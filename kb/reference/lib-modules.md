@@ -101,7 +101,7 @@ All `[text](url)` link URLs, ignoring links inside code regions.
 All `[text](url)` links as `(text, url)` pairs, ignoring links inside code regions. Used by review prompt preparation when rendering link tables in prompts.
 
 **`extract_body_dates(body: str) -> tuple[str, ...]`**
-Deduplicated ISO dates found in prose body content, ignoring fenced and inline code.
+Deduplicated ISO dates found in natural-language body content, ignoring fenced and inline code.
 
 **`remove_fenced_code_blocks(text: str) -> str`** / **`remove_code_regions(text: str) -> str`**
 Strip fenced code blocks, or both fenced and inline code. Used internally before heading extraction and other text scans to avoid false matches.

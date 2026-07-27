@@ -30,21 +30,21 @@ napkin, by Michaelliv, is a TypeScript CLI and SDK for operating a local Markdow
 ## Artifact analysis
 
 - **Storage substrate:** `files` `in-memory` — The central retained state is local Markdown and Obsidian-compatible files plus `.napkin/config.json`, `.obsidian/` settings, templates, bases, canvases, bookmarks, and `.napkin/search-cache.json`; Bases queries construct an in-memory SQLite database from vault files at query time rather than persisting a database.
-- **Representational form:** `prose` `symbolic` — Markdown note bodies and `NAPKIN.md` are prose; frontmatter, wikilinks, tags, task checkboxes, config JSON, search-cache JSON, Base YAML, Canvas JSON, templates, CLI options, and SDK return types are symbolic. The inspected code does not implement embeddings, model weights, or another parametric retained form.
+- **Representational form:** `natural-language` `symbolic` — Markdown note bodies and `NAPKIN.md` are natural-language; frontmatter, wikilinks, tags, task checkboxes, config JSON, search-cache JSON, Base YAML, Canvas JSON, templates, CLI options, and SDK return types are symbolic. The inspected code does not implement embeddings, model weights, or another parametric retained form.
 - **Lineage:** `authored` `imported` — Normal vault content is authored by humans or agents through file editing and CLI/SDK write calls; templates and scaffolds are authored package artifacts; benchmark scripts can import external conversation datasets into temporary Markdown notes, but core Napkin does not create durable memory from live agent traces.
 - **Behavioral authority:** `knowledge` `routing` `ranking` `validation` — Notes, daily entries, tags, links, tasks, and properties serve as knowledge artifacts for agents and humans; folder/template/config structure routes where content goes and how overviews are built; MiniSearch, backlinks, recency, TF-IDF keywords, and optional Base queries rank and select recall surfaces; file resolution, ambiguity errors, malformed-frontmatter warnings, and config parsing provide structural validation.
 
-**Vault content.** Storage substrate: Markdown files under the vault root, excluding `.napkin/`, `.obsidian/`, `.git/`, `.trash/`, `.nanny/`, and `node_modules`. Representational form: prose notes with symbolic frontmatter, tags, links, tasks, headings, and filenames. Lineage: authored or imported by the user, agent, script, or benchmark harness. Behavioral authority: knowledge and advice when read by an agent; stronger instruction only when a host agent chooses to treat a note such as `NAPKIN.md` as context instructions.
+**Vault content.** Storage substrate: Markdown files under the vault root, excluding `.napkin/`, `.obsidian/`, `.git/`, `.trash/`, `.nanny/`, and `node_modules`. Representational form: natural-language notes with symbolic frontmatter, tags, links, tasks, headings, and filenames. Lineage: authored or imported by the user, agent, script, or benchmark harness. Behavioral authority: knowledge and advice when read by an agent; stronger instruction only when a host agent chooses to treat a note such as `NAPKIN.md` as context instructions.
 
-**Overview artifacts.** Storage substrate: computed command output, not a durable index file. Representational form: symbolic folder records plus prose-ish keyword strings and optional `NAPKIN.md` context. Lineage: derived from current vault file contents, frontmatter, headings, tags, and paths on each overview call. Behavioral authority: routing and knowledge; it orients the agent toward folders and candidate search terms.
+**Overview artifacts.** Storage substrate: computed command output, not a durable index file. Representational form: symbolic folder records plus natural-language-ish keyword strings and optional `NAPKIN.md` context. Lineage: derived from current vault file contents, frontmatter, headings, tags, and paths on each overview call. Behavioral authority: routing and knowledge; it orients the agent toward folders and candidate search terms.
 
 **Search index and snippets.** Storage substrate: `.napkin/search-cache.json` plus live file reads. Representational form: symbolic serialized MiniSearch index, document metadata, backlink counts, and snippet line records. Lineage: derived from Markdown paths and mtimes; the fingerprint invalidates the cache when files are added, removed, or modified. Behavioral authority: ranking and routing for pull retrieval.
 
-**Config, templates, and Obsidian sync.** Storage substrate: `.napkin/config.json`, generated `.obsidian/*.json`, package template definitions, and scaffolded template files. Representational form: symbolic JSON/TypeScript plus prose template content. Lineage: authored package defaults or user-edited config. Behavioral authority: routing and validation, because they set overview depth, keyword count, search limit, snippet lines, daily note paths, template folders, graph renderer, and Obsidian integration defaults.
+**Config, templates, and Obsidian sync.** Storage substrate: `.napkin/config.json`, generated `.obsidian/*.json`, package template definitions, and scaffolded template files. Representational form: symbolic JSON/TypeScript plus natural-language template content. Lineage: authored package defaults or user-edited config. Behavioral authority: routing and validation, because they set overview depth, keyword count, search limit, snippet lines, daily note paths, template folders, graph renderer, and Obsidian integration defaults.
 
 **Bases and graph-like surfaces.** Storage substrate: `.base` YAML and Markdown/wiki-link files; the SQLite database for Base queries is in-memory. Representational form: symbolic YAML, formula/filter expressions, SQL translation, tags, links, backlinks, and embeds. Lineage: authored Base files and derived query views over current vault files. Behavioral authority: ranking, routing, and knowledge for human/agent inspection, not autonomous memory activation.
 
-Promotion path: Napkin can move from bare prose notes to more structured Markdown through frontmatter, tags, links, tasks, properties, Bases, canvases, and templates. It can also build derived overview/search surfaces from those files. It does not promote memories into semantic validators, enforced gates, learned rules, or automatic trace-extracted skills.
+Promotion path: Napkin can move from bare natural-language notes to more structured Markdown through frontmatter, tags, links, tasks, properties, Bases, canvases, and templates. It can also build derived overview/search surfaces from those files. It does not promote memories into semantic validators, enforced gates, learned rules, or automatic trace-extracted skills.
 
 ## Comparison with Our System
 
@@ -64,13 +64,13 @@ Napkin is also deliberately pull-oriented in the inspected package. A host such 
 
 ### Borrowable Ideas
 
-**Default search snippets to match-only lines.** Ready now for agent-facing tools. Napkin's `snippetLines: 0` default is a good reminder that agents often need dense evidence lines before they need surrounding prose.
+**Default search snippets to match-only lines.** Ready now for agent-facing tools. Napkin's `snippetLines: 0` default is a good reminder that agents often need dense evidence lines before they need surrounding natural-language.
 
 **Hide relevance scores unless debugging.** Ready as a UI principle. Napkin still ranks by score but hides the number unless `--score` is passed, reducing the chance that an agent treats a numeric rank as stronger evidence than the snippet.
 
 **Make every tool output teach the next move.** Ready for CLIs. The overview/search hints are lightweight progressive disclosure for workflow, not only content. Commonplace command output could use this where users or agents regularly stall after an index-like result.
 
-**Keep the SDK side effect discipline.** Ready now. Napkin's split between core data-returning functions and CLI output wrappers is a useful shape for Commonplace commands that should be callable by agents without scraping terminal prose.
+**Keep the SDK side effect discipline.** Ready now. Napkin's split between core data-returning functions and CLI output wrappers is a useful shape for Commonplace commands that should be callable by agents without scraping terminal natural-language.
 
 **Do not borrow weak semantic governance.** Napkin's freedom is an adoption strength, but Commonplace should not relax typed frontmatter, link contracts, validation, and review gates for library artifacts.
 

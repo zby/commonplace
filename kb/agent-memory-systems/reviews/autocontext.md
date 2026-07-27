@@ -26,12 +26,12 @@ Autocontext, by greyhaven-ai, is a Python and TypeScript control plane for runni
 
 **The same learned state is served through multiple adoption surfaces.** Autocontext exposes CLI, SDK, HTTP, MCP, Pi, Hermes, Claude Code skill export, and TypeScript surfaces. The MCP tools read playbooks, trajectories, analyses, hints, generated tools, skills, solved packages, feedback, and runtime sessions; exported packages turn accumulated scenario knowledge into portable agent skills ([autocontext/src/autocontext/mcp/knowledge_tools.py](https://github.com/greyhaven-ai/autocontext/blob/d381f21e17e405885aab4ff3a4e6475402bae8db/autocontext/src/autocontext/mcp/knowledge_tools.py), [ts/src/mcp/knowledge-readback-tools.ts](https://github.com/greyhaven-ai/autocontext/blob/d381f21e17e405885aab4ff3a4e6475402bae8db/ts/src/mcp/knowledge-readback-tools.ts), [autocontext/src/autocontext/knowledge/export.py](https://github.com/greyhaven-ai/autocontext/blob/d381f21e17e405885aab4ff3a4e6475402bae8db/autocontext/src/autocontext/knowledge/export.py), [autocontext/docs/agent-integration.md](https://github.com/greyhaven-ai/autocontext/blob/d381f21e17e405885aab4ff3a4e6475402bae8db/autocontext/docs/agent-integration.md)).
 
-**It can cross from prose memory into symbolic policy and parametric state.** Learned playbooks and hints are prose, but generated validators, tools, mutation specs, strategy packages, context-selection decisions, production-trace manifests, and distillation manifests are symbolic. Training export and the autoresearch training runner can turn trace-extracted records into model artifacts registered for cheaper local runtimes ([autocontext/src/autocontext/training/export.py](https://github.com/greyhaven-ai/autocontext/blob/d381f21e17e405885aab4ff3a4e6475402bae8db/autocontext/src/autocontext/training/export.py), [autocontext/src/autocontext/training/runner.py](https://github.com/greyhaven-ai/autocontext/blob/d381f21e17e405885aab4ff3a4e6475402bae8db/autocontext/src/autocontext/training/runner.py), [ts/src/traces/distillation-pipeline.ts](https://github.com/greyhaven-ai/autocontext/blob/d381f21e17e405885aab4ff3a4e6475402bae8db/ts/src/traces/distillation-pipeline.ts)).
+**It can cross from natural-language memory into symbolic policy and parametric state.** Learned playbooks and hints are natural-language, but generated validators, tools, mutation specs, strategy packages, context-selection decisions, production-trace manifests, and distillation manifests are symbolic. Training export and the autoresearch training runner can turn trace-extracted records into model artifacts registered for cheaper local runtimes ([autocontext/src/autocontext/training/export.py](https://github.com/greyhaven-ai/autocontext/blob/d381f21e17e405885aab4ff3a4e6475402bae8db/autocontext/src/autocontext/training/export.py), [autocontext/src/autocontext/training/runner.py](https://github.com/greyhaven-ai/autocontext/blob/d381f21e17e405885aab4ff3a4e6475402bae8db/autocontext/src/autocontext/training/runner.py), [ts/src/traces/distillation-pipeline.ts](https://github.com/greyhaven-ai/autocontext/blob/d381f21e17e405885aab4ff3a4e6475402bae8db/ts/src/traces/distillation-pipeline.ts)).
 
 ## Artifact analysis
 
 - **Storage substrate:** `files` — The primary retained store is the file tree: `runs/<run_id>/`, `knowledge/<scenario>/`, `skills/`, `.autocontext/production-traces/`, compaction ledgers, generated tools, harness files, packages, and optional training workspaces. SQLite stores run/generation/match/role metrics, feedback, task queues, runtime-session indexes, and analytics support state; model checkpoints and blob mirrors are secondary substrates rather than the canonical knowledge surface.
-- **Representational form:** `prose` `symbolic` `parametric` — Playbooks, analyses, hints, reports, lessons, exported skills, and curator outputs are prose; JSON/JSONL records, SQLite rows, metrics, manifests, context-selection records, mutation specs, validators, tools, and schemas are symbolic; optional training outputs and model registry entries add a parametric layer.
+- **Representational form:** `natural-language` `symbolic` `parametric` — Playbooks, analyses, hints, reports, lessons, exported skills, and curator outputs are natural-language; JSON/JSONL records, SQLite rows, metrics, manifests, context-selection records, mutation specs, validators, tools, and schemas are symbolic; optional training outputs and model registry entries add a parametric layer.
 - **Lineage:** `authored` `imported` `trace-extracted` — Scenarios, tasks, policies, hooks, and operator feedback can be authored or imported; run events, role outputs, score trajectories, production traces, session logs, compaction entries, credit assignments, lessons, dead ends, and training datasets are derived from execution traces.
 - **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — Playbooks, analyses, traces, reports, and packages provide evidence/context; generated skills, prompt fragments, role prompts, and context policies instruct; scenario contracts, staged validators, mutation gates, and harness files enforce or validate; family routing, role routing, search, and context-selection records route and rank; training and distillation surfaces provide learning input.
 
@@ -43,7 +43,7 @@ Autocontext, by greyhaven-ai, is a Python and TypeScript control plane for runni
 
 **Production traces and distillation datasets.** The production trace SDK writes validated JSONL batches under `.autocontext/production-traces/incoming/`; the TypeScript ingest path validates, deduplicates, redacts, moves accepted traces, writes receipts/errors, and enforces retention under a lock ([autocontext/src/autocontext/production_traces/emit.py](https://github.com/greyhaven-ai/autocontext/blob/d381f21e17e405885aab4ff3a4e6475402bae8db/autocontext/src/autocontext/production_traces/emit.py), [ts/src/production-traces/ingest/scan-workflow.ts](https://github.com/greyhaven-ai/autocontext/blob/d381f21e17e405885aab4ff3a4e6475402bae8db/ts/src/production-traces/ingest/scan-workflow.ts)). The distillation pipeline filters those traces into train, held-out, eval-only, and contrastive JSONL plus a manifest.
 
-**Promotion path.** The strongest path is trace -> scored generation -> coach/curator judgment -> playbook/hints/lessons/skill/tool/harness mutation -> next prompt or validator. A second path is production/run traces -> curated dataset -> training workspace -> model registry artifact. The system has several gates, but semantic provenance for individual prose claims depends on the agent output; not every lesson is forced to cite the exact run event that justified it.
+**Promotion path.** The strongest path is trace -> scored generation -> coach/curator judgment -> playbook/hints/lessons/skill/tool/harness mutation -> next prompt or validator. A second path is production/run traces -> curated dataset -> training workspace -> model registry artifact. The system has several gates, but semantic provenance for individual natural-language claims depends on the agent output; not every lesson is forced to cite the exact run event that justified it.
 
 ## Comparison with Our System
 
@@ -51,7 +51,7 @@ Autocontext and Commonplace both preserve inspectable file artifacts and make ge
 
 Autocontext is stronger as an online learning harness. It has a concrete loop for producing playbooks, hints, lessons, tools, validators, datasets, and model artifacts from evaluated attempts. Commonplace is stronger as a long-lived epistemic library: it can say why an artifact is valid, how it links to other artifacts, and what review status it carries, but it does not automatically run a scored optimization loop around every note.
 
-The most relevant design tradeoff is authority escalation. Autocontext can move from prose advice to symbolic validators, prompt mutations, and trained model artifacts, but the evidence for a particular memory's semantic truth is often the score trajectory rather than an explicit source citation. Commonplace should borrow the escalation ladder without relaxing its source and review expectations.
+The most relevant design tradeoff is authority escalation. Autocontext can move from natural-language advice to symbolic validators, prompt mutations, and trained model artifacts, but the evidence for a particular memory's semantic truth is often the score trajectory rather than an explicit source citation. Commonplace should borrow the escalation ladder without relaxing its source and review expectations.
 
 ### Borrowable Ideas
 
@@ -59,7 +59,7 @@ The most relevant design tradeoff is authority escalation. Autocontext can move 
 
 **Trace-extracted maintenance records before silent edits.** Autocontext's pending/generated artifacts make learning auditable: a coach output, curator decision, mutation record, or distillation manifest can be inspected before stronger authority is granted. Ready for stale-note, duplicate-note, and review-warning workflows.
 
-**Promotion from prose insight to symbolic gate.** A repeated review failure could first become a note, then a validator rule or review gate once evidence accumulates. Worth borrowing when a concrete warning recurs across several artifacts.
+**Promotion from natural-language insight to symbolic gate.** A repeated review failure could first become a note, then a validator rule or review gate once evidence accumulates. Worth borrowing when a concrete warning recurs across several artifacts.
 
 **Portable skill export.** Commonplace already has skills, but Autocontext's package/export path suggests a way to make a solved local workflow portable without making the exported skill the canonical source. Useful when a KB workflow should be handed to another agent environment.
 
@@ -81,9 +81,9 @@ The most relevant design tradeoff is authority escalation. Autocontext can move 
 
 **Learning timing:** `online` `staged` — Playbooks, hints, role outputs, telemetry, dead ends, and context-selection records update during runs; production-trace ingest, distillation, exports, and training are staged workflows.
 
-**Distilled form:** `prose` `symbolic` `parametric` — Distillation outputs include Markdown playbooks/skills/reports, JSON/JSONL records, validators, tools, mutation specs, manifests, datasets, and optional model checkpoints.
+**Distilled form:** `natural-language` `symbolic` `parametric` — Distillation outputs include Markdown playbooks/skills/reports, JSON/JSONL records, validators, tools, mutation specs, manifests, datasets, and optional model checkpoints.
 
-Autocontext strengthens the trace-learning survey's claim that learning can be useful before fine-tuning: most behavior change comes from prose and symbolic artifacts re-entering prompts or gates. It also shows the governance hazard: fast trace-to-playbook learning needs explicit provenance if the result is meant to become durable knowledge rather than run-local optimization state.
+Autocontext strengthens the trace-learning survey's claim that learning can be useful before fine-tuning: most behavior change comes from natural-language and symbolic artifacts re-entering prompts or gates. It also shows the governance hazard: fast trace-to-playbook learning needs explicit provenance if the result is meant to become durable knowledge rather than run-local optimization state.
 
 ## Read-back
 
@@ -97,7 +97,7 @@ The main push injection point is prompt assembly before role invocation. `build_
 
 Selection complexity is controlled by component boundaries, semantic compaction, budget trimming, role-scoped components, protected hints/dead ends, manifest-first skill discovery, and lexical search. It is not a vector store or learned retriever in the inspected code. Effective precision, context dilution, and whether the receiving model obeys the injected memory remain runtime-quality questions.
 
-Other consumers matter. Human operators inspect run status, reports, trace timelines, context-selection reports, and exported packages. Curators consume playbooks and analyses. Training and distillation pipelines consume traces and datasets. Validators and mutation gates consume symbolic artifacts with stronger authority than ordinary prose memory.
+Other consumers matter. Human operators inspect run status, reports, trace timelines, context-selection reports, and exported packages. Curators consume playbooks and analyses. Training and distillation pipelines consume traces and datasets. Validators and mutation gates consume symbolic artifacts with stronger authority than ordinary natural-language memory.
 
 ## Curiosity Pass
 
@@ -107,12 +107,12 @@ The system is unusually explicit about context efficiency for a learning harness
 
 "Learning" spans very different authority levels. A hint rotated by impact score, a curator-merged playbook, an approved harness mutation, and a fine-tuned checkpoint should not be treated as the same kind of memory merely because each came from traces.
 
-The most fragile layer is prose lineage. Scores can show that a run improved after a change, but unless the coach or curator writes evidence into the lesson, a later reader cannot always tell which trace event justified the claim.
+The most fragile layer is natural-language lineage. Scores can show that a run improved after a change, but unless the coach or curator writes evidence into the lesson, a later reader cannot always tell which trace event justified the claim.
 
 ## What to Watch
 
 - Whether context-selection telemetry grows into a true faithfulness test with controlled prompt ablations; that would change the read-back trust story.
-- Whether generated lessons and playbooks gain required source-event citations; that would make trace-extracted prose more portable outside a single scenario loop.
+- Whether generated lessons and playbooks gain required source-event citations; that would make trace-extracted natural-language content more portable outside a single scenario loop.
 - Whether approved harness mutations become richer policy objects with invalidation and rollback metadata; that would strengthen the promotion path from advice to system-definition artifact.
 - Whether production-trace distillation becomes the dominant learning route or remains a secondary export/training workflow behind prompt-level playbooks and validators.
 - Whether embeddings or LLM relevance judgments enter strategy search or prompt context selection; that would change the read-back signal classification.

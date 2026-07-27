@@ -15,7 +15,7 @@ For an LLM consumer the cost profile flips, because the recompute step is the ex
 
 The value theory alone says only *materialize it*. It does not say what the materialized copy must look like. That second constraint comes from composing this note with its safety half: once the value is recomputable from a live source, [a derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md). A materialized-and-trusted copy is one missed edit from silent, unbounded wrongness; a materialized-and-checked copy costs at most a bounded recomputation when dropped.
 
-Requiring the check narrows *how* the value may be materialized. A validator can only re-derive and compare when the copy sits in a machine-parseable region that names its source — that is, when the materialized value is in symbolic rather than prose [representational form](./definitions/representational-form.md). So the two halves divide cleanly: the value theory says materialize the derived value, and the safety constraint says materialize it in a form code can validate. Value pulls a computation out of the model's context; safety pushes the result into a symbolic slot with a derivation rule behind it. Neither half is sufficient alone — value without safety gives you the hand-maintained stale copy, safety without value gives you a validator guarding a copy no one needed.
+Requiring the check narrows *how* the value may be materialized. A validator can only re-derive and compare when the copy sits in a machine-parseable region that names its source — that is, when the materialized value is in symbolic rather than natural-language [representational form](./definitions/representational-form.md). So the two halves divide cleanly: the value theory says materialize the derived value, and the safety constraint says materialize it in a form code can validate. Value pulls a computation out of the model's context; safety pushes the result into a symbolic slot with a derivation rule behind it. Neither half is sufficient alone — value without safety gives you the hand-maintained stale copy, safety without value gives you a validator guarding a copy no one needed.
 
 ## Instances and one non-instance
 
@@ -32,7 +32,7 @@ The inversion is about the *consumer's* recompute price, not about storage being
 
 ## Open Questions
 
-- What is the smallest general mechanism for a checked, machine-locatable materialized region inside prose instruction text, so the value half can be taken without hand-rolling a validator per case?
+- What is the smallest general mechanism for a checked, machine-locatable materialized region inside natural-language instruction text, so the value half can be taken without hand-rolling a validator per case?
 - Are there derived values worth materializing for a model reader that are *not* cheaply re-derivable, where the safety half must fall back to managed staleness rather than a Level A check?
 
 ---
@@ -43,4 +43,4 @@ Relevant Notes:
 - [A derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — extends: the safety half that composes with this value half and forces the materialized copy into a checkable form
 - [Frontloading spares execution context](./frontloading-spares-execution-context.md) — extends: the sibling application at instruction scale — precompute-or-generate the known parts of a consuming call's context, of which materializing a recomputed value is one case
 - [Human–LLM differences are load-bearing for knowledge system design](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — exemplifies: the store-vs-recompute inversion is one concrete human–LLM cost-profile difference that changes a design default
-- [Representational form](./definitions/representational-form.md) — defined-in: the safety constraint pushes materialization from prose into symbolic form, the term this note uses for the machine-parseable target
+- [Representational form](./definitions/representational-form.md) — defined-in: the safety constraint pushes materialization from natural language into symbolic form, the term this note uses for the machine-parseable target

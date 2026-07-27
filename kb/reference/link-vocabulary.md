@@ -114,7 +114,7 @@ Usable from any source to any destination.
 
 ## Lineage semantics
 
-Four lineage relations with different maintenance semantics replace the retired `Distilled into:` footer. These labelled edges are the one place the distinction is formally made — prose can describe an artifact's origin loosely, but only a labelled edge asserts which maintenance regime governs it (rationale: [vocabulary collisions are prevented at write time, not resolved at read time](../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md)). `operationalized-from` is a narrower authoring-time alternative to `adapted-from` for the same edge, not a child relation to stack with it.
+Four lineage relations with different maintenance semantics replace the retired `Distilled into:` footer. These labelled edges are the one place the distinction is formally made — natural-language content can describe an artifact's origin loosely, but only a labelled edge asserts which maintenance regime governs it (rationale: [vocabulary collisions are prevented at write time, not resolved at read time](../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md)). `operationalized-from` is a narrower authoring-time alternative to `adapted-from` for the same edge, not a child relation to stack with it.
 
 **Adapted** — `adapted-from` and `Adapted into:`. The edge asserts that the target's specific content — its selection, structure, or wording — was substantially worked up from the source's specific content for a use the source did not natively serve. It does not assert completeness, entailment, generalization beyond the source, or mechanical reproducibility.
 
@@ -184,5 +184,5 @@ Relevant Notes:
 - [ADR 020 — theoretical-default additions (contrasts, mechanism)](./adr/020-theoretical-default-contrasts-mechanism.md) — rationale: the audit outcomes adding `mechanism` and `contrasts` and stating directional asymmetry
 - [Links encode conditional possibilities, not obligations](../notes/links-encode-conditional-possibilities-not-obligations.md) — rationale: the reader-need theory behind the label test
 - [Theory and methodology form a two-layer execution system](../notes/theory-and-methodology-form-a-two-layer-execution-system.md) — rationale: the maintenance regime the derived side of the lineage semantics asserts
-- [Load-bearing vocabulary collisions should be prevented or visibly scoped at write time](../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — rationale: why the derived/abstracted boundary is drawn at labelled edges rather than in prose
+- [Load-bearing vocabulary collisions should be prevented or visibly scoped at write time](../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — rationale: why the derived/abstracted boundary is drawn at labelled edges rather than in unstructured natural-language content
 - [Register](../notes/definitions/text-contract.md) — defined-in: content-mode groupings used to organise the catalogue

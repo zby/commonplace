@@ -17,7 +17,7 @@ Deployed systems adapt at three timescales, each with a different durable medium
 |-----------|------|--------|------------|
 | **Training** | Before deployment | Distributed-parametric state | Durable but hard to inspect directly; heavy infrastructure; can't incorporate deployment-specific information |
 | **In-context** | Within a session | Context window | Inspectable but ephemeral; evaporates at session end |
-| **Deploy-time** | Across sessions, during deployment | Durable system-definition artifacts (prose + symbolic) | Durable, inspectable, versionable |
+| **Deploy-time** | Across sessions, during deployment | Durable system-definition artifacts (natural-language + symbolic) | Durable, inspectable, versionable |
 
 Medium and timing are orthogonal axes in principle. The combination the table leaves empty — distributed-parametric updates at deployment pace — exists but stays rare because training infrastructure is heavy. [OpenClaw-RL](https://arxiv.org/html/2603.10165v1), which runs live RL from user interactions, is a current example.
 
@@ -33,24 +33,24 @@ A single prompt edit looks small, but a library of tips, schemas, tools, and tes
 
 Two operators drive the updates: [constraining](./definitions/constraining.md) (narrowing the interpretation space) and adaptation (reshaping prior reasoning into task-ready artifacts). [Codification](./definitions/codification.md), the far end of constraining, is where prompts undergo a phase transition into deterministic code. Both are reversible: commitments tighten along [the verifiability gradient](./verifiability-gradient.md) when cross-run patterns make them safe, and loosen when new evidence shows them wrong. A system that can only tighten ratchets itself into brittleness.
 
-## Co-evolving prose and code
+## Co-evolving natural-language and code
 
-Agile was already doing deploy-time learning, with an asymmetry: code and specs co-evolved, but only code executed, so moving a concern back to prose meant taking it out of production. LLMs close the asymmetry — prompts execute, so loosening a codified behaviour back to prose keeps the system running.
+Agile was already doing deploy-time learning, with an asymmetry: code and specs co-evolved, but only code executed, so moving a concern back to natural-language meant taking it out of production. LLMs close the asymmetry — prompts execute, so loosening a codified behaviour back to natural-language keeps the system running.
 
-You deploy with behaviour in prompts, observe what works, codify the understood parts, and the prompts evolve as the code absorbs them. The boundary between code and prose moves as understanding accumulates.
+You deploy with behaviour in prompts, observe what works, codify the understood parts, and the prompts evolve as the code absorbs them. The boundary between code and natural-language moves as understanding accumulates.
 
-The end state also differs. Agile treats natural-language specs as temporary — stories waiting to become code. Deploy-time learning recognises that some parts *should stay in prose* because they require judgment deterministic code can't capture. The hybrid is the end state, not a waypoint.
+The end state also differs. Agile treats natural-language specs as temporary — stories waiting to become code. Deploy-time learning recognises that some parts *should stay in natural-language* because they require judgment deterministic code can't capture. The hybrid is the end state, not a waypoint.
 
 ## Boundary
 
-This note is the timing argument alone. How distributed-parametric, prose, and symbolic [representational forms](./definitions/representational-form.md) should coevolve is [treat continual learning as substrate coevolution](./treat-continual-learning-as-substrate-coevolution.md).
+This note is the timing argument alone. How distributed-parametric, natural-language, and symbolic [representational forms](./definitions/representational-form.md) should coevolve is [treat continual learning as substrate coevolution](./treat-continual-learning-as-substrate-coevolution.md).
 
 ---
 
 Relevant Notes:
 
 - [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) — foundation: places system-definition artifacts on the timing axis
-- [Treat continual learning as substrate coevolution](./treat-continual-learning-as-substrate-coevolution.md) — extends: asks how deploy-time prose/symbolic loops relate to distributed-parametric loops
+- [Treat continual learning as substrate coevolution](./treat-continual-learning-as-substrate-coevolution.md) — extends: asks how deploy-time natural-language/symbolic loops relate to distributed-parametric loops
 - [The verifiability gradient](./verifiability-gradient.md) — extends: the ladder that deploy-time artifacts move along in both directions
 - [Axes of artifact analysis](./axes-of-artifact-analysis.md) — sharpens: the repo is Commonplace's storage substrate choice for many durable system-definition artifacts
 - [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — mechanism: lets content function as instruction, not only as data

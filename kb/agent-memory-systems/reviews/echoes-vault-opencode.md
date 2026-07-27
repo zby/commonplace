@@ -31,7 +31,7 @@ EchoesVault, by psinetron, is an OpenCode plugin that creates a project-local `E
 ## Artifact analysis
 
 - **Storage substrate:** `files` `repo` `prompt-registry` - The retained memory is project-local Markdown files under `EchoesVault/`; the behavior-shaping commands and skills are package constants copied into `.opencode/` files and also registered through OpenCode's command configuration; the surrounding project repository can version the resulting vault but the plugin does not require git.
-- **Representational form:** `prose` `symbolic` - Daily summaries, page bodies, command prompts, and skill instructions are prose; frontmatter, filenames, directories, index lines, wikilinks, tool schemas, command metadata, and timestamped log sections are symbolic. The inspected package has no embeddings, model weights, or other parametric retained form.
+- **Representational form:** `natural-language` `symbolic` - Daily summaries, page bodies, command prompts, and skill instructions are natural-language; frontmatter, filenames, directories, index lines, wikilinks, tool schemas, command metadata, and timestamped log sections are symbolic. The inspected package has no embeddings, model weights, or other parametric retained form.
 - **Lineage:** `authored` `trace-extracted` - Pages and index entries can be authored by a human or agent through the write tools; daily summaries, scratchpad entries, and `/echoes-end` pages are derived from the active session context by the agent. Vault structure, commands, and skills are authored package artifacts.
 - **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `learning` - Daily logs, pages, raw materials, and search results are knowledge artifacts; slash commands and skills instruct the agent; directories, filenames, index entries, and command names route work; frontmatter/index/deprecation rules are validation pressure in prompts rather than hard code gates; session distillation and scratchpad writes create learning material for later sessions.
 
@@ -79,7 +79,7 @@ EchoesVault has a stronger out-of-the-box session loop than Commonplace's genera
 
 **Learning timing:** `online` `staged` - Scratchpad writes happen during the session, while `/echoes-end` is a staged end-of-session distillation command.
 
-**Distilled form:** `prose` `symbolic` - The durable output is Markdown prose plus symbolic frontmatter, daily headings, filenames, wikilinks, and index entries.
+**Distilled form:** `natural-language` `symbolic` - The durable output is Markdown natural-language content plus symbolic frontmatter, daily headings, filenames, wikilinks, and index entries.
 
 Relative to the trace-learning survey, EchoesVault is trace-to-knowledge and trace-to-instruction-context, not trace-to-enforcement. It makes session outcomes available to future agents through files and start commands, but it does not derive validators, rankers, route tables, or code changes from the traces.
 

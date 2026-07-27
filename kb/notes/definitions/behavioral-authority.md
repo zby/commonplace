@@ -25,7 +25,7 @@ Declared intent is not enough. An advisory note may acquire high effective autho
 ## Misuse Cases
 
 - Saying a memory "is active" without naming whether it advises a model, enters an instruction channel, enforces validation, influences ranking, or feeds training.
-- Treating a Markdown file as low-authority because it is prose, even when the harness loads it as standing instruction.
+- Treating a Markdown file as low-authority because it is natural-language, even when the harness loads it as standing instruction.
 
 ---
 

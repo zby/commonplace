@@ -54,7 +54,7 @@ This is a scoped exception to the repo's files-first architecture, not a reversa
 ### Easier
 
 - **Current-state lookup becomes direct.** Selector logic reduces to "load current acceptance for this key and compare SHAs" instead of scanning files and interpreting embedded metadata blocks.
-- **Ack stops mutating prose artifacts.** Trivial-change acknowledgement becomes a first-class state transition rather than a metadata rewrite inside a review document.
+- **Ack stops mutating review documents.** Trivial-change acknowledgement becomes a first-class state transition rather than a metadata rewrite inside a review document.
 - **Review evidence becomes explicit.** Review jobs and pairs preserve completed review evidence without overloading one markdown file with both review prose and current acceptance state.
 - **Execution history becomes explicit.** One multi-gate review invocation is queryable as a job rather than inferred later from a pile of per-gate artifacts.
 - **Model partitions are cleaner.** `(note, gate, model)` is a real indexed key instead of an implicit convention reconstructed from directory layout and filename suffixes.

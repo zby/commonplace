@@ -1,5 +1,5 @@
 ---
-description: Behaviour change spans distributed-parametric, prose, and symbolic forms, so the question is how their improvement loops relate — not which is the real locus of learning
+description: Behaviour change spans distributed-parametric, natural-language, and symbolic forms, so the question is how their improvement loops relate — not which is the real locus of learning
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning]
@@ -7,9 +7,9 @@ tags: [learning-theory, deploy-time-learning]
 
 # Treat continual learning as substrate coevolution
 
-[Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) names two behaviour-change mechanisms: expensive weight updates and cheap readable [system-definition artifacts](./definitions/system-definition-artifact.md). [Deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) places the readable mechanism on the timing axis. Splitting retained behavior by [representational form](./definitions/representational-form.md) (how an operative part is encoded and consumed) gives three forms: **distributed-parametric** (weights, adapters, embeddings, learned controllers), **prose** (prompts, notes, specs, rubrics), and **symbolic** (code, schemas, tests, tools). How should their improvement loops relate? They aren't independent: optimizing one assumes a position about the others.
+[Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) names two behaviour-change mechanisms: expensive weight updates and cheap readable [system-definition artifacts](./definitions/system-definition-artifact.md). [Deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) places the readable mechanism on the timing axis. Splitting retained behavior by [representational form](./definitions/representational-form.md) (how an operative part is encoded and consumed) gives three forms: **distributed-parametric** (weights, adapters, embeddings, learned controllers), **Natural-language** (prompts, notes, specs, rubrics), and **symbolic** (code, schemas, tests, tools). How should their improvement loops relate? They aren't independent: optimizing one assumes a position about the others.
 
-Prose and symbolic cluster as the **readable artifacts** - inspectable, editable, distinct from distributed-parametric state in inspection method and update cost. The practical question of where to start building automated loops is [the readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md). This note is about the generic coevolution frame.
+Natural-language and symbolic cluster as the **readable artifacts** - inspectable, editable, distinct from distributed-parametric state in inspection method and update cost. The practical question of where to start building automated loops is [the readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md). This note is about the generic coevolution frame.
 
 ## The mainstream direction: scaling the opaque loop
 
@@ -21,11 +21,11 @@ The [bitter lesson](../sources/wikipedia-bitter-lesson.ingest.md) extrapolates: 
 
 Current methods target individual classes:
 
-- **DSPy, ProTeGi** — automated search over prompts (prose), weights frozen.
+- **DSPy, ProTeGi** — automated search over prompts (natural-language), weights frozen.
 - **Genetic programming, FunSearch** — automated search over code (symbolic), weights frozen.
-- **Meta-Harness** — automated search over harness code and prompt/context logic (symbolic + prose), weights frozen, benchmark traces as selection signal.
+- **Meta-Harness** — automated search over harness code and prompt/context logic (symbolic + natural-language), weights frozen, benchmark traces as selection signal.
 - **RLHF / RLAIF** — updates weights (opaque), treating prompts and code as fixed.
-- **Hand curation** (Commonplace and similar) — evolves prose fast and symbolic artifacts slowly, without automated search or weight updates.
+- **Hand curation** (Commonplace and similar) — evolves natural-language fast and symbolic artifacts slowly, without automated search or weight updates.
 
 Each is partial. Even unifying two classes — a joint optimizer over weights and prompts, say — would be a significant step, analogous to what end-to-end gradient descent did for features plus classifier. The prerequisite is understanding what an improvement loop for each class looks like: mutation operators, selection signals, evaluation criteria.
 
@@ -35,13 +35,13 @@ The three forms have very different dynamics:
 
 - **Distributed-parametric** updates via gradient descent or other numerical optimization. Needs differentiable or probe-derived signal and heavy training infrastructure; large updates cycle on days to weeks, though smaller add-on mechanisms can be faster.
 - **Symbolic** artifacts are mutated by LLMs or search, then evaluated by tests, execution, or formal checks.
-- **Prose** artifacts are mutated by LLMs and evaluated by execution, use, or LLM-as-judge. Semantics stay [underspecified](./agentic-systems-interpret-underspecified-instructions.md), so verification is softer.
+- **Natural-language** artifacts are mutated by LLMs and evaluated by execution, use, or LLM-as-judge. Semantics stay [underspecified](./agentic-systems-interpret-underspecified-instructions.md), so verification is softer.
 
 A joint optimizer has to handle **pace mismatch** — either it runs at the slowest class's cadence, or classes coevolve asynchronously without diverging — and **cross-class credit assignment**: a deployment failure rarely says which class wants the update (prompt revision, tool extraction, memory promotion, weight update, retrieval change). Per-class methods sidestep both by fixing the class in advance.
 
 ## Starting point
 
-Coevolution is the right conceptual frame, but a three-way joint optimizer isn't the near-term plan. [The readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) argues for starting with the prose+symbolic pair, on the basis of structural couplings that make the two a natural joint target.
+Coevolution is the right conceptual frame, but a three-way joint optimizer isn't the near-term plan. [The readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) argues for starting with the natural-language + symbolic pair, on the basis of structural couplings that make the two a natural joint target.
 
 ---
 
@@ -49,8 +49,8 @@ Relevant Notes:
 
 - [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) — foundation: two behaviour-change mechanisms (distributed-parametric updates, readable artifacts) — the premise that lets the readable pair count as a learning target at all
 - [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — foundation: places the readable mechanism on the timing axis
-- [Axes of artifact analysis](./axes-of-artifact-analysis.md) — foundation: defines the prose/symbolic/distributed-parametric split used throughout this note
-- [The readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — practical plan: the prose+symbolic pair is the tractable first slice
+- [Axes of artifact analysis](./axes-of-artifact-analysis.md) — foundation: defines the natural-language/symbolic/distributed-parametric split used throughout this note
+- [The readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — practical plan: the natural-language + symbolic pair is the tractable first slice
 - [In-context learning presupposes context engineering](./in-context-learning-presupposes-context-engineering.md) — extends: the context-engineering buildout is itself part of the joint loop
 - [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — operators: codify, relax, constrain, and adapt are artifact-side update operators
 - [Meta-Harness](../agent-memory-systems/reviews/meta-harness.md) — evidence: a fixed-weight proposer mutates harness code and context/memory logic from raw traces — a readable-artifact loop in practice

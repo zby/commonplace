@@ -103,7 +103,7 @@ The full procedure is in [run review batches](../instructions/run-review-batches
 
 For a `note-changed` pair, inspect the selector diff first. If the change does not invalidate the existing evidence, acknowledge it instead of rerunning. For a closed-ended verdict pair this carries an outcome; for an open-ended report pair it only reuses the report as current evidence and endorses nothing.
 
-`commonplace-ack-review` advances an existing baseline when a note changed but not in a way that matters for the criterion. It records the current note and criterion snapshots while preserving `evidence_review_pair_id`. It does not create evidence or rewrite any file or assay prose.
+`commonplace-ack-review` advances an existing baseline when a note changed but not in a way that matters for the criterion. It records the current note and criterion snapshots while preserving `evidence_review_pair_id`. It does not create evidence or rewrite any file or assay text.
 
 ```
 commonplace-ack-review --model-partition {model-partition} {note_path} {criterion_id}...
@@ -164,7 +164,7 @@ A worker writes one sentinel-delimited `job-output.md` covering every pair in th
 ## Result: REPORT
 ```
 
-`REPORT` is a completion marker, not an outcome. `ERROR` reports inability to produce the contracted result: finalization fails the whole job, completes no pairs, and advances no baselines. `INFO` may label a non-actionable finding inside verdict prose but is not a valid final outcome. Aliases such as `Verdict`, `Outcome`, `OK`, and `UNKNOWN` are invalid. The worker writes only the job output file; it does not touch notes, criteria, indexes, or the review database.
+`REPORT` is a completion marker, not an outcome. `ERROR` reports inability to produce the contracted result: finalization fails the whole job, completes no pairs, and advances no baselines. `INFO` may label a non-actionable finding inside verdict text but is not a valid final outcome. Aliases such as `Verdict`, `Outcome`, `OK`, and `UNKNOWN` are invalid. The worker writes only the job output file; it does not touch notes, criteria, indexes, or the review database.
 
 ## Authoring a gate
 

@@ -23,7 +23,7 @@ Retrieval-mediated connection is weaker than procedural reflection in one specif
 
 A system can strengthen the wire — enforcing a membership claim rather than asserting it, adding a field that makes an artifact findable, correcting a search recipe observed to miss a member. It cannot assume the wire holds by construction, and the difference shows up as a class of silent failure that procedural reflection does not have.
 
-The same [reference case](../reference/commonplace-as-a-reflective-system.md) records the stronger check exposing and repairing a blind spot in the prose retrieval recipe.
+The same [reference case](../reference/commonplace-as-a-reflective-system.md) records the stronger check exposing and repairing a blind spot in the natural-language retrieval recipe.
 
 ## Scope
 
@@ -37,4 +37,4 @@ Relevant Notes:
 - [Reflective system](./definitions/reflective-system.md) — grounds: supplies the causal-connection criterion this note shows retrieval realizing, and failing
 - [Stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md) — mechanism: why a trusted-but-incomplete membership claim is the sharpest form of the failure
 - [Behavioral authority](./definitions/behavioral-authority.md) — extends: the consumer, channel, and force that must hold after an artifact is found
-- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: the observed trace where a symbolic check corrected the prose search recipe that had been missing a member
+- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: the observed trace where a symbolic check corrected the natural-language search recipe that had been missing a member

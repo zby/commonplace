@@ -38,7 +38,7 @@ Possibility is not enough, and context saving is not the only cost in play. Fron
 
 ## Frontloading vs codification
 
-Frontloading can also be [constraining](./definitions/constraining.md) when it narrows the interpretations available to a later consumer. It becomes [codification](./definitions/codification.md) when the result is consumed by a symbolic artifact with formal semantics or assigned consequences, such as a schema, route table, validator input, or executable function. Deterministic prose generation, by itself, is frontloading without being codification.
+Frontloading can also be [constraining](./definitions/constraining.md) when it narrows the interpretations available to a later consumer. It becomes [codification](./definitions/codification.md) when the result is consumed by a symbolic artifact with formal semantics or assigned consequences, such as a schema, route table, validator input, or executable function. Deterministic natural-language generation, by itself, is frontloading without being codification.
 
 ## Mechanism
 

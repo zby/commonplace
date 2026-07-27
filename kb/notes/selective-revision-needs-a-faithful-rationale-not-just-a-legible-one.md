@@ -30,11 +30,11 @@ This gives the property an operational shape rather than a rhetorical one: edit 
 - The claim is about repair, not about whether the theory is good. A faithful rationale for a bad theory supports *rejecting* it precisely; faithfulness makes revision reliable, not favorable.
 - The same condition governs a second consumer: an overseer deciding about a retained change by reading its rationale rather than probing behavior. That saving inherits the asymmetry — an accepted but unfaithful rationale can cut probing while raising confident error. This note does not develop the oversight case.
 - A recorded rationale is a claim about the theory, not a transcript of how it was formed. Nothing here assumes a system can introspect its own basis; the rationale is an artifact that may be wrong, which is why the intervention test is load-bearing rather than optional.
-- The cited work establishes the faithfulness–plausibility distinction, an intervention-based failure mode in chain-of-thought, and a constructive case in concept bottlenecks. None of it tests prose rationales attached to retained theories, which is the setting this claim is about.
+- The cited work establishes the faithfulness–plausibility distinction, an intervention-based failure mode in chain-of-thought, and a constructive case in concept bottlenecks. None of it tests natural-language rationales attached to retained theories, which is the setting this claim is about.
 
 ## Open Questions
 
-- Whether the intervention test transfers from a supervised concept layer, where the intermediate is a typed variable, to a prose rationale whose premises are not separately addressable without an interpreter deciding what its premises are.
+- Whether the intervention test transfers from a supervised concept layer, where the intermediate is a typed variable, to a natural-language rationale whose premises are not separately addressable without an interpreter deciding what its premises are.
 - Whether rationales recorded at formation are measurably more faithful than ones reconstructed after the fact, or whether both confabulate often enough that the distinction does not pay for itself.
 - Whether keeping many rationales faithful as their theories drift costs more, at library scale, than re-deriving theories from scratch would.
 

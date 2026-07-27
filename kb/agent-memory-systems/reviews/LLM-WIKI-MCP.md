@@ -33,7 +33,7 @@ LLM-WIKI-MCP, from `Electro-resonance/LLM-WIKI-MCP`, is a local-first Python pac
 ## Artifact analysis
 
 - **Storage substrate:** `files` `sqlite` `repo` - Durable user/project memory lives in vault files: `wiki/*.md`, `raw/`, `notes/*.md`, `ask_history.jsonl`, `ask_history_compressed.md`, `ask_metrics.jsonl`, runtime journal/config files, and exports. SQLite stores the rebuildable FTS/index tables, while the repository stores the authored package, docs, tests, CLI/MCP tool definitions, and sample config.
-- **Representational form:** `prose` `symbolic` - Wiki pages, source captures, sidecar notes, compressed history, prompts, and docs are prose; frontmatter, JSON/JSONL records, config keys, SQLite rows/FTS terms, tool schemas, scores, graph edges, provenance hashes, and lint actions are symbolic. I found no retained embeddings, adapters, or model weights.
+- **Representational form:** `natural-language` `symbolic` - Wiki pages, source captures, sidecar notes, compressed history, prompts, and docs are natural-language; frontmatter, JSON/JSONL records, config keys, SQLite rows/FTS terms, tool schemas, scores, graph edges, provenance hashes, and lint actions are symbolic. I found no retained embeddings, adapters, or model weights.
 - **Lineage:** `authored` `imported` `trace-extracted` - The package code, docs, seed pages, schemas, tool catalogues, and user-created wiki notes are authored; source documents are imported into generated wiki pages; ask history, tool traces, runtime journal events, metrics, and compressed ask memory are extracted from interaction traces.
 - **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` `enforcement` - Wiki pages, raw imports, sidecar notes, exports, and ask history provide knowledge/context; the agent system prompt and command/tool docs instruct behavior; tool planners, config, source titles, links, and page handles route retrieval; lint, health, dry-run write, provenance checks, and doc reconciliation validate; FTS/fallback scores, candidate links, and planner heuristics rank; ask-history recording/compression and sidecar notes learn from use; overwrite checks, tombstone deletion, dry-run defaults, and active-vault ingest exclusion enforce operational boundaries.
 
@@ -83,13 +83,13 @@ The tradeoff is semantic governance. LLM-WIKI-MCP has useful structural guards a
 
 **Learning timing:** `online` `staged` - Ask turns and metrics are recorded immediately after the ask path runs; compression and recursive-context assembly happen as a staged maintenance/read step when history exceeds budget or future prompts are built.
 
-**Distilled form:** `prose` `symbolic` - Exact JSONL turns and metrics are symbolic/prose records; compressed ask memory, recent-history markdown, and agentic prompt packs are prose plus symbolic source/tool metadata.
+**Distilled form:** `natural-language` `symbolic` - Exact JSONL turns and metrics are symbolic/natural-language records; compressed ask memory, recent-history markdown, and agentic prompt packs are natural-language content plus symbolic source/tool metadata.
 
 **Extraction.** The extraction oracle is mostly the runtime path itself: the user question, built prompt, final answer, tools called, sources, and token estimates are saved without an external judge. Compression summarizes older rows by question, answer preview, and sources. That makes the loop useful for continuity and self-inspection, but weak for truth maintenance: the system remembers what happened, not whether the answer was correct.
 
 **Scope and timing.** Recent/compressed history is read into later ask prompts through `release_recent_history_markdown()`, `release_recursive_context_with_memory()`, and the final `release_agentic_ask()` path. The system also records runtime events and metrics for self-access, but those are diagnostics rather than learned behavioral rules.
 
-**Survey placement.** LLM-WIKI-MCP belongs in the trace-to-local-memory family: runtime interaction traces become durable local prose/symbolic artifacts and later prompt context. It strengthens the survey claim that trace-learning often starts as retained transcripts and summaries before it becomes enforceable policy; this implementation stops at continuity memory and diagnostics rather than promotion into stronger system-definition artifacts.
+**Survey placement.** LLM-WIKI-MCP belongs in the trace-to-local-memory family: runtime interaction traces become durable local natural-language/symbolic artifacts and later prompt context. It strengthens the survey claim that trace-learning often starts as retained transcripts and summaries before it becomes enforceable policy; this implementation stops at continuity memory and diagnostics rather than promotion into stronger system-definition artifacts.
 
 ## Read-back
 

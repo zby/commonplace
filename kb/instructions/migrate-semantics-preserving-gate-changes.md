@@ -12,7 +12,7 @@ Acknowledgement reuses completed evidence and advances the existing snapshot bas
 ## Steps
 
 1. Before editing, run the selector for the intended note scope under every affected model partition. Only migrate pairs that are currently fresh; resolve or rerun any pair already reported as `note-changed`, `criterion-changed`, or `missing-baseline`. A fresh pre-edit pair proves that both current files match its baseline snapshots.
-2. Edit the gate file. Keep the criterion semantically equivalent; prose cleanup alone is not evidence that a behavioral change is harmless.
+2. Edit the gate file. Keep the criterion semantically equivalent; wording cleanup alone is not evidence that a behavioral change is harmless.
 3. Select the affected pairs under each model partition and confirm they are stale only because the criterion changed:
 
    ```bash

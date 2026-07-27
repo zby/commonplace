@@ -31,7 +31,7 @@ last-checked: "2026-06-04"
 ## Artifact analysis
 
 - **Storage substrate:** `files` `repo` — Retained state lives in local files: `.jsonl` session stores outside the repo, converted `raw/sessions/*.md`, `wiki/**/*.md`, generated `site/`, `.llmwiki-state.json`, `.llmwiki-synth-state.json`, `.llmwiki-queue.json`, `.llmwiki-pending-prompts/`, package skills, slash commands, tests, and docs. Git can version the project and wiki, but there is no database or vector store in the core implementation.
-- **Representational form:** `prose` `symbolic` — Session bodies, wiki pages, synthesis prompts, navigation files, packaged skills, and docs are prose; frontmatter, state JSON, adapter registry names, lifecycle enums, lint rule outputs, MCP schemas, search indexes, JSON-LD, manifests, and pending sentinels are symbolic. The reviewed core does not retain embeddings or model weights.
+- **Representational form:** `natural-language` `symbolic` — Session bodies, wiki pages, synthesis prompts, navigation files, packaged skills, and docs are natural-language; frontmatter, state JSON, adapter registry names, lifecycle enums, lint rule outputs, MCP schemas, search indexes, JSON-LD, manifests, and pending sentinels are symbolic. The reviewed core does not retain embeddings or model weights.
 - **Lineage:** `authored` `imported` `trace-extracted` — Skills, slash commands, docs, seeds, lint rules, and user/agent-authored wiki pages are authored; Obsidian and other input adapters can import existing files; raw sessions and synthesized source pages are derived from agent transcripts, tool calls, model metadata, and session timing.
 - **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` `enforcement` — Raw sessions, wiki pages, exports, and MCP query results serve as knowledge; packaged skills, slash commands, `CLAUDE.md`/`AGENTS.md`, and `.kiro/steering` instruct host agents; indexes, folder context, tags, adapters, queues, and state files route work; lint, lifecycle validity, redaction, path guards, raw overwrite guards, and candidate status validate or enforce boundaries; search indexes, MCP lexical scoring, facets, and confidence fields rank; conversion and synthesis are trace-learning from prior sessions.
 
@@ -85,13 +85,13 @@ The main divergence is semantic authority. llm-wiki's packaged ingest/query skil
 
 **Learning timing:** `offline` `staged` — Conversion and synthesis run after traces already exist, either by explicit command or external hook; the agent-delegate backend stages pending prompts for a later slash-command completion step.
 
-**Distilled form:** `prose` `symbolic` — Distilled outputs include prose raw/session Markdown, synthesized source pages, wiki summaries, navigation files, and symbolic frontmatter, tags, state files, indexes, JSON exports, search chunks, and MCP schemas.
+**Distilled form:** `natural-language` `symbolic` — Distilled outputs include natural-language raw/session Markdown, synthesized source pages, wiki summaries, navigation files, and symbolic frontmatter, tags, state files, indexes, JSON exports, search chunks, and MCP schemas.
 
 **Extraction.** The converter is deterministic extraction and redaction from JSONL into Markdown; it computes message/tool/token metadata but does not infer high-level lessons. The optional synthesizer performs the semantic extraction: a backend reads a raw session body and metadata through a prompt template, then writes or stages a source page with tags. The strongest automatic trace-learning loop is therefore trace -> raw Markdown -> synthesized source page, not trace -> enforced rule.
 
 **Scope and timing.** `llmwiki sync` can be run manually, from MCP with confirmation, or by an external SessionStart hook. Synthesis is a separate command and can use dummy, Ollama, or agent-delegate backends. The agent-delegate mode writes pending prompt files and placeholder pages first, then relies on the host agent to complete them later.
 
-**Survey fit.** llm-wiki sits in the trace-to-wiki family: raw agent traces become durable, inspectable prose artifacts, then optional summarization makes them cheaper to read. It supports later self-learning through skills such as `self-learn`, but the inspected code keeps that promotion human/agent-mediated rather than automatic.
+**Survey fit.** llm-wiki sits in the trace-to-wiki family: raw agent traces become durable, inspectable wiki pages, then optional summarization makes them cheaper to read. It supports later self-learning through skills such as `self-learn`, but the inspected code keeps that promotion human/agent-mediated rather than automatic.
 
 ## Read-back
 

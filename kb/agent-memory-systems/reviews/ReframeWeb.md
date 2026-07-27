@@ -30,7 +30,7 @@ ReframeWeb, by jubjub727, is an experimental "agent-native" workflow environment
 ## Artifact analysis
 
 - **Storage substrate:** `graph` — All retained state is SurrealDB `memory_node`/`memory_root` records joined by RELATION edges; the default backend is embedded SurrealKV on local disk. It is used graph-first (root-anchored relation traversal), not as a document or vector store.
-- **Representational form:** `prose` `symbolic` — Memory payloads are natural-language prose (session-memory and preference `title`/`description`, conversation `content`, task descriptions/prompts); the tags, graph relations, `position`, timestamps, and `Provider` model/effort fields are symbolic scaffolding. No parametric form — there are no embeddings, weights, or adapters in the code.
+- **Representational form:** `natural-language` `symbolic` — Memory payloads are natural-language content (session-memory and preference `title`/`description`, conversation `content`, task descriptions/prompts); the tags, graph relations, `position`, timestamps, and `Provider` model/effort fields are symbolic scaffolding. No parametric form — there are no embeddings, weights, or adapters in the code.
 - **Lineage:** `authored` `trace-extracted` — Session memories and user preferences are authored inline by the agent's own turn output; tasks and providers are authored by seed scripts; the session→conversation→message tree is retained interaction history (transcript), i.e. trace-extracted. No `imported` (nothing external is ingested) and no automatic distillation of the transcript into new memory.
 - **Behavioral authority:** `knowledge` `routing` `ranking` — Session/preference memories and transcripts are injected as advisory context (knowledge); the task catalog is the routable option set consumed by the task-choice decision (routing); the per-stage few-shot pools bias the LLM decisions (ranking/routing steer). Everything is advisory — no memory is an enforced gate or a validator, and effective authority is *not verified from code* (no test shows a retrieved memory changing the final output).
 
@@ -115,7 +115,7 @@ Relevant Notes:
 - [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - explains why the targeted push depends on LLM-emitted tag hints and substring terms, and why empty hints yield silence.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating standing memories, transcripts, the task catalog, and few-shot pools by substrate, form, lineage, and authority.
 - [Storage substrate](../../notes/definitions/storage-substrate.md) - classifies the embedded SurrealDB graph as the retained-state substrate.
-- [Representational form](../../notes/definitions/representational-form.md) - frames the prose payload vs symbolic relation/timestamp scaffolding.
+- [Representational form](../../notes/definitions/representational-form.md) - frames the natural-language payload vs symbolic relation/timestamp scaffolding.
 - [Lineage](../../notes/definitions/lineage.md) - distinguishes agent-authored preference memories from the retained (trace-extracted) transcript.
 - [Behavioral authority](../../notes/definitions/behavioral-authority.md) - classifies memories/transcripts as knowledge, the task catalog as routing, and the few-shot pools as ranking/routing steer.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - covers the advisory memories, transcripts, and few-shot examples.

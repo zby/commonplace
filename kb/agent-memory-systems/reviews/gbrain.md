@@ -33,7 +33,7 @@ GBrain, from Garry Tan's `garrytan/gbrain` repository, is a Bun/TypeScript memor
 ## Artifact analysis
 
 - **Storage substrate:** `rdbms` — The behavior-shaping live store is Postgres/PGLite tables for pages, chunks, embeddings, links, facts, takes, jobs, logs, and caches; markdown files remain the user-auditable source/write-through surface rather than the only active substrate.
-- **Representational form:** `prose` `symbolic` `parametric` — Markdown pages, skills, facts, takes, summaries, reports, and prompts are prose; frontmatter, schemas, typed links, operations, SQL rows, queue records, and config are symbolic; embeddings and reranker/vector retrieval state are parametric access structures.
+- **Representational form:** `natural-language` `symbolic` `parametric` — Markdown pages, skills, facts, takes, summaries, reports, and prompts are natural-language; frontmatter, schemas, typed links, operations, SQL rows, queue records, and config are symbolic; embeddings and reranker/vector retrieval state are parametric access structures.
 - **Lineage:** `authored` `imported` `trace-extracted` — Skills, schemas, code, and user-authored pages are authored; synced markdown/code/images and external captures are imported; hot facts, atoms, patterns, concepts, eval candidates, subagent transcripts, synthesis pages, and skillopt candidates can derive from conversation turns, transcripts, tool calls, and accumulated brain evidence.
 - **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` `enforcement` — Pages, facts, takes, trajectories, and syntheses advise agents; skills and prompts instruct; schema packs, source scopes, graph edges, and operation definitions route; validators, lint gates, auth scopes, budgets, locks, and mutation guards enforce or validate; retrieval scores, emotional weight, graph signals, and rerankers rank; extraction, consolidation, concept synthesis, calibration, eval replay, and skillopt implement learning loops.
 
@@ -57,13 +57,13 @@ GBrain, from Garry Tan's `garrytan/gbrain` repository, is a Bun/TypeScript memor
 | Write path | CLI/MCP writes, capture/import/sync, signal detector, dream cycle, facts backstop, skillopt | Human/agent-authored notes, reviews, instructions, validation, explicit review gates |
 | Governance | Auth scopes, source scoping, locks, budgets, doctor checks, eval capture, skill gates | Collection contracts, type specs, deterministic validation, semantic review, git history |
 
-The closest alignment is that both systems treat prose files as operational artifacts rather than inert documentation. GBrain pushes further into service infrastructure: it owns database indexes, MCP transport, OAuth scopes, queues, background daemons, LLM extraction, and ranking. Commonplace keeps more authority in repo-local Markdown, schemas, instructions, and validation scripts, which makes review and rollback cheaper but read-back less automatic.
+The closest alignment is that both systems treat natural-language files as operational artifacts rather than inert documentation. GBrain pushes further into service infrastructure: it owns database indexes, MCP transport, OAuth scopes, queues, background daemons, LLM extraction, and ranking. Commonplace keeps more authority in repo-local Markdown, schemas, instructions, and validation scripts, which makes review and rollback cheaper but read-back less automatic.
 
 The main tradeoff is power versus inspectability. GBrain can serve targeted context and update derived memory continuously, including hot facts and dream-cycle artifacts. The cost is a larger trusted runtime surface: agents must trust operation dispatch, database migrations, background queue behavior, retrieval ranking, and LLM-derived maintenance loops. Commonplace is slower and more manual, but most behavior-shaping state is visible in ordinary diffs.
 
 ### Borrowable Ideas
 
-**Session-scoped hot memory as metadata, not prompt prose.** Commonplace could expose a small, clearly labeled review/run memory payload to tools or agents instead of requiring agents to search the whole KB for immediate state. Ready for narrow review workflows.
+**Session-scoped hot memory as metadata, not prompt natural-language.** Commonplace could expose a small, clearly labeled review/run memory payload to tools or agents instead of requiring agents to search the whole KB for immediate state. Ready for narrow review workflows.
 
 **Generated context should carry freshness and lineage gates.** GBrain's page generation counters, extraction watermarks, chunker versions, and cache invalidation machinery are more explicit than many markdown-only indexes. Commonplace can borrow the pattern for expensive semantic reports and source-derived views.
 
@@ -87,7 +87,7 @@ The main tradeoff is power versus inspectability. GBrain can serve targeted cont
 
 **Learning timing:** `online` `offline` `staged` — `extract_facts` and the facts backstop can run inline or queue near a write; dream-cycle phases and skillopt are staged/offline maintenance; sync/import and eval capture can run continuously as background side effects.
 
-**Distilled form:** `prose` `symbolic` `parametric` — Outputs include markdown pages, facts, takes, concepts, patterns, reports, and skill edits; symbolic rows, frontmatter, links, schema metadata, eval records, and queue logs; and embeddings over pages/facts/chunks for later retrieval.
+**Distilled form:** `natural-language` `symbolic` `parametric` — Outputs include markdown pages, facts, takes, concepts, patterns, reports, and skill edits; symbolic rows, frontmatter, links, schema metadata, eval records, and queue logs; and embeddings over pages/facts/chunks for later retrieval.
 
 **Trace source.** The qualifying code-grounded mechanisms are the hot-memory extractor over conversation turns, transcript-to-page synthesis, subagent transcript rendering, eval-capture rows from `search`/`query`, atom extraction from transcripts/pages, and concept/pattern synthesis over accumulated retained material ([src/core/facts/extract.ts](https://github.com/garrytan/gbrain/blob/9a0bae8d62cdd1e0dd6655e24e082fe6c69c5dac/src/core/facts/extract.ts), [src/core/cycle/synthesize.ts](https://github.com/garrytan/gbrain/blob/9a0bae8d62cdd1e0dd6655e24e082fe6c69c5dac/src/core/cycle/synthesize.ts), [src/core/minions/transcript.ts](https://github.com/garrytan/gbrain/blob/9a0bae8d62cdd1e0dd6655e24e082fe6c69c5dac/src/core/minions/transcript.ts), [src/core/eval-capture.ts](https://github.com/garrytan/gbrain/blob/9a0bae8d62cdd1e0dd6655e24e082fe6c69c5dac/src/core/eval-capture.ts), [src/core/cycle/extract-atoms.ts](https://github.com/garrytan/gbrain/blob/9a0bae8d62cdd1e0dd6655e24e082fe6c69c5dac/src/core/cycle/extract-atoms.ts)).
 

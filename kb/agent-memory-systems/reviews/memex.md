@@ -30,7 +30,7 @@ Memex, from `wastedcode/memex`, is a Node/TypeScript CLI and privileged daemon t
 ## Artifact analysis
 
 - **Storage substrate:** `files` `sqlite` — The durable wiki corpus, raw source archive, wiki prompt customization, tool configuration, and Claude credentials are files under each wiki directory; SQLite stores wiki registry rows, queue jobs, job results, and audit logs.
-- **Representational form:** `prose` `symbolic` — Wiki pages, `_schema.md`, `_index.md`, `_log.md`, `.claude.md`, prompt text, and query/lint reports are prose; queue rows, API routes, job types, JSON payloads/results, owner UIDs, tool whitelists, mount commands, and CLI command definitions are symbolic. I did not find vector, embedding, or model-weight state owned by Memex.
+- **Representational form:** `natural-language` `symbolic` — Wiki pages, `_schema.md`, `_index.md`, `_log.md`, `.claude.md`, prompt text, and query/lint reports are natural-language; queue rows, API routes, job types, JSON payloads/results, owner UIDs, tool whitelists, mount commands, and CLI command definitions are symbolic. I did not find vector, embedding, or model-weight state owned by Memex.
 - **Lineage:** `authored` `imported` — Users author conventions, configuration, prompts, and direct file edits; raw sources are imported into `wiki/raw/`; Claude-derived wiki pages, schema updates, links, index entries, log entries, query answers, and lint reports are derived from imported sources and existing wiki files. I did not find durable extraction from agent/session/tool traces as a standing learning path.
 - **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` — Wiki pages and query answers advise as knowledge; prompts, `.claude.md`, `_schema.md`, and tool lists instruct future Claude jobs; namespace isolation, read-only raw mounts, owner checks, job serialization, timeouts, and tool restrictions enforce boundaries; CLI/API routes, job types, index/search conventions, and schema categories route work; lint prompts and reports validate wiki health, though judgment-heavy issues are left for review.
 
@@ -42,7 +42,7 @@ Memex, from `wastedcode/memex`, is a Node/TypeScript CLI and privileged daemon t
 
 **Access and isolation contracts.** The Unix-socket API, peer-credential checks, owner UID field, mount namespace wrapper, read-only raw mount, tool whitelist, and per-wiki credential resolution are behavior-shaping artifacts that define who can mutate a wiki and what Claude can touch ([src/daemon/routes.ts](https://github.com/wastedcode/memex/blob/1e223b6045be31b70b1ab9e4b28dd403150d29e7/src/daemon/routes.ts), [src/daemon/auth.ts](https://github.com/wastedcode/memex/blob/1e223b6045be31b70b1ab9e4b28dd403150d29e7/src/daemon/auth.ts), [src/daemon/namespace.ts](https://github.com/wastedcode/memex/blob/1e223b6045be31b70b1ab9e4b28dd403150d29e7/src/daemon/namespace.ts)).
 
-**Promotion path.** Memex promotes uploaded or existing source files into wiki pages, index entries, links, schema conventions, and log entries. It also lets lint promote observed drift into direct fixes for links, related sections, index entries, and schema text. There is no implemented path from wiki prose into stronger symbolic validators, embeddings, or enforced type schemas.
+**Promotion path.** Memex promotes uploaded or existing source files into wiki pages, index entries, links, schema conventions, and log entries. It also lets lint promote observed drift into direct fixes for links, related sections, index entries, and schema text. There is no implemented path from wiki natural-language content into stronger symbolic validators, embeddings, or enforced type schemas.
 
 ## Comparison with Our System
 
@@ -88,7 +88,7 @@ The pull surface is narrow but practical: query jobs read the index, search file
 
 **The security model is unusually concrete for a wiki tool.** The system does not merely tell Claude to stay in the wiki; it remounts the wiki as `/workspace`, remounts raw sources read-only, filters environment variables, and restricts tools. That gives the prompt discipline a real boundary, though it also makes Linux capability setup part of the product.
 
-**The strongest learned artifact is still prose.** Schema conventions can evolve with every ingest, and that is genuine behavior-shaping memory for future jobs. But it remains prompt-followed prose, not a checked schema, validator, router table, or retrieval index.
+**The strongest learned artifact is still natural-language.** Schema conventions can evolve with every ingest, and that is genuine behavior-shaping memory for future jobs. But it remains prompt-followed natural-language, not a checked schema, validator, router table, or retrieval index.
 
 **Audit state is not semantic lineage.** Queue jobs and audit logs record that work happened and preserve outputs/results, but the wiki pages themselves do not have enforced source-span lineage beyond prompt-required source references.
 
@@ -104,7 +104,7 @@ The pull surface is narrow but practical: query jobs read the index, search file
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Memex stores a durable wiki, but retained memory enters jobs through explicit file lookup rather than automatic context injection.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: wiki prose, prompt instructions, queue rows, owner checks, and namespace wrappers carry different forms and authorities.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: wiki natural-language content, prompt instructions, queue rows, owner checks, and namespace wrappers carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: wiki pages, raw source references, query answers, and lint reports mostly advise as evidence or context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompts, schema conventions, CLI/API routes, queue policy, tool restrictions, and namespace boundaries govern future behavior.
 - [Context engineering](../../notes/definitions/context-engineering.md) - frames: Memex's main design problem is routing file-backed wiki memory into bounded Claude jobs through prompts and file tools.

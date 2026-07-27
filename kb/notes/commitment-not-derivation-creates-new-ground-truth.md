@@ -31,7 +31,7 @@ So the claim classifies productions, not producers. A generated index and a prom
 
 ## Two boundaries, three zones
 
-Derivation itself is graded, and the grading must not be confused with the commitment boundary. [Methodology and its theory form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) splits derived content by verification method: **mechanical** fragments, where a machine re-derives and a validator compares — these are recomputable copies proper — and **judgment-checked** derived prose, where the claims are recoverable from the source but re-derivation and comparison take judgment, so the regime is managed staleness rather than a deterministic check.
+Derivation itself is graded, and the grading must not be confused with the commitment boundary. [Methodology and its theory form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) splits derived content by verification method: **mechanical** fragments, where a machine re-derives and a validator compares — these are recomputable copies proper — and **judgment-checked** derived natural-language, where the claims are recoverable from the source but re-derivation and comparison take judgment, so the regime is managed staleness rather than a deterministic check.
 
 Both zones sit on the derivation side of the ground-truth question: a judgment-checked summary that restates its source in new words has added no claims, and when the source revises, the summary is stale and the source wins. The commitment boundary is different in kind, not merely harder to check — on its far side the artifact outranks its raw material, and "stale against the source" stops being a meaningful state because the source was never the authority for what was added.
 
@@ -46,7 +46,7 @@ Keeping the two boundaries apart prevents two opposite misfilings: judgment-chec
 | maintenance rule | checked-or-absent where mechanical; managed staleness where judgment-checked | supersession |
 | repair on drift | recompute, or judged re-derivation | a new commitment naming the old |
 | deletion cost | recomputation work — bounded and mechanical, or dear but claim-preserving | irrecoverable loss of the only record |
-| worked instances | marks, generated indexes, duplicated build assets; derived summaries and reshaped prose | ADRs, notes promoted from workshops, verification attestations, kept generated code |
+| worked instances | marks, generated indexes, duplicated build assets; derived summaries and reshaped natural-language | ADRs, notes promoted from workshops, verification attestations, kept generated code |
 
 Three consequences do real work.
 
@@ -58,7 +58,7 @@ Three consequences do real work.
 
 ## Regime membership attaches to the region, not the file
 
-A tag-README carries curated editorial prose *and* validator-enforced `complete`/`covered_by` marks. The marks are mechanical derivations; the curation is a commitment. Both live in one file, and the file's disposal behaviour is per-region: dropping a mark costs a reader one scoped sweep, dropping the curation destroys editorial judgment nothing re-derives. This is why [ADR 026](../reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) could put a validator behind the marks without pretending to validate the prose around them. The [lineage vocabulary](../reference/link-vocabulary.md) handles the same fact at the artifact scale by labelling a mixed artifact by its dominant regime — an explicit, revisable call. When classifying, ask which regime a given *claim inside* an artifact belongs to; the file is often mixed.
+A tag-README carries curated editorial natural-language *and* validator-enforced `complete`/`covered_by` marks. The marks are mechanical derivations; the curation is a commitment. Both live in one file, and the file's disposal behaviour is per-region: dropping a mark costs a reader one scoped sweep, dropping the curation destroys editorial judgment nothing re-derives. This is why [ADR 026](../reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) could put a validator behind the marks without pretending to validate the natural-language around them. The [lineage vocabulary](../reference/link-vocabulary.md) handles the same fact at the artifact scale by labelling a mixed artifact by its dominant regime — an explicit, revisable call. When classifying, ask which regime a given *claim inside* an artifact belongs to; the file is often mixed.
 
 ## The boundary is crossable by committing once
 
@@ -68,7 +68,7 @@ That also bounds the promotion: until the arbitration is actually codified, trea
 
 ## Scope
 
-- **Judged re-derivation is not recompute, and re-examination is neither.** Re-deriving judgment-checked prose reproduces claims in possibly different words; it stays inside derivation. [Retaining the episode keeps a distilled rule re-derivable](./retaining-the-episode-keeps-a-distilled-rule-re-derivable.md) describes a third thing: going back to the evidence behind an *abstracted* — committed — rule and judging whether the generalization survives. That is real recourse, and it is a fresh arbitration over retained provenance which may disagree with what it re-examines; a recompute cannot.
+- **Judged re-derivation is not recompute, and re-examination is neither.** Re-deriving judgment-checked natural-language reproduces claims in possibly different words; it stays inside derivation. [Retaining the episode keeps a distilled rule re-derivable](./retaining-the-episode-keeps-a-distilled-rule-re-derivable.md) describes a third thing: going back to the evidence behind an *abstracted* — committed — rule and judging whether the generalization survives. That is real recourse, and it is a fresh arbitration over retained provenance which may disagree with what it re-examines; a recompute cannot.
 - **The managed-staleness machinery is taken as given.** [Lineage recorded at the source](./artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md) surfaces downstream artifacts when a source changes, with judgment doing the verification for the non-mechanical zone. This note adds no machinery there; it says why nothing on the commitment side can be repaired by that machinery or any validator.
 - **Neither relation is better.** The claim is that the maintenance operations are not interchangeable, not that derivation should be preferred where a judgment is what the work needs.
 - **A derivation still needs its ground truth to exist at check time.** Where the source is destroyed or was never recorded, recompute is unavailable in practice even though nothing was added — [history has one chance to become checkable](./history-has-one-chance-to-become-checkable.md).
@@ -97,4 +97,4 @@ Relevant Notes:
 - [Constraining](./definitions/constraining.md) — defined-in: the narrowing operation commitment performs
 - [ADR 056: adopted and retired proposals archive out of the frontier](../reference/adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md) — evidence: chose archiving over deletion for adopted proposals, the commitment-side disposal operation this note predicts
 - [ADR 025: complete generated indexes are build-time only](../reference/adr/025-complete-generated-indexes-are-build-time-only.md) — evidence: deleted committed generated listings outright and regenerated from frontmatter, the derivation-side disposal operation
-- [ADR 026: tag-readme type with completeness and coverage marks](../reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) — evidence: the mixed artifact, with a validator behind the derived marks and none behind the committed prose beside them
+- [ADR 026: tag-readme type with completeness and coverage marks](../reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) — evidence: the mixed artifact, with a validator behind the derived marks and none behind the committed natural-language beside them

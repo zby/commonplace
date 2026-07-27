@@ -27,7 +27,7 @@ Sig is a desktop work-memory app published through the public `sig-ai-app/sig-re
 Claim-level (no application source inspected):
 
 - **Storage substrate:** `files` - Sig reports that captures and notes persist as plain markdown files in a user-chosen folder; team sharing and skills reportedly sync through git. Analytics event counts are a separate service path and are not the memory substrate.
-- **Representational form:** `prose` - the central retained work memory is reported as markdown prose: facts, personal observations, team-facing summaries, and reusable workflow descriptions. Any hidden app metadata or sync state is not documented enough to classify.
+- **Representational form:** `natural-language` - the central retained work memory is reported as markdown natural-language content: facts, personal observations, team-facing summaries, and reusable workflow descriptions. Any hidden app metadata or sync state is not documented enough to classify.
 - **Lineage** - human-authored and app-synthesized. Raw captures come from the user's post-meeting or work narration; Sig reportedly structures them into private notes and prepares a reviewed org-level version before sharing. The synthesis prompt, validator, reviewer UI, and regeneration rules are not exposed.
 - **Behavioral authority** - mostly **knowledge artifact** authority when AI tools or Sig's own chat use notes as context. Shared skills/workflows would become **system-definition artifacts** if they instruct future work, but the docs do not show how they are selected, invoked, or enforced.
 

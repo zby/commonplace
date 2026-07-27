@@ -31,7 +31,7 @@ MemPalace, by milla-jovovich, is a local-first Python memory system for develope
 ## Artifact analysis
 
 - **Storage substrate:** `files` `sqlite` `vector` `graph` — The retained state spans local ChromaDB files for drawer and closet collections, SQLite for the temporal knowledge graph, JSON/config/plugin files, transcript source files, and graph-like tunnel and hallway records derived from palace metadata.
-- **Representational form:** `prose` `symbolic` `parametric` — Drawers, diary entries, identity text, and hook messages are prose; wing/room metadata, drawer ids, closet pointers, KG triples, tunnel records, plugin manifests, and tool schemas are symbolic; Chroma embeddings and vector distances are parametric retrieval state.
+- **Representational form:** `natural-language` `symbolic` `parametric` — Drawers, diary entries, identity text, and hook messages are natural-language; wing/room metadata, drawer ids, closet pointers, KG triples, tunnel records, plugin manifests, and tool schemas are symbolic; Chroma embeddings and vector distances are parametric retrieval state.
 - **Lineage:** `authored` `imported` `trace-extracted` — MCP drawer writes, KG facts, plugin files, configs, and identity text are authored; project files and document corpora are imported; Claude/Codex transcripts, per-message sweeps, and hook diary checkpoints are trace-extracted from agent sessions.
 - **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` — Retrieved drawers and KG facts advise future work as knowledge; MCP protocol text, skills, hooks, and plugin manifests instruct agent behavior; wings, rooms, closets, graph tunnels, and tool schemas route retrieval; sanitizers, temporal interval checks, HNSW health probes, and tests validate state; embeddings, BM25, closet boosts, graph dynamics, and top-k limits rank read-back; trace-extracted transcript mining and diary checkpoints create later-consumed memory.
 
@@ -85,7 +85,7 @@ The main design divergence is that MemPalace keeps raw memory cheap to capture a
 
 **Learning timing:** `online` `staged` — Stop hooks trigger every configured message interval, precompact hooks fire just before context compaction, and backfills/sweeps run as explicit staged maintenance.
 
-**Distilled form:** `prose` `symbolic` `parametric` — Raw session text and diary checkpoints are prose; metadata, wings, rooms, roles, timestamps, session ids, and memory-type labels are symbolic; Chroma embeddings make the trace-extracted drawers retrievable through parametric similarity.
+**Distilled form:** `natural-language` `symbolic` `parametric` — Raw session text and diary checkpoints are natural-language; metadata, wings, rooms, roles, timestamps, session ids, and memory-type labels are symbolic; Chroma embeddings make the trace-extracted drawers retrievable through parametric similarity.
 
 On the survey axes, MemPalace is a strong example of trace capture plus retrieval promotion rather than trace-to-rule learning. It turns session traces into future recall artifacts, but I did not find code that automatically distills traces into new validators, policies, executable tools, or model weights.
 

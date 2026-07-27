@@ -33,7 +33,7 @@ Per [ADR 016](./016-custom-types-use-template-instruction-pairs.md), each type i
 - `{type}.instructions.md` — authoring prose
 - `{type}.schema.yaml` — validator schema
 
-The validator has a Python resolver (`src/commonplace/lib/type_resolver.py`). The write skill does not call the resolver; it mirrors the same discovery logic in natural-language prose so the agent can probe the filesystem. Special cases live in the skill prose: `instruction` → `kb/instructions/`, `note` inlined in [ADR 002](./002-inline-global-types-in-writing-guide.md) style.
+The validator has a Python resolver (`src/commonplace/lib/type_resolver.py`). The write skill does not call the resolver; it mirrors the same discovery logic in natural-language instructions so the agent can probe the filesystem. Special cases live in those instructions: `instruction` → `kb/instructions/`, `note` inlined in [ADR 002](./002-inline-global-types-in-writing-guide.md) style.
 
 ### Pain points
 
@@ -105,7 +105,7 @@ This deliberately keeps the authoring surface file-native. The software may stil
 
 ## How this resolves the pain points
 
-1. **Filesystem discovery gone.** The path is lexical; the write skill opens it directly. No prose rules to keep in sync with validator Python.
+1. **Filesystem discovery gone.** The path is lexical; the write skill opens it directly. No natural-language rules to keep in sync with validator Python.
 2. **Ambiguity gone.** A path names exactly one doc. The `review`-in-two-collections case becomes a normal disambiguation: the author writes the specific path.
 3. **Special-case routing gone.** Destination collection comes from user intent or `COLLECTION.md`, not from a hardcoded table in the skill.
 4. **Three-file drift gone.** Template and authoring prose share a file. Schema is orthogonal (validator concern, not writer concern) and stays separate for that reason.

@@ -8,7 +8,7 @@ tags: [trace-learning]
 
 # Voyager
 
-Voyager, from MineDojo, is a Minecraft research agent that uses LLM calls to choose tasks, write Mineflayer JavaScript, critique execution, and retain successful behaviors as an executable skill library. At the reviewed commit, the durable memory surfaces are checkpoint files: generated skill code and descriptions, `skills.json`, Chroma vector databases for skill and QA retrieval, curriculum task records, chest memory, and event traces. The strongest memory mechanism is not a prose note store but trace-extracted promotion into reusable code.
+Voyager, from MineDojo, is a Minecraft research agent that uses LLM calls to choose tasks, write Mineflayer JavaScript, critique execution, and retain successful behaviors as an executable skill library. At the reviewed commit, the durable memory surfaces are checkpoint files: generated skill code and descriptions, `skills.json`, Chroma vector databases for skill and QA retrieval, curriculum task records, chest memory, and event traces. The strongest memory mechanism is not a natural-language note store but trace-extracted promotion into reusable code.
 
 **Repository:** https://github.com/MineDojo/Voyager
 
@@ -33,7 +33,7 @@ Voyager, from MineDojo, is a Minecraft research agent that uses LLM calls to cho
 ## Artifact analysis
 
 - **Storage substrate:** `files` `vector` `in-memory` — Checkpoint JSON/text/code files hold learned skills, descriptions, task lists, QA cache, chest memory, and event traces; Chroma vector stores persist skill and QA retrieval indexes; active prompts, conversations, rollout state, and environment events live in Python objects during a run.
-- **Representational form:** `prose` `symbolic` `parametric` — Skill descriptions, prompts, QA answers, critiques, and event observations are prose; JavaScript skills, control primitives, JSON task/cache records, parsed action code, and Mineflayer calls are symbolic; OpenAI embeddings, Chroma similarity ranking, and LLM behavior are parametric surfaces.
+- **Representational form:** `natural-language` `symbolic` `parametric` — Skill descriptions, prompts, QA answers, critiques, and event observations are natural-language; JavaScript skills, control primitives, JSON task/cache records, parsed action code, and Mineflayer calls are symbolic; OpenAI embeddings, Chroma similarity ranking, and LLM behavior are parametric surfaces.
 - **Lineage:** `authored` `imported` `trace-extracted` — Prompts, base control primitives, and framework code are authored; bundled/community skill libraries are imported when supplied through `skill_library_dir`; generated skills, descriptions, event records, completed/failed task lists, QA cache entries, and chest memory are extracted from interaction traces and task execution.
 - **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` — Retrieved skills and QA answers advise the action/curriculum models as context; prompts and code schemas instruct generation; JavaScript functions and Mineflayer programs route execution; the critic and parser validate success/format; Chroma ranks memories; successful traces become future reusable skills.
 
@@ -45,7 +45,7 @@ Voyager, from MineDojo, is a Minecraft research agent that uses LLM calls to cho
 
 **Action chest memory and events.** `ActionAgent` persists `chest_memory.json` from observed nearby chests and renders it into later observations; `EventRecorder` writes raw event files and reconstructs item/biome/position histories on resume ([voyager/agents/action.py](https://github.com/MineDojo/Voyager/blob/55e45a880755d0c8c66ca7fb5fe7962ac8974f89/voyager/agents/action.py), [voyager/utils/record_utils.py](https://github.com/MineDojo/Voyager/blob/55e45a880755d0c8c66ca7fb5fe7962ac8974f89/voyager/utils/record_utils.py)). Chest memory is advisory world state; event files are mostly trace/provenance and progress analytics, not directly retrieved skill memory.
 
-**Promotion path.** The main path is environment trace and generated code -> critic success verdict -> stored JavaScript skill -> generated skill description -> Chroma embedding -> retrieved prompt program and executable environment program. The code therefore crosses from prose/task context into symbolic executable memory, but without a retained source-span chain from the originating events to the final skill.
+**Promotion path.** The main path is environment trace and generated code -> critic success verdict -> stored JavaScript skill -> generated skill description -> Chroma embedding -> retrieved prompt program and executable environment program. The code therefore crosses from natural-language/task context into symbolic executable memory, but without a retained source-span chain from the originating events to the final skill.
 
 ## Comparison with Our System
 
@@ -85,7 +85,7 @@ Voyager also shows a useful split between authored base capabilities and learned
 
 **Learning timing:** `online` `staged` — During lifelong learning, skills, task lists, QA cache, chest memory, and events are written as the agent acts. Reusing a learned skill library for inference is a staged/offline transfer step.
 
-**Distilled form:** `prose` `symbolic` `parametric` — Raw observations and critiques become prose descriptions and QA answers; successful behaviors become symbolic JavaScript functions and JSON records; Chroma embeddings provide parametric retrieval state.
+**Distilled form:** `natural-language` `symbolic` `parametric` — Raw observations and critiques become natural-language descriptions and QA answers; successful behaviors become symbolic JavaScript functions and JSON records; Chroma embeddings provide parametric retrieval state.
 
 **Survey placement.** Voyager is a strong trace-learning code-promotion system: traces do not merely create reminders, they create executable affordances. It strengthens the survey distinction between raw trace artifacts and distilled behavior-shaping artifacts, and it highlights the governance problem of promoting generated code without source-linked tests or invalidation metadata.
 
@@ -130,8 +130,8 @@ Voyager also shows a useful split between authored base capabilities and learned
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: Voyager's skills matter because they are retrieved and injected into later action prompts, not merely stored in checkpoint files.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Voyager requires separating file storage, vector indexes, generated code, prose descriptions, and execution authority.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: Voyager turns task trajectories into reusable symbolic/prose/parametric artifacts.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Voyager requires separating file storage, vector indexes, generated code, natural-language descriptions, and execution authority.
+- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: Voyager turns task trajectories into reusable symbolic/natural-language/parametric artifacts.
 - [Codification](../../notes/definitions/codification.md) - applies: successful action attempts cross from natural-language task context into executable JavaScript skills.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompts, control primitives, validators, and executable skills can carry instruction or execution force.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: QA answers, chest memory, and retrieved descriptions mostly advise rather than enforce.

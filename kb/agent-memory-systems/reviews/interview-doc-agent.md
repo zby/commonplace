@@ -30,8 +30,8 @@ last-checked: "2026-06-04"
 ## Artifact analysis
 
 - **Storage substrate:** `files` — The retained behavior-shaping state is file-backed: `SKILL.md`, docs, templates, `materials/`, `经历库/`, `jd/`, `output/`, and `wiki/index.md` live as local Markdown or template files in a vault/repo/cloud-document analogue.
-- **Representational form:** `prose` `symbolic` — Instructions, templates, raw materials, experience records, and generated documents are prose; directory conventions, path names, frontmatter, tables in `wiki/index.md`, placeholder tokens, and workflow steps are symbolic. I found no parametric memory.
-- **Lineage:** `authored` `imported` — `SKILL.md`, docs, templates, example records, and index scaffolds are authored; user job materials and JDs are imported; generated experience records are distilled from imported materials by the host agent under the skill's prose instructions.
+- **Representational form:** `natural-language` `symbolic` — Instructions, templates, raw materials, experience records, and generated documents are natural-language; directory conventions, path names, frontmatter, tables in `wiki/index.md`, placeholder tokens, and workflow steps are symbolic. I found no parametric memory.
+- **Lineage:** `authored` `imported` — `SKILL.md`, docs, templates, example records, and index scaffolds are authored; user job materials and JDs are imported; generated experience records are distilled from imported materials by the host agent under the skill's natural-language instructions.
 - **Behavioral authority:** `knowledge` `instruction` `routing` — Experience records, templates, raw materials, and JDs act as knowledge; `SKILL.md` instructs the host agent; `wiki/index.md`, personal-profile indexes, folder names, and JD matching route attention toward the relevant records. Anti-fabrication and formatting rules are instructions, not code-enforced validation.
 
 **Skill instructions.** `SKILL.md` has the strongest authority because compatible hosts are expected to read it as the operating procedure. It defines initialization, resume generation, interview-script generation, JD tailoring, experience-library update rules, and anti-fabrication behavior ([SKILL.md](https://github.com/Shilren/interview-doc-agent/blob/db4da8f7dd1065e725bff1b185c6dbbdb2425276/SKILL.md)).
@@ -50,7 +50,7 @@ last-checked: "2026-06-04"
 | Main retained artifact | File-native skill instructions, experience records, templates, and index | Typed Markdown notes, reviews, instructions, sources, schemas, indexes, and commands |
 | Write path | Host agent distills user materials into `经历库/` and generated outputs | Human/agent-authored artifacts governed by collection contracts, validation, review, and git |
 | Read path | Agent reads index, selected experience records, templates, and JDs on demand | Agents navigate through `rg`, indexes, links, collection contracts, skills, and validation/report outputs |
-| Governance | Prose instructions: single trusted source, no fabricated data, placeholders for gaps | Deterministic validation, type specs, link checks, review gates, and source-grounded citations |
+| Governance | Natural-language instructions: single trusted source, no fabricated data, placeholders for gaps | Deterministic validation, type specs, link checks, review gates, and source-grounded citations |
 
 The alignment with Commonplace is the file-native "library before generation" pattern. `interview-doc-agent` does not ask the agent to regenerate from raw dumps every time; it creates a durable intermediate layer and then uses that layer for repeated downstream work. Commonplace uses the same broad move, but with stronger typed frontmatter, validation, source citation, and review machinery.
 
@@ -62,7 +62,7 @@ The main divergence is authority. In `interview-doc-agent`, the host model is tr
 
 **Make the intermediate layer the product, not just a cache.** Ready now. The experience library is useful because it is interview-ready, structured, and reusable, not because it is a hidden retrieval artifact. Commonplace should keep treating durable Markdown artifacts as maintained products.
 
-**Use placeholders as an anti-fabrication convention.** Ready for prose-heavy generation tasks. `___` placeholders for missing facts are a simple way to keep absence visible when deterministic validation is not available.
+**Use placeholders as an anti-fabrication convention.** Ready for natural-language-heavy generation tasks. `___` placeholders for missing facts are a simple way to keep absence visible when deterministic validation is not available.
 
 **Do not borrow the weak governance as-is.** Needs stronger checks for Commonplace. A Commonplace analogue would need type validation, source links, and review state before agent-distilled personal or operational records gained durable authority.
 
@@ -70,7 +70,7 @@ The main divergence is authority. In `interview-doc-agent`, the host model is tr
 
 **Write agency:** `manual` `automatic` — Users manually add raw materials, templates, and JDs, and can edit the library directly; the host agent, when instructed by the skill, can initialize folders, distill `materials/` into `经历库/`, update `00-个人档案.md` and `wiki/index.md`, and write generated documents to `output/`.
 
-**Curation operations:** `none` — The repository gives prose instructions for distilling and integrating new raw material, but I found no executable curation implementation that deterministically performs the controlled curation operations on existing stored entries. Creating experience records from raw materials is acquisition/import, while updating the index is access-structure upkeep.
+**Curation operations:** `none` — The repository gives natural-language instructions for distilling and integrating new raw material, but I found no executable curation implementation that deterministically performs the controlled curation operations on existing stored entries. Creating experience records from raw materials is acquisition/import, while updating the index is access-structure upkeep.
 
 ## Read-back
 
@@ -92,7 +92,7 @@ The static skill text itself may be loaded by a host as baseline instruction, bu
 
 - Whether the project adds a deterministic verifier that checks generated resumes and scripts against `经历库/` numbers and flags unsupported claims.
 - Whether `wiki/index.md` gains a more structured schema for capability tags, project names, metrics, and JD-match dimensions as user libraries grow.
-- Whether the Feishu/Lark path becomes an implemented connector rather than prose mapping guidance; that would change storage substrate and write/read authority.
+- Whether the Feishu/Lark path becomes an implemented connector rather than natural-language mapping guidance; that would change storage substrate and write/read authority.
 - Whether the skill adds source pointers from distilled experience-library bullets back to `materials/`; that would make the intermediate layer more auditable.
 
 Relevant Notes:

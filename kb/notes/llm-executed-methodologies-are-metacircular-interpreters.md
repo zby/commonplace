@@ -1,5 +1,5 @@
 ---
-description: "Self-hosting LLM methodologies are closer to metacircular interpreters than compilers: agents re-interpret prose rules each session, while stable paths codify into validators and commands"
+description: "Self-hosting LLM methodologies are closer to metacircular interpreters than compilers: agents re-interpret natural-language rules each session, while stable paths codify into validators and commands"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, constraining]
@@ -7,9 +7,9 @@ tags: [foundations, constraining]
 
 # LLM-executed methodologies are metacircular interpreters, not compilers
 
-A methodology that LLM agents execute by reading its own artifacts is self-hosting in the interpreter sense, not the compiler sense. The host machine is the LLM plus harness. The methodology is source code in prose and structured files. When agents use that methodology to maintain the files that define it, the system is metacircular: the rules for operating the artifact system are themselves artifacts in that system.
+A methodology that LLM agents execute by reading its own artifacts is self-hosting in the interpreter sense, not the compiler sense. The host machine is the LLM plus harness. The methodology is source code in natural-language and structured files. When agents use that methodology to maintain the files that define it, the system is metacircular: the rules for operating the artifact system are themselves artifacts in that system.
 
-This distinction matters because compiler self-hosting suggests a binary milestone: the compiler can build itself or it cannot. LLM-executed methodology is gradual. Some rules stay interpreted as prose each session, some become structured skills, and some cross into symbolic consumers such as schemas, validators, tests, and commands.
+This distinction matters because compiler self-hosting suggests a binary milestone: the compiler can build itself or it cannot. LLM-executed methodology is gradual. Some rules stay interpreted as natural-language each session, some become structured skills, and some cross into symbolic consumers such as schemas, validators, tests, and commands.
 
 ## The interpreter shape
 
@@ -19,9 +19,9 @@ The metacircular part appears when those same artifacts govern edits to themselv
 
 ## Codification is the compiled path
 
-The compiled analogue is [codification](./definitions/codification.md). A practice starts as interpreted prose while its meaning is still moving, then moves down the enforcement gradient as it stabilizes: instruction, skill, hook, script, schema, validator, or command. That is why [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md): each step reduces semantic underspecification and execution indeterminism.
+The compiled analogue is [codification](./definitions/codification.md). A practice starts as interpreted natural-language while its meaning is still moving, then moves down the enforcement gradient as it stabilizes: instruction, skill, hook, script, schema, validator, or command. That is why [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md): each step reduces semantic underspecification and execution indeterminism.
 
-This is closer to a JIT than to whole-program compilation. Stable hot paths become symbolic artifacts with assigned consequences; unsettled judgment stays in prose where humans and agents can still revise the interpretation cheaply.
+This is closer to a JIT than to whole-program compilation. Stable hot paths become symbolic artifacts with assigned consequences; unsettled judgment stays in natural-language where humans and agents can still revise the interpretation cheaply.
 
 ## Self-hosting remains partial
 
@@ -34,6 +34,6 @@ The characteristic failure mode is the interpreter version of trusting-trust: an
 Relevant Notes:
 
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — mechanism: the interpreted-to-symbolic enforcement gradient
-- [codification](./definitions/codification.md) — defined-in: the prose-to-symbolic crossing that supplies the compiled path
+- [codification](./definitions/codification.md) — defined-in: the natural-language-to-symbolic crossing that supplies the compiled path
 - [system-definition artifact](./definitions/system-definition-artifact.md) — grounds: explains why methodology files can shape future behavior
 - [a methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — scope: why self-hosting remains partial and closure-bounded

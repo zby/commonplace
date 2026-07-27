@@ -33,7 +33,7 @@ Amazon Science SAGE is the `amazon-science/SAGE` implementation of Skill Augment
 ## Artifact analysis
 
 - **Storage substrate:** `files` `in-memory` `model-weights` — durable skill libraries, embedding files, query lists, expert datasets, logs, and checkpoints live as local files; GRPO uses per-batch in-memory skill dictionaries; learned behavior persists in SFT and veRL checkpoint directories.
-- **Representational form:** `prose` `symbolic` `parametric` — prompts and task instructions are prose; JSONL records, Python function bodies, configs, and reward code are symbolic; embeddings and trained model weights are distributed-parametric state.
+- **Representational form:** `natural-language` `symbolic` `parametric` — prompts and task instructions are natural-language; JSONL records, Python function bodies, configs, and reward code are symbolic; embeddings and trained model weights are distributed-parametric state.
 - **Lineage:** `authored` `imported` `trace-extracted` — prompts, configs, and reward code are authored; modified AppWorld, LLaMA-Factory, veRL, and vLLM code are imported/adapted; skills, query records, expert datasets, embeddings, and checkpoints derive from AppWorld rollouts and LLM-call logs.
 - **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — retained artifacts serve as experiment evidence, prompt instructions, executable code, scenario/query selectors, execution checks, similarity rankers, and SFT/GRPO learning signal.
 
@@ -89,7 +89,7 @@ The sharp tradeoff is speed of authority. SAGE can turn a successful generated f
 
 **Learning timing:** `offline` `staged` — expert-data extraction and SFT are offline; the GRPO loop stages first-subtask skills into the second subtask within a training rollout before policy updates.
 
-**Distilled form:** `prose` `symbolic` `parametric` — retained outputs include prompt-visible code/prose, JSONL function records, embedding vectors, transcript datasets, and trained model checkpoints.
+**Distilled form:** `natural-language` `symbolic` `parametric` — retained outputs include prompt-visible code/natural-language, JSONL function records, embedding vectors, transcript datasets, and trained model checkpoints.
 
 Extraction is mostly syntactic plus outcome-gated. Function extraction parses generated Python and keeps top-level definitions; expert-data extraction reads final logged model calls from successful or partial scenario runs; GRPO uses task reward plus a skill-use bonus as the oracle for policy updates. The raw trace remains evidence, while extracted functions and learned weights gain future behavior-shaping authority.
 

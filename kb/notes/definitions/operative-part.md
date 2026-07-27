@@ -6,11 +6,11 @@ tags: [learning-theory, artifact-analysis]
 
 # Operative part
 
-An operative part is the content, structure, parameterization, or behavior-affecting mechanism inside a [retained artifact](./retained-artifact.md) that a later consumer can apply. The same stored object may contain several operative parts: a Markdown prompt can carry prose instruction and a symbolic section contract; a retrieval package can carry prose records and distributed-parametric embeddings.
+An operative part is the content, structure, parameterization, or behavior-affecting mechanism inside a [retained artifact](./retained-artifact.md) that a later consumer can apply. The same stored object may contain several operative parts: a Markdown prompt can carry natural-language instruction and a symbolic section contract; a retrieval package can carry natural-language records and distributed-parametric embeddings.
 
 ## Scope
 
-Use the term operative part when the stored-object boundary is too coarse for architectural review. Operative parts may be prose, symbolic, distributed-parametric, or mixed. They matter because review evidence, invalidation triggers, rollback paths, and security risks attach to the part that actually shapes behavior.
+Use the term operative part when the stored-object boundary is too coarse for architectural review. Operative parts may be natural-language, symbolic, distributed-parametric, or mixed. They matter because review evidence, invalidation triggers, rollback paths, and security risks attach to the part that actually shapes behavior.
 
 ## Exclusions
 
@@ -18,8 +18,8 @@ The operative part is not every byte in a stored object. Formatting, comments, a
 
 ## Misuse Cases
 
-- Classifying a whole skill package as "prose" when its activation metadata and helper scripts create distinct symbolic operative parts.
-- Classifying a vector store as "prose memory" while ignoring the embedding and ranking path that selects which prose becomes visible.
+- Classifying a whole skill package as "natural-language" when its activation metadata and helper scripts create distinct symbolic operative parts.
+- Classifying a vector store as "natural-language memory" while ignoring the embedding and ranking path that selects which natural-language content becomes visible.
 
 ---
 

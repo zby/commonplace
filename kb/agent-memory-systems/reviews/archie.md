@@ -32,7 +32,7 @@ Archie, from `gchamon/archie`, is a personal Arch Linux desktop configuration an
 ## Artifact analysis
 
 - **Storage substrate:** `repo` `files` — The canonical retained state is the Git repository: Markdown docs, ADRs, work items, task briefs, Stow packages, templates, scripts, and Python maintenance tooling. Runtime projection creates file-system state through symlinks, copied system files, generated machine-local `.conf` files, `.state/dev-env/...` render outputs, and `/etc/pkglist.txt` package snapshots.
-- **Representational form:** `prose` `symbolic` — Guides, ADRs, agent briefs, changelog entries, bug reports, and comments are prose; Stow package layout, shell scripts, Python CLI code, cloud-init templates, Hyprland/Waybar/Zsh/Neovim configs, cron jobs, and tests are symbolic. I found no durable embeddings, learned model weights, or other parametric memory surface.
+- **Representational form:** `natural-language` `symbolic` — Guides, ADRs, agent briefs, changelog entries, bug reports, and comments are natural-language; Stow package layout, shell scripts, Python CLI code, cloud-init templates, Hyprland/Waybar/Zsh/Neovim configs, cron jobs, and tests are symbolic. I found no durable embeddings, learned model weights, or other parametric memory surface.
 - **Lineage:** `authored` `imported` — Most retained artifacts are authored by the maintainer. Some state is imported or mirrored from external systems: Arch package/archive data resolved by the `archie downgrade` CLI, upstream package lists, GitLab-to-GitHub mirroring policy, backup paths, external themes, cloud images, and machine-local config templates. I did not find an implemented automatic trace-to-memory learner.
 - **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` — Guides, ADRs, backup docs, and bug reports are knowledge artifacts for maintainers and agents; `AGENTS.md`, `docs/agents/*`, shell helpers, and deployment docs instruct future work; Stow layout, copied logind files, system configs, and scripts enforce machine behavior; README hubs, TOCs, package directories, work-item names, and task briefs route attention; tests, `bash -n` expectations, `shellcheck` guidance, pytests, and service reload checks validate changes.
 
@@ -40,7 +40,7 @@ Archie, from `gchamon/archie`, is a personal Arch Linux desktop configuration an
 
 **Machine-local templates and generated files.** `device.dist.conf`, `hyprpaper.dist.conf`, and `overrides.dist.sh` are retained templates; `scripts/install.sh` copies them into editable local-only files when missing. That keeps source-controlled defaults separate from machine-specific state, but it also means the repository cannot fully reconstruct a machine without local choices and backup material.
 
-**Agent guide and task briefs.** `AGENTS.md` and `docs/agents/*.md` are prose system-definition artifacts. They shape future coding-agent behavior by declaring commands, style rules, file boundaries, task sequencing, and verification expectations. Their authority is advisory/instructional rather than enforced by a harness.
+**Agent guide and task briefs.** `AGENTS.md` and `docs/agents/*.md` are natural-language system-definition artifacts. They shape future coding-agent behavior by declaring commands, style rules, file boundaries, task sequencing, and verification expectations. Their authority is advisory/instructional rather than enforced by a harness.
 
 **Development VM workflow.** The Incus scripts and cloud-init templates compile repo-authored defaults plus local environment variables into rendered files under `.state/dev-env/...`, then into Incus VM configuration. These artifacts are derived access paths for reproducible testing; the repo keeps the templates and scripts, while the rendered state is local build output.
 
@@ -84,7 +84,7 @@ The nearest edge case is `AGENTS.md`: harnesses may load it automatically when w
 
 ## Curiosity Pass
 
-**Archie is closer to "environment memory" than "agent memory."** It remembers how a maintainer wants a desktop, shell, editor, package set, and development VM to behave. That can strongly shape agents working on the machine, but the mechanism is operating-system configuration and prose instruction, not retrieval or learning.
+**Archie is closer to "environment memory" than "agent memory."** It remembers how a maintainer wants a desktop, shell, editor, package set, and development VM to behave. That can strongly shape agents working on the machine, but the mechanism is operating-system configuration and natural-language instruction, not retrieval or learning.
 
 **The repo has many agent-adjacent hooks without an agent runtime.** `AGENTS.md`, `docs/agents/`, OMP aliases, Codex-session documentation, and work-item engagement rules all assume agents will consume the repo. None of them implement automatic agent-state retention or relevance selection.
 
@@ -101,7 +101,7 @@ The nearest edge case is `AGENTS.md`: harnesses may load it automatically when w
 
 Relevant Notes:
 
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Archie bundles prose docs, symbolic configs, scripts, generated local files, and deployed OS state under different authorities.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Archie bundles natural-language docs, symbolic configs, scripts, generated local files, and deployed OS state under different authorities.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - frames: Archie stores extensive guidance, but future agents still need to pull the relevant file.
 - [Behavioral authority](../../notes/definitions/behavioral-authority.md) - applies: Archie's retained artifacts range from advisory docs to system-enforced configuration.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: Stow packages, scripts, AGENTS.md, task briefs, and VM templates shape future behavior through instruction, routing, validation, and enforcement.

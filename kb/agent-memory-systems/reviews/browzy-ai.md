@@ -33,17 +33,17 @@ browzy.ai, by Vihari Kanukollu, is a TypeScript terminal personal knowledge-base
 ## Artifact analysis
 
 - **Storage substrate:** `files` — The primary retained store is the local data directory: raw source files, wiki Markdown, `_manifest.json`, `_index.json`, drafts, outputs, session JSON/digests, activity logs, config, keys, profile, history, and schema files; SQLite under the data directory provides secondary indexed state for sources, articles, and FTS search.
-- **Representational form:** `prose` `symbolic` — Raw sources, wiki article bodies, schema instructions, session exports, digests, drafts, and activity logs are prose; frontmatter, manifests, indexes, FTS rows, session JSON, config, query-cache keys, lint issues, and prompt/output markers are symbolic control surfaces.
+- **Representational form:** `natural-language` `symbolic` — Raw sources, wiki article bodies, schema instructions, session exports, digests, drafts, and activity logs are natural-language; frontmatter, manifests, indexes, FTS rows, session JSON, config, query-cache keys, lint issues, and prompt/output markers are symbolic control surfaces.
 - **Lineage:** `authored` `imported` `trace-extracted` — Users author schema/config and can edit local files; ingested URLs/files/images become raw sources and LLM-compiled wiki articles; saved sessions, activity logs, session digests, and insight drafts are derived from Q&A/session traces.
 - **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` — Wiki articles and raw sources provide evidence/context; `browzy.schema.md` and system prompts instruct compilation and answers; wiki links, tags, manifests, indexes, and source ids route knowledge; lint checks validate links, fields, contradictions, duplicates, and gaps; FTS/BM25 plus heuristic ranking decide context order; session digests, activity logs, and crystallized drafts feed future maintenance and recall.
 
 **Raw sources and manifest.** Ingested material becomes Markdown/text/image/PDF-derived files plus `_manifest.json` entries with ids, type, title, origin, path, summary, tags, timestamps, and content hash for file sources ([src/core/ingest/index.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/ingest/index.ts), [src/core/storage/filesystem.ts](https://github.com/VihariKanukollu/browzy.ai/blob/56c253042041ee2f483a5e9b824174d746891cf4/src/core/storage/filesystem.ts)). Their authority is evidence; they shape behavior only after compilation or search indexing.
 
-**Compiled wiki articles.** Article frontmatter carries title, tags, source ids, backlinks, timestamps, and summary; article bodies carry the prose that is later served to the model. The promotion path is imported/raw source to LLM-compiled article to search-indexed query context. Existing articles can be overwritten with a merged version when the compiler output uses the same slug.
+**Compiled wiki articles.** Article frontmatter carries title, tags, source ids, backlinks, timestamps, and summary; article bodies carry the natural-language content that is later served to the model. The promotion path is imported/raw source to LLM-compiled article to search-indexed query context. Existing articles can be overwritten with a merged version when the compiler output uses the same slug.
 
 **SQLite search structures.** `sources`, `articles`, and `articles_fts` rows are derived from files and manifest entries. They have ranking/routing authority for retrieval but are not the best human inspection surface; if FTS state is stale, rebuilding from the file store is the obvious repair path.
 
-**User schema and prompts.** `browzy.schema.md` is authored prose that becomes system-prompt instruction for compiler and query paths. It is stronger than ordinary knowledge because it changes how future articles and answers are produced.
+**User schema and prompts.** `browzy.schema.md` is authored natural-language content that becomes system-prompt instruction for compiler and query paths. It is stronger than ordinary knowledge because it changes how future articles and answers are produced.
 
 **Session and trace artifacts.** Session JSON, session metadata, digest text files, optional `session-{date}` wiki articles, `log.md`, and `drafts/*.md` insight articles are trace-extracted records from interaction. Raw sessions are knowledge artifacts; digests and drafts can become behavior-shaping wiki content once indexed or loaded by later query/read paths.
 
@@ -83,9 +83,9 @@ browzy is stronger on user-facing read-back ergonomics. It packages retrieval, b
 
 **Learning timing:** `online` `staged` — Sessions and activity logs are written during use; digest generation happens on a later startup, and crystallized insight drafting runs asynchronously after a qualifying answer.
 
-**Distilled form:** `prose` `symbolic` — Digests and draft insights are prose; their filenames, frontmatter, tags, source slugs, session metadata, and activity-log markers are symbolic.
+**Distilled form:** `natural-language` `symbolic` — Digests and draft insights are natural-language; their filenames, frontmatter, tags, source slugs, session metadata, and activity-log markers are symbolic.
 
-In the trace-learning survey terms, browzy sits in the artifact-learning family: it distills session/Q&A traces into prose artifacts that may later be indexed and read back. It strengthens the claim that useful trace-learning often needs a staging layer; the implementation writes digests/drafts rather than silently changing authoritative wiki articles.
+In the trace-learning survey terms, browzy sits in the artifact-learning family: it distills session/Q&A traces into digests and drafts that may later be indexed and read back. It strengthens the claim that useful trace-learning often needs a staging layer; the implementation writes those intermediate records rather than silently changing authoritative wiki articles.
 
 ## Read-back
 

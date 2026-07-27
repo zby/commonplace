@@ -49,17 +49,17 @@ Claude Workstream Kit, by ChristopherA, is a Claude Code project-continuity kit.
 ## Artifact analysis
 
 - **Storage substrate:** `files` `repo` - The behavior-shaping state is project-local Markdown under `.state/`, `.claude/` skills/rules/agents/hooks/settings, and git commits/tags; the installer copies these into the target repository and seeds `.state/` without overwriting existing active state.
-- **Representational form:** `prose` `symbolic` - Workstream purpose, decisions, learnings, closure summaries, skills, and agent specs are prose; frontmatter fields, checkbox task IDs, status values, hook JSON, shell scripts, grep counts, git tags, and archive-line formats are symbolic.
+- **Representational form:** `natural-language` `symbolic` - Workstream purpose, decisions, learnings, closure summaries, skills, and agent specs are natural-language; frontmatter fields, checkbox task IDs, status values, hook JSON, shell scripts, grep counts, git tags, and archive-line formats are symbolic.
 - **Lineage:** `authored` `trace-extracted` - The kit's rules, hooks, templates, and skills are authored system-definition artifacts; installed workstream files are authored at creation and then updated from session work, command outputs, git state, user gates, worker packets, verifier findings, and closure evidence.
 - **Behavioral authority:** `knowledge` `instruction` `routing` `validation` - `workstream.md`, `ACTIVE.md`, handoffs, and archive entries supply remembered work context; `.claude/CLAUDE.md` and skills instruct Claude Code; fixed paths and active pointers route reads; evidence rules, verifier specs, staleness warnings, and the acceptance script validate, mostly procedurally.
 
-**Installed kit layer.** Storage substrate: copied `.claude/CLAUDE.md`, `.claude/rules/`, `.claude/skills/`, `.claude/agents/`, hooks, `settings.json`, and a version stamp. Representational form: prose instructions plus symbolic hook registrations and shell. Lineage: authored package files installed into each project. Behavioral authority: instruction, routing, and validation for Claude Code sessions.
+**Installed kit layer.** Storage substrate: copied `.claude/CLAUDE.md`, `.claude/rules/`, `.claude/skills/`, `.claude/agents/`, hooks, `settings.json`, and a version stamp. Representational form: natural-language instructions plus symbolic hook registrations and shell. Lineage: authored package files installed into each project. Behavioral authority: instruction, routing, and validation for Claude Code sessions.
 
-**Active workstream state.** Storage substrate: `.state/ACTIVE.md` and `.state/workstreams/<type>/<name>/workstream.md`. Representational form: prose sections with symbolic frontmatter, task IDs, checkboxes, `#G-` gates, dates, and deletion criteria. Lineage: created from user interview answers and then trace-updated from actual work. Behavioral authority: knowledge and instruction; it tells later sessions what exists, what is current, what is blocked, and what must be true before closure.
+**Active workstream state.** Storage substrate: `.state/ACTIVE.md` and `.state/workstreams/<type>/<name>/workstream.md`. Representational form: natural-language sections with symbolic frontmatter, task IDs, checkboxes, `#G-` gates, dates, and deletion criteria. Lineage: created from user interview answers and then trace-updated from actual work. Behavioral authority: knowledge and instruction; it tells later sessions what exists, what is current, what is blocked, and what must be true before closure.
 
-**Session-start hook.** Storage substrate: shell script plus Claude Code settings. Representational form: symbolic shell over files/git and printed prose status. Lineage: authored kit code reading current project state. Behavioral authority: push read-back and validation warning; it surfaces active work and staleness before the agent chooses its next action.
+**Session-start hook.** Storage substrate: shell script plus Claude Code settings. Representational form: symbolic shell over files/git and printed natural-language status. Lineage: authored kit code reading current project state. Behavioral authority: push read-back and validation warning; it surfaces active work and staleness before the agent chooses its next action.
 
-**Verifier and acceptance test.** Storage substrate: `.claude/agents/verifier.md` and `tests/va3-acceptance.sh`. Representational form: prose role contract, shell checks, and Claude CLI prompts. Lineage: authored tests/specs over installed behavior. Behavioral authority: validation/evaluation, but only when invoked; ordinary state edits are not guarded by a mandatory validator.
+**Verifier and acceptance test.** Storage substrate: `.claude/agents/verifier.md` and `tests/va3-acceptance.sh`. Representational form: natural-language role contract, shell checks, and Claude CLI prompts. Lineage: authored tests/specs over installed behavior. Behavioral authority: validation/evaluation, but only when invoked; ordinary state edits are not guarded by a mandatory validator.
 
 Promotion path: the kit promotes conversation/work activity into `workstream.md` and `ACTIVE.md`, then closes the stream by moving durable insights elsewhere, writing an archive line, tagging git, and deleting active state. It does not promote memories into executable tools, schemas, or enforced validators beyond the hook/test/shell conventions.
 
@@ -71,7 +71,7 @@ Promotion path: the kit promotes conversation/work activity into `workstream.md`
 | Main artifact | `.state/ACTIVE.md` plus one `workstream.md` | Typed Markdown notes, reviews, instructions, source snapshots, indexes |
 | Write path | Claude Code skills update checkboxes, evidence, ACTIVE, closure artifacts | Direct artifact edits governed by collection contracts, validation, and review |
 | Read-back | Session-start hook pushes ACTIVE and status; skills pull the active workstream | Mostly pull through search, indexes, links, skills, and loaded instructions |
-| Governance | User gates, evidence prose, verifier agent, staleness hook, acceptance script | Schemas, validators, citation rules, review gates, generated indexes |
+| Governance | User gates, evidence natural-language, verifier agent, staleness hook, acceptance script | Schemas, validators, citation rules, review gates, generated indexes |
 
 The kit is closest to Commonplace's workshop layer, not the durable note library. It gives active work a lifecycle that Commonplace usually handles through ad hoc work directories, session summaries, or current-agent discipline. The main tradeoff is that Claude Workstream Kit keeps the mechanism tiny and portable, but it encodes most quality gates as instructions to Claude rather than as independently executable validation.
 
@@ -103,7 +103,7 @@ For the requested lens, the implementation does provide project-scoped active-wo
 
 **Learning timing:** `online` `staged` - Workstream files are updated during work and session exit, while creation, work, handoff, close, and session-start reconciliation are staged skill/hook occasions.
 
-**Distilled form:** `prose` `symbolic` - Session activity becomes prose purpose, decisions, learnings, summaries, and evidence notes plus symbolic task IDs, checkboxes, frontmatter, archive lines, and git tags.
+**Distilled form:** `natural-language` `symbolic` - Session activity becomes natural-language purpose, decisions, learnings, summaries, and evidence notes plus symbolic task IDs, checkboxes, frontmatter, archive lines, and git tags.
 
 **Extraction.** Extraction is instruction-mediated. The kit does not parse raw Claude transcripts into memories; instead, the acting agent writes the active work state from the current session's actual artifacts, commits, command outputs, user approvals, and verifier findings. That is trace-extracted operational memory, but not autonomous log mining.
 

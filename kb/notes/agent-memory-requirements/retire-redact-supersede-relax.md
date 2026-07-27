@@ -19,7 +19,7 @@ Append-only capture is useful for provenance. Indexes, extracted observations, a
 - Duplicate clustering and source consolidation for repeated observations.
 - Recency decay tempered by consequence and recurrence, so old high-impact corrections do not disappear merely because they are old.
 - Retirement tests for cues that fire often but do not change behavior or produce too many false positives.
-- Relaxation paths from rigid enforcement back to prose guidance when a codified rule proves brittle.
+- Relaxation paths from rigid enforcement back to natural-language guidance when a codified rule proves brittle.
 
 ## Temporal Memory
 

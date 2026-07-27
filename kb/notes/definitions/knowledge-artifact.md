@@ -10,7 +10,7 @@ A knowledge artifact is a [retained artifact](./retained-artifact.md) whose [ope
 
 ## Scope
 
-The term names a [behavioral authority](./behavioral-authority.md) family, not a storage substrate or representational form. A knowledge artifact may be prose, symbolic, distributed-parametric, or mixed; it may live in a repo, database, vector store, prompt registry, or service object.
+The term names a [behavioral authority](./behavioral-authority.md) family, not a storage substrate or representational form. A knowledge artifact may be natural-language, symbolic, distributed-parametric, or mixed; it may live in a repo, database, vector store, prompt registry, or service object.
 
 Typical knowledge-artifact uses include:
 

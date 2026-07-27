@@ -78,6 +78,6 @@ Relevant Notes:
 
 - [ADR 044 — User verification replaces global note status](../adr/044-user-verification-replaces-global-note-status.md) — part-of: defines the portable signal and the semantic boundaries this proposal must preserve
 - [Note type](../../types/note.md) — implemented-by: owns `user-verified` authoring and revocation semantics
-- [Prose has no reliable dereference, so a declared fact must be reinforced where it applies](../../notes/prose-has-no-dereference-reinforce-facts-at-point-of-use.md) — rationale: a body banner would restate the attestation at its consumption point
+- [Natural-language content lacks reliable dereference, so facts need reinforcement at point of use](../../notes/prose-has-no-dereference-reinforce-facts-at-point-of-use.md) — rationale: a body banner would restate the attestation at its consumption point
 - [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rationale: a committed banner is safe only when mechanically checked against frontmatter
 - [Representational form](../../notes/definitions/representational-form.md) — defined-in: distinguishes committed Markdown presentation from the ProperDocs-generated view

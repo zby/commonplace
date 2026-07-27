@@ -16,7 +16,7 @@ A per-call permission check authorizes an *action*, not the *provenance of the c
 ## Two independent instances
 
 - The dynamic-workflows [triage pattern](../sources/a-harness-for-every-task-dynamic-workflows.md) bars agents that read untrusted public content (a support queue, an incident channel) from taking high-privilege actions; those actions are delegated to separate agents that act on the triage agent's output rather than the raw content.
-- [GBrain](../agentic-systems/gbrain.md)'s operations layer independently reaches the same split: every operation declares a scope (`read`/`write`/`admin`), and remote (agent-facing) callers — including the host agent GBrain otherwise instructs carefully at the prose level — are classified untrusted at the API boundary regardless of what the skill prose tells them to do, and lose certain write/admin capabilities as a result. The system's own framing is exact: prose-level trust and code-level trust are managed separately.
+- [GBrain](../agentic-systems/gbrain.md)'s operations layer independently reaches the same split: every operation declares a scope (`read`/`write`/`admin`), and remote (agent-facing) callers — including the host agent GBrain otherwise instructs carefully through natural-language guidance — are classified untrusted at the API boundary regardless of what the skill instructions tell them to do, and lose certain write/admin capabilities as a result. The system's own framing is exact: trust in natural-language instructions and trust enforced in code are managed separately.
 
 Neither system cites the other. The convergence is on the role-level split itself — deny the content-exposed role the privileged capability, independent of what the untrusted content says — not on any shared implementation.
 

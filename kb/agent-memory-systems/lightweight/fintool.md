@@ -28,7 +28,7 @@ Fintool is an AI agent product for professional investors, covered here from a f
 Claim-level (no code inspected):
 
 - **Storage substrate:** `files` — the central retained artifacts are reported as YAML/markdown files in S3, with PostgreSQL as a derived metadata/query index rather than the source of truth.
-- **Representational form:** `prose` `symbolic` — skills and user memories are prose/markdown; metadata, watchlists, fiscal calendars, confidence scores, and eval records are symbolic. The source does not expose enough implementation detail to split every sub-artifact cleanly.
+- **Representational form:** `natural-language` `symbolic` — skills and user memories are natural-language/markdown; metadata, watchlists, fiscal calendars, confidence scores, and eval records are symbolic. The source does not expose enough implementation detail to split every sub-artifact cleanly.
 - **Lineage** — mixed authored/imported/derived: skills are reportedly authored by analysts or customers, user memories by users, financial context by imported source data normalized through a parsing pipeline, PostgreSQL rows by S3 sync, and eval outcomes by test execution. The report does not document a durable agent-trace-to-memory distillation loop.
 - **Behavioral authority** — skills act as **system-definition artifacts** because they instruct task execution; user memories and normalized financial documents act as **knowledge artifacts** injected or retrieved as context; eval suites act as system-definition artifacts at deployment time by blocking regressions. Effective runtime obedience is not verified.
 

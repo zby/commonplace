@@ -64,25 +64,25 @@ Also frame the ideas by what future action the remembered material can change, a
 
 Classify the reviewed system's central retained behavior-shaping artifacts using the four-field record. This is the architectural vocabulary applied to the reviewed system — it is what makes reviews comparable across systems, and what the position paper is grounded in. **Required in every review.**
 
-Identify the artifacts that actually shape the agent's later behavior — not every file. Split a bundled object into **operative parts or consumption paths** when it carries several behavior-shaping parts under different forms or authorities (a skill package = prose guidance + symbolic manifest + tests). Classify each by:
+Identify the artifacts that actually shape the agent's later behavior — not every file. Split a bundled object into **operative parts or consumption paths** when it carries several behavior-shaping parts under different forms or authorities (a skill package = natural-language guidance + symbolic manifest + tests). Classify each by:
 
 - **Storage substrate** — where the retained state persists (files, repo, database, vector/graph store, prompt registry, model-artifact store, service object). Locates access, deletion, versioning, rollback.
-- **Representational form** — prose, symbolic, and/or distributed-parametric. Form sets the default inspection method: read prose, test/check symbolic, probe distributed-parametric. When several forms apply, list each component token; do not use a `mixed` token.
+- **Representational form** — natural-language, symbolic, and/or distributed-parametric. Form sets the default inspection method: read natural-language content, test/check symbolic, probe distributed-parametric. When several forms apply, list each component token; do not use a `mixed` token.
 - **Lineage** — whether this specific artifact was created directly or produced by transforming other material. `authored` (created fresh) and `imported` (brought in from an external source, unchanged) are direct. `trace-extracted` and `other-compiled` are both system-produced, differing only in what was transformed: raw execution traces (session logs, transcripts, tool/event traces — see Trace-learning) for the former, anything else already retained in the system (an index built from stored entries, a summary compiled from source notes) for the latter. Record what source change invalidates or regenerates the transformed artifact.
 - **Behavioral authority** — consumer, channel, and force: knowledge artifact (evidence / reference / context / advice) vs system-definition artifact (instruction, enforcement, routing, validation, evaluation, ranking, learning).
 
-**Extractable lead tokens.** So the cross-system comparison matrix can be built by parsing rather than hand-classification, open the artifact-analysis findings with backticked controlled-value tokens, written as part of the finding once you have reached it: `**Storage substrate:** \`graph\` — …`, `**Representational form:** \`prose\` \`symbolic\` — …`, `**Lineage:** \`authored\` — …`, and `**Behavioral authority:** \`knowledge\` \`routing\` — …`. Each token line is the lead of its own justifying sentence, so the value and its reasoning cannot drift apart. Vocabularies:
+**Extractable lead tokens.** So the cross-system comparison matrix can be built by parsing rather than hand-classification, open the artifact-analysis findings with backticked controlled-value tokens, written as part of the finding once you have reached it: `**Storage substrate:** \`graph\` — …`, `**Representational form:** \`natural-language\` \`symbolic\` — …`, `**Lineage:** \`authored\` — …`, and `**Behavioral authority:** \`knowledge\` \`routing\` — …`. Each token line is the lead of its own justifying sentence, so the value and its reasoning cannot drift apart. Vocabularies:
 
 - storage substrate ∈ `files` · `repo` · `sqlite` · `rdbms` · `vector` · `graph` · `kv` · `in-memory` · `prompt-registry` · `model-weights` · `service-object`
-- representational form ∈ `prose` · `symbolic` · `parametric` (list all that apply; legacy `mixed` must be decomposed)
+- representational form ∈ `natural-language` · `symbolic` · `parametric` (list all that apply; legacy `mixed` must be decomposed)
 - lineage ∈ `authored` · `imported` · `trace-extracted` · `other-compiled`
 - behavioral authority ∈ `knowledge` · `instruction` · `enforcement` · `routing` · `validation` · `ranking` · `learning`
 
 For applicable multi-valued axes where the review truly does not contain enough evidence to classify the value, write the lead token as `not-determinable` with a one-line reason, e.g. `**Read-back signal:** \`not-determinable\` — …`. Do not omit the lead line for an applicable axis; omission means the retrofit is incomplete. Do not mix `not-determinable` with controlled values on the same line.
 
-Note any **promotion path**: whether the system can move a candidate toward a stronger representational form or behavioral authority (prose advice → symbolic validator → enforced gate). That trajectory crosses form, lineage, and authority at once, and is often the most design-relevant question.
+Note any **promotion path**: whether the system can move a candidate toward a stronger representational form or behavioral authority (natural-language advice → symbolic validator → enforced gate). That trajectory crosses form, lineage, and authority at once, and is often the most design-relevant question.
 
-Mark effective authority and quality (does the prose carry forward, is the retrieval precise) as *not verified from code* where it cannot be read off the source — the same discipline as Read-back.
+Mark effective authority and quality (does the natural-language content carry forward, is the retrieval precise) as *not verified from code* where it cannot be read off the source — the same discipline as Read-back.
 
 For systems that learn from agent traces, the Write side section deepens this with the raw → distilled two-stage treatment; this section still records the system's standing retained surfaces.
 
@@ -104,7 +104,7 @@ The write side is everything that *changes* the store; the read side (below) onl
   - `decay` — remove or down-weight entries by age, recency, or capacity (forgetting / eviction).
   - `promote` — change an entry's tier or salience (promotion-by-recurrence, heat reweighting) without changing its content.
 
-  These are the *automatic* operations the system itself performs; manual maintenance is recorded as agency only (it is authoring on existing content, not a separate operation). Index/embedding rebuilds are access-structure upkeep, not content curation — note them in prose, not here.
+  These are the *automatic* operations the system itself performs; manual maintenance is recorded as agency only (it is authoring on existing content, not a separate operation). Index/embedding rebuilds are access-structure upkeep, not content curation — note them in the review text, not here.
 
 Write the agency verdict and the automatic operations as lead tokens:
 
@@ -119,14 +119,14 @@ Every `## Write side` section carries the `**Write agency:**` verdict. Add `**Cu
 
 When automatic writes are fed by agent traces, deepen the write side with the raw → distilled loop. **Add `trace-learning` to `tags`** and include this sub-section only when the code-grounded read finds a qualifying mechanism.
 
-A system qualifies when it creates, extracts, synthesizes, or learns durable retained artifacts from agent traces. Qualifying **traces:** session logs, transcripts, tool/action traces, event streams, repeated trajectories, rollouts. Qualifying **outputs:** prose (notes, rules, playbooks, lessons), symbolic units (schemas, scripts, tools), or distributed-parametric state (weights, embeddings, adapters, rankers, controllers).
+A system qualifies when it creates, extracts, synthesizes, or learns durable retained artifacts from agent traces. Qualifying **traces:** session logs, transcripts, tool/action traces, event streams, repeated trajectories, rollouts. Qualifying **outputs:** natural-language artifacts (notes, rules, playbooks, lessons), symbolic units (schemas, scripts, tools), or distributed-parametric state (weights, embeddings, adapters, rankers, controllers).
 
 Many systems run a two-stage loop: raw traces accumulate as knowledge artifacts (logs, episode buffers), then a distillation step — automatic or manual — produces system-definition artifacts (rules, validators, route entries, fine-tunes). Document both stages; the distillation step's trigger, oracle, and curation policy is often the most discriminating part. Address:
 
 1. **Trace source** — what raw signal is consumed, with what trigger boundaries. Lead token values: `**Trace source:**` `session-logs` · `tool-traces` · `event-streams` · `trajectories`.
 2. **Extraction** — what gets pulled out, and what oracle or judge decides what becomes signal.
 3. **Four fields** — record storage substrate, representational form, lineage, and behavioral authority for the raw and distilled stages in **Artifact analysis** rather than repeating them here.
-4. **Scope and timing** — per-task / per-project / cross-task, and online / offline / staged in cycles. Lead token values: `**Learning scope:**` `per-task` · `per-project` · `cross-task`; `**Learning timing:**` `online` · `offline` · `staged`; `**Distilled form:**` `prose` · `symbolic` · `parametric`.
+4. **Scope and timing** — per-task / per-project / cross-task, and online / offline / staged in cycles. Lead token values: `**Learning scope:**` `per-task` · `per-project` · `cross-task`; `**Learning timing:**` `online` · `offline` · `staged`; `**Distilled form:**` `natural-language` · `symbolic` · `parametric`.
 5. **Survey placement** — position on the [survey's axes](../trace-learning-techniques-in-related-systems.md), and whether the system strengthens, weakens, or splits any survey claim.
 
 ## Read-back
@@ -137,7 +137,7 @@ The read-back path is how stored memory re-enters a future action — the *serve
 
 Write the verdict as a backticked controlled-value lead token, the same extractable convention as the Artifact analysis lead tokens: `**Read-back:** \`pull\` — …` with value ∈ `pull` · `push` · `both`. This line is required in every `## Read-back` section.
 
-When the verdict is `push` or `both`, also write **read-back signal** and **faithfulness tested** lead tokens. Read-back signal is the *set* of targeting/signal kinds the push fires on, since a system can do several at once (always-load coarse recall *and* an identifier match *and* an inferred query). List one backticked token per kind: `**Read-back signal:** \`coarse\` \`identifier\` \`inferred / embedding\` — …` with each token ∈ `coarse` · `identifier` · `inferred / lexical` · `inferred / embedding` · `inferred / judgment` (the same vocabulary as **Targeting and signal** below). Faithfulness tested is a single `yes` or `no` token, or `not-determinable` when the review does not contain enough evidence. The matrix parser one-hots whatever tokens appear into indicator columns; these authored lines take precedence over mining the section prose. Omit for pull-only systems (their push-only axes are recorded as all-absent).
+When the verdict is `push` or `both`, also write **read-back signal** and **faithfulness tested** lead tokens. Read-back signal is the *set* of targeting/signal kinds the push fires on, since a system can do several at once (always-load coarse recall *and* an identifier match *and* an inferred query). List one backticked token per kind: `**Read-back signal:** \`coarse\` \`identifier\` \`inferred / embedding\` — …` with each token ∈ `coarse` · `identifier` · `inferred / lexical` · `inferred / embedding` · `inferred / judgment` (the same vocabulary as **Targeting and signal** below). Faithfulness tested is a single `yes` or `no` token, or `not-determinable` when the review does not contain enough evidence. The matrix parser one-hots whatever tokens appear into indicator columns; these authored lines take precedence over mining the section text. Omit for pull-only systems (their push-only axes are recorded as all-absent).
 
 **Push-specific detail:** add the remaining read-back detail only when the verdict is `push` or `both` — the system pushes retained memory. Pull-only systems keep the section short. **Targeting is recorded by the Read-back signal, not a tag:** an `identifier` or `inferred` signal (below) is a *targeted* push; `coarse` always-load is not. There is no separate `push-activation` tag or `push_engineered` flag — an `instance` signal *is* the targeted push.
 
@@ -204,7 +204,7 @@ last-checked: "YYYY-MM-DD"
 {Four-field record for the central retained artifacts, at the operative-part level. See Artifact analysis. Lead each field with extractable controlled-value tokens:}
 
 - **Storage substrate:** `{files|repo|sqlite|rdbms|vector|graph|kv|in-memory|prompt-registry|model-weights|service-object}` — {justification}
-- **Representational form:** `{prose|symbolic|parametric}` `{...}` — {justification; list all that apply}
+- **Representational form:** `{natural-language|symbolic|parametric}` `{...}` — {justification; list all that apply}
 - **Lineage:** `{authored|imported|trace-extracted|other-compiled}` `{...}` — {source and transformation status}
 - **Behavioral authority:** `{knowledge|instruction|enforcement|routing|validation|ranking|learning}` `{...}` — {consumer, channel, force}
 

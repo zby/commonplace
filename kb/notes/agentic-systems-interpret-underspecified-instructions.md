@@ -93,7 +93,7 @@ Constraining a pattern to code has four benefits — three quantitative, one qua
 
 **Reliability.** Deterministic code returns the same output for the same input, every time. No hallucination, no refusal, no silent behavior changes when the underlying model is updated.
 
-**Enforcement.** Some properties — scope rules, type rules, contract checks, invariants — only exist if a deterministic interpreter checks them. Prose can describe them but can't enforce them; LLM adherence is always probabilistic. Reliability is about output consistency on typical inputs; enforcement is the binary fact that a constraint holds for *all* inputs. For properties that require enforcement, the constraining move is not optional — the alternative is to go without the guarantee. Scope is one such property ([LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md)); bookkeeping is another ([scheduler-llm-separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md)).
+**Enforcement.** Some properties — scope rules, type rules, contract checks, invariants — only exist if a deterministic interpreter checks them. Natural-language instructions can describe them but can't enforce them; LLM adherence is always probabilistic. Reliability is about output consistency on typical inputs; enforcement is the binary fact that a constraint holds for *all* inputs. For properties that require enforcement, the constraining move is not optional — the alternative is to go without the guarantee. Scope is one such property ([LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md)); bookkeeping is another ([scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md)).
 
 The tradeoff: code requires you to commit to one precise interpretation, while LLMs let you specify *intent* in natural language and defer the choice of interpretation to runtime. That's why constraining should be progressive — wait until patterns emerge before committing to a specific semantics.
 
@@ -144,7 +144,7 @@ Relevant Notes:
 - [ABC: Agent Behavioral Contracts](https://arxiv.org/html/2602.22302v1) — grounds: contracts resolve semantic underspecification with formal YAML DSL; probabilistic compliance model (p,δ,k) quantifies how tightly a contract narrows the interpretation space
 - [interpretation errors are failures of the interpreter not the spec](./interpretation-errors-are-failures-of-the-interpreter.md) — bounded by: the two-phenomena model assumes a perfect interpreter; real LLMs add a third failure mode with different remedies
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — applies: scoping is one interpreter-enforced property that has to be imposed via the constraining move; sub-agents are that move for scope
-- [scheduler-llm-separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — applies: bookkeeping is another interpreter-enforced property; symbolic substrates enforce it for free while prose accumulates correction cost
+- [scheduler-llm-separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — applies: bookkeeping is another interpreter-enforced property; symbolic substrates enforce it for free while natural-language accumulates correction cost
 
 Sources:
 

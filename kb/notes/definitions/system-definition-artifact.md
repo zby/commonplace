@@ -18,7 +18,7 @@ System-definition artifacts include retained artifacts used with force such as:
 - **evaluation** - rubrics, acceptance checks, reviewer gates, benchmark criteria
 - **learning input** - trace datasets, reward signals, training records, preference labels
 
-The artifact may be prose, symbolic, distributed-parametric, or mixed. A Markdown file, schema, script, vector index, checkpoint, or training dataset can all be system-definition artifacts when the consumption path gives them behavior-shaping force.
+The artifact may be natural-language, symbolic, distributed-parametric, or mixed. A Markdown file, schema, script, vector index, checkpoint, or training dataset can all be system-definition artifacts when the consumption path gives them behavior-shaping force.
 
 ## Exclusions
 
@@ -28,7 +28,7 @@ The term does not replace the four artifact-analysis fields. A precise record st
 
 ## Misuse Cases
 
-- Treating "system-definition" as a representational form, as if all system-definition artifacts were prose prompts or symbolic code.
+- Treating "system-definition" as a representational form, as if all system-definition artifacts were natural-language prompts or symbolic code.
 - Calling every important artifact system definition. A canonical API spec is a knowledge artifact when read as reference and a system-definition artifact when a validator, generator, or runtime consumes it to constrain behavior.
 - Ignoring lineage for generated system-definition artifacts. High-authority derived views need explicit source, invalidation, and regeneration rules.
 

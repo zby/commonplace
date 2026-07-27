@@ -17,7 +17,7 @@ Closure-SDK, by Walter Henrique Alves da Silva, is a monorepo for composing orde
 
 ## Core Ideas
 
-**The central retained object is a geometric product, not a text memory.** The SDK embeds byte records into S3 elements, composes them, inverts them, measures drift, and compares states; the Python package exports those primitives along with `Seer`, `Oracle`, `Witness`, `gilgamesh`, `Enkidu`, and Hopf/valence views ([closure_sdk/__init__.py](https://github.com/faltz009/Closure-SDK/blob/9a3d721e60a4f63f8d085d672b30e41c38844866/closure_sdk/__init__.py), [closure_sdk/ops.py](https://github.com/faltz009/Closure-SDK/blob/9a3d721e60a4f63f8d085d672b30e41c38844866/closure_sdk/ops.py)). The memory-like property is structural: the system keeps enough ordered-data identity to detect, compare, localize, and classify divergence without presenting remembered prose to an agent.
+**The central retained object is a geometric product, not a text memory.** The SDK embeds byte records into S3 elements, composes them, inverts them, measures drift, and compares states; the Python package exports those primitives along with `Seer`, `Oracle`, `Witness`, `gilgamesh`, `Enkidu`, and Hopf/valence views ([closure_sdk/__init__.py](https://github.com/faltz009/Closure-SDK/blob/9a3d721e60a4f63f8d085d672b30e41c38844866/closure_sdk/__init__.py), [closure_sdk/ops.py](https://github.com/faltz009/Closure-SDK/blob/9a3d721e60a4f63f8d085d672b30e41c38844866/closure_sdk/ops.py)). The memory-like property is structural: the system keeps enough ordered-data identity to detect, compare, localize, and classify divergence without presenting remembered natural-language to an agent.
 
 **The SDK separates observation depth.** `Seer` keeps a constant-memory running product, `Oracle` retains a full record/path trace for recovery and localization, and `Witness` builds a reference template for later checks ([closure_sdk/lenses.py](https://github.com/faltz009/Closure-SDK/blob/9a3d721e60a4f63f8d085d672b30e41c38844866/closure_sdk/lenses.py)). This is the clearest context-efficiency pattern in the repo: keep a cheap summary hot, then escalate to retained evidence only when drift requires investigation.
 
@@ -32,7 +32,7 @@ Closure-SDK, by Walter Henrique Alves da Silva, is a monorepo for composing orde
 ## Artifact analysis
 
 - **Storage substrate:** `files` — The primary durable substrate is local files: `.cdb`/`.cdna` database directories, typed column binaries, quaternion sidecars, tombstones, headers, history JSONL, snapshots, JSON genome/brain-state saves, CLI report JSON, and source-controlled Rust/Python code. Secondary runtime substrates include in-memory `Seer`, `Oracle`, `Enkidu`, `Buffer`, `ThreeCell`, and composition-tree objects.
-- **Representational form:** `symbolic` `prose` — The operative state is mostly symbolic/numeric: quaternions, running products, row schemas, SQL AST mappings, table histories, snapshots, tombstones, genome entries, edges, activation counters, coupling statistics, and closure events. Prose appears in docs, README theory, CLI formatted reports, and source comments, but the implemented memory mechanisms are not prose-native. I did not find distributed-parametric storage such as learned embeddings or model weights.
+- **Representational form:** `symbolic` `natural-language` — The operative state is mostly symbolic/numeric: quaternions, running products, row schemas, SQL AST mappings, table histories, snapshots, tombstones, genome entries, edges, activation counters, coupling statistics, and closure events. Natural-language appears in docs, README theory, CLI formatted reports, and source comments, but the implemented memory mechanisms are not natural-language-native. I did not find distributed-parametric storage such as learned embeddings or model weights.
 - **Lineage:** `authored` `imported` — Users and programs author database rows, schemas, snapshots, saved genomes, and reference witnesses; SDK/CLI inputs import external byte streams, CSV/JSON data, and carrier curricula into geometric state. Runtime-derived indexes, histories, table identities, closure reports, and genome updates are derived views of those inputs, but not trace-extracted from agent session/tool logs in the Commonplace sense.
 - **Behavioral authority:** `knowledge` `enforcement` `routing` `validation` `ranking` `learning` — Reports and query results act as knowledge artifacts; schema constraints, SQL parsing, foreign-key checks, uniqueness, locks, tombstones, audit, repair, and integrity checks validate or enforce; resonance search, SQL filters, Hopf channels, ZREAD, and RESONATE route and rank reads; `closure_ea` ingest, evaluation, and consolidation update learned carrier memory.
 
@@ -44,7 +44,7 @@ Closure-SDK, by Walter Henrique Alves da Silva, is a monorepo for composing orde
 
 **Curriculum traces and examples.** Storage substrate: in-memory traces and source-controlled example files. Representational form: symbolic carrier windows, labels, reports, and numeric outcomes. Lineage: authored deterministic experiments replayed through `ThreeCell`; reports derive from closures, genome growth, prediction error, self-free-energy, and consolidation counts ([closure_ea/src/teach.rs](https://github.com/faltz009/Closure-SDK/blob/9a3d721e60a4f63f8d085d672b30e41c38844866/closure_ea/src/teach.rs), [closure_ea/examples/exp_associative_memory.rs](https://github.com/faltz009/Closure-SDK/blob/9a3d721e60a4f63f8d085d672b30e41c38844866/closure_ea/examples/exp_associative_memory.rs)). Behavioral authority: evaluation and learning input for experiments, not durable agent memory extracted from production traces.
 
-Promotion path: Closure-SDK has strong intra-system promotion paths but weak LLM-agent adoption paths. Database rows can become indexed/snapshotted/audited state; carrier observations can become genome entries, response entries, co-resonance statistics, and promoted level-1 attractors; incident windows can become JSON reports. None of those paths promotes remembered material into reviewed prose, prompt instructions, or agent-facing policy without an external application layer.
+Promotion path: Closure-SDK has strong intra-system promotion paths but weak LLM-agent adoption paths. Database rows can become indexed/snapshotted/audited state; carrier observations can become genome entries, response entries, co-resonance statistics, and promoted level-1 attractors; incident windows can become JSON reports. None of those paths promotes remembered material into reviewed natural-language content, prompt instructions, or agent-facing policy without an external application layer.
 
 ## Comparison with Our System
 
@@ -57,7 +57,7 @@ Promotion path: Closure-SDK has strong intra-system promotion paths but weak LLM
 | Read path | API/CLI/SQL/resonance/ZREAD/RESONATE calls | `rg`, indexes, links, skills, instructions, review reports |
 | Governance | Type/schema checks, table locks, audit/repair, tests, geometric invariants | Collection/type contracts, validation, git diffs, semantic gates, archives |
 
-Closure-SDK shares Commonplace's local-first and inspectable bias, but the retained artifacts have different semantics. Commonplace stores behavior-shaping prose and symbolic contracts that an LLM can read directly. Closure-SDK stores algebraic summaries, tables, carriers, histories, and genome entries that require code-mediated interpretation before they can shape an agent's next action.
+Closure-SDK shares Commonplace's local-first and inspectable bias, but the retained artifacts have different semantics. Commonplace stores behavior-shaping natural-language and symbolic contracts that an LLM can read directly. Closure-SDK stores algebraic summaries, tables, carriers, histories, and genome entries that require code-mediated interpretation before they can shape an agent's next action.
 
 The main divergence is authority. In Commonplace, a note, instruction, or type spec can be inspected as behavior guidance. In Closure-SDK, retrieval returns a row, carrier, incident, or genome value. That may be a useful substrate for future agent systems, but this repository does not include the policy layer that turns retrieved geometric state into prompt advice, routing instructions, or enforced agent behavior.
 
@@ -69,7 +69,7 @@ The main divergence is authority. In Commonplace, a note, instruction, or type s
 
 **Separate transient buffer from durable memory.** Ready now. `closure_ea` makes the working buffer and genome distinct; Commonplace workshop artifacts could benefit from the same clarity about what is temporary context and what has crossed into durable library state.
 
-**Borrow resonance as an analogy, not as a retrieval replacement.** Not ready. Geometric top-k over carriers is interesting, but Commonplace's core artifacts are prose and citations; replacing lexical/link-based navigation would need a clear semantic bridge.
+**Borrow resonance as an analogy, not as a retrieval replacement.** Not ready. Geometric top-k over carriers is interesting, but Commonplace's core artifacts are natural-language and citations; replacing lexical/link-based navigation would need a clear semantic bridge.
 
 **Keep learned state below prompt authority until reviewed.** Ready as a constraint. Closure-SDK demonstrates rich automatic state change, but Commonplace should not let derived state become instruction or truth without review.
 
@@ -99,7 +99,7 @@ Authority at consumption is mostly advisory or validating. Incident reports, que
 
 **The implementation is much more concrete in Closure DNA than in the broader cognitive-architecture framing.** The database code has files, locks, history, SQL, audit, repair, and tests; the "geometric computer" layer is more experimental and carrier-centric.
 
-**Ranking is precise but semantically foreign.** Drift-ranked resonance is inspectable and deterministic, but it does not give the natural-language relevance contract that agent memory systems usually need.
+**Ranking is precise but semantically foreign.** Drift-ranked resonance is inspectable and deterministic, but it does not give the natural-language content relevance contract that agent memory systems usually need.
 
 **The context-efficiency story is structural.** Closure-SDK minimizes retained evidence and escalates reads, but it does not manage prompt token budgets, progressive disclosure for LLMs, or memory injection policy.
 
@@ -107,7 +107,7 @@ Authority at consumption is mostly advisory or validating. Incident reports, que
 
 - Whether any downstream Closure application connects Closure DNA or `closure_ea` genomes to an LLM prompt loop; that would change the read-back classification from substrate-only to agent memory.
 - Whether Closure DNA's `genome.json` and composite indexes become stable public APIs; that would make the database's derived retrieval state more comparable to Commonplace generated indexes.
-- Whether resonance search gains text/document adapters with inspectable explanations; that would make it more relevant to prose KB retrieval.
+- Whether resonance search gains text/document adapters with inspectable explanations; that would make it more relevant to natural-language KB retrieval.
 - Whether `closure_ea` brain-state persistence is used outside examples; that would clarify whether its genome is a production retained artifact or an experimental model.
 - Whether audit/repair history becomes semantically reviewable rather than purely structural; that would bridge integrity checking and KB governance.
 

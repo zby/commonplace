@@ -1,5 +1,5 @@
 ---
-description: Symbolic artifacts sit on a gradient from loose prose to deterministic code; higher-verifiability artifacts support tighter iteration loops, and learning moves artifacts along it in both directions
+description: Symbolic artifacts sit on a gradient from loose natural-language to deterministic code; higher-verifiability artifacts support tighter iteration loops, and learning moves artifacts along it in both directions
 type: kb/types/note.md
 traits: [has-comparison]
 tags: [learning-theory, deploy-time-learning]
@@ -36,7 +36,7 @@ Verifiability makes the choice possible. You cannot decide whether to tighten or
 
 ## Placement, not climbing
 
-The individual practices the gradient unifies — prompt versioning, eval-driven development, CI-gated prompt testing, automated prompt optimisation (DSPy, ProTeGi), evaluator-guided program evolution (FunSearch) — are each well-established in LLMOps. What the gradient adds is a **placement test**: for any given artifact, you can ask where it currently sits and whether that grade matches its evidential maturity. A judgment call hardened into a deterministic module before its pattern stabilises is misplaced; a stable behavior still living as loose prose is also misplaced.
+The individual practices the gradient unifies — prompt versioning, eval-driven development, CI-gated prompt testing, automated prompt optimisation (DSPy, ProTeGi), evaluator-guided program evolution (FunSearch) — are each well-established in LLMOps. What the gradient adds is a **placement test**: for any given artifact, you can ask where it currently sits and whether that grade matches its evidential maturity. A judgment call hardened into a deterministic module before its pattern stabilises is misplaced; a stable behavior still living as loose natural-language is also misplaced.
 
 ---
 

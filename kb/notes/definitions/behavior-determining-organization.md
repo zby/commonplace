@@ -39,4 +39,4 @@ Relevant Notes:
 - [Self-improving system](./self-improving-system.md) — defined-in: the definition whose "its own organization" clause this term sharpens
 - [Operative change](./operative-change.md) — contrasts: whether a change to the organization *takes effect* is a separate question from whether it targeted the organization at all
 - [Behavioral authority](./behavioral-authority.md) — extends: the consumer, channel, and force through which retained structure actually determines behavior
-- [Representational form](./representational-form.md) — extends: the prose/symbolic/distributed-parametric axis the organization's components span
+- [Representational form](./representational-form.md) — extends: the natural-language/symbolic/distributed-parametric axis the organization's components span

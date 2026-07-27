@@ -12,7 +12,7 @@ It is a collection-scoped decision log, deliberately *not* a `kb/reference/adr/`
 
 ## Why a parsed matrix at all
 
-A prose-only survey cannot answer "how many systems do X", and a hand-maintained table drifts from the reviews it summarises. So the comparison data lives as **extractable lead tokens** in the review prose — `**Storage substrate:** \`sqlite\` — …` — where the controlled value leads its own justifying sentence, and a parser lifts the tokens into the matrix. Value and reasoning cannot drift apart, and the matrix rebuilds from the reviews on demand.
+A text-only survey cannot answer "how many systems do X", and a hand-maintained table drifts from the reviews it summarises. So the comparison data lives as **extractable lead tokens** in the review text — `**Storage substrate:** \`sqlite\` — …` — where the controlled value leads its own justifying sentence, and a parser lifts the tokens into the matrix. Value and reasoning cannot drift apart, and the matrix rebuilds from the reviews on demand.
 
 ## Decisions
 
@@ -26,7 +26,7 @@ A prose-only survey cannot answer "how many systems do X", and a hand-maintained
 
 ### D2 — Authored tokens, never mined
 
-**Context.** The signal axis was first populated by mining the review prose. Zikkaron exposed the failure: its prose said "coarse session context" without backticking `coarse`, so mining recorded `sig_coarse=0` — wrong. At least 23 reviews under-counted `coarse` the same way.
+**Context.** The signal axis was first populated by mining the review text. Zikkaron exposed the failure: its text said "coarse session context" without backticking `coarse`, so mining recorded `sig_coarse=0` — wrong. At least 23 reviews under-counted `coarse` the same way.
 
 **Decision.** The matrix is populated only from authored lead tokens; mining is abandoned. An applicable axis with no token is left blank and **flagged**, making the flag list the precise retrofit worklist. `not-determinable` is an explicit token for "the review genuinely cannot tell", distinct from a missing token.
 
@@ -34,7 +34,7 @@ A prose-only survey cannot answer "how many systems do X", and a hand-maintained
 
 ### D3 — Lifecycle split: write side vs read side
 
-**Context.** The review had a strong **read-back** treatment and a strong **trace-learning** treatment, but maintenance/curation had no home — it was scattered across Lineage, the trace section, and Core Ideas prose. The gap surfaced concretely: ~24 reviews authored a "post-action read-back", but reading them showed the post-action leg was almost always *capture/consolidation* ("…for later turns"), not a read. Two arguments make "post-action read-back" a category error: (1) an LLM is stateless between calls, so any memory that reaches it is pre-(next-)invocation by construction; (2) more fundamentally, at retrieval the store holds all the information it has — nothing new and relevant arrives afterward except the agent's own output, so there is nothing to push later. What fires after the turn is **maintenance**, not a second read.
+**Context.** The review had a strong **read-back** treatment and a strong **trace-learning** treatment, but maintenance/curation had no home — it was scattered across Lineage, the trace section, and Core Ideas text. The gap surfaced concretely: ~24 reviews authored a "post-action read-back", but reading them showed the post-action leg was almost always *capture/consolidation* ("…for later turns"), not a read. Two arguments make "post-action read-back" a category error: (1) an LLM is stateless between calls, so any memory that reaches it is pre-(next-)invocation by construction; (2) more fundamentally, at retrieval the store holds all the information it has — nothing new and relevant arrives afterward except the agent's own output, so there is nothing to push later. What fires after the turn is **maintenance**, not a second read.
 
 A second realisation sharpened the cut: when maintenance is **manual**, it *is* curation, and it runs through the same authoring channel as acquisition — so "acquire" and "maintain" are not separate phases. They share the write channel; what varies is agency (manual vs automatic) and operation.
 

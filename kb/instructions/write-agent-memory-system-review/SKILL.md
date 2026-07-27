@@ -145,7 +145,7 @@ If the system has no reachable source code, stop and write a lightweight note in
 
 10. **Update the trace-learning survey if needed.** If the review's trace-learning placement adds meaningfully to the survey, update `kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md`.
 
-11. **Run taxonomy QA.** Re-read the drafted review and check whether it makes the artifact contract clear where relevant. Work from the type contract's artifact-analysis field list (plus its trace-learning split, when the system learns from traces) — the contract is authoritative for which fields exist and what each means; do not QA against a remembered list. For each contract field, ask: does the review make that mechanism clear where it affects the comparison? Do not force a rigid section into every review; add or revise prose only when the existing text leaves a mechanism ambiguous.
+11. **Run taxonomy QA.** Re-read the drafted review and check whether it makes the artifact contract clear where relevant. Work from the type contract's artifact-analysis field list (plus its trace-learning split, when the system learns from traces) — the contract is authoritative for which fields exist and what each means; do not QA against a remembered list. For each contract field, ask: does the review make that mechanism clear where it affects the comparison? Do not force a rigid section into every review; add or revise text only when the existing wording leaves a mechanism ambiguous.
 
    If a field is absent because the reviewed system has no distinctive mechanism there, leave it absent. If the absence hides an important tradeoff, fix the review before semantic QA.
 

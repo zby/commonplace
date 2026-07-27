@@ -54,7 +54,7 @@ Four restrictions, each a framework-retained decision rather than an incidental 
 
 ## Promotion path
 
-Save-as-command promotes the **whole script, manually, with no test gate** — fit and trust collapse into one human decision. Notably, the vendor's own strategy corpus — adversarial verify, judge panels, loop-until-dry, multi-modal sweep, completeness critic — ships as prescriptive prose inside the Workflow tool prompt, re-instantiated by the model in each script, not as importable tested fragments. The strategy library the persistence-economics note calls for exists here as instructions, not code.
+Save-as-command promotes the **whole script, manually, with no test gate** — fit and trust collapse into one human decision. Notably, the vendor's own strategy corpus — adversarial verify, judge panels, loop-until-dry, multi-modal sweep, completeness critic — ships as prescriptive instructions inside the Workflow tool prompt, re-instantiated by the model in each script, not as importable tested fragments. The strategy library the persistence-economics note calls for exists here as instructions, not code.
 
 ## Reading against the tool-loop cluster
 

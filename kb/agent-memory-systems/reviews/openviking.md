@@ -33,7 +33,7 @@ OpenViking, by Volcengine, is an open-source context database for AI agents. At 
 ## Artifact analysis
 
 - **Storage substrate:** `files` `vector` `graph` `sqlite` `service-object` — Source content, memory files, session archives, sidecars, and plugin state are file-backed; vector rows support retrieval; links/relations create graph-like traversal; usage audit and task/telemetry state include service-managed stores; runtime sessions and task records are service objects.
-- **Representational form:** `prose` `symbolic` `parametric` — Memories, resources, summaries, profile blocks, and archive overviews are prose; URI schemas, templates, JSON metadata, hooks, policies, merge operations, links, task markers, and API contracts are symbolic; embeddings and vector/rerank scores are parametric retrieval artifacts.
+- **Representational form:** `natural-language` `symbolic` `parametric` — Memories, resources, summaries, profile blocks, and archive overviews are natural-language; URI schemas, templates, JSON metadata, hooks, policies, merge operations, links, task markers, and API contracts are symbolic; embeddings and vector/rerank scores are parametric retrieval artifacts.
 - **Lineage:** `authored` `imported` `trace-extracted` — Operators and agents can author memories and skills, resources can be uploaded or watched from external sources, and session messages/tool parts/context parts are archived and distilled into user memories, agent memories, session skills, summaries, relations, and vectors.
 - **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — Retrieved memories/resources are knowledge; agent skills, profile blocks, and injected context can instruct; namespace policy and write guards enforce; URIs, sidecars, relations, templates, and search filters route; schemas and operation parsing validate; vectors, scores, hotness, and rerankers rank; session extraction learns durable artifacts.
 
@@ -43,7 +43,7 @@ OpenViking, by Volcengine, is an open-source context database for AI agents. At 
 
 **Session archives.** `messages.jsonl`, `.abstract.md`, `.overview.md`, `.meta.json`, `.done`, and `.failed.json` under session history preserve the raw and summarized trace pipeline. Raw messages have evidence authority; summaries compress; done/failed markers have lifecycle authority because later commits wait for prior archive state; metadata records token and extraction counts.
 
-**Extracted memories and skills.** User memory templates cover profile, preferences, entities, and events; agent memory templates include tools, trajectories, experiences, skills, soul, and identity. The extracted files bundle prose content with symbolic fields, links, backlinks, operation modes, filename templates, embedding templates, and directory overview templates. Their lineage may be trace-extracted, but their consumption may be advisory, instructional, or retrieval-ranking input depending on integration.
+**Extracted memories and skills.** User memory templates cover profile, preferences, entities, and events; agent memory templates include tools, trajectories, experiences, skills, soul, and identity. The extracted files bundle natural-language content with symbolic fields, links, backlinks, operation modes, filename templates, embedding templates, and directory overview templates. Their lineage may be trace-extracted, but their consumption may be advisory, instructional, or retrieval-ranking input depending on integration.
 
 **Integration artifacts.** MCP tool definitions, Claude/Codex hook configs, OpenClaw plugin code, OpenCode plugin code, and LangGraph middleware are system-definition artifacts. They decide when memory becomes input to an agent, what context is captured afterward, what is filtered from transcripts to avoid self-contamination, and which identity scope is used.
 
@@ -87,7 +87,7 @@ OpenViking's URI and tenant model is more dynamic than Commonplace's directory r
 
 **Learning timing:** `online` `staged` — Hooks capture messages during normal agent use; commits archive immediately and run extraction asynchronously; archive ordering and done/failed markers create a staged pipeline.
 
-**Distilled form:** `prose` `symbolic` `parametric` — The outputs include prose summaries and memories, symbolic templates/fields/links/diffs/operation records/skills, and embeddings used for later retrieval.
+**Distilled form:** `natural-language` `symbolic` `parametric` — The outputs include natural-language summaries and memories, symbolic templates/fields/links/diffs/operation records/skills, and embeddings used for later retrieval.
 
 The trace-learning path is implemented in the session commit pipeline. Phase 1 snapshots and archives messages; Phase 2 hydrates tool outputs, generates archive summaries, calls long-term and agent-memory extraction, writes links and active-count updates, waits for request-scoped queue work, merges metadata, and writes `.done` last ([openviking/session/session.py](https://github.com/volcengine/OpenViking/blob/f627a09662cee5a5494eea99853b355c09b659c4/openviking/session/session.py)).
 

@@ -27,7 +27,7 @@ AgeMem is an agent memory system whose distinctive contribution is a **memory-ma
 Claim-level (no code inspected):
 
 - **Storage substrate:** `model-weights` — the central retained controller is reported as an RL-trained policy in the agent model. The LTM facts are reported as entries in a long-term memory store, but the paper does not give an inspectable persistence implementation.
-- **Representational form:** `prose` `symbolic` `parametric` — the policy is distributed-parametric; the stored facts appear as prose/tool-argument records in a reported LTM store; STM is manipulated as active context text. The most consequential operative part is the least inspectable one.
+- **Representational form:** `natural-language` `symbolic` `parametric` — the policy is distributed-parametric; the stored facts appear as natural-language/tool-argument records in a reported LTM store; STM is manipulated as active context text. The most consequential operative part is the least inspectable one.
 - **Lineage** — **trace-extracted**: the policy is learned from staged task trajectories / rollouts via RL; task, context, and memory-management rewards decide what becomes signal. Stored facts are authored at runtime by the policy. Changes in task distribution, reward design, or evaluation oracle would invalidate the learned policy claim.
 - **Behavioral authority** — two parts: the learned policy is a **system-definition artifact** consumed as a controller over memory actions; the stored LTM facts are **knowledge artifacts** consumed as context when retrieved. Effective quality and authority are reported by the paper, not verified from code.
 
@@ -52,7 +52,7 @@ AgeMem qualifies: it learns a durable artifact (the policy) from agent traces.
 
 - **Trace source** — staged task trajectories / rollouts covering LTM construction, STM control under distractors, and integrated task execution.
 - **Extraction** — RL training with step-wise GRPO; the **oracle is task completion**, augmented by context-management and memory-management rewards. That oracle dependence [bounds where the approach transfers](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md): open-ended domains without a clear completion signal lack the training reward.
-- **Distilled form** — distributed-parametric (the policy in weights); the stored facts remain a separate prose/key-value store.
+- **Distilled form** — distributed-parametric (the policy in weights); the stored facts remain a separate natural-language/key-value store.
 - **Scope and timing** — cross-task policy; learned **offline** in training, then deployed (staged, not online).
 - **Survey placement** — a clean trajectory-to-weights case in the [trace-learning survey](../trace-learning-techniques-in-related-systems.md), flagged lower-confidence because the runtime is not code-inspected.
 

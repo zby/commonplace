@@ -32,7 +32,7 @@ Awesome Agent Memory, from TeleAI-UAGI, is not a runnable memory implementation.
 ## Artifact analysis
 
 - **Storage substrate:** `repo` — The durable artifact is a GitHub repository whose canonical behavior-shaping content is the Markdown README; secondary support files are the Apache license, `.gitignore`, and logo assets.
-- **Representational form:** `prose` `symbolic` — Resource descriptions are prose; headings, year buckets, numbered lists, Markdown/HTML links, bolding conventions, star badges, and table-of-contents anchors are symbolic navigation and ranking cues.
+- **Representational form:** `natural-language` `symbolic` — Resource descriptions are natural-language; headings, year buckets, numbered lists, Markdown/HTML links, bolding conventions, star badges, and table-of-contents anchors are symbolic navigation and ranking cues.
 - **Lineage:** `authored` `imported` — Maintainers author the taxonomy, ordering, descriptions, and curation policy while importing external resource identities, URLs, star-badge references, dates, and paper/product metadata into the list.
 - **Behavioral authority:** `knowledge` `routing` `ranking` — The README serves as survey evidence and reference context; category placement and links route readers to external systems; bolding, ordering, year grouping, and star-count order provide weak ranking signals.
 

@@ -21,14 +21,14 @@ Specialized types have a different loading profile. ADRs, indexes, related-syste
 Before this split, several local types were represented by a single markdown file that mixed two different concerns:
 
 - the literal scaffold the agent should write into
-- prose guidance about how to use each section well
+- natural-language guidance about how to use each section well
 
 That coupling made the type surface less predictable. Agents and tooling had no simple convention for "load the structure" versus "load the authoring advice", and the generic writing guide risked re-absorbing type-specific conventions because there was no clear place for them to live.
 
 The type system after [ADR-012](./012-types-for-structure-traits-for-review.md) and [ADR-015](./015-standardize-authored-type-definitions-on-json-schema.md) already had three distinct jobs:
 
 - agent-facing structure for drafting
-- prose guidance for filling the structure well
+- natural-language guidance for filling the structure well
 - machine-readable validation
 
 The file layout needed to make those roles explicit for every custom type.

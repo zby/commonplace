@@ -31,7 +31,7 @@ OS-Copilot is the OS-Copilot team's open-source framework for building generalis
 ## Artifact analysis
 
 - **Storage substrate:** `files` `vector` `in-memory` — generated tools persist in `generated_tools.json`, `tool_code/*.py`, `tool_description/*.txt`, and a Chroma persistent directory; planner nodes and execution state are runtime structures ([tool manager](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/tool_repository/manager/tool_manager.py), [schema](https://github.com/OS-Copilot/OS-Copilot/blob/f720af8807e49a92dda64572d2c6bc6c0ac7ee7e/oscopilot/utils/schema.py)).
-- **Representational form:** `prose` `symbolic` `parametric` — retained tool descriptions are prose, generated Python and JSON metadata are symbolic, and Chroma embeddings are distributed-parametric views over descriptions.
+- **Representational form:** `natural-language` `symbolic` `parametric` — retained tool descriptions are natural-language, generated Python and JSON metadata are symbolic, and Chroma embeddings are distributed-parametric views over descriptions.
 - **Lineage:** `authored` `imported` `trace-extracted` — prompts, config, and baseline APIs are authored or imported; generated tools are extracted from LLM-generated code, environment execution state, judge critique, repairs, and self-learning lesson runs.
 - **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — stored tool files can be inspected as knowledge, prompts instruct generation and planning, score thresholds gate promotion, Chroma ranks and routes retrieved tools, judge prompts validate completion, and successful traces become learned reusable actions.
 
@@ -55,7 +55,7 @@ Promotion path: a user task or lesson becomes a planned Python subtask; the exec
 | Read-back | Automatic vector retrieval before planning and Python generation | Mostly deliberate pull through `rg`, indexes, links, skills, and review gates |
 | Governance | LLM judge score, execution output, repair loop, Chroma count assertion | Git diffs, type contracts, schemas, validation, semantic gates, source citations |
 
-The overlap with Commonplace is promotion: both systems move selected work products from a transient episode into retained future behavior. OS-Copilot's promotion target is executable code with strong operational authority; Commonplace's usual promotion target is reviewable prose or symbolic methodology.
+The overlap with Commonplace is promotion: both systems move selected work products from a transient episode into retained future behavior. OS-Copilot's promotion target is executable code with strong operational authority; Commonplace's usual promotion target is reviewable natural-language or symbolic methodology.
 
 FRIDAY is more operationally aggressive. A single successful, high-scoring Python subtask can become reusable code and then re-enter later prompts by vector similarity. Commonplace is slower but preserves richer provenance, replacement history, validation, and review state before artifacts become trusted context.
 
@@ -87,7 +87,7 @@ The design tradeoff is authority without audit depth. OS-Copilot persists code a
 
 **Learning timing:** `online` `staged` — ordinary task execution can promote a successful Python subtask immediately; self-learning runs staged lesson sequences through the same agent loop.
 
-**Distilled form:** `prose` `symbolic` `parametric` — the retained output is a tool description, Python/JSON tool record, and embedding index.
+**Distilled form:** `natural-language` `symbolic` `parametric` — the retained output is a tool description, Python/JSON tool record, and embedding index.
 
 Extraction is LLM-mediated and judge-gated. The executor generates Python code and an invocation, the environment executes it, the judge returns completion status and score, repair may rewrite the code, and only completed high-scoring Python subtasks are stored. The raw stage has temporary authority over repair and replanning; the distilled stage gains future planning and generation authority through retrieval.
 

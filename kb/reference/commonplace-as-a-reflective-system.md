@@ -19,19 +19,19 @@ Commonplace represents its artifact types and contracts (`kb/types/`), routing a
 
 ## Reflective structure
 
-The tag-readme trace is the cluster's canonical telling of the example. Causal connection separates a reflective system from a merely documented one, and the trace shows both directions. A strain in operation — an `index` head grown too large to support its completeness claim — prompted revision of Commonplace's self-representation. [ADR 026](./adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) split the type and made `complete` an enforced mark, carrying the decision into prose, schema, validation, and rendering.
+The tag-readme trace is the cluster's canonical telling of the example. Causal connection separates a reflective system from a merely documented one, and the trace shows both directions. A strain in operation — an `index` head grown too large to support its completeness claim — prompted revision of Commonplace's self-representation. [ADR 026](./adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) split the type and made `complete` an enforced mark, carrying the decision into natural-language instruction, schema, validation, and rendering.
 
-The revised representation then changed later behavior. The validator rejects artifacts it previously accepted; agents may skip a search when a validated completeness mark warrants doing so; and the symbolic check caught a member that the documented search recipe had missed, causing the prose recipe to be corrected. A change in operation revised the self-representation, and operations mediated through the revised representation changed subsequent behavior. The enforced `complete` and `covered_by` fields also strengthened the retrieval wire.
+The revised representation then changed later behavior. The validator rejects artifacts it previously accepted; agents may skip a search when a validated completeness mark warrants doing so; and the symbolic check caught a member that the documented search recipe had missed, causing the natural-language recipe to be corrected. A change in operation revised the self-representation, and operations mediated through the revised representation changed subsequent behavior. The enforced `complete` and `covered_by` fields also strengthened the retrieval wire.
 
 Coverage remains uneven across representational forms, [as reflective coverage must be graded per form and operation profile](../notes/reflective-coverage-is-graded-across-representational-forms.md):
 
-- **Prose reasoning revising formal artifacts** — shown: ADR 026 became a schema and validator.
-- **Symbolic execution revising prose** — shown once when validation exposed the incomplete search recipe.
-- **Represented mappings across forms** — partial: the type-specification path tightly couples this specification to validator dispatch, but most prose-to-code relationships have no equivalent binding.
+- **Natural-language reasoning revising formal artifacts** — shown: ADR 026 became a schema and validator.
+- **Symbolic execution revising natural-language instruction** — shown once when validation exposed the incomplete search recipe.
+- **Represented mappings across forms** — partial: the type-specification path tightly couples this specification to validator dispatch, but most natural-language-to-code relationships have no equivalent binding.
 - **Lineage and staleness across forms** — mostly absent: freshness tracking covers review inputs, not theory-to-implementation lineage.
 - **Model weights** — selection only: Commonplace can choose a model binding but cannot inspect or edit the provider's weights.
 
-The trace therefore earns modification-grade coverage on parts of the prose and symbolic forms and only selection-grade coverage on the parametric form. It does not establish global reflectivity over every behavior-bearing component.
+The trace therefore earns modification-grade coverage on parts of the natural-language and symbolic forms and only selection-grade coverage on the parametric form. It does not establish global reflectivity over every behavior-bearing component.
 
 ## Improvement dynamics
 

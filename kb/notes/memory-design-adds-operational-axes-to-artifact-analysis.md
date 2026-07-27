@@ -18,11 +18,11 @@ This seedling note names those cross-cutting operational axes. Its job is not to
 | Axis | Question | Memory example |
 |---|---|---|
 | Storage substrate | Where does the artifact live? | Repo file, SQL row, vector record, graph edge, service-owned memory object |
-| Representational form | How is the operative part represented and consumed? | Distributed-parametric policy in weights, prose memory entry, symbolic test or schema |
+| Representational form | How is the operative part represented and consumed? | Distributed-parametric policy in weights, natural-language memory entry, symbolic test or schema |
 | Lineage | What source dependencies or derivations does it carry? | Trace-extracted fact, generated cue, compiled prompt view, canonical workflow |
 | Behavioral authority | Who consumes it, through which channel, and with what force? | Reference advice, prompt instruction, validator enforcement, ranking influence, learning input |
 
-These fields are necessary because memory discussions often conflate them — [agent memory is a crosscutting concern, not a separable niche](./agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) collects the recurring confusions, and [The fundamental split in agent memory is not storage format but who decides what to remember](../agent-memory-systems/agentic-memory-systems-comparative-review.md) shows substrate-first comparisons missing the more consequential fields. A vector store is a substrate, not a representational form. A prompt rule is usually prose-form but behavior-shaping only through a specific authority path. A Markdown file can advise when read as reference and instruct when loaded as standing context.
+These fields are necessary because memory discussions often conflate them — [agent memory is a crosscutting concern, not a separable niche](./agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) collects the recurring confusions, and [The fundamental split in agent memory is not storage format but who decides what to remember](../agent-memory-systems/agentic-memory-systems-comparative-review.md) shows substrate-first comparisons missing the more consequential fields. A vector store is a substrate, not a representational form. A prompt rule is usually natural-language in form but behavior-shaping only through a specific authority path. A Markdown file can advise when read as reference and instruct when loaded as standing context.
 
 But artifact fields stop at the artifact boundary. They do not explain how retained material becomes future capacity.
 
@@ -43,7 +43,7 @@ The framing is what's new, not the underlying design pressures. Each axis maps o
 
 ## Why the split matters
 
-The same artifact fields can produce different memory behavior. Two systems might store prose memory entries in files and use them as behavior-shaping instructions. One may write only human-approved entries; another may mine traces after every session. One may activate cues automatically before risky actions; another may wait for manual search. Substrate, form, lineage, and authority can match while operational policies diverge.
+The same artifact fields can produce different memory behavior. Two systems might store natural-language memory entries in files and use them as behavior-shaping instructions. One may write only human-approved entries; another may mine traces after every session. One may activate cues automatically before risky actions; another may wait for manual search. Substrate, form, lineage, and authority can match while operational policies diverge.
 
 The operational axes are also mutually independent: fully specifying the capture and derivation (learning) axes leaves the activation axis open — which is why a memory system or review can elaborate its learning loop in detail and still leave read-back (how stored memory re-enters a future action) specified as a single retrieval question. Activation has its own placement choices — whether memory reaches the agent by the agent's own lookup (pull) or arrives unsolicited (push), what trips it, before or after the action, at what scope, and with what force at consumption — none of which are fixed by how the memory was learned.
 

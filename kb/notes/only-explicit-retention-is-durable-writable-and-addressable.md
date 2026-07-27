@@ -7,7 +7,7 @@ tags: [learning-theory, self-improving-systems, agent-memory]
 
 # Only explicit retention is currently durable, writable, and addressable at once
 
-A system that learns during operation must retain what it learned in some form, and the candidate forms differ on three properties that decide whether the retention can be governed. **Durability**: the retention survives the session or run that produced it. **Writability**: the system's own operation can change it. **Addressability**: processes inside the boundary can treat a retained commitment as an object — retrieve it, say what it claims, criticize it, revise it selectively, carry it to a new problem — since [reflection buys addressability](./reflection-buys-addressability.md). Cutting across all three is the tacit/explicit divide of [representational form](./definitions/representational-form.md): explicit forms (prose, symbolic) encode commitments readably; tacit forms (distributed-parametric state, conditioned context state, embodied human expertise) encode competence that cannot be read out as commitments.
+A system that learns during operation must retain what it learned in some form, and the candidate forms differ on three properties that decide whether the retention can be governed. **Durability**: the retention survives the session or run that produced it. **Writability**: the system's own operation can change it. **Addressability**: processes inside the boundary can treat a retained commitment as an object — retrieve it, say what it claims, criticize it, revise it selectively, carry it to a new problem — since [reflection buys addressability](./reflection-buys-addressability.md). Cutting across all three is the tacit/explicit divide of [representational form](./definitions/representational-form.md): explicit forms (natural-language, symbolic) encode commitments readably; tacit forms (distributed-parametric state, conditioned context state, embodied human expertise) encode competence that cannot be read out as commitments.
 
 | Retention form | Durable | Writable | Addressable |
 |---|---|---|---|
@@ -15,7 +15,7 @@ A system that learns during operation must retain what it learned in some form, 
 | Weights, selection-only profile | yes | no — swapping the sealed component is the only lever | no |
 | Weights, with fine-tuning | yes | yes | no — no per-commitment retrieval, criticism, selective revision, or rollback |
 | Human expertise | yes | yes — practice writes it | no — stable, perhaps, but not inspectable, diffable, or transferable |
-| Explicit artifacts (prose, symbolic) | yes | yes | yes |
+| Explicit artifacts (natural-language, symbolic) | yes | yes | yes |
 
 Addressability here is comparative, not absolute — the reflection note is explicit that opaque retention still admits indirect handles (behavioral probing, wholesale rollback, retraining, steering). The column records whether any handle operates on the retained commitment *as an object*, and for every tacit row the answer is no.
 
@@ -49,6 +49,6 @@ Relevant Notes:
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — extends: supplies the shared ground for its tacit-expertise and substrate-dependency resolutions
 - [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — extends: adds the addressability property and the human row to its three-timescale media comparison
 - [Retaining the episode keeps a distilled rule re-derivable](./retaining-the-episode-keeps-a-distilled-rule-re-derivable.md) — extends: what the explicit-only regime should retain in which explicit form
-- [Representational form](./definitions/representational-form.md) — defined-in: the prose / symbolic / distributed-parametric axis the tacit/explicit divide runs across
+- [Representational form](./definitions/representational-form.md) — defined-in: the natural-language/symbolic / distributed-parametric axis the tacit/explicit divide runs across
 - [Retained artifact](./definitions/retained-artifact.md) — defined-in: the umbrella term for durable behavior-shaping state this note's rows instantiate
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: the recorded selection-only profile line this claim's application rests on

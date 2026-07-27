@@ -6,7 +6,7 @@ This system is experimental and opt-in, like the review system it depends on.
 
 ## Concepts
 
-**Warn finding.** An actionable finding extracted from a review pair whose canonical outcome is `warn`. The `commonplace-warn-selector` command parses these from the `### Findings` or `### Summary` sections of stored review prose.
+**Warn finding.** An actionable finding extracted from a review pair whose canonical outcome is `warn`. The `commonplace-warn-selector` command parses these from the `### Findings` or `### Summary` sections of stored review text.
 
 **Fix strategy.** A named pattern of review warning + appropriate fix, catalogued in `kb/instructions/fix-warnings/fix-strategy-taxonomy.md`. Agents classify each fix by strategy name to make fixes auditable and to grow the taxonomy over time.
 

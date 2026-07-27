@@ -28,22 +28,22 @@ last-checked: "2026-06-04"
 
 **Context efficiency is coarse file selection plus character budgets.** Before an agent starts, `buildMemoryContextBundle()` can include the core file, the latest monthly summary, and a configured number of latest daily files, each trimmed under a shared `maxChars` budget. It does not perform semantic retrieval over memory entries; the main bound is "which files are configured/latest" and text truncation ([context bundle](https://github.com/mcollina/pi-self-learning/blob/b1add8631cb621bc2caba3c9f70376dcddf6ca36/extensions/self-learning.ts)).
 
-**The memory policy can become instruction-like.** `buildMemoryInstruction()` can append an advisory or strict system-prompt policy telling the agent where memory lives, to start from `CORE.md`, to check daily/monthly files for historical questions, and to prefer memory evidence over guessing ([instruction builder](https://github.com/mcollina/pi-self-learning/blob/b1add8631cb621bc2caba3c9f70376dcddf6ca36/extensions/self-learning.ts)). The same retained prose can therefore be background evidence and system-level instruction, depending on context settings.
+**The memory policy can become instruction-like.** `buildMemoryInstruction()` can append an advisory or strict system-prompt policy telling the agent where memory lives, to start from `CORE.md`, to check daily/monthly files for historical questions, and to prefer memory evidence over guessing ([instruction builder](https://github.com/mcollina/pi-self-learning/blob/b1add8631cb621bc2caba3c9f70376dcddf6ca36/extensions/self-learning.ts)). The same retained natural-language content can therefore be background evidence and system-level instruction, depending on context settings.
 
 ## Artifact analysis
 
 - **Storage substrate:** `files` `repo` `in-memory` — Durable memory persists as Markdown and JSON files under the resolved memory root; optional git initialization and commits preserve memory history; `RUNTIME_NOTES` carries short recent notes only in process memory between starts.
-- **Representational form:** `prose` `symbolic` — Daily entries, monthly summaries, `CORE.md`, and `long-term-memory.md` are prose; configuration, branch runtime overrides, strict JSON reflection outputs, `core/index.json` records, command definitions, and hook registrations are symbolic. There is no vector index or model-weight update in the inspected repository.
+- **Representational form:** `natural-language` `symbolic` — Daily entries, monthly summaries, `CORE.md`, and `long-term-memory.md` are natural-language; configuration, branch runtime overrides, strict JSON reflection outputs, `core/index.json` records, command definitions, and hook registrations are symbolic. There is no vector index or model-weight update in the inspected repository.
 - **Lineage:** `authored` `trace-extracted` — Settings and extension code are authored; daily entries and core records are trace-extracted from serialized branch messages, tool-result interruption signals, and LLM reflection outputs. Redistilled entries are reworked from earlier core records.
 - **Behavioral authority:** `knowledge` `instruction` `ranking` `learning` — Memory files advise as knowledge when injected; strict/advisory memory policy can instruct the agent; `core/index.json` scores and recency ranking decide what appears in `CORE.md`; the task-end reflection loop learns from previous agent work.
 
-**Daily journal entries.** The raw durable trace layer is `daily/YYYY-MM-DD.md`, appended with "What went wrong" and "How it was fixed" sections generated from the current branch conversation. It is trace-extracted prose with knowledge authority and source value for monthly summaries or later inspection.
+**Daily journal entries.** The raw durable trace layer is `daily/YYYY-MM-DD.md`, appended with "What went wrong" and "How it was fixed" sections generated from the current branch conversation. It is trace-extracted natural-language content with knowledge authority and source value for monthly summaries or later inspection.
 
-**Core index and renders.** `core/index.json` is the canonical scored symbolic index. `CORE.md` is a ranked prose view over that index, while `long-term-memory.md` is the complete rendered history. The index has ranking authority; the rendered files gain knowledge and possible instruction authority when pushed into context.
+**Core index and renders.** `core/index.json` is the canonical scored symbolic index. `CORE.md` is a ranked natural-language view over that index, while `long-term-memory.md` is the complete rendered history. The index has ranking authority; the rendered files gain knowledge and possible instruction authority when pushed into context.
 
-**Monthly summaries and redistilled global rules.** `/learning-month` consolidates daily files for a month into a prose summary. `/learning-redistill` rewrites selected core entries into cross-project action rules, can deduplicate records after key normalization, and writes the updated core files when not in dry-run mode.
+**Monthly summaries and redistilled global rules.** `/learning-month` consolidates daily files for a month into a natural-language summary. `/learning-redistill` rewrites selected core entries into cross-project action rules, can deduplicate records after key normalization, and writes the updated core files when not in dry-run mode.
 
-**Runtime notes and system-prompt policy.** `RUNTIME_NOTES` is an in-memory carryover of the first mistake/fix note from a successful reflection. The memory instruction is authored symbolic/prose configuration that controls whether injected memory is advisory or strict.
+**Runtime notes and system-prompt policy.** `RUNTIME_NOTES` is an in-memory carryover of the first mistake/fix note from a successful reflection. The memory instruction is authored symbolic/natural-language configuration that controls whether injected memory is advisory or strict.
 
 Promotion path: recent branch messages and interruption signals are serialized; an LLM reflection extracts mistakes and fixes; daily Markdown records preserve the episode-level output; core records score and aggregate repeated items; `CORE.md`, monthly summaries, runtime notes, and strict/advisory policy can be pushed into future agent context.
 
@@ -87,11 +87,11 @@ The main divergence is retrieval granularity. pi-self-learning selects memory at
 
 **Learning timing:** `online` `staged` — Task-end reflection runs online after `agent_end`; monthly summarization and global redistill are staged command-driven maintenance.
 
-**Distilled form:** `prose` `symbolic` — The immediate distilled output is prose daily/core memory plus symbolic scored index entries.
+**Distilled form:** `natural-language` `symbolic` — The immediate distilled output is natural-language daily/core memory plus symbolic scored index entries.
 
 Extraction is LLM-mediated and JSON-gated. The reflection prompt asks for only mistakes and fixes, with different scope rules for project versus global storage. Failed reflection is non-blocking, and malformed output can be repaired before the extension writes memory.
 
-Survey placement: pi-self-learning is a trace-to-prose learning system with a file-native memory root and explicit pre-start injection. It strengthens the survey claim that trace-extracted memory needs a promotion boundary: raw conversation logs are not replayed wholesale; extracted lessons are scored, rendered, and optionally redistilled before influencing future runs.
+Survey placement: pi-self-learning is a trace-to-natural-language learning system with a file-native memory root and explicit pre-start injection. It strengthens the survey claim that trace-extracted memory needs a promotion boundary: raw conversation logs are not replayed wholesale; extracted lessons are scored, rendered, and optionally redistilled before influencing future runs.
 
 ## Read-back
 
@@ -107,7 +107,7 @@ Survey placement: pi-self-learning is a trace-to-prose learning system with a fi
 
 **Injection point.** The injection point is pre-invocation: `before_agent_start` assembles memory pieces and instruction text before the agent model call. Post-task reflection is write-side learning, not read-back.
 
-**Selection, scope, and complexity.** Scope is project or global depending on `storage.mode`, and volume is bounded by `maxChars`, per-file trimming, `includeLastNDaily`, and `injectLastN`. Complexity can still grow because `CORE.md`, latest monthly summaries, and daily files may contain broad, loosely related prose.
+**Selection, scope, and complexity.** Scope is project or global depending on `storage.mode`, and volume is bounded by `maxChars`, per-file trimming, `includeLastNDaily`, and `injectLastN`. Complexity can still grow because `CORE.md`, latest monthly summaries, and daily files may contain broad, loosely related natural-language.
 
 **Authority at consumption.** The hidden memory bundle is advisory evidence. The system-prompt policy can be advisory or strict; strict mode tells the agent it must consult memory for historical questions and prefer memory evidence over guessing. Effective compliance is not measured.
 

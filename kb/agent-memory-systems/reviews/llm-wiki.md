@@ -33,7 +33,7 @@ LLM Wiki, from `nvk/llm-wiki`, is a portable agent protocol and plugin distribut
 ## Artifact analysis
 
 - **Storage substrate:** `files` `repo` — User memory persists as Markdown files, JSON registries, logs, generated reports, indexes, and optional assets in hub/topic/project directories; the shipped behavior layer itself is a git repo with plugin manifests, command prompts, skills, references, scripts, and tests.
-- **Representational form:** `prose` `symbolic` — Raw sources, compiled articles, lessons, reports, and command/skill instructions are prose; frontmatter fields, `wikis.json`, directory layouts, `_index.md` tables, plugin manifests, command metadata, lint enums, session JSON/JSONL, and source paths are symbolic. I did not find vector, graph, or model-weight retention in the reviewed repo.
+- **Representational form:** `natural-language` `symbolic` — Raw sources, compiled articles, lessons, reports, and command/skill instructions are natural-language; frontmatter fields, `wikis.json`, directory layouts, `_index.md` tables, plugin manifests, command metadata, lint enums, session JSON/JSONL, and source paths are symbolic. I did not find vector, graph, or model-weight retention in the reviewed repo.
 - **Lineage:** `authored` `imported` `trace-extracted` — Plugin instructions, references, tests, and wiki articles can be authored by agents/humans; ingested URLs/files/repos/collections become imported raw sources; `/wiki:ll`, research session registries, audit events, checkpoints, and conversation-compiled articles turn session traces into durable artifacts.
 - **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `enforcement` `ranking` `learning` — Raw and compiled wiki files advise as knowledge; the skill and command files instruct host agents; hub resolution, topic flags, indexes, tags, source paths, inventory records, datasets, and project scopes route work; lint/audit/librarian rules validate and sometimes enforce stops or repairs; index summaries, grep hits, freshness/confidence fields, and agent judgment rank reads; lessons and compilation convert experience or imported sources into later knowledge.
 
@@ -81,13 +81,13 @@ LLM Wiki's context model is closer to Commonplace than database-backed memory sy
 
 **Learning timing:** `online` `staged` — Lesson extraction runs during or at the end of the current session; dry-run and article update stages make promotion staged rather than silent. Research/audit provenance is appended during those workflows and reused later for resume or trust analysis.
 
-**Distilled form:** `prose` `symbolic` — Distilled lesson notes are prose with symbolic frontmatter (`type: lessons-learned`, `source: session`, `lesson_count`, tags, confidence) and optional article backlinks or rule proposals.
+**Distilled form:** `natural-language` `symbolic` — Distilled lesson notes are natural-language content with symbolic frontmatter (`type: lessons-learned`, `source: session`, `lesson_count`, tags, confidence) and optional article backlinks or rule proposals.
 
 **Extraction.** The oracle is the active agent following the command prompt: it identifies lesson-worthy patterns from the conversation, deduplicates them, writes structured Markdown, and may append a lesson rule to relevant wiki articles. The code does not implement an independent parser over transcripts; the trace-learning behavior is carried by the installed command/instruction artifact.
 
 **Scope and timing.** The trace-learning path is narrower than the source compiler. Most wiki knowledge comes from imported raw sources; session learning is specifically for "learned by doing" operational memory and session provenance.
 
-**Survey fit.** LLM Wiki fits the trace-to-note family: session experience becomes durable prose knowledge, then can be compiled or proposed as instructions. It does not show automatic model-weight learning, embedding-ranker training, or autonomous long-run memory evolution.
+**Survey fit.** LLM Wiki fits the trace-to-note family: session experience becomes durable natural-language knowledge, then can be compiled or proposed as instructions. It does not show automatic model-weight learning, embedding-ranker training, or autonomous long-run memory evolution.
 
 ## Read-back
 

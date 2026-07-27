@@ -26,9 +26,9 @@ A type is verified by **three** mechanisms, and only the first two are the valid
 |---|---|---|---|
 | 1 | `schema` — declarative JSON Schema | validate time | no |
 | 2 | `type_rule` — imperative code the type registers | validate time | no |
-| 3 | **type-conformance review gate** — the type spec's *prose body* is the criterion, read by an LLM ([ADR 038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)) | review time | yes |
+| 3 | **type-conformance review gate** — the type spec's *natural-language body* is the criterion, read by an LLM ([ADR 038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)) | review time | yes |
 
-This page documents 1 and 2. The third is not a lesser mechanism: **a type spec's prose is an executable criterion, not documentation.** Everything a schema cannot express still binds — it binds at review time. That is why [`type-spec.md`](../types/type-spec.md) tells authors *not* to restate schema rules in prose: the schema already enforces them, so a restatement only spends reviewer judgment re-confirming what is already guaranteed, instead of on the properties only a reviewer can check.
+This page documents 1 and 2. The third is not a lesser mechanism: **a type spec's natural-language instructions are an executable criterion, not documentation.** Everything a schema cannot express still binds — it binds at review time. That is why [`type-spec.md`](../types/type-spec.md) tells authors *not* to restate schema rules in body text: the schema already enforces them, so a restatement only spends reviewer judgment re-confirming what is already guaranteed, instead of on the properties only a reviewer can check.
 
 ## The three sources of a validator finding
 
@@ -84,5 +84,5 @@ Relevant Notes:
 - [ADR 046 — Verbatim quotes are validated against their cited source](./adr/046-verbatim-quotes-are-validated-against-their-cited-source.md) — evidence: the decision that added the second referential check and surfaced the class
 - [ADR 024 — Schema severity is per-constraint, fail by default](./adr/024-schema-severity-is-per-constraint-fail-by-default.md) — evidence: how the `schema` source assigns its own severities
 - [Commands](./commands.md) — see-also: the `commonplace-validate` command surface
-- [ADR 038 — Type-conformance reviews use the type spec as the gate](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — see-also: the third verification mechanism, where a type spec's prose binds as an LLM-judged criterion at review time
+- [ADR 038 — Type-conformance reviews use the type spec as the gate](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — see-also: the third verification mechanism, where a type spec's natural-language instructions bind as an LLM-judged criterion at review time
 - [ADR 050 — Validation runs share parsed artifacts and collection indexes](./adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md) — implemented-by: artifact-local and collection-indexed checks share one execution context without a generic dependency engine

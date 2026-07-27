@@ -49,7 +49,7 @@ The DB is the source of truth; human-readable markdown is derived.
 
 - `review_pairs.result_kind` is `verdict` or `report`. Verdict outcomes use the lowercase enum `pass`, `warn`, `fail`; report pairs keep `outcome` null. `review_jobs.status` is `queued`, `completed`, or `failed`.
 - `created_at` is when the job row and prompt inputs were prepared. Runner provenance is optional and recorded during finalization.
-- The review **body** is not in the DB. The finalizer writes it to the derived per-pair result file from parsed `job-output.md`. The DB stores protocol state (`result_kind`, nullable `outcome`, `completed_at`), not prose. `MANIFEST.json` is reconstructed from DB rows and holds no review body.
+- The review **body** is not in the DB. The finalizer writes it to the derived per-pair result file from parsed `job-output.md`. The DB stores protocol state (`result_kind`, nullable `outcome`, `completed_at`), not review text. `MANIFEST.json` is reconstructed from DB rows and holds no review body.
 - Verdict output ends with one parseable `## Result: PASS|WARN|FAIL`; report output ends with `## Result: REPORT`. `ERROR` is an execution-failure signal: finalization fails the whole job without completing pairs or advancing baselines.
 
 ### Freshness mechanism

@@ -18,7 +18,7 @@ Reflexion, from `noahshinn/reflexion`, is a research codebase for "Language Agen
 
 ## Core Ideas
 
-**Memory is verbal repair advice, not retrieved world knowledge.** HotPotQA agents keep `self.reflections` and `self.reflections_str`; when a previous attempt is incorrect, halted, or exhausted, `reflect()` asks a reflection model to diagnose the failed scratchpad and formats the result into the next agent prompt ([hotpotqa agents](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/hotpotqa_runs/agents.py), [hotpotqa prompts](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/hotpotqa_runs/prompts.py)). The stored artifact is a prose plan for avoiding a repeated failure.
+**Memory is verbal repair advice, not retrieved world knowledge.** HotPotQA agents keep `self.reflections` and `self.reflections_str`; when a previous attempt is incorrect, halted, or exhausted, `reflect()` asks a reflection model to diagnose the failed scratchpad and formats the result into the next agent prompt ([hotpotqa agents](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/hotpotqa_runs/agents.py), [hotpotqa prompts](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/hotpotqa_runs/prompts.py)). The stored artifact is a natural-language plan for avoiding a repeated failure.
 
 **AlfWorld and WebShop persist task-local memories across trials.** Their `main.py` files initialize each environment config with `memory: []`, optionally resume a prior `env_results_trial_<n>.json`, run a trial, call `update_memory()` when `--use_memory` is set, and write the updated configs back to JSON ([AlfWorld main](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/alfworld_runs/main.py), [WebShop main](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/webshop_runs/main.py)). Failed environment logs become reflection strings appended to the same environment's memory list ([AlfWorld reflections](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/alfworld_runs/generate_reflections.py), [WebShop reflections](https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/webshop_runs/generate_reflections.py)).
 
@@ -31,11 +31,11 @@ Reflexion, from `noahshinn/reflexion`, is a research codebase for "Language Agen
 ## Artifact analysis
 
 - **Storage substrate:** `in-memory` `files` — HotPotQA reflections live in agent object fields during repeated runs; AlfWorld/WebShop persist environment memory in JSON configs and logs; programming runs write JSONL records with reflections, code, feedback, and result status.
-- **Representational form:** `prose` `symbolic` — operative memories are prose reflections; JSON configs, JSONL records, benchmark statuses, tests, prompt templates, and implementation strings are symbolic or mixed prompt/program records.
+- **Representational form:** `natural-language` `symbolic` — operative memories are natural-language reflections; JSON configs, JSONL records, benchmark statuses, tests, prompt templates, and implementation strings are symbolic or mixed prompt/program records.
 - **Lineage:** `authored` `trace-extracted` — prompt templates, harness code, task configs, and benchmark scripts are authored; retained reflections are derived from failed scratchpads, action-observation histories, generated implementations, and test feedback.
 - **Behavioral authority:** `knowledge` `instruction` `validation` `routing` `learning` — logs and result records are audit knowledge; injected reflections advise or instruct the next attempt; exact-match checks, environment success, rewards, exhaustion, and tests validate failure; benchmark instance identity routes memory; reflection generation is the learning step.
 
-**HotPotQA reflection fields.** Reflections live in `CoTAgent` and `ReactReflectAgent` fields and are formatted into the next prompt only after an earlier run failed. The raw scratchpad remains evidence; the distilled prose reflection becomes prompt advice for the same question.
+**HotPotQA reflection fields.** Reflections live in `CoTAgent` and `ReactReflectAgent` fields and are formatted into the next prompt only after an earlier run failed. The raw scratchpad remains evidence; the distilled natural-language content reflection becomes prompt advice for the same question.
 
 **AlfWorld and WebShop environment configs.** `env_results_trial_<n>.json` is the durable memory surface for these tasks. Each environment config carries `memory`, success state, and, in AlfWorld, skip state. Failed logs are split by environment, converted into a "New plan", appended to that environment's memory, and later included in `EnvironmentHistory` for the same config slot.
 
@@ -43,7 +43,7 @@ Reflexion, from `noahshinn/reflexion`, is a research codebase for "Language Agen
 
 **Prompt templates and benchmark scripts.** The templates and runners are system-definition artifacts: they define when a failure counts, what history is shown to the reflection model, how many memories are shown, and where the reflection appears in the next model call.
 
-Promotion path: failed trace or failed implementation -> LLM-generated prose reflection -> same-instance prompt context for another attempt -> optional JSON/JSONL/log record. Reflexion does not promote lessons into reusable cross-task notes, tools, validators, embeddings, or model weights at this commit.
+Promotion path: failed trace or failed implementation -> LLM-generated natural-language content reflection -> same-instance prompt context for another attempt -> optional JSON/JSONL/log record. Reflexion does not promote lessons into reusable cross-task notes, tools, validators, embeddings, or model weights at this commit.
 
 ## Comparison with Our System
 
@@ -76,7 +76,7 @@ The authority tradeoff is scope. Reflexion can automatically create and re-use a
 
 **Write agency:** `automatic` `manual` — Reflections are generated automatically from failed attempts and test feedback when the benchmark strategy or `--use_memory` path enables them; operators manually select run parameters, reflection strategy, resume directories, and benchmark scripts.
 
-**Curation operations:** `promote` — A failed trace or failed implementation gains stronger future-action authority when the benchmark harness turns it into a retained prose reflection for a later attempt on the same instance.
+**Curation operations:** `promote` — A failed trace or failed implementation gains stronger future-action authority when the benchmark harness turns it into a retained natural-language content reflection for a later attempt on the same instance.
 
 ### Trace-learning
 
@@ -86,11 +86,11 @@ The authority tradeoff is scope. Reflexion can automatically create and re-use a
 
 **Learning timing:** `staged` — Reflexion attempts, evaluates, reflects on failure, inserts the reflection, and retries.
 
-**Distilled form:** `prose` — The durable behavior-shaping unit is a verbal plan, diagnosis, hint, or self-reflection.
+**Distilled form:** `natural-language` — The durable behavior-shaping unit is a verbal plan, diagnosis, hint, or self-reflection.
 
 Extraction is LLM-mediated and oracle-gated. HotPotQA reflects only after an incorrect, halted, or failed run. AlfWorld/WebShop update memory only for unsolved environments. Programming Reflexion asks for self-reflection after internal tests fail and then evaluates improved code against tests. The code does not attach exact source spans or formal proof of reflection truth; it relies on tight retry scope and benchmark feedback.
 
-Survey placement: Reflexion is the canonical trace-to-prose-advice example. It strengthens the survey distinction between raw traces as evidence and distilled lessons as behavior-shaping memory. It is not trace-to-vector, trace-to-graph, trace-to-tool, or trace-to-weights at this commit.
+Survey placement: Reflexion is the canonical trace-to-advice example. It strengthens the survey distinction between raw traces as evidence and distilled lessons as behavior-shaping memory. It is not trace-to-vector, trace-to-graph, trace-to-tool, or trace-to-weights at this commit.
 
 ## Read-back
 
@@ -106,9 +106,9 @@ Survey placement: Reflexion is the canonical trace-to-prose-advice example. It s
 
 **Injection point.** Read-back is pre-invocation: reflections are assembled into the prompt before the next reasoning/action loop or code generation call. Reflection generation after a failed run is write-side learning, not a second read.
 
-**Selection, scope, and complexity.** Scope is intentionally narrow and context volume is low: accumulated HotPotQA reflections, latest three environment memories, or one current programming reflection plus code/test feedback. Complexity remains manageable because memories are short prose plans, not retrieval bundles. The code does not measure prompt dilution or whether the model actually follows each reflection.
+**Selection, scope, and complexity.** Scope is intentionally narrow and context volume is low: accumulated HotPotQA reflections, latest three environment memories, or one current programming reflection plus code/test feedback. Complexity remains manageable because memories are short natural-language plans, not retrieval bundles. The code does not measure prompt dilution or whether the model actually follows each reflection.
 
-**Authority at consumption.** Reflections are advisory prose placed in structurally privileged prompt positions: the templates tell the model to use them to improve strategy, remember prior plans, or write an improved implementation. They are not hard gates, but they have stronger authority than a note sitting in a store because the harness guarantees prompt presence.
+**Authority at consumption.** Reflections are advisory natural-language placed in structurally privileged prompt positions: the templates tell the model to use them to improve strategy, remember prior plans, or write an improved implementation. They are not hard gates, but they have stronger authority than a note sitting in a store because the harness guarantees prompt presence.
 
 **Other consumers.** Humans and evaluators can inspect trial logs, environment JSON, HotPotQA examples, and programming JSONL. Those are audit/reporting consumers, not separate agent read-back paths.
 
@@ -128,13 +128,13 @@ Survey placement: Reflexion is the canonical trace-to-prose-advice example. It s
 - Whether reflections gain update, merge, or retirement policies rather than append-only bounded lists.
 - Whether same-instance reflections become cross-task lesson libraries; that would change the relevance and governance problem.
 - Whether per-reflection ablations appear, showing which inserted lesson changed a later action rather than only aggregate success.
-- Whether recurring prose lessons are promoted into symbolic tests, policies, or tools with stronger authority and clearer validation.
+- Whether recurring natural-language lessons are promoted into symbolic tests, policies, or tools with stronger authority and clearer validation.
 
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Reflexion turns failed trajectories and test feedback into task-local verbal advice for later attempts.
 - [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: failed attempts are distilled into reusable but scoped memory artifacts.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: Reflexion's reflections matter because the harness inserts them before retry, not because they are merely logged.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: raw traces, prose reflections, JSON records, prompt templates, and tests carry different forms and authorities.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: raw traces, natural-language reflections, JSON records, prompt templates, and tests carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: logs and result records provide evidence and audit context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompt templates, benchmark oracles, and injection code shape future behavior.

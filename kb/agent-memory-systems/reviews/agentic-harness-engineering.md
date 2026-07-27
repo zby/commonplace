@@ -31,17 +31,17 @@ Agentic Harness Engineering, by china-qijizhifeng, is an experiment framework fo
 ## Artifact analysis
 
 - **Storage substrate:** `files` `repo` — The standing harness lives as workspace files plus a git history; experiment evidence and derived state live as files under `experiments/.../runs/`, including benchmarks, analyses, scores, histories, manifests, snapshots, and traces. There is no code-grounded vector store, graph store, or model-weight update path in the reviewed source.
-- **Representational form:** `prose` `symbolic` — Prompts, long-term memory, skills, debugger reports, summaries, and feedback are prose; YAML agent configs, tool schemas, Python tools/middleware, JSON traces, manifests, score files, git commits, and task-result tables are symbolic.
+- **Representational form:** `natural-language` `symbolic` — Prompts, long-term memory, skills, debugger reports, summaries, and feedback are natural-language; YAML agent configs, tool schemas, Python tools/middleware, JSON traces, manifests, score files, git commits, and task-result tables are symbolic.
 - **Lineage:** `authored` `imported` `trace-extracted` — Baseline agent components and evolution prompts are authored; external source and web material can be imported by the explore agent into skills; rollout traces, verifier results, debugger reports, score histories, change evaluations, and evolved harness edits are derived from agent/evaluation events.
 - **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` — Trace reports and histories advise the evolution agent; prompts, skills, long-term memory, tool descriptions, middleware, and sub-agents instruct future code-agent behavior; workspace-only rules and validation commands constrain edits; YAML config, component registration, and sub-agent/tool names route behavior; Harbor/verifier results, change attribution, and validation scripts check outcomes; pass rates, best-ever snapshots, variant selection, and change verdicts rank candidates; trace-extracted analyses and edits are the learning loop.
 
-**Workspace harness.** The main retained behavior-shaping artifact is the git-backed workspace copied from `agents/code_agent_simple/`. Its prose operative parts are `systemprompt.md`, `LongTermMEMORY.md`, and any skills; its symbolic operative parts are `code_agent.yaml`, tool descriptions, Python tools, middleware, and sub-agent configs. It is consumed by Harbor/NexAU as a system-definition artifact for the next evaluation.
+**Workspace harness.** The main retained behavior-shaping artifact is the git-backed workspace copied from `agents/code_agent_simple/`. Its natural-language operative parts are `systemprompt.md`, `LongTermMEMORY.md`, and any skills; its symbolic operative parts are `code_agent.yaml`, tool descriptions, Python tools, middleware, and sub-agent configs. It is consumed by Harbor/NexAU as a system-definition artifact for the next evaluation.
 
 **Trace and debugger analysis artifacts.** Raw rollout traces, runtime logs, verifier rewards, and cleaned trace JSON are source material. Agent Debugger reports are derived knowledge artifacts that compress those traces into root-cause summaries and per-task detail files. Their authority is advisory until the evolution agent turns them into workspace edits.
 
 **Change manifests and attribution.** `change_manifest.json` records the evolution agent's declared evidence, predicted fixes, risks, and component level. `change_evaluation.json` is a derived symbolic report that compares those predictions with later task flips. This is the system's clearest promotion path: trace evidence becomes a manifest-backed edit, then later evaluation can keep, revise, or roll back that edit.
 
-**Scores, histories, and snapshots.** `iteration_scores.yaml`, `iteration_scores.md`, `task_history.json`, `evolution_history.md`, `best_ever.json`, and workspace snapshots are symbolic/prose lineage surfaces. They let the evolution prompt point to previous performance and best versions without reloading every trace.
+**Scores, histories, and snapshots.** `iteration_scores.yaml`, `iteration_scores.md`, `task_history.json`, `evolution_history.md`, `best_ever.json`, and workspace snapshots are symbolic/natural-language lineage surfaces. They let the evolution prompt point to previous performance and best versions without reloading every trace.
 
 **Evolve-agent traces and memory.** The evolve agent itself saves conversation traces and has a `save_memory` tool modeled on Gemini's memory tool, but the configured evolve agent does not list that tool in `evolve_agent.yaml` at this commit ([agents/evolve_agent/tools/session_tools/save_memory.py](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/cb6ea4e0055d60946424e8c608b4265ffaf99a09/agents/evolve_agent/tools/session_tools/save_memory.py), [agents/evolve_agent/evolve_agent.yaml](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/cb6ea4e0055d60946424e8c608b4265ffaf99a09/agents/evolve_agent/evolve_agent.yaml)). The operative memory path is therefore the experiment/workspace loop, not a personal-memory tool.
 
@@ -81,7 +81,7 @@ The strongest divergence is authority. AHE can automatically rewrite prompts, to
 
 **Learning timing:** `staged` — Evaluation writes traces, analysis writes reports, evolution edits the workspace, and the next iteration evaluates whether the prior edit helped or hurt.
 
-**Distilled form:** `prose` `symbolic` — Debugger reports, prompts, skills, and long-term memory are prose; configs, tool schemas, Python tools/middleware, manifests, scores, histories, and git snapshots are symbolic. I did not find a parametric distilled artifact in the reviewed code.
+**Distilled form:** `natural-language` `symbolic` — Debugger reports, prompts, skills, and long-term memory are natural-language; configs, tool schemas, Python tools/middleware, manifests, scores, histories, and git snapshots are symbolic. I did not find a parametric distilled artifact in the reviewed code.
 
 This is a strong trace-learning system by Commonplace's survey standard: raw traces are not merely stored, but are transformed into behavior-shaping harness artifacts and later checked by an external benchmark. The main caveat is that the learned artifact is optimized for benchmark performance, not for general truth or maintainability.
 
@@ -103,7 +103,7 @@ For the code agent being evaluated, read-back is simpler. The baseline `code_age
 
 **The README's "long-term memory" component is real as an editable slot, not as a populated mechanism.** The baseline file is a placeholder, and the evolve agent can choose to edit it, but the inspected code does not include specialized retrieval or lifecycle management for it.
 
-**The falsification loop is stronger than the semantic extraction loop.** Benchmark flips can reject a bad harness change, but they cannot fully explain why a prose debugger report or LLM-authored root cause was right. AHE's safety comes from repeated external evaluation, not from guaranteed interpretation quality.
+**The falsification loop is stronger than the semantic extraction loop.** Benchmark flips can reject a bad harness change, but they cannot fully explain why a natural-language debugger report or LLM-authored root cause was right. AHE's safety comes from repeated external evaluation, not from guaranteed interpretation quality.
 
 **Trace-learning is bounded by diagnostic richness.** The system invests heavily in verifier context, pass/fail labels, per-task reports, and partial-pass comparison. That gives the evolution agent better evidence than raw scores alone, and it is the main reason the loop is more than blind prompt search.
 

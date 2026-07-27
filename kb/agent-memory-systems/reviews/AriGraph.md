@@ -31,7 +31,7 @@ AriGraph, from AIRI Institute, is a research codebase for a TextWorld and QA mem
 ## Artifact analysis
 
 - **Storage substrate:** `in-memory` `files` — The behavior-shaping graph, embeddings, observation episodic store, plans, and recent history live mainly in Python objects during a run; experiment logs, benchmark data, prompts, QA datasets, and source code live as repository files.
-- **Representational form:** `prose` `symbolic` `parametric` — Observations, plans, episodic memories, prompts, and answers are prose; graph triplets, hypergraph theses/entities/events, JSON prompts, action JSON, and retrieval parameters are symbolic; Contriever embeddings and LLM model behavior are parametric access and generation surfaces.
+- **Representational form:** `natural-language` `symbolic` `parametric` — Observations, plans, episodic memories, prompts, and answers are natural-language; graph triplets, hypergraph theses/entities/events, JSON prompts, action JSON, and retrieval parameters are symbolic; Contriever embeddings and LLM model behavior are parametric access and generation surfaces.
 - **Lineage:** `authored` `imported` `trace-extracted` — Prompts and pipelines are authored; TextWorld environments and QA datasets are imported; triplets, outdated-entry decisions, navigation edges, episodic observations, QA paragraph memories, and run logs are extracted from observations, paragraphs, actions, and trajectories.
 - **Behavioral authority:** `knowledge` `instruction` `routing` `ranking` `learning` — Retrieved graph facts and episodes advise the planner/action/QA model as knowledge; system prompts instruct extraction, planning, action, and refinement; graph paths route `go to` navigation; embeddings and overlap scores rank memories; LLM extraction/refinement turns traces into later prompt-affecting memory.
 
@@ -83,7 +83,7 @@ AriGraph is also a useful reminder that graph memory can have real routing autho
 
 **Learning timing:** `online` — TextWorld memory updates happen during the acting loop before each planning/action decision; QA memory is built before answering each question.
 
-**Distilled form:** `prose` `symbolic` `parametric` — Raw observations remain as episodic prose; extracted triplets/theses are symbolic; Contriever embeddings are parametric retrieval state over both graph facts and episodes.
+**Distilled form:** `natural-language` `symbolic` `parametric` — Raw observations remain as episodic natural-language; extracted triplets/theses are symbolic; Contriever embeddings are parametric retrieval state over both graph facts and episodes.
 
 **Survey placement.** AriGraph is a strong example of trace-learning in-run example: raw traces become symbolic and parametric memory that affects later actions in the same episode. It weakens any survey claim that trace-learning must be durable across sessions, but it strengthens the distinction between trace-extracted knowledge artifacts and stronger reviewed system-definition artifacts.
 
@@ -126,7 +126,7 @@ AriGraph is also a useful reminder that graph memory can have real routing autho
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: AriGraph's graph matters because the pipeline reads it back into prompts, not merely because it stores facts.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating in-memory graph state, prose observations, embeddings, prompts, and evaluation logs.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating in-memory graph state, natural-language observations, embeddings, prompts, and evaluation logs.
 - [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames AriGraph's observation-to-graph loop as trace-learning.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies retrieved graph facts and episodic observations as advisory evidence/context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes authored prompts and pathfinding/routing code from ordinary graph facts.

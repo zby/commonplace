@@ -33,13 +33,13 @@ Synapptic, from `appcuarium/synapptic`, is a local Python CLI for learning a dev
 ## Artifact analysis
 
 - **Storage substrate:** `files` `sqlite` - The profile memory lives under `~/.synapptic/` as JSON observations, YAML profiles, Markdown archetypes, history snapshots, pattern prompts, config, benchmark JSON, and generated assistant memory/config files; the optional relay adds SQLite tables for request metrics, session index, FTS search, and ended-session state ([src/synapptic/config.py](https://github.com/appcuarium/synapptic/blob/bcde026770daa5cd9a8ca18ca7182b0aeaa87d1f/src/synapptic/config.py), [src/synapptic/state.py](https://github.com/appcuarium/synapptic/blob/bcde026770daa5cd9a8ca18ca7182b0aeaa87d1f/src/synapptic/state.py), [src/synapptic/relay/store.py](https://github.com/appcuarium/synapptic/blob/bcde026770daa5cd9a8ca18ca7182b0aeaa87d1f/src/synapptic/relay/store.py)).
-- **Representational form:** `prose` `symbolic` - Transcripts, observations, archetypes, guards, known weaknesses, extraction patterns, and assistant memory files are prose; dimensions, weights, evidence counts, source session ids, project slugs, model verdicts, output targets, hooks, settings, benchmark classifications, and relay indexes are symbolic. Synapptic calls LLMs, but the inspected retained memory is not stored as embeddings or model weights.
+- **Representational form:** `natural-language` `symbolic` - Transcripts, observations, archetypes, guards, known weaknesses, extraction patterns, and assistant memory files are natural-language; dimensions, weights, evidence counts, source session ids, project slugs, model verdicts, output targets, hooks, settings, benchmark classifications, and relay indexes are symbolic. Synapptic calls LLMs, but the inspected retained memory is not stored as embeddings or model weights.
 - **Lineage:** `authored` `trace-extracted` - Users author config, output selection, patterns, and exclusions; the core profile and archetype are derived from Claude Code JSONL session traces, filtered conversation pairs, LLM-extracted observations, weighted merge state, benchmark scenarios/results, and per-model verdicts.
 - **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` - Observations and relay records serve as knowledge evidence; generated archetypes and guard files instruct future coding assistants; project slugs, dimensions, output targets, and model-family resolution route memories; extraction validation, benchmark controls, and judge verdicts validate guard behavior; weights, decay, model verdicts, and exclusions rank/filter what reaches the archetype; the whole extract/merge/synthesize/benchmark loop is a learning path from traces into future prompt policy.
 
 **Observation files.** Per-session observation JSON is the raw distilled evidence layer: LLM output plus session id, timestamp, project metadata, dimension, confidence, and evidence text. It is retained mainly for traceability and later profile merging.
 
-**Weighted profiles.** `profile.yaml` is the standing learned state. It is symbolic enough to sort, decay, promote, filter, and benchmark, but its operative content is prose observations that later synthesis interprets.
+**Weighted profiles.** `profile.yaml` is the standing learned state. It is symbolic enough to sort, decay, promote, filter, and benchmark, but its operative content is natural-language observations that later synthesis interprets.
 
 **Archetype files.** `archetype.md` and generated assistant files are the high-authority read-back artifacts. They convert learned observations into natural-language behavior policy and become instruction-like when loaded by Claude Code, Cursor, Codex, or another assistant.
 
@@ -65,7 +65,7 @@ The tradeoff is speed versus review. Synapptic's local file substrate and benchm
 
 ### Borrowable Ideas
 
-**Guard effectiveness as a first-class field.** Ready now for review vocabulary. Commonplace could record whether a prescriptive instruction is untested, effective, redundant, or harmful for a model/harness, instead of treating all prose rules as equal once accepted.
+**Guard effectiveness as a first-class field.** Ready now for review vocabulary. Commonplace could record whether a prescriptive instruction is untested, effective, redundant, or harmful for a model/harness, instead of treating all natural-language rules as equal once accepted.
 
 **Trace-extracted candidates should start outside the library.** Ready for workshop workflows. Synapptic's observation/profile/archetype tiers map well to Commonplace's workshop-to-library promotion: raw traces and extracted candidate guards should live in work/report space until reviewed or benchmarked.
 
@@ -79,7 +79,7 @@ The tradeoff is speed versus review. Synapptic's local file substrate and benchm
 
 **Write agency:** `manual` `automatic` - Users configure providers, modes, output targets, patterns, projects, benchmark choices, and guard exclusions; automatic paths discover unprocessed sessions, filter transcripts, extract observations, merge weighted profiles, promote cross-project patterns, synthesize archetypes, integrate outputs, run session-end hooks, record benchmark verdicts, and maintain relay/index state.
 
-**Curation operations:** `dedup` `evolve` `decay` `promote` `consolidate` `synthesize` - Similar observations reinforce existing profile entries instead of creating endless duplicates; profile entries evolve through weight, evidence count, source list, project list, last-seen timestamp, and sometimes more-specific observation text; old entries decay by merge cycle and wall-clock age; mixed dimensions promote to global after recurrence across projects; synthesis consolidates profile entries into a compact archetype and can generate higher-level user archetype/known-weakness prose from the profile.
+**Curation operations:** `dedup` `evolve` `decay` `promote` `consolidate` `synthesize` - Similar observations reinforce existing profile entries instead of creating endless duplicates; profile entries evolve through weight, evidence count, source list, project list, last-seen timestamp, and sometimes more-specific observation text; old entries decay by merge cycle and wall-clock age; mixed dimensions promote to global after recurrence across projects; synthesis consolidates profile entries into a compact archetype and can generate higher-level user archetype/known-weakness natural-language content from the profile.
 
 ### Trace-learning
 
@@ -89,7 +89,7 @@ The tradeoff is speed versus review. Synapptic's local file substrate and benchm
 
 **Learning timing:** `online` `staged` - The SessionEnd hook can enqueue background extraction after a Claude session closes, while the explicit CLI supports staged `extract`, `merge`, `synthesize`, `integrate`, and `benchmark` runs.
 
-**Distilled form:** `prose` `symbolic` - Distilled outputs include prose observations, archetypes, guards, and known weaknesses plus symbolic dimensions, weights, evidence counts, source ids, project slugs, model verdicts, exclusion flags, and benchmark result rows.
+**Distilled form:** `natural-language` `symbolic` - Distilled outputs include natural-language observations, archetypes, guards, and known weaknesses plus symbolic dimensions, weights, evidence counts, source ids, project slugs, model verdicts, exclusion flags, and benchmark result rows.
 
 **Extraction.** The extraction oracle is a configured LLM called over a prompt template. The prompt wraps transcript and profile YAML as reference-only material, asks for JSON observations across active dimensions, and validates dimensions before saving. Custom user patterns can replace the default prompt.
 

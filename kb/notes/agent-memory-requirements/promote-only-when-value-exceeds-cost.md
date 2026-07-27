@@ -20,7 +20,7 @@ An observation inbox can be the lightest candidate stage. Its job is to record a
 
 For behavior-changing material, promotion should usually update an authoritative source artifact first. Assistant-facing cues, prompt excerpts, checklists, generated indexes, and other compiled surfaces should normally be rendered from that source unless they are explicitly governed as the source themselves.
 
-This promotion path is a [constraining](../definitions/constraining.md) gradient: prose candidate, curated note, instruction, checklist, test, script, guardrail. [Spec mining is codification's operational mechanism](../spec-mining-as-codification.md) gives the practical loop for moving repeated failures or procedures toward executable checks.
+This promotion path is a [constraining](../definitions/constraining.md) gradient: natural-language candidate, curated note, instruction, checklist, test, script, guardrail. [Spec mining is codification's operational mechanism](../spec-mining-as-codification.md) gives the practical loop for moving repeated failures or procedures toward executable checks.
 
 ## Evaluation Questions
 
@@ -34,4 +34,4 @@ This promotion path is a [constraining](../definitions/constraining.md) gradient
 Relevant Notes:
 
 - [Spec mining is codification's operational mechanism](../spec-mining-as-codification.md) - explains how repeated failures move toward executable checks
-- [Constraining](../definitions/constraining.md) - defines the gradient from prose to stricter symbolic forms
+- [Constraining](../definitions/constraining.md) - defines the gradient from natural-language to stricter symbolic forms

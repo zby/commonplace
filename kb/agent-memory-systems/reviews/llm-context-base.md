@@ -17,7 +17,7 @@ llm-context-base, from `asakin/llm-context-base`, is a portable Markdown templat
 
 ## Core Ideas
 
-**The repo is the memory substrate, not the agent runtime.** The philosophy and design docs state the boundary plainly: llm-context-base is a "pile of markdown" that external agents, MCP servers, workers, or GitHub Actions can operate on, while code extensions live above the repo ([PHILOSOPHY.md](https://github.com/asakin/llm-context-base/blob/6d01cba8e2c22f9ca2519c70073a05cd54378a8c/PHILOSOPHY.md), [docs/design-decisions.md](https://github.com/asakin/llm-context-base/blob/6d01cba8e2c22f9ca2519c70073a05cd54378a8c/docs/design-decisions.md)). This makes adoption easy across agents, but it shifts faithfulness to whether the host tool follows the prose instructions.
+**The repo is the memory substrate, not the agent runtime.** The philosophy and design docs state the boundary plainly: llm-context-base is a "pile of markdown" that external agents, MCP servers, workers, or GitHub Actions can operate on, while code extensions live above the repo ([PHILOSOPHY.md](https://github.com/asakin/llm-context-base/blob/6d01cba8e2c22f9ca2519c70073a05cd54378a8c/PHILOSOPHY.md), [docs/design-decisions.md](https://github.com/asakin/llm-context-base/blob/6d01cba8e2c22f9ca2519c70073a05cd54378a8c/docs/design-decisions.md)). This makes adoption easy across agents, but it shifts faithfulness to whether the host tool follows the natural-language instructions.
 
 **Metadata routing is the main context-efficiency mechanism.** The README and metadata docs require YAML frontmatter with `type`, `summary`, `tags`, `status`, and `updated`; the query protocol tells the agent to scan directory READMEs and summaries first, then read only one to three relevant files ([README.md](https://github.com/asakin/llm-context-base/blob/6d01cba8e2c22f9ca2519c70073a05cd54378a8c/README.md), [docs/metadata-standard.md](https://github.com/asakin/llm-context-base/blob/6d01cba8e2c22f9ca2519c70073a05cd54378a8c/docs/metadata-standard.md), [_meta/instructions/knowledge-query.md](https://github.com/asakin/llm-context-base/blob/6d01cba8e2c22f9ca2519c70073a05cd54378a8c/_meta/instructions/knowledge-query.md)). It avoids a central growing index and relies on concise document summaries as the cheap routing layer.
 
@@ -30,9 +30,9 @@ llm-context-base, from `asakin/llm-context-base`, is a portable Markdown templat
 ## Artifact analysis
 
 - **Storage substrate:** `repo` `files` — The retained state is a Git repository of Markdown files, templates, Obsidian config, README files, and thin agent bootstrap files. There is no local database, vector store, graph store, or service object in the reviewed repo.
-- **Representational form:** `prose` `symbolic` — The operative parts are prose instructions, docs, templates, and wiki pages plus symbolic YAML frontmatter, directory names, statuses, tags, dates, routing tables, tool manifests, git history, and script logic. The repo does not retain embeddings or model weights.
+- **Representational form:** `natural-language` `symbolic` — The operative parts are natural-language instructions, docs, templates, and wiki pages plus symbolic YAML frontmatter, directory names, statuses, tags, dates, routing tables, tool manifests, git history, and script logic. The repo does not retain embeddings or model weights.
 - **Lineage:** `authored` `imported` — Users and agents author wiki pages, decisions, project files, config entries, training logs, and instruction updates; captured external material enters through `_inbox/` and optionally `_sources/`. The implementation evidence does not show an automatic trace-mining loop that qualifies as `trace-extracted`.
-- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `enforcement` — Content pages serve as knowledge and reference; `_config/`, `_meta/instructions/`, AGENTS/CLAUDE/Cursor/Copilot/Windsurf shims, and templates instruct agents; metadata, directory READMEs, routing tables, and `related` links route lookup; lint and definition-of-done protocols validate; bootstrap/session-start gates and privacy/gitignore rules are prose enforcement for compliant agents.
+- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `enforcement` — Content pages serve as knowledge and reference; `_config/`, `_meta/instructions/`, AGENTS/CLAUDE/Cursor/Copilot/Windsurf shims, and templates instruct agents; metadata, directory READMEs, routing tables, and `related` links route lookup; lint and definition-of-done protocols validate; bootstrap/session-start gates and privacy/gitignore rules are natural-language enforcement for compliant agents.
 
 **Instruction substrate.** `_config/config.md`, `_config/context.md`, `_config/standard.md`, `_config/tools.md`, and `_meta/instructions/*.md` are system-definition artifacts. They change future behavior by telling agents what to load, what to ask, where to file captures, what metadata to require, how to lint, and when to keep or discard sources ([_config](https://github.com/asakin/llm-context-base/tree/6d01cba8e2c22f9ca2519c70073a05cd54378a8c/_config), [_meta/instructions](https://github.com/asakin/llm-context-base/tree/6d01cba8e2c22f9ca2519c70073a05cd54378a8c/_meta/instructions)).
 
@@ -48,9 +48,9 @@ Promotion path: captures start in `_inbox/`, can be filed into durable content d
 |---|---|---|
 | Primary purpose | Personal LLM wiki template and agent instruction substrate | Agent-operated methodology KB with typed library/workshop/source layers |
 | Canonical artifact | Markdown files with YAML frontmatter and agent instructions | Typed Markdown artifacts with collection contracts and validation |
-| Runtime | None in repo; host agents execute prose protocols | Python CLI commands, validators, indexers, review tooling, plus Markdown |
+| Runtime | None in repo; host agents execute natural-language protocols | Python CLI commands, validators, indexers, review tooling, plus Markdown |
 | Retrieval | Agent scans README, filenames, summaries, tags, and selected files | `rg`, generated indexes, links, type specs, reports, and explicit navigation rules |
-| Governance | Lint protocols and prose rules followed by agents | Deterministic validation, review gates, schemas, generated indexes, git diffs |
+| Governance | Lint protocols and natural-language rules followed by agents | Deterministic validation, review gates, schemas, generated indexes, git diffs |
 
 Both systems treat a repo of Markdown artifacts as behavior-shaping memory for future agents. llm-context-base is deliberately lighter: it optimizes for immediate adoption by ordinary users and many tools, with no build step and no runtime dependencies. Commonplace is heavier and more formal: collection contracts, type specs, deterministic validation, and generated indexes make the KB less portable but more mechanically checkable.
 
@@ -99,7 +99,7 @@ Context scope and complexity are controlled by directory routing and metadata, n
 ## What to Watch
 
 - Whether GitHub Actions, MCP, or heartbeat/event files move from future direction into shipped code; that would change the system from Markdown-only substrate to an actively scheduled memory layer.
-- Whether lint becomes an executable validator instead of a prose protocol; that would raise metadata and lifecycle rules from agent-followed advice to mechanically enforced governance.
+- Whether lint becomes an executable validator instead of a natural-language protocol; that would raise metadata and lifecycle rules from agent-followed advice to mechanically enforced governance.
 - Whether training write-back gains source-span provenance linking each learned preference or convention to a conversation, capture, or decision artifact.
 - Whether external-source preservation defaults change; preserving `_sources/` by default would shift the system closer to Karpathy's raw-source layer and improve auditability at the cost of accumulation.
 - Whether supported tool shims diverge from the canonical instruction modules as more agent ecosystems add proprietary rule formats.

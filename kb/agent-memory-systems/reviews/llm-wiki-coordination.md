@@ -32,7 +32,7 @@ llm-wiki-coordination, from `AEVYRA/llm-wiki-coordination`, is a documentation-f
 ## Artifact analysis
 
 - **Storage substrate:** `files` `repo` — The shipped retained artifacts are Markdown protocol files, a Python audit script, and downstream wiki files stored in an ordinary filesystem/repository; there is no database, vector store, graph store, or service object in the inspected source.
-- **Representational form:** `prose` `symbolic` — Protocol explanations, dialogue entries, thread context, persona ontology, and audit reports are prose; YAML frontmatter, `meta.yaml`, `consensus:` blocks, `last_eval` vectors, statuses, invariant IDs, regexes, and Python checks are symbolic. There is no parametric retrieval state.
+- **Representational form:** `natural-language` `symbolic` — Protocol explanations, dialogue entries, thread context, persona ontology, and audit reports are natural-language; YAML frontmatter, `meta.yaml`, `consensus:` blocks, `last_eval` vectors, statuses, invariant IDs, regexes, and Python checks are symbolic. There is no parametric retrieval state.
 - **Lineage:** `authored` — The package consists of authored protocols and tooling. Downstream dialogue entries are agent-authored records and can become evidence for later canonization, but the inspected repository does not implement automatic extraction from traces into durable memory.
 - **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` — Dialogue entries and crystallization summaries are knowledge artifacts; protocol files instruct agents; the audit script enforces by returning HARD/WARN/INFO findings and nonzero exit status; RoleSpace deficits, statuses, consensus blocks, and canon-page references route future work; structural and link checks validate the wiki.
 
@@ -90,14 +90,14 @@ Pull read-back is still useful: an agent can read the latest entry, compute Role
 
 - Whether a future release adds executable crystallization that writes `crystallized.md`, patches canon pages, or records signatures; that would move the promotion path from documented protocol to implemented write-side behavior.
 - Whether the audit grows repair or autofix operations. That would change the write side from manual-only to manual plus automatic validation-driven maintenance.
-- Whether stale consensus and active-agent dormancy rules become code, since those are currently stronger in prose than in the audit implementation.
+- Whether stale consensus and active-agent dormancy rules become code, since those are currently stronger in natural-language than in the audit implementation.
 - Whether any host integration appears, such as an MCP server, pre-commit hook, AGENTS.md installer, or prompt assembler; that would change read-back from pull-only to push or both.
 - Whether L4-L5 semantic audit gets a retained report format with citations; that would create a more Commonplace-like bridge from structural lint to reviewable semantic QA.
 
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: llm-wiki-coordination stores protocols and dialogue memory, but activation is pull-only unless a host agent reads or runs it.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: protocol prose, symbolic frontmatter, audit code, and dialogue entries have different authority and review methods.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: protocol natural-language, symbolic frontmatter, audit code, and dialogue entries have different authority and review methods.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: dialogue entries, crystallization summaries, and audit reports mostly serve as evidence and reference.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: protocol files, consensus rules, RoleSpace fields, and audit checks shape later behavior with instruction, validation, routing, and enforcement force.
 - [A functioning KB needs a workshop layer not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) - compares: dialogue thread directories are a workshop-style holding area for contested or in-flight reasoning before promotion.

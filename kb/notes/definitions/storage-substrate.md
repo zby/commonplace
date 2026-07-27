@@ -10,7 +10,7 @@ Storage substrate is the field that records where retained state persists: repos
 
 ## Scope
 
-Use the term storage substrate for the operational location of a [retained artifact](./retained-artifact.md). The same substrate can host many [representational forms](./representational-form.md): a repository can contain prose workflows, symbolic validators, generated prompt views, and pointers to checkpoints; a vector store can contain readable records plus distributed-parametric indexes.
+Use the term storage substrate for the operational location of a [retained artifact](./retained-artifact.md). The same substrate can host many [representational forms](./representational-form.md): a repository can contain natural-language workflows, symbolic validators, generated prompt views, and pointers to checkpoints; a vector store can contain readable records plus distributed-parametric indexes.
 
 ## Exclusions
 
@@ -19,7 +19,7 @@ Do not use storage substrate as a replacement for artifact type, form, or author
 ## Misuse Cases
 
 - Comparing "files versus weights" as a single axis when storage location, representational form, and behavioral authority are changing at once.
-- Calling a vector store a memory taxonomy rather than a substrate that may host prose records, dense-vector indexes, and ranking behavior.
+- Calling a vector store a memory taxonomy rather than a substrate that may host natural-language records, dense-vector indexes, and ranking behavior.
 
 ---
 

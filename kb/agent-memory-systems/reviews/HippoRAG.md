@@ -32,11 +32,11 @@ HippoRAG, from OSU NLP Group, is a Python RAG and non-parametric memory framewor
 ## Artifact analysis
 
 - **Storage substrate:** `files` — The retained store is local filesystem state: parquet files for chunk/entity/fact embeddings, OpenIE JSON results, a pickled igraph graph, prompts/config in the repository, and experiment outputs under `outputs`.
-- **Representational form:** `prose` `symbolic` `parametric` — Source passages and QA prompts are prose; hash ids, triples, graph nodes/edges, config values, retrieval metrics, and JSON/parquet schemas are symbolic; embeddings and LLM-mediated reranking outputs provide parametric selection state.
+- **Representational form:** `natural-language` `symbolic` `parametric` — Source passages and QA prompts are natural-language; hash ids, triples, graph nodes/edges, config values, retrieval metrics, and JSON/parquet schemas are symbolic; embeddings and LLM-mediated reranking outputs provide parametric selection state.
 - **Lineage:** `authored` `imported` — Prompts, code, configs, and demos are authored; passages, OpenIE extractions, graph edges, embeddings, and evaluation results derive from imported document corpora and caller-supplied docs. I did not find trace-extracted retained artifacts.
 - **Behavioral authority:** `knowledge` `routing` `ranking` `validation` — Retrieved passages and extracted facts advise QA as knowledge; query-to-fact and query-to-passage embedding instructions plus top-k settings route selection; dense scores, LLM fact filtering, graph weights, and PageRank rank retrieved documents; tests and evaluation metrics validate retrieval/QA behavior at the experiment level.
 
-**Document chunks.** Input documents become hashed chunk records in the chunk embedding store, with prose content plus embeddings. They are the answerable knowledge source and the nodes eventually returned to the QA prompt ([src/hipporag/embedding_store.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/embedding_store.py), [src/hipporag/HippoRAG.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/HippoRAG.py)).
+**Document chunks.** Input documents become hashed chunk records in the chunk embedding store, with natural-language content plus embeddings. They are the answerable knowledge source and the nodes eventually returned to the QA prompt ([src/hipporag/embedding_store.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/embedding_store.py), [src/hipporag/HippoRAG.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/HippoRAG.py)).
 
 **OpenIE extractions and fact store.** The extraction path stores named entities and triples per chunk, then flattens triples into fact embeddings. These facts have ranking and routing authority during retrieval, but they are not exposed as reviewed claims with source spans or acceptance state ([src/hipporag/information_extraction/openie_openai.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/information_extraction/openie_openai.py), [src/hipporag/utils/misc_utils.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/utils/misc_utils.py)).
 
@@ -46,7 +46,7 @@ HippoRAG, from OSU NLP Group, is a Python RAG and non-parametric memory framewor
 
 **Evaluation artifacts.** Retrieval and QA metrics are experiment evidence rather than runtime memory. They can validate a retrieval setup against gold documents and answers, but they do not promote or reject individual extracted facts during normal indexing ([src/hipporag/evaluation/retrieval_eval.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/evaluation/retrieval_eval.py), [src/hipporag/evaluation/qa_eval.py](https://github.com/OSU-NLP-Group/HippoRAG/blob/d437bfb1805278b81e20c82357ed3f7d90f14901/src/hipporag/evaluation/qa_eval.py)).
 
-**Promotion path.** HippoRAG promotes imported prose documents into embeddings, OpenIE triples, entity/fact nodes, graph edges, and ranked passage contexts. The promotion path is optimized for retrieval quality, not for governance: extracted facts become ranking state without an explicit review gate, typed claim record, or invalidation lifecycle.
+**Promotion path.** HippoRAG promotes imported natural-language documents into embeddings, OpenIE triples, entity/fact nodes, graph edges, and ranked passage contexts. The promotion path is optimized for retrieval quality, not for governance: extracted facts become ranking state without an explicit review gate, typed claim record, or invalidation lifecycle.
 
 ## Comparison with Our System
 
@@ -66,7 +66,7 @@ The biggest design divergence is that HippoRAG treats extracted structure as an 
 
 **Graph-mediated retrieval over source documents.** Ready as an experimental read-only layer. Commonplace could use extracted entities and graph diffusion to find candidate notes or sources, while keeping Markdown artifacts and validation as the authority source.
 
-**Separate fact retrieval from passage retrieval.** Ready for search design. HippoRAG's query-to-fact selection followed by passage ranking is a useful pattern for multi-hop source discovery where the final context should still be original prose passages.
+**Separate fact retrieval from passage retrieval.** Ready for search design. HippoRAG's query-to-fact selection followed by passage ranking is a useful pattern for multi-hop source discovery where the final context should still be original natural-language passages.
 
 **Use generated triples as candidate routing state, not accepted claims.** Ready now as a governance rule. In Commonplace, automatically extracted triples should point reviewers toward related notes or sources; they should not become durable methodology claims without review.
 

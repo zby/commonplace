@@ -17,7 +17,7 @@ The system must not merely answer "what do we know?" It must sometimes answer an
 - On-reference loading when a document, source, issue, or artifact is explicitly mentioned.
 - On-invoke loading through skills, tools, or workflows that carry their own instructions.
 - On-situation loading through typed cues that match proposed actions, task domains, risk markers, or decision spaces.
-- Checklists, tests, scripts, lint rules, approval gates, or runtime guardrails when the lesson can be moved from prose toward symbolic enforcement.
+- Checklists, tests, scripts, lint rules, approval gates, or runtime guardrails when the lesson can be moved from natural-language toward symbolic enforcement.
 
 Typed cue indexes provide the on-situation loading form of this family. A cue can carry a trigger condition, lesson, source pointer, behavioral authority, consequence weight, and placement target. Matching can use rules, embeddings, action classifiers, or LLM relevance judgments. The choice depends on consequence, false-positive tolerance, and cost.
 

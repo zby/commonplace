@@ -31,11 +31,11 @@ AgentFly, branded as Memento in the inspected repository, is an Agent-on-the-Fly
 ## Artifact analysis
 
 - **Storage substrate:** `files` `model-weights` — Case banks, training rows, dummy memory, benchmark result rows, and source data are JSONL files; the parametric retriever can persist PyTorch checkpoints under the configured output directory, although no checkpoint file is present in the inspected checkout.
-- **Representational form:** `prose` `symbolic` `parametric` — Questions, cases, rationales, and plans are prose; JSON fields, rewards, case labels, truth labels, traces, and prompt templates are symbolic; the optional case retriever checkpoint is distributed-parametric state.
+- **Representational form:** `natural-language` `symbolic` `parametric` — Questions, cases, rationales, and plans are natural-language; JSON fields, rewards, case labels, truth labels, traces, and prompt templates are symbolic; the optional case retriever checkpoint is distributed-parametric state.
 - **Lineage:** `authored` `imported` `trace-extracted` — Prompt templates and client code are authored; benchmark data and seed case rows are imported or preloaded; result rows, compact case entries, retrieved-case training rows, and retriever checkpoints derive from task trajectories and judgement outcomes.
 - **Behavioral authority:** `knowledge` `instruction` `validation` `ranking` `learning` — Case examples are knowledge artifacts when they evidence prior tasks; the formatted "positive" and "negative" blocks instruct the planner to imitate or avoid patterns; LLM judge outputs validate benchmark answers; SimCSE similarity and the trained classifier rank read-back; training rows and checkpoints provide learning authority for future retrieval.
 
-**Case-bank rows.** `memory.jsonl` rows use `case`, `plan`, and `case_label`; `dummy_memo.jsonl` rows use `question`, `plan`, and `reward`. Both formats are consumed by wrapper-specific loaders and formatted into examples. Their operative split is the plan prose/JSON used as planner advice and the label/reward used as a selection and warning signal.
+**Case-bank rows.** `memory.jsonl` rows use `case`, `plan`, and `case_label`; `dummy_memo.jsonl` rows use `question`, `plan`, and `reward`. Both formats are consumed by wrapper-specific loaders and formatted into examples. Their operative split is the plan natural-language/JSON used as planner advice and the label/reward used as a selection and warning signal.
 
 **Training-data rows.** `training_data.jsonl` rows connect a current query, a retrieved case, its case label, the retrieved plan, and a truth label indicating whether the full run was judged correct. These are not read directly into the planner; they are learning artifacts for the retriever training script.
 
@@ -81,7 +81,7 @@ The clearest tradeoff is authority. AgentFly's read-back cases are powerful beca
 
 **Learning timing:** `staged` — Case rows are appended online during benchmark execution, but parametric learning is a separate offline training step that writes checkpoints.
 
-**Distilled form:** `prose` `symbolic` `parametric` — The first distilled artifacts are prose/symbolic case rows and labels; the optional second-stage artifact is a trained neural retriever checkpoint.
+**Distilled form:** `natural-language` `symbolic` `parametric` — The first distilled artifacts are natural-language/symbolic case rows and labels; the optional second-stage artifact is a trained neural retriever checkpoint.
 
 On the survey axes, AgentFly is trace-learning with a compact case-bank output and an optional weight-learning read-back policy. It strengthens the distinction between learning LLM task behavior and fine-tuning the LLM itself: the learned weights, when present, belong to a retrieval selector, not to the planner or executor model.
 
@@ -101,7 +101,7 @@ Other consumers include the offline trainer, which consumes training rows to upd
 
 ## Curiosity Pass
 
-The repository name and README branding diverge: the requested source is AgentFly, while the README, package name, and clone instructions call the system Memento. The review uses AgentFly as the local review title and names the internal branding in prose.
+The repository name and README branding diverge: the requested source is AgentFly, while the README, package name, and clone instructions call the system Memento. The review uses AgentFly as the local review title and names the internal branding in natural-language.
 
 The README's "continual learning" claim is partly code-grounded and partly operational. The code does implement automatic case accumulation and retriever training data capture; retraining still requires a separate training invocation, and there is no scheduler or closed-loop checkpoint refresh in the inspected files.
 

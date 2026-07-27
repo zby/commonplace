@@ -44,7 +44,7 @@ Done when agents can record a correction, silent failure, repeated procedure, pr
 
 Gap: retirement, supersession, relaxation, recurrence tracking, and scheduled lifecycle work are incomplete.
 
-After candidates exist, add maintenance operations that read lifecycle state and act on it. The first pass should support duplicate merge, supersession, rejection, promotion, retirement, and relaxation from rigid checks back to prose guidance.
+After candidates exist, add maintenance operations that read lifecycle state and act on it. The first pass should support duplicate merge, supersession, rejection, promotion, retirement, and relaxation from rigid checks back to natural-language guidance.
 
 Done when a candidate or durable artifact can be triaged as promote, merge, keep, reject, retire, supersede, or relax, and when stale candidate queues cannot silently become a second untrusted library.
 

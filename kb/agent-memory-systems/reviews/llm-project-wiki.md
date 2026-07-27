@@ -31,7 +31,7 @@ last-checked: "2026-06-04"
 ## Artifact analysis
 
 - **Storage substrate:** `files` `repo` — The shipped system is two Markdown files in a git repository, and the generated target state is an Obsidian vault plus project files such as `CLAUDE.md`, `GEMINI.md`, `.claude/commands/wiki-ingest.md`, `scripts/sync-vault.sh`, `SECOND_BRAIN.md`, and wiki Markdown pages.
-- **Representational form:** `prose` `symbolic` — The operative artifact is prose instruction to Claude; symbolic parts include vault directory contracts, command paths, shell snippets, frontmatter schemas, page types, status values, log grammars, Dataview queries, and grep/git workflows.
+- **Representational form:** `natural-language` `symbolic` — The operative artifact is natural-language instruction to Claude; symbolic parts include vault directory contracts, command paths, shell snippets, frontmatter schemas, page types, status values, log grammars, Dataview queries, and grep/git workflows.
 - **Lineage:** `authored` `imported` `trace-extracted` — The setup prompt and generated schemas/rules are authored; `Sources/` snapshots are imported from project memory, rules, root docs, and design docs; gap entries and query-generated missing-page work are trace-extracted from future tasks where the wiki proves insufficient.
 - **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `learning` — Generated wiki pages advise future agents as knowledge; `CLAUDE.md` / `GEMINI.md` wiki-first rules and slash commands instruct; stale marking, sync cadence, and "only if insufficient" fallback rules constrain behavior; `index.md`, Semantic Lookup, wikilinks, and grep path matching route reads and maintenance; frontmatter, health dashboards, orphan checks, broken-link checks, and gap audits validate; gap-to-ingest and diff ingest implement a lightweight learning loop.
 
@@ -75,7 +75,7 @@ The strongest overlap is the compiled-source model: source snapshots feed distil
 
 **Learning timing:** `online` `staged` — Gap capture happens during the future task that discovered the missing knowledge; resolution is staged into the next ingest or gap-audit pass.
 
-**Distilled form:** `prose` `symbolic` — Gaps become prose log entries, then wiki pages with frontmatter, wikilinks, source paths, and status metadata.
+**Distilled form:** `natural-language` `symbolic` — Gaps become natural-language log entries, then wiki pages with frontmatter, wikilinks, source paths, and status metadata.
 
 **Extraction.** The oracle is the acting LLM's judgment that the wiki was insufficient for the current task. The prompt prescribes a one-sentence gap note and later ingest processing, but it does not ship code that parses transcripts or automatically ranks gaps.
 

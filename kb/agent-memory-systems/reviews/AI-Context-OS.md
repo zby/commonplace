@@ -31,17 +31,17 @@ AI-Context-OS, also branded MEMM, is a Tauri desktop app by alexdcd for turning 
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Canonical memories, router artifacts, inbox items, proposals, journal logs, tasks, scratch, and adapter files live in the workspace file tree; context-request telemetry, served-memory records, health snapshots, and optimization records live in SQLite under `.cache/observability.db` as support state.
-- **Representational form:** `prose` `symbolic` — Memory content and rules are prose Markdown; frontmatter, L0/L1/L2 markers, generated YAML/catalog/router files, MCP schemas, scoring records, graph edges, proposals, tasks, and observability rows are symbolic control surfaces.
+- **Representational form:** `natural-language` `symbolic` — Memory content and rules are natural-language Markdown; frontmatter, L0/L1/L2 markers, generated YAML/catalog/router files, MCP schemas, scoring records, graph edges, proposals, tasks, and observability rows are symbolic control surfaces.
 - **Lineage:** `authored` `imported` `trace-extracted` — Users author memories and rules, import inbox/link/file material, and the system derives usage counters, context-request logs, served/not-loaded rows, daily operational events, and optimization suggestions from runtime traces.
 - **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` — Memories and sources are evidence/context; `.ai/rules`, generated router files, and MCP prelude text instruct agents; frontmatter, folder contracts, graph links, skills, and adapters route work; protected-memory checks and governance surfaces validate or warn; scoring ranks read-back; observability-derived suggestions provide learning input for future maintenance.
 
-**Markdown memories.** A memory file combines YAML frontmatter (`id`, `type`, `l0`, importance, tags, links, `requires`, `optional`, `protected`, `derived_from`) with L1/L2 prose sections. The operative split is important: the prose is agent-readable knowledge, while the frontmatter is routing, ranking, dependency, and validation metadata.
+**Markdown memories.** A memory file combines YAML frontmatter (`id`, `type`, `l0`, importance, tags, links, `requires`, `optional`, `protected`, `derived_from`) with L1/L2 natural-language sections. The operative split is important: the natural-language content is agent-readable knowledge, while the frontmatter is routing, ranking, dependency, and validation metadata.
 
 **Generated router and adapter artifacts.** `claude.md`, `.cursorrules`, `.windsurfrules`, `.ai/index.yaml`, and `.ai/catalog.md` are derived views over the file store. They have system-definition authority for agents that load them, but they are explicitly overwritten and should not be treated as canonical memory.
 
 **Context scoring records.** `ScoreBreakdown`, `ScoredMemory`, `LoadedMemory`, and `UnloadedMemory` are transient symbolic artifacts produced per query. They decide what reaches the next model call, but they do not persist except where MCP observability logs the served/not-loaded result.
 
-**Observability and optimization artifacts.** SQLite `context_requests`, `memories_served`, and `memories_not_loaded` are raw trace records for context use. `OptimizationRecord` rows are distilled symbolic/prose suggestions such as compressing large L1 summaries, archiving unused memories, promoting low-importance memories that are frequently served, reviewing always-L2 memories, merging tag-overlap candidates, or nudging near-threshold memories ([src-tauri/src/core/optimizer.rs](https://github.com/alexdcd/AI-Context-OS/blob/f50f6ad42e7b2fbcc61697017b1dcbaf299f1ef5/src-tauri/src/core/optimizer.rs)). The promotion path is trace-extracted suggestion to human/system action; the inspected code updates suggestion status but does not itself rewrite the target memory.
+**Observability and optimization artifacts.** SQLite `context_requests`, `memories_served`, and `memories_not_loaded` are raw trace records for context use. `OptimizationRecord` rows are distilled symbolic/natural-language suggestions such as compressing large L1 summaries, archiving unused memories, promoting low-importance memories that are frequently served, reviewing always-L2 memories, merging tag-overlap candidates, or nudging near-threshold memories ([src-tauri/src/core/optimizer.rs](https://github.com/alexdcd/AI-Context-OS/blob/f50f6ad42e7b2fbcc61697017b1dcbaf299f1ef5/src-tauri/src/core/optimizer.rs)). The promotion path is trace-extracted suggestion to human/system action; the inspected code updates suggestion status but does not itself rewrite the target memory.
 
 **Inbox proposals.** Inbox items and `IngestProposal` JSON files are a governed staging layer: heuristics or provider inference classify captured material as promote, route to sources, update, discard, or needs-review, and applying a proposal writes a memory/source file plus daily-log entry ([src-tauri/src/commands/inbox.rs](https://github.com/alexdcd/AI-Context-OS/blob/f50f6ad42e7b2fbcc61697017b1dcbaf299f1ef5/src-tauri/src/commands/inbox.rs)). This is a real promotion path from imported material to canonical Markdown, but it is proposal-mediated rather than autonomous memory curation.
 
@@ -51,7 +51,7 @@ AI-Context-OS and Commonplace share a file-first premise: durable knowledge shou
 
 The strongest divergence is authority. Commonplace's collection contracts, type specs, and validation commands are explicit governance over the KB. AI-Context-OS has protected-memory checks, folder contracts, conflict/decay/consolidation suggestions, and optimization records, but most governance remains advisory. That makes it friendlier as a user-facing app, but weaker as an enforced methodology substrate.
 
-The strongest alignment is context-budget discipline. AI-Context-OS's L0/L1/L2 allocation is a concrete implementation of progressive disclosure, while Commonplace mostly relies on indexes, links, collection routing, and agent judgment. The reviewed code shows how a prose-first store can still have deterministic serve-time budget policy without vector infrastructure.
+The strongest alignment is context-budget discipline. AI-Context-OS's L0/L1/L2 allocation is a concrete implementation of progressive disclosure, while Commonplace mostly relies on indexes, links, collection routing, and agent judgment. The reviewed code shows how a natural-language-first store can still have deterministic serve-time budget policy without vector infrastructure.
 
 ### Borrowable Ideas
 
@@ -81,7 +81,7 @@ The strongest alignment is context-budget discipline. AI-Context-OS's L0/L1/L2 a
 
 **Learning timing:** `staged` — The trace store updates online during context serving, but optimization records are produced when `run_optimization_analysis` is invoked.
 
-**Distilled form:** `prose` `symbolic` — Suggestions are symbolic records with typed fields plus prose descriptions, evidence, impact, and estimated token savings.
+**Distilled form:** `natural-language` `symbolic` — Suggestions are symbolic records with typed fields plus natural-language descriptions, evidence, impact, and estimated token savings.
 
 This is trace-learning, but a modest form: it learns maintenance pressure and ranking/summary hygiene from usage traces. It does not distill full agent transcripts into new rules, procedures, or validated memories.
 

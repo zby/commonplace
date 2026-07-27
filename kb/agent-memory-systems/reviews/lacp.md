@@ -33,7 +33,7 @@ LACP, from 0xNyk's `0xNyk/lacp` repository, is a local-first agent harness for C
 ## Artifact analysis
 
 - **Storage substrate:** `files` - LACP stores the behavior-shaping memory surfaces in local files: Obsidian Markdown notes, JSON registries, RAG indexes, hook contracts/state, staging JSONL, handoff JSON, SMS JSONL/JSON, and Claude project `MEMORY.md` files.
-- **Representational form:** `prose` `symbolic` `parametric` - Markdown notes and injected summaries are prose; frontmatter, registries, hook contracts, policies, scores, edges, and command outputs are symbolic; sparse/dense vectors and embeddings in the RAG/research registry act as parametric retrieval state ([automation/scripts/build_memory_rag_index.py](https://github.com/0xNyk/lacp/blob/003eef16a583dbaa3fdd56e5efe393397f463f3f/automation/scripts/build_memory_rag_index.py), [automation/scripts/sync_research_knowledge.py](https://github.com/0xNyk/lacp/blob/003eef16a583dbaa3fdd56e5efe393397f463f3f/automation/scripts/sync_research_knowledge.py)).
+- **Representational form:** `natural-language` `symbolic` `parametric` - Markdown notes and injected summaries are natural-language; frontmatter, registries, hook contracts, policies, scores, edges, and command outputs are symbolic; sparse/dense vectors and embeddings in the RAG/research registry act as parametric retrieval state ([automation/scripts/build_memory_rag_index.py](https://github.com/0xNyk/lacp/blob/003eef16a583dbaa3fdd56e5efe393397f463f3f/automation/scripts/build_memory_rag_index.py), [automation/scripts/sync_research_knowledge.py](https://github.com/0xNyk/lacp/blob/003eef16a583dbaa3fdd56e5efe393397f463f3f/automation/scripts/sync_research_knowledge.py)).
 - **Lineage:** `authored` `imported` `trace-extracted` - Context-mode files, policies, docs, focus files, and manual notes are authored; URLs/text/media and inbox notes are imported; Claude transcripts, assistant messages, daily session artifacts, handoffs, and stop-hook summaries are trace-extracted.
 - **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` `learning` - Notes and graph nodes provide knowledge; `CLAUDE.md`/`AGENTS.md`, context modes, focus, SMS summaries, and hook injections can instruct; pretool/write/stop gates enforce or validate; route/context commands select execution paths; RAG/registry scores rank recall; SMS and graph update paths learn from traces.
 
@@ -47,7 +47,7 @@ LACP, from 0xNyk's `0xNyk/lacp` repository, is a local-first agent harness for C
 
 **SMS artifacts.** Episodes, epochs, narratives, and self-model JSON persist under `~/.lacp/sms`; Stop hooks record episodes and update the self-model, while session-start builds a small context block from current focus, self-model, narrative, and recent significant episodes ([hooks/self_memory_system.py](https://github.com/0xNyk/lacp/blob/003eef16a583dbaa3fdd56e5efe393397f463f3f/hooks/self_memory_system.py), [hooks/stop_quality_gate.py](https://github.com/0xNyk/lacp/blob/003eef16a583dbaa3fdd56e5efe393397f463f3f/hooks/stop_quality_gate.py), [bin/lacp-sms](https://github.com/0xNyk/lacp/blob/003eef16a583dbaa3fdd56e5efe393397f463f3f/bin/lacp-sms)).
 
-The promotion path is real but mixed: staged trace signals can become inbox notes, registry items can become graph notes, clusters can become synthesis notes, and some memories can be marked stale/superseded or archived. LACP can therefore move material from trace-extracted prose into symbolic/parametric access structures and stronger instruction/ranking surfaces, but manual review is still part of the advertised quality workflow ([docs/memory-quality-workflow.md](https://github.com/0xNyk/lacp/blob/003eef16a583dbaa3fdd56e5efe393397f463f3f/docs/memory-quality-workflow.md)).
+The promotion path is real but mixed: staged trace signals can become inbox notes, registry items can become graph notes, clusters can become synthesis notes, and some memories can be marked stale/superseded or archived. LACP can therefore move material from trace-extracted natural-language content into symbolic/parametric access structures and stronger instruction/ranking surfaces, but manual review is still part of the advertised quality workflow ([docs/memory-quality-workflow.md](https://github.com/0xNyk/lacp/blob/003eef16a583dbaa3fdd56e5efe393397f463f3f/docs/memory-quality-workflow.md)).
 
 ## Comparison with Our System
 
@@ -85,7 +85,7 @@ LACP's automatic maintenance is more ambitious than Commonplace's current genera
 
 **Learning timing:** `online` `staged` `offline` - Stop hooks write trace-extracted state online; `brain-expand` promotes staged signals and synthesizes epochs in a staged workflow; RAG builds, promotion suggestions, consolidation, probes, and benchmark pipelines are offline maintenance.
 
-**Distilled form:** `prose` `symbolic` `parametric` - Distillation outputs include Markdown inbox/graph/synthesis notes, JSON registry state and graph edges, and sparse/dense vector indexes.
+**Distilled form:** `natural-language` `symbolic` `parametric` - Distillation outputs include Markdown inbox/graph/synthesis notes, JSON registry state and graph edges, and sparse/dense vector indexes.
 
 On the trace-learning survey axes, LACP is a hybrid trace-to-memory control plane: it has online capture, staged promotion, local embedding/ranking, graph maintenance, and explicit retrieval probes. It supports the survey claim that trace learning needs a curation boundary; without the staging/promote/resolve layers, the regex extractor would be too noisy to carry authority.
 
@@ -128,7 +128,7 @@ LACP is a genuine trace-learning agent memory system embedded in a broader local
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: LACP stores many memory surfaces, but only session-start injection is retained-memory push.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: LACP separates file substrates, prose/symbolic/parametric forms, trace/import/authored lineage, and multiple behavioral authorities.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: LACP separates file substrates, natural-language/symbolic/parametric forms, trace/import/authored lineage, and multiple behavioral authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: Obsidian notes, graph nodes, synthesis notes, and RAG results mostly act as knowledge artifacts.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: context modes, gates, routing policies, validation hooks, and ranking indexes can carry stronger authority.
 - [Context engineering](../../notes/definitions/context-engineering.md) - frames: LACP's central memory problem is selecting, budgeting, and injecting local context for agent sessions.

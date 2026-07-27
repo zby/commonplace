@@ -102,7 +102,7 @@ Our repo works with `kb/notes/`, `kb/reference/`, `kb/instructions/` at the top 
 
 - **Sibling-relative markdown links** (`../notes/foo.md` from an instruction, `../reference/adr/010.md` from a note) are invariant because `kb/commonplace/` wraps siblings together.
 - **Frontmatter type pointers** split: shared global types use absolute `kb/types/...` paths (invariant because shared types stay at top level), and collection-local types use file-relative paths like `./types/structured-claim.md` or `../types/adr.md` (invariant because the file-to-types relationship inside a collection is preserved under wrapping).
-- **Generic prose references** (e.g. "a collection such as `kb/notes/`") are semantic labels that resolve to whatever `kb/notes/` means in the reader's context — our library in our repo, the user's collection in an install.
+- **Generic natural-language references** (e.g. "a collection such as `kb/notes/`") are semantic labels that resolve to whatever `kb/notes/` means in the reader's context — our library in our repo, the user's collection in an install.
 
 The type resolver in `src/commonplace/lib/type_resolver.py` accepts both absolute and file-relative `type:` values, so the same frontmatter strings work in both trees.
 

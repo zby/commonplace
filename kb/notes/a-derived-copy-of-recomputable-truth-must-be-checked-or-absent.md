@@ -29,7 +29,7 @@ What flips the regime is the check price: mechanical derivation makes verificati
 
 Enforcement is available only when four preconditions hold:
 
-1. **A derivation rule.** The copy must be mechanically re-derivable from the source. Extractable lists, set memberships, and file identity qualify; prose summaries and judgments do not — there is no comparison a machine can run, so they stay as live reads or are omitted.
+1. **A derivation rule.** The copy must be mechanically re-derivable from the source. Extractable lists, set memberships, and file identity qualify; natural-language summaries and judgments do not — there is no comparison a machine can run, so they stay as live reads or are omitted.
 2. **Machine-locatability.** The copy must occupy a marked region that names its source — the [lineage](./definitions/lineage.md) the validator follows to find the ground truth and re-derive it. Machine-followable suffices; human visibility is not required once the validator carries the interrupt.
 3. **Ground truth that exists at validation time.** Enforcement cannot help where execution itself produces the evidence: a plan's executor learns things no validator could pre-check, because the run generates them. When this precondition fails, the value was never a recomputable copy in the first place — that territory stays with the executor.
 4. **A validator expected to bottom out, not recurse.** The validator is itself a hand-authored artifact making an unchecked claim — that it correctly re-derives the copy. This looks like it reopens the regress, but it doesn't: a validator is centralized, versioned, reviewed on every change, and amortized across every copy it protects, so its unit cost of correctness-assurance is far lower than N independently hand-maintained instances would be. A derivation rule that is itself a judgment call rather than a strict mechanical extraction does not meet this precondition — it is the forbidden state, just relocated one layer down, with a stronger trust signal attached.
@@ -37,7 +37,7 @@ Enforcement is available only when four preconditions hold:
 ## Consequences
 
 - **Checked copies degrade gracefully.** Dropping one costs consumers a recomputation, never correctness, so lifecycle exits stay cheap: a copy that outgrows its purpose is deleted and readers fall back to the source.
-- **Never write the unenforced prose version of a checkable claim.** "This list is complete" with no validator behind it is exactly the hand-maintained-and-trusted state the rule forbids. A checkable claim is enforced as a check or not asserted at all.
+- **Never write the unenforced natural-language version of a checkable claim.** "This list is complete" with no validator behind it is exactly the hand-maintained-and-trusted state the rule forbids. A checkable claim is enforced as a check or not asserted at all.
 - **When a copy can't be checked, the resolution is omission.** Either delete the copy ([ADR 025](../reference/adr/025-complete-generated-indexes-are-build-time-only.md) deleted committed generated indexes) or read the source live (the 2026-06-10 skill edits — logged in `kb/log.md` — chose read-the-contract per invocation). Both are correct; both pay a build-time or hot-path cost that enforcement would have avoided. Omission is the fallback, not the optimum.
 
 ## Instances across four surfaces
@@ -53,7 +53,7 @@ It is the general form of "a cache must never be the only copy" — applied not 
 
 ## Open Questions
 
-- Where else does an unenforced prose claim quietly stand in for a checkable one (the `status:` maturity field is a candidate trust mark with no validator)?
+- Where else does an unenforced natural-language claim quietly stand in for a checkable one (the `status:` maturity field is a candidate trust mark with no validator)?
 - What is the cheapest general mechanism for marked, locatable, checkable frontloaded regions in instruction text?
 
 ---
@@ -73,4 +73,4 @@ Relevant Notes:
 - [ADR 027 — Package scaffold assets without source-tree symlinks](../reference/adr/027-package-scaffold-assets-without-source-tree-symlinks.md) — evidence: source-of-truth for the byte-identical `AGENTS.md.template` duplication cited as the fourth instance
 - [History has one chance to become checkable](./history-has-one-chance-to-become-checkable.md) — contrasts: the non-recomputable complement of preconditions 1 and 3 — history must be recorded at production time because there is no later ground truth left to re-derive it from
 - [An enforced tag-README is a MOC with a machine-checked contract](./an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md) — extends: develops this note's instance 1 (the tag-README marks) into the fuller MOC-plus-contract argument
-- [Prose has no reliable dereference, so a declared fact must be reinforced where it applies](./prose-has-no-dereference-reinforce-facts-at-point-of-use.md) — extends: the worked prose-regime case for this note's first open question, with `status:` as the candidate unenforced trust mark
+- [Natural-language content lacks reliable dereference, so facts need reinforcement at point of use](./prose-has-no-dereference-reinforce-facts-at-point-of-use.md) — extends: the worked natural-language-form case for this note's first open question, with `status:` as the candidate unenforced trust mark

@@ -33,17 +33,17 @@ ReasoningBank, from Google Research's `google-research/reasoning-bank` repositor
 ## Artifact analysis
 
 - **Storage substrate:** `files` — WebArena stores memory banks and embedding caches as local JSONL files plus selected-memory text files; mini-SWE-agent stores `./memory/{model}.jsonl` and `./memory/{model}_embeddings.jsonl`; trajectories and evaluation artifacts live in benchmark output directories.
-- **Representational form:** `prose` `symbolic` `parametric` — memory items are Markdown/prose lessons, JSONL records and prompts carry symbolic structure, and embedding vectors are distributed-parametric ranking state.
+- **Representational form:** `natural-language` `symbolic` `parametric` — memory items are Markdown/natural-language lessons, JSONL records and prompts carry symbolic structure, and embedding vectors are distributed-parametric ranking state.
 - **Lineage:** `authored` `trace-extracted` — prompts and harness code are authored; memory banks, embedding caches, selected-memory files, and outcome labels are derived from benchmark task configs, trajectories, evaluator outputs, saved messages, and LLM judgments.
 - **Behavioral authority:** `knowledge` `instruction` `validation` `ranking` `learning` — stored memories and raw trajectories are evidence; injected memory text becomes system-message advice; benchmark evaluators and LLM judges label traces; embeddings rank read-back; induction prompts create learned memory.
 
 **Reasoning memory JSONL records.** The central retained artifact is a JSONL record containing task id, query/problem statement, success/failure status, and generated memory items. WebArena records can also preserve think/action lists and template ids. The record is trace-extracted from benchmark execution, but at rest it is a knowledge artifact until selected and injected into a later prompt.
 
-**Embedding cache JSONL.** The cache stores task ids, query text, and embedding vectors. It is a derived access structure over prior task statements, not over the memory prose itself. It has ranking authority because similarity order decides which memory record can be read back, and it is also a side-effect log because every retrieval appends the current task embedding.
+**Embedding cache JSONL.** The cache stores task ids, query text, and embedding vectors. It is a derived access structure over prior task statements, not over the memory natural-language content itself. It has ranking authority because similarity order decides which memory record can be read back, and it is also a side-effect log because every retrieval appends the current task embedding.
 
 **Extraction prompts and judges.** Success/failure prompts define what a retained lesson should look like, while WebArena autoeval/ground-truth reward and mini-SWE-agent's LLM judge decide which prompt branch runs. These are system-definition artifacts for learning and validation; they decide which trace gets summarized as success advice or failure-prevention advice.
 
-**Selected-memory handoff.** WebArena materializes selected memory in a transient text file; mini-SWE-agent keeps it as a string argument. The handoff is prose derived from the JSONL bank by embedding retrieval. Its authority changes at consumption time, because the receiving agent sees it in the system message with an instruction to explicitly discuss whether to use each memory item.
+**Selected-memory handoff.** WebArena materializes selected memory in a transient text file; mini-SWE-agent keeps it as a string argument. The handoff is natural-language derived from the JSONL bank by embedding retrieval. Its authority changes at consumption time, because the receiving agent sees it in the system message with an instruction to explicitly discuss whether to use each memory item.
 
 Promotion path: raw benchmark trace -> success/failure label -> LLM-generated memory items -> JSONL memory bank -> embedding-selected memory text -> system-message advice. The system crosses from trace evidence into prompt-level behavioral context, but it does not promote memories into reviewed rules, executable tools, validators, or typed artifacts.
 
@@ -52,7 +52,7 @@ Promotion path: raw benchmark trace -> success/failure label -> LLM-generated me
 | Dimension | ReasoningBank | Commonplace |
 |---|---|---|
 | Primary purpose | Improve benchmark agents through trajectory-derived reasoning memory | Maintain a typed methodology KB for future agents and maintainers |
-| Main retained unit | JSONL memory item with prose lessons and task metadata | Git-tracked Markdown artifacts with frontmatter, type specs, links, and validation |
+| Main retained unit | JSONL memory item with natural-language lessons and task metadata | Git-tracked Markdown artifacts with frontmatter, type specs, links, and validation |
 | Learning source | WebArena and SWE-Bench trajectories plus success/failure signals | Source-grounded writing, review, validation, and workshop-to-library promotion |
 | Read-back | Embedding-selected top-1 prior task injected into the agent prompt | Mostly deliberate pull through search, indexes, links, skills, and review gates |
 | Governance | Prompt constraints, benchmark evaluator, LLM judge, embedding ranker | Collection contracts, schemas, deterministic validation, semantic review, git history |
@@ -89,11 +89,11 @@ ReasoningBank also makes the activation boundary concrete. Stored JSONL memory i
 
 **Learning timing:** `online` `staged` — The ordinary pipeline updates memory after each benchmark instance; the scaling path stages multiple trials before one induction pass.
 
-**Distilled form:** `prose` `symbolic` `parametric` — Distilled lessons are prose/Markdown inside JSONL records, symbolic task/status metadata surrounds them, and embedding vectors support later selection.
+**Distilled form:** `natural-language` `symbolic` `parametric` — Distilled lessons are natural-language/Markdown inside JSONL records, symbolic task/status metadata surrounds them, and embedding vectors support later selection.
 
 Extraction is LLM-mediated and outcome-gated. WebArena chooses the success or failure prompt from reward/autoeval results and can append autoeval thoughts to the trajectory before induction. mini-SWE-agent judges the saved non-system messages with the same model family, then calls success or failure memory prompts.
 
-Survey placement: ReasoningBank belongs in the trace-to-prose-reasoning-memory family. It strengthens the raw/distilled split: trajectories and evaluator outputs are raw evidence, while the JSONL memory item is the retained artifact that later gains prompt authority through embedding-selected injection. It also strengthens the failed-run variant because failure trajectories can produce avoidance strategies, not only successful workflow reuse.
+Survey placement: ReasoningBank belongs in the trace-to-reasoning-memory family. It strengthens the raw/distilled split: trajectories and evaluator outputs are raw evidence, while the JSONL memory item is the retained artifact that later gains prompt authority through embedding-selected injection. It also strengthens the failed-run variant because failure trajectories can produce avoidance strategies, not only successful workflow reuse.
 
 ## Read-back
 
@@ -111,7 +111,7 @@ Survey placement: ReasoningBank belongs in the trace-to-prose-reasoning-memory f
 
 **Selection, scope, and complexity.** Selection is top-1 after embedding ranking and task-id mapping. Scope is website/memory-mode for WebArena and model name for SWE-Bench. Volume is bounded to one prior task record, but a record can contain several memory items and there is no code-level token budget, provenance filter, quality score, or stale-memory policy for the selected text.
 
-**Authority at consumption.** The injected memory is advisory prose, but system-message placement and the explicit "discuss whether to use" instruction make it soft system-definition context for the next action loop. The stored JSONL item remains a knowledge artifact until this read-back path gives it behavioral force.
+**Authority at consumption.** The injected memory is advisory natural-language, but system-message placement and the explicit "discuss whether to use" instruction make it soft system-definition context for the next action loop. The stored JSONL item remains a knowledge artifact until this read-back path gives it behavioral force.
 
 **Other consumers.** Researchers and operators can inspect JSONL memory banks, embedding caches, selected-memory text files, result directories, autoeval logs, SWE-Bench trajectory JSON, and prediction files. Those are evidence/debugging surfaces; the agent-facing authority comes from prompt injection.
 
@@ -136,7 +136,7 @@ Survey placement: ReasoningBank belongs in the trace-to-prose-reasoning-memory f
 
 Relevant Notes:
 
-- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: ReasoningBank distills successful and failed benchmark trajectories into prose reasoning memory.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: ReasoningBank distills successful and failed benchmark trajectories into natural-language reasoning memory.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: ReasoningBank separates stored JSONL memory from embedding-selected prompt injection.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: JSONL memories, embedding caches, prompts, judges, trajectories, and handoff files carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: raw trajectories, evaluator outputs, stored memory items, and caches are evidence until activated.

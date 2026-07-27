@@ -28,13 +28,13 @@ Trajectory-Informed Memory Generation is an IBM Research framework that reported
 Claim-level (no code inspected):
 
 - **Storage substrate:** `vector` — the paper snapshot reports stored tip entries with vector embeddings for semantic search plus structured metadata for filtering. The concrete database or persistence implementation is not locally verified.
-- **Representational form:** `prose` — the central behavior-shaping artifact is an inspectable natural-language tip. Embeddings support retrieval, but they are an index over the prose rather than the promoted memory itself.
+- **Representational form:** `natural-language` — the central behavior-shaping artifact is an inspectable natural-language tip. Embeddings support retrieval, but they are an index over the natural-language content rather than the promoted memory itself.
 - **Lineage** — **trace-extracted**: tips are extracted and generalized from completed execution trajectories through trajectory analysis, subtask generalization, clustering, and LLM-based consolidation. Changes in the task distribution, the trajectory analyzer, or the success/failure oracle would invalidate the learned tip set.
 - **Behavioral authority** — tips are **system-definition artifacts** when injected as prompt guidelines for future runs; the stored tip library is also a knowledge artifact for inspection, but its behavior-shaping force arrives through prompt-time advice.
 
 ## Comparison with Our System
 
-Trajectory-Informed Memory Generation is closer to Commonplace than weight-learning systems because the promoted memory is readable prose, but it automates the extraction loop around a narrow task-completion oracle. Commonplace treats durable claims as authored and reviewed library artifacts; this system treats successful and failed task trajectories as raw material for automatic operational advice. The tradeoff is throughput versus governance: the paper's loop can mine many runs, while Commonplace keeps stronger review, lineage, and retirement expectations.
+Trajectory-Informed Memory Generation is closer to Commonplace than weight-learning systems because the promoted memory is readable natural-language, but it automates the extraction loop around a narrow task-completion oracle. Commonplace treats durable claims as authored and reviewed library artifacts; this system treats successful and failed task trajectories as raw material for automatic operational advice. The tradeoff is throughput versus governance: the paper's loop can mine many runs, while Commonplace keeps stronger review, lineage, and retirement expectations.
 
 The most direct divergence is read-back. Commonplace generally requires an agent to search, navigate indexes, or follow links; the paper reports task-context-based retrieval that pushes selected tips into the prompt before reasoning. That makes activation more automatic, but it also creates risk from mismatched or stale tips, and the paper snapshot does not document a lifecycle for retiring bad guidance.
 
@@ -57,7 +57,7 @@ Trajectory-Informed Memory Generation qualifies as trace-learning coverage becau
 
 - **Trace source** — completed AppWorld-style execution trajectories from a ReAct-like GPT-4 agent, including reasoning patterns, planning, validation, self-correction, failures, and inefficient successes.
 - **Extraction** — the reported analyzer identifies causal decision chains and produces strategy, recovery, and optimization tips. The practical oracle is task/scenario goal completion plus trajectory outcome class; the ingest flags this oracle dependency as the main transfer limit.
-- **Distilled form** — inspectable prose tips, with embeddings and metadata for retrieval. This is the readable-artifact counterpart to trajectory-to-weights systems such as AgeMem.
+- **Distilled form** — inspectable natural-language tips, with embeddings and metadata for retrieval. This is the readable-artifact counterpart to trajectory-to-weights systems such as AgeMem.
 - **Scope and timing** — staged learning across completed runs, then prompt-time reuse on held-out tasks. The paper reports AppWorld evaluation with the best configuration reaching +14.3 percentage points on scenario goal completion.
 - **Survey placement** — a lower-confidence, source-ingested trajectory-to-artifact case in the [trace-learning survey](../trace-learning-techniques-in-related-systems.md); it strengthens the survey's readable-artifact-learning axis while leaving implementation details unverified.
 

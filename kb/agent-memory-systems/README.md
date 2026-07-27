@@ -20,7 +20,7 @@ from these theory notes:
 - [designing-agent-memory-systems](../notes/designing-agent-memory-systems.md) — the design-pressure inventory the review contract distills into review-time sections.
 - The **four-field artifact record** every review applies to each system's central artifacts:
   - [storage substrate](../notes/definitions/storage-substrate.md) — where retained state physically lives (files, repo, sqlite, rdbms, vector/graph, kv, in-memory, model-weights, service-object); locates access, versioning, deletion.
-  - [representational form](../notes/definitions/representational-form.md) — prose / symbolic / parametric; sets the default inspection method (read / test / probe).
+  - [representational form](../notes/definitions/representational-form.md) — natural-language/symbolic / parametric; sets the default inspection method (read / test / probe).
   - [lineage](../notes/definitions/lineage.md) — authored, imported, or trace-extracted, and what source change invalidates it.
   - [behavioral authority](../notes/definitions/behavioral-authority.md) — who consumes it, through which channel, with what force ([knowledge](../notes/definitions/knowledge-artifact.md) advice vs [system-definition](../notes/definitions/system-definition-artifact.md) instruction / enforcement / routing / validation / ranking / learning).
   - (the record applies at the [operative-part](../notes/definitions/operative-part.md) level of a [retained artifact](../notes/definitions/retained-artifact.md) — a bundled object is split when its parts carry different forms or authorities.)
@@ -60,7 +60,7 @@ Cross-cutting reads:
 
 **Extractable columns** come straight from each review, so the matrix stays in sync with the prose:
 
-- Backticked **lead tokens** written in the review body where the finding is reached — `storage_substrate` (`files`/`repo`/`sqlite`/`rdbms`/`vector`/`graph`/`kv`/`in-memory`/`prompt-registry`/`model-weights`/`service-object`), `representational_form` (`prose`/`symbolic`/`parametric`), `read_back_direction` (`pull`/`push`/`both`), `Read-back signal`, write agency, curation operations, and trace-learning sub-fields. The token leads its own justifying sentence, so value and reasoning can't drift. The convention lives in the [review type spec](./types/agent-memory-system-review.md).
+- Backticked **lead tokens** written in the review body where the finding is reached — `storage_substrate` (`files`/`repo`/`sqlite`/`rdbms`/`vector`/`graph`/`kv`/`in-memory`/`prompt-registry`/`model-weights`/`service-object`), `representational_form` (`natural-language`/`symbolic`/`parametric`), `read_back_direction` (`pull`/`push`/`both`), `Read-back signal`, write agency, curation operations, and trace-learning sub-fields. The token leads its own justifying sentence, so value and reasoning can't drift. The convention lives in the [review type spec](./types/agent-memory-system-review.md).
 - `lin_trace_extracted` from the authored `Lineage` tokens: at least one retained artifact comes from traces, such as session logs, execution histories, child-agent reports, request/response history, trajectories, recovery state, or stored interaction history.
 - `trace_learning` from the review's `trace-learning` frontmatter tag: a stricter learning field for automatic writes fed by agent traces that produce durable behavior-shaping memory. `trace_learning` is a subset of `lin_trace_extracted`; systems can retain traces for evidence, recovery, continuity, or debugging without distilling them into lessons, rules, skills, validators, embeddings, adapters, rankers, or other learned memory.
 
@@ -96,7 +96,7 @@ The divergences are more revealing:
   
 - **Grounding discipline** — cognitive psychology (arscontexta) vs programming theory (Commonplace, thalo) vs empirical operational patterns (Agent-Skills)
   
-- **Formalization level** — custom DSL (thalo) vs YAML conventions (Commonplace) vs prose instructions (Agent-Skills)
+- **Formalization level** — custom DSL (thalo) vs YAML conventions (Commonplace) vs natural-language instructions (Agent-Skills)
   
 - **Governance stance** — most systems treat governance as advisory (instructions the agent should follow); Decapod enforces governance with hard gates (validation must pass, VERIFIED requires proof-plan); SAGE enforces with cryptographic gates (signed transactions, validator quorum, RBAC clearance levels) — two very different enforcement models, both structurally enforced rather than instructed
   

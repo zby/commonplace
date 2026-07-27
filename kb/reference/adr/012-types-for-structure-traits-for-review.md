@@ -34,7 +34,7 @@ That made it unclear whether moving a file between directories changed its type 
 
 **Frontmatter `type` is authoritative for library artifact identity.** Directory-local `types/` directories remain load-bearing, but they scope definition lookup rather than replacing the type system. Path and collection placement stay separate from type identity.
 
-**Type definitions are two files.** Each type has `{type}.template.md` (prose template for agents) plus `{type}.instructions.md` (how to fill it in), and a machine-readable schema in its `types/` directory. ADR-015 later standardized that schema as JSON Schema in YAML syntax. The schema replaces the validator's hard-coded `TYPE_HEADINGS` map.
+**Type definitions are two files.** Each type has `{type}.template.md` (natural-language template for agents) plus `{type}.instructions.md` (how to fill it in), and a machine-readable schema in its `types/` directory. ADR-015 later standardized that schema as JSON Schema in YAML syntax. The schema replaces the validator's hard-coded `TYPE_HEADINGS` map.
 
 **Bare type names.** Qualified canonical ids (e.g. `notes.related-system`) deferred — bare names are unambiguous today, and qualification would add readability cost before it solves a real collision.
 
@@ -50,7 +50,7 @@ That made it unclear whether moving a file between directories changed its type 
 - Moving a file no longer silently changes its artifact kind. Type identity comes from frontmatter; directories determine where definitions are found and where artifacts belong.
 
 **Harder:**
-- Every type needs a companion machine-readable schema written alongside the prose template.
+- Every type needs a companion machine-readable schema written alongside the natural-language template.
 - Authors must declare traits explicitly in frontmatter (implied traits from types deferred).
 - Existing `structured-claim` notes and existing plain notes with claim-shaped titles need `title-as-claim` added to their `traits:` field.
 

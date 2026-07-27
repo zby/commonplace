@@ -33,19 +33,19 @@ Graphiti, by Zep Software, is an open-source temporal context graph engine for A
 ## Artifact analysis
 
 - **Storage substrate:** `graph` — The primary behavior-shaping retained state persists as graph nodes and relationships in a configured graph driver; embeddings, full-text indexes, service queues, and API objects support access, but the durable memory object is the temporal context graph.
-- **Representational form:** `prose` `symbolic` `parametric` — Episode bodies, fact text, entity/community/saga summaries, and source descriptions are prose; nodes, edges, labels, group ids, timestamps, entity/edge type schemas, filters, and tool schemas are symbolic; name/fact embeddings, vector similarity, cross-encoder scores, and graph-distance rerankers provide parametric or learned ranking signals.
+- **Representational form:** `natural-language` `symbolic` `parametric` — Episode bodies, fact text, entity/community/saga summaries, and source descriptions are natural-language; nodes, edges, labels, group ids, timestamps, entity/edge type schemas, filters, and tool schemas are symbolic; name/fact embeddings, vector similarity, cross-encoder scores, and graph-distance rerankers provide parametric or learned ranking signals.
 - **Lineage:** `imported` `trace-extracted` — Text/JSON/message episodes are imported source material; message episodes and server `/messages` payloads can be conversation traces; entity nodes, edges, summaries, timestamps, duplicate resolutions, contradiction decisions, and communities are derived views extracted from those episodes and existing graph context.
 - **Behavioral authority:** `knowledge` `routing` `validation` `ranking` `learning` — Retrieved facts/nodes/episodes advise as knowledge; group ids, graph partitions, filters, labels, schemas, queues, MCP tools, and API routes direct access; Pydantic models, label validation, group validation, config factories, and driver constraints validate; BM25, embeddings, BFS, MMR, RRF, node-distance, episode-mention, and cross-encoder paths rank; ingestion and maintenance update retained graph state.
 
-**Episodes.** Storage substrate: graph `Episodic` nodes. Representational form: prose or serialized JSON content plus symbolic source, source description, group id, entity-edge list, and valid time. Lineage: imported user/application data or trace-extracted conversation messages. Behavioral authority: source evidence and provenance for later extracted nodes and facts.
+**Episodes.** Storage substrate: graph `Episodic` nodes. Representational form: natural-language or serialized JSON content plus symbolic source, source description, group id, entity-edge list, and valid time. Lineage: imported user/application data or trace-extracted conversation messages. Behavioral authority: source evidence and provenance for later extracted nodes and facts.
 
-**Entity nodes and factual edges.** Storage substrate: graph `Entity` nodes and `RELATES_TO` edges, with Kuzu using intermediate relation nodes. Representational form: symbolic graph topology plus prose summaries/facts and embeddings. Lineage: LLM-extracted from episodes, deduplicated against candidate graph state, and linked back to episodes. Behavioral authority: knowledge when returned, ranking when indexed, and learning input when later episodes update summaries or invalidate facts.
+**Entity nodes and factual edges.** Storage substrate: graph `Entity` nodes and `RELATES_TO` edges, with Kuzu using intermediate relation nodes. Representational form: symbolic graph topology plus natural-language summaries/facts and embeddings. Lineage: LLM-extracted from episodes, deduplicated against candidate graph state, and linked back to episodes. Behavioral authority: knowledge when returned, ranking when indexed, and learning input when later episodes update summaries or invalidate facts.
 
 **Temporal validity and provenance fields.** Storage substrate: symbolic properties on edges and episodes. Representational form: timestamps, episode uuid lists, `reference_time`, `valid_at`, `invalid_at`, and `expired_at`. Lineage: derived from episode timestamps and LLM timestamp extraction. Behavioral authority: routing and validation for temporal queries; invalidation also carries truth-maintenance authority over old facts.
 
 **Search configurations and indexes.** Storage substrate: graph/full-text/vector indexes and runtime `SearchConfig` recipes. Representational form: symbolic search-method/reranker configs and parametric embeddings/scores. Lineage: authored config plus derived embeddings and indexes. Behavioral authority: ranking and routing for what reaches the caller's context.
 
-**MCP/server tools.** Storage substrate: repository code and runtime service objects. Representational form: symbolic tool/API schemas plus prose instructions. Lineage: authored integration surface. Behavioral authority: routing for agent and application access; the MCP server affords read/write memory operations but does not enforce that a host agent uses search before acting.
+**MCP/server tools.** Storage substrate: repository code and runtime service objects. Representational form: symbolic tool/API schemas plus natural-language instructions. Lineage: authored integration surface. Behavioral authority: routing for agent and application access; the MCP server affords read/write memory operations but does not enforce that a host agent uses search before acting.
 
 Promotion path: Graphiti can move raw episode material into extracted nodes and facts, attach embeddings and validity windows, reuse or invalidate existing facts, and optionally consolidate graph regions into community summaries. This strengthens durability and retrieval authority, but there is no retained proposal/review artifact for the extraction or invalidation judgment.
 
@@ -90,13 +90,13 @@ The main tradeoff is hidden epistemic authority. Graphiti's LLM extraction and c
 
 **Learning timing:** `online` `staged` — MCP writes are queued and processed asynchronously per group; SDK/API ingestion can run during application operation or as a background task; community building and index/constraint setup are explicit staged operations.
 
-**Distilled form:** `prose` `symbolic` `parametric` — Message and event traces become prose facts/summaries, symbolic nodes/edges/timestamps/provenance links, and parametric embeddings or reranker scores.
+**Distilled form:** `natural-language` `symbolic` `parametric` — Message and event traces become natural-language facts/summaries, symbolic nodes/edges/timestamps/provenance links, and parametric embeddings or reranker scores.
 
 **Extraction.** The raw trace is an episode body with source metadata and reference time. The extraction oracle is primarily the configured LLM client, constrained by Pydantic response models and optional custom entity/edge types; dedupe and contradiction decisions also use LLM calls after candidate retrieval.
 
 **Scope and timing.** The durable scope is `group_id`; episode sequences can also be linked into sagas. The write that affects future action is not the raw message alone, but the derived graph state saved after extraction, resolution, embedding, and optional invalidation.
 
-**Survey fit.** Graphiti fits the trace-to-temporal-graph family: transcripts or interaction events become graph facts with provenance and validity windows. It strengthens the survey's point that trace-extracted memory can be symbolic and temporal, not only vector/prose recall.
+**Survey fit.** Graphiti fits the trace-to-temporal-graph family: transcripts or interaction events become graph facts with provenance and validity windows. It strengthens the survey's point that trace-extracted memory can be symbolic and temporal, not only vector/natural-language recall.
 
 ## Read-back
 

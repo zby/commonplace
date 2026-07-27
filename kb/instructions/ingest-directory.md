@@ -80,7 +80,7 @@ domains: [{tag1}, {tag2}, {tag3}]
 
 Note: `source_snapshot` points to the working copy, which is typically gitignored and ephemeral. The Pin line below (commit hash) is the canonical identifier for reproducibility.
 
-Genre normally lives on the source snapshot (`genre` in snapshot frontmatter, vocabulary in `kb/sources/types/snapshot.md`), but a directory ingest has no snapshot artifact — the genre (normally `code-repository`) appears only in the Classification section's prose line. If the directory is not a code repo (e.g. paper + supplements), pick the closest genre from the snapshot type spec's vocabulary; an off-list value is a deliberate extension, not an error.
+Genre normally lives on the source snapshot (`genre` in snapshot frontmatter, vocabulary in `kb/sources/types/snapshot.md`), but a directory ingest has no snapshot artifact — the genre (normally `code-repository`) appears only in the Classification section's genre line. If the directory is not a code repo (e.g. paper + supplements), pick the closest genre from the snapshot type spec's vocabulary; an off-list value is a deliberate extension, not an error.
 
 Draft body:
 

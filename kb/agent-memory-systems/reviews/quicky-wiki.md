@@ -32,13 +32,13 @@ Quicky Wiki, from `anzal1/quicky-wiki`, is a TypeScript CLI/library for turning 
 ## Artifact analysis
 
 - **Storage substrate:** `sqlite` `files` `graph` `in-memory` — `.quicky/graph.sqlite` is the central durable store; raw sources and rendered/exported outputs persist as files; the page/claim/link/dependency structure is graph-shaped even though implemented relationally; query contexts and dashboard caches are transient ([src/graph/store.ts](https://github.com/anzal1/quicky-wiki/blob/65ef29b9dcc76237aa797a0d16c50bc8fd89baf7/src/graph/store.ts), [src/cli/context.ts](https://github.com/anzal1/quicky-wiki/blob/65ef29b9dcc76237aa797a0d16c50bc8fd89baf7/src/cli/context.ts), [src/cli/serve.ts](https://github.com/anzal1/quicky-wiki/blob/65ef29b9dcc76237aa797a0d16c50bc8fd89baf7/src/cli/serve.ts)).
-- **Representational form:** `prose` `symbolic` — source text, claim statements, summaries, answers, critiques, and rendered pages are prose; schema rows, IDs, hashes, FTS tables, confidence numbers, timestamps, event types, frontmatter, metadata JSON, and tool schemas are symbolic.
+- **Representational form:** `natural-language` `symbolic` — source text, claim statements, summaries, answers, critiques, and rendered pages are natural-language; schema rows, IDs, hashes, FTS tables, confidence numbers, timestamps, event types, frontmatter, metadata JSON, and tool schemas are symbolic.
 - **Lineage:** `authored` `imported` — user files, dashboard edits, configuration, and saved answers are authored; fetched URLs and local source material are imported; source records, extracted claims, summaries, confidence events, FTS indexes, wiki pages, and exports are compiled from those authored/imported inputs. The reviewed code does not create durable memory from agent session/action traces.
 - **Behavioral authority:** `knowledge` `routing` `validation` `ranking` `learning` — claims, pages, sources, answers, health reports, and exports advise users or agents; pages, links, FTS, MCP tools, and query assembly route context; health/lint/metabolism surfaces validate or audit the graph; confidence and FTS order rank what is seen first; reinforcements, challenges, decay, and saved-answer ingestion learn by changing future graph state.
 
 **Raw sources and source records.** Raw files and fetched URL Markdown are source knowledge artifacts. SQLite source records add symbolic provenance: path, title, type, quality tier, content hash, ingestion time, and metadata. Source quality influences initial confidence, and content hashes suppress unchanged re-ingestion.
 
-**Claims, pages, links, and events.** The claim graph is the behavior-shaping artifact: prose claims are attached to pages and source records, symbolic links/dependencies/contradictions structure navigation and health checks, and epistemic events retain confidence changes. The graph is both a knowledge artifact and a system-definition artifact because search, confidence, and page grouping decide what can enter answers.
+**Claims, pages, links, and events.** The claim graph is the behavior-shaping artifact: natural-language claims are attached to pages and source records, symbolic links/dependencies/contradictions structure navigation and health checks, and epistemic events retain confidence changes. The graph is both a knowledge artifact and a system-definition artifact because search, confidence, and page grouping decide what can enter answers.
 
 **FTS indexes and query contexts.** FTS5 tables are derived access structures maintained by SQLite triggers. `queryKnowledge()` turns lexical matches into bounded prompt context; precision/recall is not verifiable from static code.
 
@@ -54,12 +54,12 @@ Promotion path: authored/imported source material becomes source rows and LLM-ex
 |---|---|---|
 | Primary purpose | Compile arbitrary documents into a confidence-scored personal wiki/graph | Maintain a typed methodology KB for agents and maintainers |
 | Canonical substrate | SQLite claim graph plus generated files | Git-tracked Markdown collections, types, sources, reports, indexes, and validation |
-| Unit of memory | Atomic extracted claim attached to sources and pages | Typed artifact with frontmatter, prose argument, links, and status |
+| Unit of memory | Atomic extracted claim attached to sources and pages | Typed artifact with frontmatter, natural-language argument, links, and status |
 | Trust model | Quality multipliers, confidence scores, events, health reports, red-team/resurface suggestions | Source grounding, collection contracts, deterministic validation, review gates, git history |
 | Read-back | Explicit CLI/dashboard/MCP/search/query pull | Mostly explicit pull through `rg`, indexes, links, skills, commands, and reviews |
 | Lifecycle | Reinforce, challenge, cascade, decay, edit/delete, render/export | Draft, connect, validate, review, replace/archive, promote from workshop to library |
 
-Quicky Wiki is closest to Commonplace at the boundary where source material becomes maintained knowledge. The difference is granularity. Quicky Wiki decomposes sources into claims and lets a database coordinate provenance, confidence, search, and outputs. Commonplace keeps whole artifacts readable, typed, and reviewable as prose.
+Quicky Wiki is closest to Commonplace at the boundary where source material becomes maintained knowledge. The difference is granularity. Quicky Wiki decomposes sources into claims and lets a database coordinate provenance, confidence, search, and outputs. Commonplace keeps whole artifacts readable, typed, and reviewable as natural-language.
 
 That makes Quicky Wiki better for broad ingestion, dashboard exploration, and confidence-oriented maintenance queues. Commonplace is slower but stronger when the artifact's argument, caveats, source grounding, and replacement history must remain directly inspectable by agents and maintainers.
 

@@ -10,7 +10,7 @@ The KB's vocabulary invariant — no unqualified term carries two load-bearing s
 
 ## Current state (as of 2026-07-18)
 
-- **Vocabulary bindings live in three prose surfaces, none machine-readable as a registry:** the always-loaded `AGENTS.md` Vocabulary section (ADR 022), definition notes under `kb/notes/definitions/` and `kb/reference/definitions/`, and the registered hyphenated identifiers documented in `kb/reference/link-vocabulary.md`.
+- **Vocabulary bindings live in three natural-language surfaces, none machine-readable as a registry:** the always-loaded `AGENTS.md` Vocabulary section (ADR 022), definition notes under `kb/notes/definitions/` and `kb/reference/definitions/`, and the registered hyphenated identifiers documented in `kb/reference/link-vocabulary.md`.
 - **`commonplace-validate` knows nothing about term senses.** It checks frontmatter validity, schema constraints, link health, and required sections; it has no list of reserved strings and no notion of a retired term.
 - **The review system can run semantic gates** over `(note, criterion)` pairs through the assay pipeline — a naming gate would ride existing machinery rather than requiring new infrastructure.
 - **Retirement is recorded only in prose history.** `distillation` was retired without a successor term (ADR 053); nothing flags its reintroduction.

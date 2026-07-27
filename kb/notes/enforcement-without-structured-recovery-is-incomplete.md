@@ -55,7 +55,7 @@ ABC's Drift Bounds Theorem formalises the cost of missing recovery. Behavioral d
 ## Open questions
 
 - Should the enforcement gradient table in [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) gain a recovery column, or does it stay focused on detection/blocking while this note handles recovery? Adding the column risks overloading a note that's already dense; keeping them separate risks the recovery layer being invisible to anyone reading only the enforcement note.
-- What does a concrete recovery-aware hook look like in this KB? A warning hook that outputs a structured JSON with `{violation, fix_instruction, fallback, escalation_threshold}` rather than a prose warning would be a step toward typed recovery — but is the complexity justified at this scale?
+- What does a concrete recovery-aware hook look like in this KB? A warning hook that outputs structured JSON with `{violation, fix_instruction, fallback, escalation_threshold}` rather than a natural-language warning would be a step toward typed recovery — but is the complexity justified at this scale?
 
 ---
 

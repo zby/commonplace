@@ -8,7 +8,7 @@ last-checked: "2026-06-04"
 
 # Agent Workflow Memory
 
-Agent Workflow Memory, from `zorazrw/agent-workflow-memory`, is research code for WebArena and Mind2Web web-navigation agents that retain reusable workflows as text files. The repository induces workflow prose from training examples or prior agent trajectories, stores those workflows under benchmark-specific `workflow/` paths, and loads the selected workflow text into future prompts rather than exposing a general memory database or agent-callable retrieval API.
+Agent Workflow Memory, from `zorazrw/agent-workflow-memory`, is research code for WebArena and Mind2Web web-navigation agents that retain reusable workflows as text files. The repository induces natural-language workflow descriptions from training examples or prior agent trajectories, stores those workflows under benchmark-specific `workflow/` paths, and loads the selected workflow text into future prompts rather than exposing a general memory database or agent-callable retrieval API.
 
 **Repository:** https://github.com/zorazrw/agent-workflow-memory
 
@@ -20,7 +20,7 @@ Agent Workflow Memory, from `zorazrw/agent-workflow-memory`, is research code fo
 
 **The central memory artifact is a workflow text file.** AWM stores reusable web-task routines as plain `.txt` files, such as the checked-in WebArena `workflow/{website}.txt` files and Mind2Web workflow outputs. WebArena's runner appends the chosen file directly to the system message when `workflow_path` is set, while Mind2Web reads `args.workflow_path` and converts its whole contents into an exemplar message before each sample ([webarena/run.py](https://github.com/zorazrw/agent-workflow-memory/blob/8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1/webarena/run.py), [webarena/agents/legacy/agent.py](https://github.com/zorazrw/agent-workflow-memory/blob/8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1/webarena/agents/legacy/agent.py), [mind2web/memory.py](https://github.com/zorazrw/agent-workflow-memory/blob/8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1/mind2web/memory.py), [webarena/workflow/](https://github.com/zorazrw/agent-workflow-memory/tree/8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1/webarena/workflow)).
 
-**Workflow induction is trace-to-prose distillation.** The WebArena prompt-based induction path collects successful result directories by ground-truth reward or model auto-evaluation, parses `experiment.log` into think/action trajectories, deduplicates by task template and abstract action sequence, then asks an OpenAI chat model to summarize common subroutines into workflows. Mind2Web's offline path generates workflows from training examples; its online path reads previous result JSON files and induces a workflow file from the accumulated trajectories ([webarena/induce_prompt.py](https://github.com/zorazrw/agent-workflow-memory/blob/8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1/webarena/induce_prompt.py), [webarena/induce_rule.py](https://github.com/zorazrw/agent-workflow-memory/blob/8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1/webarena/induce_rule.py), [mind2web/offline_induction.py](https://github.com/zorazrw/agent-workflow-memory/blob/8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1/mind2web/offline_induction.py), [mind2web/online_induction.py](https://github.com/zorazrw/agent-workflow-memory/blob/8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1/mind2web/online_induction.py)).
+**Workflow induction is trace-to-natural-language distillation.** The WebArena prompt-based induction path collects successful result directories by ground-truth reward or model auto-evaluation, parses `experiment.log` into think/action trajectories, deduplicates by task template and abstract action sequence, then asks an OpenAI chat model to summarize common subroutines into workflows. Mind2Web's offline path generates workflows from training examples; its online path reads previous result JSON files and induces a workflow file from the accumulated trajectories ([webarena/induce_prompt.py](https://github.com/zorazrw/agent-workflow-memory/blob/8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1/webarena/induce_prompt.py), [webarena/induce_rule.py](https://github.com/zorazrw/agent-workflow-memory/blob/8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1/webarena/induce_rule.py), [mind2web/offline_induction.py](https://github.com/zorazrw/agent-workflow-memory/blob/8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1/mind2web/offline_induction.py), [mind2web/online_induction.py](https://github.com/zorazrw/agent-workflow-memory/blob/8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1/mind2web/online_induction.py)).
 
 **Context efficiency is coarse file selection plus token-fit truncation, not fine-grained retrieval.** The ordinary WebArena path loads the whole selected workflow file into the system prompt. Mind2Web loads the whole workflow file plus a random sample of concrete examples filtered by website, subdomain, or domain, and stops adding exemplars when the assembled prompt would exceed the model token limit. A separate `mind2web/workflow/retrieve.py` utility can build a FAISS index over workflow names/docstrings and write selected workflows to an output file, but that is an offline preparation utility rather than an agent-side lookup in the main inference loop ([mind2web/memory.py](https://github.com/zorazrw/agent-workflow-memory/blob/8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1/mind2web/memory.py), [mind2web/workflow/retrieve.py](https://github.com/zorazrw/agent-workflow-memory/blob/8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1/mind2web/workflow/retrieve.py), [mind2web/run_mind2web.py](https://github.com/zorazrw/agent-workflow-memory/blob/8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1/mind2web/run_mind2web.py)).
 
@@ -31,21 +31,21 @@ Agent Workflow Memory, from `zorazrw/agent-workflow-memory`, is research code fo
 ## Artifact analysis
 
 - **Storage substrate:** `files` — Authored code, prompts, checked-in WebArena workflows, induced workflows, result logs, and optional Mind2Web FAISS index files all persist as repository or local filesystem artifacts.
-- **Representational form:** `prose` `symbolic` `parametric` — Workflows, prompts, thoughts, and examples are prose; scripts, JSON result records, config files, action traces, and workflow parsers are symbolic; the optional FAISS/OpenAIEmbeddings path is parametric retrieval state.
+- **Representational form:** `natural-language` `symbolic` `parametric` — Workflows, prompts, thoughts, and examples are natural-language; scripts, JSON result records, config files, action traces, and workflow parsers are symbolic; the optional FAISS/OpenAIEmbeddings path is parametric retrieval state.
 - **Lineage:** `authored` `trace-extracted` — Prompt templates and seed workflow files are authored or checked in; WebArena and Mind2Web induction derive new workflow files from task examples, result JSON, experiment logs, success signals, and LLM summarization.
 - **Behavioral authority:** `knowledge` `instruction` `ranking` `learning` `validation` — Workflow text serves as advisory/instructional prompt context for future actions; candidate scores and FAISS similarity can rank examples/workflows; induction learns from traces; reward and auto-evaluation validate which trajectories enter the write path.
 
-**Workflow files.** Storage substrate: repository or local text files under `webarena/workflow/`, Mind2Web `workflow/`, or a user-provided `--workflow_path`. Representational form: prose subroutines mixed with concrete action snippets such as `click('id')`, `fill(...)`, and `select_option(...)`. Lineage: checked-in files are retained source material; newly generated files are trace-extracted summaries from successful or selected task trajectories. Behavioral authority: prompt-level knowledge and instruction because the acting model sees the workflow text before producing the next action.
+**Workflow files.** Storage substrate: repository or local text files under `webarena/workflow/`, Mind2Web `workflow/`, or a user-provided `--workflow_path`. Representational form: natural-language subroutines mixed with concrete action snippets such as `click('id')`, `fill(...)`, and `select_option(...)`. Lineage: checked-in files are retained source material; newly generated files are trace-extracted summaries from successful or selected task trajectories. Behavioral authority: prompt-level knowledge and instruction because the acting model sees the workflow text before producing the next action.
 
-**Induction scripts and prompts.** Storage substrate: Python scripts and prompt text in the repository. Representational form: symbolic parsers, filters, and subprocess pipelines plus prose induction instructions. Lineage: authored system-definition artifacts. Behavioral authority: learning and validation; they decide which traces qualify, how examples are formatted, what the LLM is asked to abstract, and where the new workflow file is written.
+**Induction scripts and prompts.** Storage substrate: Python scripts and prompt text in the repository. Representational form: symbolic parsers, filters, and subprocess pipelines plus natural-language induction instructions. Lineage: authored system-definition artifacts. Behavioral authority: learning and validation; they decide which traces qualify, how examples are formatted, what the LLM is asked to abstract, and where the new workflow file is written.
 
 **Result and trajectory logs.** Storage substrate: WebArena `results/` directories and Mind2Web JSON logs under the configured result path. Representational form: symbolic JSON and log files containing observations, actions, model outputs, rewards, auto-evaluation records, and task metrics. Lineage: trace-extracted from benchmark runs. Behavioral authority: evidence for induction and evaluation, not the normal read-back surface.
 
-**Concrete example memory.** Storage substrate: Mind2Web's `data/memory/exemplars.json` and runtime-loaded examples. Representational form: prose chat messages with symbolic specifier fields. Lineage: imported dataset examples rather than induced workflow summaries. Behavioral authority: knowledge context added beside workflow memory; examples are filtered by website/subdomain/domain and randomly sampled up to `retrieve_top_k`.
+**Concrete example memory.** Storage substrate: Mind2Web's `data/memory/exemplars.json` and runtime-loaded examples. Representational form: natural-language chat messages with symbolic specifier fields. Lineage: imported dataset examples rather than induced workflow summaries. Behavioral authority: knowledge context added beside workflow memory; examples are filtered by website/subdomain/domain and randomly sampled up to `retrieve_top_k`.
 
 **Workflow retrieval utility.** Storage substrate: local FAISS output under `--memory_path` and selected workflow text written to `--output_path`. Representational form: parametric embeddings over workflow names/docstrings plus symbolic metadata ids. Lineage: derived index over existing workflow files. Behavioral authority: ranking and routing for preparing a smaller workflow file, but not an agent-internal read-back path in the main runner.
 
-Promotion path: AWM promotes raw task traces into durable prose workflows, then promotes selected workflow files into prompt context for future tasks. It does not promote workflows into executable tools, validators, typed artifacts, or reviewed rules with source spans.
+Promotion path: AWM promotes raw task traces into durable natural-language workflows, then promotes selected workflow files into prompt context for future tasks. It does not promote workflows into executable tools, validators, typed artifacts, or reviewed rules with source spans.
 
 ## Comparison with Our System
 
@@ -67,7 +67,7 @@ AWM is also much more push-oriented than Commonplace. Once a user or pipeline ch
 
 **Use benchmark success as a write-side gate for trace-extracted playbooks.** Ready for narrow workflows. Commonplace could allow a workshop to distill repeated validation-fix or review-triage traces only after a deterministic or reviewed success signal.
 
-**Keep the distilled artifact as editable prose before codifying it.** Ready now. AWM's text workflows are easy to inspect and revise before they gain stronger authority. Commonplace should preserve that low-friction stage for operational playbooks before turning them into skills, validators, or commands.
+**Keep the distilled artifact as editable natural-language content before codifying it.** Ready now. AWM's text workflows are easy to inspect and revise before they gain stronger authority. Commonplace should preserve that low-friction stage for operational playbooks before turning them into skills, validators, or commands.
 
 **Separate raw traces from the prompt artifact.** Ready now. AWM does not replay whole logs into future tasks; it writes a smaller workflow file. Commonplace should keep raw run logs as evidence and serve a distilled note or checklist to later agents.
 
@@ -79,7 +79,7 @@ AWM is also much more push-oriented than Commonplace. Once a user or pipeline ch
 
 **Write agency:** `automatic` `manual` — WebArena and Mind2Web scripts automatically derive workflow files from selected examples or prior trajectories; WebArena's rule path can require manual acceptance of candidate workflows; users can also edit the text files directly.
 
-**Curation operations:** `consolidate` `dedup` `synthesize` — Induction consolidates multi-step trajectories into shorter common workflows, WebArena deduplicates candidates by task template and abstract action sequence, and the LLM prompt path synthesizes new prose subroutines across selected examples. The code does not implement contradiction invalidation, decay, or durable promotion tiers.
+**Curation operations:** `consolidate` `dedup` `synthesize` — Induction consolidates multi-step trajectories into shorter common workflows, WebArena deduplicates candidates by task template and abstract action sequence, and the LLM prompt path synthesizes new natural-language subroutines across selected examples. The code does not implement contradiction invalidation, decay, or durable promotion tiers.
 
 ### Trace-learning
 
@@ -89,7 +89,7 @@ AWM is also much more push-oriented than Commonplace. Once a user or pipeline ch
 
 **Learning timing:** `online` `offline` `staged` — Mind2Web supports offline induction from training data and online induction after batches of test examples; WebArena's pipeline stages run, evaluation, and workflow update steps.
 
-**Distilled form:** `prose` `symbolic` — The retained output is prose workflow text with embedded symbolic action snippets and file/path conventions.
+**Distilled form:** `natural-language` `symbolic` — The retained output is natural-language workflow text with embedded symbolic action snippets and file/path conventions.
 
 **Trace source.** WebArena's `pipeline.py` runs inference with a workflow file, evaluates the trajectory, then updates the workflow file from result directories. `induce_prompt.py` and `induce_rule.py` parse `experiment.log` into think/action trajectories and filter candidates by benchmark reward or model auto-evaluation. Mind2Web's online induction reads previous result JSON and reconstructs per-step environments and actions.
 
@@ -97,7 +97,7 @@ AWM is also much more push-oriented than Commonplace. Once a user or pipeline ch
 
 **Scope and timing.** The retained memory normally lives at website granularity, e.g. `workflow/shopping.txt` or `workflow/aa.txt`. Online Mind2Web learning updates the file after previous batches; WebArena stages updates after evaluation. The workflow file can then be reused for later tasks, but the code does not maintain entry-level version history or invalidation metadata.
 
-**Survey placement.** AWM is a trace-to-prose-workflow system. It strengthens the survey split between raw traces as evidence and distilled playbooks as behavior-shaping artifacts. It also shows the weak-governance corner of trace-learning: useful workflows can be generated cheaply, but without source spans or per-entry review their authority should remain prompt-level advice, not enforcement.
+**Survey placement.** AWM is a trace-to-workflow system. It strengthens the survey split between raw traces as evidence and distilled playbooks as behavior-shaping artifacts. It also shows the weak-governance corner of trace-learning: useful workflows can be generated cheaply, but without source spans or per-entry review their authority should remain prompt-level advice, not enforcement.
 
 ## Read-back
 
@@ -131,21 +131,21 @@ AWM is also much more push-oriented than Commonplace. Once a user or pipeline ch
 
 **The induced workflow format is easy to edit but hard to audit.** A workflow can contain useful abstracted procedure text, concrete ids, and action syntax, but there is no per-block citation back to the successful trajectory, no model/prompt version on the block, and no invalidation rule when the website changes.
 
-**AWM stops before codification.** It keeps workflows as prompt prose and action examples. That is safer than silently generating executable browser tools, but weaker than a reviewed rule, validator, or typed skill when the same routine must be trusted across many runs.
+**AWM stops before codification.** It keeps workflows as prompt natural-language and action examples. That is safer than silently generating executable browser tools, but weaker than a reviewed rule, validator, or typed skill when the same routine must be trusted across many runs.
 
 ## What to Watch
 
 - Whether future AWM code attaches workflow blocks to source trajectory ids, success/evaluation records, model/prompt versions, and website versions; that would make trace-extracted workflows auditable.
 - Whether the FAISS workflow retriever becomes part of the online inference path; that would change read-back from coarse file push toward instance-targeted inferred selection.
 - Whether workflow files gain entry-level suppression, expiry, or invalidation when a website UI changes; without that, stale workflow push remains the main design risk.
-- Whether AWM promotes common workflows into executable browser helpers or validators; that would move the retained artifact from prose advice toward symbolic system-definition authority.
+- Whether AWM promotes common workflows into executable browser helpers or validators; that would move the retained artifact from natural-language advice toward symbolic system-definition authority.
 - Whether evaluations include memory-specific ablations for workflow text, concrete examples, and online updates; that is needed to separate context presence from behavioral use.
 
 Relevant Notes:
 
-- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: AWM distills web-agent trajectories into reusable prose workflows.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: AWM distills web-agent trajectories into reusable natural-language workflows.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: workflow files matter because the runners push them into future prompts.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: AWM bundles trace logs, workflow prose, retrieval indexes, prompts, and evaluation outputs under different forms and authorities.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: AWM bundles trace logs, natural-language workflow descriptions, retrieval indexes, prompts, and evaluation outputs under different forms and authorities.
 - [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: successful task traces are abstracted into future behavior guidance.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: workflow text and concrete examples mostly act as advisory context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - contrasts: AWM's workflow files influence behavior but are not enforced validators or executable tools.

@@ -23,13 +23,13 @@ Interpretation and retention could in principle be sourced separately and compos
 
 A formal pathway gets both cheaply inside a supplied language, because [formalization buys a mechanical acceptance test](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — and pays for it with a language, variables, primitives, and acceptance criteria fixed in advance.
 
-Theories about a system's own operation are mostly not yet in such a language. "This retrieval step surfaces the wrong artifact when the query names a type rather than a topic" is a claim about the system, with real consequences and a real scope, and no formal apparatus receives it. So the mechanical acceptance test is unavailable exactly where the reflective case needs one, and condition 2 has to be discharged over prose.
+Theories about a system's own operation are mostly not yet in such a language. "This retrieval step surfaces the wrong artifact when the query names a type rather than a topic" is a claim about the system, with real consequences and a real scope, and no formal apparatus receives it. So the mechanical acceptance test is unavailable exactly where the reflective case needs one, and condition 2 has to be discharged over natural-language.
 
 ## Only a semantic interpreter over retained text supplies both
 
 This is why the substrate matters rather than the architecture diagram. [Purely parametric retention exposes no scope](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md), and the documented partial routes out of that fail differently but fail alike here: neither yields a self-directed theory that persists with its applicability conditions attached. Formal retention supplies both conditions inside a language the reflective case rarely has.
 
-An LLM operating over retained text supplies both, and does so by division of labor: the weights are the semantic interpreter, competent over prose theories including prose about the system's own behavior; the retained artifact is the persistent, separately revisable object. Neither half is sufficient. A capable model with no retained artifact re-derives its theory each session — [and a theory nothing surfaces at the moment of need contributes nothing](./retrieval-failure-is-reflection-failure.md). A retained artifact with no interpreter is a table of rules that reasons about nothing.
+An LLM operating over retained text supplies both, and does so by division of labor: the weights are the semantic interpreter, competent over natural-language theories including natural-language about the system's own behavior; the retained artifact is the persistent, separately revisable object. Neither half is sufficient. A capable model with no retained artifact re-derives its theory each session — [and a theory nothing surfaces at the moment of need contributes nothing](./retrieval-failure-is-reflection-failure.md). A retained artifact with no interpreter is a table of rules that reasons about nothing.
 
 So the conjecture reaches reflective self-improvement on LLM-plus-artifact substrates specifically, not on reflective systems in general. That is a claim about what is currently available, not about what is possible: any substrate that supplied semantic competence over its own unformalized self-descriptions and retained them addressably would qualify equally.
 
@@ -45,7 +45,7 @@ Nothing here rebuts that. What it predicts is where to look: the artifact earns 
 - Whether the closure question was ever the interesting one. It framed the human as the thing to remove, when what the human was supplying is the evaluator — [methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md), and a loop can close computationally while its acceptance gate gets weaker.
 - Whether a deliberately minimal toy pathway, built to be reflective and computationally closed from the start and sized to test the conjecture rather than to be useful, stays autonomous end to end — or whether the human reappears at a different point, designing its objective or judging its results.
 - Whether self-directed theories are harder to reach-assess than domain theories, since the system evaluating the theory is the system the theory describes, and a flattering self-theory has no external oracle to contradict it.
-- Whether condition 3's separable parts can be had at all in prose, or whether prose theories are addressable only as indivisible documents — replaceable but not rescopable — which would collapse the advantage over wholesale replacement.
+- Whether condition 3's separable parts can be had at all in natural-language, or whether natural-language theories are addressable only as indivisible documents — replaceable but not rescopable — which would collapse the advantage over wholesale replacement.
 
 ---
 

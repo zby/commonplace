@@ -18,7 +18,7 @@ HyperAgents is Facebook Research's code release for self-referential self-improv
 
 ## Core Ideas
 
-**The durable memory is executable lineage.** Each generation creates a `gen_<id>/` folder, runs the meta agent, copies back `agent_output/model_patch.diff`, stores patch paths in `metadata.json`, and appends the generation id to `archive.jsonl` ([generate_loop.py](https://github.com/facebookresearch/Hyperagents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/generate_loop.py), [utils/gl_utils.py](https://github.com/facebookresearch/Hyperagents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/utils/gl_utils.py)). Later generations call `get_patch_files(...)` on the selected parent and apply the full patch chain before invoking or evaluating the next agent. The behavior-shaping memory is therefore a replayable diff lineage, not a recalled prose lesson.
+**The durable memory is executable lineage.** Each generation creates a `gen_<id>/` folder, runs the meta agent, copies back `agent_output/model_patch.diff`, stores patch paths in `metadata.json`, and appends the generation id to `archive.jsonl` ([generate_loop.py](https://github.com/facebookresearch/Hyperagents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/generate_loop.py), [utils/gl_utils.py](https://github.com/facebookresearch/Hyperagents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/utils/gl_utils.py)). Later generations call `get_patch_files(...)` on the selected parent and apply the full patch chain before invoking or evaluating the next agent. The behavior-shaping memory is therefore a replayable diff lineage, not a recalled natural-language lesson.
 
 **The meta agent edits the system that produces future agents.** `MetaAgent.forward(...)` gives the model the instruction to modify the supplied repository path with all local tools enabled; `run_meta_agent.py` then resets `domains/` edits and writes the diff against the base commit as `model_patch.diff` ([meta_agent.py](https://github.com/facebookresearch/Hyperagents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/meta_agent.py), [agent/llm_withtools.py](https://github.com/facebookresearch/Hyperagents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/agent/llm_withtools.py), [run_meta_agent.py](https://github.com/facebookresearch/Hyperagents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/run_meta_agent.py), [utils/git_utils.py](https://github.com/facebookresearch/Hyperagents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/utils/git_utils.py)). This makes code the promoted memory artifact.
 
@@ -33,7 +33,7 @@ HyperAgents is Facebook Research's code release for self-referential self-improv
 ## Artifact analysis
 
 - **Storage substrate:** `files` — The central retained artifacts are output-directory files: `archive.jsonl`, per-generation `metadata.json`, patch files, chat histories, predictions, reports, copied repo trees, plots, and logs.
-- **Representational form:** `prose` `symbolic` — Chat histories, prompts, reports, and generated README text are prose; patches, Python code, JSON metadata, CSV predictions, archive records, score fields, parent ids, and Docker/git commands are symbolic. The reviewed repo does not retain learned model weights or embeddings as its memory substrate.
+- **Representational form:** `natural-language` `symbolic` — Chat histories, prompts, reports, and generated README text are natural-language; patches, Python code, JSON metadata, CSV predictions, archive records, score fields, parent ids, and Docker/git commands are symbolic. The reviewed repo does not retain learned model weights or embeddings as its memory substrate.
 - **Lineage:** `authored` `trace-extracted` — The starting code, domain harnesses, tools, prompts, and selectors are authored; meta-agent chat histories, task-agent histories, predictions, reports, generated diffs, archive state, and selected patch lineages are derived from agent runs and benchmark feedback.
 - **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` `learning` `enforcement` — Histories and reports are evidence; patches and edited code instruct future execution; parent ids, patch paths, score keys, and domain adapters route runs; reports and import checks validate candidates; scores and child counts rank candidate parents; the generation loop learns by turning trace/eval evidence into future executable code; Docker reset/clean, domain reset, and patch filtering enforce some boundaries.
 
@@ -43,7 +43,7 @@ HyperAgents is Facebook Research's code release for self-referential self-improv
 
 **Evaluation artifacts.** Prediction CSVs, report JSON files, Polyglot per-instance outputs, and generated plots are knowledge artifacts for humans and ranking/validation artifacts for the loop ([domains/harness.py](https://github.com/facebookresearch/Hyperagents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/domains/harness.py), [domains/report.py](https://github.com/facebookresearch/Hyperagents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/domains/report.py), [analysis/visualize_archive.py](https://github.com/facebookresearch/Hyperagents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/analysis/visualize_archive.py)). They can influence later parent choice and, if inspected by a meta agent, future edits.
 
-**Promotion path.** HyperAgents promotes from raw traces and benchmark outputs to symbolic patches, then from patches to executable code state by parent selection and lineage replay. It does not promote traces into reviewed prose lessons, semantic indexes, validators with per-claim provenance, or model weights.
+**Promotion path.** HyperAgents promotes from raw traces and benchmark outputs to symbolic patches, then from patches to executable code state by parent selection and lineage replay. It does not promote traces into reviewed natural-language lessons, semantic indexes, validators with per-claim provenance, or model weights.
 
 ## Comparison with Our System
 
@@ -51,7 +51,7 @@ HyperAgents is Facebook Research's code release for self-referential self-improv
 |---|---|---|
 | Primary retained artifact | Generated patch lineage plus archive metadata | Typed Markdown notes, sources, instructions, indexes, and validators |
 | Learning loop | Meta-agent edits code, benchmark evaluates, archive selects parents | Agents/humans write and revise artifacts, validation and reviews check them |
-| Read-back | Selected patches are applied into future executable code | Agents search, load, and follow retained prose/symbolic artifacts |
+| Read-back | Selected patches are applied into future executable code | Agents search, load, and follow retained natural-language/symbolic artifacts |
 | Context control | Filesystem pruning, reduced repo copies, patch replay | `rg`, indexes, links, collection contracts, review bundles |
 | Governance | Import checks, benchmark scores, Docker cleanup, path filtering | Type specs, collection rules, deterministic validation, semantic review, git history |
 
@@ -83,11 +83,11 @@ Commonplace is stronger at legibility and source-grounded governance. HyperAgent
 
 **Learning timing:** `offline` `staged` — Meta-agent editing, staged evaluation, full evaluation, archive append, parent selection, ensemble evaluation, and plotting are separate outer-loop stages. The checked-in task agent does not update a memory store online while solving a single task.
 
-**Distilled form:** `symbolic` — The durable learned object is a git diff plus metadata and selection state. Chat histories and reports remain prose/symbolic evidence, but the behavior-changing distilled artifact is executable symbolic code.
+**Distilled form:** `symbolic` — The durable learned object is a git diff plus metadata and selection state. Chat histories and reports remain natural-language/symbolic evidence, but the behavior-changing distilled artifact is executable symbolic code.
 
 **Extraction.** Extraction is mediated by the meta agent and benchmark oracle: the agent edits repository files; `run_meta_agent.py` captures the resulting diff; harnesses evaluate the patched agent; report files expose scores; metadata and selection policies decide whether the lineage remains selectable ([run_meta_agent.py](https://github.com/facebookresearch/Hyperagents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/run_meta_agent.py), [generate_loop.py](https://github.com/facebookresearch/Hyperagents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/generate_loop.py), [utils/gl_utils.py](https://github.com/facebookresearch/Hyperagents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/utils/gl_utils.py)).
 
-**Survey fit.** HyperAgents belongs with trace-learning artifact systems: it turns agent/evaluation traces into executable system-definition patches rather than prose memories, vector indexes, or parametric weights. It strengthens the split between raw trace retention and promoted authority.
+**Survey fit.** HyperAgents belongs with trace-learning artifact systems: it turns agent/evaluation traces into executable system-definition patches rather than natural-language memories, vector indexes, or parametric weights. It strengthens the split between raw trace retention and promoted authority.
 
 ## Read-back
 

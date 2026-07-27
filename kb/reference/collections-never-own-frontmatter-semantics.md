@@ -15,7 +15,7 @@ The argument is self-containment. If a collection could reinterpret what a schem
 
 - Reading any artifact's frontmatter would require joining two documents — the type spec *and* the local `COLLECTION.md` — instead of one.
 - Moving a file between collections would silently change what its frontmatter asserts, even with every byte of the file unchanged.
-- Validators would check syntax whose meaning they no longer know: the schema keyword would be intact while its semantics floated free in prose the validator does not read.
+- Validators would check syntax whose meaning they no longer know: the schema keyword would be intact while its semantics floated free in natural-language content the validator does not read.
 
 Keeping frontmatter semantics wholly inside the type spec is what makes a committed value mean one thing everywhere, checkable by code that reads only the schema.
 
@@ -30,7 +30,7 @@ The epistack casework produced two ideas that would each have breached this boun
 When a field's meaning would otherwise have to vary by collection, the moves that preserve the boundary are:
 
 1. **Delete the global field.** ADR 044 for `status`: if no single meaning survives across collections, the field carries no coherent global semantics and is removed.
-2. **Carry the distinction in placement and prose, with no field at all.** [ADR 017](./adr/017-collection-md-is-the-register-convention-boundary.md) for register: which register applies is encoded by which collection a file lives in and stated in that `COLLECTION.md`, never as a frontmatter field whose meaning a collection sets.
+2. **Carry the distinction in placement and natural-language instruction, with no field at all.** [ADR 017](./adr/017-collection-md-is-the-register-convention-boundary.md) for register: which register applies is encoded by which collection a file lives in and stated in that `COLLECTION.md`, never as a frontmatter field whose meaning a collection sets.
 3. **Push it into a collection-local type whose spec owns the field with fixed meaning.** A distinction that only exists under one contract becomes a field on a collection-local type (for example, a casebook-local claim type), where the type spec still fully determines what the field means.
 
 Extending a field's *value set* while keeping each value's meaning fixed does **not** breach the boundary. The extensible-controlled-vocabularies direction for `source_type` — adding new enum values that each mean one thing everywhere — is fine; adding values is a different operation from relativizing meaning. The boundary forbids only the second.
@@ -45,5 +45,5 @@ Relevant Notes:
 
 - [Collections and types](./collections-and-types.md) — part-of: the composition model this sharpens; states the two-surface split that this note shows is asymmetric
 - [ADR 044: user verification replaces global note status](./adr/044-user-verification-replaces-global-note-status.md) — implemented-by: the decision that held the boundary by deleting the field rather than relativizing its meaning; its considered alternatives carry the per-collection meaning-redefinition option this boundary rules out
-- [ADR 017: COLLECTION.md is the register convention boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — implemented-by: the precedent for carrying a per-collection distinction in placement and prose with no frontmatter field
+- [ADR 017: COLLECTION.md is the register convention boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — implemented-by: the precedent for carrying a per-collection distinction in placement and natural-language instruction with no frontmatter field
 - [ADR 042: register becomes a default profile under open-ended text contracts](./adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — see-also: the sibling open-but-guarded value-set extension that stays on the text-contract side of this boundary

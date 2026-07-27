@@ -63,4 +63,4 @@ Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md) - see-also: explains why storing and retrieving documents does not by itself make Semantic Engine an agent-memory system.
 - [Storage substrate](../notes/definitions/storage-substrate.md) - see-also: frames the staging choice as SQLite/files/repo rather than canonical KB storage.
-- [Representational form](../notes/definitions/representational-form.md) - see-also: distinguishes prose source text, symbolic chunk metadata, and parametric embeddings in the ingest layer.
+- [Representational form](../notes/definitions/representational-form.md) - see-also: distinguishes natural-language source text, symbolic chunk metadata, and parametric embeddings in the ingest layer.

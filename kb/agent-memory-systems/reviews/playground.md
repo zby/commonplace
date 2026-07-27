@@ -32,11 +32,11 @@ last-checked: "2026-06-04"
 ## Artifact analysis
 
 - **Storage substrate:** `graph` `files` `in-memory` — The pile stores branch facts and blob handles for configuration, cognition, execution, archive, and memory entities; imported archives and text/blob payloads are stored as pile blobs; `MemoryCoverState` is an in-process cache of the last served cover.
-- **Representational form:** `prose` `symbolic` — Memory summaries, system prompts, reasoning notes, command text, outputs, and imported message text are prose; schemas, branch ids, entity links, timestamps, model/request/result metadata, config, and chunk hierarchy are symbolic.
+- **Representational form:** `natural-language` `symbolic` — Memory summaries, system prompts, reasoning notes, command text, outputs, and imported message text are natural-language; schemas, branch ids, entity links, timestamps, model/request/result metadata, config, and chunk hierarchy are symbolic.
 - **Lineage:** `authored` `imported` — System prompts, configuration, and memory summaries are authored through config or faculty-style commands; archive importers preserve external chat histories as imported messages and raw JSON trees. The inspected playground repo does not include an implemented automatic trace-to-memory-summary compiler, so the review does not classify current memory chunks as code-grounded `trace-extracted`.
 - **Behavioral authority:** `knowledge` `instruction` `routing` `validation` — Memory summaries and archive/cognition provenance serve as knowledge; the system prompt instructs the model's one-command shell loop and memory discipline; branch/config ids route faculties and context assembly; command/result schemas, pending-result checks, and repeated failed-memory-lookup guards validate or constrain execution flow.
 
-**Memory chunks.** The central retained memory artifact is a `kind_chunk` entity on the `memory` branch. Its operative prose is the summary blob; its symbolic parts are the time interval, child links, and legacy source-reference attributes. It shapes later behavior when the context builder renders it as a synthetic `memory.rs <range>` exchange.
+**Memory chunks.** The central retained memory artifact is a `kind_chunk` entity on the `memory` branch. Its operative natural-language content is the summary blob; its symbolic parts are the time interval, child links, and legacy source-reference attributes. It shapes later behavior when the context builder renders it as a synthetic `memory.rs <range>` exchange.
 
 **Cognition and execution traces.** Thoughts, model requests/results, command requests/results, reasoning text, stdout/stderr, and timestamps are durable trace surfaces. They are behavior-shaping as the recent moment tail and as provenance for memory chunks, but they are not themselves distilled long-term memory unless a user or faculty creates memory chunks covering their intervals.
 
@@ -92,7 +92,7 @@ Memory writing is still behaviorally significant: a model or operator can create
 
 **Injection point.** The injection point is pre-invocation. `create_thought_and_request()` builds a serialized context before a model request, with system prompt prepended, memory cover inserted before breath, and recent moment turns appended after breath. Memory writes or consolidation after a command would affect later context assembly, not the already-running turn.
 
-**Selection, scope, and complexity.** Volume is bounded by model context window, max output, safety margin, system prompt cost, summary text size, and image-marker cost estimates. Complexity is bounded by the selected antichain of memory chunks, but wide parent summaries and detailed children can still carry dense, loosely related prose.
+**Selection, scope, and complexity.** Volume is bounded by model context window, max output, safety margin, system prompt cost, summary text size, and image-marker cost estimates. Complexity is bounded by the selected antichain of memory chunks, but wide parent summaries and detailed children can still carry dense, loosely related natural-language.
 
 **Authority at consumption.** Served memory acts as advisory context. The system prompt gives it identity-level significance and instructs the model how to create, consolidate, and recall memories, but the memory summary text itself is not a hard gate. The failed-memory-lookup guard can inject corrective instruction when the model repeatedly queries invalid memory ids.
 
@@ -119,7 +119,7 @@ Memory writing is still behaviorally significant: a model or operator can create
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: playground's memory matters when chunks are served into the model context, not merely because they live in the pile.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: pile facts, prose summaries, branch schemas, context snapshots, and prompt instructions carry different forms and authorities.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: pile facts, natural-language summaries, branch schemas, context snapshots, and prompt instructions carry different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: memory summaries, imported archives, and cognition traces advise as evidence and context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: schemas, prompt invariants, branch routing, context assembly, and guards configure future behavior.
 - [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - explains: playground's temporal chunk selection can only target by time and hierarchy unless richer symbols are emitted into the memory layer.

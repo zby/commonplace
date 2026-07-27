@@ -9,7 +9,7 @@ tags: [learning-theory, artifact-analysis, agent-memory, context-engineering]
 
 [Adaptation of Agentic AI](../../sources/adaptation-of-agentic-ai-survey-post-training-memory-skills.ingest.md) is useful because it separates adaptation by optimization locus and signal source: A1 updates the agent from tool-execution feedback, A2 updates the agent from output evaluation, T1 trains agent-agnostic tools, and T2 adapts tools under supervision from a fixed agent. That frame answers "where did the update pressure come from?" It does not answer the design question an agent-operated KB has to answer next: what retained behavior-shaping artifact should change, through which authority path, and with what review evidence?
 
-That second question belongs to [axes of artifact analysis](../axes-of-artifact-analysis.md). Once an adaptation signal fires, the durable result may be a prose memory, prompt patch, skill, generated cue, route table, validator, typed schema, retrieval index, learned controller, adapter, or model checkpoint. Those choices differ by [storage substrate](../definitions/storage-substrate.md), [representational form](../definitions/representational-form.md), [lineage](../definitions/lineage.md), and [behavioral authority](../definitions/behavioral-authority.md). The survey's A1/A2/T1/T2 label tells us which component was optimized and what supervision signal was available; artifact analysis tells us what the system has actually learned in retained form and how future agents should trust, load, test, regenerate, or retire it.
+That second question belongs to [axes of artifact analysis](../axes-of-artifact-analysis.md). Once an adaptation signal fires, the durable result may be a natural-language memory, prompt patch, skill, generated cue, route table, validator, typed schema, retrieval index, learned controller, adapter, or model checkpoint. Those choices differ by [storage substrate](../definitions/storage-substrate.md), [representational form](../definitions/representational-form.md), [lineage](../definitions/lineage.md), and [behavioral authority](../definitions/behavioral-authority.md). The survey's A1/A2/T1/T2 label tells us which component was optimized and what supervision signal was available; artifact analysis tells us what the system has actually learned in retained form and how future agents should trust, load, test, regenerate, or retire it.
 
 ## What the survey gives
 
@@ -24,7 +24,7 @@ The survey's four-way taxonomy is valuable as a signal map:
 
 For KB methodology, the key gain is not the names. It is that signal density and component cost become visible. Execution-grounded signals are easier to use than holistic output scores. Updating a retriever, skill, prompt, validator, or memory store is usually cheaper and more inspectable than changing model weights. T2 therefore names a common practical pattern: keep the model fixed and improve the surrounding artifacts.
 
-But "tool" is too coarse for Commonplace. A tool may be a symbolic validator, a prose skill, a vector index, a learned reranker, a subprocess wrapper, or a memory curator. A memory module may include raw traces, summaries, embeddings, routing rules, and generated prompts. Treating all of those as "external tools" hides the review method and lifecycle obligations that matter operationally.
+But "tool" is too coarse for Commonplace. A tool may be a symbolic validator, a natural-language skill, a vector index, a learned reranker, a subprocess wrapper, or a memory curator. A memory module may include raw traces, summaries, embeddings, routing rules, and generated prompts. Treating all of those as "external tools" hides the review method and lifecycle obligations that matter operationally.
 
 ## The missing retained-surface question
 
@@ -37,14 +37,14 @@ The first decision is the survey's frame. The second is artifact analysis.
 
 | Observed pressure | Weak retained surface | Stronger retained surface when pattern stabilizes | Review evidence |
 |---|---|---|---|
-| A tool repeatedly fails on one input shape | prose reminder or error note | symbolic validation, argument normalizer, better error message | tests over the failing input class |
+| A tool repeatedly fails on one input shape | natural-language reminder or error note | symbolic validation, argument normalizer, better error message | tests over the failing input class |
 | A worker always runs the same sequence | prompt instruction describing the sequence | orchestrator function, workflow, or script | execution tests and interrupt/retry behavior |
 | Output structure is stable and easy to state | example output in a prompt | schema, parser, or validator | parse/validation tests |
 | Agent outputs reveal recurring search misses | note or source review describing the miss | generated index, cue, query recipe, or retrieval policy | retrieval ablation and link/provenance audit |
 | User overrides a rigid rule repeatedly | exception note | relaxed interface boundary or LLM-mediated judgment slot | integration tests plus override/appeal audit |
 | A memory update improves task outcomes | new memory entry | cue, skill, retriever update, learned policy, or raw-trace retention rule | WITH/WITHOUT behavior comparison and lineage check |
 
-This table is not a promotion ladder. The stronger surface is only stronger when the signal is strong enough and the target form matches the domain. A recurring failure can justify a validator in an exact-spec regime; in a proxy-theory regime, the same failure may justify relaxing a brittle symbolic rule back into a prose/LLM judgment path. This is why the survey's signal taxonomy needs [fixed artifacts split into exact specs and proxy theories](../fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) and [operational signals that a component is a relaxing candidate](../operational-signals-that-a-component-is-a-relaxing-candidate.md) beside it.
+This table is not a promotion ladder. The stronger surface is only stronger when the signal is strong enough and the target form matches the domain. A recurring failure can justify a validator in an exact-spec regime; in a proxy-theory regime, the same failure may justify relaxing a brittle symbolic rule back into a natural-language/LLM judgment path. This is why the survey's signal taxonomy needs [fixed artifacts split into exact specs and proxy theories](../fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) and [operational signals that a component is a relaxing candidate](../operational-signals-that-a-component-is-a-relaxing-candidate.md) beside it.
 
 ## Constraining and relaxing use the same evidence differently
 
@@ -61,14 +61,14 @@ Each action is an artifact move. It changes representational form, authority, li
 The survey correctly treats memory and skills as adaptation mechanisms rather than passive storage. That corroborates the memory-requirements work, but a system still has to split the bundle. A "memory update" may contain:
 
 - raw trace storage in an audit log;
-- extracted prose facts in a memory file;
+- extracted natural-language facts in a memory file;
 - embeddings and ranking behavior in a vector index;
 - generated cues in an always-loaded prompt view;
 - a symbolic validator mined from repeated mistakes;
 - a skill instruction plus routing metadata;
 - a learned memory-management policy.
 
-Those are different operative parts. They can share one user-facing name while requiring different review methods: read prose, test symbolic code, probe distributed-parametric behavior, and validate lineage for derived views. [Memory design adds operational axes to artifact analysis](../memory-design-adds-operational-axes-to-artifact-analysis.md) adds the policy layer around those parts: capture, derivation, activation, authority assignment, lifecycle, and evaluation. The adaptation survey helps identify where the learning signal comes from; the memory design axes decide whether the resulting artifact is allowed to act later.
+Those are different operative parts. They can share one user-facing name while requiring different review methods: read natural-language, test symbolic code, probe distributed-parametric behavior, and validate lineage for derived views. [Memory design adds operational axes to artifact analysis](../memory-design-adds-operational-axes-to-artifact-analysis.md) adds the policy layer around those parts: capture, derivation, activation, authority assignment, lifecycle, and evaluation. The adaptation survey helps identify where the learning signal comes from; the memory design axes decide whether the resulting artifact is allowed to act later.
 
 ## Evaluation implication
 
@@ -91,7 +91,7 @@ This note is not the main comparison between the survey and the memory-requireme
 ## Open questions
 
 - Should Commonplace define an "adaptation event" record with fields for signal, retained artifact, artifact axes, operational memory axis, and evaluation counterfactual?
-- Are `source -> note` labels rich enough for source-side parallel-mechanism relationships, or should those remain in ingest prose until they become claims?
+- Are `source -> note` labels rich enough for source-side parallel-mechanism relationships, or should those remain in ingest natural-language until they become claims?
 - When a signal suggests both a prompt edit and a validator, should the default be to preserve the prompt change as rationale for the validator or to keep only the symbolic artifact plus tests?
 
 ---
@@ -105,4 +105,4 @@ Relevant Notes:
 - [Memory design adds operational axes to artifact analysis](../memory-design-adds-operational-axes-to-artifact-analysis.md) - extends: adds memory-specific capture, derivation, activation, authority, lifecycle, and evaluation policies around the retained artifact
 - [Storing LLM outputs is constraining](../storing-llm-outputs-is-constraining.md) - extends: data-driven adaptation signals tell us when a retained output or prompt change is worth committing
 - [Operational signals that a component is a relaxing candidate](../operational-signals-that-a-component-is-a-relaxing-candidate.md) - extends: relaxing signals are the reverse use of adaptation evidence, when a symbolic/procedural surface is a brittle proxy theory
-- [Unified calling conventions enable bidirectional refactoring](../unified-calling-conventions-enable-bidirectional-refactoring.md) - enables: moving learned behavior between neural/prose/symbolic surfaces is cheaper when call boundaries stay stable
+- [Unified calling conventions enable bidirectional refactoring](../unified-calling-conventions-enable-bidirectional-refactoring.md) - enables: moving learned behavior between neural/natural-language/symbolic surfaces is cheaper when call boundaries stay stable
