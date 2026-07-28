@@ -1,0 +1,282 @@
+{
+  "source": "https://x.com/mrinal/status/2081823472016335059",
+  "captured": "2026-07-28T12:24:20.430766+00:00",
+  "family": "x-article",
+  "status_id": "2081823472016335059",
+  "conversation_id": "2081823472016335059",
+  "target_post": {
+    "article": {
+      "cover_media": "3_2081802590640295936",
+      "entities": {
+        "urls": [
+          {
+            "text": "https://discord.gg/dygEVzG3gf"
+          },
+          {
+            "text": "https://github.com/mrinalwadhwa/unramble"
+          },
+          {
+            "text": "https://github.com/mrinalwadhwa/fluent"
+          },
+          {
+            "text": "https://mrinal.com/articles/how-to-make-agents-that-succeed/"
+          },
+          {
+            "text": "https://github.com/mrinalwadhwa/fluent"
+          },
+          {
+            "text": "https://github.com/mrinalwadhwa/fluent"
+          }
+        ]
+      },
+      "media_entities": [
+        "16_2081794031865233408",
+        "3_2081708521238962176",
+        "3_2081708897560350720",
+        "3_2081710866005970944"
+      ],
+      "plain_text": "Fluent is a factory that autonomously turns your team's vision, ideas, bug reports, user feedback, production logs, and agent traces into working software.\n \nYou use the factory through the Fluent skill in Codex, Claude Code, Pi, or another coding agent that supports skills. The skill turns your conversation into Fluent's interface and drives its command-line machinery for you.\nInstall\nnpx skills add mrinalwadhwa/fluent --skill fluent\nUse the command above to install the Fluent skill. Start your coding agent in the project folder you want Fluent to work on, then ask it to use Fluent and describe what you want to explore, build, fix, or improve.\nThe first invocation sets up Fluent for that project and starts shaping the work with you. You can also invoke the skill explicitly: `$fluent` in Codex, `/fluent` in Claude Code, or `/skill:fluent` in Pi.\nHow Fluent works\nFluent separates work that needs human attention from work agents can do on their own. You can think of it as two conceptual queues. The first queue waits for people with the right context, judgment, expertise, or authority. The second waits on both agent and compute capacity: room to run an agent within subscription, rate, and budget limits, and a suitable environment with the models, tools, and hardware the work needs.\n \nWhenever you encounter something to explore, build, fix, or improve, ask Fluent to record it as an Observation. Add whatever context you have in the moment; you do not need to know the solution or have worked out every detail. Agents and connected systems can record Observations too. You can return to any Observation later and refine it on your own timeline, bringing in someone with the right expertise or authority when needed.\nWhen you want to act on an Observation, ask Fluent to start shaping it. Once shaping produces a Work Item, ask Fluent to run it directly or add it to the queue. A queued Work Item waits until suitable agent and compute capacity is available. If its Attempt needs human context or a decision, Fluent places the question in the human queue for you or someone with the right expertise or authority to answer. The Attempt waits for that answer while other ready Work Items can continue.\nHow you tell Fluent what to build\nAsk Fluent to help shape what you want to build. You can start from an Observation you recorded earlier or begin directly with a Brief. Fluent reads the relevant project code along with the reusable conventions, constraints, and lessons captured as project Expertise.\nYou do not need to arrive with a finished specification. Fluent collaborates with you as the slice takes shape. It grounds the conversation in the code and project Expertise, checks that it understands what you mean, and asks one focused question at a time. It uses structured methods for problem framing, behavior design, architecture, and planning to challenge assumptions, find missing cases, research technical choices, and present options with their tradeoffs. You provide context and judgment and make each decision.\n \nThe conversation produces four layers of shared context:\nBrief. A Brief describes one small slice of functionality. Fluent is designed to help you turn that slice into working software without first specifying the entire system. The Brief captures, in your words, what you want and why, grounded in the relevant project context. It keeps constraints, assumptions, and unknowns explicit without choosing a solution.\nBehavior Specifications. A Behavior Specification precisely describes how the software must behave in a particular situation. It is written so the specified observable behavior can be verified without prescribing its implementation.\nFor the slice described in the Brief, Fluent reads the project\u2019s existing Behavior Specifications and relevant code to understand what the software already guarantees. It then works with you to define the additions, changes, or removals needed for that slice. The result is a behavior diff, not a restatement of the entire system. If the project has no existing Behavior Specifications, the first slice starts them.\nBefore writing Behavior Specifications, Fluent makes the important terms precise and maps the people and systems involved, the events that occur, and the states that matter. For a small slice, it considers only what changes. It works through one area at a time, proposing a few core behaviors before asking about gaps and important edge cases. If Fluent derives a behavior that was not stated in the Brief, it labels the behavior as derived so you can accept or reject it. Decisions about libraries, protocols, storage, and other solution choices wait for the Technical Approach.\nFluent writes each Behavior Specification in a consistent form that names the situation and the required response. For example:\nWHEN a user selects Save on a draft,\nTHE SYSTEM SHALL show a `Saved` status beside the draft title.\nTest: tests/drafts.spec.ts (shows_saved_status_after_save)\nIt describes something a person can observe and a test can verify, without choosing a UI framework, component structure, or persistence mechanism.\nFluent writes Behavior Specifications in EARS, the Easy Approach to Requirements Syntax. EARS uses a small set of patterns that make the triggering event or condition and the required response explicit.\nEvery new behavior includes either a `Test:` reference or an `Untestable:` reason. While defining the behavior, Fluent inspects nearby tests and names the intended test in the project\u2019s existing style. The referenced test may not exist yet. The Writer creates or updates it during implementation, and the Tester runs it. When the test passes, the Behavior Reviewer uses that as evidence that the behavior was delivered.\nTechnical Approach. The Technical Approach document captures your technical expertise and judgment before the work is delegated to agents. You and Fluent decide the key technical choices that should guide implementation, including structure, interfaces, protocols, libraries, storage, and integrations. The document gives the Writer both the decisions and the reasoning behind them, while leaving implementation details that agents can safely determine during the work.\nImplementation Plan. The Implementation Plan turns the confirmed behaviors and technical decisions into work that agents can carry out. You and Fluent decide whether the slice should become one Work Item or several independently reviewable Work Items that can run in parallel. When steps help the Writer, the Implementation Plan divides a Work Item into steps that state what will become observably true, which behaviors each step delivers, and how the result will be verified. Fluent orders those steps by what must be built first. A small mechanical Work Item can use a minimal plan without inventing steps. When Work Items depend on one another, the plan pins the interfaces they share and the points at which their work must come together.\nYou confirm each layer before Fluent uses it as the foundation for the next. The conversation can also move backward. If the Technical Approach reveals missing behavior, you return to the Behavior Specifications. If the Implementation Plan exposes an unresolved technical decision, you return to the Technical Approach rather than leaving the Writer to guess.\nWhen you confirm the Implementation Plan, Fluent creates one Work Item for each independently reviewable part of the slice. Each Work Item carries the approved Brief, Behavior Specifications, Technical Approach, and the part of the Implementation Plan its agents must deliver. Creating a Work Item records the handoff. It does not run or queue the Work Item.\nAsk Fluent to run a Work Item directly, or add it to the queue to wait for agent and compute capacity. Each time Fluent runs a Work Item, it creates an Attempt. The Attempt tracks that execution through the Writer, Tester, Reviewers, and Learner, including every revision, test run, review, and pause. Separate Work Items can proceed independently. Within an Attempt, the Writer follows any dependencies and ordering recorded in the Implementation Plan and tracks its progress in `progress.md`.\nHow Fluent builds it\nFluent gives each Attempt an isolated Git worktree, keeping its changes separate from your working copy. It can run the Writer, Tester, Reviewer, and Learner tasks in a local sandbox or delegate them to a remote machine, currently through AWS Fargate. If the Attempt needs human context or a decision, Fluent returns the question to the human queue.\n \nWithin the Attempt, the Writer receives the approved Brief, Behavior Specifications, Technical Approach, and its assigned part of the Implementation Plan, along with the relevant code, project Expertise, and instructions. It implements the change, writes or updates its tests, and commits a candidate for the Tester and Reviewers.\nFluent does not rely on the Writer\u2019s own test report, and it does not make every Reviewer rerun the same test suite. Instead, a separate Tester produces one independent test record that all Reviewers share.\nThe Tester is a deterministic runner, not a coding agent. It reads one or more test commands from the project\u2019s `.fluent/tester.yaml`, runs them sequentially in the candidate workspace, and captures each command\u2019s output, exit code, and duration. The project\u2019s `.fluent/extract-tester-results` executable normalizes those outputs into a single `tester-results.json` artifact. Reviewers treat that artifact as authoritative for the project\u2019s test suite, although they can still run targeted checks for specific questions. The Behavior Reviewer also matches the `Test:` references in the Behavior Specifications against its per-test results.\nOnce the Tester completes, Fluent runs independent Reviewers in parallel. Every Reviewer reads the approved planning documents, the Writer\u2019s `progress.md` checklist, the candidate changes, the Tester evidence, and recorded decisions. The checklist tracks any Implementation Plan steps and review follow-ups across rounds, recording completion evidence, divergences, and notes for what comes next. Each Reviewer also loads relevant general and project Expertise, so its judgment reflects both Fluent\u2019s review methods and what the project has learned. The built-in Reviewers include:\n- The Behavior Reviewer checks both the Behavior Specifications and whether the candidate delivers them. It looks for statements that combine multiple effects, prescribe implementation, have more than one interpretation, contradict one another, omit intended or failure behavior, or lack a passing test.\n- The Architecture Reviewer evaluates the change in the context of the whole codebase. It looks for the simplest maintainable structure, clear responsibilities and boundaries, appropriate abstractions and dependencies, unnecessary coupling, known structural anti-patterns, and departures from the approved Technical Approach or recorded decisions. It considers information flow, concurrency, deployment, and operations when they matter to the change.\n- The Tests Reviewer checks whether the tests provide enough confidence to ship and refactor safely. It looks for uncovered behavior, boundaries, and error paths; tests coupled to internal structure; tests that do not exercise the actual code; poor choices of test level or doubles; shared state, nondeterminism, slowness, and failures that are hard to diagnose. It also challenges every `Untestable:` justification.\n- The Documentation Reviewer checks whether the change is documented at the levels its readers need, from code comments and module documentation to architecture and user-facing guides. It reads the documentation alongside the code to find missing or inaccurate explanations, inconsistent vocabulary, poor organization, vague claims, and prose that does not help someone understand or use the system.\n- The Skills Reviewer reads each changed Agent Skill as a complete package and traces how it is invoked. It checks the skill\u2019s specification, discoverability, progressive disclosure, instructions, references, scripts, assets, writing, interactive questions, and overlap with sibling skills, then asks whether the package is likely to accomplish its stated purpose.\nEach Reviewer writes a report that records its evidence, classifies each finding as blocking or minor, and returns `pass`, `fail`, or `uncertain`. `pass` means no blocking findings remain. `fail` means the Writer must address at least one blocking finding. `uncertain` means the Reviewer cannot confidently decide from the approved context and returns the question to the human queue.\nAfter a `fail`, Fluent starts another round. The Writer receives the failed review reports and any Tester regressions, revises the candidate, and commits the revision. The Tester reruns all declared test commands, then the affected Reviewers inspect the revision and mark earlier findings as addressed or still open. If the Attempt reaches its configured review-round limit, Fluent pauses with the evidence collected rather than continuing indefinitely.\nOnce the Tester and every Reviewer pass, the Learner examines the accepted change and the evidence from every round, updates Expertise when it finds something reusable, and records possible follow-ups in a handoff. The Attempt then produces a ready Merge Candidate.\nA ready Merge Candidate contains the reviewed change and any Expertise captured by the Learner, but it has not changed the target branch. Ask Fluent to show you the candidate so you can inspect it and decide whether to land it. By default, Fluent waits for your decision. Projects that want automatic landing can opt into a separate auto-merge process.\nTo land the candidate, Fluent first checks that both the candidate and target worktrees are clean. It rebases the candidate onto the current target branch, asking an agent to resolve straightforward conflicts and returning unresolved ones to you. It then runs the project\u2019s optional `check-pre-merge` hook. If the check fails and a `fix-pre-merge` hook exists, Fluent runs it, commits any correction it makes, and checks again. Fluent moves the target branch only after these steps pass, using a fast-forward merge.\nHow Fluent keeps improving your code\nWhile working on a Work Item, Fluent can identify related problems and possible improvements beyond the Brief it was asked to deliver. Problems with the current change, such as Tester regressions and blocking review findings, return to the Writer inside the current Attempt. The Learner records the additional improvements as follow-ups in its handoff. After the candidate lands, Fluent turns each follow-up into an Observation that you can shape and run later.\nYou can return to one of these Observations later and shape it through the usual conversation. If the Learner captured a complete, testable correction grounded in a current Behavior Specification, project instruction, or project Expertise, Fluent can turn the Observation into a corrective Work Item without repeating the full shaping process. If what it changes, how it will be verified, the authority it follows, or any required decision remains unclear, the Observation waits for you to shape it.\nWhen Fluent creates one of these corrective Work Items, what happens next depends on the follow-up mode you chose during project setup. In the default `propose` mode, the Work Item waits for you to authorize it. In `execute` mode, Fluent authorizes and queues it automatically, provided the chain of follow-up work remains within the project\u2019s configured limit. Once authorized and queued, a running scheduler picks up the Work Item when the required agent and compute capacity are available. It then goes through the same Writer, Tester, Reviewer, and Learner loop, and its Merge Candidate follows the same inspection and landing policy as any other.\nFluent can also inspect code after it lands. Post-merge review is optional and off by default. When you enable it for a land, Fluent waits briefly so nearby merges can be reviewed together, then runs the Tester and every Reviewer against the cumulative change on the target branch. If a Reviewer fails or is uncertain, Fluent creates and immediately runs a corrective Work Item using the findings as context. Any Merge Candidate it produces follows the same inspection and landing policy as any other candidate.\nHow Fluent learns your project\nEach completed change can teach Fluent something about the project: a convention to follow, an architectural constraint to preserve, a testing pattern to reuse, or a gotcha to avoid. The Learner records reusable lessons as Expertise under `.fluent/expertise/`. Fluent draws on that Expertise when it shapes, builds, and reviews future work.\nAfter the Tester and every Reviewer pass, the Learner examines the accepted change, existing Expertise, and the Tester and Reviewer evidence from every round. The Learner updates Expertise when the Attempt reveals project-specific knowledge that future agents should reuse. If the Attempt taught Fluent nothing worth carrying forward, Expertise remains unchanged.\nAny Expertise the Learner adds becomes part of the Merge Candidate and lands with the change that produced it. Over time, lessons from many Work Items accumulate in project Expertise, where future shaping conversations, Writers, and Reviewers can build on them. You can inspect and edit Expertise directly when a convention changes or a recorded lesson no longer applies.\n\nEach completed change improves the project and shapes how Fluent approaches future work.",
+      "preview_text": "Fluent is an open-source factory that autonomously turns your team's vision, ideas, bug reports, user feedback, production logs, and agent traces into working software.\n \nAt some point in the past few",
+      "title": "How I built a self-improving software factory"
+    },
+    "author_id": "10654322",
+    "conversation_id": "2081823472016335059",
+    "created_at": "2026-07-27T19:26:08.000Z",
+    "edit_history_tweet_ids": [
+      "2081823472016335059"
+    ],
+    "entities": {
+      "urls": [
+        {
+          "display_url": "x.com/i/article/2081\u2026",
+          "end": 134,
+          "expanded_url": "http://x.com/i/article/2081702591520755712",
+          "start": 111,
+          "status": 500,
+          "unwound_url": "https://x.com/i/article/2081702591520755712",
+          "url": "https://t.co/fVQDdtLXDn"
+        }
+      ]
+    },
+    "id": "2081823472016335059",
+    "text": "Here\u2019s a look inside my software factory. I\u2019ve been using it to build itself and two other projects since May. https://t.co/fVQDdtLXDn"
+  },
+  "posts": [
+    {
+      "article": {
+        "cover_media": "3_2081802590640295936",
+        "entities": {
+          "urls": [
+            {
+              "text": "https://discord.gg/dygEVzG3gf"
+            },
+            {
+              "text": "https://github.com/mrinalwadhwa/unramble"
+            },
+            {
+              "text": "https://github.com/mrinalwadhwa/fluent"
+            },
+            {
+              "text": "https://mrinal.com/articles/how-to-make-agents-that-succeed/"
+            },
+            {
+              "text": "https://github.com/mrinalwadhwa/fluent"
+            },
+            {
+              "text": "https://github.com/mrinalwadhwa/fluent"
+            }
+          ]
+        },
+        "media_entities": [
+          "16_2081794031865233408",
+          "3_2081708521238962176",
+          "3_2081708897560350720",
+          "3_2081710866005970944"
+        ],
+        "plain_text": "Fluent is a factory that autonomously turns your team's vision, ideas, bug reports, user feedback, production logs, and agent traces into working software.\n \nYou use the factory through the Fluent skill in Codex, Claude Code, Pi, or another coding agent that supports skills. The skill turns your conversation into Fluent's interface and drives its command-line machinery for you.\nInstall\nnpx skills add mrinalwadhwa/fluent --skill fluent\nUse the command above to install the Fluent skill. Start your coding agent in the project folder you want Fluent to work on, then ask it to use Fluent and describe what you want to explore, build, fix, or improve.\nThe first invocation sets up Fluent for that project and starts shaping the work with you. You can also invoke the skill explicitly: `$fluent` in Codex, `/fluent` in Claude Code, or `/skill:fluent` in Pi.\nHow Fluent works\nFluent separates work that needs human attention from work agents can do on their own. You can think of it as two conceptual queues. The first queue waits for people with the right context, judgment, expertise, or authority. The second waits on both agent and compute capacity: room to run an agent within subscription, rate, and budget limits, and a suitable environment with the models, tools, and hardware the work needs.\n \nWhenever you encounter something to explore, build, fix, or improve, ask Fluent to record it as an Observation. Add whatever context you have in the moment; you do not need to know the solution or have worked out every detail. Agents and connected systems can record Observations too. You can return to any Observation later and refine it on your own timeline, bringing in someone with the right expertise or authority when needed.\nWhen you want to act on an Observation, ask Fluent to start shaping it. Once shaping produces a Work Item, ask Fluent to run it directly or add it to the queue. A queued Work Item waits until suitable agent and compute capacity is available. If its Attempt needs human context or a decision, Fluent places the question in the human queue for you or someone with the right expertise or authority to answer. The Attempt waits for that answer while other ready Work Items can continue.\nHow you tell Fluent what to build\nAsk Fluent to help shape what you want to build. You can start from an Observation you recorded earlier or begin directly with a Brief. Fluent reads the relevant project code along with the reusable conventions, constraints, and lessons captured as project Expertise.\nYou do not need to arrive with a finished specification. Fluent collaborates with you as the slice takes shape. It grounds the conversation in the code and project Expertise, checks that it understands what you mean, and asks one focused question at a time. It uses structured methods for problem framing, behavior design, architecture, and planning to challenge assumptions, find missing cases, research technical choices, and present options with their tradeoffs. You provide context and judgment and make each decision.\n \nThe conversation produces four layers of shared context:\nBrief. A Brief describes one small slice of functionality. Fluent is designed to help you turn that slice into working software without first specifying the entire system. The Brief captures, in your words, what you want and why, grounded in the relevant project context. It keeps constraints, assumptions, and unknowns explicit without choosing a solution.\nBehavior Specifications. A Behavior Specification precisely describes how the software must behave in a particular situation. It is written so the specified observable behavior can be verified without prescribing its implementation.\nFor the slice described in the Brief, Fluent reads the project\u2019s existing Behavior Specifications and relevant code to understand what the software already guarantees. It then works with you to define the additions, changes, or removals needed for that slice. The result is a behavior diff, not a restatement of the entire system. If the project has no existing Behavior Specifications, the first slice starts them.\nBefore writing Behavior Specifications, Fluent makes the important terms precise and maps the people and systems involved, the events that occur, and the states that matter. For a small slice, it considers only what changes. It works through one area at a time, proposing a few core behaviors before asking about gaps and important edge cases. If Fluent derives a behavior that was not stated in the Brief, it labels the behavior as derived so you can accept or reject it. Decisions about libraries, protocols, storage, and other solution choices wait for the Technical Approach.\nFluent writes each Behavior Specification in a consistent form that names the situation and the required response. For example:\nWHEN a user selects Save on a draft,\nTHE SYSTEM SHALL show a `Saved` status beside the draft title.\nTest: tests/drafts.spec.ts (shows_saved_status_after_save)\nIt describes something a person can observe and a test can verify, without choosing a UI framework, component structure, or persistence mechanism.\nFluent writes Behavior Specifications in EARS, the Easy Approach to Requirements Syntax. EARS uses a small set of patterns that make the triggering event or condition and the required response explicit.\nEvery new behavior includes either a `Test:` reference or an `Untestable:` reason. While defining the behavior, Fluent inspects nearby tests and names the intended test in the project\u2019s existing style. The referenced test may not exist yet. The Writer creates or updates it during implementation, and the Tester runs it. When the test passes, the Behavior Reviewer uses that as evidence that the behavior was delivered.\nTechnical Approach. The Technical Approach document captures your technical expertise and judgment before the work is delegated to agents. You and Fluent decide the key technical choices that should guide implementation, including structure, interfaces, protocols, libraries, storage, and integrations. The document gives the Writer both the decisions and the reasoning behind them, while leaving implementation details that agents can safely determine during the work.\nImplementation Plan. The Implementation Plan turns the confirmed behaviors and technical decisions into work that agents can carry out. You and Fluent decide whether the slice should become one Work Item or several independently reviewable Work Items that can run in parallel. When steps help the Writer, the Implementation Plan divides a Work Item into steps that state what will become observably true, which behaviors each step delivers, and how the result will be verified. Fluent orders those steps by what must be built first. A small mechanical Work Item can use a minimal plan without inventing steps. When Work Items depend on one another, the plan pins the interfaces they share and the points at which their work must come together.\nYou confirm each layer before Fluent uses it as the foundation for the next. The conversation can also move backward. If the Technical Approach reveals missing behavior, you return to the Behavior Specifications. If the Implementation Plan exposes an unresolved technical decision, you return to the Technical Approach rather than leaving the Writer to guess.\nWhen you confirm the Implementation Plan, Fluent creates one Work Item for each independently reviewable part of the slice. Each Work Item carries the approved Brief, Behavior Specifications, Technical Approach, and the part of the Implementation Plan its agents must deliver. Creating a Work Item records the handoff. It does not run or queue the Work Item.\nAsk Fluent to run a Work Item directly, or add it to the queue to wait for agent and compute capacity. Each time Fluent runs a Work Item, it creates an Attempt. The Attempt tracks that execution through the Writer, Tester, Reviewers, and Learner, including every revision, test run, review, and pause. Separate Work Items can proceed independently. Within an Attempt, the Writer follows any dependencies and ordering recorded in the Implementation Plan and tracks its progress in `progress.md`.\nHow Fluent builds it\nFluent gives each Attempt an isolated Git worktree, keeping its changes separate from your working copy. It can run the Writer, Tester, Reviewer, and Learner tasks in a local sandbox or delegate them to a remote machine, currently through AWS Fargate. If the Attempt needs human context or a decision, Fluent returns the question to the human queue.\n \nWithin the Attempt, the Writer receives the approved Brief, Behavior Specifications, Technical Approach, and its assigned part of the Implementation Plan, along with the relevant code, project Expertise, and instructions. It implements the change, writes or updates its tests, and commits a candidate for the Tester and Reviewers.\nFluent does not rely on the Writer\u2019s own test report, and it does not make every Reviewer rerun the same test suite. Instead, a separate Tester produces one independent test record that all Reviewers share.\nThe Tester is a deterministic runner, not a coding agent. It reads one or more test commands from the project\u2019s `.fluent/tester.yaml`, runs them sequentially in the candidate workspace, and captures each command\u2019s output, exit code, and duration. The project\u2019s `.fluent/extract-tester-results` executable normalizes those outputs into a single `tester-results.json` artifact. Reviewers treat that artifact as authoritative for the project\u2019s test suite, although they can still run targeted checks for specific questions. The Behavior Reviewer also matches the `Test:` references in the Behavior Specifications against its per-test results.\nOnce the Tester completes, Fluent runs independent Reviewers in parallel. Every Reviewer reads the approved planning documents, the Writer\u2019s `progress.md` checklist, the candidate changes, the Tester evidence, and recorded decisions. The checklist tracks any Implementation Plan steps and review follow-ups across rounds, recording completion evidence, divergences, and notes for what comes next. Each Reviewer also loads relevant general and project Expertise, so its judgment reflects both Fluent\u2019s review methods and what the project has learned. The built-in Reviewers include:\n- The Behavior Reviewer checks both the Behavior Specifications and whether the candidate delivers them. It looks for statements that combine multiple effects, prescribe implementation, have more than one interpretation, contradict one another, omit intended or failure behavior, or lack a passing test.\n- The Architecture Reviewer evaluates the change in the context of the whole codebase. It looks for the simplest maintainable structure, clear responsibilities and boundaries, appropriate abstractions and dependencies, unnecessary coupling, known structural anti-patterns, and departures from the approved Technical Approach or recorded decisions. It considers information flow, concurrency, deployment, and operations when they matter to the change.\n- The Tests Reviewer checks whether the tests provide enough confidence to ship and refactor safely. It looks for uncovered behavior, boundaries, and error paths; tests coupled to internal structure; tests that do not exercise the actual code; poor choices of test level or doubles; shared state, nondeterminism, slowness, and failures that are hard to diagnose. It also challenges every `Untestable:` justification.\n- The Documentation Reviewer checks whether the change is documented at the levels its readers need, from code comments and module documentation to architecture and user-facing guides. It reads the documentation alongside the code to find missing or inaccurate explanations, inconsistent vocabulary, poor organization, vague claims, and prose that does not help someone understand or use the system.\n- The Skills Reviewer reads each changed Agent Skill as a complete package and traces how it is invoked. It checks the skill\u2019s specification, discoverability, progressive disclosure, instructions, references, scripts, assets, writing, interactive questions, and overlap with sibling skills, then asks whether the package is likely to accomplish its stated purpose.\nEach Reviewer writes a report that records its evidence, classifies each finding as blocking or minor, and returns `pass`, `fail`, or `uncertain`. `pass` means no blocking findings remain. `fail` means the Writer must address at least one blocking finding. `uncertain` means the Reviewer cannot confidently decide from the approved context and returns the question to the human queue.\nAfter a `fail`, Fluent starts another round. The Writer receives the failed review reports and any Tester regressions, revises the candidate, and commits the revision. The Tester reruns all declared test commands, then the affected Reviewers inspect the revision and mark earlier findings as addressed or still open. If the Attempt reaches its configured review-round limit, Fluent pauses with the evidence collected rather than continuing indefinitely.\nOnce the Tester and every Reviewer pass, the Learner examines the accepted change and the evidence from every round, updates Expertise when it finds something reusable, and records possible follow-ups in a handoff. The Attempt then produces a ready Merge Candidate.\nA ready Merge Candidate contains the reviewed change and any Expertise captured by the Learner, but it has not changed the target branch. Ask Fluent to show you the candidate so you can inspect it and decide whether to land it. By default, Fluent waits for your decision. Projects that want automatic landing can opt into a separate auto-merge process.\nTo land the candidate, Fluent first checks that both the candidate and target worktrees are clean. It rebases the candidate onto the current target branch, asking an agent to resolve straightforward conflicts and returning unresolved ones to you. It then runs the project\u2019s optional `check-pre-merge` hook. If the check fails and a `fix-pre-merge` hook exists, Fluent runs it, commits any correction it makes, and checks again. Fluent moves the target branch only after these steps pass, using a fast-forward merge.\nHow Fluent keeps improving your code\nWhile working on a Work Item, Fluent can identify related problems and possible improvements beyond the Brief it was asked to deliver. Problems with the current change, such as Tester regressions and blocking review findings, return to the Writer inside the current Attempt. The Learner records the additional improvements as follow-ups in its handoff. After the candidate lands, Fluent turns each follow-up into an Observation that you can shape and run later.\nYou can return to one of these Observations later and shape it through the usual conversation. If the Learner captured a complete, testable correction grounded in a current Behavior Specification, project instruction, or project Expertise, Fluent can turn the Observation into a corrective Work Item without repeating the full shaping process. If what it changes, how it will be verified, the authority it follows, or any required decision remains unclear, the Observation waits for you to shape it.\nWhen Fluent creates one of these corrective Work Items, what happens next depends on the follow-up mode you chose during project setup. In the default `propose` mode, the Work Item waits for you to authorize it. In `execute` mode, Fluent authorizes and queues it automatically, provided the chain of follow-up work remains within the project\u2019s configured limit. Once authorized and queued, a running scheduler picks up the Work Item when the required agent and compute capacity are available. It then goes through the same Writer, Tester, Reviewer, and Learner loop, and its Merge Candidate follows the same inspection and landing policy as any other.\nFluent can also inspect code after it lands. Post-merge review is optional and off by default. When you enable it for a land, Fluent waits briefly so nearby merges can be reviewed together, then runs the Tester and every Reviewer against the cumulative change on the target branch. If a Reviewer fails or is uncertain, Fluent creates and immediately runs a corrective Work Item using the findings as context. Any Merge Candidate it produces follows the same inspection and landing policy as any other candidate.\nHow Fluent learns your project\nEach completed change can teach Fluent something about the project: a convention to follow, an architectural constraint to preserve, a testing pattern to reuse, or a gotcha to avoid. The Learner records reusable lessons as Expertise under `.fluent/expertise/`. Fluent draws on that Expertise when it shapes, builds, and reviews future work.\nAfter the Tester and every Reviewer pass, the Learner examines the accepted change, existing Expertise, and the Tester and Reviewer evidence from every round. The Learner updates Expertise when the Attempt reveals project-specific knowledge that future agents should reuse. If the Attempt taught Fluent nothing worth carrying forward, Expertise remains unchanged.\nAny Expertise the Learner adds becomes part of the Merge Candidate and lands with the change that produced it. Over time, lessons from many Work Items accumulate in project Expertise, where future shaping conversations, Writers, and Reviewers can build on them. You can inspect and edit Expertise directly when a convention changes or a recorded lesson no longer applies.\n\nEach completed change improves the project and shapes how Fluent approaches future work.",
+        "preview_text": "Fluent is an open-source factory that autonomously turns your team's vision, ideas, bug reports, user feedback, production logs, and agent traces into working software.\n \nAt some point in the past few",
+        "title": "How I built a self-improving software factory"
+      },
+      "author_id": "10654322",
+      "conversation_id": "2081823472016335059",
+      "created_at": "2026-07-27T19:26:08.000Z",
+      "edit_history_tweet_ids": [
+        "2081823472016335059"
+      ],
+      "entities": {
+        "urls": [
+          {
+            "display_url": "x.com/i/article/2081\u2026",
+            "end": 134,
+            "expanded_url": "http://x.com/i/article/2081702591520755712",
+            "start": 111,
+            "status": 500,
+            "unwound_url": "https://x.com/i/article/2081702591520755712",
+            "url": "https://t.co/fVQDdtLXDn"
+          }
+        ]
+      },
+      "id": "2081823472016335059",
+      "text": "Here\u2019s a look inside my software factory. I\u2019ve been using it to build itself and two other projects since May. https://t.co/fVQDdtLXDn"
+    },
+    {
+      "author_id": "10654322",
+      "conversation_id": "2081823472016335059",
+      "created_at": "2026-07-27T19:34:55.000Z",
+      "edit_history_tweet_ids": [
+        "2081825680623558952"
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "end": 10,
+            "id": "820679805259550720",
+            "start": 0,
+            "username": "dexhorthy"
+          }
+        ],
+        "urls": [
+          {
+            "display_url": "x.com/dexhorthy/stat\u2026",
+            "end": 139,
+            "expanded_url": "https://x.com/dexhorthy/status/2081797628552270027",
+            "start": 116,
+            "url": "https://t.co/FFNkEycWne"
+          }
+        ]
+      },
+      "id": "2081825680623558952",
+      "in_reply_to_user_id": "10654322",
+      "referenced_tweets": [
+        {
+          "id": "2081797628552270027",
+          "type": "quoted"
+        },
+        {
+          "id": "2081823472016335059",
+          "type": "replied_to"
+        }
+      ],
+      "text": "@dexhorthy's recent series on \"Why Software Factories Fail\" is an excellent read for anyone exploring this subject: https://t.co/FFNkEycWne"
+    },
+    {
+      "author_id": "10654322",
+      "conversation_id": "2081823472016335059",
+      "created_at": "2026-07-27T19:36:32.000Z",
+      "edit_history_tweet_ids": [
+        "2081826086598627794"
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "end": 10,
+            "id": "820679805259550720",
+            "start": 0,
+            "username": "dexhorthy"
+          },
+          {
+            "end": 47,
+            "id": "35432643",
+            "start": 36,
+            "username": "addyosmani"
+          }
+        ],
+        "urls": [
+          {
+            "display_url": "x.com/addyosmani/sta\u2026",
+            "end": 110,
+            "expanded_url": "https://x.com/addyosmani/status/2079442194449232227",
+            "start": 87,
+            "url": "https://t.co/wQV5jk5ZNW"
+          }
+        ]
+      },
+      "id": "2081826086598627794",
+      "in_reply_to_user_id": "10654322",
+      "referenced_tweets": [
+        {
+          "id": "2079442194449232227",
+          "type": "quoted"
+        },
+        {
+          "id": "2081825680623558952",
+          "type": "replied_to"
+        }
+      ],
+      "text": "@dexhorthy Another insightful read: @addyosmani\u2019s \u201cSoftware Factories, Light and Dark\u201d https://t.co/wQV5jk5ZNW"
+    },
+    {
+      "author_id": "10654322",
+      "conversation_id": "2081823472016335059",
+      "created_at": "2026-07-28T06:35:27.000Z",
+      "edit_history_tweet_ids": [
+        "2081991908419887274"
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "end": 8,
+            "id": "14338403",
+            "start": 0,
+            "username": "mtrajan"
+          }
+        ]
+      },
+      "id": "2081991908419887274",
+      "in_reply_to_user_id": "14338403",
+      "note_tweet": {
+        "text": "Love the idea!\n\nAnd I chuckled reading your comment because it started with \"can't solve it in the harness\" and then you solved it in the harness. (at least in the case of Fluent).\n\nAs you described the reviewer needs memory of past decisions. The factory's job is to provide the machinery for accumulation of the required data and its distillation into easy to recall memory.\n\nYou described one possible shape of that distillation which I think is really promising but there may be other possible shapes."
+      },
+      "referenced_tweets": [
+        {
+          "id": "2081988752432644162",
+          "type": "replied_to"
+        }
+      ],
+      "text": "@mtrajan Love the idea!\n\nAnd I chuckled reading your comment because it started with \"can't solve it in the harness\" and then you solved it in the harness. (at least in the case of Fluent).\n\nAs you described the reviewer needs memory of past decisions. The factory's job is to provide the"
+    },
+    {
+      "author_id": "10654322",
+      "conversation_id": "2081823472016335059",
+      "created_at": "2026-07-28T06:59:22.000Z",
+      "edit_history_tweet_ids": [
+        "2081997927858557284"
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "end": 8,
+            "id": "14338403",
+            "start": 0,
+            "username": "mtrajan"
+          }
+        ]
+      },
+      "id": "2081997927858557284",
+      "in_reply_to_user_id": "14338403",
+      "note_tweet": {
+        "text": "For me, its pretty simple: my net throughput and output quality are both getting better every day since adopting this approach. I'm 2-ish months in.\n\nSo I'll call it whatever everyone in the community settles on calling it. But I'm convinced this is the approximate shape of the machinery that will ship most software going forward."
+      },
+      "referenced_tweets": [
+        {
+          "id": "2081994635292123435",
+          "type": "replied_to"
+        }
+      ],
+      "text": "@mtrajan For me, its pretty simple: my net throughput and output quality are both getting better every day since adopting this approach. I'm 2-ish months in.\n\nSo I'll call it whatever everyone in the community settles on calling it. But I'm convinced this is the approximate shape of the"
+    }
+  ],
+  "users": {
+    "10654322": {
+      "id": "10654322",
+      "name": "mrinal",
+      "username": "mrinal"
+    },
+    "14338403": {
+      "id": "14338403",
+      "name": "Thiyagarajan Maruthavanan (Rajan)",
+      "username": "mtrajan"
+    }
+  },
+  "thread_fetch_error": null
+}
