@@ -1,5 +1,5 @@
 ---
-description: "Addressable retention pays off conditionally on change topology: where a change touches few retained commitments and the units match that decomposition, adaptation scales with the change rather than the system — Parnas's criterion generalized; dense change favors parametric media"
+description: "Addressable retention pays off on change topology: where a change touches few commitments and units match that decomposition, adaptation scales with the change, not the system — Parnas's criterion generalized; dense change favors parametric media"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning]
