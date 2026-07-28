@@ -13,6 +13,8 @@ Lineage-specific carrier, relation, and invalidation contradictions stay in the 
 - [Directional label grammar](./directional-label-grammar.md) — adopted invariant that every directional identifier complete `source <label> target`, plus the initial pass/fail inventory and remaining migration debt.
 - [Evidence label migration plan](./evidence-label-migration-plan.md) — compact execution packet for adopting `evidenced-by` / `is-evidence-for`, migrating active contracts and edges, verifying conservation, and capturing lessons for the next label.
 - [Evidence label migration retrospective](./evidence-label-migration-retrospective.md) — completed first-run reconciliation and the mandatory add/remove/reorder/automate amendments the next directional-label migration must explicitly accept or reject.
+- [Rationale label migration plan](./rationale-label-migration-plan.md) — next-run packet: test `rests-on` against the live `rationale` corpus and `grounds`, then migrate only after the decision gate passes while exercising the retrospective amendments.
+- [Rationale label migration retrospective](./rationale-label-migration-retrospective.md) — capture second-run surprises and decide whether the migration procedure is stable enough to promote.
 
 ## Confirmed contradictions
 
@@ -24,13 +26,13 @@ Lineage-specific carrier, relation, and invalidation contradictions stay in the 
 
 ### Required collection grammar and accepted working formats disagree
 
-ADR 019 and the [shared authoring guide](../../reference/link-vocabulary.md#authoring-collection-link-rules) require one outbound block per destination collection, with search guidance and authorized labels. Several main collections instead use one scan paragraph plus a labels table. The [writing skill](../../instructions/cp-skill-write/SKILL.md#step-2---load-collection-conventions) already accepts per-destination blocks, a table, or prose.
+ADR 019, as extended by ADR 059's `external` destination, and the [shared authoring guide](../../reference/link-vocabulary.md#authoring-collection-link-rules) require per-destination semantics with search guidance and authorized labels. Several main collections serialize that contract as one scan paragraph plus a labels table rather than one block per destination. The [writing skill](../../instructions/cp-skill-write/SKILL.md#step-2---load-collection-conventions) already accepts per-destination blocks, a table, or prose.
 
 **Needed outcome:** either make per-destination semantics the requirement while allowing multiple serializations, or migrate contracts and procedures to the stricter block form.
 
 ### Some writable collections have no complete outbound-link contract
 
-The [article collection](../../articles/COLLECTION.md) deliberately permits in-prose links while forbidding footer labels, but it does not declare authorized destinations or formalize this as a specialized linking override. The illustrative [dialectical sample collection](../dialectical-sample/COLLECTION.md) requires source-span citations but has no outbound-link section at all.
+The [article collection](../../articles/COLLECTION.md) now declares its unlabeled in-prose `external` surface, but its in-prose links into the KB still lack authorized local destinations. The illustrative [dialectical sample collection](../dialectical-sample/COLLECTION.md) now has an executable `evidenced-by` citation grammar and is no longer part of this gap.
 
 **Needed outcome:** give each collection an operational grammar or an explicit exemption that writing and connect procedures know how to interpret.
 
@@ -40,11 +42,15 @@ The pre-migration catalogue described `evidence` as asymmetric, theoretical → 
 
 **Outcome:** adopted, contract-authorized, and migrated; the [retrospective](./evidence-label-migration-retrospective.md) carries the reconciled corpus counts and next-run amendments.
 
-### `compares-with` has stale scope documentation
+### Resolved: `compares-with` had stale scope documentation
 
-The shared catalogue calls `compares-with` specific to `kb/agent-memory-systems/`, while source and agentic-system contracts also authorize it.
+The shared catalogue called `compares-with` specific to `kb/agent-memory-systems/`, while live use and contracts spanned reference artifacts, sources, memory-system reviews, and agentic-system analyses.
 
-**Needed outcome:** update its declared scope and decide whether it is now a general descriptive/source comparison relation.
+**Outcome:** the catalogue now defines the source-as-subject assertion and declares the relation self-dual; reference and source contracts authorize the live pairings. Reciprocal authoring remains optional because each direction still needs its own reader need.
+
+### Resolved: literal `any` conflicted with collection exclusions
+
+`reference` and `sources` used `see-also | any` while separately excluding workshop or instruction destinations. ADR 059 now defines `any` literally, including `external`; those two library tables name their permitted destinations explicitly. Only the deliberately permissive workshop contract retains `any`.
 
 ## Enforcement and delivery gaps
 

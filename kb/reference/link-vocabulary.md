@@ -86,7 +86,7 @@ Structural relations. Commonly used for outbound links to descriptive destinatio
 | `part-of` / `contains` | wants to situate this in the larger system |
 | `implements` / `implemented-by` | wants the concrete realization or the abstract contract |
 | `supersedes` / `superseded-by` | wants the current or prior version |
-| `compares-with` | wants parallel design-axis analysis with another system (currently specific to `kb/agent-memory-systems/`) |
+| `compares-with` | self-dual; wants a parallel analysis of the target on the named comparison axis |
 | `procedure` | (descriptive → prescriptive) wants the how-to to act on this |
 
 ### Prescriptive-shaped labels
@@ -175,7 +175,6 @@ Do not use this page as a fallback for lazy labelling. If the source `COLLECTION
 
 ## Open questions
 
-- When should a collection-specific label (`compares-with`) get promoted to the catalogue at large? Current: document it here once it's in use, flagged "currently specific to X."
 - Is register-of-origin the right catalogue grouping, or would alphabetical be cleaner? Register-of-origin helps authors find labels that match their source's shape; alphabetical is flatter but less suggestive.
 - How should the connect skill treat authorized-but-rarely-used destinations? Speculative — probably depends on use-frequency signal.
 - Should `supersedes` be restricted to intra-descriptive use? Most use is ADR chains inside `kb/reference/`; cross-collection supersession is rare.

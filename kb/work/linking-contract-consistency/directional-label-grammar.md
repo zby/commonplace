@@ -67,6 +67,7 @@ Initial high-confidence cases:
 | `part-of` / `contains` | source is part of / contains target | passes |
 | `implements` / `implemented-by` | source implements / is implemented by target | passes |
 | `supersedes` / `superseded-by` | source supersedes / is superseded by target | passes |
+| `compares-with` | source is compared with target on a named axis | passes; self-dual relation, independently authored edge |
 | `defined-in` | source is defined in target | passes with omitted “is” |
 | `derived-from`; `abstracted-from`; `adapted-from`; `operationalized-from` | source has the named relation from target | passes grammatically; lineage carrier questions remain separate |
 | `grounds` | target grounds source | fails current voice |
@@ -77,7 +78,7 @@ Initial high-confidence cases:
 | `procedure` | target is the procedure for acting on source | fails current voice |
 | `precondition` | target is a precondition for source | fails current voice |
 
-The remaining procedural and weak labels need a worked-use audit before classification: `composition`, `invokes`, `applies-when`, `operates-on`, `compares-with`, and `see-also`.
+The remaining procedural and weak labels need a worked-use audit before classification: `composition`, `invokes`, `applies-when`, `operates-on`, and `see-also`.
 
 For every failing or uncertain label, the audit should record:
 

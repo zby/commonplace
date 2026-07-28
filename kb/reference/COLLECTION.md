@@ -36,6 +36,7 @@ Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 | `part-of` / `contains` | reference | situate this in the larger system |
 | `implements` / `implemented-by` | reference | concrete realization ↔ abstract contract |
 | `supersedes` / `superseded-by` | reference (ADR chains) | current or prior version |
+| `compares-with` | reference | compare this artifact with a peer on a named design or contract axis |
 | `rationale` | notes | this design rests on this claim |
 | `defined-in` | notes/definitions | reader may not know the term |
 | `derived-from` | sources, agent-memory, agentic-systems | this design choice is worked out from this external source/system, adding nothing beyond it — see the lineage semantics in `link-vocabulary.md` |

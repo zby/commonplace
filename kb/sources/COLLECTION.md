@@ -46,7 +46,7 @@ Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 | `is-evidence-for` | notes | this source bears materially on the target claim, without asserting that the target has incorporated it |
 | `abstracted-from` | notes | this claim was abstracted from this source |
 | `rationale` | notes | this design or rule rests on this claim |
-| `compares-with` | sources, agent-memory, agentic-systems | this source covers a similar/parallel system |
+| `compares-with` | notes, sources, agent-memory, agentic-systems | compare this source or analysis with a target on a named shared axis |
 | `defined-in` | notes/definitions | reader may not know the term |
 | `see-also` | notes, reference, sources, agent-memory, agentic-systems, external | adjacent companion; use sparingly |
 
