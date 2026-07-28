@@ -18,6 +18,10 @@ Editorial/expository [profile](../reference/text-contract-profiles.md): outward-
 
 **Lineage.** `source_notes` lists the repo-root paths of the notes the article distils; when present, validation checks that each resolves. There is no freshness registration — find affected articles by search.
 
+## Outbound links
+
+In-prose links to the `external` destination are authorized for primary attribution, canonical sources, and material an external reader should be able to inspect directly; they carry no formal identifier. External prospecting is part of article research, not `cp-skill-connect`.
+
 ## Types
 
 | type | file | use for |

@@ -29,7 +29,7 @@ Target: `$ARGUMENTS` — one artifact path or artifact name. If none provided, a
 2. Read `kb/reports/types/connect-report.md` before candidate discovery. It defines the report sections, quality standards, and template you will use while judging candidates.
 3. Read the target artifact fully. Identify its claim, mechanism, implications, scope, and tensions. If the target has no frontmatter (`text` file), continue discovery from its title/body and mark the report as provisional.
 4. Read `kb/<source-collection>/COLLECTION.md` and find its **outbound-linking section** (heading varies — look for the one that names destinations and labels). Read it as authoritative guidance — extract three things, regardless of whether the section is structured as per-destination blocks, a single labels table with a destinations column, prose, or any mix:
-   - **Which destination collections to prospect from this source** (and which are excluded).
+   - **Which local destination collections to prospect from this source** (and which are excluded), and whether the reserved `external` destination is authorized. The destination wildcard `any` includes `external`.
    - **Which labels are authorised for which source->destination pairs**, with the reader-need each label serves.
    - **Any direction or composition hints** — inverse-edge expectations, rare/common edges, frontloading posture, sub-agent invocation preferences. The skill below leans on these for reverse-edge candidates and for tightening prospecting on rare edges.
 
@@ -39,17 +39,19 @@ Target: `$ARGUMENTS` — one artifact path or artifact name. If none provided, a
 
 ## Discovery — per destination
 
-Connect is the skill that pays the cost of active search. The write skill is bounded to a targeted duplicate check + already-loaded context + user-named targets; connect runs the full prospecting procedure on every destination the source's `COLLECTION.md` permits.
+Connect is the skill that pays the cost of active search. The write skill is bounded to a targeted duplicate check + already-loaded context + user-named targets; connect runs the full prospecting procedure on every local destination collection the source's `COLLECTION.md` permits.
 
 Active depth: **standard** (quick: index-only single pass; deep: full discovery, multiple passes, synthesis detection).
 
 Capture discovery trace throughout — indexes read, actual query strings, candidate evaluations, and links followed. A trace with only keywords is insufficient.
 
-For **each** destination collection authorised by the source's outbound section:
+For **each local destination collection** authorised by the source's outbound section:
 
 ### 1. Decide breadth from the source COLLECTION.md's guidance
 
 Use the outbound section's triggers, latitude cues, and direction hints to set prospecting breadth. If the source has no plausible match for a destination's trigger, note that in the trace and skip that destination.
+
+The reserved `external` destination is authorization for already-known targets, not a prospecting surface. Do not search or browse the open web for candidates. If an external target was supplied by the user or is already present in loaded context, it may be evaluated under the collection's `external` rules; otherwise record that external prospecting is skipped.
 
 ### 2. Prospect using repo-local tools
 

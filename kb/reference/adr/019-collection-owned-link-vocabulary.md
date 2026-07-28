@@ -10,6 +10,7 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-04-22
 **Extends:** [ADR-009](./009-link-relationship-semantics.md), [ADR-017](./017-collection-md-is-the-register-convention-boundary.md)
+**Amended by:** [ADR-059](./059-external-is-a-reserved-outbound-destination.md) — destinations may also be the reserved `external` class, still authorized by the source collection
 
 ## Context
 

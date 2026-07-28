@@ -27,7 +27,7 @@ For new writes, resolve the target collection to a directory under `kb/` with a 
 
 ### Step 2 - Load Collection Conventions
 
-Read the target collection's `COLLECTION.md` for the collection's writing conventions, including outbound-linking rules. Find the outbound-linking section (heading varies — look for the one that names destinations and labels) and treat it as authoritative. It tells you which destination collections this source may link to, which destinations are excluded, which labels are authorised for which source->destination pairs, and the reader-need each label serves. Internal format varies (per-destination blocks, a single labels table with a destinations column, prose) — read it for content, not shape. There is no separate linking doc to consult.
+Read the target collection's `COLLECTION.md` for the collection's writing conventions, including outbound-linking rules. Find the outbound-linking section (heading varies — look for the one that names destinations and labels) and treat it as authoritative. It tells you which local collections this source may link to, whether the reserved `external` destination is authorized, which destinations are excluded, which labels are authorised for which source->destination pairs, and the reader-need each label serves. The destination wildcard `any` includes `external`. Internal format varies (per-destination blocks, a single labels table with a destinations column, prose) — read it for content, not shape. There is no separate linking doc to consult.
 
 **Hard fail** if the target collection has no `COLLECTION.md`. Every collection that accepts writes must have a `COLLECTION.md`; its register, quality goal, and linking rules are what distinguish collections. Do not proceed with default conventions.
 

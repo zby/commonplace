@@ -10,6 +10,7 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-06-01
 **Extends:** [ADR-011](./011-notes-must-be-accessible-to-external-readers.md)
+**Amended by:** [ADR-059](./059-external-is-a-reserved-outbound-destination.md) — the collection authorizes external targets while this ADR's type contract owns citation shape
 
 ## Context
 
@@ -42,9 +43,9 @@ Used on the claims that carry a review, not on every sentence. Existing citation
 - **The standing validator checks shape only.** For reviews it confirms each quote-anchored citation is well-formed and names a source. It cannot resolve the quote offline, because the source is not retained — and does not need to, because the pinned commit cannot drift.
 - **`kb/sources/` is where standing resolution would live.** Snapshots there *are* retained immutably in the repo, so a future standing validator could resolve quotes against them with no network. Not built now (one use site today); recorded as the natural home if the convention is reused.
 
-### It lives in the type spec, not `COLLECTION.md`
+### Authorization lives in `COLLECTION.md`; citation shape lives in the type spec
 
-`agent-memory-systems/COLLECTION.md` owns outbound links into *other KB collections* (labelled edges drawn from the shared vocabulary). A quote-anchored citation points at the reviewed system's external source, not at another KB artifact — it has no destination collection and no catalogue label, so it is not an outbound-linking rule. The COLLECTION file already delegates this concern ("code-grounded reviews cite the repo directly"; "the workflow and section rules live in `types/agent-memory-system-review.md`"). Per ADR-019, type-specific divergence is owned by the type definition. The convention extends the type spec's existing Citations section.
+`agent-memory-systems/COLLECTION.md` authorizes links to the reserved `external` destination. The `agent-memory-system-review` type then refines that permission with its quote-anchor, commit-pinning, and validation rules. The type owns the specialized citation shape, but cannot independently broaden the collection's permitted targets ([ADR 059](./059-external-is-a-reserved-outbound-destination.md)).
 
 ## Consequences
 
@@ -68,7 +69,8 @@ Used on the claims that carry a review, not on every sentence. Existing citation
 ## Relevant Notes
 
 - [ADR-011: notes must be accessible to external readers](./011-notes-must-be-accessible-to-external-readers.md) — foundation: the "readable without the source" requirement this convention serves by carrying evidence inline
-- [ADR-019: collection-owned link vocabulary](./019-collection-owned-link-vocabulary.md) — boundary: why a source citation is a type-spec concern, not a COLLECTION outbound-linking rule
+- [ADR-019: collection-owned link vocabulary](./019-collection-owned-link-vocabulary.md) — foundation: the source collection owns outbound authorization
+- [ADR-059: external is a reserved outbound destination](./059-external-is-a-reserved-outbound-destination.md) — amendment: external authorization is collection-owned while citation shape remains type-owned
 - [agent-memory-system-review type spec](../../agent-memory-systems/types/agent-memory-system-review.md) — where the convention is defined
 - [verify-review-quote-grounding](../../instructions/verify-review-quote-grounding.md) — the write-time resolution procedure
 - [grounding-alignment review gate](../../instructions/review-gates/semantic/grounding-alignment.md) — see-also: the semantic complement — this ADR's structural check narrows the question the gate's judgment then answers

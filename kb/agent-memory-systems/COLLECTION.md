@@ -28,7 +28,8 @@ The quality goal is **fidelity + economy**: faithful to what the code actually d
 Organised per destination: when to prospect for links, and the authorised labels (semantics in [link-vocabulary.md](../reference/link-vocabulary.md)).
 
 - **→ `kb/agent-memory-systems/`** (within collection) — search when a review touches a component of a larger reviewed system, realizes a contract named in another review, or shares a design axis with another system (the core cross-system work). Labels: `part-of` / `contains`, `implements` / `implemented-by`, `compares-with`, `see-also`.
-- **→ `kb/sources/`** — for lightweight coverage, link back to the snapshot it was abstracted from; code-grounded reviews cite the repo directly. Labels: `derived-from`, `evidenced-by`, `see-also`.
+- **→ `kb/sources/`** — for lightweight coverage, link back to the snapshot it was abstracted from. Labels: `derived-from`, `evidenced-by`, `see-also`.
+- **→ `external`** — cite the reviewed repository, code, documents, or papers already in hand. Code-grounded reviews follow the type's commit-pinning and citation-shape rules; do not prospect the open web. Labels: `evidenced-by`, `see-also`.
 - **→ `kb/notes/`** — search when a system's design rests on a theoretical claim. Links usually run inverse (theory links in via `evidenced-by` / `derived-from`), so promote a novel claim to `kb/notes/` rather than author theory in a review. Labels: `rationale`, `is-evidence-for` (rare), `defined-in`, `see-also`.
 - **→ `kb/reference/`** — scan when a design element has a direct Commonplace analogue. Labels: `see-also`.
 - **→ `kb/agentic-systems/`** — search when the reviewed memory, knowledge, or context-engineering subsystem is part of a broader agentic harness, or when a whole-system analysis supplies useful comparison context. Labels: `part-of` / `contains`, `compares-with`, `see-also`.

@@ -51,9 +51,9 @@ Types carry two contract layers. The structural layer — required frontmatter a
 
 The collection determines the *register* of an artifact, and links between registers carry different meaning than links inside one. A theoretical note linking to a descriptive note is citing evidence; a descriptive note linking to a theoretical note is citing rationale.
 
-Each `COLLECTION.md`'s "Outbound linking conventions" section is **the single authoritative source** for that collection's outbound rules. The section is organised **per destination collection** — one block per destination the source may link to. Each destination block declares two things:
+Each `COLLECTION.md`'s "Outbound linking conventions" section is **the single authoritative source** for that collection's outbound rules. The section is organised **per destination** — normally one block per destination collection the source may link to, plus the reserved `external` destination when the collection authorizes links outside the KB. The destination wildcard `any` authorizes every destination, including `external`; if neither `external` nor `any` appears, external links are unauthorized. Each destination block declares two things:
 
-- **Search guidance** — when to prospect this destination from the current source. Used by the connect skill to decide breadth and by writers manually choosing where to look for link candidates.
+- **Search guidance** — when to prospect this destination from the current source. Used by the connect skill to decide breadth and by writers manually choosing where to look for link candidates. `external` is the exception: connect does not prospect the open web, so its declaration constrains only targets already in hand.
 - **Authorised labels** — labels the writer may use for links to this destination, each with a one-line reader-need context specific to the *source → destination* pairing. Per-destination authorisation lets `kb/notes/ → kb/reference/` differ from `kb/notes/ → kb/agent-memory-systems/` even though both targets share the descriptive register.
 
 Two skills consume this directly:
@@ -63,7 +63,7 @@ Two skills consume this directly:
 
 There is no compiled topology and no separate vocabulary document for the skills to read; live `COLLECTION.md` reads remove the drift risk a compile step would introduce. A separate authoring resource at [`link-vocabulary.md`](./link-vocabulary.md) catalogues labels and authoring guidance for `COLLECTION.md` authors revising the outbound rules; note writers and the connect skill do not read it.
 
-The architecture and the per-destination structure are pinned by [ADR-019](./adr/019-collection-owned-link-vocabulary.md) (which extends ADR 017's COLLECTION.md boundary) and [ADR-020](./adr/020-theoretical-default-contrasts-mechanism.md) (which extends ADR 009's vocabulary).
+The architecture and the per-destination structure are pinned by [ADR-019](./adr/019-collection-owned-link-vocabulary.md) (which extends ADR 017's COLLECTION.md boundary), [ADR-059](./adr/059-external-is-a-reserved-outbound-destination.md) (which adds the reserved external destination), and [ADR-020](./adr/020-theoretical-default-contrasts-mechanism.md) (which extends ADR 009's vocabulary).
 
 ## How an artifact comes together
 
