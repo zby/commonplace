@@ -15,7 +15,7 @@ The absorption debate runs together two events. *Reproduction*: a model, trained
 - **Selective revision** — one commitment can be edited in place, while a weight-borne copy entangles with everything else learned, since [only explicit retention is durable, writable, and addressable at once](./only-explicit-retention-is-durable-writable-and-addressable.md).
 - **Attribution** — who adopted this, under what authority, superseding what; recall reproduces the proposition stripped of its provenance.
 
-So the durable role of a retention layer is not exclusivity of information — [unobserved local information cannot be recovered by capability alone](./unobserved-local-information-cannot-be-recovered-by-capability.md) is the narrower informational claim, and it ends once the record enters a training stream. The durable role is authority and currency: being the place where "what holds now, and on whose say-so" has an answer. A model that has learned every record makes the layer's expository copies redundant and its authoritative records more consulted, not less — more of what they license becomes actionable.
+So the durable role of a retention layer is not exclusivity of information. The informational defense is narrower and prior: before a record exists there is nothing to absorb, since [commitment, not derivation, creates new ground truth](./commitment-not-derivation-creates-new-ground-truth.md) — no reader at any capability regenerates an unentailed resolution from pre-decision sources — and it lapses once the record enters a training stream. The durable role is authority and currency: being the place where "what holds now, and on whose say-so" has an answer. A model that has learned every record makes the layer's expository copies redundant and its authoritative records more consulted, not less — more of what they license becomes actionable.
 
 The hardest case makes the distinction sharp. Suppose a repository-specific adapter is retrained after every accepted decision, so the model always reproduces current local state, while signed decision records remain external. Substitution has still not occurred: the records are what the retraining reads from, the authority a dispute appeals to, and the object a revision edits. The adapter is a cache of the record layer, and a cache does not replace its source of truth.
 
@@ -27,13 +27,13 @@ A routing rule, not a survival forecast: content that is stable, repeated, and a
 
 - The claim covers mutable, authority-bearing records. An immutable, authority-free exposition — a tutorial, a general mechanism writeup — has no substitution cost beyond fidelity, and is the genuinely absorbable case.
 - Nothing here says parametric reproduction is worthless: a model that has internalized the record layer navigates it better and needs less of it quoted into context. The claim is only that reproduction does not retire the record.
-- Together with [unobserved local information cannot be recovered by capability alone](./unobserved-local-information-cannot-be-recovered-by-capability.md), this note replaces a deleted predecessor that fused the two claims into a categorical "local state is never absorbed" (full-pass `20260728T121249Z-a3f7`). This note owns the half that survived contact with the continual-training counterexample.
+- This note replaces a deleted predecessor that fused two claims into a categorical "local state is never absorbed" (full-pass `20260728T121249Z-a3f7`). The informational half reduced to [commitment, not derivation, creates new ground truth](./commitment-not-derivation-creates-new-ground-truth.md) applied to models and was not retained as a separate note; this note owns the half that survived the continual-training counterexample.
 
 ---
 
 Relevant Notes:
 
-- [Unobserved local information cannot be recovered by capability alone](./unobserved-local-information-cannot-be-recovered-by-capability.md) — contrasts: the neighbouring informational claim, which holds only until the record is learned; this note holds after
+- [Commitment, not derivation, creates new ground truth](./commitment-not-derivation-creates-new-ground-truth.md) — grounds: the prior informational defense — an unentailed resolution exists nowhere until recorded — which lapses once the record can be learned, where this note takes over
 - [Only explicit retention is durable, writable, and addressable at once](./only-explicit-retention-is-durable-writable-and-addressable.md) — grounds: the property comparison behind the substitution costs
 - [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — grounds: the update-pace argument behind currentness
 - [System-definition artifacts are crystallized reasoning under context scarcity](./system-definition-artifacts-are-crystallized-reasoning-under-context.md) — extends: the same survivor class reached from context abundance rather than capability abundance
