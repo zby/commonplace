@@ -11,6 +11,8 @@ Lineage-specific carrier, relation, and invalidation contradictions stay in the 
 - [Current link-authorization matrix](./current-authorization-matrix.md) — inventory of every live collection contract, its source→destination label authorizations, grammar shape, and cross-contract conflicts; ends with `evidence` as the first decision packet.
 - [Evidence direction review](./evidence-direction-review.md) — corpus review of 26 source/review→note uses; establishes a real inverse reader journey while deferring its identifier to the whole-vocabulary grammar audit.
 - [Directional label grammar](./directional-label-grammar.md) — candidate invariant that every directional identifier complete `source <label> target`, plus the initial pass/fail inventory and required audit procedure.
+- [Evidence label migration plan](./evidence-label-migration-plan.md) — compact execution packet for adopting `evidenced-by` / `is-evidence-for`, migrating active contracts and edges, verifying conservation, and capturing lessons for the next label.
+- [Evidence label migration retrospective](./evidence-label-migration-retrospective.md) — run-time surprise log, edge reconciliation, and mandatory add/remove/reorder/automate amendments for the next label plan.
 
 ## Confirmed contradictions
 
