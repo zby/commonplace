@@ -33,7 +33,7 @@ Commonplace already has a substantial local theory:
 - [Inbound and outbound links serve asymmetric reader needs](../../notes/inbound-and-outbound-links-serve-asymmetric-reader-needs.md) separates authored outbound edges from derived inverse views.
 - [ADR 058](../../reference/adr/058-directional-identifiers-use-source-as-subject.md) requires every directional identifier to complete `source <label> target`.
 
-The [initial theoretical lenses](./theoretical-lenses-and-working-model.md) record the new forcing distinctions without treating them as adopted conclusions. The [current case](./current-case.md) traces the implemented evidence and rationale migrations, the grounds adjudication, and the unresolved 128-edge mechanism surface that makes the foundational question concrete.
+The [initial theoretical lenses](./theoretical-lenses-and-working-model.md) record the new forcing distinctions without treating them as adopted conclusions. The [current case](./current-case.md) traces the implemented evidence and rationale migrations, the grounds adjudication, and the unresolved 128-edge mechanism surface that makes the foundational question concrete. The [formal-link brainstorming brief](./brainstorm-formal-link-theory.md) fixes the established observations and instructs a later investigation to keep generated possibilities separate from findings.
 
 ## Questions
 
