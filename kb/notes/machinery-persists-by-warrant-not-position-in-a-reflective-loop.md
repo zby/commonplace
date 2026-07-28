@@ -9,7 +9,7 @@ tags: [learning-theory, deploy-time-learning, self-improving-systems]
 
 [The bitter lesson](../sources/wikipedia-bitter-lesson.md) has two modes, and its folk application remembers only one. The apply-mode is a selection rule over existing methods: prefer the techniques "that have been shown to scale." The build-mode is in Sutton's own conclusion — "time is better invested in finding simple scalable solutions" — and it is what compliance means where no scaled method exists yet: building one. [The two-axis reading](./the-bitter-lesson-selects-production-methods-not-representational.md) locates the localized forms in exactly that situation.
 
-The build-mode's own history shows what gets hand-crafted. Every victory in Sutton's list is hand-designed *machinery* whose *content* is produced by computation: Deep Blue's alpha-beta search, the hidden Markov models that beat hand-crafted speech pipelines, the convolutional architecture that beat hand-coded features. The lesson never opposed hand-crafting as such — it requires it, at the meta-method level — and damns it only for content. Hand-craft the machine that learns; never hand-write what it should have learned.
+The build-mode's own history shows what gets hand-crafted. Every victory in Sutton's list is hand-designed *machinery* whose *content* is produced by computation: Deep Blue's alpha-beta search, the hidden Markov models that beat hand-crafted speech pipelines, the convolutional architecture that beat hand-coded features. The lesson never opposed hand-crafting as such — it requires it, at the meta-method level — and damns it only for content. [Sutton's own closing says so directly](../sources/sutton-the-bitter-lesson-original-essay.md): "we should build in only the meta-methods that can find and capture this arbitrary complexity… We want AI agents that can discover like we can, not which contain what we have discovered." Hand-craft the machine that learns; never hand-write what it should have learned.
 
 ## Sutton's geometry has an outside; reflection erases it
 
@@ -32,7 +32,6 @@ Gradient descent buys stability precisely from its frozen meta-method. A reflect
 ## Scope
 
 - The claim is about what *licenses* persistence, not about current production ratios: one traced instance of loop-produced machinery plus one standing channel do not make the loop the main producer of its own machinery today. Content-first-machinery-later is an observed bootstrap order, not a law.
-- Sutton's original essay states the meta-method prescription directly ("build in only the meta-methods that can find and capture complexity"); this note argues from the held Wikipedia snapshot's paraphrase and examples, and the essay's own text is being captured for direct citation.
 
 ## Open Questions
 
@@ -51,3 +50,4 @@ Relevant Notes:
 - [Self-improvement is relative to a declared objective](./self-improvement-is-relative-to-a-declared-objective.md) — grounds: the function class that stays external by category
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: the governance that stands in for the fixed point
 - [Sutton, The Bitter Lesson (Wikipedia snapshot)](../sources/wikipedia-bitter-lesson.md) — evidenced-by: the shown-to-scale and time-better-invested-in-finding lines, and the winners list read as hand-designed machinery with learned content
+- [Sutton, The Bitter Lesson (original essay)](../sources/sutton-the-bitter-lesson-original-essay.md) — evidenced-by: the meta-methods passage quoted in the body — build in the meta-methods, not the discoveries
