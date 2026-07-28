@@ -16,7 +16,6 @@ A learning operation distinct from constraining and from source-derived reshapin
 - [discovery lifecycle](./definitions/discovery-lifecycle.md) — definition: the staged path from conjecture to accepted discovery (observe → conjecture → consequences → test → accept → integrate); ampliative traffic enters at the conjecture stage, and the co-arising insight is the degenerate case with the phases telescoped
 - [automated synthesis is missing good oracles](./automated-synthesis-is-missing-good-oracles.md) — why discovery resists automation: no cheap verifier for whether a posited generalization is good
 - [known-target discovery benchmarks show reachability, not discovery](./known-target-discovery-benchmarks-show-reachability-not-discovery.md) — benchmark critique: recovering a planted generalization measures search, not the open-ended act
-- [a summary claims less than its episodes; a distilled theory claims more](./a-summary-claims-less-than-its-episodes-a-theory-claims-more.md) — the operation boundary: summarization is monotone loss, theory-formation is ampliative conjecture with a reach debt; experiments bounding one must not be read as bounding the other
 
 ## Reach — what discovery produces
 
