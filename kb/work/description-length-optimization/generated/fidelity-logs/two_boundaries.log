@@ -1,0 +1,246 @@
+Reading additional input from stdin...
+OpenAI Codex v0.145.0
+--------
+workdir: /home/zby/llm/commonplace
+model: gpt-5.6-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 019fa579-662d-7183-b5e3-91739e84233e
+--------
+user
+Review the five description variants for case two_boundaries in kb/work/description-length-optimization/cases.json against the full target artifact kb/notes/two-context-boundaries-govern-collection-operations.md. Judge only semantic fidelity: whether each variant is truthful, preserves the artifact scope relevant to its retrieval task, and introduces no unsupported claim. A shorter variant may omit detail and still pass. Return exactly five reviews. Do not edit files.
+codex
+{"reviews":[{"case_id":"status","allowance":0,"faithful":true,"reason":"I’m reading the case variants alongside the full note and will judge only whether each description stays within the note’s claims and retrieval scope."}]}
+exec
+/bin/bash -lc "sed -n '1,260p' kb/work/description-length-optimization/cases.json && sed -n '1,320p' kb/notes/two-context-boundaries-govern-collection-operations.md" in /home/zby/llm/commonplace
+ succeeded in 0ms:
+{
+  "schema_version": 1,
+  "design": "Only the target description changes across allowances; distractor pointers remain at their incumbent descriptions.",
+  "cases": [
+    {
+      "id": "pointer_design",
+      "path": "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md",
+      "artifact_class": "theoretical-note",
+      "title_strength": "medium",
+      "task": "Find the artifact that compares fixed descriptions, query-time rerankers, and crafted link phrases as progressive-disclosure pointers, especially their tradeoffs in context-specificity, cost, and reliability.",
+      "variants": {
+        "120": "Fixed, query-time, and crafted pointers trade context-specificity, per-read cost, and routing reliability",
+        "160": "Progressive-disclosure pointers trade context-specificity, cost, and reliability; fixed descriptions are cheapest and dependable but query-agnostic",
+        "200": "Progressive-disclosure pointers trade context-specificity, cost, and reliability: fixed descriptions are cheap and dependable, query-time pointers more specific, crafted phrases densest",
+        "250": "Progressive-disclosure pointers trade context-specificity, cost, and reliability: fixed descriptions are cheap and dependable but query-agnostic, query-time pointers buy specificity, and crafted link phrases are dense but depend on authors",
+        "300": "Progressive-disclosure pointers trade context-specificity, cost, and reliability: fixed descriptions are cheap and dependable but query-agnostic, query-time pointers buy specificity per query, and crafted link phrases are densest but depend on authoring discipline, so systems need a mix"
+      }
+    },
+    {
+      "id": "methodology_enforcement",
+      "path": "kb/notes/methodology-enforcement-is-constraining.md",
+      "artifact_class": "theoretical-note",
+      "title_strength": "medium",
+      "task": "Find the artifact that explains when methodology should mature from written guidance through skills and hooks into scripts by reducing semantic underspecification and execution indeterminism.",
+      "variants": {
+        "120": "Methodology moves from instructions to scripts by progressively reducing interpretation and execution freedom",
+        "160": "Instructions, skills, hooks, and scripts constrain methodology by progressively reducing semantic underspecification and execution indeterminism",
+        "200": "Instructions, skills, hooks, and scripts form a constraining gradient: later layers reduce semantic underspecification and execution indeterminism, trading flexibility for reliability",
+        "250": "Instructions, skills, hooks, and scripts form a constraining gradient: later layers reduce underspecification and execution indeterminism; warning hooks fix the trigger but leave the response to an LLM, while blocking hooks and scripts fix both",
+        "300": "Instructions, skills, hooks, and scripts form a constraining gradient: later layers reduce underspecification and execution indeterminism; warning hooks fix the trigger but leave the response to an LLM, while blocking hooks and scripts fix both, so stable practices can compile into code"
+      }
+    },
+    {
+      "id": "representational_form",
+      "path": "kb/notes/definitions/representational-form.md",
+      "artifact_class": "definition",
+      "title_strength": "weak",
+      "task": "Find the canonical definition that classifies how an operative part is encoded and consumed as natural-language, symbolic, distributed-parametric, or mixed, and distinguishes this axis from storage substrate.",
+      "variants": {
+        "120": "Definition: encoding and consumption as natural-language, symbolic, distributed-parametric, or mixed",
+        "160": "Definition: representational form classifies how an operative part is encoded and consumed—natural-language, symbolic, distributed-parametric, or mixed",
+        "200": "Definition: representational form classifies how an operative part is encoded and consumed—natural-language, symbolic, distributed-parametric, or mixed—and is distinct from storage substrate",
+        "250": "Definition: representational form classifies how an operative part is encoded and consumed—natural-language, symbolic, distributed-parametric, or mixed. It differs from storage substrate; codification is the natural-language-to-symbolic crossing",
+        "300": "Definition: representational form classifies how an operative part is encoded and consumed—natural-language, symbolic, distributed-parametric, or mixed. It differs from storage substrate; codification crosses from language to symbols, and prompts are path shorthand rather than another form"
+      }
+    },
+    {
+      "id": "adr_025",
+      "path": "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md",
+      "artifact_class": "adr",
+      "title_strength": "strong",
+      "task": "Find the accepted architecture decision explaining why complete per-collection and per-tag generated listings are no longer committed or read by agents, how humans still get them, and what agents use instead.",
+      "variants": {
+        "120": "Moves complete generated collection and tag listings out of git and agent reads but keeps them in human doc builds",
+        "160": "Complete collection indexes and tag tails move out of git and the agent read path into ProperDocs builds; agents use curated heads and scoped rg",
+        "200": "Complete generated collection indexes and tag tails leave git and the agent read path and are rebuilt by ProperDocs for humans; agents discover through curated heads plus scoped rg",
+        "250": "Complete collection indexes and tag tails leave git and agent reads and are rebuilt by ProperDocs for humans; agents use curated heads plus scoped rg, superseding index-first connect discovery without adding a query command",
+        "300": "Complete collection indexes and tag tails leave git and agent reads and are rebuilt by ProperDocs for humans; agents use curated heads plus scoped rg, superseding index-first connect discovery without adding a query command because scoped rg recovers the retired listing"
+      }
+    },
+    {
+      "id": "collections_and_types",
+      "path": "kb/reference/collections-and-types.md",
+      "artifact_class": "reference",
+      "title_strength": "weak",
+      "task": "Find the shipped-system documentation explaining that collections own register and outbound-link conventions while path-referenced types own structural and semantic contracts, including how the two compose during writing and validation.",
+      "variants": {
+        "120": "How collections and path-referenced types compose: collections own register conventions; types own artifact contracts",
+        "160": "How collections and path-referenced types compose: COLLECTION.md owns register and outbound-link conventions, while type specs own artifact contracts",
+        "200": "How collections and path-referenced types compose: COLLECTION.md owns register and outbound-link conventions; type specs own structural and semantic contracts resolved directly from type paths",
+        "250": "How collections and path-referenced types compose: COLLECTION.md owns register and per-destination outbound-link conventions; type specs own structural schemas and semantic authoring contracts, resolved directly from the artifact's type path",
+        "300": "How collections and path-referenced types compose: COLLECTION.md owns register and outbound-link conventions; type specs own structural schemas and semantic contracts, resolved from the artifact's type path; writing picks collection then type, while validation resolves the type lexically"
+      }
+    },
+    {
+      "id": "invert_requests",
+      "path": "kb/instructions/invert-solution-shaped-requests.md",
+      "artifact_class": "instruction",
+      "title_strength": "strong",
+      "task": "Find the procedure to use before implementing a requested validator or feature when the request may be solution-shaped; it should recover the underlying problem, evidence status, alternatives, routing, and least-committing next move.",
+      "variants": {
+        "120": "Before implementing a proposed feature, recover its underlying problem, evidence, alternatives, and next move",
+        "160": "Use before accepting a solution-shaped request: recover the underlying problem, evidence status, alternative framings, routing, and least-committing next move",
+        "200": "Before implementing a solution-shaped request for a feature or validator, recover the problem, classify evidence, challenge assumptions, compare framings, and choose the least-committing next move",
+        "250": "Before implementing a solution-shaped request for a feature, validator, or workflow, recover the actor's problem, classify evidence, challenge assumptions, compare alternative framings, route any artifact, and recommend the least-committing next move",
+        "300": "Before implementing a solution-shaped feature, validator, or workflow request, recover the actor's problem, classify evidence, challenge assumptions, compare framings, route any artifact, and recommend the least-committing next move; stop at a question or workshop if the problem remains unclear"
+      }
+    },
+    {
+      "id": "review_batches",
+      "path": "kb/instructions/run-review-batches.md",
+      "artifact_class": "instruction",
+      "title_strength": "strong",
+      "task": "Find the operational procedure for selecting snapshot-anchored note/criterion pairs, creating homogeneous review jobs, delegating them to workers with model provenance, and finalizing the results.",
+      "variants": {
+        "120": "Run snapshot-anchored review assays by selecting note/criterion pairs, creating jobs, delegating workers, and finalizing",
+        "160": "Run snapshot-anchored verdict or report assays by selecting note/criterion pairs, creating homogeneous jobs, delegating workers, and finalizing results",
+        "200": "Run snapshot-anchored verdict or report assays: select note/criterion pairs, create jobs from selector JSON, delegate with explicit model provenance, then finalize and verify results",
+        "250": "Run snapshot-anchored verdict or report assays: select note/criterion pairs, create jobs from selector JSON, delegate each unchanged job under the designated model partition, record concrete model provenance, then finalize and verify results",
+        "300": "Run snapshot-anchored verdict or report assays: select note/criterion pairs, create homogeneous jobs from selector JSON, delegate each unchanged job to a worker under the designated model partition, record concrete model provenance, then finalize and verify results; grouping never mixes result kinds"
+      }
+    },
+    {
+      "id": "two_boundaries",
+      "path": "kb/notes/two-context-boundaries-govern-collection-operations.md",
+      "artifact_class": "theoretical-note",
+      "title_strength": "medium",
+      "task": "Find the artifact that distinguishes the full-text boundary for comparative reading from the title-plus-description index boundary for orientation, deriving three collection operating regimes.",
+      "variants": {
+        "120": "Collections cross separate full-text and title-plus-description boundaries, producing three operating regimes",
+        "160": "Collections cross a full-text boundary for comparative reading and a later title-plus-description boundary for orientation, producing three regimes",
+        "200": "Collections cross a full-text boundary where comparative reading must partition and a later title-plus-description boundary where orientation also fails, producing three operational regimes",
+        "250": "Collections cross a full-text boundary where comparison must partition and a title-plus-description boundary where orientation fails, producing three regimes; descriptions become load-bearing between them and child collections restore comparisons",
+        "300": "Collections cross a full-text boundary where comparative reading must partition and a later title-plus-description boundary where orientation fails, producing three regimes; descriptions become load-bearing between them, parent indexes support routing, and child collections restore body comparison"
+      }
+    },
+    {
+      "id": "trajectory_memory",
+      "path": "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md",
+      "artifact_class": "source-ingest",
+      "title_strength": "medium",
+      "task": "Find the source analysis of IBM's trajectory-to-tip memory pipeline reporting that subtask tips plus LLM-guided retrieval improved AppWorld scenario goal completion by 14.3 percentage points, while noting the narrow task-completion oracle.",
+      "variants": {
+        "120": "IBM extracts reusable tips from agent trajectories and retrieves them at runtime, improving complex AppWorld tasks",
+        "160": "IBM extracts strategy, recovery, and optimization tips from trajectories; subtask tips with LLM-guided retrieval improve AppWorld performance",
+        "200": "IBM extracts strategy, recovery, and optimization tips from trajectories; subtask tips plus LLM-guided retrieval improve AppWorld scenario goal completion by 14.3 points",
+        "250": "IBM extracts strategy, recovery, and optimization tips from agent trajectories and injects them at runtime; subtask tips plus LLM-guided retrieval improve AppWorld scenario goal completion by 14.3 points, forming an inspectable closed learning loop",
+        "300": "IBM extracts strategy, recovery, and optimization tips from trajectories and injects them at runtime; subtask tips plus LLM-guided retrieval improve AppWorld scenario goal completion by 14.3 points, forming an inspectable learning loop limited by a task-completion oracle and one benchmark"
+      }
+    },
+    {
+      "id": "stale_indexes",
+      "path": "kb/notes/stale-indexes-are-worse-than-no-indexes.md",
+      "artifact_class": "theoretical-note",
+      "title_strength": "strong",
+      "task": "Find the artifact explaining why an incomplete authoritative index is more dangerous than no index: agents trust it as exhaustive, stop searching, and make omitted notes invisible.",
+      "variants": {
+        "120": "An agent trusts an index as exhaustive, so omitted entries suppress fallback search and become invisible",
+        "160": "An incomplete authoritative index is worse than none because agents treat it as exhaustive, stop fallback search, and make omitted notes invisible",
+        "200": "An incomplete authoritative index is worse than none: apparent completeness satisfies navigation, suppresses search, and makes omitted notes invisible; absence degrades safely to current search",
+        "250": "An incomplete authoritative index is worse than none: apparent completeness satisfies navigation, suppresses search, and makes omitted notes invisible; absence degrades to current search. The mechanism extends to stale specs, plans, and curated lists",
+        "300": "An incomplete index is worse than none: apparent completeness satisfies navigation, suppresses search, and makes omissions invisible; absence degrades to current search. The mechanism extends to stale specs, plans, and curated lists; deterministic checks catch only declared membership omissions"
+      }
+    }
+  ]
+}
+---
+description: Any note collection faces two context boundaries — a full-text boundary where all bodies can be loaded together, and an index boundary where all titles+descriptions fit — creating three operational regimes that govern areas, /connect, and whole-KB operations differently
+type: kb/types/note.md
+tags: []
+---
+
+# Two context boundaries govern collection operations
+
+[Areas exist because useful operations require reading notes together](./areas-exist-because-useful-operations-require-reading-notes-together.md) identifies two operations that justify areas — orientation (reconstructing what is known about a topic) and comparative reading (detecting redundancy, contradiction, tension, and gaps across notes). It treats both as sharing one constraint: context is finite. But the two operations have different minimum resolution requirements. Comparative reading needs full note bodies — you can't detect redundancy between two notes from their descriptions alone. Orientation can work at either resolution — full text or descriptions. This means the two operations hit different context limits, which creates distinct operational regimes.
+
+## The two boundaries
+
+**The full-text boundary** is the point where all note bodies in a collection can be loaded together alongside instructions and reasoning space. WRITING.md sets this at ~40 notes, though the actual threshold depends on note length, instruction overhead, and how much reasoning space the operation needs.
+
+**The index boundary** is the point where all titles and descriptions in a collection can be loaded together. Because a title+description pair is much smaller than a full note body, this boundary is substantially higher than the full-text boundary. How much higher depends on description length, context window size, and what else competes for the window — but the gap is structural, not marginal. A collection can be well past the full-text boundary and still have a scannable index.
+
+As context windows grow, the index boundary moves upward — but the full-text boundary may not, because [complexity costs](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) limit how many note bodies an agent can usefully reason about simultaneously, regardless of whether they fit. The gap between the two boundaries may widen over time.
+
+## Three operational regimes
+
+The two boundaries create three regimes for any collection:
+
+**Below the full-text boundary:** Both operations work at full power. Comparative reading loads all bodies. Orientation can use either the index or full text. This is where areas are most productive — the [virtuous cycle](./areas-exist-because-useful-operations-require-reading-notes-together.md) between orientation and comparative reading runs without friction.
+
+**Between the two boundaries:** Orientation still works — the index fits in context, and good descriptions let the agent build a mental model without loading every body. Comparative reading must be partitioned into sub-passes. The agent can use the index to choose sub-passes intelligently (load notes that are likely to tension against each other), but can't do a single exhaustive comparison across the whole set. This is a degraded-but-functional regime: one operation works natively, the other requires planning.
+
+**Above the index boundary:** Even the index stops fitting productively. Orientation requires search or hierarchical navigation through sub-indexes. The collection has exceeded the point where it functions as a coherent unit for either operation.
+
+## Consequences
+
+### Descriptions become load-bearing in the middle regime
+
+Below the full-text boundary, description quality matters for retrieval but isn't critical for orientation — the agent can just read the notes. Once a collection crosses the full-text boundary, descriptions become **the only content that participates in index-level operations** — orientation, candidate discovery, sub-pass planning.
+
+This reframes the WRITING.md guidance that descriptions are "retrieval filters, not summaries." In the middle regime, they also serve as the compressed representation through which the agent orients and plans. A note with a bad description isn't just hard to find — it's invisible to every operation that works at index resolution.
+
+### Parent/child area relationships are operationally distinct layers
+
+The [areas note](./areas-exist-because-useful-operations-require-reading-notes-together.md) identifies a tension in index design: orientation benefits from synthesis and editorial structure, while comparative reading benefits from flat loadable lists. The two-boundary model separates these demands by scale rather than trying to serve both in one artifact:
+
+- **Parent areas operate at index resolution** — orientation, routing, candidate discovery. They serve collections in the middle regime.
+- **Child areas operate at full-text resolution** — comparative reading, integration. Splitting restores the ability to load all bodies together within each sub-collection.
+
+The parent index is not a taxonomic convenience — it's a distinct operational layer serving a different resolution.
+
+### Library/workshop separation is an operational necessity
+
+The [connect skill's discovery strategy](../reference/adr/003-connect-skill-discovery-strategy.md) is built on the index boundary: `/connect` works by reading the full `index.md` in one pass, scanning all titles and descriptions to find candidates. ADR 003 explicitly identifies this as a scaling constraint — it works while `index.md` is small enough to scan in one read, and proposes portioned loading when it isn't.
+
+The [quality scores note](./notes-need-quality-scores-to-scale-curation.md) identifies the same threshold from the other direction: `/connect` stops scaling without filtering once the candidate list exceeds what an agent can evaluate in context.
+
+ADR 003's scaling strategy is implicitly a response to the index boundary:
+- **Keep the main collection below the index boundary** by curating what goes in `kb/notes/` — workshop artifacts and machine-generated notes go elsewhere
+- **Use semantic search as backup** for what the index scan can't reach (sources, which have no curated index)
+- **Load the index in portions** as a degraded-but-functional fallback
+
+This means the library/workshop separation from [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) isn't just about curation quality — it's an operational necessity to keep the main collection below the index boundary where `/connect`'s full-scan approach works.
+
+## Open questions
+
+- Should the KB proactively structure for the index boundary (hierarchical indexes now), or treat it as a future problem and keep the current flat index until it breaks?
+- Does this model predict that very large KBs need three levels (namespace > area > sub-area) rather than two?
+- Can `/connect` be redesigned to work above the index boundary without losing cross-domain discovery? The quality-scores approach (filter before scanning) is one path; hierarchical indexes are another.
+
+---
+
+Relevant Notes:
+
+- [areas exist because useful operations require reading notes together](./areas-exist-because-useful-operations-require-reading-notes-together.md) — extends: adds the two-boundary model to the single-constraint analysis; separates the orientation/comparative-reading tension by scale
+- [003-connect-skill-discovery-strategy](../reference/adr/003-connect-skill-discovery-strategy.md) — grounds: the connect skill's index-first approach is built on the index boundary; its scaling concerns are exactly what happens when a collection crosses that boundary
+- [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — extends: quality scores are a response to the index boundary — filtering candidates when the full index exceeds productive scanning
+- [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — foundation: context scarcity is why the boundaries exist; the volume/complexity distinction explains why the full-text boundary may not move with growing windows
+- [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: the two boundaries define two resolution levels (index and full-text) between which the KB must support fluid switching
+- [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — enables: library/workshop separation keeps the main collection below the index boundary where /connect works
+- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — parallel: the loading hierarchy (always-loaded > on-demand > full-text) mirrors the resolution gradient described here
+
+codex
+{"reviews":[{"case_id":"two_boundaries","allowance":120,"faithful":true,"reason":"Accurately states the two distinct context boundaries and their consequence: three operating regimes."},{"case_id":"two_boundaries","allowance":160,"faithful":true,"reason":"Faithfully associates full-text capacity with comparative reading and the higher title-plus-description capacity with orientation."},{"case_id":"two_boundaries","allowance":200,"faithful":true,"reason":"Accurately captures partitioned comparative reading after the first boundary and loss of index-level orientation after the second; “fails” is acceptable shorthand for no longer working as a coherent whole-collection operation."},{"case_id":"two_boundaries","allowance":250,"faithful":true,"reason":"Faithfully adds that descriptions become operationally load-bearing in the middle regime and that child collections restore full-body comparative reading."},{"case_id":"two_boundaries","allowance":300,"faithful":true,"reason":"Accurately preserves both boundaries, all three regimes, and the supported division of labor: descriptions and parent indexes enable orientation and routing, while child collections restore body-level comparison."}]}
+tokens used
+26,023
+{"reviews":[{"case_id":"two_boundaries","allowance":120,"faithful":true,"reason":"Accurately states the two distinct context boundaries and their consequence: three operating regimes."},{"case_id":"two_boundaries","allowance":160,"faithful":true,"reason":"Faithfully associates full-text capacity with comparative reading and the higher title-plus-description capacity with orientation."},{"case_id":"two_boundaries","allowance":200,"faithful":true,"reason":"Accurately captures partitioned comparative reading after the first boundary and loss of index-level orientation after the second; “fails” is acceptable shorthand for no longer working as a coherent whole-collection operation."},{"case_id":"two_boundaries","allowance":250,"faithful":true,"reason":"Faithfully adds that descriptions become operationally load-bearing in the middle regime and that child collections restore full-body comparative reading."},{"case_id":"two_boundaries","allowance":300,"faithful":true,"reason":"Accurately preserves both boundaries, all three regimes, and the supported division of labor: descriptions and parent indexes enable orientation and routing, while child collections restore body-level comparison."}]}

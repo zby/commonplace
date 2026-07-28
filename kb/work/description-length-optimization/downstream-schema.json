@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["answers"],
+  "properties": {
+    "answers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["trial_id", "answer"],
+        "properties": {
+          "trial_id": {"type": "string"},
+          "answer": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

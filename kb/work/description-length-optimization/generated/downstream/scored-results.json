@@ -1,0 +1,756 @@
+{
+  "trials": [
+    {
+      "trial_id": "downstream-pointer_design-s20-a120-r1",
+      "source_trial_id": "pointer_design-s20-a120-r1",
+      "case_id": "pointer_design",
+      "allowance": 120,
+      "repetition": 1,
+      "selected": [
+        "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md",
+          "characters": 8119
+        }
+      ],
+      "answer": "Crafted link phrases are the densest and most context-specific pointer type because they characterize a target in relation to the surrounding argument. Their availability is unreliable because they require human judgment and authoring discipline; if no contextual link phrase was written, the pointer is absent.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-representational_form-s20-a120-r1",
+      "source_trial_id": "representational_form-s20-a120-r1",
+      "case_id": "representational_form",
+      "allowance": 120,
+      "repetition": 1,
+      "selected": [
+        "kb/notes/definitions/representational-form.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/definitions/representational-form.md",
+          "characters": 6065
+        }
+      ],
+      "answer": "The four forms are natural-language, symbolic, distributed-parametric, and mixed. Representational form describes how an artifact\u2019s operative part is encoded and consumed, whereas storage substrate describes where or in what container it is stored. For example, Markdown can contain natural-language, symbolic, or mixed content.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-adr_025-s20-a120-r1",
+      "source_trial_id": "adr_025-s20-a120-r1",
+      "case_id": "adr_025",
+      "allowance": 120,
+      "repetition": 1,
+      "selected": [
+        "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md",
+          "characters": 6728
+        }
+      ],
+      "answer": "Complete listings are regenerated at ProperDocs build time for human readers. Agents instead discover through committed curated heads and scoped `rg` searches.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-trajectory_memory-s20-a120-r1",
+      "source_trial_id": "trajectory_memory-s20-a120-r1",
+      "case_id": "trajectory_memory",
+      "allowance": 120,
+      "repetition": 1,
+      "selected": [
+        "kb/sources/trajectory-informed-memory-generation-self-improving-agents.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/sources/trajectory-informed-memory-generation-self-improving-agents.md",
+          "characters": 5794
+        }
+      ],
+      "answer": "The best configuration reported a 14.3 percentage-point scenario-goal-completion improvement on AppWorld held-out tasks: 64.3% versus a 50.0% baseline. The excerpt does not provide the KB analysis identifying a limitation of the learning signal, so the evidence is insufficient for that part.",
+      "success": false
+    },
+    {
+      "trial_id": "downstream-pointer_design-s20-a120-r2",
+      "source_trial_id": "pointer_design-s20-a120-r2",
+      "case_id": "pointer_design",
+      "allowance": 120,
+      "repetition": 2,
+      "selected": [
+        "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md",
+          "characters": 8119
+        }
+      ],
+      "answer": "Crafted link phrases are the densest and most context-specific pointer type because each phrase characterizes the target relative to the surrounding argument. Their availability is unreliable because they require human judgment and authoring discipline; if no one writes the contextual phrase, the pointer is absent or weak.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-representational_form-s20-a120-r2",
+      "source_trial_id": "representational_form-s20-a120-r2",
+      "case_id": "representational_form",
+      "allowance": 120,
+      "repetition": 2,
+      "selected": [
+        "kb/notes/definitions/representational-form.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/definitions/representational-form.md",
+          "characters": 6065
+        }
+      ],
+      "answer": "The four forms are natural-language, symbolic, distributed-parametric, and mixed. Representational form describes how an artifact\u2019s operative part is encoded and consumed, whereas storage substrate describes where or in what container it is stored. For example, Markdown can contain natural-language, symbolic, or mixed content, and a vector store can hold natural-language records while relying on distributed-parametric embeddings for retrieval.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-adr_025-s20-a120-r2",
+      "source_trial_id": "adr_025-s20-a120-r2",
+      "case_id": "adr_025",
+      "allowance": 120,
+      "repetition": 2,
+      "selected": [
+        "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md",
+          "characters": 6728
+        }
+      ],
+      "answer": "Complete listings are regenerated at ProperDocs build time for human readers. For agents, they are replaced by committed curated heads and scoped `rg` searches.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-trajectory_memory-s20-a120-r2",
+      "source_trial_id": "trajectory_memory-s20-a120-r2",
+      "case_id": "trajectory_memory",
+      "allowance": 120,
+      "repetition": 2,
+      "selected": [
+        "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md",
+          "characters": 11410
+        }
+      ],
+      "answer": "The best configuration\u2014subtask-level tips with LLM-guided retrieval\u2014reported a 14.3 percentage-point improvement in scenario goal completion on held-out AppWorld tasks. The KB analysis says the learning signal depends on a narrow, clear task-completion oracle; domains such as open-ended knowledge work, creative tasks, or advisory work may lack such a signal, so the pipeline cannot transfer as-is.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-pointer_design-s20-a160-r1",
+      "source_trial_id": "pointer_design-s20-a160-r1",
+      "case_id": "pointer_design",
+      "allowance": 160,
+      "repetition": 1,
+      "selected": [
+        "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md",
+          "characters": 8119
+        }
+      ],
+      "answer": "Crafted link phrases provide the densest, most context-specific characterization because each phrase explains why the target matters within the surrounding argument. Their availability is unreliable because they require human judgment and authoring discipline; if no one writes a contextual phrase at a link site, the pointer is absent or weak.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-representational_form-s20-a160-r1",
+      "source_trial_id": "representational_form-s20-a160-r1",
+      "case_id": "representational_form",
+      "allowance": 160,
+      "repetition": 1,
+      "selected": [
+        "kb/notes/definitions/representational-form.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/definitions/representational-form.md",
+          "characters": 6065
+        }
+      ],
+      "answer": "The four forms are natural-language, symbolic, distributed-parametric, and mixed. Representational form describes how an artifact\u2019s operative part is encoded and consumed, whereas storage substrate describes where or in what container it is stored. For example, Markdown can contain natural-language, symbolic, or mixed content, while a vector store can expose natural-language records whose retrieval relies on distributed-parametric embeddings.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-adr_025-s20-a160-r1",
+      "source_trial_id": "adr_025-s20-a160-r1",
+      "case_id": "adr_025",
+      "allowance": 160,
+      "repetition": 1,
+      "selected": [
+        "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md",
+          "characters": 6728
+        }
+      ],
+      "answer": "Complete listings are regenerated at ProperDocs build time for human readers. For agents, they are replaced by two discovery surfaces: committed curated heads and scoped `rg` searches.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-trajectory_memory-s20-a160-r1",
+      "source_trial_id": "trajectory_memory-s20-a160-r1",
+      "case_id": "trajectory_memory",
+      "allowance": 160,
+      "repetition": 1,
+      "selected": [
+        "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md",
+          "characters": 11410
+        }
+      ],
+      "answer": "The best configuration\u2014subtask-level tips with LLM-guided retrieval\u2014improved scenario goal completion by 14.3 percentage points on held-out AppWorld tasks. The KB analysis says the learning signal depends on a narrow, clear task-completion oracle: AppWorld provides deterministic completion criteria, so the approach does not transfer as-is to domains such as open-ended knowledge work, creative tasks, or advisory roles where no comparable oracle exists.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-pointer_design-s20-a160-r2",
+      "source_trial_id": "pointer_design-s20-a160-r2",
+      "case_id": "pointer_design",
+      "allowance": 160,
+      "repetition": 2,
+      "selected": [
+        "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md",
+          "characters": 8119
+        }
+      ],
+      "answer": "Crafted link phrases provide the densest, most context-specific characterization because each phrase explains why the target matters within the surrounding argument at that particular link site. Their availability is unreliable because they require human judgment and authoring discipline; if no one writes the link or its context phrase, the pointer is absent or weak.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-representational_form-s20-a160-r2",
+      "source_trial_id": "representational_form-s20-a160-r2",
+      "case_id": "representational_form",
+      "allowance": 160,
+      "repetition": 2,
+      "selected": [
+        "kb/notes/definitions/representational-form.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/definitions/representational-form.md",
+          "characters": 6065
+        }
+      ],
+      "answer": "The four forms are natural-language, symbolic, distributed-parametric, and mixed. Representational form describes how an artifact\u2019s operative part is encoded and consumed, whereas storage substrate describes where or in what container it is stored. For example, Markdown can contain natural-language, symbolic, or mixed operative parts, while a vector store can hold natural-language records whose retrieval relies on distributed-parametric embeddings and ranking.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-adr_025-s20-a160-r2",
+      "source_trial_id": "adr_025-s20-a160-r2",
+      "case_id": "adr_025",
+      "allowance": 160,
+      "repetition": 2,
+      "selected": [
+        "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md",
+          "characters": 6728
+        }
+      ],
+      "answer": "Complete listings are regenerated at ProperDocs build time for human readers. Agents instead discover through two surfaces: committed curated heads and scoped `rg` searches.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-trajectory_memory-s20-a160-r2",
+      "source_trial_id": "trajectory_memory-s20-a160-r2",
+      "case_id": "trajectory_memory",
+      "allowance": 160,
+      "repetition": 2,
+      "selected": [
+        "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md",
+          "characters": 11410
+        }
+      ],
+      "answer": "The best configuration\u2014subtask-level tips with LLM-guided retrieval\u2014reported a +14.3 percentage-point improvement in scenario goal completion on held-out AppWorld tasks. The KB analysis says the learning signal depends on a narrow, clear task-completion oracle: AppWorld offers deterministic success criteria, while open-ended knowledge work, creative tasks, and advisory domains often lack such signals, so the pipeline cannot transfer as-is.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-pointer_design-s20-a200-r1",
+      "source_trial_id": "pointer_design-s20-a200-r1",
+      "case_id": "pointer_design",
+      "allowance": 200,
+      "repetition": 1,
+      "selected": [
+        "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md",
+          "characters": 8119
+        }
+      ],
+      "answer": "Crafted link phrases are the densest and most context-specific because they characterize a target relative to the surrounding argument at each link site. Their availability is unreliable because they require human judgment and authoring discipline; if no contextual phrase or link was authored, the pointer is absent or weak.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-representational_form-s20-a200-r1",
+      "source_trial_id": "representational_form-s20-a200-r1",
+      "case_id": "representational_form",
+      "allowance": 200,
+      "repetition": 1,
+      "selected": [
+        "kb/notes/definitions/representational-form.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/definitions/representational-form.md",
+          "characters": 6065
+        }
+      ],
+      "answer": "The four forms are natural-language, symbolic, distributed-parametric, and mixed. Representational form describes how an artifact\u2019s operative part is encoded and consumed, whereas storage substrate describes where or in what container it is stored. For example, Markdown can contain natural-language, symbolic, or mixed content.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-adr_025-s20-a200-r1",
+      "source_trial_id": "adr_025-s20-a200-r1",
+      "case_id": "adr_025",
+      "allowance": 200,
+      "repetition": 1,
+      "selected": [
+        "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md",
+          "characters": 6728
+        }
+      ],
+      "answer": "Complete listings are now generated at ProperDocs build time for human readers. Agents instead discover through committed curated heads and scoped `rg` searches.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-trajectory_memory-s20-a200-r1",
+      "source_trial_id": "trajectory_memory-s20-a200-r1",
+      "case_id": "trajectory_memory",
+      "allowance": 200,
+      "repetition": 1,
+      "selected": [
+        "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md",
+          "characters": 11410
+        }
+      ],
+      "answer": "The best configuration\u2014subtask-level tips with LLM-guided retrieval\u2014improved scenario goal completion by 14.3 percentage points on held-out AppWorld tasks. The KB analysis says the learning signal depends on a narrow, clear task-completion oracle; domains with ambiguous or open-ended outcomes lack that signal, so the framework cannot be adopted as-is.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-pointer_design-s20-a200-r2",
+      "source_trial_id": "pointer_design-s20-a200-r2",
+      "case_id": "pointer_design",
+      "allowance": 200,
+      "repetition": 2,
+      "selected": [
+        "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md",
+          "characters": 8119
+        }
+      ],
+      "answer": "Crafted link phrases are the densest and most context-specific pointer type because they characterize a target in relation to the surrounding argument. Their availability is unreliable because they require human judgment and authoring discipline; if no one writes the link or its context phrase, the pointer is absent or weak.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-representational_form-s20-a200-r2",
+      "source_trial_id": "representational_form-s20-a200-r2",
+      "case_id": "representational_form",
+      "allowance": 200,
+      "repetition": 2,
+      "selected": [
+        "kb/notes/definitions/representational-form.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/definitions/representational-form.md",
+          "characters": 6065
+        }
+      ],
+      "answer": "The four forms are natural-language, symbolic, distributed-parametric, and mixed. Representational form describes how an artifact\u2019s operative part is encoded and consumed, whereas storage substrate describes where or in what container it is stored. For example, Markdown may contain natural-language, symbolic, or mixed content, while a vector store may expose natural-language records whose retrieval relies on distributed-parametric embeddings.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-adr_025-s20-a200-r2",
+      "source_trial_id": "adr_025-s20-a200-r2",
+      "case_id": "adr_025",
+      "allowance": 200,
+      "repetition": 2,
+      "selected": [
+        "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md",
+          "characters": 6728
+        }
+      ],
+      "answer": "Complete listings are regenerated at ProperDocs build time for human readers. Agents instead discover through committed curated heads and scoped `rg` searches.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-trajectory_memory-s20-a200-r2",
+      "source_trial_id": "trajectory_memory-s20-a200-r2",
+      "case_id": "trajectory_memory",
+      "allowance": 200,
+      "repetition": 2,
+      "selected": [
+        "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md",
+          "characters": 11410
+        }
+      ],
+      "answer": "The best configuration\u2014subtask-level tips with LLM-guided retrieval\u2014reported a +14.3 percentage-point improvement in scenario goal completion on held-out AppWorld tasks. The KB analysis says the learning signal depends on a narrow, clear task-completion oracle; domains such as open-ended knowledge work, creative tasks, or advisory work lack an equivalent signal, so the approach cannot be adopted as-is.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-pointer_design-s20-a250-r1",
+      "source_trial_id": "pointer_design-s20-a250-r1",
+      "case_id": "pointer_design",
+      "allowance": 250,
+      "repetition": 1,
+      "selected": [
+        "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md",
+          "characters": 8119
+        }
+      ],
+      "answer": "Crafted link phrases provide the densest, most context-specific characterization because each phrase explains why the target matters within the surrounding argument. Their availability is unreliable because they require human judgment and authoring discipline; if no one writes the contextual phrase or link, the pointer is absent.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-representational_form-s20-a250-r1",
+      "source_trial_id": "representational_form-s20-a250-r1",
+      "case_id": "representational_form",
+      "allowance": 250,
+      "repetition": 1,
+      "selected": [
+        "kb/notes/definitions/representational-form.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/definitions/representational-form.md",
+          "characters": 6065
+        }
+      ],
+      "answer": "The four forms are natural-language, symbolic, distributed-parametric, and mixed. Representational form describes how an artifact\u2019s operative part is encoded and consumed, whereas storage substrate describes where or in what container it is stored. For example, Markdown may contain natural-language, symbolic, or mixed content, while a vector store may expose natural-language records but rely on distributed-parametric embeddings and ranking.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-adr_025-s20-a250-r1",
+      "source_trial_id": "adr_025-s20-a250-r1",
+      "case_id": "adr_025",
+      "allowance": 250,
+      "repetition": 1,
+      "selected": [
+        "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md",
+          "characters": 6728
+        }
+      ],
+      "answer": "Complete listings are now regenerated at ProperDocs build time for human readers. Agents instead discover content through two surfaces: committed curated heads and scoped `rg` searches.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-trajectory_memory-s20-a250-r1",
+      "source_trial_id": "trajectory_memory-s20-a250-r1",
+      "case_id": "trajectory_memory",
+      "allowance": 250,
+      "repetition": 1,
+      "selected": [
+        "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md",
+          "characters": 11410
+        }
+      ],
+      "answer": "The best configuration\u2014subtask-level tips with LLM-guided retrieval\u2014improved scenario goal completion by 14.3 percentage points on held-out AppWorld tasks. The KB analysis says the learning signal depends on a narrow, clear task-completion oracle: AppWorld has deterministic success criteria, so the approach does not transfer as-is to open-ended domains without reliable completion signals.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-pointer_design-s20-a250-r2",
+      "source_trial_id": "pointer_design-s20-a250-r2",
+      "case_id": "pointer_design",
+      "allowance": 250,
+      "repetition": 2,
+      "selected": [
+        "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md",
+          "characters": 8119
+        }
+      ],
+      "answer": "Crafted link phrases provide the densest, most context-specific characterization because each phrase explains why the target matters within the surrounding argument. Their availability is unreliable because they require human judgment and authoring discipline; if no one writes the contextual phrase, the pointer is absent or weak.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-representational_form-s20-a250-r2",
+      "source_trial_id": "representational_form-s20-a250-r2",
+      "case_id": "representational_form",
+      "allowance": 250,
+      "repetition": 2,
+      "selected": [
+        "kb/notes/definitions/representational-form.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/definitions/representational-form.md",
+          "characters": 6065
+        }
+      ],
+      "answer": "The four forms are natural-language, symbolic, distributed-parametric, and mixed. Representational form describes how an artifact\u2019s operative part is encoded and consumed, whereas storage substrate describes where or in what container it is stored. For example, Markdown can contain natural-language, symbolic, or mixed content, while a vector store can expose natural-language records whose retrieval relies on distributed-parametric embeddings.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-adr_025-s20-a250-r2",
+      "source_trial_id": "adr_025-s20-a250-r2",
+      "case_id": "adr_025",
+      "allowance": 250,
+      "repetition": 2,
+      "selected": [
+        "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md",
+          "characters": 6728
+        }
+      ],
+      "answer": "Complete listings are now generated at ProperDocs build time for human readers. Agents instead discover material through two surfaces: committed curated heads and scoped `rg` searches.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-trajectory_memory-s20-a250-r2",
+      "source_trial_id": "trajectory_memory-s20-a250-r2",
+      "case_id": "trajectory_memory",
+      "allowance": 250,
+      "repetition": 2,
+      "selected": [
+        "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md",
+          "characters": 11410
+        }
+      ],
+      "answer": "The best configuration\u2014subtask-level tips with LLM-guided retrieval\u2014reported a 14.3-percentage-point improvement in scenario goal completion on held-out AppWorld tasks. The KB analysis says the learning signal depends on a narrow, clear task-completion oracle: this works for AppWorld\u2019s deterministic criteria but does not transfer as-is to open-ended domains without reliable completion signals.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-pointer_design-s20-a300-r1",
+      "source_trial_id": "pointer_design-s20-a300-r1",
+      "case_id": "pointer_design",
+      "allowance": 300,
+      "repetition": 1,
+      "selected": [
+        "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md",
+          "characters": 8119
+        }
+      ],
+      "answer": "Crafted link phrases provide the densest, most context-specific characterization because each phrase explains why the target matters within the surrounding argument. Their availability is unreliable because they require human judgment and authoring discipline; if an author omits the contextual phrase or link, the pointer is absent or weak.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-representational_form-s20-a300-r1",
+      "source_trial_id": "representational_form-s20-a300-r1",
+      "case_id": "representational_form",
+      "allowance": 300,
+      "repetition": 1,
+      "selected": [
+        "kb/notes/definitions/representational-form.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/definitions/representational-form.md",
+          "characters": 6065
+        }
+      ],
+      "answer": "The four forms are natural-language, symbolic, distributed-parametric, and mixed. Representational form describes how an artifact\u2019s operative part is encoded and consumed, whereas storage substrate describes where or in what container it is stored. For example, Markdown can contain natural-language, symbolic, or mixed content, and a vector store can hold natural-language records while retrieval depends on distributed-parametric embeddings.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-adr_025-s20-a300-r1",
+      "source_trial_id": "adr_025-s20-a300-r1",
+      "case_id": "adr_025",
+      "allowance": 300,
+      "repetition": 1,
+      "selected": [
+        "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md",
+          "characters": 6728
+        }
+      ],
+      "answer": "Complete listings are now generated at ProperDocs build time for human readers. Agents instead discover through two surfaces: committed curated heads and scoped `rg` searches.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-trajectory_memory-s20-a300-r1",
+      "source_trial_id": "trajectory_memory-s20-a300-r1",
+      "case_id": "trajectory_memory",
+      "allowance": 300,
+      "repetition": 1,
+      "selected": [
+        "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md",
+          "characters": 11410
+        }
+      ],
+      "answer": "The best configuration\u2014subtask-level tips with LLM-guided retrieval\u2014reported a 14.3 percentage-point improvement in scenario goal completion on held-out AppWorld tasks. The KB analysis says the learning signal depends on AppWorld\u2019s clear, deterministic task-completion oracle, so the pipeline does not transfer as-is to domains such as open-ended knowledge work, creative tasks, or advisory work where completion signals are ambiguous or absent.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-pointer_design-s20-a300-r2",
+      "source_trial_id": "pointer_design-s20-a300-r2",
+      "case_id": "pointer_design",
+      "allowance": 300,
+      "repetition": 2,
+      "selected": [
+        "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md",
+          "characters": 8119
+        }
+      ],
+      "answer": "Crafted, authoring-time link phrases provide the densest, most context-specific characterization because each phrase explains why the target matters within its surrounding argument. Their availability is unreliable because they require human judgment and authoring discipline; if no one writes the contextual link phrase, the pointer is absent.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-representational_form-s20-a300-r2",
+      "source_trial_id": "representational_form-s20-a300-r2",
+      "case_id": "representational_form",
+      "allowance": 300,
+      "repetition": 2,
+      "selected": [
+        "kb/notes/definitions/representational-form.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/notes/definitions/representational-form.md",
+          "characters": 6065
+        }
+      ],
+      "answer": "The four forms are natural-language, symbolic, distributed-parametric, and mixed. Representational form describes how an artifact\u2019s operative part is encoded and consumed, whereas storage substrate describes where or in what container it is stored. For example, Markdown can contain natural-language, symbolic, or mixed content, while a vector store can expose natural-language records whose retrieval depends on distributed-parametric embeddings.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-adr_025-s20-a300-r2",
+      "source_trial_id": "adr_025-s20-a300-r2",
+      "case_id": "adr_025",
+      "allowance": 300,
+      "repetition": 2,
+      "selected": [
+        "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md",
+          "characters": 6728
+        }
+      ],
+      "answer": "Complete listings are now regenerated at ProperDocs build time for human readers. Agents instead discover content through two surfaces: committed curated heads and scoped `rg` searches.",
+      "success": true
+    },
+    {
+      "trial_id": "downstream-trajectory_memory-s20-a300-r2",
+      "source_trial_id": "trajectory_memory-s20-a300-r2",
+      "case_id": "trajectory_memory",
+      "allowance": 300,
+      "repetition": 2,
+      "selected": [
+        "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"
+      ],
+      "loaded": [
+        {
+          "path": "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md",
+          "characters": 11410
+        }
+      ],
+      "answer": "The best configuration\u2014subtask-level tips with LLM-guided retrieval\u2014reported a 14.3-percentage-point improvement in scenario goal completion on held-out AppWorld tasks. The KB analysis identifies oracle dependency as the key limitation: learning relies on AppWorld\u2019s clear, deterministic task-completion signal, so it does not transfer as-is to domains with ambiguous or absent completion signals.",
+      "success": true
+    }
+  ],
+  "summary": [
+    {
+      "allowance": 120,
+      "trials": 8,
+      "success_rate": 0.875,
+      "body_characters_loaded": 59028
+    },
+    {
+      "allowance": 160,
+      "trials": 8,
+      "success_rate": 1.0,
+      "body_characters_loaded": 64644
+    },
+    {
+      "allowance": 200,
+      "trials": 8,
+      "success_rate": 1.0,
+      "body_characters_loaded": 64644
+    },
+    {
+      "allowance": 250,
+      "trials": 8,
+      "success_rate": 1.0,
+      "body_characters_loaded": 64644
+    },
+    {
+      "allowance": 300,
+      "trials": 8,
+      "success_rate": 1.0,
+      "body_characters_loaded": 64644
+    }
+  ]
+}

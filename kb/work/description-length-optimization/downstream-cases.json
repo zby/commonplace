@@ -1,0 +1,20 @@
+{
+  "cases": {
+    "pointer_design": {
+      "question": "Which pointer type provides the densest, most context-specific characterization, and what makes its availability unreliable?",
+      "required_term_groups": [["crafted"], ["author", "discipline"]]
+    },
+    "representational_form": {
+      "question": "Name the four representational forms and state how representational form differs from storage substrate.",
+      "required_term_groups": [["natural-language"], ["symbolic"], ["distributed-parametric"], ["mixed"], ["storage substrate"]]
+    },
+    "adr_025": {
+      "question": "Where are complete listings now produced for humans, and which two discovery surfaces replace them for agents?",
+      "required_term_groups": [["properdocs", "build time", "build-time"], ["curated heads"], ["scoped rg"]]
+    },
+    "trajectory_memory": {
+      "question": "What scenario-goal-completion improvement did the best configuration report, on which benchmark, and what limitation of the learning signal does the KB analysis identify?",
+      "required_term_groups": [["14.3"], ["appworld"], ["oracle", "task-completion"]]
+    }
+  }
+}

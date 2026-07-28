@@ -1,0 +1,735 @@
+Reading additional input from stdin...
+OpenAI Codex v0.145.0
+--------
+workdir: /home/zby/llm/commonplace
+model: gpt-5.6-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 019fa579-82e4-7632-8cfe-111f5235f47a
+--------
+user
+Review the five description variants for case stale_indexes in kb/work/description-length-optimization/cases.json against the full target artifact kb/notes/stale-indexes-are-worse-than-no-indexes.md. Judge only semantic fidelity: whether each variant is truthful, preserves the artifact scope relevant to its retrieval task, and introduces no unsupported claim. A shorter variant may omit detail and still pass. Return exactly five reviews. Do not edit files.
+codex
+{"reviews":[{"case_id":"status","allowance":0,"faithful":true,"reason":"I’ll read the case variants and the full note, then judge each description only for semantic fidelity. I won’t modify any files."}]}
+exec
+/bin/bash -lc "jq '.cases[] | select(.case_id == \"stale_indexes\" or .id == \"stale_indexes\" or .name == \"stale_indexes\")' kb/work/description-length-optimization/cases.json && sed -n '1,260p' kb/notes/stale-indexes-are-worse-than-no-indexes.md" in /home/zby/llm/commonplace
+ succeeded in 0ms:
+{
+  "id": "stale_indexes",
+  "path": "kb/notes/stale-indexes-are-worse-than-no-indexes.md",
+  "artifact_class": "theoretical-note",
+  "title_strength": "strong",
+  "task": "Find the artifact explaining why an incomplete authoritative index is more dangerous than no index: agents trust it as exhaustive, stop searching, and make omitted notes invisible.",
+  "variants": {
+    "120": "An agent trusts an index as exhaustive, so omitted entries suppress fallback search and become invisible",
+    "160": "An incomplete authoritative index is worse than none because agents treat it as exhaustive, stop fallback search, and make omitted notes invisible",
+    "200": "An incomplete authoritative index is worse than none: apparent completeness satisfies navigation, suppresses search, and makes omitted notes invisible; absence degrades safely to current search",
+    "250": "An incomplete authoritative index is worse than none: apparent completeness satisfies navigation, suppresses search, and makes omitted notes invisible; absence degrades to current search. The mechanism extends to stale specs, plans, and curated lists",
+    "300": "An incomplete index is worse than none: apparent completeness satisfies navigation, suppresses search, and makes omissions invisible; absence degrades to current search. The mechanism extends to stale specs, plans, and curated lists; deterministic checks catch only declared membership omissions"
+  }
+}
+---
+description: An agent trusts an index as exhaustive — a missing entry doesn't trigger search, it makes the note invisible
+type: kb/types/note.md
+traits: [title-as-claim]
+tags: [kb-maintenance]
+---
+
+# Stale indexes are worse than no indexes
+
+When an agent has no index for a topic, she falls back to search — and search accesses current content. She might find what she needs. But when an index exists and is incomplete, the agent reads it, feels oriented, and stops looking. The index *satisfies* the navigation need. Notes missing from the index become invisible not because they're hard to find, but because nobody looks for them.
+
+This is the core asymmetry: **absence of an index degrades to search; presence of a stale index suppresses search entirely.**
+
+The mechanism generalises beyond indexes to any authoritative artifact — specs, documentation, plans, curated lists. Any artifact that an agent treats as exhaustive will suppress fallback discovery when it goes stale. Indexes are the clearest case because their purpose is explicitly navigational, but a stale spec or an outdated architecture doc creates the same trap: the agent reads it, trusts it, and stops looking for current information.
+
+## The critical moment is note creation
+
+The most common staleness is a new note that doesn't get added to a relevant index. This happens when the agent creating the note doesn't know which indexes exist, or misjudges which ones apply.
+
+The `areas:` frontmatter field is the first defense — it declares index membership at creation time. But `areas:` requires the agent to know what indexes are available. Without that knowledge, the field stays empty or incomplete, and everything downstream (Topics footer, index listing) inherits the gap.
+
+## Defenses
+
+**At creation time:** The agent needs to see the list of available indexes. `docs/indexes.md` serves this purpose — a single file listing all indexes with descriptions. The agent reads it and asks "does this note belong in any of these?"
+
+**At connection time:** The /connect skill's Phase 5 reads `docs/indexes.md` and checks each index against the note. This is a second pass that catches what creation missed.
+
+**Deterministic check:** For every note with `areas: [X]`, verify it appears in the X index. This catches the case where `areas:` is correct but the index wasn't updated. This check is automatable.
+
+**What remains unjudgeable:** Whether a note *should* belong to an index it doesn't claim membership in. This is semantic judgment that only the agent reading both the note and the index description can make. The index-of-indexes approach keeps this judgment feasible by presenting the full list.
+
+## Sourcing
+
+This observation draws on arscontexta methodology research ("stale navigation actively misleads because agents trust curated maps completely"), adapted to our specific system where `areas:` frontmatter and `docs/indexes.md` provide the defense mechanisms.
+
+exec
+/bin/bash -lc "sed -n '1,240p' kb/work/description-length-optimization/README.md 2>/dev/null || true; rg -n 'semantic fidelity|faithful|allowance|stale_indexes' kb/work/description-length-optimization -g '*.md' -g '*.json'" in /home/zby/llm/commonplace
+ succeeded in 0ms:
+# Description-length optimization
+
+## Question
+
+What description-length contract gives Commonplace the best retrieval decisions for its context cost, now that complete generated listings are no longer on the agent read path?
+
+The current 50–200-character warning band was not derived from a retrieval evaluation. The upper bound inherited an earlier full-index cost concern, then tightened while tag indexes were expected to carry complete membership. Tag READMEs are now selective by default, but descriptions still appear in scoped `rg` result slices and build-time listings. The old rationale has weakened rather than disappeared.
+
+## Goal
+
+Produce an evidence-backed description-length policy that says:
+
+- what is being optimized;
+- which description consumers and artifact types the policy covers;
+- whether one global numeric band is justified;
+- what unit and thresholds deterministic validation should use;
+- which semantic properties remain review concerns rather than length checks.
+
+The policy must optimize the title/path-plus-description pointer as a retrieval decision surface, not description length in isolation.
+
+## What would close this workshop
+
+All of the following:
+
+1. A retrieval assay compares controlled description variants across small result sets and large scoped slices.
+2. The results report relevant-artifact recall, unnecessary full reads, downstream task success, and pointer-context cost.
+3. A decision chooses one global band, type-specific bands, or no numeric upper bound, with an explicit result-set budget.
+4. The durable decision lands in the appropriate system artifacts—an ADR if architectural, plus the type/schema, tests, authoring instructions, and command documentation affected by it.
+5. Existing over-limit descriptions are migrated only if the decided policy makes them actionable warnings.
+
+Then delete this workshop and remove its entry from `kb/work/README.md`.
+
+## Evaluation boundary
+
+In scope:
+
+- Fixed note descriptions as read/skip pointers.
+- The marginal information a description adds beyond its title or displayed path.
+- Current agent consumers: plausible-hit triage and scoped path-plus-description listings.
+- Human-facing build-time listings as a secondary consumer.
+- False skips, false opens, downstream task success, scan cost, and authoring failure modes such as summary creep.
+- Whether characters remain an adequate deterministic proxy for the actual token/byte budget.
+- Whether artifact types with different retrieval jobs need different guidance.
+
+Out of scope:
+
+- Replacing `rg` with ranked or semantic search.
+- Redesigning tag taxonomy or tag-README weight gates.
+- Host-managed skill-description limits, which have a different always-loaded consumer and external constraints.
+- Bulk-shortening descriptions before the assay determines which ones are actually defective.
+
+## Current grounding
+
+- The base type defines a description as a discriminating retrieval filter rather than a summary: [note type](../../types/note.md).
+- The current schema warns below 50 and above 200 characters: [note-base schema](../../types/note-base.schema.yaml).
+- The active navigation path uses descriptions both for five-hit triage and scoped path-plus-description slices: [navigation](../../reference/navigation.md).
+- Complete generated listings moved off the agent read path in [ADR 025](../../reference/adr/025-complete-generated-indexes-are-build-time-only.md).
+- Tag READMEs are selective by default and have their own document-weight contract: [tag-readme type](../../types/tag-readme.md).
+- Fixed descriptions trade query-specificity for low read cost and reliable availability: [pointer design tradeoffs](../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md).
+
+## Starting evidence, not a decision
+
+A 2026-07-27 corpus audit found that among 308 files with descriptions under `kb/notes/`:
+
+- median length was 189 characters;
+- 76 descriptions (24.7%) exceeded 200;
+- the 90th percentile was 239 and the 95th was 273;
+- 23 descriptions (7.5%) exceeded 250;
+- 4 descriptions (1.3%) exceeded 300.
+
+The largest tag slice, `learning-theory` at 103 notes, carried about 26,039 characters of title-plus-description payload. Capping its existing descriptions at 200 would save about 1,039 characters—roughly 4% of that payload before path/format overhead. This suggests that 200 currently cuts through ordinary descriptions while doing little to control large-slice cost.
+
+The provisional hypothesis is that 250 may be a better soft warning than 200, while descriptions above 300 are stronger candidates for summary creep. The workshop must be able to reject that hypothesis.
+
+## Working files
+
+- [measurement-plan.md](./measurement-plan.md) — proposed assay, controls, measurements, and decision rule.
+
+## Bookkeeping
+
+Plain Markdown is sufficient. Preserve prompts, case definitions, raw results, and analysis separately so the final decision can be reproduced and challenged. Do not change the shipped length contract from preliminary results alone.
+kb/work/description-length-optimization/fidelity-schema.json:10:        "required": ["case_id", "allowance", "faithful", "reason"],
+kb/work/description-length-optimization/fidelity-schema.json:13:          "allowance": {"type": "integer"},
+kb/work/description-length-optimization/fidelity-schema.json:14:          "faithful": {"type": "boolean"},
+kb/work/description-length-optimization/cases.json:3:  "design": "Only the target description changes across allowances; distractor pointers remain at their incumbent descriptions.",
+kb/work/description-length-optimization/cases.json:132:      "id": "stale_indexes",
+kb/work/description-length-optimization/generated/fidelity-review.json:1:{"reviews":[{"case_id":"pointer_design","allowance":120,"faithful":true,"reason":"Truthfully identifies the three pointer classes and their central specificity, read-cost, and reliability tradeoffs."},{"case_id":"pointer_design","allowance":160,"faithful":true,"reason":"Accurately states the overall tradeoff and the low-cost, reliable, query-agnostic character of fixed descriptions."},{"case_id":"pointer_design","allowance":200,"faithful":true,"reason":"Faithfully distinguishes fixed pointers, query-specific pointers, and the high density of crafted phrases."},{"case_id":"pointer_design","allowance":250,"faithful":true,"reason":"Accurately preserves each pointer class's principal benefit, cost, or reliability limitation."},{"case_id":"pointer_design","allowance":300,"faithful":true,"reason":"Faithfully summarizes all three pointer types and the artifact's conclusion that a system needs a mix."},{"case_id":"methodology_enforcement","allowance":120,"faithful":true,"reason":"Correctly compresses the maturation trajectory as progressively reducing interpretive and execution freedom."},{"case_id":"methodology_enforcement","allowance":160,"faithful":true,"reason":"Accurately names the enforcement layers and the two dimensions they progressively constrain."},{"case_id":"methodology_enforcement","allowance":200,"faithful":true,"reason":"Faithfully describes the gradient and its flexibility-for-reliability tradeoff."},{"case_id":"methodology_enforcement","allowance":250,"faithful":true,"reason":"Correctly distinguishes warning hooks' deterministic triggers from the deterministic responses of blocking hooks and scripts."},{"case_id":"methodology_enforcement","allowance":300,"faithful":true,"reason":"Accurately adds the artifact's maturation claim that proven stable practices can be codified."},{"case_id":"representational_form","allowance":120,"faithful":true,"reason":"Truthfully identifies the definition's operative axis and its natural-language, symbolic, distributed-parametric, and mixed cases."},{"case_id":"representational_form","allowance":160,"faithful":true,"reason":"Accurately defines representational form in terms of how an operative part is encoded and consumed."},{"case_id":"representational_form","allowance":200,"faithful":true,"reason":"Faithfully includes both the form classification and its distinction from storage substrate."},{"case_id":"representational_form","allowance":250,"faithful":true,"reason":"Correctly adds codification as the natural-language-to-symbolic crossing."},{"case_id":"representational_form","allowance":300,"faithful":true,"reason":"Accurately preserves the storage distinction, codification relation, and the narrower meaning of prompt."},{"case_id":"adr_025","allowance":120,"faithful":true,"reason":"Correctly states the decision to remove complete generated listings from git and agent reads while retaining human build output."},{"case_id":"adr_025","allowance":160,"faithful":true,"reason":"Accurately names ProperDocs as the human path and curated heads plus scoped rg as the agent path."},{"case_id":"adr_025","allowance":200,"faithful":true,"reason":"Faithfully summarizes the retired generated surfaces and their separate human and agent replacements."},{"case_id":"adr_025","allowance":250,"faithful":true,"reason":"Correctly includes the supersession of index-first discovery and the decision not to add a query command."},{"case_id":"adr_025","allowance":300,"faithful":true,"reason":"Accurately states that scoped rg recovers the operative listing function, so no new command is yet justified."},{"case_id":"collections_and_types","allowance":120,"faithful":true,"reason":"Truthfully captures the orthogonal split between collection-level register conventions and type-level artifact contracts."},{"case_id":"collections_and_types","allowance":160,"faithful":true,"reason":"Accurately assigns register and outbound-link conventions to COLLECTION.md and artifact contracts to type specs."},{"case_id":"collections_and_types","allowance":200,"faithful":true,"reason":"Correctly includes the types' structural and semantic layers and direct path-based resolution."},{"case_id":"collections_and_types","allowance":250,"faithful":true,"reason":"Faithfully preserves per-destination collection linking rules, type schemas and instructions, and direct type paths."},{"case_id":"collections_and_types","allowance":300,"faithful":true,"reason":"Accurately summarizes ownership, lexical type resolution, and the collection-then-type authoring sequence."},{"case_id":"invert_requests","allowance":120,"faithful":true,"reason":"Truthfully states the core inversion from a proposed feature to its problem, evidence, alternatives, and next move."},{"case_id":"invert_requests","allowance":160,"faithful":true,"reason":"Accurately covers the procedure's problem recovery, evidence classification, reframing, routing, and conservative action."},{"case_id":"invert_requests","allowance":200,"faithful":true,"reason":"Faithfully summarizes the main analytical steps before implementing a solution-shaped feature or validator request."},{"case_id":"invert_requests","allowance":250,"faithful":true,"reason":"Accurately preserves the actor-centered problem statement, evidence, assumptions, framings, routing, and next move."},{"case_id":"invert_requests","allowance":300,"faithful":true,"reason":"Correctly adds the instruction to stop at clarification or a workshop when the underlying problem remains unclear."},{"case_id":"review_batches","allowance":120,"faithful":true,"reason":"Accurately compresses the snapshot-anchored workflow from pair selection through delegation and finalization."},{"case_id":"review_batches","allowance":160,"faithful":true,"reason":"Truthfully covers both verdict and report assays and the requirement for homogeneous jobs."},{"case_id":"review_batches","allowance":200,"faithful":true,"reason":"Faithfully includes selector JSON, explicit model provenance, finalization, and verification."},{"case_id":"review_batches","allowance":250,"faithful":true,"reason":"Accurately states that created jobs remain unchanged, run under their designated partition, and carry worker provenance."},{"case_id":"review_batches","allowance":300,"faithful":true,"reason":"Correctly preserves the complete workflow and the prohibition on mixing result kinds within a job."},{"case_id":"two_boundaries","allowance":120,"faithful":true,"reason":"Accurately identifies the two context boundaries and the resulting three operating regimes."},{"case_id":"two_boundaries","allowance":160,"faithful":true,"reason":"Correctly associates full text with comparative reading and the later title-description boundary with orientation."},{"case_id":"two_boundaries","allowance":200,"faithful":true,"reason":"Faithfully states what fails at each boundary and that the two thresholds create three regimes."},{"case_id":"two_boundaries","allowance":250,"faithful":true,"reason":"Accurately adds the load-bearing role of descriptions and child areas' restoration of comparative reading."},{"case_id":"two_boundaries","allowance":300,"faithful":true,"reason":"Faithfully preserves the boundary model and the distinct routing and comparison roles of parent and child areas."},{"case_id":"trajectory_memory","allowance":120,"faithful":true,"reason":"Truthfully summarizes trajectory-derived reusable tips, runtime retrieval, and improved AppWorld performance."},{"case_id":"trajectory_memory","allowance":160,"faithful":true,"reason":"Accurately names the tip taxonomy and the best-performing granularity and retrieval approach."},{"case_id":"trajectory_memory","allowance":200,"faithful":true,"reason":"Correctly reports the 14.3-percentage-point scenario goal completion improvement."},{"case_id":"trajectory_memory","allowance":250,"faithful":true,"reason":"Faithfully describes extraction, runtime injection, the measured gain, and the inspectable closed learning loop."},{"case_id":"trajectory_memory","allowance":300,"faithful":true,"reason":"Accurately adds the source analysis's task-completion-oracle and single-benchmark limitations."},{"case_id":"stale_indexes","allowance":120,"faithful":true,"reason":"Correctly states the mechanism by which apparent exhaustiveness suppresses search and hides omissions."},{"case_id":"stale_indexes","allowance":160,"faithful":true,"reason":"Faithfully captures why an incomplete authoritative index is more dangerous than having no index."},{"case_id":"stale_indexes","allowance":200,"faithful":true,"reason":"Accurately contrasts stale-index search suppression with the current-content search fallback triggered by absence."},{"case_id":"stale_indexes","allowance":250,"faithful":true,"reason":"Correctly generalizes the mechanism from indexes to stale specs, plans, documentation, and curated lists."},{"case_id":"stale_indexes","allowance":300,"faithful":true,"reason":"Faithfully includes both the generalized mechanism and the limit of deterministic membership checks."}]}
+kb/work/description-length-optimization/generated/fidelity/methodology_enforcement.json:1:{"reviews":[{"case_id":"methodology_enforcement","allowance":120,"faithful":true,"reason":"Truthfully captures the maturation from instructions toward scripts as progressively reducing interpretive and execution freedom; omitted intermediate layers are permissible."},{"case_id":"methodology_enforcement","allowance":160,"faithful":true,"reason":"Accurately identifies the four enforcement layers and the two dimensions they progressively constrain."},{"case_id":"methodology_enforcement","allowance":200,"faithful":true,"reason":"Faithfully states the constraining gradient and its supported flexibility-for-reliability tradeoff."},{"case_id":"methodology_enforcement","allowance":250,"faithful":true,"reason":"Accurately distinguishes warning hooks’ deterministic triggers and LLM-mediated responses from fully deterministic blocking hooks and scripts."},{"case_id":"methodology_enforcement","allowance":300,"faithful":true,"reason":"Faithfully adds the artifact’s progressive-compilation conclusion that proven, sufficiently stable practices can be codified."}]}
+kb/work/description-length-optimization/measurement-plan.md:5:Determine the shortest description allowance at which retrieval performance stops materially improving, subject to a context budget for large candidate slices.
+kb/work/description-length-optimization/measurement-plan.md:38:Produce truthful variants under maximum allowances of approximately:
+kb/work/description-length-optimization/measurement-plan.md:46:These are ceilings, not target lengths. Do not pad a description to consume its allowance. Do not use raw truncation: it confounds length with grammatical damage and omitted sentence endings. Each variant should independently preserve the strongest available mechanism, scope, contrast, or implication.
+kb/work/description-length-optimization/measurement-plan.md:77:Aggregate by length allowance, candidate-set size, artifact type, and title strength. Report at least:
+kb/work/description-length-optimization/measurement-plan.md:104:1. Plot retrieval quality and total context cost against allowance.
+kb/work/description-length-optimization/measurement-plan.md:105:2. Identify the Pareto frontier; discard allowances that cost more without improving retrieval.
+kb/work/description-length-optimization/measurement-plan.md:106:3. Choose the shortest allowance whose false-skip and downstream-success results are not materially worse than longer variants.
+kb/work/description-length-optimization/generated/fidelity/collections_and_types.json:1:{"reviews":[{"case_id":"collections_and_types","allowance":120,"faithful":true,"reason":"Truthfully captures the core division: collections govern register conventions, while path-referenced types govern artifact contracts; omitted linking and validation detail is permissible."},{"case_id":"collections_and_types","allowance":160,"faithful":true,"reason":"Accurately adds COLLECTION.md ownership of outbound-link conventions while preserving type-spec ownership of artifact contracts."},{"case_id":"collections_and_types","allowance":200,"faithful":true,"reason":"Faithfully distinguishes collection-owned register and linking conventions from type-owned structural and semantic contracts, including direct path-based type resolution."},{"case_id":"collections_and_types","allowance":250,"faithful":true,"reason":"Accurately states the per-destination nature of outbound-link conventions and the type spec’s structural schema and semantic authoring layers, resolved from the artifact’s type path."},{"case_id":"collections_and_types","allowance":300,"faithful":true,"reason":"Faithfully summarizes both axes and their composition: authors choose collection then type, while validation lexically resolves the artifact’s path-valued type pointer."}]}
+kb/work/description-length-optimization/generated/fidelity/invert_requests.json:1:{"reviews":[{"case_id":"invert_requests","allowance":120,"faithful":true,"reason":"Truthfully captures the pre-implementation inversion workflow. Omitting validators, routing, and assumption checks is acceptable compression."},{"case_id":"invert_requests","allowance":160,"faithful":true,"reason":"Accurately summarizes the artifact’s trigger, core analysis, Commonplace routing, and least-committing recommendation."},{"case_id":"invert_requests","allowance":200,"faithful":true,"reason":"Faithfully covers the relevant feature-or-validator scope and the procedure’s problem recovery, evidence classification, assumption checks, alternative framings, and next move."},{"case_id":"invert_requests","allowance":250,"faithful":true,"reason":"Accurately reflects the actor-centered problem statement, evidence classification, assumption challenges, alternative framings, outcome routing, and single least-committing recommendation."},{"case_id":"invert_requests","allowance":300,"faithful":true,"reason":"Faithfully summarizes the procedure, including the explicit instruction to recommend a question or workshop rather than implementation when the problem remains unclear."}]}
+kb/work/description-length-optimization/generated/fidelity/representational_form.json:1:{"reviews":[{"case_id":"representational_form","allowance":120,"faithful":true,"reason":"Truthfully identifies the definition’s core classification by encoding and consumption and names all four retrieval-facing categories; omitted scope details do not distort it."},{"case_id":"representational_form","allowance":160,"faithful":true,"reason":"Accurately states that representational form classifies an operative part by how it is encoded and consumed, with the supported category set."},{"case_id":"representational_form","allowance":200,"faithful":true,"reason":"Faithfully adds the artifact’s explicit exclusion that representational form is distinct from storage substrate."},{"case_id":"representational_form","allowance":250,"faithful":true,"reason":"Accurately preserves the classification, storage-substrate distinction, and codification as the natural-language-to-symbolic transition."},{"case_id":"representational_form","allowance":300,"faithful":true,"reason":"Faithfully summarizes the classification and exclusions; its statements about codification and prompt as consumption-path shorthand rather than another form are supported by the artifact."}]}
+kb/work/description-length-optimization/generated/scored-results.json:7:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:26:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:45:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:64:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:83:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:102:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:121:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:140:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:159:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:175:      "trial_id": "stale_indexes-s5-a120-r1",
+kb/work/description-length-optimization/generated/scored-results.json:176:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:178:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:197:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:216:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:235:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:254:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:273:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:292:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:311:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:330:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:349:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:365:      "trial_id": "stale_indexes-s5-a120-r2",
+kb/work/description-length-optimization/generated/scored-results.json:366:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:368:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:387:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:406:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:425:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:444:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:463:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:482:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:501:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:520:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:539:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:555:      "trial_id": "stale_indexes-s5-a160-r1",
+kb/work/description-length-optimization/generated/scored-results.json:556:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:558:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:577:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:596:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:615:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:634:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:653:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:672:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:691:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:710:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:729:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:745:      "trial_id": "stale_indexes-s5-a160-r2",
+kb/work/description-length-optimization/generated/scored-results.json:746:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:748:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:767:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:786:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:805:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:824:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:843:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:862:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:881:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:900:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:919:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:935:      "trial_id": "stale_indexes-s5-a200-r1",
+kb/work/description-length-optimization/generated/scored-results.json:936:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:938:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:957:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:976:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:995:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:1014:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:1033:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:1052:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:1071:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:1090:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:1109:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:1125:      "trial_id": "stale_indexes-s5-a200-r2",
+kb/work/description-length-optimization/generated/scored-results.json:1126:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:1128:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:1147:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1166:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1185:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1204:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1223:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1242:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1261:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1280:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1299:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1315:      "trial_id": "stale_indexes-s5-a250-r1",
+kb/work/description-length-optimization/generated/scored-results.json:1316:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:1318:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1337:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1356:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1375:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1394:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1413:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1432:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1451:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1470:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1489:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1505:      "trial_id": "stale_indexes-s5-a250-r2",
+kb/work/description-length-optimization/generated/scored-results.json:1506:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:1508:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:1527:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1546:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1565:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1584:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1603:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1622:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1641:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1660:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1679:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1695:      "trial_id": "stale_indexes-s5-a300-r1",
+kb/work/description-length-optimization/generated/scored-results.json:1696:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:1698:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1717:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1736:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1755:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1774:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1793:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1812:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1831:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1850:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1869:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1885:      "trial_id": "stale_indexes-s5-a300-r2",
+kb/work/description-length-optimization/generated/scored-results.json:1886:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:1888:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:1907:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:1926:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:1945:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:1964:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:1983:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:2002:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:2021:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:2040:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:2059:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:2075:      "trial_id": "stale_indexes-s20-a120-r1",
+kb/work/description-length-optimization/generated/scored-results.json:2076:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:2078:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:2097:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:2116:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:2135:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:2154:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:2173:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:2192:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:2211:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:2230:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:2249:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:2265:      "trial_id": "stale_indexes-s20-a120-r2",
+kb/work/description-length-optimization/generated/scored-results.json:2266:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:2268:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:2287:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2306:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2325:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2344:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2363:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2382:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2401:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2420:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2439:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2455:      "trial_id": "stale_indexes-s20-a160-r1",
+kb/work/description-length-optimization/generated/scored-results.json:2456:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:2458:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2477:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2496:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2515:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2534:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2553:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2572:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2591:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2610:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2629:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2645:      "trial_id": "stale_indexes-s20-a160-r2",
+kb/work/description-length-optimization/generated/scored-results.json:2646:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:2648:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:2667:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:2686:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:2705:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:2724:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:2743:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:2762:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:2781:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:2800:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:2819:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:2835:      "trial_id": "stale_indexes-s20-a200-r1",
+kb/work/description-length-optimization/generated/scored-results.json:2836:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:2838:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:2857:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:2876:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:2895:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:2914:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:2933:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:2952:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:2971:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:2990:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:3009:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:3025:      "trial_id": "stale_indexes-s20-a200-r2",
+kb/work/description-length-optimization/generated/scored-results.json:3026:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:3028:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:3047:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3066:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3085:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3104:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3123:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3142:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3161:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3180:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3199:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3215:      "trial_id": "stale_indexes-s20-a250-r1",
+kb/work/description-length-optimization/generated/scored-results.json:3216:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:3218:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3237:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3256:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3275:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3294:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3313:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3332:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3351:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3370:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3389:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3405:      "trial_id": "stale_indexes-s20-a250-r2",
+kb/work/description-length-optimization/generated/scored-results.json:3406:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:3408:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:3427:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3446:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3465:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3484:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3503:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3522:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3541:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3560:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3579:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3595:      "trial_id": "stale_indexes-s20-a300-r1",
+kb/work/description-length-optimization/generated/scored-results.json:3596:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:3598:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3617:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3636:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3655:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3674:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3693:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3712:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3731:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3750:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3769:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3785:      "trial_id": "stale_indexes-s20-a300-r2",
+kb/work/description-length-optimization/generated/scored-results.json:3786:      "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/scored-results.json:3788:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:3807:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:3826:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:3845:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:3864:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:3883:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:3902:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:3921:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:3940:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:3959:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:3978:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:3997:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:4016:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:4035:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:4054:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:4073:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:4092:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:4111:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:4130:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:4149:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:4168:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:4187:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:4199:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:4211:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:4223:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:4235:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:4247:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:4259:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:4271:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:4283:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:4295:      "allowance": 300,
+kb/work/description-length-optimization/generated/scored-results.json:4307:      "allowance": 120,
+kb/work/description-length-optimization/generated/scored-results.json:4319:      "allowance": 160,
+kb/work/description-length-optimization/generated/scored-results.json:4331:      "allowance": 200,
+kb/work/description-length-optimization/generated/scored-results.json:4343:      "allowance": 250,
+kb/work/description-length-optimization/generated/scored-results.json:4355:      "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:23:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:34:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:45:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:56:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:67:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:78:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:89:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:100:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:111:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:119:          "trial_id": "stale_indexes-s5-a120-r1",
+kb/work/description-length-optimization/generated/manifest.json:120:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:122:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:140:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:151:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:162:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:173:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:184:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:195:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:206:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:217:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:228:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:236:          "trial_id": "stale_indexes-s5-a120-r2",
+kb/work/description-length-optimization/generated/manifest.json:237:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:239:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:257:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:268:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:279:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:290:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:301:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:312:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:323:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:334:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:345:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:353:          "trial_id": "stale_indexes-s5-a160-r1",
+kb/work/description-length-optimization/generated/manifest.json:354:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:356:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:374:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:385:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:396:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:407:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:418:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:429:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:440:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:451:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:462:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:470:          "trial_id": "stale_indexes-s5-a160-r2",
+kb/work/description-length-optimization/generated/manifest.json:471:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:473:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:491:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:502:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:513:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:524:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:535:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:546:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:557:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:568:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:579:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:587:          "trial_id": "stale_indexes-s5-a200-r1",
+kb/work/description-length-optimization/generated/manifest.json:588:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:590:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:608:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:619:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:630:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:641:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:652:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:663:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:674:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:685:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:696:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:704:          "trial_id": "stale_indexes-s5-a200-r2",
+kb/work/description-length-optimization/generated/manifest.json:705:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:707:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:725:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:736:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:747:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:758:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:769:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:780:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:791:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:802:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:813:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:821:          "trial_id": "stale_indexes-s5-a250-r1",
+kb/work/description-length-optimization/generated/manifest.json:822:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:824:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:842:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:853:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:864:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:875:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:886:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:897:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:908:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:919:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:930:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:938:          "trial_id": "stale_indexes-s5-a250-r2",
+kb/work/description-length-optimization/generated/manifest.json:939:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:941:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:959:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:970:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:981:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:992:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:1003:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:1014:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:1025:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:1036:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:1047:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:1055:          "trial_id": "stale_indexes-s5-a300-r1",
+kb/work/description-length-optimization/generated/manifest.json:1056:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:1058:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:1076:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:1087:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:1098:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:1109:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:1120:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:1131:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:1142:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:1153:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:1164:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:1172:          "trial_id": "stale_indexes-s5-a300-r2",
+kb/work/description-length-optimization/generated/manifest.json:1173:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:1175:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:1193:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1204:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1215:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1226:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1237:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1248:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1259:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1270:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1281:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1289:          "trial_id": "stale_indexes-s20-a120-r1",
+kb/work/description-length-optimization/generated/manifest.json:1290:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:1292:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1310:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1321:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1332:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1343:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1354:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1365:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1376:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1387:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1398:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1406:          "trial_id": "stale_indexes-s20-a120-r2",
+kb/work/description-length-optimization/generated/manifest.json:1407:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:1409:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:1427:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1438:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1449:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1460:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1471:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1482:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1493:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1504:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1515:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1523:          "trial_id": "stale_indexes-s20-a160-r1",
+kb/work/description-length-optimization/generated/manifest.json:1524:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:1526:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1544:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1555:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1566:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1577:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1588:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1599:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1610:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1621:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1632:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1640:          "trial_id": "stale_indexes-s20-a160-r2",
+kb/work/description-length-optimization/generated/manifest.json:1641:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:1643:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:1661:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1672:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1683:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1694:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1705:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1716:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1727:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1738:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1749:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1757:          "trial_id": "stale_indexes-s20-a200-r1",
+kb/work/description-length-optimization/generated/manifest.json:1758:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:1760:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1778:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1789:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1800:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1811:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1822:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1833:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1844:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1855:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1866:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1874:          "trial_id": "stale_indexes-s20-a200-r2",
+kb/work/description-length-optimization/generated/manifest.json:1875:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:1877:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:1895:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:1906:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:1917:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:1928:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:1939:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:1950:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:1961:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:1972:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:1983:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:1991:          "trial_id": "stale_indexes-s20-a250-r1",
+kb/work/description-length-optimization/generated/manifest.json:1992:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:1994:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:2012:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:2023:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:2034:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:2045:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:2056:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:2067:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:2078:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:2089:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:2100:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:2108:          "trial_id": "stale_indexes-s20-a250-r2",
+kb/work/description-length-optimization/generated/manifest.json:2109:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:2111:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:2129:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2140:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2151:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2162:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2173:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2184:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2195:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2206:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2217:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2225:          "trial_id": "stale_indexes-s20-a300-r1",
+kb/work/description-length-optimization/generated/manifest.json:2226:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:2228:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2246:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2257:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2268:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2279:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2290:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2301:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2312:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2323:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2334:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2342:          "trial_id": "stale_indexes-s20-a300-r2",
+kb/work/description-length-optimization/generated/manifest.json:2343:          "case_id": "stale_indexes",
+kb/work/description-length-optimization/generated/manifest.json:2345:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2363:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:2374:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:2392:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:2403:          "allowance": 120,
+kb/work/description-length-optimization/generated/manifest.json:2421:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:2432:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:2450:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:2461:          "allowance": 160,
+kb/work/description-length-optimization/generated/manifest.json:2479:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:2490:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:2508:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:2519:          "allowance": 200,
+kb/work/description-length-optimization/generated/manifest.json:2537:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:2548:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:2566:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:2577:          "allowance": 250,
+kb/work/description-length-optimization/generated/manifest.json:2595:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2606:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2624:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2635:          "allowance": 300,
+kb/work/description-length-optimization/generated/manifest.json:2710:      "id": "stale_indexes",
+kb/work/description-length-optimization/generated/fidelity/trajectory_memory.json:1:{"reviews":[{"case_id":"trajectory_memory","allowance":120,"faithful":true,"reason":"Truthfully summarizes trajectory-derived tips, runtime retrieval, and improved performance on complex AppWorld tasks; omitted details are permissible."},{"case_id":"trajectory_memory","allowance":160,"faithful":true,"reason":"Accurately preserves the three tip categories, subtask granularity, LLM-guided retrieval, and AppWorld performance improvement."},{"case_id":"trajectory_memory","allowance":200,"faithful":true,"reason":"Accurately reports the pipeline, best-performing configuration, metric, and 14.3-percentage-point improvement."},{"case_id":"trajectory_memory","allowance":250,"faithful":true,"reason":"Accurately adds runtime injection and characterizes the pipeline as a closed learning loop with inspectable natural-language outputs."},{"case_id":"trajectory_memory","allowance":300,"faithful":true,"reason":"Accurately includes the pipeline, measured improvement, inspectable learning loop, task-completion-oracle limitation, and single-benchmark scope."}]}
+kb/work/description-length-optimization/generated/fidelity/pointer_design.json:1:{"reviews":[{"case_id":"pointer_design","allowance":120,"faithful":true,"reason":"Truthfully identifies the three pointer types and the central tradeoff axes. “Per-read cost” is narrower than the artifact’s broader cost axis but remains supported and does not contradict authoring-time costs."},{"case_id":"pointer_design","allowance":160,"faithful":true,"reason":"Accurately states the overall tradeoff and characterizes fixed descriptions as cheap, reliable, and insensitive to the current query."},{"case_id":"pointer_design","allowance":200,"faithful":true,"reason":"Accurately preserves the comparison: fixed pointers are cheap and dependable, query-time pointers gain query-specificity, and crafted phrases provide the densest characterization."},{"case_id":"pointer_design","allowance":250,"faithful":true,"reason":"Faithfully captures all three pointer classes and their relevant tradeoffs, including crafted phrases’ dependence on authors supplying them."},{"case_id":"pointer_design","allowance":300,"faithful":true,"reason":"Faithfully summarizes the artifact’s full conclusion: the pointer types optimize different axes, crafted pointers require authoring discipline, and no single type wins, so a mix is needed."}]}
+kb/work/description-length-optimization/generated/fidelity/adr_025.json:1:{"reviews":[{"case_id":"adr_025_120","allowance":120,"faithful":true,"reason":"Truthfully preserves the core decision: complete collection and tag listings leave git and agent reads but remain available through human documentation builds."},{"case_id":"adr_025_160","allowance":160,"faithful":true,"reason":"Accurately identifies ProperDocs as the human-facing build path and curated heads plus scoped rg as the replacement agent discovery path."},{"case_id":"adr_025_200","allowance":200,"faithful":true,"reason":"Faithfully states that the generated listings are removed from git and agent reads, rebuilt for humans, and replaced for agents by curated heads plus scoped rg."},{"case_id":"adr_025_250","allowance":250,"faithful":true,"reason":"Accurately adds that the decision supersedes ADR 003's index-first connect discovery and deliberately introduces no new query command."},{"case_id":"adr_025_300","allowance":300,"faithful":true,"reason":"Faithfully includes the decision's rationale for not adding a query command: scoped rg recovers the operative discovery function of the retired listings."}]}
+kb/work/description-length-optimization/generated/fidelity/review_batches.json:1:{"reviews":[{"case_id":"review_batches","allowance":120,"faithful":true,"reason":"Truthfully summarizes the core workflow. Omitting result kinds, provenance, and verification is acceptable at this length."},{"case_id":"review_batches","allowance":160,"faithful":true,"reason":"Accurately identifies both verdict and report assays and preserves the selection, job creation, delegation, and finalization scope."},{"case_id":"review_batches","allowance":200,"faithful":true,"reason":"All claims are supported: jobs come from selector JSON, workers report model provenance, and the parent finalizes and verifies results."},{"case_id":"review_batches","allowance":250,"faithful":true,"reason":"Faithfully reflects the requirement to preserve creator-returned jobs, run workers under the designated model partition, record reported provenance, finalize, and verify."},{"case_id":"review_batches","allowance":300,"faithful":true,"reason":"Accurately adds job homogeneity and the rule that grouping never mixes verdict and report result kinds; no unsupported claim is introduced."}]}
+kb/work/description-length-optimization/generated/results/s5-a200-r2-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s5-a200-r2","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s5-a200-r2","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s5-a200-r2","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s5-a200-r2","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s5-a200-r2","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s5-a200-r2","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s5-a200-r2","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s5-a200-r2","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s5-a200-r2","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.md"],"confidence":"high"},{"trial_id":"stale_indexes-s5-a200-r2","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+kb/work/description-length-optimization/generated/results/s5-a160-r2-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s5-a160-r2","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s5-a160-r2","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s5-a160-r2","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s5-a160-r2","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s5-a160-r2","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s5-a160-r2","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s5-a160-r2","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s5-a160-r2","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s5-a160-r2","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.md"],"confidence":"high"},{"trial_id":"stale_indexes-s5-a160-r2","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+kb/work/description-length-optimization/generated/results/s20-a160-r2-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s20-a160-r2","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s20-a160-r2","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s20-a160-r2","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s20-a160-r2","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s20-a160-r2","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s20-a160-r2","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s20-a160-r2","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s20-a160-r2","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s20-a160-r2","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"],"confidence":"high"},{"trial_id":"stale_indexes-s20-a160-r2","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+kb/work/description-length-optimization/generated/results/s20-a200-r2-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s20-a200-r2","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s20-a200-r2","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s20-a200-r2","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s20-a200-r2","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s20-a200-r2","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s20-a200-r2","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s20-a200-r2","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s20-a200-r2","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s20-a200-r2","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"],"confidence":"high"},{"trial_id":"stale_indexes-s20-a200-r2","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+kb/work/description-length-optimization/generated/results/s20-a250-r1-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s20-a250-r1","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s20-a250-r1","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s20-a250-r1","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s20-a250-r1","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s20-a250-r1","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s20-a250-r1","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s20-a250-r1","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s20-a250-r1","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s20-a250-r1","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"],"confidence":"high"},{"trial_id":"stale_indexes-s20-a250-r1","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+kb/work/description-length-optimization/generated/results/s20-a120-r2-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s20-a120-r2","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s20-a120-r2","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s20-a120-r2","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s20-a120-r2","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s20-a120-r2","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s20-a120-r2","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s20-a120-r2","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s20-a120-r2","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s20-a120-r2","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"],"confidence":"high"},{"trial_id":"stale_indexes-s20-a120-r2","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+kb/work/description-length-optimization/generated/results/s20-a200-r1-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s20-a200-r1","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s20-a200-r1","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s20-a200-r1","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s20-a200-r1","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s20-a200-r1","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s20-a200-r1","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s20-a200-r1","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s20-a200-r1","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s20-a200-r1","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"],"confidence":"high"},{"trial_id":"stale_indexes-s20-a200-r1","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+kb/work/description-length-optimization/generated/results/s5-a250-r2-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s5-a250-r2","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s5-a250-r2","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s5-a250-r2","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s5-a250-r2","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s5-a250-r2","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s5-a250-r2","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s5-a250-r2","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s5-a250-r2","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s5-a250-r2","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"],"confidence":"high"},{"trial_id":"stale_indexes-s5-a250-r2","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+kb/work/description-length-optimization/generated/results/s5-a120-r1-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s5-a120-r1","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s5-a120-r1","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s5-a120-r1","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s5-a120-r1","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s5-a120-r1","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s5-a120-r1","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s5-a120-r1","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s5-a120-r1","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s5-a120-r1","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.md"],"confidence":"high"},{"trial_id":"stale_indexes-s5-a120-r1","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+kb/work/description-length-optimization/generated/results/s20-a300-r2-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s20-a300-r2","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s20-a300-r2","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s20-a300-r2","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s20-a300-r2","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s20-a300-r2","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s20-a300-r2","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s20-a300-r2","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s20-a300-r2","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s20-a300-r2","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"],"confidence":"high"},{"trial_id":"stale_indexes-s20-a300-r2","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+kb/work/description-length-optimization/generated/results/s5-a200-r1-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s5-a200-r1","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s5-a200-r1","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s5-a200-r1","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s5-a200-r1","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s5-a200-r1","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s5-a200-r1","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s5-a200-r1","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s5-a200-r1","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s5-a200-r1","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"],"confidence":"high"},{"trial_id":"stale_indexes-s5-a200-r1","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+kb/work/description-length-optimization/generated/results/s20-a300-r1-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s20-a300-r1","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s20-a300-r1","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s20-a300-r1","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s20-a300-r1","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s20-a300-r1","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s20-a300-r1","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s20-a300-r1","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s20-a300-r1","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s20-a300-r1","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"],"confidence":"high"},{"trial_id":"stale_indexes-s20-a300-r1","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+kb/work/description-length-optimization/generated/results/s20-a120-r1-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s20-a120-r1","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s20-a120-r1","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s20-a120-r1","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s20-a120-r1","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s20-a120-r1","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s20-a120-r1","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s20-a120-r1","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s20-a120-r1","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s20-a120-r1","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.md"],"confidence":"high"},{"trial_id":"stale_indexes-s20-a120-r1","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+kb/work/description-length-optimization/generated/results/s5-a250-r1-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s5-a250-r1","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s5-a250-r1","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s5-a250-r1","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s5-a250-r1","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s5-a250-r1","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s5-a250-r1","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s5-a250-r1","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s5-a250-r1","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s5-a250-r1","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"],"confidence":"high"},{"trial_id":"stale_indexes-s5-a250-r1","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+kb/work/description-length-optimization/generated/results/s5-a160-r1-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s5-a160-r1","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s5-a160-r1","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s5-a160-r1","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s5-a160-r1","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s5-a160-r1","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s5-a160-r1","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s5-a160-r1","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s5-a160-r1","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s5-a160-r1","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"],"confidence":"high"},{"trial_id":"stale_indexes-s5-a160-r1","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+kb/work/description-length-optimization/generated/results/s20-a250-r2-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s20-a250-r2","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s20-a250-r2","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s20-a250-r2","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s20-a250-r2","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s20-a250-r2","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s20-a250-r2","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s20-a250-r2","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s20-a250-r2","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s20-a250-r2","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"],"confidence":"high"},{"trial_id":"stale_indexes-s20-a250-r2","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+kb/work/description-length-optimization/generated/results/s20-a160-r1-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s20-a160-r1","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s20-a160-r1","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s20-a160-r1","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s20-a160-r1","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s20-a160-r1","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s20-a160-r1","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s20-a160-r1","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s20-a160-r1","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s20-a160-r1","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"],"confidence":"high"},{"trial_id":"stale_indexes-s20-a160-r1","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+kb/work/description-length-optimization/generated/results/s5-a300-r1-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s5-a300-r1","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s5-a300-r1","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s5-a300-r1","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s5-a300-r1","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s5-a300-r1","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s5-a300-r1","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s5-a300-r1","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s5-a300-r1","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s5-a300-r1","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"],"confidence":"high"},{"trial_id":"stale_indexes-s5-a300-r1","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+kb/work/description-length-optimization/generated/results/s5-a300-r2-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s5-a300-r2","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s5-a300-r2","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s5-a300-r2","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s5-a300-r2","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s5-a300-r2","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s5-a300-r2","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s5-a300-r2","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s5-a300-r2","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s5-a300-r2","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"],"confidence":"high"},{"trial_id":"stale_indexes-s5-a300-r2","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+kb/work/description-length-optimization/generated/results/s5-a120-r2-b1.json:1:{"decisions":[{"trial_id":"pointer_design-s5-a120-r2","selected":["kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md"],"confidence":"high"},{"trial_id":"methodology_enforcement-s5-a120-r2","selected":["kb/notes/methodology-enforcement-is-constraining.md"],"confidence":"high"},{"trial_id":"representational_form-s5-a120-r2","selected":["kb/notes/definitions/representational-form.md"],"confidence":"high"},{"trial_id":"adr_025-s5-a120-r2","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"collections_and_types-s5-a120-r2","selected":["kb/reference/collections-and-types.md"],"confidence":"high"},{"trial_id":"invert_requests-s5-a120-r2","selected":["kb/instructions/invert-solution-shaped-requests.md"],"confidence":"high"},{"trial_id":"review_batches-s5-a120-r2","selected":["kb/instructions/run-review-batches.md"],"confidence":"high"},{"trial_id":"two_boundaries-s5-a120-r2","selected":["kb/notes/two-context-boundaries-govern-collection-operations.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s5-a120-r2","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"],"confidence":"high"},{"trial_id":"stale_indexes-s5-a120-r2","selected":["kb/notes/stale-indexes-are-worse-than-no-indexes.md"],"confidence":"high"}]}
+
+codex
+{"reviews":[{"case_id":"stale_indexes","allowance":120,"faithful":true,"reason":"Correctly states that trust in an apparently exhaustive index suppresses fallback search and hides omitted content."},{"case_id":"stale_indexes","allowance":160,"faithful":true,"reason":"Faithfully captures why an incomplete authoritative index is more dangerous than having no index."},{"case_id":"stale_indexes","allowance":200,"faithful":true,"reason":"Accurately contrasts stale-index search suppression with the current-content search fallback triggered by an index's absence."},{"case_id":"stale_indexes","allowance":250,"faithful":true,"reason":"Correctly generalizes the mechanism from indexes to other authoritative artifacts such as stale specs, plans, and curated lists."},{"case_id":"stale_indexes","allowance":300,"faithful":true,"reason":"Faithfully includes both the generalized mechanism and the limitation that deterministic checks catch declared membership missing from an index, not undeclared semantic membership."}]}
+tokens used
+32,312
+{"reviews":[{"case_id":"stale_indexes","allowance":120,"faithful":true,"reason":"Correctly states that trust in an apparently exhaustive index suppresses fallback search and hides omitted content."},{"case_id":"stale_indexes","allowance":160,"faithful":true,"reason":"Faithfully captures why an incomplete authoritative index is more dangerous than having no index."},{"case_id":"stale_indexes","allowance":200,"faithful":true,"reason":"Accurately contrasts stale-index search suppression with the current-content search fallback triggered by an index's absence."},{"case_id":"stale_indexes","allowance":250,"faithful":true,"reason":"Correctly generalizes the mechanism from indexes to other authoritative artifacts such as stale specs, plans, and curated lists."},{"case_id":"stale_indexes","allowance":300,"faithful":true,"reason":"Faithfully includes both the generalized mechanism and the limitation that deterministic checks catch declared membership missing from an index, not undeclared semantic membership."}]}

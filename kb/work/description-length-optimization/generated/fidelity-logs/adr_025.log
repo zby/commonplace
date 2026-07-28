@@ -1,0 +1,232 @@
+Reading additional input from stdin...
+OpenAI Codex v0.145.0
+--------
+workdir: /home/zby/llm/commonplace
+model: gpt-5.6-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 019fa578-ba03-7f22-936f-3a71233d019a
+--------
+user
+Review the five description variants for case adr_025 in kb/work/description-length-optimization/cases.json against the full target artifact kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md. Judge only semantic fidelity: whether each variant is truthful, preserves the artifact scope relevant to its retrieval task, and introduces no unsupported claim. A shorter variant may omit detail and still pass. Return exactly five reviews. Do not edit files.
+codex
+{"reviews":[{"case_id":"status","allowance":0,"faithful":true,"reason":"I’ll read the case variants and the full ADR, then judge only semantic fidelity without editing anything."}]}
+exec
+/bin/bash -lc "sed -n '1,260p' kb/work/description-length-optimization/cases.json && sed -n '1,280p' kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md" in /home/zby/llm/commonplace
+ succeeded in 0ms:
+{
+  "schema_version": 1,
+  "design": "Only the target description changes across allowances; distractor pointers remain at their incumbent descriptions.",
+  "cases": [
+    {
+      "id": "pointer_design",
+      "path": "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md",
+      "artifact_class": "theoretical-note",
+      "title_strength": "medium",
+      "task": "Find the artifact that compares fixed descriptions, query-time rerankers, and crafted link phrases as progressive-disclosure pointers, especially their tradeoffs in context-specificity, cost, and reliability.",
+      "variants": {
+        "120": "Fixed, query-time, and crafted pointers trade context-specificity, per-read cost, and routing reliability",
+        "160": "Progressive-disclosure pointers trade context-specificity, cost, and reliability; fixed descriptions are cheapest and dependable but query-agnostic",
+        "200": "Progressive-disclosure pointers trade context-specificity, cost, and reliability: fixed descriptions are cheap and dependable, query-time pointers more specific, crafted phrases densest",
+        "250": "Progressive-disclosure pointers trade context-specificity, cost, and reliability: fixed descriptions are cheap and dependable but query-agnostic, query-time pointers buy specificity, and crafted link phrases are dense but depend on authors",
+        "300": "Progressive-disclosure pointers trade context-specificity, cost, and reliability: fixed descriptions are cheap and dependable but query-agnostic, query-time pointers buy specificity per query, and crafted link phrases are densest but depend on authoring discipline, so systems need a mix"
+      }
+    },
+    {
+      "id": "methodology_enforcement",
+      "path": "kb/notes/methodology-enforcement-is-constraining.md",
+      "artifact_class": "theoretical-note",
+      "title_strength": "medium",
+      "task": "Find the artifact that explains when methodology should mature from written guidance through skills and hooks into scripts by reducing semantic underspecification and execution indeterminism.",
+      "variants": {
+        "120": "Methodology moves from instructions to scripts by progressively reducing interpretation and execution freedom",
+        "160": "Instructions, skills, hooks, and scripts constrain methodology by progressively reducing semantic underspecification and execution indeterminism",
+        "200": "Instructions, skills, hooks, and scripts form a constraining gradient: later layers reduce semantic underspecification and execution indeterminism, trading flexibility for reliability",
+        "250": "Instructions, skills, hooks, and scripts form a constraining gradient: later layers reduce underspecification and execution indeterminism; warning hooks fix the trigger but leave the response to an LLM, while blocking hooks and scripts fix both",
+        "300": "Instructions, skills, hooks, and scripts form a constraining gradient: later layers reduce underspecification and execution indeterminism; warning hooks fix the trigger but leave the response to an LLM, while blocking hooks and scripts fix both, so stable practices can compile into code"
+      }
+    },
+    {
+      "id": "representational_form",
+      "path": "kb/notes/definitions/representational-form.md",
+      "artifact_class": "definition",
+      "title_strength": "weak",
+      "task": "Find the canonical definition that classifies how an operative part is encoded and consumed as natural-language, symbolic, distributed-parametric, or mixed, and distinguishes this axis from storage substrate.",
+      "variants": {
+        "120": "Definition: encoding and consumption as natural-language, symbolic, distributed-parametric, or mixed",
+        "160": "Definition: representational form classifies how an operative part is encoded and consumed—natural-language, symbolic, distributed-parametric, or mixed",
+        "200": "Definition: representational form classifies how an operative part is encoded and consumed—natural-language, symbolic, distributed-parametric, or mixed—and is distinct from storage substrate",
+        "250": "Definition: representational form classifies how an operative part is encoded and consumed—natural-language, symbolic, distributed-parametric, or mixed. It differs from storage substrate; codification is the natural-language-to-symbolic crossing",
+        "300": "Definition: representational form classifies how an operative part is encoded and consumed—natural-language, symbolic, distributed-parametric, or mixed. It differs from storage substrate; codification crosses from language to symbols, and prompts are path shorthand rather than another form"
+      }
+    },
+    {
+      "id": "adr_025",
+      "path": "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md",
+      "artifact_class": "adr",
+      "title_strength": "strong",
+      "task": "Find the accepted architecture decision explaining why complete per-collection and per-tag generated listings are no longer committed or read by agents, how humans still get them, and what agents use instead.",
+      "variants": {
+        "120": "Moves complete generated collection and tag listings out of git and agent reads but keeps them in human doc builds",
+        "160": "Complete collection indexes and tag tails move out of git and the agent read path into ProperDocs builds; agents use curated heads and scoped rg",
+        "200": "Complete generated collection indexes and tag tails leave git and the agent read path and are rebuilt by ProperDocs for humans; agents discover through curated heads plus scoped rg",
+        "250": "Complete collection indexes and tag tails leave git and agent reads and are rebuilt by ProperDocs for humans; agents use curated heads plus scoped rg, superseding index-first connect discovery without adding a query command",
+        "300": "Complete collection indexes and tag tails leave git and agent reads and are rebuilt by ProperDocs for humans; agents use curated heads plus scoped rg, superseding index-first connect discovery without adding a query command because scoped rg recovers the retired listing"
+      }
+    },
+    {
+      "id": "collections_and_types",
+      "path": "kb/reference/collections-and-types.md",
+      "artifact_class": "reference",
+      "title_strength": "weak",
+      "task": "Find the shipped-system documentation explaining that collections own register and outbound-link conventions while path-referenced types own structural and semantic contracts, including how the two compose during writing and validation.",
+      "variants": {
+        "120": "How collections and path-referenced types compose: collections own register conventions; types own artifact contracts",
+        "160": "How collections and path-referenced types compose: COLLECTION.md owns register and outbound-link conventions, while type specs own artifact contracts",
+        "200": "How collections and path-referenced types compose: COLLECTION.md owns register and outbound-link conventions; type specs own structural and semantic contracts resolved directly from type paths",
+        "250": "How collections and path-referenced types compose: COLLECTION.md owns register and per-destination outbound-link conventions; type specs own structural schemas and semantic authoring contracts, resolved directly from the artifact's type path",
+        "300": "How collections and path-referenced types compose: COLLECTION.md owns register and outbound-link conventions; type specs own structural schemas and semantic contracts, resolved from the artifact's type path; writing picks collection then type, while validation resolves the type lexically"
+      }
+    },
+    {
+      "id": "invert_requests",
+      "path": "kb/instructions/invert-solution-shaped-requests.md",
+      "artifact_class": "instruction",
+      "title_strength": "strong",
+      "task": "Find the procedure to use before implementing a requested validator or feature when the request may be solution-shaped; it should recover the underlying problem, evidence status, alternatives, routing, and least-committing next move.",
+      "variants": {
+        "120": "Before implementing a proposed feature, recover its underlying problem, evidence, alternatives, and next move",
+        "160": "Use before accepting a solution-shaped request: recover the underlying problem, evidence status, alternative framings, routing, and least-committing next move",
+        "200": "Before implementing a solution-shaped request for a feature or validator, recover the problem, classify evidence, challenge assumptions, compare framings, and choose the least-committing next move",
+        "250": "Before implementing a solution-shaped request for a feature, validator, or workflow, recover the actor's problem, classify evidence, challenge assumptions, compare alternative framings, route any artifact, and recommend the least-committing next move",
+        "300": "Before implementing a solution-shaped feature, validator, or workflow request, recover the actor's problem, classify evidence, challenge assumptions, compare framings, route any artifact, and recommend the least-committing next move; stop at a question or workshop if the problem remains unclear"
+      }
+    },
+    {
+      "id": "review_batches",
+      "path": "kb/instructions/run-review-batches.md",
+      "artifact_class": "instruction",
+      "title_strength": "strong",
+      "task": "Find the operational procedure for selecting snapshot-anchored note/criterion pairs, creating homogeneous review jobs, delegating them to workers with model provenance, and finalizing the results.",
+      "variants": {
+        "120": "Run snapshot-anchored review assays by selecting note/criterion pairs, creating jobs, delegating workers, and finalizing",
+        "160": "Run snapshot-anchored verdict or report assays by selecting note/criterion pairs, creating homogeneous jobs, delegating workers, and finalizing results",
+        "200": "Run snapshot-anchored verdict or report assays: select note/criterion pairs, create jobs from selector JSON, delegate with explicit model provenance, then finalize and verify results",
+        "250": "Run snapshot-anchored verdict or report assays: select note/criterion pairs, create jobs from selector JSON, delegate each unchanged job under the designated model partition, record concrete model provenance, then finalize and verify results",
+        "300": "Run snapshot-anchored verdict or report assays: select note/criterion pairs, create homogeneous jobs from selector JSON, delegate each unchanged job to a worker under the designated model partition, record concrete model provenance, then finalize and verify results; grouping never mixes result kinds"
+      }
+    },
+    {
+      "id": "two_boundaries",
+      "path": "kb/notes/two-context-boundaries-govern-collection-operations.md",
+      "artifact_class": "theoretical-note",
+      "title_strength": "medium",
+      "task": "Find the artifact that distinguishes the full-text boundary for comparative reading from the title-plus-description index boundary for orientation, deriving three collection operating regimes.",
+      "variants": {
+        "120": "Collections cross separate full-text and title-plus-description boundaries, producing three operating regimes",
+        "160": "Collections cross a full-text boundary for comparative reading and a later title-plus-description boundary for orientation, producing three regimes",
+        "200": "Collections cross a full-text boundary where comparative reading must partition and a later title-plus-description boundary where orientation also fails, producing three operational regimes",
+        "250": "Collections cross a full-text boundary where comparison must partition and a title-plus-description boundary where orientation fails, producing three regimes; descriptions become load-bearing between them and child collections restore comparisons",
+        "300": "Collections cross a full-text boundary where comparative reading must partition and a later title-plus-description boundary where orientation fails, producing three regimes; descriptions become load-bearing between them, parent indexes support routing, and child collections restore body comparison"
+      }
+    },
+    {
+      "id": "trajectory_memory",
+      "path": "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md",
+      "artifact_class": "source-ingest",
+      "title_strength": "medium",
+      "task": "Find the source analysis of IBM's trajectory-to-tip memory pipeline reporting that subtask tips plus LLM-guided retrieval improved AppWorld scenario goal completion by 14.3 percentage points, while noting the narrow task-completion oracle.",
+      "variants": {
+        "120": "IBM extracts reusable tips from agent trajectories and retrieves them at runtime, improving complex AppWorld tasks",
+        "160": "IBM extracts strategy, recovery, and optimization tips from trajectories; subtask tips with LLM-guided retrieval improve AppWorld performance",
+        "200": "IBM extracts strategy, recovery, and optimization tips from trajectories; subtask tips plus LLM-guided retrieval improve AppWorld scenario goal completion by 14.3 points",
+        "250": "IBM extracts strategy, recovery, and optimization tips from agent trajectories and injects them at runtime; subtask tips plus LLM-guided retrieval improve AppWorld scenario goal completion by 14.3 points, forming an inspectable closed learning loop",
+        "300": "IBM extracts strategy, recovery, and optimization tips from trajectories and injects them at runtime; subtask tips plus LLM-guided retrieval improve AppWorld scenario goal completion by 14.3 points, forming an inspectable learning loop limited by a task-completion oracle and one benchmark"
+      }
+    },
+    {
+      "id": "stale_indexes",
+      "path": "kb/notes/stale-indexes-are-worse-than-no-indexes.md",
+      "artifact_class": "theoretical-note",
+      "title_strength": "strong",
+      "task": "Find the artifact explaining why an incomplete authoritative index is more dangerous than no index: agents trust it as exhaustive, stop searching, and make omitted notes invisible.",
+      "variants": {
+        "120": "An agent trusts an index as exhaustive, so omitted entries suppress fallback search and become invisible",
+        "160": "An incomplete authoritative index is worse than none because agents treat it as exhaustive, stop fallback search, and make omitted notes invisible",
+        "200": "An incomplete authoritative index is worse than none: apparent completeness satisfies navigation, suppresses search, and makes omitted notes invisible; absence degrades safely to current search",
+        "250": "An incomplete authoritative index is worse than none: apparent completeness satisfies navigation, suppresses search, and makes omitted notes invisible; absence degrades to current search. The mechanism extends to stale specs, plans, and curated lists",
+        "300": "An incomplete index is worse than none: apparent completeness satisfies navigation, suppresses search, and makes omissions invisible; absence degrades to current search. The mechanism extends to stale specs, plans, and curated lists; deterministic checks catch only declared membership omissions"
+      }
+    }
+  ]
+}
+---
+description: Complete generated listings (the per-collection dir-index and the per-tag generated tail) retire from git and the agent read path and are regenerated at ProperDocs build time for human readers, while agents discover via committed curated heads plus scoped rg; supersedes ADR 003's index-first connect discovery, and adds no new query command because scoped rg recovers what the retired index gave.
+type: ../types/adr.md
+tags: []
+status: accepted
+---
+
+# 025-Complete generated indexes are build-time only; agents read curated heads plus scoped rg
+
+**Status:** accepted
+**Date:** 2026-06-09
+
+## Context
+
+- Generated navigation is committed and read whole by agents: the per-collection `dir-index.md` and the per-tag `## Other tagged notes` tail. `cp-skill-connect` (per [003-connect-skill-discovery-strategy](./003-connect-skill-discovery-strategy.md)) reads `kb/notes/dir-index.md` first. A full index read costs tens of KB before any candidate body is selected; under sub-agent decomposition, per-fork load then grows with total collection size rather than with the task.
+- These complete listings are pure denormalization: every title and description already lives in the note's own frontmatter.
+- The root cause is an access-mode asymmetry: an agent reads an index whole (linear cost into bounded context, every byte counted), while a human skims, scrolls, and Ctrl-Fs (sublinear). The same complete listing is context debt for the agent and a convenience for the human — which is why we design for the first-time human except where [access cost dominates](../../notes/design-for-the-first-time-human-except-on-access-cost.md).
+- ADR 003 bet that index-first discovery would stay viable by keeping the collection curated and loading the index in portions. Collection growth has made the complete-index read the dominant per-fork cost, so that bet no longer holds.
+
+## Decision
+
+Complete generated listings are build-time-only; the agent read path is curated heads plus scoped rg.
+
+1. Retire complete generated listings from git and the agent read path — both the per-collection `dir-index.md` and the per-tag `## Other tagged notes` tail.
+2. Regenerate them at ProperDocs build time for human readers, where browser scroll and find restore sublinear access. One source of truth (note frontmatter), two materializations.
+3. Keep curated heads committed at every scope: directory `README.md` / `COLLECTION.md`, and the editorial body of each tag index. The tag index is the tag's README; its generated tail is the detachable part.
+4. Agents discover via curated heads plus scoped `rg`; add no new query command, because scoped rg recovers the operative part of the retired index. Documented recipes: by tag, `rg -l '^tags:.*\bTAG\b' kb/notes/ --glob '*.md' | xargs -r rg -N --no-heading '^description:\s*' -r ''` (the `xargs -r` guard prevents an empty match from falling back to a whole-repo search); by keyword, `rg '^description:' <scoped path>`. Codifying these into a `commonplace-*` command is deferred until a recurring failure justifies it.
+5. Colocation is conditional on weight: a small tag keeps its short generated list colocated under the curated head; a popular tag detaches it, because a curated index is an agent read surface and must stay context-feasible. *(Refined by [ADR 026](./026-tag-readme-type-with-completeness-and-coverage-marks.md): nothing generated is committed at any size — weight became the type contract on the committed curated head instead of a colocation dial.)*
+
+This supersedes ADR 003's primary-discovery decision (read `dir-index.md` first). 003's surviving element — curated focused indexes as a discovery surface — is retained as the curated-heads path; complete-index reads are removed from standard connect discovery.
+
+## Consequences
+
+Easier:
+- Per-fork load scales with the task, not the collection: write, connect, and ingest stop paying tens of KB of denormalized index on every fork.
+- Adding a note no longer requires keeping a heavy committed index current for agents (003's maintenance burden); the human site regenerates from source.
+
+Harder / migration:
+- `git rm` plus gitignore the ~50 committed `dir-index.md` files; strip the committed generated tail from tag indexes.
+- `cp-skill-connect` standard discovery is rewritten to drop complete-index reads (curated heads plus scoped rg; broad scans reserved for deep mode).
+- Reference sweep: `navigation.md`, `CLAUDE.md` Key Indexes, and any README or curated index that links to a `dir-index.md`.
+- The ProperDocs build becomes responsible for human-facing inventories.
+
+Risks / watch:
+- Scoped rg has a footgun: a tag that matches zero files makes `xargs` run rg with no path argument, which searches the whole repo. Mitigated by `xargs -r`; recurring trips would be the signal to codify a command.
+- rg yields `path + description`, not the human H1 title; the path stands in for the title in triage. If title-in-output proves necessary, that is the case a command would justify.
+- Description quality stays load-bearing (inherited from 003).
+
+Deferred (mechanism, not direction):
+- ProperDocs generation mechanism: a `commonplace-refresh-indexes --for-build` mode the hook calls, or a dedicated plugin (must emit both the directory inventory and the per-tag listing).
+- Curated-index weight reporting plus soft/hard thresholds (bytes vs entry count; scope).
+- Whether curated indexes must declare focused-routing vs archival, or whether "curated = focused" suffices.
+
+## Links
+
+- [003-connect-skill-discovery-strategy](./003-connect-skill-discovery-strategy.md) — supersedes: this replaces 003's index-first primary discovery while retaining its curated-focused-index surface
+- [context-efficiency-is-the-central-design-concern-in-agent-systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — rationale: the per-fork cost of a whole-index read is what makes retiring it worthwhile
+- [two-context-boundaries-govern-collection-operations](../../notes/two-context-boundaries-govern-collection-operations.md) — rationale: per-fork load is the boundary this decision optimizes
+- [feasibility-is-the-heaviest-forks-net-load](../../notes/feasibility-is-the-heaviest-forks-net-load.md) — rationale: feasibility is set by the heaviest fork's net load, which the complete-index read inflates
+- [index-curation-adds-orientation-that-generation-cannot-produce](../../notes/index-curation-adds-orientation-that-generation-cannot-produce.md) — rationale: why curated heads stay committed while generated listings move to build time
+- [cp-skill-connect](../../instructions/cp-skill-connect/SKILL.md) — procedure: the discovery skill whose standard read path this decision rewrites
+
+codex
+{"reviews":[{"case_id":"adr_025_120","allowance":120,"faithful":true,"reason":"Truthfully preserves the core decision: complete collection and tag listings leave git and agent reads but remain available through human documentation builds."},{"case_id":"adr_025_160","allowance":160,"faithful":true,"reason":"Accurately identifies ProperDocs as the human-facing build path and curated heads plus scoped rg as the replacement agent discovery path."},{"case_id":"adr_025_200","allowance":200,"faithful":true,"reason":"Faithfully states that the generated listings are removed from git and agent reads, rebuilt for humans, and replaced for agents by curated heads plus scoped rg."},{"case_id":"adr_025_250","allowance":250,"faithful":true,"reason":"Accurately adds that the decision supersedes ADR 003's index-first connect discovery and deliberately introduces no new query command."},{"case_id":"adr_025_300","allowance":300,"faithful":true,"reason":"Faithfully includes the decision's rationale for not adding a query command: scoped rg recovers the operative discovery function of the retired listings."}]}
+tokens used
+25,243
+{"reviews":[{"case_id":"adr_025_120","allowance":120,"faithful":true,"reason":"Truthfully preserves the core decision: complete collection and tag listings leave git and agent reads but remain available through human documentation builds."},{"case_id":"adr_025_160","allowance":160,"faithful":true,"reason":"Accurately identifies ProperDocs as the human-facing build path and curated heads plus scoped rg as the replacement agent discovery path."},{"case_id":"adr_025_200","allowance":200,"faithful":true,"reason":"Faithfully states that the generated listings are removed from git and agent reads, rebuilt for humans, and replaced for agents by curated heads plus scoped rg."},{"case_id":"adr_025_250","allowance":250,"faithful":true,"reason":"Accurately adds that the decision supersedes ADR 003's index-first connect discovery and deliberately introduces no new query command."},{"case_id":"adr_025_300","allowance":300,"faithful":true,"reason":"Faithfully includes the decision's rationale for not adding a query command: scoped rg recovers the operative discovery function of the retired listings."}]}

@@ -1,0 +1,326 @@
+Answer each question using only the loaded artifact excerpts. Do not open files, search, or use tools.
+If the excerpts do not support an answer, say that the evidence is insufficient. Return one answer for every trial_id.
+
+TRIAL downstream-pointer_design-s20-a120-r1
+Question: Which pointer type provides the densest, most context-specific characterization, and what makes its availability unreliable?
+Loaded excerpts:
+===== kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md =====
+---
+description: Design tradeoffs for progressive disclosure pointers — context-specificity vs precomputation cost vs reliability; fixed pointers (descriptions, abstracts) trade specificity for reliability and cheap reads, query-time pointers (re-rankers) trade cost for specificity, crafted pointers (link phrases) achieve highest density but depend on authoring discipline
+type: kb/types/note.md
+traits: []
+tags: [links, computational-model]
+---
+
+# Pointer design tradeoffs in progressive disclosure
+
+A **pointer** is any lower-resolution representation that helps decide whether to load a knowledge item — a description, an abstract, a search result snippet, a re-ranker score, even a title. The concept is substrate-independent: a **link** (markdown reference with context phrase) is a pointer in our substrate; OpenViking's `.abstract.md` is a pointer in their virtual filesystem; a re-ranker output is a pointer in a retrieval pipeline.
+
+Progressive disclosure works by giving agents pointers at increasing resolution — scan cheap ones first, load expensive content only when needed. But not all pointers are alike. They vary on three axes: **context-specificity**, **cost**, and **reliability**.
+
+## Context-specificity: when does the pointer learn about the consumer?
+
+The most obvious axis. A pointer can know nothing about why the consumer is looking (a fixed description), something about the query (a re-ranker score), or everything about the surrounding argument (a crafted link phrase).
+
+**Fixed at write time.** Descriptions, OpenViking's L0 abstracts. One precomputed summary per note, amortized over all reads. The same summary regardless of who's reading or why — context-free. This is enough for global operations (search, comparative reading, index building) where there's no surrounding argument to leverage.
+
+**Produced at query time.** Search result snippets, retrieval scores, re-rankers, query-specific summaries. Some are cheap retrieval artifacts; some require inference. The common property is that they are produced for this query rather than stored ahead of time. That makes them more query-specific than fixed abstracts: "how does this system handle memory dedup?" can produce a ranking or snippet that fixed abstracts cannot. Cost and reliability vary by mechanism.
+
+**Crafted at link-authoring time.** Link phrases in our system. The same note gets a different characterization at every link site:
+
+- From a compression note: `[constraining](./definitions/constraining.md) — orthogonal to compression; narrows interpretation rather than shortening`
+- From a codification note: `[constraining](./definitions/constraining.md) — codification is the far end of constraining`
+- From an architecture note: `[constraining](./definitions/constraining.md) — narrows the set of valid interpretations an agent can make`
+
+Each phrase leverages the surrounding argument the agent already has loaded — not just "what is this item" but "why does it matter *here*." This is the densest pointer type, but it requires human judgment and only exists where someone authored a link.
+
+## Reliability: the axis you forget until it breaks
+
+If context-specificity were the only axis, the answer would be simple: compute the most specific pointer you can afford. As inference gets cheaper, query-time computation replaces fixed pointers. Problem solved.
+
+But [agent statelessness](./agent-statelessness-makes-routing-architectural-not-learned.md) complicates this. Agents start cold every session. Routing is permanent architecture, not scaffolding they outgrow. And the [degradation cliff](./agent-statelessness-makes-routing-architectural-not-learned.md) is unforgiving: when routing fails, the agent doesn't slow down — it falls into generic LLM behavior, confidently executing without the KB's methodology.
+
+Fixed pointers are reliable. They're there every time, same content, no query-time dependency. A query-time pipeline introduces new failure modes: poor retrieval, poor reranking, or poor inference can send the agent off the cliff. Crafted link phrases introduce another: if the author skipped the context phrase, the pointer is simply absent.
+
+This means the three axes pull in different directions:
+
+| Pointer type | Specificity | Cost | Reliability |
+|-------------|------------|------|-------------|
+| Fixed (write-time) | Low — context-free | Cheapest per read | Highest — always present, deterministic |
+| Query-time | Medium — query-specific | Per-query retrieval/inference cost | Medium — depends on retrieval/inference quality |
+| Crafted (authoring-time) | Highest — argument-specific | Human judgment | Variable — depends on discipline |
+
+No single type wins all three. A system needs a mix.
+
+## What this looks like in practice
+
+Comparing OpenViking's tiers with ours makes the tradeoffs concrete:
+
+| Role | OpenViking | Commonplace |
+|------|-----------|-------------|
+| Identity pointer | URI/name (~5-10 tok) | Title-as-claim (~10 tok) |
+| Fixed filter | L0 abstract (~100 tok) | Description (~50 tok) |
+| Intermediate overview | L1 overview (~2000 tok) | *No equivalent* |
+| Relation-specific pointer | `.relations.json` reason string (weaker, relation-level) | Link phrase (~20 tok), varies per link site |
+| Full content | L2 original files | Note body |
+
+Each system has a tier the other emphasizes. OpenViking invests in L1 — a 2000-token overview between the fixed filter and full content, useful for scoping before committing to a full read. We invest in crafted link phrases — 20-token characterizations that tell the agent why a target matters in the current argument. OpenViking does have relation annotations via `.relations.json` reason strings, but its main retrieval path still centers fixed pointers (`uri` + `abstract`) rather than per-link argumentative characterizations. Neither system uses query-time computation for navigation pointers yet.
+
+## Design implications
+
+| Property | Fixed | Query-time | Crafted |
+|----------|-------|-----------|---------|
+| Guaranteed to exist | Yes | Per-query | Authoring discipline |
+| Quality ceiling | Generic | Query-specific | Argument-specific |
+| Scales to global ops | Yes | Yes (at cost) | No |
+| Failure mode | Stale if source changes | Bad retrieval/rerank/inference → cliff | Absent or weak |
+
+The practical path: invest in crafted link phrases for local navigation (the common agent case), and use `/validate` to pressure notes toward reliable fixed descriptions for global operations. Watch query-time computation as inference costs drop — but treat it as supplementary to architectural routing, not a replacement.
+
+---
+
+Relevant Notes:
+
+- [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds: the navigation decision is what pointers optimize for; link phrases are the most context-specific pointer type for that decision
+- [agent statelessness makes routing architectural, not learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — grounds: the reliability axis; fixed pointers are architectural routing that stateless agents depend on, and query-time computation introduces the degradation cliff
+- [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: the cost spectrum is a context efficiency trade-off
+- [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — mechanism: fixed pointers precompute a consumer-facing view, while query-time pointers work one out for the current query
+- [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: the tier structure defines the resolution gradient; query-time computation could fill gaps dynamically
+- [OpenViking](../agent-memory-systems/reviews/openviking.md) — contrasts: their L0/L1/L2 emphasizes fixed pointers, with weaker relation-level reason strings rather than crafted per-link argument pointers; the comparison crystallized this note
+
+
+TRIAL downstream-representational_form-s20-a120-r1
+Question: Name the four representational forms and state how representational form differs from storage substrate.
+Loaded excerpts:
+===== kb/notes/definitions/representational-form.md =====
+---
+description: "Definition - representational form classifies how an operative part is encoded and consumed: natural-language, symbolic, distributed-parametric, or mixed"
+type: kb/types/definition.md
+tags: [learning-theory, artifact-analysis]
+---
+
+# Representational form
+
+Representational form classifies how a retained artifact's [operative part](./operative-part.md) is encoded and consumed. This KB uses three coarse forms: **natural-language**, **symbolic**, and **distributed-parametric**. Mixed artifacts are split by operative part or consumption path when the parts have different review evidence, invalidation needs, or rollback paths.
+
+## Scope
+
+**Natural-language** carries behavior-shaping content whose consequences come from interpretation by a language model or human. Prompts, reflections, notes, policies, playbooks, and many skills have natural-language operative parts where their force comes from interpretation.
+
+**Symbolic** carries behavior-shaping content in localized units whose consequences are assigned by a parser, interpreter, runtime, schema, validator, route table, or other defined consumer. The category is architectural, not a claim about classical symbolic AI.
+
+**Distributed-parametric** carries behavior-shaping content in numerical state distributed across parameters or dense representations: weights, adapters, embedding spaces, dense-vector indexes, reward models, learned controllers, and similar artifacts.
+
+Form sets the default inspection method: read natural-language content, test or statically check symbolic artifacts, and probe distributed-parametric artifacts behaviorally.
+
+## Derivation
+
+Two axes generate the categories. **Assigned consequences** — does a defined consumer fix what the artifact does, or is it reinterpreted on each consumption? A formal semantics is sufficient but not necessary: most programming languages have none, and still sit on this side because an implementation adjudicates, so two consumers disagreeing means one of them is wrong. Natural language has no such adjudicator — two readings can both be reasonable — which is [underspecification](../llm-interpretation-errors-README.md), not a defect of any particular text. **Localization** — is there an identifiable unit carrying the content, or is it spread across numerical state with no addressable part?
+
+| | localized | non-localized |
+|---|---|---|
+| **consequences assigned** | symbolic | — |
+| **consequences not assigned** | natural-language | distributed-parametric |
+
+The fourth cell is unoccupied in this domain rather than impossible. Vector symbolic architectures aim at exactly it, binding and bundling being algebraically defined operations over distributed hypervectors. The three-way carve therefore holds while agent systems retain nothing of that shape, and gains a fourth form if they do.
+
+The inspection rule above follows from the axes instead of being stipulated per form: a localized unit with defined semantics can be checked against them (test), a localized unit without them yields its content only to interpretation (read), and a non-localized artifact offers nothing to point at, so only its behavior is observable (probe). [Addressability](../reflection-buys-addressability.md) rides on the localization axis alone, which is why a prompt and a validator are both revisable one item at a time while weights are not.
+
+## Exclusions
+
+Representational form is not storage substrate. Markdown in a repository can be natural-language, symbolic, or mixed depending on the consumer. A vector store can expose natural-language records while its retrieval behavior depends on distributed-parametric embeddings and ranking.
+
+Representational form is also not consumption path. **Prompt** is exact when material is supplied, or explicitly assembled to be supplied, as model input. A stored note, policy, or memory record is not thereby a prompt because it might later be retrieved; retain its precise artifact name, or call it natural-language when the representational category matters. A generated model-input view can be a prompt even when it assembles natural-language and symbolic operative parts.
+
+## Misuse Cases
+
+- Calling learned weights "opaque" as if opacity were the form. The form is distributed-parametric; opacity is a practical inspection property that also appears at sufficient scale in natural-language and symbolic systems.
+- Calling every YAML or Markdown artifact symbolic. It is symbolic only where a consumer assigns defined consequences to specific fields, values, or structures.
+
+## Revision rationale
+
+The category was renamed from **prose** to **natural-language** because its boundary is interpretive, not editorial. Fragments, facts, reflections, structured records, rules, and prompt components can receive their consequences through natural-language interpretation without being continuous expository prose. The older label therefore excluded central cases by connotation and encouraged the storage package to stand in for the operative part.
+
+Apply the vocabulary in this order: name the precise artifact when the category adds nothing; use **prompt** when model-input supply is the point; use a **natural-language** category term when representational form matters; preserve **prose** for editorial meaning, quotations, historical terminology, and named review machinery. This ordering keeps prompt narrower than natural-language artifact and prevents a stored artifact from being reclassified merely because one future consumption path may place it in context.
+
+---
+
+Relevant Notes:
+
+- [operative part](./operative-part.md) - unit: representational form classifies the relevant behavior-shaping part, not necessarily the whole stored object
+- [storage substrate](./storage-substrate.md) - contrast: location is separate from representation
+- [codification](./codification.md) - mechanism: movement from natural-language into symbolic form
+- [opacity is a scale threshold](../opacity-is-a-scale-threshold.md) - caveat: practical opacity is not identical to representational form
+
+
+TRIAL downstream-adr_025-s20-a120-r1
+Question: Where are complete listings now produced for humans, and which two discovery surfaces replace them for agents?
+Loaded excerpts:
+===== kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md =====
+---
+description: Complete generated listings (the per-collection dir-index and the per-tag generated tail) retire from git and the agent read path and are regenerated at ProperDocs build time for human readers, while agents discover via committed curated heads plus scoped rg; supersedes ADR 003's index-first connect discovery, and adds no new query command because scoped rg recovers what the retired index gave.
+type: ../types/adr.md
+tags: []
+status: accepted
+---
+
+# 025-Complete generated indexes are build-time only; agents read curated heads plus scoped rg
+
+**Status:** accepted
+**Date:** 2026-06-09
+
+## Context
+
+- Generated navigation is committed and read whole by agents: the per-collection `dir-index.md` and the per-tag `## Other tagged notes` tail. `cp-skill-connect` (per [003-connect-skill-discovery-strategy](./003-connect-skill-discovery-strategy.md)) reads `kb/notes/dir-index.md` first. A full index read costs tens of KB before any candidate body is selected; under sub-agent decomposition, per-fork load then grows with total collection size rather than with the task.
+- These complete listings are pure denormalization: every title and description already lives in the note's own frontmatter.
+- The root cause is an access-mode asymmetry: an agent reads an index whole (linear cost into bounded context, every byte counted), while a human skims, scrolls, and Ctrl-Fs (sublinear). The same complete listing is context debt for the agent and a convenience for the human — which is why we design for the first-time human except where [access cost dominates](../../notes/design-for-the-first-time-human-except-on-access-cost.md).
+- ADR 003 bet that index-first discovery would stay viable by keeping the collection curated and loading the index in portions. Collection growth has made the complete-index read the dominant per-fork cost, so that bet no longer holds.
+
+## Decision
+
+Complete generated listings are build-time-only; the agent read path is curated heads plus scoped rg.
+
+1. Retire complete generated listings from git and the agent read path — both the per-collection `dir-index.md` and the per-tag `## Other tagged notes` tail.
+2. Regenerate them at ProperDocs build time for human readers, where browser scroll and find restore sublinear access. One source of truth (note frontmatter), two materializations.
+3. Keep curated heads committed at every scope: directory `README.md` / `COLLECTION.md`, and the editorial body of each tag index. The tag index is the tag's README; its generated tail is the detachable part.
+4. Agents discover via curated heads plus scoped `rg`; add no new query command, because scoped rg recovers the operative part of the retired index. Documented recipes: by tag, `rg -l '^tags:.*\bTAG\b' kb/notes/ --glob '*.md' | xargs -r rg -N --no-heading '^description:\s*' -r ''` (the `xargs -r` guard prevents an empty match from falling back to a whole-repo search); by keyword, `rg '^description:' <scoped path>`. Codifying these into a `commonplace-*` command is deferred until a recurring failure justifies it.
+5. Colocation is conditional on weight: a small tag keeps its short generated list colocated under the curated head; a popular tag detaches it, because a curated index is an agent read surface and must stay context-feasible. *(Refined by [ADR 026](./026-tag-readme-type-with-completeness-and-coverage-marks.md): nothing generated is committed at any size — weight became the type contract on the committed curated head instead of a colocation dial.)*
+
+This supersedes ADR 003's primary-discovery decision (read `dir-index.md` first). 003's surviving element — curated focused indexes as a discovery surface — is retained as the curated-heads path; complete-index reads are removed from standard connect discovery.
+
+## Consequences
+
+Easier:
+- Per-fork load scales with the task, not the collection: write, connect, and ingest stop paying tens of KB of denormalized index on every fork.
+- Adding a note no longer requires keeping a heavy committed index current for agents (003's maintenance burden); the human site regenerates from source.
+
+Harder / migration:
+- `git rm` plus gitignore the ~50 committed `dir-index.md` files; strip the committed generated tail from tag indexes.
+- `cp-skill-connect` standard discovery is rewritten to drop complete-index reads (curated heads plus scoped rg; broad scans reserved for deep mode).
+- Reference sweep: `navigation.md`, `CLAUDE.md` Key Indexes, and any README or curated index that links to a `dir-index.md`.
+- The ProperDocs build becomes responsible for human-facing inventories.
+
+Risks / watch:
+- Scoped rg has a footgun: a tag that matches zero files makes `xargs` run rg with no path argument, which searches the whole repo. Mitigated by `xargs -r`; recurring trips would be the signal to codify a command.
+- rg yields `path + description`, not the human H1 title; the path stands in for the title in triage. If title-in-output proves necessary, that is the case a command would justify.
+- Description quality stays load-bearing (inherited from 003).
+
+Deferred (mechanism, not direction):
+- ProperDocs generation mechanism: a `commonplace-refresh-indexes --for-build` mode the hook calls, or a dedicated plugin (must emit both the directory inventory and the per-tag listing).
+- Curated-index weight reporting plus soft/hard thresholds (bytes vs entry count; scope).
+- Whether curated indexes must declare focused-routing vs archival, or whether "curated = focused" suffices.
+
+## Links
+
+- [003-connect-skill-discovery-strategy](./003-connect-skill-discovery-strategy.md) — supersedes: this replaces 003's index-first primary discovery while retaining its curated-focused-index surface
+- [context-efficiency-is-the-central-design-concern-in-agent-systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — rationale: the per-fork cost of a whole-index read is what makes retiring it worthwhile
+- [two-context-boundaries-govern-collection-operations](../../notes/two-context-boundaries-govern-collection-operations.md) — rationale: per-fork load is the boundary this decision optimizes
+- [feasibility-is-the-heaviest-forks-net-load](../../notes/feasibility-is-the-heaviest-forks-net-load.md) — rationale: feasibility is set by the heaviest fork's net load, which the complete-index read inflates
+- [index-curation-adds-orientation-that-generation-cannot-produce](../../notes/index-curation-adds-orientation-that-generation-cannot-produce.md) — rationale: why curated heads stay committed while generated listings move to build time
+- [cp-skill-connect](../../instructions/cp-skill-connect/SKILL.md) — procedure: the discovery skill whose standard read path this decision rewrites
+
+
+TRIAL downstream-trajectory_memory-s20-a120-r1
+Question: What scenario-goal-completion improvement did the best configuration report, on which benchmark, and what limitation of the learning signal does the KB analysis identify?
+Loaded excerpts:
+===== kb/sources/trajectory-informed-memory-generation-self-improving-agents.md =====
+---
+source: https://arxiv.org/html/2603.10600v1
+description: IBM Research framework that extracts three categories of actionable tips (strategy, recovery, optimization) from agent execution trajectories and injects them at runtime — evaluated on AppWorld showing up to 14.3 pp gains in scenario goal completion.
+captured: 2026-03-13
+capture: web-fetch
+genre: scientific-paper
+type: kb/sources/types/snapshot.md
+---
+
+# Trajectory-Informed Memory Generation for Self-Improving Agent Systems
+
+Author: Gaodan Fang, Vatche Isahagian, K. R. Jayaram, Ritesh Kumar, Vinod Muthusamy, Punleuk Oum, Gegi Thomas (IBM Research)
+Source: https://arxiv.org/html/2603.10600v1
+Date: March 11, 2026
+
+## Abstract
+
+This paper presents a framework for extracting actionable learnings from LLM-powered agent execution trajectories to improve future performance. The system analyzes agent reasoning patterns, identifies causal decision chains, and generates three types of guidance: strategy tips from successful patterns, recovery tips from failure handling, and optimization tips from inefficient but successful executions. Evaluation on AppWorld benchmark demonstrates consistent improvements, with up to 14.3 percentage point gains in scenario goal completion on held-out tasks.
+
+## Key Contributions
+
+1. **Trajectory Intelligence Extraction** – Semantic analysis of agent reasoning patterns including analytical thoughts, planning, validation behaviors, and self-correction sequences
+
+2. **Decision Attribution Analysis** – Distinguishes immediate, proximate, and root causes of failures while identifying recovery patterns and inefficiencies
+
+3. **Contextual Learning Generation** – Produces three categorized tip types: strategy, recovery, and optimization guidance with concrete implementation steps
+
+4. **Adaptive Memory Retrieval** – Combines semantic similarity with metadata filtering for context-aware tip injection into agent prompts
+
+## Framework Overview
+
+The system operates as a three-phase pipeline:
+
+### Phase 1: Trajectory Analysis and Tips Extraction
+
+Analyzes completed agent trajectories to identify causal decision chains. Extracts tips at two granularities:
+- **Task-level tips** capture holistic end-to-end patterns
+- **Subtask-level tips** decompose into reusable logical phases for cross-task transfer
+
+The Trajectory Intelligence Extractor identifies four reasoning categories: analytical thoughts, planning thoughts, validation thoughts, and reflection thoughts. It recognizes patterns like validation behaviors, error recognition, and API discovery through semantic understanding rather than keyword matching.
+
+### Phase 2: Tip Storage and Management
+
+Generalizes subtask descriptions, clusters semantically similar tips, and consolidates redundant guidance through LLM-based merging. Stored entries include vector embeddings for semantic search and structured metadata for filtering.
+
+### Phase 3: Runtime Retrieval
+
+Two retrieval strategies at agent invocation:
+- **Cosine similarity retrieval** – Fast, embedding-based matching requiring no LLM calls
+- **LLM-guided selection** – Richer task context reasoning with metadata filtering and category prioritization
+
+Retrieved tips are injected into the agent prompt as actionable guidelines before reasoning begins.
+
+## Evaluation Results
+
+Tested on AppWorld benchmark with ReAct-style agent using GPT-4:
+
+### Held-Out Test Results (Unseen Tasks)
+
+**Subtask-level tips with LLM-guided selection (best configuration):**
+- Task Goal Completion: 73.2% vs. 69.6% baseline (+3.6 pp)
+- Scenario Goal Completion: 64.3% vs. 50.0% baseline (+14.3 pp)
+
+**Difficulty-based improvements:**
+- Difficulty 1: +1.7 pp TGC, +10.5 pp SGC
+- Difficulty 2: +4.1 pp TGC, no SGC change
+- Difficulty 3: +4.7 pp TGC, +28.5 pp SGC (149% relative increase)
+
+### Configuration Insights
+
+- **Tip granularity drives TGC** – Subtask-level tips outperform task-level regardless of retrieval strategy
+- **Retrieval strategy drives SGC** – LLM-guided selection dramatically improves cross-variant consistency
+- **Source partition benefits** – Larger gains when encountering similar tasks again (+4.4 pp TGC on train, +12.3 pp on dev)
+
+## Problem Motivation
+
+Current agent systems suffer from "amnesia" – lacking systematic mechanisms to learn from execution experiences. Existing approaches fall short:
+
+- **Rule-based systems** require manual encoding and cannot adapt to unforeseen patterns
+- **Prompt engineering** provides generic rather than experience-specific guidance
+- **Generic memory systems** (Mem0, Letta) store conversational facts but lack understanding of execution patterns, causal analysis of failures, or structured learning extraction
+
+The framework addresses these by extracting semantic learnings with provenance, performing causal attribution, and retrieving contextually relevant guidance.
+
+## Related Work
+
+The work relates to:
+- **Memory taxonomies** – Recent surveys identify limitations of overly simplistic representations and fragmented evaluation
+- **Semantic memory systems** – Mem0 and A-MEM store facts but not procedural/experiential knowledge
+- **Trajectory learning** – AWM and Memp extract workflows/procedures; ReasoningBank distills strategies; ACE evolves context playbooks
+- **Empirical foundations** – Studies show agents closely follow retrieved experiences, making mismatched retrieval problematic
+
+## Conclusions
+
+The framework enables agents to continuously improve from operational experience through structured trajectory analysis and adaptive retrieval. Results demonstrate particular effectiveness on complex, multi-step tasks requiring sophisticated planning and error recovery. Authors note extension to multi-agent systems and evaluation across additional model families as future work.
+
+---
+
+**License:** CC BY 4.0
+

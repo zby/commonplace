@@ -1,0 +1,249 @@
+Reading additional input from stdin...
+OpenAI Codex v0.145.0
+--------
+workdir: /home/zby/llm/commonplace
+model: gpt-5.6-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 019fa579-0da9-70c1-bab3-d8e512f89df9
+--------
+user
+Review the five description variants for case invert_requests in kb/work/description-length-optimization/cases.json against the full target artifact kb/instructions/invert-solution-shaped-requests.md. Judge only semantic fidelity: whether each variant is truthful, preserves the artifact scope relevant to its retrieval task, and introduces no unsupported claim. A shorter variant may omit detail and still pass. Return exactly five reviews. Do not edit files.
+codex
+{"reviews":[{"case_id":"status","allowance":0,"faithful":true,"reason":"I’ll read the case variants and the complete target artifact, then assess only truthfulness, retrieval-relevant scope, and unsupported claims."}]}
+exec
+/bin/bash -lc "rg -n 'invert_requests|description' kb/work/description-length-optimization/cases.json && sed -n '1,260p' kb/instructions/invert-solution-shaped-requests.md" in /home/zby/llm/commonplace
+ succeeded in 0ms:
+3:  "design": "Only the target description changes across allowances; distractor pointers remain at their incumbent descriptions.",
+10:      "task": "Find the artifact that compares fixed descriptions, query-time rerankers, and crafted link phrases as progressive-disclosure pointers, especially their tradeoffs in context-specificity, cost, and reliability.",
+13:        "160": "Progressive-disclosure pointers trade context-specificity, cost, and reliability; fixed descriptions are cheapest and dependable but query-agnostic",
+14:        "200": "Progressive-disclosure pointers trade context-specificity, cost, and reliability: fixed descriptions are cheap and dependable, query-time pointers more specific, crafted phrases densest",
+15:        "250": "Progressive-disclosure pointers trade context-specificity, cost, and reliability: fixed descriptions are cheap and dependable but query-agnostic, query-time pointers buy specificity, and crafted link phrases are dense but depend on authors",
+16:        "300": "Progressive-disclosure pointers trade context-specificity, cost, and reliability: fixed descriptions are cheap and dependable but query-agnostic, query-time pointers buy specificity per query, and crafted link phrases are densest but depend on authoring discipline, so systems need a mix"
+76:      "id": "invert_requests",
+108:      "task": "Find the artifact that distinguishes the full-text boundary for comparative reading from the title-plus-description index boundary for orientation, deriving three collection operating regimes.",
+110:        "120": "Collections cross separate full-text and title-plus-description boundaries, producing three operating regimes",
+111:        "160": "Collections cross a full-text boundary for comparative reading and a later title-plus-description boundary for orientation, producing three regimes",
+112:        "200": "Collections cross a full-text boundary where comparative reading must partition and a later title-plus-description boundary where orientation also fails, producing three operational regimes",
+113:        "250": "Collections cross a full-text boundary where comparison must partition and a title-plus-description boundary where orientation fails, producing three regimes; descriptions become load-bearing between them and child collections restore comparisons",
+114:        "300": "Collections cross a full-text boundary where comparative reading must partition and a later title-plus-description boundary where orientation fails, producing three regimes; descriptions become load-bearing between them, parent indexes support routing, and child collections restore body comparison"
+---
+description: Use before accepting a solution-shaped request as the task; recover the underlying problem, evidence status, alternative framings, and least-committing next move.
+type: kb/types/instruction.md
+---
+
+# Invert solution-shaped requests
+
+Use this instruction when a request arrives as a proposed artifact, feature, command, validator, skill, type, workflow, or system change before the underlying problem is clear.
+
+Treat the proposed solution as evidence of a latent problem, not as the task itself. Do not start implementing until the inversion is complete.
+
+## When to use
+
+Use this instruction for prompts shaped like:
+
+- "build X"
+- "add Y"
+- "make a skill for Z"
+- "write a validator for..."
+- "create a new type"
+- "maybe we need a command for..."
+- "we should document..."
+- "this should become a note/proposal/instruction"
+
+Do not use it when:
+
+- the user explicitly asks for direct implementation and the problem is already stated
+- the requested change is mechanical, reversible, and already scoped
+- a validated design, ADR, or accepted proposal already fixes the problem and solution
+- the task is emergency repair, where diagnosis should happen inside the repair workflow
+
+## Output contract
+
+Produce a short report with these sections:
+
+1. `Proposed solution`
+2. `Underlying problem`
+3. `Evidence status`
+4. `Assumption challenges`
+5. `Alternative framings`
+6. `Commonplace routing`
+7. `Recommended next move`
+
+The report is complete when the underlying problem is clear enough that the next artifact choice is no longer solution-jumping.
+
+## Steps
+
+### 1. State the proposed solution
+
+Restate the requested solution in one sentence.
+
+Name the kind of surface it would add or change:
+
+- note
+- source ingest
+- reference document
+- proposal or ADR
+- instruction
+- skill
+- validator, script, or command
+- index or navigation surface
+- code change
+- no durable artifact
+
+### 2. Recover the underlying problem
+
+Ask: what problem would make this solution seem reasonable?
+
+Write one concise problem statement in this shape:
+
+```text
+{actor} cannot {needed action or judgment} because {missing capability, evidence, context, constraint, or feedback}, causing {consequence}.
+```
+
+If one statement is not enough, list up to three problem hypotheses and mark the most likely one.
+
+If the problem cannot be stated clearly, stop after the report and recommend a question or workshop, not implementation.
+
+### 3. Classify evidence status
+
+Choose exactly one evidence status:
+
+- `none` -- no concrete instance, source, user need, repeated failure, or local pattern is available
+- `anecdotal` -- one example or informal report exists, but no local recurrence
+- `local-pattern` -- the problem has appeared more than once in this KB, codebase, workflow, or review history
+- `validated` -- there is explicit local evidence, accepted design rationale, test failure, review finding, or maintained source analysis
+- `contradicted` -- available evidence suggests the proposed problem framing is wrong
+
+Name the evidence in one to three bullets. If there is no evidence, say so directly.
+
+### 4. Challenge assumptions
+
+Write three to five assumption checks in this exact shape:
+
+```text
+- Assumption: ...
+  Risk if wrong: ...
+  Cheapest validation: ...
+```
+
+Prefer validations that are local and cheap: `rg`, reading one collection contract, checking existing notes, inspecting one command, running one validator, or asking one focused user question.
+
+### 5. Generate alternative framings
+
+Generate three to five alternative framings. Use these defaults unless the task clearly needs different ones:
+
+- **User/problem framing** -- what user or maintainer pain is this addressing?
+- **Workflow/process framing** -- is the bottleneck sequencing, handoff, review, or decision discipline?
+- **Context/routing framing** -- is the issue that agents do not load the right knowledge at the right time?
+- **Validation/enforcement framing** -- is the issue that a known rule is not reliably checked or followed?
+- **Artifact/type framing** -- is the issue that the current artifact shape lacks the right affordance?
+
+For each framing, state the different solution class it would imply.
+
+### 6. Route to the smallest sufficient Commonplace outcome
+
+Choose exactly one route:
+
+- `do nothing` -- the problem is not real enough, or the solution adds maintenance burden without decision value
+- `ask a question` -- one missing fact determines the path
+- `log` -- the observation is real but still pattern-recording
+- `workshop` -- the problem needs exploratory work before library changes
+- `note` -- there is a transferable claim or mechanism
+- `source ingest` -- the value is mainly in preserving and analysing an external source
+- `reference/proposal` -- the problem concerns a shipped-system design or proposed system change
+- `instruction` -- the recurring need is a judgment-bearing procedure an agent can execute from text
+- `validator/script/command` -- the rule is precise enough for deterministic enforcement or automation
+- `skill` -- the procedure needs user-facing invocation, arguments, special tool permissions, model/context policy, or repeated direct use
+
+Prefer the least-committing route that preserves learning. Treat new skills, commands, validators, types, and indexes as high-maintenance surfaces; require stronger evidence for them than for a log entry, workshop, note, or instruction.
+
+### 7. Recommend one next move
+
+Recommend exactly one next action.
+
+Good recommendations are concrete:
+
+- ask a named question
+- run a named search
+- inspect a named file or collection
+- open a workshop with a stated question
+- update a named artifact
+- write a named artifact type
+- defer with the reason stated
+
+Do not give a menu. If the evidence is weak or the problem is ambiguous, recommend clarification rather than implementation.
+
+## Verify
+
+Before acting on the original solution, confirm:
+
+- The problem statement is clearer than the proposed solution.
+- Evidence status is explicit.
+- At least one alternative framing would lead to a different solution class.
+- The recommended route is the smallest sufficient outcome.
+- Any implementation step follows from the problem, not from momentum behind the initial solution.
+
+If any check fails, do not implement yet.
+
+## Critical constraints
+
+- Do not treat the proposed solution as accepted until the report is complete.
+- Do not write durable artifacts as part of this instruction unless the user explicitly asks you to continue after the report.
+- Do not force a new artifact when `do nothing`, `ask a question`, `log`, or `workshop` is the better route.
+- Do not bury ambiguity by silently choosing one problem hypothesis.
+- Do not include long rationale; keep the output short enough to precede real work.
+
+exec
+/bin/bash -lc "sed -n '68,108p' kb/work/description-length-optimization/cases.json" in /home/zby/llm/commonplace
+ succeeded in 0ms:
+        "120": "How collections and path-referenced types compose: collections own register conventions; types own artifact contracts",
+        "160": "How collections and path-referenced types compose: COLLECTION.md owns register and outbound-link conventions, while type specs own artifact contracts",
+        "200": "How collections and path-referenced types compose: COLLECTION.md owns register and outbound-link conventions; type specs own structural and semantic contracts resolved directly from type paths",
+        "250": "How collections and path-referenced types compose: COLLECTION.md owns register and per-destination outbound-link conventions; type specs own structural schemas and semantic authoring contracts, resolved directly from the artifact's type path",
+        "300": "How collections and path-referenced types compose: COLLECTION.md owns register and outbound-link conventions; type specs own structural schemas and semantic contracts, resolved from the artifact's type path; writing picks collection then type, while validation resolves the type lexically"
+      }
+    },
+    {
+      "id": "invert_requests",
+      "path": "kb/instructions/invert-solution-shaped-requests.md",
+      "artifact_class": "instruction",
+      "title_strength": "strong",
+      "task": "Find the procedure to use before implementing a requested validator or feature when the request may be solution-shaped; it should recover the underlying problem, evidence status, alternatives, routing, and least-committing next move.",
+      "variants": {
+        "120": "Before implementing a proposed feature, recover its underlying problem, evidence, alternatives, and next move",
+        "160": "Use before accepting a solution-shaped request: recover the underlying problem, evidence status, alternative framings, routing, and least-committing next move",
+        "200": "Before implementing a solution-shaped request for a feature or validator, recover the problem, classify evidence, challenge assumptions, compare framings, and choose the least-committing next move",
+        "250": "Before implementing a solution-shaped request for a feature, validator, or workflow, recover the actor's problem, classify evidence, challenge assumptions, compare alternative framings, route any artifact, and recommend the least-committing next move",
+        "300": "Before implementing a solution-shaped feature, validator, or workflow request, recover the actor's problem, classify evidence, challenge assumptions, compare framings, route any artifact, and recommend the least-committing next move; stop at a question or workshop if the problem remains unclear"
+      }
+    },
+    {
+      "id": "review_batches",
+      "path": "kb/instructions/run-review-batches.md",
+      "artifact_class": "instruction",
+      "title_strength": "strong",
+      "task": "Find the operational procedure for selecting snapshot-anchored note/criterion pairs, creating homogeneous review jobs, delegating them to workers with model provenance, and finalizing the results.",
+      "variants": {
+        "120": "Run snapshot-anchored review assays by selecting note/criterion pairs, creating jobs, delegating workers, and finalizing",
+        "160": "Run snapshot-anchored verdict or report assays by selecting note/criterion pairs, creating homogeneous jobs, delegating workers, and finalizing results",
+        "200": "Run snapshot-anchored verdict or report assays: select note/criterion pairs, create jobs from selector JSON, delegate with explicit model provenance, then finalize and verify results",
+        "250": "Run snapshot-anchored verdict or report assays: select note/criterion pairs, create jobs from selector JSON, delegate each unchanged job under the designated model partition, record concrete model provenance, then finalize and verify results",
+        "300": "Run snapshot-anchored verdict or report assays: select note/criterion pairs, create homogeneous jobs from selector JSON, delegate each unchanged job to a worker under the designated model partition, record concrete model provenance, then finalize and verify results; grouping never mixes result kinds"
+      }
+    },
+    {
+      "id": "two_boundaries",
+      "path": "kb/notes/two-context-boundaries-govern-collection-operations.md",
+      "artifact_class": "theoretical-note",
+      "title_strength": "medium",
+      "task": "Find the artifact that distinguishes the full-text boundary for comparative reading from the title-plus-description index boundary for orientation, deriving three collection operating regimes.",
+
+codex
+{"reviews":[{"case_id":"invert_requests","allowance":120,"faithful":true,"reason":"Truthfully captures the pre-implementation inversion workflow. Omitting validators, routing, and assumption checks is acceptable compression."},{"case_id":"invert_requests","allowance":160,"faithful":true,"reason":"Accurately summarizes the artifact’s trigger, core analysis, Commonplace routing, and least-committing recommendation."},{"case_id":"invert_requests","allowance":200,"faithful":true,"reason":"Faithfully covers the relevant feature-or-validator scope and the procedure’s problem recovery, evidence classification, assumption checks, alternative framings, and next move."},{"case_id":"invert_requests","allowance":250,"faithful":true,"reason":"Accurately reflects the actor-centered problem statement, evidence classification, assumption challenges, alternative framings, outcome routing, and single least-committing recommendation."},{"case_id":"invert_requests","allowance":300,"faithful":true,"reason":"Faithfully summarizes the procedure, including the explicit instruction to recommend a question or workshop rather than implementation when the problem remains unclear."}]}
+tokens used
+24,536
+{"reviews":[{"case_id":"invert_requests","allowance":120,"faithful":true,"reason":"Truthfully captures the pre-implementation inversion workflow. Omitting validators, routing, and assumption checks is acceptable compression."},{"case_id":"invert_requests","allowance":160,"faithful":true,"reason":"Accurately summarizes the artifact’s trigger, core analysis, Commonplace routing, and least-committing recommendation."},{"case_id":"invert_requests","allowance":200,"faithful":true,"reason":"Faithfully covers the relevant feature-or-validator scope and the procedure’s problem recovery, evidence classification, assumption checks, alternative framings, and next move."},{"case_id":"invert_requests","allowance":250,"faithful":true,"reason":"Accurately reflects the actor-centered problem statement, evidence classification, assumption challenges, alternative framings, outcome routing, and single least-committing recommendation."},{"case_id":"invert_requests","allowance":300,"faithful":true,"reason":"Faithfully summarizes the procedure, including the explicit instruction to recommend a question or workshop rather than implementation when the problem remains unclear."}]}

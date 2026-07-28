@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["reviews"],
+  "properties": {
+    "reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["case_id", "allowance", "faithful", "reason"],
+        "properties": {
+          "case_id": {"type": "string"},
+          "allowance": {"type": "integer"},
+          "faithful": {"type": "boolean"},
+          "reason": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

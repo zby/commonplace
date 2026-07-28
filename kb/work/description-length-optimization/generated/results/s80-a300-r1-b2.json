@@ -1,0 +1,1 @@
+{"decisions":[{"trial_id":"adr_025-s80-a300-r1","selected":["kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md"],"confidence":"high"},{"trial_id":"trajectory_memory-s80-a300-r1","selected":["kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md"],"confidence":"high"}]}

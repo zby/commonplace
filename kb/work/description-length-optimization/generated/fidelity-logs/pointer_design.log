@@ -1,0 +1,271 @@
+Reading additional input from stdin...
+OpenAI Codex v0.145.0
+--------
+workdir: /home/zby/llm/commonplace
+model: gpt-5.6-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 019fa578-b9ef-71a2-ae40-786441a34185
+--------
+user
+Review the five description variants for case pointer_design in kb/work/description-length-optimization/cases.json against the full target artifact kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md. Judge only semantic fidelity: whether each variant is truthful, preserves the artifact scope relevant to its retrieval task, and introduces no unsupported claim. A shorter variant may omit detail and still pass. Return exactly five reviews. Do not edit files.
+codex
+{"reviews":[{"case_id":"status","allowance":0,"faithful":true,"reason":"I’ll read the case variants and the complete target note, then assess only semantic fidelity without changing files."}]}
+exec
+/bin/bash -lc "jq '.cases[] | select(.case_id == \"pointer_design\" or .id == \"pointer_design\" or .case == \"pointer_design\")' kb/work/description-length-optimization/cases.json && sed -n '1,260p' kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md" in /home/zby/llm/commonplace
+ succeeded in 0ms:
+{
+  "id": "pointer_design",
+  "path": "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md",
+  "artifact_class": "theoretical-note",
+  "title_strength": "medium",
+  "task": "Find the artifact that compares fixed descriptions, query-time rerankers, and crafted link phrases as progressive-disclosure pointers, especially their tradeoffs in context-specificity, cost, and reliability.",
+  "variants": {
+    "120": "Fixed, query-time, and crafted pointers trade context-specificity, per-read cost, and routing reliability",
+    "160": "Progressive-disclosure pointers trade context-specificity, cost, and reliability; fixed descriptions are cheapest and dependable but query-agnostic",
+    "200": "Progressive-disclosure pointers trade context-specificity, cost, and reliability: fixed descriptions are cheap and dependable, query-time pointers more specific, crafted phrases densest",
+    "250": "Progressive-disclosure pointers trade context-specificity, cost, and reliability: fixed descriptions are cheap and dependable but query-agnostic, query-time pointers buy specificity, and crafted link phrases are dense but depend on authors",
+    "300": "Progressive-disclosure pointers trade context-specificity, cost, and reliability: fixed descriptions are cheap and dependable but query-agnostic, query-time pointers buy specificity per query, and crafted link phrases are densest but depend on authoring discipline, so systems need a mix"
+  }
+}
+---
+description: Design tradeoffs for progressive disclosure pointers — context-specificity vs precomputation cost vs reliability; fixed pointers (descriptions, abstracts) trade specificity for reliability and cheap reads, query-time pointers (re-rankers) trade cost for specificity, crafted pointers (link phrases) achieve highest density but depend on authoring discipline
+type: kb/types/note.md
+traits: []
+tags: [links, computational-model]
+---
+
+# Pointer design tradeoffs in progressive disclosure
+
+A **pointer** is any lower-resolution representation that helps decide whether to load a knowledge item — a description, an abstract, a search result snippet, a re-ranker score, even a title. The concept is substrate-independent: a **link** (markdown reference with context phrase) is a pointer in our substrate; OpenViking's `.abstract.md` is a pointer in their virtual filesystem; a re-ranker output is a pointer in a retrieval pipeline.
+
+Progressive disclosure works by giving agents pointers at increasing resolution — scan cheap ones first, load expensive content only when needed. But not all pointers are alike. They vary on three axes: **context-specificity**, **cost**, and **reliability**.
+
+## Context-specificity: when does the pointer learn about the consumer?
+
+The most obvious axis. A pointer can know nothing about why the consumer is looking (a fixed description), something about the query (a re-ranker score), or everything about the surrounding argument (a crafted link phrase).
+
+**Fixed at write time.** Descriptions, OpenViking's L0 abstracts. One precomputed summary per note, amortized over all reads. The same summary regardless of who's reading or why — context-free. This is enough for global operations (search, comparative reading, index building) where there's no surrounding argument to leverage.
+
+**Produced at query time.** Search result snippets, retrieval scores, re-rankers, query-specific summaries. Some are cheap retrieval artifacts; some require inference. The common property is that they are produced for this query rather than stored ahead of time. That makes them more query-specific than fixed abstracts: "how does this system handle memory dedup?" can produce a ranking or snippet that fixed abstracts cannot. Cost and reliability vary by mechanism.
+
+**Crafted at link-authoring time.** Link phrases in our system. The same note gets a different characterization at every link site:
+
+- From a compression note: `[constraining](./definitions/constraining.md) — orthogonal to compression; narrows interpretation rather than shortening`
+- From a codification note: `[constraining](./definitions/constraining.md) — codification is the far end of constraining`
+- From an architecture note: `[constraining](./definitions/constraining.md) — narrows the set of valid interpretations an agent can make`
+
+Each phrase leverages the surrounding argument the agent already has loaded — not just "what is this item" but "why does it matter *here*." This is the densest pointer type, but it requires human judgment and only exists where someone authored a link.
+
+## Reliability: the axis you forget until it breaks
+
+If context-specificity were the only axis, the answer would be simple: compute the most specific pointer you can afford. As inference gets cheaper, query-time computation replaces fixed pointers. Problem solved.
+
+But [agent statelessness](./agent-statelessness-makes-routing-architectural-not-learned.md) complicates this. Agents start cold every session. Routing is permanent architecture, not scaffolding they outgrow. And the [degradation cliff](./agent-statelessness-makes-routing-architectural-not-learned.md) is unforgiving: when routing fails, the agent doesn't slow down — it falls into generic LLM behavior, confidently executing without the KB's methodology.
+
+Fixed pointers are reliable. They're there every time, same content, no query-time dependency. A query-time pipeline introduces new failure modes: poor retrieval, poor reranking, or poor inference can send the agent off the cliff. Crafted link phrases introduce another: if the author skipped the context phrase, the pointer is simply absent.
+
+This means the three axes pull in different directions:
+
+| Pointer type | Specificity | Cost | Reliability |
+|-------------|------------|------|-------------|
+| Fixed (write-time) | Low — context-free | Cheapest per read | Highest — always present, deterministic |
+| Query-time | Medium — query-specific | Per-query retrieval/inference cost | Medium — depends on retrieval/inference quality |
+| Crafted (authoring-time) | Highest — argument-specific | Human judgment | Variable — depends on discipline |
+
+No single type wins all three. A system needs a mix.
+
+## What this looks like in practice
+
+Comparing OpenViking's tiers with ours makes the tradeoffs concrete:
+
+| Role | OpenViking | Commonplace |
+|------|-----------|-------------|
+| Identity pointer | URI/name (~5-10 tok) | Title-as-claim (~10 tok) |
+| Fixed filter | L0 abstract (~100 tok) | Description (~50 tok) |
+| Intermediate overview | L1 overview (~2000 tok) | *No equivalent* |
+| Relation-specific pointer | `.relations.json` reason string (weaker, relation-level) | Link phrase (~20 tok), varies per link site |
+| Full content | L2 original files | Note body |
+
+Each system has a tier the other emphasizes. OpenViking invests in L1 — a 2000-token overview between the fixed filter and full content, useful for scoping before committing to a full read. We invest in crafted link phrases — 20-token characterizations that tell the agent why a target matters in the current argument. OpenViking does have relation annotations via `.relations.json` reason strings, but its main retrieval path still centers fixed pointers (`uri` + `abstract`) rather than per-link argumentative characterizations. Neither system uses query-time computation for navigation pointers yet.
+
+## Design implications
+
+| Property | Fixed | Query-time | Crafted |
+|----------|-------|-----------|---------|
+| Guaranteed to exist | Yes | Per-query | Authoring discipline |
+| Quality ceiling | Generic | Query-specific | Argument-specific |
+| Scales to global ops | Yes | Yes (at cost) | No |
+| Failure mode | Stale if source changes | Bad retrieval/rerank/inference → cliff | Absent or weak |
+
+The practical path: invest in crafted link phrases for local navigation (the common agent case), and use `/validate` to pressure notes toward reliable fixed descriptions for global operations. Watch query-time computation as inference costs drop — but treat it as supplementary to architectural routing, not a replacement.
+
+---
+
+Relevant Notes:
+
+- [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds: the navigation decision is what pointers optimize for; link phrases are the most context-specific pointer type for that decision
+- [agent statelessness makes routing architectural, not learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — grounds: the reliability axis; fixed pointers are architectural routing that stateless agents depend on, and query-time computation introduces the degradation cliff
+- [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: the cost spectrum is a context efficiency trade-off
+- [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — mechanism: fixed pointers precompute a consumer-facing view, while query-time pointers work one out for the current query
+- [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: the tier structure defines the resolution gradient; query-time computation could fill gaps dynamically
+- [OpenViking](../agent-memory-systems/reviews/openviking.md) — contrasts: their L0/L1/L2 emphasizes fixed pointers, with weaker relation-level reason strings rather than crafted per-link argument pointers; the comparison crystallized this note
+
+exec
+/bin/bash -lc "sed -n '1,180p' kb/work/description-length-optimization/cases.json" in /home/zby/llm/commonplace
+ succeeded in 0ms:
+{
+  "schema_version": 1,
+  "design": "Only the target description changes across allowances; distractor pointers remain at their incumbent descriptions.",
+  "cases": [
+    {
+      "id": "pointer_design",
+      "path": "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md",
+      "artifact_class": "theoretical-note",
+      "title_strength": "medium",
+      "task": "Find the artifact that compares fixed descriptions, query-time rerankers, and crafted link phrases as progressive-disclosure pointers, especially their tradeoffs in context-specificity, cost, and reliability.",
+      "variants": {
+        "120": "Fixed, query-time, and crafted pointers trade context-specificity, per-read cost, and routing reliability",
+        "160": "Progressive-disclosure pointers trade context-specificity, cost, and reliability; fixed descriptions are cheapest and dependable but query-agnostic",
+        "200": "Progressive-disclosure pointers trade context-specificity, cost, and reliability: fixed descriptions are cheap and dependable, query-time pointers more specific, crafted phrases densest",
+        "250": "Progressive-disclosure pointers trade context-specificity, cost, and reliability: fixed descriptions are cheap and dependable but query-agnostic, query-time pointers buy specificity, and crafted link phrases are dense but depend on authors",
+        "300": "Progressive-disclosure pointers trade context-specificity, cost, and reliability: fixed descriptions are cheap and dependable but query-agnostic, query-time pointers buy specificity per query, and crafted link phrases are densest but depend on authoring discipline, so systems need a mix"
+      }
+    },
+    {
+      "id": "methodology_enforcement",
+      "path": "kb/notes/methodology-enforcement-is-constraining.md",
+      "artifact_class": "theoretical-note",
+      "title_strength": "medium",
+      "task": "Find the artifact that explains when methodology should mature from written guidance through skills and hooks into scripts by reducing semantic underspecification and execution indeterminism.",
+      "variants": {
+        "120": "Methodology moves from instructions to scripts by progressively reducing interpretation and execution freedom",
+        "160": "Instructions, skills, hooks, and scripts constrain methodology by progressively reducing semantic underspecification and execution indeterminism",
+        "200": "Instructions, skills, hooks, and scripts form a constraining gradient: later layers reduce semantic underspecification and execution indeterminism, trading flexibility for reliability",
+        "250": "Instructions, skills, hooks, and scripts form a constraining gradient: later layers reduce underspecification and execution indeterminism; warning hooks fix the trigger but leave the response to an LLM, while blocking hooks and scripts fix both",
+        "300": "Instructions, skills, hooks, and scripts form a constraining gradient: later layers reduce underspecification and execution indeterminism; warning hooks fix the trigger but leave the response to an LLM, while blocking hooks and scripts fix both, so stable practices can compile into code"
+      }
+    },
+    {
+      "id": "representational_form",
+      "path": "kb/notes/definitions/representational-form.md",
+      "artifact_class": "definition",
+      "title_strength": "weak",
+      "task": "Find the canonical definition that classifies how an operative part is encoded and consumed as natural-language, symbolic, distributed-parametric, or mixed, and distinguishes this axis from storage substrate.",
+      "variants": {
+        "120": "Definition: encoding and consumption as natural-language, symbolic, distributed-parametric, or mixed",
+        "160": "Definition: representational form classifies how an operative part is encoded and consumed—natural-language, symbolic, distributed-parametric, or mixed",
+        "200": "Definition: representational form classifies how an operative part is encoded and consumed—natural-language, symbolic, distributed-parametric, or mixed—and is distinct from storage substrate",
+        "250": "Definition: representational form classifies how an operative part is encoded and consumed—natural-language, symbolic, distributed-parametric, or mixed. It differs from storage substrate; codification is the natural-language-to-symbolic crossing",
+        "300": "Definition: representational form classifies how an operative part is encoded and consumed—natural-language, symbolic, distributed-parametric, or mixed. It differs from storage substrate; codification crosses from language to symbols, and prompts are path shorthand rather than another form"
+      }
+    },
+    {
+      "id": "adr_025",
+      "path": "kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md",
+      "artifact_class": "adr",
+      "title_strength": "strong",
+      "task": "Find the accepted architecture decision explaining why complete per-collection and per-tag generated listings are no longer committed or read by agents, how humans still get them, and what agents use instead.",
+      "variants": {
+        "120": "Moves complete generated collection and tag listings out of git and agent reads but keeps them in human doc builds",
+        "160": "Complete collection indexes and tag tails move out of git and the agent read path into ProperDocs builds; agents use curated heads and scoped rg",
+        "200": "Complete generated collection indexes and tag tails leave git and the agent read path and are rebuilt by ProperDocs for humans; agents discover through curated heads plus scoped rg",
+        "250": "Complete collection indexes and tag tails leave git and agent reads and are rebuilt by ProperDocs for humans; agents use curated heads plus scoped rg, superseding index-first connect discovery without adding a query command",
+        "300": "Complete collection indexes and tag tails leave git and agent reads and are rebuilt by ProperDocs for humans; agents use curated heads plus scoped rg, superseding index-first connect discovery without adding a query command because scoped rg recovers the retired listing"
+      }
+    },
+    {
+      "id": "collections_and_types",
+      "path": "kb/reference/collections-and-types.md",
+      "artifact_class": "reference",
+      "title_strength": "weak",
+      "task": "Find the shipped-system documentation explaining that collections own register and outbound-link conventions while path-referenced types own structural and semantic contracts, including how the two compose during writing and validation.",
+      "variants": {
+        "120": "How collections and path-referenced types compose: collections own register conventions; types own artifact contracts",
+        "160": "How collections and path-referenced types compose: COLLECTION.md owns register and outbound-link conventions, while type specs own artifact contracts",
+        "200": "How collections and path-referenced types compose: COLLECTION.md owns register and outbound-link conventions; type specs own structural and semantic contracts resolved directly from type paths",
+        "250": "How collections and path-referenced types compose: COLLECTION.md owns register and per-destination outbound-link conventions; type specs own structural schemas and semantic authoring contracts, resolved directly from the artifact's type path",
+        "300": "How collections and path-referenced types compose: COLLECTION.md owns register and outbound-link conventions; type specs own structural schemas and semantic contracts, resolved from the artifact's type path; writing picks collection then type, while validation resolves the type lexically"
+      }
+    },
+    {
+      "id": "invert_requests",
+      "path": "kb/instructions/invert-solution-shaped-requests.md",
+      "artifact_class": "instruction",
+      "title_strength": "strong",
+      "task": "Find the procedure to use before implementing a requested validator or feature when the request may be solution-shaped; it should recover the underlying problem, evidence status, alternatives, routing, and least-committing next move.",
+      "variants": {
+        "120": "Before implementing a proposed feature, recover its underlying problem, evidence, alternatives, and next move",
+        "160": "Use before accepting a solution-shaped request: recover the underlying problem, evidence status, alternative framings, routing, and least-committing next move",
+        "200": "Before implementing a solution-shaped request for a feature or validator, recover the problem, classify evidence, challenge assumptions, compare framings, and choose the least-committing next move",
+        "250": "Before implementing a solution-shaped request for a feature, validator, or workflow, recover the actor's problem, classify evidence, challenge assumptions, compare alternative framings, route any artifact, and recommend the least-committing next move",
+        "300": "Before implementing a solution-shaped feature, validator, or workflow request, recover the actor's problem, classify evidence, challenge assumptions, compare framings, route any artifact, and recommend the least-committing next move; stop at a question or workshop if the problem remains unclear"
+      }
+    },
+    {
+      "id": "review_batches",
+      "path": "kb/instructions/run-review-batches.md",
+      "artifact_class": "instruction",
+      "title_strength": "strong",
+      "task": "Find the operational procedure for selecting snapshot-anchored note/criterion pairs, creating homogeneous review jobs, delegating them to workers with model provenance, and finalizing the results.",
+      "variants": {
+        "120": "Run snapshot-anchored review assays by selecting note/criterion pairs, creating jobs, delegating workers, and finalizing",
+        "160": "Run snapshot-anchored verdict or report assays by selecting note/criterion pairs, creating homogeneous jobs, delegating workers, and finalizing results",
+        "200": "Run snapshot-anchored verdict or report assays: select note/criterion pairs, create jobs from selector JSON, delegate with explicit model provenance, then finalize and verify results",
+        "250": "Run snapshot-anchored verdict or report assays: select note/criterion pairs, create jobs from selector JSON, delegate each unchanged job under the designated model partition, record concrete model provenance, then finalize and verify results",
+        "300": "Run snapshot-anchored verdict or report assays: select note/criterion pairs, create homogeneous jobs from selector JSON, delegate each unchanged job to a worker under the designated model partition, record concrete model provenance, then finalize and verify results; grouping never mixes result kinds"
+      }
+    },
+    {
+      "id": "two_boundaries",
+      "path": "kb/notes/two-context-boundaries-govern-collection-operations.md",
+      "artifact_class": "theoretical-note",
+      "title_strength": "medium",
+      "task": "Find the artifact that distinguishes the full-text boundary for comparative reading from the title-plus-description index boundary for orientation, deriving three collection operating regimes.",
+      "variants": {
+        "120": "Collections cross separate full-text and title-plus-description boundaries, producing three operating regimes",
+        "160": "Collections cross a full-text boundary for comparative reading and a later title-plus-description boundary for orientation, producing three regimes",
+        "200": "Collections cross a full-text boundary where comparative reading must partition and a later title-plus-description boundary where orientation also fails, producing three operational regimes",
+        "250": "Collections cross a full-text boundary where comparison must partition and a title-plus-description boundary where orientation fails, producing three regimes; descriptions become load-bearing between them and child collections restore comparisons",
+        "300": "Collections cross a full-text boundary where comparative reading must partition and a later title-plus-description boundary where orientation fails, producing three regimes; descriptions become load-bearing between them, parent indexes support routing, and child collections restore body comparison"
+      }
+    },
+    {
+      "id": "trajectory_memory",
+      "path": "kb/sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md",
+      "artifact_class": "source-ingest",
+      "title_strength": "medium",
+      "task": "Find the source analysis of IBM's trajectory-to-tip memory pipeline reporting that subtask tips plus LLM-guided retrieval improved AppWorld scenario goal completion by 14.3 percentage points, while noting the narrow task-completion oracle.",
+      "variants": {
+        "120": "IBM extracts reusable tips from agent trajectories and retrieves them at runtime, improving complex AppWorld tasks",
+        "160": "IBM extracts strategy, recovery, and optimization tips from trajectories; subtask tips with LLM-guided retrieval improve AppWorld performance",
+        "200": "IBM extracts strategy, recovery, and optimization tips from trajectories; subtask tips plus LLM-guided retrieval improve AppWorld scenario goal completion by 14.3 points",
+        "250": "IBM extracts strategy, recovery, and optimization tips from agent trajectories and injects them at runtime; subtask tips plus LLM-guided retrieval improve AppWorld scenario goal completion by 14.3 points, forming an inspectable closed learning loop",
+        "300": "IBM extracts strategy, recovery, and optimization tips from trajectories and injects them at runtime; subtask tips plus LLM-guided retrieval improve AppWorld scenario goal completion by 14.3 points, forming an inspectable learning loop limited by a task-completion oracle and one benchmark"
+      }
+    },
+    {
+      "id": "stale_indexes",
+      "path": "kb/notes/stale-indexes-are-worse-than-no-indexes.md",
+      "artifact_class": "theoretical-note",
+      "title_strength": "strong",
+      "task": "Find the artifact explaining why an incomplete authoritative index is more dangerous than no index: agents trust it as exhaustive, stop searching, and make omitted notes invisible.",
+      "variants": {
+        "120": "An agent trusts an index as exhaustive, so omitted entries suppress fallback search and become invisible",
+        "160": "An incomplete authoritative index is worse than none because agents treat it as exhaustive, stop fallback search, and make omitted notes invisible",
+        "200": "An incomplete authoritative index is worse than none: apparent completeness satisfies navigation, suppresses search, and makes omitted notes invisible; absence degrades safely to current search",
+        "250": "An incomplete authoritative index is worse than none: apparent completeness satisfies navigation, suppresses search, and makes omitted notes invisible; absence degrades to current search. The mechanism extends to stale specs, plans, and curated lists",
+        "300": "An incomplete index is worse than none: apparent completeness satisfies navigation, suppresses search, and makes omissions invisible; absence degrades to current search. The mechanism extends to stale specs, plans, and curated lists; deterministic checks catch only declared membership omissions"
+      }
+    }
+  ]
+}
+
+codex
+{"reviews":[{"case_id":"pointer_design","allowance":120,"faithful":true,"reason":"Truthfully identifies the three pointer types and the central tradeoff axes. “Per-read cost” is narrower than the artifact’s broader cost axis but remains supported and does not contradict authoring-time costs."},{"case_id":"pointer_design","allowance":160,"faithful":true,"reason":"Accurately states the overall tradeoff and characterizes fixed descriptions as cheap, reliable, and insensitive to the current query."},{"case_id":"pointer_design","allowance":200,"faithful":true,"reason":"Accurately preserves the comparison: fixed pointers are cheap and dependable, query-time pointers gain query-specificity, and crafted phrases provide the densest characterization."},{"case_id":"pointer_design","allowance":250,"faithful":true,"reason":"Faithfully captures all three pointer classes and their relevant tradeoffs, including crafted phrases’ dependence on authors supplying them."},{"case_id":"pointer_design","allowance":300,"faithful":true,"reason":"Faithfully summarizes the artifact’s full conclusion: the pointer types optimize different axes, crafted pointers require authoring discipline, and no single type wins, so a mix is needed."}]}
+tokens used
+27,888
+{"reviews":[{"case_id":"pointer_design","allowance":120,"faithful":true,"reason":"Truthfully identifies the three pointer types and the central tradeoff axes. “Per-read cost” is narrower than the artifact’s broader cost axis but remains supported and does not contradict authoring-time costs."},{"case_id":"pointer_design","allowance":160,"faithful":true,"reason":"Accurately states the overall tradeoff and characterizes fixed descriptions as cheap, reliable, and insensitive to the current query."},{"case_id":"pointer_design","allowance":200,"faithful":true,"reason":"Accurately preserves the comparison: fixed pointers are cheap and dependable, query-time pointers gain query-specificity, and crafted phrases provide the densest characterization."},{"case_id":"pointer_design","allowance":250,"faithful":true,"reason":"Faithfully captures all three pointer classes and their relevant tradeoffs, including crafted phrases’ dependence on authors supplying them."},{"case_id":"pointer_design","allowance":300,"faithful":true,"reason":"Faithfully summarizes the artifact’s full conclusion: the pointer types optimize different axes, crafted pointers require authoring discipline, and no single type wins, so a mix is needed."}]}

@@ -1,0 +1,304 @@
+{
+  "reviews": [
+    {
+      "case_id": "pointer_design",
+      "allowance": 120,
+      "faithful": true,
+      "reason": "Truthfully identifies the three pointer types and the central tradeoff axes. \u201cPer-read cost\u201d is narrower than the artifact\u2019s broader cost axis but remains supported and does not contradict authoring-time costs."
+    },
+    {
+      "case_id": "pointer_design",
+      "allowance": 160,
+      "faithful": true,
+      "reason": "Accurately states the overall tradeoff and characterizes fixed descriptions as cheap, reliable, and insensitive to the current query."
+    },
+    {
+      "case_id": "pointer_design",
+      "allowance": 200,
+      "faithful": true,
+      "reason": "Accurately preserves the comparison: fixed pointers are cheap and dependable, query-time pointers gain query-specificity, and crafted phrases provide the densest characterization."
+    },
+    {
+      "case_id": "pointer_design",
+      "allowance": 250,
+      "faithful": true,
+      "reason": "Faithfully captures all three pointer classes and their relevant tradeoffs, including crafted phrases\u2019 dependence on authors supplying them."
+    },
+    {
+      "case_id": "pointer_design",
+      "allowance": 300,
+      "faithful": true,
+      "reason": "Faithfully summarizes the artifact\u2019s full conclusion: the pointer types optimize different axes, crafted pointers require authoring discipline, and no single type wins, so a mix is needed."
+    },
+    {
+      "case_id": "methodology_enforcement",
+      "allowance": 120,
+      "faithful": true,
+      "reason": "Truthfully captures the maturation from instructions toward scripts as progressively reducing interpretive and execution freedom; omitted intermediate layers are permissible."
+    },
+    {
+      "case_id": "methodology_enforcement",
+      "allowance": 160,
+      "faithful": true,
+      "reason": "Accurately identifies the four enforcement layers and the two dimensions they progressively constrain."
+    },
+    {
+      "case_id": "methodology_enforcement",
+      "allowance": 200,
+      "faithful": true,
+      "reason": "Faithfully states the constraining gradient and its supported flexibility-for-reliability tradeoff."
+    },
+    {
+      "case_id": "methodology_enforcement",
+      "allowance": 250,
+      "faithful": true,
+      "reason": "Accurately distinguishes warning hooks\u2019 deterministic triggers and LLM-mediated responses from fully deterministic blocking hooks and scripts."
+    },
+    {
+      "case_id": "methodology_enforcement",
+      "allowance": 300,
+      "faithful": true,
+      "reason": "Faithfully adds the artifact\u2019s progressive-compilation conclusion that proven, sufficiently stable practices can be codified."
+    },
+    {
+      "case_id": "representational_form",
+      "allowance": 120,
+      "faithful": true,
+      "reason": "Truthfully identifies the definition\u2019s core classification by encoding and consumption and names all four retrieval-facing categories; omitted scope details do not distort it."
+    },
+    {
+      "case_id": "representational_form",
+      "allowance": 160,
+      "faithful": true,
+      "reason": "Accurately states that representational form classifies an operative part by how it is encoded and consumed, with the supported category set."
+    },
+    {
+      "case_id": "representational_form",
+      "allowance": 200,
+      "faithful": true,
+      "reason": "Faithfully adds the artifact\u2019s explicit exclusion that representational form is distinct from storage substrate."
+    },
+    {
+      "case_id": "representational_form",
+      "allowance": 250,
+      "faithful": true,
+      "reason": "Accurately preserves the classification, storage-substrate distinction, and codification as the natural-language-to-symbolic transition."
+    },
+    {
+      "case_id": "representational_form",
+      "allowance": 300,
+      "faithful": true,
+      "reason": "Faithfully summarizes the classification and exclusions; its statements about codification and prompt as consumption-path shorthand rather than another form are supported by the artifact."
+    },
+    {
+      "case_id": "adr_025_120",
+      "allowance": 120,
+      "faithful": true,
+      "reason": "Truthfully preserves the core decision: complete collection and tag listings leave git and agent reads but remain available through human documentation builds."
+    },
+    {
+      "case_id": "adr_025_160",
+      "allowance": 160,
+      "faithful": true,
+      "reason": "Accurately identifies ProperDocs as the human-facing build path and curated heads plus scoped rg as the replacement agent discovery path."
+    },
+    {
+      "case_id": "adr_025_200",
+      "allowance": 200,
+      "faithful": true,
+      "reason": "Faithfully states that the generated listings are removed from git and agent reads, rebuilt for humans, and replaced for agents by curated heads plus scoped rg."
+    },
+    {
+      "case_id": "adr_025_250",
+      "allowance": 250,
+      "faithful": true,
+      "reason": "Accurately adds that the decision supersedes ADR 003's index-first connect discovery and deliberately introduces no new query command."
+    },
+    {
+      "case_id": "adr_025_300",
+      "allowance": 300,
+      "faithful": true,
+      "reason": "Faithfully includes the decision's rationale for not adding a query command: scoped rg recovers the operative discovery function of the retired listings."
+    },
+    {
+      "case_id": "collections_and_types",
+      "allowance": 120,
+      "faithful": true,
+      "reason": "Truthfully captures the core division: collections govern register conventions, while path-referenced types govern artifact contracts; omitted linking and validation detail is permissible."
+    },
+    {
+      "case_id": "collections_and_types",
+      "allowance": 160,
+      "faithful": true,
+      "reason": "Accurately adds COLLECTION.md ownership of outbound-link conventions while preserving type-spec ownership of artifact contracts."
+    },
+    {
+      "case_id": "collections_and_types",
+      "allowance": 200,
+      "faithful": true,
+      "reason": "Faithfully distinguishes collection-owned register and linking conventions from type-owned structural and semantic contracts, including direct path-based type resolution."
+    },
+    {
+      "case_id": "collections_and_types",
+      "allowance": 250,
+      "faithful": true,
+      "reason": "Accurately states the per-destination nature of outbound-link conventions and the type spec\u2019s structural schema and semantic authoring layers, resolved from the artifact\u2019s type path."
+    },
+    {
+      "case_id": "collections_and_types",
+      "allowance": 300,
+      "faithful": true,
+      "reason": "Faithfully summarizes both axes and their composition: authors choose collection then type, while validation lexically resolves the artifact\u2019s path-valued type pointer."
+    },
+    {
+      "case_id": "invert_requests",
+      "allowance": 120,
+      "faithful": true,
+      "reason": "Truthfully captures the pre-implementation inversion workflow. Omitting validators, routing, and assumption checks is acceptable compression."
+    },
+    {
+      "case_id": "invert_requests",
+      "allowance": 160,
+      "faithful": true,
+      "reason": "Accurately summarizes the artifact\u2019s trigger, core analysis, Commonplace routing, and least-committing recommendation."
+    },
+    {
+      "case_id": "invert_requests",
+      "allowance": 200,
+      "faithful": true,
+      "reason": "Faithfully covers the relevant feature-or-validator scope and the procedure\u2019s problem recovery, evidence classification, assumption checks, alternative framings, and next move."
+    },
+    {
+      "case_id": "invert_requests",
+      "allowance": 250,
+      "faithful": true,
+      "reason": "Accurately reflects the actor-centered problem statement, evidence classification, assumption challenges, alternative framings, outcome routing, and single least-committing recommendation."
+    },
+    {
+      "case_id": "invert_requests",
+      "allowance": 300,
+      "faithful": true,
+      "reason": "Faithfully summarizes the procedure, including the explicit instruction to recommend a question or workshop rather than implementation when the problem remains unclear."
+    },
+    {
+      "case_id": "review_batches",
+      "allowance": 120,
+      "faithful": true,
+      "reason": "Truthfully summarizes the core workflow. Omitting result kinds, provenance, and verification is acceptable at this length."
+    },
+    {
+      "case_id": "review_batches",
+      "allowance": 160,
+      "faithful": true,
+      "reason": "Accurately identifies both verdict and report assays and preserves the selection, job creation, delegation, and finalization scope."
+    },
+    {
+      "case_id": "review_batches",
+      "allowance": 200,
+      "faithful": true,
+      "reason": "All claims are supported: jobs come from selector JSON, workers report model provenance, and the parent finalizes and verifies results."
+    },
+    {
+      "case_id": "review_batches",
+      "allowance": 250,
+      "faithful": true,
+      "reason": "Faithfully reflects the requirement to preserve creator-returned jobs, run workers under the designated model partition, record reported provenance, finalize, and verify."
+    },
+    {
+      "case_id": "review_batches",
+      "allowance": 300,
+      "faithful": true,
+      "reason": "Accurately adds job homogeneity and the rule that grouping never mixes verdict and report result kinds; no unsupported claim is introduced."
+    },
+    {
+      "case_id": "two_boundaries",
+      "allowance": 120,
+      "faithful": true,
+      "reason": "Accurately states the two distinct context boundaries and their consequence: three operating regimes."
+    },
+    {
+      "case_id": "two_boundaries",
+      "allowance": 160,
+      "faithful": true,
+      "reason": "Faithfully associates full-text capacity with comparative reading and the higher title-plus-description capacity with orientation."
+    },
+    {
+      "case_id": "two_boundaries",
+      "allowance": 200,
+      "faithful": true,
+      "reason": "Accurately captures partitioned comparative reading after the first boundary and loss of index-level orientation after the second; \u201cfails\u201d is acceptable shorthand for no longer working as a coherent whole-collection operation."
+    },
+    {
+      "case_id": "two_boundaries",
+      "allowance": 250,
+      "faithful": true,
+      "reason": "Faithfully adds that descriptions become operationally load-bearing in the middle regime and that child collections restore full-body comparative reading."
+    },
+    {
+      "case_id": "two_boundaries",
+      "allowance": 300,
+      "faithful": true,
+      "reason": "Accurately preserves both boundaries, all three regimes, and the supported division of labor: descriptions and parent indexes enable orientation and routing, while child collections restore body-level comparison."
+    },
+    {
+      "case_id": "trajectory_memory",
+      "allowance": 120,
+      "faithful": true,
+      "reason": "Truthfully summarizes trajectory-derived tips, runtime retrieval, and improved performance on complex AppWorld tasks; omitted details are permissible."
+    },
+    {
+      "case_id": "trajectory_memory",
+      "allowance": 160,
+      "faithful": true,
+      "reason": "Accurately preserves the three tip categories, subtask granularity, LLM-guided retrieval, and AppWorld performance improvement."
+    },
+    {
+      "case_id": "trajectory_memory",
+      "allowance": 200,
+      "faithful": true,
+      "reason": "Accurately reports the pipeline, best-performing configuration, metric, and 14.3-percentage-point improvement."
+    },
+    {
+      "case_id": "trajectory_memory",
+      "allowance": 250,
+      "faithful": true,
+      "reason": "Accurately adds runtime injection and characterizes the pipeline as a closed learning loop with inspectable natural-language outputs."
+    },
+    {
+      "case_id": "trajectory_memory",
+      "allowance": 300,
+      "faithful": true,
+      "reason": "Accurately includes the pipeline, measured improvement, inspectable learning loop, task-completion-oracle limitation, and single-benchmark scope."
+    },
+    {
+      "case_id": "stale_indexes",
+      "allowance": 120,
+      "faithful": true,
+      "reason": "Correctly states that trust in an apparently exhaustive index suppresses fallback search and hides omitted content."
+    },
+    {
+      "case_id": "stale_indexes",
+      "allowance": 160,
+      "faithful": true,
+      "reason": "Faithfully captures why an incomplete authoritative index is more dangerous than having no index."
+    },
+    {
+      "case_id": "stale_indexes",
+      "allowance": 200,
+      "faithful": true,
+      "reason": "Accurately contrasts stale-index search suppression with the current-content search fallback triggered by an index's absence."
+    },
+    {
+      "case_id": "stale_indexes",
+      "allowance": 250,
+      "faithful": true,
+      "reason": "Correctly generalizes the mechanism from indexes to other authoritative artifacts such as stale specs, plans, and curated lists."
+    },
+    {
+      "case_id": "stale_indexes",
+      "allowance": 300,
+      "faithful": true,
+      "reason": "Faithfully includes both the generalized mechanism and the limitation that deterministic checks catch declared membership missing from an index, not undeclared semantic membership."
+    }
+  ]
+}

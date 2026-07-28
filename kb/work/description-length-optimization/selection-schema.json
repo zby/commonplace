@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["decisions"],
+  "properties": {
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["trial_id", "selected", "confidence"],
+        "properties": {
+          "trial_id": {"type": "string"},
+          "selected": {"type": "array", "items": {"type": "string"}},
+          "confidence": {"type": "string", "enum": ["low", "medium", "high"]}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
