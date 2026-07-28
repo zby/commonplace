@@ -79,6 +79,8 @@ These cases came from `kb/work/connect-maintenance-observations/`. They are test
 ## Working Files
 
 - [current-contradictions.md](./current-contradictions.md) - ledger of live conflicts among source-side lineage rules, article-side metadata, immutable snapshots, relation direction, and generic write mechanics.
+- [lineage-profile-matrix.md](./lineage-profile-matrix.md) - decision surface separating semantic dependency, carrier, invalidation rung, retention, producer provenance, and refresh behavior across current artifact classes.
+- [normalized-directional-lineage-relations.md](./normalized-directional-lineage-relations.md) - exhaustive normalization of every shared and collection-local lineage declaration as `(derivative, relation, source)`, independent of authored link direction or carrier.
 - [verification-locus-and-provenance-theory.md](./verification-locus-and-provenance-theory.md) - theoretical spine: state vs history verification, the two reification bridges, dual invalidation semantics, the graduated invalidation ladder, and the external literature anchors (build systems, PROV, in-toto, credence goods).
 - [current-practices-and-theory.md](./current-practices-and-theory.md) - descriptive inventory of current lineage mechanisms, theory, and unresolved tensions.
 - [automatic-derivation-rules.md](./automatic-derivation-rules.md) - draft policy for git retention, merge-back lineage, derivative refresh, and automation boundaries.
