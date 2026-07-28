@@ -16,11 +16,13 @@ The **channel** may be retrieval, prompt assembly, execution, configuration, val
 
 The **force** may be advice, instruction, enforcement, selection or ranking influence, audit trigger, or learning input. Audit records do not have force by themselves; they matter when a consumer acts on them.
 
+Authority paths compose. One consumer's act is often the next path's channel — a retriever is a consumer whose output enters another consumer's channel — so a full path is a chain, and a record names one link of it.
+
 Use the term behavioral authority to make the older knowledge/system-definition distinction precise. A [knowledge artifact](./knowledge-artifact.md) is consumed as evidence, reference, context, explanation, or advice. A [system-definition artifact](./system-definition-artifact.md) is consumed with instruction, enforcement, routing, validation, configuration, evaluation, or learning force. These are authority-path families, not intrinsic artifact classes; the field is more precise because it names the actual consumer, channel, and force.
 
 ## Exclusions
 
-Declared intent is not enough. An advisory note may acquire high effective authority if it is always included in a late prompt position; a formal policy may have no effective authority if no component loads it.
+Declared intent is not enough. An advisory note may acquire high effective authority if it is always included in a late prompt position; a formal policy may have no effective authority if no component loads it. Placement within a channel is part of effective authority — the late-prompt example turns on position, not on the channel's kind.
 
 ## Misuse Cases
 
@@ -36,3 +38,4 @@ Relevant Notes:
 - [retained artifact](./retained-artifact.md) - parent concept: the persisted state whose later use may shape behavior
 - [knowledge artifact](./knowledge-artifact.md) - authority family: evidence, reference, context, explanation, or advice
 - [system-definition artifact](./system-definition-artifact.md) - authority family: instruction, enforcement, routing, validation, configuration, evaluation, or learning input
+- [a consumption channel delivers force without the history that earned it](../a-consumption-channel-delivers-force-without-the-history-that.md) - failure surface: the path confers force on its occupant without reading how it got there
