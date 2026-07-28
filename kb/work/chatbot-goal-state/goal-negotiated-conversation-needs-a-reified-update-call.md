@@ -1,5 +1,5 @@
 ---
-description: When a human turn revises the goal rather than supplying tool output, the select/call model stays clean only if that revision is reified as an explicit LLM call updating K.goal — not left to implicit re-derivation from raw history, and not silently folded in as ordinary tool output
+description: Reifies a human goal-revising turn as an explicit LLM update of K.goal, preserving symbolic select/call scheduling while avoiding raw-history re-derivation and ordinary-tool-output treatment
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [computational-model]
