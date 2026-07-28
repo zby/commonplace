@@ -31,7 +31,7 @@ Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 | label | destinations | reader-need / when to use |
 |---|---|---|
 | `extends`, `grounds`, `mechanism`, `contradicts`, `contrasts` | notes | theoretical-shaped (see `kb/reference/link-vocabulary.md`) |
-| `evidenced-by`, `abstracted-from` | notes, reference, agent-memory, agentic-systems, sources, external, work | the target bears on this working assertion / the workshop was abstracted from this |
+| `evidenced-by`, `abstracted-from` | notes, reference, agent-memory, agentic-systems, sources, external sources, work | the target bears on this working assertion / the workshop was abstracted from this |
 | `is-evidence-for` | notes, reference, work | this working observation bears materially on the target assertion without implying target-side uptake |
 | `rationale` | notes | this design or rule rests on this claim |
 | `defined-in` | notes/definitions | reader may not know the term |

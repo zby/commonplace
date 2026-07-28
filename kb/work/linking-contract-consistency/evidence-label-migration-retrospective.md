@@ -46,6 +46,15 @@ For each surprise, record:
 - **Reusable lesson:** Every label migration needs a positive mutable-surface definition and a mutually exclusive exclusion reconciliation, not only ignored globs in the rewrite command.
 - **Deferred owner, if any:** None.
 
+### Concurrent contract work crossed the commit boundary
+
+- **Expected:** Explicit path staging after diff review would isolate the migration from unrelated work in the dirty tree.
+- **Observed:** During the approval wait, seven already-selected migration files acquired concurrent external-destination changes. The eventual `git add` swept those new hunks into `b3f7e126` while their owning ADR remained uncommitted.
+- **Why it mattered:** The commit linked to an artifact absent from its own tree and claimed work outside the migration's reviewed scope.
+- **Local resolution:** Follow with a corrective commit that removes only the concurrent hunks from migration history, then restore those exact hunks to the worktree unstaged so their owner loses nothing.
+- **Reusable lesson:** An explicit path list is insufficient isolation when approvals are asynchronous; re-diff selected paths after approval and before staging, or stage from an already-reviewed patch/index state that cannot absorb later edits.
+- **Deferred owner, if any:** None; the concurrent external-destination work remains unstaged under its existing owner.
+
 ## Edge reconciliation
 
 | disposition | count | notes |
@@ -71,7 +80,7 @@ Write executable changes, not general advice.
 
 - **Add:** Require the next plan to declare positive mutable surfaces and named exclusion buckets; inventory actual resolved source→destination pairs; diff those pairs against collection authorization; and scan active recommendation/procedure prose for the literal identifier after edge inventory.
 - **Remove:** Do not use collection matrices or prior review counts as the baseline, and do not treat a repository-wide lexical replacement set as the authored corpus.
-- **Reorder:** Resolve and classify live edges first; record authorization deltas and exclusions in the retrospective; adopt the ADR/catalogue/contracts; reconcile prose guidance; migrate edges; then run tuple-conservation, old-label-exclusion, authorization, link, and validation checks in that order.
+- **Reorder:** Resolve and classify live edges first; record authorization deltas and exclusions in the retrospective; adopt the ADR/catalogue/contracts; reconcile prose guidance; migrate edges; then run tuple-conservation, old-label-exclusion, authorization, link, and validation checks in that order. After any approval wait, re-diff selected paths before staging.
 - **Automate:** For the next run, generate a temporary TSV with source path, target, resolved destination, proposed disposition, and exclusion reason, then make the post-run checker fail on a missing/unexpected tuple, an active old label, or a surviving old label outside exactly one exclusion bucket. Do not promote it to a reusable command until a second migration confirms the shape.
 - **Keep label-specific:** Semantic assertion templates, inverse-journey review, neighboring-label boundaries, and evidence's target-uptake distinction remain label-specific judgment rather than generic migration mechanics.
 
@@ -82,6 +91,6 @@ The authorization/exclusion/recommendation findings generalize to other directio
 ## Completion
 
 - Final validation/tests: `commonplace-validate` passed the `notes`, `reference`, `sources`, `agent-memory-systems`, and `agentic-systems` scopes; the changed instruction and workshop files passed individually. One unchanged overlong-description warning remains on the chatbot-goal-state workshop note. No migration code or test fixture changed; the full integration suite nevertheless passed (`487 passed`). `git diff --check`, tuple conservation, old-label exclusion reconciliation, and local-target resolution passed.
-- Migration commit: this migration's `Migrate directional evidence labels` commit.
+- Migration commits: `b3f7e126` (`Migrate directional evidence labels`) plus the corrective separation commit that leaves concurrent external-destination work unstaged.
 - Deferred follow-ups: migrate the other source-as-subject failures listed in [directional label grammar](./directional-label-grammar.md); decide enforcement in the [validator-boundary thread](./README.md#deterministic-validation-checks-link-existence-not-link-contracts). Neither was expanded here.
 - Candidate reusable procedure after another run: baseline/exclusion TSV → semantic disposition → coordinated ADR/catalogue/contracts → guidance scan → corpus rewrite → tuple/exclusion/authorization/validation reconciliation.

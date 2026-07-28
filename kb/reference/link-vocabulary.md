@@ -9,7 +9,7 @@ type: kb/types/note.md
 
 Commonplace treats links as authored reader aids, not automatic graph decoration. A link should tell a future reader why following it might help from the source artifact they are already reading.
 
-The source collection owns that decision. Each `COLLECTION.md` defines which destinations writers may link to, when an agent should search those destinations, and which labels are authorised for each source-to-destination pairing. A destination is a local collection or the reserved token `external`; external links are unauthorized unless the source collection names that token explicitly. The shared catalogue on this page is a palette; the collection's own rules are authoritative.
+The source collection owns that decision. Each `COLLECTION.md` defines which destination collections writers may link to, when an agent should search those destinations, and which labels are authorised for each source-to-destination pairing. The shared catalogue on this page is a palette; the collection's own rules are authoritative.
 
 Labels name reader needs rather than ontology edges. A `grounds` link says "follow this if you need to verify the premise." An `implements` link says "follow this if you need the concrete realization." The label is useful only when the source, target, and reason form an articulated relationship.
 
@@ -39,12 +39,12 @@ The architecture is deliberately loose because the link theory is still developi
 
 ("Register" means one of three content modes — theoretical, descriptive, prescriptive — that determines a collection's quality goal, title conventions, and linking rules. See [`register`](../notes/definitions/text-contract.md).)
 
-Organise the outbound-linking section **per destination**, not per register. A destination is normally a collection path; use the reserved token `external` for targets outside the KB. For each destination your source links to, declare:
+Organise the outbound-linking section **per destination collection**, not per register. For each collection your source links to, declare:
 
 1. **Search guidance** — when the [connect skill](../instructions/cp-skill-connect/SKILL.md) (or an author manually prospecting for links) should search this destination from the source. Concrete triggers work best: *"search when the source asserts a claim without evidence,"* not *"search when relevant."*
 2. **Authorised labels** — the labels writers in the source collection may use for links to this destination. Give each a one-line reader-need context specific to this *source → destination* pairing.
 
-If a destination isn't listed, it isn't an active link target from this collection. Adding a destination is a collection-author decision; writers cannot unilaterally link outside the authorised set. `external` is opt-in and is never included by `any`. Its declaration states the permitted purpose and surface; a type may refine citation format but cannot introduce the permission. Connect does not prospect the open web for this destination. Formal labelled links use the labels authorized for `external`; a collection may instead declare an inline citation or editorial surface without a rendered identifier ([ADR 059](./adr/059-external-is-a-reserved-outbound-destination.md)).
+If a destination isn't listed, it isn't an active link target from this collection. Adding a destination is a collection-author decision; writers cannot unilaterally link to collections outside the authorised set.
 
 **Footer inclusion is a separate decision from label choice.** Each `COLLECTION.md` also states the collection's inline-vs-footer convention (typically: inline for the strongest, argument-bearing commitment; footer for labelled links — `- [title](path) — label: context phrase`). Authorised labels govern what a footer link may be *called*; they don't decide whether a given relationship earns a footer entry at all. That weight call — is this corroboration formal enough to belong in the note's evidence map, or better left as an inline example in the body — has no validator and is left to the note's author, per the collection's own quality goal. A footer is a curated subset of what a note could link, the same selective-by-default shape as a tag-README's curated head: exhaustiveness is never the assumed default, and if a collection ever wants a footer to be a complete listing of a relation, that has to be an explicit, checked claim, not an implicit one.
 
@@ -185,7 +185,6 @@ Do not use this page as a fallback for lazy labelling. If the source `COLLECTION
 Relevant Notes:
 
 - [ADR 019 — collection-owned link vocabulary](./adr/019-collection-owned-link-vocabulary.md) — rationale: the architecture this catalogue serves
-- [ADR 059 — external is a reserved outbound destination](./adr/059-external-is-a-reserved-outbound-destination.md) — rationale: external targets remain collection-authorized without becoming a search surface
 - [ADR 009 — link relationship semantics](./adr/009-link-relationship-semantics.md) — rationale: the original theoretical vocabulary whose core labels seed this catalogue
 - [ADR 020 — theoretical-default additions (contrasts, mechanism)](./adr/020-theoretical-default-contrasts-mechanism.md) — rationale: the audit outcomes adding `mechanism` and `contrasts` and stating directional asymmetry
 - [ADR 058 — directional identifiers use the source as subject](./adr/058-directional-identifiers-use-source-as-subject.md) — rationale: the naming invariant and evidence inverse pair
