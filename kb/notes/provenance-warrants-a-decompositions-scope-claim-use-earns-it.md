@@ -1,0 +1,71 @@
+---
+description: "Derivation, inheritance, and free choice warrant a carve's scope claim — conditionally, secondhand, or merely pragmatically — but only use that could have broken the claim earns it; provenance's work is relocating that test to a statable place"
+type: kb/types/note.md
+traits: [title-as-claim]
+tags: [learning-theory, discovery, foundations]
+---
+
+# Provenance warrants a decomposition's scope claim; only discriminating use earns it
+
+A decomposition claims more than it displays. The categories are visible; the assertion that they will keep cutting the domain in the right places — in cases the designer has not seen — is not. That assertion is an [explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) claim, and since [use tests a decomposition only locally](./use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md), running the system with the carve in it does not touch it.
+
+Two questions about that claim are easy to run together. Where the claim comes from — its provenance — fixes what warrant it starts with and what a test of it would even look like. Whether the claim is *earned* is settled the only way [reach-assessment](./definitions/reach-assessment.md) recognizes: by surviving evidence that could have refuted it. Provenance grades warrant; use earns.
+
+There are three provenances a carve can be born with, distinguished by what the designer did *not* choose.
+
+**Derivation from inherited constraints** gives conditional warrant. The categories fall out of constraints the designer had no say over: what is chosen is the axes; once the axes are fixed the cells are forced, including the empty ones. The scope claim becomes a conditional with a statable antecedent — the carve holds exactly as far as the constraints that generated it hold — and the boundary can be stated ahead of the failure rather than discovered by it. What derivation does not supply is any evidence that the axes name distinctions that matter. A carve can be exhaustive relative to axes that cut the domain nowhere important; the derivation is then a valid argument from the wrong premises.
+
+**Inheritance of a tested ontology** gives transferred warrant. Someone else's carve, already exposed to cases: repeated use across varied contexts is the extensional route to a scope claim, priced at one full rebuild per sample, and borrowing a mature ontology is buying that sample secondhand — decades of use, paid for by another field. This is the only provenance whose warrant is empirical at all, and it is empirical about the *source* domain: the sample was drawn under the source's conditions, and it licenses the carve here only while the constraints that made it carve there still hold.
+
+**Free choice** gives pragmatic warrant only. Underdetermined by anything, settled by convenience or by what was in the author's head, it supports no scope claim, and its only obligation is to stay cheap to replace.
+
+## Provenance relocates the test; use runs it
+
+None of the three provenances earns the scope claim, because none of them is an encounter with evidence that could have broken it. What the first two buy is something else: they relocate the untested part to a place where it can be stated and attacked. Derivation moves the question from the carve to its axes — testing the carve becomes intervening on the constraints, cheap and targeted, with failures attributable to a named premise. Inheritance moves it to the bridge — testing becomes checking whether the source's operative constraints still bind in the target domain, work the borrowing does not come with but at least names. Free choice relocates the question nowhere: until a rationale is recovered, the only test is rebuild-and-see, another local check that never touches transfer.
+
+Earning is then a career open to all three, not a birthright of any. A carve that was free at birth can earn its scope extensionally, one context that could have broken it at a time. This is the route [an automated theory-search loop](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md) must take, since every carve such a loop proposes is free at birth — and whether its acceptance test is discriminating or merely confirmatory is exactly what decides whether the loop earns reach or manufactures unearned claims of it. Symmetrically, a derived carve is not exempt from testing; its derivation only makes the test statable in advance.
+
+[What scale replaces is a generalization whose scope was asserted rather than tested](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md) — and a carve is a generalization, asserting that these seams will keep mattering. A warranted-but-untested carve is not exempt from that selection; it is better positioned only because its untested part is statable, so a test could be run before scale runs one for you. The free-choice category is accordingly not a confession of sloppiness. It is the accurate label for most carves most of the time, and labelling it correctly is what keeps it cheap. The failure mode is not picking a free choice; it is letting one harden: a free choice encoded into a directory layout, a schema field, or a vocabulary term that a hundred artifacts cite has acquired revision cost without ever acquiring warrant or tests — expensive to change, and there was never a reason it was right.
+
+## The two triples relate but do not coincide
+
+Retained rationale records, per boundary, whether it answers an **inherited constraint**, a **local requirement**, or a **free choice**. It is tempting to read the three provenances as those same categories asked about the carve as a whole. Two of them line up — derivation is the inherited-constraint case, and free choice is unchanged — but the middle does not. A carve can be derived from constraints local to one problem while borrowing nothing: [decomposing user stories into their step-by-step context needs](./scenario-decomposition-drives-architecture.md) derives boundaries from what one application must load at each stage, which is a local requirement answered by derivation.
+
+So the two triples sort different objects. The rationale triple sorts boundaries by what each answers; provenance sorts whole carves by where the scope claim's warrant comes from. Derivation spans the first two rationale slots and differs across them only in how far the resulting conditional reaches — constraints the designer never chose carry it as far as they hold, problem-local constraints stop at problems that share them.
+
+Inheritance is not a slot in that triple at all. It is a statement about where the *rationale* came from, and its defect is precisely that the triple arrives unlabelled. That is the cost hidden in the secondhand purchase. You acquire the split without its per-boundary rationale. The source's inherited constraints and its local requirements arrive bundled and indistinguishable, so the borrowed carve looks uniformly load-bearing when part of it was only ever answering conditions in the source domain. Telling which parts those were is work the borrowing does not come with.
+
+This is why an ontology and a technique face different bars. [Adoption bars set by source field](./programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must.md) ask whether the borrowing domain is mechanistically close enough for its methods to transfer. A technique can settle that by working. An ontology cannot: it transfers by continuing to cut at places that matter, which is a claim about the target domain's structure, not about the technique's fit. Closeness of fields is evidence for it and not a substitute.
+
+## Two instances, one system, both warrants
+
+[Representational form](./definitions/representational-form.md) is born derived. Its three categories are generated by two axes — whether a defined consumer assigns consequences to the artifact, and whether there is a localized unit carrying the content. The derivation buys what a list of three categories with three attached rules would not: the boundary is stated ahead of the failure — the fourth cell is empty in this domain rather than impossible, so the carve holds while agent systems retain nothing of vector-symbolic shape and gains a form if they do — and the downstream read/test/probe rule falls out of the axes instead of being stipulated. What remains unearned is the axes themselves: nothing has yet tested whether consequence-assignment and localization are the distinctions that matter, and the derivation has relocated the scope question to exactly that spot.
+
+[Reflective system](./definitions/reflective-system.md) is born inherited. Causal connection, self-representation, and theory-relativity come from Maes 1988 with the Smith 1984 lineage behind them, carried as `derived-from` edges to the source ingests. The provenance record separates the purchase from the extensions: what was inherited is listed, and retrieval-as-causal-connection is named as Commonplace's own with no sample behind it. The bought sample covers interpreters and metaobject protocols, where the causal wire is exhaustive; whether the criteria still carve when the wire is best-effort discovery is outside what was purchased, so the note has to argue it separately — and does, in its own section. The relocation is visible in the document's structure: the untested part has its own heading.
+
+## Scope
+
+- Provenance is not correctness, and warrant is not earning. A derived carve can be derived from the wrong axes, an inherited one can come from an ontology well tested against questions nobody asks any more, and a free one may be right. Provenance says what the scope assertion rests on and where its test lives — nothing more.
+- **"Tested" is the weak joint of inheritance.** Nothing here supplies a criterion for it, and longevity is a bad proxy: an ontology can survive because it was never probed, which is the same failure as a reach claim no test could have refuted. The purchase is only as good as the testing behind it, and the buyer usually cannot audit that.
+- The provenances are not exclusive. Re-deriving a borrowed carve from local constraints is the strongest position available, and the most expensive; it is also hard to distinguish from rationalizing the borrowed split after the fact, which inherits the [worse-than-none asymmetry](./use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md) that unfaithful rationale carries.
+- **Commonplace has not demonstrated that this transfers.** Two instances, authored inside the system that states the claim, assessed by nobody outside it. What they establish is that both warrants are recordable and that the record makes departures auditable — not that recording them produces better carves, and not that the discipline survives contact with a designer who wants the carve they already had.
+- An earlier version of this note titled derivation and inheritance as *earning* explanatory-reach. That contradicted the criterion the [bitter-lesson note](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md) fixes — earned means tested against evidence that could have refuted the claim, and a derivation is not a test — and its exactly-three trichotomy left no status for a carve born free that earned its scope through use, the very career an automated search loop depends on. Separating warrant from earning is the correction.
+
+## Open Questions
+
+- What would make "already tested" checkable by a borrower who cannot re-run the source field's cases — is there anything short of finding a case that should have broken the original carve and did not?
+- Whether a re-derivation of a borrowed carve can be separated from a rationalization of it by any means other than intervention on the stated constraint.
+- Whether "stay replaceable" has an operational form — a position a free-choice carve must not occupy, a cost ceiling — or whether it stays advice that loses to the first artifact that cites it.
+- What makes a sample of contexts *discriminating* rather than merely accumulated — the extensional route earns only as fast as its sample could refute, and nothing here says when varied use crosses that line.
+
+---
+
+Relevant Notes:
+
+- [Use tests a decomposition locally; retained rationale is what makes transfer testable](./use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md) — extends: supplies the local-versus-transfer gap and the intensional/extensional routes this note grades as warrants, with inheritance added as the secondhand extensional purchase
+- [Reach-assessment](./definitions/reach-assessment.md) — defined-in: the criterion "earned" answers to — a claim tested against evidence that could have refuted it
+- [The bitter lesson selects against unearned reach, not against structure](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md) — grounds: asserted-versus-tested scope as the property scale selects on, and the search loop whose free-born carves must earn extensionally
+- [Programming patterns get a fast pass but other borrowed ideas must earn first-principles support](./programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must.md) — contrasts: sets adoption bars per source field for techniques, where this sets the bar for ontologies by whether the constraints behind the carve still hold
+- [Scenario decomposition drives architecture](./scenario-decomposition-drives-architecture.md) — contrasts: a carve derived from problem-local requirements with nothing borrowed, which is why the rationale triple's middle slot does not map onto inheritance
+- [Representational form](./definitions/representational-form.md) — grounds: worked instance of conditional warrant, where two axes generate the categories, the empty cell, and the downstream inspection rule — and relocate the untested part to the axes
+- [Reflective system](./definitions/reflective-system.md) — grounds: worked instance of transferred warrant, where the purchased criteria and the local extensions are separated in an auditable provenance record
