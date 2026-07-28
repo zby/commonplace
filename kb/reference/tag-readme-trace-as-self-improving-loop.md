@@ -33,8 +33,8 @@ Relevant Notes:
 - [Commonplace as a reflective self-improving system](./commonplace-as-a-reflective-system.md) — part-of: the classification and allocation profile this reading supports
 - [The tag-readme change as an observed causal-connection trace](./tag-readme-trace-observed-causal-connection.md) — part-of: the trace this reading interprets
 - [Where change candidates come from in Commonplace](./where-change-candidates-come-from-in-commonplace.md) — part-of: surveys the wider set of candidate-forming mechanisms the agent's role in Search is one instance of
-- [Methodological and computational closure track different changes](../notes/methodological-and-computational-closure-track-different-changes.md) — grounds: why actor allocation is reported separately from the pathway's reflectivity
-- [Self-improving system](../notes/definitions/self-improving-system.md) — rationale: the definition this trace is read against
-- [A proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — rationale: the search/evaluation/retention grid used here
-- [warranted autonomy is bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) — rationale: why the human gates sit where the oracle runs out
-- [stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md) — rationale: the improvement objective the loop aims at
+- [Methodological and computational closure track different changes](../notes/methodological-and-computational-closure-track-different-changes.md) — rests-on: why actor allocation is reported separately from the pathway's reflectivity
+- [Self-improving system](../notes/definitions/self-improving-system.md) — rests-on: the definition this trace is read against
+- [A proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — rests-on: the search/evaluation/retention grid used here
+- [warranted autonomy is bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) — rests-on: why the human gates sit where the oracle runs out
+- [stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md) — rests-on: the improvement objective the loop aims at

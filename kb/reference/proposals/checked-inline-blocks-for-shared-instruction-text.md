@@ -105,9 +105,9 @@ Choosing the exact marker syntax, defining a general natural-language module sys
 
 Relevant Notes:
 
-- [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rationale: rules out a trusted but unchecked inline copy and supplies the deterministic-oracle boundary
-- [Natural-language content lacks reliable dereference, so facts need reinforcement at point of use](../../notes/prose-has-no-dereference-reinforce-facts-at-point-of-use.md) — rationale: explains why linking to shared prose does not reliably place it in the consuming context
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) — rationale: frames literal insertion of already-known instruction content as a context-shaping operation
-- [Indirection is costly in LLM instructions](../../notes/indirection-is-costly-in-llm-instructions.md) — rationale: accounts for the execution cost of making a delegated writer follow an additional instruction reference
+- [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: rules out a trusted but unchecked inline copy and supplies the deterministic-oracle boundary
+- [Natural-language content lacks reliable dereference, so facts need reinforcement at point of use](../../notes/prose-has-no-dereference-reinforce-facts-at-point-of-use.md) — rests-on: explains why linking to shared prose does not reliably place it in the consuming context
+- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) — rests-on: frames literal insertion of already-known instruction content as a context-shaping operation
+- [Indirection is costly in LLM instructions](../../notes/indirection-is-costly-in-llm-instructions.md) — rests-on: accounts for the execution cost of making a delegated writer follow an additional instruction reference
 - [Generate KB skills at build time, don't parameterise them](../../notes/generate-instructions-at-build-time.md) — alternative: grounds the generated-artifact option and its standalone-consumer property
 - [ADR 022 — Active vocabulary and write-path first mentions](../adr/022-active-vocabulary-and-write-path-first-mentions.md) — current-state: establishes `cp-skill-write` as the operational home for universal first-mention authoring behavior

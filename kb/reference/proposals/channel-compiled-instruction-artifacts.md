@@ -86,9 +86,9 @@ Historical command examples outside instructions and promoted skills; mechanical
 
 Relevant Notes:
 
-- [Generate KB skills at build time, don't parameterise them](../../notes/generate-instructions-at-build-time.md) — rationale: the adopted claim this extends from paths to execution channel, including the standalone-canonical-form rule
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) — rationale: the test for what belongs at build time, and the validity-window obligation a compiled artifact inherits
-- [Indirection is costly in LLM instructions](../../notes/indirection-is-costly-in-llm-instructions.md) — rationale: why an unresolved branch costs on every read
-- [Operative change](../../notes/definitions/operative-change.md) — rationale: the consumer/channel/force test the Operativity section applies
-- [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rationale: the constraint a compiled artifact must satisfy
+- [Generate KB skills at build time, don't parameterise them](../../notes/generate-instructions-at-build-time.md) — rests-on: the adopted claim this extends from paths to execution channel, including the standalone-canonical-form rule
+- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) — rests-on: the test for what belongs at build time, and the validity-window obligation a compiled artifact inherits
+- [Indirection is costly in LLM instructions](../../notes/indirection-is-costly-in-llm-instructions.md) — rests-on: why an unresolved branch costs on every read
+- [Operative change](../../notes/definitions/operative-change.md) — rests-on: the consumer/channel/force test the Operativity section applies
+- [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: the constraint a compiled artifact must satisfy
 - [Instruction generation](../instruction-generation.md) — current-state: the shipped build step this proposal extends

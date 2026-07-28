@@ -50,6 +50,6 @@ Both are agent-operated markdown knowledge systems with types, links, skills, ma
 Relevant Notes:
 
 - [GBrain (agent-memory review)](../agent-memory-systems/reviews/gbrain.md) — contains: the memory, retrieval, and trace-learning subsystem this analysis deliberately excludes
-- [the practical scheduler is the host language](../notes/the-practical-scheduler-is-the-host-language.md) — rationale: the dream cycle and Minions instantiate host-language `select` with run-state reified only where durability forces it
-- [orchestration strategies and run-state have opposite persistence economics](../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md) — rationale: Minions journals K in Postgres while strategies stay versioned markdown/code
+- [the practical scheduler is the host language](../notes/the-practical-scheduler-is-the-host-language.md) — rests-on: the dream cycle and Minions instantiate host-language `select` with run-state reified only where durability forces it
+- [orchestration strategies and run-state have opposite persistence economics](../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md) — rests-on: Minions journals K in Postgres while strategies stay versioned markdown/code
 - [Claude Code dynamic workflows](./claude-code-dynamic-workflows.md) — see-also: the inverse authorship/persistence answer — model-authored disposable orchestrators inside the harness versus a shipped durable orchestrator outside it

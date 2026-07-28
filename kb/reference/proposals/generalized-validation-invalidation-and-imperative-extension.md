@@ -76,9 +76,9 @@ Collection ownership remains closed until a mechanical relation is inherently co
 
 Relevant Notes:
 
-- [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rationale: why a mark requires deterministic recomputation
+- [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: why a mark requires deterministic recomputation
 - [The validation contract](../validation-contract.md) — evidenced-by: the shipped owner/mechanism boundary this proposal may eventually extend
 - [ADR 050 — Validation runs share parsed artifacts and collection indexes](../adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md) — partial-adoption: ships the artifact-anchored evaluation model while leaving invalidation and authoring generalization deferred
 - [ADR 038 — Type-conformance reviews use the type spec as the gate](../adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — evidenced-by: the existing semantic extension path and why deterministic marks are the remaining gap
-- [Collections never own frontmatter semantics](../collections-never-own-frontmatter-semantics.md) — rationale: the boundary collection-owned checks would have to challenge
-- [First principles are inherited constraints, not design choices](../../notes/first-principles-are-inherited-constraints-not-design-choices.md) — rationale: separates the schema's inherited dereferencing limit from optional extension machinery
+- [Collections never own frontmatter semantics](../collections-never-own-frontmatter-semantics.md) — compares-with: the boundary collection-owned checks would have to challenge
+- [First principles are inherited constraints, not design choices](../../notes/first-principles-are-inherited-constraints-not-design-choices.md) — rests-on: separates the schema's inherited dereferencing limit from optional extension machinery

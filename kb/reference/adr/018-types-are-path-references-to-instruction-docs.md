@@ -151,7 +151,7 @@ The implementation creates/fuses all type instruction docs, rewrites all explici
 
 Relevant Notes:
 
-- [ADR 009 — link relationship semantics](../../reference/adr/009-link-relationship-semantics.md) — grounds: the linking vocabulary embedded in `cp-skill-write/SKILL.md`; unchanged by this ADR.
+- [ADR 009 — link relationship semantics](../../reference/adr/009-link-relationship-semantics.md) — evidenced-by: the linking vocabulary embedded in `cp-skill-write/SKILL.md`; unchanged by this ADR.
 - [ADR 016 — custom types use template/instruction pairs](./016-custom-types-use-template-instruction-pairs.md) — partially superseded: the three-file split fuses to one authoring file plus a sibling schema.
 - [ADR 002 — inline global types in writing guide](./002-inline-global-types-in-writing-guide.md) — affected at `note` migration.
-- [linking-theory](../../notes/linking-theory.md) — grounds: decision-cost model for keeping context reads cheap.
+- [linking-theory](../../notes/linking-theory.md) — rests-on: decision-cost model for keeping context reads cheap.

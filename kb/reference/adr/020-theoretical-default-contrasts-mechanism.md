@@ -11,9 +11,9 @@ status: accepted
 **Date:** 2026-04-19
 **Extends:** [ADR-009](./009-link-relationship-semantics.md)
 **Depends on:** [ADR-019](./019-collection-owned-link-vocabulary.md)
-**Amended by:** [ADR-058](./058-directional-identifiers-use-source-as-subject.md) — directional identifiers now use the source as grammatical subject; the old `evidence` identifier is retired
+**Amended by:** [ADR-058](./058-directional-identifiers-use-source-as-subject.md) — directional identifiers now use the source as grammatical subject; the old `evidence` identifier is retired; [ADR-060](./060-rationale-becomes-rests-on-and-off-pattern-grounds-are-reclassified.md) — `rationale` becomes `rests-on` while canonical `grounds` remains deferred
 
-**Scope.** This ADR's additions land in the theoretical-register default template (recorded in the catalogue at [`link-vocabulary.md`](../link-vocabulary.md)) and are adopted by collections whose `COLLECTION.md` includes them in its authorised sets. Cross-register labels (`rationale`, `evidenced-by`, `is-evidence-for`, `procedure`, `operates-on`, `defined-in`) are a separate concern handled by the catalogue and selected per destination in each `COLLECTION.md`; this ADR does not speak to them.
+**Scope.** This ADR's additions land in the theoretical-register default template (recorded in the catalogue at [`link-vocabulary.md`](../link-vocabulary.md)) and are adopted by collections whose `COLLECTION.md` includes them in its authorised sets. Cross-register labels (`rests-on`, `evidenced-by`, `is-evidence-for`, `procedure`, `operates-on`, `defined-in`) are a separate concern handled by the catalogue and selected per destination in each `COLLECTION.md`; this ADR does not speak to them.
 
 ## Context
 
@@ -87,7 +87,7 @@ The audit surfaced off-vocabulary labels that fold cleanly into existing theoret
 - `complements`, `consequence`, `sibling` → `extends` or `see-also` for pure navigation
 - `tension`, `challenges` → `contradicts`
 
-Not folded: `rationale` and `justification` are **kept distinct** in the catalogue as cross-register labels (descriptive / prescriptive → theoretical, with the reader-need *"why does this design/rule exist?"*). They do not collapse into `grounds`, which is intra-theoretical.
+Not folded: the relation then named `rationale` (later migrated to `rests-on` by ADR 060) and `justification` are **kept distinct** from `grounds`: cross-register design/rule dependency answers *"why does this design/rule exist?"*, while `grounds` is intra-theoretical premise verification.
 
 ## Consequences
 
@@ -119,6 +119,6 @@ Relevant Notes:
 
 - [ADR 009 — link relationship semantics](./009-link-relationship-semantics.md) — extended by this ADR; its five-label core stays canonical
 - [ADR 019 — collection-owned link vocabulary](./019-collection-owned-link-vocabulary.md) — depends-on: this ADR's additions land inside the architecture ADR 019 specifies
-- [linking theory](../../notes/linking-theory.md) — grounds: the decision-cost model this vocabulary instantiates
+- [linking theory](../../notes/linking-theory.md) — rests-on: the decision-cost model this vocabulary instantiates
 - [link-vocabulary report](../../reports/link-vocabulary.md) — frozen audit snapshot the analysis behind this decision was derived from
 - [inbound and outbound links serve asymmetric reader needs](../../notes/inbound-and-outbound-links-serve-asymmetric-reader-needs.md) — the inverse-view rationale that makes directional asymmetry workable

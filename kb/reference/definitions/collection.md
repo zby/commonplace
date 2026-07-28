@@ -14,14 +14,13 @@ A descendant directory with no `COLLECTION.md` of its own is an area of the encl
 
 Tools may also treat collections as operational units, but those roles vary by tool and remain secondary to the local authoring contract.
 
-The current source-repo collections include `kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/sources/`, and `kb/work/`. Installed projects expose selected shipped source collections under the `kb/commonplace/` namespace, such as `kb/commonplace/notes/`.
+The current source-repo collections include `kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/sources/`, `kb/types/`, and `kb/work/`. `kb/types/` is both the global type layer and a collection: its `COLLECTION.md` governs authoring and outbound links, while its type specs and schemas govern artifact structure and semantics. Installed projects expose selected shipped source collections under the `kb/commonplace/` namespace, such as `kb/commonplace/notes/`.
 
 ## Exclusions
 
 These are not exceptions to the definition; they are common near-misses that do not have their own `COLLECTION.md`.
 
 - `kb/commonplace/` is a namespace for shipped collections, not a collection.
-- `kb/types/` is the global type surface, not a collection.
 - `kb/work/<workshop>/` directories are areas inside the `kb/work/` collection, governed by `kb/work/COLLECTION.md`.
 
 ## Misuse Cases
@@ -36,4 +35,4 @@ Relevant Notes:
 - [available-types](../available-types.md) — extends: the shipped type inventory that collections instantiate
 - [two-context-boundaries-govern-collection-operations](../../notes/two-context-boundaries-govern-collection-operations.md) — example: one operational role that collection boundaries can play for note collections
 - [a functioning KB needs a workshop layer not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — contrasts: library collections vs workshop directories
-- [why directories despite their costs](../../notes/why-directories-despite-their-costs.md) — grounds: the general argument for directory-based organisation that collections make load-bearing
+- [why directories despite their costs](../../notes/why-directories-despite-their-costs.md) — rests-on: the general argument for directory-based organisation that collections make load-bearing

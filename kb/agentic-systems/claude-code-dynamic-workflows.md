@@ -66,8 +66,8 @@ Relevant Notes:
 
 - [Claude Code dynamic workflows docs](../sources/claude-code-dynamic-workflows-docs.md) — derived-from: the official docs snapshot this analysis is grounded in
 - [A harness for every task — dynamic workflows](../sources/a-harness-for-every-task-dynamic-workflows.md) — see-also: practitioner walkthrough of the same feature
-- [the practical scheduler is the host language](../notes/the-practical-scheduler-is-the-host-language.md) — rationale: the minimal surface (returning primitive, host-language `select`/`K`, reify-`K`-when-forced) this API approximates and deviates from
-- [LLM frameworks should keep the tool loop optional](../notes/llm-frameworks-should-keep-the-tool-loop-optional.md) — rationale: the design stance this feature partially ships; the analysis feeds back as evidence there
+- [the practical scheduler is the host language](../notes/the-practical-scheduler-is-the-host-language.md) — rests-on: the minimal surface (returning primitive, host-language `select`/`K`, reify-`K`-when-forced) this API approximates and deviates from
+- [LLM frameworks should keep the tool loop optional](../notes/llm-frameworks-should-keep-the-tool-loop-optional.md) — is-evidence-for: the design stance this feature partially ships; the analysis feeds back as evidence there
 - [any symbolic program with LLM calls is a select/call program](../notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md) — see-also: the lemma the mapping table instantiates — JS control flow playing `select`, script variables holding `K`
 - [agent orchestration occupies a multi-dimensional design space](../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) — see-also: the four withholdings read as independent design axes; this note names that independence
 - [RLM has the model write ephemeral orchestrators over sub-agents](../notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) — see-also: the same authorship model with persistence added

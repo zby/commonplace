@@ -28,11 +28,12 @@ The shipped collections:
 | `kb/instructions/` | prescriptive | executability + precision |
 | `kb/agent-memory-systems/` | descriptive (with root-level analysis exceptions) | fidelity + economy |
 | `kb/sources/` | descriptive (ingested external content) | faithful capture |
+| `kb/types/` | global system-definition contracts | self-contained checkability + economy |
 | `kb/work/` | catch-all workshop layer | move active work forward; extract durable conclusions |
 
 Each collection's writing conventions live in its own `COLLECTION.md` at the collection root: title conventions, quality discipline, what does and does not belong, and the outbound linking table for that register. [ADR-017](./adr/017-collection-md-is-the-register-convention-boundary.md) is the decision that pinned register conventions to `COLLECTION.md` rather than to the type definitions. The contract is enforceable: each note in a collection has a derivable collection-conformance review pair whose gate is the `COLLECTION.md` itself, so editing a collection contract stales exactly that collection's notes ([ADR-041](./adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)).
 
-`kb/types/` sits at the top level under `kb/` but is not a collection in this sense — it is the global type layer. Namespace directories such as installed `kb/commonplace/` are likewise not collections unless they carry their own `COLLECTION.md`; their descendant `COLLECTION.md`-bearing directories are the collections. Some collections, such as `kb/instructions/`, are framework-shipped rather than primarily practitioner-authored, but they still carry authored artifacts and local authoring/routing contracts. See the [collection definition](./definitions/collection.md) for the full boundary.
+`kb/types/` is both the global type layer and a collection. Its `COLLECTION.md` governs authoring and outbound links for the global type-spec artifacts; it does not own or reinterpret frontmatter semantics, which remain self-contained in each type spec and schema. Namespace directories such as installed `kb/commonplace/` are not collections unless they carry their own `COLLECTION.md`; their descendant `COLLECTION.md`-bearing directories are the collections. Some collections, such as `kb/instructions/`, are framework-shipped rather than primarily practitioner-authored, but they still carry authored artifacts and local authoring/routing contracts. See the [collection definition](./definitions/collection.md) for the full boundary.
 
 ## Types
 
@@ -49,7 +50,7 @@ Types carry two contract layers. The structural layer — required frontmatter a
 
 ## Cross-collection linking
 
-The collection determines the *register* of an artifact, and links between registers carry different meaning than links inside one. A theoretical note linking to a descriptive note is citing evidence; a descriptive note linking to a theoretical note is citing rationale.
+The collection determines the *register* or content role of an artifact, and links between roles carry different meaning than links inside one. A theoretical note linking to a descriptive note may cite evidence; a descriptive or system-definition artifact linking to a theoretical note may assert that it `rests-on` the target claim.
 
 Each `COLLECTION.md`'s "Outbound linking conventions" section is **the single authoritative source** for that collection's outbound rules. The section is organised **per destination** — normally one block per destination collection the source may link to, plus the reserved `external` destination when the collection authorizes links outside the KB. The destination wildcard `any` authorizes every destination, including `external`; if neither `external` nor `any` appears, external links are unauthorized. Each destination block declares two things:
 
@@ -84,8 +85,8 @@ Relevant Notes:
 - [type-loading](./type-loading.md) — part-of: the resolution mechanics for path-valued `type:` pointers and their type-spec docs
 - [definitions/collection](./definitions/collection.md) — defined-in: the precise definition of "collection" with scope, exclusions, and misuse cases
 - [link-vocabulary](./link-vocabulary.md) — part-of: the label catalogue and authoring guidance COLLECTION.md authors consult when writing outbound rules
-- [ADR-012: types for structure, traits for review](./adr/012-types-for-structure-traits-for-review.md) — rationale: the decision that keeps structural validation deterministic and traits as a review-routing axis; its traits-only semantic boundary is amended by ADR-038/041
-- [ADR-017: COLLECTION.md is the register convention boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — rationale: the decision to host register conventions in `COLLECTION.md` rather than in type definitions
-- [ADR-019: collection-owned link vocabulary](./adr/019-collection-owned-link-vocabulary.md) — rationale: the decision pinning the per-destination outbound structure inside COLLECTION.md and retiring the compiled topology
-- [ADR-038: type-conformance reviews use the type spec as the gate](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — rationale: the decision that makes the type spec's semantic layer enforceable as a review pair
-- [ADR-041: collection-conformance reviews use COLLECTION.md as the gate](./adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md) — rationale: the decision that makes the collection contract enforceable the same way
+- [ADR-012: types for structure, traits for review](./adr/012-types-for-structure-traits-for-review.md) — evidenced-by: the decision that keeps structural validation deterministic and traits as a review-routing axis; its traits-only semantic boundary is amended by ADR-038/041
+- [ADR-017: COLLECTION.md is the register convention boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — evidenced-by: the decision to host register conventions in `COLLECTION.md` rather than in type definitions
+- [ADR-019: collection-owned link vocabulary](./adr/019-collection-owned-link-vocabulary.md) — evidenced-by: the decision pinning the per-destination outbound structure inside COLLECTION.md and retiring the compiled topology
+- [ADR-038: type-conformance reviews use the type spec as the gate](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — evidenced-by: the decision that makes the type spec's semantic layer enforceable as a review pair
+- [ADR-041: collection-conformance reviews use COLLECTION.md as the gate](./adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md) — evidenced-by: the decision that makes the collection contract enforceable the same way

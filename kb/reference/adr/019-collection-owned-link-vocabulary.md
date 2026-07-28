@@ -10,7 +10,7 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-04-22
 **Extends:** [ADR-009](./009-link-relationship-semantics.md), [ADR-017](./017-collection-md-is-the-register-convention-boundary.md)
-**Amended by:** [ADR-059](./059-external-is-a-reserved-outbound-destination.md) — destinations may also be the reserved `external` class, still authorized by the source collection
+**Amended by:** [ADR-059](./059-external-is-a-reserved-outbound-destination.md) — destinations may also be the reserved `external` class, still authorized by the source collection; [ADR-060](./060-rationale-becomes-rests-on-and-off-pattern-grounds-are-reclassified.md) — the global type layer gains a collection contract and `rationale` becomes `rests-on`
 
 ## Context
 
@@ -94,6 +94,6 @@ Audit outcomes applied to the library drafts:
 - [ADR-009: link relationship semantics](./009-link-relationship-semantics.md) — foundation: the core vocabulary that this ADR scopes per collection
 - [ADR-017: COLLECTION.md is the register convention boundary](./017-collection-md-is-the-register-convention-boundary.md) — foundation: the convention boundary this ADR specifies the internal structure of
 - [ADR-020: theoretical-default additions — contrasts and mechanism](./020-theoretical-default-contrasts-mechanism.md) — extends ADR 009 within the theoretical default template this ADR scopes
-- [Links encode conditional possibilities, not obligations](../../notes/links-encode-conditional-possibilities-not-obligations.md) — grounds: the reader-need theory the label discipline rests on
+- [Links encode conditional possibilities, not obligations](../../notes/links-encode-conditional-possibilities-not-obligations.md) — rests-on: the reader-need theory the label discipline rests on
 - [Register](../../notes/definitions/text-contract.md) — defined-in: content-mode groupings used to organise the catalogue
 - [link-vocabulary.md](../link-vocabulary.md) — the catalogue that COLLECTION.md authors consult

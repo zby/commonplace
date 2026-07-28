@@ -69,9 +69,9 @@ The hybrid is plausible: keep a small always-on base set, load registry gates un
 
 Relevant Notes:
 
-- [an accepted edit verifies the change, not the rule](../../notes/an-accepted-edit-verifies-the-change-not-the-rule.md) — rationale: the oracle asymmetry that dictates candidate status, promotion, and rollback
-- [spec-mining-as-codification](../../notes/spec-mining-as-codification.md) — rationale: mining reusable checks from observed accepted behavior is the general move this design instantiates
-- [instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md) — rationale: budget-bounded selective loading instead of always-growing review prompts
-- [methodology-enforcement-is-constraining](../../notes/methodology-enforcement-is-constraining.md) — rationale: the maturation gradient gates climb from candidate toward deterministic check
+- [an accepted edit verifies the change, not the rule](../../notes/an-accepted-edit-verifies-the-change-not-the-rule.md) — rests-on: the oracle asymmetry that dictates candidate status, promotion, and rollback
+- [spec-mining-as-codification](../../notes/spec-mining-as-codification.md) — rests-on: mining reusable checks from observed accepted behavior is the general move this design instantiates
+- [instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md) — rests-on: budget-bounded selective loading instead of always-growing review prompts
+- [methodology-enforcement-is-constraining](../../notes/methodology-enforcement-is-constraining.md) — rests-on: the maturation gradient gates climb from candidate toward deterministic check
 - [review architecture](../review-architecture.md) — part-of: the shipped review subsystem this loop would extend
-- [LLM generation relaxes a goal it can't satisfy and hides the constraint a human writer stalls on](../../notes/llm-generation-relaxes-goals-where-human-writing-stalls.md) — rationale: focused review passes can recover weak joints that diffuse all-purpose review reads past
+- [LLM generation relaxes a goal it can't satisfy and hides the constraint a human writer stalls on](../../notes/llm-generation-relaxes-goals-where-human-writing-stalls.md) — rests-on: focused review passes can recover weak joints that diffuse all-purpose review reads past

@@ -1,6 +1,6 @@
 # Directional label grammar
 
-**Status:** adopted by [ADR 058](../../reference/adr/058-directional-identifiers-use-source-as-subject.md). The inventory below records the pre-adoption audit; other failing identifiers remain separately scoped migration debt.
+**Status:** adopted by [ADR 058](../../reference/adr/058-directional-identifiers-use-source-as-subject.md). The evidence pair is implemented by ADR 058 and the rationale relation by [ADR 060](../../reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-are-reclassified.md); other failing identifiers remain separately scoped migration debt.
 
 ## Candidate invariant
 
@@ -73,7 +73,7 @@ Initial high-confidence cases:
 | `grounds` | target grounds source | fails current voice |
 | `enables` | target enables source | fails current voice |
 | `mechanism` | target is the mechanism for source | fails current voice |
-| `rationale` | target is the rationale for source | fails current voice |
+| `rationale` | target is the rationale for source | failed; migrated to source-as-subject `rests-on` by ADR 060 |
 | `evidence` | target is evidence for source | fails current voice |
 | `procedure` | target is the procedure for acting on source | fails current voice |
 | `precondition` | target is a precondition for source | fails current voice |
@@ -105,6 +105,16 @@ Both complete the source-as-subject assertion without reversing endpoints. The e
 
 The pair covers corroboration, qualification, and boundary evidence. Its distinction from `grounds`, contradiction/counterevidence, and off-vocabulary `supports` remains a neighboring-label concern; those relations were not changed in this migration.
 
+## Adopted rationale successor
+
+ADR 060 retires `rationale` and adopts `rests-on`:
+
+| identifier | assertion template |
+|---|---|
+| `rests-on` | design, description, procedure, rule, or system-definition source `rests-on` theoretical target |
+
+The source depends on the target claim strongly enough that changing or rejecting the target triggers reconsideration of the source. This remains distinct from note→note premise verification under the still-unmigrated `grounds` identifier.
+
 ## Adoption status
 
-Accepted and implemented for the evidence pair by ADR 058, the shared catalogue, collection contracts, and corpus migration. The invariant governs all future directional identifiers, while each pre-existing failure receives its own migration plan rather than a silent reinterpretation.
+Accepted and implemented for the evidence pair by ADR 058 and for `rests-on` by ADR 060, the shared catalogue, collection contracts, and corpus migrations. The invariant governs all future directional identifiers, while each remaining pre-existing failure receives its own migration plan rather than a silent reinterpretation.

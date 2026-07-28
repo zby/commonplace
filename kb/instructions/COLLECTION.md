@@ -14,7 +14,7 @@ Tests for precision:
 
 **Frontloading.** Self-contained enough for an agent with no prior context. Define terms inline; don't assume the reader has loaded other KB documents.
 
-**Reasoning constraint.** Cut explanations of *why* each step exists from the instruction body. If worth preserving, record in a theory note and link via `rationale` (for meta-readers only). Keep only enough reasoning for edge cases and decisions.
+**Reasoning constraint.** Cut explanations of *why* each step exists from the instruction body. If worth preserving, record in a theory note and link via `rests-on` (for meta-readers only). Keep only enough reasoning for edge cases and decisions.
 
 **Instruction duality.** These docs are both content and working system — changing an instruction changes agent behaviour immediately. Treat edits as deployments, not documentation updates: before changing one, name what consumes it and through which channel (the type spec's Operativity section states the test); the edit is live for the next agent that loads the text, with no separate release step. The same duality means an instruction nothing loads is inert — it deploys to no one, and nothing will report that (rationale: [operative change](../notes/definitions/operative-change.md)).
 
@@ -30,7 +30,7 @@ Tests for precision:
 
 - **Context-transfer** — sub-agent invocations (link is a bootstrap for a new, clean context, not a required read in the current one).
 - **Conditional deviations** — error procedures, specialised branches, paths followed only on a specific trigger. Frontloading every deviation would bloat the main path.
-- **Meta-reader needs** — `rationale` links serve reviewers and developers updating the procedure, never executing agents.
+- **Meta-reader needs** — `rests-on` links serve reviewers and developers updating the procedure, never executing agents.
 
 Author each outbound link from the reader need at its source. A reciprocal link is allowed when the reverse direction independently helps readers, subject to this collection's exceptional-link posture; never add one merely to mirror an existing edge. Find inbound links on demand with repository search; no backlink view is currently generated. Inline for strongest commitment, with a connective word that fits (e.g. `after [title](path)`, `if [title](path)`). Footer for labelled — `- [title](path) — label: context phrase`.
 
@@ -46,7 +46,7 @@ Scan `kb/instructions/`, `kb/notes/`, and `kb/reference/` for link targets. Do n
 | `applies-when` | instructions | conditional branch; reader follows only if the trigger applies |
 | `see-also` | instructions | reserved for error procedures and conditional fallbacks |
 | `operates-on` | reference | the system component this procedure acts on |
-| `rationale` | notes | (meta-reader) the theoretical claim this rule rests on |
+| `rests-on` | notes | (meta-reader) this procedure or rule depends on the target theoretical claim |
 
 ## Frontmatter
 

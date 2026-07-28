@@ -58,6 +58,6 @@ Under every option, one piece of work is identical and can ship first: align the
 
 Relevant Notes:
 
-- [Stale indexes are worse than no indexes](../../notes/stale-indexes-are-worse-than-no-indexes.md) — rationale: a mark whose enforced scope is narrower than its stated scope is a marked-but-incomplete head, the exact catastrophic state the marks exist to prevent
-- [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rationale: scope is a parameter of the derived claim, so it must be part of what the check enforces or the claim must not be made
-- [Load-bearing vocabulary collisions should be prevented or visibly scoped at write time](../../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — rationale: collection-local tag namespaces legitimize same-string-different-sense drift, which is this invariant applied to tag strings
+- [Stale indexes are worse than no indexes](../../notes/stale-indexes-are-worse-than-no-indexes.md) — rests-on: a mark whose enforced scope is narrower than its stated scope is a marked-but-incomplete head, the exact catastrophic state the marks exist to prevent
+- [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: scope is a parameter of the derived claim, so it must be part of what the check enforces or the claim must not be made
+- [Load-bearing vocabulary collisions should be prevented or visibly scoped at write time](../../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — rests-on: collection-local tag namespaces legitimize same-string-different-sense drift, which is this invariant applied to tag strings

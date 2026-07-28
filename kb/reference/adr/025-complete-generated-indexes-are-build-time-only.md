@@ -63,8 +63,8 @@ Deferred (mechanism, not direction):
 ## Links
 
 - [003-connect-skill-discovery-strategy](./003-connect-skill-discovery-strategy.md) — supersedes: this replaces 003's index-first primary discovery while retaining its curated-focused-index surface
-- [context-efficiency-is-the-central-design-concern-in-agent-systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — rationale: the per-fork cost of a whole-index read is what makes retiring it worthwhile
-- [two-context-boundaries-govern-collection-operations](../../notes/two-context-boundaries-govern-collection-operations.md) — rationale: per-fork load is the boundary this decision optimizes
-- [feasibility-is-the-heaviest-forks-net-load](../../notes/feasibility-is-the-heaviest-forks-net-load.md) — rationale: feasibility is set by the heaviest fork's net load, which the complete-index read inflates
-- [index-curation-adds-orientation-that-generation-cannot-produce](../../notes/index-curation-adds-orientation-that-generation-cannot-produce.md) — rationale: why curated heads stay committed while generated listings move to build time
+- [context-efficiency-is-the-central-design-concern-in-agent-systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — rests-on: the per-fork cost of a whole-index read is what makes retiring it worthwhile
+- [two-context-boundaries-govern-collection-operations](../../notes/two-context-boundaries-govern-collection-operations.md) — rests-on: per-fork load is the boundary this decision optimizes
+- [feasibility-is-the-heaviest-forks-net-load](../../notes/feasibility-is-the-heaviest-forks-net-load.md) — rests-on: feasibility is set by the heaviest fork's net load, which the complete-index read inflates
+- [index-curation-adds-orientation-that-generation-cannot-produce](../../notes/index-curation-adds-orientation-that-generation-cannot-produce.md) — rests-on: why curated heads stay committed while generated listings move to build time
 - [cp-skill-connect](../../instructions/cp-skill-connect/SKILL.md) — procedure: the discovery skill whose standard read path this decision rewrites

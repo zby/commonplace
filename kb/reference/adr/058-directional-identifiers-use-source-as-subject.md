@@ -10,6 +10,7 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-07-28
 **Amends:** [ADR 020](./020-theoretical-default-contrasts-mechanism.md)
+**Amended by:** [ADR 060](./060-rationale-becomes-rests-on-and-off-pattern-grounds-are-reclassified.md) — `rationale` becomes `rests-on`; off-pattern `grounds` edges are reclassified while the canonical cohort remains deferred
 
 ## Context
 
@@ -48,13 +49,13 @@ Operativity path: `cp-skill-write` and `cp-skill-connect` load each source colle
 
 Readers can interpret both new identifiers directly from source to target, and ingestion can record where evidence lands without pretending the target already uses it. Collection contracts now authorize the pair on every source→destination path in the migrated corpus. Reciprocal links remain curated rather than generated.
 
-The vocabulary temporarily contains older identifiers whose declared semantics fail the adopted grammar. That inconsistency is deliberate migration debt, not permission for new identifiers to use target-role voice. Each later directional-label migration must preserve edge conservation, independently review inverse journeys, and update its contracts and corpus together.
+The vocabulary temporarily contains older identifiers whose declared semantics fail the adopted grammar. ADR 060 resolves `rationale`; the remaining inconsistency is deliberate migration debt, not permission for new identifiers to use target-role voice. Each later directional-label migration must preserve edge conservation, independently review inverse journeys, and update its contracts and corpus together.
 
 ---
 
 Relevant Notes:
 
-- [ADR 019 — collection-owned link vocabulary](./019-collection-owned-link-vocabulary.md) — rationale: collection contracts remain the authoritative per-source authorization surface
+- [ADR 019 — collection-owned link vocabulary](./019-collection-owned-link-vocabulary.md) — implements: collection contracts remain the authoritative per-source authorization surface
 - [ADR 020 — directional asymmetry](./020-theoretical-default-contrasts-mechanism.md) — amended-by: retains selective asymmetric authoring while this decision fixes identifier grammar
 - [Link vocabulary](../link-vocabulary.md) — implements: catalogue assertion templates and reader needs for the adopted pair
-- [Links encode conditional possibilities, not obligations](../../notes/links-encode-conditional-possibilities-not-obligations.md) — rationale: each authored direction must satisfy an independent reader need
+- [Links encode conditional possibilities, not obligations](../../notes/links-encode-conditional-possibilities-not-obligations.md) — rests-on: each authored direction must satisfy an independent reader need

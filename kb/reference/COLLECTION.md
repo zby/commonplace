@@ -11,7 +11,7 @@ Tests for economy:
 - Is the same fact stated in two places? Deduplicate or link.
 - Would a table or list say this more compactly than prose?
 
-**Fidelity constraint.** Describe the system as built, even when the implementation deviates from the theory that inspired it. If the system does X but the theory says Y, describe X and note the deviation — the `rationale` link may carry the qualifier.
+**Fidelity constraint.** Describe the system as built, even when the implementation deviates from the theory that inspired it. If the system does X but the theory says Y, describe X and note the deviation — the `rests-on` link may carry the qualifier.
 
 **Proposal exception.** Design proposals — finished but unadopted designs — live only under `proposals/` and carry the collection-local `design-proposal` type. A proposal describes a design object faithfully (problem, option space, forces, free choices marked), not shipped behavior; its description leads with "Proposal:" so a reader acting on reference docs never mistakes proposed for shipped. Once adopted or retired, a proposal is extracted and moved to `proposals/archive/`, which nothing outside it links into (ADR 056). Conventions: [proposals/README.md](./proposals/README.md).
 
@@ -27,7 +27,7 @@ Exceptions: ADRs use numbered-decision format (`012-types-for-structure-traits-f
 
 Author each outbound link from the reader need at its source. A reciprocal link is allowed when the reverse direction independently helps readers; never add one merely to mirror an existing edge. Find inbound links on demand with repository search; no backlink view is currently generated. Inline for strongest commitment, with a connective word that fits the argument (e.g. `implements [title](path)`, `rests on [title](path)`, `defined in [title](path)`). Footer for labelled — `- [title](path) — label: context phrase`.
 
-Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/sources/`, and `kb/instructions/` for link targets. Do not link into `kb/work/` (workshop layer — value is consumed, not imported). The `rationale` edge to `kb/notes/` is the primary theory-ward edge; outbound edges to `kb/agent-memory-systems/`, `kb/agentic-systems/`, and `kb/sources/` are uncommon (use them when a design choice was informed by a specific external system or source).
+Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/sources/`, and `kb/instructions/` for link targets. Do not link into `kb/work/` (workshop layer — value is consumed, not imported). The `rests-on` edge to `kb/notes/` is the primary theory-ward edge; outbound edges to `kb/agent-memory-systems/`, `kb/agentic-systems/`, and `kb/sources/` are uncommon (use them when a design choice was informed by a specific external system or source).
 
 **Labels:**
 
@@ -37,7 +37,7 @@ Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 | `implements` / `implemented-by` | reference | concrete realization ↔ abstract contract |
 | `supersedes` / `superseded-by` | reference (ADR chains) | current or prior version |
 | `compares-with` | reference | compare this artifact with a peer on a named design or contract axis |
-| `rationale` | notes | this design rests on this claim |
+| `rests-on` | notes | this design, description, or decision depends on this theoretical claim |
 | `defined-in` | notes/definitions | reader may not know the term |
 | `derived-from` | sources, agent-memory, agentic-systems | this design choice is worked out from this external source/system, adding nothing beyond it — see the lineage semantics in `link-vocabulary.md` |
 | `abstracted-from` | sources, agent-memory, agentic-systems | this design choice generalizes beyond this external source/system; the source is evidence, not a generator |

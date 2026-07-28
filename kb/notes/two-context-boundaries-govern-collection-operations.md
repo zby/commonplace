@@ -67,7 +67,7 @@ This means the library/workshop separation from [a functioning KB needs a worksh
 Relevant Notes:
 
 - [areas exist because useful operations require reading notes together](./areas-exist-because-useful-operations-require-reading-notes-together.md) — extends: adds the two-boundary model to the single-constraint analysis; separates the orientation/comparative-reading tension by scale
-- [003-connect-skill-discovery-strategy](../reference/adr/003-connect-skill-discovery-strategy.md) — grounds: the connect skill's index-first approach is built on the index boundary; its scaling concerns are exactly what happens when a collection crosses that boundary
+- [003-connect-skill-discovery-strategy](../reference/adr/003-connect-skill-discovery-strategy.md) — evidenced-by: the connect skill's index-first approach is built on the index boundary; its scaling concerns are exactly what happens when a collection crosses that boundary
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — extends: quality scores are a response to the index boundary — filtering candidates when the full index exceeds productive scanning
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — foundation: context scarcity is why the boundaries exist; the volume/complexity distinction explains why the full-text boundary may not move with growing windows
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: the two boundaries define two resolution levels (index and full-text) between which the KB must support fluid switching

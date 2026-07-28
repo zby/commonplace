@@ -64,4 +64,4 @@ Relevant Notes:
 - [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — frames the timescale at which these placements adapt
 - [Constraining and extraction both trade generality for reliability, speed, and cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — the trade-off codification enacts
 - [Ephemerality is safe where embedded operational knowledge has low explanatory-reach](./ephemerality-is-safe-where-embedded-operational-knowledge-has-low.md) — extends: adds explanatory-reach as the criterion that determines when the ephemeral/accumulating fork matters
-- [The Flawed Ephemeral Software Hypothesis (Kirsch)](https://www.blackhc.net/essays/future_of_software/) — grounds: names the concrete production pressures that make accumulated artifacts beat continual re-derivation
+- [The Flawed Ephemeral Software Hypothesis (Kirsch)](https://www.blackhc.net/essays/future_of_software/) — evidenced-by: names the concrete production pressures that make accumulated artifacts beat continual re-derivation

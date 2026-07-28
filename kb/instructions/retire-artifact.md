@@ -136,4 +136,4 @@ Relevant Notes:
 - [Freshness architecture](../reference/freshness-architecture.md) — operates-on: the baseline store step 9 mutates
 - [Commands](../reference/commands.md) — operates-on: the relocation and freshness command surfaces this procedure calls
 - [Proposals](../reference/proposals/README.md) — operates-on: the contract stating which proposals are eligible to archive and what must hold afterwards
-- [Stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md) — rationale: why a dangling pointer costs more than a missing one, which is what steps 3, 6, and 8 are paying for
+- [Stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md) — rests-on: why a dangling pointer costs more than a missing one, which is what steps 3, 6, and 8 are paying for

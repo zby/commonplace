@@ -29,7 +29,7 @@ This paper presents the first systematic empirical study of AI context files (AG
 The `/connect` run (2026-03-09) found 4 existing links and 9 new connections. This source sits squarely in the KB's core territory — it provides empirical grounding for multiple theoretical claims.
 
 **Already linked** (4 notes + 2 indexes):
-- [writing-styles-are-strategies-for-managing-underspecification](../notes/writing-styles-are-strategies-for-managing-underspecification.md) — grounds: the paper is the primary source; note was derived from the paper's five-style taxonomy
+- [writing-styles-are-strategies-for-managing-underspecification](../notes/writing-styles-are-strategies-for-managing-underspecification.md) — is-evidence-for: the paper is the primary source; note was derived from the paper's five-style taxonomy
 - [human-llm-differences-are-load-bearing](../notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — validates: paper explicitly contrasts README-for-humans vs context-file-for-agents at empirical scale
 - [tags](../notes/tags-README.md) — validates: listed in Reference material; provides empirical grounding for context-loading categories
 - [learning-theory](../notes/learning-theory-README.md) — validates: listed in Reference material; commit-level evolution confirms continuous learning through versioned artifacts

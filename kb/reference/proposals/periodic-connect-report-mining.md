@@ -49,4 +49,4 @@ Adopt as a skill or instruction — rather than repeating the workshop shape ad 
 Relevant Notes:
 
 - [Where change candidates come from in Commonplace](../where-change-candidates-come-from-in-commonplace.md) — see-also: names the exact unautomated triage-step gap this proposal answers
-- [A proposal-selection improvement loop requires search, evaluation, and operative retention](../../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — rationale: this proposal is a concrete Search-stage mechanism for the loop that note defines
+- [A proposal-selection improvement loop requires search, evaluation, and operative retention](../../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — rests-on: this proposal is a concrete Search-stage mechanism for the loop that note defines

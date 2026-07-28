@@ -47,14 +47,14 @@ A text-contract profile is not a *pathway* profile. This one is normative: a bun
 
 A profile shapes link vocabulary through defaults, not inheritance. Each default profile has a characteristic link grammar — inference labels (extends, grounds, mechanism, contrasts) for theoretical, structural labels (part-of, implements) for descriptive, operational labels (composition, precondition, invokes) for prescriptive. These are *defaults* offered as starting templates when a new collection is authored; the authoritative home of a collection's outbound grammar is its own `COLLECTION.md`, not the profile. Collections can diverge from their profile's default when their work requires it.
 
-Cross-contract links use a shared, smaller vocabulary (`rationale`, `evidenced-by` / `is-evidence-for`, `procedure`, `operates-on`, `defined-in`) drawn from a common catalogue. A reader crossing a collection boundary typically has a different unmet need (operational vs. evidential vs. definitional) than one moving within a collection, and both endpoints need to recognise the label — so the vocabulary is shared across collections rather than owned by any single one.
+Cross-contract links use a shared, smaller vocabulary (`rests-on`, `evidenced-by` / `is-evidence-for`, `procedure`, `operates-on`, `defined-in`) drawn from a common catalogue. A reader crossing a collection boundary typically has a different unmet need (operational vs. evidential vs. definitional) than one moving within a collection, and both endpoints need to recognise the label — so the vocabulary is shared across collections rather than owned by any single one.
 
 ---
 
 Relevant Notes:
 
 - [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](../a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) — foundation: the argument for the three default profiles' formulation constraint and maintenance asymmetry, revised to an attractor claim rather than an exhaustiveness claim
-- [ADR 042: register becomes a default profile under open-ended text contracts](../../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — rationale: the decision that retired the closed taxonomy and opened the profile set
+- [ADR 042: register becomes a default profile under open-ended text contracts](../../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — evidenced-by: the decision that retired the closed taxonomy and opened the profile set
 - [Text contract profiles](../../reference/text-contract-profiles.md) — part-of: the catalogue of currently shipped profiles, which collections use each, and which ADR promoted it
 - [theory and methodology form a two-layer execution system](../theory-and-methodology-form-a-two-layer-execution-system.md) — enables: working artifacts out from one another connects profiles through the theory → prescription → implementation → description chain
 - [constraining](./constraining.md) — co-equal mechanism: orthogonal to profiles but interacts — prescriptions are more constrained than theories

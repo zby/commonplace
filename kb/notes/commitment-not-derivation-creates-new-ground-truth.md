@@ -83,7 +83,7 @@ That also bounds the promotion: until the arbitration is actually codified, trea
 
 Relevant Notes:
 
-- [Link vocabulary and linking approach](../reference/link-vocabulary.md) — grounds: the registered narrow semantics of `derived-from` (nothing added) against the ampliative lineage labels; this note supplies the mechanism behind that boundary and its ground-truth consequence
+- [Link vocabulary and linking approach](../reference/link-vocabulary.md) — evidenced-by: the registered narrow semantics of `derived-from` (nothing added) against the ampliative lineage labels; this note supplies the mechanism behind that boundary and its ground-truth consequence
 - [Discovery lifecycle](./definitions/discovery-lifecycle.md) — grounds: the entailed-reshaping exclusion that keeps derivation out of the conjecture path, and acceptance as gated commitment — the human committer named as a lifecycle phase
 - [Agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — grounds: the projection-versus-compilation distinction behind the generated-code case, including why temperature-zero determinism does not entail the additions
 - [Methodology and its theory form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — grounds: the mechanical / judgment-checked grading inside derived content that this note distinguishes from the commitment boundary

@@ -44,5 +44,5 @@ Relevant Notes:
 
 - [Ephemeral computation prevents accumulation](../../notes/ephemeral-computation-prevents-accumulation.md) — motivation: names the fork this substrate resolves in the accumulating direction, and the costs (no learning, no testing, no review, no reuse) `scripts/` avoids by existing
 - [Spec mining is codification's operational mechanism](../../notes/spec-mining-as-codification.md) — mechanism: the promotion signal adopted here is spec mining's general trigger applied to individual scripts rather than system behavior
-- [Progressive constraining commits only after patterns stabilize](../../notes/progressive-constraining-commits-only-after-patterns-stabilize.md) — rationale: why the promotion signal is stabilization-across-uses rather than a first-use or fixed-count trigger
+- [Progressive constraining commits only after patterns stabilize](../../notes/progressive-constraining-commits-only-after-patterns-stabilize.md) — rests-on: why the promotion signal is stabilization-across-uses rather than a first-use or fixed-count trigger
 - [014-scripts as Python package, one-tree model](./014-scripts-as-python-package-one-tree-model.md) — precedent: the one documented promotion event from `scripts/` to the installed package, at the subsystem scale

@@ -53,4 +53,4 @@ It is weaker as an autonomous learning system. Automated session-trace extractio
 
 Relevant Notes:
 
-- [Designing a Memory System for LLM-Based Agents](../notes/designing-agent-memory-systems.md) — rationale: the requirements this shipped-system coverage map implements and partially leaves open
+- [Designing a Memory System for LLM-Based Agents](../notes/designing-agent-memory-systems.md) — rests-on: the requirements this shipped-system coverage map implements and partially leaves open

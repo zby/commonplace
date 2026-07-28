@@ -56,7 +56,7 @@ The decision-cost model needs one more axis: the content layer of the source and
 
 A theory can cite a description as evidence while remaining generally stated; a description can cite theory as rationale for why the system is shaped that way; a prescription can cite both theory and system description because procedures must be justified and executable against the current system. Reversing those relationships changes the maintenance contract. If a theory depends on a specific description for its formulation, the link reveals that the artifact has not yet been abstracted into theory. If an instruction omits the descriptive system target it acts on, executability suffers.
 
-So relationship vocabulary is not enough by itself. A `grounds` or `rationale` edge has different consequences depending on whether it crosses theory, description, or prescription. Link review should check both the local relationship phrase and the register-crossing contract.
+So relationship vocabulary is not enough by itself. A `grounds` or `rests-on` edge has different consequences depending on whether it stays within theory or crosses into description, prescription, or system-definition content. Link review should check both the local relationship phrase and the collection-crossing contract.
 
 ### What the theory predicts
 

@@ -53,7 +53,7 @@ Relevant Notes:
 
 - [032-review freshness uses DB snapshots, not Git](./032-review-freshness-uses-db-snapshots-not-git.md) — extends: the role-neutral snapshot substrate that lets a type spec sit on the gate side without schema change
 - [012-types for structure, traits for review](./012-types-for-structure-traits-for-review.md) — extends: the type/trait boundary, making the type contract itself reviewable
-- [a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rationale: why the gate must be the type spec rather than restate it
-- [link graph plus timestamps enables make-like staleness detection](../../notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — rationale: the build-product/prerequisite model; factored two-input pairs are its cheapest review-side realization
+- [a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: why the gate must be the type spec rather than restate it
+- [link graph plus timestamps enables make-like staleness detection](../../notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — rests-on: the build-product/prerequisite model; factored two-input pairs are its cheapest review-side realization
 - [review system](../README-REVIEW-SYSTEM.md) — part-of: the operator-facing concepts the conformance pair reuses unchanged
 - [review architecture](../review-architecture.md) — part-of: the code architecture carrying the second gate source and the wrapper's freshness-boundary rule

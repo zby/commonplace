@@ -23,7 +23,7 @@ Run [Evaluate the rationale link label](./evaluate-rationale-link-label.md). It 
 
 If the first condition does not hold, stop after the review and revise this packet with the adopted identifier or pair. Do not let the working candidate decide the evidence.
 
-The review found a stable 114-edge R cohort and a 58-edge boundary population. The [boundary adjudication](./rationale-grounds-boundary-adjudication.md) resolves every boundary tuple: 8 additional `rests-on`, 35 `evidenced-by`, 12 `is-evidence-for`, 2 `implements`, 1 `compares-with`, and no removals. The semantic gate is therefore satisfied for a scoped migration; use that ledger as the disposition authority and leave the 272 canonical note→note `grounds` edges unchanged.
+The review found a stable 114-edge R cohort and a 58-edge boundary population. The [boundary adjudication](./rationale-grounds-boundary-adjudication.md) resolves every boundary tuple: 8 additional `rests-on`, 35 `evidenced-by`, 12 `is-evidence-for`, 2 `implements`, 1 `compares-with`, and no removals. The semantic gate is therefore satisfied for a scoped migration; use that ledger as the disposition authority and leave the 276 canonical note→note `grounds` edges unchanged (272 reviewed plus four concurrent additions).
 
 ## Migration boundary
 

@@ -46,7 +46,7 @@ Relevant Notes:
 - [Commonplace as a reflective self-improving system](./commonplace-as-a-reflective-system.md) — part-of: the classification and allocation profile this trace supports
 - [The tag-readme trace read as a self-improving loop](./tag-readme-trace-as-self-improving-loop.md) — see-also: the same trace read as an improvement loop
 - [Where change candidates come from in Commonplace](./where-change-candidates-come-from-in-commonplace.md) — part-of: surveys the wider set of candidate-forming mechanisms the agent's drafting work here is one instance of
-- [Reflective system](../notes/definitions/reflective-system.md) — rationale: the causal-connection obligation this trace instantiates
+- [Reflective system](../notes/definitions/reflective-system.md) — rests-on: the causal-connection obligation this trace instantiates
 - [Behavioral authority](../notes/definitions/behavioral-authority.md) — defined-in: names each consumer, channel, and force in the trace
-- [stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md) — rationale: the retained claim the strain was read through
+- [stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md) — rests-on: the retained claim the strain was read through
 - [ADR 026: tag-readme type with completeness and coverage marks](./adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) — part-of: the decision this trace documents

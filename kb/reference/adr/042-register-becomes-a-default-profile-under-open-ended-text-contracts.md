@@ -71,4 +71,4 @@ Relevant Notes:
 - [ADR-038: type-conformance reviews use the type spec as the gate](./038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — extends: made the type-side contract enforced, part of why the exhaustiveness claim stopped gating anything
 - [ADR-041: collection-conformance reviews use COLLECTION.md as the gate](./041-collection-conformance-reviews-use-collection-md-as-the-gate.md) — extends: made the collection-side contract enforced, so a new profile is born with review machinery
 - [link-vocabulary.md](../link-vocabulary.md) — compares-with: the sibling open, worked-case-gated catalogue this ADR's profile library is modeled on
-- [A universal knowledge framework demotes content taxonomies to defaults and keeps answerability](../../notes/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) — rationale: the transferable claim this ADR instantiates for registers
+- [A universal knowledge framework demotes content taxonomies to defaults and keeps answerability](../../notes/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) — rests-on: the transferable claim this ADR instantiates for registers

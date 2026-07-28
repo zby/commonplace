@@ -50,4 +50,4 @@ Title: "Reshaping strips lineage, so the dependency record must live outside the
 
 Relevant Notes:
 
-- [generality bought to avoid counterexamples is paid for in precision](../../../notes/generality-bought-to-avoid-counterexamples-is-paid-for-in.md) — rationale: the universality/precision trade this gate tests for
+- [generality bought to avoid counterexamples is paid for in precision](../../../notes/generality-bought-to-avoid-counterexamples-is-paid-for-in.md) — rests-on: the universality/precision trade this gate tests for

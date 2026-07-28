@@ -1,6 +1,6 @@
 # Rationale and grounds boundary adjudication
 
-**Status:** completed; migration not started.
+**Status:** completed and implemented by ADR 060.
 
 **Date:** 2026-07-28
 
@@ -14,7 +14,7 @@ The 20 active `rationale` edges outside the confirmed rationale-dependency cohor
 | off-pattern `grounds` | 8 | 20 | 10 | 0 | 0 | 0 | 38 |
 | **total** | **8** | **35** | **12** | **2** | **1** | **0** | **58** |
 
-Together with the 114 R rows already approved by the [direction review](./rationale-label-direction-review.md), the future `rationale` migration therefore has 122 `rests-on` candidates: 114 direct successors plus 8 off-pattern `grounds` corrections. The 272 note→note `grounds` rows remain untouched for their own vocabulary evaluation.
+Together with the 114 R rows already approved by the [direction review](./rationale-label-direction-review.md), the migration has 122 `rests-on` successors: 114 direct successors plus 8 off-pattern `grounds` corrections. Four concurrent note→note edges arrived after this adjudication, so the implementation leaves 276 canonical `grounds` rows untouched for their own vocabulary evaluation.
 
 The classification test is the assertion made at the authored edge:
 
@@ -116,6 +116,6 @@ The semantic gate for the scoped `rests-on` migration is now satisfied. Its muta
 - 8 off-pattern `grounds` edges → `rests-on`;
 - 20 non-R `rationale` edges → the decisions above;
 - 30 remaining off-pattern `grounds` edges → the evidence decisions above;
-- 272 note→note `grounds` edges → excluded unchanged for the later `grounds` migration.
+- 276 note→note `grounds` edges → excluded unchanged for the later `grounds` migration, including four canonical rows added after review.
 
-Migration should conserve all 172 adjudicated tuples (114 + 8 + 20 + 30), keep the five disposition buckets mutually exclusive, and separately account for the 272 deferred `grounds` tuples. This adjudication changes no catalogue, collection contract, guidance surface, or corpus edge.
+Migration conserved all 172 adjudicated tuples (114 + 8 + 20 + 30), kept the five disposition buckets mutually exclusive, and separately accounted for the 276 deferred `grounds` tuples. The decision and implementation are recorded in [ADR 060](../../reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-are-reclassified.md).

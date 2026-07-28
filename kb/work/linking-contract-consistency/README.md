@@ -14,9 +14,10 @@ Lineage-specific carrier, relation, and invalidation contradictions stay in the 
 - [Evidence label migration plan](./evidence-label-migration-plan.md) — compact execution packet for adopting `evidenced-by` / `is-evidence-for`, migrating active contracts and edges, verifying conservation, and capturing lessons for the next label.
 - [Evidence label migration retrospective](./evidence-label-migration-retrospective.md) — completed first-run reconciliation and the mandatory add/remove/reorder/automate amendments the next directional-label migration must explicitly accept or reject.
 - [Rationale label evaluation](./evaluate-rationale-link-label.md) — read-only semantic review packet for deciding whether `rests-on` is distinct, should merge with `grounds`, should split, or should be retired before migration.
-- [Rationale and grounds boundary adjudication](./rationale-grounds-boundary-adjudication.md) — migration-ready successor decisions for the 20 non-R `rationale` edges and all 38 off-pattern `grounds` edges, including authorization consequences.
-- [Rationale label migration plan](./rationale-label-migration-plan.md) — next-run packet: test `rests-on` against the live `rationale` corpus and `grounds`, then migrate only after the decision gate passes while exercising the retrospective amendments.
-- [Rationale label migration retrospective](./rationale-label-migration-retrospective.md) — capture second-run surprises and decide whether the migration procedure is stable enough to promote.
+- [Rationale and grounds boundary adjudication](./rationale-grounds-boundary-adjudication.md) — implemented successor decisions for the 20 non-R `rationale` edges and all 38 off-pattern `grounds` edges, including authorization consequences.
+- [Rationale label migration plan](./rationale-label-migration-plan.md) — completed execution packet for adopting `rests-on`, reclassifying boundary edges, and preserving the canonical `grounds` cohort.
+- [Rationale label migration retrospective](./rationale-label-migration-retrospective.md) — second-run reconciliation, surprises, and procedure-promotion decision.
+- [Reusable directional-label migration procedure](../../instructions/migrate-directional-link-label.md) — promoted mechanical core confirmed by the evidence and rationale runs; semantic classification remains label-specific.
 
 ## Confirmed contradictions
 
@@ -53,6 +54,12 @@ The shared catalogue called `compares-with` specific to `kb/agent-memory-systems
 ### Resolved: literal `any` conflicted with collection exclusions
 
 `reference` and `sources` used `see-also | any` while separately excluding workshop or instruction destinations. ADR 059 now defines `any` literally, including `external`; those two library tables name their permitted destinations explicitly. Only the deliberately permissive workshop contract retains `any`.
+
+### Resolved: `rationale` named the target rather than the source assertion
+
+The old identifier meant “the target is the rationale for the source,” violating `source <label> target`; 20 of 134 active uses also belonged to evidence or architecture relations. Thirty-eight off-pattern `grounds` edges exposed the same boundary drift.
+
+**Outcome:** [ADR 060](../../reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-are-reclassified.md) adopts `rests-on`, reclassifies every boundary edge, gives `kb/types/` a collection-owned link contract, and leaves 276 canonical note→note `grounds` edges for their own scoped migration.
 
 ## Enforcement and delivery gaps
 

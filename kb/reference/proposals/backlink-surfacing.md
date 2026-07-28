@@ -36,5 +36,5 @@ How Commonplace could deliver the inbound-link view to its readers. Requirements
 
 Relevant Notes:
 
-- [inbound and outbound links serve asymmetric reader needs](../../notes/inbound-and-outbound-links-serve-asymmetric-reader-needs.md) — rationale: the reader needs and boundaries this design must satisfy
+- [inbound and outbound links serve asymmetric reader needs](../../notes/inbound-and-outbound-links-serve-asymmetric-reader-needs.md) — rests-on: the reader needs and boundaries this design must satisfy
 - [ADR 025 — complete generated indexes are build-time only](../adr/025-complete-generated-indexes-are-build-time-only.md) — rests on: the one-source-two-materializations pattern and the no-new-command default this proposal extends to backlinks

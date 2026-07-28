@@ -122,7 +122,7 @@ The plan should change when a gap becomes more urgent because of actual use. For
 
 Relevant Notes:
 
-- [Designing a Memory System for LLM-Based Agents](../notes/designing-agent-memory-systems.md) — rationale: defines the memory requirements whose Commonplace gaps this plan closes
+- [Designing a Memory System for LLM-Based Agents](../notes/designing-agent-memory-systems.md) — rests-on: defines the memory requirements whose Commonplace gaps this plan closes
 - [Agent memory coverage](./agent-memory-coverage.md) — part-of: maps those requirements onto current Commonplace implementation coverage and gaps
 - [Review system architecture](./review-architecture.md) — implemented-by: shipped review state and semantic gates used for trust and promotion decisions
 - [Storage](./storage-architecture.md) — implemented-by: shipped storage roles for authored markdown, generated views, reports, and review state

@@ -71,7 +71,7 @@ Inference relations. Commonly used for outbound links to theoretical destination
 | `mechanism` | asymmetric | wants to understand how the claim operates |
 | `contradicts` | symmetric | wants to resolve a disagreement |
 | `contrasts` | symmetric | wants to see the neighbouring-shape distinction |
-| `rationale` | asymmetric (descriptive/prescriptive → theoretical) | wants the claim this design/rule rests on |
+| `rests-on` | asymmetric (descriptive/prescriptive/system-definition → theoretical) | source design, rule, description, or contract depends on the target claim; reader wants the theory whose change would trigger reconsideration |
 | `evidenced-by` | asymmetric (assertion → observation/source) | source assertion is evidenced by target; reader wants the corroborating, qualifying, or boundary observation |
 | `is-evidence-for` | asymmetric (observation/source → assertion) | source bears materially on target assertion; reader wants where this observation lands, without implying target-side uptake |
 | `derived-from` | asymmetric | wants the source this was worked out from; asserts no claims beyond it (lineage semantics below) |
@@ -125,7 +125,7 @@ Four lineage relations with different maintenance semantics replace the retired 
 
 If the source were removed or materially changed, the target's actual content would need judgmental rewriting, not merely a change to its rationale. A source change therefore flags a fit recheck; it does not authorize automatic recomputation or a fresh-evidence retest.
 
-Record this edge at the source in a dedicated `Adapted into:` footer, using the same forward-pointer and context-phrase convention as the other lineage footers. Do not use it when the source only motivated, corroborated, or inspired an independently authored target; use `rationale`, `evidenced-by`, `is-evidence-for`, `grounds`, or `see-also` instead.
+Record this edge at the source in a dedicated `Adapted into:` footer, using the same forward-pointer and context-phrase convention as the other lineage footers. Do not use it when the source only motivated, corroborated, or inspired an independently authored target; use `rests-on`, `evidenced-by`, `is-evidence-for`, `grounds`, or `see-also` instead.
 
 **Operationalized** — `operationalized-from` and `Operationalized into:`. The edge narrows the adapted test: the target adds ordering, defaults, or stopping conditions the source does not fix, while adding no substantive claims beyond it. It is currently authorized for the `kb/notes/` methodology → `kb/instructions/` procedure pairing; the truth condition is portable, but a new source pairing needs its source collection's authorization before a footer is written.
 
@@ -171,6 +171,8 @@ Rationale: [source changes should surface downstream review targets, while rever
 
 The catalogue is guidance, not a closed enum. Add to it, adapt it, or ignore it where a collection has a better local vocabulary. Labels still need shared recognition to carry stable meaning across collections.
 
+When a pre-existing directional identifier is replaced, use [Migrate a directional link label](../instructions/migrate-directional-link-label.md) after semantic review supplies an adopted assertion and complete disposition ledger.
+
 Do not use this page as a fallback for lazy labelling. If the source `COLLECTION.md` authorises specific labels for a destination, use those rather than downgrading to `see-also`.
 
 ## Open questions
@@ -183,12 +185,12 @@ Do not use this page as a fallback for lazy labelling. If the source `COLLECTION
 
 Relevant Notes:
 
-- [ADR 019 — collection-owned link vocabulary](./adr/019-collection-owned-link-vocabulary.md) — rationale: the architecture this catalogue serves
-- [ADR 059 — external is a reserved outbound destination](./adr/059-external-is-a-reserved-outbound-destination.md) — rationale: external targets remain collection-authorized without becoming a search surface
-- [ADR 009 — link relationship semantics](./adr/009-link-relationship-semantics.md) — rationale: the original theoretical vocabulary whose core labels seed this catalogue
-- [ADR 020 — theoretical-default additions (contrasts, mechanism)](./adr/020-theoretical-default-contrasts-mechanism.md) — rationale: the audit outcomes adding `mechanism` and `contrasts` and stating directional asymmetry
-- [ADR 058 — directional identifiers use the source as subject](./adr/058-directional-identifiers-use-source-as-subject.md) — rationale: the naming invariant and evidence inverse pair
-- [Links encode conditional possibilities, not obligations](../notes/links-encode-conditional-possibilities-not-obligations.md) — rationale: the reader-need theory behind the label test
-- [Theory and methodology form a two-layer execution system](../notes/theory-and-methodology-form-a-two-layer-execution-system.md) — rationale: the maintenance regime the derived side of the lineage semantics asserts
-- [Load-bearing vocabulary collisions should be prevented or visibly scoped at write time](../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — rationale: why the derived/abstracted boundary is drawn at labelled edges rather than in unstructured natural-language content
+- [ADR 019 — collection-owned link vocabulary](./adr/019-collection-owned-link-vocabulary.md) — evidenced-by: the architecture this catalogue serves
+- [ADR 059 — external is a reserved outbound destination](./adr/059-external-is-a-reserved-outbound-destination.md) — evidenced-by: external targets remain collection-authorized without becoming a search surface
+- [ADR 009 — link relationship semantics](./adr/009-link-relationship-semantics.md) — evidenced-by: the original theoretical vocabulary whose core labels seed this catalogue
+- [ADR 020 — theoretical-default additions (contrasts, mechanism)](./adr/020-theoretical-default-contrasts-mechanism.md) — evidenced-by: the audit outcomes adding `mechanism` and `contrasts` and stating directional asymmetry
+- [ADR 058 — directional identifiers use the source as subject](./adr/058-directional-identifiers-use-source-as-subject.md) — evidenced-by: the naming invariant and evidence inverse pair
+- [Links encode conditional possibilities, not obligations](../notes/links-encode-conditional-possibilities-not-obligations.md) — rests-on: the reader-need theory behind the label test
+- [Theory and methodology form a two-layer execution system](../notes/theory-and-methodology-form-a-two-layer-execution-system.md) — rests-on: the maintenance regime the derived side of the lineage semantics asserts
+- [Load-bearing vocabulary collisions should be prevented or visibly scoped at write time](../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — rests-on: why the derived/abstracted boundary is drawn at labelled edges rather than in unstructured natural-language content
 - [Register](../notes/definitions/text-contract.md) — defined-in: content-mode groupings used to organise the catalogue

@@ -48,5 +48,5 @@ The KB's vocabulary invariant — no unqualified term carries two load-bearing s
 
 Relevant Notes:
 
-- [Load-bearing vocabulary collisions should be prevented or visibly scoped at write time](../../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — rationale: the invariant, risk model, and device ranking these controls would mechanically enforce
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) — rationale: the collision screen frontloads the corpus audit to the moment of naming, when the answer is cheapest to act on
+- [Load-bearing vocabulary collisions should be prevented or visibly scoped at write time](../../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — rests-on: the invariant, risk model, and device ranking these controls would mechanically enforce
+- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) — rests-on: the collision screen frontloads the corpus audit to the moment of naming, when the answer is cheapest to act on

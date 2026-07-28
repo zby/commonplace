@@ -43,9 +43,9 @@ Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 | label | destinations | reader-need |
 |---|---|---|
 | `derived-from` | external | this ingest analysis or source review is worked out from the original external source already in hand |
-| `is-evidence-for` | notes | this source bears materially on the target claim, without asserting that the target has incorporated it |
+| `is-evidence-for` | notes, agent-memory | this source bears materially on the target claim or analysis, without asserting that the target has incorporated it |
 | `abstracted-from` | notes | this claim was abstracted from this source |
-| `rationale` | notes | this design or rule rests on this claim |
+| `rests-on` | notes | this source-side design or rule depends on this theoretical claim |
 | `compares-with` | notes, sources, agent-memory, agentic-systems | compare this source or analysis with a target on a named shared axis |
 | `defined-in` | notes/definitions | reader may not know the term |
 | `see-also` | notes, reference, sources, agent-memory, agentic-systems, external | adjacent companion; use sparingly |

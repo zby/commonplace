@@ -18,7 +18,7 @@ Design proposals — finished but unadopted designs — had no home. The theory 
 
 1. **ADRs record implemented decisions only.** The `proposed` status is removed from the ADR type spec and schema (`accepted | superseded | deprecated` remain); the five stale `proposed` ADRs are flipped to `accepted`. A decision still under consideration is not an ADR.
 2. **Unadopted system designs live in `kb/reference/proposals/`** as plain `note`-typed artifacts carrying the `design-proposal` trait — trait rather than type because nothing is automatically checkable yet (types for structure, traits for review, per [ADR 012](./012-types-for-structure-traits-for-review.md)).
-3. **The proposal contract** (in `proposals/README.md`): no decision — a proposal may hold multiple options and unresolved forces; transferable requirements live in `kb/notes/` and are cited via `rationale`, with only system-specific constraints inlined; a dated current-state anchor, with staleness against later ADRs an expected lifecycle event; descriptions lead with "Proposal:" so reference readers never mistake proposed for shipped. When part of a proposal ships, that content moves out to reference docs and an ADR.
+3. **The proposal contract** (in `proposals/README.md`): no decision — a proposal may hold multiple options and unresolved forces; transferable requirements live in `kb/notes/` and are cited via `rests-on`, with only system-specific constraints inlined; a dated current-state anchor, with staleness against later ADRs an expected lifecycle event; descriptions lead with "Proposal:" so reference readers never mistake proposed for shipped. When part of a proposal ships, that content moves out to reference docs and an ADR.
 4. **The YAGNI gap rule reroutes:** system feature or design gaps → `kb/reference/proposals/`; transferable insights → `kb/notes/`.
 5. **The theory register keeps a recast option:** a design whose requirements are substantive may stay in `kb/notes/` as an existential claim with the construction presented as a witness, free choices marked, rather than moving to `proposals/`.
 
@@ -40,4 +40,4 @@ Harder / accepted costs:
 
 Relevant Notes:
 
-- [design proposals differ from claims in kind, not confidence](../../notes/design-proposals-differ-from-claims-in-kind-not-confidence.md) — rationale: the category distinction and existential recast this decision implements
+- [design proposals differ from claims in kind, not confidence](../../notes/design-proposals-differ-from-claims-in-kind-not-confidence.md) — rests-on: the category distinction and existential recast this decision implements

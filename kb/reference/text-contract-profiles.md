@@ -103,5 +103,5 @@ Narrative/log (`kb/log.md`, workshop state, backlog logs) is a recurring, real c
 Relevant Notes:
 
 - [Text contract](../notes/definitions/text-contract.md) — defined-in: the requirement this catalogue supplies proven bundles for
-- [ADR 042: register becomes a default profile under open-ended text contracts](./adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — rationale: the decision that opened this catalogue, promoted the dialectical/evidential entry, and carries the worked-case evidence trail
+- [ADR 042: register becomes a default profile under open-ended text contracts](./adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — evidenced-by: the decision that opened this catalogue, promoted the dialectical/evidential entry, and carries the worked-case evidence trail
 - [link-vocabulary.md](./link-vocabulary.md) — compares-with: the sibling open, worked-case-gated catalogue this page is modeled on

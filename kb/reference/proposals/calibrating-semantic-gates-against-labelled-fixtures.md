@@ -94,12 +94,12 @@ Adopt field calibration as a trust signal only after a worked case defines a dep
 
 Relevant Notes:
 
-- [error correction works with above-chance oracles and decorrelated checks](../../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — rationale: a gate is an oracle worth trusting only when TPR > FPR; calibration is the measurement of that gap
-- [evaluation automation is phase-gated by comprehension](../../notes/evaluation-automation-is-phase-gated-by-comprehension.md) — rationale: judge calibration precedes trusting an automated evaluator
-- [an accepted edit verifies the change, not the rule](../../notes/an-accepted-edit-verifies-the-change-not-the-rule.md) — rationale: fixtures mined from accepted edits are instance-verified, not proof of generalization
-- [criteria edits invalidate verdicts; process edits invalidate artifacts](../../notes/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md) — rationale: identifies which changes must invalidate retained regression and calibration evidence
-- [reasoning production is not reasoning evaluation](../../notes/reasoning-production-is-not-reasoning-evaluation.md) — rationale: conclusion-agreement substitution supplies an adversarial fixture family for a self-concealing evaluator failure
-- [oracle strength spectrum](../../notes/oracle-strength-spectrum.md) — rationale: calibration is a hardening step for a soft LLM oracle
+- [error correction works with above-chance oracles and decorrelated checks](../../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — rests-on: a gate is an oracle worth trusting only when TPR > FPR; calibration is the measurement of that gap
+- [evaluation automation is phase-gated by comprehension](../../notes/evaluation-automation-is-phase-gated-by-comprehension.md) — rests-on: judge calibration precedes trusting an automated evaluator
+- [an accepted edit verifies the change, not the rule](../../notes/an-accepted-edit-verifies-the-change-not-the-rule.md) — rests-on: fixtures mined from accepted edits are instance-verified, not proof of generalization
+- [criteria edits invalidate verdicts; process edits invalidate artifacts](../../notes/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md) — rests-on: identifies which changes must invalidate retained regression and calibration evidence
+- [reasoning production is not reasoning evaluation](../../notes/reasoning-production-is-not-reasoning-evaluation.md) — rests-on: conclusion-agreement substitution supplies an adversarial fixture family for a self-concealing evaluator failure
+- [oracle strength spectrum](../../notes/oracle-strength-spectrum.md) — rests-on: calibration is a hardening step for a soft LLM oracle
 - [gate learning from accepted edits](./gate-learning-from-accepted-edits.md) — see-also: this proposal supplies the detection-rate measurement that proposal's lifecycle assumes
 - [trajectory-aware evaluation of transforming agent workflows](./trajectory-aware-evaluation-of-transforming-agent-workflows.md) — see-also: a sibling labelled and repeated evaluator design at workflow-trajectory scope
 - [Improving AI Skills with autoresearch & evals-skills](../../sources/improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md) — evidenced-by: practitioner use of a hand-scored mini set to check a judge before automated optimization

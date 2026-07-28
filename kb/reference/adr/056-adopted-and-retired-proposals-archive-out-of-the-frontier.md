@@ -66,9 +66,9 @@ Operativity path: the rules are consumed by agents through three contract docume
 
 Relevant Notes:
 
-- [Flat memory predicts specific cross-contamination failures](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md) — rationale: the search-surface cost that makes separation, not deletion, the operation
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) — rationale: cue dilution — why retained-but-indexed content still costs
-- [A functioning KB needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — rationale: the sinks-not-sources rule this decision extends to a second, retained sink layer
+- [Flat memory predicts specific cross-contamination failures](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md) — rests-on: the search-surface cost that makes separation, not deletion, the operation
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) — rests-on: cue dilution — why retained-but-indexed content still costs
+- [A functioning KB needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — rests-on: the sinks-not-sources rule this decision extends to a second, retained sink layer
 - [ADR 028: design proposals live in kb/reference/proposals](./028-design-proposals-live-in-reference-proposals.md) — supersedes: adds the disposal clause its lifecycle left undefined
 - [ADR 024: schema severity is per-constraint, fail by default](./024-schema-severity-is-per-constraint-fail-by-default.md) — see-also: the audit-before-flipping rule that kept the alternatives requirement out of the schema
 - [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — see-also: the marks doctrine that ruled out an unvalidated lifecycle frontmatter field

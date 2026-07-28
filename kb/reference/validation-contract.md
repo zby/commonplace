@@ -80,7 +80,7 @@ Letting a type opt out of link health or verbatim-quote resolution would be a kn
 
 Relevant Notes:
 
-- [A derived copy of recomputable truth must be checked or absent](../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rationale: why a referential check is obligatory rather than optional, and why a false copy fails where an absent one warns
+- [A derived copy of recomputable truth must be checked or absent](../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: why a referential check is obligatory rather than optional, and why a false copy fails where an absent one warns
 - [ADR 046 — Verbatim quotes are validated against their cited source](./adr/046-verbatim-quotes-are-validated-against-their-cited-source.md) — evidenced-by: the decision that added the second referential check and surfaced the class
 - [ADR 024 — Schema severity is per-constraint, fail by default](./adr/024-schema-severity-is-per-constraint-fail-by-default.md) — evidenced-by: how the `schema` source assigns its own severities
 - [Commands](./commands.md) — see-also: the `commonplace-validate` command surface

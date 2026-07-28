@@ -125,7 +125,7 @@ Read the target collection's `COLLECTION.md` before writing or connecting artifa
 | `kb/sources/` | captured source material | Storing external snapshots, ingests, and source reviews. |
 | `kb/articles/` | editorial/expository profile | Publishing self-standing technical articles distilled from the KB for external readers. |
 | `kb/work/` | workshop layer | Holding in-flight investigations, drafts, migration plans, and temporary work that should eventually close or promote durable artifacts. |
-| `kb/types/` | global type surface, not a collection | Looking up shared type specs used across collections. |
+| `kb/types/` | global type-contract collection | Looking up or authoring shared type specs used across collections. |
 
 ### Navigation
 

@@ -50,7 +50,7 @@ The change is breaking: `source_type` in ingest-report frontmatter is rejected r
 
 Relevant Notes:
 
-- [Collections never own frontmatter semantics](../collections-never-own-frontmatter-semantics.md) — rationale: values extend, meanings stay type-owned — the boundary this mechanism respects
+- [Collections never own frontmatter semantics](../collections-never-own-frontmatter-semantics.md) — implements: values extend, meanings stay type-owned — the boundary this mechanism respects
 - [ADR 024: schema severity is per-constraint, fail by default](./024-schema-severity-is-per-constraint-fail-by-default.md) — implemented-by: the existing machinery that makes the enum warn instead of fail
 - [Snapshot type](../../sources/types/snapshot.md) — implemented-by: the field, vocabulary, and correction contract
 - [Ingest-report type](../../sources/types/ingest-report.md) — implemented-by: lens selection from the snapshot's genre and the field's removal

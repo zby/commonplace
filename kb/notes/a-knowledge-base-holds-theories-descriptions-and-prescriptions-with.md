@@ -32,8 +32,8 @@ Profile membership does not itself determine change impact. The primary record i
 | Authored dependency | Meaning | Revision trigger |
 |---|---|---|
 | Theory links to description with `evidenced-by` | The target observation supports, qualifies, or bounds the source claim | If the description or its referent changes, reassess the theory; other evidence may let it survive |
-| Prescription cites theory as `rationale` | The procedure is justified by the claim | If the theory changes, reassess the procedure |
-| Description cites theory as `rationale` | The system was shaped by the claim | If the theory changes, check the rationale; the description still follows the implemented referent |
+| Prescription `rests-on` theory | The procedure depends on the claim | If the theory changes, reassess the procedure |
+| Description `rests-on` theory | The system was shaped by the claim | If the theory changes, reconsider the design; the description still follows the implemented referent |
 | Prescription cites description as `operates-on` | The procedure acts on the described system | If the system changes, revise the procedure |
 
 The asymmetry is therefore characteristic rather than absolute. Theoretical artifacts often accumulate descriptive evidence and provide the rationale for prescriptions; descriptions track changing referents; prescriptions track both their rationale and the systems they operate on. But a schema-first description can be upstream of implementation, and a theory that rests on one volatile observation can be downstream of that evidence. Maintenance should follow the recorded dependency, not an inference from genre.
@@ -96,4 +96,4 @@ Relevant Notes:
 - [Skills derive from methodology](./skills-derive-from-methodology.md) — exemplifies: methodology → skill is an instance of the theory → prescription derivation path
 - [Instructions are typed callables](./instructions-are-typed-callables.md) — extends: the instruction duality (prescriptive content, executable authority) is a specific case of treating documents as typed callables; the callable framing captures the operational-authority axis
 - [Text contract](./definitions/text-contract.md) — defined-in: the requirement and profile vocabulary that replaces "register" as the taxonomy name
-- [ADR 042: register becomes a default profile under open-ended text contracts](../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — rationale: the decision that weakens this note's exhaustiveness claim to an attractor claim and opens the profile set
+- [ADR 042: register becomes a default profile under open-ended text contracts](../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — evidenced-by: the decision that weakens this note's exhaustiveness claim to an attractor claim and opens the profile set

@@ -53,5 +53,5 @@ Relevant Notes:
 - [017-COLLECTION.md is the register convention boundary](./017-collection-md-is-the-register-convention-boundary.md) — extends: the collection contract this ADR makes reviewable; its deferred register-correctness check now exists
 - [012-types for structure, traits for review](./012-types-for-structure-traits-for-review.md) — extends: with both conformance pairs shipped, semantic enforcement attaches to contract surfaces generally, not to traits alone
 - [factored dependency pairs for review freshness](../proposals/factored-dependency-pairs-for-review-freshness.md) — part-of: the proposal whose COLLECTION.md-as-gate item this ADR adopts; source-as-gate and cohort-scoped ack remain open there
-- [a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rationale: why the gate must be the COLLECTION.md rather than a catalog gate restating it
+- [a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: why the gate must be the COLLECTION.md rather than a catalog gate restating it
 - [review architecture](../review-architecture.md) — part-of: the code architecture carrying the collection gate source and the shared wrapper rules
