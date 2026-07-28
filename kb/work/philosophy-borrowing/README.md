@@ -52,6 +52,8 @@ The strongest common thread is not "philosophy helps KBs." It is that several ph
 
 The likely output is not a single philosophy note. The better path is probably four small operational notes, each connected to an existing workflow: note promotion, staleness/revision, type-system semantics, and definition writing.
 
+Link-specific synthesis of argumentation, inferentialism, explanation and mechanism, discourse relations, relevance, and semantic memory lives in the sibling [linking-foundations workshop](../linking-foundations/README.md). This workshop retains the general adoption test rather than growing a second link theory.
+
 ## Open questions
 
 - Should abduction become a review prompt for turning logs into notes, or just a note explaining promotion quality?
