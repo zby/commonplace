@@ -17,6 +17,8 @@ Lineage-specific carrier, relation, and invalidation contradictions stay in the 
 - [Rationale and grounds boundary adjudication](./rationale-grounds-boundary-adjudication.md) — implemented successor decisions for the 20 non-R `rationale` edges and all 38 off-pattern `grounds` edges, including authorization consequences.
 - [Rationale label migration plan](./rationale-label-migration-plan.md) — completed execution packet for adopting `rests-on`, reclassifying boundary edges, and preserving the canonical `grounds` cohort.
 - [Rationale label migration retrospective](./rationale-label-migration-retrospective.md) — second-run reconciliation, surprises, and procedure-promotion decision.
+- [Grounds label evaluation](./evaluate-grounds-link-label.md) — Luna-ready read-only packet for deciding the successor and classifying every active canonical note→note `grounds` edge before any migration.
+- [Grounds direction review](./grounds-label-direction-review.md) — complete 283-edge semantic inventory recommending `premised-on` for the 160-row premise cohort and reclassification of the remaining edges.
 - [Reusable directional-label migration procedure](../../instructions/migrate-directional-link-label.md) — promoted mechanical core confirmed by the evidence and rationale runs; semantic classification remains label-specific.
 
 ## Confirmed contradictions
