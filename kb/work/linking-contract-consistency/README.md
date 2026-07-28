@@ -13,6 +13,8 @@ Lineage-specific carrier, relation, and invalidation contradictions stay in the 
 - [Directional label grammar](./directional-label-grammar.md) — adopted invariant that every directional identifier complete `source <label> target`, plus the initial pass/fail inventory and remaining migration debt.
 - [Evidence label migration plan](./evidence-label-migration-plan.md) — compact execution packet for adopting `evidenced-by` / `is-evidence-for`, migrating active contracts and edges, verifying conservation, and capturing lessons for the next label.
 - [Evidence label migration retrospective](./evidence-label-migration-retrospective.md) — completed first-run reconciliation and the mandatory add/remove/reorder/automate amendments the next directional-label migration must explicitly accept or reject.
+- [Rationale label evaluation](./evaluate-rationale-link-label.md) — read-only semantic review packet for deciding whether `rests-on` is distinct, should merge with `grounds`, should split, or should be retired before migration.
+- [Rationale and grounds boundary adjudication](./rationale-grounds-boundary-adjudication.md) — migration-ready successor decisions for the 20 non-R `rationale` edges and all 38 off-pattern `grounds` edges, including authorization consequences.
 - [Rationale label migration plan](./rationale-label-migration-plan.md) — next-run packet: test `rests-on` against the live `rationale` corpus and `grounds`, then migrate only after the decision gate passes while exercising the retrospective amendments.
 - [Rationale label migration retrospective](./rationale-label-migration-retrospective.md) — capture second-run surprises and decide whether the migration procedure is stable enough to promote.
 

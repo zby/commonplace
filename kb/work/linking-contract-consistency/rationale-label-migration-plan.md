@@ -15,7 +15,7 @@ Preserve the current reader journey: a maintainer follows the edge from a design
 
 ## Decision gate
 
-Inventory every active registered `rationale` edge by resolved source→destination pair and inspect representative uses from each pair. Compare the assertion against `grounds`, `derived-from`, `abstracted-from`, and `operationalized-from`. Before any bulk edit, record whether:
+Run [Evaluate the rationale link label](./evaluate-rationale-link-label.md). It inventories every active registered `rationale` edge by resolved source→destination pair, compares the assertion against `grounds` and neighboring relations, and writes the decision review. Before any bulk edit, record whether:
 
 - `rests-on` honestly covers the corpus and remains distinguishable from `grounds`;
 - more than one relation is present and needs a split;
@@ -23,9 +23,13 @@ Inventory every active registered `rationale` edge by resolved source→destinat
 
 If the first condition does not hold, stop after the review and revise this packet with the adopted identifier or pair. Do not let the working candidate decide the evidence.
 
+The review found a stable 114-edge R cohort and a 58-edge boundary population. The [boundary adjudication](./rationale-grounds-boundary-adjudication.md) resolves every boundary tuple: 8 additional `rests-on`, 35 `evidenced-by`, 12 `is-evidence-for`, 2 `implements`, 1 `compares-with`, and no removals. The semantic gate is therefore satisfied for a scoped migration; use that ledger as the disposition authority and leave the 272 canonical note→note `grounds` edges unchanged.
+
 ## Migration boundary
 
 Once the gate passes, change the decision/catalogue surfaces, live collection authorizations, current authoring guidance, and active registered edges together. Preserve immutable snapshots, frozen experiments and calibration artifacts, generated/ignored reports, archived proposals, historical quotations, and ordinary prose uses of “rationale” unless they falsely state current identifier guidance. Reciprocal edge presence is not part of this migration.
+
+Resolve the three authorization consequences named by the adjudication rather than widening contracts to preserve old uses: add the two evidence pairings deliberately, and decide how the global `kb/types/` surface receives outbound-link governance before migrating its three theoretical dependencies.
 
 ## Inherited amendments from the evidence run
 
