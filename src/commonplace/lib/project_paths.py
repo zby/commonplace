@@ -20,6 +20,12 @@ REPO_ARTIFACT_DIR_NAMES = frozenset(
     {"build", "dist", "node_modules", "site", "tmp", "__pycache__"}
 )
 
+# An explicit, package-owned opt-out for data-bearing subtrees whose Markdown
+# files are inputs or outputs rather than KB artifacts.  This marker affects
+# collection-scoped validation only; the general visibility walk and explicit
+# file validation deliberately remain unchanged.
+VALIDATION_IGNORE_MARKER = ".commonplace-validation-ignore"
+
 
 def kb_root(root: Path) -> Path:
     """Return the KB root for a project root."""
@@ -102,6 +108,49 @@ def list_collection_note_paths(collection: Path) -> list[Path]:
     return sorted(
         path
         for path in iter_visible_markdown_files(collection)
+        if not is_collection_metadata(path)
+        and not is_replaced_archive(path)
+    )
+
+
+def validation_ignored_dirs(collection: Path) -> list[Path]:
+    """Return marked directories pruned from collection-scoped validation.
+
+    Once a marked directory is found its descendants are not inspected, so a
+    nested marker is redundant and intentionally omitted from the result.
+    """
+    if not collection.is_dir():
+        raise FileNotFoundError(f"Collection directory does not exist: {collection}")
+
+    ignored: list[Path] = []
+    for current, dirnames, filenames in walk_visible(collection):
+        if VALIDATION_IGNORE_MARKER not in filenames:
+            continue
+        ignored.append(current)
+        dirnames.clear()
+    return ignored
+
+
+def iter_validation_markdown_files(collection: Path) -> Iterator[Path]:
+    """Yield Markdown files in a collection's validation-visible subtrees."""
+    for current, dirnames, filenames in walk_visible(collection):
+        if VALIDATION_IGNORE_MARKER in filenames:
+            dirnames.clear()
+            continue
+        for filename in filenames:
+            if filename.endswith(".md") and not filename.startswith("."):
+                yield current / filename
+
+
+def list_collection_validation_paths(collection: Path) -> list[Path]:
+    """Return artifacts included by collection-scoped validation."""
+    if not collection.is_dir():
+        raise FileNotFoundError(f"Collection directory does not exist: {collection}")
+    if not is_collection_dir(collection):
+        raise ValueError(f"Directory is not a KB collection: {collection}")
+    return sorted(
+        path
+        for path in iter_validation_markdown_files(collection)
         if not is_collection_metadata(path)
         and not is_replaced_archive(path)
     )

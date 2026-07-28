@@ -10,10 +10,11 @@ from pathlib import Path
 
 from commonplace.lib.project_paths import (
     kb_root,
-    list_collection_note_paths,
+    list_collection_validation_paths,
     list_notes_collection_paths,
     list_type_spec_paths,
     resolve_note,
+    validation_ignored_dirs,
 )
 from commonplace.lib.validation import (
     CheckResults,
@@ -32,13 +33,15 @@ _TOO_BROAD_MESSAGE = (
 class ResolvedValidationTarget:
     paths: tuple[Path, ...]
     collection: Path | None = None
+    ignored_dirs: tuple[Path, ...] = ()
 
 
 def _collection_target(collection: Path) -> ResolvedValidationTarget:
     resolved = collection.resolve()
     return ResolvedValidationTarget(
-        paths=tuple(list_collection_note_paths(resolved)),
+        paths=tuple(list_collection_validation_paths(resolved)),
         collection=resolved,
+        ignored_dirs=tuple(validation_ignored_dirs(resolved)),
     )
 
 
@@ -49,10 +52,7 @@ def resolve_validation_target(
         raise ValueError(_TOO_BROAD_MESSAGE)
     if arg == "notes":
         collection = (kb_root(repo_root) / "notes").resolve()
-        return ResolvedValidationTarget(
-            paths=tuple(list_notes_collection_paths(repo_root)),
-            collection=collection,
-        )
+        return _collection_target(collection)
     if arg == "types":
         return ResolvedValidationTarget(paths=tuple(list_type_spec_paths(repo_root)))
 
@@ -201,6 +201,12 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Text files: {text_count}")
         print(f"Notes with warnings: {warning_count}")
         print(f"Failing notes: {failure_count}")
+        print("\nValidation-excluded subtrees:")
+        if target.ignored_dirs:
+            for path in target.ignored_dirs:
+                print(f"- {_display_path(path, repo_root=repo_root)}")
+        else:
+            print("- (none)")
         print("\nCollection structure:")
         if structure_failures:
             for _path, failure in structure_failures:

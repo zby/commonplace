@@ -132,6 +132,12 @@ Walk visible filesystem entries in deterministic order. Both prune hidden direct
 **`list_collection_note_paths(collection: Path) -> list[Path]`**
 Return visible Markdown artifacts under one collection, including everything under `types/`. Skip collection metadata and replaced archives. Filename suffixes such as `*.template.md` and `*.instructions.md` have no special meaning.
 
+**`list_collection_validation_paths(collection: Path) -> list[Path]`** / **`iter_validation_markdown_files(collection: Path)`** / **`validation_ignored_dirs(collection: Path) -> list[Path]`**
+Project the validation-specific view of a collection. A directory containing
+`.commonplace-validation-ignore` and all of its descendants are pruned from a
+collection-scoped validation walk; the general content walk is unchanged, and
+an explicit file target bypasses the exclusion.
+
 **`list_kb_note_paths(root: Path) -> list[Path]`** / **`list_notes_collection_paths(root: Path) -> list[Path]`**
 Return artifacts from every discovered collection, or only from `kb/notes/`.
 

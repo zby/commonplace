@@ -86,6 +86,39 @@ def test_list_collection_note_paths_skips_hidden_entries_but_not_visible_content
     assert visible_dir_index in discovered
 
 
+def test_collection_validation_paths_prune_marked_subtrees_only(
+    tmp_path: Path,
+) -> None:
+    collection_root = collection(tmp_path / "kb" / "work")
+    kept = write(collection_root / "workshop" / "framing.md")
+    experimental = write(collection_root / "workshop" / "experiment" / "result.md")
+    marker = write(
+        collection_root
+        / "workshop"
+        / "experiment"
+        / project_paths.VALIDATION_IGNORE_MARKER,
+        "",
+    )
+    nested_marker = write(
+        collection_root
+        / "workshop"
+        / "experiment"
+        / "run"
+        / project_paths.VALIDATION_IGNORE_MARKER,
+        "",
+    )
+
+    validation_paths = project_paths.list_collection_validation_paths(collection_root)
+
+    assert kept in validation_paths
+    assert experimental not in validation_paths
+    assert experimental in project_paths.list_collection_note_paths(collection_root)
+    assert project_paths.validation_ignored_dirs(collection_root) == [marker.parent]
+    assert nested_marker.parent not in project_paths.validation_ignored_dirs(
+        collection_root
+    )
+
+
 def test_find_repo_markdown_files_skips_artifact_trees_and_hidden_dirs(
     tmp_path: Path,
 ) -> None:

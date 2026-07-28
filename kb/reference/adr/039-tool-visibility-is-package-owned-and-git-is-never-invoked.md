@@ -9,7 +9,7 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-07-05
-**Amended:** 2026-07-13 by [ADR 047](./047-type-specifications-use-normal-deterministic-validation.md)
+**Amended:** 2026-07-27 — collection-scoped validation exclusion; 2026-07-13 by [ADR 047](./047-type-specifications-use-normal-deterministic-validation.md)
 
 ## Context
 
@@ -27,7 +27,16 @@ The contract, implemented in `project_paths.walk_visible`: hidden (dot-prefixed)
 
 ADR 047 narrows the original `types/` exclusion: type-spec documents are ordinary validation artifacts and enter collection validation, while consumers whose domain excludes contracts retain their own explicit filter.
 
-There is no mechanism for declaring collection content local-only. Everything visible under a collection is KB content; content that must not be swept lives outside collections, in hidden directories, or does not exist in the working tree. If a declaration mechanism is ever needed, it will be an explicit package-owned one, not gitignore.
+General content visibility has no mechanism for declaring collection content
+local-only. Everything visible under a collection remains KB content to search,
+index, and repository-wide tools. Collection-scoped validation has one narrower
+projection: a directory containing `.commonplace-validation-ignore` and all of
+its descendants are omitted from the validation target and reported in batch
+output. This supports tracked or local-only Markdown-bearing experiment and
+fixture data whose validity is intentionally controlled by another protocol.
+Explicit file validation bypasses the marker. The marker does not affect
+general discovery, and gitignore remains irrelevant to every package-owned
+visibility decision.
 
 Relocation moves files with `Path.rename` (creating destination parents first). Git detects renames on commit; the `git mv` path and its silent strategy degradation are deleted.
 
@@ -38,6 +47,7 @@ Easier:
 - Tree enumeration drops from seconds of subprocess churn to a plain filesystem walk, in every command and in the ProperDocs build.
 - Behavior is identical with or without git, in checkouts, plain directories, and vendored installs.
 - Committed KB content can no longer be hidden from the tools by an ignore pattern; the tracked-but-pattern-matched divergence is gone by construction.
+- Experimental and fixture subtrees can remain searchable while collection validation excludes them through one explicit package-owned declaration.
 - Relocation has one move path instead of two strategies chosen by environment.
 
 Harder:

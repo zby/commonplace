@@ -36,6 +36,15 @@ commonplace-validate kb/notes/           # validate one collection by path
 commonplace-validate kb/notes/my-note.md # validate one note
 ```
 
+Collection-scoped validation prunes any subtree containing a
+`.commonplace-validation-ignore` marker and lists each excluded subtree in its
+batch output. Use this for Markdown-bearing experimental or fixture data that
+lives inside a collection but is not itself KB content. The marker may be
+tracked or live inside a local-only ignored subtree; its semantics come from
+Commonplace, not Git. It affects only collection-scoped validation: an explicit
+file target still validates, and the subtree remains visible to other
+Commonplace commands. `.gitignore` alone has no effect on validation visibility.
+
 Bare `kb` and `all` are rejected — scope must be a specific collection or file. To validate the authored library, loop over the collections explicitly:
 
 ```bash

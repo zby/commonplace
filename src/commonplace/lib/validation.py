@@ -27,7 +27,7 @@ from commonplace.lib.project_paths import (
     collection_for_path,
     is_collection_dir,
     is_type_definition_content,
-    iter_visible_markdown_files,
+    iter_validation_markdown_files,
     kb_root,
 )
 from commonplace.lib.quote_verification import verify_content
@@ -866,7 +866,7 @@ def validate_collection_structure(
         return []
 
     failures: list[tuple[Path, str]] = []
-    for path in iter_visible_markdown_files(collection):
+    for path in iter_validation_markdown_files(collection):
         if path.name != "COLLECTION.md" or path.parent == collection:
             continue
         if is_type_definition_content(path, collection):
