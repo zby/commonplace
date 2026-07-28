@@ -31,9 +31,13 @@ The fourth cell is unoccupied in this domain rather than impossible. Vector symb
 
 The inspection rule above follows from the axes instead of being stipulated per form: a localized unit with defined semantics can be checked against them (test), a localized unit without them yields its content only to interpretation (read), and a non-localized artifact offers nothing to point at, so only its behavior is observable (probe). [Addressability](../reflection-buys-addressability.md) rides on the localization axis alone, which is why a prompt and a validator are both revisable one item at a time while weights are not.
 
+Because natural-language and symbolic share the localized side of the table, the pair is referred to jointly as **the localized forms** — the class name reads the localization axis off rather than adding vocabulary. "Readable artifacts" and "the readable pair" remain informal aliases; prefer the derived name where the carve matters.
+
 ## Exclusions
 
 Representational form is not storage substrate. Markdown in a repository can be natural-language, symbolic, or mixed depending on the consumer. A vector store can expose natural-language records while its retrieval behavior depends on distributed-parametric embeddings and ranking.
+
+**Localized** is a claim about unit structure, not about locality of reference: it means an identifiable unit carries the content, not that the content is deployment-local. A fact indexed to one deployment — the "current local state" of the absorption discussion — can be retained in any form, including weights; the two senses are orthogonal and must not be read into each other.
 
 Representational form is also not consumption path. **Prompt** is exact when material is supplied, or explicitly assembled to be supplied, as model input. A stored note, policy, or memory record is not thereby a prompt because it might later be retrieved; retain its precise artifact name, or call it natural-language when the representational category matters. A generated model-input view can be a prompt even when it assembles natural-language and symbolic operative parts.
 

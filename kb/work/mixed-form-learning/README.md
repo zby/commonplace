@@ -30,7 +30,7 @@ Provenance discipline: the three-form triangle is representational-form's carve,
 ## Vocabulary tasks
 
 - **Done (2026-07-28):** retitled to [treat continual learning as representational-form coevolution](../../notes/treat-continual-learning-as-representational-form-coevolution.md) via `commonplace-relocate-note` (28 files rewritten, ProperDocs redirect added).
-- The review proposes "localized operative representations" for what natural-language and symbolic forms share (addressability plus a stable causal route into behavior). Expect naming rounds; scrutinize for hidden dichotomies before adopting.
+- **Done (2026-07-28):** the NL+symbolic union is named **the localized forms**, registered in [representational form](../../notes/definitions/representational-form.md) with a localized-vs-deployment-local disambiguation in its Exclusions. The review's "localized operative representations" was rejected: "operative" discriminates nothing (parametric state is maximally operative) and "representations" collides with ML usage; "localized" was the one derived word, so the name reads the axis off. "Readable pair" stays as informal alias; existing note titles keep their names.
 
 ## Source verification list
 
