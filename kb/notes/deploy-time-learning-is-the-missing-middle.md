@@ -19,7 +19,7 @@ Deployed systems adapt at three timescales, each with a different durable medium
 | **In-context** | Within a session | Context window | Inspectable but ephemeral; evaporates at session end |
 | **Deploy-time** | Across sessions, during deployment | Durable system-definition artifacts (natural-language + symbolic) | Durable, inspectable, versionable |
 
-Medium and timing are orthogonal axes in principle. The combination the table leaves empty — distributed-parametric updates at deployment pace — exists but stays rare because training infrastructure is heavy. [OpenClaw-RL](https://arxiv.org/html/2603.10165v1), which runs live RL from user interactions, is a current example.
+Medium and timing are orthogonal axes in principle. The combination the table leaves empty — distributed-parametric updates at deployment pace — exists but stays rare, for two reasons of different durability: training infrastructure is heavy today, and even where the update step gets cheap, its validation radius does not — establishing that a parametric update changed only what it should is the expensive half, [which the readable-artifact loop bounds through explicit dependencies](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md). [OpenClaw-RL](https://arxiv.org/html/2603.10165v1), which runs live RL from user interactions, is a current example of the combination.
 
 Deploy-time learning is system-level adaptation: behaviour improves because *artifacts* improve — during deployment like in-context, durable like training, but inspectable and tool-compatible throughout.
 

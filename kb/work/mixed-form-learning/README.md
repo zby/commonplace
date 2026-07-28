@@ -17,7 +17,7 @@ Provenance discipline: the three-form triangle is representational-form's carve,
 | Conjecture (review's name) | Status | Disposition |
 |---|---|---|
 | Moving-frontier | **promoted** | New note (link above). Second independent arrival — first surfaced in the closed scaffolding-relaxation workshop as "recedes, then reappears at the new edge." |
-| Validation radius (under "deployment-tempo") | strong, new mechanism | Revision of [deploy-time learning is the missing middle](../../notes/deploy-time-learning-is-the-missing-middle.md) and [readable-artifact loop](../../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md): ground the tempo argument in update locality and validation radius, not current training cost. Falsifier: cheap parametric methods matching artifact systems on adaptation latency, retention, collateral regressions, rollback, and review cost over a long task stream. |
+| Validation radius (under "deployment-tempo") | **landed** (2026-07-28) | Applied: the [readable-artifact loop](../../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) now factors by deployment-pace updates *plus bounded validation radius* rather than update cost, with the falsifier stated and the scoped/attributable/regression-checked condition cross-linked to the authoritative-record note; [deploy-time learning](../../notes/deploy-time-learning-is-the-missing-middle.md) names the two reasons of different durability. |
 | Symbolic-layer writability bridge | **landed** (2026-07-28) | Applied to [scheduler-LLM separation](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md): bias claims relativized to the implemented transition function with the wrong-spec case delegated to the relational [fixed-artifacts split](../../notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md), plus the bridge paragraph — the symbolic layer is a learning target and codification is the write path into it. The general form of the bridge stays reserved for the central note. |
 | Oracle accumulation | candidate note | Failures convert into tests and validators, improving the *selection environment* for all later candidates — distinct from [oracle strength spectrum](../../notes/oracle-strength-spectrum.md) (grades oracles; this accumulates them). Worked case: the tag-readme episode. Check overlap before writing. |
 | Change-topology matching | candidate | Sparse semantic change favors a mutable representation localized in a matching decomposition. Either a new note or the missing mechanism section of [reflection buys addressability](../../notes/reflection-buys-addressability.md). |
@@ -34,9 +34,9 @@ Provenance discipline: the three-form triangle is representational-form's carve,
 
 ## Source verification list
 
-Held (citable now): [OpenAI harness engineering](../../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md), [Claude Workstream Kit](../../sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md), [vertical-agent context engineering](../../sources/building-a-good-vertical-agent-2065190286519906657.ingest.md), [KSI](../../sources/knowledge-centric-self-improvement-2607.19592.ingest.md), ACE (agent-memory review).
+Held (citable now): [OpenAI harness engineering](../../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md), [Claude Workstream Kit](../../sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md), [vertical-agent context engineering](../../sources/building-a-good-vertical-agent-2065190286519906657.ingest.md), [KSI](../../sources/knowledge-centric-self-improvement-2607.19592.ingest.md), ACE (agent-memory review), [Meta-Harness](../../agent-memory-systems/reviews/meta-harness.md) (code-grounded review plus ingest).
 
-To snapshot and verify before anything cites them: Anthropic long-running-agents engineering post; Co-Harness preprint (reported 2026-07-17, harness/fine-tune alternation); ToolGate (arXiv 2601.04688); Meta-Harness; Memento-Skills; Agent Symbolic Learning (arXiv 2406.18532).
+To snapshot and verify before anything cites them: Anthropic long-running-agents engineering post; Co-Harness preprint (reported 2026-07-17, harness/fine-tune alternation); ToolGate (arXiv 2601.04688); Memento-Skills; Agent Symbolic Learning (arXiv 2406.18532).
 
 ## What would close this workshop
 
@@ -47,4 +47,4 @@ To snapshot and verify before anything cites them: Anthropic long-running-agents
 
 ## Next useful step
 
-Land the validation-radius revision of the deploy-time and readable-artifact notes, then evaluate oracle-accumulation against the existing oracle notes.
+Evaluate oracle-accumulation against the existing oracle notes, then decide the change-topology-matching disposition (new note vs the missing mechanism section of reflection-buys-addressability).
