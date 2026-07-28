@@ -42,7 +42,7 @@ The five externally proposed additions were identity-checked and captured on 202
 ## What would close this workshop
 
 - Every inventory row dispositioned: note written, revision landed, or rejected with a reason.
-- The umbrella promoted to one central note (candidate title: "Heterogeneous change favors mixed-form learning") linking the specialized conjectures — or a recorded decision that the existing cluster already carries it.
+- **Done (2026-07-28):** the umbrella promoted to the central note [the bitter lesson selects production methods, not representational forms](../../notes/the-bitter-lesson-selects-production-methods-not-representational.md) — the discussion replaced the defensive "heterogeneous change favors mixed-form learning" framing with the two-axis carve (both axes inherited/derived), the machinery-asymmetry diagnosis, the supplied-content boundary, and the credit-assignment stake stated so it can lose; the umbrella conjecture survives inside it as the prediction.
 - The article's bitter-lesson section updated with the fixed-task/moving-frontier distinction, after the notes exist.
 - The source list resolved: snapshotted or dropped.
 
