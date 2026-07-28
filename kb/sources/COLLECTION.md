@@ -48,7 +48,7 @@ Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 | `rationale` | notes | this design or rule rests on this claim |
 | `compares-with` | sources, agent-memory, agentic-systems | this source covers a similar/parallel system |
 | `defined-in` | notes/definitions | reader may not know the term |
-| `see-also` | any | adjacent companion; use sparingly |
+| `see-also` | notes, reference, sources, agent-memory, agentic-systems, external | adjacent companion; use sparingly |
 
 ## Types
 

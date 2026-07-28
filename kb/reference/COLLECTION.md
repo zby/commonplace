@@ -42,7 +42,7 @@ Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 | `abstracted-from` | sources, agent-memory, agentic-systems | this design choice generalizes beyond this external source/system; the source is evidence, not a generator |
 | `evidenced-by` | reference, sources, agent-memory, agentic-systems, external | the target record, source, or system corroborates, qualifies, or bounds this description |
 | `procedure` | instructions | for how to do this, see this instruction |
-| `see-also` | any | adjacent companion; use sparingly |
+| `see-also` | reference, notes, agent-memory, agentic-systems, sources, instructions, external | adjacent companion; use sparingly |
 
 ## Types
 
