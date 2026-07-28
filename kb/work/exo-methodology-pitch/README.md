@@ -132,7 +132,7 @@ The frame that gets this right is already in the [reflective system](../../notes
 ## Bookkeeping
 
 - Already shipped from this thread: `63effb8e` recorded the cloning-claim inconsistency in `kb/agentic-systems/exo.md` (README and `RSI.md` present cloning and clone lineage as shipped; `SELF-CONTROL.md` marks area 7 not built).
-- Adjacent workshops, check before duplicating: [agent-complexity-theory](../agent-complexity-theory/README.md) (**the dependency** — its result families 1 and 2 decide how strong thread 2 can be stated), the closed scaffolding-relaxation workshop, promoted to [parametric reproduction cannot replace an authoritative mutable record](../../notes/parametric-reproduction-cannot-replace-an-authoritative-record.md) (what stronger models made obsolete in scaffolding — shares thread 2's territory), [self-improvement-cluster-operationalization](../self-improvement-cluster-operationalization/README.md) (inward-facing counterpart).
+- Adjacent workshops, check before duplicating: [agent-complexity-theory](../agent-complexity-theory/README.md) (**the dependency** — its result families 1 and 2 decide how strong thread 2 can be stated), the closed scaffolding-relaxation workshop, promoted to [parametric reproduction alone cannot replace an authoritative record](../../notes/parametric-reproduction-cannot-replace-an-authoritative-record.md) (what stronger models made obsolete in scaffolding — shares thread 2's territory), [self-improvement-cluster-operationalization](../self-improvement-cluster-operationalization/README.md) (inward-facing counterpart).
 
 ---
 
