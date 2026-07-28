@@ -153,6 +153,8 @@ Short spans reduce the cost of an imperfect oracle; they do not make it stronger
 - Sample apparently successful changes to detect silent proxy gaming.
 - Update failure taxonomies and question sets from escaped cases.
 
+[SlopCodeBench](../sources/why-software-factories-fail-slopcodebench-2081797628552270027.ingest.md) is an early practitioner instance of this design: incrementally revealed requirements force each later checkpoint to exercise the structure left by earlier ones, while held-out black-box tests provide a delayed accumulated-defect signal. Horthy's small run is evidence that the surface can distinguish trajectories, not evidence that strict pass or static slop metrics are sufficient maintainability oracles; generating delayed evidence does not by itself justify transferring review authority from humans to the benchmark.
+
 The [Eval Engineering workflow](../sources/towards-automating-eval-engineering-2079976006644072796.ingest.md) offers a useful pattern here: mine production traces into reproducible tasks, inspect verifier trajectories, and keep the user involved while the target is still being specified.
 
 ## A minimal pilot
@@ -192,3 +194,4 @@ Relevant Notes:
 - [Brainstorming: how to test whether pairwise comparison can harden soft oracles](./brainstorming-how-to-test-whether-pairwise-comparison-can-harden.md) — exemplifies: staged calibration of one candidate judgment method
 - [Quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — compares: parallel composite-oracle design space for semantic KB quality
 - [005-quality-check placement](../reference/adr/005-quality-check-placement.md) — evidenced-by: existing workflow placement based on determinism, cost, and false-positive tolerance
+- [Why Software Factories Fail: Benchmarking the new frontier](../sources/why-software-factories-fail-slopcodebench-2081797628552270027.ingest.md) — evidenced-by: a bounded practitioner benchmark of incrementally revealed requirements, strict accumulated passes, and deterministic maintainability proxies
