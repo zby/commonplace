@@ -4,12 +4,12 @@ Working out formal consequences of the [bounded-context orchestration model](../
 
 The goal is theorem sketches and proof outlines suitable for academic collaboration, not KB design notes. Artifacts here are consumed when they mature into a paper or get pitched to collaborators.
 
-**Downstream consumer.** [exo-methodology-pitch](../exo-methodology-pitch/README.md) depends on two families here, and how strongly it can state its case turns on how they resolve. The semantic-retrieval bound decides whether "external distilled artifacts escape re-derivation cost" is an efficiency claim scaling can answer or a lower bound no capability escapes. [No universal distillation](./no-universal-distillation-preserves-all-task-relevant-structure.md) constrains that workshop's own proposal in the other direction: if no bounded summary serves a rich query family, distillation must declare which query family it serves, which is what a per-class contract does. Neither workshop should assume the other's result — record what is proved, not what is hoped.
+**Downstream consumer.** [exo-methodology-pitch](../exo-methodology-pitch/README.md) depends on two families here, and how strongly it can state its case turns on how they resolve. The semantic-retrieval bound decides whether retaining derived artifacts avoids a reconstruction cost that stronger models could erase or a lower bound no capability escapes. [No bounded summary preserves all distinctions for a rich query family](./no-bounded-summary-preserves-all-distinctions-for-a-rich-query-family.md) constrains that workshop's proposal in the other direction: a bounded summary must declare which query family it serves, which is what a per-class contract does. Neither workshop should assume the other's result — record what is proved, not what is hoped.
 
 ## Candidate result families
 
 1. **Semantic retrieval lower bounds** — orchestration cannot replace semantic inspection without a pre-built index
-2. **No universal distillation** — no bounded summary preserves all task-relevant structure for a rich query family
+2. **Bounded-summary impossibility** — no bounded summary preserves every distinction required by a rich query family
 3. **Interaction-width lower bounds** — tasks with dense cross-item dependencies force wide prompts or repeated re-opening
 4. **Adaptivity / round lower bounds** — step-dependent discovery and pointer-chasing structures require sequential depth regardless of parallelism
 5. **Calls-width-compression tradeoff frontiers** — fewer calls require wider prompts or more aggressive compression
@@ -28,7 +28,7 @@ The goal is theorem sketches and proof outlines suitable for academic collaborat
 ## Current sketches
 
 - [Exact retrieval over semantically opaque items requires linear inspection](./exact-retrieval-over-semantically-opaque-items-requires-linear.md)
-- [No universal distillation preserves all task-relevant structure](./no-universal-distillation-preserves-all-task-relevant-structure.md)
+- [No bounded summary preserves all distinctions for a rich query family](./no-bounded-summary-preserves-all-distinctions-for-a-rich-query-family.md)
 - [Adaptive dependencies force width, reopening, or sequential rounds](./adaptive-dependencies-force-width-reopening-or-sequential-rounds.md)
 - [Few calls require width and long chains require verification](./few-calls-require-width-and-long-chains-require-verification.md)
 - [Archive readability toy model](./archive-readability-toy-model.md)

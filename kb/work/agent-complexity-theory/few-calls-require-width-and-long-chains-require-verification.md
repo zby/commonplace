@@ -16,9 +16,9 @@ The claim has two parts:
 
 ## Evidence
 
-- [No universal distillation preserves all task-relevant structure](./no-universal-distillation-preserves-all-task-relevant-structure.md) already gives the core exactness lower bound. A bounded summary can only preserve a bounded number of query-induced distinctions.
+- [No bounded summary preserves all distinctions for a rich query family](./no-bounded-summary-preserves-all-distinctions-for-a-rich-query-family.md) already gives the core exactness lower bound. A bounded summary can only preserve a bounded number of query-induced distinctions.
 - [Adaptive dependencies force width, reopening, or sequential rounds](./adaptive-dependencies-force-width-reopening-or-sequential-rounds.md) shows the operational consequence for decomposition: if a task's interaction structure is real, making the pipeline shallower does not eliminate the structure; it only moves where the system pays for it.
-- [Effective context is task-relative and complexity-relative, not a fixed model constant](../../notes/effective-context-is-task-relative-and-complexity-relative-not-a.md) explains why "few calls require width" is substantive. Prompt width means larger effective burden on the bounded call, not just more raw tokens.
+- [Agent context is constrained by soft degradation, not hard token limits](../../notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) explains why "few calls require width" is substantive. Prompt width means larger effective burden on the bounded call, not just more raw tokens.
 - [Error correction works with above-chance oracles and decorrelated checks](../../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) identifies the positive side of the reliability claim: long chains are viable when the architecture periodically inserts checks with real discriminative power.
 - [Topology, isolation, and verification form a causal chain for reliable agent scaling](../../notes/topology-isolation-and-verification-form-a-causal-chain-for-reliable.md) already argues that verification is not an optional cosmetic add-on. This note supplies the tradeoff reason: decomposition changes both context cost and where reliability must be restored.
 
@@ -46,7 +46,7 @@ bits of effective interface capacity at cut `i`.
 
 #### Proof sketch
 
-This is the same counting argument as in [No universal distillation preserves all task-relevant structure](./no-universal-distillation-preserves-all-task-relevant-structure.md), applied locally to a single pipeline cut. If `B_i` carried fewer than `log_2 N_i` bits, then it would have fewer than `N_i` possible codes. Two prefix states with different downstream-relevant profiles would collapse to the same exported interface. Since the suffix sees the same post-cut inputs in both worlds, it must return the same answer in both, contradicting exactness.
+This is the same counting argument as in [No bounded summary preserves all distinctions for a rich query family](./no-bounded-summary-preserves-all-distinctions-for-a-rich-query-family.md), applied locally to a single pipeline cut. If `B_i` carried fewer than `log_2 N_i` bits, then it would have fewer than `N_i` possible codes. Two prefix states with different downstream-relevant profiles would collapse to the same exported interface. Since the suffix sees the same post-cut inputs in both worlds, it must return the same answer in both, contradicting exactness.
 
 The consequence is local but important. Every cut has a minimum interface burden. A decomposition does not make this burden vanish; it decides where in the pipeline that burden is carried.
 
@@ -101,9 +101,9 @@ Together they yield the intended engineering rule: planner decisions should be e
 Relevant Notes:
 
 - [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) — foundation: decomposition is analyzed inside the select/call architecture where prompt width and chain depth are first-class costs
-- [no universal distillation preserves all task-relevant structure](./no-universal-distillation-preserves-all-task-relevant-structure.md) — exactness lower bound: narrow interfaces cannot preserve every downstream distinction for rich query families
+- [no bounded summary preserves all distinctions for a rich query family](./no-bounded-summary-preserves-all-distinctions-for-a-rich-query-family.md) — exactness lower bound: narrow interfaces cannot preserve every downstream distinction for rich query families
 - [adaptive dependencies force width reopening or sequential rounds](./adaptive-dependencies-force-width-reopening-or-sequential-rounds.md) — companion result: shows where the lost interaction cost reappears operationally when a task resists shallow decomposition
-- [effective context is task-relative and complexity-relative not a fixed model constant](../../notes/effective-context-is-task-relative-and-complexity-relative-not-a.md) — clarifies: the "width" side of the frontier is effective burden on bounded calls, not merely token count
+- [agent context is constrained by soft degradation not hard token limits](../../notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — clarifies: the "width" side of the frontier is effective burden on bounded calls, not merely token count
 - [decomposition heuristics for bounded-context scheduling](../../notes/decomposition-heuristics-for-bounded-context-scheduling.md) — consequence: the heuristics can be read as moves along an explicit frontier rather than as free improvements
 - [error correction works with above-chance oracles and decorrelated checks](../../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — mechanism: gives the positive theorem for recovering reliability after long stochastic chains
 - [topology, isolation, and verification form a causal chain for reliable agent scaling](../../notes/topology-isolation-and-verification-form-a-causal-chain-for-reliable.md) — extends: explains why deeper decompositions need isolation and verification structure rather than assuming chain length is harmless

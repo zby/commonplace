@@ -18,8 +18,8 @@ Two concrete forms of the claim are clean:
 
 - The orchestration model already isolates the relevant boundary: symbolic operations are exact and unbounded, but new semantic facts enter state only through bounded `call(P)` steps.
 - [Exact retrieval over semantically opaque items requires linear inspection](./exact-retrieval-over-semantically-opaque-items-requires-linear.md) proves that orchestration cannot avoid semantic work when symbolic state lacks relevance-correlated pointers. The present note shifts from "which items are relevant?" to "which item is needed next?" and "which items must be considered jointly?"
-- [No universal distillation preserves all task-relevant structure](./no-universal-distillation-preserves-all-task-relevant-structure.md) already rules out the main escape hatch for dense interactions. If a bounded interface cannot preserve all query-relevant distinctions, then partitioning the task into narrower stages does not make the interaction disappear; it only postpones where the cost is paid.
-- [Effective context is task-relative and complexity-relative, not a fixed model constant](../../notes/effective-context-is-task-relative-and-complexity-relative-not-a.md) explains why "wider prompt" here is not just about tokens. Interaction-heavy prompts are expensive because the model must use the items jointly, not merely read them side by side.
+- [No bounded summary preserves all distinctions for a rich query family](./no-bounded-summary-preserves-all-distinctions-for-a-rich-query-family.md) already rules out the main escape hatch for dense interactions. If a bounded interface cannot preserve all query-relevant distinctions, then partitioning the task into narrower stages does not make the interaction disappear; it only postpones where the cost is paid.
+- [Agent context is constrained by soft degradation, not hard token limits](../../notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) explains why "wider prompt" here is not just about tokens. Interaction-heavy prompts are expensive because the model must use the items jointly, not merely read them side by side.
 - [Decomposition heuristics for bounded-context scheduling](../../notes/decomposition-heuristics-for-bounded-context-scheduling.md) already treats "preserve interfaces needed for later synthesis" as a practical rule. This note is the lower-bound version: if the interface does not preserve those interactions, later exact synthesis must reopen or re-co-load the originals.
 
 ## Task families
@@ -66,7 +66,7 @@ Assume for contradiction that such an exact `b`-interface, no-reopen decompositi
 
 The suffix of the pipeline receives identical post-cut inputs in those two worlds: same `Y_right`, same query, same exported interface. Therefore it must return the same final answer in both worlds. That contradicts exactness.
 
-So a narrow no-reopen cut is impossible whenever the downstream interaction complexity across that cut exceeds the interface capacity. This is the dense-interaction version of the [no universal distillation](./no-universal-distillation-preserves-all-task-relevant-structure.md) argument.
+So a narrow no-reopen cut is impossible whenever the downstream interaction complexity across that cut exceeds the interface capacity. This is the dense-interaction version of the [bounded-summary impossibility](./no-bounded-summary-preserves-all-distinctions-for-a-rich-query-family.md) argument.
 
 ## Why it matters
 
@@ -91,7 +91,7 @@ Relevant Notes:
 - [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) — foundation: the lower bound is stated in the select/call architecture where new dependency facts enter only through bounded semantic calls
 - [any symbolic program with LLM calls is a select/call program](../../notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md) — scope: lifts the claim from one orchestration style to the full class of clean symbolic programs with LLM calls
 - [exact retrieval over semantically opaque items requires linear inspection](./exact-retrieval-over-semantically-opaque-items-requires-linear.md) — parallel lower bound: opacity blocks cheap pruning; the present note shows that hidden dependency structure also blocks cheap scheduling
-- [no universal distillation preserves all task-relevant structure](./no-universal-distillation-preserves-all-task-relevant-structure.md) — mechanism: dense interaction cannot be made to disappear by universally sufficient narrow summaries
-- [effective context is task-relative and complexity-relative not a fixed model constant](../../notes/effective-context-is-task-relative-and-complexity-relative-not-a.md) — clarifies: the width cost is driven by interaction complexity, not just by raw token count
+- [no bounded summary preserves all distinctions for a rich query family](./no-bounded-summary-preserves-all-distinctions-for-a-rich-query-family.md) — mechanism: dense interaction cannot be made to disappear by universally sufficient narrow summaries
+- [agent context is constrained by soft degradation not hard token limits](../../notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — clarifies: the width cost is driven by interaction complexity, not just by raw token count
 - [decomposition heuristics for bounded-context scheduling](../../notes/decomposition-heuristics-for-bounded-context-scheduling.md) — consequence: the note turns "preserve interfaces needed for later synthesis" from a heuristic into a lower-bound boundary condition
 - [LLM context is composed without scoping](../../notes/llm-context-is-composed-without-scoping.md) — mechanism: clean local frames help only when the task really decomposes; they do not erase irreducible adaptive or interaction structure

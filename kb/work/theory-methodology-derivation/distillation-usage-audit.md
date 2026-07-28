@@ -41,7 +41,7 @@ Reading the substantive (non-META) 248 instances:
 
 7. **Two-stage pipelines are the common hybrid.** Many described systems (and some KB procedures) run a DER stage (deterministic stats, compaction, summaries) feeding an AMP stage (rules, insights, harness edits): `agentic-harness-engineering`, `g-memory`, `clawvault`, `MemoryOS`, `signetai`; also `skill-creator-distillation`'s "re-distillation from a mixed evidence base". One word currently spans both stages; the decomposition names them differently — arguably the point.
 
-8. **A formal result survives untouched.** `kb/work/agent-complexity-theory/no-universal-distillation-preserves-all-task-relevant-structure.md` models distillation as a bounded summary map — pure DER; renaming is mechanical there.
+8. **A formal result survives with a mechanical rename.** `kb/work/agent-complexity-theory/no-bounded-summary-preserves-all-distinctions-for-a-rich-query-family.md` models the retired term as a bounded summary map — pure DER; the theorem itself is unchanged.
 
 ## Migration mechanics inventory
 
