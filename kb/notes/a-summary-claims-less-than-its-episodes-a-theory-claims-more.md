@@ -1,5 +1,5 @@
 ---
-description: "Summarization and theory-formation get conflated as 'compressing traces': a summary shortens, claiming a subset; a distilled theory posits a mechanism covering unseen cases, claiming more than the episodes entail — opposite directions, different debts"
+description: "A summary shortens, claiming a subset of its episodes; a distilled theory posits a mechanism covering unseen cases, claiming more than they entail — opposite directions, different debts, conflated as 'compressing traces'"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, discovery]
