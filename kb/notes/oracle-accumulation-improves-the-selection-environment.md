@@ -1,5 +1,5 @@
 ---
-description: "A failure retained as a lesson helps tasks that retrieve it; retained as an enforced check it runs against every later candidate in its domain — accumulating oracles strengthens the selection environment, moves the warranted-autonomy boundary, and amortizes validation"
+description: "A failure retained as a lesson helps tasks that retrieve it; retained as an enforced check it runs against every later candidate — accumulating oracles strengthens the selection environment, moves the warranted-autonomy boundary, amortizes validation"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning]
