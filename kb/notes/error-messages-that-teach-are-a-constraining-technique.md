@@ -9,7 +9,7 @@ tags: [learning-theory, constraining]
 
 In agent systems, every error message the agent sees — linter output, test failures, hook warnings — is context that shapes its next action. A human seeing `null pointer exception` brings decades of debugging experience. An agent's only knowledge of what went wrong is what appears in context. The error channel is an instruction channel.
 
-This means the difference between `FAIL` and `FAIL: description must be under 200 chars, yours is 247 — trim the last sentence` is not cosmetic. The first forces the agent to spend context diagnosing the problem. The second [frontloads](./frontloading-spares-execution-context.md) the answer. The cost difference is negligible — same hook, better message. The reliability difference is large.
+This means the difference between `WARN` and `WARN: description should be at most 250 characters; yours is 297 — remove the least discriminating clause` is not cosmetic. The first forces the agent to spend context diagnosing the problem. The second [frontloads](./frontloading-spares-execution-context.md) the answer. The cost difference is negligible — same hook, better message. The reliability difference is large.
 
 Lopopolo's report on [OpenAI's Codex team](https://openai.com/index/harness-engineering/) puts it directly: "Linter error messages double as remediation instructions — every failure message teaches the agent the fix." And: "every mistake is a harness bug" — when an agent makes an error the system could have prevented through a better message, the system is at fault.
 

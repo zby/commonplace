@@ -21,7 +21,7 @@ How the context engine identifies what to inject is an open design question. Doc
 
 Definitions are the cleanest case for auto-injection and motivate a `definition` type:
 
-- **They're small.** Under 200 characters in the description, a few paragraphs in the body. The context cost is low.
+- **They're small.** Their descriptions normally fit well below the 250-character warning ceiling, with only a few paragraphs in the body. The context cost is low.
 - **They're stable.** Definitions change rarely. Once loaded, they remain valid for the session.
 - **They're referential, not argumentative.** You don't need to evaluate a definition — you need to have it available. Auto-injection matches the link semantics: "as defined in" doesn't require the agent to decide whether to follow the link.
 - **They should be loaded once per session.** A definition doesn't need re-reading. The context engine could track which definitions have been injected and skip duplicates — paying the context cost once, not on every reference.

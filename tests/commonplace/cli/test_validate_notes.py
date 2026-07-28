@@ -333,8 +333,8 @@ def test_note_description_must_be_present_non_empty_text(
         ("Short but non-empty", "description should be at least 50 characters"),
         (
             "Long description "
-            + "with enough repeated words to exceed the upper bound " * 4,
-            "description should be at most 200 characters",
+            + "with enough repeated words to exceed the upper bound " * 5,
+            "description should be at most 250 characters",
         ),
     ],
 )
@@ -358,6 +358,28 @@ type: kb/types/note.md
     assert results.note_type == "note"
     assert results.fails == []
     assert any(f"frontmatter.description: {expected}" in item for item in results.warns)
+
+
+def test_note_description_between_old_and_new_upper_bound_does_not_warn(
+    tmp_path: Path,
+) -> None:
+    configure_temp_repo(tmp_path)
+    description = "x" * 225
+    note = write(
+        tmp_path / "description-inside-style-band.md",
+        f"""---
+description: {description}
+type: kb/types/note.md
+---
+
+# Description inside style band
+""",
+    )
+
+    results = validation.validate_note(note, repo_root=tmp_path)
+
+    assert results.fails == []
+    assert not any("frontmatter.description" in item for item in results.warns)
 
 
 def test_link_validation_skips_code_and_external_urls(tmp_path: Path) -> None:

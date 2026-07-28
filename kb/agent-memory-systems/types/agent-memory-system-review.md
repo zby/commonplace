@@ -19,7 +19,7 @@ The section specs below distill [designing-agent-memory-systems](../../notes/des
 
 ## Frontmatter
 
-- `description` — discriminating retrieval filter (50–200 chars, double-quoted)
+- `description` — discriminating retrieval filter (50–250 chars, double-quoted)
 - `type: ../types/agent-memory-system-review.md`
 - `source-tier` — `code-grounded` (findings rest on inspected source; abandoned-but-readable code counts) or `doc-grounded` (no reachable source; findings rest on docs/papers, kept claim-level, filed under `lightweight/`, excluded from the matrix). Required — the **only** authority difference between reviews. Promote a `doc-grounded` review by flipping to `code-grounded` once source is read.
 - Do not add `user-verified`; creation and review generation cannot grant human attestation.

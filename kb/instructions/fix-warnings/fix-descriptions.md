@@ -21,7 +21,7 @@ A focused editing pass that fixes description-field warnings from `commonplace-v
 ## The rules
 
 Validator warning:
-- **Length:** 50–200 characters
+- **Length:** 50–250 characters
 
 Review/style rules:
 - **Single statement:** no sentence-ending punctuation mid-description
@@ -44,7 +44,7 @@ The description answers "why THIS note?" not "what is this note about?" The titl
 4. Check: if an agent got 5 search results including this note, would the description help pick this one? If not, sharpen.
 
 **Common failure modes:**
-- **Summary creep:** trying to compress the whole note into 200 chars. Pick ONE discriminating element instead.
+- **Summary creep:** trying to compress the whole note into 250 chars. Pick ONE discriminating element instead.
 - **Title paraphrase:** "This note argues that [title restated]." Zero retrieval value — the title already says this.
 - **Grammatical damage:** forcing two ideas into one clause with "and" or "but" that doesn't parse. If two ideas don't fit, pick the more discriminating one.
 - **Hedging in the description:** descriptions are retrieval filters, not epistemic claims. "Context is the scarce resource" is fine in a description even if the note hedges the claim in the body.
@@ -53,7 +53,7 @@ The description answers "why THIS note?" not "what is this note about?" The titl
 
 1. Identify which warnings apply (too long, multi-sentence, terminal punctuation, title restatement).
 2. Read the note to find the discriminating element.
-3. Write the new description. Check length (aim for 100–180 chars as a sweet spot).
+3. Write the new description. Check length (usually aim for 100–180 chars; use the extra room up to 250 only when it changes the read/skip decision).
 4. Verify against the rules.
 5. Apply the edit.
 

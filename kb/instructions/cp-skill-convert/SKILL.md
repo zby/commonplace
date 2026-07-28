@@ -42,7 +42,7 @@ Add YAML frontmatter at the top of the file:
 
 ```yaml
 ---
-description: [50-200 chars, adds mechanism/scope/implication beyond the title]
+description: [50-250 chars, adds mechanism/scope/implication beyond the title]
 type: kb/types/note.md
 traits: []
 tags: []

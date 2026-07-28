@@ -25,7 +25,7 @@ The analogy: AlphaGo works because the game has a perfect verifier. KBs don't. B
 
 **Content quality proxies:**
 - Description uniqueness — pairwise similarity of descriptions. High similarity between two notes suggests either redundancy or poor discrimination. Both are actionable.
-- Description length distribution — too short (< 50 chars) → likely uninformative. Too long (> 200 chars) → summary not filter. The distribution shape tells you about overall discipline.
+- Description length distribution — too short (< 50 chars) → likely uninformative. Too long (> 250 chars) → possible summary creep rather than retrieval discrimination. The distribution shape tells you about overall discipline.
 - Title-as-claim ratio — what fraction of note titles read as claims vs topics? Can be approximated: titles starting with verbs or containing "is/are/should/enables" are likely claims. This signal operationalises [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — the ratio measures how much of the graph supports reasoning-by-traversal.
 - Frontmatter completeness — what % have description, type, areas? Declining completeness over time suggests declining discipline. Since [document types should be verifiable](./document-types-should-be-verifiable.md), the type system only works if frontmatter is trustworthy — completeness is a prerequisite for type-based signals.
 
