@@ -1,5 +1,5 @@
 ---
-description: "Identifies the natural-language-plus-symbolic pair as the tractable first loop for substrate coevolution because it shares context, operates at current tempos, and already has a codification boundary"
+description: "Identifies the natural-language-plus-symbolic pair as the tractable first loop for representational-form coevolution because it shares context, operates at current tempos, and already has a codification boundary"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning]
@@ -7,7 +7,7 @@ tags: [learning-theory, deploy-time-learning]
 
 # The readable-artifact loop is the tractable unit for continual learning
 
-[Treat continual learning as substrate coevolution](./treat-continual-learning-as-substrate-coevolution.md) sets the frame: distributed-parametric, natural-language, and symbolic [representational forms](./definitions/representational-form.md) (ways retained behavior is encoded and consumed) all adapt durably; they are coupled; how their improvement loops relate is the open question. This note takes the practical next step. A full three-way joint optimizer is not the near-term plan. The tractable first slice is the **readable pair** - natural-language and symbolic together - which shares enough structure to form a single coupled optimization target. Mainstream ML is scaling the distributed-parametric loop; automating the readable-artifact loop is a parallel, under-explored avenue that stands on its own structural merits, regardless of how fast distributed-parametric updates mature.
+[Treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md) sets the frame: distributed-parametric, natural-language, and symbolic [representational forms](./definitions/representational-form.md) (ways retained behavior is encoded and consumed) all adapt durably; they are coupled; how their improvement loops relate is the open question. This note takes the practical next step. A full three-way joint optimizer is not the near-term plan. The tractable first slice is the **readable pair** - natural-language and symbolic together - which shares enough structure to form a single coupled optimization target. Mainstream ML is scaling the distributed-parametric loop; automating the readable-artifact loop is a parallel, under-explored avenue that stands on its own structural merits, regardless of how fast distributed-parametric updates mature.
 
 ## Why the readable pair is a natural unit
 
@@ -42,7 +42,7 @@ The goal is to graduate from engineering to loops — first for the readable pai
 
 Relevant Notes:
 
-- [Treat continual learning as substrate coevolution](./treat-continual-learning-as-substrate-coevolution.md) — frame: coevolution across distributed-parametric, natural-language, and symbolic forms; this note argues the readable pair is the tractable first slice
+- [Treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md) — frame: coevolution across distributed-parametric, natural-language, and symbolic forms; this note argues the readable pair is the tractable first slice
 - [Axes of artifact analysis](./axes-of-artifact-analysis.md) — foundation: defines the natural-language/symbolic/distributed-parametric split; the readable pair is the non-distributed-parametric union
 - [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — foundation: natural-language and symbolic artifacts as durable adaptation targets; this note treats the pair as a single coupled target
 - [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) — foundation: behaviour change is the open half of continual learning, with weights and readable system-definition artifacts as the two mechanisms — the premise that lets the readable pair count as a learning target at all

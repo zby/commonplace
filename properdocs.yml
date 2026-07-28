@@ -89,6 +89,7 @@ plugins:
         'notes/tool-loop-index.md': 'notes/tool-loop-README.md'
         'notes/trace-derived-learning-techniques-in-related-systems.md': 'agent-memory-systems/README.md'
         'notes/traversal-improves-the-graph.md': 'notes/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid.md'
+        'notes/treat-continual-learning-as-substrate-coevolution.md': 'notes/treat-continual-learning-as-representational-form-coevolution.md'
         'notes/type-system-index.md': 'notes/type-system-README.md'
         'notes/underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md': 'notes/underspecification-and-indeterminism-complicate-programming-for.md'
         'notes/vocabulary-collisions-are-prevented-at-write-time-not-resolved-at-read-time.md': 'notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md'

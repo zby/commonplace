@@ -43,14 +43,14 @@ The end state also differs. Agile treats natural-language specs as temporary —
 
 ## Boundary
 
-This note is the timing argument alone. How distributed-parametric, natural-language, and symbolic [representational forms](./definitions/representational-form.md) should coevolve is [treat continual learning as substrate coevolution](./treat-continual-learning-as-substrate-coevolution.md).
+This note is the timing argument alone. How distributed-parametric, natural-language, and symbolic [representational forms](./definitions/representational-form.md) should coevolve is [treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md).
 
 ---
 
 Relevant Notes:
 
 - [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) — foundation: places system-definition artifacts on the timing axis
-- [Treat continual learning as substrate coevolution](./treat-continual-learning-as-substrate-coevolution.md) — extends: asks how deploy-time natural-language/symbolic loops relate to distributed-parametric loops
+- [Treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md) — extends: asks how deploy-time natural-language/symbolic loops relate to distributed-parametric loops
 - [The verifiability gradient](./verifiability-gradient.md) — extends: the ladder that deploy-time artifacts move along in both directions
 - [Axes of artifact analysis](./axes-of-artifact-analysis.md) — sharpens: the repo is Commonplace's storage substrate choice for many durable system-definition artifacts
 - [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — mechanism: lets content function as instruction, not only as data

@@ -29,6 +29,6 @@ Relevant Notes:
 - [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — extends: fills the timing axis for system-definition updates during deployment
 - [Constraining during deployment is continual learning](./constraining-during-deployment-is-continuous-learning.md) — exemplifies: versioned prompts, schemas, tools, and tests as one concrete system-definition loop
 - [Axes of artifact analysis](./axes-of-artifact-analysis.md) — foundation: defines substrate, form, lineage, and authority; this note applies authority to argue which half of continual learning is open
-- [Treat continual learning as substrate coevolution](./treat-continual-learning-as-substrate-coevolution.md) — extends: asks how the three representational forms' improvement loops should relate
+- [Treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md) — extends: asks how the three representational forms' improvement loops should relate
 - [Memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — contrasts: AgeMem is a learned memory-management policy system and the distributed-parametric behaviour-change case, against which the readable-artifact mechanism is the cheaper alternative
 - [Trace-learning techniques in related systems](../agent-memory-systems/trace-learning-techniques-in-related-systems.md) — evidenced-by: surveyed systems already split into weight-promotion and artifact-promotion loops

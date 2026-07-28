@@ -5,7 +5,7 @@ traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning]
 ---
 
-# Treat continual learning as substrate coevolution
+# Treat continual learning as representational-form coevolution
 
 [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) names two behaviour-change mechanisms: expensive weight updates and cheap readable [system-definition artifacts](./definitions/system-definition-artifact.md). [Deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) places the readable mechanism on the timing axis. Splitting retained behavior by [representational form](./definitions/representational-form.md) (how an operative part is encoded and consumed) gives three forms: **distributed-parametric** (weights, adapters, embeddings, learned controllers), **Natural-language** (prompts, notes, specs, rubrics), and **symbolic** (code, schemas, tests, tools). How should their improvement loops relate? They aren't independent: optimizing one assumes a position about the others.
 

@@ -29,7 +29,7 @@ Provenance discipline: the three-form triangle is representational-form's carve,
 
 ## Vocabulary tasks
 
-- Retitle [treat continual learning as substrate coevolution](../../notes/treat-continual-learning-as-substrate-coevolution.md) → representational-form coevolution; the note's own vocabulary now separates form from storage substrate. Few backlinks; standard rename.
+- **Done (2026-07-28):** retitled to [treat continual learning as representational-form coevolution](../../notes/treat-continual-learning-as-representational-form-coevolution.md) via `commonplace-relocate-note` (28 files rewritten, ProperDocs redirect added).
 - The review proposes "localized operative representations" for what natural-language and symbolic forms share (addressability plus a stable causal route into behavior). Expect naming rounds; scrutinize for hidden dichotomies before adopting.
 
 ## Source verification list
