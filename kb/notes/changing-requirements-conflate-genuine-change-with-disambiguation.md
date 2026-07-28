@@ -1,5 +1,5 @@
 ---
-description: "Agile's 'changing requirements' hide two distinct phenomena — genuine change (world moved) and late discovery that downstream specs committed to a wrong interpretation of an underspecified upstream spec — short iterations limit interpretation-error propagation, not just change-response latency"
+description: "Separates world change from late discovery that downstream work chose the wrong interpretation of an underspecified requirement; short iterations mainly limit propagation of the latter"
 type: kb/types/note.md
 traits: []
 tags: [learning-theory, deploy-time-learning]

@@ -1,5 +1,5 @@
 ---
-description: Any artifact authored before execution — instruction, plan, spec, workshop frame, an orchestrator's task prompt — fixes details as authoring-time snapshots that go stale and consume the executor's search space; fix only the goal, constraints, what done means, and the genuinely arbitrary choices, and leave what the live situation determines to the executor
+description: "Separates arbitrary choices authors must fix from situational details executors can determine, preventing stale plans and prompts from consuming the live executor's search space"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: []

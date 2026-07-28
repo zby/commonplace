@@ -1,5 +1,5 @@
 ---
-description: Semi-formal reasoning templates (explicit premises, execution traces, formal conclusions) improve LLM code verification by 5-12pp — empirical evidence for structure-as-distribution-selector and interpretation-narrowing with quantified cost (2.8x steps)
+description: "Explicit-premise reasoning templates with execution traces and formal conclusions improve code verification by 5–12 points, supporting structure as interpretation control at 2.8× step cost"
 source_snapshot: agentic-code-reasoning.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md

@@ -1,5 +1,5 @@
 ---
-description: "Trace-extracted memory arrives as a record, not knowledge — authority is earned through post-capture operations (verify, abstract, consult) with increasingly hard oracles; stores that stall before verification accumulate guesses masquerading as knowledge"
+description: "Trace memories begin as records; verification, abstraction, and consultation earn authority under progressively harder oracles, while unverified stores accumulate guesses presented as knowledge"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [agent-memory, learning-theory, context-engineering]

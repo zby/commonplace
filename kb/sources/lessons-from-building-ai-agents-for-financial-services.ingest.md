@@ -1,5 +1,5 @@
 ---
-description: Production practitioner report on building AI agents for financial services — validates files-not-database at commercial scale (S3-first with derived PostgreSQL), documents skill shadowing as user-customization mechanism, and articulates "model eats scaffolding" as an explicit design principle with fiscal-period normalization as calculator-regime counterexample
+description: "Production financial-agent report supports S3-first files with derived PostgreSQL, skill shadowing for customization, and 'model eats scaffolding,' with fiscal-period normalization as a calculator counterexample"
 source_snapshot: lessons-from-building-ai-agents-for-financial-services-201517481849743.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md

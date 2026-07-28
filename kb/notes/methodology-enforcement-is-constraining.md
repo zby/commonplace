@@ -1,5 +1,5 @@
 ---
-description: Instructions, skills, hooks, and scripts form a constraining gradient for methodology — from underspecified and indeterministic (LLM interprets and may not follow) to fully deterministic (code always runs), with hooks occupying a middle ground of deterministic triggers with indeterministic responses
+description: "Places instructions, skills, hooks, and scripts on a gradient from model-interpreted guidance to deterministic execution, with hooks combining fixed triggers and semantic responses"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, constraining]

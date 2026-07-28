@@ -1,5 +1,5 @@
 ---
-description: Code-grounded reviews may anchor load-bearing claims to a verbatim source quote pinned to the reviewed commit, with no byte offsets or ids; resolution is a write-time check against the checkout while the standing validator checks only shape, because the reviewed source is not retained in the KB
+description: "Permits reviewed-commit-pinned verbatim quote anchors in code-grounded reviews; write time resolves quotes against the checkout while standing validation checks only retained shape"
 type: ../types/adr.md
 tags: []
 status: accepted

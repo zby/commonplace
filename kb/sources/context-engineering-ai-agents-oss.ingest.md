@@ -1,5 +1,5 @@
 ---
-description: First empirical study of AI context files across 466 OSS projects — provides naturalistic data on content categories, five writing styles as constraint strategies, add-then-modify evolution pattern, and 50% stagnation rate that grounds and challenges KB constraining theory
+description: "Study of context files across 466 OSS projects identifies five constraint styles, add-then-modify evolution, and 50% stagnation, supplying naturalistic evidence for Commonplace's constraining theory"
 source_snapshot: context-engineering-ai-agents-oss.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md

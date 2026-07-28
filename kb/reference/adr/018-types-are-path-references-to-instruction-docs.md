@@ -1,5 +1,5 @@
 ---
-description: "Replaces the enum `type:` field with a path reference to a single hand-authored instructions doc per type. Collapses the three-file-per-type layout (template / instructions / schema) into one authoring doc plus a sibling schema, and dissolves the filesystem-discovery, cross-collection ambiguity, and special-case routing problems that the current enum scheme forces onto the write skill."
+description: "Replaces enum type names and three-file type bundles with path references to one authoring contract plus a sibling schema, removing discovery ambiguity and special-case write routing"
 type: ../types/adr.md
 tags: []
 status: accepted

@@ -1,5 +1,5 @@
 ---
-description: "How GBrain works as a whole agentic system — host-agent adoption protocol, the dream-cycle scheduler, the Minions durable job queue with crash-resumable subagent loops, the operations trust boundary, and the SkillOpt self-modification loop — beyond the memory subsystem reviewed separately"
+description: "Whole-system analysis of GBrain's host adoption, dream-cycle scheduler, crash-resumable Minions queue, operations trust boundary, and SkillOpt self-modification beyond its separately reviewed memory subsystem"
 type: kb/types/note.md
 traits: []
 tags: [computational-model, tool-loop]

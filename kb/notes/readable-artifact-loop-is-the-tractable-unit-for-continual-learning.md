@@ -1,5 +1,5 @@
 ---
-description: Within substrate coevolution, the readable pair (natural-language + symbolic) is the tractable unit to build a first automated loop around — shared context, current tempo, and an existing codification boundary make joint optimization clean; the pair is also under-explored relative to distributed-parametric optimization
+description: "Identifies the natural-language-plus-symbolic pair as the tractable first loop for substrate coevolution because it shares context, operates at current tempos, and already has a codification boundary"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning]

@@ -1,5 +1,5 @@
 ---
-description: Once work is split across sub-agents, the per-window feasibility ceiling becomes per-agent — set by the heaviest fork's net load (what decomposition leaves on it after work is pushed across to siblings or up to the parent), which comes apart from the operation's summed cost
+description: "Shows why decomposition changes feasibility from total operation cost to the largest residual load left on any fork after work is shifted to siblings or the parent"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [computational-model, foundations]

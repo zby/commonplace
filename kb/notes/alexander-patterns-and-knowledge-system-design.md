@@ -1,5 +1,5 @@
 ---
-description: "Alexander's pattern structure (Context/Problem/Forces/Solution) anticipates typed document contracts; his generative-process argument supports incremental codification over upfront type systems. Connection strengthens at concrete levels, grows vague at the 'centers' level."
+description: "Maps Alexander's Context/Problem/Forces/Solution pattern to typed document contracts and his generative process to incremental codification, while marking the looser 'centers' analogy"
 type: kb/types/note.md
 traits: []
 tags: [foundations]

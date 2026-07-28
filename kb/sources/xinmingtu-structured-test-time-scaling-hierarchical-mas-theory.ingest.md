@@ -1,5 +1,5 @@
 ---
-description: Formal proof that topology compression, scope isolation, and verification form a causal dependency chain enabling hierarchical MAS to bypass exponential error accumulation — directly grounds the KB's separate treatments of decomposition, scoping, and error correction as a unified principle
+description: "Formal result connects topology compression, scope isolation, and verification as a causal chain enabling hierarchical multi-agent systems to avoid exponential error accumulation"
 source_snapshot: xinmingtu-structured-test-time-scaling-hierarchical-mas-theory.md
 ingested: "2026-03-25"
 type: kb/sources/types/ingest-report.md

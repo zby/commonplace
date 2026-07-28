@@ -1,5 +1,5 @@
 ---
-description: "Unadopted system designs live in kb/reference/proposals/ as notes with the design-proposal trait; the proposed ADR status is removed so ADRs record only implemented decisions; the YAGNI gap rule routes system gaps to proposals and transferable insights to notes"
+description: "Routes unadopted system designs to kb/reference/proposals, reserves ADRs for implemented decisions, and splits YAGNI gaps from transferable theoretical insights"
 type: ../types/adr.md
 tags: []
 status: accepted

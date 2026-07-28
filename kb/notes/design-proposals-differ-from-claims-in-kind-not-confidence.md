@@ -1,5 +1,5 @@
 ---
-description: "A hypothesis is a claim at reduced commitment; a design proposal is not truth-apt at all — free parameters make it evaluable by usefulness, not truth. A proposal with substantive requirements can re-enter a claims register as an existential claim with the construction as witness"
+description: "Distinguishes hypotheses, which remain truth-apt at lower commitment, from designs judged by usefulness; substantive requirements can recast a design as an existential claim with a witness"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [artifact-analysis, document-system]

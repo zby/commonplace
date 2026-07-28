@@ -1,5 +1,5 @@
 ---
-description: Reframes "minimum viable ontology" as an optimization problem — the vocabulary that, once acquired, maximally reduces a bounded observer's extraction cost for a domain; grounds the pedagogical intuition of "conceptual thresholds" in the KB's information-theoretic framework
+description: "Defines minimum viable vocabulary as the names that most reduce a bounded observer's extraction cost, connecting conceptual thresholds to an information-theoretic optimization"
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, discovery]

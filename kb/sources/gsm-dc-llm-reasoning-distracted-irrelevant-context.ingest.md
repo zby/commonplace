@@ -1,5 +1,5 @@
 ---
-description: Controlled benchmark quantifying how irrelevant context degrades LLM reasoning via power-law error scaling with distractor count — strongest empirical grounding for the soft-degradation thesis in this KB; training and inference-time mitigations tested.
+description: "GSM-DC isolates irrelevant-context effects and finds power-law error growth with distractor count, grounding soft context degradation while comparing training- and inference-time mitigations"
 source_snapshot: gsm-dc-llm-reasoning-distracted-irrelevant-context.md
 ingested: "2026-03-26"
 type: kb/sources/types/ingest-report.md

@@ -1,5 +1,5 @@
 ---
-description: "Arize practitioner taxonomy of nine harness components and an explicit anti-LangGraph framing — fifth independent source converging on the harness decomposition, distinguished by elevating permission/safety and life-cycle hooks to first-class architectural primitives"
+description: "Arize taxonomy separates nine harness components and adds permission/safety plus lifecycle hooks as first-class primitives, a fifth independent convergence on the harness decomposition"
 source_snapshot: what-is-an-agent-harness-2046980769747533830.md
 ingested: "2026-04-23"
 type: kb/sources/types/ingest-report.md

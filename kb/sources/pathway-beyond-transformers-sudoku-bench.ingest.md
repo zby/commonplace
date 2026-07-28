@@ -1,5 +1,5 @@
 ---
-description: Company blog using Sudoku benchmark (97.4% vs 0% LLM) to argue transformers are fundamentally limited for constraint satisfaction; undisclosed BDH architecture, weak methodology, but adds a third problem domain to the architectural-limits evidence cluster alongside Ebrahimi and ConvexBench
+description: "Company Sudoku benchmark reports 97.4% for an undisclosed BDH model versus 0% for LLMs; weak methodology but a third domain suggesting architectural limits in constraint satisfaction"
 source_snapshot: pathway-beyond-transformers-sudoku-bench.md
 ingested: "2026-03-26"
 type: kb/sources/types/ingest-report.md

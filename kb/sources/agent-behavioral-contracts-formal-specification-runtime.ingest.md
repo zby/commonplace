@@ -1,5 +1,5 @@
 ---
-description: "Formal framework (ABC) extending Design-by-Contract to autonomous agents — introduces probabilistic compliance model (p,delta,k), Lyapunov drift bounds, hard/soft constraint separation with typed recovery, and a YAML DSL for specifying behavioral contracts"
+description: "ABC extends Design by Contract to agents with probabilistic compliance, Lyapunov drift bounds, hard/soft constraints, typed recovery, and a YAML contract DSL"
 source_snapshot: agent-behavioral-contracts-formal-specification-runtime-enforcement.md
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md

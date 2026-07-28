@@ -1,5 +1,5 @@
 ---
-description: Design tradeoffs for progressive disclosure pointers — context-specificity vs precomputation cost vs reliability; fixed pointers (descriptions, abstracts) trade specificity for reliability and cheap reads, query-time pointers (re-rankers) trade cost for specificity, crafted pointers (link phrases) achieve highest density but depend on authoring discipline
+description: "Compares fixed, query-time, and crafted retrieval pointers across specificity, precomputation cost, reliability, and authoring dependence to explain when each progressive-disclosure form pays"
 type: kb/types/note.md
 traits: []
 tags: [links, computational-model]

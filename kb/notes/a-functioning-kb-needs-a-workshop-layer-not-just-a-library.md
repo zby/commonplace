@@ -1,5 +1,5 @@
 ---
-description: The current type system models permanent knowledge (library) but not in-flight work with state machines, dependencies, and expiration (workshop) — tasks are a prototype of the missing layer, and a functioning knowledge base needs both plus bridges between them
+description: "Explains workshop as the temporal counterpart to a permanent knowledge library: in-flight state, dependencies, expiry, and promotion bridges, with tasks as an early prototype"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: []

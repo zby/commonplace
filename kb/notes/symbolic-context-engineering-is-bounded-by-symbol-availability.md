@@ -1,5 +1,5 @@
 ---
-description: "Symbolic context selection — matching on type, path, tag, tool, or event — can act only on an already-observable symbol; an operation's identifying symbol arrives by declaration, by the operation naming it, or by carryover from a prior one, so apparent anticipation is reaction to an earlier symbol. Producing context with no symbol available requires semantic inference."
+description: "Derives the availability limit of symbolic routing: type, path, tag, tool, or event selectors can react only after a usable symbol is declared, named by an operation, or carried forward"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [context-engineering, agent-memory]

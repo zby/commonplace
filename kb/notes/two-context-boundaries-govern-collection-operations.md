@@ -1,5 +1,5 @@
 ---
-description: Any note collection faces two context boundaries — a full-text boundary where all bodies can be loaded together, and an index boundary where all titles+descriptions fit — creating three operational regimes that govern areas, /connect, and whole-KB operations differently
+description: "Distinguishes the body-loading boundary from the later title-and-description index boundary, yielding three collection-size regimes with different consequences for areas, connect, and whole-KB work"
 type: kb/types/note.md
 tags: []
 ---

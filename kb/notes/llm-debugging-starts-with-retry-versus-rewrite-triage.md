@@ -1,5 +1,5 @@
 ---
-description: The two-phenomena model makes the first LLM debugging question diagnostic — is the failure a bad execution of a good interpretation (retry) or a consistent choice of a bad interpretation (rewrite the spec)? — because the fixes differ and do not substitute
+description: "Uses execution-versus-interpretation failure to choose the first debugging move: retry a bad execution of a sound reading, or rewrite a specification that reliably induces the wrong reading"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, computational-model, llm-interpretation-errors]

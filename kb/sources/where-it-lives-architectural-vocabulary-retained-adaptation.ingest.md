@@ -1,5 +1,5 @@
 ---
-description: "Position paper distilled from this KB's notes, publishing the four-field artifact-analysis vocabulary externally. Lineage runs paper-from-notes (not notes-from-paper); KB value is the refinements made while writing (a sovereignty-risk axis the notes don't yet cover) plus a future citable-authority reference once the paper is accepted."
+description: "External paper derived from Commonplace's four-field artifact analysis; the ingest tracks paper-from-notes lineage, adds sovereignty-risk refinements, and may become a citable authority after acceptance"
 source_snapshot: "where-it-lives-architectural-vocabulary-retained-adaptation.md"
 ingested: "2026-05-28"
 type: kb/sources/types/ingest-report.md

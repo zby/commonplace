@@ -1,5 +1,5 @@
 ---
-description: IBM pipeline extracts strategy/recovery/optimization tips from agent execution trajectories and injects at runtime — subtask granularity and LLM-guided retrieval drive gains, especially on complex tasks (+14.3 pp SGC); provides a concrete closed learning loop with inspectable output but narrow oracle (AppWorld task completion).
+description: "IBM pipeline extracts strategy, recovery, and optimization tips from trajectories for runtime retrieval; subtask granularity yields +14.3-point AppWorld gains under a narrow task-completion oracle"
 source_snapshot: trajectory-informed-memory-generation-self-improving-agents.md
 ingested: "2026-03-13"
 type: kb/sources/types/ingest-report.md

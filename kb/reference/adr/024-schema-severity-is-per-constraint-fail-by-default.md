@@ -1,5 +1,5 @@
 ---
-description: Schema-violation severity is a property of the constraint (read off error.schema, keyed by an optional stable ruleId), and the schema fails by default — a constraint opts down to a warning explicitly; replaces the instance-path _FAIL_PATHS proxy that collided on shared paths and under-enforced required structure
+description: "Moves schema finding severity from instance-path inference to each constraint, failing by default with explicit warn opt-downs and optional stable rule identifiers"
 type: ../types/adr.md
 tags: []
 status: accepted

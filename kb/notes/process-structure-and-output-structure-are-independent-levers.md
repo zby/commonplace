@@ -1,5 +1,5 @@
 ---
-description: Constraining what reasoning steps must occur (process structure) is an independent lever from constraining what the result looks like (output structure) — code-reasoning and GSM-DC evidence show process constraints and output metrics separating where output format alone would not
+description: "Distinguishes constraints on reasoning steps from constraints on result shape, using code-reasoning and GSM-DC evidence where process structure changes outcomes beyond formatting"
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [type-system]

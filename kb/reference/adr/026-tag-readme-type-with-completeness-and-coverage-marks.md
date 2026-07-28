@@ -1,5 +1,5 @@
 ---
-description: Splits the index type into a committed tag-readme type (file <tag>-README.md) whose weight gates (8KB warn/16KB fail, bytes, global) are the type contract, with an enforced complete mark (membership check) and a designed covered_by coverage mark; enforcement is reactive via the validator and the knowledge splits meaning to AGENTS.md, mechanics to the validator, maintenance to the type spec.
+description: "Creates the committed tag-readme type with byte-weight gates and validator-derived complete/covered_by marks, separating meaning, enforcement, and maintenance across their operative surfaces"
 type: ../types/adr.md
 tags: []
 status: accepted
