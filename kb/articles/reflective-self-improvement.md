@@ -18,6 +18,7 @@ source_notes:
   - kb/notes/self-improvement-is-relative-to-a-declared-objective.md
   - kb/notes/warranted-autonomy-is-bounded-by-oracle-domain.md
   - kb/notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md
+  - kb/notes/model-absorption-threatens-only-the-generalizable-half.md
   - kb/reference/commonplace-as-a-reflective-system.md
 ---
 
@@ -55,7 +56,7 @@ The deeper objection does not concern the human at all: hand-designed structure 
 
 Composition failure is the tell, and it shows only when the pieces run together against the capability they were supposed to add up to. That is what running the framework on its own methodology is for: not proof that the design is right, but the test that puts the whole decomposition, rather than its components, in front of the objective. Missed retrievals, indexes that mislead, corrections that recur, effort spent again in the same place — those are the readings, and the tag index above was one of them. They can only be read against the objective declared earlier: useful and warranted knowledge work per unit of human judgment spent. That is what keeps a maintainer quietly patching around a bad artifact from counting as the system working — the cost has not gone anywhere, it has moved to the other side of the ledger.
 
-A cousin of the bitter lesson says the artifacts are temporary even where they work: the next model will have absorbed the lessons. Partly right, and worth accepting. The generalizable half of the retention layer — reasoning routines, methodological distinctions, recurring repair strategies — must keep earning its marginal value against stronger models and longer contexts, and losing that race would make it curriculum rather than failure. But no pretrained model contains the current local state of a particular project: which commitments are operative right now, on what evidence, with what accepted exceptions, adopted by whom. That half is external by necessity, refreshed rather than absorbed — the addressable, authoritative state on which successive models and humans coordinate — and it is the half the governance machinery here is built around.
+A cousin of the bitter lesson says the artifacts are temporary even where they work: the next model will have absorbed the lessons. Partly right, and worth accepting. The generalizable half of the retention layer — reasoning routines, methodological distinctions, recurring repair strategies — must keep earning its marginal value against stronger models and longer contexts, and losing that race would make it curriculum rather than failure. But [no amount of training regenerates the current local state](../notes/model-absorption-threatens-only-the-generalizable-half.md) of a particular project — which commitments are operative right now, on what evidence, with what accepted exceptions, adopted by whom — because a commitment is a decision among live options that nothing in the world's text entails; the gap is missing information, not missing capability. That half is external by necessity, refreshed rather than absorbed — the addressable, authoritative state on which successive models and humans coordinate — and it is the half the governance machinery here is built around.
 
 ## Where to go next
 
