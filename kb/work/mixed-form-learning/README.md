@@ -1,0 +1,50 @@
+# Mixed-form learning
+
+## Question
+
+For which class of systems do localized natural-language and symbolic learning layers persist under model scaling — and which of the conjectures proposed for that claim deserve notes, which are revisions of notes we already have, and which fail?
+
+Origin: a second external review round (2026-07-28) proposed conditionalizing the bitter-lesson defense on a system class — long-lived, composite, tool-acting systems persisting across sessions and model versions — with an umbrella conjecture and eight named sub-conjectures. This workshop holds the program while pieces are verified, named, and promoted. The first promotion is already out: [scaling absorbs scaffolding at fixed difficulty, not at the frontier](../../notes/scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md).
+
+## Umbrella conjecture (working formulation)
+
+> For long-lived, composite, resource-bounded agent systems under continual heterogeneous change, the efficient frontier of adaptation, reliability, cost, and governability is occupied by architectures that learn through multiple [representational forms](../../notes/definitions/representational-form.md): distributed-parametric state carrying broad amortized competence, natural-language state carrying not-yet-formalized theories and policies, symbolic state carrying exact transitions and checkable invariants — with mature systems moving commitments between forms as evidence, formalization, and model capability change.
+
+Provenance discipline: the three-form triangle is representational-form's carve, which is *derived* (two axes, forced cells), so the umbrella inherits that derivation rather than being a fresh free choice — [rationale](../../notes/provenance-warrants-a-decompositions-scope-claim-use-earns-it.md). "Need" means worse-frontier, not computational impossibility; a learned architecture with stable semantic modules, explicit scope, and localized update paths would confirm the conjecture in a different substrate, not refute it.
+
+## Conjecture inventory and dispositions
+
+| Conjecture (review's name) | Status | Disposition |
+|---|---|---|
+| Moving-frontier | **promoted** | New note (link above). Second independent arrival — first surfaced in the closed scaffolding-relaxation workshop as "recedes, then reappears at the new edge." |
+| Validation radius (under "deployment-tempo") | strong, new mechanism | Revision of [deploy-time learning is the missing middle](../../notes/deploy-time-learning-is-the-missing-middle.md) and [readable-artifact loop](../../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md): ground the tempo argument in update locality and validation radius, not current training cost. Falsifier: cheap parametric methods matching artifact systems on adaptation latency, retention, collateral regressions, rollback, and review cost over a long task stream. |
+| Symbolic-layer writability bridge | **landed** (2026-07-28) | Applied to [scheduler-LLM separation](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md): bias claims relativized to the implemented transition function with the wrong-spec case delegated to the relational [fixed-artifacts split](../../notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md), plus the bridge paragraph — the symbolic layer is a learning target and codification is the write path into it. The general form of the bridge stays reserved for the central note. |
+| Oracle accumulation | candidate note | Failures convert into tests and validators, improving the *selection environment* for all later candidates — distinct from [oracle strength spectrum](../../notes/oracle-strength-spectrum.md) (grades oracles; this accumulates them). Worked case: the tag-readme episode. Check overlap before writing. |
+| Change-topology matching | candidate | Sparse semantic change favors a mutable representation localized in a matching decomposition. Either a new note or the missing mechanism section of [reflection buys addressability](../../notes/reflection-buys-addressability.md). |
+| Preformalization | mostly owned | [Theory-mediated learning](../../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) and [codification](../../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) carry it. Residue worth adding: the load-bearing requirement is a writable, semantically open metalanguage — not English prose specifically. |
+| Deployment-tempo | owned | [Deploy-time learning](../../notes/deploy-time-learning-is-the-missing-middle.md), pending the validation-radius upgrade above. |
+| Governed autonomy | owned | [Warranted autonomy](../../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) plus the article's legibility passage. Framing worth stealing: mixed-form systems are more *deployable*, not more intelligent — a deployment-selection claim. |
+| Institutional continuity | owned | The commitment/authority arc: [commitment creates ground truth](../../notes/commitment-not-derivation-creates-new-ground-truth.md), [parametric reproduction cannot replace an authoritative record](../../notes/parametric-reproduction-cannot-replace-an-authoritative-record.md). |
+| Bidirectional codification | promotion | [Codification and relaxing](../../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) reads as design guidance; promote to a comparative conjecture. Its four-arm experiment (NL-only / symbolic-only / one-way promotion / bidirectional) belongs beside the ablation-baselines proposal in `kb/reference/proposals/`. |
+
+## Vocabulary tasks
+
+- Retitle [treat continual learning as substrate coevolution](../../notes/treat-continual-learning-as-substrate-coevolution.md) → representational-form coevolution; the note's own vocabulary now separates form from storage substrate. Few backlinks; standard rename.
+- The review proposes "localized operative representations" for what natural-language and symbolic forms share (addressability plus a stable causal route into behavior). Expect naming rounds; scrutinize for hidden dichotomies before adopting.
+
+## Source verification list
+
+Held (citable now): [OpenAI harness engineering](../../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md), [Claude Workstream Kit](../../sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md), [vertical-agent context engineering](../../sources/building-a-good-vertical-agent-2065190286519906657.ingest.md), [KSI](../../sources/knowledge-centric-self-improvement-2607.19592.ingest.md), ACE (agent-memory review).
+
+To snapshot and verify before anything cites them: Anthropic long-running-agents engineering post; Co-Harness preprint (reported 2026-07-17, harness/fine-tune alternation); ToolGate (arXiv 2601.04688); Meta-Harness; Memento-Skills; Agent Symbolic Learning (arXiv 2406.18532).
+
+## What would close this workshop
+
+- Every inventory row dispositioned: note written, revision landed, or rejected with a reason.
+- The umbrella promoted to one central note (candidate title: "Heterogeneous change favors mixed-form learning") linking the specialized conjectures — or a recorded decision that the existing cluster already carries it.
+- The article's bitter-lesson section updated with the fixed-task/moving-frontier distinction, after the notes exist.
+- The source list resolved: snapshotted or dropped.
+
+## Next useful step
+
+Land the validation-radius revision of the deploy-time and readable-artifact notes, then evaluate oracle-accumulation against the existing oracle notes.
