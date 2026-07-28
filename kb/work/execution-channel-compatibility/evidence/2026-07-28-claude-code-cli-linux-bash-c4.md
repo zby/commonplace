@@ -2,7 +2,7 @@
 
 - Survey round: `1 — landscape breadth`
 - Procedure ID: `execution-channel-round1-v6-2026-07-28`
-- Prior related report: [2026-07-28-claude-code-cli-linux-bash-c3.md](./2026-07-28-claude-code-cli-linux-bash-c3.md) (same environment, procedure `v5`); [2026-07-28-claude-code-cli-linux-bash-c2.md](./2026-07-28-claude-code-cli-linux-bash-c2.md) (`v4`). Contrasting environments: [2026-07-28-codex-api-posix-linux-a1.md](./2026-07-28-codex-api-posix-linux-a1.md), [2026-07-28-codex-api-posix-linux-a4.md](./2026-07-28-codex-api-posix-linux-a4.md)
+- Prior related report: none retained; this v6 run supersedes the removed v4 and v5 runs for the same environment. Contrasting environments: [Codex source checkout v6](./2026-07-28-codex-api-posix-linux-a5.md), [Codex initialized project v4](./2026-07-28-codex-api-posix-linux-a4.md)
 
 Fresh full run of the `v6` procedure in the same environment, not an edit of an earlier report. All commands were re-executed; nothing was carried over. Local prefixes are normalized per step 10: `<WORKSPACE>` is the observed workspace root, `<HOME>` the user profile directory.
 

@@ -117,7 +117,7 @@ For every execution system, record:
 
 ## Round 1 procedure feedback
 
-The retained Round 1 reports—[Codex source checkout](./evidence/2026-07-28-codex-api-posix-linux-a1.md), [Codex initialized project with an unallowed `.envrc`](./evidence/2026-07-28-codex-api-posix-linux-a4.md), and [Claude Code source checkout](./evidence/2026-07-28-claude-code-cli-linux-bash-c2.md)—established ten corrections to the breadth probe:
+The retained Round 1 reports—[Codex source checkout](./evidence/2026-07-28-codex-api-posix-linux-a5.md), [Codex initialized project with an unallowed `.envrc`](./evidence/2026-07-28-codex-api-posix-linux-a4.md), and [Claude Code source checkout](./evidence/2026-07-28-claude-code-cli-linux-bash-c4.md)—established ten corrections to the breadth probe:
 
 1. Record exact project-venv `PATH` membership separately from `VIRTUAL_ENV`. The report observed project-venv command resolution with `VIRTUAL_ENV` unset; that is compatible with a stable baseline `PATH` supplied independently to each fresh tool call.
 2. Treat PID equality as inconclusive. Fresh isolated processes can reuse the same small PID, while the deliberately mutated environment variable and shell function directly test shell-state persistence.
@@ -134,7 +134,7 @@ These changes define procedure ID `execution-channel-round1-v4-2026-07-28`. The 
 
 ### V4 confirmation
 
-The [Claude Code v4 repeat](./evidence/2026-07-28-claude-code-cli-linux-bash-c2.md) reproduced its v3 environment while classifying the runtime-supplied `find` name as a function without disclosing its definition. The [Codex initialized-project v4 repeat](./evidence/2026-07-28-codex-api-posix-linux-a4.md) reproduced command-discovery failure and correctly concluded that an unallowed `.envrc` had not prepared the environment despite a matching `Loaded RC path` label.
+The retained [Claude Code v6 report](./evidence/2026-07-28-claude-code-cli-linux-bash-c4.md) reproduces the earlier v4 environment while classifying the runtime-supplied `find` name as a function without disclosing its definition. The [Codex initialized-project v4 repeat](./evidence/2026-07-28-codex-api-posix-linux-a4.md) reproduced command-discovery failure and correctly concluded that an unallowed `.envrc` had not prepared the environment despite a matching `Loaded RC path` label.
 
 Together they form an allowed/unallowed direnv contrast:
 
@@ -143,7 +143,21 @@ Together they form an allowed/unallowed direnv contrast:
 | Claude Code source checkout | yes | yes | yes | yes | succeeds |
 | Codex initialized project | yes | no | yes | no | fails |
 
-This confirms v4's observation rules; no v5 probe revision is required from these runs. Causal attribution remains weaker than the observed state: the positive report is consistent with direnv preparation but does not isolate hook execution from launcher inheritance. For solution comparison, directory-aware environment management is therefore catalogued separately from runtime-native project configuration.
+This confirms v4's observation rules. Causal attribution remains weaker than the observed state: the positive report is consistent with direnv preparation but does not isolate hook execution from launcher inheritance. For solution comparison, directory-aware environment management is therefore catalogued separately from runtime-native project configuration.
+
+### V5 disclosure hardening
+
+Reviewing the probe as a payload sent to collaborators exposed a retention risk independent of its final report rules: raw `direnv status` enters the tool transcript before an agent can summarize it, carrying allow hashes, watch metadata, and local paths. Procedure v5 captures that output inside the shell process and emits only workspace-match, authorization, and loaded-identity classifications.
+
+V5 also makes disclosure review a completion condition. Reports normalize workspace/home/temp prefixes, inspect the final payload for credential and configuration material, withhold evidence that cannot be safely redacted, and append an explicit attestation. The review itself is tool-independent; an already available scanner may supplement it but cannot become a new prerequisite.
+
+### V6 persistence-output correction
+
+The superseded Claude Code v5 run identified an internal inconsistency: the step-7 census used kind-only discovery, but the published POSIX persistence blocks still used `type commonplace_shell_probe_function`, which prints the function definition before the final disclosure review can remove it. The reporter safely substituted `type -t`, but that is Bash-specific and would make nominally comparable runs differ from the instruction.
+
+Procedure v6 removes resolver output from the persistence test entirely. Call A invokes the controlled function and records its literal result; call B runs `command -v` with output discarded and records only a presence boolean. The persistence evidence is unchanged, works in a POSIX shell, and cannot retain the definition.
+
+The retained [Claude Code](./evidence/2026-07-28-claude-code-cli-linux-bash-c4.md) and [Codex](./evidence/2026-07-28-codex-api-posix-linux-a5.md) v6 reports both execute the published blocks without deviation, retain only the controlled result and presence boolean, and pass the disclosure review. Their option-4 wording about `.envrc` is provisional report interpretation: until a runtime-native project configuration mechanism is observed, directory-aware direnv evidence belongs to option 16.
 
 ## Repeatable sweeps
 

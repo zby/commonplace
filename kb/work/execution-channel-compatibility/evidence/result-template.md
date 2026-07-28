@@ -1,7 +1,7 @@
 # Execution-environment probe: <runtime / surface / OS / interface>
 
 - Survey round: `1 — landscape breadth`
-- Procedure ID: `execution-channel-round1-v4-2026-07-28`
+- Procedure ID: `execution-channel-round1-v6-2026-07-28`
 - Prior related report: none / path
 
 ## Identity
@@ -147,3 +147,12 @@ Number findings so later synthesis can cite them.
 ## Candidate implications
 
 Link relevant options from [the solution catalogue](../solution-catalogue.md). Keep implications provisional: this report describes one environment and does not rank solutions.
+
+## Disclosure review
+
+- Final payload reviewed: yes
+- Local identifiers normalized: yes / not applicable
+- Secrets, credentials, and private keys: none observed
+- Full environment, PATH, and raw configuration output: absent
+- Optional automated scan: not run / passed / findings redacted
+- Withheld or residual sensitive-looking material: none / <non-sensitive description and reason>

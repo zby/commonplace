@@ -11,7 +11,7 @@ Produce one evidence report describing what the current agent can actually execu
 
 This instruction is the Round 1 breadth probe. Run it unchanged so reports remain comparable. Later rounds may repeat an environment with narrower, deeper tests selected from the gaps in the first reports; they create new reports rather than editing the baseline.
 
-Procedure ID: `execution-channel-round1-v4-2026-07-28`.
+Procedure ID: `execution-channel-round1-v6-2026-07-28`.
 
 The first constraint is implementability: run a check only after its prerequisites are available in the current environment. Do not assume the agent is in the Commonplace source checkout, has Git metadata, can see a project root, uses Bash, can write files, or can launch a second session. Record a skipped check and its missing prerequisite instead of inventing a substitute.
 
@@ -25,6 +25,7 @@ This is an observational procedure. Do not make the environment pass:
 - do not switch to an explicit venv executable after a bare command fails;
 - do not request broader permissions solely to complete or save the probe;
 - do not recursively search outside the workspace to find a Commonplace installation.
+- do not run commands that dump the full environment, credential stores, configuration files, shell profiles, or unrestricted repository status.
 
 The procedure may set the uniquely named `COMMONPLACE_SHELL_PROBE` variable and shell function in one tool process to test persistence. Remove them in the second call when they persist.
 
@@ -34,7 +35,7 @@ Except for that deliberate persistence test, every command block must be self-co
 
 Give another agent this instruction by a path it can already read, or paste the instruction into its task:
 
-> Probe the currently open environment using the execution-channel procedure. Treat source checkouts, initialized full projects, reader/vendor installs, package-only environments, and unrecognized layouts as valid observations. Run only checks whose prerequisites you first establish. Do not activate, install, repair, reconfigure, or broaden permissions. Return a completed evidence report; save it under the workshop evidence directory only if that path already exists and is writable within your normal scope.
+> Probe the currently open environment using the execution-channel procedure. Treat source checkouts, initialized full projects, reader/vendor installs, package-only environments, and unrecognized layouts as valid observations. Run only checks whose prerequisites you first establish. Do not activate, install, repair, reconfigure, or broaden permissions. Normalize local identifiers and complete the mandatory disclosure review on the final payload before returning it. Save the report under the workshop evidence directory only if that path already exists and is writable within your normal scope.
 
 An agent does not need access to this workshop repository to perform the probe. If it cannot write here, its response is the evidence artifact for an operator to copy later.
 
@@ -43,7 +44,7 @@ An agent does not need access to this workshop repository to perform the probe. 
 Record:
 
 - round: `1 — landscape breadth`;
-- procedure ID: `execution-channel-round1-v4-2026-07-28`;
+- procedure ID: `execution-channel-round1-v6-2026-07-28`;
 - any prior related report, otherwise `none`.
 
 ## 2. Record identity from available runtime facts
@@ -54,7 +55,7 @@ Record the following without adding a new command merely to fill a field:
 - agent product, surface, and version, if exposed;
 - OS and version, if exposed;
 - execution interface used by tool calls: PowerShell, POSIX shell, `cmd.exe`, direct process execution, remote service, or unknown;
-- workspace path supplied by the runtime, or the current directory if no workspace concept is exposed;
+- workspace path supplied by the runtime, or the current directory if no workspace concept is exposed; retain it for local comparisons but normalize it in the final report;
 - launch path, sandbox/approval mode, and write scope, when visible to the agent.
 
 Mark unavailable facts `unknown`. Do not infer the tool-call shell from an integrated-terminal preference.
@@ -254,20 +255,20 @@ Remove-Item Function:commonplace_shell_probe_function -ErrorAction SilentlyConti
 ```sh
 export COMMONPLACE_SHELL_PROBE=present
 commonplace_shell_probe_function() { printf 'present\n'; }
-printf 'step=A\npid=%s\ncwd=%s\nvariable=%s\n' "$$" "$PWD" "$COMMONPLACE_SHELL_PROBE"
-type commonplace_shell_probe_function 2>/dev/null || true
+function_result=$(commonplace_shell_probe_function)
+printf 'step=A\npid=%s\ncwd=%s\nvariable=%s\nfunction_result=%s\n' "$$" "$PWD" "$COMMONPLACE_SHELL_PROBE" "$function_result"
 ```
 
 ### POSIX call B
 
 ```sh
-printf 'step=B\npid=%s\ncwd=%s\nvariable=%s\n' "$$" "$PWD" "${COMMONPLACE_SHELL_PROBE:-}"
-type commonplace_shell_probe_function 2>/dev/null || true
+if command -v commonplace_shell_probe_function >/dev/null 2>&1; then function_present=true; else function_present=false; fi
+printf 'step=B\npid=%s\ncwd=%s\nvariable=%s\nfunction_present=%s\n' "$$" "$PWD" "${COMMONPLACE_SHELL_PROBE:-}" "$function_present"
 unset COMMONPLACE_SHELL_PROBE
 unset -f commonplace_shell_probe_function 2>/dev/null || true
 ```
 
-Record PID and working directory as call context, not as persistence tests. PID equality is not evidence of process persistence: isolated containers or PID namespaces can assign the same PID to fresh processes. The unchanged working directory is also inconclusive because this Round 1 probe does not mutate it and runtimes commonly choose the workspace directory for every fresh call. Use only the deliberately mutated variable and function as the shell-state persistence evidence.
+The call-A function invocation emits only the controlled literal `present`; the call-B lookup discards resolver output and emits only a boolean. Neither call prints a function definition. Record PID and working directory as call context, not as persistence tests. PID equality is not evidence of process persistence: isolated containers or PID namespaces can assign the same PID to fresh processes. The unchanged working directory is also inconclusive because this Round 1 probe does not mutate it and runtimes commonly choose the workspace directory for every fresh call. Use only the deliberately mutated variable and function as the shell-state persistence evidence.
 
 For `cmd.exe`, direct execution, or a remote tool API, record this step as `not run: no applicable state probe specified`. That gap is evidence for the next revision of this instruction.
 
@@ -349,14 +350,69 @@ In `cmd.exe`, run the same `rg` flags with the observed root quoted as a Windows
 
 Run `direnv status` only if command discovery found `direnv` and the layout probe observed a workspace `.envrc`. This is a read-only status check; do not run `direnv allow`, `direnv exec`, or an activation command.
 
-Do not copy the full status output into the report. Record only:
+Do not let raw status output enter the tool transcript. It contains local paths, watch metadata, and allow hashes. Use the matching shell-native filter below so the tool call emits only the required classifications.
+
+PowerShell:
+
+```powershell
+$WorkspaceEnvrc = Join-Path (Get-Location) '.envrc'
+$StatusLines = @(& direnv status 2>&1 | ForEach-Object { [string]$_ })
+$FoundPath = (($StatusLines | Where-Object { $_ -like 'Found RC path *' } | Select-Object -First 1) -replace '^Found RC path ', '')
+$FoundAllowed = (($StatusLines | Where-Object { $_ -like 'Found RC allowed *' } | Select-Object -First 1) -replace '^Found RC allowed ', '')
+$LoadedPath = (($StatusLines | Where-Object { $_ -like 'Loaded RC path *' } | Select-Object -First 1) -replace '^Loaded RC path ', '')
+if (-not $LoadedPath) {
+  $LoadedIdentity = 'none'
+} elseif ($LoadedPath -ieq $WorkspaceEnvrc) {
+  $LoadedIdentity = 'current-workspace'
+} else {
+  $LoadedIdentity = 'different-workspace'
+}
+[pscustomobject]@{
+  FoundWorkspaceEnvrc = [bool]($FoundPath -and ($FoundPath -ieq $WorkspaceEnvrc))
+  FoundAllowed = $(if ($FoundAllowed -in 'true','false') { $FoundAllowed } else { 'unknown' })
+  LoadedIdentity = $LoadedIdentity
+}
+```
+
+POSIX shell:
+
+```sh
+workspace_envrc=$PWD/.envrc
+status_output=$(direnv status 2>&1)
+found_path=
+found_allowed=unknown
+loaded_path=
+while IFS= read -r line; do
+  case "$line" in
+    'Found RC path '*) found_path=${line#Found RC path } ;;
+    'Found RC allowed '*) found_allowed=${line#Found RC allowed } ;;
+    'Loaded RC path '*) loaded_path=${line#Loaded RC path } ;;
+  esac
+done <<EOF
+$status_output
+EOF
+if [ "$found_path" = "$workspace_envrc" ]; then found_workspace_envrc=true; else found_workspace_envrc=false; fi
+if [ -z "$loaded_path" ]; then
+  loaded_identity=none
+elif [ "$loaded_path" = "$workspace_envrc" ]; then
+  loaded_identity=current-workspace
+else
+  loaded_identity=different-workspace
+fi
+case "$found_allowed" in true|false) ;; *) found_allowed=unknown ;; esac
+printf 'found_workspace_envrc=%s\nfound_allowed=%s\nloaded_identity=%s\n' "$found_workspace_envrc" "$found_allowed" "$loaded_identity"
+```
+
+For `cmd.exe` or a direct-process interface, run this check only if the runtime already supplies a way to capture and filter process output without emitting the raw text. Otherwise record `not run: no safe status-output filter`.
+
+Record only:
 
 - whether `Found RC path` identifies the observed workspace `.envrc`;
 - the `Found RC allowed` boolean;
 - whether `Loaded RC path` identifies the same workspace `.envrc`, a different workspace, or no loaded file;
 - whether the expected project-venv command directory is on the effective `PATH`.
 
-Do not record `DIRENV_CONFIG`, watch entries, timestamps, `allowPath`, or allow hashes. They do not answer this probe and disclose local paths or persistent identifiers unnecessarily.
+Do not record `DIRENV_CONFIG`, watch entries, timestamps, `allowPath`, allow hashes, or the captured raw status text. They do not answer this probe and disclose local paths or persistent identifiers unnecessarily.
 
 Interpret the fields together:
 
@@ -385,7 +441,7 @@ Run `git rev-parse --show-toplevel` only if Git resolved. If it establishes that
 
 Do not invent smoke tests for the remaining tools. A behavioral probe enters this instruction only after the inventory identifies an active Commonplace instruction, the exact behavior it relies on, and a safe fixture available in the target layout. Until then, report resolution only.
 
-## 9. Report and stop
+## 9. Draft the report
 
 Use [the result template](./evidence/result-template.md) when accessible. Otherwise reproduce its headings in the agent response.
 
@@ -397,9 +453,54 @@ Use [the result template](./evidence/result-template.md) when accessible. Otherw
 - Separate install mode, command discovery, behavioral compatibility, and runtime process semantics.
 - Treat `.envrc` presence, direnv marker presence, authorization, loaded-file identity, and effective `PATH` as separate facts.
 - Do not use fresh tool-shell behavior to infer launcher inheritance. Failed mutation persistence rules out activating once inside a tool call; it does not test whether a runtime launched from an activated parent shell passes that baseline to every fresh child.
-- Do not generalize from one report. Include the exact environment identity available to the agent.
-- Stop after reporting; do not remediate the environment.
+- Do not generalize from one report. Include the environment identity available to the agent, subject to the disclosure review below.
 
 To compare launch paths, worktrees, or two projects, run this same instruction independently in each already prepared environment and compare the reports. The probing agent is not required to create, activate, relaunch, or switch environments itself.
 
 Later rounds should start from the Round 1 reports, name the exact unknown or candidate they test, and reuse only applicable sections of this instruction. They must state any added prerequisite and its capability gate before adding a command.
+
+## 10. Review disclosure, then return the report
+
+Perform this review on the final report payload—not only on notes or an earlier draft—before finalizing, attaching, sending, or committing it. A local draft may exist while the review runs. This review is mandatory and requires no additional tool.
+
+### Normalize local identifiers
+
+After all path comparisons are complete, replace local prefixes in the report while preserving the suffix needed for provenance:
+
+- the observed workspace root becomes `<WORKSPACE>`;
+- the user home/profile directory becomes `<HOME>`;
+- the platform temporary directory becomes `<TEMP>`;
+- usernames, hostnames, email addresses, machine identifiers, and private network addresses are omitted unless the investigation specifically requires them.
+
+Replace the workspace prefix before the home prefix when the workspace is below the home directory. Keep public system paths such as `/usr/bin/rg` or `C:\Windows\System32\...` when they establish provenance. A normalized result such as `<WORKSPACE>/.venv/bin/commonplace-validate` retains the evidence this workshop needs.
+
+### Inspect for material that must not leave the environment
+
+Confirm that the final payload contains none of the following:
+
+- passwords, API keys, access or refresh tokens, cookies, session identifiers, authorization headers, private-key blocks, credential-bearing URLs, connection strings, or cloud access identifiers;
+- full environment or `PATH` dumps;
+- values of direnv marker variables, raw `direnv status`, allow hashes, watch metadata, `.envrc` contents, shell-profile contents, alias targets, or function definitions;
+- unrestricted Git status output, unrelated project filenames, home-directory listings, scratchpad paths, or memory-store paths;
+- raw command output beyond the bounded lines needed to establish a reported fact.
+
+If suspicious material is present, replace it with `[REDACTED:<category>]` and keep only the capability conclusion it supported. If redaction would destroy the evidence, mark that result `withheld from shared report` and state the non-sensitive conclusion. Never quote a suspected secret while asking whether it is safe.
+
+If the runtime already provides a secret scanner and the completed report already exists as a readable file, it may be run as an additional check. Do not install a scanner, write a temporary copy, broaden permissions, or treat scanner absence as a blocker. Configure any scanner to return only category and line number, never the matched value. This optional scan does not replace the mandatory content review.
+
+### Append the disclosure attestation
+
+The report is not complete until it ends with:
+
+```markdown
+## Disclosure review
+
+- Final payload reviewed: yes
+- Local identifiers normalized: yes / not applicable
+- Secrets, credentials, and private keys: none observed
+- Full environment, PATH, and raw configuration output: absent
+- Optional automated scan: not run / passed / findings redacted
+- Withheld or residual sensitive-looking material: none / <non-sensitive description and reason>
+```
+
+Only after this section is accurate may the agent return or persist the report. Stop after reporting; do not remediate the environment.
