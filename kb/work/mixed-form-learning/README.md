@@ -36,7 +36,7 @@ Provenance discipline: the three-form triangle is representational-form's carve,
 
 Held (citable now): [OpenAI harness engineering](../../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md), [Claude Workstream Kit](../../sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md), [vertical-agent context engineering](../../sources/building-a-good-vertical-agent-2065190286519906657.ingest.md), [KSI](../../sources/knowledge-centric-self-improvement-2607.19592.ingest.md), ACE (agent-memory review), [Meta-Harness](../../agent-memory-systems/reviews/meta-harness.md) (code-grounded review plus ingest).
 
-To snapshot and verify before anything cites them: Anthropic long-running-agents engineering post; Co-Harness preprint (reported 2026-07-17, harness/fine-tune alternation); ToolGate (arXiv 2601.04688); Memento-Skills; Agent Symbolic Learning (arXiv 2406.18532).
+To snapshot and verify before anything cites them: five items, delegated to a lighter agent via [snapshot-sources-instruction.md](./snapshot-sources-instruction.md) — which carries the expected identity of each source and the no-substitution rule (the identifiers came from an external LLM review and are claims, not facts).
 
 ## What would close this workshop
 
