@@ -34,9 +34,9 @@ Provenance discipline: the three-form triangle is representational-form's carve,
 
 ## Source verification list
 
-Held (citable now): [OpenAI harness engineering](../../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md), [Claude Workstream Kit](../../sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md), [vertical-agent context engineering](../../sources/building-a-good-vertical-agent-2065190286519906657.ingest.md), [KSI](../../sources/knowledge-centric-self-improvement-2607.19592.ingest.md), ACE (agent-memory review), [Meta-Harness](../../agent-memory-systems/reviews/meta-harness.md) (code-grounded review plus ingest).
+Held (citable now): [OpenAI harness engineering](../../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md), [Claude Workstream Kit](../../sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md), [vertical-agent context engineering](../../sources/building-a-good-vertical-agent-2065190286519906657.ingest.md), [KSI](../../sources/knowledge-centric-self-improvement-2607.19592.ingest.md), ACE (agent-memory review), [Meta-Harness](../../agent-memory-systems/reviews/meta-harness.md) (code-grounded review plus ingest), [Agent Symbolic Learning](../../sources/symbolic-learning-enables-self-evolving-agents.md), [ToolGate](../../sources/toolgate-contract-grounded-and-verified-tool-execution-for-llms.md), [Co-Harness](../../sources/co-harness-co-evolving-harnesses-and-model-weights-for-llm-agents.md), [Memento-Skills](../../sources/memento-skills-let-agents-design-agents.md), and [Anthropic's long-running-agent harness](../../sources/effective-harnesses-for-long-running-agents.md).
 
-To snapshot and verify before anything cites them: five items, delegated to a lighter agent via [snapshot-sources-instruction.md](./snapshot-sources-instruction.md) — which carries the expected identity of each source and the no-substitution rule (the identifiers came from an external LLM review and are claims, not facts).
+The five externally proposed additions were identity-checked and captured on 2026-07-28; [the execution record](./snapshot-sources-instruction.md) preserves the verification evidence and snapshot paths.
 
 ## What would close this workshop
 

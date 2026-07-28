@@ -28,8 +28,8 @@ Commit the snapshots and the two workshop-file updates together, with explicit p
 
 ## Results
 
-- Agent Symbolic Learning: _pending_
-- ToolGate: _pending_
-- Co-Harness: _pending_
-- Memento-Skills: _pending_
-- Anthropic long-running-agents post: _pending_
+- Agent Symbolic Learning: **verified** — arXiv 2406.18532 resolves to “Symbolic Learning Enables Self-Evolving Agents”; its abstract defines prompts, tools, and their composition as symbolic learnables. Snapshot: [symbolic-learning-enables-self-evolving-agents.md](../../sources/symbolic-learning-enables-self-evolving-agents.md).
+- ToolGate: **verified** — arXiv 2601.04688 resolves to “ToolGate: Contract-Grounded and Verified Tool Execution for LLMs”; its abstract specifies typed symbolic state and Hoare-style pre/postcondition checks around tool execution. Snapshot: [toolgate-contract-grounded-and-verified-tool-execution-for-llms.md](../../sources/toolgate-contract-grounded-and-verified-tool-execution-for-llms.md).
+- Co-Harness: **verified** — search found arXiv 2607.22688, “Co-Harness: Co-Evolving Harnesses and Model Weights for LLM Agents,” submitted 2026-07-17; its abstract says harness optimization alternates with fine-tuning on trajectories from the improved harness. Snapshot: [co-harness-co-evolving-harnesses-and-model-weights-for-llm-agents.md](../../sources/co-harness-co-evolving-harnesses-and-model-weights-for-llm-agents.md).
+- Memento-Skills: **verified** — search found arXiv 2603.18743, “Memento-Skills: Let Agents Design Agents”; its abstract identifies structured Markdown skills as persistent evolving memory updated by read-write reflective learning. Snapshot: [memento-skills-let-agents-design-agents.md](../../sources/memento-skills-let-agents-design-agents.md).
+- Anthropic long-running-agents post: **verified** — Anthropic's 2025-11-26 engineering post “Effective harnesses for long-running agents” states that compaction is insufficient and reports the use of progress files, git history, structured feature requirements, and incremental verified work across context windows. Snapshot: [effective-harnesses-for-long-running-agents.md](../../sources/effective-harnesses-for-long-running-agents.md).
