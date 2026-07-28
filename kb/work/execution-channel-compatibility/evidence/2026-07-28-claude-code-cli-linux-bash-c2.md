@@ -2,7 +2,7 @@
 
 - Survey round: `1 — landscape breadth`
 - Procedure ID: `execution-channel-round1-v4-2026-07-28`
-- Prior related report: [2026-07-28-claude-code-cli-linux-bash-c1.md](./2026-07-28-claude-code-cli-linux-bash-c1.md) (same environment, procedure `v3`). Contrasting environments: [2026-07-28-codex-api-posix-linux-a1.md](./2026-07-28-codex-api-posix-linux-a1.md), [2026-07-28-codex-api-posix-linux-a3.md](./2026-07-28-codex-api-posix-linux-a3.md)
+- Prior related report: none retained; this v4 run supersedes the removed v3 run for the same environment. Contrasting environments: [2026-07-28-codex-api-posix-linux-a1.md](./2026-07-28-codex-api-posix-linux-a1.md), [2026-07-28-codex-api-posix-linux-a4.md](./2026-07-28-codex-api-posix-linux-a4.md)
 
 This is a fresh full run of the `v4` procedure in the same environment, not an edit of the `v3` report. All commands were re-executed; nothing was carried over.
 
