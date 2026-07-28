@@ -41,4 +41,4 @@ This is our editorial opinion. As a scientific paper the lens is "what was not t
 
 ## Recommended Next Action
 
-Write `definitions/discovery-lifecycle.md`'s `evidence` link to this snapshot (`evidence: evolution-of-the-pdca-cycle.md`), recording the paper as historical corroboration that the note's conjecture-consequence-test loop is the same one Shewhart mapped onto hypothesis-experiment-test — the highest-reach edge connect surfaced, and the smallest durable step that pulls this orphaned source into the discovery cluster.
+Write `definitions/discovery-lifecycle.md`'s `evidenced-by` link to this snapshot (`evidence: evolution-of-the-pdca-cycle.md`), recording the paper as historical corroboration that the note's conjecture-consequence-test loop is the same one Shewhart mapped onto hypothesis-experiment-test — the highest-reach edge connect surfaced, and the smallest durable step that pulls this orphaned source into the discovery cluster.

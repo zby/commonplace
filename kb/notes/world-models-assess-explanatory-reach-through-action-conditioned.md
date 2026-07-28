@@ -27,6 +27,6 @@ Relevant Notes:
 - [Representational form](./definitions/representational-form.md) — grounds: the natural-language/symbolic/distributed-parametric split that decides which assessment route is available
 - [Formal symbolic systems assess explanatory-reach only through causal and proof obligations](./formal-systems-assess-explanatory-reach-through-causal-and-proof.md) — contrasts: symbolic route through explicit causal/proof obligations rather than learned latent prediction
 - [Theory-mediated learning may improve sample efficiency under structured shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — extends: stakes the measurable payoff of reusable structure surviving a shift
-- [Meta V-JEPA world-model framing](../sources/meta-v-jepa-world-model.source-review.md) — evidence: LeCun/JEPA framing of latent predictive world models
-- [Meta V-JEPA 2 action-conditioned world model](../sources/meta-v-jepa-2-action-conditioned-world-model.source-review.md) — evidence: action-conditioned prediction used for planning and control
-- [Why AI systems don't learn and what to do about it](../sources/why-ai-systems-dont-learn-and-what-to-do-about-it.ingest.md) — evidence: broader LeCun/Dupoux/Malik architecture where observational world modeling and action learning interact
+- [Meta V-JEPA world-model framing](../sources/meta-v-jepa-world-model.source-review.md) — evidenced-by: LeCun/JEPA framing of latent predictive world models
+- [Meta V-JEPA 2 action-conditioned world model](../sources/meta-v-jepa-2-action-conditioned-world-model.source-review.md) — evidenced-by: action-conditioned prediction used for planning and control
+- [Why AI systems don't learn and what to do about it](../sources/why-ai-systems-dont-learn-and-what-to-do-about-it.ingest.md) — evidenced-by: broader LeCun/Dupoux/Malik architecture where observational world modeling and action learning interact

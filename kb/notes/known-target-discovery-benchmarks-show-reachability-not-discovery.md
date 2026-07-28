@@ -51,4 +51,4 @@ Relevant Notes:
 - [oracle strength spectrum](./oracle-strength-spectrum.md) — grounds: target reconstruction is a soft-oracle manufacturing move, not a hard verifier for prospective discovery
 - [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — extends: reachability moves the generation side of discovery but leaves the verifier boundary in place
 - [conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — connects: known-target benchmarks test whether a system can reconstruct a general insight from supplied particulars
-- [GIANTS: Generative Insight Anticipation from Scientific Literature](../sources/giants-generative-insight-anticipation-scientific-literature.md) — evidence: backcasts downstream scientific insights from earlier parent-paper summaries
+- [GIANTS: Generative Insight Anticipation from Scientific Literature](../sources/giants-generative-insight-anticipation-scientific-literature.md) — evidenced-by: backcasts downstream scientific insights from earlier parent-paper summaries

@@ -36,5 +36,5 @@ Relevant Notes:
 
 - [The verifiability gradient](./verifiability-gradient.md) — contrasts: an orthogonal axis — how *cheaply* something can be checked, versus whether and when it can be checked at all
 - [A derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — extends: the recomputable special case; provenance records are the non-recomputable complement, trusted precisely because they cannot be recomputed
-- [W3C PROV overview](../sources/prov-overview.ingest.md) — evidence: the canonical records/attestation exemplar for capturing provenance at production time
-- [in-toto farm-to-table guarantees](../sources/in-toto-farm-to-table-guarantees.ingest.md) — evidence: cryptographic whole-chain attestation as the systems exemplar for the records route
+- [W3C PROV overview](../sources/prov-overview.ingest.md) — evidenced-by: the canonical records/attestation exemplar for capturing provenance at production time
+- [in-toto farm-to-table guarantees](../sources/in-toto-farm-to-table-guarantees.ingest.md) — evidenced-by: cryptographic whole-chain attestation as the systems exemplar for the records route

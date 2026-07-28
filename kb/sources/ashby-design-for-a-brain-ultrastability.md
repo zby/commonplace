@@ -75,11 +75,11 @@ Finally, Ashby is a clean **negative case** for [reflective system](../notes/def
 
 Relevant Notes:
 
-- [A proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — evidence: the contrast case just outside the subtype — no candidates, evaluator, or gate in the mechanism, while a functional reconstruction marks the floor of each function
+- [A proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — is-evidence-for: the contrast case just outside the subtype — no candidates, evaluator, or gate in the mechanism, while a functional reconstruction marks the floor of each function
 - [Self-improving system](../notes/definitions/self-improving-system.md) — exemplifies: the floor of the category — a minimal, non-reflective, autonomous occupant whose every function takes its weakest viable form
-- [Reflection buys addressability](../notes/reflection-buys-addressability.md) — evidence: a loop that retains without a self-representation, so what is kept is a setting rather than knowledge and nothing accumulates
-- [Reflective system](../notes/definitions/reflective-system.md) — evidence: a negative case — an adaptive, self-modifying system that is not reflective, because it has no self-representation
+- [Reflection buys addressability](../notes/reflection-buys-addressability.md) — is-evidence-for: a loop that retains without a self-representation, so what is kept is a setting rather than knowledge and nothing accumulates
+- [Reflective system](../notes/definitions/reflective-system.md) — is-evidence-for: a negative case — an adaptive, self-modifying system that is not reflective, because it has no self-representation
 - [Gödel machines are a proof-governed case of reflective self-modification](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md) — compares-with: the opposite extreme of the acceptance gate, retention by proof rather than by equilibrium
-- [oracle-strength-spectrum](../notes/oracle-strength-spectrum.md) — evidence: an architecture with no evaluator at all, below the spectrum's weakest grade
+- [oracle-strength-spectrum](../notes/oracle-strength-spectrum.md) — is-evidence-for: an architecture with no evaluator at all, below the spectrum's weakest grade
 - [Conant and Ashby, Every Good Regulator of a System Must Be a Model of That System](./conant-ashby-every-good-regulator-1970.ingest.md) — compares-with: Ashby's later, stronger claim that regulation requires a model, which the ultrastable system itself does not satisfy
 </content>

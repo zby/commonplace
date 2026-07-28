@@ -46,8 +46,8 @@ Update [Selective revision needs a faithful rationale, not just a legible one](.
 
 Relevant Notes:
 
-- [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) -- evidence: direct behavioral support for the unfaithful-rationale failure mode
-- [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) -- evidence: process-validity failure despite plausible output
-- [Context contamination operates below an agent's compliance reasoning](../notes/context-contamination-operates-below-an-agents-compliance-reasoning.md) -- evidence: hidden features steer output without explicit acknowledgement
-- [Structure activates higher-quality training distributions](../notes/structure-activates-higher-quality-training-distributions.md) -- evidence: process structure is not a faithfulness guarantee
+- [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) -- is-evidence-for: direct behavioral support for the unfaithful-rationale failure mode
+- [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) -- is-evidence-for: process-validity failure despite plausible output
+- [Context contamination operates below an agent's compliance reasoning](../notes/context-contamination-operates-below-an-agents-compliance-reasoning.md) -- is-evidence-for: hidden features steer output without explicit acknowledgement
+- [Structure activates higher-quality training distributions](../notes/structure-activates-higher-quality-training-distributions.md) -- is-evidence-for: process structure is not a faithfulness guarantee
 - [Towards Faithfully Interpretable NLP Systems](./towards-faithfully-interpretable-nlp-systems.md) -- compares-with: conceptual definition and evaluation boundary

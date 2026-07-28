@@ -33,7 +33,7 @@ The key implication is that lineage is not "where did this file come from?" in a
 | Source-side lineage tracking | `Derived into:`, `Abstracted into:`, `Adapted into:`, or `Operationalized into:` is used when a source edit should surface downstream review targets. | Source edits surface downstream artifacts at edit time; reverse provenance can remain a deliberate search. | This works for source-note -> downstream artifact but is not a universal placement rule; source snapshot -> ingest -> note, source -> source, and external work adapted from internal vocabulary may need other carriers. |
 | Article lineage | `kb/articles/` records target-side `source_notes` in frontmatter and treats source divergence as an editorial follow-up question rather than automatic staleness. | The article carries a searchable source set while remaining a dated, frozen publication record. | This postdates the source-side default and demonstrates that lineage placement and invalidation policy vary by artifact contract. |
 | Checked derived copies | Recomputable derived truth must be checked by a validator or omitted. | Mechanical lineage can be machine-followable rather than human-visible. | Only applies where derivation is deterministic and cheap to re-check; most prose/source lineage remains judgmental. |
-| Source link labels | `kb/sources/COLLECTION.md` authorizes `evidence`, `abstracted-from`, `rationale`, `compares-with`, `defined-in`, and `see-also`. | Sources have an authored outbound surface, mostly through ingest reports and source reviews. | Several triage cases need contrast or parallel-mechanism relations that are not evidence, abstraction, rationale, or source-to-source `compares-with`. |
+| Source link labels | `kb/sources/COLLECTION.md` authorizes `is-evidence-for`, `abstracted-from`, `rationale`, `compares-with`, `defined-in`, and `see-also`. | Sources have an authored outbound surface, mostly through ingest reports and source reviews. | Several triage cases need contrast or parallel-mechanism relations that are not evidence, abstraction, rationale, or source-to-source `compares-with`. |
 
 ## Gitignore And Persistence
 
@@ -134,7 +134,7 @@ The review-specific storage case is now separated into [src-architecture-alterna
 
 ### 1. Source relation labels are too provenance-shaped
 
-Current source labels cover evidence, derivation, rationale, comparison, definitions, and weak adjacency. Triage surfaced source-to-note relations that are parallel, contrasting, or same-mechanism-with-different-surface. Forcing them into `evidence` or `derived-from` misstates lineage.
+Current source labels cover evidence through `is-evidence-for`, plus derivation, rationale, comparison, definitions, and weak adjacency. Triage surfaced source-to-note relations that are parallel, contrasting, or same-mechanism-with-different-surface. Forcing them into `is-evidence-for` or `derived-from` misstates lineage.
 
 Question: should `kb/sources/COLLECTION.md` add `contrasts` and `parallels` for source-to-note relations, or should those relationships stay in ingest prose until they become notes?
 

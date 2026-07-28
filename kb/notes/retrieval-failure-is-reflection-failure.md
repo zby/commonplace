@@ -37,4 +37,4 @@ Relevant Notes:
 - [Reflective system](./definitions/reflective-system.md) — grounds: supplies the causal-connection criterion this note shows retrieval realizing, and failing
 - [Stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md) — mechanism: why a trusted-but-incomplete membership claim is the sharpest form of the failure
 - [Behavioral authority](./definitions/behavioral-authority.md) — extends: the consumer, channel, and force that must hold after an artifact is found
-- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: the observed trace where a symbolic check corrected the natural-language search recipe that had been missing a member
+- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidenced-by: the observed trace where a symbolic check corrected the natural-language search recipe that had been missing a member

@@ -46,7 +46,7 @@ Update [Selective revision needs a faithful rationale, not just a legible one](.
 
 Relevant Notes:
 
-- [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) -- evidence: supplies the target distinction and oversight boundary
-- [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) -- evidence: separates output utility from process validity
-- [Structured output is easier for humans to review](../notes/structured-output-is-easier-for-humans-to-review.md) -- evidence: readability does not entail faithfulness
+- [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) -- is-evidence-for: supplies the target distinction and oversight boundary
+- [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) -- is-evidence-for: separates output utility from process validity
+- [Structured output is easier for humans to review](../notes/structured-output-is-easier-for-humans-to-review.md) -- is-evidence-for: readability does not entail faithfulness
 - [Language Models Don't Always Say What They Think](./language-models-dont-always-say-what-they-think.md) -- compares-with: controlled behavioral test of the conceptual distinction

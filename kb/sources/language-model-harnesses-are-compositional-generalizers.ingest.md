@@ -41,4 +41,4 @@ The authors evaluate their own harness and report benchmark suites selected to s
 
 ## Recommended Next Action
 
-Update [RLM has the model write ephemeral orchestrators over sub-agents](../notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) with this snapshot as `evidence`, adding a short empirical-evidence paragraph that distinguishes demonstrated length/domain transfer from the still-open durable-accumulation question.
+Update [RLM has the model write ephemeral orchestrators over sub-agents](../notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) with this snapshot as `evidenced-by`, adding a short empirical-evidence paragraph that distinguishes demonstrated length/domain transfer from the still-open durable-accumulation question.

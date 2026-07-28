@@ -62,4 +62,4 @@ Relevant Notes:
 - [Real self-improving systems occupy combinations no single rung captures](./real-self-improving-systems-occupy-combinations-no-rung-captures.md) — grounds: the combinations that actually occur, which is why no ordering follows from the profile
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: an existing objective-relative reading inside the cluster
 - [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — contrasts: comparison blocked by incommensurable decomposition, the obstacle that survives after indexing
-- [Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) — evidence: an antecedent objective that the system neither declares nor stores
+- [Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) — evidenced-by: an antecedent objective that the system neither declares nor stores

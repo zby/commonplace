@@ -69,4 +69,4 @@ Relevant Notes:
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — extends: why addressable retention compounds only best-effort, through the discovery wire
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — extends: addressability assessed per representational form and operation profile
 - [Accumulation counts dependence through the retained result, not through the evidence it caused](./accumulation-counts-dependence-through-the-retained-result.md) — contrasts: the neighbouring property that compounds without being readable, and its criterion
-- [Ashby, Design for a Brain — ultrastability](../sources/ashby-design-for-a-brain-ultrastability.md) — evidence: the floor case — an operative incumbent whose random successor carries no improvement-relevant information from it
+- [Ashby, Design for a Brain — ultrastability](../sources/ashby-design-for-a-brain-ultrastability.md) — evidenced-by: the floor case — an operative incumbent whose random successor carries no improvement-relevant information from it

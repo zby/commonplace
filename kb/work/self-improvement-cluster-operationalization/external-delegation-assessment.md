@@ -76,10 +76,10 @@ Links:
 - [Workshop README](./README.md) — depends-on: the goal and sequencing this assessment proposes to revise
 - [External-theory evaluation](./external-theory-evaluation.md) — extends: the conservative-extension stance and findings this assessment carries to the methodology layer
 - [Self-improving systems tag README](../../notes/self-improving-systems-README.md) — tests: the cluster whose delegation surface is assessed
-- [Methodological and computational closure track different changes](../../notes/methodological-and-computational-closure-track-different-changes.md) — evidence: the executed Parasuraman form-inheritance the proposal treats as pending
+- [Methodological and computational closure track different changes](../../notes/methodological-and-computational-closure-track-different-changes.md) — evidenced-by: the executed Parasuraman form-inheritance the proposal treats as pending
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — tests: the note cleanup item 3 targets; already delegates loop-model status via Weyns
 - [Reflection makes retained lessons second-order](../../notes/reflection-makes-retained-lessons-second-order.md) — tests: the note cleanup item 1 targets; carries no Argyris content to delegate
 - [Increasing computational autonomy relocates human effort](../../notes/increasing-computational-autonomy-relocates-human-effort.md) — tests: already the short Bainbridge-grounded hypothesis item 5 asks for
 - [Warranted autonomy is bounded by oracle domain](../../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) — extends: the local theory an assurance-case inheritance would give a recording form
 - [Methodology with incomplete coverage and its live theory fallback form a two-layer execution system](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md) — grounds: the recurrence-driven promotion principle that argues against binding a host methodology before a worked case
-- [Model for Types and Levels of Human Interaction with Automation](../../sources/model-types-levels-human-interaction-automation.md) — evidence: the ingested Parasuraman source
+- [Model for Types and Levels of Human Interaction with Automation](../../sources/model-types-levels-human-interaction-automation.md) — evidenced-by: the ingested Parasuraman source

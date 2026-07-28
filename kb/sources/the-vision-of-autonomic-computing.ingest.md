@@ -41,4 +41,4 @@ Editorial opinion. As a conceptual essay this is a vision, not a validated desig
 
 ## Recommended Next Action
 
-Add an `evidence` reverse edge from [a proposal-selection loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) to this snapshot, citing Kephart & Chess as the origin of the MAPE-K reference-model tradition the note already invokes through Weyns and Petrovska. Fold the same citation into the [self-improving system definition](../notes/definitions/self-improving-system.md) if the author judges it warranted while making that edit.
+Add an `evidenced-by` reverse edge from [a proposal-selection loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) to this snapshot, citing Kephart & Chess as the origin of the MAPE-K reference-model tradition the note already invokes through Weyns and Petrovska. Fold the same citation into the [self-improving system definition](../notes/definitions/self-improving-system.md) if the author judges it warranted while making that edit.

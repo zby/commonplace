@@ -81,5 +81,5 @@ Relevant Notes:
 - [Error correction works with above-chance oracles and decorrelated checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — mechanism: states the conditions under which multiple weak checks can become a stronger composite oracle
 - [Entropy management must scale with generation throughput](./entropy-management-must-scale-with-generation-throughput.md) — exemplifies: inherited weakly checked patterns compound as accepted generation becomes later context
 - [Inspectable artifact, not supervision, defeats the blackbox problem](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — enables: inspectable form supplies evidence a quality oracle can evaluate, without guaranteeing that the evaluator discriminates adequately
-- [The Bug That Shipped](../sources/the-bug-that-shipped-2035319413474206122.md) — evidence: explicit failure probes elicited knowledge that undirected self-review rarely surfaced
+- [The Bug That Shipped](../sources/the-bug-that-shipped-2035319413474206122.md) — evidenced-by: explicit failure probes elicited knowledge that undirected self-review rarely surfaced
 - [Why Software Factories Fail](../sources/why-software-factories-fail-2080697380379427275.md) — abstracted-from: motivates the maintainability case through benchmark incentives and a failed lights-off deployment

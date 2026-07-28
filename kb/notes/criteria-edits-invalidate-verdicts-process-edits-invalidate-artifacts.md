@@ -27,4 +27,4 @@ Relevant Notes:
 
 - [History has one chance to become checkable](./history-has-one-chance-to-become-checkable.md) — grounds: the state/history asymmetry this corollary rides on — why process deficiencies are invisible to review-time criteria
 - [Link graph plus timestamps enables make-like staleness detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — extends: the make-like staleness model, refined by distinguishing which kind of edit invalidates which kind of product
-- [Build Systems à la Carte](../sources/build-systems-a-la-carte.ingest.md) — evidence: verifying traces and rebuilder design as the formal home of verdict invalidation
+- [Build Systems à la Carte](../sources/build-systems-a-la-carte.ingest.md) — evidenced-by: verifying traces and rebuilder design as the formal home of verdict invalidation

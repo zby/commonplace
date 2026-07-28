@@ -65,6 +65,6 @@ Relevant Notes:
 
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — foundation: prompt variation as a way to decorrelate weak oracles for verification
 - [operational-signals-that-a-component-is-a-relaxing-candidate](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — foundation: prompt variation as a diagnostic for paraphrase brittleness and theory-like components
-- [Prompt Stability in Code LLMs](https://arxiv.org/pdf/2509.13680) — evidence: controlled emotion/personality variants operationalize diagnostic prompt variation at scale
+- [Prompt Stability in Code LLMs](https://arxiv.org/pdf/2509.13680) — evidenced-by: controlled emotion/personality variants operationalize diagnostic prompt variation at scale
 - [first-principles reasoning selects for explanatory-reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — contrasts: Deutsch's "vary" test changes the explanation to test mechanism and explanatory-reach, not the prompt to test model behavior
 - [prompt ablation converts human insight into deployable agent framing](./prompt-ablation-converts-human-insight-to-deployable-framing.md) — adjacent method: controlled prompt variation used for framing selection rather than diagnosis or decorrelation

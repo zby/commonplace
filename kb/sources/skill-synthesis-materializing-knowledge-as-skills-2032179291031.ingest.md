@@ -44,7 +44,7 @@ One synthesis opportunity flagged: skills distilled from external domain knowled
 
 ## Extractable Value
 
-1. **Skill-from-domain-knowledge as a distinct pattern.** The KB has "skills derive from methodology through distillation" but Cramer's skills derive from *domain knowledge* (commit history, security patches, external standards). This is a concrete instance of the note's own caveat, with enough production detail to reason about the differences. [quick-win] — update the existing skills-derive note with this as an external evidence link.
+1. **Skill-from-domain-knowledge as a distinct pattern.** The KB has "skills derive from methodology through distillation" but Cramer's skills derive from *domain knowledge* (commit history, security patches, external standards). This is a concrete instance of the note's own caveat, with enough production detail to reason about the differences. [quick-win] — update the existing skills-derive note with this as an external `evidenced-by` link.
 
 2. **Source material selection matters more than prompt engineering.** Cramer's key insight is that feeding the right source material (trustworthy, domain-specific) produces dramatically better skills than prompting for generic capability. The accuracy improvement comes from input selection, not output tuning. This has implications for our distillation model — the "what to extract" question depends heavily on "what to feed in." [just-a-reference] — already implied by our distillation framework but useful as a concrete data point.
 

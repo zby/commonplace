@@ -62,7 +62,7 @@ Relevant Notes:
 
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: context scarcity is why retrieval/activation is the hard problem, not storage
 - [knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — grounds: the activation gap is what makes memory a context engineering problem
-- [agentic memory systems comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) — evidence: the current matrix axes span storage, retrieval/activation, and learning; the agency trilemma exists because the subproblems trade off against each other
+- [agentic memory systems comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) — evidenced-by: the current matrix axes span storage, retrieval/activation, and learning; the agency trilemma exists because the subproblems trade off against each other
 - [agent runtimes decompose into scheduler, context engine, and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) — grounds: the runtime decomposition assigns memory's subproblems to different components, predicting that memory is crosscutting
 - [learning theory index](./learning-theory-README.md) — grounds: extraction, promotion, and graduation are instances of accumulation, constraining, condensing, and discovery
 - [claw learning loops must improve action capacity not just retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — extends: memory serves contextual competence across five action modes, not just question-answering

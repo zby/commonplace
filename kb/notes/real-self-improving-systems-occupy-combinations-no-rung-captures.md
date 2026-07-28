@@ -56,9 +56,9 @@ Relevant Notes:
 - [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: what the reflective column is worth, and what parametric compounding does without it
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: the evidential-limit column for the proposal-selection rows, why computational allocation does not fill it, and the scope that keeps it off the direct ones
 - [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — extends: why these rows still cannot be ordered even after the profile is fixed
-- [Ashby, Design for a Brain — ultrastability](../sources/ashby-design-for-a-brain-ultrastability.md) — evidence: the operative, non-cumulative, non-reflective floor
-- [Self-Improving Algorithms](../sources/self-improving-algorithms.md) — evidence: cumulative retention with no representation and no gate
-- [DreamCoder](../sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md) — evidence: a statistical reject-capable gate, with coverage split across a symbolic library and an opaque network
-- [Knowledge-Centric Self-Improvement](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md) — evidence: addressability operations exercised computationally, with warrant split by question
-- [Exo](../agentic-systems/exo.md) — evidence: reflective, cumulative, and computationally autonomous at once, over a literal source-tree self-representation
-- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: the human-inclusive joint-allocation reading
+- [Ashby, Design for a Brain — ultrastability](../sources/ashby-design-for-a-brain-ultrastability.md) — evidenced-by: the operative, non-cumulative, non-reflective floor
+- [Self-Improving Algorithms](../sources/self-improving-algorithms.md) — evidenced-by: cumulative retention with no representation and no gate
+- [DreamCoder](../sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md) — evidenced-by: a statistical reject-capable gate, with coverage split across a symbolic library and an opaque network
+- [Knowledge-Centric Self-Improvement](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md) — evidenced-by: addressability operations exercised computationally, with warrant split by question
+- [Exo](../agentic-systems/exo.md) — evidenced-by: reflective, cumulative, and computationally autonomous at once, over a literal source-tree self-representation
+- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidenced-by: the human-inclusive joint-allocation reading

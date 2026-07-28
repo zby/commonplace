@@ -49,7 +49,7 @@ The argument used three things: use exercises the whole configuration at once, t
 
 ## Sources
 
-- [Parnas (1972), "On the Criteria To Be Used in Decomposing Systems into Modules", *CACM* 15(12)](../sources/parnas-1972-criteria-decomposing-systems-modules.md) — evidence: two working modularizations of one KWIC program, distinguished by the information-hiding criterion rather than by anything observable in running them.
+- [Parnas (1972), "On the Criteria To Be Used in Decomposing Systems into Modules", *CACM* 15(12)](../sources/parnas-1972-criteria-decomposing-systems-modules.md) — evidenced-by: two working modularizations of one KWIC program, distinguished by the information-hiding criterion rather than by anything observable in running them.
 
 ---
 
@@ -61,4 +61,4 @@ Relevant Notes:
 - [An accepted edit verifies the change, not the rule](./an-accepted-edit-verifies-the-change-not-the-rule.md) — contrasts: same instance-versus-rule gap with human acceptance as the local oracle, where there is no discarded design alternative to retain
 - [Decomposition heuristics for bounded-context scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md) — grounds: supplies the forces a rationale would record — context fit, verifiability of the boundary, merge cost
 - [Scenario decomposition drives architecture](./scenario-decomposition-drives-architecture.md) — mechanism: the step table is retained rationale in worked form, keeping the per-step context needs the boundaries answer
-- [Design rationale management in Commonplace](../reference/design-rationale-management.md) — evidence: records the inherited-constraint/local-requirement/free-choice distinction and observes from the other side that artifacts collapsing it make later transfer assessment harder
+- [Design rationale management in Commonplace](../reference/design-rationale-management.md) — evidenced-by: records the inherited-constraint/local-requirement/free-choice distinction and observes from the other side that artifacts collapsing it make later transfer assessment harder

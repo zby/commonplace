@@ -1,5 +1,7 @@
 # Evidence direction review
 
+**Status:** completed pre-migration corpus review. [ADR 058](../../reference/adr/058-directional-identifiers-use-source-as-subject.md) adopted the reviewed journeys as `evidenced-by` and `is-evidence-for`; old-label counts below remain historical evidence.
+
 ## Question
 
 Do the authorized source/review → note uses of `evidence` represent accidental mislabelling that should be removed, or a recurring inverse reader journey that has earned its own directional label?
@@ -96,14 +98,14 @@ Whatever names are selected, the semantic boundary established here remains:
 
 Both relations are asymmetric. Authoring either remains an independent reader-aid decision, and a reciprocal pair is allowed only when both journeys help.
 
-## Proposed changes, not yet applied
+## Migration outcome
 
-1. Audit every asymmetric label against `source <label> target`.
-2. Test the leading `evidenced-by` / `is-evidence-for` pair against overlap with `grounds`, existing `supports` drift, and qualification/boundary evidence.
-3. Clarify that the claim/description → source journey is not restricted to the theoretical register; `kb/reference/` and external-system analyses already use it coherently.
-4. Update the shared catalogue and affected collection contracts together.
-5. Migrate the 26 reviewed inverse edges and any renamed claim→observation edges only after the target grammar is adopted.
+1. ADR 058 adopted `source <label> target` as the naming invariant and the `evidenced-by` / `is-evidence-for` pair.
+2. The pair explicitly includes corroboration, qualification, and boundary evidence while leaving `grounds`, `supports`, and contradiction cleanup to their own reviews.
+3. Contracts authorize assertion→source use beyond the theoretical profile where live corpus evidence required it.
+4. The shared catalogue and affected collection contracts changed together.
+5. All 26 reviewed inverse edges migrated to `is-evidence-for`; reciprocal edges changed only through their independent claim→observation migration to `evidenced-by`.
 
 ## Decision status
 
-The two reader journeys are established from corpus evidence; `evidenced-by` / `is-evidence-for` is the leading identifier pair but is not adopted. The next step is the full directional-label grammar audit, followed by one coordinated vocabulary, collection-contract, and corpus migration proposal.
+The two reader journeys are established and the pair is adopted. Other identifiers that fail the source-as-subject invariant remain explicit migration debt for later scoped runs.

@@ -191,4 +191,4 @@ Relevant Notes:
 - [Diagnostic richness constrains outer-loop learning quality](./diagnostic-richness-constrains-outer-loop-learning-quality.md) — contrasts: selection scores and improvement evidence are separate requirements
 - [Brainstorming: how to test whether pairwise comparison can harden soft oracles](./brainstorming-how-to-test-whether-pairwise-comparison-can-harden.md) — exemplifies: staged calibration of one candidate judgment method
 - [Quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — compares: parallel composite-oracle design space for semantic KB quality
-- [005-quality-check placement](../reference/adr/005-quality-check-placement.md) — evidence: existing workflow placement based on determinism, cost, and false-positive tolerance
+- [005-quality-check placement](../reference/adr/005-quality-check-placement.md) — evidenced-by: existing workflow placement based on determinism, cost, and false-positive tolerance

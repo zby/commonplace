@@ -99,5 +99,5 @@ Relevant Notes:
 - [LLM learning phases fall between human modes](./llm-learning-phases-fall-between-human-learning-modes.md) — foundation: the intermediate-position warning that prevents 1:1 human-to-LLM mapping
 - [three-space agent memory echoes Tulving's taxonomy](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) — extends: this note's methodology directly addresses the "decorative?" question left open there
 - [Youssef: psychology principles for AI memory](https://x.com/rryssf_/status/2025307030651871631) — source: the five principles used as worked examples
-- [flat memory predicts specific cross-contamination failures](./flat-memory-predicts-specific-cross-contamination-failures-that-are.md) — evidence: documents the search pollution failure mode that principles 1 and 2 address
+- [flat memory predicts specific cross-contamination failures](./flat-memory-predicts-specific-cross-contamination-failures-that-are.md) — evidenced-by: documents the search pollution failure mode that principles 1 and 2 address
 - [deepfates LLM memory critique](https://x.com/deepfates/status/2036857868914483592) — contradicts source: same diagnosis, opposite solution — weight updates vs architecture

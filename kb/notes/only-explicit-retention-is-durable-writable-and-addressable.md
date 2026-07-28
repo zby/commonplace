@@ -51,4 +51,4 @@ Relevant Notes:
 - [Retaining the episode keeps a distilled rule re-derivable](./retaining-the-episode-keeps-a-distilled-rule-re-derivable.md) — extends: what the explicit-only regime should retain in which explicit form
 - [Representational form](./definitions/representational-form.md) — defined-in: the natural-language / symbolic / distributed-parametric axis the tacit/explicit divide runs across
 - [Retained artifact](./definitions/retained-artifact.md) — defined-in: the umbrella term for durable behavior-shaping state this note's rows instantiate
-- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: the recorded selection-only profile line this claim's application rests on
+- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidenced-by: the recorded selection-only profile line this claim's application rests on

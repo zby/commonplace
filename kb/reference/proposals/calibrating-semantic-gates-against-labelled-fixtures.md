@@ -102,5 +102,5 @@ Relevant Notes:
 - [oracle strength spectrum](../../notes/oracle-strength-spectrum.md) — rationale: calibration is a hardening step for a soft LLM oracle
 - [gate learning from accepted edits](./gate-learning-from-accepted-edits.md) — see-also: this proposal supplies the detection-rate measurement that proposal's lifecycle assumes
 - [trajectory-aware evaluation of transforming agent workflows](./trajectory-aware-evaluation-of-transforming-agent-workflows.md) — see-also: a sibling labelled and repeated evaluator design at workflow-trajectory scope
-- [Improving AI Skills with autoresearch & evals-skills](../../sources/improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md) — evidence: practitioner use of a hand-scored mini set to check a judge before automated optimization
+- [Improving AI Skills with autoresearch & evals-skills](../../sources/improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md) — evidenced-by: practitioner use of a hand-scored mini set to check a judge before automated optimization
 - [review system](../README-REVIEW-SYSTEM.md) — part-of: the assay/gate model and model-partition rule this design extends

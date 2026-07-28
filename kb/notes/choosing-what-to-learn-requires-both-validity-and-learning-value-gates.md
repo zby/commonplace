@@ -30,6 +30,6 @@ Relevant Notes:
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — extends: gives the boiling-cauldron promotion loop a diagnosable acceptance interface, separating contamination control from clutter control
 - [oracle strength spectrum](./oracle-strength-spectrum.md) — grounds: both gates require oracles, but their oracle targets differ
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — parallels: learned curation policies work only when the promotion signal is well defined
-- [Self-Training-LLM](../agent-memory-systems/reviews/Self-Training-LLM.md) — evidence: code-grounded review of the separate question-filtering and unknown-filtering pattern
-- [Self-training Large Language Models through Knowledge Detection](../sources/self-training-large-language-models-through-knowledge-detection.ingest.md) — evidence: paper-level account of consistency filtering and knowledge filtering as separate stages
-- [Into the Unknown: Self-Learning Large Language Models](../sources/into-the-unknown-self-learning-large-language-models.ingest.md) — evidence: frames the upstream problem as deciding what previously unknown knowledge to absorb
+- [Self-Training-LLM](../agent-memory-systems/reviews/Self-Training-LLM.md) — evidenced-by: code-grounded review of the separate question-filtering and unknown-filtering pattern
+- [Self-training Large Language Models through Knowledge Detection](../sources/self-training-large-language-models-through-knowledge-detection.ingest.md) — evidenced-by: paper-level account of consistency filtering and knowledge filtering as separate stages
+- [Into the Unknown: Self-Learning Large Language Models](../sources/into-the-unknown-self-learning-large-language-models.ingest.md) — evidenced-by: frames the upstream problem as deciding what previously unknown knowledge to absorb

@@ -52,7 +52,7 @@ A Second Brain usually needs more. Interview the operator about what else they w
 For each agreed collection:
 
 1. Create the directory under `kb/`.
-2. Write a `COLLECTION.md` defining: register, quality goal, title conventions, scope (what belongs and what doesn't), and outbound linking conventions organised per destination collection (one block per destination, each declaring search guidance and authorised labels — see `kb/reference/link-vocabulary.md` for the catalogue and `kb/reference/adr/019-collection-owned-link-vocabulary.md` for the architecture). Use the existing three `COLLECTION.md` files as models — do not invent a new schema.
+2. Write a `COLLECTION.md` defining: register, quality goal, title conventions, scope (what belongs and what doesn't), and outbound linking conventions organised per destination (normally one block per destination collection, plus the reserved `external` destination only when links outside the KB are authorized; each declares search guidance and authorised labels — see `kb/reference/link-vocabulary.md` for the catalogue and ADRs 019 and 059 for the architecture). Use the existing three `COLLECTION.md` files as models — do not invent a new schema.
 3. Distinguish library collections (value accumulates) from workshop collections (value is consumed). In-flight project work belongs in `kb/work/<project-name>/`, not in a long-lived collection. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
 4. Add the collection to the routing table in `CLAUDE.md`.
 
@@ -87,7 +87,7 @@ For each note, follow the standard Commonplace content workflow:
 1. Search first with generated indexes, tag indexes, and `rg` over descriptions and note bodies. Run at least 10 distinct query/read passes that mix exact terms, synonyms, named projects, and mechanism vocabulary.
 2. Read the target collection's `COLLECTION.md` before writing.
 3. Use `/cp-skill-write` with the appropriate type.
-4. Cite source notes with markdown links and the right link semantics for the register pair (`evidence`, `derived-from`, `since`, `because` — see each `COLLECTION.md`).
+4. Cite source notes with markdown links and the right link semantics for the register pair (`evidenced-by` / `is-evidence-for`, `derived-from`, `since`, `because` — see each `COLLECTION.md`).
 5. Flag inferences explicitly. Do not blur quotation and synthesis.
 6. Run `/cp-skill-validate <note>` before considering it done.
 

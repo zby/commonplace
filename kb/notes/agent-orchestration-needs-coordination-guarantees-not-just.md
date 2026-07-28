@@ -57,10 +57,10 @@ The unification claim is limited but useful: these cases do not share one remedy
 Relevant Notes:
 
 - [agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — extends: splits coordination into form and guarantee because the same channel can support or omit very different protections
-- [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — evidence: flat inherited context fails by contamination when there is no isolation primitive
-- [synthesis is not error correction](./synthesis-is-not-error-correction.md) — evidence: output aggregation fails by amplification when there is no adjudication primitive
-- [Ingest: Multi-Agent Memory from a Computer Architecture Perspective](https://arxiv.org/html/2603.10062v1) — evidence: shared multi-agent memory fails by inconsistency when there is no consistency protocol
-- [Intelligent AI Delegation](https://arxiv.org/pdf/2602.11865) — evidence: source of the accountability-vacuum and liability-firebreak vocabulary
+- [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — evidenced-by: flat inherited context fails by contamination when there is no isolation primitive
+- [synthesis is not error correction](./synthesis-is-not-error-correction.md) — evidenced-by: output aggregation fails by amplification when there is no adjudication primitive
+- [Ingest: Multi-Agent Memory from a Computer Architecture Perspective](https://arxiv.org/html/2603.10062v1) — evidenced-by: shared multi-agent memory fails by inconsistency when there is no consistency protocol
+- [Intelligent AI Delegation](https://arxiv.org/pdf/2602.11865) — evidenced-by: source of the accountability-vacuum and liability-firebreak vocabulary
 - [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: verification cost determines whether accountability stays local or must be refreshed from the principal
 - [session history should not be the default next context](./session-history-should-not-be-the-default-next-context.md) — extends: execution-boundary design is one place where coordination guarantees determine what survives
 - [topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable.md) — extends: argues the four failure modes map to what breaks when elements of a dependency chain (topology → isolation → verification) are missing

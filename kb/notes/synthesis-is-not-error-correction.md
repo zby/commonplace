@@ -64,6 +64,6 @@ Relevant Notes:
 - [bounded-context-orchestration-model](./bounded-context-orchestration-model.md) — extends: synthesis vs voting is a scheduler aggregation decision that should match the relationship between bounded calls
 - [decomposition-heuristics-for-bounded-context-scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md) — extends: aggregation operation must match decomposition structure (redundant calls → vote, complementary calls → synthesize)
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — grounds: voting requires an oracle to define "agreement"; oracle strength determines whether voting is viable for complex outputs
-- [Kim et al.](https://arxiv.org/pdf/2512.08296) — evidence: 17.2× error amplification with synthesis-only Independent topology vs 4.4× with centralized verification
-- [MAKER](https://arxiv.org/abs/2511.09030) — evidence: zero errors over 1M steps using first-to-ahead-by-k voting with maximal decomposition and decorrelation
+- [Kim et al.](https://arxiv.org/pdf/2512.08296) — evidenced-by: 17.2× error amplification with synthesis-only Independent topology vs 4.4× with centralized verification
+- [MAKER](https://arxiv.org/abs/2511.09030) — evidenced-by: zero errors over 1M steps using first-to-ahead-by-k voting with maximal decomposition and decorrelation
 - [topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable.md) — extends: the voting/synthesis distinction explains why the verification layer requires atomic units from isolation

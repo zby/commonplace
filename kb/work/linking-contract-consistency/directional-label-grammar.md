@@ -1,5 +1,7 @@
 # Directional label grammar
 
+**Status:** adopted by [ADR 058](../../reference/adr/058-directional-identifiers-use-source-as-subject.md). The inventory below records the pre-adoption audit; other failing identifiers remain separately scoped migration debt.
+
 ## Candidate invariant
 
 Every directional identifier must complete the assertion:
@@ -87,11 +89,11 @@ For every failing or uncertain label, the audit should record:
 6. overlap with neighboring labels;
 7. migration size and ambiguous cases requiring judgment.
 
-## Leading evidence-pair candidate
+## Adopted evidence pair
 
-The [evidence direction review](./evidence-direction-review.md) establishes that both claim→observation and observation→claim reader journeys are real. It does not yet settle their identifiers.
+The [evidence direction review](./evidence-direction-review.md) establishes that both claim→observation and observation→claim reader journeys are real. ADR 058 settles their identifiers.
 
-The leading candidate is:
+The adopted pair is:
 
 | identifier | assertion template |
 |---|---|
@@ -100,8 +102,8 @@ The leading candidate is:
 
 Both complete the source-as-subject assertion without reversing endpoints. The explicit `is-` makes `is-evidence-for` a grammatical predicate rather than an ambiguous noun-like category. It asserts that the source bears evidentially on the target; it does not assert that the target already cites, incorporates, or accepts the source.
 
-The pair remains provisional until the full audit tests its boundary against `grounds`, contradiction/counterevidence, qualification and boundary evidence, and the two existing off-vocabulary `supports` uses.
+The pair covers corroboration, qualification, and boundary evidence. Its distinction from `grounds`, contradiction/counterevidence, and off-vocabulary `supports` remains a neighboring-label concern; those relations were not changed in this migration.
 
 ## Adoption status
 
-Accepted as the workshop's candidate naming rule for subsequent analysis; not yet part of the shipped link vocabulary. Adoption requires an ADR/catalogue change and a migration plan for every affected identifier, not only the evidence pair.
+Accepted and implemented for the evidence pair by ADR 058, the shared catalogue, collection contracts, and corpus migration. The invariant governs all future directional identifiers, while each pre-existing failure receives its own migration plan rather than a silent reinterpretation.

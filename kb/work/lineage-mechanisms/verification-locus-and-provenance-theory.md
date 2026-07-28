@@ -72,7 +72,7 @@ A witness's regime can change over time: a quote anchor into an external repo is
 
 ### Gaps this exposes (write down, don't build)
 
-- **Radius-1 assay results have unhashed inputs.** Acceptance pins `(note, criterion)`; when a semantic gate judged the note against its link targets, a later edit to a target stales nothing. Currently absorbed as fuzz (strictness follows behavioral authority); the principled escalation is a factored `(note, cited-target)` pair per load-bearing evidence edge.
+- **Radius-1 assay results have unhashed inputs.** Acceptance pins `(note, criterion)`; when a semantic gate judged the note against its link targets, a later edit to a target stales nothing. Currently absorbed as fuzz (strictness follows behavioral authority); the principled escalation is a factored `(note, cited-target)` pair per load-bearing `evidenced-by` edge.
 - **Link text is a checkable witness that nothing checks.** The validator verifies link *health* (targets resolve) but never compares link display text to the target's current title. When a claim-title is revised, every inline restatement across the KB stays frozen at the old claim, and traversal-as-reasoning degrades silently — agents trust the carried witness at radius 0. Both sides are in the repo; the check is a cheap join. Candidate validator feature; also the cleanest concrete example of one surface (a markdown link) carrying a checkable witness in its text and a health-checked pointer in its path, with only the pointer verified today.
 
 ## The graduated invalidation ladder

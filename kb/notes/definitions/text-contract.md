@@ -47,7 +47,7 @@ A text-contract profile is not a *pathway* profile. This one is normative: a bun
 
 A profile shapes link vocabulary through defaults, not inheritance. Each default profile has a characteristic link grammar — inference labels (extends, grounds, mechanism, contrasts) for theoretical, structural labels (part-of, implements) for descriptive, operational labels (composition, precondition, invokes) for prescriptive. These are *defaults* offered as starting templates when a new collection is authored; the authoritative home of a collection's outbound grammar is its own `COLLECTION.md`, not the profile. Collections can diverge from their profile's default when their work requires it.
 
-Cross-contract links use a shared, smaller vocabulary (rationale, evidence, procedure, operates-on, defined-in) drawn from a common catalogue. A reader crossing a collection boundary typically has a different unmet need (operational vs. evidential vs. definitional) than one moving within a collection, and both endpoints need to recognise the label — so the vocabulary is shared across collections rather than owned by any single one.
+Cross-contract links use a shared, smaller vocabulary (`rationale`, `evidenced-by` / `is-evidence-for`, `procedure`, `operates-on`, `defined-in`) drawn from a common catalogue. A reader crossing a collection boundary typically has a different unmet need (operational vs. evidential vs. definitional) than one moving within a collection, and both endpoints need to recognise the label — so the vocabulary is shared across collections rather than owned by any single one.
 
 ---
 

@@ -39,4 +39,4 @@ This is editorial opinion. Read as participant-historian advocacy, not neutral h
 
 ## Recommended Next Action
 
-Update [discovery-lifecycle](../notes/definitions/discovery-lifecycle.md) to add an `evidence` link pointing at this snapshot, corroborating the conjecture-consequence-test core from the Deming-lineage tradition — the note's Relevant Notes currently rest that core on the Peirce SEP entry alone, and this is its first independent, applied support.
+Update [discovery-lifecycle](../notes/definitions/discovery-lifecycle.md) to add an `evidenced-by` link pointing at this snapshot, corroborating the conjecture-consequence-test core from the Deming-lineage tradition — the note's Relevant Notes currently rest that core on the Peirce SEP entry alone, and this is its first independent, applied support.

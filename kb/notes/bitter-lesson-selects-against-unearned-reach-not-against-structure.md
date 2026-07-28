@@ -56,5 +56,5 @@ Relevant Notes:
 - [Oracle strength spectrum](./oracle-strength-spectrum.md) — see-also: the verification gradient that plausibly governs which claims can be earned
 - [Constraining and distillation both trade generality for reliability, speed, and cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — grounds: why narrower artifacts survive when their reliability and cost gains dominate
 - [Sutton, The Bitter Lesson](../sources/wikipedia-bitter-lesson.ingest.md) — abstracted-from: the original argument, generalized here from human-versus-general-method to earned-versus-unearned reach
-- [In search of lost domain generalization](../sources/in-search-of-lost-domain-generalization.ingest.md) — evidence: nine algorithms making explicit reach claims, beaten by tuned ERM once the selection protocol was declared
-- [The Risks of Invariant Risk Minimization](../sources/the-risks-of-invariant-risk-minimization.ingest.md) — evidence: a predictor that discharges a formal invariance obligation while recovering the wrong commitment
+- [In search of lost domain generalization](../sources/in-search-of-lost-domain-generalization.ingest.md) — evidenced-by: nine algorithms making explicit reach claims, beaten by tuned ERM once the selection protocol was declared
+- [The Risks of Invariant Risk Minimization](../sources/the-risks-of-invariant-risk-minimization.ingest.md) — evidenced-by: a predictor that discharges a formal invariance obligation while recovering the wrong commitment

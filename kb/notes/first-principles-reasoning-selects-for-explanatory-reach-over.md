@@ -54,9 +54,9 @@ Relevant Notes:
 - [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — extends: criticism becomes operational through falsifier blocks
 - [computational-model](./computational-model-README.md) — exemplifies: programming-language concepts reaching into KB design is an explanatory-reach bet under audit
 - [systematic prompt variation serves verification and diagnosis, not explanatory-reach testing](./systematic-prompt-variation-serves-verification-and-diagnosis-not.md) — contrasts: explanatory-reach testing varies an explanation's premises, not an LLM prompt surface
-- [SuperARC AIT benchmark](../sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md) — evidence: integer-vs-binary sequence performance is suggestive for cue sensitivity and algorithmic-compression explanatory-reach, but not load-bearing here
+- [SuperARC AIT benchmark](../sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md) — evidenced-by: integer-vs-binary sequence performance is suggestive for cue sensitivity and algorithmic-compression explanatory-reach, but not load-bearing here
 - [First principles are inherited constraints, not design choices](./first-principles-are-inherited-constraints-not-design-choices.md) — contrasts: defines which constraints count as first principles; this note explains what first-principles filtering is for
-- [Moen, Foundation and History of the PDSA Cycle](../sources/foundation-and-history-of-the-pdsa-cycle.md) — evidence: the explanatory-reach-over-fit polarity restated from improvement science — a change that improved during one test must still be predicted to improve under the different conditions ahead
+- [Moen, Foundation and History of the PDSA Cycle](../sources/foundation-and-history-of-the-pdsa-cycle.md) — evidenced-by: the explanatory-reach-over-fit polarity restated from improvement science — a change that improved during one test must still be predicted to improve under the different conditions ahead
 
 Derived into:
 

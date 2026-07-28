@@ -112,7 +112,7 @@ Relevant Notes:
 - [files beat a database for agent-operated knowledge bases](./files-not-database.md) — grounds: why the substrate is often filesystem-first early on
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — extends: runtime constraints mature differently across layers, which becomes clearer once the runtime is decomposed
 - [unified calling conventions enable bidirectional refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — exemplifies: the scheduler layer as the control-flow-owning part of the runtime
-- [Harness Engineering (Lopopolo, 2026)](https://openai.com/index/harness-engineering/) — evidence: practitioner report on runtime hardening through instructions, tests, and cleanup agents
-- [Harness Engineering as Cybernetics (@odysseus0z, 2026)](https://x.com/odysseus0z/status/2030416758138634583) — evidence: control-theoretic framing for the scheduler/substrate feedback loop
-- [The Anatomy of an Agent Harness](https://x.com/Vtrivedy10/status/2031408954517971368) — evidence: the practitioner component taxonomy this note reorganizes
-- [Components of A Coding Agent (Raschka, 2026)](https://magazine.sebastianraschka.com/p/components-of-a-coding-agent) — evidence: independent six-component taxonomy converging on the same three-part decomposition from a pedagogical starting point
+- [Harness Engineering (Lopopolo, 2026)](https://openai.com/index/harness-engineering/) — evidenced-by: practitioner report on runtime hardening through instructions, tests, and cleanup agents
+- [Harness Engineering as Cybernetics (@odysseus0z, 2026)](https://x.com/odysseus0z/status/2030416758138634583) — evidenced-by: control-theoretic framing for the scheduler/substrate feedback loop
+- [The Anatomy of an Agent Harness](https://x.com/Vtrivedy10/status/2031408954517971368) — evidenced-by: the practitioner component taxonomy this note reorganizes
+- [Components of A Coding Agent (Raschka, 2026)](https://magazine.sebastianraschka.com/p/components-of-a-coding-agent) — evidenced-by: independent six-component taxonomy converging on the same three-part decomposition from a pedagogical starting point

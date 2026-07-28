@@ -98,5 +98,5 @@ Relevant Notes:
 
 - [Reasoning production is not reasoning evaluation](../../notes/reasoning-production-is-not-reasoning-evaluation.md) — rationale: a plausible reconstructed route cannot validate the route that actually produced the result
 - [An outcome check licenses replay; a rule needs the process verified](../../notes/an-outcome-check-licenses-replay-a-rule-needs-the-process-verified.md) — rationale: outcome and process checks inspect different evidence and license different conclusions
-- [Agent Harness for Large Language Model Agents ingest](../../sources/agent-harness-large-language-model-agents-survey.ingest.md) — evidence: locates trajectory and intermediate-state evaluation in the harness evaluation interface
+- [Agent Harness for Large Language Model Agents ingest](../../sources/agent-harness-large-language-model-agents-survey.ingest.md) — evidenced-by: locates trajectory and intermediate-state evaluation in the harness evaluation interface
 - [Run review batches](../../instructions/run-review-batches.md) — see-also: shipped procedure separating harness-owned orchestration from deterministic review endpoints

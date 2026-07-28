@@ -60,7 +60,7 @@ Relevant Notes:
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — mechanism: why retention without surfacing contributes nothing
 - [Representational form](./definitions/representational-form.md) — defined-in: the axis along which the substrate's two halves divide
 - [Formal symbolic systems assess explanatory-reach only through causal and proof obligations](./formal-systems-assess-explanatory-reach-through-causal-and-proof.md) — grounds: what a supplied formal language buys and costs
-- [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — evidence: the formal instance that satisfies the conditions inside an axiomatized language, unimplemented
+- [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — evidenced-by: the formal instance that satisfies the conditions inside an axiomatized language, unimplemented
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — grounds: why reflective membership does not establish the closure a test would need
-- [Commonplace as a reflective self-improving system](../reference/commonplace-as-a-reflective-system.md) — evidence: the closest running instance, with human, joint, and computational functions explicitly located
-- [Exo](../agentic-systems/exo.md) — evidence: a running system satisfying the three conditions without a human, whose acceptance oracles reach liveness but not reach
+- [Commonplace as a reflective self-improving system](../reference/commonplace-as-a-reflective-system.md) — evidenced-by: the closest running instance, with human, joint, and computational functions explicitly located
+- [Exo](../agentic-systems/exo.md) — evidenced-by: a running system satisfying the three conditions without a human, whose acceptance oracles reach liveness but not reach

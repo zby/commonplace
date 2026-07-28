@@ -24,7 +24,7 @@ The paper recasts the dominant "Agent Loop" (ReAct-style observe-reason-act) as 
 
 ## Connections Found
 
-The source maps almost one-to-one onto the KB's clean-model orchestration cluster and is one of the richest source fits in the recent academic-paper batch. Connection discovery surfaced six strong reverse-edge candidates, all in the `evidence` relationship (the snapshot corroborates existing claims rather than originating them):
+The source maps almost one-to-one onto the KB's clean-model orchestration cluster and is one of the richest source fits in the recent academic-paper batch. Connection discovery surfaced six strong reverse-edge candidates, all in the `evidenced-by` relationship (the snapshot corroborates existing claims rather than originating them):
 
 - **bounded-context-orchestration-model** — SGH's execution tuple ℰ=(𝒮,𝒰,𝒫,𝒪,Δ) is a peer-literature instance of the select/call loop: a symbolic scheduler (𝒫 over ready set 𝒰) driving bounded non-deterministic LLM nodes with results returning to explicit state (Δ). It supplies formal vocabulary (ready-set cardinality |𝒰|) for the note's parallelism remark.
 - **scheduler-llm-separation-exploits-an-error-correction-asymmetry** — SGH's core move (deterministic topology removes the LLM from policy 𝒫; LLM stays only for node execution/planning/diagnosis) is exactly the bookkeeping/semantic-judgment split the note argues for. The validation-gap theorem (correctness ≥ ∏ p_v, with p_v ≈ 1 for syntactic and ≪ 1 for semantic checks) is independent support that semantic operations resist cheap error correction.
@@ -55,4 +55,4 @@ The 70-system survey carries the "controllability-first" and "stable-commitment"
 
 ## Recommended Next Action
 
-Update **agent-orchestration-occupies-a-multi-dimensional-design-space** to add ready-set cardinality (|𝒰|, single- vs multi-ready-unit) as an explicit design axis, citing this snapshot as `evidence`. This is the single highest-reach extraction (it adds a missing dimension to an existing note rather than restating one), the source fit is exact, and it naturally pulls in the scheduler-continuum vocabulary. The remaining five reverse-edge `evidence` citations and the `kb/agentic-systems/` whole-system analysis can follow as separate, lower-priority writes.
+Update **agent-orchestration-occupies-a-multi-dimensional-design-space** to add ready-set cardinality (|𝒰|, single- vs multi-ready-unit) as an explicit design axis, citing this snapshot as `evidenced-by`. This is the single highest-reach extraction (it adds a missing dimension to an existing note rather than restating one), the source fit is exact, and it naturally pulls in the scheduler-continuum vocabulary. The remaining five reverse-edge `evidenced-by` citations and the `kb/agentic-systems/` whole-system analysis can follow as separate, lower-priority writes.

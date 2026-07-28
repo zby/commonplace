@@ -60,5 +60,5 @@ Relevant Notes:
 - [Error correction works with above-chance oracles and decorrelated checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) -- mechanism: explains why repeated review calls need discriminative, decorrelated checks rather than mere aggregation
 - [Semantic review catches content errors that structural validation cannot](./semantic-review-catches-content-errors-that-structural-validation.md) -- applies: Commonplace semantic review already names the content-level subroles this note wants to keep separate
 - [Structured output is easier for humans to review](./structured-output-is-easier-for-humans-to-review.md) -- mechanism: separating evidence from reasoning makes review subroles independently checkable
-- [Agentic Code Reasoning ingest](../sources/agentic-code-reasoning.ingest.md) -- evidence: semi-formal process templates improve execution-free verification by forcing premises, traces, and conclusions
+- [Agentic Code Reasoning ingest](../sources/agentic-code-reasoning.ingest.md) -- evidenced-by: semi-formal process templates improve execution-free verification by forcing premises, traces, and conclusions
 

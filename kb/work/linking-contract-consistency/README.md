@@ -8,11 +8,11 @@ Lineage-specific carrier, relation, and invalidation contradictions stay in the 
 
 ## Working files
 
-- [Current link-authorization matrix](./current-authorization-matrix.md) — inventory of every live collection contract, its source→destination label authorizations, grammar shape, and cross-contract conflicts; ends with `evidence` as the first decision packet.
+- [Pre-migration link-authorization matrix](./current-authorization-matrix.md) — historical inventory of collection contracts and cross-contract conflicts at the migration baseline; its old `evidence` rows are superseded by ADR 058.
 - [Evidence direction review](./evidence-direction-review.md) — corpus review of 26 source/review→note uses; establishes a real inverse reader journey while deferring its identifier to the whole-vocabulary grammar audit.
-- [Directional label grammar](./directional-label-grammar.md) — candidate invariant that every directional identifier complete `source <label> target`, plus the initial pass/fail inventory and required audit procedure.
+- [Directional label grammar](./directional-label-grammar.md) — adopted invariant that every directional identifier complete `source <label> target`, plus the initial pass/fail inventory and remaining migration debt.
 - [Evidence label migration plan](./evidence-label-migration-plan.md) — compact execution packet for adopting `evidenced-by` / `is-evidence-for`, migrating active contracts and edges, verifying conservation, and capturing lessons for the next label.
-- [Evidence label migration retrospective](./evidence-label-migration-retrospective.md) — run-time surprise log, edge reconciliation, and mandatory add/remove/reorder/automate amendments for the next label plan.
+- [Evidence label migration retrospective](./evidence-label-migration-retrospective.md) — completed first-run reconciliation and the mandatory add/remove/reorder/automate amendments the next directional-label migration must explicitly accept or reject.
 
 ## Confirmed contradictions
 
@@ -34,11 +34,11 @@ The [article collection](../../articles/COLLECTION.md) deliberately permits in-p
 
 **Needed outcome:** give each collection an operational grammar or an explicit exemption that writing and connect procedures know how to interpret.
 
-### `evidence` is used against its declared direction
+### Resolved: `evidence` was used against its declared direction
 
-The shared catalogue describes `evidence` as asymmetric, theoretical → descriptive. The sources collection authorizes it from source analyses → notes, and the agent-memory collection authorizes a rare review → note use. Those may express a valid inverse reader need, but the same asymmetric identifier currently names both directions.
+The pre-migration catalogue described `evidence` as asymmetric, theoretical → descriptive, while source analyses and agent-memory reviews also used it toward notes. [ADR 058](../../reference/adr/058-directional-identifiers-use-source-as-subject.md) resolves the conflict with `evidenced-by` for assertion→observation and `is-evidence-for` for observation→assertion. Both directions remain independently authored reader aids.
 
-**Needed outcome:** choose a canonical direction, introduce an inverse label if both journeys matter, or redefine the label as a source-independent reader-need relation whose semantics genuinely survive inversion.
+**Outcome:** adopted, contract-authorized, and migrated; the [retrospective](./evidence-label-migration-retrospective.md) carries the reconciled corpus counts and next-run amendments.
 
 ### `compares-with` has stale scope documentation
 

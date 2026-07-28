@@ -46,12 +46,12 @@ A combined system would likely use RLM-like ephemeral orchestration to explore a
 Relevant Notes:
 
 - [RLM has the model write ephemeral orchestrators over sub-agents](./rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) — grounds: supplies the ephemeral REPL-orchestrator side of the comparison
-- [Ingest: The Y-Combinator for LLMs](../sources/the-y-combinator-for-llms-solving-long-context-rot.ingest.md) — evidence: λ-RLM is an RLM variant that keeps task-local prompt-as-environment recursion while replacing arbitrary REPL code with a typed combinator runtime
+- [Ingest: The Y-Combinator for LLMs](../sources/the-y-combinator-for-llms-solving-long-context-rot.ingest.md) — evidenced-by: λ-RLM is an RLM variant that keeps task-local prompt-as-environment recursion while replacing arbitrary REPL code with a typed combinator runtime
 - [Unified calling conventions enable bidirectional refactoring between neural and symbolic](./unified-calling-conventions-enable-bidirectional-refactoring.md) — grounds: supplies the llm-do call-boundary side of the comparison
-- [Tendril](../agent-memory-systems/reviews/tendril.md) — evidence: source-inspected generated-capability system that occupies the cross-session workspace persistence point
+- [Tendril](../agent-memory-systems/reviews/tendril.md) — evidenced-by: source-inspected generated-capability system that occupies the cross-session workspace persistence point
 - [Ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — mechanism: explains the accumulation trade-off that separates RLM from Tendril
 - [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — mechanism: explains why Tendril's online capability registration is a durable behavior-change loop
 - [The verifiability gradient](./verifiability-gradient.md) — mechanism: situates llm-do's movement between LLM-backed agents and Python functions
 - [Agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — extends: this note fills in one local comparison across scheduler placement, persistence horizon, and representational form
-- [Ingest: Recursive Language Models - what finally gave me the 'aha' moment](../sources/recursive-language-models-what-finally-gave-me-the-aha-moment.ingest.md) — evidence: practitioner walkthrough of RLM's REPL mechanism and symbolic variable return
-- [Claude Code dynamic workflows](../agentic-systems/claude-code-dynamic-workflows.md) — evidence: a placement the comparison does not yet cover — model-authored sandboxed guest-language script, session-ephemeral with whole-script promotion to a reusable `/command`
+- [Ingest: Recursive Language Models - what finally gave me the 'aha' moment](../sources/recursive-language-models-what-finally-gave-me-the-aha-moment.ingest.md) — evidenced-by: practitioner walkthrough of RLM's REPL mechanism and symbolic variable return
+- [Claude Code dynamic workflows](../agentic-systems/claude-code-dynamic-workflows.md) — evidenced-by: a placement the comparison does not yet cover — model-authored sandboxed guest-language script, session-ephemeral with whole-script promotion to a reusable `/command`

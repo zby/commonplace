@@ -47,4 +47,4 @@ Relevant Notes:
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: warranted autonomy bounded by a proof requirement
 - [Reach-assessment](./definitions/reach-assessment.md) — contrasts: oracle domain bounds what unattended acceptance can establish; reach-assessment judges whether a candidate's claimed generalization is genuine
 - [Oracle-strength spectrum](./oracle-strength-spectrum.md) — extends: grades the verification surfaces that determine oracle domain
-- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: a pathway-mixed system whose autonomy profile aligns with heterogeneous oracle domain
+- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidenced-by: a pathway-mixed system whose autonomy profile aligns with heterogeneous oracle domain

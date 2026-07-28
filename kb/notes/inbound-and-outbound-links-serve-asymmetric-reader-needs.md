@@ -39,5 +39,5 @@ Who is reading determines how the derived view should reach them. A human in a r
 Relevant Notes:
 
 - [Linking theory](./linking-theory.md) — extends: the decision-cost model for outbound links, extrapolated here to inbound visibility
-- [ADR 020 — theoretical-default additions (contrasts, mechanism)](../reference/adr/020-theoretical-default-contrasts-mechanism.md) — evidence: the directional-asymmetry decision rests on forward edges being canonical and the inverse view computed
+- [ADR 020 — theoretical-default additions (contrasts, mechanism)](../reference/adr/020-theoretical-default-contrasts-mechanism.md) — evidenced-by: the directional-asymmetry decision rests on forward edges being canonical and the inverse view computed
 - [Backlink surfacing](../reference/proposals/backlink-surfacing.md) — see-also: the Commonplace design space for delivering the inbound view, which takes this note's needs as its requirements

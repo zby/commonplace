@@ -72,7 +72,7 @@ Relevant Notes:
 - [Files, not a database](./files-not-database.md) — contrasts: premature schema commitment is the ignorance failure (queries not yet known); this is the confidence failure (today's queries known too well)
 - [Short composable notes maximize combinatorial discovery](./short-composable-notes-maximize-combinatorial-discovery.md) — contrasts: the library/workshop split protects note granularity from task-shaping but leaves the structural layer unprotected
 - [Automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — see-also: retire is the mutation this note needs, and the one whose oracle is missing
-- [Sparks](../agent-memory-systems/reviews/sparks.md) — evidence: names the fixed-shape/extensibility trade and buys hardcoded page types deliberately for a narrow scope
-- [Echel](../agent-memory-systems/reviews/echel.md) — evidence: a node taxonomy hardcoded to one product workflow
-- [sift-kg](../agent-memory-systems/reviews/sift-kg.md) — evidence: a schema discovered from the first corpus and cached — fitting and freezing automated
+- [Sparks](../agent-memory-systems/reviews/sparks.md) — evidenced-by: names the fixed-shape/extensibility trade and buys hardcoded page types deliberately for a narrow scope
+- [Echel](../agent-memory-systems/reviews/echel.md) — evidenced-by: a node taxonomy hardcoded to one product workflow
+- [sift-kg](../agent-memory-systems/reviews/sift-kg.md) — evidenced-by: a schema discovered from the first corpus and cached — fitting and freezing automated
 </content>

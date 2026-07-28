@@ -56,9 +56,9 @@ Write the note claim (A) supports — that an algorithm without a declared model
 
 Relevant Notes:
 
-- [Theory-mediated learning may improve sample efficiency under structured shifts](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — evidence: this paper is the shift-difficulty caveat that paragraph already rests on
-- [Formal symbolic systems assess explanatory-reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md) — evidence: the measured instance of that note's uncited "formalization boundary" warning
-- [Codification and relaxing navigate the bitter lesson boundary](../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — evidence: nine codification bets that lost to the general method under a fair protocol
+- [Theory-mediated learning may improve sample efficiency under structured shifts](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — is-evidence-for: this paper is the shift-difficulty caveat that paragraph already rests on
+- [Formal symbolic systems assess explanatory-reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md) — is-evidence-for: the measured instance of that note's uncited "formalization boundary" warning
+- [Codification and relaxing navigate the bitter lesson boundary](../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — is-evidence-for: nine codification bets that lost to the general method under a fair protocol
 - [Reach-assessment](../notes/definitions/reach-assessment.md) — defined-in: the registered sense of the compound used throughout this report
 - [The Risks of Invariant Risk Minimization](./the-risks-of-invariant-risk-minimization.md) — compares-with: the formal counterpart to this empirical negative result
 - [Causal inference using invariant prediction](./causal-inference-using-invariant-prediction.ingest.md) — compares-with: proposes cross-environment invariance as a causal acceptance signal; parallel subject, opposite verdict

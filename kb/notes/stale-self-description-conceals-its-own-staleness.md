@@ -70,4 +70,4 @@ Relevant Notes:
 - [Reflection buys addressability](./reflection-buys-addressability.md) — mechanism: why a retained claim can be revised selectively at all
 - [Link graph plus timestamps enables make-like staleness detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — mechanism: one cheap implementation of the trigger and dependency parts
 - [Increasing computational autonomy relocates human effort to the frontier](./increasing-computational-autonomy-relocates-human-effort.md) — extends: the rate coupling, where the autonomy being pursued generates the maintenance load
-- [Exo](../agentic-systems/exo.md) — evidence: operation present, trigger and dependency absent, over a self map injected into every turn
+- [Exo](../agentic-systems/exo.md) — evidenced-by: operation present, trigger and dependency absent, over a self map injected into every turn

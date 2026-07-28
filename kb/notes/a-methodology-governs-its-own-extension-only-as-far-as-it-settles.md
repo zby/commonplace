@@ -68,5 +68,5 @@ Relevant Notes:
 - [Behavioral authority](./definitions/behavioral-authority.md) — enables: names the consumer, channel, and force the authority axis demands
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — extends: the representational-form axis widens to the mappings between forms when a recommendation spans them
 - [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: why the verification axis is the ceiling
-- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidence: applies the three closure axes to the centralized ADR 026 trace
+- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidenced-by: applies the three closure axes to the centralized ADR 026 trace
 - [Methodology with incomplete coverage and its live theory fallback form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — extends: the execution architecture past the closure frontier — fallback to the generator as expected operation, recurrence as the promotion signal that moves the frontier

@@ -67,5 +67,5 @@ Relevant Notes:
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the loop whose functions this claim distinguishes, and the search-range-versus-oracle-strength point it extends
 - [Self-improving system](./definitions/self-improving-system.md) — extends: tells the autonomy gradient which function to climb first, and why the other must be bought
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: why evaluation is the bounded function and its errors are the permanent ones
-- [Entropy management must scale with generation throughput](./entropy-management-must-scale-with-generation-throughput.md) — evidence: the capacity failure that automated search produces when evaluation does not scale with it
+- [Entropy management must scale with generation throughput](./entropy-management-must-scale-with-generation-throughput.md) — evidenced-by: the capacity failure that automated search produces when evaluation does not scale with it
 - [Automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — contrasts: search is the safer function to automate, which does not make it the easy one

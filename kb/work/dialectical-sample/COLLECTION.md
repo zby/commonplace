@@ -17,6 +17,10 @@ Every proposition needs:
 1. **An attributed asserter** — who holds this position (a name, institution, or paper), kept separate from any judgment about correctness.
 2. **A source-span citation** — file link + a prose locator (section/heading) + a grounding-layer marker: *verbatim* (quoted), *paraphrase layer* (source's own summary, not quoted), or *second-hand* (another party's restatement).
 
+## Outbound links
+
+Links from a proposition to the local immutable excerpts use `evidenced-by`: `source proposition evidenced-by target excerpt`. Each citation still requires the locator and grounding-layer marker above. The inverse `is-evidence-for` edge is not authored into immutable excerpts, and no reciprocal edge is implied.
+
 ## Review
 
 - Title states no verdict in this collection's voice.

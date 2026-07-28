@@ -141,5 +141,5 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) — draws-on: the four-field record that is the methodology being pitched
 - [System-definition artifacts are crystallized reasoning under context scarcity](../../notes/system-definition-artifacts-are-crystallized-reasoning-under-context.md) — tests: runs the unbounded-context experiment thread 2 must survive
 - [The boundary of automation is the boundary of verification](../../notes/the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: oracle construction as the automation bottleneck, which thread 1 extends backwards to ontology
-- [Exo](../../agentic-systems/exo.md) — evidence: the whole-system analysis this workshop reasons from
-- [Exo agent memory system review](../../agent-memory-systems/reviews/exo.md) — evidence: the subsystem review that already applied artifact analysis to this system
+- [Exo](../../agentic-systems/exo.md) — evidenced-by: the whole-system analysis this workshop reasons from
+- [Exo agent memory system review](../../agent-memory-systems/reviews/exo.md) — evidenced-by: the subsystem review that already applied artifact analysis to this system

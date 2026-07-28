@@ -61,4 +61,4 @@ Relevant Notes:
 - [Progressive constraining commits only after patterns stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — contrasts: guards the scope against reading logical priority as up-front ontology design
 - [Representational form](./definitions/representational-form.md) — defined-in: why form sets the default review method, so mixing forms in one layer mixes review regimes
 - [Oracle strength spectrum](./oracle-strength-spectrum.md) — see-also: the strength axis this claim is orthogonal to — a weak oracle over a declared class still has a domain
-- [Exo](../agentic-systems/exo.md) — evidence: verified code and unverified natural-language in one system, with the single typed natural-language class the only one carrying a check
+- [Exo](../agentic-systems/exo.md) — evidenced-by: verified code and unverified natural-language in one system, with the single typed natural-language class the only one carrying a check

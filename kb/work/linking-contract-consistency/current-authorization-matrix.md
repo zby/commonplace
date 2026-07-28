@@ -1,4 +1,6 @@
-# Current link-authorization matrix
+# Pre-migration link-authorization matrix
+
+**Status:** historical baseline. [ADR 058](../../reference/adr/058-directional-identifiers-use-source-as-subject.md) and the evidence-label migration supersede this file's `evidence` authorizations and first decision packet. Current contracts use `evidenced-by` and `is-evidence-for`; this inventory remains unchanged below so the migration can be audited against the state it actually found.
 
 ## Purpose and method
 
@@ -143,12 +145,12 @@ It is used for peer comparisons among memory systems, between memory and whole a
 
 Articles and the dialectical sample demonstrate legitimate links whose primary contract is not a footer relationship label: editorial invitations and attributed source-span citations. Treating them as accidental omissions would flatten real text-contract differences; treating them as implicit exceptions leaves generic skills unable to act. The architecture needs a declared override form, not necessarily one universal label table.
 
-## First decision packet: `evidence`
+## Historical first decision packet: `evidence`
 
-The cleanest candidate rule is:
+The pre-migration candidate rule was:
 
 > `evidence` is asymmetric and authored from a claim or descriptive assertion to the observation, system analysis, or source that corroborates it.
 
 That rule matches the majority of collection authorizations and the reader need “I am evaluating this assertion; show me corroboration.” Under it, source/review → claim links need a different label or ordinary prose. Candidate inverse names should be tested against reader need rather than ontology—possibly `supports`, `corroborates`, or no formal footer edge if the ingest prose already names where the source lands.
 
-The corpus review is complete in [evidence direction review](./evidence-direction-review.md): 26 inverse uses span ingest reports, a source review, and an agent-memory review; 19 have no return link. They serve a recurring source→claim landing-map journey rather than mistaken lineage or mandatory mirroring. Both journeys should remain, but their names are deferred to the whole-vocabulary [directional label grammar](./directional-label-grammar.md) audit; the earlier `evidence-for` candidate was rejected as directionally unclear.
+The corpus review in [evidence direction review](./evidence-direction-review.md) found 26 inverse uses across ingest reports, a source review, and an agent-memory review; 19 had no return link. [ADR 058](../../reference/adr/058-directional-identifiers-use-source-as-subject.md) subsequently retained both journeys as `evidenced-by` and `is-evidence-for` under the source-as-subject invariant.

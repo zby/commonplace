@@ -43,8 +43,8 @@ An always-present symbol (an action-type trigger on any `Write`) buys only coars
   
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — contrasts: frontloading uses inputs known upstream of the call; this characterizes when the identifying symbol is or isn't upstream yet
   
-- [agentic memory systems comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) — evidence: the cross-system push/pull split this generalizes
+- [agentic memory systems comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) — evidenced-by: the cross-system push/pull split this generalizes
   
-- [EQUIPA](../agent-memory-systems/reviews/equipa.md) — evidence: symbolic narrowing feeding semantic ranking, the mixed middle path
+- [EQUIPA](../agent-memory-systems/reviews/equipa.md) — evidenced-by: symbolic narrowing feeding semantic ranking, the mixed middle path
   
-- [Atomic](../agent-memory-systems/reviews/atomic.md) — evidence: report definitions as the durable-task-frame case
+- [Atomic](../agent-memory-systems/reviews/atomic.md) — evidenced-by: report definitions as the durable-task-frame case

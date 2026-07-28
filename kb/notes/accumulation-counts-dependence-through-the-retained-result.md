@@ -55,5 +55,5 @@ Relevant Notes:
 - [Reflection buys addressability](./reflection-buys-addressability.md) — contrasts: what routing retention through a self-representation does add, which the reflective non-cumulative case shows is not accumulation
 - [Self-improvement is relative to a declared objective](./self-improvement-is-relative-to-a-declared-objective.md) — grounds: why improvement-relevance, and so this reading, is objective-indexed
 - [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — contrasts: the same aggregation difficulty over a different profile dimension
-- [Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) — evidence: the operative-but-non-cumulative case, including the trigger-channel dependence the clamp excludes
-- [Self-Improving Algorithms](../sources/self-improving-algorithms.md) — evidence: cumulative retention without an inspectable self-representation
+- [Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) — evidenced-by: the operative-but-non-cumulative case, including the trigger-channel dependence the clamp excludes
+- [Self-Improving Algorithms](../sources/self-improving-algorithms.md) — evidenced-by: cumulative retention without an inspectable self-representation

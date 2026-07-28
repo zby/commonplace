@@ -30,8 +30,8 @@ None of this runs on rails. The instructions above name conventions to read and 
 
 Relevant Notes:
 
-- [Commonplace as a reflective self-improving system](./commonplace-as-a-reflective-system.md) — evidence: the ADR 026 allocation trace this note generalizes beyond
-- [The tag-readme change as an observed causal-connection trace](./tag-readme-trace-observed-causal-connection.md) — evidence: the full walkthrough of the agent-assisted drafting this note's opening trace summarizes
-- [The tag-readme trace read as a self-improving loop](./tag-readme-trace-as-self-improving-loop.md) — evidence: reads the same agent-assisted drafting as the computational part of jointly performed Search
+- [Commonplace as a reflective self-improving system](./commonplace-as-a-reflective-system.md) — evidenced-by: the ADR 026 allocation trace this note generalizes beyond
+- [The tag-readme change as an observed causal-connection trace](./tag-readme-trace-observed-causal-connection.md) — evidenced-by: the full walkthrough of the agent-assisted drafting this note's opening trace summarizes
+- [The tag-readme trace read as a self-improving loop](./tag-readme-trace-as-self-improving-loop.md) — evidenced-by: reads the same agent-assisted drafting as the computational part of jointly performed Search
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: defines the search function this note catalogs mechanisms for
-- [Freshness architecture](./freshness-architecture.md) — evidence: the newer, systematic staleness-noticing mechanism, still limited to review-pair targets
+- [Freshness architecture](./freshness-architecture.md) — evidenced-by: the newer, systematic staleness-noticing mechanism, still limited to review-pair targets

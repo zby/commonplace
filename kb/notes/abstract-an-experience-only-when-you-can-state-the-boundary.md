@@ -55,7 +55,7 @@ Relevant Notes:
 
 - [first-principles reasoning selects for explanatory-reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: the negative test (predict where it fails) is the boundary test this note applies to memory formation
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — extends: a fact is low in explanatory-reach by design, so the abstract-or-preserve choice only bites where explanatory-reach is plausibly on offer
-- [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — evidence: a preserved fact's value is its retrievability, not its transfer — the long-tail half of the decision
+- [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — evidenced-by: a preserved fact's value is its retrievability, not its transfer — the long-tail half of the decision
 - [the generality-for-reliability tradeoff](./constraining-and-extraction-both-trade-generality-for-reliability.md) — extends: the abstracted lesson keeps its source for edge cases it cannot cover
 - [trace-learning techniques in related systems](../agent-memory-systems/trace-learning-techniques-in-related-systems.md) — see-also: the field marks "explanatory-reach vs local patch" as open; this note offers a discriminator, not a closure
 - [diagnostic richness constrains outer-loop learning quality](./diagnostic-richness-constrains-outer-loop-learning-quality.md) — grounds: that inspectable failure evidence carries the boundary the directive component supplies

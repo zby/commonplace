@@ -57,4 +57,4 @@ Relevant Notes:
 - [files beat a database for agent-operated knowledge bases](./files-not-database.md) — extends: names the structural boundary that note's "a subsystem can outgrow files" exception leaves implicit
 - [axes of artifact analysis](./axes-of-artifact-analysis.md) — see-also: this is a claim on the storage-substrate axis, decided independently of representational form
 - [a derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — see-also: the disposition for the churn-without-mesh case (regenerate or validate, never store)
-- [review system architecture](../reference/review-architecture.md) — evidence: the witness — a `(note, gate)` review relation whose churning edge-state lives in a relational store while review documents stay in files
+- [review system architecture](../reference/review-architecture.md) — evidenced-by: the witness — a `(note, gate)` review relation whose churning edge-state lives in a relational store while review documents stay in files

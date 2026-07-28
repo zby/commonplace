@@ -110,10 +110,10 @@ Relevant Notes:
 - [Formal symbolic systems assess explanatory-reach only through causal and proof obligations](./formal-systems-assess-explanatory-reach-through-causal-and-proof.md) — extends: develops the formal routes and their dependence on a supplied language
 - [World models assess explanatory-reach through action-conditioned prediction](./world-models-assess-explanatory-reach-through-action-conditioned.md) — contrasts: a distributed-parametric route to the same assessment
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — mechanism: why criticism, among validation routes, is the one bounded by oracle domain
-- [DiscoverPhysics](../sources/discoverphysics-benchmarking-llms-out-of-the-box-scientific.ingest.md) — evidence: predictive accuracy and explanation quality measured separately, and coming apart
-- [FALSIFYBENCH](../sources/falsifybench-inductive-reasoning-rule-discovery-games.ingest.md) — evidence: falsification-seeking test selection predicts rule-discovery success across models
-- [ROME](../sources/rome-locating-and-editing-factual-associations-in-gpt.ingest.md) — evidence: parametric editing delivers content-addressability without scope-addressability
-- [Concept bottleneck models](../sources/concept-bottleneck-models.ingest.md) — evidence: a legible interface installed by architecture before training, correctable per inference but not retained
-- [DreamCoder](../sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md) — evidence: a compounding library of explicit abstractions, retained by a mechanical description-length gate
-- [In search of lost domain generalization](../sources/in-search-of-lost-domain-generalization.ingest.md) — evidence: specialized generalization methods did not consistently beat tuned ERM under a fixed protocol
-- [The risks of invariant risk minimization](../sources/the-risks-of-invariant-risk-minimization.ingest.md) — evidence: bounds the IRM objective specifically, in the linear regime by environment count and outside it by an existence proof
+- [DiscoverPhysics](../sources/discoverphysics-benchmarking-llms-out-of-the-box-scientific.ingest.md) — evidenced-by: predictive accuracy and explanation quality measured separately, and coming apart
+- [FALSIFYBENCH](../sources/falsifybench-inductive-reasoning-rule-discovery-games.ingest.md) — evidenced-by: falsification-seeking test selection predicts rule-discovery success across models
+- [ROME](../sources/rome-locating-and-editing-factual-associations-in-gpt.ingest.md) — evidenced-by: parametric editing delivers content-addressability without scope-addressability
+- [Concept bottleneck models](../sources/concept-bottleneck-models.ingest.md) — evidenced-by: a legible interface installed by architecture before training, correctable per inference but not retained
+- [DreamCoder](../sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md) — evidenced-by: a compounding library of explicit abstractions, retained by a mechanical description-length gate
+- [In search of lost domain generalization](../sources/in-search-of-lost-domain-generalization.ingest.md) — evidenced-by: specialized generalization methods did not consistently beat tuned ERM under a fixed protocol
+- [The risks of invariant risk minimization](../sources/the-risks-of-invariant-risk-minimization.ingest.md) — evidenced-by: bounds the IRM objective specifically, in the linear regime by environment count and outside it by an existence proof

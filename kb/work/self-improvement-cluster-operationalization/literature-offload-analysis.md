@@ -24,9 +24,9 @@ The delegation assessment's fact-check ("little to trim; the note contains no en
 
 Optional, cheap: the PDCA "act = standardize if satisfactory, back to plan if unsatisfactory" fork is a fourth independent tradition converging on the reject-capable-evaluation requirement. If added at all, it should be one clause with a citation, not a paragraph — the convergence detail lives in the ingest reports.
 
-### 1.4 [Discovery lifecycle](../../notes/definitions/discovery-lifecycle.md) — evidence links; the definition stays stipulative
+### 1.4 [Discovery lifecycle](../../notes/definitions/discovery-lifecycle.md) — `evidenced-by` links; the definition stays stipulative
 
-All three PDSA ingests converge on the same recommendation: the definition's conjecture–consequence–test core currently rests on the Peirce SEP entry alone, and the Deming lineage is a second, applied, non-philosophical tradition landing on the same loop (Shewhart's own specification–production–inspection ↔ hypothesis–experiment–test mapping; the 1991 Moen/Nolan/Provost prediction-in-Plan, observation-vs-prediction-in-Study revision). Add one evidence link — [Foundation and History](../../sources/foundation-and-history-of-the-pdsa-cycle.md) is the strongest single anchor — and cite the siblings from there rather than adding three links.
+All three PDSA ingests converge on the same recommendation: the definition's conjecture–consequence–test core currently rests on the Peirce SEP entry alone, and the Deming lineage is a second, applied, non-philosophical tradition landing on the same loop (Shewhart's own specification–production–inspection ↔ hypothesis–experiment–test mapping; the 1991 Moen/Nolan/Provost prediction-in-Plan, observation-vs-prediction-in-Study revision). Add one `evidenced-by` link — [Foundation and History](../../sources/foundation-and-history-of-the-pdsa-cycle.md) is the strongest single anchor — and cite the siblings from there rather than adding three links.
 
 No reduction: the definition is stipulative and already minimal. The gain is that its core is now corroborated by independent convergence rather than one source, which is exactly what conservative extension predicts corroboration should look like.
 
@@ -51,7 +51,7 @@ The texts that shrink are the ones **not yet written**. The delegation assessmen
 Three ingest recommendations cut against the reduction direction. Under the maintainer's direction and the quality bar, dispositions:
 
 1. **Bainbridge C/D/E note** (skill atrophy from disuse, vigilance limits, the training-investment paradox — genuinely uncovered by any note, per the ingest's search). *Park as a recorded gap.* The transfer to agent-operated KBs (humans who only review automated output lose the skill the review depends on) is real and would change oversight-allocation decisions, so it clears the quality bar — but it is new analysis, not offload, and nothing in the current workshop consumes it. Write it if and when phase-1 audit dispositions need the claim; the ingest's Extractable Value section preserves the material until then.
-2. **PDSA-convergence synthesis note** (two ingests recommend a note stating that Peircean philosophy and Deming-lineage quality improvement independently converge on the predict-then-test loop). *Do not write.* The convergence is fully recorded across the three ingest reports and becomes citable through the discovery-lifecycle evidence link (§1.4); a standalone synthesis note would restate what the sources now carry — the exact pattern this exercise exists to stop.
+2. **PDSA-convergence synthesis note** (two ingests recommend a note stating that Peircean philosophy and Deming-lineage quality improvement independently converge on the predict-then-test loop). *Do not write.* The convergence is fully recorded across the three ingest reports and becomes citable through the discovery-lifecycle `evidenced-by` link (§1.4); a standalone synthesis note would restate what the sources now carry — the exact pattern this exercise exists to stop.
 3. **Reverse-edge sweeps** (each ingest lists two or three candidate reverse edges). *Take only the strongest per source*, per each ingest's own recommendation; the rest wait for the next natural revision of the target notes.
 
 ## 4. Summary of concrete edits recommended
@@ -63,7 +63,7 @@ Small, mechanical, all confirmed against current note text:
 | Repoint Bainbridge DOI → local snapshot | autonomy-relocation note | hygiene, ±0 lines |
 | Add Bainbridge as fifth convergent source | verification-boundary note | +2 lines |
 | Add Kephart & Chess origin citation beside Weyns/Petrovska | proposal-selection loop note | +1 line |
-| Add evidence link to PDSA history snapshot | discovery-lifecycle definition | +1 line |
+| Add `evidenced-by` link to PDSA history snapshot | discovery-lifecycle definition | +1 line |
 | Optional one-line corroborations | accepted-edit note; first-principles note | +1 line each, deferred |
 
 Net effect on existing library text: a few lines added, none removed. The reduction the maintainer's direction buys is concentrated in text not yet written (§2) plus one structural follow-up outside these five sources (§1.2). The five ingests' unanimous "corroboration, not replacement" reading is itself the strongest evidence yet that the cluster's conservative-extension discipline is working as designed.

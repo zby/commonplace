@@ -31,7 +31,7 @@ Profile membership does not itself determine change impact. The primary record i
 
 | Authored dependency | Meaning | Revision trigger |
 |---|---|---|
-| Theory cites description as `evidence` | The observation supports the claim | If the description or its referent changes, reassess the theory; other evidence may let it survive |
+| Theory links to description with `evidenced-by` | The target observation supports, qualifies, or bounds the source claim | If the description or its referent changes, reassess the theory; other evidence may let it survive |
 | Prescription cites theory as `rationale` | The procedure is justified by the claim | If the theory changes, reassess the procedure |
 | Description cites theory as `rationale` | The system was shaped by the claim | If the theory changes, check the rationale; the description still follows the implemented referent |
 | Prescription cites description as `operates-on` | The procedure acts on the described system | If the system changes, revise the procedure |

@@ -24,5 +24,5 @@ This sample omits the safety review's technical backbone (Giddings & Mangano), t
 
 Sources:
 
-- [CERN LHC safety FAQ](../sources/cern-lhc-safety-faq.md) — evidence: CERN's institutional safety position
-- [Plaga (2008/2009)](../sources/plaga-2008-dissent.md) — evidence: the dissenting scenario claim
+- [CERN LHC safety FAQ](../sources/cern-lhc-safety-faq.md) — evidenced-by: CERN's institutional safety position
+- [Plaga (2008/2009)](../sources/plaga-2008-dissent.md) — evidenced-by: the dissenting scenario claim
