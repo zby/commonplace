@@ -25,7 +25,7 @@ Provenance discipline: the three-form triangle is representational-form's carve,
 | Deployment-tempo | owned | [Deploy-time learning](../../notes/deploy-time-learning-is-the-missing-middle.md), pending the validation-radius upgrade above. |
 | Governed autonomy | owned | [Warranted autonomy](../../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) plus the article's legibility passage. Framing worth stealing: mixed-form systems are more *deployable*, not more intelligent — a deployment-selection claim. |
 | Institutional continuity | owned | The commitment/authority arc: [commitment creates ground truth](../../notes/commitment-not-derivation-creates-new-ground-truth.md), [parametric reproduction cannot replace an authoritative record](../../notes/parametric-reproduction-cannot-replace-an-authoritative-record.md). |
-| Bidirectional codification | promotion | [Codification and relaxing](../../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) reads as design guidance; promote to a comparative conjecture. Its four-arm experiment (NL-only / symbolic-only / one-way promotion / bidirectional) belongs beside the ablation-baselines proposal in `kb/reference/proposals/`. |
+| Bidirectional codification | **promoted** (2026-07-28) | Parked as a frontier proposal: `kb/reference/proposals/bidirectional-codification-comparative-test.md` — four arms over a task stream with stabilizing regularities and invalidating shifts, oracle surface held constant, hand-vs-automated operator modes separated, and a pre-commitment to report the one-way arm winning. |
 
 ## Vocabulary tasks
 
