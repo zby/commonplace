@@ -1,60 +1,84 @@
-"""Repo-invariant checks on this repository's published redirect map.
-
-Unlike the other tests in this directory, these read the real `properdocs.yml`
-rather than a fixture: the invariants are about this repository's config drifting
-out of step with its tree, which no fixture can observe. A broken redirect has no
-local symptom — the generated page redirects to a URL that 404s — so nothing
-reports it until a reader follows the link.
-"""
-
 from __future__ import annotations
 
 from pathlib import Path
 
 import yaml
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
-CONFIG = REPO_ROOT / "properdocs.yml"
+from commonplace.cli import validate_notes
+from commonplace.lib.validation import validate_redirect_map
 
 
-def _config() -> tuple[Path, dict[str, str]]:
-    config = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
-    docs_dir = REPO_ROOT / config["docs_dir"]
-    redirects = [
-        plugin["redirects"]
-        for plugin in config["plugins"]
-        if isinstance(plugin, dict) and "redirects" in plugin
+def write_config(root: Path, redirect_maps: dict[str, str]) -> None:
+    config = {
+        "docs_dir": "kb",
+        "plugins": [{"redirects": {"redirect_maps": redirect_maps}}],
+    }
+    (root / "properdocs.yml").write_text(
+        yaml.safe_dump(config, sort_keys=False), encoding="utf-8"
+    )
+
+
+def write_page(root: Path, relative_path: str) -> None:
+    path = root / "kb" / relative_path
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("# Page\n", encoding="utf-8")
+
+
+def test_redirect_map_validation_accepts_resolving_flat_map(tmp_path: Path) -> None:
+    write_page(tmp_path, "notes/current.md")
+    write_config(tmp_path, {"notes/old.md": "notes/current.md"})
+
+    results = validate_redirect_map(repo_root=tmp_path)
+
+    assert results.fails == []
+    assert "[repository] redirect targets: all 1 resolve" in results.passes
+    assert "[repository] redirect keys: none shadow live pages" in results.passes
+    assert "[repository] redirect topology: flat" in results.passes
+
+
+def test_redirect_map_validation_reports_missing_target(tmp_path: Path) -> None:
+    write_config(tmp_path, {"notes/old.md": "notes/missing.md"})
+
+    results = validate_redirect_map(repo_root=tmp_path)
+
+    assert results.fails == [
+        "[repository] redirect target does not exist: "
+        "notes/old.md -> notes/missing.md"
     ]
-    assert len(redirects) == 1, "expected exactly one redirects plugin entry"
-    return docs_dir, redirects[0]["redirect_maps"]
 
 
-def test_every_redirect_target_resolves() -> None:
-    docs_dir, redirect_maps = _config()
-    broken = sorted(
-        f"{old} -> {new}" for old, new in redirect_maps.items() if not (docs_dir / new).exists()
-    )
-    assert not broken, "redirect targets do not exist:\n  " + "\n  ".join(broken)
-
-
-def test_no_redirect_shadows_a_live_page() -> None:
-    docs_dir, redirect_maps = _config()
-    shadowed = sorted(old for old in redirect_maps if (docs_dir / old).exists())
-    assert not shadowed, (
-        "redirect keys name pages that still exist, so the entries are dead config:\n  "
-        + "\n  ".join(shadowed)
+def test_redirect_map_validation_reports_live_key_and_chain(tmp_path: Path) -> None:
+    write_page(tmp_path, "notes/old.md")
+    write_page(tmp_path, "notes/middle.md")
+    write_page(tmp_path, "notes/current.md")
+    write_config(
+        tmp_path,
+        {
+            "notes/old.md": "notes/middle.md",
+            "notes/middle.md": "notes/current.md",
+        },
     )
 
+    results = validate_redirect_map(repo_root=tmp_path)
 
-def test_redirect_map_is_flat() -> None:
-    docs_dir, redirect_maps = _config()
-    chained = sorted(
-        f"{old} -> {new} (itself a redirect key)"
-        for old, new in redirect_maps.items()
-        if new in redirect_maps
+    assert "[repository] redirect key shadows a live page: notes/old.md" in results.fails
+    assert "[repository] redirect key shadows a live page: notes/middle.md" in results.fails
+    assert (
+        "[repository] redirect chain is not flat: notes/old.md -> notes/middle.md"
+        in results.fails
     )
-    assert not chained, (
-        "redirects must point at a live page, not at another redirect — the plugin emits one "
-        "hop per entry, so a chain lands on a page that only redirects again:\n  "
-        + "\n  ".join(chained)
-    )
+
+
+def test_redirects_cli_target_reports_repository_validation(
+    tmp_path: Path, monkeypatch, capsys
+) -> None:
+    write_config(tmp_path, {"notes/old.md": "notes/missing.md"})
+    monkeypatch.chdir(tmp_path)
+
+    exit_code = validate_notes.main(["redirects"])
+    output = capsys.readouterr().out
+
+    assert exit_code == 1
+    assert "=== VALIDATION: properdocs.yml ===" in output
+    assert "Type: redirect-map" in output
+    assert "notes/old.md -> notes/missing.md" in output

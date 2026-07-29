@@ -32,6 +32,7 @@ Findings are labelled with the source that produced them — `[base]` (every typ
 ```bash
 commonplace-validate notes               # validate one collection by name
 commonplace-validate types               # validate every global and collection-local type spec
+commonplace-validate redirects           # validate properdocs.yml against the published tree
 commonplace-validate kb/notes/           # validate one collection by path
 commonplace-validate kb/notes/my-note.md # validate one note
 ```
@@ -45,13 +46,16 @@ Commonplace, not Git. It affects only collection-scoped validation: an explicit
 file target still validates, and the subtree remains visible to other
 Commonplace commands. `.gitignore` alone has no effect on validation visibility.
 
-Bare `kb` and `all` are rejected — scope must be a specific collection or file. To validate the authored library, loop over the collections explicitly:
+Bare `kb` and `all` are rejected — scope must be a specific collection, file, or repository check. To validate the authored library, loop over the collections explicitly; projects with `properdocs.yml` should then validate its redirects once:
 
 ```bash
 for c in types notes reference instructions agent-memory-systems sources; do
   commonplace-validate "$c"
 done
+test ! -f properdocs.yml || commonplace-validate redirects
 ```
+
+The `redirects` target checks repository state rather than a note contract: every target must exist under `docs_dir`, no redirect key may shadow a live page, and every redirect must point directly to a live page rather than another redirect. Software tests exercise this logic against fixtures; this explicit target is what checks the current project.
 
 ### Generated indexes (no command)
 

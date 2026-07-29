@@ -19,6 +19,7 @@ from commonplace.lib.project_paths import (
 from commonplace.lib.validation import (
     CheckResults,
     run_validation,
+    validate_redirect_map,
 )
 
 
@@ -141,13 +142,18 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "target",
         help=(
-            "collection directory, note path or name, types, or today/recent "
-            "(kb/notes modified today)"
+            "collection directory, note path or name, types, redirects, or "
+            "today/recent (kb/notes modified today)"
         ),
     )
     args = parser.parse_args(argv)
 
     repo_root = Path.cwd().resolve()
+
+    if args.target == "redirects":
+        results = validate_redirect_map(repo_root=repo_root)
+        print(format_block(repo_root / "properdocs.yml", results))
+        return 1 if results.fails else 0
 
     try:
         target = resolve_validation_target(args.target, repo_root=repo_root)

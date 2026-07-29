@@ -93,7 +93,7 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
    'notes/<old-slug>.md': 'notes/<successor-slug>.md'
    ```
 
-   Skipping this breaks the artifact's public URL with no local symptom. Point at a page that exists, never at another redirect key — the plugin emits one hop per entry, so a chain lands on a page that only redirects again. If the successor is itself the target of older entries, repoint those to the new page in the same edit. `pytest tests/commonplace/docs/test_redirect_map_integrity.py` enforces all three conditions.
+   Skipping this breaks the artifact's public URL with no local symptom. Point at a page that exists, never at another redirect key — the plugin emits one hop per entry, so a chain lands on a page that only redirects again. If the successor is itself the target of older entries, repoint those to the new page in the same edit. `commonplace-validate redirects` enforces all three conditions.
 
 9. **Retire its baselines.** Both destinations orphan them — the store keys on path, which archiving changes and deletion removes.
 

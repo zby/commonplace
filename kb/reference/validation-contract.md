@@ -18,6 +18,8 @@ FAIL:
 
 In one sentence: **a type declares what the document must contain; the framework checks that what it points at is really there.**
 
+The explicit `redirects` target is outside this note pipeline. It emits `[repository]` findings by comparing `properdocs.yml` with the live `docs_dir`: targets resolve, keys do not shadow pages, and the map is flat. Keeping it explicit prevents validation of one note or collection from failing on unrelated site configuration while still making the published-tree invariant deterministic.
+
 ## Scope: this is the deterministic half only
 
 A type is verified by **three** mechanisms, and only the first two are the validator's:

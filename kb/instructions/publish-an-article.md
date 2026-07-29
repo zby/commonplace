@@ -20,7 +20,7 @@ Turn an approved article draft into the frozen dated artifact published by the P
 2. If the draft is under `kb/articles/drafts/`, relocate it to `kb/articles/{slug}.md` with `commonplace-relocate-note --to ... --apply`. If it is the transitional first draft already at the collection root, keep its path.
 3. Without changing the substantive body, set `status: published` and `published: YYYY-MM-DD` in frontmatter using the publication date supplied by the user, or the current local date when the user says “today.” Do not infer a date for “tomorrow” before that day arrives.
 4. Move the article's entry from any draft list into `kb/articles/README.md` under `## Published`, including the publication date. Keep the context phrase reader-facing.
-5. Run `commonplace-validate {published-path}` and `commonplace-validate articles`. If relocation changed `properdocs.yml`, run `pytest tests/commonplace/docs/test_redirect_map_integrity.py -q` too.
+5. Run `commonplace-validate {published-path}` and `commonplace-validate articles`. If relocation changed `properdocs.yml`, run `commonplace-validate redirects` too.
 6. Review the diff with the user when the approved body changed or any publication field is uncertain. Otherwise commit the article, collection README, and relocation redirect together. Land that commit on `main` through the repository's normal Git workflow; the Pages deployment is the publication action.
 
 ## After publication

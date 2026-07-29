@@ -1,6 +1,6 @@
 ---
 name: cp-skill-validate
-description: Run the deterministic validation script on KB notes. Checks frontmatter validity, schema constraints, link health, required sections, and batch signals such as orphans.
+description: Run deterministic validation on KB artifacts, collections, and the published redirect map, including schemas, links, required sections, and batch signals.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Bash
@@ -16,6 +16,9 @@ if [ "$ARGUMENTS" = "all" ]; then
   for contract in kb/*/COLLECTION.md; do
     commonplace-validate "$(basename "$(dirname "$contract")")" || exit $?
   done
+  if [ -f properdocs.yml ]; then
+    commonplace-validate redirects || exit $?
+  fi
 else
   commonplace-validate "$ARGUMENTS"
 fi
@@ -29,6 +32,7 @@ Prefer the narrowest target that covers the user's request. For write/edit workf
 - Multiple note paths: validate those specific notes, one command per path if needed
 - Directory path or collection name: validate `.md` files under that directory, only when the edited set is directory-scoped
 - "all": validate each top-level collection in a separate command
+- "redirects": validate the live `properdocs.yml` redirect map against its published tree
 - "notes": validate all `.md` files in `kb/notes/`
 - "recent" or "today": validate notes modified today
 - Empty: ask which note to validate

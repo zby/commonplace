@@ -8,6 +8,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
+import yaml
 from jsonschema.exceptions import ValidationError
 
 from commonplace.lib.full_pass import (
@@ -880,6 +881,94 @@ def validate_collection_structure(
             )
         )
     return failures
+
+
+def validate_redirect_map(*, repo_root: Path) -> CheckResults:
+    """Validate the live ProperDocs redirect map against its published tree."""
+    repo_root = repo_root.resolve()
+    config_path = repo_root / "properdocs.yml"
+    results = CheckResults(note_type="redirect-map")
+
+    if not config_path.is_file():
+        results.fails.append("[repository] properdocs.yml: file does not exist")
+        return results
+
+    try:
+        config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+    except (OSError, yaml.YAMLError) as exc:
+        results.fails.append(f"[repository] properdocs.yml: cannot load config: {exc}")
+        return results
+
+    if not isinstance(config, dict):
+        results.fails.append("[repository] properdocs.yml: root must be a mapping")
+        return results
+
+    docs_dir_value = config.get("docs_dir")
+    if not isinstance(docs_dir_value, str) or not docs_dir_value.strip():
+        results.fails.append("[repository] docs_dir: expected a non-empty path")
+        return results
+    docs_dir = (repo_root / docs_dir_value).resolve()
+
+    plugins = config.get("plugins")
+    if not isinstance(plugins, list):
+        results.fails.append("[repository] plugins: expected a list")
+        return results
+    redirect_plugins = [
+        plugin["redirects"]
+        for plugin in plugins
+        if isinstance(plugin, dict) and "redirects" in plugin
+    ]
+    if len(redirect_plugins) != 1:
+        results.fails.append(
+            "[repository] redirects plugin: expected exactly one configured entry"
+        )
+        return results
+
+    redirect_plugin = redirect_plugins[0]
+    if not isinstance(redirect_plugin, dict):
+        results.fails.append("[repository] redirects plugin: expected a mapping")
+        return results
+    redirect_maps = redirect_plugin.get("redirect_maps")
+    if not isinstance(redirect_maps, dict):
+        results.fails.append("[repository] redirect_maps: expected a mapping")
+        return results
+    if not all(isinstance(old, str) and isinstance(new, str) for old, new in redirect_maps.items()):
+        results.fails.append("[repository] redirect_maps: keys and targets must be paths")
+        return results
+
+    broken = sorted(
+        f"{old} -> {new}"
+        for old, new in redirect_maps.items()
+        if not (docs_dir / new).is_file()
+    )
+    if broken:
+        results.fails.extend(
+            f"[repository] redirect target does not exist: {redirect}" for redirect in broken
+        )
+    else:
+        results.passes.append(
+            f"[repository] redirect targets: all {len(redirect_maps)} resolve"
+        )
+
+    shadowed = sorted(old for old in redirect_maps if (docs_dir / old).exists())
+    if shadowed:
+        results.fails.extend(
+            f"[repository] redirect key shadows a live page: {old}" for old in shadowed
+        )
+    else:
+        results.passes.append("[repository] redirect keys: none shadow live pages")
+
+    chained = sorted(
+        f"{old} -> {new}" for old, new in redirect_maps.items() if new in redirect_maps
+    )
+    if chained:
+        results.fails.extend(
+            f"[repository] redirect chain is not flat: {redirect}" for redirect in chained
+        )
+    else:
+        results.passes.append("[repository] redirect topology: flat")
+
+    return results
 
 
 def run_validation(
