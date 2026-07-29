@@ -53,7 +53,7 @@ Relevant Notes:
 - [evaluation-automation-is-phase-gated-by-comprehension](./evaluation-automation-is-phase-gated-by-comprehension.md) — refines: inside one optimization loop, verifier construction is itself staged (comprehension -> specification -> generalization)
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — enables: the manufacturing step for building oracles where none exist
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — enables: amplifying weak oracles into useful ones
-- [fixed artifacts split into exact specs and proxy theories](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — foundation: the binary distinction this note refines — exact-spec artifacts have stronger verification surfaces than proxy theories
+- [fixed artifacts split into exact specs and proxy theories](./exact-implementation-does-not-validate-a-requirement.md) — foundation: the binary distinction this note refines — exact-spec artifacts have stronger verification surfaces than proxy theories
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — contrasts: the dynamic reading of this boundary — computational allocation advances where settled criteria acquire warranted executable checks
 - [Tam et al. — "When code is free"](https://x.com/amytam01/status/2031072399731675269) — evidenced-by: labor-economics argument that engineering automates (hard oracle) while research taste resists (no oracle)
 - [Amodei interview](https://www.dwarkesh.com/p/dario-amodei-2) — evidenced-by: frontier-lab CEO's confidence split tracks oracle strength, not capability

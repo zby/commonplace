@@ -71,6 +71,6 @@ The useful divergence is governance. Commonplace emphasizes reviewable accumulat
 
 - [files beat a database for agent-operated knowledge bases](../../notes/files-not-database.md) — is-evidence-for: Fintool reports S3 as source of truth with PostgreSQL as a derived index for fast queries
 - [oracle-strength spectrum](../../notes/oracle-strength-spectrum.md) — is-evidence-for: the reported eval suite and adversarial grounding tests are a production example of oracle hardening
-- [fixed artifacts split into exact specs and proxy theories](../../notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — rests-on: "model eats scaffolding" applies unevenly across proxy-theory skills and exact-spec modules
+- [fixed artifacts split into exact specs and proxy theories](../../notes/exact-implementation-does-not-validate-a-requirement.md) — rests-on: "model eats scaffolding" applies unevenly across proxy-theory skills and exact-spec modules
 - [Agent Skills for Context Engineering](../reviews/agent-skills-for-context-engineering.md) — compares-with: both use markdown skill packages, frontmatter discovery, and progressive disclosure, but Fintool is doc-grounded product coverage
 - [Sig](./sig.md) — compares-with: both are lightweight product reports for file-backed agent memory, with Fintool at commercial finance scale and Sig at personal/workplace capture scale

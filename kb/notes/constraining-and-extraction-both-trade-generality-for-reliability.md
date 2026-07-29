@@ -37,4 +37,4 @@ Both directions are [capacity change](./learning-is-not-only-about-generality.md
 
 Relevant Notes:
 
-- [Fixed artifacts split into exact specs and proxy theories](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — grounds: distinguishes cases where narrowing can harden confidently from cases where relaxing may be needed
+- [Exact implementation does not validate a requirement against its objective](./exact-implementation-does-not-validate-a-requirement.md) — grounds: distinguishes cases where narrowing can harden confidently from cases where relaxing may be needed

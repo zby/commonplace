@@ -22,7 +22,7 @@ The same pattern appears at the methodology level: the [maturation trajectory fr
 
 ## Why this matters for exact specs
 
-The [fixed-artifact distinction](../../../../notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) says exact-spec artifacts are safest when the spec *is* the problem. Spec mining manufactures new exact-spec artifacts by discovering specs that were implicit in behavior. Each mined spec converts a piece of the blurry zone into a harder verification target.
+The [fixed-artifact distinction](../../../../notes/exact-implementation-does-not-validate-a-requirement.md) says exact-spec artifacts are safest when the spec *is* the problem. Spec mining manufactures new exact-spec artifacts by discovering specs that were implicit in behavior. Each mined spec converts a piece of the blurry zone into a harder verification target.
 
 This connects to the [oracle strength spectrum](../../../../notes/oracle-strength-spectrum.md): spec mining moves components from soft/delayed oracle toward hard oracle. Each mined spec is also a new oracle that [error correction can amplify through decorrelated checks](../../../../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — the progression is: mine a spec (create an oracle with TPR > FPR), then amplify through decorrelated repetition. This design philosophy — out-evaluate, not out-implement — is what the [cybernetics thread](https://x.com/odysseus0z/status/2030416758138634583) calls "externalizing system-specific judgment."
 
@@ -55,7 +55,7 @@ Sources:
 Relevant Notes:
 
 - [deploy-time-learning](../../../../notes/deploy-time-learning-is-the-missing-middle.md) — foundation: codification says knowledge hardens into repo artifacts; spec mining is the mechanism that produces those artifacts from observed behavior
-- [fixed artifacts split into exact specs and proxy theories](../../../../notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — motivation: spec mining manufactures exact-spec artifacts by converting implicit behavior into harder verification targets
+- [fixed artifacts split into exact specs and proxy theories](../../../../notes/exact-implementation-does-not-validate-a-requirement.md) — motivation: spec mining manufactures exact-spec artifacts by converting implicit behavior into harder verification targets
 - [oracle-strength-spectrum](../../../../notes/oracle-strength-spectrum.md) — mechanism: spec mining moves components from soft/delayed oracle toward hard oracle; each mined spec is a new verification target
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](../../../../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — amplification: mined specs create oracles with TPR > FPR that error correction can then boost through decorrelated repetition
 - [evaluation-automation-is-phase-gated-by-comprehension](../../../../notes/evaluation-automation-is-phase-gated-by-comprehension.md) — exemplifies: evaluation tuning requires manual failure analysis and judge calibration before optimization loops can safely amplify

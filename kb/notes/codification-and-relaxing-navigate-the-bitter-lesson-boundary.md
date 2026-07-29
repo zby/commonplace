@@ -7,7 +7,7 @@ tags: [learning-theory, constraining]
 
 # Codification and relaxing navigate the bitter lesson boundary
 
-The [fixed-artifact distinction](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) separates exact specs (the spec is the problem) from proxy theories (the spec is a theory about a larger capability). Since you can't reliably tell which regime you're in until scale tests the distinction, practical systems will always be hybrids — part codified, part learned.
+The [fixed-artifact distinction](./exact-implementation-does-not-validate-a-requirement.md) separates exact specs (the spec is the problem) from proxy theories (the spec is a theory about a larger capability). Since you can't reliably tell which regime you're in until scale tests the distinction, practical systems will always be hybrids — part codified, part learned.
 
 ## The trade-off depends on which regime you're in
 
@@ -53,7 +53,7 @@ Sources:
 Relevant Notes:
 
 - [the bitter lesson selects against unearned reach, not against structure](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md) — grounds: the mechanism behind the boundary this note navigates, which explains what determines the outcome without restoring the foresight this note denies
-- [fixed artifacts split into exact specs and proxy theories](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — foundation: the exact-spec/proxy-theory distinction this note operationalizes
+- [fixed artifacts split into exact specs and proxy theories](./exact-implementation-does-not-validate-a-requirement.md) — foundation: the exact-spec/proxy-theory distinction this note operationalizes
 - [the verifiability gradient](./verifiability-gradient.md) — the ladder across which codification sits at the far end
 - [constraining and extraction can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — the trade-off codification enacts
 - [spec mining as codification](./spec-mining-as-codification.md) — the bottom-up extraction method that avoids the vision-feature failure mode

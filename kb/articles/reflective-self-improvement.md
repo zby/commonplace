@@ -17,7 +17,7 @@ source_notes:
   - kb/notes/a-proximate-target-is-checked-for-achievement-not-for-warrant.md
   - kb/notes/self-improvement-is-relative-to-a-declared-objective.md
   - kb/notes/warranted-autonomy-is-bounded-by-oracle-domain.md
-  - kb/notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md
+  - kb/notes/exact-implementation-does-not-validate-a-requirement.md
   - kb/notes/commitment-not-derivation-creates-new-ground-truth.md
   - kb/notes/a-consumption-channel-delivers-force-without-the-history-that.md
   - kb/notes/parametric-reproduction-cannot-replace-an-authoritative-record.md
@@ -61,7 +61,7 @@ At every step, though, the operative "no" belonged to a human maintainer reviewi
 
 ## Use is part of the test
 
-The deeper objection does not concern the human at all: hand-designed structure is what scale keeps washing away. That is the bitter lesson, and Commonplace is built from exactly the kind of thing that lesson eats — typed artifacts, link grammars, review criteria, each a small theory about what better knowledge work requires. The classic vision features captured real regularities and met their specifications exactly; what they failed to do was compose into seeing. [An artifact can implement its requirement exactly while the requirement itself is a proxy for the capability](../notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md): a schema validator implements a contract the project chose, an edge detector implemented a theory of what seeing requires, and from the inside the two look alike.
+The deeper objection does not concern the human at all: hand-designed structure is what scale keeps washing away. That is the bitter lesson, and Commonplace is built from exactly the kind of thing that lesson eats — typed artifacts, link grammars, review criteria, each a small theory about what better knowledge work requires. The classic vision features captured real regularities and met their specifications exactly; what they failed to do was compose into seeing. [An artifact can implement its requirement exactly while the requirement itself is a proxy for the capability](../notes/exact-implementation-does-not-validate-a-requirement.md): a schema validator implements a contract the project chose, an edge detector implemented a theory of what seeing requires, and from the inside the two look alike.
 
 Composition failure is the tell, and it shows only when the pieces run together against the capability they were supposed to add up to. That is what running the framework on its own methodology is for: not proof that the design is right, but the test that puts the whole decomposition, rather than its components, in front of the declared objective. Missed retrievals, indexes that mislead, corrections that recur, effort spent again in the same place — those are the readings, and the tag index above was one of them. The per-unit-of-human-judgment denominator is what keeps a maintainer quietly patching around a bad artifact from counting as the system working: the cost has not gone anywhere, it has moved to the other side of the ledger.
 

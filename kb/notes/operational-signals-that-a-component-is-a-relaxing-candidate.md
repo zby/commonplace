@@ -7,7 +7,7 @@ tags: [learning-theory, constraining]
 
 # Operational signals that a component is a relaxing candidate
 
-The [fixed-artifact distinction](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) says some codified components are exact-spec artifacts while others are proxy theories. That note offers confidence signals, but running systems need more operational tests for detecting proxy-theory components before full composition failure. The signals below shift confidence — they detect *badly-fitting* theories, not the theory/spec distinction itself, since a well-regularised learned component can pass all five early signals yet still encode a proxy theory.
+The [fixed-artifact distinction](./exact-implementation-does-not-validate-a-requirement.md) says some codified components are exact-spec artifacts while others are proxy theories. That note offers confidence signals, but running systems need more operational tests for detecting proxy-theory components before full composition failure. The signals below shift confidence — they detect *badly-fitting* theories, not the theory/spec distinction itself, since a well-regularised learned component can pass all five early signals yet still encode a proxy theory.
 
 ## Signals that a component encodes theory, not specification
 
@@ -21,7 +21,7 @@ The [fixed-artifact distinction](./fixed-artifacts-split-into-exact-specs-and-pr
 
 **High sensitivity to distribution shift.** If the component works on training/development data but degrades on slightly different inputs, it has overfit to a particular theory of what inputs look like.
 
-**Composition failure** (late-stage). The five signals above are early-detection — you can test for them before the system fails in production. Composition failure is the late-stage confirmation: individually sound components that don't compose into the target capability are the strongest evidence that their specs are theories, not definitions. This was the [vision researchers' experience](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — each feature worked alone, but the pieces didn't add up to "seeing." The distinction matters because composition failure is expensive to discover (you need to build and integrate) while the early signals are cheaper to test.
+**Composition failure** (late-stage). The five signals above are early-detection — you can test for them before the system fails in production. Composition failure is the late-stage confirmation: individually sound components that don't compose into the target capability are the strongest evidence that their specs are theories, not definitions. This was the [vision researchers' experience](./exact-implementation-does-not-validate-a-requirement.md) — each feature worked alone, but the pieces didn't add up to "seeing." The distinction matters because composition failure is expensive to discover (you need to build and integrate) while the early signals are cheaper to test.
 
 ## Using the signals
 
@@ -44,7 +44,7 @@ When signals don't fire:
 
 Relevant Notes:
 
-- [fixed artifacts split into exact specs and proxy theories](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — foundation: the exact-spec/proxy-theory distinction these signals operationalize
+- [fixed artifacts split into exact specs and proxy theories](./exact-implementation-does-not-validate-a-requirement.md) — foundation: the exact-spec/proxy-theory distinction these signals operationalize
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — extends: signals shift confidence about where a component sits on the oracle strength gradient
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — complement: spec mining is the action when signals don't fire (codify harder); relaxing signals detect when to reverse it
 - [codification-and-relaxing-navigate-the-bitter-lesson-boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — operationalizes: these signals are the detection mechanism for the codify/relax cycle

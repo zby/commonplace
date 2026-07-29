@@ -34,7 +34,7 @@ So a strengthened achievement check delivers exactly the signature of a verified
 
 ## How a mistaken target is found
 
-The tell is composition failure, transposed. For an artifact it is components that are individually sound and do not add up to the capability, [which is what marks a spec as a proxy theory rather than a definition](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md). For a target it is the property achieved, its check passing, and the objective sitting where it was.
+The tell is composition failure, transposed. For an artifact it is components that are individually sound and do not add up to the capability, [which is what marks a spec as a proxy theory rather than a definition](./exact-implementation-does-not-validate-a-requirement.md). For a target it is the property achieved, its check passing, and the objective sitting where it was.
 
 Reading that signal requires two things the pathway does not supply by default.
 
@@ -65,7 +65,7 @@ The consequence runs back into how architectures get compared. A profile of stru
 Relevant Notes:
 
 - [Self-improvement is relative to a declared objective](./self-improvement-is-relative-to-a-declared-objective.md) — grounds: the declared objective the target level stands in for, and the indexing this note adds a level below
-- [Fixed artifacts split into exact specs and proxy theories](./fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — grounds: the proxy-theory relation and composition failure as its tell, stated for artifacts and transposed here to targets
+- [Exact implementation does not validate a requirement against its objective](./exact-implementation-does-not-validate-a-requirement.md) — grounds: the proxy-theory relation and composition failure as its tell, stated for artifacts and transposed here to targets
 - [Weakly discriminated qualities tend to be underselected](./weakly-discriminated-qualities-tend-to-be-underselected.md) — mechanism: the selection pressure that makes a strongly checked target outcompete the objective it serves
 - [Oracle strength spectrum](./oracle-strength-spectrum.md) — contrasts: the graded proxy relation for checks, which a target sits outside rather than at the bottom of
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: warrant as what a check establishes, the property an achievement check does not supply for its target

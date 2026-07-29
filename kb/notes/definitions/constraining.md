@@ -88,6 +88,6 @@ Relevant Notes:
 - [methodology enforcement is constraining](../methodology-enforcement-is-constraining.md) — applies: the instruction → skill → hook → script gradient is constraining applied to methodology
 - [error messages that teach are a constraining technique](../error-messages-that-teach-are-a-constraining-technique.md) — instance: teaching error messages constrain interpretation space by simultaneously blocking wrong outputs and demonstrating correct ones
 - [the verifiability gradient](../verifiability-gradient.md) — the ladder across which constraining operates
-- [fixed artifacts split into exact specs and proxy theories](../fixed-artifacts-split-into-exact-specs-and-proxy-theories.md) — determines when constraining can be hardened confidently vs when relaxing may be needed
+- [fixed artifacts split into exact specs and proxy theories](../exact-implementation-does-not-validate-a-requirement.md) — determines when constraining can be hardened confidently vs when relaxing may be needed
 - [ABC: Agent Behavioral Contracts](https://arxiv.org/html/2602.22302v1) — evidenced-by: probabilistic compliance model (p,δ,k) and Drift Bounds Theorem quantify how much drift each enforcement layer permits — formal statement of the constraining trade-off
 - [Harness Engineering (Lopopolo, 2026)](https://openai.com/index/harness-engineering/) — exemplifies: "encode standards directly into the repository" is constraining in practitioner language at production scale
