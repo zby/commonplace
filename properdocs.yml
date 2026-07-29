@@ -76,6 +76,7 @@ plugins:
         'notes/minimum-viable-vocabulary-is-the-set-of-names-that-maximally-reduces-extraction-cost-for-a-bounded-observer.md': 'notes/minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md'
         'notes/observability-index.md': 'notes/observability-README.md'
         'notes/per-window-context-inefficiency-makes-tasks-infeasible.md': 'notes/feasibility-is-the-heaviest-forks-net-load.md'
+        'notes/provenance-warrants-a-decompositions-scope-claim-use-earns-it.md': 'notes/only-derivation-and-inheritance-warrant-a-scope-claim-use-earns-it.md'
         'notes/reach-makes-addressable-retention-sample-efficient-off-distribution.md': 'notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md'
         'notes/reflection-buys-addressability-not-compounding.md': 'notes/reflection-buys-addressability.md'
         'notes/reflection-may-improve-sample-efficiency-under-structured-shifts.md': 'notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md'

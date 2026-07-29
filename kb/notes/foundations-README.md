@@ -29,7 +29,7 @@ Core theory that the rest of the KB builds on. These notes define the quality cr
 ### Rationale and design method
 
 - [design rationale management in Commonplace](../reference/design-rationale-management.md) — descriptive companion: how workshops, proposals, ADRs, and contracts distribute constraints, alternatives, and decisions—and what continuity shipped contracts do not enforce
-- [only derivation and inheritance warrant a decomposition's scope claim; discriminating use earns it](./provenance-warrants-a-decompositions-scope-claim-use-earns-it.md) — derivation and inheritance give conditional or transferred starting warrant; free choice gives only a pragmatic reason to adopt, and earning stays with use that could have broken the claim
+- [only derivation and inheritance warrant a decomposition's scope claim; discriminating use earns it](./only-derivation-and-inheritance-warrant-a-scope-claim-use-earns-it.md) — derivation and inheritance give conditional or transferred starting warrant; free choice gives only a pragmatic reason to adopt, and earning stays with use that could have broken the claim
 - [Alexander's patterns connect to knowledge system design at multiple levels](./alexander-patterns-and-knowledge-system-design.md) — (speculative) pattern language as document types, generative processes as codification
 
 - [agent context is constrained by soft degradation not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — the binding constraint is the soft degradation curve, not the hard token limit; agents are in the same soft-bound family as human cognition and organizational learning

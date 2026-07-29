@@ -23,7 +23,7 @@ A learning operation distinct from constraining and from source-derived reshapin
 - [brainstorming: how explanatory-reach informs KB design](./brainstorming-how-explanatory-reach-informs-kb-design.md) — working notes applying the explanatory-reach concept to KB design decisions
 - [theory-mediated learning may improve sample efficiency under structured shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — conjecture: the measurable payoff of a discovered theory is fewer target observations after a shift that preserves the structure it names, conditional on reach-assessment having earned it
 - [selective revision needs a faithful rationale, not just a legible one](./selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) — the recorded basis is the surface revision operates on, so an unfaithful rationale repairs the wrong premise; faithfulness is tested by intervention, not by reading
-- [only derivation and inheritance warrant a decomposition's scope claim; discriminating use earns it](./provenance-warrants-a-decompositions-scope-claim-use-earns-it.md) — derivation and inheritance grade a posited carve's starting warrant and relocate its untested part to a statable place; free choice gets none, and earning stays with use that could have refuted the claim
+- [only derivation and inheritance warrant a decomposition's scope claim; discriminating use earns it](./only-derivation-and-inheritance-warrant-a-scope-claim-use-earns-it.md) — derivation and inheritance grade a posited carve's starting warrant and relocate its untested part to a statable place; free choice gets none, and earning stays with use that could have refuted the claim
 
 ## Conditions for discovery
 
