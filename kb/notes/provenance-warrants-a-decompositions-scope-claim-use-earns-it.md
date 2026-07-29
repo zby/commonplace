@@ -1,25 +1,25 @@
 ---
-description: "Derivation, inheritance, and free choice warrant a carve's scope claim — conditionally, secondhand, or merely pragmatically — but only use that could have broken the claim earns it; provenance's work is relocating that test to a statable place"
+description: "Derivation and inheritance give conditional or transferred starting warrant to a carve's scope claim; free choice gives only a pragmatic reason to adopt the carve, and discriminating use alone earns the claim"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, discovery, foundations]
 ---
 
-# Provenance warrants a decomposition's scope claim; only discriminating use earns it
+# Only derivation and inheritance warrant a decomposition's scope claim; discriminating use earns it
 
 A decomposition claims more than it displays. The categories are visible; the assertion that they will keep cutting the domain in the right places — in cases the designer has not seen — is not. That assertion is an [explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) claim, and since [use tests a decomposition only locally](./use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md), running the system with the carve in it does not touch it.
 
-Two questions about that claim are easy to run together. Where the claim comes from — its provenance — fixes what warrant it starts with and what a test of it would even look like. Whether the claim is *earned* is settled the only way [reach-assessment](./definitions/reach-assessment.md) recognizes: by surviving evidence that could have refuted it. Provenance grades warrant; use earns.
+Two questions about that claim are easy to run together. Where the claim comes from — its provenance — fixes whether it starts with any scope warrant, what kind, and what a test of it would even look like. Whether the claim is *earned* is settled the only way [reach-assessment](./definitions/reach-assessment.md) recognizes: by surviving evidence that could have refuted it. Provenance grades starting scope warrant; use earns the claim.
 
 There are three provenances a carve can be born with, distinguished by what the designer did *not* choose.
 
 **Derivation from inherited constraints** gives conditional warrant. The categories fall out of constraints the designer had no say over: what is chosen is the axes; once the axes are fixed the cells are forced, including the empty ones. The scope claim becomes a conditional with a statable antecedent — the carve holds exactly as far as the constraints that generated it hold — and the boundary can be stated ahead of the failure rather than discovered by it. What derivation does not supply is any evidence that the axes name distinctions that matter. A carve can be exhaustive relative to axes that cut the domain nowhere important; the derivation is then a valid argument from the wrong premises.
 
-**Inheritance of a tested ontology** gives transferred warrant. Someone else's carve, already exposed to cases: repeated use across varied contexts is the extensional route to a scope claim, priced at one full rebuild per sample, and borrowing a mature ontology is buying that sample secondhand — decades of use, paid for by another field. This is the only provenance whose warrant is empirical at all, and it is empirical about the *source* domain: the sample was drawn under the source's conditions, and it licenses the carve here only while the constraints that made it carve there still hold.
+**Inheritance of a tested ontology** gives transferred warrant. Someone else's carve, already exposed to cases: repeated use across varied contexts is the extensional route to a scope claim, priced at one full rebuild per sample, and borrowing a mature ontology is buying that sample secondhand — decades of use, paid for by another field. This is the only provenance whose scope warrant is empirical at all, and it is empirical about the *source* domain: the sample was drawn under the source's conditions, and it licenses the carve here only while the constraints that made it carve there still hold.
 
-**Free choice** gives pragmatic warrant only. Underdetermined by anything, settled by convenience or by what was in the author's head, it supports no scope claim, and its only obligation is to stay cheap to replace.
+**Free choice** gives no warrant for the scope claim. Underdetermined by anything and settled by convenience or by what was in the author's head, a free choice may have a pragmatic reason for adoption, but it supports no assertion that its seams will continue to matter. Its only obligation is to stay cheap to replace.
 
-## Provenance relocates the test; use runs it
+## Derivation and inheritance relocate the test; use runs it
 
 None of the three provenances earns the scope claim, because none of them is an encounter with evidence that could have broken it. What the first two buy is something else: they relocate the untested part to a place where it can be stated and attacked. Derivation moves the question from the carve to its axes — testing the carve becomes intervening on the constraints, cheap and targeted, with failures attributable to a named premise. Inheritance moves it to the bridge — testing becomes checking whether the source's operative constraints still bind in the target domain, work the borrowing does not come with but at least names. Free choice relocates the question nowhere: until a rationale is recovered, the only test is rebuild-and-see, another local check that never touches transfer.
 
@@ -45,7 +45,7 @@ This is why an ontology and a technique face different bars. [Adoption bars set 
 
 ## Scope
 
-- Provenance is not correctness, and warrant is not earning. A derived carve can be derived from the wrong axes, an inherited one can come from an ontology well tested against questions nobody asks any more, and a free one may be right. Provenance says what the scope assertion rests on and where its test lives — nothing more.
+- Provenance is not correctness, and warrant is not earning. A derived carve can be derived from the wrong axes, an inherited one can come from an ontology well tested against questions nobody asks any more, and a free one may be right. Provenance says whether the scope assertion has any starting warrant and, when it does, where its test lives — nothing more.
 - **"Tested" is the weak joint of inheritance.** Nothing here supplies a criterion for it, and longevity is a bad proxy: an ontology can survive because it was never probed, which is the same failure as a reach claim no test could have refuted. The purchase is only as good as the testing behind it, and the buyer usually cannot audit that.
 - The provenances are not exclusive. Re-deriving a borrowed carve from local constraints is the strongest position available, and the most expensive; it is also hard to distinguish from rationalizing the borrowed split after the fact, which inherits the [worse-than-none asymmetry](./use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md) that unfaithful rationale carries.
 - **Commonplace has not demonstrated that this transfers.** Two instances, authored inside the system that states the claim, assessed by nobody outside it. What they establish is that both warrants are recordable and that the record makes departures auditable — not that recording them produces better carves, and not that the discipline survives contact with a designer who wants the carve they already had.
