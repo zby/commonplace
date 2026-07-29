@@ -6,6 +6,41 @@ Reconcile Commonplace's declared linking architecture with its live collection c
 
 Lineage-specific carrier, relation, and invalidation contradictions stay in the sibling [lineage mechanisms ledger](../lineage-mechanisms/current-contradictions.md). This workshop owns the remainder: navigation links, relationship-label direction outside lineage, collection grammar, reciprocal-link procedure, validation, and inbound-link delivery.
 
+The sibling [linking foundations](../linking-foundations/README.md) workshop owns the deeper question of what an authored link represents and how philosophy, discourse theory, and cognitive science should shape the model. This workshop consumes those conclusions while retaining ownership of concrete contract reconciliation and migrations.
+
+## Plan (handoff, 2026-07-29)
+
+This section is the takeover picture: what the foundations workshop delivered, and the resulting work queue in dependency order. Read it before touching any label.
+
+### What the foundations workshop delivered
+
+The hold this README previously implied — do not adopt or migrate `explained-by` / `operates-through` before the foundational questions settle — is lifted in substance. The foundations results this workshop now consumes (full argument in [competing link models](../linking-foundations/competing-link-models.md); evidence in the [generator retrodiction run](../linking-foundations/generator-retrodiction-run.md)):
+
+- **The two-consumer registration test.** A label distinction earns a registered identifier iff it changes the reader's follow/skip decision or the revision consequence when the target changes. Every new or migrated catalogue entry should state both, plus a boundary test. This codifies what ADRs 058/060 already did implicitly.
+- **Boundary tests, not a role ontology.** Endpoint-level ambiguity (artifact vs claim vs described process) is handled by per-identifier boundary tests; no source-role/target-role signature schema is needed.
+- **Grammar strictness is the asset.** The normalized footer grammar is what made every audit and migration possible; keep it strict even while vocabulary stays collection-owned and loose.
+- **Classify with k samples, never single runs.** The revision-consequence A/B showed single-run semantic classifications mislead at exactly the granularity migrations care about.
+- **Three corpus-confirmed vocabulary gaps**, with evidence dossiers in the retrodiction run file: `elaborated-by` (reference→reference detail routing, ~18 sites), `is-enforced-by` and `is-consumed-by` (types→reference, 5 mislabeled edges plus ~11 missing-edge sites). One confirmed non-gap: the system-review collections' analogue relation toward reference is deliberate under-commitment — `see-also` stays.
+
+### Work queue (dependency order)
+
+1. **Run the [blind mechanism reclassification test](./blind-mechanism-reclassification-test.md)** — agent-executable, read-only; produces the reversal evidence the mechanism review pre-registered. Nothing downstream moves before its result exists.
+2. **Maintainer adjudication of the mechanism split** — accept/reject `explained-by` / `operates-through`, settle spellings and the one reference→notes authorization gap, and produce the ADR. The ADR is also the natural home for codifying the two-consumer registration entries and can carry (or be accompanied by) the ADR 009 scoping amendment below. Maintainer decision; agent prepares the adjudication packet from the review plus the test result.
+3. **Mechanism migration** — plan then execute via [the migration procedure](../../instructions/migrate-directional-link-label.md): 79 active `mechanism` rows plus the 49 deferred `grounds` rows, rebaselined, origin labels preserved for tuple conservation, the 10 EN rows explicitly held out. Maintainer approves the plan before any mutation.
+4. **Complete the grounds migration** — unblocked by 3: `premised-on` for the accepted 168, the adjudicated successors for the 74 boundary rows, the two flagged authorization deltas (`is-evidence-for` and `see-also` for notes→notes), disposition for the 2 post-baseline rows, full rebaseline. Same approval gate.
+5. **Gap authorizations** — maintainer decides registration of `elaborated-by` (reference contract) and `is-enforced-by`/`is-consumed-by` (types contract); agent drafts contract language, catalogue entries per the two-consumer test, and the site-fix lists from the dossiers.
+6. **Prerequisite family review** — `enables`/`precondition` direction review over both labels' full corpus plus the 10 held EN rows; same review-then-adjudicate pattern as evidence/rationale/grounds/mechanism.
+7. **ADR 009 scoping amendment** — the first confirmed contradiction below finally has an honest resolution to cite: ADR 009's vocabulary was the theory-collection seed, superseded in scope by ADR 019 and the seed-then-harvest model. Fold into step 2's ADR if convenient.
+8. **Reference ADR-local label tail audit** — `decision` ×11, `foundation` ×6, `refines` ×5, `outcome`, `amended-by`, and a dozen singletons found live in reference→reference footers; check each against contract and type-override authorization.
+9. **Standing items** (unordered, from the sections below): per-destination grammar serialization decision, the articles contract gap, the validator boundary, reciprocal-link operationalization, backlink surfacing.
+
+### Operating rules for the takeover agent
+
+- Semantic classification and adjudication evidence use k≥3 independent samples per row.
+- Rebaseline every cohort before execution; review counts drift while work is in flight.
+- No batch migration executes without a maintainer-approved plan; adjudications and authorizations are maintainer decisions — prepare packets, do not decide.
+- New and migrated catalogue entries state reader need, revision consequence, and a boundary test.
+
 ## Working files
 
 - [Pre-migration link-authorization matrix](./current-authorization-matrix.md) — historical inventory of collection contracts and cross-contract conflicts at the migration baseline; its old `evidence` rows are superseded by ADR 058.
@@ -19,6 +54,9 @@ Lineage-specific carrier, relation, and invalidation contradictions stay in the 
 - [Rationale label migration retrospective](./rationale-label-migration-retrospective.md) — second-run reconciliation, surprises, and procedure-promotion decision.
 - [Grounds label evaluation](./evaluate-grounds-link-label.md) — Luna-ready read-only packet for deciding the successor and classifying every active canonical note→note `grounds` edge before any migration.
 - [Grounds direction review](./grounds-label-direction-review.md) — complete 283-edge semantic inventory recommending `premised-on` for the 160-row premise cohort and reclassification of the remaining edges.
+- [Grounds boundary adjudication](./grounds-label-boundary-adjudication.md) — accepts `premised-on`, assigns exact successors to 74 evidence/extension/mixed rows, and defers 49 mechanism candidates to the mechanism-label review.
+- [Mechanism label evaluation](./evaluate-mechanism-link-label.md) — Luna-ready full-corpus packet covering both active `mechanism` edges and the 49 mechanism-like `grounds` rows deferred from adjudication.
+- [Blind mechanism reclassification test](./blind-mechanism-reclassification-test.md) — runnable packet for the reversal evidence the mechanism review pre-registered: k-sampled blind EX/OP reclassification of a deterministic 49-row sample, with pre-registered survive/reverse thresholds; the last evidence input before the split's maintainer adjudication.
 - [Reusable directional-label migration procedure](../../instructions/migrate-directional-link-label.md) — promoted mechanical core confirmed by the evidence and rationale runs; semantic classification remains label-specific.
 
 ## Confirmed contradictions
