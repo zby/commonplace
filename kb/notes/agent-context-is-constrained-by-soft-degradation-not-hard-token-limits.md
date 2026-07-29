@@ -69,4 +69,5 @@ Relevant Notes:
 - [GSM-DC ingest](https://arxiv.org/html/2505.18761v2) — exemplifies (relevance/interference dimension): power-law error scaling with distractor count in math reasoning, with reasoning-depth interaction
 - [Web agent benchmark ingest (Chung et al., 2025)](https://arxiv.org/html/2512.04307v1) — exemplifies (relevance/interference dimension): agent-level catastrophic degradation from injected irrelevant task sequences; iRAG provides only modest relief
 - [ConvexBench ingest](https://arxiv.org/html/2602.01075v2) — exemplifies (complexity dimension): compositional depth collapse at low token counts
+- [Verbalizable Representations Form a Global Workspace in Language Models](../sources/verbalizable-representations-global-workspace-llms.ingest.md) — evidenced-by: J-space ablation selectively impairs flexible multi-step reasoning while explicit chain-of-thought is more robust, supplying a candidate internal-workspace mechanism for complexity-driven soft bounds and externalization relief
 - [Paulsen MECW](https://arxiv.org/pdf/2509.21361) — exemplifies (volume dimension): usable context drastically below advertised windows, task-dependent

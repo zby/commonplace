@@ -60,3 +60,4 @@ Relevant Notes:
 - [storage substrate](./storage-substrate.md) - contrast: location is separate from representation
 - [codification](./codification.md) - mechanism: movement from natural-language into symbolic form
 - [opacity is a scale threshold](../opacity-is-a-scale-threshold.md) - caveat: practical opacity is not identical to representational form
+- [Verbalizable Representations Form a Global Workspace in Language Models](../../sources/verbalizable-representations-global-workspace-llms.ingest.md) - evidenced-by: the J-space is a concrete distributed-parametric representation inspected through a derived probe and tested through causal swaps and ablations
