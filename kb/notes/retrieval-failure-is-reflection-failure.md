@@ -23,6 +23,8 @@ Retrieval-mediated connection is weaker than procedural reflection in one specif
 
 A system can strengthen the wire — enforcing a membership claim rather than asserting it, adding a field that makes an artifact findable, correcting a search recipe observed to miss a member. It cannot assume the wire holds by construction, and the difference shows up as a class of silent failure that procedural reflection does not have.
 
+[Memento-Skills](../sources/memento-skills-let-agents-design-agents.ingest.md) supplies an external measurement of this wire. Replacing generic embedding retrieval with a behavior-trained skill router raised real-trajectory route-hit rate from 0.53 to 0.58 and judge success from 0.79 to 0.80. The modest downstream gain is the important boundary: selecting for behavioral utility improves discovery, but route-hit does not establish that the selected skill causally shaped the later action. Retrieval tests the first connection; uptake still needs a separate perturbation or with/without test.
+
 The same [reference case](../reference/commonplace-as-a-reflective-system.md) records the stronger check exposing and repairing a blind spot in the natural-language retrieval recipe.
 
 ## Scope
@@ -38,3 +40,4 @@ Relevant Notes:
 - [Stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md) — mechanism: why a trusted-but-incomplete membership claim is the sharpest form of the failure
 - [Behavioral authority](./definitions/behavioral-authority.md) — extends: the consumer, channel, and force that must hold after an artifact is found
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidenced-by: the observed trace where a symbolic check corrected the natural-language search recipe that had been missing a member
+- [Memento-Skills](../sources/memento-skills-let-agents-design-agents.ingest.md) — evidenced-by: behavior-trained routing improves both route hits and downstream success while leaving causal uptake after retrieval as a separate test

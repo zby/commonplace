@@ -26,6 +26,8 @@ The system should not count "memory written" as learning. It should evaluate whe
 
 These dimensions are separable. QA-style retrieval tests can pass while activation fails. A cue can fire while behavior remains unchanged. A note can be accurate but too hard to find. A policy can become harmful after the domain changes.
 
+[Memento-Skills](../../sources/memento-skills-let-agents-design-agents.ingest.md) demonstrates the useful measurement split: it reports route hits and downstream judged success separately, so a better retrieval policy is not mistaken for the final task effect. It does not run a memory-perturbation test, however, so the selected skill's causal uptake remains unmeasured. Effects-based evaluation therefore needs a stack of tests across discovery, activation, uptake, and outcome rather than one aggregate “memory works” score.
+
 ## Methods
 
 - Held-out retrieval tests for known questions.
@@ -48,4 +50,5 @@ These dimensions are separable. QA-style retrieval tests can pass while activati
 Relevant Notes:
 
 - [Large Language Model Agents are not Always Faithful Self-Evolvers](../../sources/llm-agents-are-not-always-faithful-self-evolvers.md) - evidence: shows why written memory must be evaluated for behavioral influence rather than assumed effective
+- [Memento-Skills](../../sources/memento-skills-let-agents-design-agents.ingest.md) - evidence: reports routing and downstream outcomes separately, while leaving causal uptake as an additional evaluation layer
 - [Designing a Memory System for LLM-Based Agents](../designing-agent-memory-systems.md) - derives evaluation as the closure condition for all memory requirements

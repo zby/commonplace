@@ -17,17 +17,20 @@ Computer vision provides the model. Before representation learning, features (SI
 
 The [bitter lesson](../sources/wikipedia-bitter-lesson.ingest.md) extrapolates: general methods that leverage computation eat hand-crafted components — or more precisely, [they eat the ones whose claimed scope was never earned](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md), which is why tokenizers and test suites survive the same pressure that consumed SIFT. Applied today, mainstream research extends the opaque loop — RLHF, RLAIF, continual pretraining, online learning, fast adapters — hoping to subsume the hand-crafted prompts, tools, and evals that deployed systems depend on. This may or may not succeed; new architectures could close the tempo gap, or structural limits could keep large opaque updates on a slower cycle. This note takes no position on the outcome.
 
-## Per-class loops today
+## Loops today
 
-Current methods target individual classes:
+Current methods range from single-form optimization to early cross-form loops:
 
 - **DSPy, ProTeGi** — automated search over prompts (natural-language), weights frozen.
 - **Genetic programming, FunSearch** — automated search over code (symbolic), weights frozen.
 - **Meta-Harness** — automated search over harness code and prompt/context logic (symbolic + natural-language), weights frozen, benchmark traces as selection signal.
+- **[Symbolic Learning](../sources/symbolic-learning-enables-self-evolving-agents.ingest.md)** — backward language-mediated credit assignment over prompts, tools, and pipeline topology (natural-language + symbolic), weights frozen, same prompted loss used for update and rollback.
+- **[Memento-Skills](../sources/memento-skills-let-agents-design-agents.ingest.md)** — deployment-time mutation of natural-language-plus-code skill folders around a frozen LLM, with a separately trained parametric router selecting the skill.
+- **[Co-Harness](../sources/co-harness-co-evolving-harness-and-model-weights.ingest.md)** — alternating validated harness repair and model fine-tuning, provisionally spanning distributed-parametric weights plus a natural-language/symbolic harness.
 - **RLHF / RLAIF** — updates weights (opaque), treating prompts and code as fixed.
 - **Hand curation** (Commonplace and similar) — evolves natural-language fast and symbolic artifacts slowly, without automated search or weight updates.
 
-Each is partial. Even unifying two classes — a joint optimizer over weights and prompts, say — would be a significant step, analogous to what end-to-end gradient descent did for features plus classifier. The prerequisite is understanding what an improvement loop for each class looks like: mutation operators, selection signals, evaluation criteria.
+The cross-form cases change the inventory, not the underlying difficulty. Symbolic Learning and Memento-Skills keep the main LLM fixed; Co-Harness spans all three forms but does not isolate coevolution from extra fine-tuning, improved trajectory data, or additional harness search. The open problem has moved from whether two or three forms can appear in one automated loop to whether cross-form credit assignment, compatibility, rollback, and validation can make the coupling reliably compound.
 
 ## Difficulties
 
