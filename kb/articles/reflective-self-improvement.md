@@ -1,5 +1,5 @@
 ---
-description: "Outward article: bootstrapping with the author inside — compiler as foil, verification the missing half, improvement indexed to a declared objective, use as instrumentation, the bitter lesson as a constraint on the loop rather than a verdict on artifacts"
+description: "Outward article: bootstrapping with the author inside — compiler as foil, verification the missing half, improvement indexed to a declared objective, use as instrumentation, the bitter lesson as a constraint on the loop"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
