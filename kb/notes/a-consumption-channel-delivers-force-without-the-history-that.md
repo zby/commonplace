@@ -1,5 +1,5 @@
 ---
-description: "Injected instructions and honestly distilled but false rules fail as one boundary: force is conferred by position in a consumption path, so authority no gate granted acts exactly like authority a gate did"
+description: "A consumption path can promote content into a higher-force role without checking whether an authorization covers that content, version, and use"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [failure-modes, artifact-analysis, self-improving-systems]
@@ -7,72 +7,53 @@ tags: [failure-modes, artifact-analysis, self-improving-systems]
 
 # A consumption channel delivers force without the history that earned it
 
-[Behavioral authority](./definitions/behavioral-authority.md) attaches to a consumption path — a consumer, a channel, and a force — not to the bytes of an artifact. That is usually stated as a precision gain: it stops you calling a Markdown file low-authority just because it is prose. It also has a consequence that cuts the other way. If force comes from the path, then whatever sits in the path gets the force, and the path does not ask how the content got there. An artifact can become operative carrying authority its consumer assigns but that nothing about the artifact earned.
+[Behavioral authority](./definitions/behavioral-authority.md) attaches to a consumption path — a consumer, a channel, and a force — not to the bytes of an artifact. That precision has a converse consequence: whatever reaches the path receives its force unless the path checks whether the promotion is authorized. Here, *earned* means that an explicit authorization covers the content, its version, the role it will occupy, and the use being made of it. It does not mean that the content is guaranteed true.
 
-This is a distinct failure boundary, and it is the one that makes a writable self-representation an attack surface rather than a maintenance chore. Where [retrieval is the wire a self-representation acts along](./retrieval-failure-is-reflection-failure.md), the failure there is that the search finds nothing and a represented constraint stays inert. Here the wire works perfectly. It finds an artifact, delivers it into a high-force position, and the consumer does what it says — and the trust that made it act is trust the artifact never acquired.
+This boundary makes a writable self-representation an attack surface rather than a maintenance chore. If [retrieval is the wire a self-representation acts along](./retrieval-failure-is-reflection-failure.md), one failure occurs when search finds nothing and a represented constraint stays inert. Here, the wire works: it delivers content into a high-force position without a matching authorization transition.
 
 ## Two ways in, one boundary
 
-The adversarial case is familiar. Content reaches a channel that treats it as instruction: a poisoned rule file, a memory written from a compromised tool result, text in retrieved material that reads as a directive. Natural language supplies the opening, since it has no artifact-internal separation of data from instruction — the indirect-prompt-injection failure Greshake et al. (2023) identify in LLM-integrated applications, where an application "blurs the line between data and instructions."
+The adversarial case is familiar. Content reaches a channel that treats it as instruction: a poisoned rule file, a memory written from a compromised tool result, or text in retrieved material that reads as a directive. In an [LLM context, instruction and data share one token medium](./llm-context-is-a-homoiconic-medium.md); typed envelopes help only when the consumer preserves their distinction. This is the indirect-prompt-injection failure [Greshake et al. identify in LLM-integrated applications](../sources/where-it-lives-retained-adaptation-2026-06-23.md), where an application “blurs the line between data and instructions.”
 
 The innocent case has no attacker at all:
 
-- A model distils a rule from an episode that did not happen the way the trace suggests, and the rule is written into a standing instruction file.
-- A commitment that was right when made keeps binding later work after its grounds changed. Nothing downstream re-derives it, because [what a commitment adds was never recoverable from its source](./commitment-not-derivation-creates-new-ground-truth.md) — only a later commitment displaces it, and none has been made.
-- An automatic extractor writes a candidate observation, and a reader later grants it the weight of a checked rule. [Memory earns authority per operation, not at capture](./trace-extracted-memory-earns-authority-per-operation-not-at-capture.md); an unverified diagnosis is a guess with a confident tone.
+- A model distils a false rule from a misleading trace and writes it into a standing instruction file.
+- A commitment keeps binding after its grounds change because [only a later commitment displaces it](./commitment-not-derivation-creates-new-ground-truth.md).
+- An extractor writes a candidate observation that a later reader treats as checked, although [memory earns authority per operation, not at capture](./trace-extracted-memory-earns-authority-per-operation-not-at-capture.md).
 
-These look like different problems — one is security, the others are quality — and they are usually staffed by different concerns. On this boundary they are the same event. In each, an artifact occupies an operative position, and the position confers force regardless of whether the content passed anything. The channel has no field for "how this got here," so it cannot behave differently toward the two.
+The runtime attack and the persistent false rule are different mechanisms with a shared boundary. The runtime case crosses from untrusted data into an instruction-bearing role during interpretation; the persistent case crosses through admission or lifecycle governance. In both cases, content occupies an operative position without an authorization that covers the transition. The cases therefore share a diagnostic question, not a complete control plan.
 
-That is worth stating plainly because it predicts an incomplete defence in both directions. Controlling who may write, without any check on what gets written, admits every honest error an authorized writer makes. Reviewing content well, without controlling the entrance, leaves a path into the channel that review never sees. Neither half is optional if the boundary is the thing you are closing.
+This distinction predicts incomplete defences. For persistent artifacts, controlling who may write without checking what was written admits authorized errors, while reviewing content without enforcing the reviewed entrance leaves a bypass. Ephemeral inputs additionally require consumption-side controls such as trust-tiered loading, instruction/data isolation, constrained capabilities, or a [privilege quarantine](./orchestration-needs-privilege-quarantine-not-permission-scope.md).
 
-## Not a wrong verdict, either
+## Nor is it a wrong verdict
 
-The boundary is also distinct from a gate that ran and erred. [False-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) describes an evaluator passing something it should have rejected; the correction path is a stronger oracle, and [warranted autonomy is bounded by what an oracle can assess](./warranted-autonomy-is-bounded-by-oracle-domain.md). Both arguments assume the candidate went through the gate.
+The boundary is also distinct from an evaluation gate that ran and erred. [False-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) describes an evaluator passing something it should have rejected. Its correction path is a stronger oracle — the mechanism that assesses the candidate — and [warranted autonomy is bounded by what that oracle can assess](./warranted-autonomy-is-bounded-by-oracle-domain.md). Those arguments assume the candidate went through the gate.
 
-The failure here is that gate membership is not a property the channel reads. An artifact that never faced an evaluator and one that passed a strong evaluator arrive at the consumer indistinguishable. Strengthening the oracle does nothing about a write path that does not route through it — which is why the two are separate design problems even though both end in a bad artifact acting.
+The failure here is that the channel does not necessarily check gate membership. Strengthening the oracle does nothing about a path that bypasses it. Conversely, a false positive may carry valid procedural authorization without carrying substantive truth. Authorization binding and oracle quality are therefore separate design problems, even though both can end in bad content acting.
 
-## The countermeasures are all the same move
+## Control must bind authorization to force
 
-Provenance, write authority, review, and rollback are usually listed as repository hygiene. Read against this boundary they are one operation applied at four points: putting the artifact's history back into the channel that would otherwise deliver force without it.
+Controls can act at several distinct points along the boundary. They work together only when the system binds their state to the exact content consumed:
 
-- **Provenance** makes the history readable at consumption time, so a consumer can weigh it. It is the only one of the four that acts on the consuming call itself.
-- **Write authority** narrows which paths can place content in an operative position — the entrance-side fix, and the one that decides whether the other three ever get a chance.
-- **Review** is what actually earns the force; without it provenance records only that something arrived.
-- **Rollback** withdraws force already conferred. It is the only remedy available once the artifact has been operative, and it is a [sovereignty capability](./the-four-field-record-exposes-an-efficiency-security-and-sovereignty.md) — it requires that the owner can still regenerate or restore the artifact, which an externally-held one may not permit.
+- **Runtime separation** prevents untrusted content from silently becoming instruction or gaining privileged capabilities during a call.
+- **Write authority** restricts which paths may place persistent content in an operative position.
+- **Review** grants procedural authorization for a particular content version and scope; it does not establish infallibility.
+- **Consumption enforcement and provenance** make the channel verify that the authorization matches the version and use before conferring force. Provenance is evidence for that decision, not the decision itself.
+- **Rollback** withdraws future force after detection. It is recovery rather than prevention, and it remains a [sovereignty capability](./the-four-field-record-exposes-an-efficiency-security-and-sovereignty.md) because the owner must be able to restore or regenerate the artifact.
 
-Where all four hold for a channel, the boundary is closed for that channel by construction rather than by vigilance: a [system-definition artifact](./definitions/system-definition-artifact.md) can only get into an instruction, enforcement, or routing position by a path that recorded and checked it. Where they do not, prose that anyone can write is prose that anyone can make binding. That is why this sits inside the [reflective architecture](./definitions/reflective-system.md) rather than beside it — when the operative artifacts *are* the self-representation, editing one is modifying the system, and the write path is part of the causal connection.
+A channel closes the boundary only when every route to an operative position is subject to a mechanical rule that checks the relevant authorization state. A signed artifact, a trust-tiered loader, or a store whose sole write path binds approval to a content digest can supply that rule. Merely recording provenance or performing review somewhere upstream cannot.
 
-Closing the boundary is not free, and the costs land on scarce resources: provenance fields spend context on every consumption, entrance control spends throughput, and review spends the evaluation capacity that was already the binding constraint. The claim is that the boundary exists and what closes it, not that every channel should pay full price.
+This boundary belongs inside a [reflective architecture](./definitions/reflective-system.md): when operative artifacts are the self-representation, editing one modifies the system, so admission and consumption paths are part of the causal connection. Closing these paths is not free. Provenance can spend context, entrance controls spend throughput, and review spends evaluation capacity. Which controls are justified depends on the channel's force and deployment risk.
 
 ## The cure states a claim of its own
 
-Re-coupling history to the channel produces an artifact that asserts *this was earned* — a provenance field, a verified flag, an approved status. That assertion is itself content in a trusted position, and it inherits the problem it was introduced to fix: a stale or unbacked mark tells a consumer to skip the check that would have caught it. So it falls under the rule that [a derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — enforce the mark or omit it, because a trusted mark with nothing behind it is worse than none.
-
-This KB's own `user-verified` field is the case worth holding in mind, and it is handled the hard way: the attestation is a human commitment nothing recomputes, so a substantive edit must strip it and only an explicit act can re-grant it. The discipline is not a check that the flag is true; it is a rule that mechanically destroys the flag whenever it might have stopped being true.
-
-## Scope
-
-- The claim is about channels that do not carry history, not about channels in general. A signed artifact, a trust-tiered loader, or a store whose only write path runs through validation puts history back in the channel — that is the fix, not a counterexample, and it holds only for the channel so equipped.
-- Force being channel-conferred does not mean all channels are equally dangerous. It means danger is read off the channel rather than the artifact: an advisory note pinned into every prompt can be a higher-force position than a formal policy nothing loads.
-- Nothing here says the two cases are equally likely or equally severe, only that a defence addressing one leaves the other open. Which dominates is a property of the deployment.
-
-## Open Questions
-
-- Is there anything that detects unearned authority from the consuming side alone — a signal in how an artifact is written or how it interacts with neighbours — or is entrance-side control the only place the boundary can be closed?
-- Provenance is the countermeasure that costs context on every consumption. Is there a cheap encoding that survives context pressure, or does entrance control always dominate on cost?
-- Rollback assumes you can identify what a wrongly-authorized artifact influenced while it was operative. In a retrieval-mediated system with no record of which artifacts entered which calls, what does withdrawing force actually recover?
+Authorization metadata inherits the same problem. A verified flag or approved status is itself content in a trusted position, so a stale or unbacked mark can suppress the check that would have caught it. A [derived copy of recomputable truth must therefore be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md), while a non-recomputable attestation must be invalidated whenever its scope may no longer hold. This KB applies the latter rule to `user-verified`: a substantive edit strips the human attestation, and only another explicit act restores it.
 
 ---
 
 Relevant Notes:
 
-- [Behavioral authority](./definitions/behavioral-authority.md) — defined-in: supplies the consumer/channel/force decomposition whose path-relativity this note reads as a failure surface
 - [System-definition artifact](./definitions/system-definition-artifact.md) — defined-in: the high-force family whose binding force is what gets misassigned
-- [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — contrasts: the sibling failure where the wire finds nothing, against this one where the wire works and delivers unearned trust
-- [False-positive generation is filtered; false-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) — contrasts: a gate that ran and erred, against content that reached the channel without facing a gate
-- [Trace-extracted memory earns authority per operation, not at capture](./trace-extracted-memory-earns-authority-per-operation-not-at-capture.md) — grounds: the earning ladder whose rung the channel does not read
-- [Commitment, not derivation, creates new ground truth](./commitment-not-derivation-creates-new-ground-truth.md) — grounds: why a stale commitment keeps binding force and only supersession displaces it
-- [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: the oracle-side bound this note holds fixed while attacking the write paths that bypass it
-- [A derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — grounds: why the provenance mark introduced as the cure must itself be enforced or omitted
+- [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — mechanism: explains why instruction and data can share a representation before the consumer assigns their roles
+- [Agent orchestration needs a privilege quarantine, not just a permission scope](./orchestration-needs-privilege-quarantine-not-permission-scope.md) — extends: develops runtime separation for attacker-reachable content into a role architecture
 - [The four-field record exposes an efficiency, security, and sovereignty risk triad](./the-four-field-record-exposes-an-efficiency-security-and-sovereignty.md) — grounds: states the security question as the authority-plus-lineage conjunction this note develops into a boundary, and supplies rollback as a sovereignty capability
-- [Reflective system](./definitions/reflective-system.md) — grounds: the causal connection that makes a write to an operative artifact a modification of the system
