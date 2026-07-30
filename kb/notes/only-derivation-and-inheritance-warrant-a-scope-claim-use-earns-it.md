@@ -61,7 +61,7 @@ A [reflective system](./definitions/reflective-system.md), which represents and 
 
 Relevant Notes:
 
-- [Use tests a decomposition locally; retained rationale is what makes transfer testable](./use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md) — extends: supplies the local-versus-transfer gap and the intensional and extensional routes that this note grades as warrants, with inheritance added as the secondhand purchase of extensional evidence
+- [Use tests a decomposition locally; retained rationale is what makes transfer testable](./use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md) — grounds: establishes the local-versus-transfer gap and the intensional and extensional routes that this note grades as warrants, with inheritance added as the secondhand purchase of extensional evidence
 - [Reach-assessment](./definitions/reach-assessment.md) — defined-in: supplies the criterion that "earned" answers to — a claim has been tested against evidence that could have refuted it
 - [The bitter lesson selects against unearned reach, not against structure](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md) — grounds: identifies asserted-versus-tested scope as the property on which scale selects, and supplies the search loop through which free-born decompositions must earn scope extensionally
 - [Programming patterns get a fast pass but other borrowed ideas must earn first-principles support](./programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must.md) — contrasts: sets adoption bars for techniques by source field, whereas this note sets the bar for ontologies by whether the constraints behind their decompositions still hold
