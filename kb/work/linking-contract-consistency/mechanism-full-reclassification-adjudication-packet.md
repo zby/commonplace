@@ -1,6 +1,17 @@
 # Full mechanism reclassification adjudication packet
 
-**Status:** maintainer decision requested; no vocabulary, contract, ADR, authorization, migration, or corpus change is authorized by this packet.
+**Status:** maintainer decision complete for the semantic split, spellings, and 87 unanimous EX/OP dispositions; exact-boundary evidence is authorized for the remaining 42 rows, but no vocabulary, contract, ADR, authorization, migration, or corpus change is authorized.
+
+## Maintainer decision
+
+On 2026-07-29, after a plain-language restatement of the two relations and unanimous cohorts, the maintainer approved continuing with the recommended course. This accepts:
+
+- the explanatory/operational semantic split;
+- `explained-by` and `operates-through` as the source-as-subject spellings;
+- the 56 unanimous EX rows and 31 unanimous OP rows as exact semantic dispositions;
+- the next read-only evidence work for the remaining 42 rows.
+
+The approval has the scope stated in [What approval authorizes next](#what-approval-authorizes-next). It does not itself adopt catalogue entries, alter collection contracts, authorize pairings, approve an ADR, or permit migration.
 
 ## Decision result
 
@@ -11,7 +22,7 @@ The [full reclassification](./mechanism-full-reclassification-results.md) replac
 
 The evidence supports retaining the explanatory/operational distinction. It does not preserve the old row assignments: among 111 surviving rows previously classified EX or OP, only 62 (55.9%) retain the same result and 30 (27.0%) reverse directly between EX and OP.
 
-Recommended maintainer decision: **accept the semantic split, accept `explained-by` and `operates-through` as its source-as-subject spellings, and accept the 87 unanimous EX/OP rows as migration candidates.** Then authorize a separate exact-boundary packet for the other 42 rows before any contract or corpus change.
+Accepted maintainer decision: **retain the semantic split, use `explained-by` and `operates-through` as its source-as-subject spellings, and accept the 87 unanimous EX/OP rows as migration candidates.** Prepare a separate exact-boundary packet for the other 42 rows before any contract or corpus change.
 
 ## Proposed registered semantics
 
@@ -92,15 +103,6 @@ Reject both proposed relations and evaluate a new broad successor or retirement 
 
 Require cross-model-family replication or another protocol before deciding. State the additional acceptance rule in advance. The present run used fresh isolated contexts but one reported model family; this option buys independence evidence at the cost of another full classification.
 
-## Maintainer response
+## Recorded maintainer response
 
-The recommended response can be approved in one sentence: **accept the recommended split, spellings, unanimous cohorts, and next evidence work.**
-
-Otherwise record the deviations explicitly:
-
-- semantic split: accept / reject / reopen evidence;
-- spellings: accept / revise;
-- 87 unanimous EX/OP dispositions: accept / review individually;
-- next work: authorize the 42-row boundary packet / specify another next step.
-
-No decision is inferred from this packet.
+The maintainer's “ok — go on” followed the requested explanation of the split, spellings, and unanimous cohorts. It is recorded here as approval of the recommended split, spellings, 87 unanimous dispositions, and next evidence work, within the non-mutation boundary above.

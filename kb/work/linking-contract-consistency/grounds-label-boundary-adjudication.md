@@ -24,11 +24,11 @@ The direction review's 160 P rows become `premised-on`. Exact adjudication below
 | `exemplifies` | 12 | accepted exact successor |
 | `is-evidence-for` | 9 | accepted exact successor: 2 notes→notes and 7 sources→notes |
 | `evidenced-by` | 8 | accepted exact successor |
-| `see-also` | 1 | accepted weak navigation successor |
+| remove | 1 | accepted: weak navigation edge does not earn a notes→notes `see-also` authorization |
 | mechanism evaluation | 49 | deferred without successor |
 | **active total** | **283** | reconciles to the direction review baseline |
 
-No adjudicated row is removed. The 234 exact dispositions and 49 deferred mechanism candidates are mutually exclusive.
+One adjudicated row is removed. The 233 exact successor dispositions, 1 removal, and 49 deferred mechanism candidates are mutually exclusive.
 
 ## Exact evidence dispositions
 
@@ -81,7 +81,7 @@ The review's X class was intentionally coarse. `extends` means the source develo
 
 ## Exact mixed-class dispositions
 
-The review's D class combined distinct reader needs. The exact successors below prefer `defined-in` for terminology, `extends` for a developed argument, `exemplifies` for an instance, the evidence pair for worked cases, `premised-on` for truth dependencies, and `see-also` only for the one weak navigation edge with no stronger assertion.
+The review's D class combined distinct reader needs. The exact successors below prefer `defined-in` for terminology, `extends` for a developed argument, `exemplifies` for an instance, the evidence pair for worked cases, and `premised-on` for truth dependencies. The one weak navigation edge with no stronger assertion is removed rather than widening notes→notes `see-also`.
 
 | source edge | target | successor |
 |---|---|---|
@@ -107,7 +107,7 @@ The review's D class combined distinct reader needs. The exact successors below 
 | `notes/linking-theory.md:91` | `notes/title-as-claim-makes-overlap-between-notes-visible.md` | `premised-on` |
 | `notes/links-encode-conditional-possibilities-not-obligations.md:106` | `notes/linking-theory.md` | `exemplifies` |
 | `notes/measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md:29` | `notes/methodological-and-computational-closure-track-different-changes.md` | `extends` |
-| `notes/measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md:30` | `notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md` | `see-also` |
+| `notes/measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md:30` | `notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md` | remove |
 | `notes/only-explicit-retention-is-durable-writable-and-addressable.md:47` | `notes/reflection-buys-addressability.md` | `extends` |
 | `notes/only-explicit-retention-is-durable-writable-and-addressable.md:48` | `notes/reflective-coverage-is-graded-across-representational-forms.md` | `extends` |
 | `notes/parametric-reproduction-cannot-replace-an-authoritative-record.md:40` | `notes/only-explicit-retention-is-durable-writable-and-addressable.md` | `extends` |
@@ -127,10 +127,11 @@ The review's D class combined distinct reader needs. The exact successors below 
 
 ## Authorization consequences
 
-A later migration replaces `grounds` with `premised-on` for notes→notes and uses already-authorized `extends`, `exemplifies`, `defined-in`, and `evidenced-by` pairings. It must additionally decide two demonstrated authorization deltas rather than forcing those rows into a weaker existing label:
+A later migration replaces `grounds` with `premised-on` for notes→notes and uses already-authorized `extends`, `exemplifies`, `defined-in`, and `evidenced-by` pairings. It must additionally decide one demonstrated authorization delta rather than forcing those rows into a weaker existing label:
 
-- authorize `is-evidence-for` for notes→notes (2 rows); sources→notes is already authorized;
-- authorize `see-also` for notes→notes (1 row), unless final migration review removes that weak edge instead.
+- authorize `is-evidence-for` for notes→notes (2 rows); sources→notes is already authorized.
+
+The weak notes→notes `see-also` candidate is removed. Do not add that pairing to the notes contract.
 
 The 49 mechanism candidates create no authorization decision yet. Do not retain `grounds` as a synonym after their successor is adjudicated, and do not migrate them to `mechanism` merely because that is their semantic review bucket.
 
