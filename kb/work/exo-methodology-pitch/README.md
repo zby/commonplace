@@ -8,7 +8,7 @@ That makes the next question unavoidable:
 
 Retain too little and the model keeps re-deriving the same conclusions from code and history. Retain too much and the system builds a second, noisier history — full of plausible summaries that consume context, grow stale, and acquire authority they never earned.
 
-The missing layer is not another memory store. It is an explicit, improvable policy for what deserves to be kept, in what form, with what authority, and for how long. We call that a theory of promotion.
+The missing layer is not another memory store. It is an explicit, improvable policy for what deserves to be kept, in what form, with what authority, and for how long. We call that a theory of promotion: what gets promoted from the record into a lesson.
 
 ## A concrete case
 
@@ -37,9 +37,9 @@ And choose its form by the work it does:
 
 > **episodes for evidence · natural language for reusable meaning · code for exact behavior**
 
-Keep the episode when its detail is the value. Write a conclusion in natural language when a mechanism should recur, transfer, or stay open to criticism and revision. Codify it when the useful part can be stated and checked mechanically. Record adopted decisions, because the evidence cannot.
+Keep the episode when its detail is the value. Write a conclusion in natural language when a mechanism should recur, transfer, or stay open to criticism and revision. Codify it when the useful part can be stated and checked mechanically. Record adopted decisions, because the evidence cannot recover them.
 
-And do not write down one-off interpretations, cheap deductions, generic summaries, or conclusions likely to expire before reuse. Natural language is not the default destination for every trace. It is the form for conclusions the model can state and use but the system cannot yet turn into a test, schema, or program.
+Do not write down one-off interpretations, cheap deductions, generic summaries, or conclusions likely to expire before reuse. Natural language is not the default destination for every trace. It is the form for conclusions the model can state and use but the system cannot yet turn into a test, schema, or program.
 
 ## What we'd add
 
@@ -49,7 +49,7 @@ That proposal may lose. Exo's existing heuristics, raw episodes, tools, and capa
 
 ## Think first, then verify it your way
 
-Read the pitch and form your own view. Then use your own agents, tools, and preferred methods to verify or attack it. The supporting documents expose our reasoning and evidence; they deliberately do not prescribe a verification protocol:
+You have the pitch; form your own view before opening the supporting documents. Then use your own agents, tools, and preferred methods to verify or attack it. The supporting documents expose our reasoning and evidence; they deliberately do not prescribe a verification protocol:
 
 - [Detailed argument](./argument.md) — the promotion theory in full, the three retained forms, Exo-shaped cases, the minimal proposal, and claim limits
 - [Evidence and counterevidence](./evidence.md) — pinned Exo and ExoWorker facts, supporting theory, positive and adverse results, open gaps, and falsifiers
