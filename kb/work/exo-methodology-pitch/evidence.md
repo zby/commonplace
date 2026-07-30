@@ -4,7 +4,7 @@ This document exposes the evidence behind the [short pitch](./README.md). It sep
 
 ## Pinned Exo and ExoWorker facts
 
-Evaluation boundary: canonical Exo main commit `ef4cfe057af0` and the separately linked ExoWorker branch commit `ed08a571`. The existing [whole-system analysis](../../agentic-systems/exo.md) and [memory-system review](../../agent-memory-systems/reviews/exo.md) remain pinned to the earlier `baa07f67`; unchanged claims can rely on them, while refreshed claims below come from the local checkout diff and branch inspection.
+Evaluation boundary: canonical Exo main commit `ef4cfe057af0` and the separately linked ExoWorker branch commit `ed08a571`. The [whole-system analysis](../../agentic-systems/exo.md) is refreshed to the same `ef4cfe0` pin; the [memory-system review](../../agent-memory-systems/reviews/exo.md) remains pinned to the earlier `baa07f67`, so unchanged memory claims rely on it while refreshed claims below come from the checkout diff and branch inspection.
 
 | Working claim | Evidence status | Basis |
 |---|---|---|
