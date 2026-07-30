@@ -39,6 +39,23 @@ The third change runs the other way, from code back to natural-language instruct
 
 Both directions are therefore on record: a change in the system forced a revision of its self-representation, and a change made through the self-representation changed what the system afterward required, rejected, and searched.
 
+## Verified timeline
+
+Reconstructed from git history (verified 2026-07-30), recorded here because retellings of this episode have drifted on exactly these points.
+
+| Date (2026) | Commit | Event |
+|---|---|---|
+| 06-07 | `294598da` | `index-weight-navigation` workshop opens; weight thresholds are open decision #3 — no size validation exists anywhere in the codebase yet |
+| 06-09 | `458f20bb` | ADR 025: complete generated indexes become build-time only |
+| 06-10 07:35 | `258f485f` | Thresholds decided from a manual calibration pass: median curated tag index ≈ 3.5 KB; the 8 KB soft gate flags exactly `learning-theory` (18.8 KB / 55 entries) and `computational-model` (10.5 KB / 35 entries); the 16 KB hard gate only `learning-theory`. Rollout deliberately sequenced: soft warn first, hard fail only after the learning-theory split, "otherwise validation is red on day one" |
+| 06-10 09:20 | `91130f82` | ADR 026 committed |
+| 06-10 09:26 | `94769805` | Implementation: `TAG_README_SOFT_BYTES` / `TAG_README_HARD_BYTES` and the weight-gate check — the first byte-size validator in the codebase |
+| 06-10 09:43 | `9976a081` | Fifteen indexes migrated to `tag-readme`; learning-theory deferred until trimmed below the hard gate |
+| 06-10 | `ba1a7d9f` | learning-theory adopts `covered_by`; the new check catches the block-YAML member the `rg` recipe missed |
+| 06-10 | `46f106c5` | Workshop closes into retained notes |
+
+Two negatives the timeline pins down. First, no size or completeness validator existed before ADR 026 — `git log -S "SOFT_BYTES"` (and variants) has no hits before `94769805` — so nothing warned in advance; the 18.8 KB figure was measured by hand during threshold calibration, the same morning the ADR was written. Second, the completeness promise was never observed broken: no enforced `complete` mark existed to falsify, and ADR 026 frames the soft warn as the *future* early signal that a tag is outgrowing completeness. Detection in this episode was human; the early warning is what the fix installed, not what triggered it.
+
 ---
 
 Relevant Notes:
