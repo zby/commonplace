@@ -54,7 +54,7 @@ You have the pitch; form your own view before opening the supporting documents. 
 - [Detailed argument](./argument.md) — the promotion theory in full, the three retained forms, Exo-shaped cases, the minimal proposal, and claim limits
 - [Evidence and counterevidence](./evidence.md) — pinned Exo and ExoWorker facts, supporting theory, positive and adverse results, open gaps, and falsifiers
 
-This pitch comes out of [Commonplace](https://github.com/zby/commonplace), a framework for agent-operated knowledge bases. Commonplace is both a theory and a working system: a body of claims about knowledge retention that we hope hold beyond our own tooling, entangled with the design choices that test them. As an implementation it is only one candidate for the missing layer — the argument does not require adopting it. Exo's own memory, skills, event records, or another store entirely could implement the same capability.
+This pitch comes out of [Commonplace](https://github.com/zby/commonplace), a framework for agent-operated knowledge bases. Commonplace is both a theory and a working system: a body of claims about knowledge retention, entangled with the design choices that test them. The claims are meant to hold beyond the cases where they were developed — bringing them to Exo is exactly that test. As an implementation, Commonplace is only one candidate for the missing layer; the argument does not require adopting it. Exo's own memory, skills, event records, or another store entirely could implement the same capability.
 
 ---
 

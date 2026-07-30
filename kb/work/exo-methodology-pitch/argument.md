@@ -131,7 +131,7 @@ The practical operator is movement among forms. Codify when a rule becomes mecha
 
 ## Minimal proposal for Exo
 
-Commonplace should not enter Exo's protected substrate. At most it is one candidate implementation of a replaceable, agent-editable promotion and semantic-maintenance policy above it. Commonplace is itself a hybrid of theory and implementation — claims meant to hold beyond its own design choices — and this proposal transfers the claims, not the choices.
+Commonplace should not enter Exo's protected substrate. At most it is one candidate implementation of a replaceable, agent-editable promotion and semantic-maintenance policy above it. Commonplace is itself a hybrid of theory and implementation — claims meant to hold beyond the cases where they were developed — and this proposal transfers the claims, not the choices.
 
 The minimum capability is smaller than adopting Commonplace wholesale:
 
