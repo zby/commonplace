@@ -6,7 +6,7 @@ Before a self-improving agent needs a semantic cache, it needs a theory of what 
 
 Exo already retains raw episodes, natural-language memory and skills, and symbolic policy. A more explicit natural-language layer adds value only for selected conclusions: those that will be reused, transferred, or contested often enough to repay their upkeep, and those that record commitments the evidence cannot give back. The full value and cost terms are spelled out in the economic theory below.
 
-This is a conditional value claim, not a theorem that every trace should become prose or that every self-improving system requires the same retention policy.
+This is a conditional value claim, not a theorem that every trace should become a natural-language artifact or that every self-improving system requires the same retention policy.
 
 ## What Exo already has
 
@@ -40,6 +40,8 @@ An experience does not arrive labelled with its reusable lesson. A failed integr
 - retain nothing because reconstruction is cheap or reuse is unlikely.
 
 The selection is ampliative: observed cases do not uniquely determine which generalization, if any, should govern new cases. A stronger model may make the choice better, but capability does not remove the choice. If the result is not retained, later calls must choose again; if every plausible result is retained, the cache becomes a lossy second event log.
+
+The selection is also knowledge-laden rather than domain-neutral. Which candidate promotions occur at all depends on background theories — of the software, the providers, the model's own failure modes — so the quality of selection is bounded by the breadth of conjecture generation that precedes it. A promotion theory that only prices retention will under-invest in generating candidates and then correctly select among impoverished ones.
 
 A promotion theory supplies the missing policy. It can begin as a natural-language heuristic and itself evolve with evidence. It should answer at least four questions:
 
@@ -79,6 +81,8 @@ Its expected cost grows with:
 - maintenance and invalidation work;
 - distraction from irrelevant but retrieved claims; and
 - damage from a stale or overgeneralized lesson carrying authority.
+
+Reconstruction variance has a mechanism worth naming: activation failure. Parametric knowledge is applied only when the situation summons it, and summoning is itself knowledge-dependent — a regress that must terminate in something matched against raw context. A retained conclusion's trigger terminates it externally: a routing layer matches surface features of the situation and forces the relevant content into context. The advantage is comparative, not absolute — trigger matching can also fail — but a trigger that fails leaves a named artifact that did not fire, which is inspectable and fixable, while a failed internal recall leaves nothing to point at. It follows that a lesson can be valuable while adding little the model does not know: its content may be nearly redundant with the weights while its trigger is not.
 
 This predicts that just-in-time interpretation should win for one-off cases, cheap and reliable deductions, domains with complete formal oracles, high-drift conclusions unlikely to be reused before expiry, and competence whose value resides in example detail rather than an articulable rule.
 
@@ -120,7 +124,7 @@ Suppose Exo replaces whole-artifact memory updates with compare-and-swap after o
 
 ## Why natural language is the frontier form
 
-The proposal does not privilege prose forever. It routes selected content by what currently interprets it reliably:
+The proposal does not privilege natural language forever. It routes selected content by what currently interprets it reliably:
 
 - **Episodes** preserve experience and tacit residue.
 - **Natural-language artifacts** retain mechanisms, reasons, applicability conditions, commitments, and unresolved theories that an LLM can interpret but no formal language yet receives.

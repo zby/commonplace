@@ -23,6 +23,8 @@ None of those artifacts decides what the future should inherit from the episode:
 
 A capable model can answer these questions just in time. But if the questions recur, the system pays again each time it selects the evidence and reconstructs the answer — and can produce a different answer each time.
 
+Nor is knowing enough. The model usually has the relevant background — rate limits, retry semantics, provider quirks — yet nothing in the moment may cue it to apply that knowledge; such activation failures are well documented. A retained lesson with an explicit trigger replaces that unreliable recall: the trigger fires on what the situation looks like and brings the lesson into context.
+
 ## Sometimes the evidence cannot give the lesson back
 
 There is a harder case than expensive re-derivation. Suppose that tool caps concurrent requests at 12. That number could be a permanent safety ceiling, or temporary tuning for one provider's quota. The code is identical either way, and every past run looks the same either way. But when the provider raises its limits, the two readings demand opposite responses. If nobody recorded which was meant, no future model — however capable — can recover the intent from the evidence. It can only invent a plausible one.

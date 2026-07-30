@@ -23,7 +23,7 @@ Evaluation boundary: canonical Exo main commit `ef4cfe057af0` and the separately
 
 The managed tool registry strengthens the control case. Exo can retain symbolic adaptation with a stable id, pinned source, validation before installation, replacement semantics, and inspection. Any semantic layer must add value beside that capable path rather than comparing itself with a weak or ephemeral tool baseline.
 
-The self-update reason and ExoWorker weaken the original form-based pitch. Exo now demonstrates two kinds of natural-language retention: event-local reasons attached to mutations and agent-authored facts or skills meant to survive across work. “Exo learns symbolically and needs prose” is therefore false as a system-level characterization.
+The self-update reason and ExoWorker weaken the original form-based pitch. Exo now demonstrates two kinds of natural-language retention: event-local reasons attached to mutations and agent-authored facts or skills meant to survive across work. “Exo learns symbolically and needs natural language” is therefore false as a system-level characterization.
 
 They also expose the narrower gap. A rebuild reason is not independently scoped, reviewed, activated, or invalidated. ExoWorker's memory record has id, text, and creation time; its skill has a name, description, body, files, and install/update times. These surfaces can voluntarily carry rich reasoning, but the system does not require source episodes, distinguish evidence from commitment, assign epistemic status, or connect changes in the referent to revalidation. The pitch is now about whether making that selection and lifecycle explicit is worth its cost.
 
@@ -55,7 +55,7 @@ What it does not support: Exo-specific benefit, open-ended self-theory, lifecycl
 
 What it supports: an external semantic artifact can carry reusable value independently of a persistent producing agent, including across model families; scoped claims can be challenged, split, and retained as rejections.
 
-What it does not support: which curation component caused the gain, open-ended semantic correctness, or the marginal value of governed conclusions beside Exo's existing prose, symbolic, and episodic layers.
+What it does not support: which curation component caused the gain, open-ended semantic correctness, or the marginal value of governed conclusions beside Exo's existing natural-language, symbolic, and episodic layers.
 
 ### Memento-Skills and the trace-learning corpus
 
