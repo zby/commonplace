@@ -8,6 +8,8 @@ Editorial/expository [profile](../reference/text-contract-profiles.md): outward-
 
 **Prose register.** Write in direct, functional language. Prefer plain words, explicit verbs, and concrete descriptions. Cut wording whose main effect is to sound elevated, clever, dramatic, or important. For each conspicuously vivid phrase, ask what understanding would be lost if it were stated literally. If none, use direct wording. Metaphor and memorable phrasing are allowed only when they make a mechanism, contrast, or boundary easier to grasp.
 
+**Do not use excessive defense-in-depth lawyer language.** State each claim at the scope and confidence its evidence supports. Put each material qualification beside the claim it limits, state it once, and move on. Do not repeat the same limit by negating a broader claim or add caveats for immaterial misreadings.
+
 **Drafting order.** The first version should be the simplest complete explanation. Establish the central idea, its support or mechanism, concrete grounding, material limits, and the onward path before trying to make the article memorable or easy to circulate. Simple means direct language and organization, not reduced technical content. Do not deliberately add hooks, emotional framing, surprise, stories, or memorable phrasing for promotional effect during this explanatory pass.
 
 Only after the explanation passes review may a separate editorial pass consider spreadability in the sense of Jenkins, Ford, and Green or stickiness in the sense of Heath and Heath's *Made to Stick*. Any such edit must preserve or improve clarity, precision, completeness, and honest statements of confidence and limits.
@@ -29,6 +31,7 @@ Treat these as the operative tests for collection conformance:
 - Can a technical reader with no KB context state the article's main claims, how they are supported, and their material limits?
 - When an example precedes an abstraction, does the prose say what the example establishes and carry that result into the general argument? Examples-first exposition is allowed; unexplained anecdotes are not.
 - Does each paragraph explain, support, qualify, or advance the argument?
+- Is each qualification doing new work? If it does not change the claim or what the reader may conclude, delete it.
 - Can an elevated phrase, metaphor, dramatic sentence, or flourish be replaced with plainer language without losing explanatory content? If so, require the replacement.
 - Do not request hooks, emotional framing, stories, or quotable phrasing until the explanatory tests above pass. In a later circulation or memorability pass, require every added technique to preserve or improve understanding. Repeated ornamental or sales-like phrasing warrants a warning; rhetoric that substitutes for mechanism, evidence, or qualification fails the contract.
 
