@@ -23,16 +23,17 @@ If URL provided, start Step 1 immediately.
 
 ## Step 1: Check for Duplicates
 
-Use Grep to search for the URL in existing `.md` files in `kb/sources/`. If found, tell the user and stop:
+Keep the provided URL as `source_url`. Use Grep to search for `source_url` in existing `.md` files in `kb/sources/`. If found, tell the user and stop:
 
 > Already snapshotted: kb/sources/{filename}
 
 ## Step 2: Route by URL Type
 
-Detect the URL type and branch:
+Detect the `source_url` type and branch:
 
 - **GitHub issue/PR** (`github.com/.../issues/N` or `github.com/.../pull/N`) → **Step 2a**
 - **X/Twitter** (`x.com/.../status/...` or `twitter.com/.../status/...`) → **Step 2b**
+- **arXiv abstract page** (`arxiv.org/abs/...`) → **Step 2c**
 - **PDF** (URL ends in `.pdf`, or `arxiv.org/pdf/`) → **Step 2c**
 - **Everything else** → **Step 2d**
 
@@ -41,7 +42,7 @@ Detect the URL type and branch:
 Run:
 
 ```bash
-commonplace-github-snapshot "{url}"
+commonplace-github-snapshot "{source_url}"
 ```
 
 Parse the "Snapshot saved:" line from the output to get the file path. Tell the user and stop — the script handles metadata, formatting, and saving.
@@ -51,17 +52,22 @@ Parse the "Snapshot saved:" line from the output to get the file path. Tell the 
 Run:
 
 ```bash
-commonplace-x-snapshot "{url}"
+commonplace-x-snapshot "{source_url}"
 ```
 
 Parse the "Snapshot saved:" line from the output to get the file path. Tell the user and stop — the script handles metadata, formatting, and saving.
 
-### Step 2c: Fetch PDF
+### Step 2c: Resolve and Fetch PDF
+
+Set `pdf_url`:
+
+- For an arXiv abstract URL, replace `/abs/` with `/pdf/` and discard any query string or fragment. Preserve an explicit terminal version such as `v1`. If the abstract URL has no terminal version, leave the PDF URL unversioned so arXiv serves the latest paper version. For example, `https://arxiv.org/abs/2606.03979` becomes `https://arxiv.org/pdf/2606.03979`. Do not fetch the abstract page with WebFetch.
+- For an existing PDF URL, use `source_url` unchanged.
 
 Download the PDF to a temporary file:
 
 ```bash
-curl -sL -o /tmp/snapshot_download.pdf "{url}"
+curl -fsSL -o /tmp/snapshot_download.pdf "{pdf_url}"
 ```
 
 Then use the Read tool to read the PDF:
@@ -93,7 +99,7 @@ If any fetch method fails (WebFetch NO_CONTENT, curl error, script error):
 
 **(Only for PDF and web page paths — GitHub and X scripts handle their own metadata.)**
 
-From the fetched content and URL, determine:
+From the fetched content and `source_url`, determine:
 
 - **title**: The article/post title. Use the first H1 if present, otherwise derive from content.
 - **author**: If identifiable from the content or URL (e.g. simonwillison.net → Simon Willison)
@@ -109,7 +115,7 @@ Save to `kb/sources/{slug}.md` with this format:
 
 ```markdown
 ---
-source: {url}
+source: {source_url}
 description: {description}
 captured: {YYYY-MM-DD}
 capture: {capture_method}
@@ -120,7 +126,7 @@ type: {snapshot type path from the Types menu, default kb/sources/types/snapshot
 # {title}
 
 Author: {author}
-Source: {url}
+Source: {source_url}
 Date: {publication date if known}
 
 {extracted content}
