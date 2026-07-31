@@ -1,5 +1,5 @@
 ---
-description: "Recasts the retention criterion from 'the consumer lacks this' to 'the consumer will not apply this unprompted', and argues a promoted conclusion stays unfinished until its trigger bottoms out outside the retained-artifact chain"
+description: "Recasts promotion from 'the consumer lacks this' to 'the consumer will not apply this unprompted', and requires delivery to have a root firing event independent of that prior activation"
 type: kb/types/note.md
 traits: [title-as-claim, has-comparison]
 tags: [agent-memory, context-engineering, failure-modes]
@@ -7,13 +7,13 @@ tags: [agent-memory, context-engineering, failure-modes]
 
 # Promotion selects for unreliable activation, and the regress ends only at an external trigger
 
-A **promotion theory** decides which candidate conclusions earn a durable place in retained memory: which observations become notes, which lessons become rules, and which conventions get written down. The obvious criterion is absence. Project decisions, local conventions, and facts postdating training are unavailable from the model's weights, so they must be stored somewhere.
+A **promotion theory** decides which candidate conclusions earn a durable place in retained memory: which observations become notes, which lessons become rules, and which conventions get written down. The obvious promotion criterion is absence. Project decisions, local conventions, and facts that postdate training are unavailable from the model's weights, so they must be stored somewhere.
 
-Absence is a real reason, but taken as *the* criterion it ranks the wrong set. Since [knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md), retained support can also help when the consumer can produce a conclusion on request but does not reliably raise and apply it unprompted. The [separation of generation, activation, and selection failure](./weakly-discriminated-qualities-tend-to-be-underselected.md) matters because those diagnoses call for different interventions.
+Absence is a real reason to retain content, but as *the* criterion it ranks the wrong set. As [knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md), retained support can also help when a consumer can produce a conclusion on request but does not reliably raise and apply it unprompted. The [separation of generation, activation, and selection failure](./weakly-discriminated-qualities-tend-to-be-underselected.md) matters because each failure calls for a different intervention.
 
-A conclusion has no activation value in isolation. That value belongs to a package comprising the conclusion, its delivery path, the consumer, and the occasions on which it should change behavior. The promotion question is whether retaining and delivering the conclusion will increase the probability that it is *applied on its occasion*.
+A conclusion has no activation value in isolation. That value belongs to a package: the conclusion, its delivery path, the consumer, and the occasions on which applying it should change the consumer's behavior. The relevant promotion question is therefore whether retaining and delivering the conclusion will make it more likely to be *applied on its occasion*.
 
-Absence and activation are not competing scalar scores. Absence asks whether storage is necessary for availability; activation asks whether a delivery intervention can close an application gap. When content is absent, baseline application may be zero, but storing it still does not determine how it will reach its occasion.
+Absence and activation are not competing scalar scores. Absence asks whether storage is necessary for availability. Activation asks whether a delivery intervention can close an application gap. When content is absent, baseline application may be zero, but storing it still does not determine how it will reach the occasion on which it matters.
 
 ## The two criteria rank candidates differently
 
@@ -22,76 +22,61 @@ Absence and activation are not competing scalar scores. Absence asks whether sto
 | Promotes for this reason | content that would otherwise be unavailable | support expected to improve unprompted application |
 | Supplies no marginal value when | the content is already available | application already fires reliably, however obscure the conclusion |
 | Value measured as | availability gained through storage | expected behavioral improvement, weighted by what rides on the occasion, less delivery cost |
-| Model-upgrade implication | storage may become unnecessary once the content becomes available | support retires only when the application gap or the package's net value also falls |
+| Model-upgrade implication | storage may become unnecessary once the content becomes available | support retires only when the application gap closes or the package's net value falls |
 
-The criteria diverge at both ends. A conclusion the consumer endorses when stated but never raises first has little absence value and potentially high activation value. This is the expert-witness case: the model answers the question asked but does not raise the concern nobody asked about. Conversely, an unavailable fact whose lookup already fires reliably has storage value but no additional activation value. The fact must exist somewhere, but its delivery problem is already solved.
+The criteria diverge at both ends. A conclusion that the consumer can produce when explicitly asked, but never raises first, has little absence value and potentially high activation value. This is the expert-witness case: the model answers the question asked but does not raise the concern nobody asked about. Conversely, an unavailable fact whose lookup already fires reliably has storage value but no additional activation value. A model upgrade therefore removes the storage rationale when it supplies missing content, but removes activation support only when unprompted application also improves or the delivery package no longer earns its cost.
 
-That yields a difference someone could observe. An absence theory predicts that a model upgrade retires retained material once the model can produce the content. An activation theory makes no such prediction from produce-on-request capability alone: the material should retire only if unprompted application also improves, or if the delivery package no longer earns its cost.
+This distinction sharpens the existing cost test rather than replacing it. [Promotion is already gated on future value exceeding maintenance cost](./agent-memory-requirements/promote-only-when-value-exceeds-cost.md), with retrieval and activation named together as sources of value. An open-versus-probed performance gap—the difference between unprompted performance and performance after the relevant concern is explicitly raised—can estimate the activation value available to capture, as in [maintained question-generation systems](./elicitation-requires-maintained-question-generation-systems.md). Whether promotion actually captures that value must be judged over the implemented content-and-delivery package.
 
-This distinction sharpens rather than replaces the existing cost test. [Promotion is already gated on future value exceeding maintenance cost](./agent-memory-requirements/promote-only-when-value-exceeds-cost.md), with retrieval and activation named together as sources of value. An open-versus-probed performance gap can estimate the activation value available to capture, as in [maintained question-generation systems](./elicitation-requires-maintained-question-generation-systems.md). Whether promotion captures that value must be judged over the implemented content-and-delivery package.
+## The promoted artifact inherits the activation dependency
 
-## The promoted artifact inherits the problem it was promoted to solve
+When promotion is justified by an activation gap, the promoted artifact still needs a delivery path. A note reached only after the consumer independently surfaces the same concern does not close the gap: its delivery depends on the very condition it was meant to supply. Following these dependencies backward produces the **activation regress**.
 
-When promotion is justified by an activation gap, the promoted artifact must itself be activated. A note read only when the consumer already has the topic in mind reproduces the original failure one level up: the consumer must remember to remember. Following the delivery dependencies backward produces the **activation regress**.
+[Retained-artifact](./definitions/retained-artifact.md) status does not stop the regress. A validator, always-loaded routing table, or trained disposition may itself be retained state. The relevant question is what makes its behavior fire on the occasion.
 
-The regress cannot terminate in another [retained artifact](./definitions/retained-artifact.md), a durable, addressable stored item. An instruction to consult an index, search first, or recall a convention still depends on retained content being raised. The chain terminates only when it reaches a mechanism whose firing does not itself depend on recalling another retained artifact: [content loaded unconditionally every session](./always-loaded-context-mechanisms-in-agent-harnesses.md), discovery that scans descriptions unbidden, an event-fired hook, a validator invoked by the build, a naming convention interpreted by code, or a human who invokes the procedure. These are instances of the broader [menu for firing behavior-changing memory](./agent-memory-requirements/activate-behavior-changing-memory.md).
+The delivery path can be represented as a graph of activation dependencies. A path remains unrooted when every step fires only after the consumer has already surfaced the target conclusion or the next routing instruction. It becomes rooted when a live event causes an evaluator, runtime, or human to act without that prior activation. Examples include [content loaded unconditionally at the start of every session](./always-loaded-context-mechanisms-in-agent-harnesses.md), discovery that scans descriptions without being requested, an event-fired hook, a validator invoked by the build, a naming convention interpreted by code, or a human invoking a procedure. These are instances of the broader [menu for firing behavior-changing memory](./agent-memory-requirements/activate-behavior-changing-memory.md).
 
-Externality here is causal, not informational. A description scanner, event classifier, or LLM-judged cue must still recognize the occasion. Moving that judgment outside the artifact chain does not eliminate false negatives, false positives, or maintenance. It ends only the regress in which activation depends on recalling another retained artifact. Selectivity, application, and net value must still be tested at the package level.
+Externality here is causal and relative to the activation dependency, not informational or substrate-based. A description scanner, event classifier, or LLM-judged cue must still recognize the occasion. Rooting the path does not eliminate false negatives, false positives, or maintenance costs; selectivity, application, and net value must still be tested at the package level.
 
-Chains are not the problem; unterminated chains are. A note reached through a tag index and a routing table can terminate in a harness that always loads the routing table. What fails is a path whose firing is explained only by another retained artifact, whether the path remains open or loops back on itself.
+Chains are not the problem; unrooted chains are. A note reached through a tag index and routing table can work if a session-start event loads the routing table. What fails is a path intended to support unprompted application when every firing edge still depends on the consumer independently surfacing the topic or route.
 
-**A retained conclusion's trigger is therefore load-bearing, not metadata.** Promotion for activation is incomplete until the trigger is named and shown to terminate outside the retained-artifact chain. Every artifact creates maintenance cost, and loading or indexing it also consumes context or routing capacity. Without an external terminator, the available activation value remains unrealized except through explicit requests or incidental retrieval.
+**A retained conclusion's trigger is therefore load-bearing, not metadata.** Before effects have been measured, activation-based promotion needs both a plausible root firing event and an account of why that event should recognize the occasion. Direct package-level evidence can establish that the gap is closed even when the internal path is difficult to inspect. Without either a rooted path or evidence of effects, the claimed activation value remains unrealized except through explicit requests or incidental retrieval.
 
-This is an observed failure mode, not merely a theoretical possibility. A [comparative review of agent memory systems](../agent-memory-systems/agentic-memory-systems-comparative-review.md) finds that most surveyed systems push memory into context, usually through coarse always-loading, while almost none test whether the injected memory changes behavior.
+A [comparative review of agent memory systems](../agent-memory-systems/agentic-memory-systems-comparative-review.md) finds that most surveyed systems push memory into context, usually through coarse always-loading, while almost none test whether the injected memory changes behavior. This observation does not by itself diagnose an unrooted chain. It shows instead why presence or injection alone cannot establish activation value.
 
-### A disposition can terminate the regress without making the path engineered
+### A disposition can root the path without making it engineered
 
-A trained disposition can also terminate the regress. A model that reliably searches the repository before editing supplies a trigger that is not itself a durable, addressable retained artifact.
+A trained disposition can also supply the root firing edge. A model that responds to an editing task by reliably searching the repository need not first have the missing conclusion active. The learned numerical state carrying this disposition may itself be a retained artifact; the live task cue is what makes its behavior fire.
 
-The difference is control. An author can set the conditions for a harness, hook, or build step and observe when it fails. The author can observe the effects of a disposition but cannot directly set or inspect its firing conditions. Both can terminate the causal regress; only the mechanical path is engineered.
+The difference is control. An author can set the firing conditions for a harness, hook, or build step and observe failures of that mechanism. The author can observe a disposition's effects but cannot directly set or inspect its firing conditions. Both can root the activation path; only the mechanical path is engineered.
 
 ## The resulting promotion test
 
 1. Is there an occasion on which this conclusion would change what gets done?
 2. On that occasion, what is the baseline gap between produce-on-request capability and unprompted application? If application is already reliable, activation supplies no marginal reason to retain the conclusion; exactness, provenance, coordination, or unavailable content may still supply a storage reason.
-3. What delivery path puts the artifact on that occasion, and what outside the retained-artifact chain makes that path fire? If nothing does, build a terminator or treat the activation value as unavailable.
+3. What delivery path puts the artifact on that occasion, and what live event makes the path fire without the conclusion or its next routing instruction already being active? If no such root is available, explicit requests and incidental retrieval may still work, but the identified unprompted-application gap remains unaddressed unless direct package testing already shows otherwise.
 4. Does the implemented content-and-delivery package improve behavior enough to exceed its maintenance, retrieval, context, and error costs? [Evaluate memory by effects, not existence](./agent-memory-requirements/evaluate-memory-by-effects.md).
 
-Steps 1 and 2 identify the opportunity that activation support might capture. Step 3 supplies the termination condition. Step 4 tests whether the complete intervention captures enough value to justify its cost. Passing step 2 but failing step 3 does not make every effect impossible — explicit requests and incidental retrieval can still work — but it leaves the identified activation gap without a reliable delivery path.
-
-Delivery is a different gate from [validity and learning value](./choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md) and [a statable applicability boundary](./abstract-an-experience-only-when-you-can-state-the-boundary.md). Those gates ask whether the conclusion deserves retention in principle. Delivery asks whether the intervention can reach the occasion on which that conclusion matters. A candidate can clear every content gate while having no path to use.
+Delivery is a different gate from [validity and learning value](./choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md) and [a statable applicability boundary](./abstract-an-experience-only-when-you-can-state-the-boundary.md). Those gates ask whether the conclusion deserves retention in principle. Delivery asks whether the intervention can reach the occasion on which the conclusion matters. A candidate can clear every content gate while still lacking a path to use.
 
 ## Scope
 
-Absence remains a genuine storage reason. No trigger can conjure a decision made last week or a local convention that was never retained. Absence asks whether content must be stored; activation asks whether a retained-and-delivered package improves application. Neither test replaces the other.
-
-Externality is necessary for terminating the recall regress, not sufficient for value. A stale index can fire perfectly and route to nothing. It is [worse than no index](./stale-indexes-are-worse-than-no-indexes.md) when satisfying the navigation cue suppresses a fallback search that would have worked.
+Rooting is necessary for an intended unprompted delivery path, but it is not sufficient for value. A stale index can fire perfectly and route to nothing. It is [worse than no index](./stale-indexes-are-worse-than-no-indexes.md) when satisfying the navigation cue suppresses a fallback search that would have worked.
 
 Termination can also be priced out. Unconditional loading is reliable but costly, and a shared terminator has finite capacity. [ADR 025](../reference/adr/025-complete-generated-indexes-are-build-time-only.md) retired always-loaded generated indexes when their unconditional cost grew with the collection. A path can therefore terminate correctly and still fail step 4.
 
-Building a trigger is not always feasible. [Symbolic routing can react only after a usable symbol exists](./symbolic-context-engineering-is-bounded-by-symbol-availability.md), so an occasion that nothing in the workflow names requires a costlier always-loaded slot or a probabilistic classifier. Failure to find a viable package is a legitimate outcome, not a defect in the candidate conclusion.
+Building a trigger is not always feasible. [Symbolic routing can react only after a usable symbol exists](./symbolic-context-engineering-is-bounded-by-symbol-availability.md), so an occasion that nothing in the workflow names requires either a costlier always-loaded slot or a probabilistic classifier. Causal independence and firing reliability are separate axes: a description scanner can root the path while still missing the occasion. Failure to find a viable package is a legitimate outcome, not a defect in the candidate conclusion.
 
-Measurement remains the weak point. Activation reliability is difficult to estimate in advance. Evidence usually comes from recorded misses or repeated open-versus-probed trials, so the method presupposes [a channel that records misses](./diagnostic-richness-constrains-outer-loop-learning-quality.md). Without one, activation-based selection degrades into guessing which conclusions the consumer is unlikely to raise.
+Measurement remains the weak point because activation reliability is difficult to estimate in advance. Evidence can come from recorded operational misses or controlled open-versus-probed trials. [A channel that records misses](./diagnostic-richness-constrains-outer-loop-learning-quality.md) enables learning from failures during normal operation; planned trials can generate measurements without such a channel. Without either source, activation-based selection degrades into guessing which conclusions the consumer is unlikely to raise.
 
 ## Open Questions
 
 - What is the cheapest instrument that estimates an activation gap for a candidate conclusion *before* promotion rather than after an observed miss?
-- Is trigger externality binary or graded? Harness-level description scanning is external to the artifact chain and still probabilistic, which suggests the ladder measures a continuum rather than a threshold.
-- When many artifacts share one external terminator — a single always-loaded routing file — does that terminator's capacity become the binding constraint on how much a KB can usefully retain?
+- What minimum evidence distinguishes a genuine root firing edge from model behavior that happens to retrieve the conclusion during a test?
+- When many artifacts share one external terminator—a single always-loaded routing file—does that terminator's capacity become the binding constraint on how much a KB can usefully retain?
 
 ---
 
 Relevant Notes:
 
-- [knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — grounds: supplies the storage/context/activation separation the selection criterion is defined over
-- [weakly discriminated qualities tend to be underselected](./weakly-discriminated-qualities-tend-to-be-underselected.md) — grounds: the generation/activation/selection trichotomy that makes "the model lacks it" an inadequate default diagnosis
-- [Promote only when future value exceeds maintenance cost](./agent-memory-requirements/promote-only-when-value-exceeds-cost.md) — extends: splits that note's combined "retrieval or activation value" term and adds the trigger check as a promotion obligation
-- [Activate behavior-changing memory before the mistake](./agent-memory-requirements/activate-behavior-changing-memory.md) — mechanism: the catalogue of firing methods this note argues must be selected from at promotion time
-- [symbolic context engineering is bounded by symbol availability](./symbolic-context-engineering-is-bounded-by-symbol-availability.md) — grounds: the availability limit that can make "build a trigger" unavailable and force a decline
-- [stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md) — evidenced-by: a trigger that fires reliably and still destroys value, bounding externality to necessary rather than sufficient
-- [retained artifact](./definitions/retained-artifact.md) — defined-in: the artifact class whose chain the regress runs through
-- [choosing what to learn requires both validity and learning-value gates](./choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md) — extends: adds delivery as a third gate, structurally different from both content gates
-- [diagnostic richness constrains outer-loop learning quality](./diagnostic-richness-constrains-outer-loop-learning-quality.md) — grounds: the general result behind why a missing miss-recording channel degrades activation-based selection
-- [elicitation requires maintained question-generation systems](./elicitation-requires-maintained-question-generation-systems.md) — mechanism: open-versus-probed performance estimates the activation gap the promotion package could capture
-- [Evaluate Memory By Effects, Not By Existence](./agent-memory-requirements/evaluate-memory-by-effects.md) — grounds: evaluates the retained content and delivery mechanism by their behavioral effect as one package
-- [only explicit retention is durable, writable, and addressable](./only-explicit-retention-is-durable-writable-and-addressable.md) — grounds: why a parametric disposition's firing conditions sit outside author control
+- [Only explicit retention is durable, writable, and addressable](./only-explicit-retention-is-durable-writable-and-addressable.md) — grounds: why a parametric disposition's firing conditions sit outside author control
