@@ -52,6 +52,25 @@ wins.
    - What relationship types were found
    - Any synthesis opportunities or tensions flagged
 
+   **For every experiment-bearing source, apply the fixed-decomposition
+   lens.** A source is experiment-bearing when it reports outcomes from an
+   intervention, benchmark comparison, ablation, controlled study, or other
+   empirical evaluation as evidence for a design. Before settling the
+   connections, extractable value, or limitations, read
+   `kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md`.
+   Identify:
+   - Which signals and histories could condition the learned behaviour
+   - Which responses or operations the learner could compose
+   - Which mappings its hypothesis class could express
+   - Which representations, partitions, and other design choices remained
+     fixed outside the effective update space
+
+   Separate improvement within that space from evidence for the fixed
+   decomposition. Treat an ablation as evidence only for the choice it
+   actually varies; do not let it validate adjacent fixed choices or the
+   decomposition as a whole. Carry any material consequence into
+   `Connections Found`, `Extractable Value`, or `Limitations (our opinion)`.
+
    Treat `Maintenance Observations` as non-actionable context: mention durable
    signals in the ingest report only when relevant, and do not act on or promote
    them during ingest.
@@ -112,3 +131,9 @@ wins.
   context.
 - Include effort tags on extractable value items.
 - Recommend exactly one advisory next action.
+
+---
+
+Relevant Notes:
+
+- [Learning inside a fixed decomposition inherits its mistakes](../../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — rests-on: experiment ingests must distinguish learning within an effective update space from evidence for design choices fixed outside it
