@@ -64,7 +64,9 @@ Exercised in this repository by `kb/articles/` and its near-complete first artic
 | | |
 |---|---|
 | Orientation | Self-standing exposition distilled from the KB for an external reader |
-| Quality goal | Technical depth without assumed KB context, plus a worthwhile onward path into the underlying knowledge |
+| Quality goal | Clear, precise explanation with technical depth and no assumed KB context, plus a worthwhile onward path into the underlying knowledge |
+| Prose register | Direct and functional; concrete examples establish the argument, and rhetorical ornament is cut |
+| Drafting order | Write the simplest complete explanation first; consider circulation and memorability only in later passes after the explanation works |
 | Title convention | Reader-addressed headline, not claim-as-title |
 | Attribution | Byline and publication date; `source_notes` records internal lineage |
 | Maintenance | A published body is a frozen dated record; corrections use annotations, superseding articles, or withdrawal |
