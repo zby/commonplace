@@ -13,6 +13,7 @@ source_notes:
   - kb/notes/retrieval-failure-is-reflection-failure.md
   - kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md
   - kb/notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md
+  - kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md
   - kb/notes/methodological-and-computational-closure-track-different-changes.md
   - kb/notes/a-proximate-target-is-checked-for-achievement-not-for-warrant.md
   - kb/notes/self-improvement-is-relative-to-a-declared-objective.md
@@ -28,14 +29,15 @@ source_notes:
   - kb/reference/commonplace-as-a-reflective-system.md
   - kb/reference/tag-readme-trace-observed-causal-connection.md
   - kb/agentic-systems/exo.md
+  - kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md
   - kb/sources/sutton-the-bitter-lesson-original-essay.md
 ---
 
 # Reflective self-improvement
 
-An index page in a knowledge base had two jobs: introduce a topic and list every note carrying its tag. It also had to stay short because agents load it into a limited context. As the collection grew to 55 entries and 18.8 KB, the page became too large to verify by hand. Its claim of completeness could no longer be trusted.
+[Commonplace](../index.md), the knowledge-base system that holds this article, had a `learning-theory` index with two jobs: introduce the topic and list every note carrying that tag. The page also had to stay short because agents load it into a limited context. As that body of notes grew to 55 entries and 18.8 KB, the index became too large to verify by hand. Its claim of completeness could no longer be trusted.
 
-A recorded decision split the two jobs and introduced machine-checked marks. A `complete` mark tells the validator to compare an index's links against every note carrying its tag. A `covered_by: [children]` mark checks that every note with the parent tag also carries at least one listed child tag, giving readers an enforced route through those child tags. The decision also set warning and failure limits on page size. While applying the new coverage check, the validator found a note whose multiline YAML tag list had been missed by the documented text-search recipe. The validator parsed the metadata instead of relying on that one textual layout. The recipe was corrected, and the marks now change what validation accepts and which searches an agent needs to run. The [commit history records the chain](../reference/tag-readme-trace-observed-causal-connection.md).
+A recorded decision split the two jobs and introduced machine-checked marks. The validator checks coverage in either form: every tagged note is linked from the index, or every note with the broad tag also carries at least one listed narrower tag. The decision also set warning and failure limits on page size. While applying the new coverage check, the validator found a note whose multiline YAML tag list had been missed by the documented text-search recipe. The validator parsed the metadata instead of relying on that one textual layout. The recipe was corrected, and the marks now change what validation accepts and which searches an agent needs to run. The [commit history records the chain](../reference/tag-readme-trace-observed-causal-connection.md).
 
 Three smaller hypothetical examples isolate the other parts of the pattern.
 
@@ -81,8 +83,9 @@ Guarding writes does not decide what is worth retaining. For reusable explanator
 - [Voyager](https://arxiv.org/abs/2305.16291) retains durable executable skills, while the instructions and scaffolding that run the loop remain outside the improvement target.
 - [Promptbreeder](https://arxiv.org/abs/2309.16797) changes steering text through mutation and benchmark selection, but a surviving prompt carries no maintained rationale to inspect or revise.
 - [STOP](https://arxiv.org/abs/2310.02304) and the [Darwin Gödel Machine](https://arxiv.org/abs/2505.22954) rewrite scaffolding code, but their benchmark-based evaluation can assess only effects the benchmark measures.
+- The original [Gödel machine proposal](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md) adopts a self-rewrite only after proving from its axioms that switching now has greater expected utility than continuing the search. Changes it cannot prove beneficial remain out of reach.
 
-These systems either retain changes without a governance layer or evaluate them through a narrow channel. The pattern proposed here keeps an artifact layer representing selected aspects of the system in natural language and code, then uses LLMs to propose and criticize changes. Natural-language criticism can consider effects that a fixed benchmark does not encode, but its judgments need verification outside the text being judged.
+These systems either retain changes without a governance layer or evaluate them through a narrow channel. The pattern proposed here keeps an artifact layer representing selected aspects of the system in natural language and code, then uses LLMs to propose and criticize changes. Natural-language criticism can consider effects that a proof system cannot establish or a fixed benchmark does not measure, but its judgments need verification outside the text being judged.
 
 The [reviewed Exo version](../agentic-systems/exo.md), pinned to commit `ef4cfe05` from 2026-07-29, is an agent harness and memory system that can change both natural-language and executable artifacts. It keeps event history and versioned artifacts, supports deliberate removal, structurally validates installed tools, and provides a fixed rebuild tool that blocks activation when validation or a build fails. Its documented adoption practice calls for running relevant tests first. This makes it the closest comparison here.
 
@@ -94,7 +97,7 @@ Commonplace currently relies on hand-designed artifacts: types, link rules, revi
 
 The relevant distinction is between how useful structure is produced and the form in which it is retained. Search and learning are production methods; natural language, code, and model weights are representational forms. A system could search over theories, instructions, tests, schemas, and programs, evaluate the candidates, and retain selected artifacts for later use and revision. Those artifacts would be products of learning rather than fixed knowledge supplied by designers. Their textual or symbolic form would not by itself conflict with [the bitter lesson](../notes/the-bitter-lesson-selects-production-methods-not-representational.md).
 
-Commonplace does not yet implement such a learned search loop. Humans still diagnose many failures, decide which artifact may be responsible, and accept changes; agents and automated checks assist them. The current human-assisted system is being used to discover candidate representations and checks. Whether search over a large, interdependent artifact corpus scales remains an empirical question.
+Commonplace does not yet implement such a learned search loop. Humans still diagnose many failures, decide which artifact may be responsible, and accept changes; agents and automated checks assist them. The human-assisted loop is a bootstrap: it discovers candidate representations and checks that a later search-and-learning loop could use. Whether search over a large, interdependent artifact corpus scales remains an empirical question.
 
 Stable guidance can be retired once a stronger model reliably supplies and applies it where needed. Some information still requires an authoritative current record. "Retry with backoff" is general knowledge. "This deployment retries with backoff, adopted after the March incident and owned by the platform team" records a [current commitment](../notes/commitment-not-derivation-creates-new-ground-truth.md). A model may reproduce the sentence, but [reproduction alone does not establish](../notes/parametric-reproduction-cannot-replace-an-authoritative-record.md) that the commitment is still operative, who authorized it, or what evidence now supports it. The record can use any representation that preserves currentness, attribution, and authorized revision.
 
@@ -110,9 +113,11 @@ A successful use shows that [the current division of work among artifacts, index
 
 Self-use therefore guards against ossification: it exposes hand-designed structure to evidence and supplies reasons to revise or remove it. In this way it addresses the empirical burden raised by the bitter lesson.
 
-Moving an adoption decision from a human to an automated check requires a stable criterion and use evidence that the [check reliably accepts and rejects candidates well enough for what is at stake](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md).
+Moving an adoption decision to an automated check changes who decides. For Commonplace, this counts as improvement only when the [check is reliable enough for what is at stake](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) and the change produces more useful, better-warranted knowledge work per unit of human judgment.
 
-The empirical question is whether an evolving, addressable artifact layer improves a declared objective — such as adaptation speed, reliability, or governance quality — compared with stronger base models and simpler memory systems. A fair test compares those baselines as corpus size and model strength change, while counting evaluation, maintenance, and human judgment. Self-use supplies observations about Commonplace's current design.
+A [July 2026 preprint](https://arxiv.org/abs/2607.19592) reports that a frozen, curated task-knowledge artifact improved solve rates on 20 selected hard tasks, including across two model families. The learning system revises task knowledge rather than a representation of itself, so [the result](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md) supports artifact retention and transfer, not reflective self-improvement.
+
+The broader empirical question is whether an evolving, addressable artifact layer improves a declared objective — such as adaptation speed, reliability, or governance quality — compared with stronger base models and simpler memory systems. A fair test compares those baselines as corpus size and model strength change, while counting evaluation, maintenance, and human judgment. Self-use supplies observations about Commonplace's current design.
 
 ## Where to go next
 
