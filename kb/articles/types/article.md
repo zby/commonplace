@@ -17,4 +17,4 @@ Use `article` for outward-facing pieces published from the KB: self-contained pr
 | `description` | Yes | Retrieval filter for agents; not the reader-facing abstract. |
 | `source_notes` | No | Repo-root paths of the notes the article distils; when present, every path must resolve. |
 
-Everything else (`byline`, `status`, `published`, …) is editorial convention governed by [COLLECTION.md](../COLLECTION.md), unconstrained here for now.
+Everything else (`byline`, `status`, `published`, `version`, `revised`, …) is editorial convention governed by [COLLECTION.md](../COLLECTION.md), unconstrained here for now.

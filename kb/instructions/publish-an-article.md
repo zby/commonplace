@@ -1,31 +1,40 @@
 ---
-description: "Use when a finished kb/articles draft has explicit approval to become a dated public article on the ProperDocs site"
+description: "Use when a finished kb/articles draft has explicit approval to become a public working paper or frozen dated article on the ProperDocs site"
 type: kb/types/instruction.md
 ---
 
 # Publish an article
 
-Turn an approved article draft into the frozen dated artifact published by the ProperDocs deployment. Publication approval applies to the current substantive body; if the body changes afterwards, obtain approval again.
+Turn an approved article draft into a public artifact on the ProperDocs deployment, as either a revisable **working paper** or a frozen dated **published** article. Publication approval applies to the current substantive body and to the target state; if either changes afterwards, obtain approval again.
 
 ## Prerequisites
 
 - The artifact declares `type: kb/articles/types/article.md` and `status: draft`.
 - It carries a byline and resolving `source_notes`.
 - Its body satisfies `kb/articles/COLLECTION.md`: self-standing technical prose for an external reader, no agent-facing footer grammar, and a worthwhile onward path into the KB.
-- The user has explicitly approved publication. “Nearly ready,” review approval, or a merge approval is not publication approval.
+- The user has explicitly approved publication **and named the target state**. “Nearly ready,” review approval, or a merge approval is not publication approval.
+- For a working paper, the body says what it invites — counterexamples, boundary cases, disputed classifications.
 
 ## Publish
 
 1. Run `commonplace-validate {draft-path}` and resolve every failure. Warnings require judgment but do not automatically block publication.
 2. If the draft is under `kb/articles/drafts/`, relocate it to `kb/articles/{slug}.md` with `commonplace-relocate-note --to ... --apply`. If it is the transitional first draft already at the collection root, keep its path.
-3. Without changing the substantive body, set `status: published` and `published: YYYY-MM-DD` in frontmatter using the publication date supplied by the user, or the current local date when the user says “today.” Do not infer a date for “tomorrow” before that day arrives.
-4. Move the article's entry from any draft list into `kb/articles/README.md` under `## Published`, including the publication date. Keep the context phrase reader-facing.
+3. Without changing the substantive body, set the frontmatter for the approved target state, using the date supplied by the user, or the current local date when the user says “today.” Do not infer a date for “tomorrow” before that day arrives.
+   - Working paper: `status: working-paper`, `published: YYYY-MM-DD` for the first public date, `version: 1`, and `revised: YYYY-MM-DD` matching the publication date.
+   - Published: `status: published` and `published: YYYY-MM-DD`.
+4. Move the article's entry from any draft list into `kb/articles/README.md` under `## Working papers` or `## Published`, including the date. Keep the context phrase reader-facing.
 5. Run `commonplace-validate {published-path}` and `commonplace-validate articles`. If relocation changed `properdocs.yml`, run `commonplace-validate redirects` too.
 6. Review the diff with the user when the approved body changed or any publication field is uncertain. Otherwise commit the article, collection README, and relocation redirect together. Land that commit on `main` through the repository's normal Git workflow; the Pages deployment is the publication action.
 
+## Revising a working paper
+
+A working paper is revisable in place, which is the point of the state. For each substantive revision — a changed claim, a new or withdrawn qualification, a restructured argument — bump `version`, set `revised` to the revision date, and re-run `commonplace-validate`. Typo and link fixes do not bump the version.
+
+Freeze the working paper into a dated record only with explicit approval: set `status: published`, keep the original `published` date, drop `version` and `revised`, and move its README entry to `## Published`. The path does not change. Freezing is one-way — a published body cannot reopen as a working paper.
+
 ## After publication
 
-Do not silently rewrite the substantive body. Apply a correction as one of:
+A published body is frozen. Do not silently rewrite it. Apply a correction as one of:
 
 - a dated annotation that preserves the original text;
 - a new article, with the old article set to `superseded` and a visible pointer to its successor; or
@@ -35,8 +44,8 @@ A later source-note change does not automatically stale a dated article. Search 
 
 ## Verify
 
-- The article is at `kb/articles/{slug}.md`, has `status: published`, and has the intended publication date.
-- `kb/articles/README.md` lists it under `## Published` and nowhere as a draft.
+- The article is at `kb/articles/{slug}.md`, carries the approved status, and has the intended dates — plus `version` and `revised` for a working paper.
+- `kb/articles/README.md` lists it under the matching public heading and nowhere as a draft.
 - The article and collection validate without failures.
 - After the commit reaches `main`, the ProperDocs page renders its status and the article is discoverable from the Articles navigation.
 

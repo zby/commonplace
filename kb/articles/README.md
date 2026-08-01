@@ -1,8 +1,12 @@
 # Articles
 
-Writing from the Commonplace knowledge base for readers outside the project — researchers and builders of agent and knowledge systems. Each article stands on its own, carries a byline and a date, and links into the KB it was distilled from. The KB is the living system; articles are dated records of what it established at the time of writing.
+Writing from the Commonplace knowledge base for readers outside the project — researchers and builders of agent and knowledge systems. Each article stands on its own, carries a byline and a date, and links into the KB it was distilled from.
 
-Published articles are frozen: corrections appear as dated annotations or superseding articles, never as silent rewrites.
+Articles circulate in one of two public states. A working paper is revisable: its claims are still open, it carries a version and a revision date, and it invites counterexamples. A published article is frozen — corrections appear as dated annotations or superseding articles, never as silent rewrites.
+
+## Working papers
+
+Nothing circulating yet.
 
 ## Published
 
