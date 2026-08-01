@@ -57,3 +57,4 @@ Relevant Notes:
 - [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — contrasts: the same aggregation difficulty over a different profile dimension
 - [Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) — evidenced-by: the operative-but-non-cumulative case, including the trigger-channel dependence the clamp excludes
 - [Self-Improving Algorithms](../sources/self-improving-algorithms.md) — evidenced-by: cumulative retention without an inspectable self-representation
+- [Self-improvement compounds through reflective leverage, not autonomy](./self-improvement-compounds-through-reflective-leverage-not-autonomy.md) — extends: narrows this criterion by target, counting only dependence that lands on the improvement pathway's own functions

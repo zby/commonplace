@@ -22,7 +22,7 @@ Evidence may **directly determine** an update that is always adopted, as gradien
 After membership and update architecture, profile the pathway across four parts rather than placing it on a ladder. The profile is descriptive and selects no order by itself; any comparison between pathways is indexed to a declared objective. (Not the [text-contract](./definitions/text-contract.md) sense of "profile", which is a normative bundle a collection adopts.)
 
 - **Reflective structure** — [coverage of represented aspects and forms](./reflective-coverage-is-graded-across-representational-forms.md), plus the separate [addressability profile](./reflection-buys-addressability.md) over retained commitments.
-- **Improvement dynamics** — [cumulativity](./accumulation-counts-dependence-through-the-retained-result.md): dependence through the retained result itself, not through the evidence it caused.
+- **Improvement dynamics** — [cumulativity](./accumulation-counts-dependence-through-the-retained-result.md): dependence through the retained result itself, not through the evidence it caused; [compounding requires reflective leverage](./self-improvement-compounds-through-reflective-leverage-not-autonomy.md) — dependence landing on the pathway's own machinery, independent of autonomy.
 - **Governance** — [what the methodology settles](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md), and [which of those decisions are warranted](./warranted-autonomy-is-bounded-by-oracle-domain.md).
 - **Actor allocation** — human, computational, or joint per function; [allocation carries the comparison](./methodological-and-computational-closure-track-different-changes.md), and computational closure is its no-human endpoint, not a grade of reflectivity.
 
