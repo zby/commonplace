@@ -2,16 +2,16 @@
 
 **Date:** 2026-07-29
 
-**Status:** phase A is ready for maintainer approval; phase B is semantically settled except for one prerequisite-family hold and must not execute yet. No durable catalogue, contract, ADR, or corpus change has been made.
+**Status:** phase A remains ready for maintainer approval. Phase B is withdrawn: the [premise-cohort replication](./premise-cohort-replication/results.md) blocks migration from the current premise ledger, and the [premise-relation calibration](./premise-relation-discriminability-experiment.md) must succeed before corpus transport or a replacement ledger is justified. The prerequisite-family hold remains unresolved but is no longer the only phase-B blocker. No durable catalogue, contract, ADR, or corpus change has been made.
 
 ## Recommended implementation split
 
 Use two atomic directional-label migrations rather than one 374-row edit:
 
 1. **Phase A — retire `mechanism`.** Adopt `explained-by` and `operates-through`, update current guidance, and migrate all 82 active `mechanism` tuples. This phase is complete and independently executable: 81 tuples have exact successor labels and one is removed.
-2. **Phase B — retire `grounds`.** Adopt `premised-on`, add the demonstrated notes→notes `is-evidence-for` pairing, and migrate the 292 active `grounds` tuples. Do not execute this phase until `F094` receives an exact label from the `enables` / `precondition` family review; `prerequisite-hold` is a disposition, not a registered identifier.
+2. **Phase B — retire `grounds` (withdrawn).** Do not adopt `premised-on` or execute the 292-row disposition manifest. First calibrate whether premise is distinguishable from its neighbors and whether it independently earns formal registration; only a successful calibration may authorize a fresh corpus-transport protocol and replacement ledger. `F094` must also receive an exact label from the `enables` / `precondition` family review before any later phase-B plan can become executable.
 
-This split lets `mechanism` reach zero without preserving a synonym or inventing a temporary prerequisite label. It also keeps an accepted ADR truthful: phase A can describe implemented behavior while phase B remains workshop state until every active `grounds` tuple has a successor or removal.
+This split still lets `mechanism` reach zero independently. Phase A can describe implemented behavior while all `grounds` decisions remain workshop state. Completing the prerequisite row alone no longer unlocks phase B.
 
 ## Live planning baseline
 
@@ -25,7 +25,7 @@ The [live disposition manifest](./premise-mechanism-live-disposition-manifest.ts
 
 The active pairings are 366 notes→notes, seven sources→notes, and one reference→notes. Generated reports, workshop history, archived proposals, immutable snapshots, quotations, and ordinary prose are outside this active registered-edge baseline.
 
-The full accepted disposition is:
+The pre-replication planning disposition was:
 
 | disposition | rows |
 |---|---:|
@@ -43,11 +43,11 @@ The full accepted disposition is:
 | `prerequisite-hold` | 1 |
 | **total** | **374** |
 
-The decision provenance reconciles exactly: 87 accepted mechanism-core rows, 42 mechanism-boundary rows, 155 surviving original premise rows, 69 surviving grounds-boundary rows, and 21 accepted drift rows.
+The decision provenance reconciles exactly as a historical planning baseline: 87 accepted mechanism-core rows, 42 mechanism-boundary rows, 155 surviving original premise rows, 69 surviving grounds-boundary rows, and 21 accepted drift rows. The manifest remains useful for tuple identity and provenance, but its `premised-on` rows are no longer an executable disposition ledger.
 
-## Registered semantics
+## Candidate and phase-A semantics
 
-All three proposed identifiers are asymmetric, source-as-subject, and have no required inverse. Target artifact type is not sufficient to choose between them; the source's assertion and revision consequence decide.
+The two mechanism successors remain proposed for phase A. The `premised-on` shape is now the candidate contract under calibration, not an accepted phase-B registration. All three candidate identifiers are asymmetric, source-as-subject, and have no required inverse. Target artifact type is not sufficient to choose between them; the source's assertion and revision consequence decide.
 
 ### `premised-on`
 
@@ -78,19 +78,21 @@ All three proposed identifiers are asymmetric, source-as-subject, and have no re
 
 ## Exact authorization audit
 
+This table preserves the pre-replication planning counts. Phase A uses its narrower 82-row table below; every `grounds`-derived count requires a fresh ledger before execution.
+
 | source → destination | disposition | current rows | current authorization | required decision |
 |---|---|---:|---|---|
 | notes → notes | `explained-by` | 73 | absent | register label and pairing |
 | notes → notes | `operates-through` | 33 | absent | register label and pairing |
-| notes → notes | `premised-on` | 168 | absent | register label and pairing in phase B |
-| notes → notes | `is-evidence-for` | 3 | absent | add pairing in phase B |
+| notes → notes | `premised-on` | 168 | absent | withheld pending calibration and a replacement ledger |
+| notes → notes | `is-evidence-for` | 3 | absent | defer to any rebuilt phase-B plan |
 | sources → notes | `is-evidence-for` | 7 | authorized | no change |
 | reference → notes | `rests-on` | 1 | authorized | no change |
 | notes → notes | all other exact labels | 83 | authorized | no change |
-| notes → notes | removal | 5 | not applicable | delete exact footer rows |
-| notes → notes | prerequisite hold | 1 | unresolved | family review before phase B |
+| notes → notes | removal | 5 | not applicable | one phase-A removal remains approved; four grounds removals require a fresh ledger |
+| notes → notes | prerequisite hold | 1 | unresolved | family review plus a rebuilt phase-B plan |
 
-No notes→notes `see-also` authorization is needed. The five weak-adjacency rows are removals. No reference→notes authorization is needed for either new mechanism successor: the sole reference row is exactly `rests-on`.
+Phase A needs no notes→notes `see-also` or reference→notes authorization for either new mechanism successor: its one weak-adjacency row is removed, and its sole reference row is exactly `rests-on`. The earlier claims about four grounds removals and no grounds `see-also` successors remain historical until a replacement ledger tests them.
 
 ## Phase A — executable `mechanism` migration
 
@@ -170,9 +172,9 @@ No source contract, reference contract, instruction, schema, validator, or code 
    - historical ADR/workshop evidence remains historical rather than being lexically rewritten.
 5. Validate every changed KB artifact, run `git diff --check`, inspect the complete diff, and write the phase retrospective before committing.
 
-## Phase B — `grounds` migration, one dependency outstanding
+## Phase B — `grounds` migration withdrawn
 
-The current 292-row `grounds` surface is otherwise fully classified:
+The packet previously treated the current 292-row `grounds` surface as fully classified except for one prerequisite hold:
 
 | successor/action | active `grounds` rows |
 |---|---:|
@@ -189,13 +191,13 @@ The current 292-row `grounds` surface is otherwise fully classified:
 | `prerequisite-hold` | 1 |
 | **total** | **292** |
 
-`F094` is the only blocker:
+`F094` remains a blocker, but it is no longer the only blocker:
 
 `kb/notes/an-outcome-check-licenses-replay-a-rule-needs-the-process-verified.md:40 → kb/notes/diagnostic-richness-constrains-outer-loop-learning-quality.md`
 
 Two of three exact classifiers found a prerequisite relation; one found `explained-by`. The accepted `prerequisite-hold` says the target must be available or true before the source works, but deliberately withholds a spelling until `enables` and `precondition` are reviewed together. Carrying `grounds` as a one-row legacy authorization would keep the retired ambiguity authorable; inventing a temporary label would create unreviewed vocabulary. Both are worse than resolving the family first.
 
-After that review, phase B should receive its own final rebaseline, ADR, and approval. Its already-settled durable changes are:
+The prerequisite-family review may settle `F094`, but it cannot restore this phase-B plan. The following previously proposed durable changes are withdrawn pending premise calibration, corpus transport, a complete replacement ledger, final rebaseline, and fresh maintainer approval:
 
 - replace `grounds` with `premised-on` in the shared catalogue, notes contract, workshop suggestions, and theoretical text-contract profile;
 - add notes→notes `is-evidence-for` to `kb/notes/COLLECTION.md` for the three demonstrated evidence-note rows;
@@ -207,6 +209,6 @@ After that review, phase B should receive its own final rebaseline, ADR, and app
 Recommended next authorization:
 
 1. approve phase A exactly as scoped above; and
-2. authorize the read-only `enables` / `precondition` family review needed to replace `F094`'s hold before a separate phase-B approval.
+2. approve or revise the premise-relation calibration design before any new scored dispatch.
 
-Neither authorization permits phase-B corpus mutation. Any phase-A corpus edit still starts with a fresh tuple rebaseline and stops on drift.
+The read-only `enables` / `precondition` family review can proceed independently, but completing it is not sufficient for phase B. No current authorization permits phase-B corpus mutation. Any phase-A corpus edit still starts with a fresh tuple rebaseline and stops on drift.

@@ -1,0 +1,26 @@
+{"id":"case-5fea6da992bdb6","class":"C2","confidence":"high","explanation":"B explains why OpenProse's separation yields scoping benefits in an otherwise unscoped context."}
+{"id":"case-cbbd1d7667e81e","class":"C13","confidence":"medium","explanation":"The relationship is useful connective prose, but B broadens rather than directly formalizes A's scope claim."}
+{"id":"case-013bbf561b7940","class":"C2","confidence":"high","explanation":"B explains why explicit, addressable artifacts are required for methodological closure."}
+{"id":"case-6c50ade3801134","class":"C4","confidence":"high","explanation":"B's inspectability theory justifies the runtime's separate execution-substrate design."}
+{"id":"case-5996d10a688230","class":"C4","confidence":"high","explanation":"B's recomputation economics justify the tag-README's checked completeness-mark design."}
+{"id":"case-ad48aaedc0e182","class":"C1","confidence":"high","explanation":"A's inherited composability constraint holds conditional on B's shared bounded-context condition."}
+{"id":"case-d88171537c6fb6","class":"C13","confidence":"medium","explanation":"B usefully explains A's exception, but the connection remains ancillary connective prose."}
+{"id":"case-fd065e5a4769ae","class":"C1","confidence":"high","explanation":"A's comparison framework depends on B's declared-boundary semantics."}
+{"id":"case-bac2e954ce6f0b","class":"C4","confidence":"high","explanation":"B's operation-profile vocabulary shapes the episode-and-rule design and its replay characterization."}
+{"id":"case-ca121ccba67434","class":"C2","confidence":"medium","explanation":"B explains why context degradation varies with the observer and task rather than only the hard limit."}
+{"id":"case-fa13dc1364da68","class":"C4","confidence":"high","explanation":"B's explanatory-reach test justifies the memory-abstraction rule requiring explicit boundaries."}
+{"id":"case-4f00efdb446dff","class":"C2","confidence":"high","explanation":"B explains the maintenance payoff of exposing commitments through claim titles."}
+{"id":"case-a627c01cfeb3e0","class":"C5","confidence":"high","explanation":"A's unattended-selection claim requires a verifier whose discrimination covers the relevant candidates."}
+{"id":"case-9a724e4374e080","class":"C13","confidence":"medium","explanation":"B offers a useful broader falsifiability connection, but it does not create a direct edge for A's title convention."}
+{"id":"case-1989c918c7946c","class":"C12","confidence":"high","explanation":"This is a formalization relation: B translates A's coordination claim into select/call conditions, so changes to that lemma revise the coordination interpretation."}
+{"id":"case-b5510a490b71bf","class":"C4","confidence":"high","explanation":"B's recomputation-cost theory justifies A's derived-copy retention rule once checking is available."}
+{"id":"case-72ed741ccbd80f","class":"C3","confidence":"high","explanation":"B's signal and status safeguards are control mechanisms through which trace-derived authority is prevented from being overstated."}
+{"id":"case-b43b0ab7700ffe","class":"C10","confidence":"high","explanation":"B defines the inherited criteria materially used to characterize A's reflective-system instance."}
+{"id":"case-d45ce3e679afe0","class":"C2","confidence":"high","explanation":"B explains why underspecified natural-language sources leave generated code as a committed interpretation."}
+{"id":"case-8a530b0c39ba8e","class":"C8","confidence":"high","explanation":"B develops A's specific confidence-versus-soundness distinction into a broader verifier boundary."}
+{"id":"case-8444045b653617","class":"C5","confidence":"high","explanation":"B's oracle coverage must be available before formalized claims can support unattended acceptance."}
+{"id":"case-394ae9372bce28","class":"C13","confidence":"medium","explanation":"B provides a useful epistemic explanation for co-loading, but the connection is not mechanically direct."}
+{"id":"case-1a80e03a9cb978","class":"C2","confidence":"high","explanation":"B explains why underdetermined natural-language declarations need point-of-use reinforcement."}
+{"id":"case-15b46d34f5e07e","class":"C2","confidence":"high","explanation":"B explains the partial, non-routing role of type declarations within A's placement contrast."}
+{"id":"case-f885ae7745ebc0","class":"C13","confidence":"low","explanation":"B is relevant to A's objective-setting discussion, but it does not establish the stronger categorical claim."}
+{"id":"case-93e833a0ae496b","class":"C5","confidence":"high","explanation":"B's oracle-domain coverage must hold before intervention-based revision can be trusted unattended."}

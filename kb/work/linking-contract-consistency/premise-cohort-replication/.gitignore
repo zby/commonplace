@@ -1,0 +1,4 @@
+/raw-observer/
+/raw-mapper/*
+!/raw-mapper/*-attempt-1.jsonl
+!/raw-mapper/*-attempt-1.stderr

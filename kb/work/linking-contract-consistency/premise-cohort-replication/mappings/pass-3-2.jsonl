@@ -1,0 +1,26 @@
+{"id":"case-debb81f590eb94","class":"C4","confidence":"high","explanation":"B's scheduler model justifies A's persistence-boundary design; changes to B would require revising the cache and promotion boundary."}
+{"id":"case-65f16a15010b0b","class":"C4","confidence":"high","explanation":"B's proposal-selection loop shapes A's three-stage learning architecture and its ablation design."}
+{"id":"case-de38abeca27643","class":"C4","confidence":"high","explanation":"B's decomposition lemma justifies A's host-language scheduler design and its stated scope limits."}
+{"id":"case-6c0a42a4b717c0","class":"C4","confidence":"high","explanation":"B's oracle conditions justify the design of A's four checks and its reliability claim."}
+{"id":"case-4d03ee8de3d7c3","class":"C13","confidence":"medium","explanation":"The competence condition usefully qualifies A's advice, but the observation marks the relation as connective prose only."}
+{"id":"case-e5c79d4a63f396","class":"C2","confidence":"high","explanation":"B explains how pointer context affects navigation decisions, accounting for A's title-based traversal mechanism."}
+{"id":"case-e46581928a37b0","class":"C2","confidence":"high","explanation":"B explains why bounded context makes transcript preservation a selective-loading problem, supporting A's architectural rationale."}
+{"id":"case-b940441aeb021c","class":"C10","confidence":"high","explanation":"B defines the reflective-system property that A uses to distinguish reflection from self-improvement."}
+{"id":"case-a0e84e8b184274","class":"C6","confidence":"high","explanation":"B's ablation is bounded case evidence qualifying A's interpretation of summaries as episode-backed theory formation."}
+{"id":"case-72ed741ccbd80f","class":"C4","confidence":"high","explanation":"B's trace-signal distinctions and safeguards shape A's authority ladder, status fields, and automation boundary."}
+{"id":"case-c44bc99dfa7da4","class":"C2","confidence":"high","explanation":"B explains why local symbolic exactness does not establish that an implemented requirement serves the larger objective."}
+{"id":"case-26b9c135a0d7e2","class":"C2","confidence":"high","explanation":"B explains the grammatical mechanism by which claim titles provide argument structure during A's traversal process."}
+{"id":"case-a628538d6d8332","class":"C3","confidence":"high","explanation":"B's four-part test is the procedure through which A's reach-assessment is operationally performed."}
+{"id":"case-ca2d686c8aa979","class":"C2","confidence":"medium","explanation":"B's oracle spectrum explains why accepted instances and verified general rules require separate treatment."}
+{"id":"case-bac2e954ce6f0b","class":"C13","confidence":"medium","explanation":"B usefully qualifies A's replay claim with reader-model terminology, but the observation marks the relation as connective prose only."}
+{"id":"case-1b6d3c4df444c1","class":"C4","confidence":"high","explanation":"B's inclusion-decision rationale justifies A's placement of global goals at the top of the hierarchy."}
+{"id":"case-4f00efdb446dff","class":"C2","confidence":"high","explanation":"B explains the index-scanning consequence that accounts for A's prediction about overlap visibility and maintenance cost."}
+{"id":"case-013bbf561b7940","class":"C10","confidence":"high","explanation":"B supplies the criterion defining the methodological-closure concept used in A's distinction."}
+{"id":"case-3d16fd3a85e16a","class":"C10","confidence":"high","explanation":"B's self-extension criterion defines the methodological-closure axis that A distinguishes from computational closure."}
+{"id":"case-575b06979464eb","class":"C2","confidence":"high","explanation":"B's moving-frontier argument explains how external structure can remain useful after fixed-task absorption."}
+{"id":"case-f885ae7745ebc0","class":"C13","confidence":"medium","explanation":"B's declared-objective condition usefully qualifies A's claim about reflective loops, but the relation is connective prose only."}
+{"id":"case-5ea996e957b487","class":"C13","confidence":"medium","explanation":"B's enforcement gradient usefully qualifies A's homoiconicity argument, but the observation marks the relation as connective prose only."}
+{"id":"case-fe5439ef0e0cac","class":"C8","confidence":"high","explanation":"A extends B's theory-mediated learning argument to reflective self-improvement through formal causal and proof obligations."}
+{"id":"case-6c50ade3801134","class":"C4","confidence":"high","explanation":"B's inspectability rationale justifies A's separate execution-substrate design."}
+{"id":"case-3cb813691b28b6","class":"C5","confidence":"high","explanation":"B's dependency record is a prerequisite for A's episode-rule pair to remain re-derivable and reviewable after upstream changes."}
+{"id":"case-e1177dbf35d92b","class":"C1","confidence":"high","explanation":"A's framework-relative claim that constraints prune objective space takes B's inherited-constraint test as a load-bearing condition."}

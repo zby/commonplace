@@ -1,0 +1,5 @@
+# Fixture build record
+
+The one-shot builder scanned active Markdown outside `kb/work/`, `kb/reports/`, and archived proposals; matched normalized source-plus-resolved-target tuples against the live manifest; removed YAML frontmatter and every line matching the active Markdown-link footer grammar (`[title](target) —|-- label: context`, including bold-link variants); retained headings and argumentative prose; replaced exact source/target paths; neutralized remaining Markdown link destinations to label-only links; and copied the under-review context phrase before removing the tested footer. Tuple and line identities use the frozen manifest values; every source and target pre/post artifact, every packet, and every prompt has a SHA-256 digest in `packet-digests.tsv`, `transformation-manifest.tsv`, or the protocol hash inventory. The non-scored synthetic sanitizer check is [calibration/synthetic-check.json](./calibration/synthetic-check.json).
+
+Selected packet count: 78; parser rows: 292; manifest grounds rows: 292; unsupported: 0. Freeze-time fixture root: `/tmp/premise-cohort-replication-mr159ugt`.

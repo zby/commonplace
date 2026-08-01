@@ -1,0 +1,109 @@
+# Case packet
+
+Neutral case identifier: case-ca2d686c8aa979
+
+The possible directed relationship from Artifact A to Artifact B is under review.
+
+## Artifact A
+
+# An accepted edit verifies the change, not the rule
+
+A human-accepted edit is among the strongest oracles a text system can get: someone looked at this change, in this artifact, and kept it. But the acceptance event judged the *instance* — this wording, in this context. It never judged the *rule* a learner might extract from it ("define opaque internal terms inline", "remove stock rhetoric"). Generalization asks which features of the case carry to other cases, and that is a different judgment the acceptance never performed. The oracle is strong at the instance and silent about the rule.
+
+In maturation terms, acceptance sits at the verify rung and rule extraction at the abstraction rung, and the rungs have different oracles — [trace-extracted memory earns authority per operation, not at capture]. The asymmetry is why a learning loop can be seeded with excellent evidence and still stall: instance verification is abundant (every accepted edit supplies it), while the generalization step faces the same oracle gap that makes [automating KB learning an open problem].
+
+## Consequences for mining rules from accepted edits
+
+- **Attribution is ambiguous in coupled edits.** A structural rewrite also fixes local clarity issues; which candidate rule did the acceptance actually support?
+- **Rules overfit the instance's accidents** — one author's style, one artifact family — because nothing in the acceptance marks which features were load-bearing.
+- **A rule can be satisfied while the artifact worsens elsewhere**; the acceptance never promised the rule captures everything the human weighed.
+
+So a loop that mines rules from accepted edits needs **promotion and rollback, not accumulation**: candidates enter as instance-verified, and earn rule status only through repeated independent confirmation — re-verification at the rule level, not inheritance from the instance.
+
+## Boundary
+
+The asymmetry does not make accepted edits weak evidence — they are the best available seed, which is exactly why [spec mining] starts from observed accepted behavior. The claim is only that acceptance cannot be *transferred* from the instance to the rule: the rule must be verified as a rule.
+
+---
+
+Relevant Notes:
+
+## Artifact B
+
+# Oracle strength spectrum
+
+The [fixed-artifact distinction] separates exact specs (the spec is the problem) from proxy theories (the spec is a theory about a larger capability). This note proposes that the distinction is better understood as a gradient of **oracle strength** — how cheaply and reliably you can check whether output is correct — and explores what that would imply for engineering priorities. The framework is speculative; the individual hypotheses need testing.
+
+## The spectrum
+
+- **Hard oracle:** exact, cheap, deterministic check. Unit tests, type checks, cryptographic verification. The arithmetic regime.
+- **Soft oracle:** proxy score that correlates but isn't the real thing. BLEU, helpfulness rubrics, heuristic checks, consistency scores.
+- **Interactive oracle:** you can ask for feedback. User edits, thumbs up/down, preference pairs.
+- **Delayed oracle:** you only know later. Did the user churn? Did the bug surface? Did the decision pay off?
+- **No oracle:** vibes and anecdotes.
+
+The bitter lesson is strongest at the hard-oracle end, where there's a clear training signal for scale to optimise against, and weakest at the no-oracle end, where there's nothing. Note what that does and does not consume: at the hard-oracle end scale replaces the *solution* while the oracle itself persists, because a test that fully specifies the problem has nothing left to be wrong about. The two have opposite fates at the same point on the spectrum. This maps to the Karpathy verifiability framing that [deploy-time learning] builds on: a task is verifiable to the extent it is resettable, efficient to retry, and rewardable — three properties that strengthen as oracle strength increases.
+
+## The engineering move: harden the oracle
+
+If the boundary is a gradient, the core engineering challenge becomes: move components toward the hard-oracle end. Convert no-oracle into some-oracle, then tighten. This is [codification] applied to *the objective itself*, not just to the implementation.
+
+The priority follows: invest in telemetry and eval harnesses *before* investing in capability, because verification quality is the bottleneck, not generation quality. The [Rabanser et al. reliability study] offers suggestive evidence: across 14 models and 18 months of releases, capability gains yielded only small reliability improvements. If this pattern holds broadly — and it may not, since such findings are sensitive to the specific models and benchmarks used — it confirms that generation and verification improve on independent tracks, with verification lagging.
+
+Concrete examples of oracle hardening:
+- Logging user corrections turns no-oracle into interactive oracle.
+- Adding schema validation turns soft-oracle ("does this look right?") into hard-oracle ("does this parse?").
+- Building regression test suites turns delayed-oracle into hard-oracle for known cases.
+
+## Manufacture, amplify, monitor
+
+Oracle hardening decomposes into three steps, each with its own methods and failure modes:
+
+**Manufacture.** [Spec mining] creates oracles by extracting deterministic checks from observed behavior: watch the system, identify regularities, write verifiers. Each mined spec converts "does the output look right?" into "does it match this rule?" The [reliability dimensions] (consistency, robustness, predictability, safety) tell you *which* oracle to build next — each dimension targets a different verification question, so you can direct the mining at specific gaps.
+
+**Amplify.** A mined spec doesn't need to be a perfect verifier. [Error correction] works whenever the oracle has discriminative power (TPR > FPR) and checks are decorrelated — the cost scales with 1/(TPR−FPR)², so even a weak spec is useful. This sets the manufacturing bar low: you need above-chance discrimination, not certainty. One reason external manufacturing matters: Rabanser et al. find that model self-assessment improves in calibration (aggregate confidence alignment) but not reliably in discrimination (per-instance separation of correct from incorrect). If models struggle to achieve TPR > FPR through introspection alone — a finding that may shift as models evolve — then spec mining's externally constructed checks become the primary source of discriminative oracles.
+
+**Monitor.** [Relaxing signals] detect when a hardened oracle encodes a vision feature rather than a genuine spec — brittleness under paraphrase, isolation-vs-integration gaps, sensitivity to distribution shift. These indicate the oracle is softer than it appears and the component may need to move back toward the learned regime.
+
+The steps have different failure modes: manufacturing without amplification gives a single fragile check; amplification without manufacturing leaves you voting over noise; either without monitoring risks locking in a vision feature as if it were arithmetic.
+
+## The generator/verifier pattern depends on this
+
+The [generator/verifier pattern] — high-variance generator plus quality gate — is a common architectural choice, but it only works when oracle strength is sufficient. A quality gate that can't discriminate correct from incorrect outputs (TPR ≈ FPR) adds cost without adding reliability. The manufacture/amplify pipeline above is a prerequisite for generator/verifier architectures, not an optimisation.
+
+## Maturation path
+
+This note stays seedling because it bundles several speculative claims under a coherent narrative. To mature, extract each and find adequate support — literature, external sources, worked examples, or direct argument:
+
+1. **Oracle strength is a gradient underlying the exact-spec/proxy-theory distinction** — the core reframing. Currently asserted by analogy to the Karpathy verifiability framing. Needs independent support, e.g. from reinforcement learning literature on reward shaping or verification complexity theory.
+2. **"Harden the oracle" is the primary engineering move** — plausible prescription but no practitioner evidence. Cases where teams invested in eval infrastructure before capability (or failed by not doing so) would ground this.
+3. **The manufacture/amplify/monitor decomposition** — invented here. Each step has grounding (spec mining, error correction, relaxing signals) but the claim that these three compose into a complete pipeline is unverified. Are there missing steps?
+4. **Capability gains and reliability gains track independently** — leaning on Rabanser et al., which the note already hedges. Needs either stronger empirical evidence or a theoretical argument for why they decouple.
+5. **Generator/verifier depends on oracle strength** — reasonable but stated as fact. Could be grounded in the broader generate-and-test / best-of-N literature.
+
+Each extracted claim should link back here as its origin.
+
+## Open questions
+
+- **Does oracle strength predict bitter-lessoning, or only govern it?** The mechanism is [that scale selects against unearned reach rather than against structure], which suggests oracle strength acts one step back: a hard oracle is what lets a claim be tested against cases that could refute it, so it determines whether reach can be *earned* at all rather than predicting the outcome directly. A soft oracle cannot separate a theory that explains from one that fits, so claims verified against it stay unearned however long they survive. If that holds, the spectrum is prescriptive — codify where oracles are hard, learn where they are soft — but through earnedness rather than as a brute correlation. What remains open is whether a soft oracle can ever earn a claim by accumulating enough independent checks, or whether softness is a ceiling.
+- **The no-oracle end resists automation, and the market prices it.** [Tam et al.] observe that agentic coding tools automate engineering — hard oracles, tests, specs, benchmarks — while research problem selection resists entirely, because "you can't know in advance whether a solution exists." Quant firms paying heavily for research taste is the same prediction in market-economics language. Whether this is the oracle-strength claim confirmed or just its most quotable instance is untested.
+- **Oracle strength and codification timescales.** Hard oracles codify fast (you can test immediately); delayed oracles codify slowly (you have to wait for signal). The connection to [codification timescales] seems natural but hasn't been tested.
+- **Oracle strength is itself hard to assess.** Proxy scores that seem cheap and reliable may turn out to correlate poorly with the real objective — you don't always know whether your oracle is hard or soft until you test at scale.
+
+---
+
+Relevant Notes:
+
+- [the verifiability gradient] — the Karpathy verifiability framing (resettable, efficient, rewardable) is an oracle-strength argument; the gradient maps directly to oracle strength
+- [deploy-time-learning] — frames where on the system-adaptation timescale the gradient operates
+- [spec-mining-as-codification] — the manufacturing step: extracting deterministic checks from observed behavior
+- [error-correction-works-above-chance-oracles-with-decorrelated-checks] — the amplification step: boosting weak oracles through decorrelated repetition
+- [relaxing-signals] — the monitoring step: detecting when a hardened oracle encodes a vision feature
+- [reliability-dimensions-map-to-oracle-hardening-stages] — decomposes "which oracle to harden" into four independently targetable dimensions
+- [storing-llm-outputs-is-constraining] — the generator/verifier pattern depends on oracle strength: verification must be cheap for the pattern to work
+- [quality-signals-for-kb-evaluation] — concrete oracle-hardening instance: manufacturing a composite soft oracle from many no-oracle/weak-oracle signals
+- [Rabanser et al. reliability study] — suggestive empirical evidence that capability gains and reliability gains track independently; discrimination lags calibration
+
+## Under-review context phrase
+
+the instance/rule asymmetry is a position change on the oracle-strength spectrum within one learning loop

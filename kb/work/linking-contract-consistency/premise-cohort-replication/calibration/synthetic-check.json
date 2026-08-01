@@ -1,0 +1,12 @@
+{
+  "input_digest": "388490cd90c49ee51538513cb0d91f5af297b8122b20cd64797da3a4a59f81d8",
+  "output_digest": "6e6a470227e1fef2743f7938d22d3274513b58906153fd04edeb8f095e434d49",
+  "transformations": [
+    "removed YAML frontmatter",
+    "removed 1 labelled footer lines",
+    "neutralized Markdown link destinations",
+    "retained argumentative prose, headings, and titles"
+  ],
+  "footer_removed": true,
+  "link_destination_neutralized": true
+}

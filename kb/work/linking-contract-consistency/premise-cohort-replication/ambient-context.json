@@ -1,0 +1,29 @@
+{
+  "root_agents_digest": "ccebce22f1311fec46f358ca3b1623345fe6c3d981bf8b498a684f5f8cb18c58",
+  "runbook_digest": "5178943bd8c421f43a608ada8ac8de72476eebc0f1f72115a64d71da9d204e98",
+  "experiment_design_digest": "71bcfc5e09b25407b27b4dbf4dd9ecc9ee7863c7877ef078e42005c7e779a75a",
+  "live_manifest_digest": "d4c2bca70479ee3fc6bd0dca0fc753acd94dcf7a62371cdd5ace821aa5069a36",
+  "git_revision": "e1bd481e66a301395f42cb4cc892a4ac6bcb8402",
+  "git_status_at_freeze": [
+    " M kb/work/README.md",
+    " M kb/work/linking-contract-consistency/README.md",
+    " M kb/work/linking-contract-consistency/grounds-label-boundary-adjudication.md",
+    " M kb/work/linking-contract-consistency/mechanism-full-reclassification-adjudication-packet.md",
+    "?? kb/work/cognitive-architecture-transfer-scan/",
+    "?? kb/work/linking-contract-consistency/grounds-drift-reclassification-manifest.tsv",
+    "?? kb/work/linking-contract-consistency/grounds-drift-reclassification-protocol.md",
+    "?? kb/work/linking-contract-consistency/grounds-drift-reclassification-results.md",
+    "?? kb/work/linking-contract-consistency/grounds-drift-reclassification-votes.tsv",
+    "?? kb/work/linking-contract-consistency/mechanism-boundary-adjudication-manifest.tsv",
+    "?? kb/work/linking-contract-consistency/mechanism-boundary-adjudication-protocol.md",
+    "?? kb/work/linking-contract-consistency/mechanism-boundary-adjudication-results.md",
+    "?? kb/work/linking-contract-consistency/mechanism-boundary-adjudication-votes.tsv",
+    "?? kb/work/linking-contract-consistency/premise-cohort-replication/",
+    "?? kb/work/linking-contract-consistency/premise-mechanism-implementation-packet.md",
+    "?? kb/work/linking-contract-consistency/premise-mechanism-live-disposition-manifest.tsv"
+  ],
+  "fixture_root": "/tmp/premise-cohort-replication-mr159ugt",
+  "requested_model": "luna",
+  "cli_model": "gpt-5.6-luna",
+  "isolation": "fixture root outside checkout; read-only sandbox; filesystem reads not technically enforced; prompt and trace audit"
+}

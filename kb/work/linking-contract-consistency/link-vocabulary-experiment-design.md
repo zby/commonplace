@@ -43,6 +43,20 @@ Loading an existing collection contract, instruction, rubric, or answer-bearing 
 
 Keep discovery or observation separate from mapping to current policy when that distinction matters. Freeze the observation before exposing the policy, or make policy exposure an explicit treatment. Score the result against evidence independent of the treatment whenever the experiment claims more than instruction-following.
 
+## Keep judgment axes separate
+
+A single-choice taxonomy is interpretable only when its options answer the same question and are mutually exclusive at that level. Do not put these into one outcome list:
+
+- semantic relation — what the source asserts about the target;
+- representation — whether that relationship deserves a formal edge, connective prose, or no link;
+- epistemic state — whether the supplied evidence is sufficient to judge either question.
+
+A relationship may have a semantic class while remaining too weak or local for mechanical registration, and insufficient evidence does not imply a semantic class. Record these as separate fields and aggregate them separately. If a decision depends on a conjunction such as “premise relation that earns a footer edge,” report both component results before applying the combined gate.
+
+When a run claims that participants can recognize or reject a semantic class, include known positive examples and close negative examples. Negative controls alone detect indiscriminate overcalling; they cannot detect systematic undercalling. Treat constructed controls as calibration of the supplied definition, not independent evidence that the class occurs naturally in the corpus.
+
+For an observation-then-mapping pipeline, calibrate the mapping on known cases and compare it with a matched direct-classification arm when information loss could explain the result. A failed staged classification supports a semantic conclusion only after the apparatus demonstrates that it can recover clear positives.
+
 ## Use test collections for alternative contracts
 
 When a collection contract is the variable under study, create temporary test collections with their own `COLLECTION.md` files. Test collections let agents operate through Commonplace's normal write path while receiving an alternative local contract.
@@ -96,6 +110,8 @@ Before scored execution, freeze or version:
 - assignment or randomization decisions;
 - scoring and exclusion rules;
 - the point at which exploration ends and confirmatory scoring begins.
+
+Reuse a prior decision threshold only when the scored event still has the prior event's meaning. A threshold proposed for “design dependence rather than theoretical dependence” does not automatically govern a broader outcome such as “any non-target class or instability.” A broadened event may receive its own pre-registered gate, but report it as a new operational decision rather than literal confirmation of the older reversal condition.
 
 Retain raw outputs, actual model provenance, execution traces, exclusions, and any mid-run amendments. Do not rewrite a protocol after seeing results without preserving the version that governed the run.
 

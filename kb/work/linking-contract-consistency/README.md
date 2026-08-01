@@ -8,7 +8,7 @@ Lineage-specific carrier, relation, and invalidation contradictions stay in the 
 
 The sibling [linking foundations](../linking-foundations/README.md) workshop owns the deeper question of what an authored link represents and how philosophy, discourse theory, and cognitive science should shape the model. This workshop consumes those conclusions while retaining ownership of concrete contract reconciliation and migrations.
 
-## Plan (handoff, 2026-07-29)
+## Plan (handoff updated 2026-07-30)
 
 This section is the takeover picture: what the foundations workshop delivered, and the resulting work queue in dependency order. Read it before touching any label.
 
@@ -25,15 +25,17 @@ The hold this README previously implied — do not adopt or migrate `explained-b
 ### Work queue (dependency order)
 
 1. **Completed: reclassify the mechanism surface** — the [blind test](./blind-mechanism-reclassification-results.md) reversed the first ledger, so the maintainer authorized a [full k=3 replacement](./mechanism-full-reclassification-results.md). That run retained the explanatory/operational distinction while replacing the row assignments.
-2. **Completed: close the live semantic ledger** — the maintainer accepted `explained-by`, `operates-through`, and 87 unanimous rows at the full-run baseline. The [42-row exact-boundary result](./mechanism-boundary-adjudication-results.md) settles the remaining baseline rows, including four removals instead of notes→notes `see-also`; the [grounds drift result](./grounds-drift-reclassification-results.md) settles all 21 current additions. The current 374-tuple surface now has an exact disposition for every row.
-3. **Ready for approval: implementation packet** — the [premise/mechanism packet](./premise-mechanism-implementation-packet.md) and [374-row live manifest](./premise-mechanism-live-disposition-manifest.tsv) audit exact pairings, registered semantics, durable surfaces, ADR contents, and tuple conservation. They recommend two atomic migrations because one `grounds` row is still a prerequisite-family hold.
+2. **Mechanism ledger closed; premise ledger reopened** — the maintainer accepted `explained-by`, `operates-through`, and 87 unanimous rows at the full-run baseline, and the [42-row exact-boundary result](./mechanism-boundary-adjudication-results.md) settles the remaining mechanism rows. The [premise replication](./premise-cohort-replication/results.md) then returned `REOPENS` under its frozen gate: 44/49 sampled legacy-P rows were adverse. That result blocks migration from the premise ledger without itself proving that the premise relation is unusable or supplying replacement row labels.
+3. **Phase A ready; phase B withdrawn** — the [premise/mechanism packet](./premise-mechanism-implementation-packet.md) and [374-row live manifest](./premise-mechanism-live-disposition-manifest.tsv) remain the exact pre-replication planning baseline. The packet's 82-row `mechanism` phase is independently ready for approval. Its 292-row `grounds` phase is not executable; the manifest's premise dispositions are provenance, not an approved migration ledger.
 4. **Mechanism migration** — after packet approval, adopt `explained-by` / `operates-through`, scope ADR 009, and migrate the 82 active `mechanism` rows: 81 exact successors and one removal. Rebaseline before mutation; leave all 292 `grounds` rows unchanged in this phase.
-5. **Prerequisite family review** — review `enables` / `precondition` over their full corpus plus held prerequisite rows, including `F094`. This now precedes `grounds` retirement: `prerequisite-hold` is a disposition, not a registered label, and retaining `grounds` as a one-row legacy authorization would keep the ambiguity authorable.
-6. **Complete the grounds migration** — after step 5 supplies `F094`'s exact successor and the maintainer approves a refreshed plan, adopt `premised-on`, add notes→notes `is-evidence-for`, and migrate the current 292-row surface. At this baseline, 287 rows relabel, four weak edges are removed, and one is held; no notes→notes `see-also` authorization is needed.
-7. **Gap authorizations** — maintainer decides registration of `elaborated-by` (reference contract) and `is-enforced-by`/`is-consumed-by` (types contract); agent drafts contract language, catalogue entries per the two-consumer test, and the site-fix lists from the dossiers.
-8. **ADR 009 scoping amendment** — fold into step 4's ADR: ADR 009's vocabulary was the theory-collection seed, superseded in scope by ADR 019 and the seed-then-harvest model.
-9. **Reference ADR-local label tail audit** — `decision` ×11, `foundation` ×6, `refines` ×5, `outcome`, `amended-by`, and a dozen singletons found live in reference→reference footers; check each against contract and type-override authorization.
-10. **Standing items** (unordered, from the sections below): per-destination grammar serialization decision, the articles contract gap, the validator boundary, reciprocal-link operationalization, backlink surfacing.
+5. **Calibrate the premise relation** — approve and run the [discriminability experiment](./premise-relation-discriminability-experiment.md). It separates semantic relation, formal registration, and insufficiency; includes known positive controls; and compares direct classification with the observer-to-mapper pipeline.
+6. **Test corpus transport only after calibration** — if the instrument passes, freeze a new protocol over an untouched deterministic holdout from the 106 legacy-P rows not sampled by the replication. A successful transport result may justify a complete row-level replacement run; it cannot be copied directly into migration edits.
+7. **Prerequisite family review** — review `enables` / `precondition` over their full corpus plus held prerequisite rows, including `F094`. This can proceed independently, but settling the hold no longer unlocks `grounds` retirement by itself.
+8. **Rebuild and approve the grounds migration** — only after steps 5–7 support a distinguishable, registerable relation and a complete exact ledger should a fresh packet decide whether to adopt `premised-on`, add notes→notes `is-evidence-for`, and retire `grounds`.
+9. **Gap authorizations** — maintainer decides registration of `elaborated-by` (reference contract) and `is-enforced-by`/`is-consumed-by` (types contract); agent drafts contract language, catalogue entries per the two-consumer test, and the site-fix lists from the dossiers.
+10. **ADR 009 scoping amendment** — fold into step 4's ADR: ADR 009's vocabulary was the theory-collection seed, superseded in scope by ADR 019 and the seed-then-harvest model.
+11. **Reference ADR-local label tail audit** — `decision` ×11, `foundation` ×6, `refines` ×5, `outcome`, `amended-by`, and a dozen singletons found live in reference→reference footers; check each against contract and type-override authorization.
+12. **Standing items** (unordered, from the sections below): per-destination grammar serialization decision, the articles contract gap, the validator boundary, reciprocal-link operationalization, backlink surfacing.
 
 ### Operating rules for the takeover agent
 
@@ -65,8 +67,12 @@ The hold this README previously implied — do not adopt or migrate `explained-b
 - [Mechanism boundary adjudication results](./mechanism-boundary-adjudication-results.md) — 126-vote exact ledger with 36 stable recommendations, six unstable rows, and conditional authorization consequences.
 - [Grounds drift reclassification protocol](./grounds-drift-reclassification-protocol.md) — k=3 exact-choice protocol for the 21 live `grounds` additions absent from the direction-review baseline.
 - [Grounds drift reclassification results](./grounds-drift-reclassification-results.md) — 63-vote ledger recording maintainer acceptance of 16 unanimous and five contested exact-majority dispositions, with no unstable rows and a complete 374-tuple current disposition count.
-- [Premise and mechanism implementation packet](./premise-mechanism-implementation-packet.md) — exact semantics, authorization audit, durable-surface changes, ADR contents, and two-phase migration/reconciliation plan.
-- [Premise and mechanism live disposition manifest](./premise-mechanism-live-disposition-manifest.tsv) — 374 current mutable tuples with identity and line digests, exact disposition, action, decision provenance, and authorization status.
+- [General experiment-design guardrails](./link-vocabulary-experiment-design.md) — context, isolation, leakage, independence, matched judgment axes, positive-control, and conclusion-bounding requirements for workshop experiments.
+- [Premise-cohort replication instruction](./run-premise-cohort-replication.md) — frozen cohort, blindness, staged observation/mapping, and decision rules used by the completed Luna run.
+- [Premise-cohort replication result](./premise-cohort-replication/results.md) — protocol-level `REOPENS` decision, narrow migration-hold conclusion, diagnostics, and post-run audit.
+- [Premise-relation discriminability experiment](./premise-relation-discriminability-experiment.md) — proposed positive-control calibration separating semantic relation from registration and testing direct versus staged classification.
+- [Premise and mechanism implementation packet](./premise-mechanism-implementation-packet.md) — phase A remains ready; phase B and its premise ledger are withdrawn pending calibration and corpus transport.
+- [Premise and mechanism live disposition manifest](./premise-mechanism-live-disposition-manifest.tsv) — 374-row pre-replication planning baseline retained for tuple identity and decision provenance, not an executable phase-B ledger.
 - [Reusable directional-label migration procedure](../../instructions/migrate-directional-link-label.md) — promoted mechanical core confirmed by the evidence and rationale runs; semantic classification remains label-specific.
 
 ## Confirmed contradictions

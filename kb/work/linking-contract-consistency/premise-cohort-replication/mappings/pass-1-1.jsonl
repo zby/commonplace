@@ -1,0 +1,26 @@
+{"id":"case-e46581928a37b0","class":"C4","confidence":"medium","explanation":"Selective loading and task-shaped handoffs are architectural choices justified by the finite-context theory in B."}
+{"id":"case-d78c572ba49b95","class":"C4","confidence":"high","explanation":"Atomic-note sizing is a design rule justified by the context-capacity constraint in B."}
+{"id":"case-013bbf561b7940","class":"C4","confidence":"high","explanation":"The retention criterion is a methodology rule shaped by B's comparison of explicit and tacit retention."}
+{"id":"case-ad48aaedc0e182","class":"C3","confidence":"high","explanation":"The claimed composability is produced by the whole-file ingestion and shared-window path described in B."}
+{"id":"case-b940441aeb021c","class":"C13","confidence":"high","explanation":"B gives useful neighboring context, but the distinction is not a mechanically discoverable formal edge."}
+{"id":"case-6c0a42a4b717c0","class":"C1","confidence":"high","explanation":"A applies only under B's above-chance, sufficiently decorrelated-check conditions; rejecting them reopens the amplification claim."}
+{"id":"case-d88171537c6fb6","class":"C13","confidence":"high","explanation":"B explains a local exception, but it does not create a formal edge for A's main proxy rule."}
+{"id":"case-92aa92d533a0f1","class":"C8","confidence":"medium","explanation":"A develops B's pointer-decision model into a quantitative theory of link quality."}
+{"id":"case-5996d10a688230","class":"C4","confidence":"high","explanation":"The completeness mark is a design choice justified by B's consumer-cost inversion."}
+{"id":"case-cacf9c28c10bff","class":"C3","confidence":"high","explanation":"Evaluator calibration is carried out through the failure-mining and checker-generation mechanism in B."}
+{"id":"case-3f238a6bfb20f0","class":"C3","confidence":"high","explanation":"Filtering and operative retention are effects produced by the three-function control architecture in B."}
+{"id":"case-ca121ccba67434","class":"C2","confidence":"high","explanation":"B explains task dependence by showing that information value varies with observer goals, priors, capacity, and tools."}
+{"id":"case-e1177dbf35d92b","class":"C1","confidence":"high","explanation":"A's objective-pruning claim depends on B's inherited, non-optional boundary constraints."}
+{"id":"case-c3ffb8d4901349","class":"C2","confidence":"high","explanation":"B explains the invalidation asymmetry through unrecoverable production history."}
+{"id":"case-575b06979464eb","class":"C8","confidence":"medium","explanation":"A extends B's scaling lesson into a distinction between fixed-task absorption and frontier recurrence."}
+{"id":"case-30111db7b8e1ad","class":"C4","confidence":"high","explanation":"The persistence rule is a design policy justified by B's treatment of symbolic machinery as revisable learning."}
+{"id":"case-4d03ee8de3d7c3","class":"C1","confidence":"high","explanation":"A's authoring rule assumes B's competent-executor premise; rejecting it changes what the author must specify."}
+{"id":"case-b1580658412f68","class":"C2","confidence":"high","explanation":"B explains why later state accumulation lacks the ingress handles needed to recover rationale."}
+{"id":"case-a627c01cfeb3e0","class":"C8","confidence":"high","explanation":"A specializes B's verification-boundary claim into a prediction about underselection of weakly discriminated qualities."}
+{"id":"case-d45ce3e679afe0","class":"C2","confidence":"high","explanation":"B supplies the projection-versus-compilation account explaining why generated code is an interpretation."}
+{"id":"case-f88ac900b7b30e","class":"C4","confidence":"high","explanation":"A's authoring procedure applies B's low-flexibility-first ordering rule."}
+{"id":"case-10d4bb9800d9e7","class":"C5","confidence":"high","explanation":"An independently declared objective must be available before target achievement can be assessed as serving it."}
+{"id":"case-debb81f590eb94","class":"C10","confidence":"high","explanation":"B defines K and select, the terms materially used by A."}
+{"id":"case-72ed741ccbd80f","class":"C2","confidence":"high","explanation":"B explains how signal quality, verification, abstraction, and consultation convert traces into authoritative memory."}
+{"id":"case-b43b0ab7700ffe","class":"C6","confidence":"high","explanation":"B is a worked case that corroborates and bounds A's general provenance requirement."}
+{"id":"case-e42bba438fb9cb","class":"C2","confidence":"high","explanation":"B explains the maintenance and navigation savings attributed to claim-titled pointers."}

@@ -1,0 +1,26 @@
+{"id":"case-1a80e03a9cb978","class":"C2","confidence":"high","explanation":"B supplies the semantic-underspecification account explaining why A's natural-language facts do not reliably dereference."}
+{"id":"case-a23b180adead23","class":"C4","confidence":"high","explanation":"A's linking and compression rule is a design choice justified by B's composability theory."}
+{"id":"case-b5510a490b71bf","class":"C13","confidence":"high","explanation":"B provides useful cost rationale for A's materialization choice, but the relationship remains connective prose."}
+{"id":"case-8a530b0c39ba8e","class":"C13","confidence":"high","explanation":"B usefully qualifies A's automation claim through verification, but does not establish a formal relation."}
+{"id":"case-d78c572ba49b95","class":"C13","confidence":"high","explanation":"B supplies useful context-cost rationale for A's note-size rule, without a formal edge."}
+{"id":"case-68854084829173","class":"C3","confidence":"high","explanation":"B's lineage workflow operationally surfaces dependent artifacts for the reviewability asserted by A."}
+{"id":"case-b43b0ab7700ffe","class":"C13","confidence":"medium","explanation":"B is a useful illustrative case for A's provenance rule, but the transfer remains connective rather than formal."}
+{"id":"case-ca121ccba67434","class":"C13","confidence":"high","explanation":"B offers useful observer-relative explanation for A's task-dependent bound, but not a formal edge."}
+{"id":"case-10fea94cddfcc6","class":"C13","confidence":"high","explanation":"B's varied system placements usefully support A's claim, but the evidence relation remains connective prose."}
+{"id":"case-082d18281753b9","class":"C13","confidence":"high","explanation":"B provides a useful criterion for A's distinction between production and representation, without a formal edge."}
+{"id":"case-1d940291ad46a8","class":"C3","confidence":"high","explanation":"B's loading hierarchy is the control path producing the discovery and body-loading distinctions described by A."}
+{"id":"case-5fea6da992bdb6","class":"C4","confidence":"high","explanation":"A's specification-level regime is a design response shaped by B's flat-context problem."}
+{"id":"case-e42bba438fb9cb","class":"C2","confidence":"high","explanation":"B's claim-title argument explains the maintenance component of A's decision-cost claim."}
+{"id":"case-fd065e5a4769ae","class":"C10","confidence":"high","explanation":"B defines the boundary-indexed self-improvement concept materially used in A's autonomy comparison."}
+{"id":"case-792c56f9b2a2f7","class":"C1","confidence":"high","explanation":"A's context-economy principle takes B's soft bounded-context constraint as a condition of applicability."}
+{"id":"case-d88171537c6fb6","class":"C13","confidence":"high","explanation":"B usefully explains an exception to A's proxy rule, but the connection is not a formal edge."}
+{"id":"case-8444045b653617","class":"C1","confidence":"high","explanation":"A's formal warrant applies only within the correctly translated obligation and oracle domain described by B."}
+{"id":"case-47d9b2d46aa6b4","class":"C13","confidence":"medium","explanation":"B offers a compatible rationale for retaining A's theory layer, but not a necessary formal relation."}
+{"id":"case-1220e2f6e7f005","class":"C13","confidence":"high","explanation":"B identifies the navigation decision that usefully motivates A's pointer criterion, without a formal edge."}
+{"id":"case-9197caeafa3a8b","class":"C13","confidence":"high","explanation":"B provides useful context-scarcity rationale for A's context-debt claim, but the relation remains connective."}
+{"id":"case-7434c2dafbccda","class":"C13","confidence":"medium","explanation":"B is a useful comparison point for A's compiled coordination claim, without establishing formal incompatibility."}
+{"id":"case-93e833a0ae496b","class":"C13","confidence":"medium","explanation":"B usefully bounds A's unattended-revision claim, but the connection is not formalized as a prerequisite or premise."}
+{"id":"case-b1580658412f68","class":"C3","confidence":"high","explanation":"B's ingress and decision-surface capture process is how the rationale-bearing memory effect in A is produced."}
+{"id":"case-3496ee2db136b1","class":"C4","confidence":"high","explanation":"A's maintainability-oracle design is shaped by B's account of unequal selection discrimination."}
+{"id":"case-33b17d160ff4f4","class":"C13","confidence":"high","explanation":"B usefully qualifies A's prompt-boundary claim, but does not create a formal dependency or mechanism."}
+{"id":"case-ad48aaedc0e182","class":"C2","confidence":"high","explanation":"B's co-loading account explains why A treats composability as inherited from consumer ingestion."}

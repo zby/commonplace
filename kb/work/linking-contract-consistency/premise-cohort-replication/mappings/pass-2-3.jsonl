@@ -1,0 +1,26 @@
+{"id":"case-9197caeafa3a8b","class":"C2","confidence":"high","explanation":"B explains why bounded context creates an access-cost exception to A's proxy rule."}
+{"id":"case-c3ffb8d4901349","class":"C2","confidence":"high","explanation":"B explains why production-time recording or re-derivability is needed for later review."}
+{"id":"case-a628538d6d8332","class":"C4","confidence":"high","explanation":"A's evaluator design is shaped and justified by B's explanatory-reach test."}
+{"id":"case-68854084829173","class":"C3","confidence":"high","explanation":"B's lineage mechanism operationally produces the distinction between stale derivations and commitments."}
+{"id":"case-fe5439ef0e0cac","class":"C3","confidence":"high","explanation":"B's causal and proof obligations provide the formal route through which explanatory reach is judged."}
+{"id":"case-41428517ec8382","class":"C4","confidence":"high","explanation":"A's usefulness criterion is a success rule justified by B's action-capacity account."}
+{"id":"case-30111db7b8e1ad","class":"C2","confidence":"medium","explanation":"B supplies a concrete reliability reason explaining why symbolic machinery may earn temporary persistence under A's governance rule."}
+{"id":"case-6c0a42a4b717c0","class":"C2","confidence":"high","explanation":"B explains the conditions under which weak semantic checks amplify review reliability."}
+{"id":"case-cacf9c28c10bff","class":"C3","confidence":"high","explanation":"B's spec-mining workflow is the operating route from observed failures to reusable evaluators."}
+{"id":"case-c44bc99dfa7da4","class":"C4","confidence":"high","explanation":"B's requirement-chain theory justifies A's separation of exact bookkeeping from semantic validation."}
+{"id":"case-a23b180adead23","class":"C4","confidence":"high","explanation":"B's short-note principle shapes A's design of retaining local contributions while linking shared framework material."}
+{"id":"case-575b06979464eb","class":"C2","confidence":"high","explanation":"B explains when harder deployment frontiers can renew the role of localized production methods."}
+{"id":"case-b940441aeb021c","class":"C11","confidence":"high","explanation":"A explicitly contrasts evidence-responsive self-change with B's distinct criterion of causal self-representation."}
+{"id":"case-33b17d160ff4f4","class":"C2","confidence":"high","explanation":"B explains why ad hoc prompt handoffs need an explicitly bounded visible frame."}
+{"id":"case-4d03ee8de3d7c3","class":"C1","confidence":"high","explanation":"A's delegation rule applies only under B's competent-executor premise."}
+{"id":"case-d78c572ba49b95","class":"C2","confidence":"high","explanation":"B explains why bounded context makes co-loading capacity central to discovery."}
+{"id":"case-5ea996e957b487","class":"C3","confidence":"high","explanation":"B's enforcement layers are the control path that supplies structural boundaries and mitigates A's medium hazards."}
+{"id":"case-3cb813691b28b6","class":"C3","confidence":"high","explanation":"B's dependency records and change detection operationally maintain the episode–rule link."}
+{"id":"case-c34b3568d535fc","class":"C2","confidence":"high","explanation":"B explains the concentrated risk through asymmetric rejection of candidates versus retention of bad acceptances."}
+{"id":"case-e46581928a37b0","class":"C2","confidence":"high","explanation":"B's context-feasibility and cost model explains why selective loading overtakes transcript inheritance."}
+{"id":"case-1d940291ad46a8","class":"C4","confidence":"high","explanation":"A's skills-versus-instructions description is organized and justified by B's loading hierarchy."}
+{"id":"case-2632bc38d6c3e7","class":"C11","confidence":"medium","explanation":"A contrasts causal self-representation with B's separate actionable methodology."}
+{"id":"case-26b9c135a0d7e2","class":"C3","confidence":"high","explanation":"B's claim-title mechanism operationally encodes reasoning into navigation before body loading."}
+{"id":"case-1220e2f6e7f005","class":"C2","confidence":"high","explanation":"B explains why context-rich pointer phrasing lowers the cost of navigation decisions."}
+{"id":"case-de38abeca27643","class":"C4","confidence":"high","explanation":"A's minimal API and scheduler boundary are justified by B's select/call decomposition lemma."}
+{"id":"case-a0e84e8b184274","class":"C6","confidence":"high","explanation":"B's ablation analysis qualifies and bounds what A's claim about theory formation can establish."}

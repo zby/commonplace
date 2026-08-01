@@ -1,0 +1,532 @@
+{
+  "sample": {
+    "total": 78,
+    "primary": 49,
+    "boundary_correction": 8,
+    "prior_drift": 5,
+    "negative_controls": 16
+  },
+  "primary": {
+    "n": 49,
+    "adverse": 44,
+    "adverse_share": 0.8979591836734694,
+    "c1_unanimous": 0,
+    "c1_stable_majority": 5,
+    "alternative_stable_majorities": {
+      "C4": 9,
+      "C2": 11,
+      "C3": 1,
+      "C13": 4,
+      "C10": 3,
+      "C5": 1
+    },
+    "unstable_vote_patterns": {
+      "C1/C11/C2": 1,
+      "C13/C3/C4": 1,
+      "C13/C5/C8": 2,
+      "C13/C2/C5": 1,
+      "C1/C2/C4": 1,
+      "C13/C2/C4": 2,
+      "C1/C2/C3": 1,
+      "C12/C3/C9": 1,
+      "C1/C11/C13": 1,
+      "C10/C2/C4": 1,
+      "C2/C3/C8": 1,
+      "C2/C3/C4": 1,
+      "C10/C11/C13": 1
+    },
+    "wilson_95": [
+      0.7824337583502992,
+      0.9556211075129601
+    ],
+    "decision": "reopens"
+  },
+  "secondary": {
+    "boundary-correction": {
+      "count": 8,
+      "status_counts": {
+        "UNSTABLE": 2,
+        "stable-majority": 3,
+        "unanimous": 3
+      },
+      "majority_classes": {
+        "C2": 4,
+        "C3": 1,
+        "C13": 1
+      },
+      "rows": [
+        {
+          "id": "case-92aa92d533a0f1",
+          "source": "notes/linking-theory.md",
+          "target": "notes/agents-navigate-by-deciding-what-to-read-next.md",
+          "prior": "premised-on",
+          "basis": "grounds-boundary",
+          "votes": [
+            "C8",
+            "C2",
+            "C3"
+          ],
+          "status": "UNSTABLE",
+          "majority": ""
+        },
+        {
+          "id": "case-26b9c135a0d7e2",
+          "source": "notes/linking-theory.md",
+          "target": "notes/title-as-claim-enables-traversal-as-reasoning.md",
+          "prior": "premised-on",
+          "basis": "grounds-boundary",
+          "votes": [
+            "C2",
+            "C3",
+            "C2"
+          ],
+          "status": "stable-majority",
+          "majority": "C2"
+        },
+        {
+          "id": "case-e42bba438fb9cb",
+          "source": "notes/linking-theory.md",
+          "target": "notes/title-as-claim-exposes-commitments-enabling-popperian-maintenance.md",
+          "prior": "premised-on",
+          "basis": "grounds-boundary",
+          "votes": [
+            "C2",
+            "C2",
+            "C2"
+          ],
+          "status": "unanimous",
+          "majority": "C2"
+        },
+        {
+          "id": "case-4f00efdb446dff",
+          "source": "notes/linking-theory.md",
+          "target": "notes/title-as-claim-makes-overlap-between-notes-visible.md",
+          "prior": "premised-on",
+          "basis": "grounds-boundary",
+          "votes": [
+            "C2",
+            "C2",
+            "C2"
+          ],
+          "status": "unanimous",
+          "majority": "C2"
+        },
+        {
+          "id": "case-1220e2f6e7f005",
+          "source": "notes/pointer-design-tradeoffs-in-progressive-disclosure.md",
+          "target": "notes/agents-navigate-by-deciding-what-to-read-next.md",
+          "prior": "premised-on",
+          "basis": "grounds-boundary",
+          "votes": [
+            "C4",
+            "C2",
+            "C13"
+          ],
+          "status": "UNSTABLE",
+          "majority": ""
+        },
+        {
+          "id": "case-3cb813691b28b6",
+          "source": "notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md",
+          "target": "notes/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md",
+          "prior": "premised-on",
+          "basis": "grounds-boundary",
+          "votes": [
+            "C3",
+            "C3",
+            "C5"
+          ],
+          "status": "stable-majority",
+          "majority": "C3"
+        },
+        {
+          "id": "case-394ae9372bce28",
+          "source": "notes/short-composable-notes-maximize-combinatorial-discovery.md",
+          "target": "notes/conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md",
+          "prior": "premised-on",
+          "basis": "grounds-boundary",
+          "votes": [
+            "C13",
+            "C13",
+            "C13"
+          ],
+          "status": "unanimous",
+          "majority": "C13"
+        },
+        {
+          "id": "case-e5c79d4a63f396",
+          "source": "notes/title-as-claim-enables-traversal-as-reasoning.md",
+          "target": "notes/agents-navigate-by-deciding-what-to-read-next.md",
+          "prior": "premised-on",
+          "basis": "grounds-boundary",
+          "votes": [
+            "C3",
+            "C2",
+            "C2"
+          ],
+          "status": "stable-majority",
+          "majority": "C2"
+        }
+      ]
+    },
+    "prior-drift": {
+      "count": 5,
+      "status_counts": {
+        "stable-majority": 3,
+        "UNSTABLE": 2
+      },
+      "majority_classes": {
+        "C13": 2,
+        "C1": 1
+      },
+      "rows": [
+        {
+          "id": "case-5ca86f39e5b984",
+          "source": "notes/constraining-and-extraction-both-trade-generality-for-reliability.md",
+          "target": "notes/exact-implementation-does-not-validate-a-requirement.md",
+          "prior": "premised-on",
+          "basis": "grounds-drift:G009",
+          "votes": [
+            "C11",
+            "C13",
+            "C13"
+          ],
+          "status": "stable-majority",
+          "majority": "C13"
+        },
+        {
+          "id": "case-30111db7b8e1ad",
+          "source": "notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md",
+          "target": "notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md",
+          "prior": "premised-on",
+          "basis": "grounds-drift:G001",
+          "votes": [
+            "C4",
+            "C2",
+            "C13"
+          ],
+          "status": "UNSTABLE",
+          "majority": ""
+        },
+        {
+          "id": "case-f885ae7745ebc0",
+          "source": "notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md",
+          "target": "notes/self-improvement-is-relative-to-a-declared-objective.md",
+          "prior": "premised-on",
+          "basis": "grounds-drift:G002",
+          "votes": [
+            "C1",
+            "C13",
+            "C13"
+          ],
+          "status": "stable-majority",
+          "majority": "C13"
+        },
+        {
+          "id": "case-0f41b0d385292b",
+          "source": "notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md",
+          "target": "notes/warranted-autonomy-is-bounded-by-oracle-domain.md",
+          "prior": "premised-on",
+          "basis": "grounds-drift:G014",
+          "votes": [
+            "C13",
+            "C1",
+            "C1"
+          ],
+          "status": "stable-majority",
+          "majority": "C1"
+        },
+        {
+          "id": "case-c44bc99dfa7da4",
+          "source": "notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md",
+          "target": "notes/exact-implementation-does-not-validate-a-requirement.md",
+          "prior": "premised-on",
+          "basis": "grounds-drift:G016",
+          "votes": [
+            "C1",
+            "C4",
+            "C2"
+          ],
+          "status": "UNSTABLE",
+          "majority": ""
+        }
+      ]
+    },
+    "negative-control": {
+      "count": 16,
+      "status_counts": {
+        "UNSTABLE": 7,
+        "stable-majority": 6,
+        "unanimous": 3
+      },
+      "majority_classes": {
+        "C4": 2,
+        "C2": 1,
+        "C3": 4,
+        "C6": 2
+      },
+      "rows": [
+        {
+          "id": "case-41428517ec8382",
+          "source": "notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md",
+          "target": "notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md",
+          "prior": "explained-by",
+          "basis": "mechanism-core:F002",
+          "votes": [
+            "C10",
+            "C4",
+            "C12"
+          ],
+          "status": "UNSTABLE",
+          "majority": ""
+        },
+        {
+          "id": "case-3496ee2db136b1",
+          "source": "notes/brainstorming-maintainability-oracles-for-agentic-development.md",
+          "target": "notes/weakly-discriminated-qualities-tend-to-be-underselected.md",
+          "prior": "explained-by",
+          "basis": "mechanism-core:F114",
+          "votes": [
+            "C2",
+            "C4",
+            "C4"
+          ],
+          "status": "stable-majority",
+          "majority": "C4"
+        },
+        {
+          "id": "case-575b06979464eb",
+          "source": "notes/the-bitter-lesson-selects-production-methods-not-representational.md",
+          "target": "notes/scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md",
+          "prior": "explained-by",
+          "basis": "grounds-drift:G017",
+          "votes": [
+            "C8",
+            "C2",
+            "C2"
+          ],
+          "status": "stable-majority",
+          "majority": "C2"
+        },
+        {
+          "id": "case-082d18281753b9",
+          "source": "notes/the-bitter-lesson-selects-production-methods-not-representational.md",
+          "target": "notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md",
+          "prior": "explained-by",
+          "basis": "grounds-drift:G007",
+          "votes": [
+            "C2",
+            "C8",
+            "C13"
+          ],
+          "status": "UNSTABLE",
+          "majority": ""
+        },
+        {
+          "id": "case-debb81f590eb94",
+          "source": "notes/orchestration-strategies-and-run-state-have-opposite-persistence.md",
+          "target": "notes/bounded-context-orchestration-model.md",
+          "prior": "operates-through",
+          "basis": "mechanism-core:F129",
+          "votes": [
+            "C10",
+            "C4",
+            "C4"
+          ],
+          "status": "stable-majority",
+          "majority": "C4"
+        },
+        {
+          "id": "case-5ea996e957b487",
+          "source": "notes/llm-context-is-a-homoiconic-medium.md",
+          "target": "notes/methodology-enforcement-is-constraining.md",
+          "prior": "operates-through",
+          "basis": "mechanism-core:F072",
+          "votes": [
+            "C3",
+            "C3",
+            "C13"
+          ],
+          "status": "stable-majority",
+          "majority": "C3"
+        },
+        {
+          "id": "case-cacf9c28c10bff",
+          "source": "notes/evaluation-automation-is-phase-gated-by-comprehension.md",
+          "target": "notes/spec-mining-as-codification.md",
+          "prior": "operates-through",
+          "basis": "mechanism-core:F108",
+          "votes": [
+            "C3",
+            "C3",
+            "C3"
+          ],
+          "status": "unanimous",
+          "majority": "C3"
+        },
+        {
+          "id": "case-33b17d160ff4f4",
+          "source": "notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md",
+          "target": "notes/llm-context-is-composed-without-scoping.md",
+          "prior": "operates-through",
+          "basis": "mechanism-core:F038",
+          "votes": [
+            "C4",
+            "C2",
+            "C13"
+          ],
+          "status": "UNSTABLE",
+          "majority": ""
+        },
+        {
+          "id": "case-bac2e954ce6f0b",
+          "source": "notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md",
+          "target": "notes/reflective-coverage-is-graded-across-representational-forms.md",
+          "prior": "extends",
+          "basis": "grounds-boundary",
+          "votes": [
+            "C10",
+            "C4",
+            "C13"
+          ],
+          "status": "UNSTABLE",
+          "majority": ""
+        },
+        {
+          "id": "case-cbbd1d7667e81e",
+          "source": "notes/only-derivation-and-inheritance-warrant-a-scope-claim-use-earns-it.md",
+          "target": "notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md",
+          "prior": "extends",
+          "basis": "grounds-drift:G012",
+          "votes": [
+            "C2",
+            "C13",
+            "C9"
+          ],
+          "status": "UNSTABLE",
+          "majority": ""
+        },
+        {
+          "id": "case-68854084829173",
+          "source": "notes/commitment-not-derivation-creates-new-ground-truth.md",
+          "target": "notes/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md",
+          "prior": "extends",
+          "basis": "grounds-boundary",
+          "votes": [
+            "C3",
+            "C3",
+            "C3"
+          ],
+          "status": "unanimous",
+          "majority": "C3"
+        },
+        {
+          "id": "case-3f238a6bfb20f0",
+          "source": "notes/false-positive-generation-is-filtered-before-retention.md",
+          "target": "notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md",
+          "prior": "extends",
+          "basis": "grounds-boundary",
+          "votes": [
+            "C3",
+            "C3",
+            "C3"
+          ],
+          "status": "unanimous",
+          "majority": "C3"
+        },
+        {
+          "id": "case-a0e84e8b184274",
+          "source": "notes/the-bitter-lesson-selects-production-methods-not-representational.md",
+          "target": "notes/the-meta-harness-ablation-bounds-summarization-not-theory-formation.md",
+          "prior": "evidenced-by",
+          "basis": "grounds-drift:G021",
+          "votes": [
+            "C7",
+            "C6",
+            "C6"
+          ],
+          "status": "stable-majority",
+          "majority": "C6"
+        },
+        {
+          "id": "case-7434c2dafbccda",
+          "source": "notes/compiling-coordination-preserves-primitive-not-aggregate-authority.md",
+          "target": "notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md",
+          "prior": "evidenced-by",
+          "basis": "mechanism-boundary:F095",
+          "votes": [
+            "C6",
+            "C3",
+            "C13"
+          ],
+          "status": "UNSTABLE",
+          "majority": ""
+        },
+        {
+          "id": "case-b43b0ab7700ffe",
+          "source": "notes/only-derivation-and-inheritance-warrant-a-scope-claim-use-earns-it.md",
+          "target": "notes/definitions/reflective-system.md",
+          "prior": "evidenced-by",
+          "basis": "grounds-drift:G019",
+          "votes": [
+            "C6",
+            "C10",
+            "C13"
+          ],
+          "status": "UNSTABLE",
+          "majority": ""
+        },
+        {
+          "id": "case-10fea94cddfcc6",
+          "source": "notes/self-improvement-is-relative-to-a-declared-objective.md",
+          "target": "notes/real-self-improving-systems-occupy-combinations-no-rung-captures.md",
+          "prior": "evidenced-by",
+          "basis": "grounds-boundary",
+          "votes": [
+            "C6",
+            "C6",
+            "C13"
+          ],
+          "status": "stable-majority",
+          "majority": "C6"
+        }
+      ]
+    }
+  },
+  "overall_mapping_class_counts": {
+    "C4": 41,
+    "C2": 59,
+    "C13": 40,
+    "C10": 15,
+    "C3": 28,
+    "C1": 20,
+    "C11": 5,
+    "C8": 6,
+    "C5": 9,
+    "C6": 6,
+    "C12": 2,
+    "C9": 2,
+    "C7": 1
+  },
+  "observer_edge_counts": {
+    "mechanically-discoverable": 155,
+    "connective-prose-only": 79
+  },
+  "observer_confidence_counts": {
+    "high": 199,
+    "medium": 34,
+    "low": 1
+  },
+  "observer_mapper_case_diagnostics": {
+    "non-C1-majority / mechanical-majority": 37,
+    "mapper-unstable / mechanical-majority": 14,
+    "mapper-unstable / connective-majority": 12,
+    "non-C1-majority / connective-majority": 9,
+    "C1-majority / mechanical-majority": 5,
+    "C1-majority / connective-majority": 1
+  },
+  "negative_control_c1_majorities": 0,
+  "valid_observer_records": 234,
+  "valid_mapper_records": 234,
+  "retry_failures": 2
+}

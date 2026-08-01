@@ -1,0 +1,26 @@
+{"id":"case-9197caeafa3a8b","class":"C2","confidence":"high","explanation":"B explains the exception by linking linear read cost to bounded context and irrelevant bytes."}
+{"id":"case-33b17d160ff4f4","class":"C4","confidence":"medium","explanation":"The prompt-based handoff is a design choice justified by B’s flat-context account."}
+{"id":"case-6152a54e6a18c8","class":"C2","confidence":"high","explanation":"B explains the exception as semantic underspecification rather than execution randomness."}
+{"id":"case-41428517ec8382","class":"C10","confidence":"high","explanation":"B operationally defines contextual competence as increased action capacity rather than retrieval accuracy."}
+{"id":"case-1220e2f6e7f005","class":"C4","confidence":"medium","explanation":"The pointer-design recommendation is justified by B’s follow-or-skip navigation decision."}
+{"id":"case-3cb813691b28b6","class":"C3","confidence":"high","explanation":"B’s lineage and change signal provide the control path that surfaces dependent rules for review."}
+{"id":"case-1b6d3c4df444c1","class":"C3","confidence":"high","explanation":"B’s always-loaded control-plane filter implements the zero-hop inclusion effect attributed to global goals."}
+{"id":"case-cbbd1d7667e81e","class":"C2","confidence":"medium","explanation":"B explains why scope claims require scale-tested, refutable structure rather than provenance alone."}
+{"id":"case-2632bc38d6c3e7","class":"C1","confidence":"high","explanation":"Reflection in A is conditional on B’s self-representation and causal-link requirements."}
+{"id":"case-47d9b2d46aa6b4","class":"C4","confidence":"medium","explanation":"The live theory fallback is an architectural choice justified by B’s reach-versus-fit distinction."}
+{"id":"case-4f00efdb446dff","class":"C2","confidence":"medium","explanation":"B explains the redundancy benefit of visible, claim-shaped titles."}
+{"id":"case-792c56f9b2a2f7","class":"C2","confidence":"high","explanation":"B explains the inherited constraint through silent soft degradation under finite context."}
+{"id":"case-f885ae7745ebc0","class":"C1","confidence":"medium","explanation":"A’s external-objective boundary depends on B’s independently identifiable, causally operative parameter."}
+{"id":"case-a0e84e8b184274","class":"C7","confidence":"high","explanation":"The Meta-Harness result in A is a case bearing on B’s claim about ablation identifiability."}
+{"id":"case-7434c2dafbccda","class":"C6","confidence":"medium","explanation":"B’s orchestrator example provides a case illustrating and qualifying A’s compilation claim."}
+{"id":"case-de38abeca27643","class":"C3","confidence":"high","explanation":"B’s exact select/call conversion is the operating mechanism realizing A’s host-language scheduler."}
+{"id":"case-fa13dc1364da68","class":"C4","confidence":"high","explanation":"A’s abstraction rule is shaped by B’s explanatory-reach boundary test."}
+{"id":"case-5ca86f39e5b984","class":"C11","confidence":"high","explanation":"A’s local reliability tradeoff conflicts with inferring larger-objective success from exact conformance."}
+{"id":"case-b5510a490b71bf","class":"C2","confidence":"high","explanation":"B explains the value of a checked materialized copy through consumer-side recomputation cost."}
+{"id":"case-a628538d6d8332","class":"C4","confidence":"high","explanation":"A’s reach-assessment procedure is shaped by B’s explanatory-reach test."}
+{"id":"case-ca2d686c8aa979","class":"C5","confidence":"medium","explanation":"Stronger oracle evidence in B is required before promoting an accepted instance into a rule."}
+{"id":"case-6c50ade3801134","class":"C2","confidence":"high","explanation":"B explains the execution-substrate boundary through inspectability, testing, diffs, and reversibility."}
+{"id":"case-c299eb39a9c550","class":"C10","confidence":"high","explanation":"B defines the profiles and quality priorities that A groups into objective bundles."}
+{"id":"case-bac2e954ce6f0b","class":"C10","confidence":"high","explanation":"B supplies the operation-profile definitions used to qualify replay as selection-grade."}
+{"id":"case-93e833a0ae496b","class":"C5","confidence":"medium","explanation":"An oracle domain capable of assessing the intervention is needed before unattended revision is warranted."}
+{"id":"case-5fea6da992bdb6","class":"C2","confidence":"high","explanation":"B explains the early scoping gain by identifying flat context as the missing boundary."}
