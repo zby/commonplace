@@ -30,7 +30,7 @@ Selected profile fields, not the whole profile: the governance dimension appears
 
 **The Homeostat is the floor, and it is not a low rung.** Operative, computationally autonomous, and non-cumulative at once: its retained setting steers behavior and determines whether reorganization fires, yet the successor comes from a random table and carries nothing of the incumbent. Any scale that reads autonomy as maturity puts a randomized relay bank above a human-reviewed repository.
 
-**Parametric learners break the equation of reflection with compounding.** They compound reliably through weights nothing inside them can read. This is the deployed default rather than a corner case, which is why an ontology that required reflection for membership would fail on the field's central systems.
+**Parametric learners break the equation of reflection with accumulation.** They accumulate reliably through weights nothing inside them can read. This is the deployed default rather than a corner case, which is why an ontology that required reflection for membership would fail on the field's central systems.
 
 **Ailon et al. show cumulativity without either reflection or a gate.** Its staged training phase is where the accumulation sits: a retained snapshot of a typical instance is built first, and the auxiliary search structures are then constructed against it. The stationary regime that follows retains those structures as the operative basis for later inputs without further improving them. Its objective is expected running time under a declared input distribution, and distribution shift is the boundary where the retained structure stops being warranted.
 
@@ -53,7 +53,7 @@ Relevant Notes:
 - [Self-improving systems](./self-improving-systems-README.md) — see-also: the curated head listing the four dimensions these placements are read against
 - [Self-improvement is relative to a declared objective](./self-improvement-is-relative-to-a-declared-objective.md) — grounds: why each row names its frame, and why no ordering follows from the profile alone
 - [Accumulation counts dependence through the retained result, not through the evidence it caused](./accumulation-counts-dependence-through-the-retained-result.md) — grounds: the cumulativity column's criterion
-- [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: what the reflective column is worth, and what parametric compounding does without it
+- [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: what the reflective column is worth, and what parametric accumulation does without it
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: the evidential-limit column for the proposal-selection rows, why computational allocation does not fill it, and the scope that keeps it off the direct ones
 - [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — extends: why these rows still cannot be ordered even after the profile is fixed
 - [Ashby, Design for a Brain — ultrastability](../sources/ashby-design-for-a-brain-ultrastability.md) — evidenced-by: the operative, non-cumulative, non-reflective floor

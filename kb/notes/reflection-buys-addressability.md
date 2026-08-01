@@ -1,5 +1,5 @@
 ---
-description: "Self-improvement can compound without reflection — parametric learners do — but non-reflective retention gives only indirect handles; reflective retention makes the changed object addressable"
+description: "Self-improvement can accumulate without reflection — parametric learners do — but non-reflective retention gives only indirect handles; reflective retention makes the changed object addressable"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, computational-model, self-improving-systems]
@@ -7,17 +7,17 @@ tags: [foundations, computational-model, self-improving-systems]
 
 # Reflection buys addressability
 
-What does routing an improvement pathway through a self-representation — making the self-improvement [reflective rather than non-reflective](./definitions/reflective-system.md) — actually add? The tempting answer — compounding, improvement building on improvement — claims too much, because compounding is available without reflection. Reflection's distinctive affordance is stronger, more direct **addressability**: retention that later rounds of improvement can *read*, not merely run on.
+What does routing an improvement pathway through a self-representation — making the self-improvement [reflective rather than non-reflective](./definitions/reflective-system.md) — actually add? The tempting answer — accumulation, improvement building on improvement — claims too much, because accumulation is available without reflection. Reflection's distinctive affordance is stronger, more direct **addressability**: retention that later rounds of improvement can *read*, not merely run on.
 
 The claim sharpens by separating three properties:
 
 - **Operative** retention steers: the retained change persists and affects later behavior.
-- **Cumulative** retention compounds according to an informational-dependence test that [counts only dependence through the retained result](./accumulation-counts-dependence-through-the-retained-result.md).
+- **Cumulative** retention builds on itself according to an informational-dependence test that [counts only dependence through the retained result](./accumulation-counts-dependence-through-the-retained-result.md).
 - **Addressable** retention is knowledge: processes inside the boundary can inspect the retained change, say what it claims, criticize it, revise it selectively, and carry it to a problem other than the one it came from. This is an affordance of reflective coverage over retained commitments.
 
-Operativity is required for [self-improving membership](./definitions/self-improving-system.md); cumulativity and addressability can then vary independently. Their separation is what breaks the equation of reflection with compounding. Reflection does not remove the non-cumulative floor: a retained change can be operative and addressable even when a later improvement episode does not use it. [Accumulation counts dependence through the retained result](./accumulation-counts-dependence-through-the-retained-result.md) owns that criterion and its counterexamples.
+Operativity is required for [self-improving membership](./definitions/self-improving-system.md); cumulativity and addressability can then vary independently. Their separation is what breaks the equation of reflection with accumulation. Reflection does not remove the non-cumulative floor: a retained change can be operative and addressable even when a later improvement episode does not use it. [Accumulation counts dependence through the retained result](./accumulation-counts-dependence-through-the-retained-result.md) owns that criterion and its counterexamples.
 
-## Compounding without a representation
+## Accumulation without a representation
 
 A parametric learner — a policy improved by self-play, an agent fine-tuned on its own trajectories — retains improvement in its weights, and its pathway is cumulative by construction: the retained weights are inputs to the next update, as the point where a gradient is evaluated and the base it transforms. Changing the retained weights while holding the new data fixed changes the update and its successor. Improvement genuinely builds on improvement. This is why a definition that requires reflection for self-improvement fails against the field's central cases.
 
@@ -31,7 +31,7 @@ But the weights are the system, not a map of it. Nothing inside the pathway can 
 
 Route retention through a readable self-representation and the retained change lands in an artifact the system also reads. Where the pathway is a proposal-selection loop, both remaining functions can consume it: retained knowledge narrows later *search* (recorded constraints and rejected alternatives prune the candidate space) and supplies later *evaluation* (a retained criterion is itself an oracle input). Retention stops being a substrate the pathway runs on and becomes a premise it reasons from.
 
-These retention paths trade opposite guarantees. Parametric compounding is automatic but opaque: the wire is the substrate itself, so nothing can fail to "find" the retained change — and nothing can audit it. Where reflective compounding depends on artifact discovery, it is criticizable but best-effort: the retained change compounds only if a later improvement round retrieves and uses it — [retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md). Addressability is the *possibility* of compounding as knowledge, not a guarantee of it.
+These retention paths trade opposite guarantees. Parametric accumulation is automatic but opaque: the wire is the substrate itself, so nothing can fail to "find" the retained change — and nothing can audit it. Where reflective accumulation depends on artifact discovery, it is criticizable but best-effort: the retained change counts toward later improvement only if a later round retrieves and uses it — [retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md). Addressability is the *possibility* of accumulation as knowledge, not a guarantee of it.
 
 ## Expected advantages
 
@@ -42,7 +42,7 @@ Addressability is expected to enable:
 - **Reuse and transfer** — an explicit change read into a different context, rather than reached by running the loop again.
 - **Reasoning about interactions** — two explicit changes can be checked against each other; two weight updates compose silently.
 - **Criticism and rollback** — per-change and targeted, because [acceptance is an improvement claim](./definitions/self-improving-system.md) that an addressable change leaves open to later audit.
-- **Improvement of the improvement process itself** — an explicit evaluator, criterion, or update rule is [organization](./definitions/behavior-determining-organization.md) like any other, so a reflective pathway can be turned on its own machinery.
+- **Improvement of the improvement process itself** — an explicit evaluator, criterion, or update rule is [organization](./definitions/behavior-determining-organization.md) like any other, so a reflective pathway can be turned on its own machinery — the leveraged case [that turns accumulation into compounding](./compounding-needs-leverage-to-multiply-and-autonomy-to-scale.md).
 
 Whether reflective pathways improve faster, more reliably, or more safely remains empirical. Selective revision and criticism also require [reach-assessment](./definitions/reach-assessment.md): addressability makes a change findable, but judging it as bad still requires assessing its claimed scope.
 
@@ -67,7 +67,8 @@ Relevant Notes:
 - [Reach-assessment](./definitions/reach-assessment.md) — extends: the judgment capability that would make selective revision and criticism deliver, not just become possible
 - [Localized retention pays when sparse changes have bounded impact in a matching decomposition](./localized-retention-pays-where-change-is-sparse-in-a-matching.md) — mechanism: the change-topology condition under which the expected advantages actually pay, and the dense-change case where they do not
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: operative retention as the loop's baseline, kept separate from cumulativity and reflective addressability
-- [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — extends: why addressable retention compounds only best-effort, through the discovery wire
+- [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — extends: why addressable retention accumulates only best-effort, through the discovery wire
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — extends: addressability assessed per representational form and operation profile
-- [Accumulation counts dependence through the retained result, not through the evidence it caused](./accumulation-counts-dependence-through-the-retained-result.md) — contrasts: the neighbouring property that compounds without being readable, and its criterion
+- [Accumulation counts dependence through the retained result, not through the evidence it caused](./accumulation-counts-dependence-through-the-retained-result.md) — contrasts: the neighbouring property that builds without being readable, and its criterion
+- [Compounding self-improvement needs leverage to multiply and autonomy to scale](./compounding-needs-leverage-to-multiply-and-autonomy-to-scale.md) — extends: separates accumulation from compounding, and locates reflection's contribution as addressability of the leveraged machinery
 - [Ashby, Design for a Brain — ultrastability](../sources/ashby-design-for-a-brain-ultrastability.md) — evidenced-by: the floor case — an operative incumbent whose random successor carries no improvement-relevant information from it
