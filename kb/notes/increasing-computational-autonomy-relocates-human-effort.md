@@ -36,6 +36,12 @@ Concretely: a session that drafts a note, validates it, discovers its connection
 
 These are proxies, and comparing them across time inherits the open commensurability problem — the function list itself changes as the system grows, [since measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md). What this note adds is the purpose such measurement should serve: not “are humans spending fewer hours?” but “is the intervention frontier moving outward?”
 
+## Recurring interventions are evidence about the pathway itself
+
+The interventions are more than a denominator. A *recurring* episode-specific human decision — the agent repeatedly asking which artifact should change, review repeatedly needing the same human distinction, the same class of change repeatedly needing manual authorization — marks a pathway function that is still human, and thereby a candidate for the representation–settlement–warrant conversion, [since methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md). A system that treats its intervention record as evidence in this way has made its own improvement pathway an improvement target.
+
+Pursued as a declared objective, moving the frontier outward has a well-formed statement and a degenerate one. The degenerate one is bare autonomy — hand every gate to an unattended model, achievable in one gesture. The well-formed one is expanding the domain of improvement episodes that complete unattended *and adequately verified*: fewer required human decisions per completed, warranted improvement, [since warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md).
+
 ## Scope
 
 - The claim concerns computational allocation, not methodological closure: a person can execute a settled gate, while an unattended model can improvise. The two often advance together when settled criteria become executable, [but they track different changes](./methodological-and-computational-closure-track-different-changes.md).
@@ -54,6 +60,7 @@ Relevant Notes:
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — grounds: identifies computational closure as an actor-allocation endpoint rather than methodological settlement
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: why the residue humans keep is exactly the frontier past the oracles
 - [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — extends: the commensurability problem the proposed measures inherit, now given a purpose
+- [Computationally directed self-improvement is a fixed-boundary reallocation ending in contraction](./computationally-directed-self-improvement-is-a-reallocation.md) — extends: horizon-indexed contraction failures operationalize the frontier this note locates human attention at
 - [Commonplace as a reflective self-improving system](../reference/commonplace-as-a-reflective-system.md) — evidenced-by: the human-inclusive system whose growing computational allocation alongside continued human involvement motivated the pattern
 - [The tag-readme trace read as a self-improving loop](../reference/tag-readme-trace-as-self-improving-loop.md) — evidenced-by: a worked instance of relocation — the automatable halves run in code and agents while the human keeps exactly the noticing and shape judgment
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: why the frontier is durable structure, not a temporary capability gap — automation stalls wherever verification is expensive

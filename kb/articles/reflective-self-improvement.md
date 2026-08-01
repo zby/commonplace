@@ -15,6 +15,7 @@ source_notes:
   - kb/notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md
   - kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md
   - kb/notes/methodological-and-computational-closure-track-different-changes.md
+  - kb/notes/computationally-directed-self-improvement-is-a-reallocation.md
   - kb/notes/a-proximate-target-is-checked-for-achievement-not-for-warrant.md
   - kb/notes/self-improvement-is-relative-to-a-declared-objective.md
   - kb/notes/warranted-autonomy-is-bounded-by-oracle-domain.md
@@ -97,7 +98,7 @@ Some information also requires an authoritative current record regardless of mod
 
 The production-method distinction leaves Commonplace's current types, gates, and indexes to be tested through use. One working bet is that explanation-first selection produces useful, well-supported knowledge per unit of human judgment. Review can [assess an individual explanation's reach, while use must show whether the method earns its maintenance cost](../notes/a-proximate-target-is-checked-for-achievement-not-for-warrant.md).
 
-The opening index episode is one such observation. The [division of work](../notes/methodological-and-computational-closure-track-different-changes.md) was explicit, and because [Commonplace's declared boundary](../reference/commonplace-as-a-reflective-system.md) includes designated maintainers, the loop was human-inclusive: it demonstrates an inspectable causal pathway, not autonomous diagnosis.
+The opening index episode is one such observation. The [division of work](../notes/methodological-and-computational-closure-track-different-changes.md) was explicit, and because [Commonplace's declared boundary](../reference/commonplace-as-a-reflective-system.md) includes designated maintainers, the loop was human-inclusive: it demonstrates an inspectable causal pathway, not autonomous diagnosis. That is not a shortfall the category should be redrawn to hide — a maintained system with maintainers inside its boundary is already reflectively self-improving. The transition under study is therefore not from non-reflection to reflection but [from human-directed to computationally directed reflective self-improvement](../notes/computationally-directed-self-improvement-is-a-reallocation.md): decision-bearing work — noticing a problem, diagnosing it through the system's own artifacts, choosing what to change, accepting the result — moving from maintainers to computational processes, until removing the maintainer from an episode would no longer break the loop. "An LLM wrote the code" is not the threshold; the threshold is the system using evidence and a representation of itself to determine what should change.
 
 A passing gate shows that its criterion was met; the criterion may still be [a poor proxy for the intended capability](../notes/exact-implementation-does-not-validate-a-requirement.md). Use tests how the parts work together: missed retrievals, misleading indexes, recurring corrections, and manual workarounds all count, because workarounds consume the human judgment the system is meant to spare.
 

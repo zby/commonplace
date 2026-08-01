@@ -40,6 +40,7 @@ A pathway is [**reflective**](./definitions/reflective-system.md) when change pa
 ### Governance and computational allocation
 
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — settled method can be human-executed; an unattended model can improvise.
+- [Computationally directed self-improvement is a fixed-boundary reallocation ending in contraction](./computationally-directed-self-improvement-is-a-reallocation.md) — the transition worth studying is intra-category, and its endpoint is whether the boundary can be contracted to exclude the humans.
 - [Increasing computational autonomy relocates human effort to the frontier](./increasing-computational-autonomy-relocates-human-effort.md) — measure improvements per human judgment, not hours.
 - [Only explicit retention is durable, writable, and addressable](./only-explicit-retention-is-durable-writable-and-addressable.md) — no tacit channel carries settled methodology.
 
