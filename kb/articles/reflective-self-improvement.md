@@ -28,14 +28,21 @@ source_notes:
   - kb/notes/scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md
   - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
   - kb/notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md
+  - kb/notes/an-omitted-loop-function-and-a-frozen-one-need-different-repairs.md
   - kb/reference/commonplace-as-a-reflective-system.md
   - kb/reference/tag-readme-trace-observed-causal-connection.md
   - kb/agentic-systems/exo.md
   - kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md
+  - kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md
+  - kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md
+  - kb/sources/autogenesis-a-self-evolving-agent-protocol.ingest.md
+  - kb/sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md
   - kb/sources/sutton-the-bitter-lesson-original-essay.md
 ---
 
 # Reflective self-improvement
+
+**TL;DR.** Agents that rewrite their own prompts, memory, skills, and harness code now exist. Read against a functional decomposition of the improvement loop — search, evaluation, operative retention — each of the recent systems leaves some function either *omitted* (nothing performs it) or *frozen* (performed by machinery the loop cannot revise); none argues for the placement, and reported benchmark gains cannot reveal it. The claim of this article is the diagnostic frame, not the surface: a theory of the loop's own functions, retained as governed, revisable artifacts; the distinction between omitted and frozen functions, which need different repairs; and verification-bounded migration as the rule for which decisions move from humans into computation. The loop can start before autonomy — Commonplace runs it human-inclusively, and applying its own decomposition to the recent systems has already forced one revision of that decomposition. Not yet shown: sustained compounding, autonomous semantic evaluation, or advantage over stronger models and simpler memory.
 
 An agent that is corrected today and repeats the mistake tomorrow wastes the correction. The obvious fix is retention: let the agent write down what it learned, somewhere later runs will read it. This article is about what that fix opens up: a pathway by which an agent changes itself through readable artifacts. The pathway's main benefit is addressability; its hard parts are retrieval, verification, and control over what gets written.
 
@@ -85,7 +92,7 @@ Guarding writes does not decide what is worth retaining. For reusable explanator
 
 These systems either retain changes without a governance layer or evaluate them through a narrow channel. The pattern proposed here keeps an artifact layer representing selected aspects of the system in natural language and code, then uses LLMs to propose and criticize changes. Natural-language criticism can consider effects that a proof system cannot establish or a fixed benchmark does not measure, but its judgments need verification outside the text being judged.
 
-The claim, then, is not that systems can reflect, retain lessons, or rewrite themselves — the list above shows they can. It is that an LLM plus a readable artifact layer can serve as an operative reflective surface, that addressability is that surface's distinctive benefit, and that retrieval, reach assessment, and control over write and consumption paths are its characteristic failure points.
+The claim, then, is not that an LLM plus a readable artifact layer can serve as an operative reflective surface — by 2026 that is demonstrated territory. [Self-Harness](../sources/self-harness-harnesses-that-improve-themselves.ingest.md) has a fixed model mining its own failure traces and editing its own harness through a regression gate; [Autogenesis](../sources/autogenesis-a-self-evolving-agent-protocol.ingest.md) evolves prompts, tools, agents, and memory as versioned resources with lineage and rollback; [Continual Harness](../sources/continual-harness-online-adaptation-foundation-agents.ingest.md) refines a harness first with humans in the loop and then with an automated refiner; and a production team has turned [accepted review comments into version-controlled behavioral rules](../sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md) consumed across sessions. What none of them supplies is a theory of the loop they are running. Read against the loop's [functional decomposition](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md), [each leaves a function either omitted — nothing performs it — or frozen outside the loop's own update space](../notes/an-omitted-loop-function-and-a-frozen-one-need-different-repairs.md): an edit nothing could refuse, or a gate the loop it governs cannot revise. None defends the placement, and the two conditions need different repairs that reported benchmark gains cannot tell apart. The claim this article defends is that diagnostic frame: the decomposition of the loop, the omitted/frozen distinction, and verification-bounded migration as the criterion for which frozen functions may be lifted — held as a revisable map rather than a finished one, and already revised once by its own application, which exposed retirement as a function the decomposition lacks a slot for.
 
 The closest comparison is the [reviewed Exo version](../agentic-systems/exo.md), pinned to commit `ef4cfe05` from 2026-07-29: an agent harness and memory system that can change both natural-language and executable artifacts, keeps event history and versioned artifacts, supports deliberate removal, structurally validates installed tools, and blocks activation when validation or a rebuild fails. Its weaker point is semantic governance: individual memory facts lack declared scope, provenance, and review state, and making a candidate memory durable requires no independent semantic review. Commonplace begins with that governance problem and provides far fewer runtime capabilities.
 
