@@ -1,5 +1,5 @@
 ---
-description: "Examples-first article defining reflective self-improvement and claiming a diagnostic frame for it: the improvement-loop decomposition, the omitted/frozen distinction read against four 2026 systems, verification-bounded migration of reflective control, a five-question test, and the bitter-lesson constraint"
+description: "Defines reflective self-improvement and claims its diagnostic frame: the loop decomposition, the omitted/frozen distinction read against four 2026 systems, verification-bounded migration, a five-question test, and the bitter-lesson constraint"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
