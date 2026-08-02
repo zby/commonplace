@@ -4,6 +4,7 @@ Coverage of external **agentic systems and harnesses as whole systems** — exec
 
 ## Analyses
 
+- [Autogenesis](./autogenesis.md) — self-evolving agent framework whose paper-aligned release exposes versioned protocol resources and an explicit planning bus, while current `main` replaces them with an expanded extension taxonomy and uniform capability loop; substantial code, but incomplete experiment reproduction and a broken advertised test baseline
 - [Claude Code dynamic workflows](./claude-code-dynamic-workflows.md) — model-authored orchestrator scripts over sub-agents: the first shipped harness exposure of the bounded call beneath the frozen tool loop, mapped onto the [tool-loop cluster](../notes/tool-loop-README.md)
 - [Fractal](./fractal.md) — terminal/headless RLM harness over PredictRLM: SBX-mounted workspace turns, model-authored code and sub-model calls, agent-delegation skill, and session continuity stored outside the repo
 - [GBrain as an agentic system](./gbrain.md) — the agent-OS half of a popular "memory" project: host-agent adoption protocol, dream-cycle scheduler, durable crash-resumable subagent queue, fail-closed trust boundary, and a gated self-modification loop; memory subsystem reviewed in [agent-memory-systems](../agent-memory-systems/reviews/gbrain.md)
