@@ -17,6 +17,7 @@ Commonplace indexes everything to one objective: more useful and better-warrante
 - The knowledge-centric self-improvement preprint (arXiv 2607.19592, ingested) demonstrates a workable protocol shape for one arm: agents held generic and disposable, the knowledge artifact frozen, transfer measured across tasks and model families.
 - The `condensation-faithfulness-experiment` workshop (named, not linked) is designing an adjacent, narrower experiment — condensation methodology against naive auto-summary under a perturbation protocol. It ablates one mechanism; this proposal ablates the framework.
 - The Commonplace repository is public. Its content, including the methodology being tested, may enter model training corpora — a live confound for any "bare stronger model" arm.
+- (2026-08-02) The leverage-level protocol now has its own note: [reflective leverage is tested in the next episode](../../notes/reflective-leverage-is-tested-in-the-next-episode.md) — displaced measures, uptake traces, and three baselines whose stronger-model arm carries this proposal's contamination force. The two target different quantities: that note measures leverage inside the loop; this proposal measures whether the framework earns its cost at all.
 
 ## Problem
 
