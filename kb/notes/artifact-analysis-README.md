@@ -13,6 +13,7 @@ The vocabulary for analyzing retained artifacts: where behavior-shaping state pe
 ## The scheme
 
 - [axes of artifact analysis](./axes-of-artifact-analysis.md) — the four-field analysis: storage substrate, representational form, lineage, and behavioral authority over the operative part or consumption path
+- [first-principles analysis maps a design space before selecting within it](./first-principles-analysis-maps-design-space-before-selection.md) — uses representational form as the worked case for deriving designer options from primitive axes before inherited packages close the search space
 - [the four-field record exposes an efficiency, security, and sovereignty agenda](./the-four-field-record-exposes-an-efficiency-security-and-sovereignty.md) — what the classification is *for*: the downstream questions the fields make answerable
 - [memory design adds operational axes to artifact analysis](./memory-design-adds-operational-axes-to-artifact-analysis.md) — extends the scheme with write/read-side operational axes for memory-system design
 
