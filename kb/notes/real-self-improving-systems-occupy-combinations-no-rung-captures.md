@@ -1,5 +1,5 @@
 ---
-description: "Casebook of eight placements on selected pathway-profile fields — Homeostat to Commonplace — reflection, cumulativity, allocation, and evidential limit in combinations no rung expresses"
+description: "Casebook of thirteen placements on selected pathway-profile fields — Homeostat to Commonplace — reflection, cumulativity, allocation, and evidential limit in combinations no rung expresses"
 type: kb/types/note.md
 traits: [title-as-claim, synthesis, has-comparison, has-external-sources]
 tags: [foundations, self-improving-systems]
@@ -20,9 +20,14 @@ Selected profile fields, not the whole profile: the governance dimension appears
 | [Ashby's Homeostat](../sources/ashby-design-for-a-brain-ultrastability.md) | direct, viability-driven | no | no | computational | nothing — retention is negative |
 | Parametric self-improvers | direct, gradient | no | yes | computational | training-time evaluation |
 | [Self-Improving Algorithms](../sources/self-improving-algorithms.md) | direct, staged | no | yes | computational | the declared input distribution |
+| [Continual Harness](../sources/continual-harness-online-adaptation-foundation-agents.ingest.md) | direct, refiner-mediated | yes | yes | computational | the Refiner's own judgment — end metrics observed, never gating |
 | [DreamCoder](../sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md) | proposal-selection | partly | yes | computational | statistical program fit |
 | [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) | proposal-selection | yes | yes | computational | what its proof system establishes |
 | [Knowledge-Centric Self-Improvement](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md) | proposal-selection | partly | yes | computational | benchmark oracles; debate for transfer |
+| [Self-Harness](../sources/self-harness-harnesses-that-improve-themselves.ingest.md) | proposal-selection | yes | yes | computational | two-split regression pass counts, the "held-out" split reused as selection data |
+| [Autogenesis](../sources/autogenesis-a-self-evolving-agent-protocol.ingest.md) | proposal-selection | yes | yes | computational | score against a fixed objective and safety invariants; acceptance rule and learnability mask sit outside the loop |
+| [Accumulated Behavioral Rules](../sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md) | proposal-selection | yes | yes | joint — capture human, consumption computational | one engineer's capture-time generalizability judgment; no per-rule outcome test |
+| [Darwin Gödel Machine](../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md) | proposal-selection | yes | yes | computational | compile-and-viability check; benchmark score steers only parent sampling |
 | [Exo](../agentic-systems/exo.md) | proposal-selection | yes | yes | computational | build, test, immediate behaviour |
 | [Commonplace](../reference/commonplace-as-a-reflective-system.md) | proposal-selection | yes | yes | joint, by decision | tests and validators; human judgment |
 
@@ -37,6 +42,8 @@ Selected profile fields, not the whole profile: the governance dimension appears
 **DreamCoder and the Gödel machine differ in gate kind, not gate strength.** Both run reject-capable loops; one accepts on statistical program fit, the other only on proof. DreamCoder is also split internally — an inspectable symbolic library alongside an opaque recognition network — so its reflective coverage has to be reported per component rather than as a verdict about the system.
 
 **Knowledge-Centric Self-Improvement is the strongest external case for addressability.** Its appendix traces a claim cited by id, challenged, split into two scoped claims, with the falsified branch retained as a rejection — the read-criticize-revise operations exercised computationally, not just structurally available. Its warrant splits: benchmark oracles are strong for pass/fail, while transfer-worthiness rests only on model debate.
+
+**The 2025–26 cohort clusters in a region no earlier row occupies.** Self-Harness, Continual Harness, Autogenesis, Accumulated Behavioral Rules, and the Darwin Gödel Machine are all reflective and cumulative, and — except the rules pipeline's human capture — computationally allocated, yet their evidential limits are the thinnest in their block: pass counts partly reused as selection data, a refiner nothing gates, a fixed objective the loop cannot revise, a single capture-time judgment, a bare viability check. Computationally autonomous operation over readable artifacts with thin acceptance warrant is the combination these five occupy, and [the per-function casebook](./an-omitted-loop-function-and-a-frozen-one-need-different-repairs.md) reads the same cohort at finer grain — which loop function each omits or holds frozen. Two placements deserve their own note: Continual Harness lands in the direct block for the Homeostat's reason, rejection collapsed into generation; and the Darwin Gödel Machine, carrying the Gödel machine's name, sits far from its namesake's row — acceptance on viability rather than proof, with score demoted to a search signal.
 
 **Exo and Commonplace differ most visibly in allocation.** Both are reflective, cumulative proposal-selection pathways; Exo's self-representation is unusually literal, the source tree it edits being the organization that determines its behavior, with rebuild-and-restart as the wire from artifact to behavior. Exo is computational throughout, Commonplace joint and varying by decision. On the coarse fields reported here that is the sharpest difference between them — their warrant cells differ too, and finer readings would separate their governance, search, and protected kernels — and it is invisible to any measure that scores both as "self-improving."
 
@@ -60,5 +67,11 @@ Relevant Notes:
 - [Self-Improving Algorithms](../sources/self-improving-algorithms.md) — evidenced-by: cumulative retention with no representation and no gate
 - [DreamCoder](../sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md) — evidenced-by: a statistical reject-capable gate, with coverage split across a symbolic library and an opaque network
 - [Knowledge-Centric Self-Improvement](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md) — evidenced-by: addressability operations exercised computationally, with warrant split by question
+- [An omitted improvement-loop function and a frozen one need different repairs](./an-omitted-loop-function-and-a-frozen-one-need-different-repairs.md) — contrasts: reads the 2025–26 rows at finer grain, by omitted or frozen loop function rather than by pathway profile
+- [Ingest: Self-Harness](../sources/self-harness-harnesses-that-improve-themselves.ingest.md) — evidenced-by: computational proposal over harness surfaces with a partly self-consulted regression gate
+- [Ingest: Continual Harness](../sources/continual-harness-online-adaptation-foundation-agents.ingest.md) — evidenced-by: refiner-mediated direct update with rejection collapsed into generation
+- [Ingest: Autogenesis](../sources/autogenesis-a-self-evolving-agent-protocol.ingest.md) — evidenced-by: versioned, rollback-capable retention under a fixed objective and learnability mask
+- [Ingest: Accumulated Behavioral Rules](../sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md) — evidenced-by: human capture-time judgment as the entire gate over an append-only rule file
+- [Ingest: Darwin Gödel Machine](../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md) — evidenced-by: viability-gated acceptance with benchmark score demoted to a search signal, far from its namesake's row
 - [Exo](../agentic-systems/exo.md) — evidenced-by: reflective, cumulative, and computationally autonomous at once, over a literal source-tree self-representation
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidenced-by: the human-inclusive joint-allocation reading
