@@ -1,5 +1,5 @@
 ---
-description: "Examples-first article defining reflective self-improvement, benefits and failure boundaries of readable self-representation, migration of reflective control into computational processes, a five-question test, and the bitter-lesson constraint"
+description: "Examples-first article defining reflective self-improvement and claiming a diagnostic frame for it: the improvement-loop decomposition, the omitted/frozen distinction read against four 2026 systems, verification-bounded migration of reflective control, a five-question test, and the bitter-lesson constraint"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -44,7 +44,7 @@ source_notes:
 
 **TL;DR.** Agents that rewrite their own prompts, memory, skills, and harness code now exist. Read against a functional decomposition of the improvement loop — search, evaluation, operative retention — each of the recent systems leaves some function either *omitted* (nothing performs it) or *frozen* (performed by machinery the loop cannot revise); none argues for the placement, and reported benchmark gains cannot reveal it. The claim of this article is the diagnostic frame, not the surface: a theory of the loop's own functions, retained as governed, revisable artifacts; the distinction between omitted and frozen functions, which need different repairs; and verification-bounded migration as the rule for which decisions move from humans into computation. The loop can start before autonomy — Commonplace runs it human-inclusively, and applying its own decomposition to the recent systems has already forced one revision of that decomposition. Not yet shown: sustained compounding, autonomous semantic evaluation, or advantage over stronger models and simpler memory.
 
-An agent that is corrected today and repeats the mistake tomorrow wastes the correction. The obvious fix is retention: let the agent write down what it learned, somewhere later runs will read it. This article is about what that fix opens up: a pathway by which an agent changes itself through readable artifacts. The pathway's main benefit is addressability; its hard parts are retrieval, verification, and control over what gets written.
+An agent that is corrected today and repeats the mistake tomorrow wastes the correction. The obvious fix is retention: let the agent write down what it learned, somewhere later runs will read it. This article is about what that fix opens up: a pathway by which an agent changes itself through readable artifacts. Systems that run the pathway now exist; what they still lack is a theory of the loop they are running. The pathway's main benefit is addressability; its hard parts are retrieval, verification, and control over what gets written; and diagnosing any particular loop means asking which of its functions nothing performs — and which are performed by machinery the loop itself cannot revise.
 
 Suppose a deployment fails on a Tuesday because a credential expired. An agent reviewing the trace mistakes the date for the cause and records a standing rule: "Deployments fail on Tuesdays." Later runs consume the rule and avoid Tuesday deployments. The agent has learned from evidence, and it has made itself worse.
 
@@ -137,6 +137,8 @@ The first two questions establish the self-reference and evidence-responsiveness
 | Status | Claim |
 |---|---|
 | Observed | Commonplace revised index pages, validation, and a search recipe through a governed, human-inclusive loop, and later runs consume the changes. |
+| Observed | Applying the loop decomposition to external systems exposed a function — retirement — that the decomposition itself lacks a slot for; the gap was recorded as evidence against the model rather than patched into it. |
+| Argued | Each of four 2026 self-improving-agent systems leaves a loop function either omitted (nothing performs it) or frozen (performed by machinery the loop cannot revise), and reported benchmark gains cannot distinguish the two conditions. |
 | Argued | Under a human-inclusive boundary, membership is nearly ubiquitous in maintained software; the substantive variable is which decision-bearing functions humans still supply. |
 | Argued | Readable operative artifacts provide addressability — selective inspection, revision, and removal — that weight-retained lessons do not expose. |
 | Conjectured | Explanatory artifacts may adapt a system from fewer target observations under structured task shifts. |
