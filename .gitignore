@@ -41,6 +41,9 @@ skills-lock.json
 # sources with scraping restrictions
 kb/sources/slate-moving-beyond-react-and-rlm.md
 
+# locally held copyrighted sources
+/kb/sources/sutskevers-list/
+
 # connect reports
 kb/reports/connect/*
 kb/work/connect/
