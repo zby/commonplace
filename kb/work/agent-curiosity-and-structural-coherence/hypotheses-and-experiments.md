@@ -55,6 +55,21 @@ The author's apparent starting perspective is one possible source of hypotheses,
 
 The two routes converge on an epistemic subgoal and a probe, but they expose different early failures. An agent may competently investigate a stated oddity yet never originate “does this rule hold here?” It may originate the question but fail to prioritize it, propose a check that cannot distinguish the alternatives, or obtain an answer without updating the artifact or plan.
 
+### Paper doubt and living doubt are distinguishable outcomes
+
+Use **paper doubt** as a working label for a concern that can be stated but does not alter what could reject the incumbent. A generic critique, a list of possible weaknesses, or a familiar benchmark objection remains paper doubt when it supplies no material consequence, discriminating probe, or uptake. Use **living doubt** for the stronger observed sequence: the concern earns scarce investigation effort, produces or selects a check whose outcomes distinguish compliance from failure, and changes the rule's scope, artifact, plan, or calibrated uncertainty.
+
+This is not a new stage in the process model. It groups outcomes across the existing significance, subgoal, probe, and uptake stages. It also avoids treating fluent concern production as reasoning evaluation: [reasoning production is not reasoning evaluation](../../notes/reasoning-production-is-not-reasoning-evaluation.md) predicts that a model may reconstruct the expected objection while failing to assess the incumbent process. Likewise, [known-target discovery benchmarks show reachability, not discovery closure](../../notes/known-target-discovery-benchmarks-show-reachability-not-discovery.md): supplying or recognizing the expected concern is a capability ceiling, not evidence of prospective origination.
+
+A direct experimental contrast can hold the artifact and budget fixed:
+
+- **Concern-production condition:** ask for important uncertainties or structural concerns.
+- **Consequence condition:** additionally require the organizational consequence if each concern is true.
+- **Probe condition:** additionally require a check with outcomes that discriminate failure from compliance.
+- **Uptake condition:** supply the same blinded probe result and test whether it changes the artifact, plan, rule scope, or uncertainty.
+
+Score paper-doubt yield separately from living-doubt completion. Include rule-holds and tempting-false-lead controls so indiscriminate investigation cannot win by producing more concerns. The useful dependent variable is not rhetorical force but the fraction of warranted concerns that traverse the full sequence at acceptable investigation cost.
+
 ## Curiosity, taste, representation, and selection
 
 A working distinction:
