@@ -9,7 +9,7 @@ tags: [learning-theory, observability]
 
 Trace-learning systems learn from CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the axes that separate them: how they ingest traces (ingestion pattern), what representational form they promote into (distributed-parametric, natural-language, symbolic, or mixed), and what behavioral authority the result has (knowledge artifact consumed as evidence/advice vs system-definition artifact consumed with instruction, enforcement, routing, validation, evaluation, or learning force).
 
-The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, Claude Workstream Kit, nao, MemoryOS, ClawVault, CrewAI Memory, cass-memory, deja-vu, Compound Engineering, WUPHF, REM, Autocontext, Meta-Harness, Agentic Harness Engineering, HALO, ARIS, Hermes Agent, Reflexion, Dynamic Cheatsheet, Agent Workflow Memory, ACE, ExpeL, ReasoningBank, G-Memory, AgentFly, Gnosis, Voyager, OS-Copilot, Tendril, SkillX, SkillRL, SkillWeaver, AriGraph, Amazon Science SAGE, Agent-R, Agent-S, and Self-Training-LLM (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The lightweight systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
+The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, Claude Workstream Kit, nao, MemoryOS, ClawVault, CrewAI Memory, cass-memory, deja-vu, pond, Compound Engineering, WUPHF, REM, Autocontext, Meta-Harness, Agentic Harness Engineering, HALO, ARIS, Hermes Agent, Reflexion, Dynamic Cheatsheet, Agent Workflow Memory, ACE, ExpeL, ReasoningBank, G-Memory, AgentFly, Gnosis, Voyager, OS-Copilot, Tendril, SkillX, SkillRL, SkillWeaver, AriGraph, Amazon Science SAGE, Agent-R, Agent-S, and Self-Training-LLM (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The lightweight systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
 
 **What the survey finds.** Across readable artifacts, structure ranges from minimal verbal hints (Reflexion) through scored flat rules (ACE, ExpeL) to executable code (Voyager, OS-Copilot) — the natural-language content-to-symbolic span. Candidate generation from traces is concrete enough to adapt; the open problem is evaluation — deciding what deserves trust, persistence, and retirement in open-ended domains. The per-system catalog below provides the evidence; the comparative analysis follows it.
 
@@ -184,6 +184,22 @@ The pure trace-to-recall case: existing agent session histories become a redacte
 **Promotion.** Redacted records, token buckets, GOB manifests/session metadata, sync JSONL batches, MCP recall results, `ctx` digests, and optional Claude startup context. These are knowledge/routing/ranking artifacts, not curated system-definition rules.
 
 **Scope.** Cross-harness and cross-task local recall with project-scoped push for Claude. It strengthens the weak-promotion branch of the survey: trace-extracted memory can remain an access structure over prior sessions and still change later work through pull recall or coarse project startup context.
+
+## pond
+
+A value-complete trace-to-recall system: cross-harness agent histories become one canonical archive plus lexical and parametric retrieval structures, without promotion into summaries, lessons, or rules.
+
+**Trigger.** Explicit or scheduled sync discovers enabled adapters, skips histories already represented by store watermarks, embeds new searchable messages inline, and folds index tails. A periodic in-server cycle can run the same sync path; live writes from an active harness remain deferred.
+
+**Source format.** Claude Code, Claude Desktop, Claude.ai export, Codex CLI, OpenCode, OpenClaw, NanoClaw, Hermes, and pi-coding-agent histories are parsed into Pond's Session/Message/Part interlingua. The canonical corpus retains conversational text, reasoning, files, tool calls/results, approvals, provider metadata, project/source identity, provenance, and parent-session links.
+
+**Extraction.** Mechanical, not model-judged. Typed adapters and ingest validators preserve source values and reject invalid structure; code selects only conversational user/assistant material and file metadata for `search_text`; a fixed E5/XLM-RoBERTa model derives one embedding per searchable message. There is no semantic lesson oracle.
+
+**Promotion.** Natural-language transcript content persists inside symbolic Lance datasets, with compiled BM25/scalar indexes and parametric message vectors carrying ranking authority. The raw-to-derived path strengthens retrieval but never turns recurrence or similarity into a reviewed fact, instruction, or gate.
+
+**Reinjection.** Agents or users explicitly pull ranked snippets, sessions, messages, or SQL results through CLI, HTTP, or read-only MCP. Static skill/tool instructions encourage recall but no retained session content is pushed automatically.
+
+**Scope.** Cross-harness, cross-machine, and cross-task, with project/session/source/date filters at read time. [The Pond review](./reviews/pond.md) extends the weak-promotion branch beyond deja-vu's lexical index: a trace archive can add parametric ranking and object-store scale while remaining evidence memory rather than semantic distillation.
 
 ## Compound Engineering
 
