@@ -30,9 +30,10 @@ The four do not determine, subsume, or form a monotone progression through one a
 
 ### What reflection adds
 
-A pathway is [**reflective**](./definitions/reflective-system.md) when change passes through a causally connected representation of the affected organization. Reflective structure crosses update architecture, and authority family — evidence, advice, instruction, enforcement — does not decide it.
+A [self-improving](./definitions/self-improving-system.md) pathway is [reflective](./definitions/reflective-system.md) when it routes objective-bearing evidence into a change to the system's behavior-determining organization through a causally connected self-representation; later operation must depend on that change. This causal structure permits direct updates, proposal selection, and compositions of both. Authority family — evidence, advice, instruction, enforcement — does not decide reflection.
 
 - [Reflection buys addressability](./reflection-buys-addressability.md) — retention later rounds can read, criticize, and selectively revise.
+- [Builder-loop reach](./the-builder-loop-becomes-internal-through-an-operative-redesign-path.md) — assess each aspect separately; a retained loop can challenge its result again.
 - [Reflection makes retained lessons second-order](./reflection-makes-retained-lessons-second-order.md) — an addressable lesson can reject or rescope a represented prior commitment.
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — the standing discount on a lesson that never surfaces.
 - Payoff hypotheses, still open: [theory-mediated sample efficiency](./theory-mediated-self-improvement-needs-interpretation-and-retention.md), and [selective revision needing a faithful rationale](./selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md).

@@ -39,6 +39,8 @@ The third change runs the other way, from code back to natural-language instruct
 
 Both directions are therefore on record: a change in the system forced a revision of its self-representation, and a change made through the self-representation changed what the system afterward required, rejected, and searched.
 
+One calibration retellings have needed: the split did not separate the two jobs at the artifact level. A README that declares `complete: true` still both introduces the tag and enumerates its members. What the change relocated is the *verification* of the completeness claim — out of the editing agent's unaided care and into a declared mark the validator falsifies. Read as an improvement episode, this is a revision of verification machinery, not a repair of the system's decomposition.
+
 ## Verified timeline
 
 Reconstructed from git history (verified 2026-07-30), recorded here because retellings of this episode have drifted on exactly these points.

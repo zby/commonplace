@@ -14,7 +14,7 @@ Nothing published yet.
 
 ## In draft
 
-- [Reflective self-improvement](./reflective-self-improvement.md) — names the architecture agent builders are already using: improvement routed through readable artifacts buys addressability, not compounding, taxed by retrieval.
+- [Reflective self-improvement](./reflective-self-improvement.md) — defines the causal test, then compares improvement inside supplied organizations with Commonplace's retained human–agent builder path and the proof-governed Gödel machine.
 
 ---
 

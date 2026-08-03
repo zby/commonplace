@@ -1,5 +1,5 @@
 ---
-description: "A proposal-selection improvement loop — candidates generated, evaluated with possible non-adoption, selectively retained — requires search, evaluation that can reject, and operative retention"
+description: "A proposal-selection improvement loop — candidates generated, evaluated with possible non-adoption, and accepted changes made operative — requires search, reject-capable evaluation, and operative retention"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, computational-model, self-improving-systems]
@@ -7,7 +7,7 @@ tags: [foundations, computational-model, self-improving-systems]
 
 # A proposal-selection improvement loop requires search, evaluation, and operative retention
 
-A **proposal-selection improvement loop** is the architecture of improvement in which candidate changes are generated, evaluated with a possibility of non-adoption, and selectively made operative. It is a named subtype, not the whole of the phenomenon: a [self-improving system](./definitions/self-improving-system.md) needs its changes to be responsive to evidence bearing on an improvement objective, and evidence may instead determine an update directly — gradient-, reward-, error-, or viability-driven — with no candidate ever standing to be rejected. What follows is the anatomy of the subtype, and it applies with full force exactly there.
+A **proposal-selection improvement loop** is the architecture of improvement in which candidate changes are generated, evaluated with a possibility of non-adoption, and accepted changes are made operative. It is a named subtype, not the whole of the phenomenon: a [self-improving system](./definitions/self-improving-system.md) needs its changes to be responsive to evidence bearing on an improvement objective, and evidence may instead determine an update directly — gradient-, reward-, error-, or viability-driven — with no candidate ever standing to be rejected. What follows is the anatomy of the subtype, and it applies with full force exactly there.
 
 A proposal-selection loop requires three functions: **search** brings a candidate change into consideration, **evaluation** supplies grounds for accepting or rejecting it, and **operative retention** preserves an accepted change with behavioral authority. Remove any one and the loop does not close — a change nobody proposed, nobody could reject, or nobody will ever act on.
 
