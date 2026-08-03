@@ -19,6 +19,8 @@ The evidence can be any signal diagnostic of the criterion:
 - **measurements and usage traces** — observed performance, incidents, benchmark outcomes;
 - **human judgments** — review verdicts, maintainer standards, rubric applications.
 
+A counterfactual test makes the causal clause operational: hold the incumbent and other relevant updater inputs fixed, then remove or replace the evidence. What the updater computes or installs must change — or, for a stochastic updater, its distribution must change. Retrieval, parsing, or logging alone does not establish responsiveness if the resulting update is unchanged.
+
 The evidence does **not** need to appear in a separate evaluator component. In direct-determination pathways the update rule consumes it wholesale — the gradient step *is* the response. Only the [proposal-selection subtype](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) implements the criterion as a gate that consumes evidence to accept or reject.
 
 ## Exclusions

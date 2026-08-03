@@ -46,7 +46,7 @@ A pathway is [**reflective**](./definitions/reflective-system.md) when change pa
 
 ## Placements
 
-[Eight cases profiled across selected fields of the four dimensions](./real-self-improving-systems-occupy-combinations-no-rung-captures.md) — from Ashby's Homeostat to Commonplace itself, including the [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) as the proof-governed limit. Read every claim at its stated strength: definitions are stipulated and revisable; payoff claims are open hypotheses.
+[Thirteen cases profiled across selected fields of the four dimensions](./real-self-improving-systems-occupy-combinations-no-rung-captures.md) — from Ashby's Homeostat to Commonplace itself, including the [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) as the proof-governed limit. Read every claim at its stated strength: definitions are stipulated and revisable; payoff claims are open hypotheses.
 
 ## Base vocabulary and boundary cases
 
