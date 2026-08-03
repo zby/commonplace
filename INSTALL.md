@@ -80,6 +80,8 @@ git -C commonplace sparse-checkout set kb
 - **ripgrep** (`rg`) — agent runtimes use it for fast KB search
 - **An agent runtime** — Codex, Claude Code, or another LLM/IDE that can load a project control-plane file (`AGENTS.md`/`CLAUDE.md`) and expose skill directories to the agent
 
+Normal KB maintenance is expected to happen under version control. The shipped procedures and examples use Git, so it is included in the out-of-the-box prerequisites above. A project may substitute another VCS if it adapts Git-specific procedures; the `commonplace-*` commands do not use Git history as correctness state.
+
 ### Optional
 
 - **direnv** (Linux/macOS) — optional convenience: auto-activates the project venv on `cd` and keeps uv's cache inside the project. Not needed for a working install; see the [direnv appendix](#appendix-direnv-linuxmacos). The main steps below use plain venv activation.
@@ -247,6 +249,7 @@ Then review the merged file and fill in the per-project parts. The template's HT
 - **`KB Goals and Scope`** — Purpose, Scope (the out-of-scope list is what prevents scope creep), and Quality bar. Without these the agent has no basis for inclusion decisions.
 - **Command invocation (in `### Commands`)** — keep the bare-name variant, which matches the activated venv from step 2 (or the auto-activation in the direnv appendix). If the project deliberately does **not** put the venv on `PATH`, keep the fallback variant telling agents to call the venv executables directly — `.venv/bin/commonplace-validate` or `.venv\Scripts\commonplace-validate.exe` — otherwise agents will retry failing bare commands.
 - **Navigation entry points** — add curated tag READMEs to the list as they emerge; the template comment explains when to create one.
+- **Version-control conventions** — keep the framework expectation that the KB is versioned, and add any project-specific commit, branch, or review rules. The template deliberately assigns no portable Commonplace semantics to those objects.
 
 ## 5. Install skills for every agent that will work on the project
 

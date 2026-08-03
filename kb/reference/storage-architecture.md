@@ -10,7 +10,7 @@ Commonplace stores data in three layers: authored markdown files under `kb/`, de
 
 ## Authored markdown
 
-All authored content lives as markdown with YAML frontmatter under `kb/`, tracked in git. Every file is readable and editable without tooling beyond an editor and `grep`.
+All authored content lives as markdown with YAML frontmatter under `kb/`. Normal operation expects these files to be tracked in a version-control system; this repository uses Git. Every file remains readable and editable without tooling beyond an editor and `grep`.
 
 | Directory | Contents |
 |---|---|
@@ -23,6 +23,12 @@ All authored content lives as markdown with YAML frontmatter under `kb/`, tracke
 | `kb/types/`, `kb/*/types/` | Global and collection-scoped type definitions |
 
 Document type is declared by `type:` in frontmatter and validated against the matching schema, resolved from the owning collection's `types/` directory with fallback to global `kb/types/`. See [available-types.md](./available-types.md) and [type-loading.md](./type-loading.md).
+
+## Version control is expected, not a correctness dependency
+
+Commonplace expects agents and human users maintaining a KB to use version control for diff review, rollback, attribution, and reconstruction of change episodes. This repository and the shipped operating examples use Git. Commonplace gives no framework-wide semantic meaning to commits, branches, or merges: team workflows differ too much for those objects to serve as its shared symbolic contract.
+
+This is an operating expectation, not a correctness dependency. The `commonplace-*` commands do not invoke Git ([ADR 039](./adr/039-tool-visibility-is-package-owned-and-git-is-never-invoked.md)), and review freshness compares filesystem content with database-owned snapshots rather than repository history ([ADR 032](./adr/032-review-freshness-uses-db-snapshots-not-git.md)). Version history can supply valuable evidence about what changed and when, but it is not by itself a semantic rationale relation or an obligatory read path; accepted decisions and operative consequences must be represented in the appropriate ADRs, contracts, instructions, configuration, validators, or code. Plain-directory and archive installs therefore continue to work.
 
 ## Derived indexes
 

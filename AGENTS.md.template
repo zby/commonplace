@@ -59,6 +59,10 @@ Example:
 
 Use ordinary spaced phrases in prose. If this KB registers a hyphenated identifier for a relation or field, preserve its exact spelling in the declared schema or collection slot and when naming it as a vocabulary item. Formal semantics attach to the registered identifier in its declared slot, not to the prose phrase; read the owning contract before using it.
 
+## Version control
+
+Maintain this KB under the project's version-control system. Inspect diffs before accepting changes, and use history for rollback, attribution, and reconstruction when needed. Follow the project's own conventions for commits, branches, and review; Commonplace assigns those objects no portable semantics, and `commonplace-*` command correctness does not depend on Git history.
+
 ## Using the KB
 
 The knowledge base lives in `kb/`. Search it when the user asks about decisions, reasoning, design rationale, or project knowledge.

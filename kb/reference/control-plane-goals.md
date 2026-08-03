@@ -16,7 +16,7 @@ The control-plane file the system ships is `AGENTS.md`. KB goals live in a dedic
 - **Scope** — the domain boundary, made operational by in-scope and out-of-scope lists (the out-of-scope list is the guard against scope creep)
 - **Quality bar** — domain-specific "good enough" standards
 
-This placement is load-bearing. `AGENTS.md` is loaded on every agent invocation, including forked skill contexts (`context: fork`), so the goals are in context for every write decision without any tool call. The section sits alongside the routing table, vocabulary, git conventions, and other invariants the agent needs from turn one.
+This placement is load-bearing. `AGENTS.md` is loaded on every agent invocation, including forked skill contexts (`context: fork`), so the goals are in context for every write decision without any tool call. The section sits alongside the routing table, vocabulary, version-control conventions, and other invariants the agent needs from turn one.
 
 ## What varies per installation vs. what ships with the framework
 
@@ -26,6 +26,7 @@ This placement is load-bearing. `AGENTS.md` is loaded on every agent invocation,
 | Scope (boundary + in/out lists) | Per-installation | same |
 | Quality bar | Per-installation | same |
 | Routing table | Framework | `AGENTS.md` `## Using the KB`, generated/templated |
+| Version-control expectation | Framework default; project workflow | `AGENTS.md` `## Version control` |
 | Type system | Framework | `kb/types/` plus collection-local `kb/*/types/` directories with schemas and templates |
 | Writing conventions | Framework | `kb/*/COLLECTION.md` (per-collection) |
 | Link semantics | Framework | `kb/notes/links-README.md` and related guidance in `kb/instructions/` |
@@ -37,6 +38,7 @@ Only the per-installation rows require human input. Framework rows are shipped f
 `commonplace-init` copies `AGENTS.md.template` into the practitioner project as `AGENTS.md.template`, which the practitioner fills in and renames (or copies into) `AGENTS.md`. The template carries:
 
 - A placeholder `## KB Goals and Scope` section with HTML comment guidance for each subsection, as concrete prose examples the practitioner replaces with their own answers
+- A stock `## Version control` section that makes versioned maintenance the default while leaving commit, branch, and review semantics to the project
 - A stock `## Using the KB` routing section pointing at `kb/notes/`, `kb/reference/`, and `kb/instructions/`
 - A stock Skills and Commands section listing the Commonplace-provided skills
 - `{{project_name}}` placeholders that `init_project` substitutes with the directory name
@@ -59,7 +61,7 @@ The agent has no fallback if goals are left unfilled — an empty `## KB Goals` 
 
 - The routing and navigation content (`## Using the KB`, including its Collection Routing and Navigation subsections) is generated from the framework and does not vary per installation.
 - A vocabulary section is optional and project-specific; many installations will not need one.
-- Git and development conventions are framework-shipped but customizable.
+- The version-control expectation is framework-shipped; commit, branch, review, and other development conventions are project-customizable.
 
 ---
 
