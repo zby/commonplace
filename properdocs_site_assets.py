@@ -18,6 +18,7 @@ ASSETS_DIR = Path(__file__).parent / "properdocs-assets"
 SITE_ASSETS = [
     "javascripts/tablesort-init.js",
     "javascripts/giscus-comments.js",
+    "stylesheets/content.css",
     "stylesheets/giscus.css",
     "stylesheets/link-markers.css",
 ]

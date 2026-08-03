@@ -11,6 +11,7 @@ exclude_docs: |
 theme:
   name: mkdocs
 extra_css:
+  - stylesheets/content.css
   - stylesheets/giscus.css
   - stylesheets/link-markers.css
 extra_javascript:
