@@ -117,7 +117,9 @@ Before calling a system — your own or a published one — reflectively self-im
 
 Together, the questions test for self-reference, evidence-responsiveness, and the loop's [search, evaluation, and retention functions](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) in the proposal-selection case. Applied to the Tuesday agent, the rule reached the operative instructions (question five), but no outcome evidence was consulted (question two) and nothing could reject it (question four).
 
-## Evidence and open questions
+## What is established and what remains open
+
+The article draws on two bodies of evidence for different purposes. The Commonplace trace shows a governed, human-inclusive loop revising operative artifacts. The five external systems are comparison cases for testing the functional decomposition and identifying omitted or frozen functions. The table separates observations grounded in those cases from interpretations, conjectures, and open problems.
 
 | Status | Claim |
 |---|---|
