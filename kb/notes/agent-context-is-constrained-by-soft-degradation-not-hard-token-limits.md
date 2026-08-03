@@ -35,6 +35,20 @@ Volume, complexity, and relevance/interference are distinguishable but not fully
 
 The main unresolved question is interaction, not existence. GSM-DC cleanly shows that distractor count and reasoning depth interact in synthetic math problems; web-agent benchmarks show an agent-level analogue under long multi-session histories. We do not yet know how stable the interaction surface is across natural-language tasks, partially relevant material, or different model families.
 
+## Working hypothesis: soft degradation is workspace saturation and displacement
+
+Our best current mechanical hypothesis is that much of the soft bound appears when a task's flexible computation must pass through a limited internal workspace. The [J-space experiments](../sources/verbalizable-representations-global-workspace-llms.ingest.md) identify a small, selectively engaged, verbalizable subspace that broadcasts intermediate representations to downstream computations. Its capacity is measured in tens of active directions rather than in input tokens, and what remains active depends on task demands and conceptual coherence.
+
+On this account, the three observed dimensions are different ways of taxing the same workspace:
+
+- **Volume** increases the number of candidate distinctions that may need to remain available. In the paper's list experiments, only around six previously seen unrelated items remain visible at a time, while older items drop out as the list grows. Related items fare better because the workspace can represent their shared category rather than retain each item independently.
+- **Relevance/interference** concerns competition for admission and persistence. A new semantic category rapidly evicts the previous category, and maintaining an unrelated concept interferes with solving a multi-step arithmetic problem. Irrelevant context can therefore hurt without consuming the whole token window: it can displace or redirect the representations that flexible task execution needs.
+- **Complexity** increases the number and dependency structure of intermediate representations that must be broadcast. J-space ablation selectively damages multi-hop and other flexible tasks while leaving many automatic tasks intact. Explicit chain-of-thought makes GSM8K more robust to the ablation, consistent with intermediate state being externalized into tokens instead of carried wholly in the internal workspace.
+
+The same mechanism would explain why the soft bound is hard to observe. Under J-space ablation, ordinary prediction is often preserved and disrupted continuations remain fluent; they instead fall back toward generic priors after losing an abstract, context-specific representation. A model can therefore cross its effective workspace bound without producing a visible overflow signal.
+
+This is a hypothesis, not yet a general explanation of long-context degradation. The paper does not vary long-context workload against J-space occupancy, its lens captures only a partial and single-token-friendly view of internal representation, some automatic computation bypasses J-space, and the mechanism selecting what enters the workspace remains unknown. The hypothesis predicts that matched increases in volume, interference, or compositional depth should degrade performance insofar as they increase competition, displacement, or dependency load in the operative workspace; a degradation regime with no corresponding workspace effect would count against it.
+
 ## The soft bound is invisible
 
 The hard limit is visible — exceed it and the API returns an error. The soft bound is invisible at every level.
@@ -69,5 +83,4 @@ Relevant Notes:
 - [GSM-DC ingest](https://arxiv.org/html/2505.18761v2) — exemplifies (relevance/interference dimension): power-law error scaling with distractor count in math reasoning, with reasoning-depth interaction
 - [Web agent benchmark ingest (Chung et al., 2025)](https://arxiv.org/html/2512.04307v1) — exemplifies (relevance/interference dimension): agent-level catastrophic degradation from injected irrelevant task sequences; iRAG provides only modest relief
 - [ConvexBench ingest](https://arxiv.org/html/2602.01075v2) — exemplifies (complexity dimension): compositional depth collapse at low token counts
-- [Verbalizable Representations Form a Global Workspace in Language Models](../sources/verbalizable-representations-global-workspace-llms.ingest.md) — evidenced-by: J-space ablation selectively impairs flexible multi-step reasoning while explicit chain-of-thought is more robust, supplying a candidate internal-workspace mechanism for complexity-driven soft bounds and externalization relief
 - [Paulsen MECW](https://arxiv.org/pdf/2509.21361) — exemplifies (volume dimension): usable context drastically below advertised windows, task-dependent
