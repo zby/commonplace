@@ -1,15 +1,16 @@
 ---
-description: "Use when a finished kb/articles draft has explicit approval to become a public working paper or frozen dated article on the ProperDocs site"
+description: "Use when a circulating kb/articles draft has explicit approval to become a working paper or frozen dated article on the ProperDocs site"
 type: kb/types/instruction.md
 ---
 
 # Publish an article
 
-Turn an approved article draft into a public artifact on the ProperDocs deployment, as either a revisable **working paper** or a frozen dated **published** article. Publication approval applies to the current substantive body and to the target state; if either changes afterwards, obtain approval again.
+Promote an approved circulating draft on the ProperDocs deployment to either a revisable **working paper** or a frozen dated **published** article. Publication approval applies to the current substantive body and to the target state; if either changes afterwards, obtain approval again.
 
 ## Prerequisites
 
 - The artifact declares `type: kb/articles/types/article.md` and `status: draft`.
+- It lives at `kb/articles/{slug}.md` and opens with the draft banner.
 - It carries a byline and resolving `source_notes`.
 - Its body satisfies `kb/articles/COLLECTION.md`: self-standing technical prose for an external reader, no agent-facing footer grammar, and a worthwhile onward path into the KB.
 - The user has explicitly approved publication **and named the target state**. “Nearly ready,” review approval, or a merge approval is not publication approval.
@@ -18,8 +19,8 @@ Turn an approved article draft into a public artifact on the ProperDocs deployme
 ## Publish
 
 1. Run `commonplace-validate {draft-path}` and resolve every failure. Warnings require judgment but do not automatically block publication.
-2. If the draft is under `kb/articles/drafts/`, relocate it to `kb/articles/{slug}.md` with `commonplace-relocate-note --to ... --apply`. If it is the transitional first draft already at the collection root, keep its path.
-3. Without changing the substantive body, set the frontmatter for the approved target state, using the date supplied by the user, or the current local date when the user says “today.” Do not infer a date for “tomorrow” before that day arrives.
+2. Remove the draft banner without changing the substantive body.
+3. Set the frontmatter for the approved target state, using the date supplied by the user, or the current local date when the user says “today.” Do not infer a date for “tomorrow” before that day arrives.
    - Working paper: `status: working-paper`, `published: YYYY-MM-DD` for the first public date, `version: 1`, and `revised: YYYY-MM-DD` matching the publication date.
    - Published: `status: published` and `published: YYYY-MM-DD`.
 4. Move the article's entry from any draft list into `kb/articles/README.md` under `## Working papers` or `## Published`, including the date. Keep the context phrase reader-facing.
@@ -45,6 +46,7 @@ A later source-note change does not automatically stale a dated article. Search 
 ## Verify
 
 - The article is at `kb/articles/{slug}.md`, carries the approved status, and has the intended dates — plus `version` and `revised` for a working paper.
+- The draft banner is gone.
 - `kb/articles/README.md` lists it under the matching public heading and nowhere as a draft.
 - The article and collection validate without failures.
 - After the commit reaches `main`, the ProperDocs page renders its status and the article is discoverable from the Articles navigation.
@@ -54,3 +56,4 @@ A later source-note change does not automatically stale a dated article. Search 
 Relevant Notes:
 
 - [ADR 057 — Articles use an editorial profile and excluded drafts](../reference/adr/057-articles-use-an-editorial-profile-and-excluded-drafts.md) — operates-on: publication lifecycle and channel this procedure executes
+- [ADR 063 — All article drafts circulate behind a banner](../reference/adr/063-all-article-drafts-circulate-behind-a-banner.md) — operates-on: root-only draft placement and the banner-removal transition this procedure executes

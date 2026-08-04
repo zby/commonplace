@@ -2,12 +2,12 @@
 description: "Adds a third public article state: a root-placed draft circulating for comments behind a visible banner, with no version handles and no stability promise"
 type: ../types/adr.md
 tags: []
-status: accepted
+status: superseded
 ---
 
 # 062-Drafts may circulate at the root behind a draft banner
 
-**Status:** accepted
+**Status:** superseded by [ADR 063](./063-all-article-drafts-circulate-behind-a-banner.md)
 **Date:** 2026-08-04
 
 ## Context
@@ -60,3 +60,4 @@ Relevant Notes:
 - [ADR 061 — Articles may circulate as revisable working papers](./061-articles-may-circulate-as-revisable-working-papers.md) — extends: adds the no-promise public state below the working paper, answering its objection to circulated drafts with the banner
 - [Publish an article](../../instructions/publish-an-article.md) — implemented-by: gains the draft-circulation transition alongside the existing ones
 - [Documentation site](../documentation-site.md) — part-of: rendering channel that surfaces status and banner to readers
+- [ADR 063 — All article drafts circulate behind a banner](./063-all-article-drafts-circulate-behind-a-banner.md) — superseded-by: removes the excluded-draft state and makes circulation the only draft mode

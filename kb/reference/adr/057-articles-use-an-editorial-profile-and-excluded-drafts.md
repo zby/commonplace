@@ -10,6 +10,8 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-07-26
 
+The editorial profile and published-body lifecycle remain accepted; [ADR 063](./063-all-article-drafts-circulate-behind-a-banner.md) supersedes this decision's excluded-draft placement.
+
 ## Context
 
 Commonplace had no durable home for outward-facing writing. Its library collections are optimized for agents that can traverse the graph, while a technical reader arriving from outside needs a self-standing body and a deliberate onward path into the KB. The public ProperDocs site already renders every ordinary file under `kb/`, so a committed draft in a rendered path is public before an editorial publication decision exists.
@@ -68,3 +70,4 @@ Relevant Notes:
 - [Publish an article](../../instructions/publish-an-article.md) — implemented-by: executable transition from approved draft to dated public artifact
 - [ADR 042 — Register becomes a default profile under open-ended text contracts](./042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — extends: worked-case-first rule under which the editorial profile is promoted
 - [Document types should be verifiable](../../notes/document-types-should-be-verifiable.md) — rests-on: why article schema constraints are added from observed mechanical failure rather than speculative completeness
+- [ADR 063 — All article drafts circulate behind a banner](./063-all-article-drafts-circulate-behind-a-banner.md) — superseded-by: removes this decision's excluded-draft placement while retaining its editorial profile and published lifecycle

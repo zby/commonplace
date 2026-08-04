@@ -1,6 +1,6 @@
 # Writing conventions for kb/articles/ (editorial profile)
 
-Editorial/expository [profile](../reference/text-contract-profiles.md): outward-facing articles distilled from the KB and published on the [documentation site](../reference/documentation-site.md). Adopted by [ADR 057](../reference/adr/057-articles-use-an-editorial-profile-and-excluded-drafts.md).
+Editorial/expository [profile](../reference/text-contract-profiles.md): outward-facing articles distilled from the KB and published on the [documentation site](../reference/documentation-site.md). Adopted by [ADR 057](../reference/adr/057-articles-use-an-editorial-profile-and-excluded-drafts.md); draft circulation was simplified by [ADR 063](../reference/adr/063-all-article-drafts-circulate-behind-a-banner.md).
 
 **Audience and quality goal.** Highly technical readers with no KB context. The quality goal is **explanatory clarity with technical depth, plus a clear onward path into the KB**. The primary goal is to explain, not impress: a reader should understand the article's claims, mechanisms, evidence, and limits. An article must stand on its own and leave its reader knowing where in the KB to go next.
 
@@ -18,9 +18,9 @@ Only after the explanation passes review may a separate editorial pass consider 
 
 **Titles and descriptions.** Titles are headlines addressed to the reader, not claim-titles. The frontmatter `description` remains what it is everywhere in this KB — a retrieval filter for agents; the reader-facing abstract is the article's opening paragraph.
 
-**Attribution and lifecycle.** Every article carries a `byline` and a `status` (`draft`, `working-paper`, `published`, `superseded`, `withdrawn`). Three states can be public: a root-placed draft promises nothing, a working paper is revisable on the record, and a published article is frozen.
+**Attribution and lifecycle.** Every article carries a `byline` and a `status` (`draft`, `working-paper`, `published`, `superseded`, `withdrawn`). A draft promises nothing, a working paper is revisable on the record, and a published article is frozen.
 
-A **root-placed draft** circulates for comments while its claims, structure, or central thesis may still change (ADR 062). It opens with an authored draft banner — a short blockquote saying that everything may still change and where to send comments — and carries no `version` or `revised` obligations; silent rewrites are expected. The banner must not promise stability or invite treating the text as a fixed reference.
+A **draft** circulates for comments while its claims, structure, or central thesis may still change. Every draft lives at the collection root and opens with an authored draft banner — a short blockquote saying that everything may still change and where to send comments. This banner is the only draft-specific circulation requirement. Drafts carry no `version` or `revised` obligations; silent rewrites are expected. The banner must not promise stability or invite treating the text as a fixed reference.
 
 A **working paper** circulates while its claims remain open. It is revisable in place; each substantive revision bumps `version` and sets `revised: YYYY-MM-DD`, so a reader who cited it can tell that the text moved. Its body should say what it invites — counterexamples, boundary cases, disputed classifications — because a reader offered a role is more likely to take one.
 
@@ -28,7 +28,7 @@ A **published** article is a frozen dated record. Corrections happen by dated an
 
 These are editorial conventions, not schema: the [type spec](./types/article.md) starts nearly empty and gains constraints only as failure modes are collected.
 
-**Drafting and publication.** Drafts start under `kb/articles/drafts/`, where this contract and the article type still bind but ProperDocs does not publish or index them. Placement governs visibility; status governs the reader contract. A draft may be relocated to the collection root to request comments, with the draft banner (ADR 062). List it under "In draft" when it is intended as a collection entry point. A supporting draft may instead remain unlisted when a listed root article links to it deliberately. [Publish an article](../instructions/publish-an-article.md) by setting `status` to `working-paper` or `published` with the dates that state requires and listing it under the matching heading. Every move to the root is public and needs explicit approval naming the target state and discovery path. ProperDocs renders the lifecycle status under the title.
+**Drafting and publication.** Drafts start at `kb/articles/{slug}.md` and circulate immediately through ProperDocs behind their banner. Listing a draft under "In draft" is optional navigation, not a circulation gate. [Publish an article](../instructions/publish-an-article.md) by removing the banner, setting `status` to `working-paper` or `published` with the dates that state requires, and listing it under the matching heading. Promotion still needs explicit approval naming the target state. ProperDocs renders the lifecycle status under the title.
 
 **Lineage.** `source_notes` lists the repo-root paths of the notes the article distils; when present, validation checks that each resolves. There is no freshness registration — find affected articles by search.
 
@@ -43,7 +43,7 @@ Treat these as the operative tests for collection conformance:
 - Can an elevated phrase, metaphor, dramatic sentence, or flourish be replaced with plainer language without losing explanatory content? If so, require the replacement.
 - Do not request hooks, emotional framing, stories, or quotable phrasing until the explanatory tests above pass. In a later circulation or memorability pass, require every added technique to preserve or improve understanding. Repeated ornamental or sales-like phrasing warrants a warning; rhetoric that substitutes for mechanism, evidence, or qualification fails the contract.
 - For a working paper: does the body say what it invites, and do `version` and `revised` match its last substantive change?
-- For a root-placed draft: does it open with the draft banner, and does the banner avoid stability promises while saying where to send comments? If the draft is unlisted, does a listed root article link to it deliberately?
+- For a draft: does it open with the draft banner, and does the banner avoid stability promises while saying where to send comments?
 
 ## Outbound links
 
@@ -61,5 +61,5 @@ In-prose links to the `external` destination are authorized for primary attribut
 - Shipped-system description → `kb/reference/`
 - Procedures and how-to guidance → `kb/instructions/`
 - In-flight exploration → `kb/work/`
-- Article drafts → `kb/articles/drafts/`
+- Article drafts → `kb/articles/`
 - Captured external material → `kb/sources/`
