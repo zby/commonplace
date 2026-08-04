@@ -41,7 +41,7 @@ source_notes:
 
 > **Draft.** This article is circulating for comments; its claims, structure, and even its central thesis may still change. Comments are welcome below.
 
-> **TL;DR.** A system does not compound merely because it retains improvements. A retained benefit that helps produce a later improvement provides local evidence of compounding. A compounding pathway requires this feedback to recur.
+> **TL;DR.** Improvements compound when their benefits help produce further improvements. One such link is local evidence; repeated links establish a compounding pathway.
 >
 > Reflection is neither necessary nor sufficient for compounding. Its proposed advantage is control: explicit theories and revision machinery can expose how improvements are found, judged, and installed, including the decomposition that defines the available evidence, problems, and revision targets. Within any claimed improvement episode, however, the objective and comparison rule must remain fixed independently of the candidate change. Commonplace is a testbed for whether retained natural-language theory can make this machinery a usable revision surface across heterogeneous changes without retraining model weights. It has paths that install revisions and use them later, but their compounding payoff remains unmeasured.
 
