@@ -28,7 +28,7 @@ A **published** article is a frozen dated record. Corrections happen by dated an
 
 These are editorial conventions, not schema: the [type spec](./types/article.md) starts nearly empty and gains constraints only as failure modes are collected.
 
-**Drafting and publication.** Drafts start under `kb/articles/drafts/`, where this contract and the article type still bind but ProperDocs does not publish or index them. Placement governs visibility; status governs the reader contract. A draft may be relocated to the collection root to request comments — with the draft banner and an "In draft" listing in `README.md` (ADR 062). [Publish an article](../instructions/publish-an-article.md) by setting `status` to `working-paper` or `published` with the dates that state requires and listing it under the matching heading. Every move to the root is public and needs explicit approval naming the target state. ProperDocs renders the lifecycle status under the title.
+**Drafting and publication.** Drafts start under `kb/articles/drafts/`, where this contract and the article type still bind but ProperDocs does not publish or index them. Placement governs visibility; status governs the reader contract. A draft may be relocated to the collection root to request comments, with the draft banner (ADR 062). List it under "In draft" when it is intended as a collection entry point. A supporting draft may instead remain unlisted when a listed root article links to it deliberately. [Publish an article](../instructions/publish-an-article.md) by setting `status` to `working-paper` or `published` with the dates that state requires and listing it under the matching heading. Every move to the root is public and needs explicit approval naming the target state and discovery path. ProperDocs renders the lifecycle status under the title.
 
 **Lineage.** `source_notes` lists the repo-root paths of the notes the article distils; when present, validation checks that each resolves. There is no freshness registration — find affected articles by search.
 
@@ -43,7 +43,7 @@ Treat these as the operative tests for collection conformance:
 - Can an elevated phrase, metaphor, dramatic sentence, or flourish be replaced with plainer language without losing explanatory content? If so, require the replacement.
 - Do not request hooks, emotional framing, stories, or quotable phrasing until the explanatory tests above pass. In a later circulation or memorability pass, require every added technique to preserve or improve understanding. Repeated ornamental or sales-like phrasing warrants a warning; rhetoric that substitutes for mechanism, evidence, or qualification fails the contract.
 - For a working paper: does the body say what it invites, and do `version` and `revised` match its last substantive change?
-- For a root-placed draft: does it open with the draft banner, and does the banner avoid stability promises while saying where to send comments?
+- For a root-placed draft: does it open with the draft banner, and does the banner avoid stability promises while saying where to send comments? If the draft is unlisted, does a listed root article link to it deliberately?
 
 ## Outbound links
 

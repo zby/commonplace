@@ -22,11 +22,11 @@ Operating the first two articles surfaced a need neither state serves. The opera
 
 **Every root-placed draft opens with an authored draft banner.** A short blockquote before the body states that everything may still change and where to send comments. It must not promise stability: no version handles, no revision log, no language that invites treating the text as a fixed reference. The banner is authored rather than generated, keeping ADR 057's no-custom-rendering stance; a status-driven generated banner can return if a forgotten banner ever ships (the worked-failure rule).
 
-**Root-placed drafts are listed in `kb/articles/README.md` under "In draft".** This revises ADR 057's rejected alternative "draft in the collection root, rendered but unlisted": rendered-and-listed-and-bannered is a deliberate state, where rendered-but-unlisted was an accident waiting to be discovered by site search.
+**Each root-placed draft has a deliberate discovery path.** A draft intended as a collection entry point is listed in `kb/articles/README.md` under "In draft". A supporting draft may instead remain unlisted when a listed root article links to it deliberately. This revises ADR 057's rejected alternative "draft in the collection root, rendered but unlisted": an authored incoming link makes the placement deliberate rather than an accident discoverable only through site search.
 
 **The lifecycle gains one forward step.** Excluded draft → root draft (request for comments) → working paper (claims stable enough for version handles) → published (frozen). Each transition needs explicit approval naming the target state. This answers ADR 061's objection to circulated drafts: status describes revisability and maturity, placement describes visibility, and the banner makes the combination legible on the page itself.
 
-Operativity path: `kb/articles/COLLECTION.md` binds authoring and collection-conformance review with the banner requirement and the no-stability-promise clause; `kb/articles/README.md` carries the listing; the ProperDocs metadata line continues to render the status, and the site's page-bottom comments system receives the feedback the banner invites; the two current root drafts — "Reflective self-improvement" and "What makes human-inclusive self-revision non-trivial?" — are the worked instances.
+Operativity path: `kb/articles/COLLECTION.md` binds authoring and collection-conformance review with the banner, discovery-path, and no-stability-promise clauses; `kb/articles/README.md` lists the main reflective-self-improvement draft, which links to the unlisted recursive-targetability companion; the ProperDocs metadata line continues to render status, and the site's page-bottom comments system receives the feedback each banner invites.
 
 ## Considered alternatives
 
@@ -48,7 +48,7 @@ Easier:
 
 Harder / accepted costs:
 
-- Three public states to keep accurately labelled and listed; conformance review gains the banner check, and nothing mechanical enforces it yet.
+- Three public states to keep accurately labelled and deliberately discoverable; conformance review gains banner and discovery-path checks, and nothing mechanical enforces them yet.
 - A disagreement with a root draft cannot name which text it disputes — there is no version handle by design. Accepted: that is inherent to requesting comments on a moving draft.
 - Readers who ignore the banner may still treat the text as settled; the banner bounds the collection's promise, not reader behavior.
 
