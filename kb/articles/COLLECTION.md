@@ -47,6 +47,19 @@ Treat these as the operative tests for collection conformance:
 
 ## Outbound links
 
+Article bodies expose their graph through ordinary reader-facing prose. The relationship names below classify authoring intent and `cp-skill-connect` candidates; they are not text to render. When a candidate is accepted, weave the target into a sentence whose surrounding words make the relationship clear. Do not add footer link tables, visible labels, or graph-traversal glosses. `source_notes` records lineage but does not replace a reader-facing link when the target serves an onward need in the article.
+
+Author each link from the external reader's need at its source. Search these destinations:
+
+- **→ `kb/notes/`** — when a term needs its definition, a claim needs corroboration or a material boundary, or the reader needs the fuller theoretical argument or a neighbouring distinction. Relationships: `defined-in`, `evidenced-by`, `extends`, `contrasts`, `see-also`.
+- **→ `kb/reference/`** — when a claim about Commonplace needs an operative trace, shipped-system detail, or decision background. Relationships: `evidenced-by`, `see-also`.
+- **→ `kb/sources/`** — when an empirical or externally attributed claim needs the captured source analysis behind it. Relationships: `evidenced-by`, `see-also`.
+- **→ `kb/agent-memory-systems/` and `kb/agentic-systems/`** — when a system-specific claim needs descriptive evidence, or when the article compares systems on a named axis. Relationships: `evidenced-by`, `compares-with`, `see-also`.
+- **→ `kb/articles/`** — when a companion article gives a distinct reader-facing development or explicit contrast that would interrupt this article. Relationships: `extends`, `contrasts`, `see-also`.
+- **→ `kb/instructions/` and `kb/tasks/`** — when the reader has a concrete operational next step. Relationship: `procedure`.
+
+Do not link into `kb/work/` or `kb/reports/`: unfinished investigations and generated reports are not durable onward paths for an external article reader.
+
 In-prose links to the `external` destination are authorized for primary attribution, canonical sources, and material an external reader should be able to inspect directly; they carry no formal identifier. External prospecting is part of article research, not `cp-skill-connect`.
 
 ## Types
