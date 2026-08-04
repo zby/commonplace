@@ -10,6 +10,8 @@ The proposed shared phenomenon is **local admissibility alongside global misplac
 
 The aim is not to explain every complaint about LLM-generated code or text. The evidence set is deliberately a small mechanism-discriminating sample.
 
+Structural misplacement is the workshop's first controlled case, not its definition of curiosity. A [breadth-first question-source inventory](./curiosity-question-sources.md) keeps visible other ways inquiry may begin—including ambiguity, capability limits, unexplained regularity, connection, opportunity, and incidental discovery—and records their uneven local evidence without turning them into a durable taxonomy.
+
 ## Why a new workshop
 
 The earlier [curiosity-prompts experiment](../curiosity-prompts/experiment-report.md) produced an initial lead: a broad curiosity prompt generated valuable investigations but varied across its two trials, while a cost/benefit question found its target in both of its two trials. The sample is too small to establish stable prompt effects. It nevertheless motivated a [Curiosity Pass](../../agent-memory-systems/types/agent-memory-system-review.md#curiosity-pass) for completed agent-memory-system reviews.
@@ -115,6 +117,8 @@ Prospective boundary probing is a parallel curiosity claim. It should begin with
 
 ## Working artifacts
 
+- [Breadth-first curiosity-question inventory](./curiosity-question-sources.md) — provisional question-producing moves, local episodes, evidence gaps, and contrasting experiment clusters; explicitly not a type system.
+- [Maintenance-curiosity pilot](./maintenance-curiosity-pilot/README.md) — age-blind temporal-reopening experiment over semantically old notes, with stable controls and open versus supplied-neighborhood conditions.
 - [Local case corpus](./local-case-corpus.md) — a pruned inventory of mechanism-relevant software and prose cases already in the KB and workshops.
 - [Prose fixture candidates](./prose-fixture-candidates.md) — exact frozen passages for testing locally connected but globally misplaced material, including controls and admission gaps.
 - [Hypotheses and experiments](./hypotheses-and-experiments.md) — the provisional process model, rival explanations, and within- and cross-domain interventions that distinguish them.
