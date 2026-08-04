@@ -26,13 +26,13 @@ source_notes:
 
 > **Draft.** This article is circulating for comments; its claims, structure, and even its central thesis may still change. Comments are welcome below.
 
-Imagine two agents whose policies are system prompts. An engineer wrote the first prompt directly. An optimizer produced the second: it generated thousands of variants, evaluated them on held-out tasks, and kept the best. Both prompts are natural-language text. They have the same representational form but different production methods.
+Imagine two otherwise identical agents with different system prompts. An engineer wrote the first prompt directly. An optimizer produced the second: it generated thousands of variants, evaluated them on held-out tasks, and kept the best. Both prompts are natural-language text. They have the same representational form but different production methods.
 
 Now reverse the example. Two systems use the same parameterized controller architecture but different dense coefficient vectors. An expert sets one vector directly; gradient descent learns the other from data. Here too, the representational form is the same but the production method differs. Grouping the two prompts together and the two controllers together classifies them by representational form, not by how they were produced.
 
 Richard Sutton's [2019 essay](http://www.incompleteideas.net/IncIdeas/BitterLesson.html) argues that methods built around human knowledge repeatedly lose to general methods that exploit increasing computation through search and learning. That historical claim is a serious challenge to directly specified prompts, skill libraries, agent harnesses, and knowledge bases.
 
-Sutton's lesson concerns how behavior is generated and selected, not where the result is stored. Directly specified domain knowledge must compete with methods that exploit growing computation through search and learning. His argument does not decide whether the selected result should be retained in weights, natural language, or symbolic artifacts. This article rejects only the inference from Sutton's pattern to a weights-only rule.
+Sutton's lesson concerns how behavior-shaping content is generated and selected, but does not by itself determine how the selected content is encoded and consumed. Directly specified domain knowledge must compete with methods that exploit growing computation through search and learning. This article rejects only the inference from Sutton's pattern to a weights-only rule.
 
 Representation still matters because it changes the optimization problem. A system that learns artifacts must connect outcomes to the artifacts or interactions that should change, reject harmful updates, and keep the artifact types and governing rules adequate—or revise them safely. A mixed system may be best, but the two-axis distinction alone does not show that.
 
@@ -53,9 +53,9 @@ The axes interact: representational form changes search, credit assignment, depe
 
 ## What this proves—and what it does not
 
-The lower-right cell shows the central possibility: search can select a localized artifact. Suppose an optimizer searches ten thousand candidate deployment policies, tests them in a simulator and regression suite, and installs the best survivor as a natural-language file. The result remains localized, but search rather than the designer selected its behavior-shaping content.
+The lower-right cell is already populated in bounded settings. [FunSearch](https://www.nature.com/articles/s41586-023-06924-6) generates program functions with a pretrained language model, evaluates them, and retains successful programs for further search. [AlphaDev](https://www.nature.com/articles/s41586-023-06004-9) used reinforcement learning and tree search to discover assembly sorting routines later incorporated into LLVM's standard C++ library. Together they provide concrete bounded instances of computationally selected localized artifacts.
 
-This example settles only the categorical point: search-selected behavior-shaping content need not live in weights. It does not show that the optimizer is economical, that its simulator matches production, or that the retained policy will generalize. Localized domain structure still faces Sutton's scaling test; human authorship does not exempt it from search and learning. The proposal is to make these artifacts learning targets, not protect them from learning.
+That settles only the categorical point: search-selected behavior-shaping content need not live in weights. These examples do not show that artifact search is economical, that its evaluators match deployment, or that retained artifacts generalize. Localized domain structure still faces Sutton's scaling test; human authorship does not exempt it from search and learning. The proposal is to make these artifacts learning targets, not protect them from learning.
 
 The remaining question is empirical: can learned localized artifacts compete on performance and total cost as systems, corpora, and task horizons grow? That depends on assigning credit, evaluating updates, retrieving and maintaining artifacts, and safely revising the update space.
 
@@ -67,7 +67,7 @@ A large artifact system has no comparable default. Imagine an agent deployment g
 
 Artifact systems have partial substitutes. Explicit dependency links can limit which artifacts need rechecking. Recorded execution traces preserve evidence about where a failure arose. Tests and validators can reject some bad candidates. [Localized retention helps most](../notes/localized-retention-pays-where-change-is-sparse-in-a-matching.md) when an update changes a few well-matched units and affects few others. The results examined here do not show these mechanisms combining into a general way to update heterogeneous artifacts.
 
-[Artifact learners still operate inside a decomposition chosen by designers](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md): artifact types, routing, mutation operators, evaluators, and schedules may all remain fixed. Success shows that the whole arrangement worked in the tested setting, not that these choices were necessary or better than excluded alternatives. Important fixed choices therefore need independent justification or a safe way to revise them. Redrawing artifact boundaries may also change what can be attributed, validated, or rolled back as one unit.
+[Artifact learners still operate inside a decomposition chosen by designers](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md): artifact types, routing, mutation operators, evaluators, and schedules may all remain fixed. Success shows that the whole arrangement worked in the tested setting, not that these choices were necessary or better than excluded alternatives. Fixedness is not itself a defect; consequential fixed choices need independent justification or a safe way to revise them. Decomposition is a difficult revision target because redrawing artifact boundaries also changes the units of credit assignment, validation, and rollback.
 
 This asymmetry can make parametric learning look synonymous with learning. It is an engineering gap, not a definition.
 
@@ -97,7 +97,7 @@ A fair test must compare systems that search for and retain localized artifacts 
 
 The hypothesis fails its scaling test if, relative to those baselines, design, evaluation, or maintenance costs grow faster than the useful behavior retained. Warning signs include a bespoke ontology for every new domain, spending more on evaluation than the avoided failures would have cost, or failures that require repository-wide review to diagnose. In that case, localized artifacts may remain as interfaces and records while most learned competence moves into weights.
 
-A modest success would be an efficient division of work: dense, diffuse adaptation may favor gradients, while sparse changes may favor localized artifacts when their units match the change and their dependency closure remains small. Co-Harness is an early example of this division.
+A modest success would be an efficient division of work: dense, diffuse adaptation may favor gradients, while sparse changes may favor localized artifacts when their units match the change and their dependency closure remains small. Co-Harness is designed around this division, but its experiments do not establish that the allocation is efficient.
 
 A mixed system does not escape the decomposition problem. Its units must keep attribution and revalidation tractable or be safely revisable. Otherwise the mixture has only moved the scaling problem.
 
