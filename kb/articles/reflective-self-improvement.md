@@ -136,4 +136,6 @@ Second, measure leverage. Compare matched later revision episodes against a froz
 
 A positive result would show leverage when uptake of a retained change makes a matched later revision cheaper, broader, more reliable, or less dependent on human judgment. Repeated leverage, sustained as warranted computational checks absorb rising evaluation work, would show compounding.
 
+The [Bitter Lesson companion](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) asks whether search and learning over readable artifacts can scale against weight-based alternatives.
+
 The [self-improving-systems cluster](../notes/self-improving-systems-README.md) maps the underlying theory, and [the retained-operative-path note](../notes/a-retained-operative-path-keeps-improvement-machinery-open-to-revision.md) develops the coverage criterion. If applying them produces a counterexample or disputed classification, leave a comment below.
