@@ -42,7 +42,7 @@ Addressability is expected to enable:
 - **Reuse and transfer** — an explicit change read into a different context, rather than reached by running the loop again.
 - **Reasoning about interactions** — two explicit changes can be checked against each other; two weight updates compose silently.
 - **Criticism and rollback** — per-change and targeted, because [acceptance is an improvement claim](./definitions/self-improving-system.md) that an addressable change leaves open to later audit.
-- **Improvement of the improvement process itself** — an explicit evaluator, criterion, or update rule is [organization](./definitions/behavior-determining-organization.md) like any other, so a reflective pathway can be turned on its own machinery — the leveraged case [that turns accumulation into compounding](./compounding-needs-leverage-to-multiply-and-autonomy-to-scale.md).
+- **Improvement of the improvement process itself** — an explicit evaluator, criterion, or update rule is [organization](./definitions/behavior-determining-organization.md) like any other, so a reflective pathway can be turned on its own machinery. If a retained benefit then [helps produce a later improvement](./improvements-can-accumulate-without-compounding.md), the pathway compounds.
 
 Whether reflective pathways improve faster, more reliably, or more safely remains empirical. Selective revision and criticism also require [reach-assessment](./definitions/reach-assessment.md): addressability makes a change findable, but judging it as bad still requires assessing its claimed scope.
 
@@ -70,5 +70,5 @@ Relevant Notes:
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — extends: why addressable retention accumulates only best-effort, through the discovery wire
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — extends: addressability assessed per representational form and operation profile
 - [Accumulation counts dependence through the retained result, not through the evidence it caused](./accumulation-counts-dependence-through-the-retained-result.md) — contrasts: the neighbouring property that builds without being readable, and its criterion
-- [Compounding self-improvement needs leverage to multiply and autonomy to scale](./compounding-needs-leverage-to-multiply-and-autonomy-to-scale.md) — extends: separates accumulation from compounding, and locates reflection's contribution as addressability of the leveraged machinery
+- [Improvements can accumulate without compounding](./improvements-can-accumulate-without-compounding.md) — extends: separates accumulation from compounding and locates reflection's contribution in making the relevant machinery addressable
 - [Ashby, Design for a Brain — ultrastability](../sources/ashby-design-for-a-brain-ultrastability.md) — evidenced-by: the floor case — an operative incumbent whose random successor carries no improvement-relevant information from it

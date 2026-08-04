@@ -14,7 +14,7 @@ Nothing published yet.
 
 ## In draft
 
-- [Reflective self-improvement](./reflective-self-improvement.md) — defines the causal test, compares how far five systems and Commonplace make improvement machinery addressable, and separates reuse from leverage and compounding.
+- [Reflective self-improvement](./reflective-self-improvement.md) — defines the causal test, compares how far six systems and Commonplace make improvement machinery addressable, and separates accumulation from compounding.
 
 ---
 

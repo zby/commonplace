@@ -78,4 +78,4 @@ Relevant Notes:
 - [Reflection buys addressability](./reflection-buys-addressability.md) — mechanism: why a readable artifact layer lets the cut set be read rather than only run
 - [Reflective system](./definitions/reflective-system.md) — defined-in: the causally connected self-representation that makes a pathway's allocation inspectable
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidenced-by: a declared human-inclusive boundary whose maintainers are currently a cut set of its improvement pathway
-- [Compounding self-improvement needs leverage to multiply and autonomy to scale](./compounding-needs-leverage-to-multiply-and-autonomy-to-scale.md) — extends: gives the internalization this note tracks its role in compounding — the capacity a leveraged loop needs to outgrow its human cut set
+- [Improvements can accumulate without compounding](./improvements-can-accumulate-without-compounding.md) — extends: explains how the human cut set limits the scale and duration of compounding without entering its definition

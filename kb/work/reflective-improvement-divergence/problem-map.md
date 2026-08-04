@@ -35,7 +35,7 @@ The likely unifying object is not artifact similarity or mathematical convergenc
 6. If the scheduler treats “another useful change exists” as “continue this episode,” the loop has no reason to yield while any addressable defect remains.
 7. Object-level work is displaced even when each accepted local change is defensible.
 
-This suggests a possible paradox of [reflective leverage](../../notes/compounding-needs-leverage-to-multiply-and-autonomy-to-scale.md): improving the machinery for finding defects can raise the arrival rate of improvement candidates faster than evaluation and repair discharge them. The pathway becomes locally more capable and operationally less terminating.
+This suggests a possible pathology of [compounding](../../notes/improvements-can-accumulate-without-compounding.md): when retained improvements to defect-finding help produce later improvements, they can raise the arrival rate of candidates faster than evaluation and repair discharge them. The pathway becomes locally more capable and operationally less terminating.
 
 ## Initial cases
 
@@ -126,4 +126,3 @@ The most consequential candidate is the stable in-episode contract. A stop rule 
 - **Extension to the reflective-self-improvement article:** add divergence and episode closure as a failure surface only after the general claim survives comparison with non-reflective optimization.
 
 No output is committed in advance. The workshop may instead conclude that search, revision, state accumulation, and operational non-termination need separate notes with no useful “divergence” umbrella.
-

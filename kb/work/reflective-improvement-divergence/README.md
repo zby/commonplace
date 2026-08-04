@@ -19,7 +19,7 @@ The existing KB contains several local treatments but no single cross-system acc
 - [Machinery persists by warrant, not position, in a reflective loop](../../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md) argues that reflection removes the stable external meta-method: governance and reversibility stand in for a free fixed point.
 - [Gödel machines are a proof-governed case of reflective self-modification](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md) makes the allocation problem formal: a rewrite is adopted only when switching is provably preferable to continuing the search.
 - [Traversal improvements should be deferred via logging](../../notes/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid.md) separates noticing improvement opportunities from interrupting object-level work to pursue them.
-- [Compounding self-improvement needs leverage to multiply and autonomy to scale](../../notes/compounding-needs-leverage-to-multiply-and-autonomy-to-scale.md) identifies the human evaluation cut set, but does not ask whether a computational improvement episode itself returns.
+- [Improvements can accumulate without compounding](../../notes/improvements-can-accumulate-without-compounding.md) identifies how fixed human attention can limit the scale or duration of compounding, but does not ask whether a computational improvement episode itself returns.
 
 The adjacent [self-improvement-cluster operationalization workshop](../self-improvement-cluster-operationalization/README.md) concerns how the existing theory gains force in Commonplace changes. This workshop owns the narrower unresolved theory problem: how improvement processing diverges and how an episode closes.
 
@@ -46,7 +46,7 @@ Do not infer a universal convergence requirement from the motivating cases.
 5. Must some episode boundary remain fixed during a run even if it is revisable between runs?
 6. What observable signature separates useful continued improvement, diminishing returns, oscillation, scope expansion, and runaway meta-work?
 7. Which controls transfer across systems: fixed budgets, incumbent survival, marginal-value tests, phase boundaries, deferred queues, rollback, or an adoption decision outside the active revision?
-8. Can reflective leverage make termination harder by improving the system's ability to discover further defects faster than it resolves them?
+8. Can a retained improvement to defect-finding make termination harder by discovering further defects faster than the system resolves them?
 
 ## Working artifacts
 
@@ -64,4 +64,3 @@ The workshop closes when:
 4. episode closure has been separated from artifact convergence and from permanent cessation of improvement;
 5. at least one design claim about budgets, yield rules, frozen-within-episode machinery, or governance has been promoted, rejected, or explicitly deferred for lack of evidence; and
 6. any durable result has been extracted into `kb/notes/`, with descriptive or procedural consequences routed to `kb/reference/` or `kb/instructions/` as appropriate.
-

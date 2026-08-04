@@ -1,5 +1,5 @@
 ---
-description: "Examines whether Commonplace provides complete addressability of its repository-defined behavioral authority together with warranted, operative, and repeatable revision"
+description: "Develops a human-inclusive general revision affordance and reports broad behavioral-authority addressability alongside separate admission and model-realization gaps"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -12,13 +12,14 @@ source_notes:
   - kb/notes/definitions/reflective-system.md
   - kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md
   - kb/notes/reflection-buys-addressability.md
-  - kb/notes/compounding-needs-leverage-to-multiply-and-autonomy-to-scale.md
-  - kb/notes/reflective-leverage-is-tested-in-the-next-episode.md
+  - kb/notes/improvements-can-accumulate-without-compounding.md
+  - kb/notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md
   - kb/notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md
   - kb/notes/theory-and-methodology-form-a-two-layer-execution-system.md
   - kb/notes/llm-executed-methodologies-are-metacircular-interpreters.md
   - kb/notes/a-retained-operative-path-keeps-improvement-machinery-open-to-revision.md
   - kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md
+  - kb/notes/evidence/six-commonplace-paths-establish-broad-addressability-not-completeness.md
   - kb/reference/commonplace-declared-frame.md
   - kb/reference/commonplace-as-a-reflective-system.md
   - kb/reference/storage-architecture.md
@@ -29,6 +30,7 @@ source_notes:
   - kb/reference/adr/055-explanatory-reach-replaces-bare-reach-as-the-technical-term.md
   - kb/reference/adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md
   - kb/reference/adr/057-articles-use-an-editorial-profile-and-excluded-drafts.md
+  - kb/reference/adr/063-all-article-drafts-circulate-behind-a-banner.md
   - kb/tasks/recurring/review-explanatory-reach.md
 ---
 
@@ -40,15 +42,17 @@ The systems compared in [the reflective self-improvement article](./reflective-s
 
 That makes raw mutability easy to establish. A maintainer with source access can edit a rule, its validator, and then the instructions governing validator changes. Including the research teams within the other systems would create the same possibility. The harder question is whether the system makes all of its repository-defined behavioral authority addressable and supplies a reusable path for warranted, operative revision.
 
-The working claim is:
+The hypothesis tested was:
 
-> Commonplace gives its human–agent operator a reusable path for revising any repository-defined artifact or represented relation through which behavioral authority is exercised. The operator can identify and criticize the incumbent arrangement, develop a successor, warrant its adoption over continuing with the incumbent, and install it in a live behavioral path. Once the successor enters a behavioral-authority path, it falls under the same addressability requirement.
+> Commonplace gives its human–agent operator a reusable path for revising any artifact or relation through which its repository-defined behavioral authority or revision governance is exercised. The operator can identify and criticize the incumbent arrangement, develop a successor, warrant its adoption over continuing with the incumbent, and install it in a live behavioral path. Once the successor enters a behavioral-authority path, it falls under the same addressability requirement.
 
 [Behavioral authority](../notes/definitions/behavioral-authority.md) names how a retained artifact shapes operation: the consumer, channel, and force. **Complete addressability of behavioral authority** means that every repository-defined artifact and relation in those paths—including the machinery governing revision—is available to the human–agent process for inspection, criticism, and selective revision. It does not require the unarticulated contents of a maintainer's judgment to be readable.
 
+The [six-path audit](../notes/evidence/six-commonplace-paths-establish-broad-addressability-not-completeness.md) established broad, path-relative addressability and operative reuse of natural-language and symbolic revision machinery. Because the paths were representative rather than exhaustive, it did not establish complete behavioral-authority coverage. Separately, generic maintainer admission was not represented and requested model bindings were not reliably bound to execution. Those are failures of the broader revision affordance: the first concerns governance and the second operative realization.
+
 This draft calls the stronger package a **general revision affordance**: complete addressability together with an applicable revision method, warrant for adoption, operative installation, and continuity of the revision path. *Meta* remains a role within an episode, not a permanent layer. Repeated self-revision exercises the same coverage over successive authority-bearing arrangements; the repetition belongs to the process, not to addressability.
 
-This article asks how completely Commonplace supplies that affordance. Its outer limit is the declared substrate boundary; practical coverage is measured authority path by authority path. The main article asks whether reuse produces [leverage](../notes/compounding-needs-leverage-to-multiply-and-autonomy-to-scale.md) and whether repeated leverage compounds.
+This article develops that affordance and reports where the first hard-path audit found its boundary. Its outer limit is the declared substrate boundary; practical coverage is measured authority path by authority path. The main article asks whether retained benefits [help produce later improvements](../notes/improvements-can-accumulate-without-compounding.md), directly or through reinvested savings, and whether that feedback persists across episodes.
 
 ## Why editability is not enough
 
@@ -75,7 +79,7 @@ Like [reflective coverage](../reference/commonplace-as-a-reflective-system.md), 
 
 ## What Commonplace supplies
 
-Commonplace does not supply one universal algorithm for every change. It supplies a human–agent environment in which general theory, specialized methods, and operative artifacts work together.
+Commonplace does not supply one universal algorithm for every change. The audit found parts of the stronger package in a human–agent environment where general theory, specialized methods, and operative artifacts work together.
 
 - **Authority-bearing organization is represented.** Types, collection contracts, routing rules, instructions, review criteria, ADRs, schemas, validators, configuration, and code expose much of the repository's organization as inspectable artifacts. Contracts, configuration, and code also expose many of the consumer, channel, and force relations through which those artifacts act.
 - **Open problems have a place to develop.** The workshop layer holds investigation before a conclusion is ready. Ampliative claims can follow the [discovery lifecycle](../notes/definitions/discovery-lifecycle.md): anomaly, conjecture, derived consequences, testing, acceptance, and integration. A proposal and ADR are one path from a mature design question to an installed decision, not the definition of revision itself.
@@ -94,7 +98,7 @@ Explanatory-reach is not merely a note in the repository. It is named in the roo
 
 That importance has not made the criterion immutable. The anchor theory originally presented a harder adaptive-versus-explanatory contrast. A later revision made it a polarity, added a test against rival practices, and required observed fit to discipline the explanation. The same change propagated the revised test into the notes collection contract and the [recurring explanatory-reach review](../tasks/recurring/review-explanatory-reach.md). The later [reach-assessment definition](../notes/definitions/reach-assessment.md) reused all four parts, while [ADR 055](../reference/adr/055-explanatory-reach-replaces-bare-reach-as-the-technical-term.md) made the technical name unambiguous across the corpus.
 
-This is substantive theory revision, not just proof that the files are editable. It also exposes incomplete installation: the current semantic gate does not carry the observed-fit part of the revised test, and no review log establishes that a later full review depended on all four parts. The affordance is visible, but the complete causal path has not been demonstrated for the entire revised criterion.
+This is substantive theory revision, not just proof that the files are editable. The audit also confirms that the semantic gate is routinely invoked. Yet the gate does not carry the observed-fit part of the revised test, and no retained review establishes later dependence on all four parts. The affordance is visible, but the complete causal path has not been demonstrated for the entire revised criterion.
 
 The same path could challenge the core criterion, not only refine or rename it. If counterexamples showed that explanatory-reach rejects useful explanations or rewards a rhetorical shape rather than real transfer, a successor would need to explain that failure, preserve what the old criterion got right, survive stated tests, be installed across its authority paths, and govern later review. Until a better successor earns adoption, retaining the incumbent is the normal result of comparing change with continuation.
 
@@ -105,21 +109,21 @@ Commonplace has already changed several kinds of load-bearing machinery:
 - [ADR 042](../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) replaced the claimed exhaustive three-register taxonomy after a worked dialectical collection supplied a counterexample. The successor preserved the useful theoretical, descriptive, and prescriptive profiles inside an open text-contract model, changed the definition and root vocabulary, and later made the article collection's editorial profile possible.
 - [ADR 053](../reference/adr/053-retire-distillation-without-a-successor-term.md) retired a load-bearing theory term after a 464-occurrence audit showed that it merged operations with opposite maintenance requirements. Its useful work moved to the two-layer theory, explicit lineage relations, and the discovery lifecycle rather than being preserved under a cosmetically new name. When use exposed a missing relation, [ADR 054](../reference/adr/054-add-adapted-from-and-operationalized-from-lineage-relations.md) revised the successor arrangement instead of defending the first repair.
 - The [tag-README redesign](../reference/tag-readme-trace-observed-causal-connection.md) changed instructions, schema, validation, and rendering; later validation used the new check and exposed a defect in the associated search recipe.
-- [ADR 056](../reference/adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md) revised the proposal and ADR lifecycle. [ADR 057](../reference/adr/057-articles-use-an-editorial-profile-and-excluded-drafts.md) then used its new alternatives requirement, and the adopted article proposal followed its archive rule.
+- [ADR 056](../reference/adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md) revised the proposal and ADR lifecycle. [ADR 057](../reference/adr/057-articles-use-an-editorial-profile-and-excluded-drafts.md) then used its new alternatives requirement, and [ADR 063](../reference/adr/063-all-article-drafts-circulate-behind-a-banner.md) later challenged and revised the installed article lifecycle.
 
 Together these cases are more informative than a declaration that every file may be edited. They show theory replacement, vocabulary retirement, symbolic enforcement, revision of design machinery, and later dependence on installed successors. They leave open how evenly the affordance covers different authority paths and whether it improves outcomes.
 
-## What remains to establish
+## What the audit found
 
-The stronger claim should be tested the way reflective coverage is tested: choose hard aspects, name the required operations, and look for a missing causal edge.
+The audit examined global goals, the explanatory-reach criterion, tag-README validation, the revision lifecycle, model bindings, and maintainer admission. Goals, contracts, criteria, procedures, validator rules, and model requests were inspectable and selectively revisable. The validator and lifecycle cases also demonstrate operative reuse and another revision of installed machinery. This is stronger than repository writability and weaker than complete addressability.
 
-The first task is to map the six requirements above onto authority paths most likely to expose a special-case barrier: a core objective, an evaluator, an authority rule, the revision lifecycle, a natural-language theory, and a symbolic validator. The question is not whether a maintainer can edit each artifact. It is whether Commonplace makes the artifact and the relations through which it acts addressable, then supports diagnosis, comparison with an incumbent, operative installation, and another later challenge without inventing an entirely external process.
+The strongest gap in the broader revision affordance is generic maintainer admission. Commonplace names designated maintainers and several path-specific approval requirements, but no canonical artifact records who is designated, what the grant covers, which generic condition admits a change, or which approval event authorizes the installed content version. This does not deprive installed artifacts of behavioral authority or identify an unaddressable consumer–channel–force path; it leaves the authorization relation outside the represented revision affordance.
 
-The second task is to consolidate the strongest episodes into causal traces. ADR 042 is the strongest theory-replacement candidate; ADR 053 followed by ADR 054 is the clearest successive-revision candidate; ADR 056 followed by ADR 057 is the best revision-machinery reuse candidate. The evidence should pin what prompted each change, what made the replacement better, which artifacts installed it, which later operation depended on it, and whether the successor remained addressable and was later revised.
+Model binding exposes a different boundary. The requested model, alias, and freshness partition are addressable, but retained evidence shows requested or recorded identity diverging from actual execution. That is an operative-realization gap, not an addressability failure of the request.
 
-The third task is a hostile search for an unsupported authority path. A missing specialized procedure is not enough: live theory and the workshop path are part of the claimed support. The counterexample must be a repository-defined artifact or relation with behavioral authority for which even those general resources provide no actionable route from criticism through warranted, operative change, leaving the maintainer to invent an unrecorded external process. Extending the theory or machinery to cover that case would then move the edge of the affordance.
+The audit also found that consumer, channel, and force do not fully individuate a path. A gate's target cohort or a validator's type and invocation trigger can change while those three stay fixed. The live [decomposition proposal](../reference/proposals/revise-behavioral-authority-decomposition.md) now owns the choice between adding applicability as a fourth field and treating it as a required qualifier. Authorization, runtime realization, and dependency closure remain separate questions.
 
-Coverage remains relative to the canonical repository-defined organization and the hard authority paths examined. Provider weights, inference infrastructure, and hosting stay outside [Commonplace's declared frame](../reference/commonplace-declared-frame.md); a vendored read-only copy likewise lacks the source-repository affordance unless its operator supplies an override or fork path.
+Coverage remains relative to the six paths examined and [Commonplace's declared frame](../reference/commonplace-declared-frame.md); provider weights, inference infrastructure, and hosting remain outside. Wider coverage may reveal another barrier. Even complete coverage would not establish compounding, which still requires evidence that a retained benefit helped produce a later improvement.
 
 ## Relation to the Gödel machine
 

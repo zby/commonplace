@@ -47,7 +47,7 @@ Giving the unresolved design judgment to an unconstrained model would change all
 
 ## What the classification does not claim
 
-The trace establishes neither whole-pathway computational closure nor improvement beyond the adopted criterion. Human inclusion makes membership cheap; comparison must use [the four-part pathway profile](../notes/self-improving-systems-README.md), whose comparison across time or differently decomposed systems remains [an open measurement problem](../notes/measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md).
+The trace establishes neither whole-pathway computational closure nor improvement beyond the adopted criterion. Human inclusion makes membership cheap; comparison must use [the four-part pathway profile](../notes/self-improving-systems-README.md), whose comparison across time or differently decomposed systems remains [an open measurement problem](../notes/measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md). A broader [six-path Commonplace audit](../notes/evidence/six-commonplace-paths-establish-broad-addressability-not-completeness.md) establishes wide addressability without establishing complete coverage; separately, generic maintainer admission is its strongest gap in the broader revision affordance.
 
 ---
 
@@ -66,3 +66,4 @@ Relevant Notes:
 - [Warranted autonomy is bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) — rests-on: why moving a function to a computational component does not by itself warrant the decision
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](../notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — rests-on: the methodological-closure property assessed separately from reflectivity
 - [Stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md) — rests-on: the retained claim through which the adaptation signal was interpreted
+- [Six Commonplace paths establish broad addressability, not completeness](../notes/evidence/six-commonplace-paths-establish-broad-addressability-not-completeness.md) — see-also: widens the evidence from the tag-README trace to six difficult authority paths and separates coverage from broader admission and realization gaps

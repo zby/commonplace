@@ -1,5 +1,5 @@
 ---
-description: "Proposal: restructure the behavioral-authority sub-divisions — pipeline paths, force families, an effective/warranted split — with a literature survey of existing authority and provenance decompositions before any carve is chosen"
+description: "Proposal: restructure behavioral-authority subdivisions for applicability, pipeline paths, force families, and effective versus warranted authority after surveying existing decompositions"
 type: ../types/design-proposal.md
 tags: [artifact-analysis, learning-theory]
 ---
@@ -8,20 +8,23 @@ tags: [artifact-analysis, learning-theory]
 
 The [behavioral authority](../../notes/definitions/behavioral-authority.md) definition's core claim — authority attaches to a consumption path, not to bytes — is sound and heavily load-bearing. Its sub-divisions are not equally developed: the consumer, channel, and force lists were enumerated rather than derived, and writing [a consumption channel delivers force without the history that earned it](../../notes/a-consumption-channel-delivers-force-without-the-history-that.md) strained them at three identifiable points. This proposal holds the option space for restructuring them, with a literature survey as the first gate: authority, integrity, and provenance have decades of prior decompositions, and [a carve that inherits a tested ontology is in a better position than one chosen freely](../../notes/only-derivation-and-inheritance-warrant-a-scope-claim-use-earns-it.md) — the same secondhand purchase that Maes and Smith supplied for [reflective system](../../notes/definitions/reflective-system.md).
 
-## Current state (as of 2026-07-28)
+## Current state (as of 2026-08-04)
 
 - The definition records three components: consumer, channel, force, each as a flat example list. Two clarifications were adopted directly as uncontested: authority paths compose (one consumer's act is the next path's channel), and placement within a channel is part of effective force.
 - Roughly 37 files cite the definition, including the `kb/agent-memory-systems/` reviews, which record behavioral-authority observations per reviewed system. Any change to the component structure has a migration surface there.
 - The authority-failure note is live and builds the contrast between force a channel delivers and force the artifact earned entirely in prose, because the definition offers no handle for it.
 - The definition's Exclusions section names *effective* authority; no term for *warranted* authority exists anywhere in the vocabulary.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) already records scope as local consumption-path metadata outside the authority triple, so the proposal must decide whether to promote that existing qualifier or change the record itself.
+- A [six-path Commonplace audit](../../notes/evidence/six-commonplace-paths-establish-broad-addressability-not-completeness.md) found that consumer, channel, and force can stay constant while the target cohort or activation trigger changes. Its explanatory-reach and tag-validator cases require applicability to identify the authority path, but do not decide whether applicability is a fourth component or a required qualifier.
 
 ## Problem
 
-Three misfits, each observed in use rather than conjectured:
+Four misfits, each observed in use rather than conjectured:
 
 1. **No warrant dimension.** The record captures who consumes what, through which channel, with what force — and nothing about what stands behind the occupancy: a review verdict, a human commitment, an attestation, or nothing. The authority-failure note's entire subject is the gap between delivered and earned force, and it had to construct the distinction ad hoc.
 2. **The force list mixes kinds.** Advice/instruction/enforcement form a bindingness gradient read by an interpreting consumer; validation/routing/ranking influence are executed mechanically; learning input lands in weights with delayed, non-addressable effect. The definition's own hedge on audit triggers ("no force by themselves") signals the heterogeneity. Claims built on the vocabulary inherit it: the authority-failure note's countermeasures hold for interpretive and mechanical force but break for parametric force, where "rollback" means retraining.
 3. **Channel is one slot; real paths are staged.** Retrieval selects, assembly positions, the consumer acts — one consumption event spans several list entries, and the countermeasures in the authority-failure note land at different stages (entrance, placement, consumption, after-the-fact). The note had to invent entrance-side/consuming-side vocabulary the definition does not supply.
+4. **Applicability is implicit.** A semantic gate may apply only to notes carrying one trait, and a validator rule only to a canonical type, affected cohort, and invocation trigger. Consumer, channel, and force do not distinguish these scoped uses. An authority-path inventory therefore needs the target cohort, aspect, or operation and the condition under which force activates.
 
 ## Design space
 
@@ -30,8 +33,10 @@ Three misfits, each observed in use rather than conjectured:
 3. **Pipeline path structure.** A path becomes an ordered chain of stages with position as a named component; the current channel list is re-read as stage instances. Resolves misfit 3 and the retriever/retrieval double-listing; touches every record's shape.
 4. **Force families.** Organize the force list into interpretive, mechanical, and parametric families — checking first whether the families are derivable from [representational form](../../notes/definitions/representational-form.md)'s axes (the read/test/probe consumption rule is suspiciously parallel), which would make the carve derived rather than free.
 5. **Inherit an external decomposition.** If the survey finds a tested ontology that covers the record's job, adopt it with purchase and local extension explicitly separated, as the reflective-system definition did with Maes 1988.
+6. **Applicability as a fourth component.** Every record names the target cohort, aspect, or operation and its activation condition. This makes path identity explicit but enlarges the migration surface.
+7. **Applicability as a required path qualifier.** Keep the current triple as the local link and require scope and trigger only when individuating or comparing paths. This preserves existing records but risks continuing to omit applicability when it matters.
 
-Free choices, marked as such: the family names in option 4; the warrant vocabulary (warrant vs. earning vs. backing); whether options compose (2 + 4 is coherent; 1 + 3 is a full rebuild).
+Free choices, marked as such: the family names in option 4; the warrant vocabulary (warrant vs. earning vs. backing); whether options compose (2 + 4 + 7 is coherent; 1 + 3 + 6 is a full rebuild); and whether applicability is part of the record or a qualifier over it.
 
 ## Survey targets
 
@@ -45,6 +50,7 @@ The gate before choosing: run the misfits across prior art, recording per thread
 - **W3C PROV** — the entity/activity/agent ontology; a tested general provenance decomposition, possibly too generic to bind force.
 - **Speech-act theory (Austin, Searle)** — illocutionary force taxonomies; "force" is already their word, and the interpretive family may inherit its gradient rather than invent one.
 - **LangSec** — the data/instruction separation whose absence in natural-language channels is the injection opening the authority-failure note cites via Greshake et al.
+- **Access-control policy applicability** — target, condition, action, and effect structures in policy languages and attribute-based access control; a possible tested account of where and when authority applies.
 
 ## Forces
 
@@ -52,6 +58,7 @@ The gate before choosing: run the misfits across prior art, recording per thread
 - **Provenance discipline**: a freely chosen replacement carve is no better warranted than the freely chosen current one; the survey exists to make the revision derived or inherited rather than a second free choice ([rationale](../../notes/only-derivation-and-inheritance-warrant-a-scope-claim-use-earns-it.md)).
 - **Context cost**: richer records spend context at every consumption; the authority-failure note's own open question asks whether provenance survives context pressure or entrance control always dominates.
 - **Naming risk**: axis names carry hidden dichotomies; expect multiple naming rounds before any family or warrant term is fixed.
+- **Applicability cost**: option 6 makes every record more precise at recurring context cost; option 7 is cheaper but may fail exactly where scoped gates and triggers are load-bearing.
 
 ## Operativity and warrant
 
@@ -63,3 +70,4 @@ A revised definition is consumed by review authors and note writers through the 
 - The chosen decomposition re-derives the current consumer/channel/force lists as instances rather than discarding them.
 - The migration path for existing review records is stated and priced before any record-shape option is adopted.
 - The authority-failure note can be re-grounded on the revised vocabulary without losing any of its three moves (unification, gate-bypass separation, countermeasures-as-one-operation).
+- The chosen account distinguishes the audit's trait-scoped gate and type/trigger-scoped validator paths without conflating applicability with authorization, runtime realization, or dependency closure.
