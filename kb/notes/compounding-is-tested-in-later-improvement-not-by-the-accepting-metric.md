@@ -39,6 +39,14 @@ Under this note's causal definition, that sequence establishes retained, transfe
 
 The two meanings become compatible if an indirect mechanism is added and measured. Retained competence or in-loop regression control could spare Phase-2 search from reacquiring old capabilities or repairing regressions. An allocator would then have to make the saved rollout budget, compute, or evaluation effort available for new improvement, and the later search would have to consume it. This assumes that the saved resource is usable and that progress is not capped by another bottleneck. The study fixes each phase at 200 rollouts and reports no reinvestment trace, so it leaves this mechanism possible rather than established.
 
+## Harness benefit closes uptake, not feedback
+
+The [Harness Updating Is Not Harness Benefit study](../sources/harness-updating-is-not-harness-benefit.ingest.md) separates producing a persistent update from a task-solving agent benefiting from it. This makes the uptake trace more precise: update production → operative retention and application → artifact loading → faithful use → task benefit. Every link is needed for an operational task-side gain. Retention alone is insufficient when the agent never loads the relevant artifact, and loading alone is insufficient when the agent does not follow it.
+
+Compounding adds a distinct final edge: task benefit → causal contribution to a later improvement episode. Harness benefit is therefore necessary for compounding through a task-side gain, but it is not sufficient. The final edge can close when the later improver directly takes up the benefit, or when an observed allocator makes resources freed or preserved by the benefit available to improvement work and later search consumes them.
+
+The study supports the uptake distinctions through controlled evolver-agent cross-pairing and, on SkillsBench, separate measurements of skill loading and adherence. Its update and benefit metrics remain relative to the tested pairings, while prompts, editable surfaces, task streams, and anchor sets stay fixed. It identifies failure points within that decomposition; it does not observe the final feedback edge.
+
 ## What to measure in the later episode
 
 | Direction | Measure in the later episode |
@@ -93,6 +101,7 @@ Relevant Notes:
 - [The Meta-Harness ablation does not identify episode-backed theory formation](./the-meta-harness-ablation-bounds-summarization-not-theory-formation.md) — evidenced-by: shows how ablation arms can fail to isolate the claimed intervention
 - [Ingest: HyperAgents](../sources/hyperagents.ingest.md) — evidenced-by: freezes transferred improvement machinery in a new domain and measures its later agent-generation productivity
 - [Ingest: Do Agent Optimizers Compound? A Continual-Learning Evaluation on Terminal-Bench 2.0](../sources/agent-optimizers-compound-terminal-bench.ingest.md) — evidenced-by: separates transfer and later re-optimization while leaving the earlier gain's causal contribution untested
+- [Ingest: Harness Updating Is Not Harness Benefit](../sources/harness-updating-is-not-harness-benefit.ingest.md) — evidenced-by: separates update production, artifact loading, faithful use, and task benefit while leaving benefit-to-later-improvement feedback untested
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — contrasts: bounds what may run unattended rather than what later evidence establishes
 - [Commonplace as a reflective self-improving system](../reference/commonplace-as-a-reflective-system.md) — evidenced-by: supplies human-inclusive candidate episodes whose compounding contribution remains unmeasured
 - [Ablation baselines for the declared objective](../reference/proposals/ablation-baselines-for-the-declared-objective.md) — see-also: supplies objective-level ablation designs complementary to these later-episode comparisons
