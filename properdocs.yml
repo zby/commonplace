@@ -90,6 +90,7 @@ plugins:
         'notes/self-modification-requires-search-evaluation-and-retention.md': 'notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md'
         'notes/skills-derive-from-methodology-through-distillation.md': 'notes/skills-derive-from-methodology.md'
         'notes/tags-index.md': 'notes/tags-README.md'
+        'notes/the-builder-loop-becomes-internal-through-an-operative-redesign-path.md': 'notes/a-retained-operative-path-keeps-improvement-machinery-open-to-revision.md'
         'notes/tool-loop-index.md': 'notes/tool-loop-README.md'
         'notes/trace-derived-learning-techniques-in-related-systems.md': 'agent-memory-systems/README.md'
         'notes/traversal-improves-the-graph.md': 'notes/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid.md'

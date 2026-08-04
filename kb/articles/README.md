@@ -14,7 +14,10 @@ Nothing published yet.
 
 ## In draft
 
-- [Reflective self-improvement](./reflective-self-improvement.md) — defines the causal test, then compares improvement inside supplied organizations with Commonplace's retained human–agent builder path and the proof-governed Gödel machine.
+- [Reflective self-improvement](./reflective-self-improvement.md) — defines the causal test, compares how far five systems and Commonplace make improvement machinery addressable, and separates reuse from leverage and compounding.
+- [What makes human-inclusive self-revision non-trivial?](./recursive-targetability.md) — separates trivial human-inclusive mutability from a general revision affordance: a reusable, self-applying path from criticism through warranted, operative change at any repository-defined layer.
+
+Root-placed drafts circulate for comments behind a draft banner (ADR 062); their claims and structure may still change.
 
 ---
 
