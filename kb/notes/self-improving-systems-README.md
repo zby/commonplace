@@ -33,7 +33,7 @@ The four do not determine, subsume, or form a monotone progression through one a
 A [self-improving](./definitions/self-improving-system.md) pathway is [reflective](./definitions/reflective-system.md) when it routes objective-bearing evidence into a change to the system's behavior-determining organization through a causally connected self-representation; later operation must depend on that change. This causal structure permits direct updates, proposal selection, and compositions of both. Authority family — evidence, advice, instruction, enforcement — does not decide reflection.
 
 - [Reflection buys addressability](./reflection-buys-addressability.md) — retention later rounds can read, criticize, and selectively revise.
-- [Recursive revision reach](./a-retained-operative-path-keeps-improvement-machinery-open-to-revision.md) — assess each aspect separately; a retained operative path can challenge its result again.
+- [Repeatable operative revision](./a-retained-operative-path-keeps-improvement-machinery-open-to-revision.md) — complete addressability covers governing machinery; continuity keeps its revision path usable.
 - [Reflection makes retained lessons second-order](./reflection-makes-retained-lessons-second-order.md) — an addressable lesson can reject or rescope a represented prior commitment.
 - [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — the standing discount on a lesson that never surfaces.
 - Payoff hypotheses, still open: [theory-mediated sample efficiency](./theory-mediated-self-improvement-needs-interpretation-and-retention.md), and [selective revision needing a faithful rationale](./selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md).
@@ -47,7 +47,7 @@ A [self-improving](./definitions/self-improving-system.md) pathway is [reflectiv
 
 ## Placements
 
-[Thirteen cases profiled across selected fields of the four dimensions](./real-self-improving-systems-occupy-combinations-no-rung-captures.md) — from Ashby's Homeostat to Commonplace itself, including the [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) as the proof-governed limit. Read every claim at its stated strength: definitions are stipulated and revisable; payoff claims are open hypotheses.
+Evidence: [five recent paths](./evidence/five-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md) map operative redesign and supplied machinery; [thirteen cases](./evidence/real-self-improving-systems-occupy-combinations-no-rung-captures.md) map profile combinations, including the [Gödel machine](./goedel-machines-are-a-proof-governed-case-of-self-modification.md). Definitions are stipulated and revisable; payoff claims remain hypotheses.
 
 ## Base vocabulary and boundary cases
 

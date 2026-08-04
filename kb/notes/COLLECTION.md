@@ -81,6 +81,10 @@ Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/sources/`, an
 | `tag-readme` | `kb/types/tag-readme.md` | a tag's curated head (`<tag>-README.md`); weight-gated, with optional validator-enforced `complete`/`covered_by` marks |
 | `index` | `kb/types/index.md` | build-time generated listings only — do not author new committed indexes |
 
+## Evidence placement
+
+Use `kb/notes/evidence/` when a note's primary contribution is what a bounded dataset, experiment, trace cohort, or comparative casebook establishes. These remain theoretical notes under this collection contract: state both the inference the evidence supports and its limit. Put raw captures in `kb/sources/`, descriptions of particular systems or Commonplace episodes in their descriptive collection, and unsettled audits in `kb/work/`.
+
 ## What does NOT belong here
 
 - Unadopted system designs → `kb/reference/proposals/` (`design-proposal` type), unless recast as an existential claim per above

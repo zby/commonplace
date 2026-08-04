@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [behavioral-authority-addressability](./behavioral-authority-addressability/README.md) — auditing whether Commonplace's repository-defined behavioral-authority paths are completely addressable, while treating the current consumer–channel–force decomposition as preliminary and recording any evidence-driven additions
 - [reflective-improvement-divergence](./reflective-improvement-divergence/README.md) — investigating when open-ended improvement search becomes revision drift, oscillation, moving-criterion instability, or operational non-termination, and what episode-closure rules let a reflective system return to object-level work without pretending it has converged
 - [self-revision-design-space](./self-revision-design-space/README.md) — explaining, in plain language first, aspect-bounded builder-loop reach: experimental pathways revise different roles and code while leaving different governing machinery supplied, Commonplace partially retains a human–agent redesign path, and the theoretical Gödel machine internalizes broad redesign behind a proof requirement
 - [agent-curiosity-and-structural-coherence](./agent-curiosity-and-structural-coherence/README.md) — testing whether locally acceptable but globally misplaced code and prose arise from weak role-model activation, anomaly-to-subgoal transition, structural candidate search, or global selection rather than treating “lack of taste” as an explanation

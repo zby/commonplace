@@ -26,7 +26,7 @@ Operating the first two articles surfaced a need neither state serves. The opera
 
 **The lifecycle gains one forward step.** Excluded draft → root draft (request for comments) → working paper (claims stable enough for version handles) → published (frozen). Each transition needs explicit approval naming the target state. This answers ADR 061's objection to circulated drafts: status describes revisability and maturity, placement describes visibility, and the banner makes the combination legible on the page itself.
 
-Operativity path: `kb/articles/COLLECTION.md` binds authoring and collection-conformance review with the banner, discovery-path, and no-stability-promise clauses; `kb/articles/README.md` lists the main reflective-self-improvement draft, which links to the unlisted recursive-targetability companion; the ProperDocs metadata line continues to render status, and the site's page-bottom comments system receives the feedback each banner invites.
+Operativity path: `kb/articles/COLLECTION.md` binds authoring and collection-conformance review with the banner, discovery-path, and no-stability-promise clauses; `kb/articles/README.md` lists the main reflective-self-improvement draft, which links to the unlisted human-inclusive self-revision companion; the ProperDocs metadata line continues to render status, and the site's page-bottom comments system receives the feedback each banner invites.
 
 ## Considered alternatives
 

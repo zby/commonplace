@@ -24,7 +24,7 @@ Weyns defines self-adaptation through complementary external and internal princi
 
 ## Connections Found
 
-The source is a technical anchor for [a proposal-selection loop requires search, evaluation, and retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md): both treat loop decompositions as conceptual engineering models rather than category definitions. It also directly supports [real self-improving systems occupy combinations no single rung captures](../notes/real-self-improving-systems-occupy-combinations-no-rung-captures.md), whose profile separates architecture, allocation, and governance instead of collapsing them into one autonomy score. No durable note currently uses Weyns's six-wave vocabulary as an operational taxonomy.
+The source is a technical anchor for [a proposal-selection loop requires search, evaluation, and retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md): both treat loop decompositions as conceptual engineering models rather than category definitions. It also directly supports [real self-improving systems occupy combinations no single rung captures](../notes/evidence/real-self-improving-systems-occupy-combinations-no-rung-captures.md), whose profile separates architecture, allocation, and governance instead of collapsing them into one autonomy score. No durable note currently uses Weyns's six-wave vocabulary as an operational taxonomy.
 
 ## Extractable Value
 
