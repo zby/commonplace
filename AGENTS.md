@@ -37,6 +37,8 @@ Out of scope:
 
 A design insight is worth a note when it changes how someone would build or operate a KB. Observations about what works are worth a log entry on first occurrence and a note when the mechanism is understood. Pure pattern-recording without explanation belongs in a log entry, not a note.
 
+**Simple writing (best effort).** Use the simplest wording that preserves the claim and its necessary qualifications. Aim for one main point per sentence. Prefer short, direct sentences. State definitions directly, put conditions and qualifiers next to the claims they limit, and make causal or contrastive relationships explicit. The KB graph already supplies complexity through connections among notes; do not add avoidable complexity inside a sentence.
+
 ## Vocabulary
 
 Terms needed to understand the project's structure and everyday operations, alphabetical. Each links its full definition.
