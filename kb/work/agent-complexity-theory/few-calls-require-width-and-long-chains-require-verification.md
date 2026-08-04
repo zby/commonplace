@@ -1,11 +1,13 @@
 ---
-description: "Decomposition sits on a width-loss-reliability frontier: exact short pipelines need wide prompts or high-bandwidth interfaces, while long unchecked chains accumulate error and therefore need verifier or redundancy stages"
+description: "Working frontier note whose interface bound remains useful but whose reliability caveat needs a correlation correction and verifier-spacing replacement"
 type: kb/types/note.md
 traits: []
 tags: [computational-model, context-engineering, llm-interpretation-errors]
 ---
 
 # Few calls require width and long chains require verification
+
+> **Status correction (2026-08-04):** The interface-capacity proposition remains useful and can be strengthened to an exact answer-profile characterization. The reliability caveat below is wrong to say arbitrary correlation strengthens exponential decay: perfect correlation can keep chain success at `1 - epsilon` regardless of length. The proposed replacement is a verifier-spacing policy based on measured segment success `q(k)`. See [Architectural decision theorems: review and proposed pivot](./architectural-decision-theorems-review.md).
 
 Decomposition is not a free optimization knob. In the [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md), reducing call count means each call must absorb more of the task-relevant state directly or inherit a richer intermediate representation from earlier stages. Increasing call count makes local prompts easier, but it lengthens the stochastic chain through which errors can survive. So bounded-call design sits on a frontier: **few calls require width or lossy compression; long chains require verification, redundancy, or both**.
 

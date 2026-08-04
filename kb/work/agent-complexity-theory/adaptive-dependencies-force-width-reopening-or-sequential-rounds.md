@@ -1,11 +1,13 @@
 ---
-description: Exact orchestration over step-dependent discovery and dense cross-item interactions must pay in prompt width, repeated reopening, or sequential rounds; parallel fan-out alone cannot remove the dependency cost
+description: "Superseded sketch: the width-independent adaptive-round claim is false; retain the interaction-cut argument and replace adaptivity with a breadth/lookahead tradeoff"
 type: kb/types/note.md
 traits: []
 tags: [computational-model, context-engineering]
 ---
 
 # Adaptive dependencies force width, reopening, or sequential rounds
+
+> **Status correction (2026-08-04):** The adaptive-chain theorem below is false as written because its known candidate layers can all be inspected in one unrestricted-width batch; the returned successor mappings can then be followed symbolically. The replacement direction is an exact breadth/lookahead tradeoff: resolving `h` hidden choices in one batch over a `B`-ary pointer tree costs `(B^h - 1) / (B - 1)` speculative inspections. See [Architectural decision theorems: review and proposed pivot](./architectural-decision-theorems-review.md). The interaction-width result remains a candidate restatement of the answer-profile cut theorem.
 
 In the [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md), symbolic code can cache, sort, and batch arbitrary state, but only bounded calls can reveal new semantic dependency structure. That creates a second family of lower bounds beyond simple retrieval cost. For exact task families with either step-dependent discovery or dense cross-item interaction, orchestration must pay somewhere: in wider prompts that co-load the interacting material, in repeated reopening of previously seen sources, or in more sequential rounds. Parallel fan-out alone does not remove this cost, because the scheduler does not know the decisive dependency structure soon enough to exploit the width.
 

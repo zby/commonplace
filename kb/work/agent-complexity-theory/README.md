@@ -4,16 +4,26 @@ Working out formal consequences of the [bounded-context orchestration model](../
 
 The goal is theorem sketches and proof outlines suitable for academic collaboration, not KB design notes. Artifacts here are consumed when they mature into a paper or get pitched to collaborators.
 
+## Current direction
+
+An [external review recorded on 2026-08-04](./architectural-decision-theorems-review.md) proposes pivoting from generic resource lower bounds to **architectural decision theorems**. The organizing claim is that a decomposition creates an information cut whose cost is set by the downstream distinctions that must cross it. Candidate results should rule out a decomposition, choose between retention and summarization, give a measurable crossover, or produce a scheduling or verification policy.
+
+The review also identifies two corrections to current sketches:
+
+- the width-independent adaptive-chain round lower bound is false for the stated known-layer model; unrestricted speculative breadth can collapse rounds at exponential work cost;
+- arbitrary error correlation does not necessarily worsen reliability decay; a perfect shared failure event can keep success constant with chain length.
+
+The correction arguments are direct. The broader theorem program and literature positioning remain proposals until checked.
+
 **Downstream consumer.** [exo-methodology-pitch](../exo-methodology-pitch/README.md) depends on two families here, and how strongly it can state its case turns on how they resolve. The semantic-retrieval bound decides whether retaining derived artifacts avoids a reconstruction cost that stronger models could erase or a lower bound no capability escapes. [No bounded summary preserves all distinctions for a rich query family](./no-bounded-summary-preserves-all-distinctions-for-a-rich-query-family.md) constrains that workshop's proposal in the other direction: a bounded summary must declare which query family it serves, which is what a per-class contract does. Neither workshop should assume the other's result — record what is proved, not what is hoped.
 
 ## Candidate result families
 
-1. **Semantic retrieval lower bounds** — orchestration cannot replace semantic inspection without a pre-built index
-2. **Bounded-summary impossibility** — no bounded summary preserves every distinction required by a rich query family
-3. **Interaction-width lower bounds** — tasks with dense cross-item dependencies force wide prompts or repeated re-opening
-4. **Adaptivity / round lower bounds** — step-dependent discovery and pointer-chasing structures require sequential depth regardless of parallelism
-5. **Calls-width-compression tradeoff frontiers** — fewer calls require wider prompts or more aggressive compression
-6. **Verification / reliability lower bounds** — long noisy call chains require explicit verifier stages
+1. **Information cuts and addressability** — exact answer-profile capacity, one-way communication, frozen decompositions, and retained-source separation
+2. **Adaptivity and speculative work** — breadth/lookahead tradeoffs and a conjectured full rounds/work frontier
+3. **Online architectural policies** — thresholds for decomposition, artifact materialization, verifier spacing, and pointer amortization
+4. **Positive sufficient conditions** — mergeable summaries and adaptive witness coverage
+5. **Boundary lemmas and accounting models** — opaque retrieval, archive readability, and call-width bookkeeping
 
 ## Proof template
 
@@ -27,25 +37,26 @@ The goal is theorem sketches and proof outlines suitable for academic collaborat
 
 ## Current sketches
 
+- [Architectural decision theorems: review and proposed pivot](./architectural-decision-theorems-review.md)
 - [Exact retrieval over semantically opaque items requires linear inspection](./exact-retrieval-over-semantically-opaque-items-requires-linear.md)
 - [No bounded summary preserves all distinctions for a rich query family](./no-bounded-summary-preserves-all-distinctions-for-a-rich-query-family.md)
-- [Adaptive dependencies force width, reopening, or sequential rounds](./adaptive-dependencies-force-width-reopening-or-sequential-rounds.md)
-- [Few calls require width and long chains require verification](./few-calls-require-width-and-long-chains-require-verification.md)
+- [Adaptive dependencies force width, reopening, or sequential rounds](./adaptive-dependencies-force-width-reopening-or-sequential-rounds.md) — adaptive-chain theorem invalid as written; interaction-cut argument remains useful
+- [Few calls require width and long chains require verification](./few-calls-require-width-and-long-chains-require-verification.md) — reliability correlation caveat needs replacement
 - [Archive readability toy model](./archive-readability-toy-model.md)
 
 ## Sketch abstracts
 
 ### Interaction / adaptivity lower bounds
 
-Target statement shape: if solving a task requires combining information distributed across many items with important cross-item dependencies, or if the identity of the next item to inspect depends on semantic content discovered in the current step, then bounded-call orchestration must pay somewhere: either wider per-call context, repeated reopening of previously seen sources, or more sequential rounds. Parallel width alone does not remove this cost because the dependency graph is not known in advance.
+Corrected target statement shape: a no-reopen decomposition cut must transmit enough information to distinguish every downstream answer profile. For adaptive pointer following, parallel width can remove rounds, but guaranteed lookahead `h` in a hidden `B`-ary tree requires inspecting the complete depth-`h` prefix, so latency is exchanged for exponentially growing speculative work.
 
-Practical consequence: some workflows are inherently serial. When the task has real step-dependent discovery, "better planning" cannot collapse it into a shallow one-shot pipeline; the scheduler must budget for iterative loading and intermediate state updates.
+Practical consequence: a scheduler chooses among another dependent round, speculative inspection, a lower-branching pointer layer, and reopening. Insufficient capacity across a frozen cut cannot be repaired by improving only the components on either side.
 
 ### Tradeoff and reliability theorems
 
-Target statement shape: reducing call count pushes burden onto prompt width or onto more lossy intermediate summaries, while increasing chain depth compounds error and omission risk. So decomposition should be analyzable as an explicit cost/reliability frontier rather than a vague engineering heuristic.
+Target statement shape: convex within-call cost and interface cost determine an optimal independent-work chunk size. Measured segment success and verifier cost determine an optimal verification interval. Repeated derivation and artifact build cost determine when reasoning should be materialized.
 
-Practical consequence: there is no free decomposition. Short pipelines need broad context windows or stronger compression artifacts; long pipelines need verification stages, redundancy, or local re-checks. In practice this means planner designs should expose the cost/reliability trade explicitly and insert verifier passes where the chain would otherwise accumulate unbounded drift.
+Practical consequence: planner designs should expose measurable costs and use crossover rules rather than treating more decomposition, more retention, or more verification as unconditionally better.
 
 ### Archive readability toy model
 
