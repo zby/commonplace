@@ -17,7 +17,7 @@ source_notes:
   - kb/notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md
   - kb/notes/theory-and-methodology-form-a-two-layer-execution-system.md
   - kb/notes/llm-executed-methodologies-are-metacircular-interpreters.md
-  - kb/notes/a-retained-operative-path-keeps-improvement-machinery-open-to-revision.md
+  - kb/notes/a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md
   - kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md
   - kb/notes/evidence/six-commonplace-paths-establish-broad-addressability-not-completeness.md
   - kb/reference/commonplace-declared-frame.md
@@ -69,7 +69,7 @@ The same distinction applies to revision. A maintainer and a writable repository
 | **Operative installation** | A good proposal or saved rationale that never reaches a consumer with behavioral force. |
 | **Continuity across successors** | A revision that leaves its artifacts inspectable but disables the determination, admission, installation, or later-use path needed for another operative change. |
 
-Together, these obligations turn "a human can edit anything" into an authority-path-relative, testable claim about support.
+Together, these obligations turn "a human can edit anything" into an authority-path-relative, testable claim about support. They describe the system-level affordance; the narrower [repeatable-path test](../notes/a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md) follows representation, determination, admission, installation, dependence, and continuity for one redesign class.
 
 These are logical obligations, not required components. A proposal-selection path can compare an explicit candidate with the incumbent and reject it. A direct update may instead rely on a warranted evidence-to-successor rule. The general affordance does not require one search algorithm, evaluator, or design lifecycle for every change.
 

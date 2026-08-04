@@ -98,7 +98,7 @@ Relevant Notes:
 - [Behavioral authority](../definitions/behavioral-authority.md) — defined-in: supplies the consumer, channel, and force record whose applicability boundary the audit exposes
 - [Axes of artifact analysis](../axes-of-artifact-analysis.md) — grounds: locates authority alongside substrate, representational form, and lineage
 - [A consumption channel delivers force without the history that earned it](../a-consumption-channel-delivers-force-without-the-history-that.md) — grounds: explains why live force does not preserve admission legitimacy
-- [A repeatable operative path keeps a redesign class open to revision](../a-retained-operative-path-keeps-improvement-machinery-open-to-revision.md) — extends: supplies the continuity test exercised by the validator and lifecycle cases
+- [A repeatable operative path keeps a redesign class open to revision](../a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md) — extends: supplies the continuity test exercised by the validator and lifecycle cases
 - [Six reported self-improvement paths expose bounded redesign surfaces within supplied methods](./six-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md) — contrasts: applies the same path-relative discipline to six external systems whose research teams remain outside the reported loops
 - [Commonplace as a reflective self-improving system](../../reference/commonplace-as-a-reflective-system.md) — see-also: classifies the narrower tag-README episode under the declared human-inclusive frame
 - [Revise the behavioral-authority decomposition](../../reference/proposals/revise-behavioral-authority-decomposition.md) — see-also: owns the unresolved choice between applicability as a field or a required qualifier
