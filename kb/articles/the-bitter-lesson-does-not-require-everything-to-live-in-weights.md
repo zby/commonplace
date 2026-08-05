@@ -28,7 +28,7 @@ source_notes:
 
 Imagine two otherwise identical agents with different system prompts. An engineer wrote the first prompt directly. An optimizer produced the second: it generated thousands of variants, evaluated them on held-out tasks, and kept the best. Both prompts are natural-language text. They have the same representational form but different production methods.
 
-Now reverse the example. Two systems use the same parameterized controller architecture but different dense coefficient vectors. An expert sets one vector directly; gradient descent learns the other from data. Here too, the representational form is the same but the production method differs. Grouping the two prompts together and the two controllers together classifies them by representational form, not by how they were produced.
+Now reverse the example. Two systems use the same parameterized controller architecture but different dense coefficient vectors. An expert sets one vector directly; gradient descent learns the other from data. Here too, the representational form is the same but the production method differs. Grouping the prompts together and the controllers together classifies both pairs by representational form rather than production method.
 
 Richard Sutton's [2019 essay](http://www.incompleteideas.net/IncIdeas/BitterLesson.html) argues that methods built around human knowledge repeatedly lose to general methods that exploit increasing computation through search and learning. That historical claim is a serious challenge to directly specified prompts, skill libraries, agent harnesses, and knowledge bases.
 
@@ -38,7 +38,7 @@ Representation still matters because it changes the optimization problem. A syst
 
 ## Two axes, not one
 
-Across chess, Go, speech recognition, and computer vision, Sutton's pattern is that directly encoded domain knowledge helped, then plateaued as search and learning exploited more computation.
+Across chess, Go, speech recognition, and computer vision, Sutton describes a pattern: directly encoded domain knowledge helped, then plateaued as search and learning exploited more computation.
 
 The first axis is how content is produced or revised. Designers can specify it directly, or a search or learning procedure can generate and select changes using evidence and computation. Classify each component and update separately: an optimizer may select a prompt revision while designers still specify the surrounding schema, evaluator, candidate generator, and acceptance rule.
 
@@ -53,7 +53,7 @@ The axes interact: representational form changes search, credit assignment, depe
 
 ## What this proves—and what it does not
 
-The lower-right cell is already populated in bounded settings. [FunSearch](https://www.nature.com/articles/s41586-023-06924-6) generates program functions with a pretrained language model, evaluates them, and retains successful programs for further search. [AlphaDev](https://www.nature.com/articles/s41586-023-06004-9) used reinforcement learning and tree search to discover assembly sorting routines later incorporated into LLVM's standard C++ library. Together they provide concrete bounded instances of computationally selected localized artifacts.
+Existing systems already populate the lower-right cell in bounded settings. [FunSearch](https://www.nature.com/articles/s41586-023-06924-6) generates program functions with a pretrained language model, evaluates them, and retains successful programs for further search. [AlphaDev](https://www.nature.com/articles/s41586-023-06004-9) used reinforcement learning and tree search to discover assembly sorting routines later incorporated into LLVM's standard C++ library. Together they provide concrete bounded instances of computationally selected localized artifacts.
 
 That settles only the categorical point: search-selected behavior-shaping content need not live in weights. These examples do not show that artifact search is economical, that its evaluators match deployment, or that retained artifacts generalize. Localized domain structure still faces Sutton's scaling test; human authorship does not exempt it from search and learning. The proposal is to make these artifacts learning targets, not protect them from learning.
 
@@ -65,11 +65,11 @@ Within a fixed differentiable computation graph, data path, and objective, backp
 
 A large artifact system has no comparable default. Imagine an agent deployment governed by 5,000 instructions, tests, schemas, tool definitions, and memory items. A failed release does not identify whether the cause was a retrieval rule, an outdated instruction, a bad tool contract, a missing test, or an interaction among them. Asking a model to "reflect and improve the repository" delegates the diagnosis; it does not solve credit assignment.
 
-Artifact systems have partial substitutes. Explicit dependency links can limit which artifacts need rechecking. Recorded execution traces preserve evidence about where a failure arose. Tests and validators can reject some bad candidates. [Localized retention helps most](../notes/localized-retention-pays-where-change-is-sparse-in-a-matching.md) when an update changes a few well-matched units and affects few others. The results examined here do not show these mechanisms combining into a general way to update heterogeneous artifacts.
+Artifact systems have partial substitutes. Explicit dependency links can limit which artifacts need rechecking. Recorded execution traces preserve evidence about where a failure arose. Tests and validators can reject some bad candidates. [Localized retention helps most](../notes/localized-retention-pays-where-change-is-sparse-in-a-matching.md) when an update changes a few well-matched units and affects few others. The results examined here do not show that these mechanisms combine into a general method for updating heterogeneous artifacts.
 
 [Artifact learners still operate inside a decomposition chosen by designers](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md): artifact types, routing, mutation operators, evaluators, and schedules may all remain fixed. Success shows that the whole arrangement worked in the tested setting, not that these choices were necessary or better than excluded alternatives. Fixedness is not itself a defect; consequential fixed choices need independent justification or a safe way to revise them. Decomposition is a difficult revision target because redrawing artifact boundaries also changes the units of credit assignment, validation, and rollback.
 
-This asymmetry can make parametric learning look synonymous with learning. It is an engineering gap, not a definition.
+This asymmetry can make parametric learning look synonymous with learning. But that asymmetry is an engineering gap, not a reason to define learning as parametric.
 
 ## What current systems learn—and leave fixed
 
@@ -81,7 +81,7 @@ Three recent systems already learn natural-language or symbolic artifacts inside
 
 [Co-Harness](../sources/co-harness-co-evolving-harness-and-model-weights.ingest.md) makes the mixture explicit. Its harness loop repairs prompts, tools, skills, middleware, and memory from failed trajectories. The repaired harness generates verified trajectories for supervised fine-tuning; the updated model then exposes the next harness bottlenecks. The design aims to move some behavior into weights while keeping the harness independently revisable. Its dual-loop evidence is limited to three 30-problem competition-math sets. A separate 200-hour study covers harness evolution without weight updates. No matched ablation isolates the migration, so the gains cannot yet be assigned to coevolution rather than additional fine-tuning or harness search alone.
 
-The clearest comparison is how each system accepts an update and what designers still supply:
+The systems differ most clearly in how they accept updates and what designers still supply:
 
 | System | How updates are accepted | Important structure left directly specified |
 |---|---|---|
