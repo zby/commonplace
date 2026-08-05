@@ -43,11 +43,11 @@ source_notes:
 
 > **TL;DR.** Improvements compound when their benefits feed into further improvements. One such link is local evidence; repeated links establish a compounding pathway.
 >
-> Compounding can occur without reflection, and reflection alone does not produce it. Reflection's proposed advantage is control: it exposes the theories and machinery behind improvement to revision, including how the system defines evidence, problems, and possible changes. Each episode still needs an objective and comparison rule that the candidate cannot change. Commonplace tests whether retained natural-language theory can provide this control across heterogeneous changes without retraining model weights. It can install and reuse revisions, but has not shown compounding through its theory layer.
+> Compounding can occur without reflection, and reflection alone does not produce it. But reflection can give a system more control over improvement by making its underlying theories and machinery revisable, including what counts as evidence, what counts as a problem, and which changes it can consider. Each candidate must still be judged against an objective and comparison rule that it cannot change. Commonplace tests whether retained natural-language theory can provide this control across heterogeneous changes without retraining model weights. It can install and reuse revisions, but has not shown compounding through its theory layer.
 
 ## Compounding is the payoff
 
-Suppose an agent maintains a deployment policy that its runtime loads. A deployment fails on a Tuesday because a credential expired. The agent mistakes the date for the cause and installs “Never deploy on Tuesdays”; later runs obey. The change is objective-directed and operative, but wrong. Calling the process self-improving describes its objective, not the outcome of every update.
+Suppose an agent maintains a deployment policy. A deployment fails on a Tuesday because a credential expired. The agent mistakes the date for the cause and installs “Never deploy on Tuesdays”; later runs obey. The example shows that [*self-improving*](../notes/definitions/self-improving-system.md) describes the process's objective, not the result of every update: the agent changes its own policy in pursuit of improvement but installs a bad rule.
 
 A correct policy that reduced failures would be a retained gain. If the system instead installed a causal-evidence check and later used it to diagnose another failure and install a better policy, the second improvement would depend on the earlier check. This is local evidence of *compounding*: an improvement's benefit helped produce a later improvement. A pathway requires this feedback to recur, but its effect need not be exponential or indefinite.
 
