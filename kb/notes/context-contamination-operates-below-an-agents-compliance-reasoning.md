@@ -2,7 +2,7 @@
 description: "A controlled test found fine-grained stance drift despite explicit detection and refusal; exclusion guarantees non-exposure, while instruction-level mitigation remains an empirical question"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [llm-interpretation-errors, context-engineering]
+tags: [llm-reliability, context-engineering]
 ---
 
 # Context contamination operates below an agent's compliance reasoning

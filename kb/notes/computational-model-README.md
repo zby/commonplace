@@ -38,8 +38,9 @@ What kind of "programs" LLM instructions are, and what programming-language conc
 
 ## Error Correction & Reliability
 
-Dual-tagged with [LLM interpretation errors](./llm-interpretation-errors-README.md), which provides the broader error theory; these claims are about the scheduling architecture.
+Dual-tagged with [LLM reliability](./llm-reliability-README.md), which provides the broader error theory; these claims are about the scheduling architecture.
 
+- [LLM output deviation has three sources with non-substitutable remedies](./llm-output-deviation-has-three-sources-with-non-substitutable.md) — the deviation taxonomy the claims below rest on: spec, interpreter, and sampling process are different objects, so their remedies cannot stand in for each other
 - [scheduler-llm-separation-exploits-an-error-correction-asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — symbolic operations are error-correctable through redundancy while LLM bookkeeping compounds errors silently
 - [specification-level separation recovers scoping before it recovers error correction](./specification-level-separation-recovers-scoping-before-it-recovers.md) — an intermediate regime where OpenProse-like DSLs recover frame isolation without hard-oracle bookkeeping
 
@@ -49,7 +50,7 @@ Dual-tagged with [LLM interpretation errors](./llm-interpretation-errors-README.
 
 ## Related Tags
 
-- [llm-interpretation-errors](./llm-interpretation-errors-README.md) — error correction theory, oracle hardening, and reliability dimensions; explains *why* the scheduling architecture works
+- [llm-reliability](./llm-reliability-README.md) — error correction theory, oracle hardening, and reliability dimensions; explains *why* the scheduling architecture works
 - [tool-loop](./tool-loop-README.md) — the loop-exposure and hidden-scheduler cluster, including the observability failures of framework-owned loops
 - [learning-theory](./learning-theory-README.md) — how systems learn through constraining, codification, and source-derived reshaping; the computational model explains *what kind of programs* these mechanisms operate on
 - [tags](./tags-README.md) — practical architecture applying these computational properties; frontloading and indirection cost are PL concepts applied to KB instructions

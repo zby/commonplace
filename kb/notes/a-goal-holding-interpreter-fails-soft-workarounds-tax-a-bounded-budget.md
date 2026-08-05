@@ -2,7 +2,7 @@
 description: "A procedure compiles its goal away, so a blocked step fails loud and hard; an interpreter holds the goal and re-routes, so failures are absorbed as a per-encounter tax on bounded capacity — silent, accumulating, and softly saturating"
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, llm-interpretation-errors]
+tags: [learning-theory, llm-reliability]
 ---
 
 # A goal-holding interpreter fails soft, and its workarounds tax a bounded budget
@@ -11,7 +11,7 @@ A procedure is a goal compiled away: the artifact holds one path, the end is no 
 
 ## One property, two faces
 
-The robustness is not a separate mechanism from the interpreted layer's characteristic error. [Underspecification](./llm-interpretation-errors-README.md) — the interpreter's freedom to choose among readings — is the deviation source [the error-correction asymmetry charges against semantic work](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md), and it is *the same property* that supplies path multiplicity when a route is blocked. Interpretive freedom has two faces: deviation from intent, and resilience under partial breakage. Codification's trade restates itself accordingly: removing the freedom buys exactness *and loud failure* at the price of brittleness; keeping it buys survival at the price of silence.
+The robustness is not a separate mechanism from the interpreted layer's characteristic error. [Underspecification](./llm-output-deviation-has-three-sources-with-non-substitutable.md) — the interpreter's freedom to choose among readings — is the deviation source [the error-correction asymmetry charges against semantic work](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md), and it is *the same property* that supplies path multiplicity when a route is blocked. Interpretive freedom has two faces: deviation from intent, and resilience under partial breakage. Codification's trade restates itself accordingly: removing the freedom buys exactness *and loud failure* at the price of brittleness; keeping it buys survival at the price of silence.
 
 ## The tax and the ceiling
 

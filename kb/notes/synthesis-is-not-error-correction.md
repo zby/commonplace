@@ -2,7 +2,7 @@
 description: Synthesis propagates errors by merging all agent outputs; voting corrects errors by discarding minorities — Kim et al.'s 17.2× amplification is a synthesis failure, not evidence against multi-agent coordination
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [llm-interpretation-errors]
+tags: [llm-reliability]
 ---
 
 # Synthesis is not error correction

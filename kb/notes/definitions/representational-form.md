@@ -20,7 +20,7 @@ Form sets the default inspection method: read natural-language content, test or 
 
 ## Derivation
 
-Two axes generate the categories. **Assigned consequences** — does a defined consumer fix what the artifact does, or is it reinterpreted on each consumption? A formal semantics is sufficient but not necessary: most programming languages have none, and still sit on this side because an implementation adjudicates, so two consumers disagreeing means one of them is wrong. Natural language has no such adjudicator — two readings can both be reasonable — which is [underspecification](../llm-interpretation-errors-README.md), not a defect of any particular text. **Localization** — is there an identifiable unit carrying the content, or is it spread across numerical state with no addressable part?
+Two axes generate the categories. **Assigned consequences** — does a defined consumer fix what the artifact does, or is it reinterpreted on each consumption? A formal semantics is sufficient but not necessary: most programming languages have none, and still sit on this side because an implementation adjudicates, so two consumers disagreeing means one of them is wrong. Natural language has no such adjudicator — two readings can both be reasonable — which is [underspecification](../agentic-systems-interpret-underspecified-instructions.md), not a defect of any particular text. **Localization** — is there an identifiable unit carrying the content, or is it spread across numerical state with no addressable part?
 
 | | localized | non-localized |
 |---|---|---|

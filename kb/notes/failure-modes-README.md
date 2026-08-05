@@ -16,5 +16,5 @@ Failure-mode notes name recurring ways an agent-operated KB can fail despite hav
 
 ## Related Tags
 
-- [LLM interpretation errors](./llm-interpretation-errors-README.md) - adjacent error taxonomy for failures in how models interpret instructions and evidence
+- [LLM reliability](./llm-reliability-README.md) - adjacent area: the deviation taxonomy and correction machinery for failures in how models interpret instructions and evidence
 - [Evaluation](./evaluation-README.md) - methods for detecting whether failures are real and whether interventions improve behavior

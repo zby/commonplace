@@ -2,7 +2,7 @@
 description: Controlled prompt variation either decorrelates checks or measures brittleness under fixed task semantics; Deutsch's variation test instead changes the explanation to test mechanism and explanatory-reach
 type: kb/types/note.md
 traits: [has-external-sources]
-tags: [evaluation, llm-interpretation-errors, learning-theory]
+tags: [evaluation, llm-reliability, learning-theory]
 ---
 
 # Systematic prompt variation serves verification and diagnosis, not explanatory-reach testing

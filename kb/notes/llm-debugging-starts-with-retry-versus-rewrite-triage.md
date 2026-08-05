@@ -2,7 +2,7 @@
 description: "Uses execution-versus-interpretation failure to choose the first debugging move: retry a bad execution of a sound reading, or rewrite a specification that reliably induces the wrong reading"
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, computational-model, llm-interpretation-errors]
+tags: [learning-theory, computational-model, llm-reliability]
 ---
 
 # LLM debugging starts with retry-versus-rewrite triage
@@ -26,4 +26,4 @@ Relevant Notes:
 
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the two-phenomena model that motivates the triage
 - [llm-code-boundaries-are-natural-checkpoints](./llm-code-boundaries-are-natural-checkpoints.md) — related: checkpoints are where you bisect to decide which side of the crossing the failure came from
-- [interpretation-errors-are-failures-of-the-interpreter](./interpretation-errors-are-failures-of-the-interpreter.md) — bounded by: real LLMs also add interpreter failures beyond the two phenomena, which this triage does not cover
+- [out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — bounded by: real LLMs also add interpreter failures beyond the two phenomena, which this triage does not cover

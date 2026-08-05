@@ -3,7 +3,7 @@ description: "Curated head for the learning-theory tag — how systems learn, ve
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: learning-theory
-covered_by: [deploy-time-learning, constraining, discovery, artifact-analysis, agent-memory, llm-interpretation-errors]
+covered_by: [deploy-time-learning, constraining, discovery, artifact-analysis, agent-memory, llm-reliability]
 ---
 
 # Learning theory
@@ -21,7 +21,7 @@ Every note carrying `learning-theory` also carries at least one of these child t
 - [discovery](./discovery-README.md) — positing a general concept and recognizing particulars as its instances; explanatory-reach as what it produces
 - [artifact-analysis](./artifact-analysis-README.md) — the four-field vocabulary (substrate, form, lineage, authority) for retained behavior-shaping artifacts
 - [agent-memory](./agent-memory-README.md) — memory architecture: spaces, contamination, policy learnability, and the crosscutting decomposition
-- [llm-interpretation-errors](./llm-interpretation-errors-README.md) — oracle theory, error correction, and reliability; the error-theory area applies verification concepts to LLM interpretation failures
+- [llm-reliability](./llm-reliability-README.md) — oracle theory, error correction, and the deviation taxonomy; the area applies verification concepts to LLM output deviations
 
 ## Start here
 

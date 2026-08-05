@@ -1,21 +1,23 @@
 ---
-description: Three sources of deviation between intended and actual LLM output — prompt underspecification, execution indeterminism, and interpreter failure — plus oracle theory, error correction, and architectural responses for managing each
+description: Why LLM output deviates from intent — underspecification, interpreter failure, indeterminism — and the machinery for detecting and correcting it, from oracle theory and error correction to architectural separation
 type: kb/types/tag-readme.md
 index_source: tag
-index_key: llm-interpretation-errors
+index_key: llm-reliability
 ---
 
-# LLM interpretation errors
+# LLM reliability
 
-LLM output deviates from what the user intended for three distinct reasons, each a property of a different part of the system and each requiring different remedies:
+LLM output deviates from what the user intended for three distinct reasons — underspecification of the spec, error by the interpreter, and indeterminism in sampling — each a property of a different part of the system and each needing a different remedy. This area covers that taxonomy, the detection and correction machinery (oracles, voting, verification), and architectural responses (separation, bounded context) for managing all three.
 
-- **[Underspecification](./agentic-systems-interpret-underspecified-instructions.md)** — the prompt admits multiple valid interpretations. A property of the specification language. Even a perfect interpreter faces this. Remedy: narrow the spec.
-- **[Indeterminism](./execution-indeterminism-is-a-property-of-the-sampling-process.md)** — the same prompt produces different outputs across runs. A property of the sampling process. Theoretically eliminable. Remedy: sampling control.
-- **[Interpretation error](./interpretation-errors-are-failures-of-the-interpreter.md)** — the LLM's output distribution is biased away from the valid space (for a theoretical deterministic LLM: simply the wrong output). Remedy: error detection and correction.
+## The Taxonomy
 
-[Ma et al.'s prompt stability study](https://arxiv.org/pdf/2509.13680) empirically separates all three: temperature+sampling measures indeterminism within each prompt variant, cross-variant comparison measures underspecification, and systematic degradation under emotional prompts reveals bias. Performance and stability are decoupled (Spearman rho = -0.433), confirming these are independent phenomena.
+- [LLM output deviation has three sources with non-substitutable remedies](./llm-output-deviation-has-three-sources-with-non-substitutable.md) — the synthesis: why the three are properties of different objects, why prompt narrowing, error correction, and sampling control cannot stand in for each other, and how to tell the three apart empirically
+- [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — source 1: the spec admits multiple valid interpretations; a property of the specification language that even a perfect interpreter faces
+- [out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — source 2, interpreter failure: the output falls outside what the spec allows; a property of the interpreter, with the worked failure catalogue
+- [traditional-software-can-bracket-executor-conformance-llm-systems](./traditional-software-can-bracket-executor-conformance-llm-systems.md) — the foundation under the taxonomy: classical stacks can assume executor conformance and unique meaning, LLM systems can assume neither, so error analysis needs three questions where programming needed one
+- [execution-indeterminism-is-a-property-of-the-sampling-process](./execution-indeterminism-is-a-property-of-the-sampling-process.md) — source 3: the same prompt gives different outputs across runs; a property of the sampling process, theoretically eliminable
+- [llm-debugging-starts-with-retry-versus-rewrite-triage](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) — the operational move: which remedy to reach for first, for the two-source case
 
-Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspecification remedy) when the LLM is ignoring constraints it already has (interpretation error), or lowering temperature (indeterminism remedy) when the spec genuinely admits the unwanted output (underspecification). This area covers the taxonomy, the detection and correction machinery (oracles, voting, verification), and architectural responses (separation, bounded context) for managing all three.
 ## Error Correction Theory
 
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — the core theory: error correction is viable when oracles have discriminative power (TPR > FPR) and checks are decorrelated; amplification cost scales with 1/(TPR-FPR)²
@@ -53,5 +55,5 @@ Conflating the three leads to misdiagnosis — e.g. narrowing the spec (underspe
 
 ## Related Tags
 
-- [learning-theory](./learning-theory-README.md) — oracle and verification theory originated there; this area applies it specifically to LLM interpretation errors
+- [learning-theory](./learning-theory-README.md) — oracle and verification theory originated there; this area applies it specifically to LLM output deviations
 - [computational-model](./computational-model-README.md) — the scheduling architecture that separation notes describe; error correction explains *why* it works

@@ -33,4 +33,4 @@ Observability is about recovering signals that would otherwise stay hidden: exec
 - [KB maintenance](./kb-maintenance-README.md) — maintenance consumes the signals observability exposes
 - [Computational model](./computational-model-README.md) — runtime architecture determines which state transitions are inspectable
 - [Learning theory](./learning-theory-README.md) — soft signals, oracle strength, and inspectable artifacts explain what observability can reliably support
-- [LLM interpretation errors](./llm-interpretation-errors-README.md) — error correction and verification theory explain how visible signals can become actionable
+- [LLM reliability](./llm-reliability-README.md) — error correction and verification theory explain how visible signals can become actionable

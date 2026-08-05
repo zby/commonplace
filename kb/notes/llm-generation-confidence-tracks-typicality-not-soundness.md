@@ -2,7 +2,7 @@
 description: "An LLM's next-token confidence measures how typical a continuation is, not whether it's true or valid; the two are decoupled, so soundness can't be read off confidence and needs a separate check"
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, failure-modes, llm-interpretation-errors]
+tags: [learning-theory, failure-modes, llm-reliability]
 ---
 
 # An LLM's generation confidence tracks typicality, not soundness

@@ -3,7 +3,7 @@ description: "VAIR paper showing large reasoning models can solve math problems 
 source_snapshot: "an-enigma-of-artificial-reason-production-evaluation-gap-lrms.md"
 ingested: "2026-06-17"
 type: kb/sources/types/ingest-report.md
-domains: [evaluation, oracle-theory, reasoning, llm-interpretation-errors]
+domains: [evaluation, oracle-theory, reasoning, llm-reliability]
 ---
 
 # Ingest: An Enigma of Artificial Reason
@@ -15,7 +15,7 @@ From: https://arxiv.org/abs/2606.01462
 ## Classification
 
 Type: scientific-paper -- arXiv preprint with benchmark construction, model and human experiments, process-reward-model evaluation, representation probes, causal patching, and limitations.
-Domains: evaluation, oracle-theory, reasoning, llm-interpretation-errors
+Domains: evaluation, oracle-theory, reasoning, llm-reliability
 Author: NUS/MIT/SMART-affiliated authors; credibility comes from the concrete benchmark design, human comparison, and mechanistic analyses, but it remains preprint-tier evidence.
 
 ## Summary
