@@ -1,5 +1,5 @@
 ---
-description: Why LLM output deviates from intent — underspecification, interpretation error, indeterminism — and the machinery for detecting and correcting it, from oracle theory and error correction to architectural separation
+description: Why LLM output deviates from intent — underspecification, interpreter failure, indeterminism — and the machinery for detecting and correcting it, from oracle theory and error correction to architectural separation
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: llm-reliability
@@ -13,7 +13,8 @@ LLM output deviates from what the user intended for three distinct reasons — u
 
 - [LLM output deviation has three sources with non-substitutable remedies](./llm-output-deviation-has-three-sources-with-non-substitutable.md) — the synthesis: why the three are properties of different objects, why prompt narrowing, error correction, and sampling control cannot stand in for each other, and how to tell the three apart empirically
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — source 1: the spec admits multiple valid interpretations; a property of the specification language that even a perfect interpreter faces
-- [interpretation-errors-are-failures-of-the-interpreter](./interpretation-errors-are-failures-of-the-interpreter.md) — source 2: the output falls outside what the spec allows; a property of the interpreter, with the worked failure catalogue
+- [out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — source 2, interpreter failure: the output falls outside what the spec allows; a property of the interpreter, with the worked failure catalogue
+- [traditional-software-can-bracket-executor-conformance-llm-systems](./traditional-software-can-bracket-executor-conformance-llm-systems.md) — the foundation under the taxonomy: classical stacks can assume executor conformance and unique meaning, LLM systems can assume neither, so error analysis needs three questions where programming needed one
 - [execution-indeterminism-is-a-property-of-the-sampling-process](./execution-indeterminism-is-a-property-of-the-sampling-process.md) — source 3: the same prompt gives different outputs across runs; a property of the sampling process, theoretically eliminable
 - [llm-debugging-starts-with-retry-versus-rewrite-triage](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) — the operational move: which remedy to reach for first, for the two-source case
 

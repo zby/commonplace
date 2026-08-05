@@ -17,14 +17,14 @@ Indeterminism is **engineering noise** — variation in how a chosen interpretat
 
 Counterintuitively, indeterminism **obscures** the deeper issue of [underspecification](./agentic-systems-interpret-underspecified-instructions.md). Because outputs vary across runs, people attribute the variation to randomness — "it's stochastic" — and reach for familiar tools: temperature tuning, retries, sampling strategies. This framework avoids confronting the real difference from traditional programming: that the specification language doesn't have precise semantics.
 
-The remedy is **sampling control**: temperature adjustment, deterministic decoding, best-of-N selection. These address run-to-run variation but leave both [underspecification](./agentic-systems-interpret-underspecified-instructions.md) and [interpretation error](./interpretation-errors-are-failures-of-the-interpreter.md) untouched.
+The remedy is **sampling control**: temperature adjustment, deterministic decoding, best-of-N selection. These address run-to-run variation but leave both [underspecification](./agentic-systems-interpret-underspecified-instructions.md) and [interpreter failure](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) untouched.
 
 ---
 
 Relevant Notes:
 
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — elaborates: the full framework including how indeterminism and underspecification layer on each other; covers the deeper phenomenon (underspecification as a property of the specification language) that indeterminism obscures
-- [interpretation errors are failures of the interpreter not the spec](./interpretation-errors-are-failures-of-the-interpreter.md) — sibling: the third phenomenon, also unaddressed by sampling control
+- [out-of-spec output is a failure of the interpreter, not the spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — sibling: the third phenomenon, also unaddressed by sampling control
 - [LLM output deviation has three sources with non-substitutable remedies](./llm-output-deviation-has-three-sources-with-non-substitutable.md) — synthesis: the three-source taxonomy this note is part of, and why sampling control cannot stand in for the other remedies
 - [LLM reliability](./llm-reliability-README.md) — parent area: deviation sources plus the verification and correction machinery
 

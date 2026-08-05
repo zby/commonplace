@@ -10,7 +10,7 @@ tags: [llm-reliability, computational-model]
 When an LLM's output is not what the user wanted, the deviation has one of three causes, and each is a property of a different part of the system. Take three objects: the intended set `I` of outputs the user would accept, the valid set `V` of outputs the specification admits, and the output distribution `D` the interpreter produces from that specification.
 
 - **[Underspecification](./agentic-systems-interpret-underspecified-instructions.md)** — `V` is larger than `I`. The spec admits outputs the user did not want. A property of the specification language; a perfect, deterministic interpreter still faces it.
-- **[Interpretation error](./interpretation-errors-are-failures-of-the-interpreter.md)** — `D` puts mass outside `V`. The spec rules the output out and the interpreter produces it anyway. A property of the interpreter.
+- **[Interpreter failure](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md)** — `D` puts mass outside `V`. The spec rules the output out and the interpreter produces it anyway. A property of the interpreter.
 - **[Indeterminism](./execution-indeterminism-is-a-property-of-the-sampling-process.md)** — `D` is not concentrated on a point, so repeated draws differ. A property of the sampling process.
 
 The three claims are about three different objects, which is why the taxonomy is not a list of observed symptoms but a decomposition of the pipeline. Any system that runs `specification → interpreter → sampled execution` has these three loci, whether the interpreter is an LLM, a contractor working from a brief, or a compiler for a language with implementation-defined behavior. The symptom — "the output is wrong" — is identical across all three; the locus is not.
@@ -23,7 +23,7 @@ Each standard remedy acts on exactly one of the three objects, so it cannot repa
 
 **Error detection and correction** — validation, [oracles](./oracle-strength-spectrum.md), voting, guardrails, architectural separation — moves the realized output back inside `V`. It says nothing about whether `V` is close to `I`. An oracle can only reject a valid-but-unwanted output if the oracle itself encodes the missing intent, and at that point the spec narrowing has happened in the checker rather than the prompt; the work was not avoided, only relocated.
 
-**Sampling control** — temperature, deterministic decoding, best-of-N — concentrates `D`. It neither shrinks `V` nor moves mass inside it. At temperature 0 the interpreter still picks one point from a plural `V`, and a deterministic interpreter still makes interpretation errors; you get the same wrong output every time instead of a different one each run.
+**Sampling control** — temperature, deterministic decoding, best-of-N — concentrates `D`. It neither shrinks `V` nor moves mass inside it. At temperature 0 the interpreter still picks one point from a plural `V`, and a deterministic interpreter still produces out-of-`V` output; you get the same wrong output every time instead of a different one each run.
 
 So misdiagnosis is expensive in a specific way: the wrong remedy does not merely fail, it consumes the budget (context, latency, review attention) that the right remedy needs. Rewriting a prompt against an interpreter failure spends context to no effect; lowering temperature against underspecification removes the variation that was the only visible evidence that `V` was too wide.
 
@@ -55,7 +55,8 @@ The decomposition assumes `I` exists and is known to the user. When the intent i
 Relevant Notes:
 
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — grounds: the source framing for underspecification, and for the projection model that makes `V` an object rather than a metaphor
-- [interpretation errors are failures of the interpreter](./interpretation-errors-are-failures-of-the-interpreter.md) — grounds: the third source, with the worked catalogue of out-of-`V` failures
+- [out-of-spec output is a failure of the interpreter, not the spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — grounds: the third source, with the worked catalogue of out-of-`V` failures
+- [traditional software can bracket executor conformance; LLM systems cannot](./traditional-software-can-bracket-executor-conformance-llm-systems.md) — extends: why the analysis needs exactly these three questions — classical practice collapses to one only because executor conformance and singleton meaning can be assumed there
 - [execution indeterminism is a property of the sampling process](./execution-indeterminism-is-a-property-of-the-sampling-process.md) — grounds: the sampling-process source and why it obscures the other two
 - [llm-debugging-starts-with-retry-versus-rewrite-triage](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) — extends: turns the diagnostic signatures into a first debugging move, for the two-source case
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — mechanism: when the error-correction remedy actually works, and what it costs
