@@ -40,6 +40,7 @@ What kind of "programs" LLM instructions are, and what programming-language conc
 
 Dual-tagged with [LLM reliability](./llm-reliability-README.md), which provides the broader error theory; these claims are about the scheduling architecture.
 
+- [LLM output deviation has three sources with non-substitutable remedies](./llm-output-deviation-has-three-sources-with-non-substitutable.md) — the deviation taxonomy the claims below rest on: spec, interpreter, and sampling process are different objects, so their remedies cannot stand in for each other
 - [scheduler-llm-separation-exploits-an-error-correction-asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — symbolic operations are error-correctable through redundancy while LLM bookkeeping compounds errors silently
 - [specification-level separation recovers scoping before it recovers error correction](./specification-level-separation-recovers-scoping-before-it-recovers.md) — an intermediate regime where OpenProse-like DSLs recover frame isolation without hard-oracle bookkeeping
 
