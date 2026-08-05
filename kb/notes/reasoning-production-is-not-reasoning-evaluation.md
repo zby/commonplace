@@ -2,7 +2,7 @@
 description: "Review and critique systems need independent process-validity checks because a model can substitute answer reconstruction for reasoning evaluation"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [evaluation, llm-interpretation-errors]
+tags: [evaluation, llm-reliability]
 ---
 
 # Reasoning production is not reasoning evaluation

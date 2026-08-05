@@ -2,7 +2,7 @@
 description: Four elicitation strategies ordered by user expertise required, composable into review architectures with maintenance loops that prevent ossification
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
-tags: [llm-interpretation-errors, failure-modes, evaluation]
+tags: [llm-reliability, failure-modes, evaluation]
 ---
 
 # Elicitation requires maintained question-generation systems

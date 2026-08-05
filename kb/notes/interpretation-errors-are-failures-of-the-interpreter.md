@@ -2,7 +2,7 @@
 description: Real LLMs produce outputs that no valid interpretation of the spec allows — violating explicit constraints, hallucinating, failing at fully specified bookkeeping — a property of the interpreter itself, absent from the idealised two-phenomena model
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [llm-interpretation-errors]
+tags: [llm-reliability]
 ---
 
 # Interpretation errors are failures of the interpreter
@@ -33,7 +33,8 @@ Relevant Notes:
 
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the idealised two-phenomena model this note extends; covers underspecification and indeterminism in depth
 - [execution indeterminism is a property of the sampling process](./execution-indeterminism-is-a-property-of-the-sampling-process.md) — sibling: the second phenomenon, a property of the execution engine
-- [LLM interpretation errors](./llm-interpretation-errors-README.md) — parent area: the three-phenomena taxonomy this note is part of
+- [LLM output deviation has three sources with non-substitutable remedies](./llm-output-deviation-has-three-sources-with-non-substitutable.md) — synthesis: the three-source taxonomy this note is part of, and why only error detection and correction address this source
+- [LLM reliability](./llm-reliability-README.md) — parent area: deviation sources plus the verification and correction machinery
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — remedy: the general theory of error correction applicable to interpretation errors
 - [scheduler-llm-separation-exploits-an-error-correction-asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — architectural remedy: moving error-prone bookkeeping to a reliable substrate
 - [Ma et al. (Sep 2025) — Prompt Stability in Code LLMs](https://arxiv.org/pdf/2509.13680) — evidenced-by: emotional prompt variation produces systematic performance degradation (bias) on functionally identical tasks

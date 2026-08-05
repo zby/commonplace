@@ -2,7 +2,7 @@
 description: "Uses execution-versus-interpretation failure to choose the first debugging move: retry a bad execution of a sound reading, or rewrite a specification that reliably induces the wrong reading"
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, computational-model, llm-interpretation-errors]
+tags: [learning-theory, computational-model, llm-reliability]
 ---
 
 # LLM debugging starts with retry-versus-rewrite triage

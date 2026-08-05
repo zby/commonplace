@@ -3,7 +3,7 @@ description: Argues that pairwise judging plus round-robin win rates is a better
 source_snapshot: kb/sources/even-if-you-set-aside-whether-citations-are-the-right-proxy-for.md
 ingested: "2026-03-23"
 type: kb/sources/types/ingest-report.md
-domains: [evaluation, context-engineering, llm-interpretation-errors]
+domains: [evaluation, context-engineering, llm-reliability]
 ---
 
 # Ingest: Post by @koylanai
@@ -14,7 +14,7 @@ From: https://x.com/koylanai/status/2035982137539559616
 
 ## Classification
 Type: conceptual-essay — a short argument generalizing a pattern from one paper into a broader evaluation framing for context engineering, not a report of a deployed system or an empirical study on its own.
-Domains: evaluation, context-engineering, llm-interpretation-errors
+Domains: evaluation, context-engineering, llm-reliability
 Author: Muratcan Koylan (`@koylanai`) is already a known voice in this KB through [Agent Skills for Context Engineering](../agent-memory-systems/reviews/agent-skills-for-context-engineering.md), so this reads as a practitioner extending an established line of thought on evaluation design for agents.
 
 ## Summary

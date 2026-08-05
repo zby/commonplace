@@ -2,7 +2,7 @@
 description: "Conjecture separating available model capability from selection: qualities weakly distinguished by the actual acceptance oracle lose to strongly verified objectives"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [learning-theory, llm-interpretation-errors, evaluation, self-improving-systems]
+tags: [learning-theory, llm-reliability, evaluation, self-improving-systems]
 ---
 
 # Weakly discriminated qualities tend to be underselected

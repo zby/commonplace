@@ -2,7 +2,7 @@
 description: "The spec's valid set, the interpreter's output distribution, and the sampling process are three different objects, so prompt narrowing, error correction, and sampling control each repair one failure and leave the others untouched"
 type: kb/types/note.md
 traits: [title-as-claim, synthesis, has-external-sources]
-tags: [llm-interpretation-errors, computational-model]
+tags: [llm-reliability, computational-model]
 ---
 
 # LLM output deviation has three sources with non-substitutable remedies

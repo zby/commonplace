@@ -1,11 +1,11 @@
 ---
-description: Three sources of deviation between intended and actual LLM output — prompt underspecification, execution indeterminism, and interpreter failure — plus oracle theory, error correction, and architectural responses for managing each
+description: Why LLM output deviates from intent — underspecification, interpretation error, indeterminism — and the machinery for detecting and correcting it, from oracle theory and error correction to architectural separation
 type: kb/types/tag-readme.md
 index_source: tag
-index_key: llm-interpretation-errors
+index_key: llm-reliability
 ---
 
-# LLM interpretation errors
+# LLM reliability
 
 LLM output deviates from what the user intended for three distinct reasons — underspecification of the spec, error by the interpreter, and indeterminism in sampling — each a property of a different part of the system and each needing a different remedy. This area covers that taxonomy, the detection and correction machinery (oracles, voting, verification), and architectural responses (separation, bounded context) for managing all three.
 
@@ -54,5 +54,5 @@ LLM output deviates from what the user intended for three distinct reasons — u
 
 ## Related Tags
 
-- [learning-theory](./learning-theory-README.md) — oracle and verification theory originated there; this area applies it specifically to LLM interpretation errors
+- [learning-theory](./learning-theory-README.md) — oracle and verification theory originated there; this area applies it specifically to LLM output deviations
 - [computational-model](./computational-model-README.md) — the scheduling architecture that separation notes describe; error correction explains *why* it works

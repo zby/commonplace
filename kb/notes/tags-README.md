@@ -30,7 +30,7 @@ For current-state documentation about the live Commonplace system rather than tr
 - [Failure modes](./failure-modes-README.md) — characteristic ways knowledge can exist without changing agent behavior
 - [Links](./links-README.md) — link semantics, navigation behavior, and link-management methodology
 - [Type system](./type-system-README.md) — why documents have types, what roles they serve, how structured writing improves quality
-- [LLM interpretation errors](./llm-interpretation-errors-README.md) — error taxonomy, oracle theory, error correction, and architectural responses to imperfect LLM interpretation
+- [LLM reliability](./llm-reliability-README.md) — why LLM output deviates from intent (underspecification, interpretation error, indeterminism) and the machinery for catching and correcting it: oracle theory, error correction, architectural separation
 - [Observability](./observability-README.md) — making hidden state, hidden failure, and quality drift visible enough for operators and maintenance loops to act on
 - [KB maintenance](./kb-maintenance-README.md) — operations, audits, and maintenance methodology
 - [Related systems](../agent-memory-systems/README.md) — external systems tracked for comparison and convergence signals

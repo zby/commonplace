@@ -2,7 +2,7 @@
 description: "A human writer stalls at the constraint they can't satisfy; an LLM instead ships fluent output that looks solved but silently drops it — hiding the error, so the check falls on the reader"
 type: kb/types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, llm-interpretation-errors]
+tags: [learning-theory, llm-reliability]
 ---
 
 # LLM generation relaxes a goal it can't satisfy and hides the constraint a human writer stalls on

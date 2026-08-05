@@ -2,7 +2,7 @@
 description: When an agent silently resolves unacknowledged material ambiguity in a spec, final success hides that the contract failed to determine the path — an extension of the tool-fallback observability problem
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
-tags: [learning-theory, computational-model, observability, llm-interpretation-errors]
+tags: [learning-theory, computational-model, observability, llm-reliability]
 ---
 
 # Silent disambiguation is the semantic analogue of tool fallback

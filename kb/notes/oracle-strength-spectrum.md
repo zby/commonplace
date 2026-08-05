@@ -2,7 +2,7 @@
 description: Exploratory framework — oracle strength, how cheaply correctness can be verified, as the gradient underlying the exact-spec/proxy-theory distinction, with an oracle-hardening pipeline
 type: kb/types/note.md
 traits: []
-tags: [llm-interpretation-errors]
+tags: [llm-reliability]
 ---
 
 # Oracle strength spectrum

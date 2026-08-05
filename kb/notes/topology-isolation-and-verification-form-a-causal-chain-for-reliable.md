@@ -1,7 +1,7 @@
 ---
 description: Topology, isolation, and verification may form a strict dependency chain rather than independent design choices — tested against the simpler account that good decomposition implies the other two
 type: kb/types/note.md
-tags: [computational-model, llm-interpretation-errors]
+tags: [computational-model, llm-reliability]
 ---
 
 # Topology, isolation, and verification form a causal chain for reliable agent scaling

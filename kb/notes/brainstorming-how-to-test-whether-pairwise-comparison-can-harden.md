@@ -2,7 +2,7 @@
 description: Staged test plan for whether pairwise comparison improves soft-oracle properties (discrimination, stability, calibration) in LLM evaluation loops
 type: kb/types/note.md
 traits: [has-external-sources]
-tags: [evaluation, llm-interpretation-errors, context-engineering]
+tags: [evaluation, llm-reliability, context-engineering]
 ---
 
 # Brainstorming: how to test whether pairwise comparison can harden soft oracles
