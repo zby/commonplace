@@ -1,62 +1,86 @@
-# Exo can remember everything. What should become a lesson?
+# Exo can rewrite itself. Can one improvement help produce the next?
 
-Exo has built an unusually strong substrate for learning. It keeps the full record of what happened, lets the agent save facts and skills, and can preserve successful changes as tools, tests, prompts, or code. ExoWorker even supplies a simple rule of thumb: lasting fact → memory, reusable playbook → skill, repeated helper → tool.
+Exo has built an unusually strong substrate for reflective self-improvement. Its source tree is an inspectable representation of the system that determines its behavior. The agent can edit the mutable executor and policy, rebuild, restart, and preserve the record of failed attempts outside the state it rewinds. It can also retain facts, skills, tools, prompts, tests, and code.
 
-That makes the next question unavoidable:
+Those capabilities make self-change possible, reversible, and reusable. They do not yet show that Exo's improvements **compound**.
 
-> Which experiences are worth turning into lessons?
-
-Retain too little and the model keeps re-deriving the same conclusions from code and history. Retain too much and the system builds a second, noisier history — full of plausible summaries that consume context, grow stale, and acquire authority they never earned.
-
-The missing layer is not another memory store. It is an explicit, improvable policy for what deserves to be kept, in what form, with what authority, and for how long. We call that a theory of promotion: what gets promoted from the record into a lesson.
+An improvement compounds when its benefit helps produce a later improvement. A better evaluator might reject a bad rewrite. A better retrieval rule might surface the evidence needed for a later diagnosis. A better promotion policy might prevent the next useful lesson from becoming an inert memory. One such dependency is local evidence; repeated dependencies establish a compounding pathway.
 
 ## A concrete case
 
-Suppose Exo hits the same integration failure twice and installs a managed tool that prevents it. The tool preserves exact behavior. The registry records its source, pinned to an exact commit. The event log preserves the failures and the installation.
+Suppose Exo hits the same integration failure twice and installs a managed tool that prevents it. The tool preserves exact behavior. The registry records its source at an exact commit. The event log preserves the failures and the installation.
 
-None of those artifacts decides what the future should inherit from the episode:
+That may be a real retained gain. But if the next improvement remains just as hard to notice, diagnose, judge, and install, Exo has accumulated another useful capability without improving how it improves.
 
-- Was this a provider-specific workaround or a general integration rule?
-- Should it apply whenever a similar error appears, or only under the original configuration?
-- Is the reusable result the example, a short claim, a playbook, a test, or the tool itself?
-- What change should make Exo reconsider or retire it?
+Now suppose Exo also retains the causal lesson behind the repair, its scope, and the evidence that would overturn it. A later provider failure triggers that lesson. Exo uses it to reject a superficial retry patch, identifies a shared failure mechanism, and installs a broader fix with less search or stronger evaluation. The later improvement depends on the earlier one. That is local evidence of compounding.
 
-A capable model can answer these questions just in time. But if the questions recur, the system pays again each time it selects the evidence and reconstructs the answer — and can produce a different answer each time.
+The distinction cannot be read from the first tool's test result. It appears only in the later improvement episode and needs a causal trace between the two.
 
-Nor is knowing enough. The model usually has the relevant background — rate limits, retry semantics, provider quirks — yet nothing in the moment may cue it to apply that knowledge; such activation failures are well documented. A retained lesson with an explicit trigger replaces that unreliable recall: the trigger fires on what the situation looks like and brings the lesson into context.
+## The opportunity: make the improvement process a revision surface
 
-## Sometimes the evidence cannot give the lesson back
+The separately linked ExoWorker branch already supplies a primitive promotion policy: keep lasting facts as memory, reusable playbooks as skills, and repeated helpers as tools. The open question is whether a more explicit and revisable policy would earn its cost.
 
-There is a harder case than expensive re-derivation. Suppose that tool caps concurrent requests at 12. That number could be a permanent safety ceiling, or temporary tuning for one provider's quota. The code is identical either way, and every past run looks the same either way. But when the provider raises its limits, the two readings demand opposite responses. If nobody recorded which was meant, no future model — however capable — can recover the intent from the evidence. It can only invent a plausible one.
+The proposal is not another memory store. It is to represent the machinery that turns experience into change:
 
-So retained lessons come in two kinds: **caches**, conclusions that could be re-derived but are kept because re-deriving is costly or unstable, and **commitments**, decisions the evidence can never give back. They need different maintenance rules: a stale cache can be discarded and rebuilt; a lost commitment is gone.
+- what the system treats as evidence and which problems it can notice;
+- how it searches for candidate changes;
+- which objective and comparison rule evaluate them;
+- what becomes an episode, lesson, skill, test, tool, prompt, or code change;
+- how much behavioral authority each retained result receives; and
+- what later evidence should revise, rescope, codify, supersede, or retire it.
 
-## The claim
+Reflection's advantage here is control, not guaranteed improvement. Explicit commitments can be named, criticized, and selectively revised. The policy that chooses lessons can itself become a lesson and later a revision target. But an addressable artifact that no later improvement retrieves and uses does not compound.
 
-> Write a lesson down when it will be needed again and re-deriving it costs more than keeping it current — or when it records a decision that nothing else can recover.
+## Three tests for an Exo improvement path
 
-And choose its form by the work it does:
+| Test | Questions |
+|---|---|
+| **Occurrence** | What Exo boundary, time horizon, and objective are in scope? Did relevant evidence change Exo's behavior-determining organization? Did later behavior use the change? |
+| **Revision surface** | Which prompts, tools, memories, tests, evaluators, policies, and relations could the path revise? Which did it revise, which stayed fixed, and could the same path revise its successor? |
+| **Compounding** | Did a later improvement measurably depend on the retained benefit? How were the episodes connected, and did the feedback recur? |
 
-> **episodes for evidence · natural language for reusable meaning · code for exact behavior**
+This separates three claims that are easy to blur. Exo can support self-improvement without every accepted change being beneficial. It can accumulate useful changes without making later improvement more productive. And it can expose a broad revision surface without discovering every omission in its own decomposition.
 
-Keep the episode when its detail is the value. Write a conclusion in natural language when a mechanism should recur, transfer, or stay open to criticism and revision. Codify it when the useful part can be stated and checked mechanically. Record adopted decisions, because the evidence cannot recover them.
+## The evaluation boundary must remain outside the candidate
 
-Do not write down one-off interpretations, cheap deductions, generic summaries, or conclusions likely to expire before reuse. Natural language is not the default destination for every trace. It is the form for conclusions the model can state and use but the system cannot yet turn into a test, schema, or program.
+Each improvement episode needs an objective and comparison rule fixed independently of the candidate being judged. A candidate cannot prove itself better by rewriting its own test or redefining success. Changing the objective, evaluator, scope, or stopping rule is a separate revision that needs separate authority.
+
+This is where Exo's current mechanical gates stop. Build success, tests, restart success, and logs can reject a broken change. They can still admit a change that makes the agent's judgment worse. A maintained natural-language theory can expose that gap and propose a behavioral canary; it cannot manufacture a trustworthy oracle for open-ended self-change.
 
 ## What we'd add
 
-Exo can already write lessons into memory and skills. The proposal is to make the selection policy itself explicit and improvable: a maintained theory of promotion, plus enough structure on each retained conclusion — its evidence, trigger, scope, and current status — that Exo can later criticize, rescope, supersede, retire, or codify it as the system changes.
+The minimum capability is smaller than adopting Commonplace:
 
-That proposal may lose. Exo's existing heuristics, raw episodes, tools, and capable models may reconstruct the right lesson cheaply enough. A maintained lesson store may instead become expensive, distracting, or confidently stale. Those outcomes would narrow or defeat the argument.
+1. Maintain an explicit, agent-editable theory of promotion and a map of the artifacts and relations that shape Exo's behavior.
+2. Preserve raw episodes while promoting only selected conclusions, procedures, checks, and code.
+3. Give retained conclusions enough identity to record their evidence, trigger, mechanism, scope, status, authority, and affected artifacts where those distinctions matter.
+4. Route them into later work and record whether they were retrieved, used, contradicted, revised, or ignored.
+5. Keep the evaluation contract fixed within an episode and revise it, when needed, through a separately judged episode.
+6. Measure whether retained benefits make later improvement cheaper, broader, more reliable, or less dependent on human judgment.
+7. Use those later outcomes to revise the promotion and revision theory itself.
+
+The representational rule remains simple:
+
+> **episodes for evidence · natural language for reusable meaning · code for exact behavior**
+
+Retain a natural-language conclusion when it is likely to recur and re-deriving it costs more than keeping it current, or when it records a decision the evidence cannot recover. Codify the part that can be stated and checked mechanically. Keep the episode because the conclusion may be wrong.
+
+## The proposal can lose
+
+The relevant baseline is Exo as it already exists: the same model, episodes, free-form memory, skills, tools, prompts, tests, and freedom to modify symbolic artifacts.
+
+The proposal loses if that baseline makes later improvements as cheaply, reliably, and broadly as the explicit layer after counting retrieval, context, review, staleness, maintenance, and human judgment. It also loses if retained theories are not activated, cannot be kept current, or merely give fluent rationales more authority.
+
+The decisive experiment therefore compares later improvement episodes with the relevant theory frozen, absent, or replaced by simpler memory. It measures the later revision—not the metric that accepted the earlier change—and traces direct use or actual reinvestment of saved resources.
 
 ## Think first, then verify it your way
 
-You have the pitch; form your own view before opening the supporting documents. Then use your own agents, tools, and preferred methods to verify or attack it. The supporting documents expose our reasoning and evidence; they deliberately do not prescribe a verification protocol:
+You have the pitch; form your own view before opening the supporting documents. Then use your own agents, tools, and preferred methods to verify or attack it:
 
-- [Detailed argument](./argument.md) — the promotion theory in full, the three retained forms, Exo-shaped cases, the minimal proposal, and claim limits
-- [Evidence and counterevidence](./evidence.md) — pinned Exo and ExoWorker facts, supporting theory, positive and adverse results, open gaps, and falsifiers
+- [Detailed argument](./argument.md) — Exo's present revision path, accumulation versus compounding, promotion economics, evaluation boundary, concrete cases, and minimal proposal
+- [Evidence and counterevidence](./evidence.md) — pinned Exo and ExoWorker facts, later-episode evidence, supporting theory, adverse results, open gaps, and falsifiers
 
-This pitch comes out of [Commonplace](https://github.com/zby/commonplace), a framework for agent-operated knowledge bases. Commonplace is both a theory and a working system: a body of claims about knowledge retention, entangled with the design choices that test them. The claims are meant to hold beyond the cases where they were developed — bringing them to Exo is exactly that test. As an implementation, Commonplace is only one candidate for the missing layer; the argument does not require adopting it. Exo's own memory, skills, event records, or another store entirely could implement the same capability.
+This pitch comes out of [Commonplace](https://github.com/zby/commonplace), a framework for agent-operated knowledge bases. Commonplace is itself testing whether retained natural-language theory can make heterogeneous revision more controllable and eventually compounding. It has installed and reused revisions, but it has not shown compounding through its theory layer. Exo is a sharper computational case of the same question. The proposal transfers the hypothesis, not Commonplace's Markdown, schemas, review system, or protected-boundary choices.
 
 ---
 
