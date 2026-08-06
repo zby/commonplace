@@ -7,23 +7,22 @@ tags: [foundations, self-improving-systems]
 
 # Improvements can accumulate without compounding
 
-Useful changes can persist, be reused, and build a growing stock without making later improvement any easier. That is **accumulation**: later operation depends on retained results, as tested more precisely by [cumulativity through the retained result](./accumulation-counts-dependence-through-the-retained-result.md). **Compounding** begins when earlier improvements also help produce later improvements.
+Useful changes can persist, be reused, and build a growing stock without making later improvement any easier. That is **accumulation**: later operation depends on retained results, as tested more precisely by [cumulativity through the retained result](./accumulation-counts-dependence-through-the-retained-result.md). **Compounding** adds feedback: the benefit of an earlier retained improvement helps produce another retained gain. A system that keeps each useful rule while every new rule remains equally difficult to discover accumulates without compounding.
 
-The help can be direct. Better retrieval can surface the right evidence sooner; a better evaluator can reject a bad revision; a better revision method can make a new artifact class editable. A validator that saves ten minutes on every later revision has already made later improvement cheaper. The path can also be indirect: a task-facing improvement may free time or compute that is then spent finding, testing, or refining better changes. If that external saving is unused or absorbed by another bottleneck, the task improvement remains useful, but the record does not show that its benefit fed back into further improvement.
-
-Compounding is therefore a reading of a pathway across episodes, not a label attached to one artifact. An earlier change contributes when its retained benefit reaches later improvement work and helps that work produce another retained gain.
+Compounding is therefore a claim about a pathway across episodes, not a label attached to one artifact.
 
 ## Feedback into later improvement is the distinction
 
-Accumulation asks whether later operation uses what earlier work retained. Compounding adds one causal question: **did that retained result help produce a later improvement?** The result may participate directly in diagnosis, evaluation, updating, or retention—including by reducing their cost—or it may free resources elsewhere that are demonstrably reinvested in those activities.
+Accumulation asks whether later operation uses what earlier work retained. Compounding adds one causal question: **did the benefit of that retained result help produce a later improvement?** The result and its benefit are distinct: a validator is a retained result; the time or errors it saves are benefits. Those benefits can reach later improvement in two ways:
 
-This broader reading matters. A task-facing improvement can contribute to compounding even if it never edits an evaluator or update rule. Fewer recurring failures may free maintainer attention; faster execution may release compute; clearer output may make later diagnosis more reliable. What matters is whether the benefit actually returns to the improvement process, not which architectural box the original change occupied.
+- **Direct contribution.** Later improvement work uses the retained result, whose benefit aids diagnosis, evaluation, updating, or retention and helps produce another retained gain. Better retrieval, a better evaluator, or a better revision method can contribute this way.
+- **Indirect contribution.** The retained result produces an operational benefit that frees time, compute, or judgment elsewhere; an observed reinvestment path makes that capacity available to improvement work; and later work consumes it while producing another retained gain. Fewer recurring failures or faster execution can contribute this way. An unused saving, or one absorbed by another bottleneck, does not.
 
-The feedback is symmetric. A bad evaluator can make later revisions worse, and a misleading theory can redirect effort across many episodes. The same pathway that compounds gains can compound errors.
+A structurally similar feedback can amplify errors. A bad evaluator can make later revisions worse, and a misleading theory can redirect effort across many episodes. When later revisions reduce performance against the declared objective, this is error amplification rather than compounding under the gain-specific definition. A pathway can nevertheless compound toward a normatively bad objective; whether the objective is desirable is a separate question.
 
 ## The evidence comes from later episodes
 
-The metric that accepted a change tests its immediate target. A passing validator shows that the validator works on the tested case; it does not show that later revision became more productive. Evidence for compounding must therefore be displaced to [later improvement episodes](./compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md).
+The metric used to accept a change tests its immediate target. For example, a validator accepting a change shows that the change passes its immediate check; it does not show that later revision became more productive. Evidence for compounding must therefore be displaced to [later improvement episodes](./compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md).
 
 A positive later episode can provide local evidence of compounding: an earlier improvement helped produce a subsequent one. A sequence shows whether that feedback is sustained. The effect need not be exponential, smooth, or permanent. It may be modest, irregular, and eventually saturate.
 
@@ -31,7 +30,7 @@ A positive later episode can provide local evidence of compounding: an earlier i
 
 A human-inclusive pathway can compound. If a retained change makes each maintainer judgment more productive, the feedback is already present; reinvesting saved effort can amplify it. Fixed human attention can nevertheless cap how many candidates are considered or how much evaluation is performed, so the observed rate may flatten even while individual revisions improve.
 
-Computational execution and evaluation can move that ceiling, but bare automation is not part of the definition. More candidates create more testing load, and an evaluator used beyond [the domain it can warrant](./warranted-autonomy-is-bounded-by-oracle-domain.md) scales error rather than justified improvement. [Oracle accumulation](./oracle-accumulation-improves-the-selection-environment.md) is especially important because a new check can both improve later selection and widen the range over which it can run without another human decision.
+Computational execution and evaluation can move that ceiling, but bare automation is not part of the definition. More candidates create more testing load, and using an evaluator beyond [the domain it can warrant](./warranted-autonomy-is-bounded-by-oracle-domain.md) scales error rather than justified improvement. [Oracle accumulation](./oracle-accumulation-improves-the-selection-environment.md) is especially important because a new check can improve later selection and widen the range over which that check can run without another human decision.
 
 ## Reflection makes the feedback inspectable
 
@@ -39,18 +38,20 @@ Compounding is architecture-neutral. A learned optimizer can improve later optim
 
 For current LLM systems, a retained natural-language improvement theory may make this feedback easier to route across heterogeneous changes. That is a candidate mechanism, not proof that the pathway compounds. The proof still lies in later episodes becoming more productive because they received the earlier benefit.
 
-## Three observable readings
+## Report feedback, duration, and constraints separately
 
-- **Accumulation without compounding.** Retained gains build up or are reused, but later improvement proceeds as before.
-- **Compounding under a bottleneck.** Earlier gains help produce later ones, but fixed human attention, evaluation, compute, or another cut set limits the observed rate.
-- **Sustained compounding.** The feedback continues across several episodes; bottlenecks may still limit its rate or scale.
+An observation of the pathway should report three independent features:
+
+- **Feedback.** Retained gains may accumulate while later improvement proceeds as before, or an earlier retained benefit may help produce a later improvement.
+- **Duration.** One later episode provides local evidence; a sequence of such contributions supports sustained compounding.
+- **Constraints.** Human attention, evaluation, compute, or another bottleneck may limit the rate or scale of feedback without erasing the contributions that do occur.
 
 ## Scope
 
-- All readings are relative to a declared system boundary, objective, and horizon. A pathway may compound for one redesign class and merely accumulate for another.
+- All feedback claims are relative to a declared system boundary, objective, and horizon. A pathway may compound for one redesign class and merely accumulate for another.
 - Compounding does not imply exponential or unbounded growth. Saturation changes the trajectory without erasing earlier feedback.
 - When a benefit is produced outside later improvement work, reinvestment must be evidenced rather than inferred. Freed time or compute that disappears into unrelated work does not establish compounding.
-- Compounding says nothing by itself about whether the resulting direction is desirable. The process may become progressively better at optimizing a bad objective.
+- Improvement is relative to the declared objective. Compounding does not imply that the objective or resulting direction is desirable.
 
 ## Open Questions
 
