@@ -1,5 +1,5 @@
 ---
-description: Interpreter failure is output the spec's public meaning rules out — constraint violations, hallucination, bookkeeping slips, framing bias; the fault attaches to the interpreter's role, not the spec, so the remedy is detection and correction rather than spec narrowing
+description: Interpreter failure is output the spec's public meaning rules out — constraint violations, hallucination, bookkeeping slips, framing bias; the fault attaches to the interpreter's role, so the remedy is detection and correction, not spec narrowing
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [llm-reliability]
