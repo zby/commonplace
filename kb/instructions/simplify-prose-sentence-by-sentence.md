@@ -23,11 +23,12 @@ Skip frontmatter, code, formulas, link destinations, and generated blocks unless
 ## Inspect each unit
 
 1. Put the real actor, action, constraint, or result before abstract framing. Prefer “X can give the system more control” to “X's proposed advantage is control,” and “Each candidate must be judged against…” to “Each episode needs…” when these rewrites preserve the claim. Do not give a path, channel, artifact, evidence, or other abstraction agency unless it performs that causal role. Preserve uncertainty with an accurate modal or nearby qualifier.
-2. Make an important relation between adjacent sentences explicit when the reader would otherwise have to infer it. Use the smallest accurate connective, such as *but* for contrast, *because* for cause, or *therefore* for consequence.
-3. Remove helper verbs, repeated phrases, and clauses whose work a later concrete detail already does. If later behavior shows that a policy is used, for example, do not first say that the runtime loads it.
-4. After an example, state what it establishes when the inferential step is not already clear. Connect the relevant concrete detail to the general claim instead of leaving the reader to infer why the example matters.
-5. Prefer direct verbs, but do not replace a plain, precise phrase with stiffer wording merely to match a pattern. Compare every revision with the original for causal direction, uncertainty, conditions, scope, evidence strength, technical roles, and unit of analysis.
-6. Preserve formal relational wording — such as `is a function of`, quantifiers, invariants, equivalence claims, and `by construction` — unless the replacement states the same relation at least as explicitly. Do not trade a formal relation for looser causal prose merely to foreground an actor.
+2. When clarity depends on deciding whether a phrase denotes a term, the concept it names, a source account, the current artifact's explication, or the object to which the concept applies, mark the unit `defer`; do not polish its existing frame. Name the possibly conflated roles in the report and route the passage to [Report high-impact simplification opportunities](./report-high-impact-simplification-opportunities.md).
+3. Make an important relation between adjacent sentences explicit when the reader would otherwise have to infer it. Use the smallest accurate connective, such as *but* for contrast, *because* for cause, or *therefore* for consequence.
+4. Remove helper verbs, repeated phrases, and clauses whose work a later concrete detail already does. If later behavior shows that a policy is used, for example, do not first say that the runtime loads it.
+5. After an example, state what it establishes when the inferential step is not already clear. Connect the relevant concrete detail to the general claim instead of leaving the reader to infer why the example matters.
+6. Prefer direct verbs, but do not replace a plain, precise phrase with stiffer wording merely to match a pattern. Compare every revision with the original for causal direction, uncertainty, conditions, scope, evidence strength, technical roles, and unit of analysis.
+7. Preserve formal relational wording — such as `is a function of`, quantifiers, invariants, equivalence claims, and `by construction` — unless the replacement states the same relation at least as explicitly. Do not trade a formal relation for looser causal prose merely to foreground an actor.
 
 ## Report
 
