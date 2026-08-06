@@ -15,7 +15,7 @@ Skip frontmatter, code, formulas, link destinations, and generated blocks unless
 
 ## Process the file
 
-1. As you reach each sentence, assign it the next stable identifier: `S001`, `S002`, and so on. Assign standalone reader-facing fragments `F001`, `F002`, and so on. Number units while processing them; do not build a separate inventory first.
+1. As you reach each sentence, assign it the next stable identifier: `S001`, `S002`, and so on. Assign standalone reader-facing fragments `F001`, `F002`, and so on. A run-in label belongs to the sentence or fragment it introduces. Treat a grammatical sentence that spans Markdown blocks as one `S` unit; do not number its syntactic pieces again as fragments. Number a list item or table cell as `F` only when it stands independently rather than completing a surrounding sentence. Do not assign identifiers to excluded material. Number units while processing them; do not build a separate inventory first.
 2. Give each unit one decision. Use `keep` when no clear improvement is available; `revise`, `split`, `merge`, or `delete` for a local edit; and `defer` when the problem requires structural or substantive revision. A zero-change pass is valid.
 3. Apply any edit before moving to the next unit. A `merge` may combine only adjacent units. Keep original identifiers stable after a revision, split, merge, or deletion.
 4. After finishing a local block, re-read it with the preceding and following sentences. Check the edits together for repeated openings, subjects, verbs, or claim framing; unclear referents; lost transitions; and changed technical roles. Revert a weaker edit or mark the problem `defer`.
@@ -27,10 +27,11 @@ Skip frontmatter, code, formulas, link destinations, and generated blocks unless
 3. Remove helper verbs, repeated phrases, and clauses whose work a later concrete detail already does. If later behavior shows that a policy is used, for example, do not first say that the runtime loads it.
 4. After an example, state what it establishes when the inferential step is not already clear. Connect the relevant concrete detail to the general claim instead of leaving the reader to infer why the example matters.
 5. Prefer direct verbs, but do not replace a plain, precise phrase with stiffer wording merely to match a pattern. Compare every revision with the original for causal direction, uncertainty, conditions, scope, evidence strength, technical roles, and unit of analysis.
+6. Preserve formal relational wording — such as `is a function of`, quantifiers, invariants, equivalence claims, and `by construction` — unless the replacement states the same relation at least as explicitly. Do not trade a formal relation for looser causal prose merely to foreground an actor.
 
 ## Report
 
-Return a compact coverage ledger containing one decision for every `S` and `F` identifier. Consecutive `keep` decisions may be collapsed into ranges such as `S001–S016 keep`; they need no individual anchors or reasons. List every other decision separately.
+Keep a compact coverage ledger containing one decision for every `S` and `F` identifier while working. By default, report every non-`keep` decision and summarize the number of `keep` decisions. Include the full ledger or collapsed `keep` ranges only when the caller or containing workflow asks for auditable coverage.
 
 For each `revise`, `split`, `merge`, or `delete`, give the nearest heading, original wording, final wording, and a brief reason. For each `defer`, name the larger problem without solving it. End with decision counts, excluded regions, changed file paths, and validation results. Do not create a durable report unless the caller or containing workflow supplies a path.
 
@@ -41,3 +42,7 @@ For each `revise`, `split`, `merge`, or `delete`, give the nearest heading, orig
 - Check that no material claim, qualification, causal role, or useful voice changed.
 - Re-read the complete revised file once for cumulative problems, but do not make an unlogged broad revision during this read.
 - Run the artifact's validator.
+
+## Provenance
+
+The sentence-level heuristics draw on Gopen and Swan's reader-expectation approach, Joseph Williams's character-and-action analysis, and Richard Lanham's Paramedic Method. Commonplace adds exhaustive sentence and fragment coverage, block-local editing, explicit semantic-invariant checks, and artifact validation for agent execution.
