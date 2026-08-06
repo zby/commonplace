@@ -23,7 +23,7 @@ Each standard remedy acts on exactly one of the three objects, so it cannot repa
 
 **Error detection and correction** — validation, [oracles](./oracle-strength-spectrum.md), voting, guardrails, architectural separation — moves the realized output back inside `V`. It says nothing about whether `V` is close to `I`. An oracle can only reject a valid-but-unwanted output if the oracle itself encodes the missing intent, and at that point the spec narrowing has happened in the checker rather than the prompt; the work was not avoided, only relocated.
 
-**Sampling control** — temperature, deterministic decoding, best-of-N — concentrates `D`. It neither shrinks `V` nor moves mass inside it. At temperature 0 the interpreter still picks one point from a plural `V`, and a deterministic interpreter still produces out-of-`V` output; you get the same wrong output every time instead of a different one each run.
+**Sampling control** — temperature, deterministic decoding, best-of-N — concentrates `D`. It neither shrinks `V` nor moves mass inside it. At temperature 0 the interpreter still picks one point from a plural `V`, and a deterministic interpreter still produces out-of-`V` output; you get the same wrong output every time instead of a different one each run. Concentrating `D` can also *mask* interpreter failure without repairing it: when the modes happen to lie inside `V`, realized failures get rarer while the bias remains a property of the interpreter, ready to resurface under a distribution shift.
 
 So misdiagnosis is expensive in a specific way: the wrong remedy does not merely fail, it consumes the budget (context, latency, review attention) that the right remedy needs. Rewriting a prompt against an interpreter failure spends context to no effect; lowering temperature against underspecification removes the variation that was the only visible evidence that `V` was too wide.
 
@@ -31,7 +31,7 @@ So misdiagnosis is expensive in a specific way: the wrong remedy does not merely
 
 The three have different empirical signatures, and each signature holds one of the three objects fixed while varying another.
 
-- Hold the prompt fixed and resample: variation across runs is indeterminism. Consistent failure is not.
+- Hold the prompt fixed and resample: variation *among valid outputs* is indeterminism. An invalid output that appears on only some runs is not thereby noise — the intermittency is sampling, but the out-of-`V` mass it reveals is interpreter failure. Resampling measures how much of `D` sits outside `V`; it does not relocate the fault to the sampler.
 - Hold the task fixed and vary framing that does not change meaning — emotional register, persona, ordering of candidates: systematic performance change is interpreter bias, since `V` did not move.
 - Read the spec against the bad output: if a competent reader given only that spec would accept the output, `V` admits it and the failure is underspecification, not interpreter failure.
 
