@@ -43,7 +43,7 @@ source_notes:
 
 > **TL;DR.** Improvements compound when their benefits feed into further improvements. One such link is local evidence; repeated links establish a compounding pathway.
 >
-> Compounding can occur without reflection, and reflection alone does not produce it. But reflection can give a system more control over improvement by making its underlying theories and machinery revisable, including what counts as evidence, what counts as a problem, and which changes it can consider. Each candidate must still be judged against an objective and comparison rule that it cannot change. Commonplace tests whether retained natural-language theory can provide this control across heterogeneous changes without retraining model weights. It can install and reuse revisions, but has not shown compounding through its theory layer.
+> Compounding can occur without reflection, and reflection alone does not produce it. But reflection can give a system more control over improvement by making its underlying theories and machinery revisable, including what counts as evidence, what counts as a problem, and which changes it can consider. Each candidate must still be judged against an objective and comparison rule that it cannot change. Commonplace is our attempt to test whether retained natural-language theory can provide this control across heterogeneous changes without retraining model weights. We can show that it installs and reuses revisions. We have not yet traced a case in which a retained theory-layer improvement helped produce a later improvement, let alone shown that this feedback recurs. This is a limit of our current evidence, not a finding that Commonplace cannot compound.
 
 ## Compounding is the payoff
 
@@ -114,7 +114,7 @@ None of these results establishes recurrent compounding.
 
 ## A proof-governed limit case
 
-A theoretical [Gödel machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md) can rewrite even the machinery that chooses later rewrites, but only after proving that the candidate is better than continuing. Beneficial changes it cannot prove are excluded. It therefore has a broad formal revision surface, but no empirical evidence of compounding. Commonplace studies a narrower surface under fallible semantic judgment.
+A theoretical [Gödel machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md) can rewrite even the machinery that chooses later rewrites, but only after proving that switching to the candidate now has greater expected utility than keeping its current code running while the search for other rewrites continues. Beneficial changes it cannot prove are excluded. It therefore has a broad formal revision surface, but no empirical evidence of compounding. Commonplace studies a narrower surface under fallible semantic judgment.
 
 ## Commonplace as a human-inclusive testbed
 
