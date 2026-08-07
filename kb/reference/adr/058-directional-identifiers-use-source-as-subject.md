@@ -10,7 +10,7 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-07-28
 **Amends:** [ADR 020](./020-theoretical-default-contrasts-mechanism.md)
-**Amended by:** [ADR 060](./060-rationale-becomes-rests-on-and-off-pattern-grounds-are-reclassified.md) — `rationale` becomes `rests-on`; off-pattern `grounds` edges are reclassified while the canonical cohort remains deferred
+**Amended by:** [ADR 060](./060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md) — `rationale` becomes `rests-on`; off-pattern `grounds` edges are reclassified while the canonical cohort remains deferred
 
 ## Context
 

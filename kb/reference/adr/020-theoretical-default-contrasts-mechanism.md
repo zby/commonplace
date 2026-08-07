@@ -11,7 +11,7 @@ status: accepted
 **Date:** 2026-04-19
 **Extends:** [ADR-009](./009-link-relationship-semantics.md)
 **Depends on:** [ADR-019](./019-collection-owned-link-vocabulary.md)
-**Amended by:** [ADR-058](./058-directional-identifiers-use-source-as-subject.md) — directional identifiers now use the source as grammatical subject; the old `evidence` identifier is retired; [ADR-060](./060-rationale-becomes-rests-on-and-off-pattern-grounds-are-reclassified.md) — `rationale` becomes `rests-on` while canonical `grounds` remains deferred
+**Amended by:** [ADR-058](./058-directional-identifiers-use-source-as-subject.md) — directional identifiers now use the source as grammatical subject; the old `evidence` identifier is retired; [ADR-060](./060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md) — `rationale` becomes `rests-on` while canonical `grounds` remains deferred
 
 **Scope.** This ADR's additions land in the theoretical-register default template (recorded in the catalogue at [`link-vocabulary.md`](../link-vocabulary.md)) and are adopted by collections whose `COLLECTION.md` includes them in its authorised sets. Cross-register labels (`rests-on`, `evidenced-by`, `is-evidence-for`, `procedure`, `operates-on`, `defined-in`) are a separate concern handled by the catalogue and selected per destination in each `COLLECTION.md`; this ADR does not speak to them.
 

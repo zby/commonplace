@@ -118,4 +118,4 @@ The semantic gate for the scoped `rests-on` migration is now satisfied. Its muta
 - 30 remaining off-pattern `grounds` edges → the evidence decisions above;
 - 276 note→note `grounds` edges → excluded unchanged for the later `grounds` migration, including four canonical rows added after review.
 
-Migration conserved all 172 adjudicated tuples (114 + 8 + 20 + 30), kept the five disposition buckets mutually exclusive, and separately accounted for the 276 deferred `grounds` tuples. The decision and implementation are recorded in [ADR 060](../../reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-are-reclassified.md).
+Migration conserved all 172 adjudicated tuples (114 + 8 + 20 + 30), kept the five disposition buckets mutually exclusive, and separately accounted for the 276 deferred `grounds` tuples. The decision and implementation are recorded in [ADR 060](../../reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md).

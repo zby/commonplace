@@ -108,6 +108,7 @@ plugins:
         'notes/underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md': 'notes/underspecification-and-indeterminism-complicate-programming-for.md'
         'notes/vocabulary-collisions-are-prevented-at-write-time-not-resolved-at-read-time.md': 'notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md'
         'notes/world-models-assess-reach-through-action-conditioned-prediction.md': 'notes/world-models-assess-explanatory-reach-through-action-conditioned.md'
+        'reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-are-reclassified.md': 'reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md'
         'reference/proposals/anchored-validation-checks-with-declared-dependencies.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'
         'reference/proposals/artifact-anchored-validation-over-a-run-scoped-context.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'
         'reference/proposals/assertion-force-separate-from-lifecycle-status.md': 'reference/proposals/archive/assertion-force-separate-from-lifecycle-status.md'

@@ -10,7 +10,7 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-04-22
 **Extends:** [ADR-009](./009-link-relationship-semantics.md), [ADR-017](./017-collection-md-is-the-register-convention-boundary.md)
-**Amended by:** [ADR-059](./059-external-is-a-reserved-outbound-destination.md) — destinations may also be the reserved `external` class, still authorized by the source collection; [ADR-060](./060-rationale-becomes-rests-on-and-off-pattern-grounds-are-reclassified.md) — the global type layer gains a collection contract and `rationale` becomes `rests-on`
+**Amended by:** [ADR-059](./059-external-is-a-reserved-outbound-destination.md) — destinations may also be the reserved `external` class, still authorized by the source collection; [ADR-060](./060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md) — the global type layer gains a collection contract and `rationale` becomes `rests-on`
 
 ## Context
 

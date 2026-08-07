@@ -23,7 +23,7 @@ Do not edit corpus edges, collection contracts, the shared catalogue, ADRs, or d
 Read:
 
 - [ADR 058](../../reference/adr/058-directional-identifiers-use-source-as-subject.md) for the `source <label> target` invariant;
-- [ADR 060](../../reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-are-reclassified.md) for the implemented `rests-on` boundary and the deferred canonical cohort;
+- [ADR 060](../../reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md) for the implemented `rests-on` boundary and the deferred canonical cohort;
 - the [directional-label grammar](./directional-label-grammar.md), [rationale direction review](./rationale-label-direction-review.md), [boundary adjudication](./rationale-grounds-boundary-adjudication.md), and [rationale migration retrospective](./rationale-label-migration-retrospective.md);
 - the current [link vocabulary](../../reference/link-vocabulary.md), `kb/notes/COLLECTION.md`, and any other active contract or guidance that defines or teaches `grounds`;
 - the [reusable migration procedure](../../instructions/migrate-directional-link-label.md) only to understand what evidence a later migration will require.

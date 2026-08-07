@@ -20,7 +20,7 @@ Do not edit corpus edges, collection contracts, the catalogue, ADRs, durable ins
 
 ## Governing context
 
-Read ADRs [020](../../reference/adr/020-theoretical-default-contrasts-mechanism.md), [058](../../reference/adr/058-directional-identifiers-use-source-as-subject.md), and [060](../../reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-are-reclassified.md); the current [link vocabulary](../../reference/link-vocabulary.md) and relevant collection contracts; the [directional grammar](./directional-label-grammar.md); and the grounds [direction review](./grounds-label-direction-review.md) and [boundary adjudication](./grounds-label-boundary-adjudication.md).
+Read ADRs [020](../../reference/adr/020-theoretical-default-contrasts-mechanism.md), [058](../../reference/adr/058-directional-identifiers-use-source-as-subject.md), and [060](../../reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md); the current [link vocabulary](../../reference/link-vocabulary.md) and relevant collection contracts; the [directional grammar](./directional-label-grammar.md); and the grounds [direction review](./grounds-label-direction-review.md) and [boundary adjudication](./grounds-label-boundary-adjudication.md).
 
 The last local inventory found 79 active `mechanism` edges and 49 deferred mechanism-like `grounds` edges. Recompute both surfaces rather than trusting those counts. Preserve each row's origin label so the review can test whether authors were using the two labels differently. The nine previously observed files authoring both labels are high-information cases, not a privileged sample.
 

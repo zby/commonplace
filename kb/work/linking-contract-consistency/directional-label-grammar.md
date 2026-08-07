@@ -1,6 +1,6 @@
 # Directional label grammar
 
-**Status:** adopted by [ADR 058](../../reference/adr/058-directional-identifiers-use-source-as-subject.md). The evidence pair is implemented by ADR 058 and the rationale relation by [ADR 060](../../reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-are-reclassified.md); other failing identifiers remain separately scoped migration debt.
+**Status:** adopted by [ADR 058](../../reference/adr/058-directional-identifiers-use-source-as-subject.md). The evidence pair is implemented by ADR 058 and the rationale relation by [ADR 060](../../reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md); other failing identifiers remain separately scoped migration debt.
 
 ## Candidate invariant
 

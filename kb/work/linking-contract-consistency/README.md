@@ -115,7 +115,7 @@ The shared catalogue called `compares-with` specific to `kb/agent-memory-systems
 
 The old identifier meant “the target is the rationale for the source,” violating `source <label> target`; 20 of 134 active uses also belonged to evidence or architecture relations. Thirty-eight off-pattern `grounds` edges exposed the same boundary drift.
 
-**Outcome:** [ADR 060](../../reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-are-reclassified.md) adopts `rests-on`, reclassifies every boundary edge, gives `kb/types/` a collection-owned link contract, and leaves 276 canonical note→note `grounds` edges for their own scoped migration.
+**Outcome:** [ADR 060](../../reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md) adopts `rests-on`, reclassifies every boundary edge, gives `kb/types/` a collection-owned link contract, and leaves 276 canonical note→note `grounds` edges for their own scoped migration.
 
 ## Enforcement and delivery gaps
 

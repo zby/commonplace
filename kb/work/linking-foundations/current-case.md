@@ -29,7 +29,7 @@ The migration covered 207 active old-label edges, including 26 inverse-journey c
 
 ### Rationale and off-pattern grounds
 
-The old `rationale` identifier also described the target: the target was the rationale on which the source depended. Corpus review found 134 active edges in three semantic groups rather than one renameable relation. [ADR 060](../../reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-are-reclassified.md) adopted `source rests-on target` for design, description, procedure, rule, and system-definition dependence.
+The old `rationale` identifier also described the target: the target was the rationale on which the source depended. Corpus review found 134 active edges in three semantic groups rather than one renameable relation. [ADR 060](../../reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md) adopted `source rests-on target` for design, description, procedure, rule, and system-definition dependence.
 
 The migration (`dac39977`) assigned the 134 old `rationale` rows as:
 
