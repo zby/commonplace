@@ -93,6 +93,7 @@ include = [
 "kb/instructions/cp-skill-snapshot-web" = "kb/instructions/cp-skill-snapshot-web"
 "kb/instructions/cp-skill-validate" = "kb/instructions/cp-skill-validate"
 "kb/instructions/cp-skill-write" = "kb/instructions/cp-skill-write"
+"kb/instructions/cp-skill-write-multistage" = "kb/instructions/cp-skill-write-multistage"
 
 [tool.hatch.build.targets.wheel.force-include]
 "AGENTS.md.template" = "commonplace/_data/AGENTS.md.template"

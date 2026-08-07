@@ -88,5 +88,6 @@ MANIFEST = ScaffoldManifest(
         "cp-skill-ingest",
         "cp-skill-snapshot-web",
         "cp-skill-revise-autoreason",
+        "cp-skill-write-multistage",
     ),
 )

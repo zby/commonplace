@@ -1,12 +1,12 @@
 ---
 name: cp-skill-write
-description: Write one KB note under its collection and type contracts, validate it, and hand broader graph discovery to cp-skill-connect.
+description: Write one KB note whose intended contribution is already determined, under its collection and type contracts; validate it and hand broader graph discovery to cp-skill-connect.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
 context: fork
 model: opus
-argument-hint: "[path | collection | type] [topic] — a note path for editing, or a collection/type/topic for new notes"
+argument-hint: "[path | collection | type] [topic or claim/purpose] — a note path for editing, or a collection/type/subject for new notes"
 ---
 
 ## EXECUTE NOW
@@ -39,7 +39,18 @@ Do not fall back from a missing type path to `note`.
 
 For `text`, write raw markdown with no frontmatter only when the user explicitly wants unstructured capture. Otherwise use `kb/types/note.md`.
 
-### Step 4 - Search Before Writing
+### Step 4 - Resolve The Intended Contribution
+
+Before drafting, identify from the user's request and the target artifact in edit mode:
+
+- the intended audience, using the collection default when the task does not narrow it;
+- the governing question, target claim, or practical purpose;
+- what the reader should understand, infer, or do because this artifact exists; and
+- any scope or angle needed to distinguish it from materially different artifacts on the same topic.
+
+The repository and collection contracts constrain the register, acceptable contribution class, and often the default audience. They do not by themselves select an artifact-specific claim or purpose. When the task or incumbent artifact already determines these choices, proceed without a formal brief. If several materially different contributions fit and the task does not select among them, do not choose one from model priors: ask one focused question, or use an exploratory workshop when determining the contribution is itself the work. When the contribution is determined but its claims still need substantial grounding or synthesis, stop and explain why the ordinary path is insufficient. Ask whether the user wants to continue with `cp-skill-write-multistage`, and invoke it only after explicit confirmation.
+
+### Step 5 - Search Before Writing
 
 Write does not run active discovery — that is `cp-skill-connect`'s job. Write authors one note and commits only links the author already has in hand, plus a cheap duplicate guard:
 
@@ -51,7 +62,7 @@ In edit mode, also run a backlinks lookup on the target note — one query, no b
 
 All discovery beyond this — collection-wide description scans, cross-destination prospecting, body search, tag traversal, link-following, reverse-edge reasoning — belongs to `cp-skill-connect`, not here. Write stays focused on authoring one note.
 
-### Step 5 - Draft And Save
+### Step 6 - Draft And Save
 
 Follow the type-spec doc and collection conventions. Derive a lowercase-hyphenated filename from `# Title` unless editing an existing file. For typed artifacts, set `type:` to the exact repo-relative type-spec path, not the type name.
 
@@ -61,7 +72,7 @@ Preserve existing frontmatter and links during edits unless the requested change
 
 Before saving a substantive edit, remove `user-verified` if present. Verification attests to the prior substantive contents and must be granted again explicitly by a human. Preserve it only when the user has explicitly authorized a mechanical trivial-change workflow.
 
-### Step 6 - Validate
+### Step 7 - Validate
 
 Validate the note you wrote or edited:
 
@@ -71,7 +82,7 @@ commonplace-validate path/to/file.md
 
 Fix structural failures before stopping.
 
-Then suggest `cp-skill-connect` as the next step. Step 4 commits only links the author already had in hand (loaded context, user-named) plus a duplicate guard; the rest of the note's share of the graph — collection-wide description scans, cross-destination candidates, body-search hits, tag-traversal, link-following, reverse-edge candidates — only surfaces under the connect skill. The suggestion is not optional polish.
+Then suggest `cp-skill-connect` as the next step. Step 5 commits only links the author already had in hand (loaded context, user-named) plus a duplicate guard; the rest of the note's share of the graph — collection-wide description scans, cross-destination candidates, body-search hits, tag-traversal, link-following, reverse-edge candidates — only surfaces under the connect skill. The suggestion is not optional polish.
 
 ## Universal Mechanics
 

@@ -39,6 +39,8 @@ A design insight is worth a note when it changes how someone would build or oper
 
 **Simple writing (best effort).** Use the simplest wording that preserves the claim and its necessary qualifications. Aim for one main point per sentence. Prefer short, direct sentences. State definitions directly, put conditions and qualifiers next to the claims they limit, and make causal or contrastive relationships explicit. The KB graph already supplies complexity through connections among notes; do not add avoidable complexity inside a sentence.
 
+**Substantive specificity (best effort).** Make each paragraph earn its place by changing what the reader understands, infers, or can do; do not restate or praise a point merely to make the text sound complete. In load-bearing claims, resolve ambiguity that would change the claim's truth conditions, evidential support, or implications; when relevant, name the mechanism, comparison basis, or scope. Use available specifics, but never invent precision: narrow the claim, state uncertainty, or flag the unresolved choice.
+
 ## Vocabulary
 
 Terms needed to understand the project's structure and everyday operations, alphabetical. Each links its full definition.
