@@ -25,6 +25,7 @@ plugins:
         'agent-memory-systems/related-systems-index.md': 'agent-memory-systems/README.md'
         'articles/recursive-targetability.md': 'articles/what-makes-human-inclusive-self-revision-non-trivial.md'
         'articles/what-makes-a-system-self-improving.md': 'articles/reflective-self-improvement.md'
+        'instructions/report-high-impact-simplification-opportunities.md': 'instructions/run-compression-bundle-on-note.md'
         'instructions/run-review-batches-on-note.md': 'instructions/run-review-batches.md'
         'instructions/simplify-prose-without-weakening-claims.md': 'instructions/simplify-prose-sentence-by-sentence.md'
         'notes/a-declared-mark-is-an-accelerator-never-a-load-bearing-wall.md': 'reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md'

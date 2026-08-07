@@ -1,5 +1,5 @@
 ---
-description: Produce a disposable edit-strategy report for one note using the unanchored compression criteria
+description: Produce a disposable edit-strategy report for one note using the unanchored compression criteria and high-impact synthesis
 type: kb/types/instruction.md
 ---
 
@@ -23,6 +23,8 @@ Use these criterion files, in this order:
 3. `kb/instructions/compression-bundle/detail-overhang.md`
 4. `kb/instructions/compression-bundle/marginal-value-redundancy.md`
 
+After the four criteria, apply `kb/instructions/compression-bundle/high-impact-simplification-synthesis.md` to the artifact and the combined findings. This synthesis has no independent verdict; it selects the few structural changes most worth authorial attention.
+
 Do not route these criteria through selectors or review jobs. Do not write review DB state or invoke acknowledgement or ingestion commands.
 
 ## Roles
@@ -33,13 +35,14 @@ The **orchestrator** prepares the reviewer packet, dispatches one fresh reviewer
 
 1. Read the target note.
 2. Read the four criterion files above.
-3. Concatenate the criterion definitions into a reviewer packet. Preserve each file's `gate_id`, name, failure mode, test, and examples; `gate_id` is part of this bundle's report vocabulary, not a persisted review identity.
+3. Concatenate the criterion definitions and the high-impact synthesis instruction into a reviewer packet. Preserve each criterion's `gate_id`, name, failure mode, test, and examples; `gate_id` is part of this bundle's report vocabulary, not a persisted review identity.
 4. As the orchestrator, start one fresh sub-agent and give it:
    - the target note path and full note text;
    - the concatenated gate packet;
    - `{output-path}`;
    - the output contract below.
-5. As the dispatched reviewer, apply every criterion independently and write only `{output-path}`. Do not edit the note or delegate the review again.
+   Tell the reviewer to treat the target artifact as the evidence for its intended contribution. Ambient conversation and the topic alone do not settle an unstated thesis, audience, or purpose.
+5. As the dispatched reviewer, apply every criterion independently, then run the high-impact synthesis over the artifact and combined findings. Write only `{output-path}`. Do not edit the note or delegate the review again.
 6. As the orchestrator, verify that `{output-path}` exists and follows the output contract, then close, terminate, or release the reviewer with the harness's lifecycle operation. Do not retain it for a follow-up task.
 
 ## Output Contract
@@ -71,18 +74,26 @@ PASS|INFO|WARN
 
 - WARN|INFO: <specific location and action>
 
-## Suggested Revision
+## High-impact Simplification Opportunities
 
-<short edit plan that preserves the strongest claim while reducing context cost>
+### 1. <short opportunity name>
+
+- Location: <heading and smallest useful quotation or section range>
+- Reader problem: <why this materially obscures the claim, structure, or flow>
+- Direction: <possible compression, fold, deletion, or reorganization>
+- Combines: <relevant compression findings, or “cross-cutting”>
+- Preserve or decide: <meanings, implications, or structural choices that constrain the revision>
 ```
 
-Omit per-gate finding sections when a gate has no findings beyond a concise PASS summary. Do not emit PASS-per-paragraph output.
+Omit per-gate finding sections when a gate has no findings beyond a concise PASS summary. Do not emit PASS-per-paragraph output. Report zero to three high-impact opportunities; write `None` when no opportunity clears the synthesis threshold.
 
 `PASS`, `INFO`, and `WARN` here are local report labels. They are not review-system decisions, and the report has no `REPORT` completion marker because it is not finalized into the review store.
 
 ## Reviewer Bias
 
 The compression bundle is intentionally edit-strategy oriented. It should flag true, coherent, and locally defensible material when the material does not earn its current context cost. Prefer compression, folding, deletion, demotion to open question, or rehoming over additive repair unless extra wording is necessary to preserve the core claim.
+
+The final synthesis is selective rather than exhaustive. It may combine several findings into one larger revision, but it must leave semantic or evidential choices unresolved instead of hiding them inside a cleaner rewrite.
 
 ## Do Not
 

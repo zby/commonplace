@@ -13,6 +13,10 @@ This is separate from the normal `prose` and `semantic` bundles because the lens
 - [detail-overhang](./detail-overhang.md) — examples, caveats, mechanisms, or background details that outgrow their role.
 - [core-claim-obscured](./core-claim-obscured.md) — the strongest retained claim is buried under supporting apparatus.
 
+## Synthesis
+
+After applying the four criteria, run [high-impact simplification synthesis](./high-impact-simplification-synthesis.md). It selects at most three changes that would materially improve the artifact's central claim, conceptual structure, or argumentative flow. The synthesis can combine several local findings into one structural revision, but it does not settle ambiguous meanings or rewrite the artifact.
+
 ## Candidate future gates
 
 - `split-candidate-threshold` — material marked for rehoming without enough evidence that it deserves its own durable note.
