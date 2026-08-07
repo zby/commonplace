@@ -1,0 +1,411 @@
+{
+  "source": "https://x.com/willccbb/status/2085469602017161229",
+  "captured": "2026-08-07T08:38:03.220556+00:00",
+  "family": "x-thread",
+  "status_id": "2085469602017161229",
+  "conversation_id": "2085469602017161229",
+  "target_post": {
+    "author_id": "3064259332",
+    "conversation_id": "2085469602017161229",
+    "created_at": "2026-08-06T20:54:33.000Z",
+    "edit_history_tweet_ids": [
+      "2085469602017161229"
+    ],
+    "entities": {
+      "urls": [
+        {
+          "display_url": "pic.x.com/SDV6k8NcmP",
+          "end": 301,
+          "expanded_url": "https://x.com/willccbb/status/2085469602017161229/photo/1",
+          "media_key": "3_2085467734708813824",
+          "start": 278,
+          "url": "https://t.co/SDV6k8NcmP"
+        },
+        {
+          "display_url": "pic.x.com/SDV6k8NcmP",
+          "end": 301,
+          "expanded_url": "https://x.com/willccbb/status/2085469602017161229/photo/1",
+          "media_key": "3_2085468099248349185",
+          "start": 278,
+          "url": "https://t.co/SDV6k8NcmP"
+        },
+        {
+          "display_url": "pic.x.com/SDV6k8NcmP",
+          "end": 301,
+          "expanded_url": "https://x.com/willccbb/status/2085469602017161229/photo/1",
+          "media_key": "3_2085468163840540672",
+          "start": 278,
+          "url": "https://t.co/SDV6k8NcmP"
+        }
+      ]
+    },
+    "id": "2085469602017161229",
+    "text": "RLMs can very much do true recursion at depth=1 :)\n\nbecause you're in a REPL, you can write *real recursive programs* that *call subagents* and still not need \"subsubagents\" anywhere. \n\nclaude code can't do this -- you'd have to write a program in a file that execs \"claude -p\" https://t.co/SDV6k8NcmP"
+  },
+  "posts": [
+    {
+      "author_id": "3064259332",
+      "conversation_id": "2085469602017161229",
+      "created_at": "2026-08-06T20:54:33.000Z",
+      "edit_history_tweet_ids": [
+        "2085469602017161229"
+      ],
+      "entities": {
+        "urls": [
+          {
+            "display_url": "pic.x.com/SDV6k8NcmP",
+            "end": 301,
+            "expanded_url": "https://x.com/willccbb/status/2085469602017161229/photo/1",
+            "media_key": "3_2085467734708813824",
+            "start": 278,
+            "url": "https://t.co/SDV6k8NcmP"
+          },
+          {
+            "display_url": "pic.x.com/SDV6k8NcmP",
+            "end": 301,
+            "expanded_url": "https://x.com/willccbb/status/2085469602017161229/photo/1",
+            "media_key": "3_2085468099248349185",
+            "start": 278,
+            "url": "https://t.co/SDV6k8NcmP"
+          },
+          {
+            "display_url": "pic.x.com/SDV6k8NcmP",
+            "end": 301,
+            "expanded_url": "https://x.com/willccbb/status/2085469602017161229/photo/1",
+            "media_key": "3_2085468163840540672",
+            "start": 278,
+            "url": "https://t.co/SDV6k8NcmP"
+          }
+        ]
+      },
+      "id": "2085469602017161229",
+      "text": "RLMs can very much do true recursion at depth=1 :)\n\nbecause you're in a REPL, you can write *real recursive programs* that *call subagents* and still not need \"subsubagents\" anywhere. \n\nclaude code can't do this -- you'd have to write a program in a file that execs \"claude -p\" https://t.co/SDV6k8NcmP"
+    },
+    {
+      "author_id": "3064259332",
+      "conversation_id": "2085469602017161229",
+      "created_at": "2026-08-06T22:24:18.000Z",
+      "edit_history_tweet_ids": [
+        "2085492186662236390"
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "end": 15,
+            "id": "357588207",
+            "start": 0,
+            "username": "ButcherBradley"
+          }
+        ]
+      },
+      "id": "2085492186662236390",
+      "in_reply_to_user_id": "357588207",
+      "referenced_tweets": [
+        {
+          "id": "2085485094647599451",
+          "type": "replied_to"
+        }
+      ],
+      "text": "@ButcherBradley breaks the rules for subscription usage haha"
+    },
+    {
+      "author_id": "3064259332",
+      "conversation_id": "2085469602017161229",
+      "created_at": "2026-08-06T22:29:06.000Z",
+      "edit_history_tweet_ids": [
+        "2085493394726629714"
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "end": 12,
+            "id": "1496859811685806086",
+            "start": 0,
+            "username": "olliecrosen"
+          }
+        ]
+      },
+      "id": "2085493394726629714",
+      "in_reply_to_user_id": "1496859811685806086",
+      "referenced_tweets": [
+        {
+          "id": "2085492838205120998",
+          "type": "replied_to"
+        }
+      ],
+      "text": "@olliecrosen yes! and we support bidirectional comms between subagents + parents :)"
+    },
+    {
+      "author_id": "3064259332",
+      "conversation_id": "2085469602017161229",
+      "created_at": "2026-08-06T23:37:35.000Z",
+      "edit_history_tweet_ids": [
+        "2085510629276991522"
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "end": 9,
+            "id": "3281109110",
+            "start": 0,
+            "username": "llllvvuu"
+          }
+        ]
+      },
+      "id": "2085510629276991522",
+      "in_reply_to_user_id": "3281109110",
+      "referenced_tweets": [
+        {
+          "id": "2085508572457353699",
+          "type": "replied_to"
+        }
+      ],
+      "text": "@llllvvuu in prime-agent we get a handle for the child agent, child gets a parent handle, both can send bidirectional messages which enter their context queue (just like user messages)"
+    },
+    {
+      "author_id": "3064259332",
+      "conversation_id": "2085469602017161229",
+      "created_at": "2026-08-07T01:28:03.000Z",
+      "edit_history_tweet_ids": [
+        "2085538428784132602"
+      ],
+      "entities": {
+        "mentions": [
+          {
+            "end": 9,
+            "id": "3281109110",
+            "start": 0,
+            "username": "llllvvuu"
+          }
+        ]
+      },
+      "id": "2085538428784132602",
+      "in_reply_to_user_id": "3281109110",
+      "referenced_tweets": [
+        {
+          "id": "2085523922532118957",
+          "type": "replied_to"
+        }
+      ],
+      "text": "@llllvvuu the return isn't the response, it's a handle/id for the subagent, returns instantly\n\nall agents are parallel/async, no blocking"
+    }
+  ],
+  "users": {
+    "3064259332": {
+      "id": "3064259332",
+      "name": "will brown",
+      "username": "willccbb"
+    },
+    "820967485": {
+      "id": "820967485",
+      "name": "Sreeram Garlapati",
+      "username": "SreeramG"
+    },
+    "2013616335595421696": {
+      "id": "2013616335595421696",
+      "name": "Akshay Ravirala | Data & AI Systems",
+      "username": "DatawithAkshay"
+    },
+    "1788870098457133056": {
+      "id": "1788870098457133056",
+      "name": "DangcingAI",
+      "username": "DangcingAI"
+    },
+    "47406972": {
+      "id": "47406972",
+      "name": "Raveesh \u6298\u56f3",
+      "username": "raveeshbhalla"
+    },
+    "1253995654113787904": {
+      "id": "1253995654113787904",
+      "name": "\ua672",
+      "username": "WrongNebula"
+    },
+    "1171673313938235394": {
+      "id": "1171673313938235394",
+      "name": "Growvv",
+      "username": "0x100AA"
+    },
+    "219762505": {
+      "id": "219762505",
+      "name": "Gaurav Gat",
+      "username": "Bull_lion_aire"
+    },
+    "1774924133387673600": {
+      "id": "1774924133387673600",
+      "name": "csgm",
+      "username": "csgbwk"
+    },
+    "2004675530935926784": {
+      "id": "2004675530935926784",
+      "name": "am.will",
+      "username": "LLMJunky"
+    },
+    "1228804651": {
+      "id": "1228804651",
+      "name": "DennyHo",
+      "username": "Dennyho2"
+    },
+    "1605274291569799168": {
+      "id": "1605274291569799168",
+      "name": "Omar Khattab",
+      "username": "lateinteraction"
+    },
+    "3281109110": {
+      "id": "3281109110",
+      "name": "L",
+      "username": "llllvvuu"
+    },
+    "1539946529204895745": {
+      "id": "1539946529204895745",
+      "name": "Md. Asaad Sayed \ud83e\udebd",
+      "username": "AsaadSayed61"
+    },
+    "920308045036576768": {
+      "id": "920308045036576768",
+      "name": "JMB \ud83e\uddd9\u200d\u2642\ufe0f",
+      "username": "jmbollenbacher"
+    },
+    "1509785580594659330": {
+      "id": "1509785580594659330",
+      "name": "Jesse Merhi",
+      "username": "jesse_merhi"
+    },
+    "396935566": {
+      "id": "396935566",
+      "name": "Omen",
+      "username": "Phenomenon_One"
+    },
+    "417508671": {
+      "id": "417508671",
+      "name": "The AI Therapist",
+      "username": "TheAIShrink"
+    },
+    "1524427831555416066": {
+      "id": "1524427831555416066",
+      "name": "M",
+      "username": "init_malachi"
+    },
+    "1720665183188922368": {
+      "id": "1720665183188922368",
+      "name": "Grok",
+      "username": "grok"
+    },
+    "1534524582291550208": {
+      "id": "1534524582291550208",
+      "name": "Giedrius Trump",
+      "username": "Trumpyla"
+    },
+    "1339936747749138432": {
+      "id": "1339936747749138432",
+      "name": "rohan",
+      "username": "i2ohan"
+    },
+    "1283334068206280704": {
+      "id": "1283334068206280704",
+      "name": "Atoof Shakir",
+      "username": "atoof_sh"
+    },
+    "523868345": {
+      "id": "523868345",
+      "name": "Saleh Hindi",
+      "username": "SalehOfTomorrow"
+    },
+    "1496859811685806086": {
+      "id": "1496859811685806086",
+      "name": "Oily Raisin",
+      "username": "olliecrosen"
+    },
+    "991095910816927744": {
+      "id": "991095910816927744",
+      "name": "Peter Edmonds",
+      "username": "peteredm0"
+    },
+    "357588207": {
+      "id": "357588207",
+      "name": "Brad",
+      "username": "ButcherBradley"
+    },
+    "1466030314019504137": {
+      "id": "1466030314019504137",
+      "name": "Alex Yarosh \u00b7 AI expert \u00b7 CEO of AI Studio",
+      "username": "AleksejAros"
+    },
+    "1963466798": {
+      "id": "1963466798",
+      "name": "Dan McAteer",
+      "username": "daniel_mac8"
+    },
+    "1225510025453588482": {
+      "id": "1225510025453588482",
+      "name": "Saad",
+      "username": "eSaadster"
+    },
+    "1483192186242052100": {
+      "id": "1483192186242052100",
+      "name": "Marko Kraemer",
+      "username": "markokraemer"
+    },
+    "2076467164190474240": {
+      "id": "2076467164190474240",
+      "name": "asldkasldkl",
+      "username": "asldkasldknu"
+    },
+    "790960779440816129": {
+      "id": "790960779440816129",
+      "name": "kbnn",
+      "username": "kbnntd"
+    },
+    "1821576970465058816": {
+      "id": "1821576970465058816",
+      "name": "stochasm",
+      "username": "stochasticchasm"
+    },
+    "1764647639964897280": {
+      "id": "1764647639964897280",
+      "name": "gkrovso",
+      "username": "bebraSOL"
+    },
+    "1941709461971783680": {
+      "id": "1941709461971783680",
+      "name": "hayder",
+      "username": "jadidbourbaki"
+    },
+    "1699233118291361792": {
+      "id": "1699233118291361792",
+      "name": "Basit Mustafa",
+      "username": "moltar81435"
+    },
+    "1891921937108172800": {
+      "id": "1891921937108172800",
+      "name": "Andrew Ross",
+      "username": "AndrewRoss00"
+    },
+    "1945909917031731200": {
+      "id": "1945909917031731200",
+      "name": "chiefofautism",
+      "username": "chiefofautism"
+    },
+    "1927821221095202816": {
+      "id": "1927821221095202816",
+      "name": "Dawn",
+      "username": "Dawn23871512983"
+    },
+    "1711422261742252032": {
+      "id": "1711422261742252032",
+      "name": "Tavio Lawrence",
+      "username": "Secondmindsys"
+    },
+    "1640106152150065153": {
+      "id": "1640106152150065153",
+      "name": "Satyaki Upadhyay",
+      "username": "satyaki_u"
+    },
+    "1657182935525752832": {
+      "id": "1657182935525752832",
+      "name": "High Jack",
+      "username": "jackadoresai"
+    }
+  },
+  "thread_fetch_error": null
+}
