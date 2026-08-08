@@ -48,7 +48,7 @@ The decomposition assumes `I` exists and is known to the user. When the intent i
 ## Open Questions
 
 - Can the three contributions be measured per-deployment rather than merely separated in a controlled study? Ma et al. show the separation is possible in principle; a per-system decomposition would let a team see which remedy has the best return before spending on it.
-- Interpreter failure rates are model properties that improve with model generation, while underspecification is a property of the specification language and does not. Whether the practical mix shifts toward underspecification as models improve is testable but untested here.
+- With the assembled input held fixed, interpreter failure rates are model properties that can improve with model generation, while underspecification belongs to the input and does not. Memory or context assembly can narrow the effective specification by adding information; that changes the input rather than improving its interpreter. Whether the practical mix shifts toward underspecification as models improve is testable but untested here.
 
 ---
 

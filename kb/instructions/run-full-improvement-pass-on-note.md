@@ -5,7 +5,7 @@ type: kb/types/instruction.md
 
 # Run a full improvement pass on one note
 
-Sequence five validated method families — the compression bundle, `critique-note`, `composition-friction-gate`, every catalog review bundle under `kb/instructions/review-gates/`, and `cp-skill-connect` — into one ordered pass over a single note, reconcile their output into one editorial packet, apply it, run a flow/coherence copyedit, and close review over the final text with one assay cycle. This instruction does not replace the individual methods; it orders them, settles the disagreements between them, and carries the result through to an edited and re-assayed note. Method fit varies by note shape — treat a note whose shape surprises you with extra scrutiny; the per-method rationale below (see "Why this order") states what each validation run actually found.
+Sequence five validated method families — the compression bundle, `critique-note`, `composition-friction-gate`, every catalog review bundle under `kb/instructions/review-gates/`, and `cp-skill-connect` — into one ordered pass over a single note. Reconcile their output into an editorial packet that identifies the note's warranted contribution, apply it, run a flow/coherence copyedit, and close review over the final text with one assay cycle. This instruction does not replace the individual methods; it orders them, settles the disagreements between them, and carries the result through to an edited and re-assayed note. Method fit varies by note shape — treat a note whose shape surprises you with extra scrutiny; the per-method rationale below (see "Why this order") states what each validation run actually found.
 
 Catalog review bundles (always requested together in steps 5 and 10): `accessibility`, `complexity`, `frontmatter`, `prose`, `semantic`, `sentence`, `structural`. The selector skips gates that do not apply to the note's `type:` or `traits:`; do not treat a skipped gate as a passed gate.
 
@@ -19,7 +19,7 @@ Concurrency precondition: from step 1 until the pass stops after step 8 or compl
 
 Derive `<note-name>` from `{note-path}` as the filename without its extension (`kb/notes/linking-theory.md` → `linking-theory`). At the start of every invocation mint a unique `<pass-id>` (a UTC timestamp plus a short random suffix is sufficient). Retain reports under `kb/reports/full-pass/<note-name>/<pass-id>/{initial,closing}/`; never reuse a pass ID or overwrite an initial report.
 
-Steps 1 through 7 below only write reports; none of them edit the note. For a `keep` Disposition, steps 8 and 9 apply the packet and run a final flow pass, and step 10 closes review over those edits without starting another transformation round. When step 7 concludes the note should not exist as a unit (Disposition `delete` or `merge`), leave the note byte-identical and stop after handing back the packet — see step 8.
+Steps 1 through 7 below only write reports; none of them edit the note. For a `keep` Disposition with a determined warranted contribution, steps 8 and 9 apply the packet and run a final flow pass, and step 10 closes review over those edits without starting another transformation round. When step 7 concludes that the note should not exist as a unit (Disposition `delete` or `merge`) or that its contribution is underdetermined, leave the note byte-identical and stop after handing back the packet — see step 8.
 
 ## Execution roles and isolation
 
@@ -44,6 +44,7 @@ At most one matching pending report may exist for a source. If more than one exi
 - **`composition-friction-gate` third.** A third orthogonal axis again: not context cost, not defensibility against an opponent, but whether the claim survives concretization at all and which inferential joints are least supported. Like `critique-note` it runs adversarially in a fresh sub-agent, so it sits next to it in the sequence. Unlike every other step here, it must not resolve to PASS/WARN or remove/compress/keep — see "Reconciling disagreement" for how its output is carried into the packet without collapsing that rule.
 - **All catalog review bundles, always fourth.** Run every bundle under `kb/instructions/review-gates/` in one requested-mode selector call. Each bundle is an orthogonal lens; together they cover truth and grounding (`semantic`), metadata-as-claim (`frontmatter`), section shape and proportion (`complexity`), paragraph rhetoric and reference hygiene (`prose`), sentence clarity and attribution (`sentence`), presentation structure (`structural`), and reader load from opaque terms (`accessibility`). Case 02 showed `semantic` and compression can diverge sharply: `semantic/load-bearing-qualifiers` positively defended a section that marginal-value-redundancy correctly flagged, because semantic gates ask whether qualifiers are necessary for truth, not whether a paragraph adds marginal value. The same non-correlation applies across bundles — keep complementary findings rather than letting one bundle veto another. Like critique, this step writes freshness baselines; unlike critique, verdict-kind pairs complete with outcomes. It always runs every applicable gate rather than substituting judgment about whether the note looks mature enough to skip a lens.
 - **`cp-skill-connect` last of the report-only steps.** Connect summarizes the note's current claim, mechanism, and tensions to prospect for links; running it last means the synthesis packet's connection candidates reflect the same reading of the note that produced the earlier findings, instead of being a disconnected report gathered at a different point in the reasoning.
+- **Contribution selection belongs in synthesis.** Whether the note offers a non-generic, warranted update depends on several inputs already present in step 7: the artifact-supported intent, critique and semantic findings about warrant, compression's buried-versus-undetermined distinction, and connect's account of what the KB already supplies. Another isolated gate would lack that combined comparison surface. The packet therefore carries a pass-local contribution brief; it is a diagnostic reconstruction from the incumbent, not an independent record of the original commission.
 - **Flow/coherence pass after body edits, not before.** Compressing, deleting, and rehoming material breaks transitions the original prose relied on. Running a readability pass before those edits land would polish sentences this instruction is about to cut; it belongs after the substantive content is settled.
 - **Why several orthogonal checks at all, and why synthesis over voting.** Each of compression, critique-note, composition-friction-gate, the catalog bundles, and connect tests a different, structurally independent property, so their failures don't correlate the way repeated passes of the same check would. Step 7 reconciles by keeping complementary findings rather than voting one down — these methods answer different sub-problems, not the same question twice, so disagreement between them is signal to preserve, not noise to resolve by majority.
 
@@ -74,15 +75,27 @@ At most one matching pending report may exist for a source. If more than one exi
 6. Run `cp-skill-connect` against the note and immediately copy its canonical report to `kb/reports/full-pass/<note-name>/<pass-id>/initial/connect.md`. The closing connect run writes the same canonical report path and will overwrite it; the pass-scoped copy is the retained initial evidence.
 7. Synthesize the retained reports (below) into one typed packet at `kb/reports/full-pass/<note-name>/<pass-id>/full-pass-report.md`, including the note-level Disposition (`keep`, `delete`, or `merge into <target>` — see "Reconciling disagreement"). This is the only step among 1–7 that reconciles disagreement; do not just concatenate the reports.
 
+   Before choosing the Disposition or body edits, write the packet's **Warranted contribution** section. Read the target collection's `COLLECTION.md`. Use an intended reader stated in the artifact when present. Otherwise use the consuming audience in the repository's KB purpose, narrowed by the collection contract when it supplies a narrower audience. Then answer:
+
+   > Relative to the intended reader and the existing KB, what does this artifact warrant the reader to understand, infer, believe, or do that a generic treatment would not?
+
+   Derive the answer only from the artifact, repository and collection contracts, retained reports, explicit user direction, and retained intent supplied for this pass. Treat a context block as retained intent only when it identifies its source, subject, scope, and whether its role is authoritative or advisory. Record which input selected the contribution. Current user direction prevails. If retained intent conflicts with the incumbent or another applicable input and no explicit precedence resolves the conflict, use `UNDETERMINED`; do not silently amend the contribution. User direction or remembered intent may select it; neither warrants factual claims. Treat memory as a separate input rather than meaning extracted from the prompt, and do not add an ad hoc history search to this procedure. Use connect to establish what the KB already supplies; use critique and semantic findings to assess warrant; and use compression findings to distinguish a buried contribution from an undetermined one. A connection or synthesis candidate may not become a new angle merely because it is available in the report. Preserve differences among observations, deductions, and conjectures when stating the warrant. Model familiarity is not evidence that a contribution is old, and model surprise is not evidence that it matters.
+
+   Set `Update` to one artifact-supported sentence, `UNDETERMINED`, or `NONE`. Use `UNDETERMINED` when materially different reader priors, angles, or contributions remain after applying the repository audience fallback and nothing in the authorized inputs selects one. This is a specification gap in the available inputs, not a reason to retry with a stronger model. A later run may close it if a memory channel supplies relevant retained intent. Before finalizing an `UNDETERMINED` packet, ask the user one focused question that presents the competing choices. If the user answers, record that live direction as the source of intent and finish synthesis. If no answer is available, retain `UNDETERMINED` and stop as step 8 specifies; a later invocation may use explicit user direction or supplied memory. Use `NONE` only when no distinct contribution remains after comparison with the reader and KB baseline; missing but repairable warrant belongs in the Warrant field, not in `NONE`. This section is a pass-local revision brief, not independent evidence of original intent.
+
    If the disposition is `merge`, treat the target as provisional until you read it fully, confirm that the rationale still applies, write its exact UTF-8 text to packet-relative `merge-target.txt`, and record its logical path, H1 title, and text SHA-256. From that capture until the report is finalized, no other actor may edit the target. If the rationale fails against the captured target, choose `keep` or `delete` instead; do not retain provisional merge fields.
 
    Write every frontmatter field and the canonical `Resolution` section shown in the Output Contract. A `keep` report starts `not-required`; `delete` and `merge` start `pending`. Run `commonplace-validate <report-path>` and stop on any failure.
-8. Read the packet's Disposition first. If it is `delete` or `merge`, do not edit the note or apply the packet's body edits. Leave the note byte-identical, retain the pass directory, hand back `kb/reports/full-pass/<note-name>/<pass-id>/full-pass-report.md`, and stop the pass — skip steps 9 and 10. The packet is the sole handoff until the disposition is accepted, rejected, or superseded; executing the deletion or merge belongs to whoever reads it, not to this instruction.
+8. Read the packet's Warranted contribution and Disposition first. If `Update` is `UNDETERMINED`, the Disposition must be `keep`, Body edits must be empty, and Open items must state the competing choices and the missing selecting input or authorial decision. Do not invent an angle or apply even locally safe polish: leave the note byte-identical, hand back the packet, and stop before steps 9 and 10.
+
+   If `Update` is `NONE`, use the existing note-level evidence to choose `merge` when another artifact already owns the contribution or `delete` when no distinct definition, record, reference, or audience-specific expository function remains. Both dispositions remain pending for user authority. Do not use `NONE` with `keep` to polish a generic note.
+
+   If the Disposition is `delete` or `merge`, do not edit the note or apply the packet's body edits. Leave the note byte-identical, retain the pass directory, hand back `kb/reports/full-pass/<note-name>/<pass-id>/full-pass-report.md`, and stop the pass — skip steps 9 and 10. The packet is the sole handoff until the disposition is accepted, rejected, or superseded; executing the deletion or merge belongs to whoever reads it, not to this instruction.
 
    Otherwise (Disposition `keep`), run `commonplace-guard-full-pass-report <report-path>` immediately before the first edit. Continue only on exit 0 with every input `matching`. On exit 1 with `changed`, do not edit the note; render the report as `superseded` with `version-guard` authority and stop. A `missing` or `corrupt-capture` result, or exit 2, requires reconciliation and leaves the report unchanged.
 
    After a successful guard, apply the packet's body edits directly to the note. If `composition-friction-gate` ran, reread its report's "For the human" line against the edited text before moving on. This is not a re-run of the gate — just a check that the one thing it pointed to is still accurate, or has actually been addressed, now that the edit has changed the prose around it. If it looks wrong given the edit, note that in the packet's Open items rather than silently re-editing.
-9. Run a final revise pass over the edited note with exactly this prompt: `revise the note for flow, coherence, logic and readability`. Give a newly isolated sub-agent that performed no earlier work in this pass (or yourself, if editing directly) only the current note text and that prompt — not the packet or the underlying reports. Do not use a follow-up turn to a reviewer from steps 2–6. This step is a copyedit pass, not a second chance to re-open the content decisions steps 1–8 already made; it should not reintroduce material step 8 removed or add new claims. **Do not start step 10 until this step completes and `{note-path}` is stable on disk.**
+9. Run a final revise pass over the edited note with exactly this prompt: `revise the note for flow, coherence, logic and readability`. Give a newly isolated sub-agent that performed no earlier work in this pass (or yourself, if editing directly) only the current note text and that prompt — not the packet or the underlying reports. Do not use a follow-up turn to a reviewer from steps 2–6. This step is a copyedit pass, not a second chance to re-open the content decisions steps 1–8 already made; it should not reintroduce material step 8 removed, add new claims, or replace the selected contribution with a more generic treatment. **Do not start step 10 until this step completes and `{note-path}` is stable on disk.**
 10. Run one closing cycle over all five method families, as specified in "Closing cycle" below — **only after step 9 has finished**. Append its summary to `full-pass-report.md`; route residual findings to Open items and stop after this one cycle.
 
 ### Synchronization: steps 8–10
@@ -112,7 +125,7 @@ Rerun critique through the step-3 flow. Immediately copy finalized catalog-bundl
 
 Rerun the compression bundle, composition-friction-gate, and connect directly against the final text. Retain them under `closing/`. Copy connect's canonical report into `closing/connect.md` immediately after the skill returns; this closing run overwrites the canonical report used in step 6 but never the retained `initial/connect.md`.
 
-Read every closing report against the edited note. Add any remaining actionable finding to the packet's Open items; do not start another edit-and-review round. The friction report's "For the human" line remains routed attention and must not be collapsed into an automatic verdict.
+Read every closing report against the edited note. Repeat the packet's warranted-contribution comparison against the same intended reader and KB baseline, and record whether the final text strengthened, preserved, weakened, changed, or made the selected update undetermined. A newly introduced angle is a protocol failure, even if it seems more interesting. Route `weakened`, `changed`, and `undetermined` results to Open items. Do not start another edit-and-review round. The friction report's "For the human" line remains routed attention and must not be collapsed into an automatic verdict.
 
 Append this section to the packet:
 
@@ -127,6 +140,7 @@ Append this section to the packet:
 | composition-friction-gate | SURVIVES/DISSOLVES summary | yes/no |
 | accessibility / complexity / frontmatter / prose / semantic / sentence / structural | per-bundle pass/warn/fail summary | yes/no |
 | connect | candidate summary | yes/no |
+| warranted contribution | strengthened / preserved / weakened / changed / undetermined | yes/no |
 ```
 
 ## Reconciling disagreement
@@ -136,7 +150,9 @@ Append this section to the packet:
 - If `prose` or `sentence` findings overlap with `semantic` findings on the same passage, keep both when the underlying tests differ (for example grounding alignment vs. parsing ambiguity); compress to one row only when the finding and recommended action are identical.
 - Route `frontmatter` findings that require title or description changes into Body edits with explicit actions; do not leave metadata fixes only in Open items when the packet already commits to substantive edits.
 - Treat connect's candidates as additive: they extend the note's outbound links and do not bear on whether body content should be cut, so list them separately from the body-edit recommendations. One exception: a near-duplicate connect surfaces may inform the packet's Disposition (next bullet) — it still never justifies a passage-level cut.
-- **Disposition is a note-level judgment, made once in step 7.** Set `delete` or `merge into <target>` only when a finding is about the note as a unit, not about a passage: connect surfaces an existing note that already carries the same claim and mechanism (merge); the compression bundle finds no passage that earns its context cost (delete); or `critique-note` shows the central commitment indefensible with no repair short of a different note (delete, with the packet recording what a replacement would need). Do not reach a non-`keep` disposition by summing passage-level cuts — a note every section of which got compressed can still deserve to exist.
+- Keep a Body edit only when its action and rationale state how it surfaces or sharpens the selected update, strengthens or protects its warrant, or removes material that does none of those jobs. Correctness and epistemic-status repairs normally strengthen warrant; generic fluency, extra coverage, or citation count alone do not justify an edit.
+- Ground every claim that a contribution is generic or distinctive in the declared reader baseline or the closest KB alternatives surfaced by connect. Do not use model familiarity, surprise, or novelty of phrasing as a proxy for reader update.
+- **Disposition is a note-level judgment, made once in step 7.** Set `delete` or `merge into <target>` only when a finding is about the note as a unit, not about a passage: connect surfaces an existing note that already carries the same claim and mechanism (merge); the compression bundle finds no passage that earns its context cost (delete); `critique-note` shows the central commitment indefensible with no repair short of a different note (delete, with the packet recording what a replacement would need); or the warranted-contribution comparison records `NONE` after excluding a distinct definition, record, reference, or audience-specific expository function (merge when another artifact owns the useful residue, otherwise delete). Do not reach a non-`keep` disposition by summing passage-level cuts — a note every section of which got compressed can still deserve to exist.
 - **Carry `composition-friction-gate`'s findings unresolved.** Do not convert its filter verdict or its ranked joints into a remove/compress/keep action the way the other methods' findings are converted. Put them in the packet's dedicated "Routed attention" section verbatim, out of scope for step 8's automatic application — the same status as the "Open items" section, not a body edit. This is the one deliberate exception to "reconcile, don't concatenate" — reconciling this gate's output the way the others are reconciled would recreate the self-graded verdict its own hard rule forbids. If a thin joint turns out, on the editor's judgment, to need a real fix, that judgment call belongs to whoever reads the packet, not to this instruction.
 
 ## Output Contract
@@ -167,16 +183,19 @@ resulting_paths: []
 **Target:** `<note-path>`
 **Reports used:** compression bundle, critique-note, composition-friction-gate, catalog review bundles (`accessibility`, `complexity`, `frontmatter`, `prose`, `semantic`, `sentence`, `structural`), connect
 
-## Strongest retained claim
-<one sentence, reconciled from the compression bundle and critique-note>
+## Warranted contribution
+**Reader and prior:** <intended reader or use, the input that determines it and that input's source and role, and the relevant existing-KB baseline>
+**Update:** <one artifact-supported sentence | UNDETERMINED | NONE>
+**Why a generic treatment would not supply it:** <the specific delta, the competing choices when undetermined, or why no delta remains>
+**Warrant:** <the evidence and reasoning route, preserving material differences in epistemic status and naming repairable limits>
 
 ## Disposition
-**keep | delete | merge into `<target-path>`** — <for delete/merge: one-line rationale naming the source finding; for keep: "no note-level finding" suffices>
+**keep | delete | merge into `<target-path>`** — <for delete/merge: one-line rationale naming the source finding; for keep: "no note-level finding" or "contribution undetermined; retained intent or authorial choice required">
 
 ## Body edits
 | Location | Source method(s) | Finding | Action | Rationale |
 |---|---|---|---|---|
-| ... | compression/branch-bloat | ... | remove/compress/split/keep | ... |
+| ... | compression/branch-bloat | ... | remove/compress/split/keep | <how this affects the update or its warrant> |
 | ... | critique-note | ... | ... | ... |
 
 ## Routed attention (composition-friction-gate — not auto-resolved)
@@ -207,7 +226,7 @@ Add matching subsections for any other bundle with findings (`accessibility`, `c
 - <label> -> <target> — <reason, from connect report>
 
 ## Proposed revision shape
-<short outline of the note after the body edits above>
+<short outline of the note after the body edits above, or "Not produced — contribution undetermined">
 
 ## Open items
 <branches or claims that need evidence before a rehoming or deletion decision can be made, plus any routed-attention item above that the editor judges worth acting on>
@@ -222,7 +241,7 @@ Add matching subsections for any other bundle with findings (`accessibility`, `c
 **Resulting paths:** —
 ```
 
-Never omit "Routed attention" — even a clean SURVIVES with no thin joints below THIN is worth one line, since silently dropping the section would make the friction gate's absence indistinguishable from a clean result. Never omit "Disposition" either: an explicit `keep` distinguishes "considered and kept" from "never considered".
+Never omit "Warranted contribution", "Routed attention", or "Disposition". The first makes the contribution-selection experiment inspectable; even a clean SURVIVES with no thin joints below THIN is worth one line, since silently dropping Routed attention would make the friction gate's absence indistinguishable from a clean result. An explicit `keep` distinguishes "considered and kept" from "never considered".
 
 `kb/reports/full-pass/*`, `kb/reports/critique/*`, `kb/reports/friction/*`, and `kb/reports/connect/*` are gitignored inspection artifacts. Quote or restate enough of each source report's substance directly into the packet that it stands alone. Retain the pass directory while its packet or residual findings are still in use; delete it after those outputs have been consumed. An unactioned `delete`/`merge` Disposition counts as still in use, so retain its packet until someone accepts, rejects, or supersedes it.
 
@@ -231,6 +250,7 @@ Never omit "Routed attention" — even a clean SURVIVES with no thin joints belo
 - Do not edit the note before step 8. Steps 1–7 produce a plan; step 8 applies it.
 - Do not skip any catalog review bundle in step 5 or the closing cycle. Request all seven bundles every time; let the selector skip non-applicable gates, not the orchestrator.
 - Do not hand back the raw reports as the deliverable. The reconciled packet is the point of steps 1–7.
+- Do not infer a contribution from the topic, a generic treatment, model familiarity, or an attractive connection candidate. If the authorized inputs do not select one, record `UNDETERMINED` and stop before editing.
 - Do not resolve a compression-vs-catalog-bundle disagreement by dropping one finding; record both and let the packet's reader judge, since they test different properties.
 - Do not convert `composition-friction-gate`'s filter verdict or thinnest-joints ranking into a remove/compress/keep action. Its hard rule against self-graded verdicts is why this instruction carries its findings unresolved instead of reconciling them like the others.
 - Do not let the step 9 revise pass change claims, add material, or restore anything step 8 cut. If it does, that's a sign the packet's body edits left the note incoherent — fix the edit, not the prose around it.
@@ -244,4 +264,5 @@ Relevant Notes:
 
 - [Error correction works with above-chance oracles and decorrelated checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — why running compression, critique-note, composition-friction-gate, the catalog bundles, and connect side by side catches more than repeating one check.
 - [Synthesis is not error correction](../notes/synthesis-is-not-error-correction.md) — why step 7 reconciles complementary findings instead of voting one down.
+- [Warranted reader update is the objective of substantive writing](../notes/warranted-reader-update-is-the-objective-of-substantive-writing.md) — rests-on: why the packet must compare a specific reader update and its warrant with generic and existing-KB alternatives instead of polishing the topic.
 - [Resolve a full-pass disposition](./resolve-full-pass-disposition.md) — applies-when: a retained delete or merge report needs inspection or resolution
