@@ -38,11 +38,11 @@ Each surface below is derived from the authored markdown; none of it is committe
 |---|---|---|
 | Directory listing pages (per-collection `dir-index.md`) | Title, description, and type of every note in the directory | ProperDocs hook, build time only |
 | Per-tag generated listings (below each curated tag index) | Notes grouped by tag, minus already-curated entries | ProperDocs hook, build time only |
-| ProperDocs static site | Entire `kb/` tree, configured by `properdocs.yml` | `uv run --extra docs properdocs build` |
+| ProperDocs static site | Public KB artifacts, excluding raw source captures, generated reports, and configured workshop fixtures | `uv run --extra docs properdocs build` |
 
 Agents enumerate the same information on demand with the scoped `rg` recipes in [navigation.md](./navigation.md).
 
-The `redirect_maps` block in `properdocs.yml` preserves external URLs across note renames.
+The `redirect_maps` block in `properdocs.yml` preserves external URLs across published note renames. Source ingest analyses render on the site; their raw snapshots stay in Git for agent use but are excluded from the site because they duplicate externally hosted material.
 
 ## Generated reports
 

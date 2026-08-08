@@ -21,7 +21,7 @@ This is why `kb/README.md` does **not** appear on the site: `kb/index.md` shadow
 
 The nav is generated, not hand-listed. `src/commonplace/docs/properdocs_hooks.py:on_config` walks the directories directly under `docs_dir` and adds a top-nav entry for each one that contains a `README.md`, pointing at that README. `Home` (fixed to `index.md`) leads the list; external `Recent Changes` and `GitHub` links bracket the end. Adding a collection to the nav means giving its directory a `README.md`; nothing in `properdocs.yml` lists collections.
 
-`properdocs.yml` also carries a `redirect_maps` block (preserves external URLs across note renames; written by `commonplace-relocate-note`) and `exclude_docs` (keeps `reports/**` and a few workshop fixtures out of the build). Per-collection `dir-index.md` and per-tag listing pages are generated at build time only (ADR 025), covered in [storage-architecture.md](./storage-architecture.md).
+`properdocs.yml` also carries a `redirect_maps` block (preserves external URLs across note renames; written by `commonplace-relocate-note`) and `exclude_docs`. The exclusion keeps generated reports, raw source captures, and a few workshop fixtures out of the build. Ingest analyses under `kb/sources/` still render; their paired snapshots remain Git-tracked evidence for agents, but the site does not republish copies of externally hosted pages. Per-collection `dir-index.md` and per-tag listing pages are generated at build time only (ADR 025), covered in [storage-architecture.md](./storage-architecture.md).
 
 ## Landing-page inventory
 
