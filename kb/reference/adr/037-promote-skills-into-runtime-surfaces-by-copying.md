@@ -1,5 +1,5 @@
 ---
-description: Replaces symlink and Windows-junction skill projections with real copied directories in commonplace-init, migrating legacy links to copies on re-init
+description: Replaces symlink and Windows-junction skill projections with real copied directories in commonplace-init
 type: ../types/adr.md
 tags: []
 status: accepted
@@ -22,7 +22,7 @@ ADR 027 already removed symlinks from the packaging side for the same reason: Un
 
 `commonplace-init` copies each promoted skill directory from `kb/commonplace/instructions/<name>/` into every runtime skills directory as regular files. Projected files go through the same per-file `_record_existing` classification as the rest of the scaffold: missing files are created, identical files are preserved silently, and differing files are preserved and reported.
 
-A symlink or junction found at a projection destination — left by an install from an earlier version — is removed and replaced with a copy on re-init. The junction fallback and the skipped-projection reporting are deleted; copying works on every platform, so there is no partial-failure path left.
+The junction fallback and skipped-projection reporting are deleted; copying works on every platform, so there is no partial-failure path in new projection creation. The initial implementation also converted link projections left by earlier installs. That temporary migration branch was removed after relevant installations had migrated. Current init applies the ordinary per-file preservation rules to anything already present at a projection destination.
 
 The canonical contract stays the source directory under `kb/commonplace/instructions/`. The Commonplace source repo keeps its committed relative symlinks under `.claude/skills/` and `.agents/skills/` — those are repo-local development conveniences on platforms that support them, not installer output.
 

@@ -10,7 +10,7 @@ The review subsystem's assumptions about project shape are hardcoded as module-l
 
 ## Current state (as of 2026-07-13)
 
-General freshness and review execution share one operational store ([ADR 052](../adr/052-general-freshness-store-review-first-migration.md)). Store path resolution lives in `commonplace.store` (`kb/reports/commonplace-store.sqlite`; `COMMONPLACE_STORE`, with `COMMONPLACE_REVIEW_DB` as a legacy fallback). Review modules re-export `DEFAULT_DB_PATH` and `resolve_db_path` from there. A `ReviewConfig` would still be review-owned, but its `db_path` field should align with `commonplace.store` rather than reintroducing a review-only default.
+General freshness and review execution share one operational store ([ADR 052](../adr/052-general-freshness-store-review-first-migration.md)). Store path resolution lives in `commonplace.store` (`kb/reports/commonplace-store.sqlite`; `COMMONPLACE_STORE`). Review modules re-export `DEFAULT_DB_PATH` and `resolve_db_path` from there. A `ReviewConfig` would still be review-owned, but its `db_path` field should align with `commonplace.store` rather than reintroducing a review-only default.
 
 Project-shape constants partition cleanly by owner:
 
@@ -31,7 +31,7 @@ The hardcoded scan roots are the operative limitation: `list_reviewable_notes` w
 
 ## The design
 
-One frozen dataclass `ReviewConfig` in `commonplace.review`, holding the review-owned table above, constructed once per CLI invocation from defaults merged with a per-project override source, and passed explicitly to the functions that consume it — no module-global mutation, no import-time `Path.cwd()`, following the existing `repo_root`/`db_path` threading convention. Its `db_path` default delegates to `commonplace.store.resolve_db_path` so review and freshness CLIs share one override story (`COMMONPLACE_STORE`, legacy `COMMONPLACE_REVIEW_DB`, `--db`).
+One frozen dataclass `ReviewConfig` in `commonplace.review`, holding the review-owned table above, constructed once per CLI invocation from defaults merged with a per-project override source, and passed explicitly to the functions that consume it — no module-global mutation, no import-time `Path.cwd()`, following the existing `repo_root`/`db_path` threading convention. Its `db_path` default delegates to `commonplace.store.resolve_db_path` so review and freshness CLIs share one override story (`COMMONPLACE_STORE`, `--db`).
 
 The core deliberately gets nothing: if a stable-core constant ever needs per-project variation, it gets its own object then, with its own (slower) change cadence. The two configs share at most an override-file format, not a type.
 

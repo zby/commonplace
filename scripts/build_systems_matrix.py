@@ -7,7 +7,7 @@ One row per code-backed review file in kb/agent-memory-systems/reviews/, keyed b
 and missing/mismatched values are flagged, not trusted. Doc-grounded reviews under
 lightweight/ are intentionally excluded from this code-based matrix. The parsing
 logic lives in the package library `commonplace.lib.systems_matrix` (text-in,
-row-out, unit-tested); this runner owns file discovery, the legacy identity join
+row-out, unit-tested); this runner owns file discovery, the existing identity join
 (public_repo / clone_path), and CSV writing. Hand-classified columns are
 preserved across runs by review_file. Off-vocabulary tokens, missing frontmatter,
 and tier mismatches are reported, not guessed.
@@ -77,17 +77,12 @@ def read_source_tier(path: Path) -> str | None:
 
 
 def load_inventory() -> list[dict[str, str]]:
-    """Legacy systems.csv rows, for the public_repo / clone_path join."""
+    """Current systems.csv rows for identity joins and hand-authored columns."""
     if not SYSTEMS_CSV.exists():
         return []
-    legacy = {"system name": "system_name", "public repo": "public_repo",
-              "path to cloned repo": "clone_path"}
     with SYSTEMS_CSV.open(encoding="utf-8") as fh:
         rows = list(csv.DictReader(fh))
-    out = []
-    for r in rows:
-        out.append({legacy.get(k, k): (v or "").strip() for k, v in r.items()})
-    return out
+    return [{key: (value or "").strip() for key, value in row.items()} for row in rows]
 
 
 def main() -> int:
@@ -133,14 +128,14 @@ def main() -> int:
             for c in COLUMNS:
                 if c not in PARSED and c not in JOINED and old.get(c):
                     row[c] = old[c]
-        # join identity. Prefer explicit current-review metadata over the legacy
-        # CSV inventory so renamed/colliding reviews cannot inherit stale rows.
+        # Prefer explicit review metadata over the existing CSV inventory so
+        # renamed or colliding reviews cannot inherit stale rows.
         key = norm(path.stem)
         explicit_repo, explicit_clone = read_review_identity(path)
         if explicit_repo or explicit_clone:
-            legacy_repo, legacy_clone = ident.get(key, ("", ""))
-            row["public_repo"] = explicit_repo or legacy_repo
-            row["clone_path"] = explicit_clone or derive_clone_path(explicit_repo) or legacy_clone
+            prior_repo, prior_clone = ident.get(key, ("", ""))
+            row["public_repo"] = explicit_repo or prior_repo
+            row["clone_path"] = explicit_clone or derive_clone_path(explicit_repo) or prior_clone
             joined += 1
             rows.append(row)
             for f in flags:

@@ -12,7 +12,6 @@ SCHEMA_PATH = "store-schema.sql"
 DEFAULT_DB_PATH = Path("kb/reports/commonplace-store.sqlite")
 LEGACY_DB_PATH = Path("kb/reports/review-store.sqlite")
 DB_ENV_VAR = "COMMONPLACE_STORE"
-LEGACY_DB_ENV_VAR = "COMMONPLACE_REVIEW_DB"
 
 EXPECTED_TABLES = frozenset(
     {
@@ -47,7 +46,7 @@ def connect(db_path: Path) -> sqlite3.Connection:
 def resolve_db_path(repo_root: Path, db_override: str | None = None) -> Path:
     if db_override:
         return Path(db_override).resolve()
-    raw = os.environ.get(DB_ENV_VAR, "").strip() or os.environ.get(LEGACY_DB_ENV_VAR, "").strip()
+    raw = os.environ.get(DB_ENV_VAR, "").strip()
     if raw:
         db_path = Path(raw)
         if not db_path.is_absolute():

@@ -244,7 +244,7 @@ def test_installation_warnings_report_missing_package_commands(
     )
     monkeypatch.setattr(init_project_module, "_uv_tool_bin", lambda: None)
 
-    lines = installation_warnings(tmp_path)
+    lines = installation_warnings()
 
     assert any("commonplace-validate" in line and "not on PATH" in line for line in lines)
     assert any("uv tool update-shell" in line for line in lines)
@@ -257,7 +257,7 @@ def test_installation_warnings_report_missing_uv(
     monkeypatch.setattr(init_project_module, "_installed_command_names", lambda: ())
     monkeypatch.setattr(init_project_module, "_uv_tool_bin", lambda: None)
 
-    lines = installation_warnings(tmp_path)
+    lines = installation_warnings()
 
     assert any("uv is not on PATH" in line for line in lines)
 
@@ -279,7 +279,7 @@ def test_installation_warnings_report_shadowing_commands(
         init_project_module, "_uv_tool_bin", lambda: Path("/user/uv-tool-bin")
     )
 
-    lines = installation_warnings(tmp_path)
+    lines = installation_warnings()
 
     assert any("resolve outside uv's tool executable directory" in line for line in lines)
     assert any("do not use uv tool install --force" in line for line in lines)
@@ -302,23 +302,4 @@ def test_installation_warnings_empty_for_healthy_tool_install(
         init_project_module, "_uv_tool_bin", lambda: Path("/user/uv-tool-bin")
     )
 
-    assert installation_warnings(tmp_path) == []
-
-
-def test_main_reports_windows_init_failure(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
-) -> None:
-    monkeypatch.setattr(init_project_module.sys, "platform", "win32")
-    monkeypatch.setattr(init_project_module, "installation_warnings", lambda _: [])
-
-    def fail_init_project(root: Path, name: str | None = None) -> init_project_module.InitReport:
-        raise OSError("symbolic link privilege not held")
-
-    monkeypatch.setattr(init_project_module, "init_project", fail_init_project)
-
-    exit_code = init_project_module.main(["--root", str(tmp_path), "--name", "myproject"])
-
-    captured = capsys.readouterr()
-    assert exit_code == 1
-    assert "Failed to initialize Commonplace project" in captured.out
-    assert "symbolic link privilege not held" in captured.out
+    assert installation_warnings() == []

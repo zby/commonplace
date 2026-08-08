@@ -16,7 +16,7 @@ For review execution (jobs, pairs, finalization, prompts), see [review architect
 |---|---|
 | `kb/reports/commonplace-store.sqlite` | Current operational database (review + freshness) |
 | `kb/reports/review-store.sqlite` | Schema-v7 backup; read-only migration source |
-| `COMMONPLACE_STORE` | Env override for store path (`COMMONPLACE_REVIEW_DB` still honored as fallback) |
+| `COMMONPLACE_STORE` | Env override for store path |
 
 `commonplace.store` owns connection setup, schema version refusal (`PRAGMA user_version = 1`), foreign-key enforcement, and whole-store integrity dispatch. `commonplace.review.review_schema` delegates to it. If the new default is absent but the legacy backup exists beside it, store preparation refuses with a migration command rather than creating an empty database.
 
