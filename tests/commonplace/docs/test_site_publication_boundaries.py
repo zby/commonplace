@@ -1,15 +1,15 @@
 from pathlib import Path
 
 import yaml
-from mkdocs.config import load_config
+from properdocs.config.config_options import PathSpec
 
 
 ROOT = Path(__file__).resolve().parents[3]
 
 
 def test_raw_sources_stay_out_while_ingests_are_published() -> None:
-    config = load_config(config_file=str(ROOT / "properdocs.yml"))
-    excluded = config["exclude_docs"]
+    config = yaml.safe_load((ROOT / "properdocs.yml").read_text(encoding="utf-8"))
+    excluded = PathSpec().run_validation(config["exclude_docs"])
 
     assert excluded.match_file("sources/example.md")
     assert excluded.match_file("sources/example.json")
