@@ -38,7 +38,8 @@ First-principles exploration counters this failure by moving search outward befo
 - identify the boundary commitments and the constraint packets they bring;
 - derive questions whose answers change observable consequences;
 - generate materially different positions, including unfamiliar and empty ones;
-- compare alternative seams rather than only implementations behind one seam;
+- compare rival decompositions rather than only implementations behind one seam;
+- rederive the map from a materially different formulation while holding its boundary commitments fixed;
 - apply requirements and discriminating evidence to select among the remaining positions;
 - keep choices not fixed by constraints or evidence cheap to replace.
 
@@ -49,6 +50,10 @@ This is not a demand to enumerate a combinatorial universe before prototyping. P
 Calling an axis first-principled does not make it so. A post-hoc analysis can choose axes that reproduce an already preferred taxonomy, just as it can choose premises broad enough to justify several incompatible practices. [First-principles reasoning selects for explanatory-reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) supplies the negative test: a derivation should rule out a plausible rival, identify the premise that does so, or predict how the conclusion changes when a premise changes.
 
 Applied to a design-space map, that test asks whether changing an axis value predicts a different review method, failure mode, cost, or capability; whether removing an axis collapses cases that behave differently; and whether adding a counterexample forces the map to change. Axes that merely rename familiar packages provide no protection against premature closure.
+
+A single derivation cannot certify its own axes. Hold the problem boundary and inherited commitments fixed, then derive a rival map from a materially different formulation—for example, causal obligations instead of familiar components, temporal transitions instead of stored objects, or consumer requirements instead of producer labels. Compare the requirements and consequences that survive, not whether the maps use the same vocabulary. A claimed necessity preserved while the surrounding allocations change has stronger support; one that disappears may have been imported through the first decomposition.
+
+Agreement is corroboration, not proof: two maps can share a hidden premise. Disagreement narrows the investigation toward a missing axis, a false independence claim, a hidden constraint, a translation or derivation error, or a mismatch in the supposedly fixed boundary. Survival across rival maps does not make a requirement a first principle—inheritance from a boundary commitment does. It tests whether the claimed necessity survives a changed decomposition rather than merely rationalizing the incumbent architecture.
 
 Even a valid derivation gives conditional rather than universal coverage. As [only derivation and inheritance warrant a decomposition's scope claim](./only-derivation-and-inheritance-warrant-a-scope-claim-use-earns-it.md), the map holds while its generating constraints and distinctions remain operative. First-principles analysis makes that condition explicit so later evidence can revise the map instead of being forced into it.
 
@@ -62,6 +67,7 @@ Even a valid derivation gives conditional rather than universal coverage. As [on
 ## Open Questions
 
 - What evidence is sufficient to treat two design questions as independent axes rather than coupled descriptions of one choice?
+- How different must two formulations be before their agreement counts as independent corroboration rather than a shared hidden premise?
 - How should a designer decide that the materially different regions have been covered well enough to permit closure?
 - Which other Commonplace classifications generate designer options from primitive axes, and which merely catalogue existing practice?
 

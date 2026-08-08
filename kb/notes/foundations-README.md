@@ -28,6 +28,8 @@ Core theory that the rest of the KB builds on. These notes define the quality cr
 
 ### Rationale and design method
 
+- [first-principles analysis maps a design space before selecting within it](./first-principles-analysis-maps-design-space-before-selection.md) — maps consequential alternatives before closure and tests claimed necessities against rival decompositions
+- [human analogies can motivate functions without determining component boundaries](./human-analogies-suggest-functions-not-component-boundaries.md) — retains useful functional hypotheses from human cognition while reopening their allocation across engineered components
 - [design rationale management in Commonplace](../reference/design-rationale-management.md) — descriptive companion: how workshops, proposals, ADRs, and contracts distribute constraints, alternatives, and decisions—and what continuity shipped contracts do not enforce
 - [only derivation and inheritance warrant a decomposition's scope claim; discriminating use earns it](./only-derivation-and-inheritance-warrant-a-scope-claim-use-earns-it.md) — derivation and inheritance give conditional or transferred starting warrant; free choice gives only a pragmatic reason to adopt, and earning stays with use that could have broken the claim
 - [Alexander's patterns connect to knowledge system design at multiple levels](./alexander-patterns-and-knowledge-system-design.md) — (speculative) pattern language as document types, generative processes as codification
