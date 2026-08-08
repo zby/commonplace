@@ -616,16 +616,16 @@ Some evidence.
     assert any("missing '## Reasoning'" in item for item in results.fails)
 
 
-def test_bare_enum_frontmatter_type_fails_validation(tmp_path: Path) -> None:
+def test_non_path_frontmatter_type_fails_validation(tmp_path: Path) -> None:
     notes_root = configure_temp_repo(tmp_path)
     note = write(
-        notes_root / "legacy.md",
+        notes_root / "invalid-type.md",
         """---
-description: Legacy enum-typed note should be rejected after path-valued type migration
+description: Non-path frontmatter type should be rejected by the current path-valued contract
 type: spec
 ---
 
-# Legacy note
+# Invalid type value
 """,
     )
 
@@ -1230,15 +1230,15 @@ def test_types_target_scans_all_type_spec_directories(tmp_path: Path) -> None:
         "# Structured claim type\n",
     )
     write(tmp_path / "kb" / "types" / "text.md", "# Text\n")
-    legacy_template = write(
-        tmp_path / "kb" / "notes" / "types" / "legacy.template.md",
+    template = write(
+        tmp_path / "kb" / "notes" / "types" / "example.template.md",
         "# Template\n",
     )
 
     target = validate_notes.resolve_validation_target("types", repo_root=tmp_path)
 
     assert target.paths == (
-        legacy_template,
+        template,
         local_type,
         global_type,
     )

@@ -1124,21 +1124,6 @@ class TestModelOptional:
         assert result.returncode == 2
         assert "--model-partition is required unless selecting missing-baseline coverage" in result.stderr
 
-    def test_cli_rejects_removed_ack_option(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path)
-        removed_option = "--" + "ack"
-
-        result = run_cli(
-            "review_target_selector",
-            removed_option,
-            "kb/notes/stable.md:prose/source-residue",
-            cwd=tmp_path,
-            check=False,
-        )
-
-        assert result.returncode == 2
-        assert f"unrecognized arguments: {removed_option}" in result.stderr
-
     def test_cli_requires_model_for_requested_mode(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
 

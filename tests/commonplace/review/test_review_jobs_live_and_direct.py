@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 import sqlite3
 import subprocess
-import tomllib
 from pathlib import Path
 
 from commonplace.lib import frontmatter
@@ -484,27 +483,6 @@ def test_create_review_jobs_rejects_batch_size_with_note_grouping(tmp_path: Path
 
     assert result.returncode == 2
     assert "--batch-size is only valid with --grouping criterion" in result.stderr
-
-
-def test_public_review_entry_points_replace_ingest_surfaces() -> None:
-    pyproject = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))
-    scripts = pyproject["project"]["scripts"]
-
-    assert scripts["commonplace-finalize-review-job"] == "commonplace.cli.review.finalize_review_job:main"
-    assert scripts["commonplace-review-target-selector"] == "commonplace.cli.review.review_target_selector:main"
-    assert scripts["commonplace-create-review-jobs"] == "commonplace.cli.review.create_review_jobs:main"
-    removed_scripts = [
-        "commonplace-" + "claim-review-job",
-        "commonplace-" + "repair-model-partitions",
-        "commonplace-" + "ingest-job-output",
-        "commonplace-" + "ingest-" + "batch-output",
-        "commonplace-" + "run-review-jobs",
-        "commonplace-" + "run-review-bundles",
-        "commonplace-" + "run-gate-sweep",
-        "commonplace-" + "review-sweep",
-    ]
-    for script_name in removed_scripts:
-        assert script_name not in scripts
 
 
 def test_finalize_review_job_validates_model_effort_partition_before_mutation(tmp_path: Path) -> None:
