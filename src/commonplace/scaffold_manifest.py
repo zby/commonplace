@@ -71,7 +71,6 @@ MANIFEST = ScaffoldManifest(
     # Resolved with project-specific replacements at install time.
     templates=(
         ("AGENTS.md.template", "AGENTS.md.template"),
-        (".envrc.template", ".envrc"),
     ),
     # Skill directories for supported runtimes; promoted skills are copied
     # into each from kb/commonplace/instructions/<name>.

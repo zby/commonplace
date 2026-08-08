@@ -103,9 +103,11 @@ Clone the repo to explore or contribute to the Commonplace methodology itself, o
 ```bash
 git clone https://github.com/zby/commonplace.git
 cd commonplace
+uv tool install --python ">=3.11" --editable .
+uv tool update-shell
 ```
 
-If you use `direnv`, make sure your shell has the direnv hook installed, then run `direnv allow` once after entering the repo. The `.envrc` sets `PATH` and `UV_CACHE_DIR` for the project. Start Codex or Claude Code from that direnv-loaded interactive shell so the runtime inherits the project venv; otherwise launch it with `direnv exec . <command>`.
+Restart the shells, IDEs, and agent runtimes that need the commands, then call every `commonplace-*` entry point by bare name. The editable tool observes ordinary source changes directly; after dependency, entry-point, build-metadata, or packaged-scaffold changes, rerun it with `uv tool install --reinstall --python ">=3.11" --editable .`. Run development dependencies through the project environment, for example `uv run pytest` and `uv run ruff check .`. This installation is user-level, so the checkout supplies the one active Commonplace command version for that OS user.
 
 ## Prerequisites
 

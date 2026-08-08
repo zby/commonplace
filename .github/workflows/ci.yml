@@ -1,0 +1,105 @@
+name: Test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  test-wheel-tool:
+    name: ${{ matrix.os }} wheel tool
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          python-version: "3.11"
+          tool-bin-dir: ${{ runner.temp }}/uv-tool-bin
+
+      - name: Publish uv tool commands (POSIX)
+        if: runner.os != 'Windows'
+        run: echo "${{ runner.temp }}/uv-tool-bin" >> "$GITHUB_PATH"
+
+      - name: Publish uv tool commands (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: '"${{ runner.temp }}\uv-tool-bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append'
+
+      - name: Run software tests
+        run: uv run pytest
+
+      - name: Build wheel
+        run: uv build --wheel
+
+      - name: Install wheel as uv tool (POSIX)
+        if: runner.os != 'Windows'
+        run: uv tool install --python 3.11 dist/llm_commonplace-*.whl
+
+      - name: Install wheel as uv tool (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $wheel = Get-ChildItem dist\llm_commonplace-*.whl | Select-Object -First 1
+          uv tool install --python 3.11 $wheel.FullName
+
+      - name: Verify every declared entry point resolves from the tool bin
+        shell: python
+        run: |
+          import os
+          from pathlib import Path
+          import shutil
+          import subprocess
+          import sys
+          import tomllib
+
+          with Path("pyproject.toml").open("rb") as stream:
+              commands = sorted(tomllib.load(stream)["project"]["scripts"])
+          tool_bin = Path(subprocess.check_output(
+              ["uv", "tool", "dir", "--bin"], text=True
+          ).strip())
+          expected_dir = os.path.normcase(os.path.abspath(tool_bin))
+          missing = []
+          conflicts = []
+          for command in commands:
+              executable = shutil.which(command)
+              if executable is None:
+                  missing.append(command)
+              elif os.path.normcase(os.path.abspath(Path(executable).parent)) != expected_dir:
+                  conflicts.append(f"{command}: {executable}")
+          print(f"verified {len(commands)} declared entry points in {tool_bin}")
+          if missing or conflicts:
+              print(f"missing: {missing}")
+              print(f"conflicts: {conflicts}")
+              sys.exit(1)
+          subprocess.run(["commonplace-init", "--help"], check=True)
+          subprocess.run(["commonplace-validate", "--help"], check=True)
+
+      - name: Initialize and validate a temporary project
+        shell: python
+        run: |
+          from pathlib import Path
+          import subprocess
+          import tempfile
+
+          with tempfile.TemporaryDirectory() as directory:
+              project = Path(directory) / "smoke-project"
+              subprocess.run([
+                  "commonplace-init", "--root", str(project), "--name", "smoke-project"
+              ], check=True)
+              assert not (project / ".envrc").exists()
+              assert not (project / ".venv").exists()
+              subprocess.run([
+                  "commonplace-validate",
+                  str(project / "kb" / "commonplace" / "reference" / "commands.md"),
+              ], check=True)

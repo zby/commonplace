@@ -6,7 +6,7 @@ tags: []
 
 # Commonplace CLI commands
 
-All commands are installed by `pip install llm-commonplace` and available as `commonplace-*` on PATH. Run any command with `--help` for full usage.
+All commands are installed together with `uv tool install --python ">=3.11" llm-commonplace` and resolve as `commonplace-*` from uv's user-level tool executable directory. Run any command with `--help` for full usage. Source contributors install the checkout with the same command plus `--editable .`; project-only executables such as `pytest`, `ruff`, and `properdocs` run through `uv run` instead.
 
 ## Project setup
 
@@ -59,7 +59,7 @@ The `redirects` target checks repository state rather than a note contract: ever
 
 ### Generated indexes (no command)
 
-Complete generated listings — per-collection `dir-index.md` pages and per-tag generated tails — are not committed and have no rebuild command. The ProperDocs hook (`src/commonplace/docs/properdocs_hooks.py`) materializes them in-memory at build time for the published site (ADR 025); `properdocs build` is the only way to produce them. Agents enumerate candidates with the scoped `rg` recipes in [navigation.md](./navigation.md). The retired commands `commonplace-refresh-indexes`, `commonplace-sync-generated-index`, and `commonplace-generate-notes-index` no longer exist.
+Complete generated listings — per-collection `dir-index.md` pages and per-tag generated tails — are not committed and have no rebuild command. The ProperDocs hook (`src/commonplace/docs/properdocs_hooks.py`) materializes them in-memory at build time for the published site (ADR 025); `uv run --extra docs properdocs build` is the only way to produce them in this source checkout. Agents enumerate candidates with the scoped `rg` recipes in [navigation.md](./navigation.md). The retired commands `commonplace-refresh-indexes`, `commonplace-sync-generated-index`, and `commonplace-generate-notes-index` no longer exist.
 
 ## Note operations
 
@@ -119,7 +119,7 @@ commonplace-github-snapshot --out-dir kb/sources/ https://github.com/owner/repo/
 
 ### commonplace-x-snapshot
 
-Snapshot an X/Twitter post into `kb/sources/`. Requires the `xdk` package (`pip install llm-commonplace[snapshot]`).
+Snapshot an X/Twitter post into `kb/sources/`. Requires installing the tool with the snapshot extra: `uv tool install --python ">=3.11" "llm-commonplace[snapshot]"`.
 
 ```bash
 commonplace-x-snapshot https://x.com/user/status/123456789

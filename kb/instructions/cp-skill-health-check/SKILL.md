@@ -1,6 +1,6 @@
 ---
 name: cp-skill-health-check
-description: Diagnose Commonplace project layout, promoted-skill discovery, command paths, package commands, and launch-environment failures.
+description: Diagnose Commonplace project layout, promoted-skill discovery, user-level uv tool installation, command PATH ownership, and launch-environment failures.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Grep, Glob, Bash
@@ -8,156 +8,157 @@ context: fork
 argument-hint: "[symptom] — optional description of what is broken"
 ---
 
+# Commonplace Health Check
+
 ## EXECUTE NOW
 
-Use this skill when the user reports that a Commonplace KB is not working correctly: missing skills, `commonplace-*` command failures, validation not found, the agent runtime not seeing the venv, or confusion around direnv. It applies both to installed KBs, where shipped content lives under `kb/commonplace/`, and to the Commonplace source repo, where shipped content lives directly under `kb/`.
+Use this skill when a Commonplace KB has missing skills, missing or failing `commonplace-*` commands, or commands that work in one shell but not in an IDE or agent runtime. It applies both to installed KBs, where shipped content lives under `kb/commonplace/`, and to the Commonplace source repository, where shipped content lives directly under `kb/`.
 
 Target symptom: `$ARGUMENTS`
 
-This skill diagnoses and reports. Do not edit shell config, rerun `commonplace-init`, install packages, or change symlinks unless the user explicitly asks for repair after seeing the diagnosis.
+Do not modify files during diagnosis. Report the evidence and the smallest repair. Apply a repair only when the user asked for one.
 
-## Step 1 - Identify the workspace shape
+## Step 1 — Locate the project and classify the layout
 
-Run:
+From the workspace root, inspect:
 
 ```bash
 pwd
-git rev-parse --show-toplevel 2>/dev/null || true
-git remote -v 2>/dev/null || true
-test -d kb && echo "kb: present" || echo "kb: missing"
 test -f AGENTS.md && echo "AGENTS.md: present" || echo "AGENTS.md: missing"
 test -f CLAUDE.md && echo "CLAUDE.md: present" || echo "CLAUDE.md: missing"
-test -d kb/commonplace && echo "kb/commonplace: present" || echo "kb/commonplace: missing"
-test -d src/commonplace && echo "src/commonplace: present" || echo "src/commonplace: missing"
-test -d kb/reference && echo "kb/reference: present" || echo "kb/reference: missing"
-test -d kb/instructions && echo "kb/instructions: present" || echo "kb/instructions: missing"
-test -f .envrc && echo ".envrc: present" || echo ".envrc: missing"
-test -d .venv && echo ".venv: present" || echo ".venv: missing"
+test -d kb/commonplace && echo "layout: installed KB" || true
+test -f pyproject.toml && test -d src/commonplace && echo "layout: source repo" || true
+test -d .agents/skills && echo ".agents/skills: present" || true
+test -d .claude/skills && echo ".claude/skills: present" || true
 ```
 
 Interpretation:
-- Missing `kb/` means the user is probably not in the project root.
-- If `kb/commonplace/` exists, classify the workspace as an **installed KB**.
-- If any `git remote -v` URL names `github.com:zby/commonplace` or `github.com/zby/commonplace`, classify the workspace as the **Commonplace source repo**. Repositories can have multiple remotes; do not assume the relevant one is named `origin` or that there is only one remote. This is OK; do not warn about the missing shipped library namespace.
-- If git metadata is unavailable but `src/commonplace/`, `kb/reference/`, and `kb/instructions/` exist while `kb/commonplace/` is missing, report "source-repo-shaped workspace, git identity unknown" rather than treating it as an installed KB failure.
-- Missing `kb/commonplace/` in any other workspace that claims to be installed means `commonplace-init` likely has not run, or the install is from an older layout.
-- Missing `AGENTS.md` and `CLAUDE.md` means the agent may not have a loaded control-plane file.
-- Missing `.envrc` or `.venv` means command discovery will probably fail unless the package was installed globally.
 
-## Step 2 - Check promoted skill discovery
+- Installed KB: `kb/commonplace/{notes,reference,instructions}/` exists.
+- Source repository: `pyproject.toml`, `src/commonplace/`, and top-level `kb/{notes,reference,instructions}/` exist.
+- Neither: the wrong directory is open or `commonplace-init` has not run.
+- `.venv` is not a Commonplace layout requirement. A project may still own one for unrelated dependencies.
 
-Run:
+## Step 2 — Check the control plane and skill projections
+
+Read the active root control-plane file and confirm it routes Commonplace commands by bare name. Then inspect the canonical health skill and the runtime projections:
 
 ```bash
-# Use find -L so it also follows symlinked skill directories. In an installed
-# KB the known .claude/.agents projections are real copied directories, but in
-# the Commonplace source repo (and installs from older versions) they are
-# symlinks into the canonical skill source tree, and plain `find` (without -L)
-# will not descend into those, returning a misleading empty result.
-find -L .claude/skills .agents/skills -maxdepth 2 -name SKILL.md -print 2>/dev/null | sort
-# Derive the expected promoted set from the live skill source tree
-# (kb/commonplace/instructions/ in an installed KB, kb/instructions/ in the
-# Commonplace source repo). Do not check against a hardcoded skill list —
-# it goes stale as skills are added or retired.
-skill_src=kb/commonplace/instructions
-test -d "$skill_src" || skill_src=kb/instructions
-for skill in $(cd "$skill_src" && ls -d cp-skill-*); do
-  for dir in .claude/skills .agents/skills; do
-    test -e "$dir/$skill/SKILL.md" && echo "active skill OK: $dir/$skill" || echo "active skill MISSING: $dir/$skill"
-  done
-done
-find .claude/skills .agents/skills -maxdepth 1 -type l ! -exec test -e {} \; -print 2>/dev/null | sort
+test -f kb/commonplace/instructions/cp-skill-health-check/SKILL.md && echo "installed canonical skill: OK" || true
+test -f kb/instructions/cp-skill-health-check/SKILL.md && echo "source canonical skill: OK" || true
+test -f .agents/skills/cp-skill-health-check/SKILL.md && echo ".agents projection: OK" || true
+test -f .claude/skills/cp-skill-health-check/SKILL.md && echo ".claude projection: OK" || true
 ```
 
-The per-skill `test -e` loop is the authoritative signal for whether each expected skill resolves (`test -e` follows symlinks). Treat the `find -L` listing as a cross-check for unexpected or extra skills, not the primary verdict.
+If the canonical skill exists but the current runtime cannot discover its projection, `commonplace-init` may need to be rerun or the runtime may use another skill-discovery surface. Do not repair a Commonplace source checkout with `commonplace-init`; follow the source repository's `AGENTS.md` instead.
 
-The expected promoted set is the `cp-skill-*` directories in the skill source tree the loop derives from. In the Commonplace source repo, `MANIFEST.promoted_skills` in `src/commonplace/scaffold_manifest.py` is the authoritative manifest; if the loop's derived set and that tuple disagree, report the difference as a finding.
+## Step 3 — Check the uv tool installation and command ownership
 
-Interpretation:
-- No `.claude/skills/` or `.agents/skills/` entries: `commonplace-init` likely did not run, the runtime is looking at a different project root, or the active runtime uses a different skill-discovery surface.
-- `active skill MISSING` for an expected skill: the checked skill surface is incomplete. In an installed KB, rerun `commonplace-init` after confirming the project root and package install, or install/register `kb/commonplace/instructions/<skill>/` in the active runtime's own skill surface. In the Commonplace source repo, recreate the local symlink to `kb/instructions/<skill>/` or install/register that canonical skill directory in the active runtime's own surface.
-- Broken symlink output for an expected active skill: the skill surface points at a missing path; treat it as a runtime-skill problem.
-- Broken symlink output for a retired or extra skill not in the expected active set, such as `cp-skill-compile-collections`, is a maintenance observation, not the likely cause of current Commonplace command or health-check failure when all expected active skills are OK.
-- Skill exists on disk but the agent cannot invoke it: the runtime may not support that skill directory, may have been started before init, may need restart, or may need its own IDE/plugin-specific skill import step.
-
-## Step 3 - Check command environment
-
-Run:
+On Linux/macOS:
 
 ```bash
-printf 'SHELL=%s\n' "$SHELL"
-printf 'PATH=%s\n' "$PATH"
-command -v commonplace-validate || true
-command -v commonplace-init || true
-command -v pytest || true
-command -v python3 || true
 command -v uv || true
+uv tool list || true
+uv tool dir --bin || true
+command -v commonplace-init || true
+command -v commonplace-validate || true
+which -a commonplace-validate 2>/dev/null || true
 ```
 
-Interpretation:
-- `commonplace-validate` and `pytest` resolving to a path under the project `.venv/bin` is the healthy state: agents must call these by bare name (no `.venv/bin/` prefix, no `direnv exec`, no `uv run` wrapper). If the bare commands resolve, report Command PATH OK and flag any habit of prefixing as unnecessary — see the bullets in `AGENTS.md` under Development.
-- `commonplace-validate` missing while `.venv/bin/commonplace-validate` exists usually means `.venv/bin` is not on `PATH`.
-- `pytest` resolving outside the project venv is a sign the project environment was not loaded.
-- `uv` missing only matters for install/update workflows; installed `commonplace-*` commands should not need `uv run` after environment activation.
+On native Windows PowerShell:
 
-## Step 4 - Check direnv specifically
+```powershell
+Get-Command uv -ErrorAction SilentlyContinue
+uv tool list
+uv tool dir --bin
+Get-Command commonplace-init -All -ErrorAction SilentlyContinue
+Get-Command commonplace-validate -All -ErrorAction SilentlyContinue
+```
 
-Run:
+Classify the result:
+
+- **uv missing:** the installation prerequisite is absent.
+- **`llm-commonplace` absent from `uv tool list`:** the user-level tool is not installed.
+- **Command exists inside `uv tool dir --bin` but bare-name lookup fails:** the tool executable directory is missing from this process's `PATH`.
+- **Bare name resolves outside `uv tool dir --bin`:** another install or a project venv shadows the user-level tool. Report every candidate from `which -a` or `Get-Command -All`.
+- **Only some declared `commonplace-*` commands exist:** the tool installation is incomplete or stale after an entry-point metadata change; reinstall it.
+- **A fresh terminal resolves the command but the IDE or agent does not:** the launch class did not inherit the updated user environment. Treat this as runtime environment propagation, not package absence.
+
+Do not use `uv tool install --force` as the default repair for an executable conflict. First identify which installation owns the conflicting name and remove or reorder the stale owner.
+
+## Step 4 — Check legacy project-environment residue
+
+Inspect only; do not delete:
 
 ```bash
-command -v direnv || true
-direnv status || true
-rg -n 'direnv hook (bash|zsh)' "$HOME/.bashrc" "$HOME/.bash_profile" "$HOME/.profile" "$HOME/.zshrc" 2>/dev/null || true
-direnv exec . bash -c 'command -v commonplace-validate; command -v pytest; printf "UV_CACHE_DIR=%s\n" "$UV_CACHE_DIR"' || true
+test -f .envrc && sed -n '1,80p' .envrc || true
+test -d .venv && echo ".venv exists; determine its owner before cleanup" || true
 ```
 
-Interpretation:
-- `direnv` missing: install direnv or use explicit `.venv/bin/<command>` paths.
-- `.envrc` not allowed: run `direnv allow` from the project root.
-- No hook found in shell config: add `eval "$(direnv hook bash)"` to `~/.bashrc` for bash, or `eval "$(direnv hook zsh)"` to `~/.zshrc` for zsh, then start a new interactive shell.
-- `direnv exec . bash -c ...` succeeds but direct `command -v commonplace-validate` fails: direnv is configured, but the current agent command environment did not inherit it. Start the agent runtime from a direnv-loaded interactive shell, or launch it with `direnv exec /path/to/project <agent-command>`.
-- Do not test `direnv exec` through `bash -lc`; login shell startup may reset `PATH` and hide the environment you are trying to inspect.
+The exact `.envrc` generated by older Commonplace releases contained only:
 
-## Step 5 - Check package and validator health
+```bash
+export PATH="$PWD/.venv/bin:$PATH"
+export UV_CACHE_DIR="$PWD/.uv-cache"
+```
 
-Prefer direct commands when available. If direct commands are missing but direnv works, wrap them with `direnv exec . bash -c`.
+That exact file is obsolete after the user-level tool works in fresh processes. An edited `.envrc` must be reviewed manually. A `.venv` may hold the project's own dependencies; never classify it as removable merely because Commonplace no longer needs it.
 
-If the workspace is an installed KB, run one of:
+## Step 5 — Check package and validator health
+
+If this is an installed KB:
 
 ```bash
 commonplace-validate kb/commonplace/reference/commands.md
 ```
 
-or:
+If this is the Commonplace source repository:
 
 ```bash
-direnv exec . bash -c 'commonplace-validate kb/commonplace/reference/commands.md'
-```
-
-If the workspace is the Commonplace source repo, validate:
-
-```bash
-direnv exec . bash -c 'commonplace-validate kb/reference/commands.md'
+commonplace-validate kb/reference/commands.md
+uv run pytest -q
 ```
 
 Interpretation:
-- Command not found: environment activation or package installation problem.
-- Import/module error: package install problem; reinstall in the project venv.
-- Validation runs: the Python command surface is healthy; focus on skill discovery or agent launch environment.
 
-## Step 6 - Report
+- Command not found: return to step 3.
+- Import or dependency error: reinstall the uv tool. For an editable source install, metadata and dependency changes require `uv tool install --reinstall --python ">=3.11" --editable .` even though ordinary source edits do not.
+- Validator runs: the command package is healthy; focus on skill discovery or launch-environment propagation.
+- `uv run pytest` fails before tests start: the source project's dependency environment is unhealthy. `pytest` is a development dependency, not part of the Commonplace command tool.
 
-Report in this format:
+## Repair commands
+
+Published install:
+
+```bash
+uv tool install --python ">=3.11" llm-commonplace
+uv tool update-shell
+```
+
+Editable source install, run from the Commonplace checkout:
+
+```bash
+uv tool install --python ">=3.11" --editable .
+uv tool update-shell
+```
+
+After `uv tool update-shell`, fully restart the shell, IDE, desktop agent, or service being tested. The shell update is durable and is not rerun at every shell start. In CI, configure a job-local uv tool executable directory and append it to `$GITHUB_PATH`; do not mutate a shell profile.
+
+One uv tool installation supplies one active Commonplace version per OS user. Switching between published and editable sources changes the command implementation for every project under that user.
+
+## Step 6 — Report
+
+Use this format:
 
 ```text
 Commonplace health check:
 - Project root: OK / problem
 - Layout: installed KB / source repo / problem
 - Control-plane file: OK / problem
-- Library layout: OK / problem
 - Runtime skills: OK / problem
-- Command PATH: OK / problem
-- direnv: OK / problem
+- uv tool installation: OK / problem
+- Runtime PATH: OK / problem
+- Command ownership: uv tool / conflict / missing
 - Validator: OK / problem
 
 Likely cause:
@@ -171,16 +172,16 @@ Evidence:
 - <short command result>
 
 Maintenance observations:
-- <retired or extra broken symlinks, stale generated indexes, or other non-blocking findings; write "None" if empty>
+- <legacy .envrc, unrelated .venv requiring owner review, stale skill copies, or "None">
 ```
 
-If several independent problems appear, list them in the order that blocks the most downstream checks:
+List independent problems in this blocking order:
 
-1. Wrong directory / missing project root
-2. `commonplace-init` did not run or installed layout is stale
-3. Agent runtime does not see promoted skills
-4. `.venv/bin` is not on `PATH`
-5. direnv hook/allow/launch inheritance problem
-6. Package import or command failure
+1. Wrong directory or missing initialized layout.
+2. Missing canonical skill or runtime projection.
+3. uv or the `llm-commonplace` tool is missing.
+4. uv's tool executable directory is absent from the consuming process's `PATH`.
+5. Another executable shadows the uv tool.
+6. Package import, dependency, or validator failure.
 
-Do not claim the installation is fixed unless you reran the failing check and it passed.
+Do not claim the installation is fixed unless the failing check passes in the same launch class that originally failed.

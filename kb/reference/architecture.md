@@ -46,12 +46,11 @@ project/
     .claude/skills/cp-skill-*/     ← known runtime skill projection
     .agents/skills/cp-skill-*/     ← known runtime skill projection
     AGENTS.md                      ← project control-plane file (from AGENTS.md.template)
-    .envrc                         ← project environment for local commands
 ```
 
 The shipped library sits under `kb/commonplace/` as a single boundary the user treats as read-only. The user's own collections (`kb/notes/`, `kb/reference/`, `kb/instructions/`) are peers to the library at the top level of `kb/`, starting empty except for a minimal `COLLECTION.md` template. Shared global types stay at top-level `kb/types/` so both the library and the user's own types can reference them with invariant absolute paths.
 
-The framework implementation itself is not vendored into the project. It is provided by the installed Python package and exposed through `commonplace-*` commands.
+The framework implementation itself is not vendored into the project. It is installed once per OS user as an isolated uv tool and exposed through `commonplace-*` commands in uv's user-level executable directory. Projects do not need a Commonplace-specific venv, activation step, or `.envrc`. One tool installation supplies the active command version to all projects for that user.
 
 The Python package carries the scaffold inputs as packaged data in built wheels. In the source checkout, the same inputs are read directly from the canonical repo paths rather than through duplicate scaffold files or source-tree symlinks.
 
@@ -78,7 +77,9 @@ The Python package carries the scaffold inputs as packaged data in built wheels.
 1. Creates the directory shell under `kb/` — the user's collections, the user-space directories, and the `kb/commonplace/` hierarchy.
 2. Copies shipped library trees into `kb/commonplace/{notes,reference,instructions}/`. Shared `kb/types/` and user-space type scaffolds (`kb/sources/types/`, `kb/reports/types/`) land at their conventional top-level locations.
 3. Scaffolds minimal `COLLECTION.md` templates into the user's empty collections so that write skills have a starter register and conventions stub to fill in.
-4. Promotes selected skills into known `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/` runtime surfaces as real copied directories of `kb/commonplace/instructions/<name>/` (legacy symlink or junction projections from earlier versions are replaced with copies on re-init), and resolves project-specific templates such as `AGENTS.md` and `.envrc`. The canonical skill directories stay installed under `kb/commonplace/instructions/`; agent runtimes with a different discovery surface may need to copy, register, or import those directories themselves.
+4. Promotes selected skills into known `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/` runtime surfaces as real copied directories of `kb/commonplace/instructions/<name>/` (legacy symlink or junction projections from earlier versions are replaced with copies on re-init), and resolves the project-specific `AGENTS.md.template`. The canonical skill directories stay installed under `kb/commonplace/instructions/`; agent runtimes with a different discovery surface may need to copy, register, or import those directories themselves.
+
+Command installation precedes this scaffold step. `uv tool install --python ">=3.11" llm-commonplace` installs a published release; contributors use `uv tool install --python ">=3.11" --editable .` from the source checkout. `uv tool update-shell` persists uv's executable-directory addition, and newly launched shells, IDEs, and agent processes then resolve the commands by bare name. Development-only executables such as `pytest` and `ruff` stay in the source project's dependency environment and run through `uv run`.
 
 The result is that the agent's hot path stays inside the project tree. It reads `AGENTS.md`, the target collection's `COLLECTION.md`, and the relevant type files directly from the installed KB rather than jumping out to a separate framework checkout.
 
@@ -119,6 +120,7 @@ Relevant Notes:
 - [Reference](./README.md) — overview of the shipped reference collection and operator guide
 - [021-Ship library content under kb/commonplace](./adr/021-ship-library-content-under-kb-commonplace.md) — decision: the library/user boundary and path invariance rules this architecture implements
 - [027-Package scaffold assets without source-tree symlinks](./adr/027-package-scaffold-assets-without-source-tree-symlinks.md) — decision: package scaffold assets through explicit wheel includes plus source-checkout fallback
+- [064-Install Commonplace commands as a user-level uv tool](./adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) — decision: the command-installation authority and project-environment removal
 - [014-scripts-as-python-package-one-tree-model](./adr/014-scripts-as-python-package-one-tree-model.md) — decision: package-and-init model that ADR-021 refines with the `kb/commonplace/` namespace
 - [013-skills-first-delivery-with-core-local-type-split](./adr/013-skills-first-delivery-with-core-local-type-split.md) — decision: the skills-first model and the core/local type split
 - [type-loading](./type-loading.md) — how shipped type definitions are discovered, including file-relative resolution for collection-local types

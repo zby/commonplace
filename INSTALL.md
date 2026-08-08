@@ -74,17 +74,12 @@ git -C commonplace sparse-checkout set kb
 
 ### Required
 
-- **Python 3.11+**
-- **uv** (recommended) or **pip**
+- **uv** — installs Commonplace and selects or provisions a compatible Python 3.11+ interpreter
 - **git**
 - **ripgrep** (`rg`) — agent runtimes use it for fast KB search
 - **An agent runtime** — Codex, Claude Code, or another LLM/IDE that can load a project control-plane file (`AGENTS.md`/`CLAUDE.md`) and expose skill directories to the agent
 
 Normal KB maintenance is expected to happen under version control. The shipped procedures and examples use Git, so it is included in the out-of-the-box prerequisites above. A project may substitute another VCS if it adapts Git-specific procedures; the `commonplace-*` commands do not use Git history as correctness state.
-
-### Optional
-
-- **direnv** (Linux/macOS) — optional convenience: auto-activates the project venv on `cd` and keeps uv's cache inside the project. Not needed for a working install; see the [direnv appendix](#appendix-direnv-linuxmacos). The main steps below use plain venv activation.
 
 ### Check prerequisites
 
@@ -93,104 +88,74 @@ If any required tool is missing, install it before continuing.
 Linux/macOS:
 
 ```bash
-python3 --version   # must be 3.11+
-uv --version        # or: pip --version
+uv --version
 git --version
 rg --version
-direnv version      # optional
 ```
 
 Windows PowerShell:
 
 ```powershell
-py -3 --version     # must be 3.11+
-uv --version        # or: py -3 -m pip --version
+uv --version
 git --version
 rg --version
 ```
 
 ## 2. Install the library and make the commands work
 
-The requirement is simply that the `commonplace-*` commands are installed and resolvable in the environment that runs your agent runtime — the shell you launch a command-line runtime (Codex, Claude Code) from, or whatever environment an IDE like Cursor opens the project in. A **project-local venv** is the recommended way to satisfy that, because each project can pin its own version independently; a global or shared install works too, as long as the commands end up on `PATH` where the agent actually runs. The rest of this guide uses a project-local venv. From your project root — create the directory and `cd` into it first if this is a new project:
+Install Commonplace as a user-level uv tool. uv creates an isolated environment for the package and places every declared `commonplace-*` executable in its tool executable directory:
 
-Linux/macOS:
-
-```bash
-uv venv
-uv pip install llm-commonplace
+```text
+uv tool install --python ">=3.11" llm-commonplace
+uv tool update-shell
 ```
 
-Windows PowerShell:
+The second command durably adds uv's tool executable directory to the user environment; it is not reissued on every shell restart. Close the installer shell and fully restart every shell, IDE, desktop agent, or service process that must use the commands. A process that was already running keeps its old environment.
 
-```powershell
-uv venv
-uv pip install llm-commonplace
+This establishes one active Commonplace command version per OS user. All projects for that user resolve the same tool. Project dependencies remain independent and do not share Commonplace's isolated tool environment.
+
+For Commonplace development, install an editable checkout instead, from that checkout's root:
+
+```text
+uv tool install --python ">=3.11" --editable .
+uv tool update-shell
 ```
 
-Without uv:
+Ordinary Python and scaffold-source edits are visible without reinstalling. After changing dependencies, entry points, build metadata, or which files the package includes, force a metadata refresh without changing command ownership:
 
-```bash
-# Linux/macOS
-python3 -m venv .venv
-. .venv/bin/activate
-pip install llm-commonplace
+```text
+uv tool install --reinstall --python ">=3.11" --editable .
 ```
 
-```powershell
-# Windows PowerShell
-py -3 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install llm-commonplace
+Switching the user-level tool to an editable checkout changes the commands seen by every project for that user.
+
+To install optional snapshot dependencies with the published tool, request the extra during installation:
+
+```text
+uv tool install --reinstall --python ">=3.11" "llm-commonplace[snapshot]"
 ```
-
-For Commonplace development or local contribution work, install from a checkout instead:
-
-```bash
-uv pip install -e /PATH/TO/commonplace
-```
-
-### Make `commonplace-*` resolve by bare name
-
-The install puts the `commonplace-*` executables in `.venv/bin/` (Linux/macOS) or `.venv\Scripts\` (Windows), but they are not on your `PATH` yet, so bare-name calls fail. Activate the venv so agents and shells can call `commonplace-validate`, `commonplace-init`, and the rest by bare name. Activation must be redone in each new shell:
-
-```bash
-. .venv/bin/activate                 # Linux/macOS
-```
-
-```powershell
-.\.venv\Scripts\Activate.ps1         # Windows PowerShell
-```
-
-```bat
-.venv\Scripts\activate.bat           :: Windows cmd
-```
-
-If PowerShell blocks activation because script execution is restricted, allow locally signed scripts for your user account, then activate again:
-
-```powershell
-Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
-.\.venv\Scripts\Activate.ps1
-```
-
-On Linux/macOS, to skip the per-shell `activate` step (and keep uv's cache inside the project for sandboxed runtimes), set up direnv — see the [direnv appendix](#appendix-direnv-linuxmacos).
 
 ### Check the commands run
 
-With the venv activated, confirm the entry points resolve:
+Run these checks in a newly started process, not the installer process:
 
 ```bash
-command -v commonplace-validate   # Linux/macOS — should print a path under .venv/bin
+uv tool dir --bin
+command -v commonplace-validate
 commonplace-init --help
 ```
 
 ```powershell
-(Get-Command commonplace-validate).Source   # Windows — should print a path under .venv\Scripts
+uv tool dir --bin
+(Get-Command commonplace-validate).Source
 commonplace-init --help
 ```
 
+The resolved command should be inside the directory printed by `uv tool dir --bin`. Repeat the check inside each IDE or agent runtime you intend to support; an integrated terminal result does not prove that a separately launched desktop agent inherited the same environment.
+
 ## 3. Create the project with commonplace-init
 
-Run `commonplace-init` from the project root. With the venv activated (step 2), call it by bare name:
+Run `commonplace-init` from the project root by bare name:
 
 ```bash
 commonplace-init --name <your-project>          # Linux/macOS
@@ -209,10 +174,9 @@ This creates:
 - **Type definitions** — shared types under `kb/types/`, plus source/report type scaffolds
 - **Canonical skills** — `kb/commonplace/instructions/cp-skill-write/`, plus the matching `cp-skill-validate/`, `cp-skill-connect/`, etc. The `cp-skill-` prefix avoids collisions with your project's own skills and with the `commonplace-*` CLI commands.
 - **Known runtime skill projections** — `.agents/skills/cp-skill-*/` and `.claude/skills/cp-skill-*/` copies of the canonical skill directories for two common layouts (step 5 covers other runtimes). These are regular directories, not symlinks or junctions, so they work the same on every platform — including Windows without admin rights or Developer Mode.
-- **`.envrc`** — project-scoped environment (`PATH`, `UV_CACHE_DIR`) for the optional direnv setup (see the [direnv appendix](#appendix-direnv-linuxmacos)); harmless if you don't use direnv
 - **`AGENTS.md.template`** — control-plane template with the project name filled in
 
-Rerunning `commonplace-init` is safe — it never overwrites existing files, so you can rerun after a package upgrade to pick up new scaffold files. It reports which preserved files already match the current scaffold and which were left untouched because they differ from what the current run would generate.
+Rerunning `commonplace-init` is safe — it never overwrites existing files, so you can rerun after a package upgrade to pick up new scaffold files. It reports which preserved files already match the current scaffold and which were left untouched because they differ from what the current run would generate. It no longer creates `.envrc`; if it finds the exact file generated by an older Commonplace release, it reports the residue without deleting it.
 
 ### Check validation and search
 
@@ -247,7 +211,7 @@ cat AGENTS.md.template >> CLAUDE.md
 Then review the merged file and fill in the per-project parts. The template's HTML comments mark every spot; the load-bearing ones are:
 
 - **`KB Goals and Scope`** — Purpose, Scope (the out-of-scope list is what prevents scope creep), and Quality bar. Without these the agent has no basis for inclusion decisions.
-- **Command invocation (in `### Commands`)** — keep the bare-name variant, which matches the activated venv from step 2 (or the auto-activation in the direnv appendix). If the project deliberately does **not** put the venv on `PATH`, keep the fallback variant telling agents to call the venv executables directly — `.venv/bin/commonplace-validate` or `.venv\Scripts\commonplace-validate.exe` — otherwise agents will retry failing bare commands.
+- **Command invocation (in `### Commands`)** — keep the unconditional bare-name rule. Commonplace commands come from the user-level uv tool, not the project's dependency environment.
 - **Navigation entry points** — add curated tag READMEs to the list as they emerge; the template comment explains when to create one.
 - **Version-control conventions** — keep the framework expectation that the KB is versioned, and add any project-specific commit, branch, or review rules. The template deliberately assigns no portable Commonplace semantics to those objects.
 
@@ -265,7 +229,7 @@ Inspect your runtime's skill-discovery rules and project every `cp-skill-*` dire
 
 ## 6. Start the runtime
 
-Start your agent runtime from a shell where the venv is activated (step 2) so it inherits the environment. On Windows, activate in that shell first, or configure the IDE's integrated terminal/service so `.venv\Scripts` is on `PATH`.
+Fully restart the agent runtime after `uv tool update-shell`, then confirm inside the agent that `commonplace-validate --help` resolves. Shell activation is not part of the contract. If the command works in a new terminal but not in the agent, diagnose how that runtime receives the user environment rather than reinstalling the package repeatedly.
 
 From inside the running runtime, confirm the skills resolve by their `cp-skill-*` names:
 
@@ -295,49 +259,26 @@ If you use Claude Code, skip the per-command permission prompt by adding prefix-
 
 Prefer `.claude/settings.local.json` over `.claude/settings.json` so the approvals stay local and aren't committed for other contributors.
 
-## Appendix: direnv (Linux/macOS)
+## Troubleshooting command discovery
 
-direnv is an optional convenience on top of the plain venv activation in step 2. It does two things:
+Use `uv tool list` to confirm installation and `uv tool dir --bin` to identify the expected executable directory. On Linux/macOS, `command -v` or `which -a` shows what wins on `PATH`; on PowerShell use `Get-Command -All`.
 
-- **Auto-activation** — adds `.venv/bin` to `PATH` whenever you `cd` into the project, so `commonplace-*` commands resolve by bare name without running `. .venv/bin/activate` in every new shell.
-- **In-project uv cache** — sets `UV_CACHE_DIR` to `.uv-cache/` inside the project, so sandboxed runtimes like Codex don't need privilege escalation to write to a cache outside the project tree.
+- **Tool missing:** install it with the step 2 command.
+- **Executable exists in uv's tool directory but bare name is missing:** run `uv tool update-shell`, then fully restart the consuming process. In CI, append the configured tool bin directory to `$GITHUB_PATH` instead of editing a profile.
+- **Bare name resolves elsewhere:** an older project venv or another install is shadowing the uv tool. Remove or reorder that `PATH` entry. Do not make `uv tool install --force` the default repair; uv's conflict is evidence that command ownership needs to be resolved.
+- **Only one IDE or agent fails:** that launch class did not inherit the updated user environment. Fix its supported environment configuration or exclude it from the support claim.
+- **Import fails after an editable metadata change:** rerun the editable install with `--reinstall` so uv refreshes the existing tool environment.
 
-`commonplace-init` already generated the `.envrc` with both settings, so setup is just installing the hook and allowing the file.
+`cp-skill-health-check` performs the same classification and also checks the installed KB and skill projections.
 
-1. Install the direnv shell hook once (skip if already present), then restart your shell:
+### Migrating an older project-local installation
 
-   ```bash
-   echo 'eval "$(direnv hook bash)"' >> ~/.bashrc   # bash
-   echo 'eval "$(direnv hook zsh)"' >> ~/.zshrc      # zsh
-   ```
-
-2. Allow the generated `.envrc` from the project root:
-
-   ```bash
-   cd /path/to/your-project
-   direnv allow
-   ```
-
-   You should see a `direnv: loading ...` message, and commands resolve by bare name:
-
-   ```bash
-   command -v commonplace-validate
-   ```
-
-direnv populates `.uv-cache/` inside the project (you'll likely want to keep it out of version control). Launch agent runtimes from this direnv-loaded shell so they inherit the environment. If a runtime is started from a non-interactive wrapper that has not run the hook, wrap the launch explicitly:
-
-```bash
-direnv exec /path/to/your-project codex
-```
-
-direnv here is written for Linux/macOS. It may work on Windows through WSL or Git Bash, but that path is untested.
+Install and verify the user-level tool first. Then inspect any project `.envrc` that adds `.venv/bin` or `.venv\Scripts` to `PATH`. The exact two-line `.envrc` generated by older Commonplace releases can be removed after the fresh-process checks pass. An edited `.envrc` must be reviewed manually. Remove a project `.venv` only if you have confirmed it was used solely for Commonplace; it may still own the project's unrelated dependencies.
 
 ## Resulting layout
 
 ```text
 my-project/
-  .venv/
-  .envrc
   .agents/
     skills/
       cp-skill-write/
@@ -364,13 +305,22 @@ my-project/
 
 ## Updating
 
-Upgrade the project-local package from PyPI:
+Upgrade the published user-level tool:
 
 ```bash
-uv pip install --upgrade llm-commonplace
+uv tool upgrade llm-commonplace
 ```
 
-If the project uses a source checkout or editable install for Commonplace development, pull that checkout before upgrading or reinstalling the editable package.
+For an editable source install, pull the checkout. Ordinary code changes are immediately visible; rerun `uv tool install --reinstall --python ">=3.11" --editable .` when installation metadata or dependencies changed.
+
+To switch between an editable checkout and the published package, make the ownership change explicit:
+
+```bash
+uv tool uninstall llm-commonplace
+uv tool install --python ">=3.11" llm-commonplace       # published
+# or, from the checkout:
+uv tool install --python ">=3.11" --editable .          # editable
+```
 
 Rerun init to pick up any new scaffold files (existing files are preserved):
 
