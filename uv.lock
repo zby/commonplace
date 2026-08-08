@@ -223,7 +223,7 @@ wheels = [
 
 [[package]]
 name = "llm-commonplace"
-version = "0.1.4"
+version = "0.1.5"
 source = { editable = "." }
 dependencies = [
     { name = "jsonschema" },
@@ -252,6 +252,7 @@ snapshot = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "properdocs" },
     { name = "pytest" },
     { name = "ruff" },
 ]
@@ -277,6 +278,7 @@ provides-extras = ["docs", "snapshot", "all"]
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "properdocs" },
     { name = "pytest" },
     { name = "ruff" },
 ]

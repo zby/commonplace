@@ -1,6 +1,6 @@
 [project]
 name = "llm-commonplace"
-version = "0.1.4"
+version = "0.1.5"
 description = "The theory of LLM wikis, running as one. A framework for agent-operated knowledge: typed, linked, review-gated markdown your agents execute."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -52,7 +52,7 @@ commonplace-warn-selector = "commonplace.cli.review.warn_selector:main"
 commonplace-x-snapshot = "commonplace.cli.x_snapshot:main"
 
 [dependency-groups]
-dev = ["pytest", "ruff"]
+dev = ["properdocs", "pytest", "ruff"]
 
 [tool.ruff]
 include = ["src/**/*.py", "tests/**/*.py"]
