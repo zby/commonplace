@@ -15,7 +15,7 @@ All commands are installed together with `uv tool install --python ">=3.11" llm-
 Initialize or update a Commonplace project. Creates KB directories, seeds instructions and type definitions, copies shipped skills into the known `.claude/skills/` and `.agents/skills/` runtime layouts, and resolves templates. Runtimes with a different skill-discovery surface can expose the canonical `kb/commonplace/instructions/cp-skill-*` directories through their own skill mechanism.
 
 ```bash
-commonplace-init --name <project-name>
+commonplace-init --name my-project
 commonplace-init --root /path/to/project
 ```
 

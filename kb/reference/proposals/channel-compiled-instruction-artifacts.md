@@ -6,17 +6,17 @@ tags: [architecture]
 
 # Channel-compiled instruction artifacts
 
-Commonplace already decided that skills are generated at build time rather than parameterised at runtime, and `commonplace-init` already resolves paths that way. Execution channel — which shell, which command spelling, which virtual-environment layout — escaped that decision. It is carried instead as branches the reading agent resolves on every use: a native-Windows section in the control plane, a bare-name-then-`.exe` fallback rule, and Bash-shaped snippets inside promoted skills that a PowerShell agent must translate before it can act.
+Commonplace already decided that skills are generated at build time rather than parameterised at runtime, and `commonplace-init` already resolves project-specific values that way. Shell language escaped that decision. Bash-shaped snippets inside promoted skills still require a PowerShell agent to translate before it can act.
 
-That is runtime parameterisation wearing natural-language clothing. The [adopted claim](../../notes/generate-instructions-at-build-time.md) rejects it in placeholder form for exactly the reasons that apply here — interpretation overhead on every use across every substitution site, with occasional silent misreads — and states the canonical form of a skill as standalone, with the templating step producing that form rather than leaking into the runtime artifact. A natural-language branch is a substitution site whose resolver is the LLM.
+ADR 064 removed one former reason to compile by making the user-level uv tool directory the cross-platform authority for `commonplace-*` commands. Generated instructions no longer branch over project-venv activation, `.venv/bin` versus `.venv\Scripts`, or explicit `.exe` fallback paths. The remaining shell-language problem is still runtime parameterisation wearing natural-language clothing. The [adopted claim](../../notes/generate-instructions-at-build-time.md) rejects it in placeholder form for exactly the reasons that apply here — interpretation overhead on every use across every substitution site, with occasional silent misreads — and states the canonical form of a skill as standalone, with the templating step producing that form rather than leaking into the runtime artifact. A natural-language branch is a substitution site whose resolver is the LLM.
 
-## Current state (as of 2026-07-25)
+## Current state (as of 2026-08-08)
 
-- `commonplace-init` is the single build/install step. It copies scaffold trees verbatim and resolves a small set of placeholders (project name, absolute project root). [Instruction generation](../instruction-generation.md) states the intended property directly: "There are no runtime variables in the generated artifacts."
+- Command installation and project scaffolding are separate. uv installs every `commonplace-*` entry point into one user-level tool executable directory; `commonplace-init` copies scaffold trees and resolves the project name. Generated command instructions use bare names without an OS or project-venv branch ([ADR 064](../adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md)).
 - Promoted skills are projected into `.claude/skills/` and `.agents/skills/` as real copied directories, after ADR 037 retired symlinks and Windows junctions. The instructions collection contract already calls these "compiled copies" — today that compilation is identity plus path substitution.
 - Non-promoted instructions are copied into `kb/commonplace/instructions/` and read in place. No projection, no substitution.
-- Eleven promoted skills carry 28 shell fences, every one labelled `bash` or `sh` and none `powershell`. Two contain constructs that cannot run under PowerShell: a `test -d … && echo … || echo …` block with `2>/dev/null` in the health-check skill, and `xargs -r` in the connect skill, whose own instructions flag the `-r` guard as load-bearing.
-- The control plane spends roughly a screenful of always-loaded context on channel-conditional procedure — Windows venv setup, the `.exe` fallback, `Test-Path` diagnosis, a pytest cache caveat — of which at most one branch is ever true on a given machine.
+- Nine promoted skills carry 24 `bash` fences and one `powershell` fence. The health-check skill provides a PowerShell command-discovery branch but retains nine Bash blocks; the connect skill still uses `xargs -r`, whose guard its own instructions mark as load-bearing.
+- The generated control-plane template is channel-neutral for Commonplace command invocation. The source repository's uncompiled `AGENTS.md` retains smaller native-Windows clauses for the pytest cache and source-checkout skill symlinks, not command discovery.
 - The Commonplace source checkout is deliberately not initialised, so no compile step currently covers the repository the maintainer operates.
 - Provenance: phase-1 audit finding F8 and its workshop proposal on promoted-skill portability, which treats the symptom (make every snippet run everywhere) rather than the mechanism (resolve the channel once, emit one form).
 
@@ -24,7 +24,7 @@ That is runtime parameterisation wearing natural-language clothing. The [adopted
 
 An instruction that must serve two channels either fails on one of them or carries both. Both outcomes are defects, and they trade against each other:
 
-- **Carrying one channel** leaves the other non-operative. The consumer and force exist, but the channel is unavailable across part of the declared frame, so the intended behavior does not occur there. The sharpest instance is the diagnostic skill named as the recovery path for a broken environment being itself the most channel-bound artifact in the set.
+- **Carrying one shell language** leaves the other non-operative. The consumer and force exist, but the procedure syntax is unavailable across part of the declared frame, so the intended behavior does not occur there. The sharpest instance is the diagnostic skill named as the recovery path for command discovery carrying nine Bash blocks and only one PowerShell alternative.
 - **Carrying both** makes every reader pay for a branch that is false for them, and makes the agent the resolver. A wrong resolution is worse than a missing command: an absent binary fails loudly, while an improvised translation of a guarded pipeline can drop the guard and return a plausible wrong answer.
 
 The channel is known at install time. Nothing about it requires the reading agent's runtime state, which is the standing test for what should be frontloaded.
@@ -47,7 +47,7 @@ Sketched to bound the design, not to choose. Options are not mutually exclusive.
 - **A — Portability convention only.** Keep both channels in the source and require every snippet to run everywhere or label its channel. Cheapest; retains the interpretation step and the context cost; this is roughly the existing workshop proposal.
 - **B — Compile promoted skills.** Extend the existing projection from identity-plus-paths to channel resolution. Smallest change that reaches the artifacts agents execute most.
 - **C — Compile the instructions tree.** Same treatment for non-promoted instructions, which today have no projection at all.
-- **D — Compile the control plane.** Emit a channel-resolved `AGENTS.md`, removing the always-loaded branch that benefits nobody on a resolved machine.
+- **D — Compile the control plane if another forcing case appears.** ADR 064 removed the installed-project command branch that motivated this option. The source checkout retains minor Windows-specific clauses, but it is deliberately outside `commonplace-init`; no current installed-project worked case warrants control-plane compilation.
 - **E — Resolve later than install.** Compile at session start or on demand rather than at init, so the artifact tracks the machine currently running it rather than the machine that installed it.
 
 Cross-cutting: whether the source carries explicit per-channel branches, or stays channel-neutral while the compiler selects idioms from a table it owns.
@@ -56,7 +56,7 @@ Cross-cutting: whether the source carries explicit per-channel branches, or stay
 
 Marked as undecided, with the consideration each turns on:
 
-- **What a channel is** — one named profile, or a set of independent capability facts. Turns on whether the axes actually co-vary in practice.
+- **What a channel is** — one named shell profile, or a set of independent syntax and capability facts. Command location and environment activation are no longer variables under the uv-tool contract.
 - **When compilation runs** — install, session start, or explicit refresh. Turns on how often the channel changes relative to the artifacts.
 - **What compiles** — skills, all instructions, the control plane, or a declared subset. Turns on where the interpretation cost actually lands.
 - **Whether compiled output is committed or ignored** — turns on whether a reader without a build step must still find a working procedure.
@@ -66,7 +66,8 @@ Marked as undecided, with the consideration each turns on:
 
 ## Operativity
 
-- Options B, C, D consume an existing channel: `commonplace-init` writes files that harness skill loaders and agents already read, with the force those artifacts already carry. No new consumer is required — the compile step and its outputs exist.
+- Options B and C consume an existing channel: `commonplace-init` writes files that harness skill loaders and agents already read, with the force those artifacts already carry. No new consumer is required — the compile step and its outputs exist.
+- Option D has an output consumer but no current installed-project substitution site. It should not be built without a new worked case.
 - Option E has **no consumer yet**: nothing runs at session start today, so a hook or equivalent must be built before the option is available at all.
 - Option A changes no mechanism; its force is authoring convention plus whatever check backs it.
 - If any option adds a portability check, its warrant is narrow: a detector for known channel-specific idioms where a portable equivalent exists. It cannot prove general shell portability, and should report rather than infer semantic equivalence. Warrant stops at the idiom list it carries.
@@ -76,11 +77,11 @@ Marked as undecided, with the consideration each turns on:
 - A worked case: one artifact compiled for a real channel, with the before/after context cost and the resolved-branch count stated rather than estimated.
 - A stated answer for the derived-copy question — what checks the compiled form against its source, or why an unchecked copy is acceptable here.
 - A stated review target, consistent with whatever freshness can currently represent.
-- Evidence that the interpretation cost being removed is real: at minimum, the observed failure class (two skills that cannot run on a declared-supported channel), and preferably an instance of an agent mistranslating rather than failing.
+- Evidence that the remaining interpretation cost is real: at minimum, a Bash-only promoted-skill operation that cannot run on a declared-supported shell, and preferably an instance of an agent mistranslating rather than failing.
 
 ## Out of scope
 
-Historical command examples outside instructions and promoted skills; mechanical translation between shell languages; and any change to which channels Commonplace declares support for. This proposal is about resolving the declared set at build time, not revising it.
+Command installation and discovery, settled by ADR 064; historical command examples outside instructions and promoted skills; mechanical translation between shell languages; and any change to which channels Commonplace declares support for. This proposal is about resolving the declared shell set at build time, not revising it.
 
 ---
 
@@ -92,3 +93,4 @@ Relevant Notes:
 - [Operative change](../../notes/definitions/operative-change.md) — rests-on: the consumer/channel/force test the Operativity section applies
 - [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: the constraint a compiled artifact must satisfy
 - [Instruction generation](../instruction-generation.md) — current-state: the shipped build step this proposal extends
+- [ADR 064: Install Commonplace commands as a user-level uv tool](../adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) — compares-with: removes command location and environment activation from the channel variables this proposal must resolve

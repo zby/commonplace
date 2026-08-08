@@ -101,7 +101,7 @@ git --version
 rg --version
 ```
 
-## 2. Install the library and make the commands work
+## 2. Install Commonplace as a user-level tool
 
 Install Commonplace as a user-level uv tool. uv creates an isolated environment for the package and places every declared `commonplace-*` executable in its tool executable directory:
 
@@ -158,11 +158,11 @@ The resolved command should be inside the directory printed by `uv tool dir --bi
 Run `commonplace-init` from the project root by bare name:
 
 ```bash
-commonplace-init --name <your-project>          # Linux/macOS
+commonplace-init --name my-project
 ```
 
 ```powershell
-commonplace-init --name <your-project>          # Windows PowerShell
+commonplace-init --name my-project
 ```
 
 The `--name` flag sets the project name used in templates; if omitted it defaults to the directory name.

@@ -127,7 +127,7 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
 - `commonplace-validate kb/notes` — no new orphan, and no weight-gate warning on a curated head that absorbed routing.
 - `commonplace-freshness-status --missing` — does not name the retired path.
 - `rg -l '<artifact-slug>' -g '*.md' kb/` — for delete, nothing outside gitignored reports; for archive, nothing outside the archive directory and `kb/work/`.
-- `pytest`
+- `uv run pytest`
 
 ---
 

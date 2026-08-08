@@ -58,16 +58,22 @@ On structure: a wiki accretes it, because structure is cheap to add and free to 
 
 Commonplace gives agents three kinds of operative artifact.
 
-**Commands** (`commonplace-*`) are the Python CLI — deterministic operations called by name. Install the package, then:
+**Commands** (`commonplace-*`) are the Python CLI — deterministic operations called by name. Install them once per OS user, update the durable command path, and restart the consuming shell or agent runtime:
+
+```bash
+uv tool install --python ">=3.11" llm-commonplace
+uv tool update-shell
+```
+
+After restarting the consuming process, invoke the commands by bare name:
 
 ```bash
 commonplace-validate kb/notes        # check frontmatter, types, links, structure
-commonplace-init                     # scaffold Commonplace into a project
-commonplace-github-snapshot <url>    # snapshot a GitHub issue/PR into kb/sources/
-commonplace-x-snapshot <url>         # snapshot an X/Twitter thread
+commonplace-init                      # scaffold Commonplace into the current project
+commonplace-github-snapshot https://github.com/owner/repo/issues/123
 ```
 
-A further family of commands drives the review system — selecting targets, queuing jobs, finalizing output; see the [review system overview](https://github.com/zby/commonplace/blob/main/kb/reference/README-REVIEW-SYSTEM.md).
+A further family of commands drives the review system — selecting targets, queuing jobs, finalizing output. `commonplace-x-snapshot` requires the `snapshot` package extra. See [INSTALL.md](./INSTALL.md) for optional extras and the [review system overview](https://github.com/zby/commonplace/blob/main/kb/reference/README-REVIEW-SYSTEM.md) for review commands.
 
 **Skills** (`cp-skill-*`) are agent procedures the harness auto-loads from their descriptions: when a task matches a skill, the agent invokes it. `commonplace-init` installs them into a consuming project.
 
@@ -86,11 +92,11 @@ A further family of commands drives the review system — selecting targets, que
 
 ## Usage
 
-Two ways to use Commonplace, by what you want from it: **install the system** to run a knowledge base of your own, or **vendor this repo read-only** so your agents can consult the research. Python is only needed for the full install — the vendored KB is plain markdown, so it drops into a TypeScript, Rust, or any other project with no programming environment attached.
+Two ways to use Commonplace, by what you want from it: **install the system** to run a knowledge base of your own, or **vendor this repo read-only** so your agents can consult the research. A Python runtime, which uv can provision, is only needed for the full install — the vendored KB is plain markdown, so it drops into a TypeScript, Rust, or any other project with no programming environment attached.
 
 ### Installing into a project (full install)
 
-Commonplace can be installed into any project as a Python package. Your agents get the same type system, conventions, and skills, and accumulate knowledge about your domain rather than this one. The package ships the methodology — the research notes, reference docs, instructions, types, skills, and `commonplace-*` commands — but not the external-system reviews (`kb/agent-memory-systems/`, `kb/agentic-systems/`) or the source snapshots in `kb/sources/`: those are research material specific to this repo, left out to keep the package small. Read them on the [rendered site](https://zby.github.io/commonplace/). See [**INSTALL.md**](https://github.com/zby/commonplace/blob/main/INSTALL.md) for the setup flow.
+Commonplace installs as a user-level uv tool, then scaffolds its KB content into any project. Your agents get the same type system, conventions, and skills, and accumulate knowledge about your domain rather than this one. The package ships the methodology — the research notes, reference docs, instructions, types, skills, and `commonplace-*` commands — but not the external-system reviews (`kb/agent-memory-systems/`, `kb/agentic-systems/`) or the source snapshots in `kb/sources/`: those are research material specific to this repo, left out to keep the package small. Read them on the [rendered site](https://zby.github.io/commonplace/). See [**INSTALL.md**](https://github.com/zby/commonplace/blob/main/INSTALL.md) for the setup flow.
 
 ### Vendored inside your project (reader mode)
 
@@ -116,7 +122,7 @@ Restart the shells, IDEs, and agent runtimes that need the commands, then call e
 | Tool | Required | Purpose |
 | --- | --- | --- |
 | Agent runtime | yes | Codex, Claude Code, or another internal LLM/IDE that can load project instructions and expose the `cp-skill-*` skill directories |
-| [uv](https://docs.astral.sh/uv/) | yes | Install and run the Commonplace Python package |
+| [uv](https://docs.astral.sh/uv/) | yes | Install the Commonplace command tool and run source-development dependencies |
 | [git](https://git-scm.com/) | yes | Versioning, history-preserving renames in `convert` |
 | [ripgrep](https://github.com/BurntSushi/ripgrep) (`rg`) | yes | Structured search — frontmatter queries, keyword matching, link scanning |
 | [curl](https://curl.se/) | yes | PDF downloads in `snapshot-web` |
