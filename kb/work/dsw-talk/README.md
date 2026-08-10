@@ -11,6 +11,7 @@ The talk should leave the audience thinking "I can apply these patterns to my ow
 ## State
 
 - [outline.md](./outline.md) — the working 35-minute outline, the vibe-noting and tag-README cases, the four practitioner lessons, the material triage against the KB, the visual spine, and the deliberate exclusions.
+- [development-implications.md](./development-implications.md) — the provisional Commonplace roadmap implied by the talk: test an observable loop from raw observation through candidate disposition and cold-session reuse before adding more infrastructure.
 
 ## What would close this workshop
 
