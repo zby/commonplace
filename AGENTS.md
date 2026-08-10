@@ -76,7 +76,7 @@ Use ordinary spaced phrases in prose (`adapted from`, `derived from`). Registere
 - **Package documentation**: [lib-modules.md](./kb/reference/lib-modules.md) — internal API of the `commonplace.lib` modules; [freshness-architecture.md](./kb/reference/freshness-architecture.md) — general freshness store and transitions; [review-architecture.md](./kb/reference/review-architecture.md) — review adapter and execution.
 - **YAGNI** — don't implement features that aren't needed yet. If you identify a gap, write it down instead of implementing it: a system feature or design gap becomes a design proposal in `kb/reference/proposals/` (see its README for the contract); a transferable insight becomes a note in `kb/notes/`.
 - **No backwards compatibility** — with no external consumers, always prioritize cleaner design over keeping old behavior alive. If backcompat code is ever needed, mark it with `# BACKCOMPAT: <reason> - remove after <condition>`.
-- **Tests**: `uv run pytest` — all tests must pass.
+- **Tests**: `uv run pytest` — when pytest is required, all tests must pass. Do not run pytest for changes confined to Markdown KB artifacts that are data and are not test fixtures or test inputs; run the relevant `commonplace-validate` checks instead.
 
 ### Source checkout command installation
 
