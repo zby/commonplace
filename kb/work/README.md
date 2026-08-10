@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [dsw-talk](./dsw-talk/README.md) — preparing a 35-minute Data Summit Warsaw practitioner talk: one core hybrid-system claim, four engineering lessons, a triage of KB material into included/compressed/cut, and an evolving visual spine that closes on self-hosting
 - [agent-runtime-design](./agent-runtime-design/README.md) — deriving what an agent runtime must provide, starting with capability requests, scoped grants, and durable suspension for approval, while separating runtime guarantees from CLI, TUI, API, and host-application control surfaces
 - [reflective-improvement-divergence](./reflective-improvement-divergence/README.md) — investigating when open-ended improvement search becomes revision drift, oscillation, moving-criterion instability, or operational non-termination, and what episode-closure rules let a reflective system return to object-level work without pretending it has converged
 - [self-revision-design-space](./self-revision-design-space/README.md) — explaining, in plain language first, aspect-bounded builder-loop reach: experimental pathways revise different roles and code while leaving different governing machinery supplied, Commonplace partially retains a human–agent redesign path, and the theoretical Gödel machine internalizes broad redesign behind a proof requirement
