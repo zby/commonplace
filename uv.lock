@@ -2,10 +2,6 @@ version = 1
 revision = 3
 requires-python = ">=3.11"
 
-[options]
-exclude-newer = "0001-01-01T00:00:00Z" # This has no effect and is included for backwards compatibility when using relative exclude-newer values.
-exclude-newer-span = "P7D"
-
 [[package]]
 name = "annotated-types"
 version = "0.7.0"
@@ -271,8 +267,8 @@ requires-dist = [
     { name = "pyyaml", specifier = ">=6.0.0" },
     { name = "pyyaml", marker = "extra == 'all'" },
     { name = "referencing", specifier = ">=0.31.0" },
-    { name = "xdk", marker = "extra == 'all'" },
-    { name = "xdk", marker = "extra == 'snapshot'" },
+    { name = "xdk", marker = "extra == 'all'", specifier = ">=0.10.4" },
+    { name = "xdk", marker = "extra == 'snapshot'", specifier = ">=0.10.4" },
 ]
 provides-extras = ["docs", "snapshot", "all"]
 
@@ -975,14 +971,14 @@ wheels = [
 
 [[package]]
 name = "xdk"
-version = "0.9.0"
+version = "0.10.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pydantic" },
     { name = "requests" },
     { name = "requests-oauthlib" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/09/3c/6940c6e94d4f96f5f048bb11e7303cfe09ca5bc4fd95f25d461f350b3b58/xdk-0.9.0.tar.gz", hash = "sha256:0fab8a1649cb92b824f3ff0b579a2e8bcce42a5c378298a4e381f0d1f40191d6", size = 404139, upload-time = "2026-02-28T01:17:14.879Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/9b/7b/47c5efdb3f6b1e76b101eca028fc68831344762650138534854cc4bd2243/xdk-0.10.6.tar.gz", hash = "sha256:34a5142680f051f65aa1d4b53759ec7cead84ddf49428bcf278c7f8881da6d79", size = 461188, upload-time = "2026-07-25T05:33:43.031Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/0b/37/b7e57c9fe9c4f383afc1a4b16451373ee5ae96dd25b02e1c0dd347b30423/xdk-0.9.0-py3-none-any.whl", hash = "sha256:042555e661c1ee772e085d9eb4df0a335b1f81dcfb9ae7fba1a32d950cd6a4ef", size = 172500, upload-time = "2026-02-28T01:17:13.356Z" },
+    { url = "https://files.pythonhosted.org/packages/b3/98/6bf27d955447ace007b3a55094ef36dc35c3b97f4e2da939247e443f3936/xdk-0.10.6-py3-none-any.whl", hash = "sha256:89859f02e2365a3edceb04340f1902ba5d975a3e22e469bb9bfd8bfdf557e587", size = 212692, upload-time = "2026-07-25T05:33:41.6Z" },
 ]

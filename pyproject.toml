@@ -59,8 +59,8 @@ include = ["src/**/*.py", "tests/**/*.py"]
 
 [project.optional-dependencies]
 docs = ["properdocs", "properdocs-theme-mkdocs", "mkdocs-redirects"]
-snapshot = ["python-dotenv", "xdk"]
-all = ["properdocs", "properdocs-theme-mkdocs", "mkdocs-redirects", "python-dotenv", "pyyaml", "xdk"]
+snapshot = ["python-dotenv", "xdk>=0.10.4"]
+all = ["properdocs", "properdocs-theme-mkdocs", "mkdocs-redirects", "python-dotenv", "pyyaml", "xdk>=0.10.4"]
 
 [build-system]
 requires = ["hatchling"]

@@ -31,13 +31,15 @@ POST_FIELDS = [
     "created_at",
     "conversation_id",
     "in_reply_to_user_id",
-    "referenced_tweets",
-    "note_tweet",
+    "referenced_posts",
+    "note_post",
     "entities",
     "article",
 ]
 USER_FIELDS = ["id", "username", "name"]
-EXPANSIONS = ["author_id", "in_reply_to_user_id", "referenced_tweets.id"]
+EXPANSIONS = ["author_id", "in_reply_to_user_id", "referenced_posts"]
+
+
 def _canonical_source_url(url: str) -> str:
     parsed = urlparse(url)
     host = parsed.netloc.lower().replace("www.", "")
@@ -93,7 +95,11 @@ def _is_article_url(url: str) -> bool:
     if host not in {"x.com", "twitter.com"}:
         return False
     segments = [s for s in parsed.path.strip("/").split("/") if s]
-    return len(segments) >= 3 and segments[:2] == ["i", "article"] and segments[2].isdigit()
+    return (
+        len(segments) >= 3
+        and segments[:2] == ["i", "article"]
+        and segments[2].isdigit()
+    )
 
 
 def _extract_users_map(includes: dict[str, Any] | None) -> dict[str, dict[str, Any]]:
@@ -111,7 +117,7 @@ def _fetch_post(
 ) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
     response = client.posts.get_by_id(
         post_id,
-        tweet_fields=POST_FIELDS,
+        post_fields=POST_FIELDS,
         expansions=EXPANSIONS,
         user_fields=USER_FIELDS,
     )
@@ -124,7 +130,7 @@ def _fetch_post(
 
 
 def _reply_parent_id(post: dict[str, Any]) -> str | None:
-    for ref in post.get("referenced_tweets") or []:
+    for ref in post.get("referenced_posts") or []:
         if ref.get("type") == "replied_to" and ref.get("id"):
             return str(ref["id"])
     return None
@@ -173,7 +179,7 @@ def _fetch_thread_recent(
             query=query,
             max_results=100,
             sort_order="recency",
-            tweet_fields=POST_FIELDS,
+            post_fields=POST_FIELDS,
             expansions=EXPANSIONS,
             user_fields=USER_FIELDS,
         ):
@@ -206,7 +212,7 @@ def _post_sort_key(post: dict[str, Any]) -> tuple[str, int]:
 
 
 def _post_text(post: dict[str, Any]) -> str:
-    note_text = (post.get("note_tweet") or {}).get("text")
+    note_text = (post.get("note_post") or {}).get("text")
     if isinstance(note_text, str) and note_text.strip():
         return note_text.strip()
     return str(post.get("text") or "").strip()
@@ -270,8 +276,14 @@ def _render_markdown(
         )
         return "\n".join(lines)
 
-    heading = f"Thread by {author_label}" if len(posts_sorted) > 1 else f"Post by {author_label}"
-    lines.extend([f"# {heading}", "", f"Source post: {_post_url(target_post, users)}", ""])
+    heading = (
+        f"Thread by {author_label}"
+        if len(posts_sorted) > 1
+        else f"Post by {author_label}"
+    )
+    lines.extend(
+        [f"# {heading}", "", f"Source post: {_post_url(target_post, users)}", ""]
+    )
     if thread_error:
         lines.extend([f"Thread fetch note: {thread_error}", ""])
 
@@ -301,7 +313,9 @@ def _classify_family(target_post: dict, posts_sorted: list[dict]) -> str:
     An article wins over a thread even if the post has replies, because
     article-bearing posts carry their own distinctive content.
     """
-    article_text = str(((target_post.get("article") or {}).get("plain_text") or "")).strip()
+    article_text = str(
+        ((target_post.get("article") or {}).get("plain_text") or "")
+    ).strip()
     if article_text:
         return "x-article"
     if len(posts_sorted) > 1:
@@ -386,7 +400,9 @@ def snapshot_x_url(url: str, out_dir: str, max_posts: int) -> str:
         "users": users,
         "thread_fetch_error": thread_error,
     }
-    json_path.write_text(json.dumps(payload, ensure_ascii=True, indent=2), encoding="utf-8")
+    json_path.write_text(
+        json.dumps(payload, ensure_ascii=True, indent=2), encoding="utf-8"
+    )
 
     md = _render_markdown(
         source_url=source_url,
@@ -431,7 +447,9 @@ def main() -> int:
     load_dotenv()
     args = parse_args()
     try:
-        result = snapshot_x_url(args.url, out_dir=args.out_dir, max_posts=args.max_posts)
+        result = snapshot_x_url(
+            args.url, out_dir=args.out_dir, max_posts=args.max_posts
+        )
     except Exception as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 1

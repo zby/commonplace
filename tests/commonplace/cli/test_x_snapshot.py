@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 import yaml
@@ -26,6 +27,108 @@ def frontmatter(path: Path) -> dict:
 class FakeClient:
     def __init__(self, bearer_token: str) -> None:
         self.bearer_token = bearer_token
+
+
+class FakeResponse:
+    def __init__(self, payload: dict) -> None:
+        self.payload = payload
+
+    def model_dump(self) -> dict:
+        return self.payload
+
+
+def test_fetch_post_uses_xdk_0_10_post_vocabulary() -> None:
+    target_post = {
+        "id": "1002",
+        "text": "Truncated text",
+        "author_id": "42",
+        "referenced_posts": [{"type": "replied_to", "id": "1001"}],
+        "note_post": {"text": "Full post text"},
+    }
+
+    class LookupPosts:
+        def get_by_id(
+            self,
+            post_id: str,
+            *,
+            post_fields: list[str],
+            expansions: list[str],
+            user_fields: list[str],
+        ) -> FakeResponse:
+            assert post_id == "1002"
+            assert "referenced_posts" in post_fields
+            assert "note_post" in post_fields
+            assert "referenced_tweets" not in post_fields
+            assert expansions == [
+                "author_id",
+                "in_reply_to_user_id",
+                "referenced_posts",
+            ]
+            assert user_fields == x_snapshot.USER_FIELDS
+            return FakeResponse(
+                {
+                    "data": target_post,
+                    "includes": {
+                        "users": [{"id": "42", "username": "alice", "name": "Alice"}]
+                    },
+                }
+            )
+
+    client = SimpleNamespace(posts=LookupPosts())
+    post, users = x_snapshot._fetch_post(client, "1002")
+
+    assert users["42"]["username"] == "alice"
+    assert x_snapshot._reply_parent_id(post) == "1001"
+    assert x_snapshot._post_text(post) == "Full post text"
+
+
+def test_fetch_thread_recent_uses_xdk_0_10_post_fields() -> None:
+    class RecentPosts:
+        def search_recent(
+            self,
+            *,
+            query: str,
+            max_results: int,
+            sort_order: str,
+            post_fields: list[str],
+            expansions: list[str],
+            user_fields: list[str],
+        ) -> list[FakeResponse]:
+            assert query == "conversation_id:1002"
+            assert max_results == 100
+            assert sort_order == "recency"
+            assert "referenced_posts" in post_fields
+            assert "note_post" in post_fields
+            assert expansions == [
+                "author_id",
+                "in_reply_to_user_id",
+                "referenced_posts",
+            ]
+            assert user_fields == x_snapshot.USER_FIELDS
+            return [
+                FakeResponse(
+                    {
+                        "data": [{"id": "1003", "author_id": "42"}],
+                        "includes": {
+                            "users": [
+                                {"id": "42", "username": "alice", "name": "Alice"}
+                            ]
+                        },
+                    }
+                )
+            ]
+
+    client = SimpleNamespace(posts=RecentPosts())
+    posts, users, error = x_snapshot._fetch_thread_recent(
+        client,
+        conversation_id="1002",
+        thread_author_id="42",
+        max_posts=200,
+    )
+
+    assert error is None
+    assert list(posts) == ["1003"]
+    assert users["42"]["username"] == "alice"
 
 
 @pytest.mark.parametrize(
@@ -78,7 +181,9 @@ def test_x_snapshot_stamps_family_tag_into_frontmatter_and_sidecar(
     users = {"42": {"id": "42", "username": "alice", "name": "Alice"}}
     monkeypatch.setenv("X_BEARER_TOKEN", "token")
     monkeypatch.setattr(x_snapshot.xdk, "Client", FakeClient)
-    monkeypatch.setattr(x_snapshot, "_fetch_post", lambda _client, _post_id: (target_post, users))
+    monkeypatch.setattr(
+        x_snapshot, "_fetch_post", lambda _client, _post_id: (target_post, users)
+    )
     monkeypatch.setattr(x_snapshot, "_fetch_ancestors", lambda _client, _post: ({}, {}))
     monkeypatch.setattr(
         x_snapshot,
