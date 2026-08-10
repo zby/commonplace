@@ -77,7 +77,7 @@ These are logical obligations, not required components. A proposal-selection pat
 
 The successor need not be a one-for-one replacement artifact. A better arrangement may narrow a rule, split one concept into several, reroute its useful work, or remove an artifact whose role is no longer warranted. What matters is comparing the successor with continued use of the incumbent arrangement.
 
-Complete addressability, like [reflective coverage](../reference/commonplace-as-a-reflective-system.md), is relative to a declared boundary and an operation profile. Commonplace may strongly support inspection and revision of natural-language theory, types, and validators while having weaker paths for objectives, evaluator validity, authority arrangements, or external model bindings.
+Complete addressability, like [reflective coverage](../reference/commonplace-as-a-reflective-system.md), is relative to a declared boundary and an operation profile. Commonplace may strongly support inspection and revision of natural-language theory, types, and validators while having weaker paths for objectives, evaluator validity, authority arrangements, or the realization of its internal binding requests at an external model dependency.
 
 ## How the revision path works
 

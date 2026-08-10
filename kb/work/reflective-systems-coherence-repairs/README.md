@@ -1,0 +1,61 @@
+# Reflective-systems coherence repairs
+
+## Goal
+
+Resolve the four live defects remaining after triage of the [2026-07-14 reflective-systems coherence report](../../reports/reflective-systems-coherence-report.md), without replaying recommendations already absorbed by later revisions.
+
+## Evidence boundary
+
+The report is evidence about repository snapshot `32ce89e6`, not current truth. Each repair must be checked against the live library before editing. The triage against `c41c7155` found four remaining defects; everything else in the report is either already resolved or deferred under YAGNI.
+
+## Repair queue
+
+1. **Complete — external-model boundary.** Keep provider and weights outside the declared Commonplace frame. Treat editable model-binding requests as internal localized configuration that may select an external dependency when realized, not as reflective coverage of the dependency's distributed-parametric form; assess requested-to-realized binding separately.
+2. **Pending — closure semantics.** Naming a decider closes routing only. Decision-content closure requires explicitly retained criteria, supplied directly or imported by reference; tacit criteria held by the decider do not count.
+3. **Pending — natural-language/symbolic crossing.** Recast the claim around changes that move the interpretation–enforcement boundary; do not generalize from those crossings to every reliability improvement.
+4. **Pending — retrieval locality.** State failure at the unit it breaks: the represented aspect, constraint, or reflective path whose retrieval wire missed it, not the whole system's reflectivity.
+
+## Item 1 decision and acceptance boundary
+
+The operative distinction is:
+
+- **Reflective coverage** applies only to represented aspects of the same bounded system. Its operation profile records what internal processes can do to those covered aspects or components.
+- **Dependency control** records the cross-boundary effect an internal binding requests. Editing the binding changes localized Commonplace configuration; if the request is realized, it selects an external model without covering that model or its weights. Request addressability and operative realization are separate findings.
+
+Item 1 is complete when:
+
+- the coverage theory states the boundary condition and no longer uses Commonplace's external provider model as an example of a covered component;
+- the declared frame and Commonplace case classify the binding as internal and modifiable, and the provider/weights as external and uncovered;
+- every live consumer of `selection-grade` or `selection-only` parametric coverage either adopts dependency-control wording or is shown to describe a genuinely in-boundary component;
+- affected artifacts pass deterministic validation, and a final search finds no live statement granting reflective coverage to Commonplace's external weights.
+
+## Item 1 completion evidence
+
+Completed 2026-08-10. The repair changed these library artifacts:
+
+- `kb/notes/reflective-coverage-is-graded-across-representational-forms.md`
+- `kb/reference/commonplace-declared-frame.md`
+- `kb/reference/commonplace-as-a-reflective-system.md`
+- `kb/notes/methodological-and-computational-closure-track-different-changes.md`
+- `kb/notes/only-explicit-retention-is-durable-writable-and-addressable.md`
+- `kb/notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md`
+- `kb/notes/improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md`
+- `kb/notes/evidence/six-commonplace-paths-establish-broad-addressability-not-completeness.md`
+- `kb/articles/what-makes-human-inclusive-self-revision-non-trivial.md`
+- `kb/work/self-improvement-cluster-operationalization/README.md`
+
+The coverage theory now confines reflective operations to represented in-boundary aspects. The Commonplace frame and case identify the writable object as a localized binding request, leave provider weights outside the system, and treat any realized model selection as dependency control. They also state that request addressability does not establish realization or a reflective causal path. A focused semantic re-review found no remaining blocker.
+
+Each changed artifact, this workshop README, and `kb/work/README.md` passed an individual `commonplace-validate` run. A live-library search found no remaining claim that Commonplace has `selection-grade` or `selection-only` reflective coverage of external provider weights; matches in the snapshot report and frozen evidence packets remain historical evidence. `git diff --check` was clean, and `uv run pytest` passed all 479 tests.
+
+## Next-session routing
+
+Resume at the first `Pending` queue item. Re-read the cited live artifacts before editing because this workshop records decisions and status, not frozen replacement text. Complete one item fully, update its status and evidence here, then stop unless the maintainer asks to continue.
+
+## What closes the workshop
+
+All four defects are repaired in the library, the queue records their validation evidence, and no unresolved finding remains. Then delete this workshop and remove its entry from `kb/work/README.md`; the durable value belongs in the repaired library artifacts.
+
+## Bookkeeping
+
+Keep repair decisions and validation evidence here. Do not copy full library drafts into the workshop, and do not edit the snapshot report to make it describe later repository states.

@@ -23,15 +23,15 @@ The tag-readme trace is the cluster's canonical telling of the example. Causal c
 
 The revised representation then changed later behavior. The validator rejects artifacts it previously accepted; agents may skip a search when a validated completeness mark warrants doing so; and the symbolic check caught a member that the documented search recipe had missed, causing the natural-language recipe to be corrected. A change in operation revised the self-representation, and operations mediated through the revised representation changed subsequent behavior. The enforced `complete` and `covered_by` fields also strengthened the retrieval wire.
 
-Coverage remains uneven across representational forms, [as reflective coverage must be graded per form and operation profile](../notes/reflective-coverage-is-graded-across-representational-forms.md):
+Coverage remains uneven across representational forms, [as reflective coverage must be stated per form and operation profile](../notes/reflective-coverage-is-graded-across-representational-forms.md). The tag-readme trace establishes the localized-form coverage rows; a separate six-path audit bounds what can be said about model-binding control:
 
 - **Natural-language reasoning revising formal artifacts** — shown: ADR 026 became a schema and validator.
 - **Symbolic execution revising natural-language instruction** — shown once when validation exposed the incomplete search recipe.
 - **Represented mappings across forms** — partial: the type-specification path tightly couples this specification to validator dispatch, but most natural-language-to-code relationships have no equivalent binding.
 - **Lineage and staleness across forms** — mostly absent: freshness tracking covers review inputs, not theory-to-implementation lineage.
-- **Model weights** — selection only: Commonplace can choose a model binding but cannot inspect or edit the provider's weights.
+- **Requested model binding** — the localized request is explicit and revisable, but the audit does not establish a reflective causal path through it. Its selection effect would cross to an external dependency, and the [six-path audit](../notes/evidence/six-commonplace-paths-establish-broad-addressability-not-completeness.md#requested-model-bindings-are-not-realized-bindings) found no trusted requested-to-realized binding. Provider weights remain outside the frame and uncovered.
 
-The trace therefore earns modification-grade coverage on parts of the natural-language and symbolic forms and only selection-grade coverage on the parametric form. It does not establish global reflectivity over every behavior-bearing component.
+The tag-readme evidence therefore earns modification-grade coverage on parts of the natural-language and symbolic forms. It earns no reflective coverage of the external parametric form. The separate binding audit establishes addressability of an internal localized request and an operative-realization gap, not reflective modification through that request; any realized model selection would be dependency control across the boundary. The trace does not establish global reflectivity over every behavior-bearing component.
 
 ## Improvement dynamics
 

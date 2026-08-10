@@ -12,7 +12,7 @@ A system that learns during operation must retain what it learned in some form, 
 | Retention form | Durable | Writable | Addressable |
 |---|---|---|---|
 | In-context conditioning | no — dies with the session | yes — every token writes it | no — the transcript is addressable; the competence it induces is not |
-| Weights, selection-only profile | yes | no — swapping the sealed component is the only lever | no |
+| In-boundary sealed weights, replaceable only as a whole | yes | no — replacement changes component identity, not the weights | no |
 | Weights, with fine-tuning | yes | yes | no — no per-commitment retrieval, criticism, selective revision, or rollback |
 | Human expertise | yes | yes — practice writes it | no — stable, perhaps, but not inspectable, diffable, or transferable |
 | Explicit artifacts (natural-language, symbolic) | yes | yes | yes |
@@ -23,11 +23,11 @@ Two rows deserve unpacking. **In-context conditioning looks explicit because its
 
 ## Externalization is the transport, not a preliminary
 
-The conversion of a human-held decision to computational execution puts settlement — making the criterion explicit — before allocation. The table shows that ordering is forced, twice over. In a system whose [operation profile](./reflective-coverage-is-graded-across-representational-forms.md) over the parametric form is selection-only, explicit artifacts are the only durable *writable* channel there is: nothing else inside the boundary can receive the criterion at all. And even where fine-tuning adds parametric writability, the transfer is unaddressable — what was allocated can no longer be stated, reviewed, or revised as a commitment, so the allocation escapes governance at the moment it succeeds. Either way, a criterion moves to a computational actor only through an explicit representation. Externalization is the transport mechanism of allocation, not preparation for it.
+The conversion of a human-held decision to computational execution puts settlement — making the criterion explicit — before allocation. The table shows that ordering is forced, twice over. Where sealed weights can only be replaced as a whole, explicit artifacts are the only durable *writable* channel available to the system: changing an internal model binding selects a component but writes nothing into its weights. And even where fine-tuning adds parametric writability, the transfer is unaddressable — what was allocated can no longer be stated, reviewed, or revised as a commitment, so the allocation escapes governance at the moment it succeeds. Either way, a criterion moves to a computational actor only through an explicit representation. Externalization is the transport mechanism of allocation, not preparation for it.
 
 ## The claim is current, and its falsifier is named
 
-This is an empirical claim about existing substrates, so its application to a particular system should be stated as a profile line over the parametric form, not as a fact about technology at large — [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) records a selection-only line, and everything this note forces (explicit-only retention, externalization as transport) is downstream of that line. What would break the claim is not more writability: fine-tuning exists now, and continual-learning pipelines only add write channels. The falsifier is addressability of a tacit form — interpretability-grade editing under which a weight-encoded commitment can be individually retrieved, criticized, and revised. A system whose profile line crosses that boundary owes every artifact derived from this claim a re-derivation.
+This is an empirical claim about existing substrates, so its application to a particular system must state both the boundary and the available operations rather than universalize from one deployment. [Commonplace keeps provider weights outside its frame](../reference/commonplace-declared-frame.md), so those weights are excluded from its retention forms rather than occupying a selection-only row. Commonplace has no in-boundary parametric write path; its writable object is the localized binding request, whose requested-to-realized effect remains runtime-contingent. What would break the general claim is not more writability: fine-tuning exists now, and continual-learning pipelines only add write channels. The falsifier is addressability of a tacit form — interpretability-grade editing under which a weight-encoded commitment can be individually retrieved, criticized, and revised. A system whose capabilities cross that boundary owes every artifact derived from this claim a re-derivation.
 
 ## Scope
 
@@ -45,10 +45,10 @@ This is an empirical claim about existing substrates, so its application to a pa
 Relevant Notes:
 
 - [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: defines addressability and its comparative reading; this note extends the comparison across all current retention forms
-- [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — grounds: the operation-profile vocabulary the frame-indexed corollary is stated in, and the per-form verification obligation the tacit rows collapse to
+- [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — grounds: distinguishes an operation profile over an in-boundary component from control of an external dependency, and supplies the per-form verification obligation the tacit rows collapse to
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — extends: supplies the shared ground for its tacit-expertise and substrate-dependency resolutions
 - [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — extends: adds the addressability property and the human row to its three-timescale media comparison
 - [Retaining the episode keeps a distilled rule re-derivable](./retaining-the-episode-keeps-a-distilled-rule-re-derivable.md) — extends: what the explicit-only regime should retain in which explicit form
 - [Representational form](./definitions/representational-form.md) — defined-in: the natural-language / symbolic / distributed-parametric axis the tacit/explicit divide runs across
 - [Retained artifact](./definitions/retained-artifact.md) — defined-in: the umbrella term for durable behavior-shaping state this note's rows instantiate
-- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidenced-by: the recorded selection-only profile line this claim's application rests on
+- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidenced-by: the excluded external-provider case and the distinction between its writable localized binding request and the provider weights it names

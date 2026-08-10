@@ -34,7 +34,7 @@ Changes confined to one form exist, and some of them matter: a code-only bug fix
 ## Scope
 
 - The claim characterizes where reliability gains concentrate under the stated pressure; it is not a universal over every improvement. A system without reliability pressure, or with no formal consumers at all, is outside the argument.
-- It concerns the natural-language/symbolic pair. The distributed-parametric form sits under selection-grade levers in current agent systems, and this argument does not extend to it.
+- It concerns the natural-language/symbolic pair and does not extend to distributed-parametric artifacts. A localized model-binding request remains in the pair even when it names weights, because representational form follows the operative artifact rather than its referent.
 - The mechanism carries the claim; the direct evidence base is the single repository trace used in both directions above, set out in full in [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md). One trace is not a sample; classifying external agent systems by which forms their improvements touch is the test beyond this repository. A first such classification: [Knowledge-Centric Self-Improvement](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md) is a natural-language-only improvement loop — accepted claims accumulate as advice to fresh agents, as natural-language-only coverage predicts — that succeeds because its symbolic half, benchmark verification, is supplied externally, fixed, and already adequate, so the enforcement line never needs to move; the settings its authors leave untested are those where it would.
 
 ---

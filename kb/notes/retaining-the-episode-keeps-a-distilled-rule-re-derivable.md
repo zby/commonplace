@@ -24,7 +24,7 @@ Governability runs the other way. Rules collide detectably — two contradictory
 ## Costs the pair must manage
 
 - **Loading.** Retaining episodes is a capture posture, not a context posture: [persistence and loading are separate decisions](./session-history-should-not-be-the-default-next-context.md), and [evidence can be preserved without becoming the next context](./agent-memory-requirements/preserve-evidence-without-loading-history.md). Rules load by default because [a fast path should carry answers, not work](./frontloading-spares-execution-context.md); episodes load on demand — scope disputes, re-derivation, residue-heavy tasks.
-- **Model relativity.** An episode's lesson is a joint product of the trace and the model that reads it; replay under different weights re-conditions differently. Episode retention therefore carries a quiet selection-grade dependency on the parametric form — faithful replay pins the reader — while a rule is comparatively model-portable. The [operation-profile vocabulary](./reflective-coverage-is-graded-across-representational-forms.md) makes the dependency statable.
+- **Model relativity.** An episode's lesson is a joint product of the trace and the model that reads it; replay under different weights re-conditions differently. Episode retention therefore carries a reader-model dependency: comparable replay may require pinning model identity and version, while a rule is comparatively model-portable. The pin is localized configuration about reader identity, not a representation of the weights, and a request alone does not establish which model actually ran.
 
 ## Scope
 
@@ -48,5 +48,5 @@ Relevant Notes:
 - [Session history should not be the default next context](./session-history-should-not-be-the-default-next-context.md) — grounds: the persistence/loading split that makes episode retention affordable
 - [Preserve evidence without making history the next context](./agent-memory-requirements/preserve-evidence-without-loading-history.md) — extends: the capture-side practice this claim supplies the re-derivability rationale for
 - [Frontloading spares execution context](./frontloading-spares-execution-context.md) — grounds: why the rule layer carries answers and loads by default
-- [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — grounds: the profile vocabulary that states episode replay's selection-grade dependency on the reader model
+- [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — contrasts: separates a localized reader-model binding from coverage of the hidden weights it names
 - [Open-domain memory retention needs a declared output spec](./open-domain-memory-retention-needs-a-declared-output-spec.md) — contrasts: owns the inclusion criterion; this note owns the form question
