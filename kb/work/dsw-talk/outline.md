@@ -36,7 +36,7 @@ Introduce each lesson as the conclusion of a case segment. Do not present the fo
 
 ### Case 1: vibe-noting
 
-Use four pieces of slide-ready evidence, not the whole note:
+Use four pieces of slide-ready evidence from the [vibe-noting revision trace](../../notes/evidence/vibe-noting-trace-shows-persistence-enables-revision-not-certification.md), not the whole theory note:
 
 - The raw human observation about code as a persistent artifact and a KB extending that property to knowledge work.
 - The first candidate's genuine additions: the inspectability claim, the distinction between augmentation and automation, and the relationship to weak verification.
@@ -127,7 +127,8 @@ The audience takeaway: "I can apply these patterns to my own LLM knowledge syste
 
 ---
 
-- [vibe-noting](../../notes/vibe-noting.md) — evidenced-by: the central worked example; its own history shows both the useful transformation and errors later caught in review
+- [A vibe-noting trace shows persistence enables revision, not certification](../../notes/evidence/vibe-noting-trace-shows-persistence-enables-revision-not-certification.md) — evidenced-by: the central worked example preserves the seed, candidate, review corrections, and retained result
+- [Vibe-noting](../../notes/vibe-noting.md) — rests-on: the theoretical artifact distilled from the worked case supplies the inspectability-versus-verifiability explanation
 - [Reverse compression is when LLM output expands without adding](../../notes/reverse-compression-is-when-llm-output-expands-without-adding.md) — rests-on: the fluency trap in the 8–12 min section
 - [The tag-README change as an observed causal-connection trace](../../reference/tag-readme-trace-observed-causal-connection.md) — evidenced-by: the second worked example and its verified implementation timeline
 - [The tag-README trace read as a self-improving loop](../../reference/tag-readme-trace-as-self-improving-loop.md) — rests-on: the calibrated self-hosting close

@@ -13,7 +13,7 @@ raw observation
   → measured effect and new observations
 ```
 
-The talk makes this gap visible because both of its worked cases had to be reconstructed manually. The vibe-noting case preserves its initiating conversation, candidate prose, and later corrections inside one note. The tag-README case required a separate commit-by-commit trace to show how an operational strain became changed methodology and machinery. Neither path is yet an ordinary, observable Commonplace operation.
+The talk makes this gap visible because both of its worked cases had to be reconstructed manually. The [vibe-noting revision trace](../../notes/evidence/vibe-noting-trace-shows-persistence-enables-revision-not-certification.md) preserves its initiating observation, candidate prose, later corrections, and compressed retained artifact as a bounded evidence case. The tag-README case required a separate commit-by-commit trace to show how an operational strain became changed methodology and machinery. Neither path is yet an ordinary, observable Commonplace operation.
 
 ## Why this is the next gap
 
