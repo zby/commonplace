@@ -25,7 +25,7 @@ One authoring rule follows: content on different change schedules should remain 
 
 ## Scope
 
-- The condition is about *revision* cost, not retrieval or competence: a perfectly matched decomposition still rides the best-effort retrieval wire, and [retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) regardless of topology.
+- The condition is about *revision* cost, not retrieval or competence: a perfectly matched decomposition still rides the best-effort retrieval wire, and [a retrieval miss is a local reflective-path failure](./a-retrieval-miss-is-a-local-reflective-path-failure.md) regardless of topology.
 - *k* and *n* form a schema, not a measurement; real edit and impact footprints are fuzzy. A decomposition chosen after the fact can manufacture apparent sparsity, so the claim has content only when the units were fixed before the change arrived. Whether designers can estimate change topology well enough to choose matching units in advance remains the open half of Parnas's criterion.
 
 ---

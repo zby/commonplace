@@ -9,7 +9,7 @@ tags: [failure-modes, artifact-analysis, self-improving-systems]
 
 [Behavioral authority](./definitions/behavioral-authority.md) attaches to a consumption path — a consumer, a channel, and a force — not to the bytes of an artifact. That precision has a converse consequence: whatever reaches the path receives its force unless the path checks whether the promotion is authorized. Here, *earned* means that an explicit authorization covers the content, its version, the role it will occupy, and the use being made of it. It does not mean that the content is guaranteed true.
 
-This boundary makes a writable self-representation an attack surface rather than a maintenance chore. If [retrieval is the wire a self-representation acts along](./retrieval-failure-is-reflection-failure.md), one failure occurs when search finds nothing and a represented constraint stays inert. Here, the wire works: it delivers content into a high-force position without a matching authorization transition.
+This boundary makes a writable self-representation an attack surface rather than a maintenance chore. If [retrieval is the wire a self-representation acts along](./a-retrieval-miss-is-a-local-reflective-path-failure.md), one failure occurs when search finds nothing and a represented constraint stays inert. Here, the wire works: it delivers content into a high-force position without a matching authorization transition.
 
 ## Two ways in, one boundary
 

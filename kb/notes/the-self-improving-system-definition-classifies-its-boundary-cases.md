@@ -34,7 +34,7 @@ An explication earns its keep by classifying the cases that motivated it *and* t
 
 **Architecture without self-directedness is the instructive exclusion.** The answer-refinement case runs a complete generate–evaluate–select loop — candidates, an evaluator, selective retention — and is still not a self-improving system, because everything it improves is a work product. The subtype machinery detects the *mechanism*; only the organization clause decides *membership*. This is the cleanest demonstration that the two questions are independent.
 
-**Memory systems fill the rare cell.** The unconditional-append memory agent is reflective *and* direct-update — evidence writes straight into the most readable substrate there is — occupying the corner of the [two-dimensions crossing](./definitions/self-improving-system.md) that neither the parametric nor the gated tradition covers. Its known failure mode is not the write but the read: memory that nothing loads is not operative, [and retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md).
+**Memory systems fill the rare cell.** The unconditional-append memory agent is reflective *and* direct-update — evidence writes straight into the most readable substrate there is — occupying the corner of the [two-dimensions crossing](./definitions/self-improving-system.md) that neither the parametric nor the gated tradition covers. Its known failure mode is not the write but the read: memory that nothing loads is not operative, [because a retrieval miss breaks the affected reflective path](./a-retrieval-miss-is-a-local-reflective-path-failure.md).
 
 ## Open Questions
 
@@ -50,4 +50,4 @@ Relevant Notes:
 - [Operative change](./definitions/operative-change.md) — grounds: the horizon-relative persistence-plus-authority clause
 - [Evidence bearing on an improvement objective](./definitions/evidence-bearing-on-an-improvement-objective.md) — grounds: the clause that excludes accident and admits gateless adaptation
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — contrasts: the mechanism the answer-refinement case has and membership ignores
-- [Retrieval failure is reflection failure](./retrieval-failure-is-reflection-failure.md) — extends: why the memory-updating case's weak point is consumption, not capture
+- [A retrieval miss is a local reflective-path failure](./a-retrieval-miss-is-a-local-reflective-path-failure.md) — extends: why the memory-updating case's local weak point is consumption, not capture

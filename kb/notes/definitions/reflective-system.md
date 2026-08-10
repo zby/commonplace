@@ -39,7 +39,7 @@ The definition requires neither a particular artifact authority nor a particular
 
 ## One realization: retrieval-mediated connection
 
-In a retained-artifact system such as Commonplace, the causal connection can run through retrieval. A process discovers relevant parts of the self-representation and lets them shape what it does. Retrieval is neither required for reflection nor sufficient for it: the retrieved representation must actually participate in the causal path. Because discovery is best-effort rather than exhaustive, [retrieval failure is reflection failure](../retrieval-failure-is-reflection-failure.md) develops the resulting weakness and ways to strengthen the connection.
+In a retained-artifact system such as Commonplace, the causal connection can run through retrieval. A process discovers relevant parts of the self-representation and lets them shape what it does. Retrieval is neither required for reflection nor sufficient for it: the retrieved representation must actually participate in the causal path. [A retrieval miss is a local reflective-path failure](../a-retrieval-miss-is-a-local-reflective-path-failure.md); it becomes global only when no qualifying causal path remains inside the declared frame.
 
 ## Exclusions
 
@@ -67,7 +67,7 @@ The conceptual core is inherited; Commonplace's operational extensions are ident
 
 - **Causal connection, self-representation, theory-relativity — inherited.** Maes defines a reflective system as a computational system that reasons about itself “in a causally connected way,” and names the structures representing selected aspects its self-representation ([Maes 1988, printed pp. 1–2, 14–17; PDF pp. 1–2, 14–17](../../sources/maes-computational-reflection-1988.ingest.md)). The introspection/intercession split is corroborated in [Wuyts and Ducasse 2001](../../sources/wuyts-ducasse-2001-symbiotic-reflection.ingest.md); the embedded-self-theory lineage is [Smith 1984](../../sources/smith-reflection-and-semantics-in-lisp-1984.ingest.md).
 - **Explicit boundary- and path-relative attribution — Commonplace's explication.** The definition makes these coordinates part of assessing a reflection claim; it does not attribute this formulation to the cited literature.
-- **Retrieval as a causal connection — Commonplace's own.** None of the cited reflection sources treats discovery over retained artifacts as the causal-connection mechanism. See [retrieval failure is reflection failure](../retrieval-failure-is-reflection-failure.md).
+- **Retrieval as a causal connection — Commonplace's own.** None of the cited reflection sources treats discovery over retained artifacts as the causal-connection mechanism. See [A retrieval miss is a local reflective-path failure](../a-retrieval-miss-is-a-local-reflective-path-failure.md).
 - **Terminology reservation.** Commonplace retains **reflective system** across boundary choices and reserves **reflexive system** for a future concept only if it names a distinct property. Nothing currently requires the second term.
 
 ---
@@ -76,7 +76,7 @@ Relevant Notes:
 
 - [Actionable methodology](./actionable-methodology.md) — grounds: an internal process may act through a methodology, but actionability alone does not establish reflection
 - [Behavioral authority](./behavioral-authority.md) — enables: names the consumer, channel, and force that make a self-representation operative
-- [Retrieval failure is reflection failure](../retrieval-failure-is-reflection-failure.md) — extends: develops the retrieval-mediated causal connection, and the best-effort weakness that comes with it
+- [A retrieval miss is a local reflective-path failure](../a-retrieval-miss-is-a-local-reflective-path-failure.md) — extends: develops the path-relative failure mode of a retrieval-mediated causal connection
 - [Reach-assessment](./reach-assessment.md) — contrasts: a semantic-judgment capability not entailed by reflection's structural requirements
 - [Reflective coverage is graded across representational forms](../reflective-coverage-is-graded-across-representational-forms.md) — extends: when behavior spans heterogeneous forms, coverage must be claimed per form and operation profile
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — extends: reflection supplies one causal path into the loop, but not the search, evaluation, or operative retention the loop needs

@@ -100,6 +100,7 @@ plugins:
         'notes/reflective-leverage-is-tested-in-the-next-episode.md': 'notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md'
         'notes/reflective-systems-README.md': 'notes/self-improving-systems-README.md'
         'notes/related-systems/related-systems-index.md': 'agent-memory-systems/README.md'
+        'notes/retrieval-failure-is-reflection-failure.md': 'notes/a-retrieval-miss-is-a-local-reflective-path-failure.md'
         'notes/reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md': 'notes/reverse-compression-is-when-llm-output-expands-without-adding.md'
         'notes/rlm-achieves-the-clean-scheduler-model-but-opts-out-of-accumulation.md': 'notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md'
         'notes/self-modification-requires-search-evaluation-and-retention.md': 'notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md'

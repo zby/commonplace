@@ -52,4 +52,4 @@ Relevant Notes:
 
 - [An author should fix what the executor can't determine, not what it will](../notes/fix-what-the-executor-cant-determine-not-what-it-will.md) - rationale for the detail-level rule: which details to fix and which to leave to the executor
 - [Operative change](../notes/definitions/operative-change.md) - rationale for the operativity rule: a change operates only through a consumer, channel, and force over a declared horizon
-- [Retrieval failure is reflection failure](../notes/retrieval-failure-is-reflection-failure.md) - rationale for the description and routing rules: retrieval is the wire a retained instruction acts along, and it is best-effort unless a loaded surface enumerates the route
+- [A retrieval miss is a local reflective-path failure](../notes/a-retrieval-miss-is-a-local-reflective-path-failure.md) - rationale for the description and routing rules: retrieval is the wire a retained instruction acts along, and it is best-effort unless a loaded surface enumerates the route
