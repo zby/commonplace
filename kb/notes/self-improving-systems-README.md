@@ -58,5 +58,5 @@ Evidence: [Commonplace paths](./evidence/six-commonplace-paths-establish-broad-a
 ## Related Tags
 
 - [foundations](./foundations-README.md) — the broader core theory this sits inside
-- [constraining](./constraining-README.md) — methodological closure is a constraining property of methodology-as-input
+- [constraining](./constraining-README.md) — methodological closure tracks retained settlement of consequential choices in a governed pathway
 - [computational-model](./computational-model-README.md) — reflection and intercession as computational concepts generalized to socio-technical boundaries

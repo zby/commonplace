@@ -11,7 +11,7 @@ The report is evidence about repository snapshot `32ce89e6`, not current truth. 
 ## Repair queue
 
 1. **Complete — external-model boundary.** Keep provider and weights outside the declared Commonplace frame. Treat editable model-binding requests as internal localized configuration that may select an external dependency when realized, not as reflective coverage of the dependency's distributed-parametric form; assess requested-to-realized binding separately.
-2. **Pending — closure semantics.** Naming a decider closes routing only. Decision-content closure requires explicitly retained criteria, supplied directly or imported by reference; tacit criteria held by the decider do not count.
+2. **Complete — closure semantics.** Naming a decider closes routing only. Decision-content closure requires explicitly retained criteria, supplied directly or imported by reference; tacit criteria held by the decider do not count.
 3. **Pending — natural-language/symbolic crossing.** Recast the claim around changes that move the interpretation–enforcement boundary; do not generalize from those crossings to every reliability improvement.
 4. **Pending — retrieval locality.** State failure at the unit it breaks: the represented aspect, constraint, or reflective path whose retrieval wire missed it, not the whole system's reflectivity.
 
@@ -47,6 +47,23 @@ Completed 2026-08-10. The repair changed these library artifacts:
 The coverage theory now confines reflective operations to represented in-boundary aspects. The Commonplace frame and case identify the writable object as a localized binding request, leave provider weights outside the system, and treat any realized model selection as dependency control. They also state that request addressability does not establish realization or a reflective causal path. A focused semantic re-review found no remaining blocker.
 
 Each changed artifact, this workshop README, and `kb/work/README.md` passed an individual `commonplace-validate` run. A live-library search found no remaining claim that Commonplace has `selection-grade` or `selection-only` reflective coverage of external provider weights; matches in the snapshot report and frozen evidence packets remain historical evidence. `git diff --check` was clean, and `uv run pytest` passed all 479 tests.
+
+## Item 2 decision and acceptance boundary
+
+Methodological closure is assessed from retained methodology relative to a named pathway and its consequential decision set. The presence of capable actors, tools, or authority procedures can make the methodology actionable, but does not supply decision content that its retained materials leave open.
+
+Naming a decider closes routing only. Decision-content closure requires the methodology to supply a criterion, explicitly import a retained criterion or decision procedure that constrains the result, or determine the result itself. An imported criterion need not be duplicated, but the pathway must operatively use it. Tacit criteria held by a decider remain actor capability rather than retained methodology. A choice may be declared outside the consequential decision set when its divergence is tolerable; that narrows the assessment instead of closing the choice.
+
+Item 2 is complete when the canonical closure note and its live summaries use this distinction consistently, no dependent artifact relies on the tacit-criteria exception, and the affected artifacts pass deterministic validation.
+
+## Item 2 completion evidence
+
+Completed 2026-08-10. The repair changed:
+
+- `kb/notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md`
+- `kb/notes/self-improving-systems-README.md`
+
+The canonical note now separates routing from decision-content closure, treats direct and explicitly imported criteria alike, bounds closure by how far those criteria constrain the answer, and excludes tacit actor criteria. The tag head no longer presents closure as an intrinsic property of methodology-as-input. A backlink audit found no other live dependent that needed editing, and a focused semantic re-review found no remaining blocker. Both changed artifacts passed individual `commonplace-validate` runs without warnings. A live-library search found none of the superseded exception phrases, and `git diff --check` was clean. The historical report and frozen replication packet remain unchanged.
 
 ## Next-session routing
 

@@ -15,19 +15,21 @@ A [reflective system](./definitions/reflective-system.md) has a causally connect
 
 Closure asks a different question: how far can methodology-governed self-extension proceed before it must import a meta-decision the methodology does not supply? A system can be reflective without being closed, and a methodology can be closed on some axis for a system that never modifies itself at all.
 
-## The system, not the lone agent
+## Closure reads retained methodology, not actor capability
 
-Closure is a property of the methodology-as-input, not of any one system or agent's capabilities. The governed system may include human reviewers, agents, deterministic tools, and authority procedures. Closure asks whether that combined system has a governed route for each relevant meta-decision — not whether one model can act unassisted. The gap is where the methodology specifies nothing and someone must improvise.
+Closure is a property of the retained methodology relative to a named pathway, not of any participant's unrecorded capabilities. The governed system may include human reviewers, agents, deterministic tools, and authority procedures. Their availability can make the methodology actionable, but it does not supply decision content the methodology leaves open. Closure asks whether the methodology settles each relevant meta-decision directly or explicitly imports a retained criterion or result that the pathway will use. The gap is where the retained method specifies or references nothing and an actor must improvise.
 
-## Closure comes in three strengths
+## Routing and decision content settle separately
 
-A methodology can settle a decision three ways, and they are not equivalent:
+A methodology can govern a decision three ways, and they are not equivalent:
 
 1. **Name the decider.** "A maintainer approves this class of change." The routing is governed; the *content* of the decision is not.
-2. **Supply criteria.** Hand over a rule the decider applies, so two competent operators reach the same answer.
+2. **Supply or import criteria.** Hand over an explicit rule, or bind the pathway to an explicitly retained criterion elsewhere, so the retained materials constrain the choice rather than requiring the decider to invent its basis.
 3. **Determine the result.** Leave nothing to decide — the methodology, or a tool it invokes, fixes the outcome.
 
-Naming a decider is the weakest, and treating it as full closure would empty the concept: any methodology could close every axis by writing "ask the maintainer." It is a real closure only where the assigned decider carries criteria the methodology need not restate, or where divergence on that decision is tolerable. Where the decision is consequential and divergence-prone, assignment alone leaves the frontier exactly where it was — which is why the three axes below demand criteria and oracles rather than owners.
+Only the second and third provide decision-content closure, and a criterion closes content only as far as it constrains the answer. In the rest of this note, unqualified **closure** means decision-content closure.
+
+Naming a decider closes routing, not decision content. Treating it as content closure would empty the concept: any methodology could close every axis by writing "ask the maintainer." A decider's stable but tacit criteria remain actor capability rather than retained methodology, [since only explicit retention is currently durable, writable, and addressable at once](./only-explicit-retention-is-durable-writable-and-addressable.md). The methodology need not duplicate a criterion, but it must explicitly reference a retained criterion or decision procedure that constrains or determines the result, and the pathway must operatively use it. If divergence is tolerable, the methodology can declare the choice outside the consequential decision set; that narrows the closure claim rather than settling the choice. Where the decision is consequential and divergence-prone, assignment alone leaves the frontier exactly where it was — which is why the three axes below demand criteria and oracles rather than owners.
 
 The stakes are that improvised meta-decisions are where two sessions diverge, [since agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) rather than executing them.
 
@@ -54,7 +56,7 @@ The three axes above belong to closure under recommendations because the recomme
 ## Scope
 
 - **Closure is a direction, not a binary.** No real methodology settles every extension decision it could face. The claim is that methodology-governed self-extension scales with how much it settles, and stalls at the first consequential meta-decision it leaves open — the self-extension frontier. What operates past that frontier has a named architecture: in [the two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md), dropping back to the generator layer — theory, or the judgment the methodology did not settle — is an expected operation, and recurring fallback results are promotion candidates that move the frontier outward.
-- **The counter worth taking seriously.** A capable agent brings general competence and can improvise the decisions a methodology omits. Where that improvisation is reliable, closure buys less. The claim's force therefore tracks how *consequential and divergence-prone* the omitted decisions are — high for what-to-codify, how-to-verify, and what-grants-force; low for cosmetic choices.
+- **The counter worth taking seriously.** A capable agent brings general competence and can improvise the decisions a methodology omits. Where that improvisation is reliable, closure buys less. The claim's force therefore tracks how *consequential and divergence-prone* the omitted decisions are. Choices whose divergence cannot affect the governed outcome are outside the assessed decision set rather than weakly closed.
 - **Whether Commonplace is closed is a separate assessment.** This note supplies the criterion; the [reference case](../reference/commonplace-as-a-reflective-system.md) applies it to one pathway, not the whole system.
 - **Closure explains production, not retention.** Why the codified artifact is then kept rather than re-derived each session is a separate argument — a persisted symbolic artifact is deterministic and inspectable, and in agent systems [the prescription and the code it becomes are the same retained thing](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) at different points on the constraining gradient.
 
@@ -70,3 +72,4 @@ Relevant Notes:
 - [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: why the verification axis is the ceiling
 - [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidenced-by: applies the three closure axes to the centralized ADR 026 trace
 - [Methodology with incomplete coverage and its live theory fallback form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — extends: the execution architecture past the closure frontier — fallback to the generator as expected operation, recurrence as the promotion signal that moves the frontier
+- [Only explicit retention is currently durable, writable, and addressable at once](./only-explicit-retention-is-durable-writable-and-addressable.md) — grounds: why an imported explicit criterion can belong to retained methodology while a decider's tacit criterion cannot
