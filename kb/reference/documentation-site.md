@@ -19,9 +19,9 @@ This is why `kb/README.md` does **not** appear on the site: `kb/index.md` shadow
 
 ## Nav generation
 
-The nav is generated, not hand-listed. `src/commonplace/docs/properdocs_hooks.py:on_config` walks the directories directly under `docs_dir` and adds a top-nav entry for each one that contains a `README.md`, pointing at that README. `Home` (fixed to `index.md`) leads the list; external `Recent Changes` and `GitHub` links bracket the end. Adding a collection to the nav means giving its directory a `README.md`; nothing in `properdocs.yml` lists collections.
+The nav is generated, not hand-listed. `src/commonplace/docs/properdocs_hooks.py:on_config` walks the directories directly under `docs_dir` and adds a top-nav entry for each one that contains a `README.md`, pointing at that README. `Home` (fixed to `index.md`) leads the list; external `Recent Changes` and `GitHub` links bracket the end. Every top-level `COLLECTION.md`-bearing directory must provide that curated landing; `commonplace-validate landings` checks both its presence and the absence of a colliding `index.md`. Nothing in `properdocs.yml` lists collections.
 
-`properdocs.yml` also carries a `redirect_maps` block (preserves external URLs across note renames; written by `commonplace-relocate-note`) and `exclude_docs`. The exclusion keeps generated reports, raw source captures, and a few workshop fixtures out of the build. Ingest analyses under `kb/sources/` still render; their paired snapshots remain Git-tracked evidence for agents, but the site does not republish copies of externally hosted pages. Per-collection `dir-index.md` and per-tag listing pages are generated at build time only (ADR 025), covered in [storage-architecture.md](./storage-architecture.md).
+`properdocs.yml` also carries a `redirect_maps` block (preserves external URLs across note renames; written by `commonplace-relocate-note`) and `exclude_docs`. The exclusion keeps generated reports, raw source captures, and a few workshop fixtures out of the build. Ingest analyses under `kb/sources/` still render; their paired snapshots remain Git-tracked evidence for agents, but the site does not republish copies of externally hosted pages. Content-collection `dir-index.md` and per-tag listing pages are generated at build time only (ADR 025), covered in [storage-architecture.md](./storage-architecture.md).
 
 ## Landing-page inventory
 
@@ -32,7 +32,7 @@ A reader can enter through any of these. They are distinct files with distinct j
 | GitHub repo page | `/README.md` | Tool face: install, commands, layout, license. Outside `docs_dir`, so GitHub-only. | No (GitHub repo view) |
 | Site home | `kb/index.md` | Content face: the rendered site's front door — positioning lede, theory threads, browse. Shadows `kb/README.md`. | Yes (`Home`) |
 | Source routing doc | `kb/README.md` | Filesystem-contract routing for agents reading the source tree. Shadowed by `kb/index.md`. | No (dropped from build) |
-| Collection landings | `kb/<collection>/README.md` (notes, reference, instructions, agent-memory-systems, agentic-systems, sources, work) | Each collection's curated head and nav target; renders as the collection's main page. | Yes (one nav entry each) |
+| Collection landings | `kb/<collection>/README.md` (agent-memory-systems, agentic-systems, articles, instructions, notes, reference, sources, types, work) | Each top-level collection's curated head and nav target; renders as the collection's main page. | Yes (one nav entry each) |
 
 The root `README.md` (tool face) and `kb/index.md` (content face) are kept as separate files deliberately: they serve different jobs, and `docs_dir: kb` puts the root README outside the docs tree, so a single shared homepage would require moving `docs_dir` or a symlink. Both should open with the same positioning lede and then diverge by job; the shared lede is short enough to sync by hand.
 

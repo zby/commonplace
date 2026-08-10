@@ -15,6 +15,8 @@ In this source repository, common collection roots include:
 - `kb/agent-memory-systems/`
 - `kb/agentic-systems/`
 - `kb/sources/`
+- `kb/articles/`
+- `kb/types/`
 - `kb/work/`
 
 In installed projects, shipped Commonplace library content may live under
@@ -23,5 +25,6 @@ not a collection, unless it carries its own `COLLECTION.md`; its descendant
 `COLLECTION.md`-bearing directories are the collections.
 
 Use collection-local `COLLECTION.md` files for writing conventions, type
-offerings, and outbound-linking rules. Use `kb/types/` for global type specs;
-`kb/types/` is a framework type surface, not a collection.
+offerings, and outbound-linking rules. `kb/types/` is both the global framework
+type surface and a collection; its type specs keep their self-contained global
+semantics while its `COLLECTION.md` governs local authoring and routing.

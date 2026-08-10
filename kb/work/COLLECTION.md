@@ -53,7 +53,7 @@ When the workshop's question is answered, extract the durable conclusions into t
 | `note` | `kb/types/note.md` | workshop output that needs normal note metadata before promotion |
 | `instruction` | `kb/types/instruction.md` | temporary procedures, experimental gates, runbooks |
 | `structured-claim` | `kb/notes/types/structured-claim.md` | workshop draft already shaped as evidence/reasoning argument |
-| `index` | `kb/types/index.md` | generated workshop directory indexes |
+| `index` | `kb/types/generated-index.md` | build-time generated workshop directory listings |
 | `text` (implicit) | no frontmatter | drafts, traces, scratch, anything pre-structural |
 
 ## What does NOT belong here

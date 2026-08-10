@@ -18,6 +18,7 @@ from commonplace.cli.init_project import (  # noqa: E402
     main,
     _resolve_scaffold_source,
 )
+from commonplace.lib.validation import validate_collection_landings  # noqa: E402
 
 
 def test_init_project_creates_core_directories(tmp_path: Path) -> None:
@@ -61,10 +62,13 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
     assert (tmp_path / "kb" / "commonplace" / "reference" / "types" / "adr.schema.yaml").is_file()
     assert not (tmp_path / "kb" / "commonplace" / "agent-memory-systems").exists()
 
-    # User collections get minimal COLLECTION.md templates to fill in.
+    # User collections get minimal authoring contracts and curated landings.
     assert (tmp_path / "kb" / "notes" / "COLLECTION.md").is_file()
+    assert (tmp_path / "kb" / "notes" / "README.md").is_file()
     assert (tmp_path / "kb" / "reference" / "COLLECTION.md").is_file()
+    assert (tmp_path / "kb" / "reference" / "README.md").is_file()
     assert (tmp_path / "kb" / "instructions" / "COLLECTION.md").is_file()
+    assert (tmp_path / "kb" / "instructions" / "README.md").is_file()
 
     # Shared global types stay at top-level kb/types/ (ADR-021: B1 paths are
     # invariant when the global types dir is shared, not nested under commonplace).
@@ -86,6 +90,14 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
     assert not (tmp_path / "kb" / "sources" / "types" / "snapshot.template.md").exists()
 
     assert (tmp_path / "AGENTS.md.template").is_file()
+
+
+def test_init_project_satisfies_collection_landing_invariant(tmp_path: Path) -> None:
+    init_project(tmp_path)
+
+    results = validate_collection_landings(repo_root=tmp_path)
+
+    assert results.fails == []
 
 
 def test_init_project_installs_skills_as_copies(tmp_path: Path) -> None:

@@ -883,6 +883,62 @@ def validate_collection_structure(
     return failures
 
 
+def validate_collection_landings(*, repo_root: Path) -> CheckResults:
+    """Validate curated landings for collections directly under ``kb/``."""
+    repo_root = repo_root.resolve()
+    docs_root = kb_root(repo_root).resolve()
+    results = CheckResults(note_type="collection-landings")
+
+    if not docs_root.is_dir():
+        results.fails.append("[repository] collection landings: kb/ does not exist")
+        return results
+
+    collections = sorted(
+        child
+        for child in docs_root.iterdir()
+        if not child.name.startswith(".") and is_collection_dir(child)
+    )
+    if not collections:
+        results.fails.append(
+            "[repository] collection landings: no top-level collections found"
+        )
+        return results
+
+    missing = [
+        collection / "README.md"
+        for collection in collections
+        if not (collection / "README.md").is_file()
+    ]
+    if missing:
+        results.fails.extend(
+            "[repository] collection landing does not exist: "
+            f"{path.relative_to(repo_root)}"
+            for path in missing
+        )
+    else:
+        results.passes.append(
+            "[repository] collection landings: "
+            f"all {len(collections)} top-level collections have README.md"
+        )
+
+    collisions = [
+        collection
+        for collection in collections
+        if (collection / "README.md").is_file()
+        and (collection / "index.md").is_file()
+    ]
+    if collisions:
+        results.fails.extend(
+            "[repository] collection landing collision: "
+            f"{collection.relative_to(repo_root)} contains both README.md and index.md"
+            for collection in collisions
+        )
+    else:
+        results.passes.append("[repository] collection landing collisions: none")
+
+    return results
+
+
 def validate_redirect_map(*, repo_root: Path) -> CheckResults:
     """Validate the live ProperDocs redirect map against its published tree."""
     repo_root = repo_root.resolve()

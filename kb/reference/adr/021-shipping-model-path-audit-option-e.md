@@ -45,7 +45,7 @@ Each reference falls into one of six patterns. The E-compatibility answer is dif
 
 #### B1 — Shared global types (`kb/types/...`)
 
-Types that live at the top-level shared `kb/types/` directory. All three collections (notes, reference, instructions) reference these — e.g. `type: kb/types/note.md`, `type: kb/types/index.md`.
+Types that live at the top-level shared `kb/types/` directory. All three collections (notes, reference, instructions) reference these — e.g. `type: kb/types/note.md`, `type: kb/types/generated-index.md`.
 
 **Option E result.** ✅ Work as-is **if** `kb/types/` stays at shared top level. Both our repo and a user's install have `kb/types/` at the same path. No nesting under `kb/commonplace/`.
 
@@ -107,6 +107,8 @@ The clean split: **B1 absolute, B2 file-relative.** Both invariant under E.
 | `kb/sources/types/snapshot.md` | 1 | B2 (in sources — not shipped) |
 | `kb/sources/types/ingest-report.md` | 1 | B2 (in sources — not shipped) |
 | **Total** | **296 frontmatter** | **B1: 270 / B2 (shipped): 24** |
+
+**Later path change (2026-08-10).** The generated-page type spec moved from the historically audited `kb/types/index.md` path to `kb/types/generated-index.md` so `kb/types/README.md` could own the collection landing URL. Its B1 classification is unchanged.
 
 **Migration status (2026-04-23): COMPLETE.** All 24 B2 frontmatter pointers in shipped content rewritten:
 

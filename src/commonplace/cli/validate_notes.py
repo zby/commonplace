@@ -19,14 +19,14 @@ from commonplace.lib.project_paths import (
 from commonplace.lib.validation import (
     CheckResults,
     run_validation,
+    validate_collection_landings,
     validate_redirect_map,
 )
 
 
 _TOO_BROAD_MESSAGE = (
     "Validation scope must be a specific collection or file. "
-    "Pass one of: notes, types, reference, instructions, agent-memory-systems, "
-    "sources, or a note path."
+    "Pass a collection name or path, types, landings, redirects, or a note path."
 )
 
 
@@ -142,8 +142,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "target",
         help=(
-            "collection directory, note path or name, types, redirects, or "
-            "today/recent (kb/notes modified today)"
+            "collection directory, note path or name, types, landings, redirects, "
+            "or today/recent (kb/notes modified today)"
         ),
     )
     args = parser.parse_args(argv)
@@ -153,6 +153,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.target == "redirects":
         results = validate_redirect_map(repo_root=repo_root)
         print(format_block(repo_root / "properdocs.yml", results))
+        return 1 if results.fails else 0
+
+    if args.target == "landings":
+        results = validate_collection_landings(repo_root=repo_root)
+        print(format_block(repo_root / "kb", results))
         return 1 if results.fails else 0
 
     try:

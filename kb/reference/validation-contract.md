@@ -18,7 +18,7 @@ FAIL:
 
 In one sentence: **a type declares what the document must contain; the framework checks that what it points at is really there.**
 
-The explicit `redirects` target is outside this note pipeline. It emits `[repository]` findings by comparing `properdocs.yml` with the live `docs_dir`: targets resolve, keys do not shadow pages, and the map is flat. Keeping it explicit prevents validation of one note or collection from failing on unrelated site configuration while still making the published-tree invariant deterministic.
+The explicit `landings` and `redirects` targets are outside this note pipeline. Both emit `[repository]` findings. `landings` checks that every top-level collection has a `README.md` and that no sibling `index.md` shadows it. `redirects` compares `properdocs.yml` with the live `docs_dir`: targets resolve, keys do not shadow pages, and the map is flat. Keeping these checks explicit prevents validation of one note or collection from failing on unrelated site configuration while still making the published-tree invariants deterministic.
 
 ## Scope: this is the deterministic half only
 

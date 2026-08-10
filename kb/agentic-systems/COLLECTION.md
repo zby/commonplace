@@ -36,7 +36,7 @@ Organised per destination; label semantics in [link-vocabulary.md](../reference/
 
 - `note` -> `kb/types/note.md`
   Use for system and feature analyses, and for cross-system comparisons.
-- `index` -> `kb/types/index.md`
+- `index` -> `kb/types/generated-index.md`
   Build-time generated directory listings only (ADR 026); the committed `README.md` navigation hub carries no frontmatter.
 
 ## What does NOT belong here

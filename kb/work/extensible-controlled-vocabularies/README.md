@@ -27,7 +27,7 @@ A full pass over every `*.schema.yaml` under `kb/` for `enum:` constraints, filt
 **Machinery-shaped — probably stay closed:**
 
 - `kb/reference/types/adr.schema.yaml` → `status` (`accepted` / `superseded` / `deprecated`) — a narrow, standard ADR-lifecycle vocabulary; hard to construct a plausible rival under this framework's own boundary commitments.
-- `kb/types/index.schema.yaml` / `kb/types/tag-readme.schema.yaml` → `index_source` (`directory` / `tag` / `tag-indexes`) — names generation *mechanisms* Commonplace's own indexing code implements, not knowledge content.
+- `kb/types/generated-index.schema.yaml` / `kb/types/tag-readme.schema.yaml` → `index_source` (`directory` / `tag` / `tag-indexes`) — names generation *mechanisms* Commonplace's own indexing code implements, not knowledge content.
 - `kb/reports/types/connect-report.schema.yaml` → `depth` (`quick` / `standard` / `deep`) — an operational parameter of the connect skill, not a content classification.
 
 ## Status is a collapsed cube, not a fourth open-list instance

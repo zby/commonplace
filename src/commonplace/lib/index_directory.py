@@ -14,7 +14,7 @@ from commonplace.lib.project_paths import (
 
 
 SKIP_DIR_NAMES = {"types"}
-INDEX_TYPE = "kb/types/index.md"
+INDEX_TYPE = "kb/types/generated-index.md"
 
 
 def entry_sort_key(entry: tuple[str, str, str, str]) -> tuple[str, str]:

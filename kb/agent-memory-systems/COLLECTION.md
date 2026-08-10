@@ -43,7 +43,7 @@ Organised per destination: when to prospect for links, and the authorised labels
   Use for reviews of external agent memory or context-engineering systems. Set `source-tier: code-grounded` when source was inspected, `doc-grounded` (under `lightweight/`) when coverage is paper/README/article-only — same comparison elements, lower evidence tier.
 - `note` -> `kb/types/note.md`
   Use for cross-system descriptive analyses and comparative reviews.
-- `index` -> `kb/types/index.md`
+- `index` -> `kb/types/generated-index.md`
   Use for navigation hubs and generated directory indexes.
 
 ## What does NOT belong here

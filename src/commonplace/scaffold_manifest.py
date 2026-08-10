@@ -60,13 +60,15 @@ MANIFEST = ScaffoldManifest(
         ("kb/sources/types", "kb/sources/types"),
         ("kb/types", "kb/types"),
     ),
-    # Single files copied without a tree walk. User-collection COLLECTION.md
-    # templates land in the user's empty collections so write skills have a
-    # starting register/convention stub to fill in.
+    # Single files copied without a tree walk. User-collection contract and
+    # landing templates seed empty collections with authoring and routing heads.
     files=(
         ("templates/user-notes-COLLECTION.md", "kb/notes/COLLECTION.md"),
+        ("templates/user-notes-README.md", "kb/notes/README.md"),
         ("templates/user-reference-COLLECTION.md", "kb/reference/COLLECTION.md"),
+        ("templates/user-reference-README.md", "kb/reference/README.md"),
         ("templates/user-instructions-COLLECTION.md", "kb/instructions/COLLECTION.md"),
+        ("templates/user-instructions-README.md", "kb/instructions/README.md"),
     ),
     # Resolved with project-specific replacements at install time.
     templates=(

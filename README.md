@@ -2,11 +2,9 @@
 
 **Research on knowledge systems, running as one.**
 
-Commonplace is a growing body of research on how to build the most powerful agentic systems. The bet is simple: an LLM can consume a theory and act on it, and can even write the code that theory calls for — so an _actionable_ theory of how to build such systems is itself a way of building them. Commonplace aims to be that theory: one closed under its own recommendations, telling an agent when to reason from prose, when to freeze knowledge into durable code, and how to verify what it produces.
+Commonplace studies how agentic systems can change after deployment through inspectable knowledge artifacts. It also puts that idea into practice: human-directed agents use and revise the Markdown, instructions, schemas, validators, tests, and code in this repository. When later work loads or enforces those artifacts, accepted changes can shape behavior without updating model weights. The repository makes both the mechanism and its governance visible.
 
-The theory's most immediate target is an **LLM wiki** in the sense [Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): a persistent, linked markdown layer that agents build and maintain around your own work, turning ephemeral chats into a durable, growing body of your thinking. This repository ships everything needed to run one — the type system, writing conventions, agent skills, and `commonplace-*` Python commands.
-
-It is also the first deployment. The research lives here as notes, and LLM agents follow the methodology those notes lay out to maintain the wiki it lives in. The content is AI-generated throughout — a human directs the inquiry; agents (Claude, ChatGPT, and others) draft, connect, and maintain the notes.
+The theory's most immediate target is an **LLM wiki**, in the sense [AI researcher Andrej Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): a persistent, linked Markdown layer that agents build and maintain around a person's or project's work. This repository ships the framework for operating one — the type system, writing conventions, agent skills, and `commonplace-*` Python commands.
 
 This page covers the tool: what's in the repo, how to use it, and how to install it. The research is best read on the rendered site at <https://zby.github.io/commonplace/>.
 

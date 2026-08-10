@@ -15,7 +15,7 @@ from properdocs.structure.files import File
 from commonplace.lib import frontmatter, index_directory, index_generated
 from commonplace.lib.project_paths import collection_dirs, collection_for_path
 
-INDEX_TYPE = "kb/types/index.md"
+INDEX_TYPE = "kb/types/generated-index.md"
 # Page types that act as a tag's landing: the committed tag-readme (ADR 026)
 # and the index type (build-time virtual pages, unmigrated indexes).
 TAG_PAGE_TYPES = {INDEX_TYPE, "kb/types/tag-readme.md"}

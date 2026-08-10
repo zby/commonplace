@@ -2,7 +2,7 @@
 
 ## Purpose and quality goal
 
-This collection is Commonplace's global type surface. Its artifacts are system-definition contracts used across collections: they describe artifact shape, declare schemas, and supply authoring and review instructions for each global type.
+This collection is Commonplace's global type surface. Its type specs are system-definition contracts used across collections: they describe artifact shape, declare schemas, and supply authoring and review instructions for each global type. `README.md` is the collection's curated reader landing; `text.md` documents the implicit no-frontmatter case.
 
 Quality goal is **self-contained checkability + economy**. A type spec must tell authors, readers, validators, and type-conformance reviewers what an instance asserts without requiring collection-specific reinterpretation. Keep global contracts small enough to load wherever the type is used; collection-specific structure belongs in a collection-local type instead.
 
@@ -10,7 +10,8 @@ Quality goal is **self-contained checkability + economy**. A type spec must tell
 
 ## Title and body conventions
 
-- Name a type spec after the type it defines.
+- Keep `README.md` as a concise route into the global contracts; detailed cross-collection inventory belongs in `kb/reference/available-types.md`.
+- Name a type spec after the type it defines, except when that name would occupy a reserved directory landing path such as `index.md`.
 - Follow the `type-spec` contract in [`type-spec.md`](./type-spec.md); its schema and body own structural and semantic type requirements.
 - Do not place collection-local types here. Put them under `kb/<collection>/types/` and list them in that collection's `COLLECTION.md`.
 
@@ -25,7 +26,7 @@ Do not link to external sources or into `kb/work/`, `kb/sources/`, `kb/agent-mem
 
 ## Types
 
-Every authored Markdown artifact in this collection is a type spec and carries `type: kb/types/type-spec.md`. The root [`type-spec.md`](./type-spec.md) is self-referential. Schema files are symbolic sidecars, not Markdown artifacts.
+Every Markdown artifact in this collection other than `COLLECTION.md`, `README.md`, and `text.md` is a type spec and carries `type: kb/types/type-spec.md`. The root [`type-spec.md`](./type-spec.md) is self-referential. `COLLECTION.md` governs local authoring and routing, `README.md` is curated navigation, `text.md` documents the implicit text contract, and schema files are symbolic sidecars rather than Markdown artifacts.
 
 ## What does not belong here
 

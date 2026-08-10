@@ -16,7 +16,8 @@ The shipped Commonplace scaffold installs global type specs under `kb/types/` an
 | `instruction` | `kb/types/instruction.md` | Procedures, promoted skill bodies, wrapper prompts, work packets handed to sub-agents. |
 | `review-gate` | `kb/types/review-gate.md` | A single quality check the review system applies to KB artifacts. |
 | `definition` | `kb/types/definition.md` | Operational vocabulary definitions. |
-| `index` | `kb/types/index.md` | Navigation hubs and generated directory or tag indexes. |
+| `tag-readme` | `kb/types/tag-readme.md` | Curated tag landings with optional validator-enforced completeness and coverage marks. |
+| `index` | `kb/types/generated-index.md` | Build-time generated directory listings; committed directories use `README.md` and tags use `tag-readme`. |
 | `type-spec` | `kb/types/type-spec.md` | Metadata contract for type-spec docs themselves. |
 
 `kb/types/text.md` documents the implicit no-frontmatter text case. It is not an explicit type spec and should not be used as a `type:` value.

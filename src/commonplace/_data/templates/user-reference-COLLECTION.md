@@ -37,5 +37,5 @@ sources. See kb/commonplace/reference/link-vocabulary.md.
 <!-- Examples:
 - `note` (kb/types/note.md) — default for reference prose
 - `adr` (./types/adr.md) — architecture decision records
-- `index` (kb/types/index.md) — curated navigation
+- `index` (kb/types/generated-index.md) — build-time generated directory listings
 -->

@@ -38,5 +38,5 @@ Instructions typically link back to notes (rationale) and reference
 <!-- Examples:
 - `instruction` (kb/types/instruction.md) — default
 - `skill` (kb/types/skill.md) — auto-loaded harness skills
-- `index` (kb/types/index.md) — curated navigation
+- `index` (kb/types/generated-index.md) — build-time generated directory listings
 -->

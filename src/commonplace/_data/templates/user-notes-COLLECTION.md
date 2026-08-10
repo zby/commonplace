@@ -39,7 +39,7 @@ See kb/commonplace/reference/link-vocabulary.md for the shipped vocabulary.
 
 <!-- Which types do notes in this collection use? Examples:
 - `note` (kb/types/note.md) — default
-- `index` (kb/types/index.md) — curated navigation pages
+- `index` (kb/types/generated-index.md) — build-time generated directory listings
 - `definition` (kb/types/definition.md) — vocabulary entries
 Add collection-local types under ./types/ as needed.
 -->

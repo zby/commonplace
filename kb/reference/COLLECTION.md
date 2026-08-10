@@ -53,7 +53,7 @@ Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 | `adr` | `./types/adr.md` | architecture decision records |
 | `design-proposal` | `./types/design-proposal.md` | finished but unadopted designs under `proposals/` |
 | `definition` | `kb/types/definition.md` | shipped-system vocabulary terms |
-| `index` | `kb/types/index.md` | reference navigation hubs and generated directory indexes |
+| `index` | `kb/types/generated-index.md` | build-time generated directory listings only |
 
 ## What does NOT belong here
 
