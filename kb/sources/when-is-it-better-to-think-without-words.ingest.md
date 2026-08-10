@@ -52,4 +52,4 @@ Finally, changed human understanding, a stabilized page, and durable agent-syste
 
 ## Recommended Next Action
 
-Start `kb/work/written-artifacts-in-learning-loops/` and make its first functional matrix distinguish exploratory search from textual testing and stabilization, with separate rows for the changed human, the retained artifact, and the later agent consumer; use this source as the case that prevents “learning through writing” from collapsing those loci or assuming that all productive thought is verbal.
+The written-artifacts-in-learning-loops workshop that used this source has run and closed. This source served as the boundary case keeping “learning through writing” from collapsing the changed human, the retained artifact, and the later agent consumer, or assuming all productive thought is verbal — a distinction the KB already carries in [knowledge storage does not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md) and [continual learning's open problem is behaviour, not knowledge](../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md), so it warranted no separate promotion.

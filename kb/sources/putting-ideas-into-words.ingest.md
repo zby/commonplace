@@ -46,4 +46,4 @@ The neutral stranger is still the author. Shared assumptions, missing evidence, 
 
 ## Recommended Next Action
 
-Start `kb/work/written-artifacts-in-learning-loops/` with Graham, Karnofsky, Karlsson, Borretti, and Grunewald as the human-side corpus, and make its first deliverable a functional matrix separating exact-word commitment, reader-stance inspection, error localization, inquiry routing, rejection, retention, activation, and observed locus of change before deciding whether a new tag has a stable scope.
+The written-artifacts-in-learning-loops workshop that examined this source has run and closed. Graham's neutral-stranger reread — a reader who has only the text — motivated a prototype self-sufficiency review gate; live testing found the gate redundant with the KB's descriptive-link-label convention, and that finding was promoted as the conjecture [descriptive link labels may supply the self-sufficiency a reconstruction gate would check](../notes/descriptive-link-labels-may-supply-claim-self-sufficiency.md). Its open next action is that note's discriminating test: run the cold-reader check on a fresh draft before connection labels are added.

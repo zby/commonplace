@@ -50,4 +50,4 @@ Most importantly for Commonplace, changed human understanding, changed artifact 
 
 ## Recommended Next Action
 
-Start a focused `kb/work/written-artifacts-in-learning-loops/` workshop using Karnofsky, Karlsson, Borretti, and Grunewald as the human-side corpus and the KB's human-transfer and readable-artifact notes as boundary conditions; make its first deliverable a functional matrix separating locus of change, writing operation, retained state, activation path, and evidence of learning, and defer any new tag until that matrix yields a stable inclusion rule.
+The written-artifacts-in-learning-loops workshop that examined this source has run and closed. Its distinctive contribution from Karnofsky — organizing source-reading around a provisional written claim that routes what to read next — was promoted as the conjecture [claim-routed reading may beat reading-first for synthesis notes](../notes/claim-routed-reading-may-beat-reading-first-for-synthesis-notes.md). Its open next action is that note's discriminating test: build a synthesis note both claim-routed and read-first, and compare warranted update against context cost.
