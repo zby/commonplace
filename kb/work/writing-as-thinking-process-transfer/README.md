@@ -24,7 +24,7 @@ Status ∈ {open, testing, promoted, rejected}. Method and first target are deli
 
 | # | Idea (essay source) | Residual increment over what ships / what to discriminate | Status |
 |---|---|---|---|
-| 1 | **Premise-decomposition review** (how-to-think #2) | `composition-friction-gate` already decomposes into inferential *joints (edges)* and attacks each. Increment: decompose into *premises (nodes)* and test each for external support / counterexample. Discriminator: on one note, does the premise-node check surface a real weakness the joint check misses? | **signal — build candidate** (discriminator passed 2026-08-10, see Test log) |
+| 1 | **Premise-decomposition review** (how-to-think #2) | `composition-friction-gate` already decomposes into inferential *joints (edges)* and attacks each. Increment: decompose into *premises (nodes)* and test each for external support / counterexample. Discriminator: on one note, does the premise-node check surface a real weakness the joint check misses? | **promoted** → `kb/instructions/premise-decomposition-gate.md` (discriminator + generalization test passed 2026-08-10, see Test log). Registration into the review pipeline deferred. |
 | 2 | **Counterexample-scope routing** (how-to-think #1) | Classify a defeated point as *local* (defeats a premise → revise, keep title-claim) vs *global* (propagates to the conclusion → retire). Targets: `discovery-lifecycle.md` test branch and `FIX-SYSTEM`. Composes with #1. | **open (+supporting evidence)** — the #1 discriminator showed LOCAL/GLOBAL routing adds actionable value the joint check lacks |
 | 3 | **Value-of-information reading** (learning-by-writing #3) | Route the next read by *expected claim-change*, not retrieval relevance, in `connect` / `write-multistage`. Operationalizes the open question in the claim-routed conjecture. | open |
 | 5 | **Stance-reversal operator** (learning-by-writing #4) | Routine "write the strongest note that contradicts this one" as an anchoring check in connect/review. Cheap; de-risks the claim-routed conjecture's own anchoring failure mode. | open |
@@ -59,7 +59,19 @@ Status ∈ {open, testing, promoted, rejected}. Method and first target are deli
 
 **Caveats.** Two notes, both theoretical/empirical-premise register (where node/edge divergence is most expected); single reader per cell, no replication. Medium confidence: justifies building, not a universal-lift claim. Untested on definitional and procedural notes.
 
-**Next.** Draft the premise-decomposition gate as a `kb/instructions/` procedure (mirror `composition-friction-gate.md`: fresh sub-agent, no self-grade, routed attention, LOCAL/GLOBAL per premise). Before promoting, run it against one definitional and one procedural note to check the defect class generalizes beyond title-as-claim notes.
+### 2026-08-10 — #1 build + generalization test
+
+**Built** `kb/instructions/premise-decomposition-gate.md` (experimental, run-by-hand sibling to `composition-friction-gate.md`; register-aware Step 1/2 for claim / definition / procedure; LOCAL/GLOBAL routing per premise; writes a report, mutates nothing; not wired into the review system).
+
+**Generalization test.** Ran the gate (fresh cold readers) against a **definition** (`directed-reading.md`) and a **procedure** (`critique-note.md`) to check the defect class holds beyond title-as-claim/empirical notes.
+- **Definition:** produced boundary-commitment premises and mis-sorting counterexamples — three LOCAL condition-repairs (mid-pass scoping vs "bounded before the pass"; short sources vs the behavioural check; FAQ/API-reference sources vs the "native structure" contrast) and a GLOBAL "this may mark a *phase* of task-lensed synthesis, not a *kind*" defeater reached by a sharper route than the note's own "may be redundant" hedge.
+- **Procedure:** produced assumption-premises and misfire counterexamples — LOCAL repairs (register inference, link-scoped engagement judgement, output-destination guard) and three GLOBAL defeaters, incl. **P4**: `critique-note` mandates "the strongest case" with an ERROR path covering only *inability*, not *correctness*, so it has no sanctioned way to report "the note is sound," driving fabricated opposition on correct notes.
+
+**Verdict.** Gate generalizes to definition and procedure registers, producing register-appropriate, actionable LOCAL/GLOBAL findings. Confidence: medium → good (three registers). #1 **promoted**.
+
+**Byproduct (spun off, not acted on):** the P4 finding is a real gap in `critique-note.md` — no sanctioned "no strong critique exists / note is sound" outcome. Candidate fix for a separate session; do not scope-creep here.
+
+**Next.** (1) ~~Decide whether to wire the gate into the review pipeline~~ **Resolved (maintainer):** the gate does NOT belong in the wired review pipeline — that pipeline is for verdict-producing, easy-to-auto-fix findings. Hard, human-routed, no-verdict methods (`composition-friction-gate`, `critique-note`, compression bundle) are set aside from it and orchestrated by `kb/instructions/run-full-improvement-pass-on-note.md`. Integrate `premise-decomposition-gate` there as the node-check companion to `composition-friction-gate` (edges), carried unresolved in "Routed attention", with a GLOBAL-defeated load-bearing premise feeding the note-level Disposition. Integration pending. (2) Build #2 (LOCAL/GLOBAL routing into `discovery-lifecycle.md` and FIX-SYSTEM) — the gate already emits the LOCAL/GLOBAL signal it needs. (3) Optionally write the theory note behind premise-vs-joint decomposition and link the gate to it via `rests-on`.
 
 ## Bookkeeping
 

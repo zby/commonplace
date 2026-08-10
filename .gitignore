@@ -56,6 +56,10 @@ kb/reports/critique/*
 kb/reports/friction/*
 !kb/reports/friction/README.md
 
+# premise-decomposition reports (experimental — see kb/instructions/premise-decomposition-gate.md)
+kb/reports/premise-decomposition/*
+!kb/reports/premise-decomposition/README.md
+
 # full-pass reports (see kb/work/agent-note-improvement/run-full-improvement-pass-on-note.md)
 kb/reports/full-pass/*
 !kb/reports/full-pass/README.md
