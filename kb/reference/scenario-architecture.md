@@ -12,8 +12,8 @@ How Commonplace instantiates scenario-derived architecture in the shipped system
 
 An installed project has one `kb/` root containing two coexisting surfaces:
 
-- `kb/commonplace/` — the shipped library (read-only by convention): methodology notes, reference, instructions, and agent-memory-system reviews.
-- `kb/notes/`, `kb/reference/`, `kb/instructions/` — the user's own collections, scaffolded empty with a starter `COLLECTION.md`.
+- `kb/commonplace/` — the shipped library (read-only by convention): methodology notes, reference, and instructions.
+- `kb/notes/`, `kb/reference/`, `kb/instructions/` — the user's own collections, scaffolded without user-authored artifacts but with starter `COLLECTION.md` contracts and `README.md` landings.
 
 Plus two supporting runtime surfaces:
 

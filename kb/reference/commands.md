@@ -12,7 +12,7 @@ All commands are installed together with `uv tool install --python ">=3.11" llm-
 
 ### commonplace-init
 
-Initialize or update a Commonplace project. Creates KB directories, seeds instructions and type definitions, copies shipped skills into the known `.claude/skills/` and `.agents/skills/` runtime layouts, and resolves templates. Runtimes with a different skill-discovery surface can expose the canonical `kb/commonplace/instructions/cp-skill-*` directories through their own skill mechanism.
+Initialize or update a Commonplace project. Creates KB directories and starter collection contracts and landings, seeds instructions and type definitions, copies shipped skills into the known `.claude/skills/` and `.agents/skills/` runtime layouts, and resolves templates. Runtimes with a different skill-discovery surface can expose the canonical `kb/commonplace/instructions/cp-skill-*` directories through their own skill mechanism.
 
 ```bash
 commonplace-init --name my-project
@@ -25,7 +25,7 @@ commonplace-init --root /path/to/project
 
 ### commonplace-validate
 
-Deterministic validator for KB notes. Checks frontmatter validity, schema constraints, link health, the proposal-archive link boundary, verbatim-quote resolution, structural description presence, description length warnings, required sections, and batch signals such as orphan detection. Description discrimination quality is handled by review gates, not deterministic validation.
+Deterministic validator for KB artifacts and explicit repository invariants. Artifact targets check frontmatter validity, schema constraints, link health, the proposal-archive link boundary, verbatim-quote resolution, structural description presence, description length warnings, required sections, and batch signals such as orphan detection. Repository targets check collection landings and the published redirect map. Description discrimination quality is handled by review gates, not deterministic validation.
 
 Findings are labelled with the source that produced them — `[base]` (every typed note), `[type: <name>]` (rules the type owns), `[schema]` (the type's declarative constraints). What each source can express, and what every typed note is checked for regardless of type, is the [validation contract](./validation-contract.md).
 

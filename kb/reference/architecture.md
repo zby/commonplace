@@ -1,5 +1,5 @@
 ---
-description: Shipped Commonplace architecture — installed project layout, packaged runtime, scaffolded library under kb/commonplace/, empty user collections, promoted skills, and the library/user boundary
+description: Shipped Commonplace architecture — installed project layout, packaged runtime, scaffolded library under kb/commonplace/, starter user collections, promoted skills, and the library/user boundary
 type: kb/types/note.md
 traits: []
 tags: []
@@ -27,11 +27,11 @@ project/
           cp-skill-write/
           *.md
       types/                       ← shared global types (`text`, `note`, `instruction`, ...)
-      notes/                       ← user's own notes; starts with a COLLECTION.md template
+      notes/                       ← user's own notes; starts with COLLECTION.md and README.md
         types/
-      reference/                   ← user's own reference; starts with a COLLECTION.md template
+      reference/                   ← user's own reference; starts with COLLECTION.md and README.md
         types/
-      instructions/                ← user's own instructions; starts with a COLLECTION.md template
+      instructions/                ← user's own instructions; starts with COLLECTION.md and README.md
       sources/                     ← user's captured sources
         types/
       tasks/                       ← user's task lifecycle
@@ -48,7 +48,7 @@ project/
     AGENTS.md                      ← project control-plane file (from AGENTS.md.template)
 ```
 
-The shipped library sits under `kb/commonplace/` as a single boundary the user treats as read-only. The user's own collections (`kb/notes/`, `kb/reference/`, `kb/instructions/`) are peers to the library at the top level of `kb/`, starting empty except for a minimal `COLLECTION.md` template. Shared global types stay at top-level `kb/types/` so both the library and the user's own types can reference them with invariant absolute paths.
+The shipped library sits under `kb/commonplace/` as a single boundary the user treats as read-only. The user's own collections (`kb/notes/`, `kb/reference/`, `kb/instructions/`) are peers to the library at the top level of `kb/`. They start without user-authored artifacts but with a minimal `COLLECTION.md` contract and a curated `README.md` landing. Shared global types stay at top-level `kb/types/` so both the library and the user's own types can reference them with invariant absolute paths.
 
 The framework implementation itself is not vendored into the project. It is installed once per OS user as an isolated uv tool and exposed through `commonplace-*` commands in uv's user-level executable directory. Projects do not need a Commonplace-specific venv, activation step, or `.envrc`. One tool installation supplies the active command version to all projects for that user.
 
@@ -62,7 +62,7 @@ The Python package carries the scaffold inputs as packaged data in built wheels.
 | `kb/commonplace/reference/` | Shipped-system documentation plus ADR history |
 | `kb/commonplace/instructions/` | Shipped methodology procedures and cp-skill-* skills |
 | `kb/types/` | Shared global type contracts — library and user both use and extend |
-| `kb/notes/`, `kb/reference/`, `kb/instructions/` | User's own collections, each with a starter `COLLECTION.md` |
+| `kb/notes/`, `kb/reference/`, `kb/instructions/` | User's own collections, each with a starter `COLLECTION.md` contract and `README.md` landing |
 | `kb/*/types/` | Collection-local structural contracts for specialised documents |
 | `kb/sources/` | User's captured external sources and source reviews |
 | `kb/tasks/` | User's task lifecycle artifacts |
@@ -76,7 +76,7 @@ The Python package carries the scaffold inputs as packaged data in built wheels.
 
 1. Creates the directory shell under `kb/` — the user's collections, the user-space directories, and the `kb/commonplace/` hierarchy.
 2. Copies shipped library trees into `kb/commonplace/{notes,reference,instructions}/`. Shared `kb/types/` and user-space type scaffolds (`kb/sources/types/`, `kb/reports/types/`) land at their conventional top-level locations.
-3. Scaffolds minimal `COLLECTION.md` templates into the user's empty collections so that write skills have a starter register and conventions stub to fill in.
+3. Scaffolds a minimal `COLLECTION.md` contract and curated `README.md` landing into each empty user collection, giving write skills a conventions stub and readers a stable entry point.
 4. Promotes selected skills into known `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/` runtime surfaces as real copied directories of `kb/commonplace/instructions/<name>/`, and resolves the project-specific `AGENTS.md.template`. The canonical skill directories stay installed under `kb/commonplace/instructions/`; agent runtimes with a different discovery surface may need to copy, register, or import those directories themselves.
 
 Command installation precedes this scaffold step. `uv tool install --python ">=3.11" llm-commonplace` installs a published release; contributors use `uv tool install --python ">=3.11" --editable .` from the source checkout. `uv tool update-shell` persists uv's executable-directory addition, and newly launched shells, IDEs, and agent processes then resolve the commands by bare name. Development-only executables such as `pytest` and `ruff` stay in the source project's dependency environment and run through `uv run`.

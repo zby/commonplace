@@ -77,8 +77,8 @@ A further family of commands drives the review system — selecting targets, que
 
 | Skill | Purpose |
 |---|---|
-| `cp-skill-write` | Route and draft a note, index, or specialized type |
-| `cp-skill-validate` | Check frontmatter, descriptions, types, links, structure |
+| `cp-skill-write` | Write or edit one artifact under its collection and type contracts |
+| `cp-skill-validate` | Validate artifacts, collection landings, and site redirects |
 | `cp-skill-connect` | Discover connections and write a `connect-report` |
 | `cp-skill-convert` | Convert raw text captures into structured notes |
 | `cp-skill-ingest` | Ingest an external source: snapshot → connect → classify → analyse |

@@ -17,7 +17,7 @@ note_parser.py    Parse markdown notes into a schema-friendly document model
 project_paths.py  Define KB boundaries, collection discovery, and visible walks
 index_generated.py Build generated tag sections and shared collection tag indexes
 type_resolver.py  Resolve note types from scoped JSON Schema definitions
-validation.py     Deterministic validation rules for KB notes (commonplace-validate lib)
+validation.py     Deterministic artifact and repository validation rules (commonplace-validate lib)
 relocation.py     Move/rename a KB note or directory: rewrite backlinks and ProperDocs config
 ```
 
@@ -216,11 +216,11 @@ Convenience projections of the shared collection index used by generated-page co
 
 ## validation
 
-Deterministic validation execution and rules for KB notes. Used by `commonplace-validate`. A library-owned run caches parsed artifacts and collection indexes, expands explicit impacts, evaluates per-artifact checks, and returns anchored results; the CLI resolves targets and presents them.
+Deterministic validation execution and rules for KB artifacts plus explicit repository checks. Used by `commonplace-validate`. A library-owned artifact run caches parsed documents and collection indexes, expands explicit impacts, evaluates per-artifact checks, and returns anchored results; the CLI resolves targets and presents those results or invokes a repository check directly.
 
 ### Public API
 
-**`CheckResults`** — mutable dataclass holding pass/warn/fail/info string lists for one note.
+**`CheckResults`** — mutable dataclass holding pass/warn/fail/info string lists for one artifact or repository target.
 
 **`ParsedNote`** — dataclass bundling a note's `path`, `content`, `note_type`, `profile` (`TypeProfile`), and `document` (`ParsedDocument`).
 
@@ -236,6 +236,12 @@ One-path convenience wrapper around the run parser. Returns `(parsed, None)` on 
 
 **`validate_note(path: Path, *, repo_root: Path) -> CheckResults`**
 One-path convenience wrapper around `ValidationRun.validate`.
+
+**`validate_collection_landings(*, repo_root: Path) -> CheckResults`**
+Check every `COLLECTION.md`-bearing directory directly under `kb/` for a curated `README.md` landing and reject a sibling `index.md` that would shadow it.
+
+**`validate_redirect_map(*, repo_root: Path) -> CheckResults`**
+Check `properdocs.yml` against the live published tree: redirect targets resolve, redirect keys do not shadow live pages, and redirects point directly to live pages rather than other redirects.
 
 **`type_rule(*type_paths)`**
 Decorator registering a type-specific rule `(results, parsed, *, run) -> None` for canonical type paths. The run supplies repository identity and shared referential inputs; matching rules still execute between generic checks and schema validation. Current registrations: quote-citation shape checks for `kb/agent-memory-systems/types/agent-memory-system-review.md`, declared-schema resolution for `kb/types/type-spec.md`, and weight/completeness/coverage gates for `kb/types/tag-readme.md`.

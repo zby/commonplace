@@ -1,4 +1,4 @@
-"""Deterministic validator for KB notes."""
+"""Deterministic validator for KB artifacts and repository invariants."""
 
 from __future__ import annotations
 

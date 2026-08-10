@@ -1,5 +1,5 @@
 ---
-description: COLLECTION.md-bearing subtree under kb/ whose local authoring contract governs artifacts in that subtree
+description: COLLECTION.md-bearing subtree under kb/ whose local authoring contract governs its artifacts; top-level collections also provide a README landing
 type: kb/types/definition.md
 tags: []
 ---
@@ -7,6 +7,8 @@ tags: []
 # Collection
 
 A **collection** in a Commonplace KB is a subtree under `kb/` whose root contains `COLLECTION.md`. `COLLECTION.md` is the local authoring contract for artifacts in that subtree. It usually defines the collection's purpose, register or content mode, quality goal, type guidance, and outbound-link policy.
+
+A collection directly under `kb/` also has a `README.md` as its curated reader landing. The README routes readers but does not replace the binding `COLLECTION.md` contract. It must not coexist with a sibling `index.md`, because both render to the same directory URL and `index.md` shadows the README. `commonplace-validate landings` enforces this invariant for collection roots that are direct children of `kb/`; ordinary area directories still inherit their enclosing collection's contract and need no landing of their own.
 
 Collections can also have local type specs. When present, they live in a `types/` subdirectory at the collection root. Type specs are structural authoring contracts: they define artifact shape through schema, frontmatter requirements, required sections, and written guidance for filling that shape. `COLLECTION.md` can guide authors to both global type specs in `kb/types/` and local type specs in the collection's own `types/` directory; see [type-loading](../type-loading.md) for the resolution mechanics.
 

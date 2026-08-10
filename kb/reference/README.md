@@ -120,19 +120,20 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 
 ### Validate the KB
 
-*What it's for.* Check that notes have well-formed frontmatter, required fields, resolvable links, and valid type-specific structure. This is deterministic and does not call an LLM.
+*What it's for.* Check mechanically decidable artifact properties—well-formed frontmatter, required fields, resolvable links, and valid type-specific structure—and explicit repository invariants for collection landings and site redirects. This is deterministic and does not call an LLM.
 
 *How to ask.*
 
 - "Validate `kb/notes/foo.md`."
 - "Run validation across the whole KB and report any failures."
+- "Check the collection landings and published redirects."
 - Or run `commonplace-validate kb/notes/foo.md`.
 
-*What happens.* The validator checks schemas, links, filename constraints, and type-specific structural requirements.
+*What happens.* Artifact targets check schemas, links, filename constraints, and type-specific structural requirements. The `landings` target requires a non-colliding `README.md` for every collection directly under `kb/`; `redirects` checks `properdocs.yml` against the live published tree.
 
-*What you get.* A pass/fail report per note with `FAIL`, `WARN`, and `INFO` lines. Each finding is labelled with the source that produced it — `[base]`, `[type: <name>]`, or `[schema]` — so a rule your type spec never mentioned is traceable to the contract that does impose it. See the [validation contract](./validation-contract.md) for what each source can express and what every typed note is checked for regardless of type.
+*What you get.* A pass/fail report per target with `FAIL`, `WARN`, and `INFO` lines. Artifact findings are labelled `[base]`, `[type: <name>]`, or `[schema]`; repository findings are labelled `[repository]`. See the [validation contract](./validation-contract.md) for what each source can express.
 
-*Limitations.* Validation is structural only. Vacuous descriptions or weak claims are review problems, not validator problems.
+*Limitations.* Validation judges mechanically decidable properties only. Vacuous descriptions or weak claims are review problems, not validator problems.
 
 ### Review notes
 
@@ -158,7 +159,7 @@ Most operations go through the agent, but a few CLI commands are reasonable to r
 
 | Command | Purpose |
 |---|---|
-| `commonplace-validate <path>` | Run the deterministic validator on a note or directory |
+| `commonplace-validate <target>` | Validate an artifact or collection, global type specs, collection landings, or the published redirect map |
 | `commonplace-guard-full-pass-report <report>` | Refuse a full-pass transition unless every packet capture still matches its live artifact |
 | `commonplace-relocate-note <note> --to <dest> [--apply]` | Move or rename a note with link rewrites and ProperDocs redirect; dry-run by default |
 | `commonplace-github-snapshot <url>` | Snapshot a GitHub issue, PR, or repo README into `kb/sources/` |

@@ -12,7 +12,7 @@ The quality goal is **fidelity + economy**: faithful to what the code actually d
 
 **`lightweight/`** — doc-grounded coverage for systems known from papers, READMEs, or articles when no reachable repository has been inspected. These are ordinary `agent-memory-system-review` notes carrying `source-tier: doc-grounded`; they hold the **same comparison elements** as code-grounded reviews (four-field record, read-back direction, borrowable ideas) at a lower evidence tier — claim-level. The tier is about authority, not scope. Flip `source-tier` to `code-grounded` if inspectable source later appears. The review spec's instructions are tier-neutral (evidence-stance, source-metadata, and citation rules cover both); see the `source-tier` field in `types/agent-memory-system-review.md`.
 
-**Collection root** — navigation (index, README), cross-system analyses (comparative reviews, focused comparisons), and any analysis grounded in multiple reviews. When an analysis makes a claim general enough to transfer beyond this landscape, consider promoting it to `kb/notes/`.
+**Collection root** — navigation (`README.md` plus build-time directory listings), cross-system analyses (comparative reviews, focused comparisons), and any analysis grounded in multiple reviews. When an analysis makes a claim general enough to transfer beyond this landscape, consider promoting it to `kb/notes/`.
 
 ## Title conventions
 
@@ -44,7 +44,7 @@ Organised per destination: when to prospect for links, and the authorised labels
 - `note` -> `kb/types/note.md`
   Use for cross-system descriptive analyses and comparative reviews.
 - `index` -> `kb/types/generated-index.md`
-  Use for navigation hubs and generated directory indexes.
+  Build-time generated directory listings only; the committed `README.md` navigation hub carries no frontmatter.
 
 ## What does NOT belong here
 

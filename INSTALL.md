@@ -169,7 +169,7 @@ The `--name` flag sets the project name used in templates; if omitted it default
 
 This creates:
 
-- **User KB directories** — `kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/sources/`, `kb/tasks/`, `kb/work/`, `kb/reports/`, `kb/log.md`
+- **User KB directories and collection heads** — `kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/sources/`, `kb/tasks/`, `kb/work/`, `kb/reports/`, `kb/log.md`; notes, reference, and instructions each receive a starter `COLLECTION.md` contract and `README.md` landing
 - **Commonplace library content** — shipped notes, reference docs, instructions, review gates, and skills under `kb/commonplace/notes/`, `kb/commonplace/reference/`, and `kb/commonplace/instructions/`
 - **Type definitions** — shared types under `kb/types/`, plus source/report type scaffolds
 - **Canonical skills** — `kb/commonplace/instructions/cp-skill-write/`, plus the matching `cp-skill-validate/`, `cp-skill-connect/`, etc. The `cp-skill-` prefix avoids collisions with your project's own skills and with the `commonplace-*` CLI commands.
@@ -184,11 +184,12 @@ Commonplace works with curated indexes and `rg`; no semantic-search daemon is re
 
 ```bash
 commonplace-validate kb/commonplace/reference/commands.md
+commonplace-validate landings
 rg "^description:" kb/commonplace/notes kb/commonplace/reference kb/commonplace/instructions --glob "*.md"
 rg "your search terms" kb/ --glob "*.md"
 ```
 
-A fresh project has no user notes yet, so `commonplace-validate kb/notes` may report that no notes matched — run it after the first user note exists.
+A fresh scaffold should pass `commonplace-validate landings`: every collection directly under `kb/` has a `README.md`, with no sibling `index.md` collision. A fresh project has no user notes yet, so `commonplace-validate kb/notes` may report that no notes matched — run it after the first user note exists.
 
 ## 4. Set up the control-plane file
 

@@ -30,7 +30,7 @@ Substitution is a flat string replace in `_write_template`. Templates that don't
 
 `commonplace-init` produces four kinds of output:
 
-**Directories** (from `DEFAULT_DIRS`) — empty directory shells the practitioner fills in:
+**Directories** (from `MANIFEST.directories`) — empty directory shells the practitioner fills in:
 
 - `kb/types/` — shared global types
 - `kb/notes/`, `kb/notes/types/` — user's notes collection
@@ -51,10 +51,13 @@ Substitution is a flat string replace in `_write_template`. Templates that don't
 **Scaffold files** — individual files copied into the user's collections:
 
 - `kb/notes/COLLECTION.md` — minimal theoretical/descriptive/prescriptive template
+- `kb/notes/README.md` — curated empty-state landing
 - `kb/reference/COLLECTION.md` — minimal template
+- `kb/reference/README.md` — curated empty-state landing
 - `kb/instructions/COLLECTION.md` — minimal template
+- `kb/instructions/README.md` — curated empty-state landing
 
-Each template invites the practitioner to pick a register, state a quality goal, and declare outbound link rules, with pointers to the shipped `kb/commonplace/<collection>/COLLECTION.md` as a worked example.
+Each `COLLECTION.md` template invites the practitioner to pick a register, state a quality goal, and declare outbound link rules, with pointers to the shipped `kb/commonplace/<collection>/COLLECTION.md` as a worked example. Each `README.md` supplies the collection's stable reader landing, points authors to that contract, and states that the collection has no artifacts yet.
 
 **Resolved templates** — read, substituted, written:
 
@@ -69,11 +72,11 @@ The source tree does not keep symlinked copies of the shipped KB under `src/comm
 1. `commonplace/_data/<path>` — packaged wheel data, populated by Hatch `force-include` entries from canonical repo paths. The sdist also explicitly includes those canonical inputs so wheels built from sdists have the same scaffold source.
 2. The canonical repo path — used in editable source checkouts, so edits to `kb/notes/`, `kb/reference/`, `kb/instructions/`, and the root templates are picked up without duplicating files.
 
-The exception is `src/commonplace/_data/templates/`, which contains real scaffold-only files for the user's empty `COLLECTION.md` templates. Those files have no canonical counterpart elsewhere in the KB.
+The exception is `src/commonplace/_data/templates/`, which contains real scaffold-only files for the user collections' starter `COLLECTION.md` contracts and `README.md` landings. Those files have no canonical counterpart elsewhere in the KB.
 
 ## Skill projection
 
-In addition to copying the instructions tree under `kb/commonplace/instructions/`, `init_project` attempts to project a selected subset of skills (`write`, `validate`, `connect`, `convert`, `health-check`, `ingest`, `snapshot-web`, `revise-iterative`, `revise-autoreason`) into two known runtime discovery layouts:
+In addition to copying the instructions tree under `kb/commonplace/instructions/`, `init_project` attempts to project a selected subset of skills (`write`, `validate`, `connect`, `convert`, `health-check`, `ingest`, `snapshot-web`, `revise-autoreason`, `write-multistage`) into two known runtime discovery layouts:
 
 - `.claude/skills/cp-skill-<skill>/`
 - `.agents/skills/cp-skill-<skill>/`
@@ -110,7 +113,7 @@ Relevant Notes:
 - [014-scripts-as-python-package-one-tree-model](./adr/014-scripts-as-python-package-one-tree-model.md) — decision: shipping scripts as an installable Python package and consolidating scaffold into one tree
 - [027-package-scaffold-assets-without-source-tree-symlinks](./adr/027-package-scaffold-assets-without-source-tree-symlinks.md) — decision: package scaffold assets with explicit wheel includes and source-checkout fallback instead of source-tree symlinks
 - [064-install-commonplace-commands-as-a-user-level-uv-tool](./adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) — decision: user-level command installation and removal of project command-environment scaffolding
-- [013-skills-first-delivery-with-core-local-type-split](./adr/013-skills-first-delivery-with-core-local-type-split.md) — decision: the skills-first delivery model and the core/local type split that `SCAFFOLD_TREES` and `PROMOTED_SKILLS` implement
+- [013-skills-first-delivery-with-core-local-type-split](./adr/013-skills-first-delivery-with-core-local-type-split.md) — decision: the skills-first delivery model and the core/local type split that `MANIFEST.trees` and `MANIFEST.promoted_skills` implement
 - [006-two-tree-installation-layout](./adr/006-two-tree-installation-layout.md) — decision: the installation layout that `commonplace-init` produces
 - [architecture](./architecture.md) — shipped architecture: where the generation pipeline sits inside the installed surface
 - [control-plane-goals](./control-plane-goals.md) — how the generated `AGENTS.md.template` carries the `## KB Goals and Scope` section for practitioners to fill in

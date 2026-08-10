@@ -19,7 +19,7 @@ Read this document to get the model. For the type catalog see [available-types](
 
 A **collection** is a subtree under `kb/` whose root contains `COLLECTION.md`. That file is the local authoring and routing contract for artifacts in the subtree: purpose, register or mode, quality goal, placement boundaries, title and description conventions, type guidance, outbound-link policy, labels, search guidance, and lifecycle rules. Subdirectories inside a collection are normally *areas* under the same contract. A `COLLECTION.md` inside a non-collection namespace, such as installed `kb/commonplace/notes/`, is an ordinary collection; a `COLLECTION.md` inside another collection is invalid.
 
-The shipped collections:
+The current top-level source-repo collections:
 
 | Collection | Register | Quality goal |
 |---|---|---|
@@ -27,6 +27,8 @@ The shipped collections:
 | `kb/reference/` | descriptive | fidelity + economy |
 | `kb/instructions/` | prescriptive | executability + precision |
 | `kb/agent-memory-systems/` | descriptive (with root-level analysis exceptions) | fidelity + economy |
+| `kb/agentic-systems/` | descriptive | fidelity + economy |
+| `kb/articles/` | editorial/expository | explanatory clarity + technical depth + onward path into the KB |
 | `kb/sources/` | descriptive (ingested external content) | faithful capture |
 | `kb/types/` | global system-definition contracts | self-contained checkability + economy |
 | `kb/work/` | catch-all workshop layer | move active work forward; extract durable conclusions |
@@ -41,7 +43,7 @@ A **type** is a structural contract expressed as a hand-authored **type-spec doc
 
 Two scopes:
 
-- **Global type-spec docs** live in `kb/types/`. The shipped globals are `type-spec` (the self-referential root), `note` (the base structured type), `instruction` (prescriptive procedures, skill bodies, wrapper prompts, work packets), `review-gate` (one quality check for the review system), `definition` (vocabulary), and `index` (navigation hubs). Globals are global because they can occur in any collection. `kb/types/text.md` documents the implicit no-frontmatter case and is not itself a selectable type.
+- **Global type-spec docs** live in `kb/types/`. The shipped globals are `type-spec` (the self-referential root), `note` (the base structured type), `instruction` (prescriptive procedures, skill bodies, wrapper prompts, work packets), `review-gate` (one quality check for the review system), `definition` (vocabulary), `tag-readme` (curated tag landings), and `index` (build-time generated directory listings only). Globals are global because they can occur in any collection. `kb/types/text.md` documents the implicit no-frontmatter case and is not itself a selectable type.
 - **Collection-local type-spec docs** live in `kb/<collection>/types/`. They apply only to artifacts in that collection. Examples: `adr` in `kb/reference/types/`, `structured-claim` in `kb/notes/types/`, `snapshot`, `ingest-report`, and `source-review` in `kb/sources/types/`, `connect-report` in `kb/reports/types/`.
 
 Type resolution is lexical: the path stored in `type:` names the type-spec doc directly. The collection does not participate in explicit type resolution; collection scoping shows up only in `COLLECTION.md`'s `## Types` menu when an author is picking a type for a new write. See [type-loading](./type-loading.md) for the full mechanics.
