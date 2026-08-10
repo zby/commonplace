@@ -6,7 +6,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [written-artifacts-in-learning-loops](./written-artifacts-in-learning-loops/README.md) — determining which functions of writing and written artifacts transfer across human and agent learning loops while keeping changed understanding, retained artifacts, activation, and behavioural effect causally distinct
 - [continual-harness-governance-experiment](./continual-harness-governance-experiment/README.md) — designing a matched test of whether Commonplace-derived control, warrant, recovery, and artifact-lifecycle mechanisms improve reset-free harness adaptation without importing a compounding claim or presuming proposal selection
 - [dsw-talk](./dsw-talk/README.md) — preparing a 35-minute Data Summit Warsaw practitioner talk: one core hybrid-system claim, four engineering lessons, a triage of KB material into included/compressed/cut, and an evolving visual spine that closes on self-hosting
 - [agent-runtime-design](./agent-runtime-design/README.md) — deriving what an agent runtime must provide, starting with capability requests, scoped grants, and durable suspension for approval, while separating runtime guarantees from CLI, TUI, API, and host-application control surfaces
