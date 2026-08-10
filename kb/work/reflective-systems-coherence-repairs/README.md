@@ -12,7 +12,7 @@ The report is evidence about repository snapshot `32ce89e6`, not current truth. 
 
 1. **Complete — external-model boundary.** Keep provider and weights outside the declared Commonplace frame. Treat editable model-binding requests as internal localized configuration that may select an external dependency when realized, not as reflective coverage of the dependency's distributed-parametric form; assess requested-to-realized binding separately.
 2. **Complete — closure semantics.** Naming a decider closes routing only. Decision-content closure requires explicitly retained criteria, supplied directly or imported by reference; tacit criteria held by the decider do not count.
-3. **Pending — natural-language/symbolic crossing.** Recast the claim around changes that move the interpretation–enforcement boundary; do not generalize from those crossings to every reliability improvement.
+3. **Complete — natural-language/symbolic crossing.** Recast the claim around changes that move the interpretation–enforcement boundary; do not generalize from those crossings to every reliability improvement.
 4. **Pending — retrieval locality.** State failure at the unit it breaks: the represented aspect, constraint, or reflective path whose retrieval wire missed it, not the whole system's reflectivity.
 
 ## Item 1 decision and acceptance boundary
@@ -64,6 +64,28 @@ Completed 2026-08-10. The repair changed:
 - `kb/notes/self-improving-systems-README.md`
 
 The canonical note now separates routing from decision-content closure, treats direct and explicitly imported criteria alike, bounds closure by how far those criteria constrain the answer, and excludes tacit actor criteria. The tag head no longer presents closure as an intrinsic property of methodology-as-input. A backlink audit found no other live dependent that needed editing, and a focused semantic re-review found no remaining blocker. Both changed artifacts passed individual `commonplace-validate` runs without warnings. A live-library search found none of the superseded exception phrases, and `git diff --check` was clean. The historical report and frozen replication packet remain unchanged.
+
+## Item 3 decision and acceptance boundary
+
+The interpretation–enforcement boundary records which form bears responsibility for a behavior: natural-language content leaves consequences to model or human interpretation, while a symbolic artifact has consequences assigned by a formal consumer. A change moves the boundary only when it transfers that responsibility. Codification is the observed natural-language-to-symbolic direction; retiring formal enforcement would be the reverse direction.
+
+Two related changes must remain separate. Re-grounding a symbolic rule against revised retained natural-language criteria changes the mapping between forms without reallocating responsibility. Symbolic execution that exposes a faulty natural-language instruction is cross-form feedback; if the enforcement stays fixed, it changes neither the allocation nor the enforcement rule. Same-form bug fixes, retry corrections, atomicity repairs, resource bounds, and guidance revisions can materially improve reliability without any crossing.
+
+Item 3 is complete when the canonical claim, title, description, evidence reading, and reflective-coverage consequence use this boundary; the Commonplace trace is no longer presented as evidence of a reverse boundary movement or re-grounded enforcement; live consumers stop equating crossings with reliability improvement generally; the obsolete claim no longer survives as the live note identifier; and the affected artifacts and redirect map pass deterministic validation.
+
+## Item 3 completion evidence
+
+Completed 2026-08-10. The repair changed:
+
+- `kb/notes/moving-the-interpretation-enforcement-boundary-requires-coverage.md` (relocated from `kb/notes/improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md`)
+- `kb/notes/reflective-coverage-is-graded-across-representational-forms.md`
+- `kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md`
+- `kb/sources/jdegoes-recursive-agent-architecture-2081854216264392934.ingest.md`
+- `properdocs.yml`
+
+The canonical note now makes boundary movement, rather than improvement generally, the event that requires modification-grade coverage of both localized forms and their mapping. It treats re-grounding and symbolic-to-natural-language feedback as distinct mechanisms, states that the reference trace demonstrates only codification and feedback, and names same-form reliability improvements as counterexamples to the former generalization. The Knowledge-Centric Self-Improvement case is now a boundary-stable comparison rather than purported evidence that gains concentrate at crossings. The live theory backlink and both ingest link labels use the narrowed claim, and the relocation removes the superseded claim from the note's live identifier while preserving its published URL through the generated redirect.
+
+A focused semantic pass against grounding alignment, internal consistency, explanatory-reach, load-bearing qualifiers, underspecification, and unearned generality found no remaining blocker after making the retained-natural-language condition on re-grounding explicit. All four changed library artifacts and this workshop README passed individual `commonplace-validate` runs without warnings. Redirect validation found all 103 targets resolvable, no key shadowing a live page, and a flat redirect topology. A live-library search found none of the superseded claim formulations. `git diff --check` was clean, and `uv run pytest` passed all 479 tests. The snapshot report and historical workshop evidence remain unchanged.
 
 ## Next-session routing
 

@@ -77,6 +77,7 @@ plugins:
         'notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md': 'notes/exact-implementation-does-not-validate-a-requirement.md'
         'notes/formal-systems-can-assess-reach-through-causal-and-proof-obligations.md': 'notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md'
         'notes/foundations-index.md': 'notes/foundations-README.md'
+        'notes/improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md': 'notes/moving-the-interpretation-enforcement-boundary-requires-coverage.md'
         'notes/inductive-bias-splits-into-generic-and-specific-levels.md': 'notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md'
         'notes/interpretation-errors-are-failures-of-the-interpreter.md': 'notes/out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md'
         'notes/kb-maintenance-index.md': 'notes/kb-maintenance-README.md'
