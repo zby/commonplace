@@ -24,8 +24,8 @@ Status ∈ {open, testing, promoted, rejected}. Method and first target are deli
 
 | # | Idea (essay source) | Residual increment over what ships / what to discriminate | Status |
 |---|---|---|---|
-| 1 | **Premise-decomposition review** (how-to-think #2) | `composition-friction-gate` already decomposes into inferential *joints (edges)* and attacks each. Increment: decompose into *premises (nodes)* and test each for external support / counterexample. Discriminator: on one note, does the premise-node check surface a real weakness the joint check misses? | open |
-| 2 | **Counterexample-scope routing** (how-to-think #1) | Classify a defeated point as *local* (defeats a premise → revise, keep title-claim) vs *global* (propagates to the conclusion → retire). Targets: `discovery-lifecycle.md` test branch and `FIX-SYSTEM`. Composes with #1. | open |
+| 1 | **Premise-decomposition review** (how-to-think #2) | `composition-friction-gate` already decomposes into inferential *joints (edges)* and attacks each. Increment: decompose into *premises (nodes)* and test each for external support / counterexample. Discriminator: on one note, does the premise-node check surface a real weakness the joint check misses? | **signal — build candidate** (discriminator passed 2026-08-10, see Test log) |
+| 2 | **Counterexample-scope routing** (how-to-think #1) | Classify a defeated point as *local* (defeats a premise → revise, keep title-claim) vs *global* (propagates to the conclusion → retire). Targets: `discovery-lifecycle.md` test branch and `FIX-SYSTEM`. Composes with #1. | **open (+supporting evidence)** — the #1 discriminator showed LOCAL/GLOBAL routing adds actionable value the joint check lacks |
 | 3 | **Value-of-information reading** (learning-by-writing #3) | Route the next read by *expected claim-change*, not retrieval relevance, in `connect` / `write-multistage`. Operationalizes the open question in the claim-routed conjecture. | open |
 | 5 | **Stance-reversal operator** (learning-by-writing #4) | Routine "write the strongest note that contradicts this one" as an anchoring check in connect/review. Cheap; de-risks the claim-routed conjecture's own anchoring failure mode. | open |
 | 6 | **False-precision anti-gate / "accurately-vague" register** (wordless #2) | A check for stating-as-settled what the evidence leaves open — the counter-pressure to constraining. `AGENTS.md` forbids invented precision but no gate enforces it. | open |
@@ -43,6 +43,23 @@ Status ∈ {open, testing, promoted, rejected}. Method and first target are deli
 - [Learning by writing](../../sources/learning-by-writing.ingest.md) — Karnofsky: hypothesis as inquiry-control state (#3, #5)
 - [Putting ideas into words](../../sources/putting-ideas-into-words.ingest.md) — Graham: exact-word commitment + neutral-stranger reread
 - [When is it better to think without words](../../sources/when-is-it-better-to-think-without-words.ingest.md) — Karlsson: expansion/compression phasing, false precision (#6)
+
+## Test log
+
+### 2026-08-10 — #1 premise-decomposition discriminator (premise-node vs joint-edge)
+
+**Setup.** Two title-as-claim notes resting on empirical premises — `llm-generation-confidence-tracks-typicality-not-soundness.md` (A) and `weakly-discriminated-qualities-tend-to-be-underselected.md` (B). Each read by two fresh, cold (no linked notes), no-tools adversarial sub-agents: a **JOINT** reader running the shipped `composition-friction-gate` (test each inference/edge; default UNSUPPORTED) and a **PREMISE** reader (assume inferences valid; decompose the claim into premise-nodes; hunt a counterexample per premise; route failures LOCAL/GLOBAL). Question: does PREMISE surface a real weakness JOINT misses?
+
+**Result — yes, on both notes, and the two are complementary.**
+- **A:** PREMISE-only found (i) an RLVR/post-training counterexample to the premise "training optimizes text likelihood" — a premise stated as background, which an edge-check has no joint to attack — and (ii) a token-logprob vs verbalized-confidence conflation. JOINT-only found the automation-boundary corollary as an inference overreach.
+- **B:** heavy convergence (both caught "no-lift underselection" over-stated as "directional drift," and the Bug-That-Shipped activation-vs-selection confound). PREMISE still added: whether decorrelated maintainability signals *exist* to assemble (JOINT endorsed that reasoning as holding), and whether the weak quality has a stance-independent ordering at all ("underselection" as possible category error).
+- **#2 evidence:** PREMISE's LOCAL/GLOBAL routing converted findings into "scope the claim" vs "the headline must weaken" — actionable in a way JOINT's thin-joint ranking is not.
+
+**Verdict.** Premise-node decomposition reaches a distinct, actionable defect class (false/doubtful *background* premises; scope-repairs) the joint-edge check cannot structurally reach; the two are complementary, not redundant. Build #1 as a **sibling** to `composition-friction-gate` with #2's LOCAL/GLOBAL routing built in — do **not** replace the joint check.
+
+**Caveats.** Two notes, both theoretical/empirical-premise register (where node/edge divergence is most expected); single reader per cell, no replication. Medium confidence: justifies building, not a universal-lift claim. Untested on definitional and procedural notes.
+
+**Next.** Draft the premise-decomposition gate as a `kb/instructions/` procedure (mirror `composition-friction-gate.md`: fresh sub-agent, no self-grade, routed attention, LOCAL/GLOBAL per premise). Before promoting, run it against one definitional and one procedural note to check the defect class generalizes beyond title-as-claim notes.
 
 ## Bookkeeping
 
