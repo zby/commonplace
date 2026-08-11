@@ -7,19 +7,21 @@ tags: [learning-theory, deploy-time-learning]
 
 # Deploy-time learning is the missing middle
 
-[Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) names [system-definition artifacts](./definitions/system-definition-artifact.md) as the cheap behaviour-change mechanism alongside expensive weight updates. This note places that mechanism on the timing axis.
+[Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) argues that the continual-learning objective foregrounds durable [system-definition](./definitions/system-definition-artifact.md) writes that install fast, and that such writes span three representational forms. This note develops the timing axis behind *fast*: when, across a deployed system's lifecycle, a durable write can land — and why the durable-and-fast cell is the one readable artifacts occupy.
 
 ## Three timescales
 
-Deployed systems adapt at three timescales, each with a different durable medium:
+Two structural axes describe a durable write: *when* it lands across a deployed system's lifecycle, and whether it *persists* past the run that produced it. Three timescales populate them:
 
-| Timescale | When | Medium | Properties |
-|-----------|------|--------|------------|
-| **Training** | Before deployment | Distributed-parametric state | Durable but hard to inspect directly; heavy infrastructure; can't incorporate deployment-specific information |
-| **In-context** | Within a session | Context window | Inspectable but ephemeral; evaporates at session end |
-| **Deploy-time** | Across sessions, during deployment | Durable system-definition artifacts (natural-language + symbolic) | Durable, inspectable, versionable |
+| Timescale | When it lands | Persists past the run? | Form that occupies it today (contingent) |
+|-----------|---------------|------------------------|------------------------------------------|
+| **Training** | Before deployment | Yes | Distributed-parametric state |
+| **In-context** | Within a session | No — evaporates at session end | Context window |
+| **Deploy-time** | Across sessions, during deployment | Yes | Readable system-definition artifacts (natural-language + symbolic) |
 
-Medium and timing are orthogonal axes in principle. The combination the table leaves empty — distributed-parametric updates at deployment pace — exists but stays rare, for two reasons of different durability: training infrastructure is heavy today, and even where the update step gets cheap, its validation radius does not — establishing that a parametric update changed only what it should is the expensive half, [which the readable-artifact loop bounds through explicit dependencies](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md). [OpenClaw-RL](https://arxiv.org/html/2603.10165v1), which runs live RL from user interactions, is a current example of the combination.
+The **missing middle is the durable-and-fast cell**: training buys durability at the cost of speed, in-context buys speed at the cost of durability, and deploy-time is the corner that is both.
+
+Timing and [representational form](./definitions/representational-form.md) are orthogonal, so the last column records what *currently* occupies each cell, not a law — any form could in principle land at any timescale. Readable artifacts hold the deploy-time cell today not because readability is intrinsic to that timing, but because parametric updates cannot yet validate fast enough to live there. Even where the update step gets cheap, its validation radius does not shrink with it: establishing that a parametric update changed only what it should is the expensive half, [which the readable-artifact loop bounds through explicit dependencies](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md). That makes "readable forms own the middle" a current empirical claim with a named falsifier — [OpenClaw-RL](https://arxiv.org/html/2603.10165v1), which runs live RL from user interactions, is a frontier probe of parametric updates at deployment pace. If that path generalises, the deploy-time cell stops being readable-only.
 
 Deploy-time learning is system-level adaptation: behaviour improves because *artifacts* improve — during deployment like in-context, durable like training, but inspectable and tool-compatible throughout.
 
@@ -49,7 +51,7 @@ This note is the timing argument alone. How distributed-parametric, natural-lang
 
 Relevant Notes:
 
-- [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) — foundation: places system-definition artifacts on the timing axis
+- [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) — foundation: the objective-level claim whose fast-install demand this note develops on the timing axis
 - [Treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md) — extends: asks how deploy-time natural-language/symbolic loops relate to distributed-parametric loops
 - [The verifiability gradient](./verifiability-gradient.md) — extends: the ladder that deploy-time artifacts move along in both directions
 - [Axes of artifact analysis](./axes-of-artifact-analysis.md) — sharpens: the repo is Commonplace's storage substrate choice for many durable system-definition artifacts
