@@ -13,6 +13,8 @@ When no rule-ready signal is available yet, the system has three moves instead: 
 
 Push and pull do not change this. Pull supplies selection input directly through a query, path, or tool call. A path may itself be rule-ready; a natural-language query may instead supply content from which relevance is inferred. Push must obtain equivalent input upstream through a task identifier, current object, workflow mode, event payload, or input to a relevance classifier. A coarse trigger such as session start or a bare `Write` event can deliver generic context, but by itself cannot choose among multiple live candidates. Push names a delivery direction, not a way of knowing what to deliver.
 
+The practical consequence inverts where the difficulty seems to lie. Storing a memory and injecting it are the easy parts; the hard part is the selector — deciding which sessions are the relevant ones — and that is exactly what needs the selection input. Having stored the `curl` lesson tells the system nothing about which sessions are about to run `curl`.
+
 The bound is on selection, not presence: a bounded superset can hold the right item without any signal picking it out. Rule-based routing is reliable exactly when the rule-ready signal already exists; deriving relevance for a case still in flight belongs to inference rather than rule matching.
 
 ## Relevant Notes
