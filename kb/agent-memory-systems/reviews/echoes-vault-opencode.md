@@ -122,4 +122,4 @@ Relevant Notes:
 - [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames `/echoes-end` and scratchpad notes as session-trace distillation into future memory.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies generated OpenCode commands, skills, and tool schemas as behavior-shaping artifacts.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies daily logs, pages, raw materials, and search results as remembered context rather than hard controls.
-- [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - relates to EchoesVault's reliance on filenames, index lines, wikilinks, dates, and keywords as retrieval symbols.
+- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates to EchoesVault's reliance on filenames, index lines, wikilinks, dates, and keywords as retrieval signals.

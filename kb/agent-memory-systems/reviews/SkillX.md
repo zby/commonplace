@@ -136,4 +136,4 @@ Relevant Notes:
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: retrieved plans, skill records, filters, and prompt formatters shape future behavior through instruction, routing, validation, and ranking.
 - [Codification](../../notes/definitions/codification.md) - applies: successful natural-language/tool traces are compressed into reusable symbolic/natural-language procedures.
 - [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md) - applies: reward filters, LLM filters, schema checks, and benchmark outcomes have different verification strength.
-- [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - contrasts: SkillX uses semantic embedding/judgment signals when task-specific symbolic routing is not enough.
+- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - contrasts: SkillX uses semantic embedding/judgment signals when task-specific rule-based routing is not enough.

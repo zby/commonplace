@@ -134,6 +134,6 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: the review separates raw memories, SkillBank JSON, retrieval state, SFT examples, and model weights.
 - [Behavioral authority](../../notes/definitions/behavioral-authority.md) - frames: skills move from evidence to prompt instruction and learning authority.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompt templates, retrieval rules, trainer update gates, and SkillBank entries shape later behavior.
-- [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - compares: template retrieval depends on detectable task/category symbols, while embedding mode falls back to inferred similarity.
+- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - compares: template retrieval depends on detectable task/category signals, while embedding mode falls back to inferred similarity.
 - [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md) - applies: reward labels, LLM extraction, validation success rates, and policy improvements provide different strengths of evidence.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: SkillRL is a trace-to-skill and trace-to-policy system.

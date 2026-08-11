@@ -121,4 +121,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Binder's records, config entities, projections, transactions, hooks, and tools have different authority despite sharing one database.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: Binder records and rendered files mostly serve as evidence, reference, and context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: Binder schemas, navigation, views, validators, hooks, and tool definitions constrain future behavior.
-- [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - relates: Binder's context efficiency depends on fields, identifiers, relation keys, filters, and navigation rules being present and maintained.
+- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: Binder's context efficiency depends on fields, identifiers, relation keys, filters, and navigation rules being present and maintained.

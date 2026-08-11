@@ -120,4 +120,4 @@ Relevant Notes:
 - [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames Smriti's trace log plus reviewed consolidation path as a conservative trace-learning loop.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies ordinary memories, raw traces, snippets, indexes, and recall bundles as advisory retained knowledge.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - contrasts Smriti's MCP schemas, repair routines, and ranking policy with stronger instruction, validation, or enforcement artifacts.
-- [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - relates to Smriti's reliance on titles, aliases, tags, categories, scopes, wikilinks, and lexical terms as recall symbols.
+- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates to Smriti's reliance on titles, aliases, tags, categories, scopes, wikilinks, and lexical terms as recall signals.

@@ -135,6 +135,6 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies to cards, generated context, indexes, drift rows, hooks, and vault projections as different operative parts.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places Eidetic's transcript-to-signal loop in the trace-learning landscape.
 - [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames session-end signal extraction as learning from agent traces.
-- [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - explains why project slugs, card kinds, statuses, and detail ids make selection targetable.
+- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why project slugs, card kinds, statuses, and detail ids make selection targetable.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies ordinary memory cards, search results, and signal cards as advisory retained knowledge.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies hooks, generated rules context, MCP schemas, validators, and ranking policy as behavior-shaping control surfaces.

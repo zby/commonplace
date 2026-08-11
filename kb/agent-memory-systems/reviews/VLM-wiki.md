@@ -115,4 +115,4 @@ Relevant Notes:
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: compiled wiki pages and raw analyses advise future answers as evidence/context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `AGENTS.md`, templates, config, trigger keywords, and scripts shape future agent behavior.
 - [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) - relates: compiled wiki pages and indexes precompute smaller context from raw multimodal material.
-- [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - explains: VLM-wiki's pull path depends on available symbols such as categories, titles, tags, links, and index rows.
+- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: VLM-wiki's pull path depends on available signals such as categories, titles, tags, links, and index rows.

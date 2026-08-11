@@ -153,4 +153,4 @@ Relevant Notes:
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: ordinary notes, methodology claims, session files, observations, and search results when consumed as evidence or context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: generated `CLAUDE.md`, skills, hooks, schemas, queue state, validation scripts, and promoted methodology rules.
 - [Context engineering](../../notes/definitions/context-engineering.md) - frames: Ars Contexta's core contribution is routing, loading, scoping, and maintaining agent context across sessions.
-- [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - applies: startup hooks can only push fixed-path and threshold-visible memory unless richer relevance signals are computed.
+- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - applies: startup hooks can only push fixed-path and threshold-visible memory unless richer relevance signals are computed.

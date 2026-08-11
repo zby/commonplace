@@ -122,4 +122,4 @@ Relevant Notes:
 - [Representational form](../../notes/definitions/representational-form.md) - supports separating natural-language wiki content from symbolic schemas, graph rows, and command contracts.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies runtime schemas, skill instructions, validators, and tool commands as behavior-shaping artifacts.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies paper/concept/idea/method/wiki output pages as advisory retained research memory.
-- [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - explains why AutoSci's slugs, entity kinds, status fields, and graph edges matter for targeted read-back.
+- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why AutoSci's slugs, entity kinds, status fields, and graph edges matter for targeted read-back.

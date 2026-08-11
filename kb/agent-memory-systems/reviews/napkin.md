@@ -114,4 +114,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: notes, config, templates, search cache, Base queries, and overview output have different forms and authorities.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: vault notes and retrieved snippets mostly serve as evidence, reference, context, or advice.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - contrasts: Napkin config, templates, and CLI behavior shape access, but vault content is not automatically enforced as a system definition.
-- [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - relates: Napkin relies on filenames, folders, tags, links, headings, mtimes, and lexical terms as available retrieval symbols.
+- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: Napkin relies on filenames, folders, tags, links, headings, mtimes, and lexical terms as available retrieval signals.

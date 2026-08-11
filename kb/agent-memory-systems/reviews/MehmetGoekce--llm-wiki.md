@@ -114,4 +114,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: L1 memory files, L2 wiki pages, schema pages, command instructions, and lint rules differ by substrate, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: L2 wiki pages mainly serve as evidence and reference during query.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `wiki.md`, schemas, routing rules, lint rules, and setup templates shape future agent behavior.
-- [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - explains: LLM Wiki's retrieval depends on namespaces, page names, properties, links, and keywords being available as symbols.
+- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: LLM Wiki's retrieval depends on namespaces, page names, properties, links, and keywords being available as selection signals.

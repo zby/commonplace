@@ -1,0 +1,453 @@
+{
+  "source": "https://x.com/henrytdowling/status/2054246434506199529",
+  "captured": "2026-08-11T10:29:52.213702+00:00",
+  "family": "x-article",
+  "status_id": "2054246434506199529",
+  "conversation_id": "2054246434506199529",
+  "target_post": {
+    "article": {
+      "cover_media": "3_2054275052875792384",
+      "entities": {
+        "urls": [
+          {
+            "text": "http://claude.local.md/"
+          },
+          {
+            "text": "https://www.youtube.com/watch?v=7AmhgMAJIT4"
+          },
+          {
+            "text": "https://github.com/poteto/brainmaxxing"
+          },
+          {
+            "text": "https://x.com/appliedcompute/status/2050296179330863329"
+          },
+          {
+            "text": "https://x.com/CaelStewart2/status/2051412480572739782"
+          },
+          {
+            "text": "https://x.com/AirbyteHQ/status/2051686041950523720"
+          },
+          {
+            "text": "https://x.com/elementdsj/status/2049892715098169620"
+          },
+          {
+            "text": "https://www.trychroma.com/research/context-rot"
+          },
+          {
+            "text": "https://x.com/bokiko/status/2051354191738597472"
+          },
+          {
+            "text": "https://x.com/BeauJohnson89/status/2050593791938105439?s=20"
+          },
+          {
+            "text": "https://x.com/msukkarieh1/status/2046279157496057987"
+          },
+          {
+            "text": "http://claude.md/"
+          },
+          {
+            "text": "https://naumu.ai/"
+          },
+          {
+            "text": "https://x.com/DhravyaShah/status/2049326274724945953?utm_source=chatgpt.com"
+          },
+          {
+            "text": "https://arxiv.org/html/2511.17208v2"
+          },
+          {
+            "text": "https://x.com/theblessnetwork/status/2047410540012556788?s=20"
+          },
+          {
+            "text": "https://x.com/RLanceMartin/status/1711801139459752086"
+          },
+          {
+            "text": "https://arxiv.org/html/2504.19413v1"
+          },
+          {
+            "text": "https://traces.com/"
+          },
+          {
+            "text": "https://x.com/Beever_AI/status/2050051528157778399?s=20"
+          },
+          {
+            "text": "https://x.com/mernit/status/2050309641209290887?s=20"
+          },
+          {
+            "text": "https://github.com/CodeAbra/iai-mcp"
+          },
+          {
+            "text": "https://browser-use.com/posts/two-ways-to-sandbox-agents"
+          },
+          {
+            "text": "https://arxiv.org/abs/2602.01331"
+          },
+          {
+            "text": "https://x.com/pauliusztin_/status/2049466230663262212"
+          },
+          {
+            "text": "https://arxiv.org/html/2603.27277v1"
+          },
+          {
+            "text": "https://www.engram.fyi/"
+          },
+          {
+            "text": "https://github.com/swarmclawai/swarmvault"
+          },
+          {
+            "text": "https://x.com/jerryjliu0/status/2040154840228323468?utm_source=chatgpt.com"
+          },
+          {
+            "text": "https://mnemosyne.site/"
+          },
+          {
+            "text": "https://openreview.net/forum?id=FiM0M8gcct"
+          },
+          {
+            "text": "https://x.com/henrytdowling/status/2049580122852995338"
+          },
+          {
+            "text": "https://x.com/ashpreetbedi/status/2049180168200106150?s=20"
+          },
+          {
+            "text": "https://www.unibase.com/"
+          },
+          {
+            "text": "https://vercel.com/blog/how-to-build-agents-with-filesystems-and-bash"
+          },
+          {
+            "text": "https://x.com/HilaShmuel/status/2049909354803962328"
+          },
+          {
+            "text": "https://arxiv.org/pdf/2310.08560"
+          },
+          {
+            "text": "https://x.com/Ghatikesh/status/2051780018125275406"
+          },
+          {
+            "text": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f"
+          },
+          {
+            "text": "https://x.com/driaforall/status/1966544319516402105"
+          },
+          {
+            "text": "https://mem0.ai/blog/mem0-the-token-efficient-memory-algorithm"
+          },
+          {
+            "text": "https://memory.orinlabs.org/"
+          },
+          {
+            "text": "https://x.com/JadHindy/status/2050280016387199245?s=20"
+          },
+          {
+            "text": "https://huggingface.co/papers/2605.05242"
+          }
+        ]
+      },
+      "media_entities": [
+        "3_2054246001293316096",
+        "3_2054245710842003456"
+      ],
+      "plain_text": "There are a lot of different approaches to building memory for coding agents (see here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, and here for some example implementations.)\nIn this article, I\u2019m going to give my opinionated stance on how you should approach this problem, examining three key decisions that memory builders need to make. This article is kinda a grab bag.\nTLDR:\nUse semantic retrieval and grep to retrieve memories over some form of structured knowledge base, and do not use knowledge graphs. Generally, the agent should request memories rather than force-feeding them. You should store organization-specific knowledge in your memory store- not personal preferences and not information generally available on the internet.\nDimension 1: Retrieval\nHow do we structure the data so that it\u2019s easy to retrieve? Here are the most common approaches:\nSemantic retrieval (specifically, vector embeddings) is the most common naive approach that people use to build agent memory. Here\u2019s a thread talking about common patterns. It\u2019s great and you should incorporate it.\nGrep over filesystem is also much-talked-about (here\u2019s an example, here\u2019s the supermemory founder talking about it, here\u2019s a vercel blog about this). It\u2019s great and you should incorporate it. This feels spiritually the most \u201cbitter-lesson-pilled\u201d (hence the refrain \u201cfilesystem + grep is all you need\u201d).\nKnowledge graphs are a popular and enticing approach. Mem0\u2019s entity linking is an example of this approach. Shortly I will argue that you should not incorporate a knowledge graph into your memory system.\nLLM Wiki (source) is the idea of structuring your codebase/organization\u2019s memory as a collection of documents that an AI continually maintains / cleans up. It\u2019s very promising and you should use it. Here\u2019s a more formal academic paper advocating for this approach.\nSubagent summary- take a large piece of stored text and summarizing it with several smaller subagents in parallel. This paper on \u201cagentic mapreduce\u201d is an example.\nQ: Which ones should I use?\nA: All of the above except knowledge graphs.\nIf you\u2019re building on the Claude Agent SDK your agent will have grep and subagent summary out of the box.\nHere\u2019s a summary of why it\u2019s necessary to include each of the above four components:\nGrep over filesystem is the gold standard for agent memory. It plays to what agents are already posttrained to be great at- writing bash commands, understanding filesystems, and iteratively using tools. E.g. \u201cwhy did we decide to bump the rate limit on our API gateway\u201d -> `grep -n \"rate\" src/scheduler/gateway/server.py | head -20`\nSemantic retrieval is helpful to agents looking for answers to semantic questions that aren\u2019t easy to grep for. E.g. \u201cwhere do we constrain our users\u2019 ability to configure their pipeline?\u201d\nCurated LLM Wiki -> Essentially indexes your filesystem to make grepping easier. E.g. you don\u2019t want to have many redundant entries for \u201ccaching strategy\u201d in your filesystem. Additionally allows the memory to evolve based on your organization\u2019s needs over time.\nAgentic Mapreduce -> Useful for \u201csummary\u201d queries. E.g. what are the most common ways our past 1000 customers have churned?\nQ: Why shouldn\u2019t I use a knowledge graph?\nFirst, I\u2019ll claim that you shouldn\u2019t use a knowledge graph as your primary way of representing memory.\n \nMost knowledge graph implementations store facts, and memory != facts. Here\u2019s an illustrative example: Suppose my friend Joy texted me \u201cI broke up with Dylan\u2026\u201d\nThe way a knowledge graph would update in response to this information is to...\nChange the edge between Joy and Dylan from \u201ccouple\u201d to \u201cexes\u201d\nMaybe write to the \u201cJoy\u201d / \u201cDylan\u201d nodes something to the effect of \u201crecently had a breakup\u201d\nBut there\u2019s so much semantic information in that text that wasn\u2019t captured! The \u201c...\u201d indicates that there\u2019s probably some spicy tea. The fact that the text was short, and came out of the blue indicates that maybe she had been expecting it or knows that I had been expecting it. Sam Whitmore makes this point very convincingly in her talk on memory last year (at the 2:05 mark)\nSecond, I\u2019ll claim that even in addition to another way of representing memory (e.g. a document store), a knowledge graph is still not worth using in your product. Here\u2019s some empirical evidence: Mem0 tried graph memory and was only able to squeeze out a 2% performance gain on benchmarks. This paper tried it and found that while token costs go down, so does performance. Similarly, in this paper, some researchers found that between a simple retrieval-based memory, and a simple retrieval-based memory augmented with a graph, the retrieval-based memory actually performed worse.\nDimension 2: Memory Injection Policy\nShould the agent ask for things to be added to its memory, or should things be added to the agent\u2019s memory proactively?\nPull the agent asks for memory based on a query (via semantic search, asking a subagent to summarize, etc), and then receives a result. Eg Letta\nPush relevant memories are proactively added to the agent\u2019s context without any explicit request on the part of the agent. Eg most 2023-era RAG systems\n \nQ: We should never push to memory, because pushing irrelevant stuff into memory will cause context rot, right?\nA: I don\u2019t think these are quite the same thing! LLMs are able to do great things under long context windows- consider that *coding agents* routinely hit 1M context and they are the main workhorse for AI productivity.\nSo really, the problem is that if you add *irrelevant* context, LLM performance decreases. But the success of coding agents suggests to us that it\u2019s totally possible to do great work with relevant context, if you\u2019re smart.\nQ: Okay, that\u2019s a neat fun fact, but why would I ever want to push? That\u2019s not very bitter-lesson-pilled! Just let the agent decide.\nYes, generally it\u2019s better to let the coding agent manage its own resources! But you really do have to push sometimes. Here\u2019s an example of a time where you\u2019d want to push memory:\nThe user has previously mentioned that `curl` isn\u2019t working on their local network, and they need to use `wget` instead\nThe agent tries to use `curl`.\nNo reasonable agent would think to check whether there have been historical problems with `curl` before using it. But also, clearly a desideratum of any reasonable memory system would be that the agent is able to remember this fact. So, this fact needs to be pushed to the agent. This example comes from a friend of mine, who presents an extremely interesting version of the \u201cpush\u201d approach here.\nAlso, I would push back on \u201cpush\u201d being inherently not bitter-lesson-pilled. What if we RL\u2019d a memory injector in tandem with an agent on a task? That would be very bitter-lesson-pilled.\nA few additional thoughts on push versus pull: (1) if you are pushing memory, you should probably push as a user message rather than as part of the system prompt, so as to save money on prompt caching (2) instead of pushing a full \u201cmemory\u201d to an agent\u2019s context window, it may be a better idea to push a lightweight \u201ctitle\u201d of the memory, and to allow the agent to decide whether or not to double click into any of the memories based on their title- analogous to how skills work.\nDimension 3: What to store: Transcripts vs commentary on transcripts vs LLM wiki\nA good general policy is: \u201cStore everything that you would consider `company knowledge`\u201d.\nHere are some things that many peope like to put in their memory store:\nContext from various knowledge resources (eg Slack, Granola)\nTheir codebase\nThings that the agent decides to write to memory (eg a persistent \u201cnotebook\u201d)\nPast conversation transcripts\nHere are some other, less talked about things that you might consider adding to memory:\nQ: Should you include your collaborator\u2019s conversation transcripts\nA: Yes, if they\u2019ll let you! Here\u2019s a post that explains the benefits of this in greater detail- tldr you can make your agents 48% more efficient on a team of 2 by sharing transcripts in memory.\nQ: Should you include facts about the world in your agent\u2019s memory store? Eg: should there be an entry for \u201cpotato\u201d? Seems like that would be a useful thing to remember, but also it\u2019s already in the weights of any llm.\nA: Sometimes! Here\u2019s an analogy that might be helpful: imagine that wikipedia is what\u2019s outside of your agent\u2019s memory, and your company has an internal wiki. If your organization has a specific insight on ACME corp (eg \u201cthey\u2019re our number one competitor\u201d) that wouldn\u2019t be ACME corp\u2019s wikipedia page, then you should \u201cfork\u201d wikipedia and create your own page for ACME corp, which is stored in agent memory.\nQ: Should you include secrets in your agent\u2019s memory store? Eg: Cursor API key\nA: Nope. Authenticating your agent is a separate task from your agent remembering things. A better model is to keep secrets in a separate server that stores authentication info for the agent (here\u2019s a nice article on a common design pattern)\nQ: Should you include user preferences in your agent\u2019s memory store? Eg: \u201cPlease return all your responses in spanish\u201d\nA: Nope. That should go in a user-scoped file like `~/.claude/CLAUDE.md` or `CLAUDE.local.md`. The reasoning here is that we expect agent memory to become multiplayer soon, and agent memory should encode org-level preferences (eg: \u201cwe always make reports <2k words\u201d) rather than user-level preferences.\nThanks to Sam Liu and Bryan Houlton for comments on this article!",
+      "preview_text": "There are a lot of different approaches to building memory for coding agents (see here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here,",
+      "title": "Three Dimensions That Matter To An Agent Memory Store "
+    },
+    "article_title": {
+      "title": "Three Dimensions That Matter To An Agent Memory Store "
+    },
+    "attachments": null,
+    "author_id": "1137505033816350722",
+    "card_uri": null,
+    "community_id": null,
+    "context_annotations": null,
+    "conversation_id": "2054246434506199529",
+    "created_at": "2026-05-12T17:04:50.000Z",
+    "display_text_range": null,
+    "edit_controls": null,
+    "edit_history_post_ids": [
+      "2054246434506199529"
+    ],
+    "entities": {
+      "cashtags": null,
+      "hashtags": null,
+      "mentions": null,
+      "urls": [
+        {
+          "end": 23,
+          "start": 0,
+          "description": null,
+          "display_url": "x.com/i/article/2054\u2026",
+          "expanded_url": "http://x.com/i/article/2054242895272759303",
+          "images": null,
+          "media_key": null,
+          "status": 500,
+          "title": null,
+          "unwound_url": "https://x.com/i/article/2054242895272759303",
+          "url": "https://t.co/BZPOSm7Zyc"
+        }
+      ]
+    },
+    "geo": null,
+    "id": "2054246434506199529",
+    "in_reply_to_user_id": null,
+    "lang": null,
+    "matched_media_notes": null,
+    "media_metadata": null,
+    "non_public_metrics": null,
+    "note_post": null,
+    "note_request_suggestions": null,
+    "organic_metrics": null,
+    "paid_partnership": null,
+    "possibly_sensitive": null,
+    "promoted_metrics": null,
+    "public_metrics": null,
+    "referenced_posts": null,
+    "reply_settings": null,
+    "scopes": null,
+    "source": null,
+    "suggested_source_links": null,
+    "suggested_source_links_with_counts": null,
+    "text": "https://t.co/BZPOSm7Zyc",
+    "username": null,
+    "withheld": null
+  },
+  "posts": [
+    {
+      "article": {
+        "cover_media": "3_2054275052875792384",
+        "entities": {
+          "urls": [
+            {
+              "text": "http://claude.local.md/"
+            },
+            {
+              "text": "https://www.youtube.com/watch?v=7AmhgMAJIT4"
+            },
+            {
+              "text": "https://github.com/poteto/brainmaxxing"
+            },
+            {
+              "text": "https://x.com/appliedcompute/status/2050296179330863329"
+            },
+            {
+              "text": "https://x.com/CaelStewart2/status/2051412480572739782"
+            },
+            {
+              "text": "https://x.com/AirbyteHQ/status/2051686041950523720"
+            },
+            {
+              "text": "https://x.com/elementdsj/status/2049892715098169620"
+            },
+            {
+              "text": "https://www.trychroma.com/research/context-rot"
+            },
+            {
+              "text": "https://x.com/bokiko/status/2051354191738597472"
+            },
+            {
+              "text": "https://x.com/BeauJohnson89/status/2050593791938105439?s=20"
+            },
+            {
+              "text": "https://x.com/msukkarieh1/status/2046279157496057987"
+            },
+            {
+              "text": "http://claude.md/"
+            },
+            {
+              "text": "https://naumu.ai/"
+            },
+            {
+              "text": "https://x.com/DhravyaShah/status/2049326274724945953?utm_source=chatgpt.com"
+            },
+            {
+              "text": "https://arxiv.org/html/2511.17208v2"
+            },
+            {
+              "text": "https://x.com/theblessnetwork/status/2047410540012556788?s=20"
+            },
+            {
+              "text": "https://x.com/RLanceMartin/status/1711801139459752086"
+            },
+            {
+              "text": "https://arxiv.org/html/2504.19413v1"
+            },
+            {
+              "text": "https://traces.com/"
+            },
+            {
+              "text": "https://x.com/Beever_AI/status/2050051528157778399?s=20"
+            },
+            {
+              "text": "https://x.com/mernit/status/2050309641209290887?s=20"
+            },
+            {
+              "text": "https://github.com/CodeAbra/iai-mcp"
+            },
+            {
+              "text": "https://browser-use.com/posts/two-ways-to-sandbox-agents"
+            },
+            {
+              "text": "https://arxiv.org/abs/2602.01331"
+            },
+            {
+              "text": "https://x.com/pauliusztin_/status/2049466230663262212"
+            },
+            {
+              "text": "https://arxiv.org/html/2603.27277v1"
+            },
+            {
+              "text": "https://www.engram.fyi/"
+            },
+            {
+              "text": "https://github.com/swarmclawai/swarmvault"
+            },
+            {
+              "text": "https://x.com/jerryjliu0/status/2040154840228323468?utm_source=chatgpt.com"
+            },
+            {
+              "text": "https://mnemosyne.site/"
+            },
+            {
+              "text": "https://openreview.net/forum?id=FiM0M8gcct"
+            },
+            {
+              "text": "https://x.com/henrytdowling/status/2049580122852995338"
+            },
+            {
+              "text": "https://x.com/ashpreetbedi/status/2049180168200106150?s=20"
+            },
+            {
+              "text": "https://www.unibase.com/"
+            },
+            {
+              "text": "https://vercel.com/blog/how-to-build-agents-with-filesystems-and-bash"
+            },
+            {
+              "text": "https://x.com/HilaShmuel/status/2049909354803962328"
+            },
+            {
+              "text": "https://arxiv.org/pdf/2310.08560"
+            },
+            {
+              "text": "https://x.com/Ghatikesh/status/2051780018125275406"
+            },
+            {
+              "text": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f"
+            },
+            {
+              "text": "https://x.com/driaforall/status/1966544319516402105"
+            },
+            {
+              "text": "https://mem0.ai/blog/mem0-the-token-efficient-memory-algorithm"
+            },
+            {
+              "text": "https://memory.orinlabs.org/"
+            },
+            {
+              "text": "https://x.com/JadHindy/status/2050280016387199245?s=20"
+            },
+            {
+              "text": "https://huggingface.co/papers/2605.05242"
+            }
+          ]
+        },
+        "media_entities": [
+          "3_2054246001293316096",
+          "3_2054245710842003456"
+        ],
+        "plain_text": "There are a lot of different approaches to building memory for coding agents (see here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, and here for some example implementations.)\nIn this article, I\u2019m going to give my opinionated stance on how you should approach this problem, examining three key decisions that memory builders need to make. This article is kinda a grab bag.\nTLDR:\nUse semantic retrieval and grep to retrieve memories over some form of structured knowledge base, and do not use knowledge graphs. Generally, the agent should request memories rather than force-feeding them. You should store organization-specific knowledge in your memory store- not personal preferences and not information generally available on the internet.\nDimension 1: Retrieval\nHow do we structure the data so that it\u2019s easy to retrieve? Here are the most common approaches:\nSemantic retrieval (specifically, vector embeddings) is the most common naive approach that people use to build agent memory. Here\u2019s a thread talking about common patterns. It\u2019s great and you should incorporate it.\nGrep over filesystem is also much-talked-about (here\u2019s an example, here\u2019s the supermemory founder talking about it, here\u2019s a vercel blog about this). It\u2019s great and you should incorporate it. This feels spiritually the most \u201cbitter-lesson-pilled\u201d (hence the refrain \u201cfilesystem + grep is all you need\u201d).\nKnowledge graphs are a popular and enticing approach. Mem0\u2019s entity linking is an example of this approach. Shortly I will argue that you should not incorporate a knowledge graph into your memory system.\nLLM Wiki (source) is the idea of structuring your codebase/organization\u2019s memory as a collection of documents that an AI continually maintains / cleans up. It\u2019s very promising and you should use it. Here\u2019s a more formal academic paper advocating for this approach.\nSubagent summary- take a large piece of stored text and summarizing it with several smaller subagents in parallel. This paper on \u201cagentic mapreduce\u201d is an example.\nQ: Which ones should I use?\nA: All of the above except knowledge graphs.\nIf you\u2019re building on the Claude Agent SDK your agent will have grep and subagent summary out of the box.\nHere\u2019s a summary of why it\u2019s necessary to include each of the above four components:\nGrep over filesystem is the gold standard for agent memory. It plays to what agents are already posttrained to be great at- writing bash commands, understanding filesystems, and iteratively using tools. E.g. \u201cwhy did we decide to bump the rate limit on our API gateway\u201d -> `grep -n \"rate\" src/scheduler/gateway/server.py | head -20`\nSemantic retrieval is helpful to agents looking for answers to semantic questions that aren\u2019t easy to grep for. E.g. \u201cwhere do we constrain our users\u2019 ability to configure their pipeline?\u201d\nCurated LLM Wiki -> Essentially indexes your filesystem to make grepping easier. E.g. you don\u2019t want to have many redundant entries for \u201ccaching strategy\u201d in your filesystem. Additionally allows the memory to evolve based on your organization\u2019s needs over time.\nAgentic Mapreduce -> Useful for \u201csummary\u201d queries. E.g. what are the most common ways our past 1000 customers have churned?\nQ: Why shouldn\u2019t I use a knowledge graph?\nFirst, I\u2019ll claim that you shouldn\u2019t use a knowledge graph as your primary way of representing memory.\n \nMost knowledge graph implementations store facts, and memory != facts. Here\u2019s an illustrative example: Suppose my friend Joy texted me \u201cI broke up with Dylan\u2026\u201d\nThe way a knowledge graph would update in response to this information is to...\nChange the edge between Joy and Dylan from \u201ccouple\u201d to \u201cexes\u201d\nMaybe write to the \u201cJoy\u201d / \u201cDylan\u201d nodes something to the effect of \u201crecently had a breakup\u201d\nBut there\u2019s so much semantic information in that text that wasn\u2019t captured! The \u201c...\u201d indicates that there\u2019s probably some spicy tea. The fact that the text was short, and came out of the blue indicates that maybe she had been expecting it or knows that I had been expecting it. Sam Whitmore makes this point very convincingly in her talk on memory last year (at the 2:05 mark)\nSecond, I\u2019ll claim that even in addition to another way of representing memory (e.g. a document store), a knowledge graph is still not worth using in your product. Here\u2019s some empirical evidence: Mem0 tried graph memory and was only able to squeeze out a 2% performance gain on benchmarks. This paper tried it and found that while token costs go down, so does performance. Similarly, in this paper, some researchers found that between a simple retrieval-based memory, and a simple retrieval-based memory augmented with a graph, the retrieval-based memory actually performed worse.\nDimension 2: Memory Injection Policy\nShould the agent ask for things to be added to its memory, or should things be added to the agent\u2019s memory proactively?\nPull the agent asks for memory based on a query (via semantic search, asking a subagent to summarize, etc), and then receives a result. Eg Letta\nPush relevant memories are proactively added to the agent\u2019s context without any explicit request on the part of the agent. Eg most 2023-era RAG systems\n \nQ: We should never push to memory, because pushing irrelevant stuff into memory will cause context rot, right?\nA: I don\u2019t think these are quite the same thing! LLMs are able to do great things under long context windows- consider that *coding agents* routinely hit 1M context and they are the main workhorse for AI productivity.\nSo really, the problem is that if you add *irrelevant* context, LLM performance decreases. But the success of coding agents suggests to us that it\u2019s totally possible to do great work with relevant context, if you\u2019re smart.\nQ: Okay, that\u2019s a neat fun fact, but why would I ever want to push? That\u2019s not very bitter-lesson-pilled! Just let the agent decide.\nYes, generally it\u2019s better to let the coding agent manage its own resources! But you really do have to push sometimes. Here\u2019s an example of a time where you\u2019d want to push memory:\nThe user has previously mentioned that `curl` isn\u2019t working on their local network, and they need to use `wget` instead\nThe agent tries to use `curl`.\nNo reasonable agent would think to check whether there have been historical problems with `curl` before using it. But also, clearly a desideratum of any reasonable memory system would be that the agent is able to remember this fact. So, this fact needs to be pushed to the agent. This example comes from a friend of mine, who presents an extremely interesting version of the \u201cpush\u201d approach here.\nAlso, I would push back on \u201cpush\u201d being inherently not bitter-lesson-pilled. What if we RL\u2019d a memory injector in tandem with an agent on a task? That would be very bitter-lesson-pilled.\nA few additional thoughts on push versus pull: (1) if you are pushing memory, you should probably push as a user message rather than as part of the system prompt, so as to save money on prompt caching (2) instead of pushing a full \u201cmemory\u201d to an agent\u2019s context window, it may be a better idea to push a lightweight \u201ctitle\u201d of the memory, and to allow the agent to decide whether or not to double click into any of the memories based on their title- analogous to how skills work.\nDimension 3: What to store: Transcripts vs commentary on transcripts vs LLM wiki\nA good general policy is: \u201cStore everything that you would consider `company knowledge`\u201d.\nHere are some things that many peope like to put in their memory store:\nContext from various knowledge resources (eg Slack, Granola)\nTheir codebase\nThings that the agent decides to write to memory (eg a persistent \u201cnotebook\u201d)\nPast conversation transcripts\nHere are some other, less talked about things that you might consider adding to memory:\nQ: Should you include your collaborator\u2019s conversation transcripts\nA: Yes, if they\u2019ll let you! Here\u2019s a post that explains the benefits of this in greater detail- tldr you can make your agents 48% more efficient on a team of 2 by sharing transcripts in memory.\nQ: Should you include facts about the world in your agent\u2019s memory store? Eg: should there be an entry for \u201cpotato\u201d? Seems like that would be a useful thing to remember, but also it\u2019s already in the weights of any llm.\nA: Sometimes! Here\u2019s an analogy that might be helpful: imagine that wikipedia is what\u2019s outside of your agent\u2019s memory, and your company has an internal wiki. If your organization has a specific insight on ACME corp (eg \u201cthey\u2019re our number one competitor\u201d) that wouldn\u2019t be ACME corp\u2019s wikipedia page, then you should \u201cfork\u201d wikipedia and create your own page for ACME corp, which is stored in agent memory.\nQ: Should you include secrets in your agent\u2019s memory store? Eg: Cursor API key\nA: Nope. Authenticating your agent is a separate task from your agent remembering things. A better model is to keep secrets in a separate server that stores authentication info for the agent (here\u2019s a nice article on a common design pattern)\nQ: Should you include user preferences in your agent\u2019s memory store? Eg: \u201cPlease return all your responses in spanish\u201d\nA: Nope. That should go in a user-scoped file like `~/.claude/CLAUDE.md` or `CLAUDE.local.md`. The reasoning here is that we expect agent memory to become multiplayer soon, and agent memory should encode org-level preferences (eg: \u201cwe always make reports <2k words\u201d) rather than user-level preferences.\nThanks to Sam Liu and Bryan Houlton for comments on this article!",
+        "preview_text": "There are a lot of different approaches to building memory for coding agents (see here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here, here,",
+        "title": "Three Dimensions That Matter To An Agent Memory Store "
+      },
+      "article_title": {
+        "title": "Three Dimensions That Matter To An Agent Memory Store "
+      },
+      "attachments": null,
+      "author_id": "1137505033816350722",
+      "card_uri": null,
+      "community_id": null,
+      "context_annotations": null,
+      "conversation_id": "2054246434506199529",
+      "created_at": "2026-05-12T17:04:50.000Z",
+      "display_text_range": null,
+      "edit_controls": null,
+      "edit_history_post_ids": [
+        "2054246434506199529"
+      ],
+      "entities": {
+        "cashtags": null,
+        "hashtags": null,
+        "mentions": null,
+        "urls": [
+          {
+            "end": 23,
+            "start": 0,
+            "description": null,
+            "display_url": "x.com/i/article/2054\u2026",
+            "expanded_url": "http://x.com/i/article/2054242895272759303",
+            "images": null,
+            "media_key": null,
+            "status": 500,
+            "title": null,
+            "unwound_url": "https://x.com/i/article/2054242895272759303",
+            "url": "https://t.co/BZPOSm7Zyc"
+          }
+        ]
+      },
+      "geo": null,
+      "id": "2054246434506199529",
+      "in_reply_to_user_id": null,
+      "lang": null,
+      "matched_media_notes": null,
+      "media_metadata": null,
+      "non_public_metrics": null,
+      "note_post": null,
+      "note_request_suggestions": null,
+      "organic_metrics": null,
+      "paid_partnership": null,
+      "possibly_sensitive": null,
+      "promoted_metrics": null,
+      "public_metrics": null,
+      "referenced_posts": null,
+      "reply_settings": null,
+      "scopes": null,
+      "source": null,
+      "suggested_source_links": null,
+      "suggested_source_links_with_counts": null,
+      "text": "https://t.co/BZPOSm7Zyc",
+      "username": null,
+      "withheld": null
+    }
+  ],
+  "users": {
+    "1137505033816350722": {
+      "affiliation": null,
+      "confirmed_email": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "id": "1137505033816350722",
+      "is_identity_verified": null,
+      "location": null,
+      "most_recent_post_id": null,
+      "name": "Henry Dowling",
+      "parody": null,
+      "pinned_post_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscribes_to_you": null,
+      "subscription": null,
+      "subscription_type": null,
+      "url": null,
+      "username": "henrytdowling",
+      "verified": null,
+      "verified_followers_count": null,
+      "verified_type": null,
+      "withheld": null
+    }
+  },
+  "thread_fetch_error": null
+}

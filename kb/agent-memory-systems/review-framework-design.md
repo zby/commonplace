@@ -85,4 +85,4 @@ A second realisation sharpened the cut: when maintenance is **manual**, it *is* 
 Relevant Notes:
 
 - [agentic-memory-systems-comparative-review](./agentic-memory-systems-comparative-review.md) — see-also: the synthesis this framework feeds
-- [symbolic context engineering is bounded by symbol availability](../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) — rests-on: grounds the read-back signal taxonomy and the single-injection-point argument
+- [Rule-based context selection needs a pre-existing signal](../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) — rests-on: grounds the read-back signal taxonomy and the single-injection-point argument

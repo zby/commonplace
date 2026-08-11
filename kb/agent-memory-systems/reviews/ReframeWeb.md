@@ -112,7 +112,7 @@ ReframeWeb's most novel idea relative to us is treating recency — including "r
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - grounds the read-back direction and the observation that ReframeWeb pushes memory every turn but never tests activation.
-- [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - explains why the targeted push depends on LLM-emitted tag hints and substring terms, and why empty hints yield silence.
+- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why the targeted push depends on LLM-emitted tag hints and substring terms, and why empty hints yield silence.
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating standing memories, transcripts, the task catalog, and few-shot pools by substrate, form, lineage, and authority.
 - [Storage substrate](../../notes/definitions/storage-substrate.md) - classifies the embedded SurrealDB graph as the retained-state substrate.
 - [Representational form](../../notes/definitions/representational-form.md) - frames the natural-language payload vs symbolic relation/timestamp scaffolding.

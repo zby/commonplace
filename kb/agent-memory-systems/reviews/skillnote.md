@@ -153,4 +153,4 @@ Relevant Notes:
 - [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: prompt-watch turns interaction traces into skill candidates while preserving manual promotion.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: drafts, comments, ratings, and usage records provide evidence or advice before they become instructions.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: published and synced `SKILL.md` files can instruct agents through native skill systems.
-- [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - relates: SkillNote's targeting relies on slugs, collections, paths, tool names, and descriptions.
+- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: SkillNote's targeting relies on slugs, collections, paths, tool names, and descriptions.

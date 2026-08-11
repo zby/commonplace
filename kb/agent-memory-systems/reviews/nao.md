@@ -124,4 +124,4 @@ Relevant Notes:
 - [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames nao's conversation-to-memory extraction loop.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies prompts, SQL filters, role checks, Slack policy, story sharing, and memory toggles as behavior-shaping controls.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies project context files, stories, query caches, and personal facts as advisory remembered context.
-- [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - explains why nao's file paths, database ids, story ids, folders, and categories are useful routing symbols.
+- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why nao's file paths, database ids, story ids, folders, and categories are useful routing signals.

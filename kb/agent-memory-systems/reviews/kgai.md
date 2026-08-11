@@ -113,4 +113,4 @@ Relevant Notes:
 - [Codification](../../notes/definitions/codification.md) - relates: kgai codifies a natural-language decision into symbolic graph mutations at write time rather than as a later promotion.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - distinguishes: decisions are consumed as advisory context, with no enforcement of compliance.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: the knowledge-graph skill and Stop hook instruct and enforce capture behavior.
-- [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - relates: deterministic element ids depend on a canonical name already being reused; diacritic/synonym forks are the symbol-availability limit.
+- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: deterministic element ids depend on a canonical name already being reused; diacritic/synonym forks are the signal-availability limit.

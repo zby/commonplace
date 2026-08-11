@@ -139,4 +139,4 @@ Relevant Notes:
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places deja-vu in trace-to-search and trace-to-startup-context rather than trace-to-policy.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies recalled snippets, context digests, shares, and imported sessions as advisory evidence.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies installed MCP and hook configuration as behavior-shaping routing/instruction surfaces.
-- [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - explains why auto-recall's targeted push depends on project-name identifiers being available and reliable.
+- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why auto-recall's targeted push depends on project-name identifiers being available and reliable.

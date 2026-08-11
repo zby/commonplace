@@ -118,4 +118,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - grounds the split between Markdown files, TOML config, generated instructions, command envelopes, and snapshot indexes.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies vault notes, dogfood reports, command results, and lint reports as advisory remembered context.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies schemas, lint rules, saved views, command implementations, generated Claude skills/rules, and snapshot indexes as behavior-shaping control surfaces.
-- [Symbolic context engineering is bounded by symbol availability](../../notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md) - explains why hyalo's frontmatter, tags, links, saved views, and file paths are the handles that make retrieval precise.
+- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why hyalo's frontmatter, tags, links, saved views, and file paths are the signals that make retrieval precise.

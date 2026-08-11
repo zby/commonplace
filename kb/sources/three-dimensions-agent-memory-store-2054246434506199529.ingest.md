@@ -1,0 +1,45 @@
+---
+description: "Opinionated agent-memory design essay: hybrid retrieval, selective push, and organization-scoped storage, with anti-graph claims that outrun its evidence"
+source_snapshot: "three-dimensions-agent-memory-store-2054246434506199529.md"
+ingested: "2026-08-11"
+type: kb/sources/types/ingest-report.md
+domains: [agent-memory, context-engineering, retrieval, knowledge-bases]
+---
+
+# Ingest: Three Dimensions That Matter To An Agent Memory Store
+
+Source: [three-dimensions-agent-memory-store-2054246434506199529.md](./three-dimensions-agent-memory-store-2054246434506199529.md)
+Captured: 2026-08-11
+From: https://x.com/henrytdowling/status/2054246434506199529
+
+## Classification
+
+Genre: conceptual-essay -- a single-author, explicitly opinionated design argument that synthesizes other systems and reported results rather than documenting the author's own implementation or experiment.
+Domains: agent-memory, context-engineering, retrieval, knowledge-bases
+Author: Henry Dowling is identified by name and X handle, but the capture supplies no affiliation, credentials, methods, or first-hand implementation record. Treat the author as a practitioner commentator and judge the claims through their cited evidence.
+
+## Summary
+
+Dowling organizes agent-memory design around three choices. For retrieval, he recommends combining filesystem grep, embedding search, an agent-maintained document wiki, and subagent summarization while rejecting knowledge graphs. For read-back, he prefers agent-initiated pull but argues that action-relevant lessons sometimes must be pushed before an agent would know to ask; a lighter variant pushes only memory titles and lets the agent pull the body. For retention, he recommends organization-specific knowledge rather than public facts, secrets, or user-specific preferences. The essay is most useful as a compact practitioner taxonomy and statement of the selective-push problem. It does not supply the activation path needed to turn that problem statement into a design, while its universal anti-graph conclusion and benchmark-derived confidence are weaker still.
+
+## Connections Found
+
+The source is practitioner corroboration for [agent memory as a crosscutting concern](../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md): its three dimensions span storage and retrieval, contextual activation, and admission scope, while omitting much of learning, trust, and lifecycle. Its `curl`/`wget` case states the problem addressed by [activating behavior-changing memory before the mistake](../notes/agent-memory-requirements/activate-behavior-changing-memory.md), but it is not evidence for an activation mechanism because it never identifies how the impending action becomes visible to the injector. The title-only push proposal applies [progressive-disclosure pointers](../notes/pointer-design-tradeoffs-in-progressive-disclosure.md) after selection, but it likewise leaves trigger selection unspecified and therefore compares with the [bound that rule-based selection needs a pre-existing signal](../notes/rule-based-context-selection-needs-a-pre-existing-signal.md). The retrieval recommendation broadly matches Commonplace's [files-first argument](../notes/files-not-database.md) and [shipped storage architecture](../reference/storage-architecture.md), but its blanket rejection of graphs is a tension case rather than support: [Graphiti](./graphiti-temporal-knowledge-graph.ingest.md) shows graph-specific temporal capabilities, and the larger [memory-system comparison](../agent-memory-systems/agentic-memory-systems-comparative-review.md) finds activation and verification more discriminating than substrate. Its repeated Bitter Lesson framing also contrasts with [the production-method/form distinction](../notes/the-bitter-lesson-selects-production-methods-not-representational.md).
+
+## Extractable Value
+
+1. **Push a pointer, pull the payload.** A memory injector can surface a cheap title or other fixed pointer before an action, then leave the agent to request the full memory. This composes selective push with progressive disclosure and makes false-positive pushes cheaper without assuming pure pull can anticipate every relevant lesson. It does not solve relevance selection: a symbolic injector still needs an available task, event, action, or other cue, while earlier anticipation requires semantic inference or relevance compiled into routing metadata. Test pointer-only, full-memory, and no-push conditions for both task success and context cost. [experiment]
+2. **The `curl`/`wget` case diagnoses a requirement but omits the mechanism.** A correction can be retrievable yet useless because the agent has no reason to search before taking the action it must avoid. The case does not say what observes the proposed action, which cue selects the correction, or when injection occurs, so promoting it as an activation example would be misleading. [just-a-reference]
+3. **The proposed retrieval ensemble serves different query shapes.** Grep handles exact lexical access, embeddings handle paraphrastic access, a maintained wiki reduces redundancy and supplies stable handles, and subagent map-reduce handles aggregation over many records. The last operation addresses transformation burden more than retrieval, sharpening the KB's distinction between [access and transformation](../notes/access-burden-and-transformation-burden-are-independent-query.md). [deep-dive]
+4. **"Company knowledge" is an admission heuristic, not a governance model.** The public/internal and organization/user/secret distinctions help state what a shared store should contain, but multiplayer memory still needs explicit read, write, promotion, activation, and retirement authority as required by [Make Authority Explicit](../notes/agent-memory-requirements/make-authority-explicit.md). [just-a-reference]
+5. **The essay is a worked example of two overgeneralizations.** It treats filesystem and agent control as inherently Bitter-Lesson-aligned despite the lesson's production-method axis, and it generalizes from particular graph augmentations to knowledge graphs as a class. Both are useful review examples of conclusions escaping the choices actually varied. [just-a-reference]
+
+## Limitations (our opinion)
+
+This is a broad conceptual essay, not a controlled comparison or a report from a deployed memory system. The Markdown capture also lost the embedded destinations behind repeated phrases such as "here" and "this paper." The auxiliary X capture retains a list of URLs, but not a durable claim-to-citation mapping in the snapshot, so the reported 2% graph gain, graph-related regressions, and 48% collaboration improvement cannot be audited from this artifact alone. The author also does not state evaluation tasks, baselines, model versions, retrieval budgets, or failure rates for the proposed stack.
+
+The empirical claims must be read inside their fixed decompositions. In the cited graph comparisons, behavior can condition on the benchmark query, retained records, and whatever history the fixed pipeline exposes; it can compose only the supplied retrieval, graph-augmentation, and generation operations; and its expressible mappings are bounded by the chosen model, ranker, schema, and prompts. Representation, chunking, entity extraction, graph ontology, injection policy, task set, and most competing architectures remain fixed outside the varied space. A gain or loss therefore bears on the particular augmentation tested, not on knowledge graphs as a class or on the essay's four-part alternative as a whole. Likewise, the `curl`/`wget` example shows why selective push can be necessary but does not explain how the injector recognizes the situation. As [rule-based selection needs a pre-existing signal](../notes/rule-based-context-selection-needs-a-pre-existing-signal.md), a deterministic trigger can react to an available `curl` action, tool event, task mode, or other cue; triggering earlier requires semantic inference or relevance compiled into symbols beforehand. The essay measures neither cue precision, false positives, behavioral uptake, nor context dilution. The organization-only retention rule also under-specifies legitimate private preferences, role-scoped knowledge, access control, provenance, and lifecycle maintenance.
+
+## Recommended Next Action
+
+Retain this ingest as a source-only reference and do not promote the `curl`/`wget` or title-only-push examples unless later evidence specifies the trigger signal, selection mechanism, injection timing, and behavioral effect.
