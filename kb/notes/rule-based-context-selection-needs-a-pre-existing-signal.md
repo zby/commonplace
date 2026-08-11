@@ -1,5 +1,5 @@
 ---
-description: "A rule-based selector can target one case only when a signal already distinguishes it from the other live candidates; lacking that, the system must wait, load a bounded superset, or infer relevance from content"
+description: "A rule-based selector can target one case only when a rule-ready signal already distinguishes it; otherwise the system must wait, load broadly, or infer relevance from task and candidate content"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [context-engineering, agent-memory]
@@ -7,13 +7,13 @@ tags: [context-engineering, agent-memory]
 
 # Rule-based context selection needs a pre-existing signal
 
-A rule-based selector can load context for a specific case only when a signal — a feature that already distinguishes that case from the other live candidates — is available to it. The signal can be a path, type, tag, tool, event payload, or workflow mode; it need not name the target, only separate it from the alternatives. The limit is structural: a rule cannot select on a distinction that none of its inputs encode. [Codification](./definitions/codification.md) makes such selection cheap, deterministic, and reviewable, but it cannot manufacture the distinguishing signal.
+A rule-based selector can load context for a specific case only when a rule-ready signal — a codified feature that already distinguishes that case from the other live candidates — is available to it. The signal can be a path, type, tag, tool argument, event payload, or workflow mode; it need not name the target, only separate it from the alternatives. The limit is structural: a rule cannot select on a distinction that none of its inputs encode. [Codification](./definitions/codification.md) makes such selection cheap, deterministic, and reviewable, but it cannot manufacture the distinguishing signal.
 
-When no signal is available yet, the selector has three moves instead: wait for or ask for one, [load a bounded superset](./always-loaded-context-mechanisms-in-agent-harnesses.md) so the case is present without being singled out, or infer relevance from the candidates' content — lexically or semantically. Only inference produces a targeted result without a pre-existing signal, and it does so by reading content rather than matching a feature: a different mechanism, not a variant of the same one.
+When no rule-ready signal is available yet, the system has three moves instead: wait for or ask for one, [load a bounded superset](./always-loaded-context-mechanisms-in-agent-harnesses.md) so the case is present without being singled out, or infer relevance from the current task and candidate content — lexically or semantically. Inference can produce a targeted result without a predeclared route, but not without selection input: it derives a relevance relation from content instead of matching a distinction already encoded for the rule.
 
-Push and pull do not change this. Pull arrives with a request — a query, path, or tool call — that already carries the signal. Push must fire before the agent asks, so it needs the signal from upstream: a task identifier, the current object, a workflow mode, an event payload. A coarse always-on trigger such as session start or a bare `Write` event carries no such signal, so it can deliver generic context but never the item this case needs. Push names a delivery direction, not a way of knowing what to deliver.
+Push and pull do not change this. Pull supplies selection input directly through a query, path, or tool call. A path may itself be rule-ready; a natural-language query may instead supply content from which relevance is inferred. Push must obtain equivalent input upstream through a task identifier, current object, workflow mode, event payload, or input to a relevance classifier. A coarse trigger such as session start or a bare `Write` event can deliver generic context, but by itself cannot choose among multiple live candidates. Push names a delivery direction, not a way of knowing what to deliver.
 
-The bound is on selection, not presence: a bounded superset can hold the right item without any signal picking it out. Rule-based routing is reliable exactly when the signal already exists; producing it for a case still in flight is the part outside its reach.
+The bound is on selection, not presence: a bounded superset can hold the right item without any signal picking it out. Rule-based routing is reliable exactly when the rule-ready signal already exists; deriving relevance for a case still in flight belongs to inference rather than rule matching.
 
 ## Relevant Notes
 
