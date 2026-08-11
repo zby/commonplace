@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from pathlib import Path
 
 from commonplace.lib import frontmatter
@@ -34,7 +35,11 @@ def _display_type(note_type: str) -> str:
     return note_type
 
 
-def _has_indexable_content(directory: Path) -> bool:
+def _has_indexable_content(
+    directory: Path,
+    *,
+    include: Callable[[Path], bool] | None = None,
+) -> bool:
     """True if the directory or any descendant holds an indexable .md file.
 
     Excludes README.md (curated landing) and dir-index.md (the generated index
@@ -50,18 +55,24 @@ def _has_indexable_content(directory: Path) -> bool:
             continue
         if any(part in SKIP_DIR_NAMES for part in path.relative_to(directory).parts):
             continue
+        if include is not None and not include(path):
+            continue
         return True
     return False
 
 
-def _should_skip_subdir(subdir: Path) -> bool:
+def _should_skip_subdir(
+    subdir: Path,
+    *,
+    include: Callable[[Path], bool] | None = None,
+) -> bool:
     if subdir.name.startswith("."):
         return True
     if subdir.name in SKIP_DIR_NAMES:
         return True
     if (subdir / ".git").exists():
         return True
-    return not _has_indexable_content(subdir)
+    return not _has_indexable_content(subdir, include=include)
 
 
 def _subdir_link_target(
@@ -99,6 +110,7 @@ def generate(
     *,
     parent_link: str,
     subdirs_have_index: bool = False,
+    include: Callable[[Path], bool] | None = None,
 ) -> str:
     """Generate dir-index.md content for a single directory level.
 
@@ -113,7 +125,7 @@ def generate(
 
     for path in sorted(notes_dir.iterdir()):
         if path.is_dir():
-            if _should_skip_subdir(path):
+            if _should_skip_subdir(path, include=include):
                 continue
             subdirs.append(path)
             continue
@@ -124,6 +136,8 @@ def generate(
         if is_replaced_archive(path):
             continue
         if is_type_definition_content(path, notes_dir):
+            continue
+        if include is not None and not include(path):
             continue
 
         content = path.read_text(encoding="utf-8")
@@ -179,6 +193,7 @@ def collect_index_pages(
     *,
     is_root: bool = True,
     max_depth: int | None = None,
+    include: Callable[[Path], bool] | None = None,
     _depth: int = 0,
 ) -> list[tuple[Path, str]]:
     """Generate dir-index pages for `notes_dir` and qualifying subdirs, in memory.
@@ -200,13 +215,14 @@ def collect_index_pages(
     pages: list[tuple[Path, str]] = []
     if will_recurse:
         for subdir in sorted(notes_dir.iterdir()):
-            if not subdir.is_dir() or _should_skip_subdir(subdir):
+            if not subdir.is_dir() or _should_skip_subdir(subdir, include=include):
                 continue
             pages.extend(
                 collect_index_pages(
                     subdir,
                     is_root=False,
                     max_depth=max_depth,
+                    include=include,
                     _depth=_depth + 1,
                 )
             )
@@ -215,6 +231,7 @@ def collect_index_pages(
         notes_dir,
         parent_link="../index.md" if is_root else "../dir-index.md",
         subdirs_have_index=will_recurse,
+        include=include,
     )
     pages.append((notes_dir / "dir-index.md", content))
     return pages

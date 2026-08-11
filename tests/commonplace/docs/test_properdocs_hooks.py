@@ -3,6 +3,8 @@ from __future__ import annotations
 from pathlib import Path
 from types import SimpleNamespace
 
+from properdocs.structure.files import File, Files, InclusionLevel
+
 from commonplace.docs import properdocs_hooks
 
 
@@ -225,6 +227,52 @@ def test_on_page_markdown_links_collection_readme_to_dir_index(tmp_path: Path) -
         properdocs_hooks._generated_index_dirs.discard(notes)
 
     assert "[Complete file listing](./dir-index.md)" in result
+
+
+def test_on_files_publishes_source_index_with_only_published_pages(tmp_path: Path) -> None:
+    class Config(dict):
+        def __init__(self, docs_dir: Path, site_dir: Path) -> None:
+            super().__init__(docs_dir=str(docs_dir))
+            self.site_dir = str(site_dir)
+            self.use_directory_urls = True
+            self.plugins = SimpleNamespace(_current_plugin="test")
+
+    docs_dir = tmp_path / "kb"
+    sources = docs_dir / "sources"
+    readme = write(sources / "README.md", "# Sources\n")
+    collection = write(sources / "COLLECTION.md", "# Sources collection\n")
+    ingest = write(sources / "published.ingest.md", "# Published ingest\n")
+    snapshot = write(sources / "excluded.md", "# Excluded snapshot\n")
+    config = Config(docs_dir, tmp_path / "site")
+
+    def source_file(path: Path, inclusion: InclusionLevel) -> File:
+        return File(
+            path.relative_to(docs_dir).as_posix(),
+            str(docs_dir),
+            config.site_dir,
+            config.use_directory_urls,
+            inclusion=inclusion,
+        )
+
+    files = Files(
+        [
+            source_file(readme, InclusionLevel.INCLUDED),
+            source_file(collection, InclusionLevel.INCLUDED),
+            source_file(ingest, InclusionLevel.INCLUDED),
+            source_file(snapshot, InclusionLevel.EXCLUDED),
+        ]
+    )
+
+    try:
+        properdocs_hooks.on_files(files, config)
+        generated = files.get_file_from_path("sources/dir-index.md")
+    finally:
+        properdocs_hooks._generated_index_dirs.clear()
+
+    assert generated is not None
+    assert generated.inclusion is InclusionLevel.INCLUDED
+    assert "Published ingest" in generated.content_string
+    assert "Excluded snapshot" not in generated.content_string
 
 
 def test_on_page_markdown_keeps_unindexed_tags_as_text(tmp_path: Path) -> None:

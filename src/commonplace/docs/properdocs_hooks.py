@@ -10,7 +10,7 @@ import re
 from functools import cache
 from pathlib import Path
 
-from properdocs.structure.files import File
+from properdocs.structure.files import File, InclusionLevel
 
 from commonplace.lib import frontmatter, index_directory, index_generated
 from commonplace.lib.project_paths import collection_dirs, collection_for_path
@@ -72,6 +72,11 @@ def on_files(files, config):
     _generated_index_dirs.clear()
     docs_dir = Path(config["docs_dir"]).resolve()
     root = docs_dir.parent
+    published_paths = {
+        Path(file.abs_src_path).resolve()
+        for file in files.documentation_pages()
+        if file.abs_src_path is not None
+    }
 
     for collection in collection_dirs(root):
         if collection.name == "reports":
@@ -79,13 +84,21 @@ def on_files(files, config):
         pages = index_directory.collect_index_pages(
             collection,
             max_depth=COLLECTION_MAX_DEPTH.get(collection.name),
+            include=lambda path: path.resolve() in published_paths,
         )
         for output_path, content in pages:
             src_uri = output_path.relative_to(docs_dir).as_posix()
             stale = files.get_file_from_path(src_uri)
             if stale is not None:
                 files.remove(stale)
-            files.append(File.generated(config, src_uri, content=content))
+            files.append(
+                File.generated(
+                    config,
+                    src_uri,
+                    content=content,
+                    inclusion=InclusionLevel.INCLUDED,
+                )
+            )
             _generated_index_dirs.add(output_path.parent)
 
     return files
