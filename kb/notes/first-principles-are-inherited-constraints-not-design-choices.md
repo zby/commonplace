@@ -1,11 +1,11 @@
 ---
-description: "A rule is inherited only if it follows from independently stated boundary invariants; a rival that preserves them exposes the rule as a design choice"
+description: "A rival that preserves a framework's boundary invariants demotes a rule to a design choice; absent one, the rule is only undemoted, not certified — inheritance still owes a positive derivation"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [document-system, foundations]
 ---
 
-# First principles are inherited constraints, not design choices
+# A framework rule is a first principle only if no rival preserves its boundary invariants
 
 A framework's first principles are constraints inherited from its boundary commitments, not choices made within those boundaries. This note gives a discipline for catching choices that pose as first principles; it does not certify that a rule is inherited. The discipline cuts reliably in one direction only: if a rival design preserves the invariants the framework holds fixed while dropping the rule, the rule is a design choice, not an inherited constraint. It does not run the other way on its own. Failing to find a rival leaves a rule undemoted, not proven inherited, because the rival may exist outside the current implementation, and because "follows from invariants" means something only against invariants stated independently of the rule. Use the rival hunt to demote the rules that are really choices; certifying a constraint as inherited still needs a positive derivation from those independent invariants.
 
