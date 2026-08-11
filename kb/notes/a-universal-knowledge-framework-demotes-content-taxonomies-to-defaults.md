@@ -19,9 +19,9 @@ Demote, don't delete. A closed taxonomy earns its keep three ways, and each has 
 
 - **Routing.** "This collection is theoretical" lets an agent infer the writing goal from one word. Keep that benefit by treating the taxonomy's entries as *named default profiles*: proven bundles that a new collection can adopt in one line.
 - **Growth brake.** "The list is complete" blocks speculative additions. Preserve that discipline with a *worked-case guard*: admit new entries only after they survive use in a real collection, never in anticipation of one.
-- **Interoperability.** Shared profile names let readers recognize conventions across collections. Preserve it with a *shared catalogue* whose published entries retain fixed meanings across adopters.
+- **Interoperability.** Shared profile names let readers recognize conventions across collections — a [coordination value](./definitions/coordination-value.md) created by adopters committing to the same names, not by any name's own merit. Preserve it with a *shared catalogue* whose published entries retain fixed meanings across adopters.
 
-The guard protects the shared catalogue, not local experimentation. A new collection can declare and use a local contract immediately. Local extensions remain explicitly local and carry no cross-collection compatibility guarantee. Promotion waits until a contract has survived real use and its meaning can be shared without collision. This approach accepts a cold-start cost for novel collections while preventing local variation from silently claiming interoperability.
+The guard protects the shared catalogue, not local experimentation. A new collection can declare and use a local contract immediately. Local extensions remain explicitly local and carry no cross-collection compatibility guarantee. Promotion waits until a contract has survived real use and its meaning can be shared without collision. This approach accepts a cold-start cost for novel collections while preventing local variation from silently claiming interoperability. The cold-start cost is the price of deferring the coordination commitment until worked use shows the shape is worth sharing — collections commit locally at once, while the shared catalogue waits on reach.
 
 ## The invariant that stays closed: answerability
 
@@ -59,6 +59,7 @@ Relevant Notes:
 - [KB goals in always-loaded context guide inclusion decisions](./kb-goals-in-always-loaded-context-guide-inclusion-decisions.md) — contrasts: the same universal/per-installation split seen from the operator side — purpose, scope, and quality bar need human input, while the demoted taxonomies arrive as framework-shipped defaults
 - [017-collection-md-is-the-register-convention-boundary](../reference/adr/017-collection-md-is-the-register-convention-boundary.md) — evidenced-by: shipped instance of the declaration obligation — COLLECTION.md is the mandatory per-collection contract surface, and a missing or vague one is "an operational defect"
 - [Text contract](./definitions/text-contract.md) — defined-in: the profile vocabulary the third shipped instance uses
+- [Coordination value](./definitions/coordination-value.md) — defined-in: names the interoperability benefit — the shared catalogue's worth is created by adopters committing to the same names, and this note defers that commitment to a worked-case guard
 - [Knowledge artifact](./definitions/knowledge-artifact.md) — defined-in: the answerability boundary that separates knowledge artifacts from arbitrary text
 - [018-Types are path references to instruction docs](../reference/adr/018-types-are-path-references-to-instruction-docs.md) — evidenced-by: shipped instance of the demotion — an open, collection-local type set
 - [019-Collection-owned link vocabulary with per-destination outbound rules](../reference/adr/019-collection-owned-link-vocabulary.md) — evidenced-by: analogous semantic-vocabulary demotion — collection-owned selections from a shared catalogue

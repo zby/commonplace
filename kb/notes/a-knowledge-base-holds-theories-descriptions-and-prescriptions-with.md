@@ -38,6 +38,8 @@ Profile membership does not itself determine change impact. The primary record i
 
 The asymmetry is therefore characteristic rather than absolute. Theoretical artifacts often accumulate descriptive evidence and provide the rationale for prescriptions; descriptions track changing referents; prescriptions track both their rationale and the systems they operate on. But a schema-first description can be upstream of implementation, and a theory that rests on one volatile observation can be downstream of that evidence. Maintenance should follow the recorded dependency, not an inference from genre.
 
+A committed structure need not rest on any theory. A shared convention — a link label, a schema field, a routing key — can carry [coordination value](./definitions/coordination-value.md): worth created by every artifact and tool adopting the *same* one, not discovered as a property of the choice. Because the value is the sharedness and not the choice, a better-in-principle alternative does not increase it, and a structure carrying it has operational authority with no `rests-on` edge for a theory change to travel down. So a theory proposing a marginally better option does not trigger its revision the way a `rests-on` dependent would; only a theory showing the coordination *itself* is net-negative fires a change, and even then re-coordination carries a switching cost the theory must clear. This is the sharpest form of "follow the edge, not the genre": coordination value is a standing commitment, not a downstream crystallization.
+
 ## One common path connects the profiles
 
 Derivation and implementation often connect the profiles in a deliberately designed system:
