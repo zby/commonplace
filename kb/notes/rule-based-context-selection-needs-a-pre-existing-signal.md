@@ -31,4 +31,4 @@ The bound is on selection, not presence: a bounded superset can hold the right i
 
 - [Activate Behavior-Changing Memory Before The Mistake](./agent-memory-requirements/activate-behavior-changing-memory.md) — extends: applies the bound to pre-action activation and separates typed from inferred cues
 
-- [Promotion selects for unreliable activation, and the regress ends only at an external trigger](./promotion-selects-for-unreliable-activation-and-the-regress-ends-only.md) — extends: develops the bound into a trigger-feasibility limit for activation packages
+- [Promotion selects for unreliable activation, and the regress ends only at an external trigger](./promotion-selects-for-unreliable-activation-and-the-regress-ends-only.md) — extends: absent a rule-ready signal, develops the delivery fork — always-loaded slot or classifier as one recognition judgment relocated, not removed
