@@ -50,7 +50,7 @@ Coevolution is the right conceptual frame, but a three-way joint optimizer isn't
 
 Relevant Notes:
 
-- [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) — foundation: two behaviour-change mechanisms (distributed-parametric updates, readable artifacts) — the premise that lets the readable pair count as a learning target at all
+- [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) — foundation: governing behaviour-changing writes across parametric, natural-language, and symbolic forms is the open problem — the premise that lets the readable pair count as a learning target at all
 - [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — foundation: places the readable mechanism on the timing axis
 - [Axes of artifact analysis](./axes-of-artifact-analysis.md) — foundation: defines the natural-language/symbolic/distributed-parametric split used throughout this note
 - [The readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — practical plan: the natural-language + symbolic pair is the tractable first slice
