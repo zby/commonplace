@@ -25,7 +25,7 @@ The burden therefore begins whenever a KB is expected to outlive the question se
 
 ## What earns permanence
 
-The first warrant for hardening comes from constraint. [A framework rule is a first principle only if no rival preserves its boundary invariants](./framework-rule-is-a-first-principle-without-boundary-preserving-rival.md): a rule is forced when it follows from the fixed invariants of a boundary commitment. Choosing a consumer, substrate, domain, or machinery fixes such invariants. Dropping a rule they force means changing the commitment, not merely selecting another workable design.
+The first warrant for hardening comes from constraint. [A framework rule is an inherited constraint only if no rival preserves its boundary invariants](./a-framework-rule-is-inherited-only-without-a-boundary-preserving-rival.md): a rule with a rival that preserves the fixed invariants of a boundary commitment is a replaceable choice, so constraint can warrant hardening only for rules without one — and surviving that test leaves a rule contestable, not certified. Choosing a consumer, substrate, domain, or machinery fixes such invariants. Dropping a rule they genuinely force means changing the commitment, not merely selecting another workable design.
 
 The second warrant comes from evidence. [Only derivation and inheritance give a decomposition starting scope warrant; discriminating use earns it](./only-derivation-and-inheritance-warrant-a-scope-claim-use-earns-it.md). Task-derived structure should begin local and replaceable, but it can earn broader scope by surviving genuinely different questions that could have exposed a bad fit. Promotion should record that evidence explicitly. Adoption by more tools or notes raises migration cost; it does not by itself demonstrate transfer.
 
@@ -65,7 +65,7 @@ Neighbouring systems illustrate the present-fit and future-transfer trade withou
 
 Relevant Notes:
 
-- [A framework rule is a first principle only if no rival preserves its boundary invariants](./framework-rule-is-a-first-principle-without-boundary-preserving-rival.md) — grounds: the one-way test that demotes any rule with a boundary-preserving rival to a replaceable choice, leaving constraint-forced structure as what survives drift
+- [A framework rule is an inherited constraint only if no rival preserves its boundary invariants](./a-framework-rule-is-inherited-only-without-a-boundary-preserving-rival.md) — grounds: the one-way test that demotes any rule with a boundary-preserving rival to a replaceable choice, leaving constraint-forced structure as what survives drift
 - [Only derivation and inheritance warrant a decomposition's scope claim; discriminating use earns it](./only-derivation-and-inheritance-warrant-a-scope-claim-use-earns-it.md) — grounds: supplies the promotion path by which task-derived structure can earn wider scope without having been permanent at adoption
 - [A universal knowledge framework demotes content taxonomies to defaults and keeps answerability](./a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) — contradicts: agrees on the policy but draws the burden at export; this note argues drift brings it forward to the single-purpose instance
 - [Scenario decomposition drives architecture](./scenario-decomposition-drives-architecture.md) — contrasts: deriving structure from current scenarios is right; hardening it on that basis is the cost named here

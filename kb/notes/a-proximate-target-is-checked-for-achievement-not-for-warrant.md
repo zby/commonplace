@@ -44,7 +44,7 @@ Reading that signal requires two things the pathway does not supply by default.
 
 ## Why the levels collapse
 
-A proximate target is a design choice justified by a claim, not [a constraint inherited from a consumer or a substrate](./framework-rule-is-a-first-principle-without-boundary-preserving-rival.md) — but it presents like one. Structural properties are stable, statable, and cheap to check for achievement, and those are the same properties that make something look like a settled goal rather than a contestable bet.
+A proximate target is a design choice justified by a claim, not [a constraint inherited from a consumer or a substrate](./a-framework-rule-is-inherited-only-without-a-boundary-preserving-rival.md) — but it presents like one. Structural properties are stable, statable, and cheap to check for achievement, and those are the same properties that make something look like a settled goal rather than a contestable bet.
 
 The consequence runs back into how architectures get compared. A profile of structural properties selects no ordering by itself; that much is a claim about the descriptive space. But a declared objective does not repair this on its own either, because an objective stated over outcomes cannot rank architectures without some claim connecting structure to outcome. The linking claim is doing that work wherever architectures are being ranked, whether or not anyone has written it down.
 
@@ -69,7 +69,7 @@ Relevant Notes:
 - [Weakly discriminated qualities tend to be underselected](./weakly-discriminated-qualities-tend-to-be-underselected.md) — mechanism: the selection pressure that makes a strongly checked target outcompete the objective it serves
 - [Oracle strength spectrum](./oracle-strength-spectrum.md) — contrasts: the graded proxy relation for checks, which a target sits outside rather than at the bottom of
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: warrant as what a check establishes, the property an achievement check does not supply for its target
-- [A framework rule is a first principle only if no rival preserves its boundary invariants](./framework-rule-is-a-first-principle-without-boundary-preserving-rival.md) — contrasts: the inherited constraint a proximate target is mistaken for
+- [A framework rule is an inherited constraint only if no rival preserves its boundary invariants](./a-framework-rule-is-inherited-only-without-a-boundary-preserving-rival.md) — contrasts: the inherited constraint a proximate target is mistaken for
 - [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: the worked instance — addressability is pursued for expected advantages, which is a linking claim of exactly this shape
 - [Selective revision needs a faithful rationale, not just a legible one](./selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) — extends: what stating a linking claim has to achieve, and why legibility alone leaves the repair confidently wrong
 - [Revising an improvement objective is licensed from outside it or is not improvement](./revising-an-improvement-objective-is-licensed-from-outside-it.md) — contrasts: its proxy-revision subtraction settles check replacement empirically against an unchanged objective; a target has no verdict stream for that comparison to run on
