@@ -28,6 +28,7 @@ Relevant Notes:
 - [Theory-mediated learning may improve sample efficiency under shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — grounds: the sample-efficiency axis foregrounded by the sparse deployment loop
 - [Representational form](./definitions/representational-form.md) — defines: the three forms this note ranges over and how form sets the default review method
 - [Treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md) — extends: owns the general cross-form trade space and how the parametric, natural-language, and symbolic loops relate
+- [The deployed system, not the model alone, is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md) — sharpens: the unit those cross-form writes range over is the whole deployed system, not the model alone
 - [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — extends: the write path by which a lesson moves between natural-language and symbolic form
 - [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — grounds: storage and read-back do not imply activation, and activation of content is not governance
 - [Behavioral authority](./definitions/behavioral-authority.md) — grounds: the consumption-path distinction between informing content and governing writes
