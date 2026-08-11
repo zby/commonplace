@@ -55,7 +55,7 @@ Relevant Notes:
 - [computational-model](../../../../notes/computational-model-README.md) — exemplifies: programming-language concepts reaching into KB design is a reach bet under audit
 - [systematic prompt variation serves verification and diagnosis, not explanatory-reach testing](../../../../notes/systematic-prompt-variation-serves-verification-and-diagnosis-not.md) — contrasts: reach testing varies an explanation's premises, not an LLM prompt surface
 - [SuperARC AIT benchmark](../../../../sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md) — evidence: integer-vs-binary sequence performance is suggestive for cue sensitivity and algorithmic-compression reach, but not load-bearing here
-- [First principles are inherited constraints, not design choices](../../../../notes/first-principles-are-inherited-constraints-not-design-choices.md) — contrasts: defines which constraints count as first principles; this note explains what first-principles filtering is for
+- [A framework rule is a first principle only if no rival preserves its boundary invariants](../../../../notes/framework-rule-is-a-first-principle-without-boundary-preserving-rival.md) — contrasts: defines which constraints count as first principles; this note explains what first-principles filtering is for
 
 Derived into:
 
