@@ -129,11 +129,8 @@ uv tool install --reinstall --python ">=3.11" --editable .
 
 Switching the user-level tool to an editable checkout changes the commands seen by every project for that user.
 
-To install optional snapshot dependencies with the published tool, request the extra during installation:
-
-```text
-uv tool install --reinstall --python ">=3.11" "llm-commonplace[snapshot]"
-```
+The base tool installation includes the dependencies used by X/Twitter
+snapshotting; no installation extra is required.
 
 ### Check the commands run
 

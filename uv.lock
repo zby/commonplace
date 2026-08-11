@@ -223,8 +223,10 @@ version = "0.1.5"
 source = { editable = "." }
 dependencies = [
     { name = "jsonschema" },
+    { name = "python-dotenv" },
     { name = "pyyaml" },
     { name = "referencing" },
+    { name = "xdk" },
 ]
 
 [package.optional-dependencies]
@@ -232,18 +234,11 @@ all = [
     { name = "mkdocs-redirects" },
     { name = "properdocs" },
     { name = "properdocs-theme-mkdocs" },
-    { name = "python-dotenv" },
-    { name = "pyyaml" },
-    { name = "xdk" },
 ]
 docs = [
     { name = "mkdocs-redirects" },
     { name = "properdocs" },
     { name = "properdocs-theme-mkdocs" },
-]
-snapshot = [
-    { name = "python-dotenv" },
-    { name = "xdk" },
 ]
 
 [package.dev-dependencies]
@@ -262,15 +257,12 @@ requires-dist = [
     { name = "properdocs", marker = "extra == 'docs'" },
     { name = "properdocs-theme-mkdocs", marker = "extra == 'all'" },
     { name = "properdocs-theme-mkdocs", marker = "extra == 'docs'" },
-    { name = "python-dotenv", marker = "extra == 'all'" },
-    { name = "python-dotenv", marker = "extra == 'snapshot'" },
+    { name = "python-dotenv" },
     { name = "pyyaml", specifier = ">=6.0.0" },
-    { name = "pyyaml", marker = "extra == 'all'" },
     { name = "referencing", specifier = ">=0.31.0" },
-    { name = "xdk", marker = "extra == 'all'", specifier = ">=0.10.4" },
-    { name = "xdk", marker = "extra == 'snapshot'", specifier = ">=0.10.4" },
+    { name = "xdk", specifier = ">=0.10.4" },
 ]
-provides-extras = ["docs", "snapshot", "all"]
+provides-extras = ["docs", "all"]
 
 [package.metadata.requires-dev]
 dev = [

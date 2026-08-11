@@ -20,7 +20,13 @@ classifiers = [
     "Topic :: Software Development :: Documentation",
     "Topic :: Text Processing :: Markup :: Markdown",
 ]
-dependencies = ["jsonschema>=4.25.0", "PyYAML>=6.0.0", "referencing>=0.31.0"]
+dependencies = [
+    "jsonschema>=4.25.0",
+    "PyYAML>=6.0.0",
+    "python-dotenv",
+    "referencing>=0.31.0",
+    "xdk>=0.10.4",
+]
 
 [project.urls]
 Documentation = "https://zby.github.io/commonplace/"
@@ -59,8 +65,7 @@ include = ["src/**/*.py", "tests/**/*.py"]
 
 [project.optional-dependencies]
 docs = ["properdocs", "properdocs-theme-mkdocs", "mkdocs-redirects"]
-snapshot = ["python-dotenv", "xdk>=0.10.4"]
-all = ["properdocs", "properdocs-theme-mkdocs", "mkdocs-redirects", "python-dotenv", "pyyaml", "xdk>=0.10.4"]
+all = ["properdocs", "properdocs-theme-mkdocs", "mkdocs-redirects"]
 
 [build-system]
 requires = ["hatchling"]

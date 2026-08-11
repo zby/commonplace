@@ -121,7 +121,7 @@ commonplace-github-snapshot --out-dir kb/sources/ https://github.com/owner/repo/
 
 ### commonplace-x-snapshot
 
-Snapshot an X/Twitter post into `kb/sources/`. Requires installing the tool with the snapshot extra: `uv tool install --python ">=3.11" "llm-commonplace[snapshot]"`.
+Snapshot an X/Twitter post into `kb/sources/`. Its runtime dependencies are included in the base Commonplace tool installation.
 
 ```bash
 commonplace-x-snapshot https://x.com/user/status/123456789

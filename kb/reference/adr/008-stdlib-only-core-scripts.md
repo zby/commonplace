@@ -33,13 +33,15 @@ unquoted_scalar := .+  (trimmed; must not start with [ or {)
 
 All scripts — including `validate_notes.py` — now use this shared module. PyYAML is removed entirely from core and validation scripts. Move all external dependencies (`properdocs`, `xdk`) to optional dependency groups in `pyproject.toml`. Core scripts (`scripts/`) require only Python 3.11+ stdlib.
 
+This dependency boundary later narrowed. Once the scripts became installed package entry points, package-level validation gained runtime dependencies. On 2026-08-11, XDK and python-dotenv also became base package dependencies because the base installation unconditionally exposes `commonplace-x-snapshot`; an installed command must be executable without an unrequested extra.
+
 ## Consequences
 
-- **Easier installation**: `python3 scripts/foo.py` works without a venv. No `uv sync` needed for core operations. (Note: [ADR-014](./014-scripts-as-python-package-one-tree-model.md) later moved scripts into an installed package with `commonplace-*` entry points. The stdlib-only constraint remains — it means the package has no runtime dependencies.)
+- **Easier installation**: `python3 scripts/foo.py` works without a venv. No `uv sync` needed for core operations. (Note: [ADR-014](./014-scripts-as-python-package-one-tree-model.md) later moved scripts into an installed package with `commonplace-*` entry points. The frontmatter parser remains stdlib-only, but the package later acquired runtime dependencies.)
 - **No cwd problem**: Skills can invoke scripts from any working directory by using an absolute path to the script. (Now moot — commands are on `$PATH` after `pip install`.)
 - **Grammar is the contract**: The frontmatter grammar is defined in one place (`scripts/frontmatter.py` docstring). Validation enforces it. If the grammar needs to grow, the parser and the grammar spec evolve together.
 - **Duplicate key detection preserved**: The shared parser detects and reports duplicate keys, maintaining the validation guarantee that PyYAML's custom loader previously provided.
-- **Optional capabilities still need setup**: ProperDocs site building needs `pip install commonplace[docs]`, X snapshots need `pip install commonplace[snapshot]`.
+- **Optional capabilities still need setup**: ProperDocs site building needs the `docs` extra. X snapshotting initially needed a `snapshot` extra, but its dependencies became part of the base installation when its command became part of that installation's guaranteed surface.
 - **Block-style YAML is intentionally unsupported**: If someone writes `tags:\n  - foo\n  - bar`, the parser won't understand it. This is a feature — the grammar is narrow by design and the validator will flag the error.
 
 ---
