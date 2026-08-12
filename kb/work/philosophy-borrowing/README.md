@@ -17,7 +17,7 @@ This workshop keeps that adoption bar. It considers only the three most promisin
 
 ## Current grounding
 
-- [Programming patterns get a fast pass but other borrowed ideas must earn first-principles support](../../notes/programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must.md) — adoption filter for borrowing outside programming
+- [Programming patterns get a fast pass but other borrowed ideas must earn first-principles support](../../reference/source-adoption-policy.md) — adoption filter for borrowing outside programming
 - [Mechanistic constraints make Popperian KB recommendations actionable](../../notes/mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — existing Popperian borrowing
 - [First-principles reasoning selects for explanatory reach over adaptive fit](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) — existing Deutsch borrowing
 - [Claim notes should use Toulmin-derived sections for structured argument](../../notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md) — existing Toulmin borrowing

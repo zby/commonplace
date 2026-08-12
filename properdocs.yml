@@ -94,6 +94,7 @@ plugins:
         'notes/observability-index.md': 'notes/observability-README.md'
         'notes/only-derivation-and-inheritance-warrant-a-scope-claim-use-earns-it.md': 'notes/derivation-and-inheritance-give-starting-warrant-earns-scope.md'
         'notes/per-window-context-inefficiency-makes-tasks-infeasible.md': 'notes/feasibility-is-the-heaviest-forks-net-load.md'
+        'notes/programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must.md': 'reference/source-adoption-policy.md'
         'notes/provenance-warrants-a-decompositions-scope-claim-use-earns-it.md': 'notes/derivation-and-inheritance-give-starting-warrant-earns-scope.md'
         'notes/reach-makes-addressable-retention-sample-efficient-off-distribution.md': 'notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md'
         'notes/real-self-improving-systems-occupy-combinations-no-rung-captures.md': 'notes/evidence/real-self-improving-systems-occupy-combinations-no-rung-captures.md'

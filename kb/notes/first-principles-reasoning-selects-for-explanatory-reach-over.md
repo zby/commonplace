@@ -48,7 +48,7 @@ Explanatory-reach is the quality goal for theoretical notes, not the only kind o
 
 Relevant Notes:
 
-- [design methodology — borrow widely, filter by first principles](./programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must.md) — grounds: first-principles filtering selects for explanatory-reach when the borrowed pattern is tied back to inherited constraints
+- [A borrowed pattern transfers only as far as source and target share a mechanism](./borrowed-patterns-transfer-only-over-shared-mechanism.md) — contrasts: gates borrowing on shared mechanism, where this note selects imported explanations for explanatory-reach
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — grounds: the Scope boundary — explanatory-reach is one property of accumulated knowledge, not the only learning value
 - [conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — parallels: the generative model depth maps to explanatory knowledge with explanatory-reach
 - [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — extends: criticism becomes operational through falsifier blocks

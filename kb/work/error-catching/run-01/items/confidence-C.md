@@ -48,7 +48,7 @@ Reach is the quality goal for theoretical notes, not the only kind of KB value. 
 
 Relevant Notes:
 
-- [design methodology — borrow widely, filter by first principles](../../../../notes/programming-patterns-get-a-fast-pass-but-other-borrowed-ideas-must.md) — grounds: first-principles filtering selects for explanatory reach when the borrowed pattern is tied back to inherited constraints
+- [design methodology — borrow widely, filter by first principles](../../../../reference/source-adoption-policy.md) — grounds: first-principles filtering selects for explanatory reach when the borrowed pattern is tied back to inherited constraints
 - [learning is not only about generality](../../../../notes/learning-is-not-only-about-generality.md) — grounds: the Scope boundary — reach is one property of accumulated knowledge, not the only learning value
 - [conjecture is seeing the particular as an instance of the general](../../../../notes/conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — parallels: the generative model depth maps to explanatory knowledge with reach
 - [mechanistic constraints make Popperian KB recommendations actionable](../../../../notes/mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — extends: criticism becomes operational through falsifier blocks
