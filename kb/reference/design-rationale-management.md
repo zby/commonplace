@@ -20,7 +20,7 @@ Three nearby terms operate on different objects:
 
 | Term | What it does in Commonplace |
 |---|---|
-| **Design constraint** | Restricts the feasible design space. A first principle is a constraint inherited from a consumer, substrate, domain, or machinery commitment; a problem-local constraint can restrict one collection without binding the framework. |
+| **Design constraint** | Restricts the feasible design space. An inherited constraint is forced by a consumer, substrate, domain, or machinery commitment — a status a rationale must argue, not assume; a problem-local constraint can restrict one collection without binding the framework. |
 | **Design rationale** | Records how constraints, assumptions, alternatives, evidence, and trade-offs support a decision—especially where the constraints leave more than one feasible choice. |
 | **[Constraining](../notes/definitions/constraining.md)** | Narrows the valid interpretations of a retained artifact. It is a deploy-time learning operation, not the name of the design methodology. |
 

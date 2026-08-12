@@ -41,4 +41,6 @@ Option 1 or 3 is recommended; option 2 undersells claims that are genuinely near
 
 ## Disposition
 
-Audit only — no fixes applied in this pass. Recommended order when fixing: Overclaims 1–4 are independent small edits; the deepest-gap decision is separate and larger.
+Overclaims 1–4 fixed (2026-08-12, same branch), with maintainer framings: item 1 reworded as a working heuristic whose confidence rests on — and expires with — the commitments; item 2 resolved by shifting constraint-status vocabulary from "first principle" to "inherited constraint" in `design-rationale-management` and `first-principles-analysis` ("first principles" survives only as the name of a reasoning style); item 3 demoted the provider-filter leg to a provider-contingent barrier; item 4 reorganized `technical-constraints` into three constraints plus the codification lever and dropped "constraint packet" as a settled unit. The frozen replication packets under `kb/work/linking-contract-consistency/` retain the old text as experiment inputs — deliberately untouched.
+
+Still open: the deepest-gap decision (derive, soften, or declare-definitional the declaration obligation and answerability universals) and the two vocabulary observations. Closure waits on those.
