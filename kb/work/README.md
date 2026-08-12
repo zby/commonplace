@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [inherited-constraint-audit](./inherited-constraint-audit/README.md) — auditing every remaining first-person claim that a specific rule is inherited from a boundary commitment, now that the framework-rule note certifies nothing: four overclaims flagged for fixes, and a decision pending on deriving or softening the two surviving universals (declaration obligation, answerability)
 - [writing-as-thinking-process-transfer](./writing-as-thinking-process-transfer/README.md) — harvesting the still-unincorporated ideas from the four 2026-08-10 writing/thinking essays into Commonplace process changes under a discriminating-test-before-build rule; backlog covers premise-decomposition review, counterexample-scope FIX routing, value-of-information reading, a stance-reversal operator, and a false-precision anti-gate, plus the two promoted conjectures' open tests
 - [continual-harness-governance-experiment](./continual-harness-governance-experiment/README.md) — designing a matched test of whether Commonplace-derived control, warrant, recovery, and artifact-lifecycle mechanisms improve reset-free harness adaptation without importing a compounding claim or presuming proposal selection
 - [dsw-talk](./dsw-talk/README.md) — preparing a 35-minute Data Summit Warsaw practitioner talk: one core hybrid-system claim, four engineering lessons, a triage of KB material into included/compressed/cut, and an evolving visual spine that closes on self-hosting
