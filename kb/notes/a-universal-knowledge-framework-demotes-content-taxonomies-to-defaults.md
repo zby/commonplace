@@ -1,13 +1,13 @@
 ---
-description: "Universal frameworks should keep closed first-order content taxonomies as guarded defaults until heterogeneous worked cases establish their explanatory-reach; declared contracts and answerability remain universal"
+description: "Universal frameworks should keep closed content taxonomies as guarded defaults until heterogeneous worked cases earn promotion; what stays fixed is stipulated (answerability) or enforced (declared contracts), not certified universal"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [document-system, foundations]
 ---
 
-# A universal knowledge framework demotes content taxonomies to defaults and keeps answerability
+# A universal knowledge framework demotes content taxonomies to defaults
 
-A framework that aims to serve *any* knowledge base should not promote a closed first-order content taxonomy — a fixed list of the kinds or roles knowledge artifacts may have, such as exactly three content modes or one fixed type set — to a universal rule merely because it fits the collections already seen. Such a taxonomy should enter the framework as a guarded default. It should become universal only if its top-level categories survive heterogeneous worked cases without exceptions or relabeling. This is a burden-of-proof rule, not proof that a closed upper content ontology is impossible: a role-defined taxonomy that meets the burden may remain universal. Two things do survive universally. First, every collection must *declare its contract* (quality goal, conventions, maintenance semantics) in a form that writers, reviewers, and tools can load. Second, every artifact admitted as knowledge must satisfy one domain invariant: it must be **answerable** under an explicit correctness or currency test.
+A framework that aims to serve *any* knowledge base should not promote a closed first-order content taxonomy — a fixed list of the kinds or roles knowledge artifacts may have, such as exactly three content modes or one fixed type set — to a universal rule merely because it fits the collections already seen. Such a taxonomy should enter the framework as a guarded default. It should become universal only if its top-level categories survive heterogeneous worked cases without exceptions or relabeling. This is a burden-of-proof rule, not proof that a closed upper content ontology is impossible: a role-defined taxonomy that meets the burden may remain universal. The demotion leaves no certified universals behind. What the framework fixes, it fixes by other means: admission as knowledge is stipulated by definition — an admitted artifact must be [answerable](./definitions/answerability.md) — and contract declaration is enforced design, recorded with its alternatives in [ADR 017](../reference/adr/017-collection-md-is-the-register-convention-boundary.md). Both are commitments, contestable like every other framework rule.
 
 ## Why closed taxonomies fail at universality
 
@@ -23,21 +23,14 @@ Demote, don't delete. A closed taxonomy earns its keep three ways, and each has 
 
 The guard protects the shared catalogue, not local experimentation. A new collection can declare and use a local contract immediately. Local extensions remain explicitly local and carry no cross-collection compatibility guarantee. Promotion waits until a contract has survived real use and its meaning can be shared without collision. This approach accepts a cold-start cost for novel collections while preventing local variation from silently claiming interoperability. The cold-start cost is the price of deferring the coordination commitment until worked use shows the shape is worth sharing — collections commit locally at once, while the shared catalogue waits on reach.
 
-## The invariant that stays closed: answerability
+## What the framework fixes, and how
 
-Universality cannot mean "any text." The invariant applies to artifacts admitted as knowledge, not to every workshop document or system-definition artifact used to operate the framework. An answerability relation counts only when the collection contract can name:
+Universality cannot mean "any text." The framework holds that line with two fixed points, and neither claims certified-universal status:
 
-- an external referent or outcome;
-- the correctness or currency property the artifact asserts about it; and
-- an observable discrepancy or change that triggers correction, qualification, or retirement.
+- **By definition.** An artifact is admitted as knowledge only if it is [answerable](./definitions/answerability.md) — its collection contract can name what it answers to, the property asserted, and the discrepancy that triggers correction. The relation's per-kind forms, exclusions, and edge-case decision rules live in the definition. The invariant applies to artifacts admitted as knowledge, not to workshop documents or system-definition artifacts used to operate the framework; contesting it means proposing a different account of the domain commitment, not finding a counterexample under this one.
+- **By enforced design.** Every writable collection declares a loadable contract (quality goal, conventions, maintenance semantics). The machinery refuses collections without one, and [ADR 017](../reference/adr/017-collection-md-is-the-register-convention-boundary.md) records the design and its alternatives. The rationale is consumer-side: bounded agents cannot reliably infer a collection's conventions from examples within a context budget, so heterogeneous collections need their conventions explicit and loadable — a contestable claim, not a certification.
 
-Mere usefulness, provenance, audience response, or authorial intent does not count unless the artifact asserts fidelity to it. A claim answers to the world; a description, to a system; a prescription, to the outcomes of following it under stated conditions; an attributed position, to what the party asserts; a capture, to its source; and an index, to its promised coverage of a corpus. First-person commitment ("do I still believe this?") is one relation among several, not the framework's definition.
-
-This gives edge cases a decision rule. An unresolved question qualifies only if the artifact asserts that the question remains open or relevant, with resolution or changed priorities as retirement conditions. Otherwise, it belongs in work-in-flight. A prompt may answer to observed behavior as a system-definition artifact, but that does not make it knowledge. Merely retaining an authored poem asserts no correctness or currency relation, while a capture of a poem can assert fidelity to its source. Maintenance is universal in form — every knowledge artifact has revision conditions — but local in content.
-
-## A consumer-derived universal
-
-Within an agent-operated framework, bounded-context economy also applies to every collection contract because [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md). This constraint is inherited from the chosen consumer; it does not establish the same universal for a framework with a different reader architecture.
+Bounded-context economy likewise applies across every collection contract because [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md). That constraint is claimed from the chosen consumer; a framework with a different reader architecture would not inherit it.
 
 ## Evidence
 
@@ -55,12 +48,12 @@ Relevant Notes:
 
 - [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) — contrasts: its three recurring attractors survive as profiles, while this note states the burden a closed content taxonomy must meet before becoming universal
 - [Title as claim exposes commitments, enabling Popperian maintenance](./title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) — contrasts: first-person commitment is one answerability relation among several, not the framework's definition
-- [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: why bounded-context economy is consumer-derived and therefore stays universal
+- [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: why bounded-context economy is claimed from the consumer and applies across every collection contract
 - [KB goals in always-loaded context guide inclusion decisions](./kb-goals-in-always-loaded-context-guide-inclusion-decisions.md) — contrasts: the same universal/per-installation split seen from the operator side — purpose, scope, and quality bar need human input, while the demoted taxonomies arrive as framework-shipped defaults
 - [017-collection-md-is-the-register-convention-boundary](../reference/adr/017-collection-md-is-the-register-convention-boundary.md) — evidenced-by: shipped instance of the declaration obligation — COLLECTION.md is the mandatory per-collection contract surface, and a missing or vague one is "an operational defect"
 - [Text contract](./definitions/text-contract.md) — defined-in: the profile vocabulary the third shipped instance uses
 - [Coordination value](./definitions/coordination-value.md) — defined-in: names the interoperability benefit — the shared catalogue's worth is created by adopters committing to the same names, and this note defers that commitment to a worked-case guard
-- [Knowledge artifact](./definitions/knowledge-artifact.md) — defined-in: the answerability boundary that separates knowledge artifacts from arbitrary text
+- [Answerability](./definitions/answerability.md) — defined-in: the stipulated domain invariant for admission as knowledge, extracted from this note's former invariant section
 - [018-Types are path references to instruction docs](../reference/adr/018-types-are-path-references-to-instruction-docs.md) — evidenced-by: shipped instance of the demotion — an open, collection-local type set
 - [019-Collection-owned link vocabulary with per-destination outbound rules](../reference/adr/019-collection-owned-link-vocabulary.md) — evidenced-by: analogous semantic-vocabulary demotion — collection-owned selections from a shared catalogue
 - [042-Register becomes a default profile under open-ended text contracts](../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — evidenced-by: shipped content-profile demotion backed by a worked counterexample

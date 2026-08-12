@@ -32,7 +32,7 @@ The [control-plane model](./agents-md-should-be-organized-as-a-control-plane.md)
 | Quality bar — domain-specific "good enough" standards | Per-installation |
 | Routing, type system, writing conventions, link semantics | Framework-shipped defaults |
 
-Only the per-installation rows require human input. The default rows ship with the framework and can be updated mechanically on upgrade — but they are defaults, not universals: what is framework-fixed is the machinery (that collections declare contracts, that types and link labels exist), while the taxonomies themselves are collection-local and extendable, since [a universal knowledge framework demotes content taxonomies to defaults and keeps answerability](./a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) (shipped instances: ADR 018 made the type set open and collection-local, ADR 019 made link vocabulary collection-owned).
+Only the per-installation rows require human input. The default rows ship with the framework and can be updated mechanically on upgrade — but they are defaults, not universals: what is framework-fixed is the machinery (that collections declare contracts, that types and link labels exist), while the taxonomies themselves are collection-local and extendable, since [a universal knowledge framework demotes content taxonomies to defaults](./a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) (shipped instances: ADR 018 made the type set open and collection-local, ADR 019 made link vocabulary collection-owned).
 
 ## What makes each subsection work
 

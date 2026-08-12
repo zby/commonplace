@@ -36,6 +36,6 @@ To assess a candidate, state the boundary invariants independently of it, then p
 
 Relevant Notes:
 
-- [A universal knowledge framework demotes content taxonomies to defaults and keeps answerability](./a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) — extends: applies the demotion side to content taxonomies, with a rival kind of KB as the demoting witness
+- [A universal knowledge framework demotes content taxonomies to defaults](./a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) — extends: applies the demotion side to content taxonomies, with a rival kind of KB as the demoting witness
 - [First-principles analysis maps a design space before selecting within it](./first-principles-analysis-maps-design-space-before-selection.md) — mechanism: fixes boundary commitments, maps the remaining choice axes, and hunts the rivals this test consumes
 - [First-principles reasoning selects for explanatory-reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — contrasts: anchors "first principle" on a different axis — an epistemic filter on explanations, where this note demotes framework rules that have boundary-preserving rivals
