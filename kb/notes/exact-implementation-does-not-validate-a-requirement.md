@@ -52,7 +52,7 @@ The practical posture is provisional [codification](./definitions/codification.m
 Relevant Notes:
 
 - [A proximate target is checked for achievement, not for warrant](./a-proximate-target-is-checked-for-achievement-not-for-warrant.md) — extends: carries the proxy relation upward into the objective, target, criterion, and oracle levels and declares where the analysis stops
-- [Only derivation and inheritance warrant a decomposition's scope claim; discriminating use earns it](./only-derivation-and-inheritance-warrant-a-scope-claim-use-earns-it.md) — extends: explains what warrants a conjectured decomposition and how its claimed scope can be earned
+- [Derivation and inheritance give starting warrant; discriminating evidence or proof earns scope](./derivation-and-inheritance-give-starting-warrant-earns-scope.md) — extends: explains what warrants a conjectured decomposition and how its claimed scope can be earned
 - [The readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — extends: situates provisional hardening and relaxing inside durable artifact evolution
 - [Feedback-trained memory management is oracle-dependent even when its operations are hand-designed](./memory-management-policy-is-learnable-but-oracle-dependent.md) — exemplifies: memory operations admit local specifications while the policy composing them remains outcome-dependent
 - [Fintool production-agent report](../sources/lessons-from-building-ai-agents-for-financial-services.ingest.md) — evidenced-by: fiscal-period normalization is a constitutive calculator-like requirement inside an otherwise judgment-heavy finance system
