@@ -24,7 +24,7 @@ Smith argues that self-reference is not enough for reflection. A reflective syst
 
 ## Connections Found
 
-Smith is a historical anchor for [Reflective system](../notes/definitions/reflective-system.md): self-description and behavioral effect must be compared with Smith's embedded theory, two-way causality, and vantage point. The paper also supplies the primary Lisp lineage for [LLM context is a homoiconic medium](../notes/llm-context-is-a-homoiconic-medium.md), but blocks the inference from homoiconicity or metacircular self-description to reflection. [Maes 1987](./maes-concepts-and-experiments-computational-reflection-1987.md) and [Maes 1988](./maes-computational-reflection-1988.md) retain the causal core while generalizing beyond procedural languages and using “reflection” for what Smith presents here as the narrower procedural case.
+Smith is a historical anchor for [Reflective system](../notes/definitions/reflective-system.md): self-description and behavioral effect must be compared with Smith's embedded theory, two-way causality, and vantage point. The paper also supplies the primary Lisp lineage for [LLM contexts interpret instructions and content through the same token medium](../notes/llm-context-interprets-instructions-and-content-through-one-medium.md), but blocks the inference from homoiconicity or metacircular self-description to reflection. [Maes 1987](./maes-concepts-and-experiments-computational-reflection-1987.md) and [Maes 1988](./maes-computational-reflection-1988.md) retain the causal core while generalizing beyond procedural languages and using “reflection” for what Smith presents here as the narrower procedural case.
 
 ## Extractable Value
 

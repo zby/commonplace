@@ -24,7 +24,7 @@ Maes defines computational reflection for any computational model as the behavio
 
 ## Connections Found
 
-This source is the primary vocabulary anchor for [Reflective system](../notes/definitions/reflective-system.md): self-description and editability remain weaker than Maes's causal-connection requirement. It also narrows the Lisp precedent in [LLM context is a homoiconic medium](../notes/llm-context-is-a-homoiconic-medium.md): a common program/data format enables the meta-circular route to procedural reflection but is not itself reflection. Maes's theory-relativity and declarative/procedural continuum complement, without collapsing into, Commonplace's broader [representational-form](../notes/definitions/representational-form.md) vocabulary.
+This source is the primary vocabulary anchor for [Reflective system](../notes/definitions/reflective-system.md): self-description and editability remain weaker than Maes's causal-connection requirement. It also narrows the Lisp precedent in [LLM contexts interpret instructions and content through the same token medium](../notes/llm-context-interprets-instructions-and-content-through-one-medium.md): a common program/data format enables the meta-circular route to procedural reflection but is not itself reflection. Maes's theory-relativity and declarative/procedural continuum complement, without collapsing into, Commonplace's broader [representational-form](../notes/definitions/representational-form.md) vocabulary.
 
 ## Extractable Value
 

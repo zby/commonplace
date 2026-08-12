@@ -9,7 +9,7 @@ tags: [computational-model]
 
 An LLM's context is assembled by concatenating system prompts, skill bodies, user messages, and tool outputs into a single token stream. Everything is global: every token is visible to every other token, with no way to say "this binding is local to this skill" or "this tool output should not influence instruction interpretation."
 
-This is not even dynamic scoping (name bindings resolved through the call stack rather than the source structure), which at least maintains a stack with push and pop. Flat concatenation is the [homoiconic medium](./llm-context-is-a-homoiconic-medium.md) (instructions and data share one representation) with no structure imposed on top, yet it produces dynamic scoping's pathologies — and the Lisp analogy still clarifies them:
+This is not even dynamic scoping (name bindings resolved through the call stack rather than the source structure), which at least maintains a stack with push and pop. Flat concatenation is the [homoiconic medium](./llm-context-interprets-instructions-and-content-through-one-medium.md) (instructions and data share one representation) with no structure imposed on top, yet it produces dynamic scoping's pathologies — and the Lisp analogy still clarifies them:
 
 **Spooky action at a distance.** An early turn subtly biases a later response. The LLM has no mechanism to mark a binding as out of scope — once something enters the log, it influences everything downstream. This is the [three-space memory claim's](./flat-memory-predicts-specific-cross-contamination-failures-that-are.md) "operational debris pollutes search" failure mode, restated as a scoping problem.
 
@@ -63,7 +63,7 @@ Sources:
 
 Relevant Notes:
 
-- [llm context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — amplifies: the medium provides no structural boundaries, so scoping must be imposed by architecture
+- [LLM contexts interpret instructions and content through the same token medium](./llm-context-interprets-instructions-and-content-through-one-medium.md) — amplifies: the medium provides no structural boundaries, so scoping must be imposed by architecture
 - [agent orchestration needs coordination guarantees, not just coordination channels](./agent-orchestration-needs-coordination-guarantees-not-just.md) — extends: scoping is one coordination guarantee family; without it, flat context fails by contamination rather than by inconsistency or amplification
 - [three-space memory separation predicts measurable failure modes](./flat-memory-predicts-specific-cross-contamination-failures-that-are.md) — exemplifies: the failure modes (search pollution, identity scatter, insight trapping) are symptoms of flat scoping applied to memory
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — grounds: natural-language content has no deterministic interpreter, so scope guarantees — like other interpreter-enforced semantics — must be imposed via the constraining move to code; sub-agents are that move applied to scope

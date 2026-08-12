@@ -29,7 +29,7 @@ Deploy-time learning is system-level adaptation: behaviour improves because *art
 
 Traditional stateful software — CRMs, rule engines, document stores — counts as learning by Simon's criterion, but trivially: ordinary engineering handles it, so researchers filter it out. What they miss is how *large* a behaviour change can grow from durable system-definition artifacts.
 
-A single prompt edit looks small, but a library of tips, schemas, tools, and tests accumulated across sessions is a different object. [Context efficiency](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) is why: progressive disclosure, skill routing, and retrieval into [homoiconic context](./llm-context-is-a-homoiconic-medium.md) make the effective context far larger than the literal window, so stored artifacts can deliver behaviour change at weight-update scale. Researchers trained to think through gradients have mostly looked past it.
+A single prompt edit looks small, but a library of tips, schemas, tools, and tests accumulated across sessions is a different object. [Context efficiency](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) is why: progressive disclosure, skill routing, and retrieval into [homoiconic context](./llm-context-interprets-instructions-and-content-through-one-medium.md) make the effective context far larger than the literal window, so stored artifacts can deliver behaviour change at weight-update scale. Researchers trained to think through gradients have mostly looked past it.
 
 ## Mechanisms
 
@@ -55,7 +55,7 @@ Relevant Notes:
 - [Treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md) — extends: asks how deploy-time natural-language/symbolic loops relate to distributed-parametric loops
 - [The verifiability gradient](./verifiability-gradient.md) — extends: the ladder that deploy-time artifacts move along in both directions
 - [Axes of artifact analysis](./axes-of-artifact-analysis.md) — sharpens: the repo is Commonplace's storage substrate choice for many durable system-definition artifacts
-- [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — mechanism: lets content function as instruction, not only as data
+- [LLM contexts interpret instructions and content through the same token medium](./llm-context-interprets-instructions-and-content-through-one-medium.md) — mechanism: lets content function as instruction, not only as data
 - [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — lever: selective access patterns make the effective context far larger than the window, which is what lets stored-artifact behaviour change reach weight-update scale
 - [changing requirements conflate genuine change with disambiguation failure](./changing-requirements-conflate-genuine-change-with-disambiguation.md) — extends: agile's "changing requirements" reframed through the interpretation-error lens
 - [Context Engineering for AI Agents in OSS](https://arxiv.org/pdf/2510.21413) — validates: 466 OSS projects treat AI context files as maintained software artifacts

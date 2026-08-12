@@ -13,7 +13,7 @@ This boundary makes a writable self-representation an attack surface rather than
 
 ## Two ways in, one boundary
 
-The adversarial case is familiar. Content reaches a channel that treats it as instruction: a poisoned rule file, a memory written from a compromised tool result, or text in retrieved material that reads as a directive. In an [LLM context, instruction and data share one token medium](./llm-context-is-a-homoiconic-medium.md); typed envelopes help only when the consumer preserves their distinction. This is the indirect-prompt-injection failure [Greshake et al. identify in LLM-integrated applications](../sources/where-it-lives-retained-adaptation-2026-06-23.md), where an application “blurs the line between data and instructions.”
+The adversarial case is familiar. Content reaches a channel that treats it as instruction: a poisoned rule file, a memory written from a compromised tool result, or text in retrieved material that reads as a directive. In an [LLM context, instruction and data share one token medium](./llm-context-interprets-instructions-and-content-through-one-medium.md); typed envelopes help only when the consumer preserves their distinction. This is the indirect-prompt-injection failure [Greshake et al. identify in LLM-integrated applications](../sources/where-it-lives-retained-adaptation-2026-06-23.md), where an application “blurs the line between data and instructions.”
 
 The innocent case has no attacker at all:
 
@@ -54,6 +54,6 @@ Authorization metadata inherits the same problem. A verified flag or approved st
 Relevant Notes:
 
 - [System-definition artifact](./definitions/system-definition-artifact.md) — defined-in: the high-force family whose binding force is what gets misassigned
-- [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — mechanism: explains why instruction and data can share a representation before the consumer assigns their roles
+- [LLM contexts interpret instructions and content through the same token medium](./llm-context-interprets-instructions-and-content-through-one-medium.md) — mechanism: explains why instruction and data can share a representation before the consumer assigns their roles
 - [Agent orchestration needs a privilege quarantine, not just a permission scope](./orchestration-needs-privilege-quarantine-not-permission-scope.md) — extends: develops runtime separation for attacker-reachable content into a role architecture
 - [The four-field record exposes an efficiency, security, and sovereignty risk triad](./the-four-field-record-exposes-an-efficiency-security-and-sovereignty.md) — grounds: states the security question as the authority-plus-lineage conjunction this note develops into a boundary, and supplies rollback as a sovereignty capability

@@ -33,5 +33,5 @@ Relevant Notes:
 - [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — grounds: storage and read-back do not imply activation, and activation of content is not governance
 - [Behavioral authority](./definitions/behavioral-authority.md) — grounds: the consumption-path distinction between informing content and governing writes
 - [Constraining during deployment is continual learning](./constraining-during-deployment-is-continuous-learning.md) — exemplifies: versioned prompts, schemas, tools, and tests as one concrete system-definition loop
-- [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — mechanism: lets readable artifacts function as instruction rather than only as data
+- [LLM contexts interpret instructions and content through the same token medium](./llm-context-interprets-instructions-and-content-through-one-medium.md) — mechanism: lets readable artifacts function as instruction rather than only as data
 - [Trace-learning techniques in related systems](../agent-memory-systems/trace-learning-techniques-in-related-systems.md) — evidenced-by: surveyed systems already split into weight-promotion and artifact-promotion loops

@@ -85,6 +85,7 @@ plugins:
         'notes/kb-maintenance-index.md': 'notes/kb-maintenance-README.md'
         'notes/learning-theory-index.md': 'notes/learning-theory-README.md'
         'notes/links-index.md': 'notes/links-README.md'
+        'notes/llm-context-is-a-homoiconic-medium.md': 'notes/llm-context-interprets-instructions-and-content-through-one-medium.md'
         'notes/llm-frameworks-should-expose-the-loop.md': 'notes/tool-loop-README.md'
         'notes/llm-interpretation-errors-index.md': 'notes/llm-reliability-README.md'
         'notes/llm-interpretation-errors-README.md': 'notes/llm-reliability-README.md'

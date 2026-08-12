@@ -14,7 +14,7 @@ What kind of "programs" LLM instructions are, and what programming-language conc
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — core framing: LLM instructions are distinguished by underspecified semantics and execution indeterminism
 - [context-efficiency-is-the-central-design-concern-in-agent-systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — why context is the scarce resource; cost has two dimensions (volume and complexity) that drive the mechanisms below
 - [bounded-context-orchestration-model](./bounded-context-orchestration-model.md) — formalises orchestration as a symbolic scheduler driving bounded LLM calls through a select/call loop with explicit state update
-- [llm-context-is-a-homoiconic-medium](./llm-context-is-a-homoiconic-medium.md) — instructions and data share the same representation, enabling extensibility but removing structural guardrails
+- [LLM contexts interpret instructions and content through the same token medium](./llm-context-interprets-instructions-and-content-through-one-medium.md) — instructions and data share the same representation, enabling extensibility but removing structural guardrails
 - [llm-context-is-composed-without-scoping](./llm-context-is-composed-without-scoping.md) — context is flat concatenation with no scoping, producing dynamic scoping's pathologies; sub-agents are the one isolation mechanism
 
 ## Scheduling & Orchestration

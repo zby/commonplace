@@ -39,9 +39,9 @@ Prompts carry judgment that type signatures can't express. A prompt can say "foc
 
 This matters most for sub-agent handoff. An ad hoc prompt is a clean context boundary: the caller does the judgment-heavy work (gathering, selecting, deciding what matters) and writes it down. The sub-agent executes with clean context — no conversation history, no search, no decisions about what's relevant. The prompt defines what's visible in the sub-agent's [lexically scoped frame](./llm-context-is-composed-without-scoping.md), and the sub-agent inherits nothing beyond what the caller explicitly passed.
 
-## Why this works: homoiconicity
+## Why this works: one shared medium
 
-Ad hoc extension without schema changes is possible because the [LLM context is a homoiconic medium](./llm-context-is-a-homoiconic-medium.md) — instructions and content share the same representation (natural language tokens). A markdown file is both content you can read/link/analyze and instructions you can hand to a sub-agent for execution. A CLAUDE.md rule is both documentation for humans and a behavioral constraint for agents. No registration, no type system gatekeeping, no compilation step. This is the same property that makes Lisp, Emacs, and Smalltalk extensible from within — and carries the same discoverability costs.
+Ad hoc extension without schema changes is possible because [instructions and content share one token medium](./llm-context-interprets-instructions-and-content-through-one-medium.md) — the same representation (natural language tokens). A markdown file is both content you can read/link/analyze and instructions you can hand to a sub-agent for execution. A CLAUDE.md rule is both documentation for humans and a behavioral constraint for agents. No registration, no type system gatekeeping, no compilation step. This shared-medium extensibility resembles how Lisp is extensible from within — a bounded analogy, not a strict equivalence — and carries the same discoverability costs.
 
 ## Open Questions
 

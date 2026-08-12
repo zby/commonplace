@@ -40,7 +40,7 @@ The paper introduces Natural-Language Agent Harnesses (NLAHs) — a framework fo
 
 - [Methodology enforcement is constraining](../notes/methodology-enforcement-is-constraining.md) — **exemplifies**: NLAH's contracts (inputs, outputs, validation gates, retry rules) are methodology enforcement at the specification level. The failure taxonomy with named recovery modes maps onto the enforcement gradient between skills and hooks.
 
-- [LLM context is a homoiconic medium](../notes/llm-context-is-a-homoiconic-medium.md) — **exemplifies**: NLAH explicitly treats NL as carrying "editable, inspectable orchestration logic" — artifacts are both content the LLM reads and programs the LLM executes.
+- [LLM contexts interpret instructions and content through the same token medium](../notes/llm-context-interprets-instructions-and-content-through-one-medium.md) — **exemplifies**: NLAH explicitly treats NL as carrying "editable, inspectable orchestration logic" — artifacts are both content the LLM reads and programs the LLM executes.
 
 - [Deploy-time learning is the missing middle](../notes/deploy-time-learning-is-the-missing-middle.md) — **exemplifies**: NLAHs are durable symbolic artifacts (portable, versioned, ablatable) that improve system behavior without weight updates. The emphasis on ablation studies is verification methodology for deploy-time learning.
 

@@ -105,7 +105,7 @@ stable-first to maximize the cacheable prefix.
   rewrites history and caching are in direct tension. This is a candidate for a new note.
 - Stable-first ordering mechanically reinforces [instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md):
   the content that loads every turn goes first (longest cache hit).
-- Per-tool schema hashing is a diagnostic response to [LLM context is a homoiconic medium](../../notes/llm-context-is-a-homoiconic-medium.md) —
+- Per-tool schema hashing is a diagnostic response to [LLM context is a homoiconic medium](../../notes/llm-context-interprets-instructions-and-content-through-one-medium.md) —
   because everything is concatenated text, you can't tell which contribution broke the cache
   without hashing each component separately.
 

@@ -24,7 +24,7 @@ Maes defines computational reflection as the behavior of a computational system 
 
 ## Connections Found
 
-This is a related earlier version of [Maes's 1988 Computational Reflection](./maes-computational-reflection-1988.md), not an independent foundation: the causal-connection and procedural/declarative claims should be deduplicated in favor of the later treatment. Its distinct value for [Reflective system](../notes/definitions/reflective-system.md) is the implemented 3-KRS topology—objects, meta-objects, and interpreter-mediated behavioral effect—and its local granularity. Its meta-circular discussion also limits the analogy in [LLM context is a homoiconic medium](../notes/llm-context-is-a-homoiconic-medium.md): common program/data representation enables one reflective implementation strategy but is not the general definition.
+This is a related earlier version of [Maes's 1988 Computational Reflection](./maes-computational-reflection-1988.md), not an independent foundation: the causal-connection and procedural/declarative claims should be deduplicated in favor of the later treatment. Its distinct value for [Reflective system](../notes/definitions/reflective-system.md) is the implemented 3-KRS topology—objects, meta-objects, and interpreter-mediated behavioral effect—and its local granularity. Its meta-circular discussion also limits the analogy in [LLM contexts interpret instructions and content through the same token medium](../notes/llm-context-interprets-instructions-and-content-through-one-medium.md): common program/data representation enables one reflective implementation strategy but is not the general definition.
 
 ## Extractable Value
 
