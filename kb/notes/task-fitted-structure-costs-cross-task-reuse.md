@@ -25,7 +25,7 @@ The burden therefore begins whenever a KB is expected to outlive the question se
 
 ## What earns permanence
 
-The first warrant for hardening comes from constraint. [A framework rule with a boundary-preserving rival is not an inherited constraint](./a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md), so constraint can warrant hardening only for rules without such a rival — and surviving that hunt leaves a rule contestable, not certified. Choosing a consumer, substrate, domain, or machinery fixes such invariants. Dropping a rule they genuinely force means changing the commitment, not merely selecting another workable design.
+The first warrant for hardening comes from constraint. [A framework rule with a boundary-preserving rival is not an inherited constraint](./a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md), so constraint can warrant hardening only for rules without such a rival — and surviving that hunt leaves a rule contestable, not certified. Choosing a consumer, substrate, domain, or machinery fixes the invariants a rival must preserve. Dropping a rule those commitments genuinely force means changing the commitment, not merely selecting another workable design.
 
 The second warrant comes from evidence. [Only derivation and inheritance give a decomposition starting scope warrant; discriminating use earns it](./only-derivation-and-inheritance-warrant-a-scope-claim-use-earns-it.md). Task-derived structure should begin local and replaceable, but it can earn broader scope by surviving genuinely different questions that could have exposed a bad fit. Promotion should record that evidence explicitly. Adoption by more tools or notes raises migration cost; it does not by itself demonstrate transfer.
 

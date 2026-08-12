@@ -15,7 +15,7 @@ The constraints do not tell you what to value. They tell you what you *cannot* m
 
 Absent constraints, "what should a KB keep" has the shape of every unbounded normative question: any answer is defensible in isolation, none is falsifiable, and the debate never closes because there is no cost to a bad answer. A KB with unlimited context, no code, an infinitely malleable reader, and free verification could optimize anything you could name — coherence-of-the-whole, aesthetic economy, comprehensiveness — and you would have no engineering reason to prefer one. The objective would be pure stipulation.
 
-The constraints below remove exactly that freedom.
+The constraints below remove exactly that freedom; the lever that follows them changes what pursuing a surviving objective costs.
 
 ## Three constraints that prune the space, and one lever
 

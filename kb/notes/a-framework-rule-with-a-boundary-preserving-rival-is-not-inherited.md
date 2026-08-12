@@ -13,7 +13,9 @@ The invariants must be stated independently of the rule under test, as observabl
 
 Choosing files for ubiquity and tooling, for example, does not make every file-handling policy an inherited constraint. A parser or adapter that changes a policy while preserving the declared file guarantees demonstrates a choice within the design space. An adapter that changes a loading or identity guarantee changes the boundary contract instead — a rival of that kind belongs to a different framework, not to the same design space, and demotes nothing.
 
-[First-principles analysis maps the design space and then searches for those rivals](./first-principles-analysis-maps-design-space-before-selection.md). The companion note applies the test at scale: first-order content taxonomies [demote to guarded defaults](./a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) when another kind of KB supplies a viable rival.
+The procedure, then: state the boundary invariants independently of the candidate rule, and propose the strongest rival. A rival that preserves the invariants demotes the rule. A rival that changes them belongs to a different boundary contract. An inconclusive comparison leaves the rule where it was.
+
+[First-principles analysis maps the design space and then searches for those rivals](./first-principles-analysis-maps-design-space-before-selection.md). A companion note applies the test at scale: first-order content taxonomies [demote to guarded defaults](./a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) when another kind of KB supplies a viable rival.
 
 ## Rules that fail the test
 
@@ -25,12 +27,10 @@ Applying the test to Commonplace demotes rules that look foundational but have w
 - **Spending the directory tree on content area rather than kind** is one routing choice. A kind-based tree can preserve the framework's other boundary guarantees.
 - **Status and lifecycle enums** may use different values or separate structural state from first-person endorsement without removing lifecycle machinery.
 
-To assess a candidate, state the boundary invariants independently of it, then propose the strongest rival. A rival that preserves the invariants demotes the rule. A rival that changes them belongs to a different boundary contract. An inconclusive comparison leaves the rule where it was.
-
 ## Scope
 
 - The test demotes; it does not certify. A rule that has survived the rival hunt so far is at best a candidate inherited constraint, and stays contestable until someone derives it from the independently stated invariants — machinery this note does not provide.
-- The demoted list is open in both directions: a later rival can demote a rule not listed here, and no listing is permanent.
+- The demoted list is open: a later rival can demote a rule not listed here, and a listed demotion holds only under the current boundary contract.
 
 ---
 
