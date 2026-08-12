@@ -13,7 +13,7 @@ This is a claim about **fidelity**, not authority, and the two move in opposite 
 
 ## Capture is layered because it is forced to be
 
-The layering is not a design choice: no rival capture design drops it while preserving the commitments the framework has already made (the demoting move [a framework rule is an inherited constraint only if no rival preserves its boundary invariants](./a-framework-rule-is-inherited-only-without-a-boundary-preserving-rival.md) would require). A long source cannot be captured verbatim into markdown at full fidelity, because the consumer's context window is finite, because copyright forces trims, and because provider output filters block mass verbatim reproduction. Any framework whose consumer is an LLM and whose sources are real documents faces all three. So a snapshot of a long source is not a copy — it is an *extraction*, and it stratifies:
+The layering is not a design choice — [a framework rule with a boundary-preserving rival is not an inherited constraint](./a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md), and no rival capture design drops the layering while preserving the commitments the framework has already made. A long source cannot be captured verbatim into markdown at full fidelity, because the consumer's context window is finite, because copyright forces trims, and because provider output filters block mass verbatim reproduction. Any framework whose consumer is an LLM and whose sources are real documents faces all three. So a snapshot of a long source is not a copy — it is an *extraction*, and it stratifies:
 
 - **Verbatim layer** — the source's own words, reproduced. A claim may quote, and a machine can string-match the quote back against the snapshot.
 - **Paraphrase layer** — the snapshot's own-words summary of a passage. A claim may cite it, but must not use quotation marks, and verification requires going back to the authoritative artifact (the sibling PDF).
@@ -48,7 +48,7 @@ Relevant Notes:
 
 - [History has one chance to become checkable](./history-has-one-chance-to-become-checkable.md)
 - [A derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md)
-- [A framework rule is an inherited constraint only if no rival preserves its boundary invariants](./a-framework-rule-is-inherited-only-without-a-boundary-preserving-rival.md)
+- [A framework rule with a boundary-preserving rival is not an inherited constraint](./a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md)
 - [Trace-extracted memory earns authority per operation, not at capture](./trace-extracted-memory-earns-authority-per-operation-not-at-capture.md)
 - [Structure inference needs capture at the decision surface](./structure-inference-needs-capture-at-the-decision-surface.md) — decision rationale rather than quote fidelity
 - [ADR 046 — Verbatim quotes are validated against their cited source](../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)

@@ -5,7 +5,7 @@ traits: [title-as-claim]
 tags: [document-system, foundations]
 ---
 
-# A framework rule is an inherited constraint only if no rival preserves its boundary invariants
+# A framework rule with a boundary-preserving rival is not an inherited constraint
 
 A framework's inherited constraints follow from its boundary commitments; everything else its rules assert is chosen within those commitments. This note gives a heuristic for telling the two apart, and the heuristic cuts in one direction only. Propose the strongest rival design that drops the rule. If the rival preserves the invariants the framework holds fixed, the rule is a design choice, not an inherited constraint. If no rival is found, the rule is only undemoted — not proven inherited — because the rival may exist outside the current implementation, and because certifying inheritance would take a positive derivation from the invariants, which this test does not supply.
 

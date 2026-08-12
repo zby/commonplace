@@ -19,7 +19,7 @@ For the live Commonplace repo's current type inventory and migration summary, se
 - [design-for-the-first-time-human-except-on-access-cost](./design-for-the-first-time-human-except-on-access-cost.md) — refines the dual-audience heuristic: design for newcomer-human ergonomics except where agent access mode makes whole-artifact reads expensive
 - [why-directories-despite-their-costs](./why-directories-despite-their-costs.md) — directories buy one-two orders of magnitude of navigable scale but each new directory taxes routing, search config, and cross-directory linking
 - [a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults](./a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) — the type/label/register taxonomies are collection-local defaults with worked-case guards; only the declaration obligation and answerability stay universal
-- [A framework rule is an inherited constraint only if no rival preserves its boundary invariants](./a-framework-rule-is-inherited-only-without-a-boundary-preserving-rival.md) — the complement: a one-way demotion test — a rule whose rival preserves the boundary invariants (consumer, substrate, domain, machinery) is a design choice; a rule with no rival found is only undemoted, not certified
+- [A framework rule with a boundary-preserving rival is not an inherited constraint](./a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md) — the complement: a one-way demotion test — a rule whose rival preserves the boundary invariants (consumer, substrate, domain, machinery) is a design choice; a rule with no rival found is only undemoted, not certified
 
 ## Writing Conventions
 
