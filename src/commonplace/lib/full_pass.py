@@ -36,7 +36,7 @@ class FullPassReport:
     packet_dir: Path
     frontmatter: dict[str, Any]
     body: str
-    disposition: Literal["keep", "delete", "merge"]
+    disposition: Literal["keep", "delete", "merge", "rehome"]
     guarded_inputs: tuple[GuardedInput, ...]
 
 
@@ -162,9 +162,9 @@ def parse_full_pass_report(
         raise ValueError(f"type: expected {FULL_PASS_REPORT_TYPE}")
 
     disposition_value = frontmatter.get("disposition")
-    if disposition_value not in {"keep", "delete", "merge"}:
-        raise ValueError("disposition: expected keep, delete, or merge")
-    disposition: Literal["keep", "delete", "merge"] = disposition_value
+    if disposition_value not in {"keep", "delete", "merge", "rehome"}:
+        raise ValueError("disposition: expected keep, delete, merge, or rehome")
+    disposition: Literal["keep", "delete", "merge", "rehome"] = disposition_value
 
     packet_dir = report_path.parent
     guarded_inputs = [

@@ -141,6 +141,20 @@ def test_missing_live_artifact_is_not_capture_corruption(tmp_path: Path) -> None
     assert results[0].capture_sha256 == results[0].expected_sha256
 
 
+def test_rehome_report_parses_as_pending_with_only_the_source_guarded(
+    tmp_path: Path,
+) -> None:
+    report_path = write_packet(tmp_path, disposition="rehome")
+
+    report = load_full_pass_report(report_path, repo_root=tmp_path)
+
+    assert report.disposition == "rehome"
+    assert [guarded.role for guarded in report.guarded_inputs] == ["source"]
+
+    results = guard_full_pass_report(report)
+    assert [result.status for result in results] == ["matching"]
+
+
 def test_capture_symlink_is_corrupt_even_when_it_points_inside_packet(
     tmp_path: Path,
 ) -> None:

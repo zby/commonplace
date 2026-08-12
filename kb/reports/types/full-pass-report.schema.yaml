@@ -39,7 +39,7 @@ allOf:
             type: string
             minLength: 1
           disposition:
-            enum: [keep, delete, merge]
+            enum: [keep, delete, merge, rehome]
           merge_target:
             type: [string, "null"]
           merge_target_capture:

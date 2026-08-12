@@ -78,6 +78,16 @@ def test_pending_merge_validates_both_packet_captures(tmp_path: Path) -> None:
     assert any("packet captures: all 2" in item for item in result.passes)
 
 
+def test_pending_rehome_validates_with_only_the_source_capture(tmp_path: Path) -> None:
+    install_types(tmp_path)
+    report = write_packet(tmp_path, disposition="rehome")
+
+    result = validate_note(report, repo_root=tmp_path)
+
+    assert not result.fails
+    assert any("packet captures: all 1" in item for item in result.passes)
+
+
 def test_terminal_resolution_requires_complete_metadata(tmp_path: Path) -> None:
     install_types(tmp_path)
     report = write_packet(tmp_path, disposition="delete")

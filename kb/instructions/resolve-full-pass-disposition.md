@@ -1,5 +1,5 @@
 ---
-description: Resolve, reject, supersede, or reconcile a retained full-pass delete or merge disposition
+description: Resolve, reject, supersede, or reconcile a retained full-pass delete, merge, or rehome disposition
 type: kb/types/instruction.md
 ---
 
@@ -20,7 +20,7 @@ Inputs:
 4. Interpret the JSON and exit status:
    - Exit 0 with every input `matching`: the decision may proceed.
    - Exit 1 with any `changed`: preserve every live artifact and resolve the report to `superseded` with `resolution_authority: version-guard`. State which guarded paths changed. Do not accept, reject, rebase, or apply an alternative.
-   - Exit 1 with `missing` or `corrupt-capture`: leave `resolution: pending` and reconcile. Absence cannot prove a delete or merge succeeded; capture corruption is not source drift.
+   - Exit 1 with `missing` or `corrupt-capture`: leave `resolution: pending` and reconcile. Absence cannot prove a delete, merge, or rehome succeeded; capture corruption is not source drift.
    - Exit 2: leave the report unchanged and repair or reconcile the invalid invocation/report.
 
 If several inputs are returned, inspect every result; the command never short-circuits after the first failure.
@@ -31,6 +31,7 @@ Proceed only with an explicit user decision:
 
 - **Accept delete.** Delete only `source`. Verify it is absent and that no unintended path changed. Then record `accepted`; `resulting_paths` is empty.
 - **Accept merge.** Reconcile the captured source into the named live `merge_target` as a semantic edit, update affected backlinks as needed, remove invalid `user-verified` attestation from the edited target, and delete the source only after the target contains the accepted result. Verify the source is absent, the target exists at the recorded path, and validation succeeds. Record `accepted` with the target in `resulting_paths`. Do not substitute `commonplace-relocate-note` for semantic reconciliation.
+- **Accept rehome.** The packet's Disposition names the target collection and whether the remedy is a whole move or a split. For a **whole rehome**, move `source` to the target collection with `commonplace-relocate-note` (which rewrites inbound link paths and the redirect map), retype the note's `type:` frontmatter to the target collection's type, and revise its register to the target's text contract (drop first-person operational framing for a descriptive rehome, and so on). For a **split**, first author the extracted transferable claim as a new note in the origin collection, then rehome the operational remainder as above. In both cases update inbound citers' visible link text and summaries, remove invalid `user-verified` attestation from any edited artifact, and run `commonplace-validate` on every touched artifact. Record `accepted` with every surviving path (the relocated note, and for a split the extracted note) in `resulting_paths`.
 - **Reject.** Leave source and target byte-identical. Record `rejected` with every guarded live path in `resulting_paths` and explain why the recommendation was declined.
 - **Apply an alternative.** Perform only the user-authorized alternative, verify every resulting path and validate each edited artifact, then record `alternative-applied` with all surviving result paths. An opposite-direction merge is an alternative, not acceptance of the original merge.
 
