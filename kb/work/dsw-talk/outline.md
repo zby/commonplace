@@ -1,5 +1,8 @@
 # DSW talk — working outline and material selection
 
+> **⚠️ STALE — needs rework before use. Do not submit from this file, and do not build the talk from it yet.**
+> This outline predates the locked submission title **"Strange-Loop Knowledge Base: An LLM Wiki That Rewrites Its Own Rules"** (see `abstract.md` / `cfp-submission.md`). It was deliberately built to *suppress* self-hosting/self-improvement framing (self-hosting is only a 4-min close here; it instructs "do not introduce reflection or self-improvement vocabulary"). The submitted abstract now makes self-hosting the **headline** and the tag-README loop the **spine**. Reworking this outline to match — and verifying the tag-README loop is traceable arrow-by-arrow with human-in-the-loop points marked (the "honesty line" the abstract promises) — is the next job, after the CFP is in. The CFP form uses the short agenda in `cfp-submission.md`, not this file.
+
 Imported conclusions from the planning session that scanned the KB. The talk is tighter than Commonplace itself: one practitioner story, with deeper theory only where it explains a design decision.
 
 ## Core claim
