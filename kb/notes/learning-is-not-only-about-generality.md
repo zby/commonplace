@@ -53,7 +53,7 @@ Relevant Notes:
 - [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — the other mechanism: working use-shaped artifacts out from reasoning under context budget constraints
 - [codification](./definitions/codification.md) — the far end of constraining where the compound gain is largest
 - [the verifiability gradient](./verifiability-gradient.md) — structures the compound dimension
-- [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — frames where the gradient-moving happens on the system-adaptation timescale
+- [deploy-time learning](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — frames where the gradient-moving happens on the system-adaptation timescale
 - [first-principles reasoning selects for explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: Deutsch's reach criterion (registered here as explanatory-reach) distinguishes facts (adaptive, no explanatory-reach) from rules (explanatory, with explanatory-reach)
 - [recognition, not linking, is the hard problem in knowledge systems](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — mechanism: converting facts into rules turns on recognizing what they share, which is where the cost falls
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — exemplifies: AgeMem learns a policy for managing facts (when to store, retrieve, summarize) but operates entirely on facts, never producing rules or explanatory-reach

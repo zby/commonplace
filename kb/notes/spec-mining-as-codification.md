@@ -54,7 +54,7 @@ Sources:
 
 Relevant Notes:
 
-- [deploy-time-learning](./deploy-time-learning-is-the-missing-middle.md) — foundation: codification says knowledge hardens into repo artifacts; spec mining is the mechanism that produces those artifacts from observed behavior
+- [deploy-time-learning](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — foundation: codification says knowledge hardens into repo artifacts; spec mining is the mechanism that produces those artifacts from observed behavior
 - [fixed artifacts split into exact specs and proxy theories](./exact-implementation-does-not-validate-a-requirement.md) — motivation: spec mining manufactures exact-spec artifacts by converting implicit behavior into harder verification targets
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — mechanism: spec mining moves components from soft/delayed oracle toward hard oracle; each mined spec is a new verification target
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — amplification: mined specs create oracles with TPR > FPR that error correction can then boost through decorrelated repetition

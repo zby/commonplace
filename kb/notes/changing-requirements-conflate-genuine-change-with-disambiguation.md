@@ -36,7 +36,7 @@ This reframes iteration length as an **interpretation-error propagation bound**,
 
 ## Deploy-time learning
 
-[Deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) extends the same loop to human–AI systems: each deploy surfaces interpretation choices that natural-language specs left open, and [constraining](./definitions/constraining.md) narrows the spec for the next cycle. Every prompt invocation performs an explicit projection, so misreadings surface faster—but the agile propagation bound still applies: shorter cycles limit how much downstream work rests on a wrong reading before correction.
+[Deploy-time learning](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) extends the same loop to human–AI systems: each deploy surfaces interpretation choices that natural-language specs left open, and [constraining](./definitions/constraining.md) narrows the spec for the next cycle. Every prompt invocation performs an explicit projection, so misreadings surface faster—but the agile propagation bound still applies: shorter cycles limit how much downstream work rests on a wrong reading before correction.
 
 ## Open Questions
 

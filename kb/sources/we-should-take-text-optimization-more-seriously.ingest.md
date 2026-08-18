@@ -28,7 +28,7 @@ The companion connect report (`kb/reports/connect/sources/we-should-take-text-op
 
 - [continual-learning-open-problem-is-behaviour-not-knowledge](../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md) — **evidence** for the legitimacy pillar (text layer is a behaviour-change mechanism co-equal with weight updates).
 - [treat-continual-learning-as-substrate-coevolution](../notes/treat-continual-learning-as-representational-form-coevolution.md) — **evidence**; the weights/text "routing problem" and co-evolution argument; pairs with the Meta-Harness citation already there.
-- [deploy-time-learning-is-the-missing-middle](../notes/deploy-time-learning-is-the-missing-middle.md) — **evidence**; the "staging ground for eventual distillation into weights" restates the deploy-time staging argument.
+- [deploy-time-learning-is-the-missing-middle](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) — **evidence**; the "staging ground for eventual distillation into weights" restates the deploy-time staging argument.
 - [constraining-during-deployment-is-continuous-learning](../notes/constraining-during-deployment-is-continuous-learning.md) — **evidence**; weaker-pressure, auditable, composable text-layer edits accumulating adaptive capacity outside weights.
 - [in-context-learning-presupposes-context-engineering](../notes/in-context-learning-presupposes-context-engineering.md) — **evidence**; progressive disclosure / implicitly conditioning on much-larger-than-window context.
 - [readable-artifact-loop-is-the-tractable-unit-for-continual-learning](../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — **evidence**; the update-time-compute / fork-test-compare reflective loop.

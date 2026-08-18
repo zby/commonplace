@@ -42,4 +42,4 @@ Relevant Notes:
 
 - [Agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) — extends: develops contextual competence into minimum properties of useful retained knowledge
 - [Memory design adds operational axes to artifact analysis](./memory-design-adds-operational-axes-to-artifact-analysis.md) — extends: maps capture, activation, authority, lifecycle, and evaluation around retained artifacts
-- [Deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — grounds: durable readable artifacts can change system behavior during deployment
+- [Deploy-time learning is the missing middle](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — grounds: durable readable artifacts can change system behavior during deployment

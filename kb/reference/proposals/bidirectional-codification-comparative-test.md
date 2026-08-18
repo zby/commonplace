@@ -14,7 +14,7 @@ This explains why the two readable forms are needed *together*: natural language
 
 ## Current state (as of 2026-07-28)
 
-- The codification/relaxing note supplies the operators and [operational relaxing signals](../../notes/operational-signals-that-a-component-is-a-relaxing-candidate.md) the detection side; [deploy-time learning](../../notes/deploy-time-learning-is-the-missing-middle.md) asserts the reversibility claim in passing ("a system that can only tighten ratchets itself into brittleness") without comparative evidence.
+- The codification/relaxing note supplies the operators and [operational relaxing signals](../../notes/operational-signals-that-a-component-is-a-relaxing-candidate.md) the detection side; [deploy-time learning](../../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) asserts the reversibility claim in passing ("a system that can only tighten ratchets itself into brittleness") without comparative evidence.
 - The [scheduler note](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) now names codification as the write path into a learnable symbolic layer, and [oracle accumulation](../../notes/oracle-accumulation-improves-the-selection-environment.md) gives retained checks their compounding role — both presuppose the promotion direction works; neither tests relaxation.
 - No system in the KB's coverage demonstrates automated relaxation; one-way promotion is the observed norm in surveyed loops.
 - Originates from the mixed-form-learning workshop's disposition of an external-review conjecture (2026-07-28).

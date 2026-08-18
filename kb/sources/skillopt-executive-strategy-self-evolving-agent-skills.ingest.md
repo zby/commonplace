@@ -25,7 +25,7 @@ SkillOpt treats an agent skill document as trainable external state. A separate 
 ## Connections Found
 
 - [Readable artifact loop is the tractable unit for continual learning](../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) -- **evidence**. SkillOpt is a concrete natural-language-only readable-artifact loop: frozen model, mutable skill, bounded text edits, validation gate, and compact deployed artifact.
-- [Deploy-time learning is the missing middle](../notes/deploy-time-learning-is-the-missing-middle.md) -- **evidence**. The system learns by updating durable skill text across runs, not by changing weights at inference.
+- [Deploy-time learning is the missing middle](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) -- **evidence**. The system learns by updating durable skill text across runs, not by changing weights at inference.
 - [Continual learning open problem is behaviour, not knowledge](../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md) -- **evidence**. The retained artifact changes future behavior through instruction authority, so the learned object is behavioral policy rather than passive knowledge.
 - [Diagnostic richness constrains outer-loop learning quality](../notes/diagnostic-richness-constrains-outer-loop-learning-quality.md) -- **evidence**. Rollout traces, success/failure contrast, rejected edits, and slow/meta updates supply more diagnostic state than a scalar score alone.
 - [The verifiability gradient](../notes/verifiability-gradient.md) -- **evidence**. SkillOpt's success depends on resettable, scored tasks and held-out validation; the paper's limitations mark subjective/open-ended domains as weaker targets.

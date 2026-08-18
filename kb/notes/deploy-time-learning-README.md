@@ -11,7 +11,7 @@ The organizing framework of the learning-theory area: deployed systems adapt thr
 
 ## The framework
 
-- [deploy-time learning is the missing middle](./deploy-time-learning-is-the-missing-middle.md) — three timescales of system adaptation; co-evolving natural-language and code as agile-style deploy-time learning
+- [deploy-time learning is the missing middle](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — three timescales of system adaptation; co-evolving natural-language and code as agile-style deploy-time learning
 - [the verifiability gradient](./verifiability-gradient.md) — the ladder deploy-time artifacts sit on, from restructured prompts through schemas and evals to deterministic code
 - [readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — the loop that makes behaviour change cheap: readable system-definition artifacts revised in place
 - [treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md) — the system and its knowledge substrate evolve together rather than one training the other

@@ -101,7 +101,7 @@ Relevant Notes:
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — instance: attention scarcity made architectural; roots in Simon, working memory
 - [short composable notes maximize combinatorial discovery](./short-composable-notes-maximize-combinatorial-discovery.md) — instance: modularity under bounds; roots in Parnas, Ranganathan, Zettelkasten
 - [links index](./links-README.md) — instance: typed relationships for bounded navigation; roots in hypertext theory, semantic web, library science
-- [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) — instance: system-level adaptation through artifacts; roots in organizational learning, knowledge creation
+- [deploy-time learning](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — instance: system-level adaptation through artifacts; roots in organizational learning, knowledge creation
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — instance: propositional titles for bounded scanners
 - [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: observer-relativity that makes adaptation necessary
 - [first-principles reasoning selects for explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — test: if the shared structure has explanatory-reach, results transfer; if not, the pattern is superficial

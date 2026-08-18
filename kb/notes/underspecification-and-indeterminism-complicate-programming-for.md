@@ -37,7 +37,7 @@ The two phenomena compound: you're testing an underspecified specification execu
 
 ## Why the practices transfer
 
-Both domains solve the same problems: making behaviour predictable, making systems composable, making artifacts verifiable. The underlying concepts (type theory, compilation, contracts) explain *why* a practice works in both settings. [Thalo](../agent-memory-systems/reviews/thalo.md) demonstrates the endpoint: a system that built a full compiler (Tree-Sitter grammar, LSP, 27 validation rules) for knowledge management, taking typing and testing to their logical extreme. [Codification systematises these transfers](./deploy-time-learning-is-the-missing-middle.md) — the accumulated prompt adjustments, output post-processing, and workflow changes that every deployed system accumulates are exactly these programming practices applied informally. The motivation is practical — these are things we do, not abstractions we admire.
+Both domains solve the same problems: making behaviour predictable, making systems composable, making artifacts verifiable. The underlying concepts (type theory, compilation, contracts) explain *why* a practice works in both settings. [Thalo](../agent-memory-systems/reviews/thalo.md) demonstrates the endpoint: a system that built a full compiler (Tree-Sitter grammar, LSP, 27 validation rules) for knowledge management, taking typing and testing to their logical extreme. [Codification systematises these transfers](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — the accumulated prompt adjustments, output post-processing, and workflow changes that every deployed system accumulates are exactly these programming practices applied informally. The motivation is practical — these are things we do, not abstractions we admire.
 
 ## Open Questions
 
@@ -54,7 +54,7 @@ Relevant Notes:
 - [progressive constraining commits only after patterns stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — sharpens: the "progressive" qualifier in progressive compilation names a specific contrast with one-shot LLM code generation
 - [LLM debugging starts with retry-versus-rewrite triage](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) — extends: diagnostic for the "fix is rewriting the spec, not retrying" move; tells you which doubled test surface the failure sits on
 - [LLM↔code boundaries are natural checkpoints](./llm-code-boundaries-are-natural-checkpoints.md) — related: the doubled testing surface separates cleanly at LLM↔code transitions; code downstream is traditionally testable
-- [codification: the missing middle](./deploy-time-learning-is-the-missing-middle.md) — progressive compilation in practice
+- [codification: the missing middle](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — progressive compilation in practice
 - [constraining is learning](./definitions/constraining.md) — synthesizes: the informal programming practices accumulated by every deployed system are what codification systematises
 - [storing LLM outputs is constraining](./storing-llm-outputs-is-constraining.md) — version control practice applied to LLM outputs
 - [inspectable artifact](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — design for testability applied to LLM artifacts

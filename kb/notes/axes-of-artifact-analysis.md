@@ -110,7 +110,7 @@ Relevant Notes:
 - [codification](./definitions/codification.md) - defines the phase transition from natural-language into symbolic form
 - [constraining](./definitions/constraining.md) - mechanism that operates across natural-language artifacts and reaches symbolic artifacts at its far end
 - [LLM contexts interpret instructions and content through the same token medium](./llm-context-interprets-instructions-and-content-through-one-medium.md) - mechanism: lets the same natural-language content function as a knowledge artifact or system-definition artifact depending on authority path
-- [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) - applies: deploy-time learning is timing-defined and can land in natural-language, symbolic, or distributed-parametric forms
+- [deploy-time learning](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) - applies: deploy-time learning is timing-defined and can land in natural-language, symbolic, or distributed-parametric forms
 - [treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md) - extends: builds on the natural-language/symbolic/distributed-parametric split to ask how improvement loops should relate
 - [system-definition artifacts are crystallized reasoning under context scarcity](./system-definition-artifacts-are-crystallized-reasoning-under-context.md) - extends: system-definition artifacts split into heuristic crystallized reasoning and authority-bearing constraints
 - [Memory design adds operational axes to artifact analysis](./memory-design-adds-operational-axes-to-artifact-analysis.md) - extends: memory operational policies should attach to operative parts and consumption paths
