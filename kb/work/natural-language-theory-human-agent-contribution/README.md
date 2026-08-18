@@ -4,6 +4,8 @@
 
 Preserve the evidence needed to analyse how the current version of *Natural-language theories carry warrant claim by claim and scope by scope* was produced. The later analysis uses the distinctions in *Reflective self-improvement* to ask which causal contributions came from the human, which came from agents, which were genuinely joint, and whether this retained epistemology later contributes to compounding through Commonplace's writing machinery.
 
+The main question has shifted to the writing machinery itself: how much of the new machinery — the claim-disposition stage and whatever follows it — was invented by agents. "Invented by" is not yet operationalized; the criterion is admittedly fuzzy and may be made stricter later. Two objects must not be conflated in answering it: the claim-disposition stage is a process correction prompted by the episode's artifact-shape failure, while the retained note's epistemological ideas — warrant per claim-scope pair, the two thresholds — have not yet been folded into the writing machinery. The pathway's theory-installation step therefore remains open.
+
 The immediate purpose is preservation, not a settled attribution verdict. The target note has since been restructured into a more atomic artifact, so the `evidence/` directory preserves the longer text produced by this session as the primary original. It also freezes the trigger source and ingest, the user's counterexample, the relevant article, and the available session/process record. Snapshot files are evidence, not live copies, and must not be updated when their source artifacts change. `analysis.md` is a provisional reading of that evidence and may be replaced after later episodes supply a stronger causal trace.
 
 ## Evaluation boundary
@@ -16,6 +18,7 @@ This workshop does not yet claim compounding. It records a candidate pathway: re
 
 - [Session and process record](./evidence/session-and-process-record.md) — exact human prompts plus reconstructed agent and multistage contributions
 - [Restructure session record](./evidence/restructure-session-record.md) — the second episode (atomic restructure), captured contemporaneously by the session that performed it
+- [Writing-machinery integration](./evidence/writing-machinery-integration.md) — causal record of the claim-disposition revision, with before/after skill snapshots
 - [Evidence manifest](./evidence/README.md) — frozen artifact copies and their evidential roles
 - [Analysis](./analysis.md) — secondary, provisional attribution and its reading under the article's occurrence, revision-surface, and compounding tests
 
