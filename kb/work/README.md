@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [natural-language-theory-human-agent-contribution](./natural-language-theory-human-agent-contribution/README.md) — attributing the human and agent interventions behind the natural-language-theory warrant note, with frozen pre-revision evidence and an occurrence/revision-surface/compounding analysis
 - [multistage-write-select-call-cordis-20260814](./multistage-write-select-call-cordis-20260814/README.md) — revising the select/call decomposition lemma against Cordis and DeepSeek Harness: LLM-call trace equivalence, external effects, dynamic program configuration, and the distinction between mechanical representability and scheduler quality
 - [writing-as-thinking-process-transfer](./writing-as-thinking-process-transfer/README.md) — harvesting the still-unincorporated ideas from the four 2026-08-10 writing/thinking essays into Commonplace process changes under a discriminating-test-before-build rule; backlog covers premise-decomposition review, counterexample-scope FIX routing, value-of-information reading, a stance-reversal operator, and a false-precision anti-gate, plus the two promoted conjectures' open tests
 - [continual-harness-governance-experiment](./continual-harness-governance-experiment/README.md) — designing a matched test of whether Commonplace-derived control, warrant, recovery, and artifact-lifecycle mechanisms improve reset-free harness adaptation without importing a compounding claim or presuming proposal selection
