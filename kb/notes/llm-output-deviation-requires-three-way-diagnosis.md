@@ -15,7 +15,7 @@ When an LLM's output is not what the user wanted, diagnosis must answer three di
 
 Several questions can matter in the same run. A plural `V` can admit unwanted outputs, an imperfect interpreter can place mass outside `V`, and sampling determines which point is realized. The decomposition is for diagnosis, not for exclusive blame assignment. Any system that runs `specification → interpreter → sampled execution` raises the same questions, whether the interpreter is an LLM, a contractor working from a brief, or a compiler for a language with implementation-defined behavior.
 
-The practical consequence is that each repair class has a different primary target. Prompt narrowing, error correction, and sampling control therefore cannot substitute for one another as complete repairs, even when one intervention affects more than one relation.
+The practical consequence is that each repair class has a different primary target. Prompt narrowing, error correction, and sampling control therefore cannot substitute for one another as complete repairs: an intervention repairs a defect only if it reaches the defective relation, and belonging to a remedy class does not establish that it does. An intervention that does not reach it can still make behavior look acceptable, which is a different and less durable outcome.
 
 ## Why the remedies do not substitute
 
@@ -27,7 +27,19 @@ Each standard remedy directly changes a different relation in the diagnosis. Cro
 
 **Sampling control** — temperature adjustment or deterministic decoding — concentrates `D`. It neither defines a narrower `V` nor guarantees that `D` lies inside `V`. Lower temperature can suppress a bad tail, but it can also concentrate on a valid-but-unwanted or out-of-`V` point. `best-of-N` is a mixed strategy rather than pure sampling control when a scorer or chooser provides an oracle or preference.
 
-A remedy aimed at the wrong relation can leave the primary defect intact while still consuming context, latency, or review attention. Rewriting a prompt may fail against interpreter non-conformance, while lowering temperature can hide the run-to-run variation that made a wide `V` visible without narrowing it.
+A remedy aimed at the wrong relation can leave the primary defect intact while still consuming context, latency, or review attention.
+
+## A worked comparison
+
+Non-substitution is operational, not definitional. The claim is not that a remedy from one class never repairs a defect located in another — it is that repair requires reaching the defective relation, and a remedy's class does not settle whether it gets there. Three outcomes are worth separating: the intervention reaches the relation from another surface, it fails to reach it, or it leaves the relation untouched while hiding its effect.
+
+**Cross-class repair that works.** A specification admits an output the user did not want, so the defect is `V ⊃ I`. Adding a checker that rejects that output restores acceptable behavior, although error correction's primary target is out-of-`V` mass. It works for a specific reason: to reject a spec-valid output at all, the checker had to encode the missing intent. The narrowing was performed, not skipped — it moved into the checker, where it may be cheaper to audit than the equivalent prose in a prompt.
+
+**Cross-class repair that fails.** In a controlled test, [stance-bearing content already in context steered writer agents' evaluative language, own-voice glosses, and section structure](./context-contamination-operates-below-an-agents-compliance-reasoning.md) while every gross compliance check passed; one writer detected the contaminant, named it out of contract, refused to reproduce it, and still leaked its lean. Narrowing the spec cannot repair this, because the defect is not in `V`. The spec already excluded the drift, and adding words leaves the contaminant in a context the interpreter still integrates. The reliable control is architectural: keep the contaminant out of the context. That test had two runs per condition and a declared confound, so it establishes that refusal and drift coexisted rather than the size of the effect.
+
+**Masking, which resembles repair.** Where `V` is too wide, lowering the temperature can concentrate `D` on one admissible point that happens to sit inside `I`. Output becomes acceptable and `V` is untouched. The tell is conditional: a masked defect returns when its masking condition lapses — the temperature is raised, a new input makes a different admissible point most likely, or the concentrated point stops being the wanted one — while a repaired relation does not. That is what makes the distinction testable rather than a matter of description.
+
+The discriminator is therefore whether the intervention carries the missing work to the defective relation, and the perturbation test separates it from masking. Both judgments are about a particular case and can be wrong in either direction: a schema meant only to shrink `V` may also steer the interpreter off format violations. What does not follow is that any remedy addresses any defect, which is what treating the three as interchangeable would assume.
 
 ## Distinguishing them
 
@@ -69,4 +81,4 @@ Relevant Notes:
 - [scheduler-llm-separation-exploits-an-error-correction-asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — mechanism: the architectural form of the error-correction remedy, moving out-of-`V`-prone work to a substrate with hard oracles
 - [silent disambiguation is the semantic analogue of tool fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — contrasts: hidden recovery after an ambiguous spec, which looks like interpreter failure but is located in `V`
 - [Ma et al. — Prompt Stability in Code LLMs](../sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md) — evidenced-by: separates sampling variation from meaning-preserving framing bias; performance-stability decoupling shows those are not one phenomenon
-- [context contamination operates below an agent's compliance reasoning](./context-contamination-operates-below-an-agents-compliance-reasoning.md) — evidenced-by: a worked case of non-substitutability — instruction-level narrowing applied to an interpreter-level failure demonstrably fails
+- [context contamination operates below an agent's compliance reasoning](./context-contamination-operates-below-an-agents-compliance-reasoning.md) — evidenced-by: the controlled test behind the failed-repair half of the worked comparison, with its design, blinding protocol, and declared confound
