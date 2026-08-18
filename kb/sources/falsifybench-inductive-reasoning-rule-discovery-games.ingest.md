@@ -64,7 +64,7 @@ Update [known-target discovery benchmarks show reachability, not discovery closu
 - [mechanistic constraints make Popperian KB recommendations actionable](../notes/mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — is-evidence-for: bears on the note's premise that criticism must be structural because it will not happen ambiently
 - [discovery lifecycle](../notes/definitions/discovery-lifecycle.md) — is-evidence-for: first LLM-side measurement of the consequence-derivation to test transition
 - [reach-assessment](../notes/definitions/reach-assessment.md) — is-evidence-for: the natural-language route to reach judgment varies measurably across models
-- [conjecture is seeing the particular as an instance of the general](../notes/conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — is-evidence-for: turn-level data on how the posit-and-recognize loop breaks
+- [recognition, not linking, is the hard problem in knowledge systems](../notes/recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — is-evidence-for: turn-level data on how the posit-and-recognize loop breaks
 - [DiscoverPhysics](./discoverphysics-benchmarking-llms-out-of-the-box-scientific-thinking.md) — compares-with: the same closed experimentation loop in simulated worlds rather than an abstract rule game
 - [An Enigma of Artificial Reason](./an-enigma-of-artificial-reason-production-evaluation-gap-lrms.md) — compares-with: confirmation bias measured when models evaluate supplied reasoning rather than generate their own probes
 - [GIANTS](./giants-generative-insight-anticipation-scientific-literature.md) — compares-with: the backcast construction of a known-target discovery benchmark

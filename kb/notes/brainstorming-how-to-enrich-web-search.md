@@ -16,7 +16,7 @@ The KB's connection methodology (`/connect`) is corpus-agnostic — it runs the 
 
 ## Why this differs from naive search
 
-The [discovery epistemology note](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) identifies three abstraction depths for connections:
+The [recognition-cost note](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) grades what a connection can share:
 
 1. **Shared feature** — "both mention X." Embeddings get here cheaply. This is what naive RAG does.
 2. **Shared structure** — "both exhibit pattern P." Requires understanding, not just matching. Expensive.
@@ -77,7 +77,7 @@ Even single-pass "search, snapshot, connect, bridge, report" would validate whet
 
 Relevant Notes:
 
-- [conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — provides the abstraction depth framework that distinguishes this from naive search
+- [recognition, not linking, is the hard problem in knowledge systems](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — provides the recognition-cost grading that distinguishes this from naive search
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — the boiling cauldron concept maps directly to the iterative search loop
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — deep search results are workshop material needing extraction bridges
 - [linking-theory](./linking-theory.md) — link quality criteria inform how inter-result connections should be expressed

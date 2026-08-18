@@ -32,7 +32,7 @@ This adapted distinction provides a quality check orthogonal to the KB's type sy
 3. **Can it be criticized?** Is there a specific way the explanation could be wrong, not just incomplete? The [falsifier blocks](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) practice operationalizes this.
 4. **Does observed fit discipline the explanation?** Local success is not second-class residue; it is evidence. If the explanation cannot account for where the pattern actually works, fails, or costs too much to maintain, it has verbal explanatory-reach without operational grip.
 
-The first three tests map to the three depths in [discovery](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md): shared feature (adaptive), shared structure (partially explanatory), generative model (fully explanatory, with explanatory-reach). The fourth is not a depth — it holds an explanation at any depth accountable to the observed fit it must organize.
+The first three tests map to the grading of [what must be recognized](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md): shared feature (adaptive), shared structure (partially explanatory), generative model (fully explanatory, with explanatory-reach). The fourth is not a depth — it holds an explanation at any depth accountable to the observed fit it must organize.
 
 ## Scope
 
@@ -50,7 +50,7 @@ Relevant Notes:
 
 - [A borrowed pattern transfers only as far as source and target share a mechanism](./borrowed-patterns-transfer-only-over-shared-mechanism.md) — contrasts: gates borrowing on shared mechanism, where this note selects imported explanations for explanatory-reach
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — grounds: the Scope boundary — explanatory-reach is one property of accumulated knowledge, not the only learning value
-- [conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — parallels: the generative model depth maps to explanatory knowledge with explanatory-reach
+- [recognition, not linking, is the hard problem in knowledge systems](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — contrasts: its recognition-cost grading runs parallel to this note's explanatory grading, with the generative-model level matching explanatory-reach
 - [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — extends: criticism becomes operational through falsifier blocks
 - [computational-model](./computational-model-README.md) — exemplifies: programming-language concepts reaching into KB design is an explanatory-reach bet under audit
 - [systematic prompt variation serves verification and diagnosis, not explanatory-reach testing](./systematic-prompt-variation-serves-verification-and-diagnosis-not.md) — contrasts: explanatory-reach testing varies an explanation's premises, not an LLM prompt surface

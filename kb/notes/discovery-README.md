@@ -12,7 +12,7 @@ A learning operation distinct from constraining and from source-derived reshapin
 
 ## The operation
 
-- [conjecture is seeing the particular as an instance of the general](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — the dual structure (posit the general, recognize the particular); three depths from shared feature to generative model; the hard problem is recognition, not linking
+- [recognition, not linking, is the hard problem in knowledge systems](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — recognizing shared structure is the expensive step, articulating a seen link is cheap; naming a recognized structure amortizes later recognition
 - [discovery lifecycle](./definitions/discovery-lifecycle.md) — definition: the staged path from conjecture to accepted discovery (observe → conjecture → consequences → test → accept → integrate); ampliative traffic enters at the conjecture stage, and the co-arising insight is the degenerate case with the phases telescoped
 - [automated synthesis is missing good oracles](./automated-synthesis-is-missing-good-oracles.md) — why discovery resists automation: no cheap verifier for whether a posited generalization is good
 - [known-target discovery benchmarks show reachability, not discovery](./known-target-discovery-benchmarks-show-reachability-not-discovery.md) — benchmark critique: recovering a planted generalization measures search, not the open-ended act

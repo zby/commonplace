@@ -102,7 +102,7 @@ Relevant Notes:
 
 - [Reach-assessment](./definitions/reach-assessment.md) — defined-in: the capability that selects the theory whose reach could pay, and which retention does not supply
 - [First-principles reasoning selects for explanatory-reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: the property that carries the conjectured gain, and the negative test that judges it
-- [Conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — grounds: theory search posits a general structure and recognizes prior observations as instances of it
+- [Recognition, not linking, is the hard problem in knowledge systems](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — grounds: theory search turns on recognizing prior observations as instances of a proposed structure, the step that carries the cost
 - [Abstract an experience into a lesson only when you can state where the lesson stops](./abstract-an-experience-only-when-you-can-state-the-boundary.md) — grounds: stating applicability conditions is a judgment, not a derivation from the evidence
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the search/evaluation split that keeps theory generation distinct from reach-assessment
 - [Representational form](./definitions/representational-form.md) — defined-in: the natural-language, symbolic, and distributed-parametric axis the parametric contrast runs along

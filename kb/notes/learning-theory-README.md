@@ -10,7 +10,7 @@ covered_by: [deploy-time-learning, constraining, discovery, artifact-analysis, a
 
 How systems learn, verify, and improve. These notes define learning mechanisms, verification gradients, and memory architecture that KB design draws on but that aren't KB-specific — they apply to any system that adapts through durable artifacts.
 
-The area is organized around [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) as the unifying framework. **Accumulation** — adding knowledge to the store — is the most basic learning operation, with [explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) as its key property: facts sit at the low end, theories at the high end. Accumulated knowledge is transformed by [constraining](./definitions/constraining.md) and by working use-shaped artifacts out from it ([theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md)); [conjecture](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) posits the high-explanatory-reach theories that are accumulation's most valuable items.
+The area is organized around [deploy-time learning](./deploy-time-learning-is-the-missing-middle.md) as the unifying framework. **Accumulation** — adding knowledge to the store — is the most basic learning operation, with [explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) as its key property: facts sit at the low end, theories at the high end. Accumulated knowledge is transformed by [constraining](./definitions/constraining.md) and by working use-shaped artifacts out from it ([theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md)); the conjecture phase of the [discovery lifecycle](./definitions/discovery-lifecycle.md) posits the high-explanatory-reach theories that are accumulation's most valuable items, and [recognition](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) is the expensive step in getting there.
 
 ## The kinds of notes under this tag
 
@@ -30,7 +30,7 @@ Every note carrying `learning-theory` also carries at least one of these child t
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — the underspecification foundation: spec-to-program projection and the constrain/relax cycle
 - [the verifiability gradient](./verifiability-gradient.md) — the ladder deploy-time artifacts sit on
 - [both a narrowed and a use-shaped artifact trade generality for reliability, speed, and cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — how the two transforming mechanisms relate
-- [conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — the third operation, and why recognition is its hard problem
+- [recognition, not linking, is the hard problem in knowledge systems](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — where connecting knowledge actually costs, and how naming amortizes it
 
 ## Related Tags
 

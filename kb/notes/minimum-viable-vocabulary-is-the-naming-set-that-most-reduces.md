@@ -15,7 +15,7 @@ The KB's information-theoretic framework turns this imprecise intuition into an 
 
 Two mechanisms already in the KB explain why a set of names can have this effect — why vocabulary, specifically, is the right unit of extraction cost reduction.
 
-**Naming amortizes discovery cost.** [Discovery](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) argues that the highest-value act in a knowledge system is creating a named concept — once a structure has a name, recognizing further instances becomes cheap. Each term in a minimum viable vocabulary is a discovery someone else already made, packaged so the newcomer can recognize instances without repeating the original discovery.
+**Naming amortizes recognition cost.** [Recognition, not linking, is the hard problem in knowledge systems](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) argues that recognizing shared structure is the expensive step in connecting knowledge, and that naming a recognized structure amortizes it — once a structure has a name with usable membership criteria, recognizing further instances becomes cheap. Each term in a minimum viable vocabulary is a recognition someone else already paid for, packaged so the newcomer can recognize instances without repeating the original discovery.
 
 **A minimum vocabulary is shaped for a bounded observer.** It reshapes domain knowledge around a use case, a context budget, and an agent. Here the target is a newcomer and the context budget is minimal. Because the result is shaped by a specific observer's bounds, multiple minimum viable vocabularies for the same domain are expected — a human learning 3D graphics and an agent parsing 3D file formats face different computational limits, so the vocabulary that maximally reduces extraction cost differs for each.
 
@@ -35,6 +35,6 @@ Sources:
 Relevant Notes:
 
 - [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: MVV is a concrete instance of deterministic transformation that makes structure accessible to bounded observers
-- [conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — mechanism: naming amortizes discovery cost; MVV packages pre-named structures for reuse by newcomers
+- [recognition, not linking, is the hard problem in knowledge systems](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — mechanism: naming amortizes recognition cost; MVV packages pre-named structures for reuse by newcomers
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — enables: MVV is knowledge compressed to fit context constraints when full domain methodology won't fit
 - [agent statelessness means the context engine should inject context automatically](./agent-statelessness-means-the-context-engine-should-inject-context.md) — extends: for agents, MVV must be injected each session rather than retained

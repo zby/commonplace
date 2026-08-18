@@ -48,7 +48,7 @@ One connection is a tension rather than support: [the boundary of automation is 
 
 6. **"Make the domain counterfactual so pretraining recall cannot carry the score" is an unnamed recurring design move.** Present now in at least three captured sources -- non-standard physics here, esoteric languages in [EsoLang-Bench](./esolang-bench-evaluating-genuine-reasoning-via-esoteric-programming.md), unusual encodings in [SuperARC](./superarc-ait-benchmark-llm-compression-abstraction.md) -- and named nowhere in `kb/notes/`. Naming it would give the anti-recall control a handle separate from leakage control for authored targets. [experiment]
 
-7. **Failures concentrate on latent structure.** Agents handle law-fitting over observed quantities better than positing an unobserved particular (a hidden dark-matter-like species) that the observed trajectories require. This is [conjecture is seeing the particular as an instance of the general](../notes/conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md)'s "the hard problem is recognition" with a machine-side measurement attached. [just-a-reference]
+7. **Failures concentrate on latent structure.** Agents handle law-fitting over observed quantities better than positing an unobserved particular (a hidden dark-matter-like species) that the observed trajectories require. This is [recognition, not linking, is the hard problem in knowledge systems](../notes/recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md)'s "the hard problem is recognition" with a machine-side measurement attached. [just-a-reference]
 
 ## Limitations (our opinion)
 

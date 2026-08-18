@@ -12,14 +12,14 @@ When your index is a list of topics ("memory notes", "linking thoughts"), review
 
 When your index is a list of claims ("structure enables navigation without reading everything", "recognition not linking is the hard problem"), the review loop is cheaper. You can scan the list and ask of each title: *do I still believe this?* The ones that provoke doubt are the ones worth opening. The rest can be skipped. Maintenance cost scales with the number of *doubtful* claims, not the total number of notes.
 
-This is Popper's criterion applied to knowledge management: a claim that can't be challenged can't be maintained. Topic titles hide their commitments; claim titles expose them. The [maturation path in the discovery note](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) is an example — it lists seven claims extracted from the note body precisely so each can be individually challenged and supported or refuted.
+This is Popper's criterion applied to knowledge management: a claim that can't be challenged can't be maintained. Topic titles hide their commitments; claim titles expose them. The history of [recognition, not linking, is the hard problem in knowledge systems](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) is an example — its predecessor title, "conjecture is seeing the particular as an instance of the general", exposed a universal commitment that review then refuted, and the note was rebuilt around the claims that survived.
 
 ---
 
 Relevant Notes:
 
 - [Title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — extends: adds the maintenance/falsification benefit to the traversal benefit already argued there
-- [Conjecture is seeing the particular as an instance of the general](./conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md) — exemplifies: its maturation path is a list of claims extracted for individual challenge
+- [Recognition, not linking, is the hard problem in knowledge systems](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — exemplifies: its exposed universal predecessor claim was refuted under review and the note rebuilt around the surviving claims
 - [Mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — grounds: the Popperian framing that recommendations must be falsifiable to be useful
 
 Derived into:
