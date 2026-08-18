@@ -87,6 +87,7 @@ These cases came from `kb/work/connect-maintenance-observations/`. They are test
 - [storage-weight-across-cases.md](./storage-weight-across-cases.md) - comparison of derivation cases against the many-to-many/churning-edge storage predicate.
 - [model-provenance.md](./model-provenance.md) - model metadata rule for derivation events, one-shot derivatives, reviews, canonical note merge-back, and deterministic generated views.
 - [eigenius-contact-points.md](./eigenius-contact-points.md) - external whole-system witness: the Eigenius typed knowledge-graph platform mapped onto the verification-locus theory, the invalidation ladder, and both flagged gaps.
+- [scienceflow-contact-points.md](./scienceflow-contact-points.md) - contrasting external whole-system witness: recoverable work state, non-rewindable evidence and resource history, source-preserving context folding, and consumer-relative lineage closure.
 - [general-lineage-refresh-state-design.md](./general-lineage-refresh-state-design.md) - deferred weight-3 design for a generic SQLite-backed freshness store, to revisit only when a second churning lineage mesh earns it.
 
 Moved out of this workshop:
