@@ -49,7 +49,7 @@ Component interactions recursively regenerate the interaction network; the netwo
 
 ### Constraints for later Commonplace notes
 
-Never use **autopoiesis**, **autonomy**, **organizational closure**, **reflection**, and **reflexivity** interchangeably. A prose/code system is not autopoietic without component production and a physical/topological living-system account. If “closure” is used for methodology, qualify the distinct relation. Human participation can fit an autonomy analysis without making the institution autopoietic. This source does not classify Commonplace.
+Never use **autopoiesis**, **autonomy**, **organizational closure**, **reflection**, and **reflexivity** interchangeably. A natural-language/code system is not autopoietic without component production and a physical/topological living-system account. If “closure” is used for methodology, qualify the distinct relation. Human participation can fit an autonomy analysis without making the institution autopoietic. This source does not classify Commonplace.
 
 ## Extractable Value
 

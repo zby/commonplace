@@ -67,7 +67,7 @@ For ordinary domain representation, causality is bidirectional correspondence: d
 
 - Do not equate a **self-description** or self-referencing text with reflection; require an account of the causal connection to represented system aspects.
 - Do not infer whole-system transparency or modifiability from reflection; state which aspects are represented, at what granularity, and which kernel remains outside the representation.
-- Keep **procedural versus declarative** separate from Commonplace's **prose versus symbolic** representational forms: Maes classifies how self-representation relates to implementation, not merely its encoding medium.
+- Keep **procedural versus declarative** separate from Commonplace's **natural-language versus symbolic** representational forms: Maes classifies how self-representation relates to implementation, not merely its encoding medium.
 - Treat theory-relativity as a constraint on reach: the vocabulary exposed by a system's self-representation determines the self-questions and self-changes it can formulate.
 - Keep reflective capability separate from activation policy: implicit and explicit reflection concern when reflective reasoning runs, not whether the causal connection exists.
 - Do not use Maes to put human operators inside the system boundary; that move requires the second-order-cybernetics sources.

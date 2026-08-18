@@ -53,7 +53,7 @@ Within each language, traditional reflection causally connects execution and its
 
 ### Constraints on later Commonplace vocabulary
 
-Any proposed **cross-representational reflection** should distinguish (1) a data/representation mapping, (2) a protocol or operation mapping, and (3) causal connection to what those representations govern. Bidirectionality must cover both values and behavior, including whatever counts as reflective/meta-level behavior. A shared repository, readable pair, or common calling convention is not by itself inter-language reflection. Generalizing from languages to prose and formal artifacts must specify the analogue of interpreters, meta-representations, mappings, and causal connection. The paper provides no basis for including humans inside the system boundary and no ruling on whether Commonplace is reflective or reflexive.
+Any proposed **cross-representational reflection** should distinguish (1) a data/representation mapping, (2) a protocol or operation mapping, and (3) causal connection to what those representations govern. Bidirectionality must cover both values and behavior, including whatever counts as reflective/meta-level behavior. A shared repository, readable pair, or common calling convention is not by itself inter-language reflection. Generalizing from programming languages to natural-language and formal artifacts must specify the analogue of interpreters, meta-representations, mappings, and causal connection. The paper provides no basis for including humans inside the system boundary and no ruling on whether Commonplace is reflective or reflexive.
 
 ## Extractable Value
 
@@ -61,11 +61,11 @@ Any proposed **cross-representational reflection** should distinguish (1) a data
 2. **Reflection-versus-meta-programming discriminator** -- different-language reasoning without causal connection remains meta-programming, not reflection. [quick-win]
 3. **Reflective-interface reach** -- cross-language reflection must expose base-level and meta-level behavior, not just ordinary data exchange. [deep-dive]
 4. **Conceptual-versus-implementation boundary** -- a clean layered model may remain analytically necessary even when implementations collapse levels for convenience. [just-a-reference]
-5. **Applicability limit** -- explicit evaluation meta-representations are assumed, which a prose/code generalization must replace with a stated analogue rather than silently inherit. [quick-win]
+5. **Applicability limit** -- explicit evaluation meta-representations are assumed, which a natural-language/code generalization must replace with a stated analogue rather than silently inherit. [quick-win]
 
 ## Limitations (our opinion)
 
-The model is supported by two language pairs but not by a systematic comparison against alternative interoperability architectures. Its transparency criterion is partly a usability property and does not by itself establish reflective causal connection; the latter still comes from traditional reflection in each language. The examples are programming languages with explicit interpreters and meta-level protocols, so direct transfer to asynchronous, human-mediated prose and code artifacts risks turning “mapping” into analogy without an operational account. The paper also says little about authority, verification, persistence, or delayed behavioral effects central to Commonplace's [representational-form](../notes/definitions/representational-form.md) analysis.
+The model is supported by two language pairs but not by a systematic comparison against alternative interoperability architectures. Its transparency criterion is partly a usability property and does not by itself establish reflective causal connection; the latter still comes from traditional reflection in each language. The examples are programming languages with explicit interpreters and meta-level protocols, so direct transfer to asynchronous, human-mediated natural-language and code artifacts risks turning “mapping” into analogy without an operational account. The paper also says little about authority, verification, persistence, or delayed behavioral effects central to Commonplace's [representational-form](../notes/definitions/representational-form.md) analysis.
 
 ## Recommended Next Action
 

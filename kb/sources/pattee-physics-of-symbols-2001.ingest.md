@@ -1,5 +1,5 @@
 ---
-description: "Epistemic-cut vocabulary for symbolic constraints, material dynamics, and the limits of prose/code analogies"
+description: "Epistemic-cut vocabulary for symbolic constraints, material dynamics, and the limits of natural-language/code analogies"
 source_snapshot: "pattee-physics-of-symbols-2001.md"
 ingested: "2026-07-14"
 type: kb/sources/types/ingest-report.md
@@ -49,7 +49,7 @@ Stored symbolic constraints control rate-dependent construction; material dynami
 
 ### Constraints for later Commonplace notes
 
-Do not equate the epistemic cut with Markdown/code, neural/symbolic, or prose/formal boundaries. Those may be useful analogies only if the mapping identifies symbol vehicles, interpreters, control/measurement directions, embodiment, and what is lost when the descriptive cut moves. Distinguish necessary bridges from sufficient reflection criteria. This paper does not decide Commonplace's status.
+Do not equate the epistemic cut with Markdown/code, neural/symbolic, or natural-language/formal boundaries. Those may be useful analogies only if the mapping identifies symbol vehicles, interpreters, control/measurement directions, embodiment, and what is lost when the descriptive cut moves. Distinguish necessary bridges from sufficient reflection criteria. This paper does not decide Commonplace's status.
 
 ## Extractable Value
 

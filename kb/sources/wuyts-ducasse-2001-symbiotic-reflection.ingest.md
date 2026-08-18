@@ -24,7 +24,7 @@ Wuyts and Ducasse define **symbiotic reflection** as an extension of reflective 
 
 ## Connections Found
 
-This source is the early technical anchor for [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md): causal connection and mutual access/action are stronger conditions than co-location or co-evolution. [Representational form](../notes/definitions/representational-form.md) remains the local vocabulary for any later generalization, because the paper's distinction is between programming languages and paradigms rather than Commonplace's prose, symbolic, and distributed-parametric forms.
+This source is the early technical anchor for [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md): causal connection and mutual access/action are stronger conditions than co-location or co-evolution. [Representational form](../notes/definitions/representational-form.md) remains the local vocabulary for any later generalization, because the paper's distinction is between programming languages and paradigms rather than Commonplace's natural-language, symbolic, and distributed-parametric forms.
 
 ## Inherited Vocabulary
 
@@ -53,7 +53,7 @@ Classic reflection connects the interpreter/program to its own execution-state r
 
 ### Constraints on later Commonplace vocabulary
 
-Later notes should reserve **reflection** for manipulation of a causally connected representation, distinguish introspection from intercession, and state the theory and system boundary under which “self” is identified. **Cross-representational** or **symbiotic** reflection should require mutual operative access, not merely prose and code discussing one another. Entity mapping must be named as a mechanism rather than assumed. The paper does not decide whether Commonplace meets these conditions, does not include people inside the boundary, and does not license using **reflexive** as a synonym for its computational term **reflective**.
+Later notes should reserve **reflection** for manipulation of a causally connected representation, distinguish introspection from intercession, and state the theory and system boundary under which “self” is identified. **Cross-representational** or **symbiotic** reflection should require mutual operative access, not merely natural-language artifacts and code describing one another. Entity mapping must be named as a mechanism rather than assumed. The paper does not decide whether Commonplace meets these conditions, does not include people inside the boundary, and does not license using **reflexive** as a synonym for its computational term **reflective**.
 
 ## Extractable Value
 

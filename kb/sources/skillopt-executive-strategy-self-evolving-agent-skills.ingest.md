@@ -24,7 +24,7 @@ SkillOpt treats an agent skill document as trainable external state. A separate 
 
 ## Connections Found
 
-- [Readable artifact loop is the tractable unit for continual learning](../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) -- **evidence**. SkillOpt is a concrete prose-only readable-artifact loop: frozen model, mutable skill, bounded text edits, validation gate, and compact deployed artifact.
+- [Readable artifact loop is the tractable unit for continual learning](../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) -- **evidence**. SkillOpt is a concrete natural-language-only readable-artifact loop: frozen model, mutable skill, bounded text edits, validation gate, and compact deployed artifact.
 - [Deploy-time learning is the missing middle](../notes/deploy-time-learning-is-the-missing-middle.md) -- **evidence**. The system learns by updating durable skill text across runs, not by changing weights at inference.
 - [Continual learning open problem is behaviour, not knowledge](../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md) -- **evidence**. The retained artifact changes future behavior through instruction authority, so the learned object is behavioral policy rather than passive knowledge.
 - [Diagnostic richness constrains outer-loop learning quality](../notes/diagnostic-richness-constrains-outer-loop-learning-quality.md) -- **evidence**. Rollout traces, success/failure contrast, rejected edits, and slow/meta updates supply more diagnostic state than a scalar score alone.
@@ -33,12 +33,12 @@ SkillOpt treats an agent skill document as trainable external state. A separate 
 - [Trajectory-Informed Memory Generation for Enhanced Agentic Reasoning](trajectory-informed-memory-generation-self-improving-agents.ingest.md) -- **compares-with**. Both learn from execution trajectories; TIMG produces retrievable tips, while SkillOpt edits one portable skill document.
 - [Agent Workflow Memory](agent-workflow-memory.ingest.md) -- **compares-with**. Both induce procedural text from traces; SkillOpt adds bounded patches, rejected-edit memory, and explicit held-out selection.
 - [Skill Synthesis: Materializing Knowledge as Skills](skill-synthesis-materializing-knowledge-as-skills-2032179291031.ingest.md) -- **compares-with**. Skill Synthesis derives skills from source/domain corpora; SkillOpt optimizes skills from scored rollouts.
-- [Meta-Harness: End-to-End Optimization of Model Harnesses](meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md) -- **compares-with**. Both optimize readable artifacts around a fixed model from evaluation feedback; Meta-Harness changes code harnesses, while SkillOpt changes prose skills.
+- [Meta-Harness: End-to-End Optimization of Model Harnesses](meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md) -- **compares-with**. Both optimize readable artifacts around a fixed model from evaluation feedback; Meta-Harness changes code harnesses, while SkillOpt changes natural-language skills.
 - [Improving AI Skills with AutoResearch Evals Skills](improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md) -- **compares-with**. That practitioner account emphasizes manual comprehension and judge calibration; SkillOpt automates more of the loop in hard-oracle domains but still depends on scored trajectories and held-out selection.
 
 ## Extractable Value
 
-- **Skill documents can be trained as readable external policy** [quick-win]. SkillOpt is strong evidence for treating skill prose as a behavior-shaping artifact that can be improved without weight updates.
+- **Skill documents can be trained as readable external policy** [quick-win]. SkillOpt is strong evidence for treating skill text as a behavior-shaping artifact that can be improved without weight updates.
 - **Validation gates are the practical boundary for automated skill evolution** [quick-win]. The strict held-out gate is what lets text edits become a learning loop instead of uncontrolled prompt rewriting.
 - **Textual learning-rate budgets and bounded edits reduce skill drift** [experiment]. The add/delete/replace budget gives an operational pattern for future skill revision tools: constrain the edit surface before evaluating effects.
 - **Rejected edits are retained learning artifacts** [experiment]. Keeping a rejected-edit buffer turns failed proposed changes into negative evidence for later optimizer calls.
@@ -56,4 +56,4 @@ SkillOpt treats an agent skill document as trainable external state. A separate 
 
 ## Recommended Next Action
 
-Write a note tentatively titled **Skill documents can be trained as readable external policy**. It should connect SkillOpt to the readable-artifact loop, deploy-time learning, diagnostic richness, and verifiability gradient notes. The central claim should be that scored rollouts plus held-out validation can make prose skills into trainable external policy artifacts, with the boundary condition that the evaluator must be good enough to make text edits learnable rather than merely plausible.
+Write a note tentatively titled **Skill documents can be trained as readable external policy**. It should connect SkillOpt to the readable-artifact loop, deploy-time learning, diagnostic richness, and verifiability gradient notes. The central claim should be that scored rollouts plus held-out validation can make natural-language skills into trainable external policy artifacts, with the boundary condition that the evaluator must be good enough to make text edits learnable rather than merely plausible.

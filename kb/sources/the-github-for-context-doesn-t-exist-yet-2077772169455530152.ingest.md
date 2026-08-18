@@ -40,7 +40,7 @@ This report is strongest as a production witness for the KB's artifact-side lear
 
 6. **Trace learning should terminate in proposals at weak-oracle boundaries.** The reported harness reverse-constructs candidate improvements from production traces but returns them to maintainers with provenance, evaluations, bounded promotion, and approval. This is independent practitioner evidence for candidate-stage trace memory and operation-by-operation authority. [quick-win]
 
-7. **Executable context inherits software supply-chain risk.** Hardcoded secrets plus imported public skill repositories triggered an audit even without a reported breach. Once prose can instruct agents and tools, provenance, permission scope, secret scanning, retention, deletion, and rollback must govern the context before execution rather than arrive as storage hygiene afterward. [just-a-reference]
+7. **Executable context inherits software supply-chain risk.** Hardcoded secrets plus imported public skill repositories triggered an audit even without a reported breach. Once natural-language artifacts can instruct agents and tools, provenance, permission scope, secret scanning, retention, deletion, and rollback must govern the context before execution rather than arrive as storage hygiene afterward. [just-a-reference]
 
 ## Limitations (our opinion)
 

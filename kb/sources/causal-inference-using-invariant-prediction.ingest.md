@@ -35,7 +35,7 @@ This source directly supports [reach assessment](../notes/definitions/reach-asse
 
 ## Limitations (our opinion)
 
-The method is assumption-dependent and environment-dependent. It is strongest when multiple environments or interventions are available and when the invariance assumptions match the data-generating process. It does not make arbitrary observational data sufficient for causal inference, and it does not solve the prose version of reach assessment. The KB should use it as a formal exemplar, not as a universal reach oracle.
+The method is assumption-dependent and environment-dependent. It is strongest when multiple environments or interventions are available and when the invariance assumptions match the data-generating process. It does not make arbitrary observational data sufficient for causal inference, and it does not solve the natural-language route to reach assessment. The KB should use it as a formal exemplar, not as a universal reach oracle.
 
 ## Recommended Next Action
 

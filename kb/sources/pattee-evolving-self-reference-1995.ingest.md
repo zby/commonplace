@@ -56,7 +56,7 @@ Treat matter-symbol complementarity only as a structural analogy for complementa
 1. **Complementarity without ontological dualism** -- supports distinguishing representational regimes while rejecting the inference that they are isolated substances. [deep-dive]
 2. **Function is system-relative** -- a symbol vehicle's role depends on interpreter, construction/control use, and environment, not syntax alone. [deep-dive]
 3. **Necessary-not-sufficient discipline** -- semantic closure is presented as necessary for open-ended evolution, never as a sufficient checklist. [quick-win]
-4. **Explicit analogy limit** -- blocks direct transfer of biological semantic closure to prose/code co-maintenance. [quick-win]
+4. **Explicit analogy limit** -- blocks direct transfer of biological semantic closure to natural-language/code co-maintenance. [quick-win]
 
 ## Limitations (our opinion)
 
@@ -64,4 +64,4 @@ This is a theoretical synthesis rather than a test of software or knowledge syst
 
 ## Recommended Next Action
 
-Use this ingest only as a limitation-bearing structural analogy in [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md), retaining its explicit non-equivalence with prose/code relations.
+Use this ingest only as a limitation-bearing structural analogy in [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md), retaining its explicit non-equivalence with natural-language/code relations.

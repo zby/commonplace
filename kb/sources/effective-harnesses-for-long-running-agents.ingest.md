@@ -34,7 +34,7 @@ The report is practitioner evidence for [session history should not be the defau
 
 3. **A feature ledger counters premature completion by making incompleteness explicit** -- Expanding the initial prompt into more than 200 initially failing behaviors prevents a later agent from equating visible progress with task completion. The symbolic `passes` field is valuable because its mutation is narrow and tied to end-to-end evidence. [experiment]
 
-4. **Clean-state handoff is a quality invariant, not merely a summary** -- Descriptive progress text is paired with a working commit and a basic end-to-end test on startup, so later sessions can detect divergence between the record and executable reality. This gives cross-session continuity a verification surface instead of trusting prose alone. [quick-win]
+4. **Clean-state handoff is a quality invariant, not merely a summary** -- Descriptive progress text is paired with a working commit and a basic end-to-end test on startup, so later sessions can detect divergence between the record and executable reality. This gives cross-session continuity a verification surface instead of trusting the progress text alone. [quick-win]
 
 5. **Frontier scaffolding can be measured by function rather than file count** -- The source identifies four surviving functions around a frontier model: orientation, task decomposition, durable state, and verification. Those functions are a more stable longitudinal measurement target than the exact `claude-progress.txt`, JSON, and shell files used in this experiment. [deep-dive]
 

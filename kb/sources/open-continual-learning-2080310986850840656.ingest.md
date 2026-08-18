@@ -29,7 +29,7 @@ This source is a compact design sketch that provides practitioner framing for [C
 ## Extractable Value
 
 1. **An operational four-stage loop for organization-specific adaptation** -- expert elicitation, task/evaluation construction, agent fitting, and trace collection gives the deploy-time-learning framing a compact process vocabulary. [quick-win]
-2. **Evaluations and environments as transformation artifacts** -- the post places an intermediate task surface between tacit expert knowledge and agent behavior, suggesting that domain mining should produce executable or inspectable evaluation contexts rather than only prose summaries. [experiment]
+2. **Evaluations and environments as transformation artifacts** -- the post places an intermediate task surface between tacit expert knowledge and agent behavior, suggesting that domain mining should produce executable or inspectable evaluation contexts rather than only natural-language summaries. [experiment]
 3. **Observability as part of the learning loop** -- it explicitly couples trace collection and curation to continual improvement, which is a useful reminder that feedback infrastructure is part of adaptation rather than an after-the-fact dashboard. [quick-win]
 4. **Open skills as an adoption surface** -- the post identifies skills as a low-friction entry point for turning accumulated task knowledge into behavior-shaping artifacts, while leaving their routing, authority, and review policy open. [just-a-reference]
 

@@ -24,7 +24,7 @@ This 2002 version defines **symbiotic reflection** as reflection between two lan
 
 ## Connections Found
 
-The durable relationship is a `compares-with` lineage edge to [the 2001 snapshot](./wuyts-ducasse-2001-symbiotic-reflection.md). It should not add a second evidence vote to [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md). [Representational form](../notes/definitions/representational-form.md) still supplies the local constraint on generalizing from programming paradigms to prose/symbolic forms.
+The durable relationship is a `compares-with` lineage edge to [the 2001 snapshot](./wuyts-ducasse-2001-symbiotic-reflection.md). It should not add a second evidence vote to [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md). [Representational form](../notes/definitions/representational-form.md) still supplies the local constraint on generalizing from programming paradigms to natural-language/symbolic forms.
 
 ## Inherited Vocabulary
 
@@ -62,7 +62,7 @@ Use this version to confirm wording and lineage, not to double-count support alr
 
 ## Limitations (our opinion)
 
-The main limitation is evidential dependence: this is a related version of the 2001 work, with the same authors, system, mechanisms, and examples. It is not independent corroboration and should not increase confidence by source count. Like the earlier paper, it treats a relatively simple object-to-term reification and explicitly leaves tighter concept integration as future work (printed p. 15; PDF p. 15). It does not test prose/code regimes, delayed artifact workflows, authority, verification, or human-inclusive boundaries.
+The main limitation is evidential dependence: this is a related version of the 2001 work, with the same authors, system, mechanisms, and examples. It is not independent corroboration and should not increase confidence by source count. Like the earlier paper, it treats a relatively simple object-to-term reification and explicitly leaves tighter concept integration as future work (printed p. 15; PDF p. 15). It does not test natural-language/code regimes, delayed artifact workflows, authority, verification, or human-inclusive boundaries.
 
 ## Recommended Next Action
 

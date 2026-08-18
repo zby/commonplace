@@ -24,7 +24,7 @@ Brichau et al. start from a SOUL/Smalltalk system already described as symbiotic
 
 ## Connections Found
 
-The strongest landing point is [Unified calling conventions enable bidirectional refactoring](../notes/unified-calling-conventions-enable-bidirectional-refactoring.md): this source shows that a common call surface needs semantic mappings, not only shared names. [Representational form](../notes/definitions/representational-form.md) prevents equating programming-paradigm mismatch with Commonplace's prose/symbolic distinction. The paper is secondary to the 2001 and 2006 sources for defining reflection itself.
+The strongest landing point is [Unified calling conventions enable bidirectional refactoring](../notes/unified-calling-conventions-enable-bidirectional-refactoring.md): this source shows that a common call surface needs semantic mappings, not only shared names. [Representational form](../notes/definitions/representational-form.md) prevents equating programming-paradigm mismatch with Commonplace's natural-language/symbolic distinction. The paper is secondary to the 2001 and 2006 sources for defining reflection itself.
 
 ## Inherited Vocabulary
 
@@ -62,7 +62,7 @@ Later notes should not treat **transparent invocation**, **shared namespace**, o
 
 ## Limitations (our opinion)
 
-This is ongoing implementation work rather than a completed general model. It presents a single language pair, openly leaves hard semantic mappings unresolved, and uses “symbiotic reflection” more loosely than the more explicit conditions in Wuyts–Ducasse 2001 and Gybels et al. 2006. Its practical examples show feasibility but do not evaluate correctness, performance, completeness, or alternative mappings. For Commonplace, the source can ground mapping difficulty but not the stronger claim that prose and code form a reflective system.
+This is ongoing implementation work rather than a completed general model. It presents a single language pair, openly leaves hard semantic mappings unresolved, and uses “symbiotic reflection” more loosely than the more explicit conditions in Wuyts–Ducasse 2001 and Gybels et al. 2006. Its practical examples show feasibility but do not evaluate correctness, performance, completeness, or alternative mappings. For Commonplace, the source can ground mapping difficulty but not the stronger claim that natural-language artifacts and code form a reflective system.
 
 ## Recommended Next Action
 

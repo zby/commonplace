@@ -63,7 +63,7 @@ The `/connect` discovery run found 9 new connections beyond the 6 already establ
 
 5. **Module boundaries unify scoping, loading, and type functions.** Three KB notes approach the same insight from different angles (scoping theory, type economics, practitioner module isolation). This source is better used as a suggestive practitioner anecdote than as the empirical anchor for that synthesis. [deep-dive]
 
-6. **Voice encoding as structured constraints vs. prose descriptions.** The reported numeric scales and banned-word lists provide a compact practitioner example of prescriptive and prohibitive style strategies. [just-a-reference]
+6. **Voice encoding as structured constraints vs. natural-language descriptions.** The reported numeric scales and banned-word lists provide a compact practitioner example of prescriptive and prohibitive style strategies. [just-a-reference]
 
 7. **Claim-strength audit needed before reuse.** Because this source is dense with potentially useful claims but thin in evidence, the immediate value is auditing downstream notes to ensure they cite it as anecdotal practitioner evidence rather than as a deeply verified system reference. [quick-win]
 

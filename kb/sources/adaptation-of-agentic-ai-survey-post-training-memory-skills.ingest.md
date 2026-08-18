@@ -32,7 +32,7 @@ The report's main non-actionable maintenance signal: [research/adaptation-agenti
 
 ## Extractable Value
 
-1. **Optimization locus and supervision signal are not enough; artifact substrate is the missing axis.** High reach. A1/A2/T1/T2 cleanly separates agent-vs-tool and execution-vs-output signals, but it hides whether the durable learned result lives in weights, external tools, memory stores, prose policies, or symbolic artifacts. This is exactly where the KB's substrate-coevolution frame adds value. [quick-win]
+1. **Optimization locus and supervision signal are not enough; artifact substrate is the missing axis.** High reach. A1/A2/T1/T2 cleanly separates agent-vs-tool and execution-vs-output signals, but it hides whether the durable learned result lives in weights, external tools, memory stores, natural-language policies, or symbolic artifacts. This is exactly where the KB's substrate-coevolution frame adds value. [quick-win]
 
 2. **Memory and skills are adaptation mechanisms, not side modules.** High reach. The survey's surprising useful move is to place adaptive memory, skill libraries, retrievers, and subagents inside the same adaptation map as post-training. This supports the KB claim that memory crosses storage, context engineering, and learning, while adding a broader literature vocabulary for tool-side adaptation. [quick-win]
 
