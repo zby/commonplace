@@ -56,7 +56,9 @@ for the paper.
    no official or directly verified repository is available, report that a
    code-grounded ingest cannot be completed and offer the ordinary paper ingest.
 
-For each selected GitHub repository, normalize the URL to
+Code grounding currently supports only GitHub repositories; if a verified
+repository is hosted elsewhere, report that limitation and offer the ordinary
+paper ingest. For each selected GitHub repository, normalize the URL to
 `https://github.com/{owner}/{repo}` and use
 `related-systems/{owner}--{repo}/` as its checkout.
 

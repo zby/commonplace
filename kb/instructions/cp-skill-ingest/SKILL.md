@@ -64,8 +64,10 @@ wins.
    lens.** A source is experiment-bearing when it reports outcomes from an
    intervention, benchmark comparison, ablation, controlled study, or other
    empirical evaluation as evidence for a design. Before settling the
-   connections, extractable value, or limitations, read
-   `kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md`.
+   connections, extractable value, or limitations, read the note
+   `learning-inside-a-fixed-decomposition-inherits-its-mistakes.md`: in an
+   installed project under `kb/commonplace/notes/`, in the Commonplace source
+   checkout under `kb/notes/`.
    Identify:
    - Which signals and histories could condition the learned behaviour
    - Which responses or operations the learner could compose
