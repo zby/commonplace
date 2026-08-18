@@ -1,7 +1,7 @@
 ---
 description: Artifact analysis records retained behavior-shaping artifacts by storage substrate, representational form, lineage, and behavioral authority so review evidence, invalidation, and rollback follow how artifacts actually act
 type: kb/types/note.md
-traits: [has-comparison]
+traits: [has-comparison, has-external-sources]
 tags: [learning-theory, artifact-analysis]
 ---
 
@@ -92,6 +92,9 @@ Each field blocks a different category mistake.
 | Commonplace validators | Repo / installed package; codified from conventions | Symbolic Python checks | Advisory or enforcing validation depending on command or hook |
 | Generated directory index | Repo; derived view over directory contents | Structured Markdown: natural-language labels plus symbolic frontmatter | Navigation aid; should refresh when sources change |
 | RAG corpus | Vector store; canonical or derived depending on ingestion | Natural-language records plus distributed-parametric embedding/ranking path | Retriever/ranker influences selection; selected records advise the model |
+| Intern-S2-Mobius checkpoint | Model-artifact store; learned update with paper-reported conversion and training lineage | Distributed-parametric shared routed experts and layer-local token mixers and experts | Hidden-state routing selects shared experts; decoder traversal and residual integration give the selected parameters behavioral force |
+
+The [code-grounded Mobius ingest](../sources/intern-s2-mobius-arxiv-v1.ingest.md) makes the checkpoint a bounded same-form role-separation case. In the inspected release, each decoder layer is assigned to one of four default shared MoE blocks by layer index; a learned top-k router selects eight of 256 experts by default, and the routed output is combined with a per-layer shared expert. The paper calls the shared FFN pools Memory and the attention or linear-attention stages Reasoners. These labels mark different architectural roles and authority paths, but both operative parts remain distributed-parametric. The split therefore does not supply localized-artifact governance: it does not create readable claims with claim-level provenance, selective invalidation, or selective rollback. Static inspection establishes the routing mechanism, not the paper's efficiency, latent-reasoning, self-evolution, or semantic-memory claims.
 
 ## Consequences for memory design
 
