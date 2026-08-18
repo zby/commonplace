@@ -10,9 +10,6 @@ These files are the workshop's primary deliverable. They freeze the state availa
 - [Discovery index](./discovery-README.snapshot.md) — the exact navigation surface changed when the note was retained
 - [Session and process record](./session-and-process-record.md) — exact human prompts and the recoverable record of agent interpretation, synthesis, audit, and acceptance
 - [Restructure session record](./restructure-session-record.md) — second episode (the atomic restructure), captured contemporaneously in the performing session; a record, not a frozen snapshot, and the only fully non-reconstructed process evidence in this workshop
-- [Writing-machinery integration](./writing-machinery-integration.md) — causal record of the later claim-disposition revision and its current evidential status
-- [Multistage skill before claim disposition](./cp-skill-write-multistage.before-claim-disposition.snapshot.md) — exact pre-revision procedure
-- [Multistage skill after claim disposition](./cp-skill-write-multistage.after-claim-disposition.snapshot.md) — exact revised procedure before subsequent live edits
 
 Each artifact snapshot contains a two-line provenance preamble followed by the source file's complete content as it stood at capture time. Relative links inside snapshots retain their source spelling and are evidence, not workshop navigation links.
 

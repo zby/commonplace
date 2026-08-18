@@ -59,7 +59,7 @@ This episode is not evidence of compounding yet, but it may supply the retained 
 
 The first transition would show that theory helped produce a machinery improvement. The third step is needed to show that the machinery's retained benefit improved later revision productivity. The causal record should preserve which claims informed the machinery change, what operative artifact changed, and what later comparison makes the benefit observable. Merely citing, loading, or translating the note into an instruction would show reuse and installation, not by itself compounding.
 
-Step 2 has not happened: the note's mechanisms — warrant per claim-scope pair, the two thresholds — have not been folded into writing or review machinery. The concurrent claim-disposition revision of the multistage skill is a different claim, a process correction prompted by the artifact-shape failure rather than an installation of this epistemology, and its evidence was deliberately removed from this workshop to keep the claims separate.
+Step 2 has not happened: the note's mechanisms — warrant per claim-scope pair, the two thresholds — have not been folded into writing or review machinery.
 
 ## The second episode inverts the attribution profile
 
