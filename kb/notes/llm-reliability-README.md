@@ -7,11 +7,11 @@ index_key: llm-reliability
 
 # LLM reliability
 
-LLM output deviates from what the user intended for three distinct reasons — underspecification of the spec, error by the interpreter, and indeterminism in sampling — each a property of a different part of the system and each needing a different remedy. This area covers that taxonomy, the detection and correction machinery (oracles, voting, verification), and architectural responses (separation, bounded context) for managing all three.
+LLM output deviates from what the user intended for three distinct reasons — underspecification of the spec, error by the interpreter, and indeterminism in sampling — each diagnosed by a different question and each repaired at a different primary surface. This area covers that taxonomy, the detection and correction machinery (oracles, voting, verification), and architectural responses (separation, bounded context) for managing all three.
 
 ## The Taxonomy
 
-- [LLM output deviation has three sources with non-substitutable remedies](./llm-output-deviation-has-three-sources-with-non-substitutable.md) — the synthesis: why the three are properties of different objects, why prompt narrowing, error correction, and sampling control cannot stand in for each other, and how to tell the three apart empirically
+- [LLM output deviation requires three-way diagnosis](./llm-output-deviation-requires-three-way-diagnosis.md) — the synthesis: the three diagnostic questions, why prompt narrowing, error correction, and sampling control target different relations and so cannot completely substitute for one another, and how to tell the three apart empirically
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — source 1: the spec admits multiple valid interpretations; a property of the specification language that even a perfect interpreter faces
 - [out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — source 2, interpreter failure: the output falls outside what the spec allows; a property of the interpreter, with the worked failure catalogue
 - [traditional-software-can-bracket-executor-conformance-llm-systems](./traditional-software-can-bracket-executor-conformance-llm-systems.md) — the foundation under the taxonomy: classical stacks can assume executor conformance and unique meaning, LLM systems can assume neither, so error analysis needs three questions where programming needed one

@@ -38,7 +38,7 @@ So error analysis for an LLM system irreducibly needs three questions where clas
 2. Did the interpreter honor what the spec means? — interpreter failure, a property of the interpreter.
 3. Which sample did I draw? — indeterminism, a property of the sampling process.
 
-[The three-source taxonomy](./llm-output-deviation-has-three-sources-with-non-substitutable.md) is therefore not a new phenomenon list assembled from LLM symptoms. It is the classical analysis with both brackets removed. That is also why its members cannot be merged or traded against each other: they were never one thing, only jointly invisible.
+[The three-way diagnosis](./llm-output-deviation-requires-three-way-diagnosis.md) is therefore not a new phenomenon list assembled from LLM symptoms. It is the classical analysis with both brackets removed. That is also why its questions cannot be merged or traded against each other: they were never one question, only jointly invisible.
 
 ## Keeping the category coherent
 
@@ -71,7 +71,7 @@ Relevant Notes:
 
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — grounds: why natural language supports no conforming-interpreter standard and no attainable formal semantics, which is what makes the second norm weak but non-vacuous
 - [out-of-spec output is a failure of the interpreter, not the spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — grounds: the component claim for interpreter failure, with the worked catalogue of outputs falling outside `V`
-- [LLM output deviation has three sources with non-substitutable remedies](./llm-output-deviation-has-three-sources-with-non-substitutable.md) — extends: supplies the reason the taxonomy has exactly these three members — it is the classical two-norm analysis with both brackets removed
+- [LLM output deviation requires three-way diagnosis](./llm-output-deviation-requires-three-way-diagnosis.md) — extends: supplies the reason the diagnosis has exactly these three questions — it is the classical two-norm analysis with both brackets removed
 - [constraining](./definitions/constraining.md) — defined-in: the narrowing operation this note reads as re-purchasing the conformance bracket
 - [scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — mechanism: the architectural form of re-purchasing the bracket, moving exact bookkeeping to a substrate whose conformance can be assumed
 - [oracle strength spectrum](./oracle-strength-spectrum.md) — mechanism: the graded machinery that re-establishes conformance per output when it cannot be assumed

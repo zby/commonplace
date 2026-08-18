@@ -21,4 +21,4 @@ Relevant Notes:
 
 - [A bare writing prompt does not determine its intended contribution](./a-bare-writing-prompt-does-not-determine-its-intended-contribution.md) — grounds: establishes the missing information that either memory or a fallback guess must supply
 - [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — mechanism: retained intent changes a later request only when the memory path activates it
-- [LLM output deviation has three sources with non-substitutable remedies](./llm-output-deviation-has-three-sources-with-non-substitutable.md) — extends: separates changing the assembled input from improving its interpreter
+- [LLM output deviation requires three-way diagnosis](./llm-output-deviation-requires-three-way-diagnosis.md) — extends: separates changing the assembled input from improving its interpreter

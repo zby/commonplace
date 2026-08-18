@@ -35,7 +35,7 @@ Relevant Notes:
 
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the idealised two-phenomena model this note extends; covers underspecification and indeterminism in depth
 - [execution indeterminism is a property of the sampling process](./execution-indeterminism-is-a-property-of-the-sampling-process.md) — sibling: the second phenomenon, a property of the execution engine
-- [LLM output deviation has three sources with non-substitutable remedies](./llm-output-deviation-has-three-sources-with-non-substitutable.md) — synthesis: the three-source taxonomy this note is part of, and why only error detection and correction address this source
+- [LLM output deviation requires three-way diagnosis](./llm-output-deviation-requires-three-way-diagnosis.md) — synthesis: the three-question diagnosis this note is part of, and why error detection and correction is the primary repair surface for out-of-spec output
 - [LLM reliability](./llm-reliability-README.md) — parent area: deviation sources plus the verification and correction machinery
 - [traditional software can bracket executor conformance; LLM systems cannot](./traditional-software-can-bracket-executor-conformance-llm-systems.md) — grounds: why the failure attribution is legitimate — the interpreter is held to a role norm, like a compiler to a language standard, and for LLMs that norm cannot be bracketed
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — remedy: the general theory of error correction applicable to interpreter failures

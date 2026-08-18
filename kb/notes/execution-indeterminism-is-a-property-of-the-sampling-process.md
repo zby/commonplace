@@ -25,7 +25,7 @@ Relevant Notes:
 
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — elaborates: the full framework including how indeterminism and underspecification layer on each other; covers the deeper phenomenon (underspecification as a property of the specification language) that indeterminism obscures
 - [out-of-spec output is a failure of the interpreter, not the spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — sibling: the third phenomenon, also unaddressed by sampling control
-- [LLM output deviation has three sources with non-substitutable remedies](./llm-output-deviation-has-three-sources-with-non-substitutable.md) — synthesis: the three-source taxonomy this note is part of, and why sampling control cannot stand in for the other remedies
+- [LLM output deviation requires three-way diagnosis](./llm-output-deviation-requires-three-way-diagnosis.md) — synthesis: the three-question diagnosis this note is part of, and why sampling control is not a complete substitute for the other remedies
 - [LLM reliability](./llm-reliability-README.md) — parent area: deviation sources plus the verification and correction machinery
 
 Sources:

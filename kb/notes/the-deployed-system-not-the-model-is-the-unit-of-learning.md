@@ -29,7 +29,7 @@ Because [learning inside a fixed decomposition inherits its mistakes](./learning
 
 A capable model can sometimes compensate for a poor fixed layer. It can infer an intention a prompt omitted, reconstruct state that the harness failed to preserve, or reproduce an operation that should have been a tool. Such compensation can improve measured behavior, but it does not show that the fixed decomposition was right. It may instead spend model capacity and inference cost repairing the same system error on every run.
 
-This limitation is causal rather than terminological because [LLM output deviation has three sources with non-substitutable remedies](./llm-output-deviation-has-three-sources-with-non-substitutable.md). Those remedies act on different parts of the system:
+This limitation is causal rather than terminological because [LLM output deviation requires three-way diagnosis](./llm-output-deviation-requires-three-way-diagnosis.md). Those remedies have different primary targets in the system:
 
 - Underspecification can require revising the natural-language specification, changing assembled context, or committing a settled interpretation to a symbolic artifact.
 - Interpreter failure can require a better model, but it can also require detection, correction, validation, or architectural separation outside the failing interpreter.
@@ -59,7 +59,7 @@ Relevant Notes:
 - [Behavior-determining organization](./definitions/behavior-determining-organization.md) — defined-in: identifies retained components by their causal effect on future behavior rather than by whether they are model weights
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — mechanism: distinguishes evidence-responsive learning from durable but unevaluated maintenance changes
 - [Continual learning's open problem is governing behaviour change, not storing knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) — context: continual learning is the regime where excluding non-model components is most consequential; this note's unit claim applies there and beyond
-- [LLM output deviation has three sources with non-substitutable remedies](./llm-output-deviation-has-three-sources-with-non-substitutable.md) — grounds: specification, interpreter, and sampling failures require access to different repair surfaces
+- [LLM output deviation requires three-way diagnosis](./llm-output-deviation-requires-three-way-diagnosis.md) — grounds: specification, interpreter, and sampling failures require access to different repair surfaces
 - [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — grounds: model-only optimization cannot repair consequential choices excluded from its effective update space
 - [The bitter lesson selects production methods, not representational forms](./the-bitter-lesson-selects-production-methods-not-representational.md) — grounds: computational production makes natural-language and symbolic system components compatible with the lesson
 - [Moving the interpretation-enforcement boundary requires cross-form coverage](./moving-the-interpretation-enforcement-boundary-requires-coverage.md) — mechanism: governing transfers between model interpretation and formal enforcement requires access to both sides and their mapping

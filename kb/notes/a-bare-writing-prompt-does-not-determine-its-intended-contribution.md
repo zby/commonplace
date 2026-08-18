@@ -23,7 +23,7 @@ Relevant Notes:
 
 - [Agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — exemplifies: a bare writing prompt admits many valid contributions and therefore cannot identify one without additional context
 - [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — mechanism: retained intent can complete a bare commission only when the memory path activates it for the write
-- [LLM output deviation has three sources with non-substitutable remedies](./llm-output-deviation-has-three-sources-with-non-substitutable.md) — extends: model improvement repairs interpreter failure, not information missing from the available specification and context
+- [LLM output deviation requires three-way diagnosis](./llm-output-deviation-requires-three-way-diagnosis.md) — extends: model improvement repairs interpreter failure, not information missing from the available specification and context
 
 Operationalized into:
 
