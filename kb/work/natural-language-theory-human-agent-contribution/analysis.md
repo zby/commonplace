@@ -41,7 +41,7 @@ The retained artifact depends on the whole chain. Removing the human steps leave
 
 ### Occurrence
 
-The episode produced a retained note and a navigation update. That establishes an installed revision to Commonplace's natural-language theory layer. It does not by itself establish that later behavior used the change. This workshop reads the note as the object of an attribution study, not yet as operative theory that changes how another problem is solved. A later task must depend on its claims before the article's occurrence test is met for behavioral use.
+The episode produced a note and a navigation update, but retention was completed only later: the original session never committed the note, and it entered git history first as this workshop's frozen snapshot (`bcb94c39`) and then, restructured, as commit `4f51fc6d`. With that qualification, the sequence establishes an installed revision to Commonplace's natural-language theory layer. It does not by itself establish that later behavior used the change. This workshop reads the note as the object of an attribution study, not yet as operative theory that changes how another problem is solved. A later task must depend on its claims before the article's occurrence test is met for behavioral use.
 
 ### Revision surface
 
@@ -58,6 +58,14 @@ This episode is not evidence of compounding yet, but it may supply the retained 
 3. A subsequent writing episode becomes cheaper, broader, more reliable, or less human-dependent because it operates through that revised machinery.
 
 The first transition would show that theory helped produce a machinery improvement. The third step is needed to show that the machinery's retained benefit improved later revision productivity. The causal record should preserve which claims informed the machinery change, what operative artifact changed, and what later comparison makes the benefit observable. Merely citing, loading, or translating the note into an instruction would show reuse and installation, not by itself compounding.
+
+As of 2026-08-18, the second step has begun: reflection on the synthesis note and its atomic rewrite led to a validated `claim-disposition.md` stage in `cp-skill-write-multistage`. The before/after procedure and decision trace are preserved under `evidence/`. This establishes an operative machinery revision and a candidate causal link from the retained epistemology. Its effect on later writing remains unobserved, so the compounding claim is still open.
+
+## The second episode inverts the attribution profile
+
+The atomic restructure (recorded contemporaneously in [restructure-session-record.md](./evidence/restructure-session-record.md)) is a consolidation episode rather than a generation episode, and its attribution runs the other way. The conceptually load-bearing interventions were human: the judgment that the claim was atomic and the synthesis shape wrong, and the examples-versus-exhaustive-lists lens, which caught a defect — a second, competing taxonomy of warrant sources — that the agent's own revision pass had not flagged. The agent's contributions were verificatory and executive: discovering that the displaced formalization material already lived in a sibling note, the fold-versus-separate disposition of each displaced claim, and the rewrites themselves.
+
+Two observations follow. First, the human/agent attribution profile is not a property of the collaboration in general; it varied with episode type across the two observed episodes — agent-dominant conceptual elaboration during generation, human-dominant conceptual judgment during consolidation. Any durable conclusion about agent contribution should be indexed by episode type until more episodes are observed. Second, the two records differ in evidential quality: the first is partly reconstructed after its workshop was consumed, while the second was captured in the performing session with verbatim prompts. The methodological lesson is to capture process records contemporaneously; a causal-attribution study cannot rely on the workshop-consumption norm leaving its primary trace intact.
 
 ## What the case does establish
 

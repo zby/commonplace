@@ -15,6 +15,7 @@ This workshop does not yet claim compounding. It records a candidate pathway: re
 ## Working files
 
 - [Session and process record](./evidence/session-and-process-record.md) — exact human prompts plus reconstructed agent and multistage contributions
+- [Restructure session record](./evidence/restructure-session-record.md) — the second episode (atomic restructure), captured contemporaneously by the session that performed it
 - [Evidence manifest](./evidence/README.md) — frozen artifact copies and their evidential roles
 - [Analysis](./analysis.md) — secondary, provisional attribution and its reading under the article's occurrence, revision-surface, and compounding tests
 

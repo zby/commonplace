@@ -32,6 +32,14 @@ After another session restructured the live note, the human clarified which vers
 
 > we now in another session restructured the note and made it atomic - so it is important that the original text that was result of this session is preserved.
 
+The human then requested an explanation of the artifact-shape failure:
+
+> now analyze why you produced a synthesis note instead of an atomic claim
+
+After that analysis, the human authorized carrying the lesson into writing machinery:
+
+> OK - I think we should revise the muti stage write skill. Atomic notes are better than synteses so a step in the procedure should check what claims do we make and what we can fold them into existing notes, what warrants new notes and what is the central contribution. Maybe there should be user involved for the folding or when there are more than one new note to be produced.
+
 At workshop creation, the content following the snapshot's two-line provenance preamble was verified byte-for-byte against the then-live 71-line note. After the later restructuring, the live note contained 43 lines and differed from the frozen copy. The preserved original content has SHA-256 `16651a290489c95a3e720441dd96d5f4193aa3ce988c47ccd57855ef85644b80`; the restructured live note observed on 2026-08-18 had SHA-256 `2eec9489340a5bcc68135b1124eaddb9da08a08b881b690dcd8d15bd7f8c71b2`.
 
 ## Agent interpretive pivots
@@ -98,3 +106,7 @@ The episode produced:
 - clean deterministic validation for the target note and the affected learning-theory and discovery navigation artifacts.
 
 No human review of the final wording is recorded before this workshop. The workflow's agent acceptance verdict is evidence of an internal check, not a substitute for human acceptance or evidence that the theory is true.
+
+## Later machinery integration
+
+The subsequent revision to `cp-skill-write-multistage` is preserved separately in `writing-machinery-integration.md` with before/after snapshots. It establishes that this episode's claim-level and atomicity concerns entered an operative procedure. No downstream writing result has yet established that the change improves revision productivity.
