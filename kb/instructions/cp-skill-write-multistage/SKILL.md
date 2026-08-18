@@ -39,7 +39,7 @@ When the task is a mechanical update, a local prose edit, or a straightforward w
 
 ## Step 2 - Create Or Resume The Workshop
 
-Search `kb/work/` for an unfinished multistage workshop whose `README.md` contains the exact run key or current target path. If exactly one exists, resume it. If several exist, stop and ask which one to use. Otherwise create:
+Search `kb/work/` for an unfinished multistage workshop whose declared immutable run key or current intended target path exactly matches this run; do not match paths mentioned only in pending handoffs or prose. If exactly one exists, resume it. If several exist, stop and ask which one to use. Otherwise create:
 
 ```text
 kb/work/multistage-write-<short-topic>-<YYYYMMDD>/
@@ -53,6 +53,7 @@ Create `README.md` with:
 - the workshop's source/input paths;
 - a checklist for `brief.md`, `reconstruction.md`, `claim-disposition.md`, `claim-skeleton.md`, `draft.md`, `audit.md`, `candidate.md`, conditional `acceptance.md`, and promotion;
 - unresolved human decisions and blockers;
+- pending handoffs, each with its target, proposed delta, user authorization, and order when known;
 - whether acceptance review is required, not required, or complete.
 
 The checklist and stage files are the workflow state. Do not introduce a `stage` frontmatter field. Mark a stage complete only after its file is non-empty, contains the required items for that step, and has no blocker that the next step would hide. If an upstream artifact changes, uncheck and regenerate every dependent stage before promotion.
@@ -65,6 +66,7 @@ Write `brief.md` before delegating any prose. Include only information fixed by 
 
 - the question or decision the artifact must address;
 - intended audience and what the reader should understand, infer, or do;
+- intended target path, mode, collection, and type;
 - target claim or purpose supplied by the user, without expanding it;
 - scope, exclusions, required terminology, and collection/type constraints;
 - source and evidence paths available to the run;
@@ -94,9 +96,9 @@ Keep the reconstruction proportional to the inputs. Do not repeat the same limit
 
 ## Step 5 - Dispose Candidate Claims Before Choosing The Artifact Shape
 
-Launch a new single-use claim architect with `brief.md`, `reconstruction.md`, and the target collection/type contracts. Do not give it `original.md` or any draft. It may run targeted title and description searches and open plausible existing notes for each candidate claim discovered during reconstruction. In edit mode, give it the current target path as an exclusion: it must not open that file even when a search surfaces it, because the live incumbent is the draft it must stay blind to.
+Launch a new single-use claim architect with `brief.md`, `reconstruction.md`, and the target collection/type contracts. Do not initially give it `original.md` or any draft. It may run targeted title and description searches and open plausible existing notes for each candidate claim discovered during reconstruction. In edit mode, give it the current target path as an exclusion: it must not open that file even when a search surfaces it.
 
-Have it write `claim-disposition.md`. Inventory every candidate durable claim needed to answer the governing question and record:
+Have it write a `## Source-first disposition` section in `claim-disposition.md`. Inventory every candidate durable claim needed to answer the governing question and record:
 
 - the claim in one sentence;
 - its relation to the user-supplied target;
@@ -105,6 +107,8 @@ Have it write `claim-disposition.md`. Inventory every candidate durable claim ne
 - one disposition: `central contribution`, `cite existing`, `fold into existing`, `separate new artifact`, `support/example/scope only`, or `omit/retain in workshop`;
 - the existing or proposed target path when applicable;
 - why the disposition preserves a useful citation and revision boundary.
+
+In edit mode, wait until the source-first section is saved before giving the same architect `original.md`. Then have it append `## Incumbent reconciliation` without rewriting the source-first section. It must inventory every material incumbent commitment that the source-first pass omitted, merge duplicates explicitly, and give each remaining commitment the same disposition fields. The incumbent can reveal a claim that needs evaluation, but it is not evidence for that claim. If retaining or revising an incumbent commitment requires support absent from `reconstruction.md`, mark `EVIDENCE NEEDED` and return to Step 4 after acquiring the exact evidence path and adding it to `brief.md`. An unsupported commitment may be explicitly omitted only when the governing question and supplied intent do not require it; otherwise treat the missing evidence as blocking under Step 3. The architect must not open the live target or any draft during this reconciliation.
 
 For a claim-bearing artifact, default to one atomic central contribution: one proposition another artifact can cite as a premise without inheriting an independent claim cluster. Evidence, mechanism, consequences, examples, and scope may remain when they establish, apply, or bound that proposition. A section that could be removed while leaving the central argument intact, and that another artifact may need to cite independently, is a separate claim rather than supporting completeness.
 
@@ -117,7 +121,11 @@ Apply these decision gates:
 - If more than one independent new artifact is warranted, record each proposed artifact and ask the user which to produce first and whether to create separate runs for the others. If the user already authorized the set and order, record that direction and continue with only the current artifact; every additional artifact gets its own run.
 - Do not ask about claims classified as support, example, scope, omission, or adequate existing premises.
 
-After a user decision, add the direction to `brief.md`, update the current target in the workshop `README.md` if needed, regenerate `claim-disposition.md`, and continue only when it names exactly one current central contribution or one type-appropriate practical purpose with no unresolved decision marker.
+After a user decision, clear the corresponding decision marker in the workshop `README.md` and add the direction to `brief.md`. Before invalidating `claim-disposition.md`, copy every authorized but non-current fold or additional artifact into the README's pending handoffs.
+
+If the decision changes target identity, mode, collection, or type—not merely the provisional filename of a new artifact within the same collection and type—return to Step 1 first. Re-resolve the target and contracts and replace target-specific incumbent and backlink inputs. Synchronize the target path, mode, collection, type, and source paths in `brief.md` and the workshop `README.md`, and replace the collection/type constraints in `brief.md`. If the selected target is an additional artifact rather than a replacement for the current one, leave it as a Step 10 handoff instead of retargeting this run.
+
+Because the brief or target inputs changed, uncheck reconstruction and every dependent stage, then resume at Step 4. Do not regenerate only `claim-disposition.md`. Continue only when the rebuilt disposition names exactly one current central contribution or one type-appropriate practical purpose with no unresolved decision marker.
 
 ## Step 6 - Build The Claim Skeleton In A Fresh Context
 
@@ -158,7 +166,7 @@ Launch a new single-use auditor. Give it `brief.md`, `reconstruction.md`, `claim
 
 Have it write `audit.md` with anchored findings. Each finding begins with `Status: open` and recommends one action: `keep`, `remove`, `ground`, `clarify`, or `ask user`. `Keep` means that the cited draft text is already justified; the finding must name that basis. Audit in this order:
 
-1. **Claim delta:** identify every draft commitment absent from the skeleton, every planned commitment omitted or altered, and every change in causality, scope, confidence, quantity, or recommendation. In edit mode, also identify incumbent commitments the draft drops or changes.
+1. **Claim delta:** identify every draft commitment absent from the skeleton, every planned commitment omitted or altered, and every change in causality, scope, confidence, quantity, or recommendation. In edit mode, also verify that every material incumbent commitment appears in the incumbent reconciliation, then identify incumbent commitments the draft drops or changes.
 2. **Artifact shape:** check every independent claim against `claim-disposition.md`. For a claim-bearing target, verify that the title, description, opening, and body expose one importable central proposition; flag any second cluster that should be cited, revised, folded, or promoted independently. Reject a `synthesis` trait used only to waive extraction.
 3. **Grounding:** check material assertions against the reconstruction and sources. Distinguish source fact, user direction, inference, and unsupported completion.
 4. **Specificity:** flag ambiguity that changes truth conditions, support, or implications. Ask for mechanism, comparison basis, or scope only where it is load-bearing; do not demand decorative detail.
@@ -202,13 +210,15 @@ Fix validation failures immediately. If they cannot be fixed within the establis
 
 After the target validates, add the authorized lineage footers and validate every changed source. Do not add a target-to-source lineage footer merely for symmetry. If a lineage edit cannot be made valid, restore every changed source and the target to their pre-promotion state, retain the workshop, and report the blocker.
 
-After successful validation, remove the exact completed workshop directory and its `kb/work/README.md` entry unless the user asked to inspect or retain the run as an experiment or audit record, or any recorded user decision remains unexecuted — such as a confirmed fold into another artifact or an authorized additional artifact awaiting its own run. If retained, mark its state in `README.md` and keep its index entry. Report what was removed or retained. Suggest `cp-skill-connect` for broader graph discovery.
+After successful validation, remove the exact completed workshop directory and its `kb/work/README.md` entry unless the user asked to inspect or retain the run as an experiment or audit record, or any recorded user decision remains unexecuted — such as a confirmed fold into another artifact or an authorized additional artifact awaiting its own run. If retained, mark its state in `README.md` and keep its index entry. Treat such pending work as a handoff: report each fold or additional artifact and let the user decide what to do next; do not start another run automatically. When the user directs that a handoff has been declined or completed, mark it resolved and remove this workshop once no retention reason remains. Report what was removed or retained. Suggest `cp-skill-connect` for broader graph discovery.
 
 ## Verify
 
 - The target remained untouched until a reconciled candidate was ready.
 - Source reconstruction occurred in a fresh context that never saw the incumbent or draft.
+- In edit mode, source-first disposition was saved before the incumbent was revealed, and every material incumbent commitment was then reconciled without treating it as evidence.
 - Claim disposition preceded the skeleton; existing claims were cited or proposed for confirmed folding, and additional new artifacts were separated into their own user-authorized runs.
+- A direction added to the brief after a user decision caused reconstruction and every dependent stage to be rebuilt.
 - A claim-bearing target exposes one importable central proposition unless the disposition establishes that an irreducible synthesis is itself the contribution.
 - The skeleton preceded prose and every material draft addition was audited.
 - Missing knowledge remained visible instead of becoming plausible filler.
