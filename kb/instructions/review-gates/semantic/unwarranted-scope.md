@@ -46,5 +46,5 @@ Same experiments, but the claim's condition names the mechanism as the transfer 
 
 Relevant Notes:
 
-- [Natural-language theories carry warrant claim by claim and scope by scope](../../../notes/natural-language-theories-carry-warrant-claim-by-claim.md) — rests-on: warrant attaches to claim-scope pairs, and transfer beyond the tested domain needs a justified relation
+- [Theory warrant should be tracked at the finest granularity evidence licenses](../../../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) — rests-on: warrant attaches at the finest claim-scope granularity the evidence identifies, and transfer beyond the tested domain needs a justified relation
 - [Derivation and inheritance give starting warrant; discriminating evidence or proof earns scope](../../../notes/derivation-and-inheritance-give-starting-warrant-earns-scope.md) — rests-on: the support routes and what domain each one earns
