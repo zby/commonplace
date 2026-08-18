@@ -4,7 +4,7 @@
 
 Preserve the evidence needed to analyse how the current version of *Natural-language theories carry warrant claim by claim and scope by scope* was produced. The later analysis uses the distinctions in *Reflective self-improvement* to ask which causal contributions came from the human, which came from agents, which were genuinely joint, and whether this retained epistemology later contributes to compounding through Commonplace's writing machinery.
 
-The focus is the epistemology: the note introduces mechanisms — warrant per claim-scope pair, the two thresholds — that are expected to produce better notes once folded into the writing machinery. That fold has not happened yet. When it does, the main question becomes how much of the resulting machinery was invented by agents; "invented by" is not yet operationalized, and the criterion may be made stricter later.
+The focus is the epistemology: the note introduces mechanisms — warrant per claim-scope pair, the two thresholds — that are expected to produce better notes once folded into the writing machinery. On 2026-08-18 the fold happened: two semantic review gates (`unwarranted-scope`, `epistemic-status-blur`) now operationalize the epistemic threshold, with explicit `rests-on` lineage to the theory notes; the [gate-fold episode record](./evidence/gate-fold-episode-record.md) preserves the episode contemporaneously. The main question is how much of that machinery was invented by agents; "invented by" is not yet operationalized, and the criterion may be made stricter later.
 
 The immediate purpose is preservation, not a settled attribution verdict. The target note has since been restructured into a more atomic artifact, so the `evidence/` directory preserves the longer text produced by this session as the primary original. It also freezes the trigger source and ingest, the user's counterexample, the relevant article, and the available session/process record. Snapshot files are evidence, not live copies, and must not be updated when their source artifacts change. `analysis.md` is a provisional reading of that evidence and may be replaced after later episodes supply a stronger causal trace.
 
@@ -18,6 +18,7 @@ This workshop does not yet claim compounding. It records a candidate pathway: re
 
 - [Session and process record](./evidence/session-and-process-record.md) — exact human prompts plus reconstructed agent and multistage contributions
 - [Restructure session record](./evidence/restructure-session-record.md) — the second episode (atomic restructure), captured contemporaneously by the session that performed it
+- [Gate-fold episode record](./evidence/gate-fold-episode-record.md) — the third episode (epistemology folded into two review gates), captured contemporaneously with validation results
 - [Evidence manifest](./evidence/README.md) — frozen artifact copies and their evidential roles
 - [Analysis](./analysis.md) — secondary, provisional attribution and its reading under the article's occurrence, revision-surface, and compounding tests
 

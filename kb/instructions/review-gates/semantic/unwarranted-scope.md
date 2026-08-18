@@ -28,7 +28,7 @@ For the central claim (title, description, opening argument):
 
 WARN when the central claim invites reliance over cases its support does not exercise and neither a transfer relation nor a conjecture marking covers the surplus. INFO when a transfer relation is gestured at but not articulated, or when only a supporting (non-central) claim overreaches.
 
-Do not flag here: a cited source misrepresented or stretched (`semantic/grounding-alignment` — that gate audits the claim-to-citation route; this one audits claimed scope against the union of presented support, including uncited derivation and argument); abstraction that widens the claim's vocabulary (`semantic/unearned-generality`); a scope left ambiguous between readings (`semantic/underspecified-assertions`); a conjecture presented as established fact (`semantic/epistemic-status-blur` — that is a status failure even when the scope is right).
+Do not flag here: a cited source misrepresented or stretched (`semantic/grounding-alignment` — that gate audits the claim-to-citation route; this one audits claimed scope against the union of presented support, including uncited derivation and argument); abstraction that widens the claim's vocabulary (`semantic/unearned-generality`); a scope left ambiguous between materially different readings (`semantic/underspecified-assertions` — ambiguity about *what is claimed* goes there; a scope that is broad but clearly stated is judged here); a conjecture presented as established fact (`semantic/epistemic-status-blur` — that is a status failure even when the scope is right).
 
 ## Example (fail)
 

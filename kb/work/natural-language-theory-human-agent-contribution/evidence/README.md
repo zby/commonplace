@@ -9,7 +9,8 @@ These files are the workshop's primary deliverable. They freeze the state availa
 - [Defazio ingest](./defazio-ingest.snapshot.md) — the agent-produced interpretation of that source before the epistemological discussion
 - [Discovery index](./discovery-README.snapshot.md) — the exact navigation surface changed when the note was retained
 - [Session and process record](./session-and-process-record.md) — exact human prompts and the recoverable record of agent interpretation, synthesis, audit, and acceptance
-- [Restructure session record](./restructure-session-record.md) — second episode (the atomic restructure), captured contemporaneously in the performing session; a record, not a frozen snapshot, and the only fully non-reconstructed process evidence in this workshop
+- [Restructure session record](./restructure-session-record.md) — second episode (the atomic restructure), captured contemporaneously in the performing session; a record, not a frozen snapshot
+- [Gate-fold episode record](./gate-fold-episode-record.md) — third episode (epistemology folded into the `unwarranted-scope` and `epistemic-status-blur` gates), captured contemporaneously with pipeline and historical-A/B validation results
 
 Each artifact snapshot contains a two-line provenance preamble followed by the source file's complete content as it stood at capture time. Relative links inside snapshots retain their source spelling and are evidence, not workshop navigation links.
 
