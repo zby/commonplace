@@ -291,6 +291,94 @@ Captured text.
     assert any("genre" in item for item in results.warns)
 
 
+def configure_ingest_report_repo(tmp_path: Path) -> None:
+    for name in ("note-base.schema.yaml", "note.schema.yaml"):
+        write(
+            tmp_path / "kb" / "types" / name,
+            (Path.cwd() / "kb" / "types" / name).read_text(encoding="utf-8"),
+        )
+    write(
+        tmp_path / "kb" / "sources" / "types" / "ingest-report.schema.yaml",
+        (
+            Path.cwd() / "kb" / "sources" / "types" / "ingest-report.schema.yaml"
+        ).read_text(encoding="utf-8"),
+    )
+    write_type_spec(
+        tmp_path,
+        "kb/sources/types/ingest-report.md",
+        name="ingest-report",
+        schema="kb/sources/types/ingest-report.schema.yaml",
+    )
+
+
+def code_grounded_ingest(*, include_heading: bool) -> str:
+    headings = "\n## Code Grounding\n\nStatic source inspection only.\n" if include_heading else ""
+    return f"""---
+description: Code-grounded analysis of a paper and its released implementation
+source_snapshot: paper.md
+ingested: "2026-08-18"
+type: kb/sources/types/ingest-report.md
+domains: [agents, evaluation]
+code_revisions:
+  - https://github.com/example/system/commit/0123456789abcdef0123456789abcdef01234567
+---
+
+# Ingest: Paper
+
+## Classification
+
+Scientific paper.
+
+## Summary
+
+Summary.
+{headings}
+## Connections Found
+
+Connections.
+
+## Extractable Value
+
+1. Value. [quick-win]
+
+## Limitations (our opinion)
+
+Limitations.
+
+## Recommended Next Action
+
+File as a reference.
+"""
+
+
+def test_code_grounded_ingest_requires_code_grounding_section(tmp_path: Path) -> None:
+    configure_ingest_report_repo(tmp_path)
+    ingest = write(
+        tmp_path / "kb" / "sources" / "paper.ingest.md",
+        code_grounded_ingest(include_heading=False),
+    )
+
+    results = validation.validate_note(ingest, repo_root=tmp_path)
+
+    assert any("missing '## Code Grounding'" in item for item in results.fails)
+
+
+def test_code_grounded_ingest_accepts_pinned_revision_and_section(tmp_path: Path) -> None:
+    configure_ingest_report_repo(tmp_path)
+    ingest = write(
+        tmp_path / "kb" / "sources" / "paper.ingest.md",
+        code_grounded_ingest(include_heading=True),
+    )
+
+    results = validation.validate_note(ingest, repo_root=tmp_path)
+
+    assert results.fails == []
+    assert any(
+        "type schema: ingest-report requirements satisfied" in item
+        for item in results.passes
+    )
+
+
 @pytest.mark.parametrize(
     ("description_line", "expected"),
     [

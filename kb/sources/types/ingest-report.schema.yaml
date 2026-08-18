@@ -28,6 +28,13 @@ allOf:
             items:
               type: string
               minLength: 1
+          code_revisions:
+            type: array
+            minItems: 1
+            uniqueItems: true
+            items:
+              type: string
+              pattern: "^https://github\\.com/[^/]+/[^/]+/commit/[0-9a-f]{40}$"
         additionalProperties: true
       headings:
         type: array
@@ -44,3 +51,13 @@ allOf:
               const: "## Limitations (our opinion)"
           - contains:
               const: "## Recommended Next Action"
+  - if:
+      properties:
+        frontmatter:
+          required:
+            - code_revisions
+    then:
+      properties:
+        headings:
+          contains:
+            const: "## Code Grounding"

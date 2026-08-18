@@ -36,9 +36,17 @@ wins.
 1. **Resolve the target.**
    - If `$ARGUMENTS` is empty, list recent `kb/sources/*.md` files excluding
      `.json` and `.ingest.md`, then ask which one to ingest.
+   - If the target is a `paperswithcode.co/paper/` URL, or it is an arXiv paper
+     and the user explicitly requested code grounding, read and follow the
+     conditional procedure `ingest-paper-with-code.md`. In an installed project
+     use `kb/commonplace/instructions/ingest-paper-with-code.md`; in the
+     Commonplace source checkout use `kb/instructions/ingest-paper-with-code.md`.
+     Skip the remaining Step 1 bullets, then continue at Step 2 with the paper
+     snapshot and code-grounding context returned by that procedure.
    - If the target starts with `http://` or `https://`, invoke
-     `cp-skill-snapshot-web` on the URL. Parse the `Snapshot saved:` line from
-     its output; that path is the source snapshot for the next step.
+     `cp-skill-snapshot-web` on the URL. Parse the `Snapshot saved:` or
+     `Already snapshotted:` line from its output; that path is the source
+     snapshot for the next step.
    - Otherwise, treat the target as the source snapshot path.
 
 2. **Run connection discovery.**
@@ -100,6 +108,10 @@ wins.
    explain how it connects to the current KB, extract goal-relative value, state
    limitations, and recommend one advisory next action.
 
+   If the paper-with-code branch supplied code-grounding context, apply its
+   frontmatter, `Code Grounding`, citation, and evidence-boundary requirements
+   while drafting this same ingest report.
+
    If the source is not relevant to this KB, say so in the report. Keep the
    report short, explain the mismatch, and recommend no promotion or source-only
    filing as appropriate.
@@ -121,7 +133,8 @@ wins.
 
 7. **Report the result.**
    Tell the user where the ingest report was saved and state the recommended
-   next action.
+   next action. For a paper-with-code ingest, also report the paper version,
+   checkout paths, reviewed commits, execution status, and validation result.
 
 ## Constraints
 

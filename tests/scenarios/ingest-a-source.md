@@ -51,6 +51,8 @@ Notes: connect runs the full prospecting procedure on every destination `kb/sour
 
 **Snapshot already on disk:** Fork 3 is skipped — the path is passed straight to Fork 2/4.
 
-**Source type variation:** academic paper / blog / GitHub / X each change only Fork 3's capture method; Forks 2 and 4 are identical.
+**Source type variation:** ordinary academic papers, blogs, GitHub, and X change only Fork 3's capture method; Forks 2 and 4 are identical.
+
+**Paper with code:** a Papers with Code URL, or an arXiv paper explicitly requested with code grounding, makes Fork 2 read `kb/instructions/ingest-paper-with-code.md`. Fork 3 captures the version-pinned arXiv paper; Fork 2 also inspects commit-pinned checkouts under `related-systems/` before connection discovery and drafting. This adds evidence to the existing ingest context rather than adding another skill fork.
 
 **Escalation (installed projects, rare):** an unusual source format adds a search + 1-2 reads into `commonplace/kb/notes/` in Fork 2.

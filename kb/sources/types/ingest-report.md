@@ -18,6 +18,9 @@ Assess fit relative to the installed KB's goals, local collection contracts, and
 - Set `source_snapshot` to the source snapshot filename or repo-root path.
 - Use `type: kb/sources/types/ingest-report.md` for the artifact type.
 - Use `domains` for two to four topic tags that make the report searchable.
+- For a code-grounded paper ingest, set `code_revisions` to the immutable
+  commit URL for every inspected repository. Do not record machine-local
+  checkout paths as durable source identity.
 - Use file-relative Markdown links in the report body for durable KB artifacts and source snapshots. Do not link to generated connect reports.
 
 ## Genre
@@ -28,6 +31,10 @@ The source's genre lives on the snapshot (`genre` in the snapshot's frontmatter 
 
 - `Classification` identifies the source genre (from the snapshot), domain tags, and author signal.
 - `Summary` is one paragraph for someone deciding whether to read the full source.
+- `Code Grounding` is required when `code_revisions` is present. Link the
+  reviewed revisions and pinned source files; distinguish mechanisms confirmed
+  by inspection, experiment support artifacts that were present but not run,
+  and claims that remain paper-only. State what code, if any, was executed.
 - `Connections Found` summarizes the connection discovery findings and explains how the source fits the current KB, as compact prose naming the source's role (for example: anchor, technical basis, counterpoint, legal disposition, public statement, limitation) rather than a transcribed candidate list. Drop weak, speculative, or duplicate edges; keep only settled, durable judgments. If no casebook notes exist yet, say so plainly instead of substituting a full map of relationships to other already-captured sources, or framing the section as prospective connections for notes that do not exist yet. The generated connect report is working context only; do not cite it, link to it, or name its path in the ingest report.
 - `Extractable Value` lists three to seven items, ordered by reach and novelty relative to the installed KB's goals and existing KB connections.
 - `Limitations (our opinion)` states where the source should not be trusted or over-generalized.
@@ -49,6 +56,9 @@ The source's genre lives on the snapshot (`genre` in the snapshot's frontmatter 
 `Limitations (our opinion)` is editorial judgment — label it as opinion. Name what is missing, cite a relevant KB note when one exists, and state what the gap means for the source's conclusions. The lens depends on the snapshot's `genre`:
 
 - **Scientific papers** — what was not tested: missing or naive baselines, limited benchmarks, configurations the literature or this KB already discusses, claims that do not generalize beyond the tested setup.
+  Released source can confirm that a mechanism is implemented or expose its
+  configuration, but static inspection does not reproduce training, benchmark,
+  throughput, or quality results. State the remaining outcome-evidence gap.
 - **Practitioner reports** — what is not visible: survivorship bias (what worked is reported, failed attempts are not), sample size of one, unacknowledged context such as team size, budget, or existing infrastructure.
 - **Conceptual essays and conversation threads** — what is not argued: reasoning by analogy without testing whether the analogy holds, cherry-picked supporting examples, conflating naming something with explaining it, unfalsifiable framings.
 - **Tool announcements and design proposals** — what is not shown: vendor bias and flattering benchmarks, missing failure modes or scaling limits, gaps between the announced design and real use.
@@ -99,4 +109,19 @@ Author: {credibility signal}
 ## Recommended Next Action
 
 {One specific action}
+```
+
+For a code-grounded paper ingest, add this frontmatter field:
+
+```yaml
+code_revisions:
+  - https://github.com/{owner}/{repo}/commit/{40-character-sha}
+```
+
+Add this section after `Summary`:
+
+```markdown
+## Code Grounding
+
+{Pinned repositories, claim-bearing source citations, inspection result, and execution status}
 ```
