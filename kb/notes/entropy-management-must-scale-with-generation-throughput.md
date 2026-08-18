@@ -17,6 +17,8 @@ OpenAI's Codex team found this empirically at 1M LOC scale. Early on, engineers 
 
 The [stagnation finding](./methodology-enforcement-is-constraining.md) from the context engineering study reinforces this from the negative direction: 50% of AGENTS.md files were never changed after creation. These are systems where maintenance throughput is zero — and instructions accumulate without pruning.
 
+Retained explanations create a recursive version of the same problem. Generated comments and documentation do not remain inert artifacts: later agents receive them as context and may trust, imitate, or elaborate on their claims. A low-density or inaccurate explanation can therefore seed more output before a human removes it. Cleanup must remove misleading retained context as well as keep artifact volume manageable. The AI;DR discussion supplies practitioner reports of this path, but its self-selected anecdotes establish a failure mode, not its prevalence or effect size.
+
 ## Implications for this KB
 
 The KB already has the pieces — [maintenance operations](./maintenance-operations-catalogue-should-stage-stable-procedures.md) (what to clean), [external triggering](./periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in.md) (when to trigger), [staleness detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) (how to detect). What it lacks is the scaling commitment: as note production increases (especially if [boiling cauldron mutations](./automating-kb-learning-is-an-open-problem.md) are automated), the maintenance operations must run at matching frequency. Orphan detection, connection quality checks, and staleness sweeps need to become continuous, not periodic.
@@ -33,3 +35,4 @@ Relevant Notes:
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — constrains: if boiling cauldron mutations are automated, maintenance must be automated at matching throughput or quality degrades
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — detects: the credibility erosion failure mode is what happens when entropy management falls behind generation
 - [Harness Engineering](https://openai.com/index/harness-engineering/) — primary evidence: 1M LOC agent-generated codebase where background cleanup agents maintain quality at generation-matching throughput
+- [AI;DR Hacker News discussion](../sources/hacker-news-ai-dr-ai-didnt-read.md) — evidenced-by: self-selected practitioner reports in which retained generated explanations become later agent context; supports the recursive path, not a prevalence claim
