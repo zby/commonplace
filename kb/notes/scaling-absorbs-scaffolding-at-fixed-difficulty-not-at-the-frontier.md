@@ -49,4 +49,4 @@ Relevant Notes:
 
 - [The bitter lesson selects against unearned reach, not against structure](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md) — grounds: scaling removes unearned scope claims at fixed difficulty, so absorption of yesterday’s scaffolding does not settle the frontier question
 - [The bitter lesson selects production methods, not representational forms](./the-bitter-lesson-selects-production-methods-not-representational.md) — extends: carries the moving-frontier argument into the production-method versus representational-form distinction
-- [Deploy-time learning is the missing middle](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — extends: the frontier continues to generate deployment-pace change, which the middle layer addresses
+- [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — extends: the frontier continues to generate deployment-pace change, which retained-artifact adaptation addresses

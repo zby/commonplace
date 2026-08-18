@@ -7,11 +7,11 @@ index_key: deploy-time-learning
 
 # deploy-time-learning
 
-The organizing framework of the learning-theory area: deployed systems adapt through symbolic artifacts — durable, inspectable, verifiable — filling the gap between training and in-context learning. Notes here cover the framework itself, the learning fundamentals it rests on, and the feedback signals that govern its quality. A child of [learning-theory](./learning-theory-README.md).
+The organizing framework of the learning-theory area: deployed systems can retain evaluated changes to behavior-shaping artifacts — durable, inspectable, verifiable — giving them a persistent adaptation path across sessions that requires no weight update. Notes here cover the framework itself, the learning fundamentals it rests on, and the feedback signals that govern its quality. A child of [learning-theory](./learning-theory-README.md).
 
 ## The framework
 
-- [deploy-time learning is the missing middle](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — three timescales of system adaptation; co-evolving natural-language and code as agile-style deploy-time learning
+- [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — the framework claim: retained, evaluated artifact updates give deployed systems cross-session adaptation without weight updates
 - [the verifiability gradient](./verifiability-gradient.md) — the ladder deploy-time artifacts sit on, from restructured prompts through schemas and evals to deterministic code
 - [readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — the loop that makes behaviour change cheap: readable system-definition artifacts revised in place
 - [treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md) — the system and its knowledge substrate evolve together rather than one training the other

@@ -25,7 +25,7 @@ Every note carrying `learning-theory` also carries at least one of these child t
 
 ## Start here
 
-- [deploy-time learning is the missing middle](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — the unifying framework: three timescales of system adaptation
+- [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — the unifying framework: persistent cross-session adaptation through retained behavior-shaping artifacts, without weight updates
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — accumulation with explanatory-reach as its key property; Simon's definition grounds the decomposition
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — the underspecification foundation: spec-to-program projection and the constrain/relax cycle
 - [the verifiability gradient](./verifiability-gradient.md) — the ladder deploy-time artifacts sit on

@@ -54,7 +54,7 @@ Relevant Notes:
 - [progressive constraining commits only after patterns stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — sharpens: the "progressive" qualifier in progressive compilation names a specific contrast with one-shot LLM code generation
 - [LLM debugging starts with retry-versus-rewrite triage](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) — extends: diagnostic for the "fix is rewriting the spec, not retrying" move; tells you which doubled test surface the failure sits on
 - [LLM↔code boundaries are natural checkpoints](./llm-code-boundaries-are-natural-checkpoints.md) — related: the doubled testing surface separates cleanly at LLM↔code transitions; code downstream is traditionally testable
-- [codification: the missing middle](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — progressive compilation in practice
+- [codification](./definitions/codification.md) — progressive compilation in practice
 - [constraining is learning](./definitions/constraining.md) — synthesizes: the informal programming practices accumulated by every deployed system are what codification systematises
 - [storing LLM outputs is constraining](./storing-llm-outputs-is-constraining.md) — version control practice applied to LLM outputs
 - [inspectable artifact](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — design for testability applied to LLM artifacts

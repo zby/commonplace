@@ -25,7 +25,7 @@ SkillOpt treats an agent skill document as trainable external state. A separate 
 ## Connections Found
 
 - [Readable artifact loop is the tractable unit for continual learning](../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) -- **evidence**. SkillOpt is a concrete natural-language-only readable-artifact loop: frozen model, mutable skill, bounded text edits, validation gate, and compact deployed artifact.
-- [Deploy-time learning is the missing middle](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) -- **evidence**. The system learns by updating durable skill text across runs, not by changing weights at inference.
+- [Retained system-definition artifacts enable persistent deployment-time adaptation](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) -- **evidence**. The system learns by updating durable skill text across runs, not by changing weights at inference.
 - [Continual learning open problem is behaviour, not knowledge](../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md) -- **evidence**. The retained artifact changes future behavior through instruction authority, so the learned object is behavioral policy rather than passive knowledge.
 - [Diagnostic richness constrains outer-loop learning quality](../notes/diagnostic-richness-constrains-outer-loop-learning-quality.md) -- **evidence**. Rollout traces, success/failure contrast, rejected edits, and slow/meta updates supply more diagnostic state than a scalar score alone.
 - [The verifiability gradient](../notes/verifiability-gradient.md) -- **evidence**. SkillOpt's success depends on resettable, scored tasks and held-out validation; the paper's limitations mark subjective/open-ended domains as weaker targets.
@@ -56,4 +56,4 @@ SkillOpt treats an agent skill document as trainable external state. A separate 
 
 ## Recommended Next Action
 
-Write a note tentatively titled **Skill documents can be trained as readable external policy**. It should connect SkillOpt to the readable-artifact loop, deploy-time learning, diagnostic richness, and verifiability gradient notes. The central claim should be that scored rollouts plus held-out validation can make natural-language skills into trainable external policy artifacts, with the boundary condition that the evaluator must be good enough to make text edits learnable rather than merely plausible.
+Write a note tentatively titled **Skill documents can be trained as readable external policy**. It should connect SkillOpt to the readable-artifact loop, retained-artifact deployment-time adaptation, diagnostic richness, and verifiability gradient notes. The central claim should be that scored rollouts plus held-out validation can make natural-language skills into trainable external policy artifacts, with the boundary condition that the evaluator must be good enough to make text edits learnable rather than merely plausible.

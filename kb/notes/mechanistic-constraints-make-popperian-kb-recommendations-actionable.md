@@ -57,6 +57,6 @@ Relevant Notes:
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — constrains: bounded context makes ambient contradiction detection unreliable
 - [error correction works with above-chance oracles and decorrelated checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — enables: why falsifier blocks produce better criticism than re-reading
 - [constraining](./definitions/constraining.md) — mechanism: user corrections narrow interpretation space by changing instructions
-- [deploy-time learning: the missing middle](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — mechanism: instruction refinements persist across sessions
+- [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — mechanism: instruction refinements persist across sessions
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — example: existing convention that already externalizes conjectures
 - [links](./links-README.md) — example: existing relation semantics that already structure criticism

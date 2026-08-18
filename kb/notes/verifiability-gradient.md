@@ -12,7 +12,7 @@ tags: [learning-theory, deploy-time-learning]
 
 Karpathy identifies three properties that make a task verifiable: **resettable** (you can retry), **efficient** (retries are cheap), and **rewardable** (you can evaluate results automatically). The more verifiable a task is, the more you can hill-climb on it — through RL at training time, or through iteration at runtime.
 
-Symbolic artifacts used in [deploy-time learning](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) sit on a gradient of verifiability:
+Symbolic artifacts used in [deployment-time adaptation through retained artifacts](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) sit on a gradient of verifiability:
 
 | Grade | Example | Resettable | Efficient | Rewardable |
 |-------|---------|:---:|:---:|:---:|
@@ -42,7 +42,7 @@ The individual practices the gradient unifies — prompt versioning, eval-driven
 
 Relevant Notes:
 
-- [Deploy-time learning is the missing middle](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — frames where on the system-adaptation timescale the gradient operates
+- [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — frames the deployment-time adaptation path whose retained artifacts the gradient grades
 - [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — develops the bidirectional movement along the gradient
 - [Oracle strength spectrum](./oracle-strength-spectrum.md) — parallel framing: Karpathy's verifiability properties are an oracle-strength argument
 - [ABC: Agent Behavioral Contracts](https://arxiv.org/html/2602.22302v1) — exemplifies: behavioral contracts (YAML DSL specs with runtime enforcement) sit at the far end of the gradient for behavioral constraints
