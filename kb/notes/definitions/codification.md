@@ -32,6 +32,8 @@ Turning a rule into legalese, a standards document, or a formal prose policy is 
 
 Structured Markdown, YAML, or JSON is not automatically codification. It becomes codification only where a formal consumer assigns defined consequences to fields, values, sections, or operations.
 
+Numerical content does not by itself require codification. An exact numerical claim can be stated and tested in natural language; it needs symbolic form only when its consequences must be assigned by a formal consumer, such as mechanically repeatable computation or acceptance.
+
 ## Misuse Cases
 
 - Calling every clearer instruction "codified" even though the consumer is still an LLM interpreting natural language.
