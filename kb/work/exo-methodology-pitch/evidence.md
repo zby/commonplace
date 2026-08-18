@@ -121,7 +121,7 @@ Those defenses limit the paper's reach; they do not establish that the proposed 
 
 [Meta-Harness](../../sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md) is an outer-loop harness-code optimizer. In its text-classification ablation, a proposer with raw execution traces reaches 50.0 median accuracy, versus 34.6 with scores only and 34.9 with scores plus generated summaries. It is strong adverse evidence against replacing diagnostic episodes with consumer-blind summaries.
 
-[The dedicated boundary note](../../notes/the-meta-harness-ablation-bounds-summarization-not-theory-formation.md) identifies why that ablation does not test episode-backed semantic theory:
+[The dedicated boundary note](../../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md) identifies why that ablation does not test episode-backed semantic theory:
 
 1. Summaries replaced episodes instead of being retained beside them.
 2. Summarization ran before the next proposer formed its diagnostic question and was consumer-blind.

@@ -44,3 +44,9 @@ The claim of continual learning "without parameter updates" applies to the under
 ## Recommended Next Action
 
 Update [A retrieval miss is a local reflective-path failure](../notes/a-retrieval-miss-is-a-local-reflective-path-failure.md) with Memento-Skills as `evidenced-by`: add the router's generic-embedding versus behavior-trained route-hit and end-to-end results, then state the boundary that route selection tests the discovery wire while a separate perturbation test is still needed to establish causal uptake after retrieval.
+
+---
+
+Relevant Notes:
+
+- [An experiment identifies only the contrast it actually runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md) — abstracted-from: the Read-Write ablation identifies the jointly varied skill-optimization bundle, not any one operation or selected skill

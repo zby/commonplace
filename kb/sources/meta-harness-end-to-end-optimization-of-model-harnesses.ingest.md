@@ -77,3 +77,9 @@ The `/connect` pass identified 9 connections to existing KB notes, with two synt
 ## Recommended Next Action
 
 Write a note titled "Diagnostic richness determines outer-loop search quality" connecting to [oracle-strength-spectrum](../notes/oracle-strength-spectrum.md), [trace-learning-techniques-in-related-systems](../agent-memory-systems/trace-learning-techniques-in-related-systems.md), and [context-efficiency-is-the-central-design-concern-in-agent-systems](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md). It would argue that the binding constraint on automated improvement loops is not search algorithm sophistication or oracle strength alone but diagnostic access quality — the ability of the proposer to selectively inspect rich, raw diagnostic information. The Meta-Harness ablation provides the first controlled evidence; position it alongside the HyperAgents/Autocontext/text-optimizer gradient to show the pattern holds across systems. This names the unnamed axis the `/connect` report flagged as a synthesis opportunity.
+
+---
+
+Relevant Notes:
+
+- [An experiment identifies only the contrast it actually runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md) — abstracted-from: the fixed summary-without-traces arm bounds that tested representation but leaves materially different theory treatments unidentified

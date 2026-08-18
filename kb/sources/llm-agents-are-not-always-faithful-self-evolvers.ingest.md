@@ -43,3 +43,9 @@ This is editorial judgment. The strongest *result* is the raw-vs-condensed asymm
 ## Recommended Next Action
 
 Upgrade the three existing bare-URL citations to labelled local `evidenced-by` edges pointing at this snapshot and refresh them from v2 to v3 — in [distillation](../notes/definitions/distillation.md), [evaluate-memory-by-effects](../notes/agent-memory-requirements/evaluate-memory-by-effects.md), and [activate-behavior-changing-memory](../notes/agent-memory-requirements/activate-behavior-changing-memory.md) — then add a new `evidenced-by` edge from [knowledge-storage-does-not-imply-contextual-activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md) anchored on the §5.2 IG-attribution result. Defer the cross-collection edges (Dynamic Cheatsheet, Agent Workflow Memory reviews) to a connect run scoped to `agent-memory-systems/COLLECTION.md`. The "condensation is a systematic activation-killer" synthesis (Extractable Value 4) is the candidate worth a brainstorm, but it is a follow-on, not this step.
+
+---
+
+Relevant Notes:
+
+- [An experiment identifies only the contrast it actually runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md) — abstracted-from: the omission, empty, shuffled, irrelevant, corrupt, and filler interventions show that different controls preserve different non-target properties and identify distinct effects
