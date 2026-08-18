@@ -5,6 +5,7 @@ Coverage of external **agentic systems and harnesses as whole systems** — exec
 ## Analyses
 
 - [Autogenesis](./autogenesis.md) — self-evolving agent framework whose paper-aligned release exposes versioned protocol resources and an explicit planning bus, while current `main` replaces them with an expanded extension taxonomy and uniform capability loop; substantial code, but incomplete experiment reproduction and a broken advertised test baseline
+- [Eigenius](./eigenius.md) — typed execution and verification substrate with a manually loaded host-agent reasoning protocol: curated MCP, checked justification certificates on named load paths, incomplete recovery/provenance, and conditional Lean correspondence
 - [Claude Code dynamic workflows](./claude-code-dynamic-workflows.md) — model-authored orchestrator scripts over sub-agents: the first shipped harness exposure of the bounded call beneath the frozen tool loop, mapped onto the [tool-loop cluster](../notes/tool-loop-README.md)
 - [Compound Engineering plugin](./compound-engineering-plugin.md) — artifact-mediated software factory whose project-knowledge and optimization loops provide search, evaluation, and retention, but whose installed prompt corpus remains outside the ordinary update loop
 - [Fractal](./fractal.md) — terminal/headless RLM harness over PredictRLM: SBX-mounted workspace turns, model-authored code and sub-model calls, agent-delegation skill, and session continuity stored outside the repo
