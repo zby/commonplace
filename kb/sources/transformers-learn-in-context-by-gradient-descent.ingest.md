@@ -30,7 +30,7 @@ The connection pass found a learning-theory cluster rather than a broad context-
 
 1. **In-context learning has internal and external layers** -- high reach. The KB already has the external layer: context engineering selects and organizes what reaches the window. This source adds the internal layer: model weights determine what adaptation can be computed from those examples once loaded. [deep-dive]
 
-2. **A trained model can encode a learning algorithm without updating weights at inference time** -- the paper cleanly separates durable outer-loop learning (weights trained across tasks) from ephemeral inner-loop adaptation (forward-pass gradient-like updates over context). This sharpens substrate and timescale vocabulary in [continual-learning-open-problem-is-behaviour-not-knowledge](../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md). [quick-win]
+2. **A trained model can encode a learning algorithm without updating weights at inference time** -- the paper cleanly separates durable outer-loop learning (weights trained across tasks) from ephemeral inner-loop adaptation (forward-pass gradient-like updates over context). This sharpens substrate and timescale vocabulary in [continual-learning-open-problem-is-behaviour-not-knowledge](../notes/continual-learning-requires-governing-behaviour-changing-writes.md). [quick-win]
 
 3. **Mechanistic evidence beats analogy for mesa-optimizer claims** -- unlike the speculative mesa-recursion source, this paper shows a concrete optimizer-like forward-pass mechanism and weight construction. The value is bounded but real: learned internal optimization exists in at least one simple, inspectable regime. [quick-win]
 

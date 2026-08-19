@@ -777,7 +777,7 @@ The concrete update to [automating KB learning is an open problem](../notes/auto
 
 Relevant Notes:
 
-- [continual learning's open problem is behaviour, not knowledge](../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md) — sharpens: the survey's artifact-promotion systems count as behaviour-change learning via readable system-definition artifacts; the distributed-parametric cases take the slower, harder-to-validate form
+- [Continual learning requires governing behaviour-changing writes, not just storing content](../notes/continual-learning-requires-governing-behaviour-changing-writes.md) — sharpens: the survey's artifact-promotion systems count as behaviour-change learning via readable system-definition artifacts; the distributed-parametric cases take the slower, harder-to-validate form
 - [Axes of artifact analysis](../notes/axes-of-artifact-analysis.md) — sharpens: separates storage substrate, representational form, lineage, and behavioral authority, clarifying that service memory is usually a substrate choice rather than a form or authority family
 - [automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md) — sharpens: source-inspected systems now give concrete extraction and promotion loops for workshop artifacts and policy learning; the remaining bottleneck is still evaluation of higher-order mutations
 - [a functioning knowledge base needs a workshop layer, not just a library](../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — grounds the artifact-promotion side of this survey: several systems operationalize workshop-to-library bridges from session traces or run trajectories, even though the weight-learning cases extend beyond that note's domain

@@ -78,7 +78,7 @@ A memory cue that fires and enters context has not closed the activation gap unl
 
 Stronger grounding:
 
-The cue is a system-definition artifact, so this belongs in the behavior-change half of continual learning. [Continual learning's open problem is behaviour, not knowledge](../../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md) grounds why a retrieved fact and a fired policy cue have different success criteria. [The readable-artifact loop is the tractable unit for continual learning](../../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) explains why prompt snippets, rules, tests, and tools are the practical substrate for this kind of behavior change. [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md) explains why the evaluation should move from "cue was present" to an oracle that discriminates changed behavior from unchanged behavior.
+The cue is a system-definition artifact, so this belongs in the behavior-change half of continual learning. [Continual learning requires governing behaviour-changing writes, not just storing content](../../notes/continual-learning-requires-governing-behaviour-changing-writes.md) grounds why a retrieved fact and a fired policy cue have different success criteria. [The readable-artifact loop is the tractable unit for continual learning](../../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) explains why prompt snippets, rules, tests, and tools are the practical substrate for this kind of behavior change. [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md) explains why the evaluation should move from "cue was present" to an oracle that discriminates changed behavior from unchanged behavior.
 
 Why it deserves a separate note:
 
@@ -95,7 +95,7 @@ This is strongest for high-priority or always-loaded behavior-changing cues. Low
 Existing overlaps:
 
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) names the activation gap.
-- [Continual learning's open problem is behaviour, not knowledge](../../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md) grounds the behavior-change criterion.
+- [Continual learning requires governing behaviour-changing writes, not just storing content](../../notes/continual-learning-requires-governing-behaviour-changing-writes.md) grounds the behavior-change criterion.
 - [The readable-artifact loop is the tractable unit for continual learning](../../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) grounds readable cues as a practical learning substrate.
 - [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md) grounds why cue evaluation needs a stronger behavioral oracle.
 - [Prompt ablation converts human insight into deployable agent framing](../../notes/prompt-ablation-converts-human-insight-to-deployable-framing.md) gives a method for testing framing.
@@ -105,7 +105,7 @@ Existing overlaps:
 Suggested links:
 
 - `extends`: [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md)
-- `grounds`: [Continual learning's open problem is behaviour, not knowledge](../../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md)
+- `grounds`: [Continual learning requires governing behaviour-changing writes, not just storing content](../../notes/continual-learning-requires-governing-behaviour-changing-writes.md)
 - `grounds`: [The readable-artifact loop is the tractable unit for continual learning](../../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md)
 - `grounds`: [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md)
 - `mechanism`: [Prompt ablation converts human insight into deployable agent framing](../../notes/prompt-ablation-converts-human-insight-to-deployable-framing.md)
@@ -418,7 +418,7 @@ Grounding to reuse:
 
 ### Retrieval splits by role, not content
 
-This is a strong design move, but it may already be covered by [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md), [Continual learning's open problem is behaviour, not knowledge](../../notes/continual-learning-open-problem-is-behaviour-not-knowledge.md), and the source note itself. Extract only if future work repeatedly needs the exact retrieval/activation consequence of the role axis.
+This is a strong design move, but it may already be covered by [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md), [Continual learning requires governing behaviour-changing writes, not just storing content](../../notes/continual-learning-requires-governing-behaviour-changing-writes.md), and the source note itself. Extract only if future work repeatedly needs the exact retrieval/activation consequence of the role axis.
 
 Grounding to reuse:
 

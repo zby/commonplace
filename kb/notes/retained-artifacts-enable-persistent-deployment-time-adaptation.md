@@ -7,7 +7,7 @@ tags: [learning-theory, deploy-time-learning]
 
 # Retained system-definition artifacts enable persistent deployment-time adaptation
 
-[Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) argues that deployed systems need durable behavior changes installed within their operating feedback loops. These changes need not wait for another model-weight training cycle. During deployment, a system can evaluate and retain changes to [system-definition artifacts](./definitions/system-definition-artifact.md)—prompts, rules, tools, schemas, tests, and configuration that it consumes with binding force.
+[Continual learning requires governing behaviour-changing writes, not just storing content](./continual-learning-requires-governing-behaviour-changing-writes.md) argues that deployed systems need durable behavior changes installed within their operating feedback loops. These changes need not wait for another model-weight training cycle. During deployment, a system can evaluate and retain changes to [system-definition artifacts](./definitions/system-definition-artifact.md)—prompts, rules, tools, schemas, tests, and configuration that it consumes with binding force.
 
 This is a distinct adaptation path because the selected change affects later sessions without becoming part of the model's weights. This note calls that path **deployment-time adaptation**. The process counts as learning when deployment experience drives a proposal, evaluation selects it, and retention allows it to change later behavior.
 
@@ -49,7 +49,7 @@ The claim is that a persistent deployment-time adaptation path exists outside mo
 
 Relevant Notes:
 
-- [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) — grounds: supplies the durable behavior-change objective whose lifecycle consequence this note develops
+- [Continual learning requires governing behaviour-changing writes, not just storing content](./continual-learning-requires-governing-behaviour-changing-writes.md) — grounds: supplies the durable behavior-change objective whose lifecycle consequence this note develops
 - [Learning is not only about generality](./learning-is-not-only-about-generality.md) — grounds: supplies Herbert Simon's capacity-change criterion
 - [The deployed system, not the model alone, is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md) — grounds: identifies the behavior-producing system as the learning boundary
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — mechanism: distinguishes selected learning from arbitrary persistent maintenance

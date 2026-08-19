@@ -9,7 +9,7 @@ tags: [agent-memory, context-engineering, learning-theory]
 
 The system must not merely answer "what do we know?" It must sometimes answer an unasked question: "what past lesson applies to the action I am about to take?"
 
-[Continual learning's open problem is behaviour, not knowledge](../continual-learning-open-problem-is-behaviour-not-knowledge.md): adding retrievable facts is easier than changing future action. A stored correction only matters operationally if it fires before the agent repeats the corrected behavior.
+[Continual learning requires governing behaviour-changing writes, not just storing content](../continual-learning-requires-governing-behaviour-changing-writes.md): adding retrievable facts is easier than changing future action. A stored correction only matters operationally if it fires before the agent repeats the corrected behavior.
 
 ## Methods
 
@@ -38,6 +38,6 @@ A cue that fires and enters context has not succeeded unless it changes downstre
 
 Relevant Notes:
 
-- [Continual learning's open problem is behaviour, not knowledge](../continual-learning-open-problem-is-behaviour-not-knowledge.md) - grounds the behavior-change test
+- [Continual learning requires governing behaviour-changing writes, not just storing content](../continual-learning-requires-governing-behaviour-changing-writes.md) - grounds the behavior-change test
 - [Knowledge storage does not imply contextual activation](../knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes storage from effective activation
 - [Large Language Model Agents are not Always Faithful Self-Evolvers](../../sources/llm-agents-are-not-always-faithful-self-evolvers.md) - evidence: causal-intervention warning that visible memory can fail to drive behavior

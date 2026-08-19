@@ -60,6 +60,7 @@ plugins:
         'notes/conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md': 'notes/recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md'
         'notes/constraining-and-distillation-both-trade-generality-for-reliability.md': 'notes/constraining-and-extraction-both-trade-generality-for-reliability.md'
         'notes/context-engineering-index.md': 'notes/context-engineering-README.md'
+        'notes/continual-learning-open-problem-is-behaviour-not-knowledge.md': 'notes/continual-learning-requires-governing-behaviour-changing-writes.md'
         'notes/cross-representational-reflection.md': 'notes/reflective-coverage-is-graded-across-representational-forms.md'
         'notes/definitions/actionable-theory.md': 'notes/definitions/actionable-methodology.md'
         'notes/definitions/register.md': 'notes/definitions/text-contract.md'

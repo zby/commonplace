@@ -106,7 +106,7 @@ That shift explains why memory labels are too coarse. A retained lesson can beco
 
 Relevant Notes:
 
-- [Continual learning's open problem is behaviour, not knowledge](./continual-learning-open-problem-is-behaviour-not-knowledge.md) - applies: the older role axis becomes behavioral authority over a consumption path
+- [Continual learning requires governing behaviour-changing writes, not just storing content](./continual-learning-requires-governing-behaviour-changing-writes.md) - applies: the older role axis becomes behavioral authority over a consumption path
 - [codification](./definitions/codification.md) - defines the phase transition from natural-language into symbolic form
 - [constraining](./definitions/constraining.md) - mechanism that operates across natural-language artifacts and reaches symbolic artifacts at its far end
 - [LLM contexts interpret instructions and content through the same token medium](./llm-context-interprets-instructions-and-content-through-one-medium.md) - mechanism: lets the same natural-language content function as a knowledge artifact or system-definition artifact depending on authority path
