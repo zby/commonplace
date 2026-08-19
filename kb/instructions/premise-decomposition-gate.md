@@ -45,6 +45,10 @@ For each premise, actively hunt a concrete **counterexample** or a specific reas
 
 Counterexample by register: for a claim, a case where the premise is false; for a definition, a case the boundary mis-sorts (over- or under-includes) or a distinction that changes nothing; for a procedure, a situation where the assumption fails and the steps misfire.
 
+**Read each premise at its stated modality** (`kb/notes/COLLECTION.md`, "Claim modality"). A premise stated as a tendency ("usually", "most", "under conditions C") is dented or defeated only by prevalence-shaped evidence — the exceptions being common or the ordinary case going the other way — never by one instance it already concedes. A premise stated as a first-order model with adequacy commitments is attacked through those commitments — an exception its domain treats as ordinary unmarked practice, or the model losing dominance — not by conceded, accounted-for exceptions. A premise with no stated mode reads as universal, and one genuine counterexample defeats it.
+
+For every non-`HOLDS` premise, also record the **counterexample shape**: `instance` (one concrete case), `prevalence` (evidence the exception is common or ordinary), or `priced-exception` (the case is marked, fenced, or charged for in its own domain). The shape is routing information for whoever repairs the note — a prevalence-shaped defeat of a universal premise points at a statistical reframe, and a priced-exception defeat points at an ideal-type candidate — not a verdict, and not this method's call to make.
+
 ## Step 4 — Route each failure local or global
 
 For every `DOUBTFUL` or `DEFEATED` premise, classify the scope of its failure:
@@ -66,7 +70,7 @@ Write to `kb/reports/premise-decomposition/<note-name>.premises.md`. Mutate noth
 **Central commitment (one sentence):** <...>
 
 ## Premises and counterexamples
-1. **<premise, stated as a proposition>** — <HOLDS | DOUBTFUL | DEFEATED> — <the counterexample or reason> — <LOCAL | GLOBAL if not HOLDS>
+1. **<premise, stated as a proposition, at its stated modality>** — <HOLDS | DOUBTFUL | DEFEATED> — <the counterexample or reason> — <LOCAL | GLOBAL if not HOLDS> — <instance | prevalence | priced-exception if not HOLDS>
 2. ...
 
 ## For the human

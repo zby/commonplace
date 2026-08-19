@@ -18,6 +18,10 @@ The episode matters beyond its note: it is the first end-to-end trace in this re
 - **Pricing as design vocabulary (open)** — extension candidate from the class-instance session: when an idealization passes the pricing test, the domain's pricing apparatus (its fence) is a candidate solution structure for the analogous problem in the target domain — the fenced-second-relation result is the one witness. Recorded as an open question in the criterion note; a claim of its own if a second case lands
 - **Maxim reconciliation (open)** — the operator maxim "the goal of our theories is to become methodology" reads as theory-consumed-by-methodology, while [theory and methodology form a two-layer execution system](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md) keeps theory live upstream as the generator layer. Decide whether the maxim should be restated ("theories generate methodology and remain upstream of it") or the note revised.
 
+## Adopted (2026-08-19)
+
+ADR 066 shipped the machinery this workshop was opened to design: three claim modes declared in text, modality-aware premise reading with counterexample-shape annotations, and mode-guarded bidirectional reframes in the full pass. The proposal was trimmed to its undecided remainder (profile-level policy, attestation drift tracking). The 22 candidates in [statistical-mode-candidates.md](./statistical-mode-candidates.md) are now the repair queue: ordinary full passes fix them under the new rules, starting with the recommended first conversions.
+
 ## Promoted at open
 
 - `kb/reference/proposals/repair-dispositions-for-defeated-claims.md` — the design object: make the repair policy for review-defeated claims explicit, with an option space (document the current universal, add a declared-modality/idealization repair with pricing-gated verdicts, or declare policy per text-contract profile)
