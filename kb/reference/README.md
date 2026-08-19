@@ -88,20 +88,19 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 
 *Limitations.* Relationship labels are judgment calls and sometimes need correction. Connection is often underdone at write time, so running connect explicitly on new notes is a reasonable habit.
 
-### Convert between types
+### Convert text to a note
 
 *What it's for.* Promote a rough capture to a more structured form as understanding matures.
 
 *How to ask.*
 
 - "Convert `kb/notes/scratch.md` from text to a note."
-- "This note has enough argument behind it now. Promote it to a structured-claim."
 
-*What happens.* The agent adds frontmatter, renames the file to match the title where needed, or adds required structural sections such as Evidence and Reasoning.
+*What happens.* The agent adds valid note frontmatter: a semantic `description`, `type: kb/types/note.md`, and empty `traits` and `tags`, while leaving `user-verified` absent. It does not edit the body. When the filename does not match the title, it renames the file within its collection and repairs backlinks.
 
-*What you get.* The same note at a higher point on the type ladder, with the required structure filled in or drafted from the existing prose.
+*What you get.* The same captured content as a structurally valid, unverified note, possibly under a title-aligned filename with its inbound links updated.
 
-*Limitations.* Demotion is not supported, and converting weak content into a stronger type does not create rigor by itself.
+*Limitations.* Only text → note is implemented. Demotion and note → specialised-type conversion are future directions. Conversion supplies structure and retrieval metadata; it does not improve the body or create rigor.
 
 ### Revise a note
 

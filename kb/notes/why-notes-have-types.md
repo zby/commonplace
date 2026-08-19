@@ -42,7 +42,14 @@ The arguments are independent and complementary. Each stands alone; together the
 
 ## Maturation
 
-Content starts as [text](../types/text.md) (no frontmatter, no structure) and gains type information as it develops — gradual typing applied to documents. The maturation path is: raw capture → add frontmatter (`note`) → accumulate traits → promote to a specific type when structural criteria are met. A bare note that persists without promotion is a signal. This mirrors the broader [constraining pattern](./methodology-enforcement-is-constraining.md): practices start stochastic and harden as they prove out.
+Content starts as [text](../types/text.md) (no frontmatter, no structure) and
+gains type information as it develops — gradual typing applied to documents.
+The maturation path is: raw capture → add valid note frontmatter
+(`description` plus `type: kb/types/note.md`) → accumulate traits → promote to
+a specific type when structural criteria are met. A bare note that persists
+without promotion is a signal. This mirrors the broader [constraining
+pattern](./methodology-enforcement-is-constraining.md): practices start
+stochastic and harden as they prove out.
 
 ## Why free-form, not enum
 

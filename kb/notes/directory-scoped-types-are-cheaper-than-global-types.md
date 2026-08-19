@@ -32,8 +32,8 @@ A thin global layer might be just the maturity ladder:
 
 | Global type | What it tells an agent |
 |---|---|
-| `text` | No frontmatter — raw capture, always valid |
-| `note` | Has frontmatter with description — searchable, connectable, validatable |
+| `text` | No frontmatter — raw capture with no type-specific structural checks |
+| `note` | Has valid frontmatter with a description and a type pointer resolving to the base note contract — searchable, connectable, validatable |
 
 Everything else — ADRs, source reviews, structured claims, reviews, indexes — is plausibly a directory-local specialisation of `note`. A specialised type is a note that lives in a specific directory and has a specific section structure. The directory's template defines the structure; validation checks against the directory's expectations.
 
@@ -45,7 +45,7 @@ The types that genuinely move are `text` and `note` — and those are exactly th
 
 ## What this would change
 
-**The control-plane file gets thinner.** The routing table stays (agents still need to know which directory to put things in). The global type vocabulary shrinks to `text` vs `note` (has frontmatter or not).
+**The control-plane file gets thinner.** The routing table stays (agents still need to know which directory to put things in). The global type vocabulary shrinks to `text` vs `note` (no frontmatter vs valid typed frontmatter).
 
 **Directory READMEs and templates become the type definitions.** Each directory's conventions say what structure is expected, what metadata matters, what validation applies. This is already happening informally in any KB with collection-level READMEs; making it explicit means the README *is* the type spec for that directory.
 
@@ -60,7 +60,8 @@ Some things genuinely apply everywhere:
 - **Frontmatter conventions** — description, status, tags. Every note has these regardless of directory.
 - **Status ladder** — seedling/current/speculative/outdated. Universal commitment tracking.
 - **Link conventions** — how to link, what semantics to use. Directory-independent.
-- **The text → note promotion** — adding frontmatter to a raw capture. Universal maturity step.
+- **The text → note promotion** — adding valid frontmatter with `description`
+  and `type: kb/types/note.md` to a raw capture. Universal maturity step.
 
 These are the real global affordances. They're thin — which is the point.
 

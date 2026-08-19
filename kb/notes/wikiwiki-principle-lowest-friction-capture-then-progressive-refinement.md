@@ -15,10 +15,15 @@ The KB type hierarchy is a codification ladder for thoughts. Its design principl
 
 2. **Our type ladder mirrors this.** The [available types](../reference/available-types.md) hierarchy follows the same pattern:
    - **`text`** — no frontmatter, just write. Zero friction, like creating a wiki page.
-   - **`note`** — add frontmatter, claim title, connections. Now findable.
+   - **`note`** — add valid frontmatter with `description` and
+     `type: kb/types/note.md`, then develop the title and connections. Now
+     findable.
    - **`structured-claim`** — add Evidence/Reasoning/Caveats sections. Now [verifiable](./claim-notes-should-use-toulmin-derived-sections-for-structured.md).
 
-   Each step adds structure only when the thought has earned it. The file never moves or gets copied — it grows structure in place.
+   Each step adds structure only when the thought has earned it. The same
+   logical artifact grows structure in its current collection; conversion may
+   normalize its filename and repair backlinks rather than preserving a
+   mismatched path.
 
 3. **Verification stays orthogonal.** A structurally complete `structured-claim` may still lack `user-verified`; shaping, semantic review, and explicit human attestation are distinct operations. Structure can be refined without manufacturing a commitment signal.
 
@@ -26,7 +31,13 @@ The KB type hierarchy is a codification ladder for thoughts. Its design principl
 
 A half-formed intuition doesn't need Toulmin sections — it needs to exist before it's forgotten. A mature argument that other notes depend on as a premise does need sections — it's load-bearing and must be trustworthy. The wiki principle says: don't force mature structure at capture time, because friction prevents capture. Don't leave mature arguments unstructured, because you can't verify them.
 
-The key property is **refinement in place**. A `text` file becomes a `note` by adding frontmatter. A `note` becomes a `structured-claim` by adding sections. No migration, no new file, no pipeline. The file path stays stable, links don't break, git history is preserved. This makes refinement cheap enough to actually happen — the same insight Cunningham had about wiki pages.
+The key property is **refinement in place**. A `text` file becomes a `note` by
+adding valid note frontmatter. A `note` becomes a `structured-claim` by adopting
+that type's pointer and sections. No content migration, copy, or publication
+pipeline is required. Conversion may normalize the filename within the same
+collection, but it repairs backlinks and preserves the artifact's body and Git
+history. This makes refinement cheap enough to actually happen — the same
+insight Cunningham had about wiki pages.
 
 This connects to [codification](./definitions/codification.md): codification is the general pattern (stochastic → deterministic), the wiki principle is the UX requirement that makes it work (each step must be low-friction and in-place).
 

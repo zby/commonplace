@@ -1,8 +1,7 @@
-# M1 plan — Finish the five representation migrations
+# M1 plan — Finish the representation migrations
 
-**State:** open. All five audited contradictions remain, and a targeted recheck
-found additional current-looking consumers. The table in the workshop is a
-starting witness set, not a complete migration manifest.
+**State:** open. Four packets remain. Text promotion was resolved and guarded
+on 2026-08-19; the other witness sets still need complete consumer inventories.
 
 ## Resolution selected
 
@@ -38,16 +37,30 @@ retired executable form.
    `kb/sources/types/snapshot.md` from `type: snapshot` to
    `type: kb/sources/types/snapshot.md`, while retaining the collection Types
    menu as the extension point. Coordinate wording with S1 and I3.
-5. **Text promotion.** Change `kb/types/text.md` so promotion requires valid
-   note frontmatter including `description` and `type: kb/types/note.md`, with
-   no implicit human verification. Align conceptual conversion notes with the
-   already-correct convert skill.
+5. **Text promotion — resolved 2026-08-19.** `kb/types/text.md` now requires
+   valid note frontmatter including `description` and
+   `type: kb/types/note.md`, with no implicit human verification. The root and
+   reference guides plus the text-promotion passages in five conceptual notes
+   match the already-correct convert skill. A focused docs test derives the
+   schema's required fields, checks the authoritative text contract and
+   converter template against them, and rejects retired shortcuts across those
+   eight live consumers.
+
+## Migration manifest
+
+| Packet | Retired form | Ground truth | Live consumers | Allowed history | Chosen edit | Verification | State |
+|---|---|---|---|---|---|---|---|
+| Global note status | Global maturity/status on base notes | ADR 044 and `note.schema.yaml` | Starting witnesses: `available-types.md`, notes landing, document-system landing; full sweep pending | Inventory pending; preserve type-local lifecycle fields and dated decisions | Pending | Pending | Open |
+| Areas and Topics | `areas:` plus Topics footers as current grouping | ADR 004 and current tag contracts | Starting witnesses: areas note and stale-indexes note; full sweep after T1 | ADR 004 retains the migration history | Pending T1 | Pending | Open |
+| Path-valued types | Bare type names and collection/global lookup fallback | `type-loading.md`, resolver, and schemas | Starting witnesses: document-types note, storage architecture, type-ladder notes | Inventory pending | Pending | Pending | Open |
+| Snapshot type pointer | `type: snapshot` | `snapshot.schema.yaml` | `kb/sources/types/snapshot.md` plus S1/I3 surfaces | None selected | Coordinate with S1 and I3 | Pending | Open |
+| Text promotion | Description-only or arbitrary-frontmatter promotion; bare `type: note`; implicit verification | `note-base.schema.yaml`, `note.md`, and `cp-skill-convert` | Root README, reference README, `text.md`, convert-description, metadata-enforcement, why-types, directory-scoped-types, and wikiwiki notes | Dated ADR/workshop experiment copies may retain their historical wording | Require `description` plus `type: kb/types/note.md`; leave `user-verified` absent; preserve the logical artifact while allowing backlink-safe rename | All 11 edited Markdown artifacts validate cleanly; schema-derived text-contract/converter checks and the scoped retired-wording scan pass; 491-test suite and focused Ruff pass | **Resolved 2026-08-19** |
 
 ## Guard and verification
 
-Create a migration manifest with columns for retired form, ground truth, live
-consumers, allowed historical paths, chosen edit, validation, and closure.
-Add focused lexical guards for load-bearing literals such as bare YAML
+Maintain the migration manifest above as each packet inventories consumers and
+settles its allowed history, edits, verification, and closure. Add focused
+lexical guards for load-bearing literals such as bare YAML
 `type: note|spec|structured-claim|snapshot`, active `areas:`/Topics-footer
 instructions, and global note maturity/status claims. Use explicit historical
 allowlists; do not build a general semantic-contradiction engine.
