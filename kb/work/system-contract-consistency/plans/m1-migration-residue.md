@@ -1,7 +1,8 @@
 # M1 plan — Finish the representation migrations
 
-**State:** open. Four packets remain. Text promotion was resolved and guarded
-on 2026-08-19; the other witness sets still need complete consumer inventories.
+**State:** open. Three packets remain. Text promotion and the snapshot type
+pointer were resolved and guarded on 2026-08-19; the other witness sets still
+need complete consumer inventories.
 
 ## Resolution selected
 
@@ -33,10 +34,13 @@ retired executable form.
    Correct `type-loading.md`'s stale “collection-scoped lookup” description even
    though its body is current. Retain an old bare enum only when explicitly
    labelled historical.
-4. **Snapshot type pointer.** Change the authoritative default in
-   `kb/sources/types/snapshot.md` from `type: snapshot` to
-   `type: kb/sources/types/snapshot.md`, while retaining the collection Types
-   menu as the extension point. Coordinate wording with S1 and I3.
+4. **Snapshot type pointer — resolved 2026-08-19.** The authoritative default
+   in `kb/sources/types/snapshot.md` now matches the schema's required
+   `type: kb/sources/types/snapshot.md`. The collection Types menu remains the
+   extension point. A schema-derived docs test guards the type spec, menu, and
+   snapshot skill defaults; existing CLI tests cover the X and GitHub emitters.
+   The repair does not constrain S1's mutation boundary or I3's installed
+   sources contract.
 5. **Text promotion — resolved 2026-08-19.** `kb/types/text.md` now requires
    valid note frontmatter including `description` and
    `type: kb/types/note.md`, with no implicit human verification. The root and
@@ -53,7 +57,7 @@ retired executable form.
 | Global note status | Global maturity/status on base notes | ADR 044 and `note.schema.yaml` | Starting witnesses: `available-types.md`, notes landing, document-system landing; full sweep pending | Inventory pending; preserve type-local lifecycle fields and dated decisions | Pending | Pending | Open |
 | Areas and Topics | `areas:` plus Topics footers as current grouping | ADR 004 and current tag contracts | Starting witnesses: areas note and stale-indexes note; full sweep after T1 | ADR 004 retains the migration history | Pending T1 | Pending | Open |
 | Path-valued types | Bare type names and collection/global lookup fallback | `type-loading.md`, resolver, and schemas | Starting witnesses: document-types note, storage architecture, type-ladder notes | Inventory pending | Pending | Pending | Open |
-| Snapshot type pointer | `type: snapshot` | `snapshot.schema.yaml` | `kb/sources/types/snapshot.md` plus S1/I3 surfaces | None selected | Coordinate with S1 and I3 | Pending | Open |
+| Snapshot type pointer | `type: snapshot` | `snapshot.schema.yaml` | Snapshot type spec; sources Types menu; snapshot-web default and template; X and GitHub emitters | None | Replace the bare default with the schema's path-valued constant while retaining the Types-menu extension point; S1 and I3 do not alter the pointer | All 4 edited Markdown artifacts validate cleanly; schema-derived spec/menu/skill parity and existing emitter tests pass; 492-test suite and focused Ruff pass | **Resolved 2026-08-19** |
 | Text promotion | Description-only or arbitrary-frontmatter promotion; bare `type: note`; implicit verification | `note-base.schema.yaml`, `note.md`, and `cp-skill-convert` | Root README, reference README, `text.md`, convert-description, metadata-enforcement, why-types, directory-scoped-types, and wikiwiki notes | Dated ADR/workshop experiment copies may retain their historical wording | Require `description` plus `type: kb/types/note.md`; leave `user-verified` absent; preserve the logical artifact while allowing backlink-safe rename | All 11 edited Markdown artifacts validate cleanly; schema-derived text-contract/converter checks and the scoped retired-wording scan pass; 491-test suite and focused Ruff pass | **Resolved 2026-08-19** |
 
 ## Guard and verification

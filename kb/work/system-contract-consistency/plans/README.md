@@ -16,7 +16,7 @@ outcomes record the guard that keeps a closed contradiction from recurring.
 | T1 | Adopt collection-scoped tag membership claims and bound tag-link routing to that scope | [Tag scope](./t1-tag-scope.md) |
 | E1 | Retain native Windows support and remove or pair every channel-specific promoted procedure | [Windows execution](./e1-windows-execution.md) |
 | F1 | **Resolved 2026-08-19:** unsupported generic freshness acceptance was withdrawn until a real non-review target exists | [Completed outcome](./f1-freshness-accept.md) |
-| M1 | Complete the four remaining migration-residue packets; text promotion is resolved and guarded | [Migration residue](./m1-migration-residue.md) |
+| M1 | Complete the three remaining migration-residue packets; text promotion and the snapshot pointer are resolved and guarded | [Migration residue](./m1-migration-residue.md) |
 | C1 | **Resolved 2026-08-19:** quote verification is documented and exact console-script/reference parity is enforced | [Completed outcome](./c1-command-catalogue.md) |
 
 ## Execution order

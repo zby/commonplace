@@ -1,4 +1,4 @@
-"""Keep authored type-transition guidance aligned with executable schemas."""
+"""Keep authored type guidance aligned with executable schemas."""
 
 from __future__ import annotations
 
@@ -91,3 +91,34 @@ def test_current_text_promotion_guidance_avoids_retired_shortcuts() -> None:
     assert occurrences == [], "retired text-promotion guidance remains:\n" + "\n".join(
         occurrences
     )
+
+
+def test_snapshot_type_pointer_matches_schema() -> None:
+    schema = yaml.safe_load(
+        (REPO_ROOT / "kb/sources/types/snapshot.schema.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
+    expected_pointer = schema["properties"]["frontmatter"]["properties"]["type"][
+        "const"
+    ]
+    contract = (REPO_ROOT / "kb/sources/types/snapshot.md").read_text(
+        encoding="utf-8"
+    )
+    metadata = contract.split("## Metadata", maxsplit=1)[1].split(
+        "## Genre", maxsplit=1
+    )[0]
+
+    assert f"`type: {expected_pointer}`" in metadata
+    assert "`type: snapshot`" not in metadata
+
+    collection_contract = (REPO_ROOT / "kb/sources/COLLECTION.md").read_text(
+        encoding="utf-8"
+    )
+    assert f"| `snapshot` | `{expected_pointer}` |" in collection_contract
+
+    snapshot_skill = (
+        REPO_ROOT / "kb/instructions/cp-skill-snapshot-web/SKILL.md"
+    ).read_text(encoding="utf-8")
+    assert f"`{expected_pointer}` in the shipped default" in snapshot_skill
+    assert f"default {expected_pointer}" in snapshot_skill

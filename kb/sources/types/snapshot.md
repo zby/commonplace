@@ -15,7 +15,7 @@ A snapshot is stamped by capture tooling or a snapshot skill. It is not normally
 
 ## Metadata
 
-- Set `type: snapshot`.
+- Set `type: kb/sources/types/snapshot.md`.
 - Set `source` to the canonical URL of the original source.
 - Set `captured` to the capture date or datetime.
 - Set `capture` to the capture mechanism, such as `web-fetch`, `pdf-read`, `xdk`, or `gh-api`.

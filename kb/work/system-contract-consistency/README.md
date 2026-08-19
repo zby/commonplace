@@ -74,7 +74,7 @@ Priorities mean:
 | T1 | P1 | Tag coverage is stated and routed beyond one collection but generated and checked within one collection | A validated mark can falsely license a reader to stop searching | [Tag scope](./plans/t1-tag-scope.md) |
 | E1 | P1 | Native Windows is supported, but promoted skills retain unpaired POSIX-only commands | Selected recovery and authoring procedures are non-operative on a declared channel | [Windows execution](./plans/e1-windows-execution.md) |
 | F1 | P1 | **Resolved 2026-08-19:** the unsupported generic accept entry point, transition, schema, and current-facing claims were withdrawn | ADR 065 requires a concrete non-review target before the surface can return | [Completed outcome](./plans/f1-freshness-accept.md) |
-| M1 | P2 | Four accepted representation migrations retain live guidance; the text-promotion packet closed on 2026-08-19 | Agents can still author schema-invalid or semantically retired artifacts from current docs | [Migration residue](./plans/m1-migration-residue.md) |
+| M1 | P2 | Three accepted representation migrations retain live guidance; the text-promotion and snapshot-pointer packets closed on 2026-08-19 | Agents can still author schema-invalid or semantically retired artifacts from current docs | [Migration residue](./plans/m1-migration-residue.md) |
 | C1 | P2 | **Resolved 2026-08-19:** 21 console scripts now have 21 unique command-reference sections | An exact set-parity test prevents one-sided catalogue changes | [Completed outcome](./plans/c1-command-catalogue.md) |
 
 ## I1 — Shipping and upgrade contracts disagree
@@ -303,23 +303,24 @@ one-line freshness-module summary because it already contained unrelated
 uncommitted edits; that navigation-only cleanup remains pending rather than
 sweeping another change into this outcome.
 
-## M1 — Four representation migrations retain live residue
+## M1 — Three representation migrations retain live residue
 
-Four audited rows remain active. The text-promotion row closed on 2026-08-19:
+Three audited rows remain active. The text-promotion and snapshot-pointer rows
+closed on 2026-08-19:
 
 | State | Current contract | Guidance disposition |
 |---|---|---|
 | Open | [ADR 044](../../reference/adr/044-user-verification-replaces-global-note-status.md) and [note.schema.yaml](../../types/note.schema.yaml) remove global note `status` | [available-types.md](../../reference/available-types.md), [notes/README.md](../../notes/README.md), and [document-system-README.md](../../notes/document-system-README.md) still teach a global maturity/status ladder |
 | Open | [ADR 004](../../reference/adr/004-replace-areas-with-tags.md) replaces `areas` and Topics footers | [areas-exist-because-useful-operations-require-reading-notes-together.md](../../notes/areas-exist-because-useful-operations-require-reading-notes-together.md) and [stale-indexes-are-worse-than-no-indexes.md](../../notes/stale-indexes-are-worse-than-no-indexes.md) teach the retired mechanism as current |
 | Open | [type-loading.md](../../reference/type-loading.md) requires path-valued `type:` | [document-types-should-be-verifiable.md](../../notes/document-types-should-be-verifiable.md) uses current bare-type examples, and [storage-architecture.md](../../reference/storage-architecture.md) teaches lookup/fallback rather than lexical path resolution |
-| Open | [snapshot.schema.yaml](../../sources/types/snapshot.schema.yaml) requires `type: kb/sources/types/snapshot.md` | [snapshot.md](../../sources/types/snapshot.md) tells authors to use `type: snapshot` |
+| **Resolved** | [snapshot.schema.yaml](../../sources/types/snapshot.schema.yaml) requires `type: kb/sources/types/snapshot.md` | [snapshot.md](../../sources/types/snapshot.md) now gives the same path-valued default. A schema-derived parity test covers the type spec, collection Types menu, and snapshot skill; existing emitter tests cover X and GitHub captures. |
 | **Resolved** | [note-base.schema.yaml](../../types/note-base.schema.yaml) requires `description` and `type`, while convert writes `type: kb/types/note.md` and never grants verification | The text contract, root and reference guides, and five conceptual notes now require complete note frontmatter in their text-promotion passages. A schema-derived check covers the authoritative text contract and converter template; a scoped regression scan rejects retired shortcuts in all eight current consumers. |
 
-The [migration plan and manifest](./plans/m1-migration-residue.md) records the
-eight text-promotion consumers and their guard. The other rows remain starting
-witness sets rather than complete inventories. Their packets must still
-distinguish explicit history from current instructions and add narrow guards
-for the retired executable forms.
+The [migration plan and manifest](./plans/m1-migration-residue.md) records both
+completed packets and their guards. The other rows remain starting witness sets
+rather than complete inventories. Their packets must still distinguish
+explicit history from current instructions and add narrow guards for the
+retired executable forms.
 
 ## C1 — Command-catalogue parity is resolved
 
