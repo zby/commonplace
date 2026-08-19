@@ -54,7 +54,7 @@ Neither case shows pricing deciding anything. What both show is that the questio
 
 ## Consequence for review workflows
 
-A repair vocabulary whose premise verdicts are only DEFEATED and HOLDS gives the idealization question no slot, but the fix is not a pricing-gated verdict. "Holds as idealization, exceptions priced" would accept claims on routing evidence alone — an immunizing slot built into the workflow. The route worth adding is an assessment: pricing opens it, and a retained idealization carries an adequacy record — declared use, omitted mechanism, bound, dominance — that later passes can attack like any other content.
+Premise verdicts that classify truth — held, doubtful, defeated — are right to stay silent about repair: a false universal premise stays defeated even when the claim deserves to survive as an idealization. The gap sits one level up, in the repair dispositions. If no disposition can convert a defeated crisp claim into a declared idealization, the assessment has no place to run, and no one records its rejection as a decision either. The fix is not a pricing-gated acceptance: "holds as idealization, exceptions priced" would accept claims on routing evidence alone — an immunizing slot built into the workflow. The route worth adding is the assessment itself: pricing opens it, and a retained idealization carries an adequacy record — declared use, omitted mechanism, bound, dominance — that later passes can attack like any other content.
 
 ## Scope
 
