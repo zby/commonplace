@@ -1,13 +1,13 @@
 ---
-description: "In a linked KB note, retain the recognition condition and any unrecoverable rationale; factor reconstructable framework recap into a linked artifact and test the boundary by downstream effects"
+description: "Retain the recognition anchor and rationale the intended consumption path cannot reliably supply — an enforced path can carry the anchor itself; reconstructable framework recap factors into the linked artifact, tested by downstream effects"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [context-engineering]
 ---
 
-# Linked notes should retain recognition anchors, not reconstructable framework recaps
+# A linked note's durable payload is what its consumption path cannot reliably supply
 
-A framework can occupy much of an author's working context without being the durable contribution of a particular case note. When intended consumers can reconstruct the framework from a linked artifact, the note should retain what the case adds: the recognition condition, the mapping to a problem type, the operation to perform, local facts, and any rationale unavailable elsewhere. Keep framework exposition or derivation inline only when the link cannot supply needed accessibility, disambiguation, warrant, provenance, or fidelity.
+A framework can occupy much of an author's working context without being the durable contribution of a particular case note. When intended consumers can reconstruct the framework from a linked artifact, the note should retain what the case adds: the recognition condition, the mapping to a problem type, the operation to perform, local facts, and any rationale unavailable elsewhere. Keep framework exposition or derivation inline only when the link cannot supply needed accessibility, disambiguation, warrant, provenance, or fidelity. The retention duty is relative to the intended consumption path: where an enforced path — a template that forces the condition, a validator that fires on it, a routing rule that applies the mapping — reliably supplies the recognition itself, the note need not repeat it, and what remains to retain is whatever that path cannot reliably supply.
 
 The framework's size during writing is therefore a poor guide to what the finished note should contain. The boundary is [observer-relative](./information-value-is-observer-relative.md): it depends on what intended consumers can reconstruct faithfully, activate at the point of use, and verify when they dispute the mapping.
 
@@ -17,7 +17,7 @@ When a linked note applies a familiar framework to a particular case, its recogn
 
 > When **this observable condition** occurs, treat **this apparent task** as **this named kind of problem**, and use the corresponding framework to **perform this operation**.
 
-The linked framework supplies the shared concepts. The condition, mapping, and operation preserve the case-specific recognition that the consumer could not reliably supply. But a framework address is not a substitute for a local reason. When the mapping is contestable or its reasoning cannot be recovered from a named source, retain the decisive premise, evidence edge, provenance pointer, or authoritative interpretation. [History has one chance to become checkable](./history-has-one-chance-to-become-checkable.md); familiarity with the generic framework cannot restore rationale that was never recorded.
+The linked framework supplies the shared concepts. The condition, mapping, and operation preserve the case-specific recognition that neither the consumer nor an enforced consumption path can reliably supply. But a framework address is not a substitute for a local reason. When the mapping is contestable or its reasoning cannot be recovered from a named source, retain the decisive premise, evidence edge, provenance pointer, or authoritative interpretation. [History has one chance to become checkable](./history-has-one-chance-to-become-checkable.md); familiarity with the generic framework cannot restore rationale that was never recorded.
 
 ## Place shared framework once; retain unrecoverable local reasons
 

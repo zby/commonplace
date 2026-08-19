@@ -125,6 +125,7 @@ plugins:
         'notes/targeted-context-selection-is-bounded-by-discriminator-availability.md': 'notes/rule-based-context-selection-needs-a-pre-existing-signal.md'
         'notes/task-fitted-structure-costs-cross-task-reuse.md': 'notes/current-task-fit-alone-does-not-warrant-costly-entrenchment.md'
         'notes/the-builder-loop-becomes-internal-through-an-operative-redesign-path.md': 'notes/a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md'
+        'notes/the-framework-is-often-larger-than-the-durable-contribution.md': 'notes/linked-note-durable-payload-is-what-consumption-path-cannot-supply.md'
         'notes/the-meta-harness-ablation-bounds-summarization-not-theory-formation.md': 'notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md'
         'notes/tool-loop-index.md': 'notes/tool-loop-README.md'
         'notes/trace-derived-learning-techniques-in-related-systems.md': 'agent-memory-systems/README.md'
