@@ -31,6 +31,7 @@ For the live Commonplace repo's current type inventory and migration summary, se
 - [text-testing-framework](./text-testing-framework.md) — reference framework: contracts per document type, test pyramid (deterministic/LLM rubric/corpus), production workflow
 - [deterministic-validation-should-be-a-script](./deterministic-validation-should-be-a-script.md) — half of /validate's checks are hard-oracle (enums, link resolution, frontmatter structure) and could run as a Python script instead of burning LLM tokens
 - [unit-testing-llm-instructions-requires-mocking-the-tool-boundary](./unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md) — skills are programs whose I/O boundary is tool calls; mocking that boundary enables instruction-level testing that complements text artifact testing
+- [domain-pricing-routes-an-exception-to-idealization-assessment](./domain-pricing-routes-an-exception-to-idealization-assessment.md) — the workflow shape for defeated-but-retainable claims: domain pricing opens an idealization assessment, adequacy evidence decides it, and pricing-gated acceptance is an immunizing slot
 
 ## Decisions
 

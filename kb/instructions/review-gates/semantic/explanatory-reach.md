@@ -24,3 +24,9 @@ For the central claim:
 5. Do not repair the mechanism while reviewing. Judge the explanation present in the artifact, not a stronger route that would make the same conclusion work.
 
 WARN when the note presents a claim with no mechanism, or the mechanism is easy to vary without breaking the conclusion. INFO when a mechanism is present but thin — plausible but not yet constrained enough to be hard-to-vary.
+
+---
+
+Relevant Notes:
+
+- [Domain pricing routes an exception to idealization assessment but does not decide it](../../../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md) — rests-on: the discriminator behind the ad-hoc-accommodation check — pricing can open review of an idealized claim, but only an attackable adequacy record justifies retention; an escape hatch has neither

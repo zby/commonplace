@@ -15,6 +15,7 @@ Failure-mode notes name recurring ways an agent-operated KB can fail despite hav
 - [Elicitation requires maintained question-generation systems](./elicitation-requires-maintained-question-generation-systems.md) - shows how inquiry processes decay when prompts stop generating discriminating questions
 - [Generality bought to avoid counterexamples is paid for in precision](./generality-bought-to-avoid-counterexamples-is-paid-for-in.md) - the widening escape from counterexamples: vocabulary abstracts, content stays flat, prose becomes unreadable
 - [Narrowing bought to survive review is paid for in content](./narrowing-bought-to-survive-review-is-paid-for-in-content.md) - the narrowing escape: shrinking a defeated claim's subject into its own predicate yields an analytic title that passes every gate
+- [Domain pricing routes an exception to idealization assessment but does not decide it](./domain-pricing-routes-an-exception-to-idealization-assessment.md) - names post-hoc immunization as the idealization escape's degenerate form and states the adequacy commitments that keep an idealized claim refutable
 
 ## Related Tags
 

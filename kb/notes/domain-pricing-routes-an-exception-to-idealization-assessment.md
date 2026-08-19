@@ -1,7 +1,7 @@
 ---
 description: "Pricing signatures are defeasible, author-external evidence that a counterexample deserves idealization assessment; whether it refutes is settled by intended use, the omitted mechanism, consequence bounds, and explanatory dominance"
 type: kb/types/note.md
-traits: [title-as-claim, has-comparison]
+traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [document-system, failure-modes, kb-maintenance]
 ---
 
@@ -75,3 +75,12 @@ Relevant Notes:
 - [title as claim exposes commitments, enabling Popperian maintenance](./title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) — grounds: the maintenance frame this assessment sits inside, where the adequacy record is the exposed commitment surface a later pass attacks
 - [formal systems assess explanatory-reach only through causal and proof obligations](./formal-systems-assess-explanatory-reach-through-causal-and-proof.md) — grounds: adequacy is judged relative to a declared model and use, not to surface marking, which is this note's second stage stated for formal assessment
 - [methodology with incomplete coverage and its live theory fallback form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — contrasts: idealization keeps unification in the generator layer instead of letting it migrate into methodology-shaped content
+- [reach-assessment](./definitions/reach-assessment.md) — defined-in: the adequacy stage is a content-level reach-assessment, distinct from the pricing that only routes a candidate to it
+- [theory warrant should be tracked at the finest granularity evidence licenses](./theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) — grounds: its non-distribution rule is why evidence for exceptional status cannot silently become warrant for bounds, dominance, or adequacy over a declared use
+- [repair dispositions for defeated claims are an epistemic policy with an option space](../reference/proposals/repair-dispositions-for-defeated-claims.md) — see-also: the Commonplace design surface that would turn the two-stage criterion into a keep-as-idealization disposition, gate, and freshness design
+- [Metaobject Protocols: Why We Want Them and What Else They Can Do](../sources/metaobject-protocols-why-we-want-them-and-what-else-they-can-do.md) — evidenced-by: protocol entry points and explicit base/meta separation attest the marked-interface signature, without establishing prevalence or adequacy
+- [Monkey patch](../sources/monkey-patch.md) — evidenced-by: the documented warning term attests the pejorative-name signature; the source is tertiary and records sanctioned uses too, so the inference stays community-relative
+- [Fast properties in V8](../sources/fast-properties-in-v8.md) — evidenced-by: hidden classes, dictionary mode, and inline caches attest the runtime-charge signature when stable-shape assumptions break
+- [Maps (Hidden Classes) in V8](../sources/maps-hidden-classes-in-v8.md) — evidenced-by: the field-constness trace supplies the concrete deoptimization mechanism behind the runtime charge
+- [Release Handling](../sources/erlang-release-handling.md) — evidenced-by: versioned appup/relup plans, synchronized `code_change`, and rollback attest the governance-ritual signature, not the rarity or subordination of live definition change
+- [SELF: The Power of Simplicity](../sources/self-the-power-of-simplicity.md) — evidenced-by: a rival organized around eliminating classes, attesting that the class commitment is real and contestable — the one-way half of the rival signature

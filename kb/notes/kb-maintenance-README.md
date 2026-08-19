@@ -24,6 +24,7 @@ How an agent-operated KB stays healthy as it grows. Detection, operations, and t
 - [stale-indexes-are-worse-than-no-indexes](./stale-indexes-are-worse-than-no-indexes.md) — a missing index entry suppresses search entirely; absence of an index degrades to search, presence of a stale index prevents it
 - [a-derived-copy-of-recomputable-truth-must-be-checked-or-absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — a copy of mechanically recomputable information must be validator-checked against its source or not exist; hand-maintained-and-trusted is the forbidden middle
 - [apparent success is an unreliable health signal in framework-owned tool loops](./apparent-success-is-an-unreliable-health-signal-in-framework-owned.md) — successful runs can still conceal broken helpers and paths; maintenance needs log sweeps or other observability for hidden failures
+- [domain-pricing-routes-an-exception-to-idealization-assessment](./domain-pricing-routes-an-exception-to-idealization-assessment.md) — separates truth verdicts from repair dispositions: pricing routes a defeated claim to idealization assessment, and a retained idealization carries an adequacy record later passes can attack
 
 ## Operations
 

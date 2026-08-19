@@ -48,3 +48,4 @@ Relevant Notes:
 
 - [Reach-assessment](./definitions/reach-assessment.md) — defined-in: the judgment that separates directly checked cases from claimed generalization beyond them
 - [Mixed epistemic status must be preserved below the document level](./mixed-epistemic-status-must-be-preserved-below-the-document-level.md) — extends: develops evidence-granular warrant into an authoring and review rule
+- [Domain pricing routes an exception to idealization assessment but does not decide it](./domain-pricing-routes-an-exception-to-idealization-assessment.md) — extends: develops the non-distribution rule into a two-stage review architecture where routing and adequacy evidence carry different authority
