@@ -2,11 +2,12 @@
 
 ## Goal
 
-Compare the epistemic architectures of four research systems — how claims, evidence, warrant, and explanation route through each system's acceptance machinery, and what its operative oracle actually discriminates. The four cases:
+Compare the epistemic architectures of five research systems — how claims, evidence, warrant, and explanation route through each system's acceptance machinery, and what its operative oracle actually discriminates. The five cases:
 
 - **Commonplace** — this KB: natural-language artifacts, declared quality goals, verdict/report review pairs, freshness baselines.
 - **Eigenius** — typed kernel substrate: certificates, epistemic grades, path-specific commit gates, optional Lean proof checking; pinned authority in the [code-grounded review](../../agentic-systems/eigenius.md).
 - **ScienceFlow** — long-horizon research-agent harness: evaluator-gated Stage acceptance, anchor selection, folded memory; pinned authority in the [code-grounded ingest](../../sources/scienceflow-long-horizon-agent-for-ml-research-and-discovery.ingest.md).
+- **AI Research OS** — skill-driven personal research wiki: immutable sources, LLM-maintained synthesis pages, deterministic indexes, structural lint, no reject-capable acceptance step; pinned authority in the [code-grounded review](../../agent-memory-systems/reviews/ai-research-os-workshop.md).
 - **The ontology draft** — a private research-ontology design for an artifact-focused AI lab (v0.2, examined 2026-08-19): measurement-only acceptance over versioned objects, with explanation represented but unscored. Kept anonymous in all committed text until the authors approve naming; the source document is not ingested.
 
 "Epistemic architecture" deliberately names the comparison plane, not a class of systems: every system has one, possibly degenerate, so "system X's epistemic architecture lacks a claim object" is a sayable finding. Whether a given system's machinery is genuinely epistemic is an output of the comparison, not a membership condition.
@@ -16,7 +17,8 @@ The selection angle that seeded this workshop is [weakly discriminated qualities
 ## Threads
 
 - [four-system-baseline.md](./four-system-baseline.md) — the opening position from the 2026-08-19 analysis: per-system operative-oracle readings, the four-way spectrum of where explanation sits relative to the oracle, the route-level asymmetry variant, and the response taxonomy (exile / grade-cap / declare-and-audit)
-- **Response taxonomy (open, candidate note)** — three observed responses to the form-vs-explanation oracle asymmetry. Log-entry-grade until the mechanism is worked out and a further system either fits or breaks the taxonomy.
+- [ai-research-os-reading.md](./ai-research-os-reading.md) — the fifth case: retention without an acceptance gate, selection moving to read-time as a candidate scope extension of the conjecture, the mark-and-expose response, and the participation × containment 2×2 that reframes the taxonomy
+- **Response taxonomy (open, candidate note)** — four observed responses to the form-vs-explanation oracle asymmetry, reframed by the fifth case as a participation × containment 2×2. Candidate note if the 2×2 survives the next system read.
 - **Route-level oracle asymmetry (open, candidate addition)** — asymmetry between commit routes into the accepted population, not just between qualities; Eigenius is the witness. Candidate one-sentence extension to the weakly-discriminated note plus `evidenced-by` edges for Eigenius and ScienceFlow.
 - **Attribution of the ontology draft (open, external)** — ask the draft's authors whether it may be named and ingested; if yes, the anonymized references here and in the weakly-discriminated note can be restored to full citations, and the comparison becomes a shareable artifact for that conversation.
 
