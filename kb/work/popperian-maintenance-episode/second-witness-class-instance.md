@@ -22,6 +22,12 @@ This is the operational form the honesty test lacked in the first witness: **an 
 
 The two witnesses bracket the test. In the three-way-diagnosis case, the defeating cross-effects (a schema also steering the interpreter off format violations) are arguably ordinary unmarked practice in prompt engineering — the honesty test might have refused the idealization, and the reframe would stand. In the class-instance case the pricing is richly attested in the domain and the test plausibly passes. A vocabulary with the third verdict would have treated the two cases differently; the current vocabulary treated them the same. That asymmetry — not either case alone — is the evidence that the missing verdict does discriminating work.
 
+## Conversion executed — outside a pass (2026-08-19)
+
+The owning session has since restored the strong claim as a declared idealization by direct revision (at the operator's standing revise-directly instruction): the write-back section states the fixed class as class-based OO's first-order model, carries the pricing inline (marked reflection interface, the warning name monkey-patching, runtime deoptimization charges, versioned changesets and migration callbacks), and links `grounds` to the criterion note. The pricing lives in the note body deliberately — the criterion's gate question is "does the note carry the pricing?", so a bare link would not satisfy it. It also found a convergence result: read through the idealization, the paradigm contains a *fenced* version of the second relation (metaobject protocols, Smalltalk changesets, Erlang `code_change`), so what an LLM agent lacks is the enforcement, not the concept.
+
+Status against the proposal's adoption criterion: **unmet**. The honesty test has not run inside a pass — this was content-level work. It sets up the first real run: a future full pass on `instantiation-alone-cannot-model-agent-learning-across-sessions.md` will find the pricing there to be attacked, and its premise verdicts on the idealization paragraph are the test operating against resistance.
+
 ## Ratchet observation
 
 Author-side guidance sweeps drafts for absolutes; gate-side defeat forces qualification, reframe, or delete. All available repairs weaken. Two witnessed cases so far; in the first the narrowed claim happened to end sharper, which was the material, not the procedure. Parked as a mechanism claim inside the promoted note's scope, pending more cases.
