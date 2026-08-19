@@ -62,7 +62,7 @@ The routing stage needs a domain with settled practice; a young or contested dom
 
 ## Open Questions
 
-- What measures fit which uses? Frequency, effect magnitude, semantic reach, safety consequence, and explanatory share can rank the same exception differently, so the assessment needs the measure matched to the declared use rather than chosen freely.
+- What measures fit which uses? Frequency, effect magnitude, semantic reach, safety consequence, and explanatory share can rank the same exception differently, so the assessment needs the measure matched to the declared use rather than chosen freely. The class-instance case now supplies one instance: its declared use consumes the fence itself, so the exception's frequency is irrelevant there and the right measure is fence integrity — whether the exception stays marked.
 - Does an idealization need scheduled re-testing? An exception that was marked and rare can become ordinary as the domain evolves, refuting the idealization without any new counterexample to the first-order model. One candidate mechanism: register the pricing attestations as tracked inputs to the claim's review state, so drift surfaces as staleness of a cited attestation.
 - Does a passed assessment yield more than a verdict? In the class-instance case the pricing apparatus — the metaobject protocol, change-as-deployment rituals — supplied reusable design vocabulary for the analogous problem in the target domain. Whether the fence a domain builds around its exception is generally a candidate solution structure is untested beyond that one case.
 
