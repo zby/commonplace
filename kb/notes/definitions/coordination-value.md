@@ -33,7 +33,7 @@ It is not the runtime coordination of [agent orchestration](../agent-orchestrati
 Relevant Notes:
 
 - [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](../a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) — home: works out how coordination value behaves under change, where maintenance follows the authored edge rather than the genre
-- [Task-fitted structure costs cross-task reuse](../task-fitted-structure-costs-cross-task-reuse.md) — applies: coordination value is the third hardening warrant its rule does not cover, alongside inherited constraint and earned transfer
+- [Current-task fit alone does not warrant costly structural entrenchment](../current-task-fit-alone-does-not-warrant-costly-entrenchment.md) — applies: coordination value is the third hardening warrant in its rule, alongside inherited constraint and discriminating transfer evidence
 - [A universal knowledge framework demotes content taxonomies to defaults](../a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) — evidenced-by: the shared catalogue's interoperability benefit is coordination value, deferred to a worked-case guard
 - [Behavioral authority](./behavioral-authority.md) — contrast: force exerted when consumed versus the warrant for committing
 - [Knowledge artifact](./knowledge-artifact.md) — contrast: value that informs without binding, judged by reach rather than shared adoption

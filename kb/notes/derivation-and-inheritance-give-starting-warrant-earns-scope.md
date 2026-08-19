@@ -69,5 +69,5 @@ The representational-form decomposition is derived from the axes of consequence 
 Relevant Notes:
 
 - [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — extends: derives the correction cost of entrenching boundaries whose rivals remain outside the effective update space
-- [Task-fitted structure costs cross-task reuse](./task-fitted-structure-costs-cross-task-reuse.md) — extends: applies provisional adoption, replaceability, and earned transfer to durable KB structure
+- [Current-task fit alone does not warrant costly structural entrenchment](./current-task-fit-alone-does-not-warrant-costly-entrenchment.md) — extends: applies provisional adoption, replaceability, and earned transfer to durable KB structure
 - [Commonplace as an instrument](../reference/commonplace-as-an-instrument.md) — evidenced-by: records the two instances and the absence of demonstrated transfer
