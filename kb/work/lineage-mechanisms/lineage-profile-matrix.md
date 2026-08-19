@@ -39,7 +39,7 @@ Five decisions remain before the workshop can extract a coherent contract:
 
 1. **Normalize direction.** Declare `(derivative, relation, source)` independently of whether the carrier renders `...-from`, `... into:`, metadata, or an operational row.
 2. **Choose policy authority and precedence.** Decide whether a collection contract selects a lineage profile, whether a type may refine it, and how `cp-skill-write` discovers the effective carrier and invalidation response. The categorical universal source-footer rule cannot coexist with the article and snapshot profiles unchanged.
-3. **Specify immutable/external-source carriers.** Choose target-side metadata/link, mutable ingest companion, or an external edge record as the default when the semantic source cannot be edited.
+3. **Specify immutable/external-source carriers.** Choose target-side metadata/link, mutable ingest companion, or an external edge record as the default when the semantic source cannot be edited. A draft mutability-based rule with two new consumer cases (docs-on-code, outlines-on-literature) is in [external-referent-grounding-cases.md](./external-referent-grounding-cases.md).
 4. **Specify the minimum production record.** Define the fields and carrier for retained one-shot derivatives and `produced_by` events without imposing “last model” metadata on canonical artifacts.
 5. **Separate optional vocabulary expansion.** Decide `contrasts`, parallel-mechanism, inverse-lineage, and source-to-source comparison labels from worked cases after the carrier and direction rules are fixed; those labels should not block the general model.
 

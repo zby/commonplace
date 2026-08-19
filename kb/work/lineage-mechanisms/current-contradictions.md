@@ -20,7 +20,7 @@ The working workaround is downstream links from notes and descriptive reviews to
 
 **Operational consequence:** authors must choose between violating snapshot immutability and violating the universal lineage procedure.
 
-**Decision needed:** specify the carrier for immutable and externally owned sources—target-side metadata/link, a mutable ingest companion, or an external edge record—and state how change impact is surfaced from that carrier.
+**Decision needed:** specify the carrier for immutable and externally owned sources—target-side metadata/link, a mutable ingest companion, or an external edge record—and state how change impact is surfaced from that carrier. Two new consumer cases (documentation grounded on code, claims grounded on captured literature) and a draft rule are in [external-referent-grounding-cases.md](./external-referent-grounding-cases.md).
 
 ## 3. Lineage relation direction and recording direction are conflated
 
