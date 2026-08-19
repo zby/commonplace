@@ -300,4 +300,4 @@ General freshness and the operational store live outside `commonplace.lib`. See 
 
 **`commonplace.store`** — `connect`, `ensure_db`, `resolve_db_path`, `assert_store_integrity`; schema in `store-schema.sql`.
 
-**`commonplace.freshness`** — `versioning.resolve_file_text`, `transitions.{accept_target_observations, ack_target_inputs, retire_target}`, `status.load_target_status`, `selector.select_stale_review_targets`.
+**`commonplace.freshness`** — `versioning.resolve_file_text`, `transitions.{ack_target_inputs, retire_target}`, `status.load_target_status`, `selector.select_stale_review_targets`.

@@ -44,12 +44,12 @@ commonplace.freshness/
   keys.py                  Canonical target JSON encoding
   versioning.py            file-text resolution from repo paths
   snapshots.py             Insert/dedupe/load artifact snapshots
-  baselines.py             Review-pair baseline read/write (capture + observation)
+  baselines.py             Review-pair baseline read/write (capture + acknowledgement)
   selector.py              Repository-wide stale target selection
   status.py                Status projection and JSON rendering
-  transitions.py           accept, ack, retire, capture refresh primitives
+  transitions.py           ack, retire, capture refresh primitives
   integrity.py             Hash and review-pair structural checks
-commonplace.cli.freshness_*   Global status, accept, ack, retire CLIs
+commonplace.cli.freshness_*   Global status, ack, retire CLIs
 ```
 
 Review adapters in `commonplace.review` call into `freshness` for compare/persist; they retain review-specific discovery (`missing-baseline`), reason mapping (`criterion-changed` before `note-changed`), trivial ack, and capture finalization.
@@ -59,7 +59,6 @@ Review adapters in `commonplace.review` call into `freshness` for compare/persis
 | transition | owner | live check | evidence |
 |---|---|---|---|
 | capture refresh | `finalize_capture_refresh()` in review finalization | no | replaced |
-| observation refresh | `commonplace-freshness-accept` | yes | n/a (rejects `review-pair` in v1) |
 | observation ack | `commonplace-freshness-ack`, `commonplace-ack-review` | yes | preserved on review-pair |
 | retirement | `commonplace-freshness-retire` | — | cascade delete bridge |
 
@@ -76,7 +75,6 @@ Malformed registered state is a store error — never downgraded to `missing-bas
 ## Command surface
 
 - `commonplace-freshness-status` — repository-wide status over registered targets
-- `commonplace-freshness-accept` — observation refresh for non-review targets (v1: rejects `review-pair`)
 - `commonplace-freshness-ack` — ack changed inputs from a status-derived manifest
 - `commonplace-freshness-retire` — remove a registered baseline
 
@@ -84,9 +82,15 @@ Malformed registered state is a store error — never downgraded to `missing-bas
 
 Collection-as-artifact freshness (`collection-text`, `collection-maintenance`) is not implemented. See [proposal: collection-as-artifact freshness](./proposals/collection-as-artifact-freshness.md).
 
+No generic initial-acceptance or refresh command ships. Review finalization owns
+creation and replacement of the only supported target kind. A generic
+transition may return only with an adopted non-review target and its complete
+registration contract ([ADR 065](./adr/065-publish-only-supported-freshness-transitions.md)).
+
 ## See also
 
 - [ADR 052](./adr/052-general-freshness-store-review-first-migration.md) — decision record
-- [Freshness JSON contracts](./freshness-schemas.md) — status, accept, ack, retire shapes and exit codes
+- [ADR 065](./adr/065-publish-only-supported-freshness-transitions.md) — withdrawal rule for unsupported transitions
+- [Freshness JSON contracts](./freshness-schemas.md) — status, ack, and retire shapes and exit codes
 - [Storage](./storage-architecture.md) — where the store sits among authored markdown and derived indexes
 - [Review architecture](./review-architecture.md) — review adapter and execution flow

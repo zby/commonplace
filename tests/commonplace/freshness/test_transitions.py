@@ -4,14 +4,18 @@ from pathlib import Path
 
 import pytest
 
-from commonplace.lib.hashing import content_sha256_for_text
 from commonplace.freshness.transitions import (
     InputObservation,
-    accept_target_observations,
     ack_target_inputs,
     retire_target,
 )
-from commonplace.review.review_db import connect, ensure_db, load_current_freshness_baselines, snapshot_file
+from commonplace.lib.hashing import content_sha256_for_text
+from commonplace.review.review_db import (
+    connect,
+    ensure_db,
+    load_current_freshness_baselines,
+    snapshot_file,
+)
 from tests.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
 
 
@@ -26,47 +30,6 @@ def _init_store(tmp_path: Path) -> Path:
     db_path = repo_root / "kb/reports/commonplace-store.sqlite"
     ensure_db(db_path)
     return db_path
-
-
-def test_accept_rejects_unsupported_target_kind(tmp_path: Path) -> None:
-    db_path = _init_store(tmp_path)
-    with connect(db_path) as conn:
-        with pytest.raises(ValueError, match="not supported for generic accept"):
-            accept_target_observations(
-                conn,
-                repo_root=tmp_path,
-                target_kind="collection-maintenance",
-                target_key={"collection_path": "kb/notes"},
-                inputs={
-                    "contract": InputObservation(
-                        input_role="contract",
-                        artifact_path="kb/notes/example.md",
-                        version_kind="file-text",
-                        content_sha256=content_sha256_for_text(
-                            (tmp_path / "kb/notes/example.md").read_text(encoding="utf-8")
-                        ),
-                    )
-                },
-                expected_baseline_revision=None,
-            )
-
-
-def test_accept_rejects_review_pair(tmp_path: Path) -> None:
-    db_path = _init_store(tmp_path)
-    with connect(db_path) as conn:
-        with pytest.raises(ValueError, match="review-pair"):
-            accept_target_observations(
-                conn,
-                repo_root=tmp_path,
-                target_kind="review-pair",
-                target_key={
-                    "note_path": "kb/notes/example.md",
-                    "criterion_path": "kb/instructions/review-gates/prose/source-residue.md",
-                    "model_partition": "codex",
-                },
-                inputs={},
-                expected_baseline_revision=None,
-            )
 
 
 def test_retire_target_is_idempotent(tmp_path: Path) -> None:

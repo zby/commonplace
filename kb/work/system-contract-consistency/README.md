@@ -4,16 +4,17 @@
 
 **Last recheck:** 2026-08-19
 
-**State:** nine findings remain open; C1 was resolved on 2026-08-19. Plans and
-outcomes are recorded in the [plan index](./plans/README.md)
+**State:** eight findings remain open; C1 and F1 were resolved on 2026-08-19.
+Plans and outcomes are recorded in the [plan index](./plans/README.md)
 
 **Scope:** current Commonplace contracts outside the linking and lineage
 domains
 
 ## Current verdict
 
-Nine of the ten confirmed contradictions remain open. C1 closed by documenting
-the omitted executable and enforcing exact catalogue parity. Four other
+Eight of the ten confirmed contradictions remain open. C1 closed by documenting
+the omitted executable and enforcing exact catalogue parity. F1 closed by
+withdrawing a generic freshness command that had no legal target. Four other
 findings received partial repairs at one edge, but both conflicting witnesses
 remain live:
 
@@ -72,9 +73,9 @@ Priorities mean:
 | S1 | P1 | Snapshots are categorically immutable, yet ingest must correct `genre` in place while being told to write only its report | Ingest cannot obey its collection, type, and skill contracts together | [Snapshot mutation boundary](./plans/s1-snapshot-mutation-boundary.md) |
 | T1 | P1 | Tag coverage is stated and routed beyond one collection but generated and checked within one collection | A validated mark can falsely license a reader to stop searching | [Tag scope](./plans/t1-tag-scope.md) |
 | E1 | P1 | Native Windows is supported, but promoted skills retain unpaired POSIX-only commands | Selected recovery and authoring procedures are non-operative on a declared channel | [Windows execution](./plans/e1-windows-execution.md) |
-| F1 | P1 | `commonplace-freshness-accept` is published for non-review targets while its accepted target-kind set is empty | Every invocation reaches an unsupported-kind error | [Freshness accept](./plans/f1-freshness-accept.md) |
+| F1 | P1 | **Resolved 2026-08-19:** the unsupported generic accept entry point, transition, schema, and current-facing claims were withdrawn | ADR 065 requires a concrete non-review target before the surface can return | [Completed outcome](./plans/f1-freshness-accept.md) |
 | M1 | P2 | Five accepted representation migrations retain live guidance for their retired forms | Agents can author schema-invalid or semantically retired artifacts from current docs | [Migration residue](./plans/m1-migration-residue.md) |
-| C1 | P2 | **Resolved 2026-08-19:** 22 console scripts now have 22 unique command-reference sections | An exact set-parity test prevents one-sided catalogue changes | [Completed outcome](./plans/c1-command-catalogue.md) |
+| C1 | P2 | **Resolved 2026-08-19:** 21 console scripts now have 21 unique command-reference sections | An exact set-parity test prevents one-sided catalogue changes | [Completed outcome](./plans/c1-command-catalogue.md) |
 
 ## I1 — Shipping and upgrade contracts disagree
 
@@ -277,27 +278,30 @@ pipeline with a runtime-native algorithm, pairs the pre-command health checks,
 audits all nine promoted skills and their execution declarations, and adds
 native-Windows CI and evidence.
 
-## F1 — Generic freshness acceptance has no legal input
+## F1 — Generic freshness acceptance is withdrawn
 
-`pyproject.toml` still publishes `commonplace-freshness-accept` and the current
-command, architecture, schema, and module references still describe it.
-[transitions.py](../../../src/commonplace/freshness/transitions.py) still sets
-`V1_ACCEPT_TARGET_KINDS = frozenset()`: it rejects `review-pair`, then rejects
-every other target kind because none is accepted.
+**Resolved 2026-08-19.** [ADR
+065](../../reference/adr/065-publish-only-supported-freshness-transitions.md)
+amends accepted [ADR
+052](../../reference/adr/052-general-freshness-store-review-first-migration.md):
+v1 has only `review-pair` targets, so review finalization owns baseline creation
+and replacement. Generic initial acceptance may return only with an adopted
+non-review target and its complete registration contract.
 
-Accepted [ADR
-052](../../reference/adr/052-general-freshness-store-review-first-migration.md),
-the [review-system reference](../../reference/README-REVIEW-SYSTEM.md), and the
-[artifact-freshness workshop](../artifact-freshness-and-referential-checks/README.md)
-also retain current-looking claims that generic accept shipped.
+The package entry point, CLI module, unreachable transition, empty target-kind
+set, rejection-only tests, JSON schema, and current-facing documentation were
+removed together. Status, acknowledgement, retirement, capture finalization,
+and the generic tables remain. The C1 parity test now observes 21 published
+commands and 21 unique command sections, so a one-sided reintroduction fails.
 
-The selected resolution is deletion, not speculative implementation. Remove
-the console script, unreachable transition, rejection-only tests, and every
-current-facing reference until a real non-review consumer supplies an
-end-to-end contract. This includes refining ADR 052 and correcting those
-reference/workshop surfaces so they do not retain a contrary claim. Remove the
-entry point and its command section together; C1's completed parity test now
-enforces that synchronization.
+The dated [freshness-module review](../freshness-module-review/findings.md) and
+historical artifact-freshness implementation documents retain the old command
+only as explicitly marked evidence. The active collection-freshness proposal
+describes initial registration as future work rather than claiming that a
+generic command ships. The shared `kb/work/README.md` still has a stale
+one-line freshness-module summary because it already contained unrelated
+uncommitted edits; that navigation-only cleanup remains pending rather than
+sweeping another change into this outcome.
 
 ## M1 — Five representation migrations retain live residue
 
@@ -318,16 +322,15 @@ and adds narrow allowlisted guards for the retired executable forms.
 
 ## C1 — Command-catalogue parity is resolved
 
-The scripts table in [pyproject.toml](../../../pyproject.toml) publishes 22
+The scripts table in [pyproject.toml](../../../pyproject.toml) publishes 21
 `commonplace-*` entry points, and [commands.md](../../reference/commands.md) now
-has 22 unique matching command sections. The new quote-verification section
+has 21 unique matching command sections. The new quote-verification section
 documents its targets, `--show-matches`, result classes, and exit behavior.
 
 [test_command_catalogue_integrity.py](../../../tests/commonplace/docs/test_command_catalogue_integrity.py)
 parses both live surfaces, rejects duplicate command headings, and asserts exact
-set equality without fixing the expected count. F1 remains an operativity
-contradiction, not a catalogue contradiction: removing freshness accept later
-must remove it from both sets in the same change or this test fails.
+set equality without fixing the expected count. F1's later removal changed both
+sets together, so catalogue parity remained intact without changing the guard.
 
 ## Root causes
 
@@ -370,11 +373,9 @@ presence, not that any legal invocation or supported execution channel works.
 5. **Expose truthful full validation (V1).** Consume the same collection
    enumeration, retain orphan-type and top-level-landing coverage, and replace
    the shell loop.
-6. **Land the other repairs.** F1 must remove its package entry and reference
-   section together under C1's parity guard. T1 should precede M1's areas
-   packet; E1 consumes V1 and remains with the execution-channel workshop. S1
-   and I3's installed sources template close together even if their edits are
-   prepared separately.
+6. **Land the other repairs.** T1 should precede M1's areas packet; E1 consumes
+   V1 and remains with the execution-channel workshop. S1 and I3's installed
+   sources template close together even if their edits are prepared separately.
 7. **Finish the M1 sweep and cheap drift guards.** Retain focused parity and
    lexical checks at the boundaries that drifted.
 
@@ -393,8 +394,9 @@ presence, not that any legal invocation or supported execution channel works.
 - Historical ADR context is not current authority. ADR 021 remains included
   because it is accepted and its Decision and Consequences still make
   present-tense guarantees.
-- The older freshness review's snapshot-pruning concern is resolved in current
-  code; only generic accept remains live here.
+- The freshness module review's remaining implementation findings are outside
+  this contract workshop. Its generic-accept finding is resolved here; its
+  dated reproduction remains historical evidence.
 
 ## Closure condition
 

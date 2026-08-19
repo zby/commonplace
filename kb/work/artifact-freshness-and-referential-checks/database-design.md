@@ -225,7 +225,7 @@ The old `current_freshness_baselines` name is removed so no caller can accidenta
 | DB path, connection, schema version, transaction setup, whole-store integrity | `commonplace.store` |
 | Path versioning (`file-text` in v1), snapshots, hashes, generic baseline/input rows | `commonplace.freshness` |
 | Generic current-status and reverse-selection queries | `commonplace.freshness` |
-| Refresh acceptance and acknowledgement compare-and-swap | `commonplace.freshness` |
+| Capture refresh and acknowledgement compare-and-swap | `commonplace.freshness` |
 | Review job/pair CRUD and result integrity | `commonplace.review` |
 | Mapping review target keys and input roles to review CLI concepts | `commonplace.review` |
 | Review evidence bridge and evidence pruning | `commonplace.review` |
@@ -235,27 +235,26 @@ Whole-store initialization runs generic integrity checks and then the explicit r
 
 ## Transaction semantics
 
-Two refresh paths share the same baseline/input tables but differ in observation validation. Review finalization uses the capture path; operator-facing accept and ack use the observation path.
+Two baseline-update paths share the same baseline/input tables but differ in observation validation. Review finalization uses the capture path; operator-facing acknowledgement uses the observation path.
 
 | path | entry | live-version check | evidence |
 |---|---|---|---|
 | **Capture refresh** | `commonplace.review.finalize_capture_refresh()` | No — writes job-owned snapshots | Replaced on review-pair targets |
-| **Observation refresh** | `commonplace-freshness-accept` | Yes — each supplied hash must match current resolved text | Unchanged; not applicable to review-pair targets |
 | **Observation ack** | `commonplace-freshness-ack`, `commonplace-ack-review` | Yes — revalidates status output | Preserved on review-pair targets |
 
-Generic `commonplace-freshness-accept` rejects `target_kind = review-pair`. Review evidence replacement requires a completed pair id and therefore stays in the review-owned capture transaction.
+Review evidence replacement requires a completed pair id and therefore stays in the review-owned capture transaction. No generic initial-acceptance or refresh transition ships ([ADR 065](../../reference/adr/065-publish-only-supported-freshness-transitions.md)).
 
-### Initial acceptance
+### Initial review-pair acceptance
 
-Within one `BEGIN IMMEDIATE` transaction:
+Review finalization creates a first baseline within its `BEGIN IMMEDIATE`
+transaction:
 
-1. require no current target with the same `(target_kind, target_key_json)` baseline;
-2. insert or reuse path-keyed snapshots;
-3. insert the revision-1 baseline containing target identity;
-4. insert the complete input-role set;
-5. let the review wrapper write review evidence when the target is a review pair;
-6. run generic and review integrity checks; and
-7. commit.
+1. require that the queued pair expected no existing baseline;
+2. insert or reuse the pair's captured note and criterion snapshots;
+3. insert the revision-1 `review-pair` baseline and complete input-role set;
+4. write the completed review pair as evidence;
+5. run generic and review integrity checks; and
+6. commit.
 
 Any failure rolls back the baseline, inputs, and review evidence together.
 
@@ -276,20 +275,6 @@ Any failure rolls back the baseline, inputs, and review evidence together.
 If step 2 fails because another writer advanced the baseline after queue time, the whole job fails with `stale-baseline-revision` and no baseline row changes. This is the live job-49 case: pair `81` captured note snapshot `24` while the current baseline already uses snapshot `29`; finalization must fail, not downgrade the accepted baseline.
 
 Capture refresh deliberately does not require captured snapshots to equal current live text. The selector reports the resulting baseline stale immediately when live files moved on during the run.
-
-### Observation refresh (generic accept)
-
-Within one transaction:
-
-1. reject `target_kind = review-pair`;
-2. load the target and require `revision == expected_revision`;
-3. resolve each supplied path/version kind to current text and require the supplied content hash matches that resolution;
-4. insert or reuse those exact snapshots;
-5. replace the complete input set;
-6. update the acceptance timestamp and increment revision once;
-7. run integrity checks;
-8. commit; and
-9. prune unreferenced snapshots.
 
 ### Acknowledgement
 
@@ -326,7 +311,7 @@ The repository-wide selector:
 5. groups changed inputs by target; and
 6. returns target identity, baseline revision, and changed inputs.
 
-`input-missing` means the accepted path no longer resolves to versionable content — deleted file, deleted collection root, or path escape. It is ordinary staleness for disposition purposes (exit `1`), not a store-integrity failure. The supported dispositions are observation refresh after restoring the path, acknowledgement when the operator accepts the absence, or `commonplace-freshness-retire` when the target should leave the registry.
+`input-missing` means the accepted path no longer resolves to versionable content — deleted file, deleted collection root, or path escape. It is ordinary staleness for disposition purposes (exit `1`), not a store-integrity failure. Restore the path before acknowledgement or re-review, or use `commonplace-freshness-retire` when the target should leave the registry.
 
 `version-error` means the resolver could not produce canonical text (permissions, invalid UTF-8, symlink where a file is required). That is an invocation or integrity failure (exit `2`).
 
@@ -456,7 +441,7 @@ v1 implementation may begin when plan and design agree on:
 3. `file-text` path-keyed snapshots;
 4. baseline/input keys, retirement, and cascade delete;
 5. review evidence bridge and adapter view;
-6. capture vs observation refresh and `finalize_capture_refresh()`;
+6. capture refresh, observation acknowledgement, and `finalize_capture_refresh()`;
 7. queued-job `expected_baseline_revision` and migration disposition (job `49`);
 8. `input-missing` exit `1`; and
 9. JSON contracts in [freshness-schemas.md](../../reference/freshness-schemas.md).

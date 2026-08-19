@@ -200,14 +200,6 @@ commonplace-freshness-status --json --diff
 commonplace-freshness-status --missing
 ```
 
-### commonplace-freshness-accept
-
-Observation refresh or initial acceptance for non-review targets. Rejects `review-pair` in v1 — review capture finalization owns those targets.
-
-```bash
-commonplace-freshness-accept --input manifest.json
-```
-
 ### commonplace-freshness-ack
 
 Acknowledge changed inputs for a registered target from a status-derived manifest. Review-pair targets preserve evidence automatically.

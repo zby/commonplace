@@ -1,5 +1,12 @@
 # Implementer handoff
 
+> **Historical implementation handoff (2026-07-13).** The generic accept
+> portion of this plan did not become an operable capability and was withdrawn
+> on 2026-08-19 by
+> [ADR 065](../../reference/adr/065-publish-only-supported-freshness-transitions.md).
+> Its mentions below are retained as dated design evidence, not current
+> instructions.
+
 **Start here.** Authority chain: this file → [implementation-plan.md](./implementation-plan.md) → [database-design.md](./database-design.md) → [freshness-schemas.md](../../reference/freshness-schemas.md).
 
 **Verdict:** go. Build v1 review-first; end at M4 proposals. Do not implement `collection-text` or register non-review targets in this phase.

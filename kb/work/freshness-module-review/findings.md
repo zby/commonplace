@@ -6,6 +6,8 @@ All 18 tests in `tests/commonplace/freshness/` pass. Nothing here is currently b
 
 ## 1. `commonplace-freshness-accept` is a shipped command that can never succeed
 
+**Resolved 2026-08-19:** [ADR 065](../../reference/adr/065-publish-only-supported-freshness-transitions.md) withdrew the command and schema; the entry point, CLI module, unreachable transition, and rejection-only tests were deleted. The text below remains evidence from the reviewed commit.
+
 `V1_ACCEPT_TARGET_KINDS` is `frozenset()` (`transitions.py:285`). `accept_target_observations` (`transitions.py:342`) guards on it:
 
 - `target_kind == "review-pair"` → raises "must use review capture finalization"

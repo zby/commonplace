@@ -9,7 +9,6 @@ from pathlib import Path
 
 from commonplace.freshness import baselines as freshness_baselines
 from commonplace.freshness.keys import canonical_json, review_pair_target_key
-from commonplace.freshness.revisions import allocate_initial_revision, allocate_successor_revision
 from commonplace.freshness.snapshots import insert_or_get_snapshot
 from commonplace.freshness.versioning import FILE_TEXT, resolve_file_text
 from commonplace.review.clock import iso_now
@@ -17,7 +16,6 @@ from commonplace.review.review_db import SupersededFreshnessBaseline
 from commonplace.review.review_model import normalize_model_partition
 
 REVIEW_PAIR_KIND = freshness_baselines.REVIEW_PAIR_KIND
-V1_ACCEPT_TARGET_KINDS: frozenset[str] = frozenset()
 
 
 @dataclass(frozen=True)
@@ -72,101 +70,6 @@ def retire_target(
         return False
     conn.execute("DELETE FROM freshness_baselines WHERE target_id = ?", (target_id,))
     return True
-
-
-def accept_target_observations(
-    conn: sqlite3.Connection,
-    *,
-    repo_root: Path,
-    target_kind: str,
-    target_key: dict[str, str],
-    inputs: dict[str, InputObservation],
-    expected_baseline_revision: int | None,
-    accepted_at: str | None = None,
-) -> None:
-    """Observation refresh or initial acceptance. Rejects review-pair in v1."""
-    if target_kind == REVIEW_PAIR_KIND:
-        raise ValueError("review-pair targets must use review capture finalization, not generic accept")
-    if target_kind not in V1_ACCEPT_TARGET_KINDS:
-        raise ValueError(f"target kind {target_kind!r} is not supported for generic accept in v1")
-    if not inputs:
-        raise ValueError("accept manifest must include at least one input role")
-    target_key_json = _target_key_json(target_kind, target_key)
-    current = conn.execute(
-        """
-        SELECT target_id, revision
-        FROM freshness_baselines
-        WHERE target_kind = ? AND target_key_json = ?
-        """,
-        (target_kind, target_key_json),
-    ).fetchone()
-    if expected_baseline_revision is None:
-        if current is not None:
-            raise ValueError("stale-baseline-revision: baseline already exists")
-    else:
-        if current is None:
-            raise ValueError("stale-baseline-revision: expected baseline but none registered")
-        if int(current["revision"]) != expected_baseline_revision:
-            raise ValueError(
-                f"stale-baseline-revision: expected {expected_baseline_revision}, "
-                f"current {current['revision']}"
-            )
-
-    accepted = accepted_at or iso_now()
-    snapshot_ids: dict[str, int] = {}
-    for role, observation in inputs.items():
-        if observation.version_kind != FILE_TEXT:
-            raise ValueError(f"unsupported version kind: {observation.version_kind}")
-        resolved = resolve_file_text(repo_root=repo_root, path=observation.artifact_path)
-        if resolved.content_sha256 != observation.content_sha256:
-            raise ValueError(
-                f"live hash mismatch for {observation.artifact_path}: "
-                f"expected {observation.content_sha256}, current {resolved.content_sha256}"
-            )
-        snapshot = insert_or_get_snapshot(conn, resolved=resolved, captured_at=accepted)
-        snapshot_ids[role] = snapshot.snapshot_id
-
-    if current is None:
-        revision = allocate_initial_revision(
-            conn,
-            target_kind=target_kind,
-            target_key_json=target_key_json,
-        )
-        cursor = conn.execute(
-            """
-            INSERT INTO freshness_baselines (target_kind, target_key_json, revision, accepted_at)
-            VALUES (?, ?, ?, ?)
-            """,
-            (target_kind, target_key_json, revision, accepted),
-        )
-        target_id = int(cursor.lastrowid)
-    else:
-        target_id = int(current["target_id"])
-        revision = allocate_successor_revision(
-            conn,
-            target_kind=target_kind,
-            target_key_json=target_key_json,
-            current_revision=int(current["revision"]),
-        )
-        conn.execute(
-            """
-            UPDATE freshness_baselines
-            SET revision = ?, accepted_at = ?
-            WHERE target_id = ?
-            """,
-            (revision, accepted, target_id),
-        )
-        conn.execute("DELETE FROM freshness_inputs WHERE target_id = ?", (target_id,))
-
-    for role, observation in inputs.items():
-        conn.execute(
-            """
-            INSERT INTO freshness_inputs (
-                target_id, input_role, artifact_path, version_kind, accepted_snapshot_id
-            ) VALUES (?, ?, ?, ?, ?)
-            """,
-            (target_id, role, observation.artifact_path, observation.version_kind, snapshot_ids[role]),
-        )
 
 
 def ack_target_inputs(

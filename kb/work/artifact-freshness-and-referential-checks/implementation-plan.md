@@ -1,5 +1,12 @@
 # Implementation plan: general freshness, review-first (v1)
 
+> **Historical implementation plan (2026-07-13).** The store migration and
+> review-first substrate shipped, but the proposed generic accept surface had
+> no admissible target and was withdrawn on 2026-08-19 by
+> [ADR 065](../../reference/adr/065-publish-only-supported-freshness-transitions.md).
+> References below to generic accept or observation refresh record the original
+> plan; they are not current system authority.
+
 ## Outcome
 
 Replace review-specific freshness tables with one artifact-neutral substrate, migrate retained review baselines, and make review commands adapters over that substrate. Ship repository-wide status and generic accept/ack/retire over **`file-text`** inputs and **`review-pair`** targets.

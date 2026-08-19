@@ -8,14 +8,14 @@ No artifact class is intrinsically a source or a derivative. A source snapshot, 
 
 ## Current phase (v1 — shipped)
 
-v1 landed in [ADR 052](../../reference/adr/052-general-freshness-store-review-first-migration.md) and [freshness architecture](../../reference/freshness-architecture.md). This workshop may close after operators confirm migration on external copies.
+v1 landed in [ADR 052](../../reference/adr/052-general-freshness-store-review-first-migration.md) and [freshness architecture](../../reference/freshness-architecture.md). [ADR 065](../../reference/adr/065-publish-only-supported-freshness-transitions.md) later withdrew the generic accept placeholder because v1 has no non-review target. This workshop may close after operators confirm migration on external copies.
 
 Shipped scope — **review-first migration** onto a general operational store:
 
 - one `file-text` version function;
 - `review-pair` targets only;
-- repository-wide status, accept, ack, and retire over registered baselines; and
-- capture refresh vs observation refresh separated, with queued-job CAS.
+- repository-wide status, acknowledgement, and retirement over registered baselines; and
+- review-owned capture refresh separated from live observation acknowledgement, with queued-job CAS.
 
 **Out of this phase:** `collection-text` versioning, `collection-maintenance` targets, and any non-review registration. Those designs are sketched in [future-work-collection-freshness.md](./future-work-collection-freshness.md) and exit through **M4 proposals** — see [implementation plan](./implementation-plan.md).
 
@@ -28,7 +28,7 @@ Referential-check class design (general cross-artifact prose validation, positio
 | [implementer-handoff.md](./implementer-handoff.md) | compressed entry point — verdict, milestones, traps |
 | [implementation-plan.md](./implementation-plan.md) | sequence, gates M1–M4, done-when |
 | [database-design.md](./database-design.md) | schema authority — migration map, DDL, transactions |
-| [freshness-schemas.md](../../reference/freshness-schemas.md) | canonical status/accept/ack/retire JSON (promoted to reference) |
+| [freshness-schemas.md](../../reference/freshness-schemas.md) | canonical status/ack/retire JSON (promoted to reference) |
 | [future-work-collection-freshness.md](./future-work-collection-freshness.md) | deferred sketch → M4 proposal source |
 
 ## Implemented foundation
@@ -42,8 +42,8 @@ Review freshness baselines now live in `commonplace-store.sqlite` as `review-pai
 - artifact-neutral target identity (`target_kind` + canonical `target_key_json`);
 - path-keyed `artifact_snapshots` and `freshness_inputs` replacing review-shaped baseline columns;
 - reverse selection from changed `file-text` paths to affected registered targets;
-- optimistic baseline revision with two refresh paths (capture vs observation);
-- `commonplace-freshness-status`, accept, ack, retire; and
+- optimistic baseline revision across capture refresh and observation acknowledgement;
+- `commonplace-freshness-status`, acknowledgement, and retirement; and
 - source-to-destination migration to `commonplace-store.sqlite` with `review-store.sqlite` retained byte-identical as backup.
 
 Freshness selection compares registered accepted versions with current versions — it says the accepted basis changed, not that a claim is false. Referential validation (type-owned checks, verbatim quotes) tests current state and can prove invalidity without a prior baseline; that boundary stays separate.
@@ -70,7 +70,7 @@ Out of scope for v1: full-pass rework, pinned-input machinery, automatic rewriti
 
 1. review baselines migrate to the general store with parity-tested selection, evidence, ack, and finalization;
 2. global status and reverse selection work over registered `review-pair` targets;
-3. capture refresh, observation refresh/ack, retirement, and queued-job CAS behave per [database-design.md](./database-design.md);
+3. capture refresh, observation acknowledgement, retirement, and queued-job CAS behave per [database-design.md](./database-design.md);
 4. reference documentation and an ADR describe the shipped mechanism;
 5. [collection-as-artifact-freshness](../../reference/proposals/collection-as-artifact-freshness.md) proposal is committed (M4); and
 6. [future-work-collection-freshness.md](./future-work-collection-freshness.md) narrows to a pointer at that proposal.

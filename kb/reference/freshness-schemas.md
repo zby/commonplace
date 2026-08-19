@@ -1,12 +1,12 @@
 ---
-description: "Canonical JSON shapes for commonplace-freshness-status, accept, ack, and retire (v1: review-pair targets, file-text inputs)"
+description: "Canonical JSON shapes for commonplace-freshness-status, ack, and retire (v1: review-pair targets, file-text inputs)"
 type: kb/types/note.md
 tags: []
 ---
 
 # Freshness JSON contracts (v1)
 
-Canonical shapes for `commonplace-freshness-status`, `accept`, `ack`, and `retire`.
+Canonical shapes for `commonplace-freshness-status`, `ack`, and `retire`.
 
 **v1 scope:** `review-pair` targets, `file-text` inputs. Non-review examples live in [collection-as-artifact freshness](./proposals/collection-as-artifact-freshness.md).
 
@@ -32,12 +32,13 @@ Target keys: sorted keys, compact separators before persistence. CLI may pretty-
   "input_role": "note",
   "artifact_path": "kb/notes/example.md",
   "version_kind": "file-text",
-  "content_sha256": "64 lowercase hex",
-  "content_text": "exact UTF-8 text"
+  "content_sha256": "64 lowercase hex"
 }
 ```
 
-`content_text` required in accept manifests; optional in status without `--diff`.
+Ack manifests copy the current content hash from a status result. The ack
+transition resolves the live file again and requires the hash to match before
+advancing the baseline.
 
 ## Changed input (status)
 
@@ -80,30 +81,6 @@ Target keys: sorted keys, compact separators before persistence. CLI may pretty-
 ```
 
 Fresh targets only with `--all`. Ack copies `baseline_revision` and intended `current_content_sha256` values.
-
-## Accept (`commonplace-freshness-accept --input -`)
-
-```json
-{
-  "schema": "commonplace-freshness-accept/1",
-  "target_kind": "example-target",
-  "target_key": { "...": "..." },
-  "transition": "refresh",
-  "expected_baseline_revision": 3,
-  "inputs": {
-    "primary": {
-      "input_role": "primary",
-      "artifact_path": "kb/example.md",
-      "version_kind": "file-text",
-      "content_sha256": "64 lowercase hex"
-    }
-  }
-}
-```
-
-Observation refresh or initial acceptance. **`review-pair` rejected in v1.** Non-review manifests ship with first non-review target kind.
-
-`transition`: `initial` (`expected_baseline_revision: null`) or `refresh` (must match current revision). All registered roles required; hashes must match live resolution at commit.
 
 ## Ack (`commonplace-freshness-ack --input -`)
 

@@ -8,10 +8,10 @@ tags: [kb-maintenance, observability]
 
 Epistack maintenance must detect when a source collection gains, loses, or changes a member without a pre-existing per-file dependency edge. Shipped v1 freshness registers only `file-text` inputs on `review-pair` targets in `commonplace-store.sqlite` ([ADR 052](../adr/052-general-freshness-store-review-first-migration.md)). Per-file registration cannot see new members until something explicitly accepts them.
 
-## Current state (as of 2026-07-13)
+## Current state (as of 2026-08-19)
 
-- General freshness substrate is shipped: `artifact_snapshots`, `freshness_baselines`, `freshness_inputs`, and `commonplace-freshness-{status,accept,ack,retire}` over registered targets.
-- v1 admits `file-text` only and `review-pair` targets only; generic accept rejects `review-pair`.
+- General freshness substrate is shipped: `artifact_snapshots`, `freshness_baselines`, `freshness_inputs`, and `commonplace-freshness-{status,ack,retire}` over registered targets.
+- v1 admits `file-text` only and `review-pair` targets only. Generic initial acceptance is deliberately absent because review finalization owns registration of the only supported target kind ([ADR 065](../adr/065-publish-only-supported-freshness-transitions.md)).
 - Review parity (selector discovery, capture finalization, observation ack, pruning) is an adapter over the generic tables.
 - Epistack casebook maintenance still relies on per-file `file-text` edges plus semantic workflows; no `collection-text` encoder or `collection-maintenance` targets are registered.
 - Workshop exploration lives at `kb/work/artifact-freshness-and-referential-checks/future-work-collection-freshness.md`.
@@ -89,13 +89,13 @@ Set-level dependencies are uncommon. When they matter enough to automate, invest
 
 - Whether `collection-text` shares `artifact_snapshots` rows or uses a parallel render cache.
 - How global status labels `collection-maintenance` changed inputs in JSON (role names vs path-only).
-- Whether first adoption registers Epistack casebooks via migration script or manual accept manifests.
+- Whether first adoption registers Epistack casebooks through migration or an adoption-defined registration command.
 
 ## Adoption criteria
 
 - Epistack submission work needs casebook-wide selection without hand-maintaining per-new-file edges.
 - `collection-text` encoder passes golden fixtures for add/remove/rename cases.
-- Generic accept/ack/retire are exercised on at least one non-review target in CI.
+- Initial acceptance, refresh, acknowledgement, and retirement are exercised end to end for at least one non-review target in CI. A generic CLI and schema return only if the adopted consumer needs them.
 - Schema widening (`version_kind` checks, resolver dispatch) is recorded in a follow-on ADR when implemented.
 
 ## Rationale

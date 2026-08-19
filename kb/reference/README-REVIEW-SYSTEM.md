@@ -150,7 +150,7 @@ With `--model-partition` omitted, the selector reports only model-agnostic missi
 
 **Warn queue** — `commonplace-warn-selector`.
 
-**Global freshness** — `commonplace-freshness-status [--json] [--diff] [--all] [--model-partition {partition}]`. `commonplace-freshness-ack --input -` and `commonplace-freshness-retire --input -` consume JSON manifests. Generic accept rejects `review-pair` targets in v1.
+**Global freshness** — `commonplace-freshness-status [--json] [--diff] [--all] [--model-partition {partition}]`. `commonplace-freshness-ack --input -` and `commonplace-freshness-retire --input -` consume JSON manifests. Review finalization owns creation and replacement of `review-pair` baselines; no generic initial-acceptance or refresh command ships.
 
 ## The reviewer output contract
 

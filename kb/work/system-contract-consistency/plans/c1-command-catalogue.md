@@ -1,19 +1,18 @@
 # C1 outcome — Executable and documented command sets are equal
 
-**State:** resolved 2026-08-19. There are 22 `commonplace-*` console scripts and
-22 unique command-reference sections.
+**State:** resolved 2026-08-19. There are 21 `commonplace-*` console scripts and
+21 unique command-reference sections.
 
 ## Resolution
 
 C1 closed independently of F1. `commonplace-verify-quotes` is now documented,
 and a test enforces exact name equality between the published and documented
-sets. The assertion compares sets rather than freezing 22 as a permanent
-command count.
+sets. The assertion compares sets rather than freezing a permanent command
+count.
 
-F1 remains open because catalogue presence and command operativity are separate
-properties. If F1 removes `commonplace-freshness-accept`, it must remove the
-package entry and command section together; the C1 guard then passes at 21
-without modification.
+F1 was a separate operativity contradiction. Its resolution removed
+`commonplace-freshness-accept` from the package and command reference together;
+the C1 guard passed at 21 without modification.
 
 ## Implemented
 
@@ -26,13 +25,13 @@ without modification.
 2. Added `tests/commonplace/docs/test_command_catalogue_integrity.py`. It reads
    `[project.scripts]` with `tomllib`, parses exact `### commonplace-*`
    headings, rejects duplicates, and compares the name sets with no allowlist.
-3. Left `commonplace-freshness-accept` unchanged in both sets. C1 does not
-   misrepresent its F1 capability defect as catalogue drift.
+3. F1 later removed `commonplace-freshness-accept` from both sets. C1 stayed
+   closed because the guard compares names rather than freezing a count.
 
 ## Verification
 
 - The focused catalogue test passes.
-- The complete test suite passes: 491 tests.
+- The complete test suite passes after F1's removal: 489 tests.
 - The new test passes focused Ruff validation. Repository-wide Ruff still has
   pre-existing failures outside this change.
 - `commands.md`, this outcome, the plan index, and workshop state pass

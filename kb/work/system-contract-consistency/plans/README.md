@@ -15,7 +15,7 @@ outcomes record the guard that keeps a closed contradiction from recurring.
 | S1 | Define captured-content immutability with `genre` as the sole ingest-time correction | [Snapshot mutation boundary](./s1-snapshot-mutation-boundary.md) |
 | T1 | Adopt collection-scoped tag membership claims and bound tag-link routing to that scope | [Tag scope](./t1-tag-scope.md) |
 | E1 | Retain native Windows support and remove or pair every channel-specific promoted procedure | [Windows execution](./e1-windows-execution.md) |
-| F1 | Remove generic freshness accept until a real non-review target exists | [Freshness accept](./f1-freshness-accept.md) |
+| F1 | **Resolved 2026-08-19:** unsupported generic freshness acceptance was withdrawn until a real non-review target exists | [Completed outcome](./f1-freshness-accept.md) |
 | M1 | Run a five-packet migration-residue sweep with focused lexical guards | [Migration residue](./m1-migration-residue.md) |
 | C1 | **Resolved 2026-08-19:** quote verification is documented and exact console-script/reference parity is enforced | [Completed outcome](./c1-command-catalogue.md) |
 
@@ -32,10 +32,9 @@ outcomes record the guard that keeps a closed contradiction from recurring.
 3. **Close projection and validation:** I2 implements projection closure and
    packaged-product acceptance. V1 exposes one truthful full check without
    losing orphan-type or top-level-landing coverage.
-4. **Remove independent contradictions:** F1 removes its command from both
-   package metadata and reference under C1's completed parity guard. S1 and the
-   I3 source template close together even if their edits are prepared
-   separately.
+4. **Remove independent contradictions:** S1 and the I3 source template close
+   together even if their edits are prepared separately. F1 is already closed
+   under C1's command-parity guard.
 5. **Finish scoped owner work:** T1 precedes the areas packet of M1. V1 supplies
    the shell-neutral validation path needed by E1. E1 remains owned by the
    execution-channel workshop and must include a native-Windows evidence run.

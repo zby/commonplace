@@ -11,6 +11,8 @@ status: accepted
 **Date:** 2026-07-13  
 **Supersedes in part:** [ADR 032](./032-review-freshness-uses-db-snapshots-not-git.md), [ADR 051](./051-full-pass-packets-own-guarded-captures-and-resolutions.md)
 
+**Amended by:** [ADR 065](./065-publish-only-supported-freshness-transitions.md) — generic accept was withdrawn until an end-to-end non-review target is adopted
+
 ## Context
 
 Review freshness worked, but its tables and helpers were review-shaped: `review_file_snapshots`, review-only `freshness_baselines`, and compare/persist logic embedded in the review package. That blocked repository-wide status, generic accept/ack/retire over registered targets, and a second consumer without duplicating the mechanism.
@@ -28,12 +30,12 @@ One freshness mechanism owns:
 - `freshness_inputs` — accepted input roles pointing at snapshot ids; and
 - `review_freshness_evidence` — review-only bridge retaining the completed evidence pair for `review-pair` targets.
 
-v1 admits only `file-text` inputs and `review-pair` targets. Review commands are adapters: they keep `missing-baseline` discovery, reason mapping (`criterion-changed` before `note-changed`), trivial ack, all-or-nothing finalization, evidence retention, and pruning. Global commands `commonplace-freshness-{status,accept,ack,retire}` operate over registered targets; generic accept rejects `review-pair` because capture refresh requires a completed pair id.
+v1 admits only `file-text` inputs and `review-pair` targets. Review commands are adapters: they keep `missing-baseline` discovery, reason mapping (`criterion-changed` before `note-changed`), trivial ack, all-or-nothing finalization, evidence retention, and pruning. Global commands `commonplace-freshness-{status,ack,retire}` operate over registered targets. Review finalization owns initial acceptance and replacement because capture refresh requires a completed pair id. No generic initial-acceptance or refresh transition ships ([ADR 065](./065-publish-only-supported-freshness-transitions.md)).
 
-Two refresh paths remain distinct:
+Two baseline-update paths remain distinct:
 
 - **Capture refresh** — review finalization (`finalize_capture_refresh()`): job snapshots, CAS on `review_pairs.expected_baseline_revision`, evidence replaced.
-- **Observation refresh/ack** — live revalidation against resolved file text; ack preserves review evidence.
+- **Observation ack** — live revalidation against resolved file text; ack preserves review evidence for an existing baseline.
 
 Queued jobs record `expected_baseline_revision` at pair create. Finalization CASes the stored revision; stale capture after queue is `stale-baseline-revision` at runtime and `stale-queued-capture` at migration. Retirement (`commonplace-freshness-retire`) removes a registered baseline and cascades inputs plus review evidence without deleting jobs or historical result files.
 
@@ -59,4 +61,5 @@ Harder:
 ## See also
 
 - [Review system architecture](../review-architecture.md)
+- [ADR 065: Publish only supported freshness transitions](./065-publish-only-supported-freshness-transitions.md)
 - [Proposal: collection-as-artifact freshness](../proposals/collection-as-artifact-freshness.md)
