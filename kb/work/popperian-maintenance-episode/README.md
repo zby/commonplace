@@ -20,7 +20,7 @@ The episode matters beyond its note: it is the first end-to-end trace in this re
 
 ## Adopted (2026-08-19)
 
-ADR 066 shipped the machinery this workshop was opened to design: three claim modes declared in text, modality-aware premise reading with counterexample-shape annotations, and mode-guarded bidirectional reframes in the full pass. The proposal was trimmed to its undecided remainder (profile-level policy, attestation drift tracking). The 22 candidates in [statistical-mode-candidates.md](./statistical-mode-candidates.md) are now the repair queue: ordinary full passes fix them under the new rules, starting with the recommended first conversions.
+ADR 066 shipped the machinery this workshop was opened to design: three claim modes declared in text, modality-aware premise reading with counterexample-shape annotations, and mode-guarded bidirectional reframes in the full pass. The proposal was trimmed to its undecided remainder (profile-level policy, attestation drift tracking). The 22 candidates in [statistical-mode-candidates.md](./statistical-mode-candidates.md) are now the repair queue, and [adr-066-test-runs.md](./adr-066-test-runs.md) schedules the first six passes as the machinery's validation series — every new path exercised, plus a no-fire control.
 
 ## Promoted at open
 
