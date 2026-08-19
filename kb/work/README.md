@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [epistemic-architectures](./epistemic-architectures/README.md) — comparing how claims, evidence, warrant, and explanation route through the acceptance machinery of four research systems (Commonplace, Eigenius, ScienceFlow, and a private research-ontology draft), with the response taxonomy and the route-level oracle-asymmetry variant as candidate extractions
 - [popperian-maintenance-episode](./popperian-maintenance-episode/README.md) — recording three worked Popperian-maintenance episodes: the three-way-diagnosis reframe, the class-instance defeats whose counterexamples are domain-priced exceptions, and the criterion note's own reframe to pricing-routes/adequacy-decides; coordination point for the idealization/declared-modality thread, with the first in-pass assessment, the genre-drift cohort question, and the maxim reconciliation open
 - [machine-studying-ontology](./machine-studying-ontology/README.md) — deciding which distinctions in Machine Studying improve Commonplace's ontology of corpus-only preparation, agent-level adaptation, domain expertise, and study efficiency, with promotion gated on changed classification, design, or evaluation
 - [natural-language-theory-human-agent-contribution](./natural-language-theory-human-agent-contribution/README.md) — attributing the human and agent interventions behind the natural-language-theory warrant note, with frozen pre-revision evidence and an occurrence/revision-surface/compounding analysis
