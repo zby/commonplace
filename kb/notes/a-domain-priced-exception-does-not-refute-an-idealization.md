@@ -64,7 +64,8 @@ The claim is about which observations refute, not about which repair wins in a g
 ## Open Questions
 
 - Who judges pricing, and how contestable is it? "The domain prices this" is itself a claim about a domain's practice, and a motivated author will find marked-looking features around any exception. Whether the five signatures above are discriminating enough in practice, or need a stated threshold such as more than one independent signature, is untested.
-- Does an idealization need scheduled re-testing? Exceptions that were marked and rare under one regime may become ordinary as the domain evolves — reflective mutation becoming routine in a language community, say — which would refute the idealization without any new counterexample to the first-order model.
+- Does an idealization need scheduled re-testing? Exceptions that were marked and rare under one regime may become ordinary as the domain evolves — reflective mutation becoming routine in a language community, say — which would refute the idealization without any new counterexample to the first-order model. One candidate mechanism: register the pricing attestations as tracked inputs to the claim's review state, so domain drift surfaces as staleness of a cited attestation rather than waiting for someone to notice a new counterexample.
+- Does a passed pricing test yield more than a verdict? In the worked case, the pricing apparatus itself — the metaobject protocol, change-as-deployment rituals — turned out to be reusable design vocabulary for the analogous problem in the target domain: the fence is where the domain's accumulated wisdom about safely handling the exception lives. Whether "a passed test makes the domain's fence a candidate solution structure" holds beyond one witnessed case is untested; this note treats pricing evidentially.
 
 ---
 
