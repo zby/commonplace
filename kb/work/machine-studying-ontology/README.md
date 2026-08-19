@@ -54,15 +54,15 @@ The workshop does not need to adopt StudyBench's scalar, prove that any studying
 
 ## Disposition ledger
 
-| Candidate | Status | Required comparison |
+| Candidate | Status | Disposition record |
 |---|---|---|
-| machine studying | open | deploy-time learning; task-conditioned adaptation |
-| agent as model plus harness | open | deployed-system unit of learning; definition/session relations — [instantiation alone cannot model agent learning across sessions](../../notes/instantiation-alone-cannot-model-agent-learning-across-sessions.md) argues `(model, harness)` needs two relations, instantiation for session startup and a selected transformation of the definition for cross-session learning, so the required comparison must also settle whether `Sigma` adds anything beyond the KB's existing definition/session vocabulary |
-| studying algorithm | open | corpus access; artifact production; retained system change |
-| expertise | open | knowledge; contextual activation; action capacity; inference efficiency |
-| studying intelligence | open | learning efficiency across study budgets |
-| evidence-timing boundary | open | task, reward, demonstration, and trace availability |
-| three intervention families | open | representational form and mixed interventions |
+| machine studying | translate | Corpus-only, pre-task preparation is deploy-time adaptation restricted by evidence timing — a regime and experimental protocol (StudyBench), not a new ontological category. Destination: the capture signal-timing sub-axis in [memory design adds operational axes](../../notes/memory-design-adds-operational-axes-to-artifact-analysis.md). |
+| agent as model plus harness | merge | `Sigma = (model, harness)` adds nothing beyond the deployed-system unit of learning plus the definition/session relations. Destination: convergent evidenced-by on [the deployed system, not the model alone, is the unit of learning](../../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md); the update relation is owned by [instantiation alone cannot model agent learning across sessions](../../notes/instantiation-alone-cannot-model-agent-learning-across-sessions.md). |
+| studying algorithm | merge | The `(agent, corpus) -> changed agent` map is the definition-update relation of [instantiation alone cannot model agent learning across sessions](../../notes/instantiation-alone-cannot-model-agent-learning-across-sessions.md), where it is cited; the corpus-remains-available clause translates to frontloading rather than internalization. |
+| expertise | translate | Domain-relative action capacity under activation constraints, covered by [knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md); the retrieval-controlled selection experiment is promoted as evidence there, and the across-budget measurement residue is recorded as an open question on the same note. |
+| studying intelligence | defer | Second-order scalar over a measurement the KB did not adopt; no current consumer. Revisit if across-budget evaluation enters KB practice — the open question on the knowledge-storage note is the hook. |
+| evidence-timing boundary | adopt | As the capture signal-timing sub-axis (corpus-only versus task-, reward-, demonstration-, or trace-conditioned) in [memory design adds operational axes](../../notes/memory-design-adds-operational-axes-to-artifact-analysis.md). Boundary cases survived: self-posed questions stay pre-task, self-mined execution traces do not; AWM, Voyager, and Dynamic Cheatsheet classify to the conditioned pole. |
+| three intervention families | translate | The families are representational-form placements of the retained change — parametric via raw-corpus loss, parametric via synthesized signal, readable context artifacts — so mixed systems are points on the existing form-coevolution axis, not a taxonomy failure. Destination: the signal-timing paragraph plus the cheatsheet evidence edges on [retained artifacts](../../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) and [frontloading](../../notes/frontloading-spares-execution-context.md). |
 
 Allowed dispositions are `adopt`, `translate`, `merge`, `reject`, and `defer`. Record a reason and durable destination for every non-open disposition.
 

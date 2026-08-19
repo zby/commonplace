@@ -58,6 +58,7 @@ For memory and KB design, the implication is simple: storing more knowledge is n
 - How often does context-to-action failure occur in ordinary agent workflows, outside artificial solution-injection benchmarks?
 - Which process structures most cheaply convert visible information into plan updates?
 - Does the activation gap reliably grow with distance from the immediate artifact: syntax, operational behavior, system-level consequences?
+- Does measuring performance across inference-compute budgets, rather than at one budget, separate activation quality from raw capability? Machine Studying's expertise curves suggest such a protocol; whether it belongs in KB or memory evaluation is unresolved.
 
 ---
 
@@ -72,3 +73,4 @@ Relevant Notes:
 - [Agents Explore but Agents Ignore ingest](../sources/agents-explore-but-agents-ignore-llms-lack-environmental.ingest.md) — evidenced-by: solution-injection experiments separate discovery from action, showing context-present solutions can remain unintegrated
 - [Faithful Self-Evolvers ingest](../sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md) — evidenced-by: condensed experience can stay semantically plausible yet lose behavioral influence relative to the raw traces it replaced — an activation loss introduced by the reshaping itself
 - [Verbalizable Representations Form a Global Workspace in Language Models](../sources/verbalizable-representations-global-workspace-llms.ingest.md) — evidenced-by: causal interventions distinguish information available to the model, information loaded into J-space by task demands, and J-space content that actually mediates report or flexible computation
+- [Machine Studying](../sources/machine-studying.ingest.md) — evidenced-by: retrieval-controlled selection on its literature task — two models surface the same gold papers, but the older model discards the right ones after reading them, isolating context-to-action failure with retrieval held constant
