@@ -4,7 +4,7 @@ Recorded 2026-08-19 from a parallel session's analysis, relayed by the operator;
 
 ## What the gate did
 
-The premise-decomposition gate GLOBAL-defeated three premises of `kb/notes/agent-definitions-and-sessions-break-the-class-instance-analogy.md` (since retitled by its owning session to `instantiation-alone-cannot-model-agent-learning-across-sessions.md`, uncommitted as of this record):
+The premise-decomposition gate GLOBAL-defeated three premises of `kb/notes/agent-definitions-and-sessions-break-the-class-instance-analogy.md` (since retitled by its owning session to `instantiation-alone-cannot-model-agent-learning-across-sessions.md`, committed 2026-08-19 in `2f12319a` with a redirect from the old slug):
 
 1. "Class-based OO fixes a class before its instances exist and provides no instance-caused path for changing class behavior inherited by later instances" — defeated by Python mutating `type(self)` from an instance method.
 2. "A class-based system fixes the boundary between shared class behavior and instance-local content at authoring time" — defeated by reflective class mutation and Ruby singleton methods.
