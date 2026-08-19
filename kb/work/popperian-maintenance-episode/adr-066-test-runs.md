@@ -51,9 +51,35 @@ Mode landings: one of six (run 5, statistical, guard in the disposition). Declin
 
 The headline finding is better than the one we designed for: **mode conversion is rare because mode landings require mode-appropriate warrant** — prevalence evidence for statistical, domain-priced exceptions for ideal-type — and most mismatched notes lack it. Their honest repairs are scope, category, or conditionality reframes. The modality machinery's principal observed effect is *preventive*: shape annotations route synthesis away from unguarded landings, and the two runs that could have produced degenerate outcomes (run 3 re-hedging; run 4 promoting a false universal) both avoided them. The 22-candidate survey overpredicted conversions systematically; class labels flag mismatch but the evidence decides the landing. Second-wave implication: run candidates through ordinary passes without mode predictions; track only whether guards bind and shapes discriminate.
 
-## Second wave (queue, not scheduled)
+## Wave 2 (scheduled 2026-08-19)
 
-After readouts from the six: `structure-activates-higher-quality-training-distributions.md` and `knowledge-storage-does-not-imply-contextual-activation.md` (statistical with numeric prevalence refuters), `entropy-management-must-scale-with-generation-throughput.md` (deontic universal), `weakly-discriminated-qualities-tend-to-be-underselected.md` (well-behaved Class B with named conditions), `codified-scheduling-patterns-can-turn-tools-into-hidden-schedulers.md` (upward to universal), `files-not-database.md` (statistical vs ideal-type boundary decision), `bounded-context-orchestration-model.md` (the clean-model cluster — last, because reframing the hub note has the widest citer blast radius).
+Discipline, per the series verdict: **no mode predictions**. Class labels flagged these as mismatch candidates; the evidence decides the landing. Per-run readouts track only whether the shape annotations discriminate, whether any landed mode meets its guard, and the follow-up cost. Batches are ordered by inbound-citer blast radius (measured 2026-08-19), because a reframe's real cost is the rename-and-reconcile fanout, not the pass. Passes on different notes may run in parallel; follow-ups for large-radius notes should land the same day as their pass.
+
+**Batch A — small radius (2–6 citing files each), run freely:**
+1. `access-burden-and-transformation-burden-are-independent-query.md` (2)
+2. `codified-scheduling-patterns-can-turn-tools-into-hidden-schedulers.md` (2)
+3. `llm-generation-confidence-tracks-typicality-not-soundness.md` (3) — carries a mixed-modality body (one half deductive, one half rate-dependent), so its readout bears on per-claim mode assignment
+4. `weakly-discriminated-qualities-tend-to-be-underselected.md` (4) — already declares conjecture status with named conditions; its readout bears on how modality composes with lifecycle stage
+5. `traditional-debugging-intuitions-break-when-tool-loops-can-recover.md` (4)
+6. `human-analogies-suggest-functions-not-component-boundaries.md` (6)
+
+**Batch B — medium radius (7–17), run after batch A's follow-ups are clean:**
+7. `prose-has-no-dereference-reinforce-facts-at-point-of-use.md` (7)
+8. `entropy-management-must-scale-with-generation-throughput.md` (8)
+9. `apparent-success-is-an-unreliable-health-signal-in-framework-owned.md` (9) — sits inside the clean-model cluster, so its readout previews batch C's hub
+10. `memory-design-adds-operational-axes-to-artifact-analysis.md` (10)
+11. `indirection-is-costly-in-llm-instructions.md` (11)
+12. `structure-activates-higher-quality-training-distributions.md` (17) — the corpus's best numeric-prevalence evidence (benchmark deltas plus a survived null); whatever lands here is the strongest test yet of the statistical guard against real rates
+
+**Batch C — large radius, one at a time, same-day follow-up committed before the next starts:**
+13. `agent-memory-needs-discoverable-composable-trusted-knowledge-under.md` (18)
+14. `storing-llm-outputs-is-constraining.md` (19) — opens with a declared working-hypothesis line; tests mode-versus-stage composition at scale
+15. `stale-indexes-are-worse-than-no-indexes.md` (24) — foundational to the marks doctrine; a reframe here touches enforcement rationale
+16. `files-not-database.md` (29) — the regime boundary lives in a sibling note; the pass may pull it in or leave it, and either is informative
+17. `bounded-context-orchestration-model.md` (59) — the strongest remaining candidate for a genuine in-pass ideal-type conversion: the cluster's own "clean model / degraded variant" vocabulary is domain-internal pricing, unlike run 2's unmarked blurring. Also the widest-radius reframe in the wave; schedule when the follow-up day is free
+18. `knowledge-storage-does-not-imply-contextual-activation.md` (211) — deliberately last. The title is a non-implication claim, which one storage-without-activation case establishes, so the reframe probability may be low despite the seven body hedges — but if the pass does reframe, the follow-up is the largest citer sweep in the KB's history. Do not start it without the follow-up capacity reserved.
+
+**Coverage gaps wave 2 could close** (tracked, not predicted onto any note): a statistical landing whose stated refuter is numeric rather than qualitative; a genuine in-pass ideal-type conversion whose adequacy record the closing premise rerun attacks; and a landing-moment guard rejection — a synthesis that reaches for a mode and is blocked by the guard text rather than by the runner's judgment.
 
 ## Series success criteria
 
