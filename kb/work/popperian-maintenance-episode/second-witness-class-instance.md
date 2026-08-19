@@ -20,7 +20,7 @@ This is the operational form the honesty test lacked in the first witness: **an 
 
 ## Contrast with the first witness
 
-The two witnesses bracket the test. In the three-way-diagnosis case, the defeating cross-effects (a schema also steering the interpreter off format violations) are arguably ordinary unmarked practice in prompt engineering — the honesty test might have refused the idealization, and the reframe would stand. In the class-instance case the pricing is richly attested in the domain and the test plausibly passes. A vocabulary with the third verdict would have treated the two cases differently; the current vocabulary treated them the same. That asymmetry — not either case alone — is the evidence that the missing verdict does discriminating work.
+The two witnesses bracket the test. In the three-way-diagnosis case, the defeating cross-effects (a schema also steering the interpreter off format violations) are arguably ordinary unmarked practice in prompt engineering — the honesty test might have refused the idealization, and the reframe would stand. In the class-instance case the pricing is richly attested in the domain and the routing stage plausibly passes (the third episode later split the test: pricing routes, adequacy — still unassessed here — decides). A vocabulary with the third verdict would have treated the two cases differently; the current vocabulary treated them the same. That asymmetry — not either case alone — is the evidence that the missing verdict does discriminating work.
 
 ## Conversion executed — outside a pass (2026-08-19)
 
