@@ -42,6 +42,7 @@ plugins:
         'notes/a-summary-claims-less-than-its-episodes-a-theory-claims-more.md': 'notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md'
         'notes/actionable-theories-and-reflexive-system-construction.md': 'notes/self-improving-systems-README.md'
         'notes/addressable-hypotheses-may-reduce-target-data-under-structured-shifts.md': 'notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md'
+        'notes/agent-definitions-and-sessions-break-the-class-instance-analogy.md': 'notes/instantiation-alone-cannot-model-agent-learning-across-sessions.md'
         'notes/agent-memory-index.md': 'notes/agent-memory-README.md'
         'notes/agent-memory-serves-contextual-competence-through-discoverable-composable-trusted-knowledge.md': 'notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md'
         'notes/an-adaptation-loop-requires-search-evaluation-and-retention.md': 'notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md'

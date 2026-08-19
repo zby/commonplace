@@ -57,7 +57,7 @@ The workshop does not need to adopt StudyBench's scalar, prove that any studying
 | Candidate | Status | Required comparison |
 |---|---|---|
 | machine studying | open | deploy-time learning; task-conditioned adaptation |
-| agent as model plus harness | open | deployed-system unit of learning |
+| agent as model plus harness | open | deployed-system unit of learning; definition/session relations — [instantiation alone cannot model agent learning across sessions](../../notes/instantiation-alone-cannot-model-agent-learning-across-sessions.md) argues `(model, harness)` needs two relations, instantiation for session startup and a selected transformation of the definition for cross-session learning, so the required comparison must also settle whether `Sigma` adds anything beyond the KB's existing definition/session vocabulary |
 | studying algorithm | open | corpus access; artifact production; retained system change |
 | expertise | open | knowledge; contextual activation; action capacity; inference efficiency |
 | studying intelligence | open | learning efficiency across study budgets |
