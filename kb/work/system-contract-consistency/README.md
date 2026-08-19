@@ -1,78 +1,150 @@
-# System contract consistency audit
+# System contract consistency workshop
 
-**Audit date:** 2026-07-29
+**Opened:** 2026-07-29
 
-**Scope:** current Commonplace contracts outside the linking and lineage domains
+**Last recheck:** 2026-08-19
 
-## Verdict
+**State:** nine findings remain open; C1 was resolved on 2026-08-19. Plans and
+outcomes are recorded in the [plan index](./plans/README.md)
 
-Commonplace has ten confirmed cross-surface contradictions outside the ones already owned by the [linking-contract-consistency](../linking-contract-consistency/README.md) workshop and the [lineage ledger](../lineage-mechanisms/current-contradictions.md). The highest-risk cluster is not an isolated stale sentence: the source-to-install projection has no single contract shared by the accepted shipping decision, scaffold manifest, generated control plane, installed files, upgrade behavior, and validation workflow.
+**Scope:** current Commonplace contracts outside the linking and lineage
+domains
 
-A pristine `commonplace-init` currently produces a KB whose shipped collections contain **433 broken local links**, whose shared global types add **14 more**, and whose reference collection gains one projection-specific validation failure. The advertised `all` validation procedure does not inspect those nested shipped collections. This makes the installed form both less coherent than the source form and capable of reporting completion without examining the broken surface.
+## Current verdict
 
-The remaining contradictions repeat three mechanisms:
+Nine of the ten confirmed contradictions remain open. C1 closed by documenting
+the omitted executable and enforcing exact catalogue parity. Four other
+findings received partial repairs at one edge, but both conflicting witnesses
+remain live:
 
-- an exception or migration landed in its primary schema or decision record but not in every consumer;
-- a scope word such as “all,” “every,” or “supported” is broader than the mechanism that enforces it;
-- a command or workflow was exposed before its accepted input domain existed.
+- E1: the health check gained one PowerShell-paired step and dropped obsolete
+  activation instructions, but several promoted procedures are still
+  POSIX-only;
+- V1: the skill and command reference now agree, but they agree on the same
+  one-level glob that omits nested shipped collections;
+- I3: the global type collection now explains its dual role, but the generated
+  control plane still denies that role and installed sources/work still lack
+  contracts;
+- S1: ingest validation now acknowledges a possibly edited snapshot, but no
+  ingest step authorizes the edit and the direct-write constraint still forbids
+  it.
+
+The install-integrity result worsened from 447 broken links on 2026-07-29 to
+**516** on 2026-08-19: 502 in the three shipped library collections and 14 in
+the shared global types. The installed reference collection also had one
+projection-specific type-resolution failure. The advertised full-validation
+procedure still skips all three shipped collections, so it can report
+completion without examining this broken surface.
+
+The recurring mechanisms remain:
+
+- an exception or migration landed in its primary schema or decision record
+  but not in every consumer;
+- a scope word such as “all,” “every,” or “supported” is broader than the
+  mechanism that enforces it;
+- a command or workflow was exposed before its accepted input domain existed;
+- a non-identity install projection is tested as a copier rather than operated
+  as the product a user receives.
 
 ## Standard used
 
-A **confirmed contradiction** needs two current, operative witnesses that cannot both be followed over the same declared scope. An advertised command with an empty legal input domain also qualifies. A missing future feature, an explicitly historical statement, or an unimplemented proposal does not.
+A **confirmed contradiction** needs two current, operative witnesses that
+cannot both be followed over the same declared scope. An advertised command
+with an empty legal input domain also qualifies. A missing future feature, an
+explicitly historical statement, or an unimplemented proposal does not.
 
 Priorities mean:
 
 - **P0** — a fresh install or completion signal is unsound;
-- **P1** — a current supported workflow, trusted mark, or system-definition contract can direct incompatible actions;
-- **P2** — a narrower current reference or authoring surface teaches a rejected or invalid shape.
+- **P1** — a current supported workflow, trusted mark, or system-definition
+  contract can direct incompatible actions;
+- **P2** — a narrower current reference or authoring surface teaches a rejected
+  or invalid shape.
 
 ## Findings at a glance
 
-| ID | Priority | Contradiction | Immediate consequence | Existing owner |
+| ID | Priority | Current contradiction | Immediate consequence | Plan |
 |---|---|---|---|---|
-| I1 | P0 | The accepted shipping decision promises a refreshable, marker-guarded four-collection library; init installs three collections, no marker, and never refreshes changed files | Package upgrades leave old library and skill files installed indefinitely | none |
-| I2 | P0 | Source-valid relative paths are copied into a different installed topology without translating or shipping their targets | A pristine install introduces 447 broken local links and one type-resolution failure | none |
-| V1 | P0 | `validate all` means one-level collection globbing, while installed collections live two levels deep | The normal completion path skips the entire shipped library | [validation](../validation/README.md), but this installed-layout case is not recorded there |
-| I3 | P1 | The generated control plane calls sources/work collections without installing contracts, and calls `kb/types/` not a collection while installing its contract | Read-before-write is impossible for two routed destinations; the global type collection is misclassified | none |
-| S1 | P1 | Snapshots are both immutable and mutable in place, while ingest both must and must not perform the mutation | Ingestion cannot obey its collection, type, and skill contracts together | none |
-| T1 | P1 | Tag completeness is stated and routed across collections but checked and generated within one collection | A validated mark can falsely license a reader to stop searching | [tag-scope proposal](../../reference/proposals/tag-scope-is-declared-where-membership-claims-are-made.md) |
-| E1 | P1 | Native Windows is supported, but promoted procedures contain unpaired POSIX-only commands | Selected skills can be non-operative on a declared channel | [execution-channel compatibility](../execution-channel-compatibility/README.md) |
-| F1 | P1 | `commonplace-freshness-accept` is published for non-review targets, but no non-review target kind is accepted | Every invocation reaches an unconditional unsupported-kind error | [freshness module review](../freshness-module-review/README.md) |
-| M1 | P2 | Accepted metadata/type migrations coexist with current docs that prescribe the retired representation | Agents can author schema-invalid or semantically retired artifacts from live guidance | none |
-| C1 | P2 | The CLI reference and executable catalogue enumerate different command surfaces | A shipped command is absent from its claimed reference while an unusable one is documented | none |
+| I1 | P0 | Accepted ADR 021 promises four shipped collections, a marker, and marker-backed refresh; init ships three, writes no marker, and preserves every differing file | Package upgrades cannot update existing project-local library or skill copies as promised | [Shipping and upgrade](./plans/i1-shipping-upgrade.md) |
+| I2 | P0 | Source-valid local paths are copied through a topology change without shipping or translating their targets | A pristine install has 516 broken links and one type failure | [Install projection integrity](./plans/i2-install-projection-integrity.md) |
+| V1 | P0 | Both documented `all` procedures use `kb/*/COLLECTION.md`, while installed library collections are nested below `kb/commonplace/` | The normal completion path skips the shipped library | [Validate all](./plans/v1-validate-all.md) |
+| I3 | P1 | Generated routing treats sources/work as collections without contracts and treats contract-bearing `kb/types/` as not a collection | Read-before-write is impossible at two routed destinations and discovery excludes a real collection | [Installed topology](./plans/i3-installed-topology.md) |
+| S1 | P1 | Snapshots are categorically immutable, yet ingest must correct `genre` in place while being told to write only its report | Ingest cannot obey its collection, type, and skill contracts together | [Snapshot mutation boundary](./plans/s1-snapshot-mutation-boundary.md) |
+| T1 | P1 | Tag coverage is stated and routed beyond one collection but generated and checked within one collection | A validated mark can falsely license a reader to stop searching | [Tag scope](./plans/t1-tag-scope.md) |
+| E1 | P1 | Native Windows is supported, but promoted skills retain unpaired POSIX-only commands | Selected recovery and authoring procedures are non-operative on a declared channel | [Windows execution](./plans/e1-windows-execution.md) |
+| F1 | P1 | `commonplace-freshness-accept` is published for non-review targets while its accepted target-kind set is empty | Every invocation reaches an unsupported-kind error | [Freshness accept](./plans/f1-freshness-accept.md) |
+| M1 | P2 | Five accepted representation migrations retain live guidance for their retired forms | Agents can author schema-invalid or semantically retired artifacts from current docs | [Migration residue](./plans/m1-migration-residue.md) |
+| C1 | P2 | **Resolved 2026-08-19:** 22 console scripts now have 22 unique command-reference sections | An exact set-parity test prevents one-sided catalogue changes | [Completed outcome](./plans/c1-command-catalogue.md) |
 
-## I1 — The accepted shipping and upgrade contract is not the initializer's contract
+## I1 — Shipping and upgrade contracts disagree
 
-The accepted [ADR 021](../../reference/adr/021-ship-library-content-under-kb-commonplace.md) fixes all of the following as the installed shape:
+Accepted [ADR 021](../../reference/adr/021-ship-library-content-under-kb-commonplace.md)
+still specifies four library collections, including `agent-memory-systems`, a
+`kb/commonplace/.commonplace` marker, and marker-backed replacement of a clean
+shipped tree. The [scaffold manifest](../../../src/commonplace/scaffold_manifest.py)
+ships only notes, reference, and instructions. Init writes no marker and
+preserves every differing existing target because it has no prior-version
+baseline.
 
-- four library collections under `kb/commonplace/`, including `agent-memory-systems`;
-- a `kb/commonplace/.commonplace` version/drift marker;
-- overwrite of a clean shipped tree on upgrade, with refusal only when marker-backed drift is detected.
+Most current surfaces already describe that implementation. [ADR
+014](../../reference/adr/014-scripts-as-python-package-one-tree-model.md)
+sets missing-files-only, non-destructive behavior and explicitly rejects
+automatic synchronization. [ADR
+037](../../reference/adr/037-promote-skills-into-runtime-surfaces-by-copying.md)
+requires manual diff-and-merge for projected skills, and
+[INSTALL.md](../../../INSTALL.md) says reruns acquire new scaffold files rather
+than replace existing ones. ADR 021 remains the marker-backed replacement
+witness. Separately, [architecture.md](../../reference/architecture.md) still
+makes the broader claim that init can “re-sync” the library on upgrade.
 
-The current [scaffold manifest](../../../src/commonplace/scaffold_manifest.py) copies only `notes`, `reference`, and `instructions`. It installs no marker. The [initializer](../../../src/commonplace/cli/init_project.py) preserves every existing differing file; it has no prior-version baseline with which to distinguish a practitioner edit from an old package version. [ADR 037](../../reference/adr/037-promote-skills-into-runtime-surfaces-by-copying.md) explicitly says projected skill upgrades require manual diff-and-merge. [INSTALL.md](../../../INSTALL.md) accurately narrows re-init to picking up *new* scaffold files, while the current [architecture reference](../../reference/architecture.md) still says `commonplace-init` can re-sync the library on upgrade.
+The selected plan preserves current behavior rather than inventing an
+unimplemented drift protocol: settle I2's exact bundle, mark ADR 021
+superseded, restate the surviving namespace decision, and state one
+missing-files-only transition and manual upgrade procedure across ADRs, code,
+tests, install docs, and architecture.
 
-These are not alternative layers of one behavior. A file that changed between package releases is “different” in the installed tree, so init preserves it whether or not the user ever touched it. `pip install --upgrade` plus `commonplace-init` therefore cannot perform the update that ADR 014 and ADR 021 describe.
+## I2 — The install projection breaks the library graph
 
-**Needed decision:** either implement marker-backed canonical refresh, including an explicit policy for locally changed shipped files and projected skills, or amend the accepted decision and every upgrade claim around a deliberately manual update mechanism. Independently decide whether `agent-memory-systems` remains in the shipped bundle; current code and current architecture silently disagree with the accepted ADR.
+The source notes, reference, instructions, and shared types validate without
+missing-link warnings. Copying selected content under `kb/commonplace/` while
+keeping shared types at `kb/types/` and omitting dependency collections breaks
+otherwise valid paths:
 
-## I2 — The source-to-install path projection produces a broken library
+| Installed surface | Files with broken links | Broken links | Failures |
+|---|---:|---:|---:|
+| `kb/commonplace/notes` | 150 | 468 | 0 |
+| `kb/commonplace/reference` | 23 | 33 | 1 |
+| `kb/commonplace/instructions` | 1 | 1 | 0 |
+| `kb/types` | 4 | 14 | 0 |
+| **Total** | **178** | **516** | **1** |
 
-ADR 021's [path-audit appendix](../../reference/adr/021-shipping-model-path-audit-option-e.md) explicitly did not scan `kb/types/`. It also made two conditions of the chosen layout: ship `agent-memory-systems`, and replace primary links into omitted `sources` with external citations. Neither condition holds in the current scaffold.
+Resolved against their intended source targets, the 516 broken edges divide as
+follows:
 
-The consequences are measurable in a pristine generated project:
+| Intended target class | Broken edges |
+|---|---:|
+| `kb/sources/` | 321 |
+| `kb/agent-memory-systems/` | 112 |
+| `kb/agentic-systems/` | 29 |
+| `kb/types/` | 29 |
+| `kb/notes/` | 9 |
+| `kb/reference/` | 5 |
+| `AGENTS.md`, `tasks/`, `src/`, `kb/articles/`, `kb/reports/` | 10 |
+| `kb/log.md` | 1 |
 
-| Surface | Source checkout | Pristine installed shape |
-|---|---:|---:|
-| `notes` | 321 files, 0 warning-bearing notes, 0 failures | 134 warning-bearing notes, 405 missing-link warnings, 0 failures |
-| `reference` | 123 files, 0 warning-bearing notes, 1 pre-existing filename failure | 21 warning-bearing notes, 27 missing-link warnings, 2 failures |
-| `instructions` | 83 files, 0 warning-bearing notes, 0 failures | 1 warning-bearing note, 1 missing-link warning, 0 failures |
-| shared `kb/types` | 8 files, 0 warnings, 0 failures | 4 warning-bearing type specs, 14 missing-link warnings, 0 failures |
+The sole failure is [text-contract-profiles.md](../../reference/text-contract-profiles.md):
+its file-relative `type:` pointer reaches global `kb/types/` in the source but
+resolves to absent `kb/commonplace/types/` after installation. Shared type
+contracts exhibit the inverse depth change when they link back into notes or
+reference.
 
-The 405 broken note links divide into 246 links to omitted sources, 116 to omitted agent-memory-system reviews, 23 to omitted agentic-system analyses, 19 to global types whose relative depth changed, and one to omitted task content. The additional installed-reference failure is [text-contract-profiles.md](../../reference/text-contract-profiles.md): its source-valid file-relative pointer to a global type resolves under `kb/commonplace/types/` after shipping, even though ADR 021's own rule says global type pointers must stay repository-relative `kb/types/...` paths.
-
-The shared type contracts show the complementary failure. Files such as [instruction.md](../../types/instruction.md), [note.md](../../types/note.md), [review-gate.md](../../types/review-gate.md), and [type-spec.md](../../types/type-spec.md) stay at top-level `kb/types/`, but their `../notes/...` and `../reference/...` markdown links assume the source checkout. In an install, those targets moved under `kb/commonplace/`. A future user file at the old relative target could silently turn a broken library link into a link to unrelated user content.
-
-**Needed outcome:** make the generated install a tested product shape. A clean-install acceptance test should validate every shipped collection and shared type with zero projection-introduced failures or warnings. The shipping contract must then choose, per dependency class, to ship the target, translate the link, replace it with an external citation, or remove the dependency. Source-tree validation cannot establish installed-tree integrity after a non-identity path transform.
+The resolution plan treats init as a build projection with an explicit
+source-to-installed map, an explicit disposition for omitted dependencies, one
+code-safe link rewriter, and a strict packaged-wheel acceptance test. The
+current-system recommendation is to retain the three documented library
+collections and replace omitted first-party and source edges with stable public
+or canonical external targets. Expanding the bundle remains coherent, but must
+be chosen explicitly before the I1 successor ADR.
 
 ### Reproduction
 
@@ -82,141 +154,251 @@ From the Commonplace source root:
 audit_root=$(mktemp -d /tmp/commonplace-contract-audit-XXXXXX)
 commonplace-init --root "$audit_root" --name audit
 cd "$audit_root"
-commonplace-validate commonplace/notes
-commonplace-validate commonplace/reference
-commonplace-validate commonplace/instructions
+commonplace-validate kb/commonplace/notes
+commonplace-validate kb/commonplace/reference
+commonplace-validate kb/commonplace/instructions
 commonplace-validate kb/types
 ```
 
-The counts above came from this procedure on 2026-07-29. Link-health findings are warnings, so the notes, instructions, and types commands still exit successfully; reference fails for the projection-specific type pointer plus the source checkout's existing 71-character ADR filename.
+These counts were reproduced on 2026-08-19. Missing links are warnings, so exit
+status alone cannot establish product integrity. Reference exits nonzero only
+for the projection-specific type pointer; the previously reported source
+filename failure no longer exists.
 
-## V1 — “Validate all” does not mean all collections
+## V1 — “Validate all” still means one depth
 
-The promoted [validation skill](../../instructions/cp-skill-validate/SKILL.md) implements `all` with `kb/*/COLLECTION.md`. That works only for collections one level below `kb/`. Installed library collections live at `kb/commonplace/{notes,reference,instructions}/`, so the glob skips every one of them. This is especially consequential because it hides I2 from the normal full-validation path.
+[commands.md](../../reference/commands.md) no longer contains its stale
+hardcoded collection list. It now matches the promoted [validation
+skill](../../instructions/cp-skill-validate/SKILL.md): both loop over
+`kb/*/COLLECTION.md`. That removes the previous second meaning but preserves the
+core gap. A pristine install contains seven `COLLECTION.md` files; the glob sees
+four and misses all three nested shipped collections.
 
-The [commands reference](../../reference/commands.md) gives a second meaning of the same operation: a hardcoded loop over `types notes reference instructions agent-memory-systems sources`. In the source checkout this omits the current `agentic-systems` and `articles` collections. In an installed project it again names user-root paths rather than the nested shipped collections. The source repository currently has nine top-level collection contracts; neither procedural enumeration is the authoritative set across both supported layouts.
+[project_paths.py](../../../src/commonplace/lib/project_paths.py) already has a
+recursive `collection_dirs()`, but no `all` procedure consumes it. It also
+filters out any path containing `types`, so it returns six of the seven install
+collections, and in the source checkout it can include the deliberately ignored
+`kb/work/dialectical-sample` fixture. The full-validation enumerator therefore
+must include the I3 disposition of global types, prune
+`.commonplace-validation-ignore`, carry repository-relative paths rather than
+basenames, continue after failures, and own one aggregate result.
 
-**Needed outcome:** one collection enumerator should own full validation. The implementation already has recursive collection discovery in [project_paths.py](../../../src/commonplace/lib/project_paths.py); expose or consume that behavior rather than serializing collection names or depth assumptions in instructions. Add a test that `all` covers every discovered collection exactly once in both source and generated-install fixtures.
+Collection discovery is not the whole current `types` target: support type
+specs under paths such as `kb/reports/types/` and `kb/tasks/types/` may have no
+enclosing collection. `all` must cover those exactly once after collection
+runs. It must also run the existing direct-child-of-`kb/` landing check once,
+without silently imposing that landing rule on nested library collections.
 
-## I3 — The installed collection topology contradicts its control plane
+## I3 — Installed routing and material topology disagree
 
-The generated [AGENTS template](../../../AGENTS.md.template) defines a collection as a `kb/` subtree with a local `COLLECTION.md`, tells agents to read that contract before writing, and routes both `kb/sources/` and `kb/work/` as collections. It simultaneously calls `kb/types/` a “global type surface, not a collection.”
+[kb/types/COLLECTION.md](../../types/COLLECTION.md) now correctly explains that
+`kb/types/` is both global in reach and a collection by contract. The source
+control plane and architecture agree. The generated
+[AGENTS.md.template](../../../AGENTS.md.template) still says it is “not a
+collection,” while `collection_dirs()` excludes it.
 
-The manifest does the inverse in material form:
+[collection_conformance.py](../../../src/commonplace/review/collection_conformance.py)
+also excludes every contract under a `types` path even though accepted [ADR
+060](../../reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md)
+places `kb/types/` inside collection-conformance review.
 
-- it copies [kb/types/COLLECTION.md](../../types/COLLECTION.md), whose first paragraph explicitly says the directory is a collection;
-- it creates `kb/sources/` and `kb/work/` without either collection contract;
-- it supplies source type specs whose extension instructions depend on the sources collection's Types menu.
+The template also routes `kb/sources/` and `kb/work/` as writable collections
+and requires their contract to be read before writing. The scaffold creates the
+directories but installs neither `COLLECTION.md` nor a landing for either.
+Write and connect can therefore hard-fail on a pristine install. Snapshot-web's
+newly hedged contract pointer does not supply the missing contract that ingest
+and type extension still require.
 
-The contradiction reaches executable procedures. [cp-skill-snapshot-web](../../instructions/cp-skill-snapshot-web/SKILL.md) says the snapshot type comes from `kb/sources/COLLECTION.md`; [ingest-directory](../../instructions/ingest-directory.md) names that file as a prerequisite; [cp-skill-write](../../instructions/cp-skill-write/SKILL.md) hard-fails any writable collection without a contract. A pristine install therefore cannot satisfy its read-before-write rule for sources or workshops, while it is instructed to ignore the contract that actually governs the global types it received.
+The selected topology makes sources and work genuine scaffolded user
+collections, classifies types as the global type collection, and keeps
+`kb/commonplace/` as a namespace rather than a collection. A package-owned
+machine-readable declaration must drive or be parity-checked against manifest,
+routing, discovery, top-level landing coverage, and smoke tests.
 
-**Needed outcome:** derive the control-plane routing table and starter contracts from one declared installed topology. If sources and work are writable collections, scaffold contracts adequate to their actual type and link semantics. If they are support directories until a user opts in, stop routing them as collections and make source skills own a contract-independent default. Correct the `kb/types/` classification either way.
+## S1 — Snapshot immutability has an undeclared exception
 
-## S1 — Snapshot immutability has an undeclared write exception
+The [sources collection](../../sources/COLLECTION.md) still says snapshots are
+categorically immutable. [ADR
+045](../../reference/adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md),
+the [snapshot type](../../sources/types/snapshot.md), and the [ingest-report
+type](../../sources/types/ingest-report.md) require ingest to correct `genre` in
+place when closer reading changes the classification.
 
-The [sources collection contract](../../sources/COLLECTION.md) says snapshots preserve captured content, “Don't edit” them, and later states categorically that snapshots are immutable. [ADR 045](../../reference/adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md), the [snapshot type](../../sources/types/snapshot.md), and the [ingest-report type](../../sources/types/ingest-report.md) instead require ingestion to correct `genre` in place when closer reading changes the classification. ADR 045 acknowledges that the snapshot is no longer fully immutable.
+[cp-skill-ingest](../../instructions/cp-skill-ingest/SKILL.md) now says final
+validation may cover a snapshot the run “created or edited.” Its direct-output
+rule and final constraint still permit only the `.ingest.md` report, and no step
+authorizes or performs the correction. [cp-skill-connect](../../instructions/cp-skill-connect/SKILL.md)
+also retains categorical immutability language.
 
-The ingest skill supplies a third incompatible boundary: [cp-skill-ingest](../../instructions/cp-skill-ingest/SKILL.md) says its direct output is only the `.ingest.md` report and repeats “Write only the `.ingest.md` report directly,” while its loaded type contract can require a snapshot edit. A validation step conditionally mentions a snapshot the run edited, but no step authorizes or performs the required correction.
+The selected resolution names **captured-content immutability**: body,
+provenance, identity, and authored-link surface remain fixed; ingest may correct
+only the `genre` scalar. The collection, ADR, types, ingest, connect, and I3's
+installed source contract must state and test that same byte-level boundary.
 
-**Needed outcome:** choose and name the mutable envelope. The minimal resolution is to define content immutability separately from a small mutable capture-metadata set, revise the collection's categorical language, and explicitly authorize the ingest skill to update `genre`. If whole-file immutability is load-bearing, move corrected classification to a mutable companion and change ADR 045's single-ground-truth decision.
+## T1 — Tag completeness claims have incompatible scopes
 
-## T1 — Tag completeness has incompatible scopes
+The active [tag-scope
+proposal](../../reference/proposals/tag-scope-is-declared-where-membership-claims-are-made.md)
+remains unadopted. The [tag-readme type](../../types/tag-readme.md) and current
+routing use unqualified “every note” language across collection-facing
+surfaces, while generation and validation index one collection.
 
-This contradiction is already fully evidenced in the active [tag-scope proposal](../../reference/proposals/tag-scope-is-declared-where-membership-claims-are-made.md):
+The live witness is
+[trace-learning-techniques-in-related-systems.md](../../agent-memory-systems/trace-learning-techniques-in-related-systems.md),
+which carries `learning-theory` but none of the six children declared by the
+notes collection's
+[learning-theory-README.md](../../notes/learning-theory-README.md). Its
+`covered_by` claim is therefore false at cross-collection scope while validation
+passes because it checks only notes.
 
-- the [tag-readme type](../../types/tag-readme.md) says a marked page links “every” note carrying the tag;
-- the generated listing and validator operate within the tag README's collection;
-- the site hook routes matching tags across collection boundaries;
-- the root control-plane search recipe scans several collections, while [navigation.md](../../reference/navigation.md) uses a notes-only recipe.
+The plan adopts the proposal's collection-scoped option. A mark licenses
+skipping only its owning collection's sweep, cross-collection search is a union
+of independent sweeps, and tag-link routing cannot cross into a landing whose
+generated tail excludes the source artifact.
 
-The live witness is [trace-learning-techniques-in-related-systems.md](../../agent-memory-systems/trace-learning-techniques-in-related-systems.md), which carries `learning-theory` but none of the children declared by [learning-theory-README.md](../../notes/learning-theory-README.md). Validation passes because it checks only the notes collection; the unqualified reader-facing coverage claim is false at the wider scope other consumers imply.
+## E1 — Native Windows support and promoted procedures disagree
 
-**Needed outcome:** adopt one of the proposal's scoped designs. The non-negotiable invariant is narrower: no mark may license skipping a search wider than the scope the validator actually checked.
+Native Windows and PowerShell remain supported, and the manifest now promotes
+nine skills. [cp-skill-health-check](../../instructions/cp-skill-health-check/SKILL.md)
+improved its uv-tool step and removed the old `direnv`, `bash -c`, and active
+`.venv/bin` instructions. Its layout, projection, and legacy-residue checks
+still use unpaired Bash constructs such as `test`, `&&`, `||`, and `sed`.
+[cp-skill-connect](../../instructions/cp-skill-connect/SKILL.md) still uses the
+GNU-sensitive `xargs -r` guard, while
+[cp-skill-validate](../../instructions/cp-skill-validate/SKILL.md) still embeds a
+Bash `if`/`for` program.
 
-## E1 — Supported native Windows and promoted procedures disagree
+The [execution-channel
+workshop](../execution-channel-compatibility/README.md) remains the owner, but
+its earlier project-venv premise is stale under the current user-level uv-tool
+installation model and its evidence is Linux-only. The plan retains Windows,
+uses V1's package-owned target dispatcher (including `all`), replaces connect's
+pipeline with a runtime-native algorithm, pairs the pre-command health checks,
+audits all nine promoted skills and their execution declarations, and adds
+native-Windows CI and evidence.
 
-[INSTALL.md](../../../INSTALL.md) and the generated control plane explicitly support native Windows and PowerShell. The current manifest promotes eight skills unchanged into runtime surfaces. At least three contain unpaired POSIX-only procedures:
+## F1 — Generic freshness acceptance has no legal input
 
-- [cp-skill-health-check](../../instructions/cp-skill-health-check/SKILL.md), the recovery path for environment failures, depends on `test`, shell command substitution, POSIX `.venv/bin`, `direnv`, and `bash -c`;
-- [cp-skill-connect](../../instructions/cp-skill-connect/SKILL.md) uses `xargs -r` and calls the guard load-bearing;
-- [cp-skill-validate](../../instructions/cp-skill-validate/SKILL.md) implements its only `all` procedure as a Bash `if`/`for` program.
+`pyproject.toml` still publishes `commonplace-freshness-accept` and the current
+command, architecture, schema, and module references still describe it.
+[transitions.py](../../../src/commonplace/freshness/transitions.py) still sets
+`V1_ACCEPT_TARGET_KINDS = frozenset()`: it rejects `review-pair`, then rejects
+every other target kind because none is accepted.
 
-The issue is not that PowerShell spelling is absent from every historical example. These are current promoted instructions, copied as executable runtime authority onto a platform the installer declares supported. The [execution-channel workshop](../execution-channel-compatibility/README.md) now owns the broader solution space; the earlier focused [portability proposal](../self-improvement-cluster-operationalization/windows-portability-for-promoted-skills.md) records the same consumer/channel mismatch.
+Accepted [ADR
+052](../../reference/adr/052-general-freshness-store-review-first-migration.md),
+the [review-system reference](../../reference/README-REVIEW-SYSTEM.md), and the
+[artifact-freshness workshop](../artifact-freshness-and-referential-checks/README.md)
+also retain current-looking claims that generic accept shipped.
 
-**Needed outcome:** complete that workshop's evidence gathering, then either provide portable entry points, channel-paired procedures, or channel-resolved installed artifacts. A support declaration must be tested against the procedures it delivers, not only against Python package installation.
+The selected resolution is deletion, not speculative implementation. Remove
+the console script, unreachable transition, rejection-only tests, and every
+current-facing reference until a real non-review consumer supplies an
+end-to-end contract. This includes refining ADR 052 and correcting those
+reference/workshop surfaces so they do not retain a contrary claim. Remove the
+entry point and its command section together; C1's completed parity test now
+enforces that synchronization.
 
-## F1 — Generic freshness acceptance has an empty accepted domain
+## M1 — Five representation migrations retain live residue
 
-`pyproject.toml` publishes `commonplace-freshness-accept`. The [commands reference](../../reference/commands.md), [freshness architecture](../../reference/freshness-architecture.md), and [freshness schemas](../../reference/freshness-schemas.md) describe it as observation refresh or initial acceptance for non-review targets and say it rejects `review-pair`.
+All five audited rows remain active:
 
-The live [transition implementation](../../../src/commonplace/freshness/transitions.py) defines `V1_ACCEPT_TARGET_KINDS = frozenset()`. `accept_target_observations()` first rejects `review-pair`, then rejects every target not in that empty set. There is no input for which the advertised transition can succeed.
-
-This is not merely deferred generalization: the executable and its current reference are shipped before the first supported consumer exists. The [freshness module review](../freshness-module-review/README.md) already owns the finding; older findings in that workshop were not imported here because current code has changed.
-
-**Needed outcome:** remove the command and current-facing documentation until a non-review target kind ships, or ship that target and its end-to-end acceptance path. Keeping a deliberately unusable executable as a placeholder makes `--help` indistinguishable from implemented capability.
-
-## M1 — Accepted representation migrations left active consumers behind
-
-Several breaking migrations changed schemas and much of the corpus without invalidating every current reader or authoring surface:
-
-| Adopted/current contract | Conflicting current surface |
+| Current contract | Conflicting live guidance |
 |---|---|
-| [ADR 044](../../reference/adr/044-user-verification-replaces-global-note-status.md) deletes global note `status`; [note.schema.yaml](../../types/note.schema.yaml) rejects it | [available-types.md](../../reference/available-types.md) says the base note has status; the [notes README](../../notes/README.md) promises every note a seedling-to-current maturity mark; [document-system-README.md](../../notes/document-system-README.md) still names a global status ladder |
-| [ADR 004](../../reference/adr/004-replace-areas-with-tags.md) replaces `areas` with freeform `tags` and removes Topics footers | [areas-exist-because-useful-operations-require-reading-notes-together.md](../../notes/areas-exist-because-useful-operations-require-reading-notes-together.md) says the current collection assigns areas and prescribes `areas:`/Topics behavior; [stale-indexes-are-worse-than-no-indexes.md](../../notes/stale-indexes-are-worse-than-no-indexes.md) teaches the same retired mechanism |
-| [type-loading.md](../../reference/type-loading.md) requires a path-valued `type:` and says bare enum values fail | [document-types-should-be-verifiable.md](../../notes/document-types-should-be-verifiable.md) uses `type: note`, `type: spec`, and `type: structured-claim` as current executable examples; [storage-architecture.md](../../reference/storage-architecture.md) still describes collection-local lookup with global fallback instead of lexical path resolution |
-| [snapshot.schema.yaml](../../sources/types/snapshot.schema.yaml) requires `type: kb/sources/types/snapshot.md` | The authoritative [snapshot type](../../sources/types/snapshot.md) tells authors to set `type: snapshot` |
-| [note-base.schema.yaml](../../types/note-base.schema.yaml) requires both `description` and `type`; the [convert skill](../../instructions/cp-skill-convert/SKILL.md) writes both | [text.md](../../types/text.md) says adding frontmatter with at least a description promotes text to note |
+| [ADR 044](../../reference/adr/044-user-verification-replaces-global-note-status.md) and [note.schema.yaml](../../types/note.schema.yaml) remove global note `status` | [available-types.md](../../reference/available-types.md), [notes/README.md](../../notes/README.md), and [document-system-README.md](../../notes/document-system-README.md) still teach a global maturity/status ladder |
+| [ADR 004](../../reference/adr/004-replace-areas-with-tags.md) replaces `areas` and Topics footers | [areas-exist-because-useful-operations-require-reading-notes-together.md](../../notes/areas-exist-because-useful-operations-require-reading-notes-together.md) and [stale-indexes-are-worse-than-no-indexes.md](../../notes/stale-indexes-are-worse-than-no-indexes.md) teach the retired mechanism as current |
+| [type-loading.md](../../reference/type-loading.md) requires path-valued `type:` | [document-types-should-be-verifiable.md](../../notes/document-types-should-be-verifiable.md) uses current bare-type examples, and [storage-architecture.md](../../reference/storage-architecture.md) teaches lookup/fallback rather than lexical path resolution |
+| [snapshot.schema.yaml](../../sources/types/snapshot.schema.yaml) requires `type: kb/sources/types/snapshot.md` | [snapshot.md](../../sources/types/snapshot.md) tells authors to use `type: snapshot` |
+| [note-base.schema.yaml](../../types/note-base.schema.yaml) requires `description` and `type`, and convert writes both | [text.md](../../types/text.md) says a description alone promotes text to note |
 
-Each row is narrow, but together they show a migration failure mode: the changed representation has no complete consumer inventory. Current documents that validate cleanly can still teach the previous system because semantic validation does not compare examples or descriptive claims with schemas.
+A focused recheck found additional current-looking consumers, so these are
+witnesses rather than a complete migration manifest. The plan runs five
+reviewable packets, distinguishes explicit history from current instructions,
+and adds narrow allowlisted guards for the retired executable forms.
 
-**Needed outcome:** every breaking ADR needs a checked migration manifest covering schema/code, type specs, collection contracts, skills, current reference, navigation heads, examples, templates, and tests. Add focused lexical sentinels for retired load-bearing identifiers until the migration closes; do not attempt a general semantic-contradiction engine.
+## C1 — Command-catalogue parity is resolved
 
-## C1 — The command catalogue drifts from the executable surface
+The scripts table in [pyproject.toml](../../../pyproject.toml) publishes 22
+`commonplace-*` entry points, and [commands.md](../../reference/commands.md) now
+has 22 unique matching command sections. The new quote-verification section
+documents its targets, `--show-matches`, result classes, and exit behavior.
 
-The scripts table in [pyproject.toml](../../../pyproject.toml) publishes 22 `commonplace-*` entry points. [commands.md](../../reference/commands.md), whose declared role is the reference for commands shipped by `llm-commonplace`, has 21 command sections. It omits the working `commonplace-verify-quotes` command while documenting the unusable generic accept command from F1.
-
-This is the lowest-priority finding because omission alone does not break execution. It is still a current catalogue inconsistency and an inexpensive detector for broader drift.
-
-**Needed outcome:** assert parity between console-script names and command-reference sections, with an explicit allowlist only for intentionally internal commands. Capability status should be recorded separately from mere executable presence.
+[test_command_catalogue_integrity.py](../../../tests/commonplace/docs/test_command_catalogue_integrity.py)
+parses both live surfaces, rejects duplicate command headings, and asserts exact
+set equality without fixing the expected count. F1 remains an operativity
+contradiction, not a catalogue contradiction: removing freshness accept later
+must remove it from both sets in the same change or this test fails.
 
 ## Root causes
 
-The ten findings reduce to four systemic causes.
-
 ### 1. The installed form is not an acceptance-test target
 
-Most path, collection, validation-depth, and upgrade contradictions are invisible in the source checkout. Init tests assert that selected files exist and copies match their sources; they do not operate the generated KB as a consumer would. A non-identity projection needs product-level tests over the output, not only unit tests over the copier.
+Init tests prove selected files were copied. They do not operate the generated
+KB as a consumer would. A non-identity projection needs product tests over its
+output, including warnings, rather than only unit tests over its copier.
 
-### 2. Decisions and migrations do not carry a consumer manifest
+### 2. Decisions and migrations lack consumer manifests
 
-ADR 004, ADR 021, ADR 044, and ADR 045 each changed a concept with many readers. Their primary implementation moved, but navigation, examples, skills, or installed projections retained the old contract. The linking workshop found the same mechanism in another domain.
+ADRs 004, 021, 044, and 045 changed concepts with many readers. Primary
+implementations moved while navigation, examples, skills, or installed
+projections retained the old contract.
 
-### 3. Scope is encoded in prose and reimplemented by traversal choices
+### 3. Scope is prose reimplemented as traversal
 
-“Every tagged note,” “all collections,” and “supported on Windows” are scope claims. The validator, glob, site hook, and promoted procedure each select their own scope rather than consuming a shared declaration.
+“Every tagged note,” “all collections,” and “supported on Windows” are scope
+claims. Validator, glob, site hook, and promoted procedure each select their
+own set rather than consuming a shared declaration.
 
 ### 4. Presence is mistaken for capability
 
-A console entry point, a help page, or a copied skill proves discoverability, not operativity. Generic freshness accept has no accepted target; Windows skills have no executable channel; an installed type contract can be present while its rationale links are broken.
+A console entry point, help page, copied skill, or installed contract proves
+presence, not that any legal invocation or supported execution channel works.
 
-## Resolution order
+## Implementation order
 
-1. **Repair the installed product boundary.** Reconcile ADR 021, the manifest, current architecture, and upgrade semantics; add a pristine-install acceptance fixture; decide the shipped dependency set; eliminate projection-introduced link and type failures.
-2. **Make full validation truthful.** Discover collections recursively in both source and install layouts, and make clean-install validation part of release verification.
-3. **Resolve the snapshot write boundary.** This is a small three-surface contradiction with a direct authoring consequence.
-4. **Finish already-owned P1 work.** Tag scope, execution channels, and generic freshness accept already have evidence and owners; carry their outcomes back into durable contracts and code.
-5. **Run the representation-migration sweep.** Remove the status/areas/bare-type residue and add targeted migration guards.
-6. **Add cheap parity checks.** Console scripts versus command docs, generated routing versus installed contracts, promoted skills versus declared channels, and type-spec examples versus schema-valid fixtures.
+1. **Settle the installed-product inputs.** I3 defines the collection roles,
+   discovery semantics, and machine-readable topology shape; S1 settles the
+   sources mutation boundary; I2 chooses which dependency classes ship and
+   which receive explicit external projections.
+2. **Record the combined decision (I1).** The successor ADR marks ADR 021
+   superseded and records the actual bundle, topology, and preserve-only upgrade
+   semantics.
+3. **Finish material topology (I3).** Scaffold sources/work contracts using S1,
+   apply I2's library routing, and align discovery and conformance review.
+4. **Close the projection and test the packaged product (I2).** Translate every
+   included edge and make unresolved dependencies fail release acceptance.
+5. **Expose truthful full validation (V1).** Consume the same collection
+   enumeration, retain orphan-type and top-level-landing coverage, and replace
+   the shell loop.
+6. **Land the other repairs.** F1 must remove its package entry and reference
+   section together under C1's parity guard. T1 should precede M1's areas
+   packet; E1 consumes V1 and remains with the execution-channel workshop. S1
+   and I3's installed sources template close together even if their edits are
+   prepared separately.
+7. **Finish the M1 sweep and cheap drift guards.** Retain focused parity and
+   lexical checks at the boundaries that drifted.
 
 ## Exclusions and non-findings
 
-- Linking vocabulary, direction, grammar, and enforcement remain in the [linking workshop](../linking-contract-consistency/README.md); lineage carrier and invalidation conflicts remain in the [lineage ledger](../lineage-mechanisms/current-contradictions.md). They were used as a method model, not recounted as new findings.
-- The nested `kb/work/dialectical-sample/COLLECTION.md` is under a tracked validation-ignore marker. It is an intentional workshop fixture, not a live nested-collection failure. A proposal that still calls it a current validation failure is stale, but that proposal drift is not itself elevated here.
-- Deferred collection-level freshness, generic lineage storage, semantic link validation, and similar missing consumers are design gaps until two live contracts choose incompatible behavior.
-- Historical context inside ADRs was not treated as current. ADR 021 is included because its status is accepted and its Decision/Consequences sections make present-tense installed guarantees that current reference still partly repeats.
-- The older freshness review's snapshot-pruning concern was rechecked and excluded: current code now prunes unreferenced snapshots. Only generic accept remains live.
-- A first validator run from the source checkout against an absolute path in `/tmp` exposed a repository-root assumption and traceback. That invocation crossed project roots and was discarded; all reported install counts were rerun from inside the generated project.
+- Linking vocabulary, direction, grammar, and enforcement remain in the
+  [linking workshop](../linking-contract-consistency/README.md); lineage carrier
+  and invalidation conflicts remain in the [lineage
+  ledger](../lineage-mechanisms/current-contradictions.md).
+- `kb/work/dialectical-sample/COLLECTION.md` is beneath a tracked validation
+  ignore marker. It is not a live nested-collection defect, but collection
+  enumeration must prune it.
+- Deferred collection freshness, generic lineage storage, semantic-link
+  validation, and similar missing consumers remain design gaps until live
+  contracts choose incompatible behavior.
+- Historical ADR context is not current authority. ADR 021 remains included
+  because it is accepted and its Decision and Consequences still make
+  present-tense guarantees.
+- The older freshness review's snapshot-pruning concern is resolved in current
+  code; only generic accept remains live here.
 
 ## Closure condition
 
-This workshop closes when every finding is either resolved in durable system artifacts or transferred to a named active workshop/proposal with an owner and acceptance criteria. The report itself should not become a second authority surface: after resolution, delete this workshop and retain only the ADRs, reference updates, tests, or transferable notes produced from it.
+This workshop closes only after every plan's acceptance criteria are satisfied
+in durable system artifacts or the finding is explicitly transferred to a
+named owner with those criteria. The workshop must then be deleted so it does
+not become a second authority surface.

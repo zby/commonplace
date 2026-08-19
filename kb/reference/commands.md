@@ -59,6 +59,24 @@ test ! -f properdocs.yml || commonplace-validate redirects
 
 The `landings` and `redirects` targets check repository state rather than a note contract. `landings` requires every collection directly under `kb/` to have a `README.md` and rejects a sibling `index.md` that would shadow it. `redirects` requires every redirect target to exist under `docs_dir`, forbids a redirect key from shadowing a live page, and requires every redirect to point directly to a live page rather than another redirect. Software tests exercise this logic against fixtures; these explicit targets check the current project.
 
+### commonplace-verify-quotes
+
+Report corpus-wide verification of quotations whose citations are marked
+`verbatim`. Each target is a Markdown file or directory; directory targets are
+searched recursively while collection contracts named `COLLECTION.md` are
+skipped. The command reports `mismatch` and `unresolved` results by default,
+then prints match, mismatch, and unresolved totals. Use `--show-matches` to
+include successful checks in the per-quotation output.
+
+```bash
+commonplace-verify-quotes kb/notes kb/reference
+commonplace-verify-quotes --show-matches kb/notes/my-note.md
+```
+
+A normal run exits `1` when at least one quotation mismatches its linked
+source. It exits `0` when none mismatch; unresolved pairings remain visible but
+do not by themselves fail the sweep. The command does not modify any files.
+
 ### Generated indexes (no command)
 
 Complete generated listings — per-collection `dir-index.md` pages and per-tag generated tails — are not committed and have no rebuild command. The ProperDocs hook (`src/commonplace/docs/properdocs_hooks.py`) materializes them in-memory at build time for the published site (ADR 025); `uv run --extra docs properdocs build` is the only way to produce them in this source checkout. Agents enumerate candidates with the scoped `rg` recipes in [navigation.md](./navigation.md). The retired commands `commonplace-refresh-indexes`, `commonplace-sync-generated-index`, and `commonplace-generate-notes-index` no longer exist.
