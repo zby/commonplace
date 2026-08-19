@@ -55,6 +55,6 @@ Evidence is the "silently averaged" experiment run in the sibling `epistack-case
 Relevant Notes:
 
 - [Agent orchestration needs coordination guarantees, not just capable agents](./agent-orchestration-needs-coordination-guarantees-not-just.md) — grounds: names contamination as the failure mode of composing flat context without a scoping or isolation primitive
-- [Agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — see-also: theorizes interference at gross-accuracy grain; this note describes the sub-threshold variant that detection does not neutralize
+- [soft degradation often binds before the hard cap when required evidence fits](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) — see-also: theorizes interference at gross-accuracy grain; this note describes the sub-threshold variant that detection does not neutralize
 - [Semantic leakage in language models (Gonen et al.)](../sources/semantic-leakage-lms-gonen.ingest.md) — evidenced-by: systematic association leakage in flat prompts; instruction-tuned models leak more — same integration mechanism as this note's diffuse steering, measured without refusal
 - [Ingest: Language Models, Like Humans, Show Content Effects on Reasoning Tasks](../sources/language-models-like-humans-show-content-effects-on-reasoning.ingest.md) — evidenced-by: the same integration failure on logic-task accuracy grain; does not test explicit refusal

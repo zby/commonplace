@@ -7,7 +7,7 @@ tags: [computational-model, foundations]
 
 # Under sub-agent decomposition, feasibility is the heaviest fork's net load
 
-[Context efficiency's binding face is per-window feasibility](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — a capability ceiling rather than a cost, because the [soft bound degrades competence before the hard limit](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md). That framing assumes a single window. This note develops what the ceiling becomes once work is split across sub-agents.
+[Context efficiency's binding face is per-window feasibility](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — a capability ceiling rather than a cost, because the [soft bound degrades competence before the hard limit](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md). That framing assumes a single window. This note develops what the ceiling becomes once work is split across sub-agents.
 
 ## Feasibility is per-agent, set by the heaviest fork
 
@@ -16,7 +16,7 @@ The per-window ceiling is per *agent*. When work is split across [lexically scop
 - **Decomposition is a feasibility strategy, not just tidiness.** A load that cannot fit one window can be made to fit across several — and each sibling carries only its slice (less volume) free of the others' state (less interference). Sub-agent isolation earns its place here as a way to stay under the ceiling, not only as scope hygiene.
 - **Aggregate cost and feasibility come apart.** An operation can be cheap in total yet infeasible (one bloated fork), or expensive in total yet entirely feasible (load spread thin across many light forks). Optimizing the summed cost can even *worsen* feasibility — merging steps to avoid re-paying setup piles load back onto a single context. The two must be judged separately.
 
-A fork's *load* is more than its token count. It is how heavily the window taxes the model across the [soft bound's dimensions](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md): the volume of tokens, the complexity of using them, and the interference from material that competes with the task. The same volume of context is a heavier load when the tokens are harder to use — deeper indirection, more dependent reasoning steps — or when irrelevant state crowds the task, so it can cross the ceiling at a token count that cleaner, simpler content would clear. Feasibility therefore tracks load, not raw token count.
+A fork's *load* is more than its token count. It is how heavily the window taxes the model across the [soft bound's dimensions](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md): the volume of tokens, the complexity of using them, and the interference from material that competes with the task. The same volume of context is a heavier load when the tokens are harder to use — deeper indirection, more dependent reasoning steps — or when irrelevant state crowds the task, so it can cross the ceiling at a token count that cleaner, simpler content would clear. Feasibility therefore tracks load, not raw token count.
 
 ## A fork's net load is what decomposition leaves on it
 
@@ -31,7 +31,7 @@ This makes the system non-additive. A parent that absorbs more work than it impo
 Relevant Notes:
 
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: the two-faces split and the feasibility-binds-first ranking this note specializes to the decomposed case
-- [agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — grounds: the per-window soft bound and its volume, complexity, and interference dimensions, which this note specializes to the per-agent decomposed case
+- [soft degradation often binds before the hard cap when required evidence fits](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) — grounds: the per-window soft bound and its volume, complexity, and interference dimensions, which this note specializes to the per-agent decomposed case
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — grounds: sub-agent forks are the independent scoped frames that make the ceiling per-agent
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — mechanism: a sparing lever that lowers a fork's net load
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — mechanism: sparing by declining to load a body

@@ -35,7 +35,7 @@ Retaining raw traces broadly preserves optionality for later redistillation, but
 
 Stronger grounding:
 
-This should be grounded first in context engineering, not storage economics. [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) explains why storage and context have different cost models: the hard problem is bounded context assembly, not persistence. [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) locates broad trace retention on the execution substrate, while extraction/loading belong to the context engine and learning loop. [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) gives the most direct frame: "memory" decomposes into storage, activation, and learning.
+This should be grounded first in context engineering, not storage economics. [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) explains why storage and context have different cost models: the hard problem is bounded context assembly, not persistence. [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) locates broad trace retention on the execution substrate, while extraction/loading belong to the context engine and learning loop. [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) gives the most direct frame: "memory" decomposes into storage, activation, and learning.
 
 Why it deserves a separate note:
 
@@ -61,7 +61,7 @@ Suggested links:
 
 - `grounds`: [Session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md)
 - `grounds`: [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md)
-- `grounds`: [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md)
+- `grounds`: [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md)
 - `grounds`: [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md)
 - `grounds`: [Distillation is transformation, not selection](../../notes/distillation-is-transformation-not-selection.md)
 - `contrasts`: [The chat-history model trades context efficiency for implementation simplicity](../../notes/the-chat-history-model-trades-context-efficiency-for-implementation.md)
@@ -183,7 +183,7 @@ The note should not propose adding a fifth memory layer by default. It should cl
 Existing overlaps:
 
 - [A functioning knowledge base needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) is the main premise.
-- [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) grounds the execution-substrate distinction between active work state and retrieved memory.
+- [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) grounds the execution-substrate distinction between active work state and retrieved memory.
 - [Conversation vs prompt refinement in agent-to-agent coordination](../../notes/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) helps distinguish execution trace from compressed handoff.
 - [Session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md) helps distinguish stored trace, handoff artifact, and next-call context.
 - This proposed note would bridge workshop theory to agent memory architecture.
@@ -191,7 +191,7 @@ Existing overlaps:
 Suggested links:
 
 - `extends`: [A functioning knowledge base needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md)
-- `grounds`: [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md)
+- `grounds`: [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md)
 - `grounds`: [Session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md)
 - `contrasts`: [Conversation vs prompt refinement in agent-to-agent coordination](../../notes/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md)
 - `grounds`: [Designing a Memory System for LLM-Based Agents](../../notes/designing-agent-memory-systems.md)

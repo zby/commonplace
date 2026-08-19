@@ -79,7 +79,7 @@ Relevant Notes:
 
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: verification cost determines which qualities can support warranted automation
 - [The augmentation-automation boundary is discrimination not accuracy](./the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — grounds: aggregate generator accuracy cannot replace per-instance discrimination at the acceptance boundary
-- [An outcome check licenses replay; a rule needs the process verified](./an-outcome-check-licenses-replay-a-rule-needs-the-process-verified.md) — extends: outcome and process checks can strongly verify different qualities of the same candidate
+- [A checked outcome licenses retaining an episode, not abstracting its explanation](./checked-outcome-licenses-episode-retention-not-abstraction.md) — extends: outcome and process checks can strongly verify different qualities of the same candidate
 - [Error correction works with above-chance oracles and decorrelated checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — mechanism: states the conditions under which multiple weak checks can become a stronger composite oracle
 - [Entropy management must scale with generation throughput](./entropy-management-must-scale-with-generation-throughput.md) — exemplifies: inherited weakly checked patterns compound as accepted generation becomes later context
 - [Inspectable artifact, not supervision, defeats the blackbox problem](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — enables: inspectable form supplies evidence a quality oracle can evaluate, without guaranteeing that the evaluator discriminates adequately

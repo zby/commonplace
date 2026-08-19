@@ -151,7 +151,7 @@ Zerostack's worktree commands are a good terminal workflow affordance, but they 
 
 Relevant Notes:
 
-- [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) grounds the scheduler/context/execution split used above.
+- [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) grounds the scheduler/context/execution split used above.
 - [Agent orchestration occupies a multi-dimensional design space](../../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) explains why `pi_agent_rust`'s tree, replay, and governance surfaces should not be collapsed into a single "more agentic" ladder.
 - [Conversation vs prompt refinement in agent-to-agent coordination](../../notes/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) clarifies the difference between `pi_agent_rust` branch summaries, zerostack prompt loops, and raw transcript inheritance.
 - [Session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md) frames the distinction between stored traces and what gets loaded into the next model call.

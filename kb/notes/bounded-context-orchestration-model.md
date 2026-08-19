@@ -33,7 +33,7 @@ Let:
 - `M` be the maximum effective context budget for one call
 - `||P||` be the effective cost of complete prompt `P` — token count, compositional difficulty, task framing, or all three
 
-The cost measure `||·||` is an idealized effective-cost measure over the whole prompt, not just a token count. The cost may depend on the kind of task that `P` describes: a synthesis prompt and a relevance-check prompt can have different effective costs even when they contain the same source material. [Agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) develops the empirical case for that task dependence.
+The cost measure `||·||` is an idealized effective-cost measure over the whole prompt, not just a token count. The cost may depend on the kind of task that `P` describes: a synthesis prompt and a relevance-check prompt can have different effective costs even when they contain the same source material. [soft degradation often binds before the hard cap when required evidence fits](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) develops the empirical case for that task dependence.
 
 The loop alternates between symbolic scheduling and bounded LLM calls. Symbolic scheduling happens outside LLM context: file listing, retrieval, sorting, prompt assembly, deduplication, state update, and cache maintenance. LLM calls are the bounded, stochastic steps that perform semantic judgment under focused prompts.
 
@@ -85,7 +85,7 @@ Sources:
 Relevant Notes:
 
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — motivation: context is the scarce resource with volume and complexity dimensions
-- [agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — grounds: usable context is a task-dependent degradation surface, modeled relationally rather than as a single per-model capacity
+- [soft degradation often binds before the hard cap when required evidence fits](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) — grounds: usable context is a task-dependent degradation surface, modeled relationally rather than as a single per-model capacity
 - [scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — foundation: bookkeeping and semantic work have different error profiles across all three phenomena
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — mechanism: the single-step mechanism this note extends to an iterative loop
 - [information value is observer-relative because extraction requires computation](./information-value-is-observer-relative.md) — explains why framing matters in selection
@@ -97,5 +97,5 @@ Relevant Notes:
 - [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — mechanism: a compact task-facing view of `K` is worked out for the orchestrator's bounded context while fuller state remains available
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — complicates: the goal, the halt/continue decision, and the sub-agent's interpretation are all underspecified
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — context: the loop's externalisation response is the workshop pattern
-- [agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) — component view: names the scheduler as one part of a larger runtime decomposition
+- [Agent-runtime analysis should separate scheduling, context assembly, and external state](./agent-runtime-analysis-should-separate-scheduling-context-state.md) — component view: separates scheduling as one of three runtime concerns
 - [topology, isolation, and verification form a causal chain for reliable agent scaling](./topology-isolation-and-verification-form-a-causal-chain-for-reliable.md) — extends: argues that the select/call loop's decomposition is the first prerequisite in a dependency chain (topology → isolation → verification)

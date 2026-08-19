@@ -80,7 +80,7 @@ production systems independently land on the frame discipline.
 
 ### 2.3. Effective-window calculation mechanically instantiates the soft bound — but only the output-reservation piece
 
-The KB argues in [agent context is constrained by soft degradation, not hard token limits](../../notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md)
+The KB argues in [agent context is constrained by soft degradation, not hard token limits](../../notes/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md)
 that the binding constraint is a soft degradation surface, not the advertised token limit.
 Token-wiki Chapter 7 shows every production system computes an "effective window" < advertised:
 
@@ -323,7 +323,7 @@ human review.
    - Add defense-in-depth as the layering discipline across the existing architectural responses
      (§3.4).
 
-2. **[agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md](../../notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md)**
+2. **[agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md](../../notes/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md)**
    - Add practitioner "effective window" conventions as first-order volume corrections.
      Token-wiki's Chapter 7 is the citation. Note that practitioner deltas are from
      output-reservation and fixed overhead, while theoretical soft-degradation is

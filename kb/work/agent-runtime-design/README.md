@@ -14,7 +14,7 @@ This workshop develops that methodology. It does not begin by standardizing the 
 
 ## Working boundary
 
-For this workshop, the **agent runtime** is the operational system that turns model judgments into situated work across time. Its starting decomposition is [scheduler, context engine, and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md), but that is a hypothesis to test rather than a fixed definition. Runtime policy, durable run state, delegation, recovery, and event protocols may require sharper treatment.
+For this workshop, the **agent runtime** is the operational system that turns model judgments into situated work across time. Its starting decomposition is [scheduler, context engine, and execution substrate](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md), but that is a hypothesis to test rather than a fixed definition. Runtime policy, durable run state, delegation, recovery, and event protocols may require sharper treatment.
 
 A **runtime client or interface** lets a person or application operate that system. It can configure and start work, project runtime state, carry steering and authority decisions back into execution, and expose interruption or recovery controls. A TUI, CLI, API callback, organizational policy service, or headless runner can play this role. Runtime and client may share one process without becoming the same architectural responsibility.
 
@@ -37,7 +37,7 @@ Memory-system internals remain covered by [`kb/agent-memory-systems/`](../../age
 - [Code-grounded runtime pilot: Fractal and llm-do](./fractal-llm-do-code-grounded-runtime-pilot.md) — traces two runtime-facing systems with explicit externalized boundaries, tests the common-floor and approval requirements, and separates conversational continuity, process-local state, durable continuation, and later extension activation.
 - [Code-grounded boundary pilot: PydanticAI and DSPy](./pydantic-ai-dspy-code-grounded-boundary-pilot.md) — tests an embedded inner runtime and a host-language computation library, broadens approval to terminal deferral and re-entry, and establishes target classification as a substantive review result.
 - [Agentic systems collection](../../agentic-systems/README.md) — current heterogeneous evidence base.
-- [Agent runtime decomposition](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) — starting component model, not a fixed conclusion.
+- [Agent runtime decomposition](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) — starting component model, not a fixed conclusion.
 - [Bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) — starting account of symbolic scheduling around semantic calls.
 - [Agent orchestration occupies a multi-dimensional design space](../../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) — warning against ranking runtimes on one ladder.
 - [Runtime structure determines governance control surfaces](../../notes/runtime-structure-determines-governance-control-surfaces.md) — starting account of how architecture constrains intervention and audit.

@@ -14,7 +14,7 @@ The result is not a runtime that contains every useful feature. It is a runtime 
 
 ## Mechanism and policy must be separated inside the runtime decomposition
 
-The existing decomposition into [scheduler, context engine, and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) is still useful, but each component contains both mechanism and policy.
+The existing decomposition into [scheduler, context engine, and execution substrate](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) is still useful, but each component contains both mechanism and policy.
 
 | Component | Protected mechanism | Extensible policy |
 |---|---|---|

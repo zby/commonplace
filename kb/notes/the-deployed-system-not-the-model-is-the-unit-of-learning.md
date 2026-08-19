@@ -13,7 +13,7 @@ This broader boundary does not diminish model learning. It places model learning
 
 ## Why the model looked like the right boundary
 
-The prompt-to-completion interface made the model a useful shorthand for the system: it appeared to receive the task, perform the work, and return the result. Deployment made more machinery consequential. Long-running work needs durable state, bounded context, exact tool execution, permissions, and verification. These functions come from a runtime that can be decomposed into [scheduler, context engine, and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md).
+The prompt-to-completion interface made the model a useful shorthand for the system: it appeared to receive the task, perform the work, and return the result. Deployment made more machinery consequential. Long-running work needs durable state, bounded context, exact tool execution, permissions, and verification. These functions come from a runtime that can be decomposed into [scheduler, context engine, and execution substrate](./agent-runtime-analysis-should-separate-scheduling-context-state.md).
 
 These components do not merely support behavior produced elsewhere. A retriever determines which evidence becomes available. A scheduler determines which calls happen and what state survives. A validator determines which candidate outputs can take effect. Changing any one can change the result while the model remains fixed, so calling the result "model behavior" attributes joint behavior to one component.
 

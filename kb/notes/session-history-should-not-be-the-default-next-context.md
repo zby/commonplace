@@ -28,7 +28,7 @@ Why does it default this way? Because [raw history is the easiest way to preserv
 
 ## Why transcript inheritance breaks down
 
-The same property that makes trace-preserving handoff safe early makes it expensive later: it preserves everything. LLMs [degrade with context complexity](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — every token spent parsing irrelevant history is cognitive budget not spent on the actual task:
+The same property that makes trace-preserving handoff safe early makes it expensive later: it preserves everything. LLMs [degrade with context complexity](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) — every token spent parsing irrelevant history is cognitive budget not spent on the actual task:
 
 - local tactical debris survives beyond the stage where it mattered
 - the model must re-interpret prior interaction rather than consume a clean artifact

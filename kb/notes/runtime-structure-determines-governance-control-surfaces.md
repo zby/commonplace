@@ -50,7 +50,7 @@ The scheduler row is mostly empty because commonplace doesn't have a scheduler �
 
 Relevant Notes:
 
-- [Agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) — grounds: names the structural decomposition this note qualifies
+- [Agent-runtime analysis should separate scheduling, context assembly, and external state](./agent-runtime-analysis-should-separate-scheduling-context-state.md) — grounds: names the three runtime concerns this note qualifies
 - [Methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — extends: describes one governance gradient that operates across the runtime rather than inside a single structural component
 - [Semantic review catches content errors that structural validation cannot](./semantic-review-catches-content-errors-that-structural-validation.md) — exemplifies: review and validation are governance operations with different oracle and cost profiles
 - [Inspectable artifact, not supervision, defeats the blackbox problem](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — grounds: explains why externalized exact state gives governance unusually strong control surfaces

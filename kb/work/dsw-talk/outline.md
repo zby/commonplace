@@ -136,7 +136,7 @@ The audience takeaway: "I can apply these patterns to my own LLM knowledge syste
 - [The tag-README change as an observed causal-connection trace](../../reference/tag-readme-trace-observed-causal-connection.md) — evidenced-by: the second worked example and its verified implementation timeline
 - [The tag-README trace read as a self-improving loop](../../reference/tag-readme-trace-as-self-improving-loop.md) — rests-on: the calibrated self-hosting close
 - [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — rests-on: the context-budget section
-- [Agent context is constrained by soft degradation, not hard token limits](../../notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — see-also: deeper context model retained for Q&A rather than taught on stage
+- [Agent context is constrained by soft degradation, not hard token limits](../../notes/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) — see-also: deeper context model retained for Q&A rather than taught on stage
 - [Constraining](../../notes/definitions/constraining.md) — defined-in: the convention → schema → validator progression shown through examples
 - [Progressive constraining commits only after patterns stabilize](../../notes/progressive-constraining-commits-only-after-patterns-stabilize.md) — grounds: why validators arrive late, not first
 - [Scheduler–LLM separation exploits an error-correction asymmetry](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — see-also: underlying rationale retained for Q&A

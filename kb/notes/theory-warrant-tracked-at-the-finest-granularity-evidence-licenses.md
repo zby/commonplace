@@ -33,7 +33,7 @@ One document can therefore mix observations, derived consequences, inferred mech
 
 ## One theory can carry individual and joint warrant
 
-The account that [agent context is constrained by soft degradation rather than hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) crosses the structural threshold: it states a mechanism, predictions, and a falsifier. Its empirical inputs concern particular tasks and models; its headline claim is broader; and its workspace mechanism is a working hypothesis. The narrow regularities may carry individual warrant. A test of the integrated account might instead warrant only a joint model claim. Neither result gives the document a uniform status or assigns support to every component.
+The account that [soft degradation often binds before the hard cap when required evidence fits](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) crosses the structural threshold: it states a mechanism, predictions, and a falsifier. Its empirical inputs concern particular tasks and models; its headline claim is broader; and its workspace mechanism is a working hypothesis. The narrow regularities may carry individual warrant. A test of the integrated account might instead warrant only a joint model claim. Neither result gives the document a uniform status or assigns support to every component.
 
 ## Scope
 

@@ -27,7 +27,7 @@ This ontology suggests that "context cost" may be too coarse when used as a sing
 - **`4CAPS-3` — compare load signatures, not only outcomes.** Two workflows can reach the same answer while placing very different burdens on search, reading, judgment, or verification. The lower-bottleneck workflow may generalize better to larger tasks.
 - **`4CAPS-4` — design overload signatures.** If instruction interference, excessive candidate retrieval, and tool-output volume produce distinguishable failure patterns, those patterns could drive different remediation instead of the generic response "use less context."
 
-These candidates sharpen the existing claim that [agent context is constrained by soft degradation, not hard token limits](../../notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md): the degradation may be local to a functional component before the overall window is full.
+These candidates sharpen the existing claim that [agent context is constrained by soft degradation, not hard token limits](../../notes/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md): the degradation may be local to a functional component before the overall window is full.
 
 ## Method worth borrowing
 

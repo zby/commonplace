@@ -52,4 +52,4 @@ Relevant Notes:
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — grounds: states the symbolic-outside-semantic-inside principle this note applies to query routing
 - [scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — grounds: the formal argument for why symbolic work should stay on symbolic substrates
 - [charting the knowledge-access problem beyond RAG](./charting-the-knowledge-access-problem-beyond-rag.md) — extracted from: the transformation-burden and symbolic/semantic sections of this brainstorming note
-- [agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — clarifies: access and transformation consume context differently, reinforcing their independence
+- [soft degradation often binds before the hard cap when required evidence fits](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) — clarifies: access and transformation consume context differently, reinforcing their independence

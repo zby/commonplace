@@ -43,7 +43,7 @@ Storage-to-context failures need routing: indexes, search, retrieval filters, sk
 
 Context-to-action failures need integration pressure: reflection prompts, "revise the plan in light of observations" steps, mandatory investigation of surprising evidence, salience checks, and process structures that make the agent ask whether visible information should change the current plan. This is one reason [process structure and output structure are independent levers](./process-structure-and-output-structure-are-independent-levers.md): changing the reasoning process can activate knowledge without changing the final answer format.
 
-Both transitions are affected by context scarcity. More context can help by making knowledge present, but it can also hurt by diluting cues or increasing competition. [Agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) is the broader mechanism: well-formed output can hide the fact that important material in the context was ignored.
+Both transitions are affected by context scarcity. More context can help by making knowledge present, but it can also hurt by diluting cues or increasing competition. [soft degradation often binds before the hard cap when required evidence fits](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) is the broader mechanism: well-formed output can hide the fact that important material in the context was ignored.
 
 ## Why It Matters
 
@@ -65,7 +65,7 @@ For memory and KB design, the implication is simple: storing more knowledge is n
 Relevant Notes:
 
 - [elicitation-requires-maintained-question-generation-systems](./elicitation-requires-maintained-question-generation-systems.md) — extends: strategies and systems for closing the activation gap described here
-- [agent context is constrained by soft degradation, not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — complements: soft degradation explains why adding more context can suppress activation through cue dilution and irrelevant-context interference
+- [soft degradation often binds before the hard cap when required evidence fits](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) — complements: soft degradation explains why adding more context can suppress activation through cue dilution and irrelevant-context interference
 - [process-structure-and-output-structure-are-independent-levers](./process-structure-and-output-structure-are-independent-levers.md) — enables: reflection and investigation prompts can improve context-to-action integration without changing output format
 - [silent-disambiguation-is-the-semantic-analogue-of-tool-fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — example: low activation of critical branches can be masked by superficially successful outputs
 - [the-bug-that-shipped-2035319413474206122](https://x.com/KatanaLarp/status/2035319413474206122) — evidenced-by: deployment-failure insights retrievable on probe but often absent in undirected review

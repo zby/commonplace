@@ -6,7 +6,7 @@ tags: [learning-theory, foundations, deploy-time-learning]
 
 # Soft-bound traditions as sources for context engineering strategies
 
-Because [agent context is soft-bounded rather than hard-limited](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md), strategies from traditions that face similar bounds are candidate sources for context engineering. This note catalogs twelve such traditions and assesses what actually transfers.
+Because [agent context is soft-bounded rather than hard-limited](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md), strategies from traditions that face similar bounds are candidate sources for context engineering. This note catalogs twelve such traditions and assesses what actually transfers.
 
 ## The traditions
 
@@ -72,7 +72,7 @@ Three structural differences between agents and prior traditions limit what tran
 
 1. **Optimization target mismatch.** Human working memory optimizes for understanding. Pedagogy optimizes for durable learning. Agent context optimizes for task completion on this turn. Strategies tuned for understanding or learning may underperform on single-turn task completion.
 
-2. **Feedback absence.** Many pedagogical and organizational strategies depend on the processor signaling when it's struggling. Agents don't signal degradation — the [high control, low observability tension](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) means you can engineer inputs precisely but can't observe whether they're working.
+2. **Feedback absence.** Many pedagogical and organizational strategies depend on the processor signaling when it's struggling. Agents don't signal degradation — the [high control, low observability tension](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) means you can engineer inputs precisely but can't observe whether they're working.
 
 3. **Different failure modes.** Human working memory loses chunks (forgetting). Agent context degrades by dilution (lost-in-the-middle), compositional collapse, and instruction-following decay. A strategy that addresses forgetting may not address dilution.
 
@@ -95,7 +95,7 @@ The KB's framework draws directly on several of these traditions — [constraini
 
 Relevant Notes:
 
-- [agent context is constrained by soft degradation not hard token limits](./agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md) — foundation: establishes the soft-bound nature of agent context that justifies looking to these traditions
+- [soft degradation often binds before the hard cap when required evidence fits](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) — foundation: establishes the soft-bound nature of agent context that justifies looking to these traditions
 - [constraining](./definitions/constraining.md) — instance: progressive narrowing of interpretation space; roots in gradual typing, formal specification
 - [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — instance: compression for a specific observer; roots in pedagogy, technical writing, knowledge management
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — instance: attention scarcity made architectural; roots in Simon, working memory

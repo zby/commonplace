@@ -251,7 +251,7 @@ define multiple threshold levels for graceful degradation, and cap output reserv
   header → experiment → registry → default 200k.
 
 **KB alignment.**
-- Empirically operationalizes [agent context is constrained by soft degradation, not hard token limits](../../notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md):
+- Empirically operationalizes [agent context is constrained by soft degradation, not hard token limits](../../notes/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md):
   the "effective window" calculation is exactly the hard/effective distinction that note makes
   theoretical. Token-wiki shows practitioners universally compute the effective window as a
   different number from the advertised one — but their deltas are from *output reservations and

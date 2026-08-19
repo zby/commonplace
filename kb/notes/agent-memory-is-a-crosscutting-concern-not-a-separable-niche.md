@@ -35,7 +35,7 @@ No system solves all three well — which is the [agency trilemma](../agent-memo
 
 ## The runtime decomposition predicts this
 
-The [scheduler / context engine / execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) decomposition of agent runtimes predicts where memory's subproblems land:
+The [scheduler / context engine / execution substrate](./agent-runtime-analysis-should-separate-scheduling-context-state.md) decomposition of agent runtimes predicts where memory's subproblems land:
 
 - Storage belongs to the **execution substrate** (persistent world outside the model)
 - Retrieval/activation belongs to the **context engine** (what enters each bounded call)
@@ -63,7 +63,7 @@ Relevant Notes:
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: context scarcity is why retrieval/activation is the hard problem, not storage
 - [knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — grounds: the activation gap is what makes memory a context engineering problem
 - [agentic memory systems comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) — evidenced-by: the current matrix axes span storage, retrieval/activation, and learning; the agency trilemma exists because the subproblems trade off against each other
-- [agent runtimes decompose into scheduler, context engine, and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) — grounds: the runtime decomposition assigns memory's subproblems to different components, predicting that memory is crosscutting
+- [Agent-runtime analysis should separate scheduling, context assembly, and external state](./agent-runtime-analysis-should-separate-scheduling-context-state.md) — grounds: the three-concern separation assigns memory's subproblems to different concerns, predicting that memory is crosscutting
 - [learning theory index](./learning-theory-README.md) — grounds: extraction, promotion, and graduation are instances of accumulation, constraining, condensing, and discovery
 - [claw learning loops must improve action capacity not just retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — extends: memory serves contextual competence across five action modes, not just question-answering
 - [agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) — grounds: the three properties apply to remembered knowledge, not only authored KB notes

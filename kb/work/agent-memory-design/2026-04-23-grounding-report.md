@@ -39,7 +39,7 @@ Recommended revision anchor:
 
 ### 2. Runtime Decomposition Locates Memory's Subproblems
 
-[Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) gives a better architectural home for the design than "memory system."
+[Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) gives a better architectural home for the design than "memory system."
 
 Mapping:
 
@@ -293,7 +293,7 @@ If a durable note or policy generates a cue, the cue is a compiled view. It shou
 High-value "Relevant Notes" additions:
 
 - [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — primary foundation for context scarcity.
-- [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) — locates storage, activation, and scheduling responsibilities.
+- [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) — locates storage, activation, and scheduling responsibilities.
 - [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) — strongest local summary of memory as storage + context engineering + learning.
 - [Pointer design tradeoffs in progressive disclosure](../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md) — grounds summaries, descriptions, cue triggers, and episode pointers as progressive-disclosure artifacts.
 - [The readable-artifact loop is the tractable unit for continual learning](../../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — grounds prose and symbolic memory artifacts as the practical learning substrate.

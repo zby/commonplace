@@ -42,7 +42,7 @@ Without either, the system trains us to trust outcomes while the infrastructure 
 
 ## Theoretical placement
 
-The [agent runtime decomposition](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) places the phenomenon at the boundary between scheduler and execution substrate. The scheduler asks for a capability; the substrate attempts the tool call; the runtime decides whether the error is terminal or recoverable.
+The [agent runtime decomposition](./agent-runtime-analysis-should-separate-scheduling-context-state.md) places the phenomenon at the boundary between scheduler and execution substrate. The scheduler asks for a capability; the substrate attempts the tool call; the runtime decides whether the error is terminal or recoverable.
 
 Current frameworks often encode only that binary. What is missing is a first-class notion of **degraded execution**: a run that reached an acceptable output through a path with weaker guarantees than the intended one.
 
@@ -66,7 +66,7 @@ Relevant Notes:
 - [traditional debugging intuitions break when tool loops can recover semantically](./traditional-debugging-intuitions-break-when-tool-loops-can-recover.md) — consequence: explains why programmers systematically over-trust successful outcomes in this regime
 - [silent disambiguation is the semantic analogue of tool fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — extends: the same observability failure appears when the runtime repairs ambiguity in the spec rather than failure in the tool path
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — refines: degradation is not only context-bounded scheduling but also loss of observability about how the run succeeded
-- [agent runtimes decompose into scheduler context engine and execution substrate](./agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) — locates: the weakened health signal appears at the boundary between scheduler intent and substrate behavior
+- [Agent-runtime analysis should separate scheduling, context assembly, and external state](./agent-runtime-analysis-should-separate-scheduling-context-state.md) — locates: the weakened health signal appears at the boundary between scheduler intent and substrate behavior
 - [enforcement without structured recovery is incomplete](./enforcement-without-structured-recovery-is-incomplete.md) — complements: corrective/fallback/escalation needs an observability layer so recovery does not erase evidence of the original failure
 - [unit testing LLM instructions requires mocking the tool boundary](./unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md) — limits: mocked tool tests catch instruction regressions but not broken paths, missing binaries, or credential failures in the real runtime
 - [Designing a Memory System for LLM-Based Agents](./designing-agent-memory-systems.md) — extends: turns the apparent-success failure mode into an actionable memory-extraction category for degraded paths and hidden fallback repairs

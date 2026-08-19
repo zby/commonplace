@@ -30,7 +30,7 @@ The paper introduces Natural-Language Agent Harnesses (NLAHs) — a framework fo
 
 **Strongest structural connections:**
 
-- [Agent runtimes decompose into scheduler, context engine, and execution substrate](../notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md) — **exemplifies**: NLAH's IHR independently derived the same three-part decomposition. Runtime charter = context engine, stage structure = scheduler, file-backed state = execution substrate. Strong converging evidence for the decomposition from an independent research group.
+- [Agent-runtime analysis should separate scheduling, context assembly, and external state](../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) — **exemplifies**: NLAH's IHR independently derived the same three-part decomposition. Runtime charter = context engine, stage structure = scheduler, file-backed state = execution substrate. Strong converging evidence for the decomposition from an independent research group.
 
 - [Specification-level separation recovers scoping before it recovers error correction](../notes/specification-level-separation-recovers-scoping-before-it-recovers.md) — **exemplifies**: NLAH occupies exactly the intermediate regime this note describes — control flow is named (stages), state protocols are externalized (file-backed state), judgment holes are marked (roles), but execution still depends on LLM compliance through the IHR. The paper provides SWE-bench/OSWorld evidence for the intermediate regime, stronger than the OpenProse case study alone.
 
