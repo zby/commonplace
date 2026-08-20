@@ -41,7 +41,7 @@ Eight connections identified:
 
 7. **[constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost](../notes/constraining-and-extraction-both-trade-generality-for-reliability.md)** -- grounds: the four reliability dimensions operationalise the "compound" (reliability/speed/cost) that constraining and distillation trade generality for.
 
-8. **[storing-llm-outputs-is-constraining](../notes/storing-llm-outputs-is-constraining.md)** -- exemplifies: the consistency dimension quantifies exactly what output constraining prevents -- 50x cost swings and outcome variance on identical inputs.
+8. **[Selecting an LLM output fixes a result, not its interpretation](../notes/selecting-an-llm-output-fixes-a-result-not-its-interpretation.md)** -- extends: multi-run consistency measures the generator's distribution, while selecting one accepted output creates a separate artifact-testing target; neither establishes that the selected text has one meaning.
 
 ## Extractable Value
 

@@ -42,9 +42,9 @@ Oracle hardening decomposes into three steps, each with its own methods and fail
 
 The steps have different failure modes: manufacturing without amplification gives a single fragile check; amplification without manufacturing leaves you voting over noise; either without monitoring risks locking in a vision feature as if it were arithmetic.
 
-## The generator/verifier pattern depends on this
+## Artifact filtering depends on this
 
-The [generator/verifier pattern](./storing-llm-outputs-is-constraining.md) — high-variance generator plus quality gate — is a common architectural choice, but it only works when oracle strength is sufficient. A quality gate that can't discriminate correct from incorrect outputs (TPR ≈ FPR) adds cost without adding reliability. The manufacture/amplify pipeline above is a prerequisite for generator/verifier architectures, not an optimisation.
+Using artifact checks as a [selection gate](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) helps only when the checks discriminate on the acceptance objective within the decision horizon and cost budget. A quality gate that cannot discriminate correct from incorrect outputs (TPR ≈ FPR) adds cost without adding reliability. The manufacture/amplify pipeline above is therefore a prerequisite for reliable artifact filtering, not an optimisation.
 
 ## Maturation path
 
@@ -76,7 +76,7 @@ Relevant Notes:
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — the amplification step: boosting weak oracles through decorrelated repetition
 - [relaxing-signals](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — the monitoring step: detecting when a hardened oracle encodes a vision feature
 - [reliability-dimensions-map-to-oracle-hardening-stages](./reliability-dimensions-map-to-oracle-hardening-stages.md) — decomposes "which oracle to harden" into four independently targetable dimensions
-- [storing-llm-outputs-is-constraining](./storing-llm-outputs-is-constraining.md) — the generator/verifier pattern depends on oracle strength: verification must be cheap for the pattern to work
+- [Selecting an LLM output fixes a result, not its interpretation](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — extends: artifact checks can filter candidates only when the oracle discriminates within the required decision horizon and budget
 - [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — concrete oracle-hardening instance: manufacturing a composite soft oracle from many no-oracle/weak-oracle signals
 - [brainstorming-how-to-test-whether-pairwise-comparison-can-harden-soft-oracles](./brainstorming-how-to-test-whether-pairwise-comparison-can-harden.md) — extends: turns the note's `preference pairs` placeholder into a concrete experimental design for testing whether pairwise judgment actually strengthens a soft oracle
 - [Rabanser et al. reliability study](https://arxiv.org/pdf/2602.16666) — suggestive empirical evidence that capability gains and reliability gains track independently; discrimination lags calibration

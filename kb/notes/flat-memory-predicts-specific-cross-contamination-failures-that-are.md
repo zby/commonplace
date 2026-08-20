@@ -61,5 +61,5 @@ Each observation gets a short log entry: date, which failure mode, what happened
 Relevant Notes:
 
 - [the verifiability gradient](./verifiability-gradient.md) — motivates durable knowledge in the first place
-- [storing-llm-outputs-is-constraining](./storing-llm-outputs-is-constraining.md) — graduation from operational space to knowledge graph is a form of constraining
+- [Selecting an LLM output fixes a result, not its interpretation](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — grounds: promotion can select an artifact for the knowledge-graph path without making its content unambiguous; authority must be assigned separately
 - [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — argues these failure modes are symptoms of forcing action-oriented knowledge (preferences, procedures, precedents) into a retrieval-oriented structure

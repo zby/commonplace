@@ -59,5 +59,5 @@ Relevant Notes:
 
 - [soft degradation often binds before the hard cap when required evidence fits](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) — grounds: reconciliation work reduces effective context, so feasibility depends on the whole task rather than fragment count alone
 - [Short composable notes maximize combinatorial discovery](./short-composable-notes-maximize-combinatorial-discovery.md) — contrasts: composition aids discovery, while a pre-reconciled narrative aids whole-picture consumption
-- [Storing LLM outputs is constraining](./storing-llm-outputs-is-constraining.md) — contrasts: storing freezes an output, while holistic rewriting maintains a current view
+- [Selecting an LLM output fixes a result, not its interpretation](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — contrasts: selecting and versioning one output preserves a fixed result, while holistic rewriting maintains a current view
 - [What spec-driven development gets wrong](../sources/what-spec-driven-development-gets-wrong-2025993446633492725.md) — evidenced-by: Augment Code, an AI coding-tool company, describes human-reviewed agent updates to a living specification

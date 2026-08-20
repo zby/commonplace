@@ -136,7 +136,7 @@ Relevant Notes:
 - [constraining](./definitions/constraining.md) — defines the narrowing mechanism this note frames theoretically
 - [codification](./definitions/codification.md) — the constraining gradient from prompt tweaks to deterministic modules
 - [programming-practices-apply-to-prompting](./underspecification-and-indeterminism-complicate-programming-for.md) — applies: typing, testing, and version control transfer to prompting under this framework
-- [storing-llm-outputs-is-constraining](./storing-llm-outputs-is-constraining.md) — applies: keeping an LLM output resolves underspecification to a fixed interpretation
+- [Selecting an LLM output fixes a result, not its interpretation](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — applies: keeping a chosen output fixes result identity while semantic ambiguity can survive; downstream constraint requires a separate adoption or authority boundary
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — applies: type assignment resolves semantic underspecification in both document and type definition
 - [unified-calling-conventions-enable-bidirectional-refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — enables: llm-do implements the movable semantic boundary through unified calling conventions
 - [writing styles are strategies for managing underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) — applies: the five empirically observed context-file writing styles map to different strategies for narrowing the interpretation space

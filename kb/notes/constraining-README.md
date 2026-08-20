@@ -11,13 +11,13 @@ Making semantics more focused by narrowing the space of valid interpretations an
 
 ## Definition and spectrum
 
-- [constraining](./definitions/constraining.md) — definition and spectrum: storing an output, writing a convention, adding structured sections, extracting deterministic code
+- [constraining](./definitions/constraining.md) — definition and spectrum: definitions, conventions, structured sections, schemas, validators, and deterministic code
 - [codification](./definitions/codification.md) — the far end, where the medium itself changes from natural language to a symbolic artifact with formal semantics
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — the foundation: the spec-to-program projection model, semantic boundaries, and the constrain/relax cycle
 
 ## Instances and techniques
 
-- [storing LLM outputs is constraining](./storing-llm-outputs-is-constraining.md) — the simplest instance: keeping a specific output resolves underspecification to one interpretation
+- [Selecting an LLM output fixes a result, not its interpretation](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — boundary case: selection fixes result identity; it counts as constraining only when adoption also narrows which interpretations remain operative
 - [constraining during deployment is continuous learning](./constraining-during-deployment-is-continuous-learning.md) — versioned constraining beats weight updates on inspectability and rollback
 - [spec mining as codification](./spec-mining-as-codification.md) — observe behavior, extract deterministic rules, grow the calculator surface monotonically
 - [error messages that teach are a constraining technique](./error-messages-that-teach-are-a-constraining-technique.md) — in agent systems the error channel is an instruction channel

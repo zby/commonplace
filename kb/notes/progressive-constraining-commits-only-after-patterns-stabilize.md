@@ -31,4 +31,4 @@ Relevant Notes:
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the projection model explains why code generation freezes one of many valid interpretations
 - [codification](./definitions/codification.md) — related: progressive constraining is codification applied only to patterns that stabilize across runs
 - [constraining](./definitions/constraining.md) — related: both modes are constraining moves; they differ in when commitment happens
-- [storing-llm-outputs-is-constraining](./storing-llm-outputs-is-constraining.md) — parallel: storing a single generated artifact is also a one-shot projection; the same tradeoff between immediate commitment and preserved optionality applies to artifacts, not just code
+- [Selecting an LLM output fixes a result, not its interpretation](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — contrasts: selecting one generated artifact immediately fixes result identity, while progressive constraining waits for repeated evidence before narrowing semantics

@@ -27,7 +27,7 @@ In conventional programming, types are crisp because the processor is determinis
 
 Our processor is an [LLM that interprets underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md). This has a direct consequence: type *assignment* is also underspecified. An agent classifying a document resolves the ambiguity inherent in the type definitions — the same document might be classified differently by different agents, or even the same agent on different runs. The underspecification isn't a bug in the type system. It's a consequence of the specifications (both the document and the type definitions) being in natural language, which doesn't have precise denotations.
 
-This means we need types that are useful despite underspecification — types that assert structural properties you can check, even if the checking requires judgment rather than proof. Type assignment is itself a case of [storing an LLM output as constraining](../notes/storing-llm-outputs-is-constraining.md) — choosing to label a document `type: spec` collapses a space of possible classifications to a single point.
+This means we need types that are useful despite underspecification — types that assert structural properties you can check, even if the checking requires judgment rather than proof. Type assignment has the same selection boundary as [selecting an LLM output](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md): choosing `type: spec` fixes which classification downstream tools consume, but it does not make the natural-language type definitions unambiguous.
 
 ## What went wrong with flat types
 
@@ -102,6 +102,6 @@ Relevant Notes:
 
 - [available types](../reference/available-types.md) — the spec implementing this design: base types, traits, and the migration table from old flat types
 - [automated-tests-for-text](./automated-tests-for-text.md) — enables enforcement: the test pyramid provides the "compiler" for type contracts (deterministic checks for structure, LLM rubrics for judgment-dependent traits)
-- [storing-llm-outputs-is-constraining](../notes/storing-llm-outputs-is-constraining.md) — grounds the underspecification argument: type assignment is itself a constraining decision, and the tolerance of misclassification mirrors the generator/verifier pattern
+- [Selecting an LLM output fixes a result, not its interpretation](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — grounds: type assignment selects one classification for operative use without proving that it is the only valid reading, so the chosen classification still needs verification
 - [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — types and traits are the navigation hints this note describes; they tell agents what a document offers before opening it
 - [the verifiability gradient](./verifiability-gradient.md) — the ladder that the type maturation path mirrors: `note` is untyped, traits accumulate, base types promote

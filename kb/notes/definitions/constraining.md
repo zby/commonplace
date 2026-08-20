@@ -8,7 +8,7 @@ tags: [learning-theory, constraining]
 
 Constraining is making semantics more focused: narrowing the space of valid interpretations a text or symbolic artifact admits. In this KB, it names a core deploy-time learning mechanism. A constrained artifact is not merely easier to find, shorter, clearer, or more useful; it leaves future consumers with fewer legitimate ways to read it.
 
-At the light end, a definition, convention, or structured section rules out some readings while leaving several valid ones. At the heavy end, commitment collapses the space to one interpretation: a stored output, schema, validator, route table, or deterministic function. These cases use different media and different levels of force, but they count as constraining for the same reason: they reduce semantic latitude. Reliability, speed, cost control, and reviewability may follow, but they are consequences rather than the definition.
+At the light end, a definition, convention, or structured section rules out some readings while leaving several valid ones. At the heavy end, a schema, validator, route table, or deterministic function assigns formal consequences to one operational interpretation. These cases use different media and different levels of force, but they count as constraining for the same reason: they reduce semantic latitude. Reliability, speed, cost control, and reviewability may follow, but they are consequences rather than the definition.
 
 ## Scope
 
@@ -29,7 +29,6 @@ Constraining is a gradient, not a single operation. Each step removes some inter
 | Constraining | What changes | Semantic effect |
 |--------------|-------------|-----------------|
 | Define a term | Replace loose usage with an operational boundary | Some ordinary readings no longer count |
-| Store an LLM output | Commit to one interpretation of a prompt | Alternative possible completions no longer matter |
 | Create a title convention | Require a title to assert a claim or signal a role | Ambiguous topic labels become invalid |
 | Add structured sections | Assign meaning to document positions | Readers know how each part should be interpreted |
 | Add a schema or validator | Make field meanings and invalid values explicit | Unsupported interpretations are rejected |
@@ -67,9 +66,9 @@ Constraining and use-shaping are orthogonal — they operate on different dimens
 | | Not use-shaped | Use-shaped (source material reshaped for a consumer) |
 |---|---|---|
 | **Not constrained** | Raw capture (text file, session notes) | Reshaped for a consumer but still semantically loose (draft skill, rough note) |
-| **Constrained** | Committed but not transformed from a source (stored output, frozen config) | Reshaped and semantically focused (validated skill, codified script) |
+| **Constrained** | Committed but not transformed from a source (frozen configuration with assigned semantics) | Reshaped and semantically focused (validated skill, codified script) |
 
-You can constrain without reshaping from a source (store an LLM output — commit to one interpretation without transforming recorded source material). You can reshape without constraining (write a task-shaped skill that remains natural language and underspecified). Strong artifacts often combine both operations.
+You can constrain without reshaping from a source (freeze a configuration or route table with assigned consequences). You can reshape without constraining (write a task-shaped skill that remains natural language and underspecified). Strong artifacts often combine both operations.
 
 Constraining asks: *how constrained is this artifact?* The lineage question asks: *was this artifact adapted from recorded source material for a particular consumer?*
 
@@ -84,7 +83,7 @@ Relevant Notes:
 - [codification](./codification.md) — the far end of the constraining spectrum: constraining that crosses a medium boundary
 - [theory and methodology form a two-layer execution system](../theory-and-methodology-form-a-two-layer-execution-system.md) — contrasts: the maintenance regimes for content worked out from a source, orthogonal to how constrained the artifact is
 - [agentic systems interpret underspecified instructions](../agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecification framework that constraining operates on
-- [storing LLM outputs is constraining](../storing-llm-outputs-is-constraining.md) — the simplest instance: committing to one interpretation by keeping a specific output
+- [Selecting an LLM output fixes a result, not its interpretation](../selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — contrasts: result selection fixes artifact identity, while constraining additionally requires semantic narrowing
 - [methodology enforcement is constraining](../methodology-enforcement-is-constraining.md) — applies: the instruction → skill → hook → script gradient is constraining applied to methodology
 - [error messages that teach are a constraining technique](../error-messages-that-teach-are-a-constraining-technique.md) — instance: teaching error messages constrain interpretation space by simultaneously blocking wrong outputs and demonstrating correct ones
 - [the verifiability gradient](../verifiability-gradient.md) — the ladder across which constraining operates
