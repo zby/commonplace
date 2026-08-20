@@ -11,7 +11,7 @@ How an agent-operated KB stays healthy as it grows. Detection, operations, and t
 
 ## Dynamics
 
-- [entropy-management-must-scale-with-generation-throughput](./entropy-management-must-scale-with-generation-throughput.md) — cleanup throughput must match generation throughput; agents replicate patterns including bad ones, so without proportional maintenance quality degrades with volume
+- [maintenance-capacity-must-match-harmful-artifact-inflow](./maintenance-capacity-must-match-harmful-artifact-inflow.md) — stable quality requires prevention, containment, detection, and repair capacity to keep pace with risk-weighted harmful-artifact inflow; gross generation is only a proxy
 - [traversal-improves-the-graph](./traversal-improvements-should-be-deferred-via-logging-to-avoid-mid.md) — every traversal is a read-write opportunity; agents should log improvement opportunities during reading, then process them separately to avoid context-switching
 - [title-as-claim-exposes-commitments-enabling-popperian-maintenance](./title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) — claim titles make maintenance cheap: scan the index, ask "do I still believe this?", open only the doubtful ones
 
@@ -23,7 +23,7 @@ How an agent-operated KB stays healthy as it grows. Detection, operations, and t
 - [link-graph-plus-timestamps-enables-make-like-staleness-detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — existing links encode dependencies; comparing note and target timestamps flags staleness without new annotation
 - [stale-indexes-are-worse-than-no-indexes](./stale-indexes-are-worse-than-no-indexes.md) — a missing index entry suppresses search entirely; absence of an index degrades to search, presence of a stale index prevents it
 - [a-derived-copy-of-recomputable-truth-must-be-checked-or-absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — a copy of mechanically recomputable information must be validator-checked against its source or not exist; hand-maintained-and-trusted is the forbidden middle
-- [apparent success is an unreliable health signal in framework-owned tool loops](./apparent-success-is-an-unreliable-health-signal-in-framework-owned.md) — successful runs can still conceal broken helpers and paths; maintenance needs log sweeps or other observability for hidden failures
+- [final task success does not establish intended-path health](./final-task-success-does-not-establish-intended-path-health.md) — identical terminal outcomes can conceal broken prescribed paths; maintenance needs independent path events
 - [domain-pricing-routes-an-exception-to-idealization-assessment](./domain-pricing-routes-an-exception-to-idealization-assessment.md) — separates truth verdicts from repair dispositions: pricing routes a defeated claim to idealization assessment, and a retained idealization carries an adequacy record later passes can attack
 
 ## Operations

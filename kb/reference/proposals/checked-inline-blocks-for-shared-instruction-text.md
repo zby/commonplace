@@ -106,8 +106,8 @@ Choosing the exact marker syntax, defining a general natural-language module sys
 Relevant Notes:
 
 - [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: rules out a trusted but unchecked inline copy and supplies the deterministic-oracle boundary
-- [Natural-language content lacks reliable dereference, so facts need reinforcement at point of use](../../notes/prose-has-no-dereference-reinforce-facts-at-point-of-use.md) — rests-on: explains why linking to shared prose does not reliably place it in the consuming context
+- [Local materialization should outperform distant natural-language declarations](../../notes/local-materialization-should-outperform-distant-declarations.md) — see-also: supplies the untested behavioral comparison between a runtime reference and a generated local view; this proposal adds the deterministic-equality and adoption constraints
 - [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) — rests-on: frames literal insertion of already-known instruction content as a context-shaping operation
-- [Indirection is costly in LLM instructions](../../notes/indirection-is-costly-in-llm-instructions.md) — rests-on: accounts for the execution cost of making a delegated writer follow an additional instruction reference
+- [Model-resolved indirection adds interpretation work to LLM execution](../../notes/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — rests-on: accounts for the execution cost of making a delegated writer resolve an additional instruction reference
 - [Generate KB skills at build time, don't parameterise them](../../notes/generate-instructions-at-build-time.md) — alternative: grounds the generated-artifact option and its standalone-consumer property
 - [ADR 022 — Active vocabulary and write-path first mentions](../adr/022-active-vocabulary-and-write-path-first-mentions.md) — current-state: establishes `cp-skill-write` as the operational home for universal first-mention authoring behavior

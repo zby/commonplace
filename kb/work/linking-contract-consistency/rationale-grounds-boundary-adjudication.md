@@ -62,7 +62,7 @@ These source assertions or descriptions point to observations, cases, sources, o
 - `kb/notes/oracle-strength-spectrum.md:84`;
 - `kb/notes/process-structure-and-output-structure-are-independent-levers.md:48`;
 - `kb/notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md:37`;
-- `kb/notes/structure-activates-higher-quality-training-distributions.md:37,38`;
+- `kb/notes/structured-prompt-gains-do-not-establish-distribution-selection.md:40,41,42`;
 - `kb/notes/structured-output-is-easier-for-humans-to-review.md:23`;
 - `kb/notes/title-as-claim-enables-traversal-as-reasoning.md:78`;
 - `kb/notes/writing-styles-are-strategies-for-managing-underspecification.md:52`;

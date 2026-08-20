@@ -7,7 +7,7 @@ tags: [learning-theory, computational-model, observability, llm-reliability]
 
 # Silent disambiguation is the semantic analogue of tool fallback
 
-When a tool call fails and the agent silently works around it, [apparent success hides that the intended path broke](./apparent-success-is-an-unreliable-health-signal-in-framework-owned.md). The same thing happens one layer up: when a spec leaves an implementation-significant branch unresolved and the agent silently picks one reading, success hides that the contract didn't determine the path. The gap is semantic instead of operational, but the observability failure is identical — the run crossed into recovery and nothing reported it.
+When a tool call fails and the agent silently works around it, [final task success does not establish intended-path health](./final-task-success-does-not-establish-intended-path-health.md) unless an independent execution signal preserves the deviation. The same thing happens one layer up: when a spec leaves an implementation-significant branch unresolved and the agent silently picks one reading, success hides that the contract didn't determine the path. The gap is semantic instead of operational, but the observability failure is identical — the run crossed into recovery and nothing reported it.
 
 This is not [interpreter failure](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) (spec was clear, model violated it), and it excludes specs that explicitly delegate discretion. It is the agent repairing a contract gap the spec didn't acknowledge — which means task completion alone cannot distinguish "the spec was sufficient" from "the agent improvised well enough."
 
@@ -15,7 +15,7 @@ This is not [interpreter failure](./out-of-spec-output-is-a-failure-of-the-inter
 
 Relevant Notes:
 
-- [apparent success is an unreliable health signal in framework-owned tool loops](./apparent-success-is-an-unreliable-health-signal-in-framework-owned.md) — extended from: this note carries the same observability argument one layer up, from tool failure to unacknowledged semantic underdetermination
+- [Final task success does not establish intended-path health](./final-task-success-does-not-establish-intended-path-health.md) — extends: this note carries the same non-identifiability argument one layer up, from tool failure to unacknowledged semantic underdetermination
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: ambiguity exists because natural-language specs admit multiple valid interpretations
 - [changing requirements conflate genuine change with disambiguation failure](./changing-requirements-conflate-genuine-change-with-disambiguation.md) — sharpens: the first silent choice is already a degraded run state, not only a future maintenance problem
 - [out-of-spec output is a failure of the interpreter, not the spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — distinguishes: this note is about insufficient specification, not violating a sufficient one

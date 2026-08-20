@@ -32,8 +32,8 @@ What kind of "programs" LLM instructions are, and what programming-language conc
 - [writing-styles-are-strategies-for-managing-underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) — five observed context-file writing styles as strategies for narrowing the interpretation space
 - [programming-practices-apply-to-prompting](./underspecification-and-indeterminism-complicate-programming-for.md) — typing, testing, version control transfer to prompting with modified cost models
 - [unified-calling-conventions-enable-bidirectional-refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — calling conventions that let components move between neural and symbolic implementations
-- [natural-language content lacks reliable dereference, so facts need reinforcement at point of use](./prose-has-no-dereference-reinforce-facts-at-point-of-use.md) — name resolution holds in formal systems but not in LLM-read natural-language content, so single-source-of-truth gives way to checked denormalization
-- [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — indirection is nearly free at runtime in code but costs context and interpretation overhead on every read in prompts
+- [Local materialization should outperform distant natural-language declarations](./local-materialization-should-outperform-distant-declarations.md) — untested comparison of declaration-only context with generated point-of-use views, under a single canonical maintenance authority
+- [Model-resolved indirection adds interpretation work to LLM execution](./model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — distinguishes references resolved by the model from aliases expanded by a deterministic executor and makes literalization conditional on token and lifecycle costs
 - [frontloading spares execution context](./frontloading-spares-execution-context.md) — partial evaluation applied to instructions: precompute known inputs and insert results to spare the consuming call's context budget
 
 ## Error Correction & Reliability

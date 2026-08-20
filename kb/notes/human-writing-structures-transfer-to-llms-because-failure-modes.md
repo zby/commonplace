@@ -25,7 +25,7 @@ Relevant Notes:
 
 - [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured.md) — foundation: the specific Toulmin structure this note argues transfers to LLMs
 - [programming-practices-apply-to-prompting](./underspecification-and-indeterminism-complicate-programming-for.md) — extends: adds a new category of transfer — not just programming practices but writing genre conventions
-- [structure-activates-higher-quality-training-distributions](./structure-activates-higher-quality-training-distributions.md) — complementary: a second independent argument for structured types with LLMs (distribution selection rather than failure-mode transfer)
+- [Structured-prompt gains do not establish training-distribution selection](./structured-prompt-gains-do-not-establish-distribution-selection.md) — contrasts: distribution selection remains unverified, so this note supplies an independent failure-mode rationale for structure
 - [structured-output-is-easier-for-humans-to-review](./structured-output-is-easier-for-humans-to-review.md) — complementary: a third independent argument (readability, not LLM-specific at all)
 - [why-notes-have-types](./why-notes-have-types.md) — context: the overview that links all three arguments as supporting the quality role of types
 - [Language Models, Like Humans, Show Content Effects on Reasoning Tasks](https://academic.oup.com/pnasnexus/article/3/7/pgae233/7712372) — evidenced-by: empirical demonstration of human-like content effects across three reasoning tasks, with Wason divergence as a transfer boundary

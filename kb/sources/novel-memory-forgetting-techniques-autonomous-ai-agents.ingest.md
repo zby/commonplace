@@ -34,7 +34,7 @@ The connection report identified 9 genuine connections, with the strongest being
 
 4. **[notes-need-quality-scores-to-scale-curation](../notes/notes-need-quality-scores-to-scale-curation.md)** — enables: the paper's relevance scoring formula (recency + frequency + semantic alignment) is a tested implementation of note quality scoring for curation at scale.
 
-5. **[context-efficiency-is-the-central-design-concern](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md)** and **[entropy-management-must-scale-with-generation-throughput](../notes/entropy-management-must-scale-with-generation-throughput.md)** — exemplifies both: the framework is a concrete technical response to context scarcity, and its continuous forgetting is entropy management at conversational scale.
+5. **[context-efficiency-is-the-central-design-concern](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md)** and **[maintenance-capacity-must-match-harmful-artifact-inflow](../notes/maintenance-capacity-must-match-harmful-artifact-inflow.md)** — exemplifies both: the framework is a concrete technical response to context scarcity, and its continuous forgetting is a mechanism for reducing harmful retained-artifact inflow at conversational scale.
 
 A synthesis opportunity was identified: an inspectability-learnability spectrum for memory management policy across four systems (this paper, AgeMem, Cludebot, cass-memory), with the paper's formula-based approach trading adaptability for inspectability.
 

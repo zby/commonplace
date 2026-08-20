@@ -30,7 +30,7 @@ The organizing framework of the learning-theory area: deployed systems can retai
 - [changing requirements conflate genuine change with disambiguation failure](./changing-requirements-conflate-genuine-change-with-disambiguation.md) — short iterations bound interpretation-error propagation, not just change-response latency
 - [evaluation automation is phase-gated by comprehension](./evaluation-automation-is-phase-gated-by-comprehension.md) — comprehension and specification must precede optimization, or automation amplifies the wrong objective
 - [diagnostic richness constrains outer-loop learning quality](./diagnostic-richness-constrains-outer-loop-learning-quality.md) — what the learning loop can learn is bounded by what its diagnostics distinguish
-- [apparent success is an unreliable health signal](./apparent-success-is-an-unreliable-health-signal-in-framework-owned.md) — completion without verification teaches the wrong lesson
+- [final task success does not establish intended-path health](./final-task-success-does-not-establish-intended-path-health.md) — completion without path evidence cannot show whether the prescribed path stayed healthy
 
 ## Related Tags
 

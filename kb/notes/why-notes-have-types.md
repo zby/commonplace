@@ -32,13 +32,13 @@ This connects the type system to [theories, descriptions, and prescriptions with
 
 ## Output quality
 
-Beyond organisation, types shape what gets written. When a `structured-claim` template requires Evidence, Reasoning, and Caveats sections, the writer must actually produce those things. With LLMs specifically, three independent arguments support this:
+Beyond organisation, types shape what gets written. When a `structured-claim` template requires Evidence, Reasoning, and Caveats sections, the writer must actually produce those things. With LLMs specifically, two arguments support this role and one evidential limit prevents overclaiming its mechanism:
 
 - [Human writing structures transfer to LLMs because failure modes overlap](./human-writing-structures-transfer-to-llms-because-failure-modes.md) — LLMs exhibit human-like failures (conflating evidence with opinion, skipping qualifications), so structures that prevent those failures in humans prevent them in LLMs too.
-- [Structure activates higher-quality training distributions](./structure-activates-higher-quality-training-distributions.md) — structured templates steer autoregressive generation toward scientific papers and formal arguments rather than unstructured web text.
+- [Structured-prompt gains do not establish training-distribution selection](./structured-prompt-gains-do-not-establish-distribution-selection.md) — measured gains do not isolate a higher-quality training distribution from format constraints, task decomposition, or extra computation.
 - [Structured output is easier for humans to review](./structured-output-is-easier-for-humans-to-review.md) — separated sections let a reader check facts and logic independently, regardless of how the LLM produced them.
 
-The arguments are independent and complementary. Each stands alone; together they cover the full chain: the LLM might reason better, the output will be shaped better, and the human reader can evaluate it better.
+The two positive arguments are independent, while the causal limit keeps their benefits from being misattributed. Together they justify structure through the work it requires and the review it enables without assuming a training-data mechanism.
 
 ## Maturation
 
@@ -72,6 +72,6 @@ Relevant Notes:
 - [types-give-agents-structural-hints-before-opening-documents](./types-give-agents-structural-hints-before-opening-documents.md) — develops: the navigation role of types
 - [type-system-enforces-metadata-that-navigation-depends-on](./type-system-enforces-metadata-that-navigation-depends-on.md) — develops: the enforcement role that makes navigation reliable
 - [human-writing-structures-transfer-to-llms-because-failure-modes-overlap](./human-writing-structures-transfer-to-llms-because-failure-modes.md) — develops: the failure-mode transfer argument for output quality
-- [structure-activates-higher-quality-training-distributions](./structure-activates-higher-quality-training-distributions.md) — develops: the distribution-selection argument for output quality
+- [Structured-prompt gains do not establish training-distribution selection](./structured-prompt-gains-do-not-establish-distribution-selection.md) — contrasts: limits what prompt-performance evidence establishes about the mechanism behind output quality
 - [structured-output-is-easier-for-humans-to-review](./structured-output-is-easier-for-humans-to-review.md) — develops: the readability argument for output quality
 - [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the workshop layer that will need its own type extensions

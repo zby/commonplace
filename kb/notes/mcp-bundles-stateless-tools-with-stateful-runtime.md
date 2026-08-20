@@ -41,4 +41,3 @@ Relevant Notes:
 - [files beat a database for agent-operated knowledge bases](./files-not-database.md) — same pattern at the storage layer: files are the stateless default, databases earn their complexity only for specific capabilities (temporal queries, graph analytics)
 - [ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — stateless tool invocation is ephemeral by design; MCP's persistent server pushes toward accumulating state whether or not the tools need it
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — unnecessary intermediate layers add latency and failure modes without improving the agent's context
-- [indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — same principle: indirection through a server process costs overhead on every call, unlike code where indirection is nearly free

@@ -43,7 +43,7 @@ The framework's job is therefore to [**keep the tool loop optional**](./llm-fram
 ## Downstream consequences
 
 - [session history should not be the default next context](./session-history-should-not-be-the-default-next-context.md) — sub-tasks should start with constructed prompts, not inherit the parent's full conversation
-- [apparent success is an unreliable health signal in framework-owned tool loops](./apparent-success-is-an-unreliable-health-signal-in-framework-owned.md) — when the framework owns recovery, the parent cannot distinguish intended-path success from workaround success
+- [final task success does not establish intended-path health](./final-task-success-does-not-establish-intended-path-health.md) — when primary and fallback success share one terminal state, the parent needs independent path evidence to distinguish them
 - [Designing a Memory System for LLM-Based Agents](./designing-agent-memory-systems.md) — applies the fallback/recovery problem to memory extraction: successful runs can still teach the system about broken primary paths and degraded guarantees
 - [silent disambiguation is the semantic analogue of tool fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — the same observability problem for ambiguous specs rather than broken tools
 

@@ -341,7 +341,7 @@ Reason to hesitate:
 
 This is valuable, but it may overlap with existing maintenance and entropy notes:
 
-- [Entropy management must scale with generation throughput](../../notes/entropy-management-must-scale-with-generation-throughput.md)
+- [Maintenance capacity must match harmful-artifact inflow](../../notes/maintenance-capacity-must-match-harmful-artifact-inflow.md)
 - [Notes need quality scores to scale curation](../../notes/notes-need-quality-scores-to-scale-curation.md)
 - [Ephemeral computation prevents accumulation](../../notes/ephemeral-computation-prevents-accumulation.md)
 
@@ -387,7 +387,7 @@ Reason to hesitate:
 
 There are already strong observability notes:
 
-- [Apparent success is an unreliable health signal in framework-owned tool loops](../../notes/apparent-success-is-an-unreliable-health-signal-in-framework-owned.md)
+- [Final task success does not establish intended-path health](../../notes/final-task-success-does-not-establish-intended-path-health.md)
 - [Silent disambiguation is the semantic analogue of tool fallback](../../notes/silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md)
 - [Enforcement without structured recovery is incomplete](../../notes/enforcement-without-structured-recovery-is-incomplete.md)
 
@@ -399,7 +399,7 @@ The oracle-strength grounding makes this a stronger candidate than before. Silen
 
 Suggested links if extracted:
 
-- `grounds`: [Apparent success is an unreliable health signal in framework-owned tool loops](../../notes/apparent-success-is-an-unreliable-health-signal-in-framework-owned.md)
+- `grounds`: [Final task success does not establish intended-path health](../../notes/final-task-success-does-not-establish-intended-path-health.md)
 - `grounds`: [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md)
 - `mechanism`: [Spec mining is codification's operational mechanism](../../notes/spec-mining-as-codification.md)
 - `extends`: [Enforcement without structured recovery is incomplete](../../notes/enforcement-without-structured-recovery-is-incomplete.md)

@@ -36,7 +36,7 @@ The `/connect` discovery found 11 connections across the KB, with 5 strong, 4 mo
 
 - [deploy-time-learning-is-the-missing-middle](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) — **exemplifies**: Augment independently arrives at the same co-evolution loop — a natural-language spec and code co-evolve, with the spec updating as agents discover reality. The spec isn't temporary backlog waiting to become code; it's a persistent co-maintained artifact.
 
-- [entropy-management-must-scale-with-generation-throughput](../notes/entropy-management-must-scale-with-generation-throughput.md) — **extends**: The core observation ("documentation-first initiatives fail because maintenance is invisible work") is the entropy management problem stated for specs. The bidirectional spec is Augment's answer to throughput matching — agents maintain the spec as a side effect of work, so maintenance scales automatically with generation.
+- [maintenance-capacity-must-match-harmful-artifact-inflow](../notes/maintenance-capacity-must-match-harmful-artifact-inflow.md) — **extends**: The core observation ("documentation-first initiatives fail because maintenance is invisible work") is the harmful-inflow problem stated for specs. A bidirectional spec couples preventive maintenance to ordinary work and may reduce the rate at which stale specifications enter use; the source does not establish that capacity automatically matches the resulting risk.
 
 - [inspectable-artifact-not-supervision-defeats-the-blackbox-problem](../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — **exemplifies**: The bidirectional spec IS an inspectable substrate — a plain-text artifact that any party can inspect, diff, and review.
 
@@ -46,7 +46,7 @@ The `/connect` discovery found 11 connections across the KB, with 5 strong, 4 mo
 
 ## Extractable Value
 
-1. **Bidirectional spec as throughput-matching mechanism** — agents maintain the spec as a side effect of doing the work, which is a concrete architecture where maintenance throughput automatically matches generation throughput. This is a specific design pattern the [entropy-management](../notes/entropy-management-must-scale-with-generation-throughput.md) note can reference as evidence. [quick-win]
+1. **Bidirectional spec as prevention-coupled maintenance** — agents update the spec as a side effect of doing the work, which can reduce the rate at which stale specifications become harmful retained artifacts. This is a candidate design witness for [maintenance capacity must match harmful-artifact inflow](../notes/maintenance-capacity-must-match-harmful-artifact-inflow.md), but the source supplies no outcome evidence that the coupled maintenance is sufficient. [quick-win]
 
 2. **Update granularity as a design variable** — "Too much and the spec becomes noise you learn to ignore. Too little and you're back to guessing what happened." This is a signal-to-noise tradeoff on inspectable substrates that the KB hasn't articulated. What counts as a "directional decision" worth surfacing? [experiment]
 
@@ -72,4 +72,4 @@ The `/connect` discovery found 11 connections across the KB, with 5 strong, 4 mo
 
 ## Recommended Next Action
 
-Update [entropy-management-must-scale-with-generation-throughput](../notes/entropy-management-must-scale-with-generation-throughput.md): add the bidirectional spec as a second design pattern (alongside harness engineering's background cleanup agents) for achieving maintenance-generation throughput matching. The note currently has one concrete architecture (OpenAI Codex's cleanup agents); the Augment approach is a structurally different solution to the same problem — maintenance as a side effect of generation rather than maintenance as a parallel process.
+Evaluate [maintenance capacity must match harmful-artifact inflow](../notes/maintenance-capacity-must-match-harmful-artifact-inflow.md) against the bidirectional spec as a second design pattern alongside Harness Engineering's background cleanup agents. Augment's approach couples preventive maintenance to the work that changes the spec rather than running repair in parallel, but the source offers no evidence that it keeps harmful inflow within a quality bound.

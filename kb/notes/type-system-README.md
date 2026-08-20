@@ -25,10 +25,10 @@ Why documents have types, what the type system does, and how structured writing 
 
 ## Output Quality
 
-Three independent arguments for why structured document types improve what gets written:
+Two arguments for why structured document types improve what gets written, plus one causal-identification limit:
 
 - [human-writing-structures-transfer-to-llms-because-failure-modes-overlap](./human-writing-structures-transfer-to-llms-because-failure-modes.md) — failure-mode transfer: LLMs exhibit human-like failures, so structures that prevent those failures in humans prevent them in LLMs too
-- [structure-activates-higher-quality-training-distributions](./structure-activates-higher-quality-training-distributions.md) — distribution selection: structured templates steer autoregressive generation toward scientific papers and formal arguments
+- [Structured-prompt gains do not establish training-distribution selection](./structured-prompt-gains-do-not-establish-distribution-selection.md) — causal limit: prompt-performance gains do not isolate a higher-quality training distribution from rival mechanisms
 - [structured-output-is-easier-for-humans-to-review](./structured-output-is-easier-for-humans-to-review.md) — reviewability: separated sections let readers check facts and logic independently
 
 ## Structure Dimensions

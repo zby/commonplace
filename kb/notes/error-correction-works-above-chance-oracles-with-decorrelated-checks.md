@@ -76,7 +76,7 @@ Given the amplification condition and the decorrelation requirement, the design 
 
 ## Implications for the knowledge system
 
-Structured document types already function as error correction: they constrain the output space (structural checks) and steer the model toward [higher-quality training distributions](./structure-activates-higher-quality-training-distributions.md). The framework developed here suggests going further:
+Structured document types already function as error correction by constraining the output space through structural checks. [Structured-prompt gains do not establish training-distribution selection](./structured-prompt-gains-do-not-establish-distribution-selection.md), so this role should rest on the checks the type makes possible rather than on an inferred training-data mechanism. The framework developed here suggests going further:
 
 - **Validation scripts** are hard-oracle checks — cheap, deterministic, but narrow.
 - **Multiple generation + voting** could improve seedling quality before human review.
@@ -91,7 +91,7 @@ Relevant Notes:
 
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — foundation: the spectrum of oracle strength this note extends with error correction as an amplification mechanism
 - [MAKER paper](https://arxiv.org/abs/2511.09030) — example: voting with hard oracles achieves O(s ln s) scaling for million-step tasks; this note generalises beyond hard oracles
-- [structure activates higher-quality training distributions](./structure-activates-higher-quality-training-distributions.md) — enables: structured templates are one error-correction mechanism (distribution selection constrains output); this note places them in the broader design space
+- [Structured-prompt gains do not establish training-distribution selection](./structured-prompt-gains-do-not-establish-distribution-selection.md) — contrasts: bounds the distribution-selection explanation so this note's error-correction account rests on explicit constraints and checks
 - [reliability dimensions map to oracle hardening stages](./reliability-dimensions-map-to-oracle-hardening-stages.md) — extends: reliability dimensions are specific oracle-hardening moves; error correction amplifies whatever oracle strength they achieve
 - [codification](./definitions/codification.md) — parallel: codification moves toward harder oracles, making error correction cheaper; but error correction doesn't require hard oracles
 - [spec mining as codification](./spec-mining-as-codification.md) — feeds: spec mining manufactures the oracles (TPR > FPR) that error correction then amplifies through decorrelated repetition

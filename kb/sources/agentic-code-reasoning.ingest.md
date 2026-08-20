@@ -27,7 +27,7 @@ The `/connect` discovery identified 7 note connections and 2 source connections,
 
 **Strongest connections:**
 
-1. **[structure-activates-higher-quality-training-distributions](../notes/structure-activates-higher-quality-training-distributions.md)** (exemplifies): The paper provides direct empirical evidence for this seedling note's thesis. Semi-formal templates steer agents toward rigorous systematic analysis rather than heuristic guessing — precisely the distribution-selection effect the note describes. The note explicitly seeks grounding evidence; this paper supplies quantitative support (5-12pp gains). Importantly, the paper also surfaces a boundary condition the note anticipates: for Sonnet, semi-formal reasoning does not improve over standard agentic reasoning on code QA (84.8% vs 85.3%), echoing the note's caution that "imposing structure can degrade quality."
+1. **[Structured-prompt gains do not establish training-distribution selection](../notes/structured-prompt-gains-do-not-establish-distribution-selection.md)** (evidenced-by): The paper supplies the note's central contrast: semi-formal templates improve code-verification accuracy by 5–12 percentage points, yet the bundled intervention does not isolate format, process, extra computation, or a training-distribution mechanism. Claude Sonnet's code-QA result (84.8% with the template versus 85.3% without it) also shows that the measured effect is condition-dependent.
 
 2. **[human-writing-structures-transfer-to-llms-because-failure-modes-overlap](../notes/human-writing-structures-transfer-to-llms-because-failure-modes.md)** (exemplifies): The paper documents specific human-like failure modes that structured templates correct: guessing function behavior from names, skipping case enumeration, dismissing subtle differences as irrelevant. The semi-formal template corrects these by forcing explicit evidence at each step.
 
@@ -45,7 +45,7 @@ The `/connect` discovery identified 7 note connections and 2 source connections,
 
 ## Extractable Value
 
-1. **Semi-formal templates as empirical grounding for `structure-activates-higher-quality-training-distributions`.** The seedling note explicitly lacks evidence; this paper provides quantified support (5-12pp) and a boundary condition (Sonnet's non-improvement). Updating the note would move it toward maturation. [quick-win]
+1. **Semi-formal templates as a causal-identification case.** The paper provides a quantified gain and a null, but its bundled templates do not reveal which component caused either result. This now grounds [Structured-prompt gains do not establish training-distribution selection](../notes/structured-prompt-gains-do-not-establish-distribution-selection.md). [quick-win]
 
 2. **Failure-mode taxonomy for verification agents.** Three specific failure classes — incomplete execution tracing, third-party library semantic guessing, and dismissal of subtle differences — are reusable for designing eval harnesses or decorrelation strategies. Not currently captured in any KB note. [quick-win]
 
@@ -75,4 +75,4 @@ The `/connect` discovery identified 7 note connections and 2 source connections,
 
 ## Recommended Next Action
 
-Update [structure-activates-higher-quality-training-distributions](../notes/structure-activates-higher-quality-training-distributions.md): add this paper as empirical evidence in the status note section, citing the 5-12pp gains as support for the distribution-selection thesis and the Sonnet non-improvement as a boundary condition. This would move the note's status from "seedling lacking evidence" toward "seedling with partial support." The note's current status section explicitly asks for this kind of grounding.
+The completed update to [Structured-prompt gains do not establish training-distribution selection](../notes/structured-prompt-gains-do-not-establish-distribution-selection.md) uses the 5–12-point gain and the Claude Sonnet null as evidence that prompt performance alone does not identify which bundled component caused the result.

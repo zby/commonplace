@@ -13,7 +13,7 @@ When instructing LLMs, frontloading means computing instruction inputs before th
 
 Doing a procedure inside an LLM call costs more context than inserting its result. The procedure text itself may be small. For example, "search for X in `kb/notes/`" is a single line. Carrying it out can still produce tool calls, search results, reasoning traces, and interpretation work. It can sometimes also produce additional LLM calls. When it does, their outputs occupy the context window. All of this competes with the call's real task. The cost recurs on every invocation.
 
-The comparison that matters is the *realized* execution context, not the instruction's size. A pointer can be shorter than the result but cost more. For example, "read file X" is one line, but executing it pulls the whole of file X into the window. So frontloading's saving is largest on the operation and complexity dimensions — the discovery, derivation, and indirection the call no longer performs. On raw volume, frontloading saves only when the inserted result is *smaller* than the material it replaces. Inlining content that the call would have loaded anyway only defers those tokens; it does not remove them. A pointer that gets followed regardless is only [indirection](./indirection-is-costly-in-llm-instructions.md).
+The comparison that matters is the *realized* execution context, not the instruction's size. A pointer can be shorter than the result but cost more. For example, "read file X" is one line, but executing it pulls the whole of file X into the window. So frontloading's saving is largest on the operation and complexity dimensions — the discovery, derivation, and indirection the call no longer performs. On raw volume, frontloading saves only when the inserted result is *smaller* than the material it replaces. Inlining content that the call would have loaded anyway only defers those tokens; it does not remove them. A model-facing pointer that the LLM must resolve is [model-resolved indirection](./model-resolved-indirection-adds-interpretation-work-to-llm-execution.md).
 
 The saving matters before any hard token limit is reached. Frontloading can be constitutive because it shapes what fits in a consuming call's effective context: without the pre-step, the call may become less reliable through missed instructions, shallow reasoning, stale material treated as live, or budget spent interpreting setup. This follows from the broader point that [soft degradation often binds before the hard cap when required evidence fits](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md). Frontloading is also economic when one build-time, install-time, or session-start computation saves many runtime calls from repeating the same work.
 
@@ -24,7 +24,7 @@ Discovery avoidance is the practical version of the same pattern. Pre-resolving 
 The basic test is whether the value is known before the consuming call runs.
 
 **Static (frontloadable):**
-- Variable resolution — paths, project names, configuration values known at setup time (the [indirection elimination](./indirection-is-costly-in-llm-instructions.md) case)
+- Variable resolution — paths, project names, configuration values known at setup time (the [model-resolved binding elimination](./model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) case)
 - File listings — "here are the files in `kb/notes/`" rather than "list the files in `kb/notes/`"
 - Aggregations — counts, summaries of known datasets, pre-computed indexes
 - Template expansion — [build-time generation](./generate-instructions-at-build-time.md) of skills and instructions
@@ -48,7 +48,7 @@ Inlining is the most common realization: it substitutes the pre-computed result 
 
 Relevant Notes:
 
-- [Indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — overlaps: variable resolution is frontloading and constraining; it becomes codification only when a formal mechanism consumes the resolved value
+- [Model-resolved indirection adds interpretation work to LLM execution](./model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — overlaps: upstream variable resolution can be frontloading and constraining; it becomes codification only when a formal mechanism consumes the resolved value
 - [Generate KB skills at build time, don't parameterise them](./generate-instructions-at-build-time.md) — overlaps: template expansion frontloads setup work and may codify generated fields when downstream tooling assigns them consequences
 - [soft degradation often binds before the hard cap when required evidence fits](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) — grounds: frontloading avoids degradation across volume, complexity, and interference rather than only avoiding hard token overflow
 - [Ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — application: ad hoc instruction artifacts frontload caller judgment at a clean context boundary, but should not merely duplicate stable skill contracts

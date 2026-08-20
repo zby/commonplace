@@ -82,7 +82,7 @@ The [auditable editing experiment](../auditable-llm-editing/README.md) supplies 
 
 ## A required prose counterexample: local redundancy can be correct
 
-[Natural-language content lacks reliable dereference](../../notes/prose-has-no-dereference-reinforce-facts-at-point-of-use.md) argues that a distant declaration may not govern a later LLM-read passage unless the fact or its consequence is reinforced at the point of use. In that regime, local repetition can improve uptake, and a canonical-plus-checked-copy design may outperform normalization.
+[Local materialization should outperform distant natural-language declarations](../../notes/local-materialization-should-outperform-distant-declarations.md) advances an untested statistical conjecture: for distant or non-obvious uses, a generated local view from one canonical value should outperform declaration-only presentation. It distinguishes generated exact or derived views from human-authored restatement and makes a held-out correct, non-contradictory application rate the primary comparison.
 
 This blocks a naive transfer from software: duplication, locality, or addition is not itself a prose smell. A valid experiment must show role conflict or a downstream cost, not merely that two sentences overlap. A counterexperiment should compare canonical-only, point-of-use reinforcement, and checked canonical-plus-local reinforcement on both immediate uptake and later revision drift. If deliberate reinforcement wins, the shared theory must concern global-role conflict rather than subtraction or single-source organization in general.
 

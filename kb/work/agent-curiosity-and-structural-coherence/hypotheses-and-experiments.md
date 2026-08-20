@@ -134,7 +134,7 @@ The first is accessible with black-box experiments. The second needs careful pro
 - **Role uniqueness:** code ownership is sometimes exclusive, while one sentence can legitimately perform several discourse jobs. Human preferred placement is not ground truth.
 - **Move semantics:** relocating code can preserve behavior; relocating a sentence can change scope, implicature, anaphora, and premise salience.
 - **Risk:** code moves risk regressions and broad diffs. Prose moves are often cheaper, but cross-references and anaphora can make them risky; that difference is itself an experimental manipulation.
-- **Legitimate redundancy:** [point-of-use reinforcement](../../notes/prose-has-no-dereference-reinforce-facts-at-point-of-use.md) may improve uptake when natural language cannot reliably propagate a distant declaration. The common target is role conflict, not locality, repetition, or addition in themselves.
+- **Legitimate redundancy:** [local materialization](../../notes/local-materialization-should-outperform-distant-declarations.md) is conjectured to improve uptake over declaration-only presentation for distant or non-obvious uses. The common target is role conflict, not locality, repetition, or addition in themselves.
 
 ## Structural subgoal origination is not one capability
 

@@ -31,7 +31,7 @@ That is what makes "make the evaluator stronger" no answer to a weak generator, 
 
 The costs of automating the two functions are paid in different currencies.
 
-**Automating search costs evaluation throughput.** Machine-generated candidates are judged by the same evaluator that judged the human's. The failure mode is a queue: candidates arriving faster than anything can judge or prune them, which is exactly the pathology in [entropy management must scale with generation throughput](./entropy-management-must-scale-with-generation-throughput.md). That is a *capacity* problem, and capacity problems are tractable — batch, prioritize, sample, or strengthen the evaluator.
+**Automating search costs evaluation throughput.** Machine-generated candidates are judged by the same evaluator that judged the human's. The failure mode is a queue: candidates arriving faster than anything can judge or prune them, which is exactly the pathology in [maintenance capacity must match harmful-artifact inflow](./maintenance-capacity-must-match-harmful-artifact-inflow.md). That is a *capacity* problem, and capacity problems are tractable — batch, prioritize, sample, or strengthen the evaluator.
 
 **Automating evaluation costs correctness.** A weak oracle accepts changes that do not help, they are retained, and they compound: a bad note gets linked, cited, and reshaped into a skill. That is not a capacity problem and no amount of throughput fixes it. It is bounded by [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md).
 
@@ -67,5 +67,5 @@ Relevant Notes:
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the loop whose functions this claim distinguishes, and the search-range-versus-oracle-strength point it extends
 - [Self-improving system](./definitions/self-improving-system.md) — extends: tells the autonomy gradient which function to climb first, and why the other must be bought
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: why evaluation is the bounded function and its errors are the permanent ones
-- [Entropy management must scale with generation throughput](./entropy-management-must-scale-with-generation-throughput.md) — evidenced-by: the capacity failure that automated search produces when evaluation does not scale with it
+- [Maintenance capacity must match harmful-artifact inflow](./maintenance-capacity-must-match-harmful-artifact-inflow.md) — evidenced-by: the capacity failure that automated search produces when evaluation cannot neutralize the harmful candidates it admits
 - [Automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — contrasts: search is the safer function to automate, which does not make it the easy one

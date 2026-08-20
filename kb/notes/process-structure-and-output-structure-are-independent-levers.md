@@ -25,9 +25,9 @@ GSM-DC ([Yang et al., 2025](https://arxiv.org/html/2505.18761v2)) supplies a com
 
 ## Two mechanisms, split two ways
 
-The distinction matters because the KB's two main explanatory mechanisms — distribution selection and interpretation narrowing — apply differently to each type of structure.
+The distinction matters because two proposed explanatory mechanisms — distribution selection and interpretation narrowing — apply differently to each type of structure.
 
-**Distribution selection** ([structure-activates-higher-quality-training-distributions](./structure-activates-higher-quality-training-distributions.md)). Output structure activates training data that shares the same format (scientific papers, legal briefs) — this is the distribution-selection effect proper. Process structure activates training data where rigorous reasoning was being performed, regardless of output format. A "state your premises before concluding" instruction may activate the same reasoning quality found in scientific papers without activating the scientific paper format. The two activations draw from overlapping but distinct subsets of the training distribution.
+**Distribution selection** is a hypothesis, not an identified effect ([structured-prompt gains do not establish training-distribution selection](./structured-prompt-gains-do-not-establish-distribution-selection.md)). Output structure could cue patterns associated with a shared format, while process structure could cue learned reasoning procedures regardless of output format. But a measured gain does not show that either activation occurred: the constraints also change format compliance and required reasoning work directly. Process-only and output-only interventions therefore define experimental contrasts rather than two established training subsets.
 
 **Interpretation narrowing** ([agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md)). Output constraints narrow the interpretation space of what a valid result looks like. Process constraints narrow the interpretation space of how to get there. Both reduce underspecification, but they address different sources of it — and combining them is not redundant, because eliminating ambiguity about format still leaves ambiguity about reasoning strategy, and vice versa.
 
@@ -42,7 +42,7 @@ The [methodology-enforcement note](./methodology-enforcement-is-constraining.md)
 
 Relevant Notes:
 
-- [structure-activates-higher-quality-training-distributions](./structure-activates-higher-quality-training-distributions.md) — refines: the distribution-selection argument applies differently to process and output structure; this note separates what that note currently treats as one mechanism
+- [Structured-prompt gains do not establish training-distribution selection](./structured-prompt-gains-do-not-establish-distribution-selection.md) — grounds: explains why process and output interventions must be tested separately rather than inferred from one bundled prompt gain
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — extends: process constraints and output constraints narrow different parts of the interpretation space (how vs what)
 - [methodology-enforcement-is-constraining](./methodology-enforcement-is-constraining.md) — connects: methodology enforcement is primarily process structure (constraining how the agent reasons), not output structure
 - [human-writing-structures-transfer-to-llms-because-failure-modes-overlap](./human-writing-structures-transfer-to-llms-because-failure-modes.md) — context: human writing genres bundle both process and output structure; the per-convention transfer evaluation should assess each dimension separately

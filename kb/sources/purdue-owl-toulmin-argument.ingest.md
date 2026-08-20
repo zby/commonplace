@@ -39,11 +39,10 @@ The `/connect` report identified that this source is already well-integrated int
 **New "last mile" connections found** — 7 notes reference Toulmin concepts (warrants, evidence/reasoning sections, structured templates) without linking back to the formal source:
 
 1. [human-writing-structures-transfer-to-llms](../notes/human-writing-structures-transfer-to-llms-because-failure-modes.md) — **exemplifies**: uses Toulmin as its primary running example but doesn't link the source
-2. [structure-activates-higher-quality-training-distributions](../notes/structure-activates-higher-quality-training-distributions.md) — **exemplifies**: references "a Toulmin-shaped template" without citing origin
-3. [structured-output-is-easier-for-humans-to-review](../notes/structured-output-is-easier-for-humans-to-review.md) — **grounds**: argues for Evidence/Reasoning separation without citing Toulmin as the theoretical basis
-4. [writing-styles-are-strategies-for-managing-underspecification](../notes/writing-styles-are-strategies-for-managing-underspecification.md) — **grounds**: uses "warrant" terminology from Toulmin without linking
-5. [skills-derive-from-methodology-through-distillation](../notes/skills-derive-from-methodology.md) — **exemplifies**: references Toulmin as methodology source
-6. [text-testing-framework](../notes/text-testing-framework.md) — **grounds**: operationalizes Toulmin's grounds/warrant separation in truthfulness contracts
+2. [structured-output-is-easier-for-humans-to-review](../notes/structured-output-is-easier-for-humans-to-review.md) — **grounds**: argues for Evidence/Reasoning separation without citing Toulmin as the theoretical basis
+3. [writing-styles-are-strategies-for-managing-underspecification](../notes/writing-styles-are-strategies-for-managing-underspecification.md) — **grounds**: uses "warrant" terminology from Toulmin without linking
+4. [skills-derive-from-methodology-through-distillation](../notes/skills-derive-from-methodology.md) — **exemplifies**: references Toulmin as methodology source
+5. [text-testing-framework](../notes/text-testing-framework.md) — **grounds**: operationalizes Toulmin's grounds/warrant separation in truthfulness contracts
 7. [wikiwiki-principle](../notes/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — **enables**: references structured-claim/Toulmin sections as the top of the refinement ladder
 
 The overall pattern: the synthesis note (claim-notes-should-use-toulmin) captured the main insight, but Toulmin vocabulary has diffused into many notes that reference the concepts without linking the formal source.

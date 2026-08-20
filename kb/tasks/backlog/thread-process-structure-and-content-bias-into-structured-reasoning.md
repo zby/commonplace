@@ -11,7 +11,7 @@ Make the KB’s structured-reasoning cluster account for two missing dimensions:
 
 ## Context
 - Relevant files/symbols:
-  - `kb/notes/structure-activates-higher-quality-training-distributions.md`
+  - `kb/notes/structured-prompt-gains-do-not-establish-distribution-selection.md`
   - `kb/notes/human-writing-structures-transfer-to-llms-because-failure-modes.md`
   - `kb/notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md`
   - `kb/sources/agentic-code-reasoning.ingest.md`
@@ -22,7 +22,7 @@ Make the KB’s structured-reasoning cluster account for two missing dimensions:
   - Current modified worktree state around `kb/sources/language-models-like-humans-show-content-effects-on-reasoning.ingest.md`
 - How to verify / reproduce:
   - Confirm the KB has an explicit home for the process-structure vs output-structure distinction
-  - Confirm `structure-activates-higher-quality-training-distributions.md` uses Lampinen evidence directly or links to the note that does
+  - Confirm `structured-prompt-gains-do-not-establish-distribution-selection.md` uses Lampinen evidence directly or links to the note that does
   - Confirm `error-correction-works-above-chance-oracles-with-decorrelated-checks.md` mentions content bias as a correlated-error source
 
 ## Decision Record
@@ -43,7 +43,7 @@ Make the KB’s structured-reasoning cluster account for two missing dimensions:
 ## Tasks
 - [x] Write or promote a note distinguishing process structure from output structure — wrote `kb/notes/process-structure-and-output-structure-are-independent-levers.md`, connected to type-system index, distribution-selection note, and error-correction note
 - [x] Thread Lampinen evidence into the distribution-selection note — already done (pre-existing)
-- [x] Decide where the "instruction tuning and scaling do not remove content bias" claim should live — already in `structure-activates-higher-quality-training-distributions.md` (line 21)
+- [x] Decide where the "instruction tuning and scaling do not remove content bias" claim should live — the evidence remains in `structured-prompt-gains-do-not-establish-distribution-selection.md`, narrowed to the tested conditions rather than a general causal claim
 - [x] Update the error-correction note to treat content bias as a source of correlated model error — added "Content bias as a correlated error source" subsection to the decorrelation section
 
 ## Current State

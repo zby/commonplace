@@ -1,5 +1,5 @@
 ---
-description: Template generation pays the flexibility cost once at setup; runtime variables pay it on every use across every substitution site, with occasional LLM misreads
+description: Template generation resolves installation-known values before model execution, trading model-side binding work for setup, regeneration, and derived-copy maintenance
 type: kb/types/note.md
 traits: []
 tags: [architecture]
@@ -7,11 +7,11 @@ tags: [architecture]
 
 # Generate KB skills at build time, don't parameterise them
 
-Since [indirection is costly in LLM instructions](../notes/indirection-is-costly-in-llm-instructions.md), skills and instructions should be generated from templates rather than parameterised with runtime variables.
+When a stable setup value would otherwise remain [model-resolved indirection](./model-resolved-indirection-adds-interpretation-work-to-llm-execution.md), generating skills and instructions from templates moves the binding out of LLM execution.
 
 Skills hardcode paths dozens of times — in grep commands, script invocations, save targets. Making a KB reusable across projects requires these paths to vary. There are two ways to get that variability:
 
-**Runtime variables** — skills contain placeholders like `$KB_ROOT/notes/` and the LLM substitutes on every invocation. This adds interpretation overhead to every skill use, across every substitution site. Occasionally the LLM gets it wrong — wrong root, wrong slash direction, missing suffix — and the error surfaces only when a tool call fails.
+**Model-facing runtime variables** — skills contain placeholders like `$KB_ROOT/notes/` and the LLM substitutes on every invocation. This adds interpretation work to every skill use, across every substitution site, and creates a failure surface: a wrong root, slash direction, or suffix may become visible only when a tool call fails.
 
 **Build-time generation** — a template contains `{{kb_root}}/notes/`, a setup script resolves it to an absolute path at install time, and the generated skill is literal. The LLM reads and acts directly, with no substitution step.
 
@@ -34,7 +34,7 @@ For recurring tasks this is especially clean. The task template is a stable runb
 Relevant Notes:
 
 - [instruction-generation](../reference/instruction-generation.md) — current-state: how Commonplace instantiates this argument today through `commonplace-init`, scaffold trees, and the specific substitution points
-- [indirection is costly in LLM instructions](../notes/indirection-is-costly-in-llm-instructions.md) — foundation: the general principle this applies; in code indirection is free, in LLM instructions it costs context and interpretation on every read
+- [Model-resolved indirection adds interpretation work to LLM execution](./model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — foundation: the resolver boundary this applies; setup-time expansion removes model-side binding work while preserving token and lifecycle tradeoffs
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — template generation is a point on the constraining gradient
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — motivates: always-loaded context should be slim; variable interpretation adds complexity
 - [instructions are typed callables](./instructions-are-typed-callables.md) — enables: typed signatures on tasks/skills can declare configuration dependencies, letting the build step resolve only what's needed

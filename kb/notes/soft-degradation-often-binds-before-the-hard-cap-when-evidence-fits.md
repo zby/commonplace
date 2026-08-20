@@ -27,7 +27,7 @@ The same pattern appears in agent workflows. Injecting irrelevant task sequences
 
 ### Complexity
 
-Some context becomes expensive not because it is long, but because it is hard to interpret or compose. Every layer of [indirection costs context and interpretation overhead](./indirection-is-costly-in-llm-instructions.md), and deeper compositional structure may impose a similar burden. ConvexBench, a benchmark on compositional symbolic reasoning, shows collapse at low token counts: F1 falls from 1.0 at depth 2 to about 0.2 at depth 100, even though the depth-100 prompt contains only 5,331 tokens ([local ingest](../sources/convexbench-can-llms-recognize-convex-functions.ingest.md)). Token count alone therefore does not predict usable capacity. What remains open is whether this failure is specifically a context-management limit, a missing reasoning procedure, or some mixture of both.
+Some context becomes expensive not because it is long, but because it is hard to interpret or compose. A reference that the model must resolve adds [interpretation work](./model-resolved-indirection-adds-interpretation-work-to-llm-execution.md), and deeper compositional structure may impose a similar burden. ConvexBench, a benchmark on compositional symbolic reasoning, shows collapse at low token counts: F1 falls from 1.0 at depth 2 to about 0.2 at depth 100, even though the depth-100 prompt contains only 5,331 tokens ([local ingest](../sources/convexbench-can-llms-recognize-convex-functions.ingest.md)). Token count alone therefore does not predict usable capacity. What remains open is whether this failure is specifically a context-management limit, a missing reasoning procedure, or some mixture of both.
 
 ### Open questions
 
@@ -62,7 +62,7 @@ Relevant Notes:
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — mechanism: explains why irrelevant state can steer a task even when it does not fill the window
 - [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — extends: models task-dependent usable context as an effective per-call cost inside a scheduler
 - [Context contamination operates below an agent's compliance reasoning](./context-contamination-operates-below-an-agents-compliance-reasoning.md) — extends: specializes interference to stance drift that can remain below gross task failure
-- [Indirection is costly in LLM instructions](./indirection-is-costly-in-llm-instructions.md) — mechanism: indirection cost is a soft-bound phenomenon because interpretation overhead degrades silently
+- [Model-resolved indirection adds interpretation work to LLM execution](./model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — mechanism: model-side binding adds a complexity cost inside the soft bound, though its magnitude remains unmeasured
 - [Information value is observer-relative](./information-value-is-observer-relative.md) — grounds: observer-relativity is what makes the soft bound task-dependent
 - [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — complements: soft degradation helps explain why relevant knowledge can stay stored but fail to activate when extra context dilutes or crowds out the right cues
 - [A goal-holding interpreter fails soft, and its workarounds tax a bounded budget](./a-goal-holding-interpreter-fails-soft-workarounds-tax-a-bounded-budget.md) — extends: proposes, as a KB-internal conjecture, that repeated rerouting work consumes the same bounded budget
