@@ -1,5 +1,5 @@
 ---
-description: Queries impose distinct access and transformation burdens that can vary separately even when retrieval and reasoning interact
+description: Separates the system-relative cost of finding required inputs from producing an answer, so query systems can diagnose which work remains as retrieval and reasoning interact
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, computational-model]
@@ -7,7 +7,9 @@ tags: [foundations, computational-model]
 
 # Access burden and transformation burden are distinct query dimensions
 
-Question-answering systems face two different burdens: finding the right inputs and turning those inputs into the requested output. These burdens can vary separately even when they interact during execution. Treating query difficulty as one score obscures where the work remains and which mechanism could reduce it.
+Question-answering systems face two different burdens: finding the right inputs and turning those inputs into the requested output. These burdens can vary separately even when they interact during execution. When either burden is material, treating query difficulty as one score obscures where the work remains and which mechanism could reduce it.
+
+Neither burden is intrinsic to the query text. For a particular system at a particular moment, their values depend on which evidence and intermediate results the execution state already holds; how the information is represented; which artifacts, such as indexes or precomputed results, are available; which operators, such as search, SQL, code, or model inference, can act on it; and which outputs the answer semantics accept. A materialized answer can make transformation trivial; a poor representation can make the same underlying information difficult to access or transform. The distinction therefore compares burdens within a specified query-system situation rather than assigning a permanent score to a query.
 
 ## The two burdens
 
@@ -17,32 +19,23 @@ Question-answering systems face two different burdens: finding the right inputs 
 
 These examples establish separability, not isolation. Either burden can be high while the other is low, so reducing one does not necessarily reduce the other.
 
+The distinction adds little to a direct lookup when the needed input is already explicit and returning it satisfies the answer semantics: both burdens are negligible. It becomes diagnostic when at least one burden is material.
+
 The burdens nevertheless interact during execution. A transformation can expose missing evidence and trigger another access step. Conversely, retrieval may return raw evidence or a precomputed result, changing the transformation that remains. Access and transformation can therefore alternate as stages of a pipeline while remaining distinct diagnostic dimensions.
 
-## Transformation routing depends on specification
+## A routing corollary
 
-Distinguishing transformation burden enables a second routing question: is the next operation specified well enough for mechanical execution? This separates three responsibilities that the original query may combine: specifying the intended operation, executing it, and validating that its result answers the query.
+Distinguishing transformation burden permits a narrower routing question: is the next operation specified well enough for mechanical execution? A transformation is fully specified when its procedure and acceptance conditions fix which outputs are valid. Filtering, counting, aggregating, sorting, joining, and sampling can meet this condition once their predicates, numeric rules, tie handling, distributions, and other semantics are fixed. A sampling procedure may permit several literal results while remaining fully specified.
 
-**Formally specified transformations** have explicit procedures and acceptance conditions. Filtering, counting, aggregating, sorting, joining, or sampling can be executed by a symbolic substrate once predicates, numeric rules, tie handling, distributions, and other semantics are fixed. A formally specified procedure need not produce one literal output: a sampling operation can permit multiple results while remaining fully defined.
+Unresolved interpretation, relevance judgment, explanation, synthesis, or conjecture remains semantic work. When a trustworthy symbolic implementation exists, it should execute the fully specified portion. A bounded semantic call—a model call limited to the context and unresolved judgment needed for one step—can specify or decompose the remaining work. Checking whether the result answers the query is not inherently a third responsibility distinct from specification: it is mechanical when the acceptance conditions settle the check and semantic when they do not.
 
-**Semantic transformations** still depend on interpretation, relevance judgment, explanation, synthesis, or conjecture that the system has not reduced to a formal procedure. The causal expense question remains semantic when the query and evidence do not specify how to infer or rank plausible causes.
+A deterministically decoded model that has been exhaustively verified for a finite input domain can also be trustworthy for one fixed operation. This local exception defeats a categorical ban on model execution, but it does not erase the distinction between access and transformation burden.
 
-When a trustworthy symbolic implementation exists, it should execute a fully specified operation. An LLM may still help specify the operation, decompose the query, or validate whether the formal result answers the user's intent. Symbolic execution guarantees neither a correct specification nor a correct implementation. It confines model uncertainty to the stages that require interpretation instead of reintroducing it into mechanical execution. The [scheduler-LLM separation](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) argument supports this preference on reliability and cost grounds; deciding whether an operation is fully specified remains a matter of judgment.
-
-## Routing is iterative
-
-Because transformation can expose missing inputs, routing is a loop rather than a fixed two-stage pipeline. The [bounded-context orchestration model](./bounded-context-orchestration-model.md) suggests this sequence:
-
-1. Acquire the inputs currently required.
-2. Identify the next transformation and specify its acceptance conditions as far as the evidence permits.
-3. Execute fully specified operations symbolically; route unresolved judgment to a bounded semantic call; split mixed work across both.
-4. Validate the result against the original query. If validation changes the required evidence or operation, return to the relevant step.
-
-Text-to-SQL, filter construction, and API-call assembly fit this pattern. A model translates natural language into an operation, symbolic code executes it, and validation checks whether the operation represented the intended request.
+Execution changes the state against which both burdens are measured, so routing can alternate: acquire the inputs needed now, specify and execute one transformation, compare its result with the answer semantics, and repeat if the result exposes missing evidence or unresolved judgment. The [scheduler-LLM separation](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) argument supplies the reliability-and-cost reason for the symbolic preference, while the [bounded-context orchestration model](./bounded-context-orchestration-model.md) supplies this one-step loop shape. This is a consequence of the two-burden diagnosis, not a second classification of query difficulty.
 
 ## Open questions
 
-- Can access burden and transformation burden be estimated from a query before execution, or only recognised after the fact?
+- Can access burden and transformation burden be estimated from the query plus its system-relative variables before execution, or only recognised after the fact?
 - What taxonomy within transformation burden is more useful than a symbolic/semantic binary?
 - Where should a mixed query hand off between formal execution and semantic judgment?
 - How can a system detect formally specified transformations that natural-language phrasing makes appear semantic?

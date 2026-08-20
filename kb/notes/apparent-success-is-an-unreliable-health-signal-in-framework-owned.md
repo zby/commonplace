@@ -19,7 +19,7 @@ The standard tool loop merges three different outcomes into one visible state:
 
 Frameworks typically compress the first two into "success." A snapshot skill whose X fetch script fails because of a bad path can still produce something by browsing the page directly. The user sees completion, but the system no longer knows from the final outcome whether the prescribed path worked, whether provenance changed, or whether fidelity dropped.
 
-Programmers trained on traditional systems are particularly vulnerable to this. As [traditional debugging intuitions break when tool loops can recover semantically](./traditional-debugging-intuitions-break-when-tool-loops-can-recover.md) develops: in traditional software, broken infrastructure usually fails loudly enough that success remains a rough proxy for mechanism health. Semantic recovery weakens that proxy without making the change obvious.
+The contrast with traditional software shows why the weakness is easy to miss. There, recovery is engineered in advance — retry, coded fallback, cached value, surfaced error — and is explicit in code, logs, or control flow; a recovery path that was never implemented cannot fire, so an unhandled break surfaces by construction. In a semantic tool loop the fallback is synthesized from the model's understanding of the task rather than selected from a fixed menu, so success establishes only that some viable path existed in the joint space of tools plus model improvisation, not that the intended mechanism was healthy. Debugging direction inherits the problem: a visible failure points at the broken mechanism, but a mechanism that fails without producing any final failure state gives the maintainer nothing to look into, so broken helpers persist behind apparently healthy runs.
 
 ## Why framework-owned loops encourage this
 
@@ -63,7 +63,6 @@ Relevant Notes:
 
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — boundary: the clean scheduler model survives; this note targets what final success can and cannot tell you about runtime health
 - [tool loop](./tool-loop-README.md) — extends: hidden orchestration also hides the distinction between acceptable result and healthy execution path
-- [traditional debugging intuitions break when tool loops can recover semantically](./traditional-debugging-intuitions-break-when-tool-loops-can-recover.md) — consequence: explains why programmers systematically over-trust successful outcomes in this regime
 - [silent disambiguation is the semantic analogue of tool fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — extends: the same observability failure appears when the runtime repairs ambiguity in the spec rather than failure in the tool path
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — refines: degradation is not only context-bounded scheduling but also loss of observability about how the run succeeded
 - [Agent-runtime analysis should separate scheduling, context assembly, and external state](./agent-runtime-analysis-should-separate-scheduling-context-state.md) — locates: the weakened health signal appears at the boundary between scheduler intent and substrate behavior

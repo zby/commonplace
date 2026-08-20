@@ -15,7 +15,6 @@ Observability is about recovering signals that would otherwise stay hidden: exec
 - [Designing a Memory System for LLM-Based Agents](./designing-agent-memory-systems.md) — bridges observability to memory: hidden fallback paths and degraded execution become extraction targets for maintenance and repair
 - [Apparent success is an unreliable health signal in framework-owned tool loops](./apparent-success-is-an-unreliable-health-signal-in-framework-owned.md) — successful outcomes can hide broken helpers and degraded execution paths, so final success alone is not a trustworthy operational signal
 - [Silent disambiguation is the semantic analogue of tool fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — extends the same observability problem to underspecified specs: a useful artifact can hide that the contract did not determine the path and the runtime repaired it locally
-- [Traditional debugging intuitions break when tool loops can recover semantically](./traditional-debugging-intuitions-break-when-tool-loops-can-recover.md) — explains why programmers over-trust successful outcomes when semantic recovery hides the broken mechanism
 
 ## Detection & Signals
 
