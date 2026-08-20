@@ -1,0 +1,842 @@
+{
+  "source": "https://x.com/marfinxx/status/2088234998654472340",
+  "captured": "2026-08-20T13:27:16.882050+00:00",
+  "family": "x-article",
+  "status_id": "2088234998654472340",
+  "conversation_id": "2088234998654472340",
+  "target_post": {
+    "article": {
+      "cover_media": "3_2088050056234442752",
+      "entities": {
+        "code": [
+          {
+            "code": "\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 FAST INNER LOOP (Real-Time Turn Execution - Sub-Second Latency)       \u2502\n\u2502                                                                        \u2502\n\u2502  User Query \u2500\u2500> [Hybrid Search: Vector + Graph + Keyword]              \u2502\n\u2502                         \u2502                                              \u2502\n\u2502                         \u25bc                                              \u2502\n\u2502                 [MMR Diversity Re-Ranking]                             \u2502\n\u2502                         \u2502                                              \u2502\n\u2502                         \u25bc                                              \u2502\n\u2502                 [Scope AST & Budget Allocator]                         \u2502\n\u2502                         \u2502                                              \u2502\n\u2502                         \u25bc                                              \u2502\n\u2502  Fixed Prefix \u2500\u2500> [Structured KV-Cache Prompt] \u2500\u2500> [LLM Inference]    \u2502\n\u2502                                                          \u2502             \u2502\n\u2502                                                          \u25bc             \u2502\n\u2502                                                  [Tool Execution]      \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n                                                           \u2502 Raw Traces\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u25bc\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 SLOW OUTER LOOP (Asynchronous Background Maintenance - Zero User Wait) \u2502\n\u2502                                                                        \u2502\n\u2502  Raw Traces \u2500\u2500> [Atomic Fact Extractor: ADD / UPDATE / DELETE]         \u2502\n\u2502                        \u2502                                               \u2502\n\u2502                        \u25bc                                               \u2502\n\u2502                 [Knowledge Graph Entity Linking]                       \u2502\n\u2502                        \u2502                                               \u2502\n\u2502                        \u25bc                                               \u2502\n\u2502                 [Ebbinghaus Decay Scoring & Eviction]                  \u2502\n\u2502                        \u2502                                               \u2502\n\u2502                        \u25bc                                               \u2502\n\u2502                 [Consolidated Long-Term Memory Substrate]              \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518",
+            "content": "```\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 FAST INNER LOOP (Real-Time Turn Execution - Sub-Second Latency)       \u2502\n\u2502                                                                        \u2502\n\u2502  User Query \u2500\u2500> [Hybrid Search: Vector + Graph + Keyword]              \u2502\n\u2502                         \u2502                                              \u2502\n\u2502                         \u25bc                                              \u2502\n\u2502                 [MMR Diversity Re-Ranking]                             \u2502\n\u2502                         \u2502                                              \u2502\n\u2502                         \u25bc                                              \u2502\n\u2502                 [Scope AST & Budget Allocator]                         \u2502\n\u2502                         \u2502                                              \u2502\n\u2502                         \u25bc                                              \u2502\n\u2502  Fixed Prefix \u2500\u2500> [Structured KV-Cache Prompt] \u2500\u2500> [LLM Inference]    \u2502\n\u2502                                                          \u2502             \u2502\n\u2502                                                          \u25bc             \u2502\n\u2502                                                  [Tool Execution]      \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n                                                           \u2502 Raw Traces\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u25bc\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 SLOW OUTER LOOP (Asynchronous Background Maintenance - Zero User Wait) \u2502\n\u2502                                                                        \u2502\n\u2502  Raw Traces \u2500\u2500> [Atomic Fact Extractor: ADD / UPDATE / DELETE]         \u2502\n\u2502                        \u2502                                               \u2502\n\u2502                        \u25bc                                               \u2502\n\u2502                 [Knowledge Graph Entity Linking]                       \u2502\n\u2502                        \u2502                                               \u2502\n\u2502                        \u25bc                                               \u2502\n\u2502                 [Ebbinghaus Decay Scoring & Eviction]                  \u2502\n\u2502                        \u2502                                               \u2502\n\u2502                        \u25bc                                               \u2502\n\u2502                 [Consolidated Long-Term Memory Substrate]              \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n```",
+            "language": "none"
+          },
+          {
+            "code": "",
+            "content": "| Memory Tier | Operational Role | Storage Substrate | Update Mechanism | Lifespan |\n| :--- | :--- | :--- | :--- | :--- |\n| **Working Memory** | Active prompt context, live scratchpad, tool outputs | GPU RAM / KV-Cache | Autoregressive token generation | Single inference turn |\n| **Short-Term Episodic** | Chronological record of recent user turns and tool logs | In-memory KV store / SQLite | Synchronous append per turn | Single working session |\n| **Long-Term Semantic** | Consolidated domain facts, user preferences, system models | Hybrid Vector DB + Knowledge Graph | Asynchronous offline reflection | Persistent cross-session |\n| **Procedural Memory** | Validated tool workflows, self-correction rules, execution skills | Versioned policy files / Git repo | Reflection trajectory updates | Permanent system lifecycle |",
+            "language": "none"
+          },
+          {
+            "code": "{\n  \"action\": \"ADD\",\n  \"target_memory_id\": null,\n  \"memory_note\": {\n    \"subject\": \"codebase.convention\",\n    \"fact_contents\": \"All database queries must use async SQLAlchemy sessions with explicit commit blocks\",\n    \"keywords\": [\"database\", \"sqlalchemy\", \"async\"],\n    \"tags\": [\"architecture\", \"backend\"],\n    \"importance_score\": 0.9\n  },\n  \"reasoning_trace\": \"Extracted architectural convention established during refactoring session\"\n}",
+            "content": "```json\n{\n  \"action\": \"ADD\",\n  \"target_memory_id\": null,\n  \"memory_note\": {\n    \"subject\": \"codebase.convention\",\n    \"fact_contents\": \"All database queries must use async SQLAlchemy sessions with explicit commit blocks\",\n    \"keywords\": [\"database\", \"sqlalchemy\", \"async\"],\n    \"tags\": [\"architecture\", \"backend\"],\n    \"importance_score\": 0.9\n  },\n  \"reasoning_trace\": \"Extracted architectural convention established during refactoring session\"\n}\n```",
+            "language": "json"
+          },
+          {
+            "code": "Incoming User Message:\n\"We migrated our cache from Redis to Dragonfly on port 6379.\"\n\nMemory Extraction Decision:\n{\n  \"action\": \"UPDATE\",\n  \"target_memory_id\": \"mem_infra_cache_081\",\n  \"memory_note\": {\n    \"subject\": \"infrastructure.caching\",\n    \"fact\": \"Primary cache runs Dragonfly on port 6379 (migrated from Redis)\",\n    \"tags\": [\"infra\", \"caching\", \"dragonfly\"]\n  },\n  \"reasoning\": \"Modifies existing caching specification without creating duplicate memory\"\n}",
+            "content": "```\nIncoming User Message:\n\"We migrated our cache from Redis to Dragonfly on port 6379.\"\n\nMemory Extraction Decision:\n{\n  \"action\": \"UPDATE\",\n  \"target_memory_id\": \"mem_infra_cache_081\",\n  \"memory_note\": {\n    \"subject\": \"infrastructure.caching\",\n    \"fact\": \"Primary cache runs Dragonfly on port 6379 (migrated from Redis)\",\n    \"tags\": [\"infra\", \"caching\", \"dragonfly\"]\n  },\n  \"reasoning\": \"Modifies existing caching specification without creating duplicate memory\"\n}\n```",
+            "language": "none"
+          },
+          {
+            "code": "Naive Approach:\n[Raw Logs + Entire Codebase + Old Chats] \u2500\u2500> [LLM Context Window] \u2500\u2500> Context Rot & High Cost\n\nThe Unified Cognitive Stack:\n[Persistent Memory Substrate] \u2500\u2500(Selective Retrieval)\u2500\u2500> [Dynamic Context Engine] \u2500\u2500> [Deterministic Execution]\n         \u25b2                                                               \u2502\n         \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500(Async Consolidation Loop)\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518",
+            "content": "```\nNaive Approach:\n[Raw Logs + Entire Codebase + Old Chats] \u2500\u2500> [LLM Context Window] \u2500\u2500> Context Rot & High Cost\n\nThe Unified Cognitive Stack:\n[Persistent Memory Substrate] \u2500\u2500(Selective Retrieval)\u2500\u2500> [Dynamic Context Engine] \u2500\u2500> [Deterministic Execution]\n         \u25b2                                                               \u2502\n         \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500(Async Consolidation Loop)\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n```",
+            "language": "none"
+          },
+          {
+            "code": "\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 1. IMMUTABLE SYSTEM PREFIX (Byte 0)                                    \u2502\n\u2502    Root identity, safety rules, tool definitions, output schemas.       \u2502\n\u2502    [100% KV-Cache Hit Rate - Never changes across turns]               \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 2. RELEVANT MEMORY & REPO SLICE                                        \u2502\n\u2502    Scope-elided AST maps, top-K retrieved long-term facts.             \u2502\n\u2502    [Semi-Static Layer - Cached across related sub-tasks]                \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 3. APPEND-ONLY DYNAMIC TAIL                                            \u2502\n\u2502    User query, immediate scratchpad, live tool execution output.      \u2502\n\u2502    [Volatile Layer - Appended strictly at the end]                     \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518",
+            "content": "```\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 1. IMMUTABLE SYSTEM PREFIX (Byte 0)                                    \u2502\n\u2502    Root identity, safety rules, tool definitions, output schemas.       \u2502\n\u2502    [100% KV-Cache Hit Rate - Never changes across turns]               \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 2. RELEVANT MEMORY & REPO SLICE                                        \u2502\n\u2502    Scope-elided AST maps, top-K retrieved long-term facts.             \u2502\n\u2502    [Semi-Static Layer - Cached across related sub-tasks]                \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 3. APPEND-ONLY DYNAMIC TAIL                                            \u2502\n\u2502    User query, immediate scratchpad, live tool execution output.      \u2502\n\u2502    [Volatile Layer - Appended strictly at the end]                     \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n```",
+            "language": "none"
+          },
+          {
+            "code": "# Raw file on disk (150 lines, ~1,200 tokens)\nclass PaymentProcessor:\n    def __init__(self, api_key: str):\n        self.api_key = api_key\n        self.client = StripeClient(api_key)\n        # ... 40 lines of internal setup ...\n\n    def process_charge(self, user_id: str, amount_cents: int) -> ChargeResult:\n        # ... 80 lines of validation, network retry, telemetry ...\n        return result\n\n# Scope-Elided AST injected into Context (15 lines, ~95 tokens)\nclass PaymentProcessor:\n    def __init__(self, api_key: str): ...\n    def process_charge(self, user_id: str, amount_cents: int) -> ChargeResult: ...",
+            "content": "```python\n# Raw file on disk (150 lines, ~1,200 tokens)\nclass PaymentProcessor:\n    def __init__(self, api_key: str):\n        self.api_key = api_key\n        self.client = StripeClient(api_key)\n        # ... 40 lines of internal setup ...\n\n    def process_charge(self, user_id: str, amount_cents: int) -> ChargeResult:\n        # ... 80 lines of validation, network retry, telemetry ...\n        return result\n\n# Scope-Elided AST injected into Context (15 lines, ~95 tokens)\nclass PaymentProcessor:\n    def __init__(self, api_key: str): ...\n    def process_charge(self, user_id: str, amount_cents: int) -> ChargeResult: ...\n```",
+            "language": "python"
+          }
+        ],
+        "urls": [
+          {
+            "text": "https://t.me/+-e0O9zoaMvQ1NjAy"
+          },
+          {
+            "text": "https://t.me/+-e0O9zoaMvQ1NjAy"
+          }
+        ]
+      },
+      "plain_text": "Every builder using LLMs in production encounters the exact same silent wall\nYou open a new chat session with Claude Fable 5, GPT-5.6, or Gemini 3.7 Flash, and you are forced to re-explain your project architecture, coding conventions, and database schema from scratch. By message 15, the model starts losing track of constraints established in message 2. By message 30, it hallucinates imports, contradicts its own earlier code, and burns thousands of unnecessary tokens on every single turn\nThe natural instinct is to rely on massive 1M+ token context windows by dumping entire repositories and documentation dumps into the prompt\nThen the second failure hits: the model drowns in its own context. Critical rules get ignored in the middle of the payload, latency skyrockets, and your monthly API invoice quadruples\nThe issue is not model intelligence. The issue is an architectural misunderstanding: treating the context window like a permanent hard drive instead of volatile RAM\nReal agent performance requires two distinct, synchronized disciplines working together:\nContext Engineering is the volatile working memory (GPU RAM) of the model: it orchestrates what enters the active inference window right now\nMemory Engineering is the non-volatile secondary storage (SSD / Database) of the agent: it governs what knowledge survives, adapts, and evolves across sessions\nWhen combined, they form a dual-loop cognitive architecture that gives LLMs persistent cross-session memory while cutting active token consumption by up to 60%\n \n \n1. Context Engineering: Orchestrating the Active Inference Window\nContext Engineering is the discipline of maximizing reasoning fidelity and throughput within the active inference window for a single execution turn. It treats prompt tokens as scarce, expensive GPU registers that must be structured deterministically\nThe KV-Cache Friendly Prompt Layout\nCurrent frontier models such as Claude Sonnet 5, Claude Opus 5, GPT-5.6, Gemini 3.1 Pro, and DeepSeek-V4 utilize prompt prefix caching. When an input prompt shares an identical token prefix with previous requests, the model reuses pre-computed Key-Value (KV) matrices directly from cache, slashing latency and cutting input token costs by up to 90%\nDynamic prompt formatting, shifting system instructions, or random tool ordering breaks prefix cache alignment instantly\nTo achieve consistent 90%+ cache hit rates in production, context engineering enforces a strict three-tier prompt structure:\n \nIngest-with-Provenance: AST Code Parsing and Scope-Aware Elision\nDumping raw source code files into context windows wastes token budgets on internal syntax boilerplate\nProduction tools like Aider and Claude Code utilize Tree-sitter to parse source files into structured Abstract Syntax Trees (ASTs). This pipeline extracts function signatures, class interfaces, and import dependencies while stripping out internal implementation bodies:\n \nBy coupling AST parsing with Personalized PageRank algorithms over dependency graphs, the agent loads a complete architectural map of 100+ files into less than 3,000 tokens.\n \n2. Memory Engineering: Managing Long-Term Knowledge Evolution\nIf Context Engineering manages the agent's working scratchpad, Memory Engineering builds its persistent brain. It operates entirely outside the active context window, governing how information is extracted, structured, updated, and forgotten over time.\nThe 4-Tier Memory Hierarchy for Autonomous Agents\nTo balance operational speed with long-term retention, production agent systems categorize knowledge into four distinct tiers:\n \nAtomic Note Extraction and the CRUD Framework\nNaive memory systems blindly save raw chat transcripts into a vector database. This leads to retrieval drift, where semantically similar but outdated conversations pollute future queries.\nAdvanced memory systems (such as A-MEM, Zep, and Memory-R1) process incoming events into self-contained atomic notes using four explicit CRUD operations:\nADD: Creates a new atomic memory record when incoming information is completely novel.\nUPDATE: Merges new details into an existing record without creating duplicate entries.\nDELETE: Invalidates or removes historical records that are explicitly contradicted by new facts.\nNOOP: Discards transient noise, conversational pleasantries, and temporary variables.\n \nControlled Forgetting: Why Agents Must Forget to Stay Smart\nHuman intelligence relies on forgetting irrelevant details to generalize concepts. Agents that remember everything inevitably suffer from embedding saturation and context clutter.\nMemory engineering applies exponential decay functions inspired by the Ebbinghaus forgetting curve. Every stored memory receives a dynamic retention score based on three variables:\nSemantic Relevance: Cosine similarity between the memory and current task\nAccess Frequency: How often the memory is recalled and verified\nTemporal Recency: Time elapsed since the memory was last accessed\nMemories that go unreferenced naturally decay. When an item falls below an eviction threshold, the system archives or deletes it, ensuring the active memory index remains razor-sharp.\n \n3. The Unified Cognitive Stack: Combining Context and Memory in Runtime\nUsing Context Engineering or Memory Engineering in isolation creates severe structural bottlenecks:\nContext without Memory creates an amnesiac agent that burns tokens re-learning the same environment on every run.\nMemory without Context creates an uncurated retrieval swamp that poisons the model's active reasoning window with conflicting facts.\nTrue agent performance emerges from orchestrating them together through a Dual-Loop Cognitive Architecture\n \nHow the Dual-Loop Architecture Works:\n1. The Fast Inner Loop (Active Context Engine):\nRuns in milliseconds during live user interactions\nPulls only the top-K most relevant memory nodes using hybrid retrieval (Dense Vector + BM25 Keyword + Knowledge Graph traversal)\nRuns Maximal Marginal Relevance (MMR) to eliminate redundant chunks\nInjects the compressed memory slice into the dynamic tail of the KV-cached prompt template\nExecutes inference and dispatches tools without latency overhead\n2. The Slow Outer Loop (Background Memory Engine):\nRuns asynchronously in the background when the agent is idle\nAnalyzes raw execution logs from the fast loop\nExecutes atomic note extraction, updates entity relations in the knowledge graph, and recalculates memory decay scores\nPrunes obsolete memories and resolves contradictions without delaying user responses\n \n4. Production Implementation Blueprint: 4 Steps to Build the Stack\nBuilding this unified cognitive architecture in your own AI applications does not require complex infrastructure. You can implement this system using standard open-source tools:\nStep 1: Lock the Byte-0 System Prompt for 90%+ Prefix Caching\nPlace all system policies, identity instructions, and tool JSON definitions at the very beginning of your prompt template. Never dynamically alter this block between turns. Ensure tool specifications use deterministic key ordering\nStep 2: Implement Tree-sitter Code Map Extraction\nReplace raw file loading with signature extraction. Parse project directories into symbol tables containing only class names, function signatures, and docstrings. Inject full file contents only when the agent explicitly requests them via tool calls\nStep 3: Implement Post-Session Fact Extraction\nAt the end of each session, trigger a lightweight extraction call using structured JSON output to distill durable facts into an atomic storage table (SQLite or Qdrant):\n \nStep 4: Hybrid Multi-Index Retrieval with Maximal Marginal Relevance\nWhen building prompts for a new query, retrieve candidate memories across three channels: dense vector search (semantic similarity), SQLite FTS5 (exact keyword match), and graph links (entity relations). Pass the candidates through an MMR re-ranker with a diversity parameter of $\\lambda = 0.7$ to eliminate near-duplicate memories before injecting them into the context window\n \n5. The 2026 Engineering Stack & Key Takeaways\nThe autonomous agent ecosystem in mid-2026 has converged around specialized tools and models designed for this unified architecture:\nFrontier Reasoning Models: Fable 5, Claude Opus 5, GPT-5.6, Gemini 3.7 Flash, and DeepSeek-V4 provide native prefix caching, low-latency reasoning traces, and high-fidelity tool dispatching.\nLetta (formerly MemGPT): Implements operating-system-level memory management with explicit core, archival, and recall tiers.\nZep Memory: Temporal knowledge graph system providing automated fact invalidation and relationship tracking.\nCognee & Microsoft GraphRAG: Graph-native pipelines connecting unstructured text into interconnected semantic entities.\nAider & Claude Code: Gold standards for real-time repository mapping, scope elision, and KV-cache optimization.\nCore Architectural Rules to Remember:\nContext is RAM, Memory is SSD: Never treat context windows as long-term databases. Use context for active reasoning, and external storage for persistence\nCache the Prefix, Vary the Tail: Keep system instructions immutable at Byte 0 to maximize KV-cache hits and minimize latency\nCompress Before Injection: Parse structured data with ASTs and scope elision rather than dumping raw logs into prompts\nActive Curation Beats Raw Volume: A curated memory index of 50 atomic facts outperforms an unmanaged vector store of 50,000 conversational fragments\nDecouple Execution from Maintenance: Run reasoning in the fast inner loop, and memory consolidation in the asynchronous outer loop\nMastering the intersection of Context Engineering and Memory Engineering is what separates brittle toy demos from enterprise-grade autonomous software agents.\n \nadditional alpha - https://t.me/+-e0O9zoaMvQ1NjAy\n~marfin",
+      "preview_text": "Every builder using LLMs in production encounters the exact same silent wall\nYou open a new chat session with Claude Fable 5, GPT-5.6, or Gemini 3.7 Flash, and you are forced to re-explain your",
+      "title": "Autonomous Agent Architecture: Unifying Context Engineering and Memory Engineering"
+    },
+    "article_title": {
+      "title": "Autonomous Agent Architecture: Unifying Context Engineering and Memory Engineering"
+    },
+    "attachments": null,
+    "author_id": "1172526145272762368",
+    "card_uri": null,
+    "community_id": null,
+    "context_annotations": null,
+    "conversation_id": "2088234998654472340",
+    "created_at": "2026-08-14T12:03:15.000Z",
+    "display_text_range": null,
+    "edit_controls": null,
+    "edit_history_post_ids": [
+      "2088234998654472340"
+    ],
+    "entities": {
+      "cashtags": null,
+      "hashtags": null,
+      "mentions": null,
+      "urls": [
+        {
+          "end": 23,
+          "start": 0,
+          "description": null,
+          "display_url": "x.com/i/article/2088\u2026",
+          "expanded_url": "https://x.com/i/article/2088025394175762432",
+          "images": null,
+          "media_key": null,
+          "status": 500,
+          "title": null,
+          "unwound_url": "https://x.com/i/article/2088025394175762432",
+          "url": "https://t.co/ujFEK89wF1"
+        }
+      ]
+    },
+    "geo": null,
+    "id": "2088234998654472340",
+    "in_reply_to_user_id": null,
+    "lang": null,
+    "matched_media_notes": null,
+    "media_metadata": null,
+    "non_public_metrics": null,
+    "note_post": null,
+    "note_request_suggestions": null,
+    "organic_metrics": null,
+    "paid_partnership": null,
+    "possibly_sensitive": null,
+    "promoted_metrics": null,
+    "public_metrics": null,
+    "referenced_posts": null,
+    "reply_settings": null,
+    "scopes": null,
+    "source": null,
+    "suggested_source_links": null,
+    "suggested_source_links_with_counts": null,
+    "text": "https://t.co/ujFEK89wF1",
+    "username": null,
+    "withheld": null
+  },
+  "posts": [
+    {
+      "article": {
+        "cover_media": "3_2088050056234442752",
+        "entities": {
+          "code": [
+            {
+              "code": "\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 FAST INNER LOOP (Real-Time Turn Execution - Sub-Second Latency)       \u2502\n\u2502                                                                        \u2502\n\u2502  User Query \u2500\u2500> [Hybrid Search: Vector + Graph + Keyword]              \u2502\n\u2502                         \u2502                                              \u2502\n\u2502                         \u25bc                                              \u2502\n\u2502                 [MMR Diversity Re-Ranking]                             \u2502\n\u2502                         \u2502                                              \u2502\n\u2502                         \u25bc                                              \u2502\n\u2502                 [Scope AST & Budget Allocator]                         \u2502\n\u2502                         \u2502                                              \u2502\n\u2502                         \u25bc                                              \u2502\n\u2502  Fixed Prefix \u2500\u2500> [Structured KV-Cache Prompt] \u2500\u2500> [LLM Inference]    \u2502\n\u2502                                                          \u2502             \u2502\n\u2502                                                          \u25bc             \u2502\n\u2502                                                  [Tool Execution]      \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n                                                           \u2502 Raw Traces\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u25bc\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 SLOW OUTER LOOP (Asynchronous Background Maintenance - Zero User Wait) \u2502\n\u2502                                                                        \u2502\n\u2502  Raw Traces \u2500\u2500> [Atomic Fact Extractor: ADD / UPDATE / DELETE]         \u2502\n\u2502                        \u2502                                               \u2502\n\u2502                        \u25bc                                               \u2502\n\u2502                 [Knowledge Graph Entity Linking]                       \u2502\n\u2502                        \u2502                                               \u2502\n\u2502                        \u25bc                                               \u2502\n\u2502                 [Ebbinghaus Decay Scoring & Eviction]                  \u2502\n\u2502                        \u2502                                               \u2502\n\u2502                        \u25bc                                               \u2502\n\u2502                 [Consolidated Long-Term Memory Substrate]              \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518",
+              "content": "```\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 FAST INNER LOOP (Real-Time Turn Execution - Sub-Second Latency)       \u2502\n\u2502                                                                        \u2502\n\u2502  User Query \u2500\u2500> [Hybrid Search: Vector + Graph + Keyword]              \u2502\n\u2502                         \u2502                                              \u2502\n\u2502                         \u25bc                                              \u2502\n\u2502                 [MMR Diversity Re-Ranking]                             \u2502\n\u2502                         \u2502                                              \u2502\n\u2502                         \u25bc                                              \u2502\n\u2502                 [Scope AST & Budget Allocator]                         \u2502\n\u2502                         \u2502                                              \u2502\n\u2502                         \u25bc                                              \u2502\n\u2502  Fixed Prefix \u2500\u2500> [Structured KV-Cache Prompt] \u2500\u2500> [LLM Inference]    \u2502\n\u2502                                                          \u2502             \u2502\n\u2502                                                          \u25bc             \u2502\n\u2502                                                  [Tool Execution]      \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n                                                           \u2502 Raw Traces\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u25bc\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 SLOW OUTER LOOP (Asynchronous Background Maintenance - Zero User Wait) \u2502\n\u2502                                                                        \u2502\n\u2502  Raw Traces \u2500\u2500> [Atomic Fact Extractor: ADD / UPDATE / DELETE]         \u2502\n\u2502                        \u2502                                               \u2502\n\u2502                        \u25bc                                               \u2502\n\u2502                 [Knowledge Graph Entity Linking]                       \u2502\n\u2502                        \u2502                                               \u2502\n\u2502                        \u25bc                                               \u2502\n\u2502                 [Ebbinghaus Decay Scoring & Eviction]                  \u2502\n\u2502                        \u2502                                               \u2502\n\u2502                        \u25bc                                               \u2502\n\u2502                 [Consolidated Long-Term Memory Substrate]              \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n```",
+              "language": "none"
+            },
+            {
+              "code": "",
+              "content": "| Memory Tier | Operational Role | Storage Substrate | Update Mechanism | Lifespan |\n| :--- | :--- | :--- | :--- | :--- |\n| **Working Memory** | Active prompt context, live scratchpad, tool outputs | GPU RAM / KV-Cache | Autoregressive token generation | Single inference turn |\n| **Short-Term Episodic** | Chronological record of recent user turns and tool logs | In-memory KV store / SQLite | Synchronous append per turn | Single working session |\n| **Long-Term Semantic** | Consolidated domain facts, user preferences, system models | Hybrid Vector DB + Knowledge Graph | Asynchronous offline reflection | Persistent cross-session |\n| **Procedural Memory** | Validated tool workflows, self-correction rules, execution skills | Versioned policy files / Git repo | Reflection trajectory updates | Permanent system lifecycle |",
+              "language": "none"
+            },
+            {
+              "code": "{\n  \"action\": \"ADD\",\n  \"target_memory_id\": null,\n  \"memory_note\": {\n    \"subject\": \"codebase.convention\",\n    \"fact_contents\": \"All database queries must use async SQLAlchemy sessions with explicit commit blocks\",\n    \"keywords\": [\"database\", \"sqlalchemy\", \"async\"],\n    \"tags\": [\"architecture\", \"backend\"],\n    \"importance_score\": 0.9\n  },\n  \"reasoning_trace\": \"Extracted architectural convention established during refactoring session\"\n}",
+              "content": "```json\n{\n  \"action\": \"ADD\",\n  \"target_memory_id\": null,\n  \"memory_note\": {\n    \"subject\": \"codebase.convention\",\n    \"fact_contents\": \"All database queries must use async SQLAlchemy sessions with explicit commit blocks\",\n    \"keywords\": [\"database\", \"sqlalchemy\", \"async\"],\n    \"tags\": [\"architecture\", \"backend\"],\n    \"importance_score\": 0.9\n  },\n  \"reasoning_trace\": \"Extracted architectural convention established during refactoring session\"\n}\n```",
+              "language": "json"
+            },
+            {
+              "code": "Incoming User Message:\n\"We migrated our cache from Redis to Dragonfly on port 6379.\"\n\nMemory Extraction Decision:\n{\n  \"action\": \"UPDATE\",\n  \"target_memory_id\": \"mem_infra_cache_081\",\n  \"memory_note\": {\n    \"subject\": \"infrastructure.caching\",\n    \"fact\": \"Primary cache runs Dragonfly on port 6379 (migrated from Redis)\",\n    \"tags\": [\"infra\", \"caching\", \"dragonfly\"]\n  },\n  \"reasoning\": \"Modifies existing caching specification without creating duplicate memory\"\n}",
+              "content": "```\nIncoming User Message:\n\"We migrated our cache from Redis to Dragonfly on port 6379.\"\n\nMemory Extraction Decision:\n{\n  \"action\": \"UPDATE\",\n  \"target_memory_id\": \"mem_infra_cache_081\",\n  \"memory_note\": {\n    \"subject\": \"infrastructure.caching\",\n    \"fact\": \"Primary cache runs Dragonfly on port 6379 (migrated from Redis)\",\n    \"tags\": [\"infra\", \"caching\", \"dragonfly\"]\n  },\n  \"reasoning\": \"Modifies existing caching specification without creating duplicate memory\"\n}\n```",
+              "language": "none"
+            },
+            {
+              "code": "Naive Approach:\n[Raw Logs + Entire Codebase + Old Chats] \u2500\u2500> [LLM Context Window] \u2500\u2500> Context Rot & High Cost\n\nThe Unified Cognitive Stack:\n[Persistent Memory Substrate] \u2500\u2500(Selective Retrieval)\u2500\u2500> [Dynamic Context Engine] \u2500\u2500> [Deterministic Execution]\n         \u25b2                                                               \u2502\n         \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500(Async Consolidation Loop)\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518",
+              "content": "```\nNaive Approach:\n[Raw Logs + Entire Codebase + Old Chats] \u2500\u2500> [LLM Context Window] \u2500\u2500> Context Rot & High Cost\n\nThe Unified Cognitive Stack:\n[Persistent Memory Substrate] \u2500\u2500(Selective Retrieval)\u2500\u2500> [Dynamic Context Engine] \u2500\u2500> [Deterministic Execution]\n         \u25b2                                                               \u2502\n         \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500(Async Consolidation Loop)\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n```",
+              "language": "none"
+            },
+            {
+              "code": "\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 1. IMMUTABLE SYSTEM PREFIX (Byte 0)                                    \u2502\n\u2502    Root identity, safety rules, tool definitions, output schemas.       \u2502\n\u2502    [100% KV-Cache Hit Rate - Never changes across turns]               \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 2. RELEVANT MEMORY & REPO SLICE                                        \u2502\n\u2502    Scope-elided AST maps, top-K retrieved long-term facts.             \u2502\n\u2502    [Semi-Static Layer - Cached across related sub-tasks]                \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 3. APPEND-ONLY DYNAMIC TAIL                                            \u2502\n\u2502    User query, immediate scratchpad, live tool execution output.      \u2502\n\u2502    [Volatile Layer - Appended strictly at the end]                     \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518",
+              "content": "```\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 1. IMMUTABLE SYSTEM PREFIX (Byte 0)                                    \u2502\n\u2502    Root identity, safety rules, tool definitions, output schemas.       \u2502\n\u2502    [100% KV-Cache Hit Rate - Never changes across turns]               \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 2. RELEVANT MEMORY & REPO SLICE                                        \u2502\n\u2502    Scope-elided AST maps, top-K retrieved long-term facts.             \u2502\n\u2502    [Semi-Static Layer - Cached across related sub-tasks]                \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 3. APPEND-ONLY DYNAMIC TAIL                                            \u2502\n\u2502    User query, immediate scratchpad, live tool execution output.      \u2502\n\u2502    [Volatile Layer - Appended strictly at the end]                     \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n```",
+              "language": "none"
+            },
+            {
+              "code": "# Raw file on disk (150 lines, ~1,200 tokens)\nclass PaymentProcessor:\n    def __init__(self, api_key: str):\n        self.api_key = api_key\n        self.client = StripeClient(api_key)\n        # ... 40 lines of internal setup ...\n\n    def process_charge(self, user_id: str, amount_cents: int) -> ChargeResult:\n        # ... 80 lines of validation, network retry, telemetry ...\n        return result\n\n# Scope-Elided AST injected into Context (15 lines, ~95 tokens)\nclass PaymentProcessor:\n    def __init__(self, api_key: str): ...\n    def process_charge(self, user_id: str, amount_cents: int) -> ChargeResult: ...",
+              "content": "```python\n# Raw file on disk (150 lines, ~1,200 tokens)\nclass PaymentProcessor:\n    def __init__(self, api_key: str):\n        self.api_key = api_key\n        self.client = StripeClient(api_key)\n        # ... 40 lines of internal setup ...\n\n    def process_charge(self, user_id: str, amount_cents: int) -> ChargeResult:\n        # ... 80 lines of validation, network retry, telemetry ...\n        return result\n\n# Scope-Elided AST injected into Context (15 lines, ~95 tokens)\nclass PaymentProcessor:\n    def __init__(self, api_key: str): ...\n    def process_charge(self, user_id: str, amount_cents: int) -> ChargeResult: ...\n```",
+              "language": "python"
+            }
+          ],
+          "urls": [
+            {
+              "text": "https://t.me/+-e0O9zoaMvQ1NjAy"
+            },
+            {
+              "text": "https://t.me/+-e0O9zoaMvQ1NjAy"
+            }
+          ]
+        },
+        "plain_text": "Every builder using LLMs in production encounters the exact same silent wall\nYou open a new chat session with Claude Fable 5, GPT-5.6, or Gemini 3.7 Flash, and you are forced to re-explain your project architecture, coding conventions, and database schema from scratch. By message 15, the model starts losing track of constraints established in message 2. By message 30, it hallucinates imports, contradicts its own earlier code, and burns thousands of unnecessary tokens on every single turn\nThe natural instinct is to rely on massive 1M+ token context windows by dumping entire repositories and documentation dumps into the prompt\nThen the second failure hits: the model drowns in its own context. Critical rules get ignored in the middle of the payload, latency skyrockets, and your monthly API invoice quadruples\nThe issue is not model intelligence. The issue is an architectural misunderstanding: treating the context window like a permanent hard drive instead of volatile RAM\nReal agent performance requires two distinct, synchronized disciplines working together:\nContext Engineering is the volatile working memory (GPU RAM) of the model: it orchestrates what enters the active inference window right now\nMemory Engineering is the non-volatile secondary storage (SSD / Database) of the agent: it governs what knowledge survives, adapts, and evolves across sessions\nWhen combined, they form a dual-loop cognitive architecture that gives LLMs persistent cross-session memory while cutting active token consumption by up to 60%\n \n \n1. Context Engineering: Orchestrating the Active Inference Window\nContext Engineering is the discipline of maximizing reasoning fidelity and throughput within the active inference window for a single execution turn. It treats prompt tokens as scarce, expensive GPU registers that must be structured deterministically\nThe KV-Cache Friendly Prompt Layout\nCurrent frontier models such as Claude Sonnet 5, Claude Opus 5, GPT-5.6, Gemini 3.1 Pro, and DeepSeek-V4 utilize prompt prefix caching. When an input prompt shares an identical token prefix with previous requests, the model reuses pre-computed Key-Value (KV) matrices directly from cache, slashing latency and cutting input token costs by up to 90%\nDynamic prompt formatting, shifting system instructions, or random tool ordering breaks prefix cache alignment instantly\nTo achieve consistent 90%+ cache hit rates in production, context engineering enforces a strict three-tier prompt structure:\n \nIngest-with-Provenance: AST Code Parsing and Scope-Aware Elision\nDumping raw source code files into context windows wastes token budgets on internal syntax boilerplate\nProduction tools like Aider and Claude Code utilize Tree-sitter to parse source files into structured Abstract Syntax Trees (ASTs). This pipeline extracts function signatures, class interfaces, and import dependencies while stripping out internal implementation bodies:\n \nBy coupling AST parsing with Personalized PageRank algorithms over dependency graphs, the agent loads a complete architectural map of 100+ files into less than 3,000 tokens.\n \n2. Memory Engineering: Managing Long-Term Knowledge Evolution\nIf Context Engineering manages the agent's working scratchpad, Memory Engineering builds its persistent brain. It operates entirely outside the active context window, governing how information is extracted, structured, updated, and forgotten over time.\nThe 4-Tier Memory Hierarchy for Autonomous Agents\nTo balance operational speed with long-term retention, production agent systems categorize knowledge into four distinct tiers:\n \nAtomic Note Extraction and the CRUD Framework\nNaive memory systems blindly save raw chat transcripts into a vector database. This leads to retrieval drift, where semantically similar but outdated conversations pollute future queries.\nAdvanced memory systems (such as A-MEM, Zep, and Memory-R1) process incoming events into self-contained atomic notes using four explicit CRUD operations:\nADD: Creates a new atomic memory record when incoming information is completely novel.\nUPDATE: Merges new details into an existing record without creating duplicate entries.\nDELETE: Invalidates or removes historical records that are explicitly contradicted by new facts.\nNOOP: Discards transient noise, conversational pleasantries, and temporary variables.\n \nControlled Forgetting: Why Agents Must Forget to Stay Smart\nHuman intelligence relies on forgetting irrelevant details to generalize concepts. Agents that remember everything inevitably suffer from embedding saturation and context clutter.\nMemory engineering applies exponential decay functions inspired by the Ebbinghaus forgetting curve. Every stored memory receives a dynamic retention score based on three variables:\nSemantic Relevance: Cosine similarity between the memory and current task\nAccess Frequency: How often the memory is recalled and verified\nTemporal Recency: Time elapsed since the memory was last accessed\nMemories that go unreferenced naturally decay. When an item falls below an eviction threshold, the system archives or deletes it, ensuring the active memory index remains razor-sharp.\n \n3. The Unified Cognitive Stack: Combining Context and Memory in Runtime\nUsing Context Engineering or Memory Engineering in isolation creates severe structural bottlenecks:\nContext without Memory creates an amnesiac agent that burns tokens re-learning the same environment on every run.\nMemory without Context creates an uncurated retrieval swamp that poisons the model's active reasoning window with conflicting facts.\nTrue agent performance emerges from orchestrating them together through a Dual-Loop Cognitive Architecture\n \nHow the Dual-Loop Architecture Works:\n1. The Fast Inner Loop (Active Context Engine):\nRuns in milliseconds during live user interactions\nPulls only the top-K most relevant memory nodes using hybrid retrieval (Dense Vector + BM25 Keyword + Knowledge Graph traversal)\nRuns Maximal Marginal Relevance (MMR) to eliminate redundant chunks\nInjects the compressed memory slice into the dynamic tail of the KV-cached prompt template\nExecutes inference and dispatches tools without latency overhead\n2. The Slow Outer Loop (Background Memory Engine):\nRuns asynchronously in the background when the agent is idle\nAnalyzes raw execution logs from the fast loop\nExecutes atomic note extraction, updates entity relations in the knowledge graph, and recalculates memory decay scores\nPrunes obsolete memories and resolves contradictions without delaying user responses\n \n4. Production Implementation Blueprint: 4 Steps to Build the Stack\nBuilding this unified cognitive architecture in your own AI applications does not require complex infrastructure. You can implement this system using standard open-source tools:\nStep 1: Lock the Byte-0 System Prompt for 90%+ Prefix Caching\nPlace all system policies, identity instructions, and tool JSON definitions at the very beginning of your prompt template. Never dynamically alter this block between turns. Ensure tool specifications use deterministic key ordering\nStep 2: Implement Tree-sitter Code Map Extraction\nReplace raw file loading with signature extraction. Parse project directories into symbol tables containing only class names, function signatures, and docstrings. Inject full file contents only when the agent explicitly requests them via tool calls\nStep 3: Implement Post-Session Fact Extraction\nAt the end of each session, trigger a lightweight extraction call using structured JSON output to distill durable facts into an atomic storage table (SQLite or Qdrant):\n \nStep 4: Hybrid Multi-Index Retrieval with Maximal Marginal Relevance\nWhen building prompts for a new query, retrieve candidate memories across three channels: dense vector search (semantic similarity), SQLite FTS5 (exact keyword match), and graph links (entity relations). Pass the candidates through an MMR re-ranker with a diversity parameter of $\\lambda = 0.7$ to eliminate near-duplicate memories before injecting them into the context window\n \n5. The 2026 Engineering Stack & Key Takeaways\nThe autonomous agent ecosystem in mid-2026 has converged around specialized tools and models designed for this unified architecture:\nFrontier Reasoning Models: Fable 5, Claude Opus 5, GPT-5.6, Gemini 3.7 Flash, and DeepSeek-V4 provide native prefix caching, low-latency reasoning traces, and high-fidelity tool dispatching.\nLetta (formerly MemGPT): Implements operating-system-level memory management with explicit core, archival, and recall tiers.\nZep Memory: Temporal knowledge graph system providing automated fact invalidation and relationship tracking.\nCognee & Microsoft GraphRAG: Graph-native pipelines connecting unstructured text into interconnected semantic entities.\nAider & Claude Code: Gold standards for real-time repository mapping, scope elision, and KV-cache optimization.\nCore Architectural Rules to Remember:\nContext is RAM, Memory is SSD: Never treat context windows as long-term databases. Use context for active reasoning, and external storage for persistence\nCache the Prefix, Vary the Tail: Keep system instructions immutable at Byte 0 to maximize KV-cache hits and minimize latency\nCompress Before Injection: Parse structured data with ASTs and scope elision rather than dumping raw logs into prompts\nActive Curation Beats Raw Volume: A curated memory index of 50 atomic facts outperforms an unmanaged vector store of 50,000 conversational fragments\nDecouple Execution from Maintenance: Run reasoning in the fast inner loop, and memory consolidation in the asynchronous outer loop\nMastering the intersection of Context Engineering and Memory Engineering is what separates brittle toy demos from enterprise-grade autonomous software agents.\n \nadditional alpha - https://t.me/+-e0O9zoaMvQ1NjAy\n~marfin",
+        "preview_text": "Every builder using LLMs in production encounters the exact same silent wall\nYou open a new chat session with Claude Fable 5, GPT-5.6, or Gemini 3.7 Flash, and you are forced to re-explain your",
+        "title": "Autonomous Agent Architecture: Unifying Context Engineering and Memory Engineering"
+      },
+      "article_title": {
+        "title": "Autonomous Agent Architecture: Unifying Context Engineering and Memory Engineering"
+      },
+      "attachments": null,
+      "author_id": "1172526145272762368",
+      "card_uri": null,
+      "community_id": null,
+      "context_annotations": null,
+      "conversation_id": "2088234998654472340",
+      "created_at": "2026-08-14T12:03:15.000Z",
+      "display_text_range": null,
+      "edit_controls": null,
+      "edit_history_post_ids": [
+        "2088234998654472340"
+      ],
+      "entities": {
+        "cashtags": null,
+        "hashtags": null,
+        "mentions": null,
+        "urls": [
+          {
+            "end": 23,
+            "start": 0,
+            "description": null,
+            "display_url": "x.com/i/article/2088\u2026",
+            "expanded_url": "https://x.com/i/article/2088025394175762432",
+            "images": null,
+            "media_key": null,
+            "status": 500,
+            "title": null,
+            "unwound_url": "https://x.com/i/article/2088025394175762432",
+            "url": "https://t.co/ujFEK89wF1"
+          }
+        ]
+      },
+      "geo": null,
+      "id": "2088234998654472340",
+      "in_reply_to_user_id": null,
+      "lang": null,
+      "matched_media_notes": null,
+      "media_metadata": null,
+      "non_public_metrics": null,
+      "note_post": null,
+      "note_request_suggestions": null,
+      "organic_metrics": null,
+      "paid_partnership": null,
+      "possibly_sensitive": null,
+      "promoted_metrics": null,
+      "public_metrics": null,
+      "referenced_posts": null,
+      "reply_settings": null,
+      "scopes": null,
+      "source": null,
+      "suggested_source_links": null,
+      "suggested_source_links_with_counts": null,
+      "text": "https://t.co/ujFEK89wF1",
+      "username": null,
+      "withheld": null
+    },
+    {
+      "article": null,
+      "article_title": null,
+      "attachments": null,
+      "author_id": "1172526145272762368",
+      "card_uri": null,
+      "community_id": null,
+      "context_annotations": null,
+      "conversation_id": "2088234998654472340",
+      "created_at": "2026-08-14T12:06:55.000Z",
+      "display_text_range": null,
+      "edit_controls": null,
+      "edit_history_post_ids": [
+        "2088235919434293694"
+      ],
+      "entities": {
+        "cashtags": null,
+        "hashtags": null,
+        "mentions": [
+          {
+            "end": 11,
+            "start": 0,
+            "id": "1790585810644803585",
+            "username": "Lummox_eth"
+          }
+        ],
+        "urls": null
+      },
+      "geo": null,
+      "id": "2088235919434293694",
+      "in_reply_to_user_id": "1790585810644803585",
+      "lang": null,
+      "matched_media_notes": null,
+      "media_metadata": null,
+      "non_public_metrics": null,
+      "note_post": null,
+      "note_request_suggestions": null,
+      "organic_metrics": null,
+      "paid_partnership": null,
+      "possibly_sensitive": null,
+      "promoted_metrics": null,
+      "public_metrics": null,
+      "referenced_posts": [
+        {
+          "id": "2088235589489344865",
+          "type": "replied_to"
+        }
+      ],
+      "reply_settings": null,
+      "scopes": null,
+      "source": null,
+      "suggested_source_links": null,
+      "suggested_source_links_with_counts": null,
+      "text": "@Lummox_eth glad to help you fam",
+      "username": null,
+      "withheld": null
+    },
+    {
+      "article": null,
+      "article_title": null,
+      "attachments": null,
+      "author_id": "1172526145272762368",
+      "card_uri": null,
+      "community_id": null,
+      "context_annotations": null,
+      "conversation_id": "2088234998654472340",
+      "created_at": "2026-08-14T12:07:08.000Z",
+      "display_text_range": null,
+      "edit_controls": null,
+      "edit_history_post_ids": [
+        "2088235976120324462"
+      ],
+      "entities": {
+        "cashtags": null,
+        "hashtags": null,
+        "mentions": [
+          {
+            "end": 8,
+            "start": 0,
+            "id": "1918346924463202304",
+            "username": "gippp69"
+          }
+        ],
+        "urls": null
+      },
+      "geo": null,
+      "id": "2088235976120324462",
+      "in_reply_to_user_id": "1918346924463202304",
+      "lang": null,
+      "matched_media_notes": null,
+      "media_metadata": null,
+      "non_public_metrics": null,
+      "note_post": null,
+      "note_request_suggestions": null,
+      "organic_metrics": null,
+      "paid_partnership": null,
+      "possibly_sensitive": null,
+      "promoted_metrics": null,
+      "public_metrics": null,
+      "referenced_posts": [
+        {
+          "id": "2088235879441822090",
+          "type": "replied_to"
+        }
+      ],
+      "reply_settings": null,
+      "scopes": null,
+      "source": null,
+      "suggested_source_links": null,
+      "suggested_source_links_with_counts": null,
+      "text": "@gippp69 thx gipp",
+      "username": null,
+      "withheld": null
+    },
+    {
+      "article": null,
+      "article_title": null,
+      "attachments": null,
+      "author_id": "1172526145272762368",
+      "card_uri": null,
+      "community_id": null,
+      "context_annotations": null,
+      "conversation_id": "2088234998654472340",
+      "created_at": "2026-08-14T12:09:00.000Z",
+      "display_text_range": null,
+      "edit_controls": null,
+      "edit_history_post_ids": [
+        "2088236444695298078"
+      ],
+      "entities": {
+        "cashtags": null,
+        "hashtags": null,
+        "mentions": [
+          {
+            "end": 9,
+            "start": 0,
+            "id": "1717914543450431488",
+            "username": "0xbobaaa"
+          }
+        ],
+        "urls": null
+      },
+      "geo": null,
+      "id": "2088236444695298078",
+      "in_reply_to_user_id": "1717914543450431488",
+      "lang": null,
+      "matched_media_notes": null,
+      "media_metadata": null,
+      "non_public_metrics": null,
+      "note_post": null,
+      "note_request_suggestions": null,
+      "organic_metrics": null,
+      "paid_partnership": null,
+      "possibly_sensitive": null,
+      "promoted_metrics": null,
+      "public_metrics": null,
+      "referenced_posts": [
+        {
+          "id": "2088236266022187515",
+          "type": "replied_to"
+        }
+      ],
+      "reply_settings": null,
+      "scopes": null,
+      "source": null,
+      "suggested_source_links": null,
+      "suggested_source_links_with_counts": null,
+      "text": "@0xbobaaa ty bro",
+      "username": null,
+      "withheld": null
+    },
+    {
+      "article": null,
+      "article_title": null,
+      "attachments": null,
+      "author_id": "1172526145272762368",
+      "card_uri": null,
+      "community_id": null,
+      "context_annotations": null,
+      "conversation_id": "2088234998654472340",
+      "created_at": "2026-08-14T16:07:57.000Z",
+      "display_text_range": null,
+      "edit_controls": null,
+      "edit_history_post_ids": [
+        "2088296576967909752"
+      ],
+      "entities": {
+        "cashtags": null,
+        "hashtags": null,
+        "mentions": [
+          {
+            "end": 8,
+            "start": 0,
+            "id": "1922941474024398848",
+            "username": "0xSlyth"
+          }
+        ],
+        "urls": null
+      },
+      "geo": null,
+      "id": "2088296576967909752",
+      "in_reply_to_user_id": "1922941474024398848",
+      "lang": null,
+      "matched_media_notes": null,
+      "media_metadata": null,
+      "non_public_metrics": null,
+      "note_post": null,
+      "note_request_suggestions": null,
+      "organic_metrics": null,
+      "paid_partnership": null,
+      "possibly_sensitive": null,
+      "promoted_metrics": null,
+      "public_metrics": null,
+      "referenced_posts": [
+        {
+          "id": "2088236589730439209",
+          "type": "replied_to"
+        }
+      ],
+      "reply_settings": null,
+      "scopes": null,
+      "source": null,
+      "suggested_source_links": null,
+      "suggested_source_links_with_counts": null,
+      "text": "@0xSlyth always happy to help mate",
+      "username": null,
+      "withheld": null
+    },
+    {
+      "article": null,
+      "article_title": null,
+      "attachments": null,
+      "author_id": "1172526145272762368",
+      "card_uri": null,
+      "community_id": null,
+      "context_annotations": null,
+      "conversation_id": "2088234998654472340",
+      "created_at": "2026-08-14T23:36:20.000Z",
+      "display_text_range": null,
+      "edit_controls": null,
+      "edit_history_post_ids": [
+        "2088409419201544564"
+      ],
+      "entities": {
+        "cashtags": null,
+        "hashtags": null,
+        "mentions": [
+          {
+            "end": 8,
+            "start": 0,
+            "id": "1328750996261117955",
+            "username": "notp3rk"
+          }
+        ],
+        "urls": null
+      },
+      "geo": null,
+      "id": "2088409419201544564",
+      "in_reply_to_user_id": "1328750996261117955",
+      "lang": null,
+      "matched_media_notes": null,
+      "media_metadata": null,
+      "non_public_metrics": null,
+      "note_post": null,
+      "note_request_suggestions": null,
+      "organic_metrics": null,
+      "paid_partnership": null,
+      "possibly_sensitive": null,
+      "promoted_metrics": null,
+      "public_metrics": null,
+      "referenced_posts": [
+        {
+          "id": "2088399958206476454",
+          "type": "replied_to"
+        }
+      ],
+      "reply_settings": null,
+      "scopes": null,
+      "source": null,
+      "suggested_source_links": null,
+      "suggested_source_links_with_counts": null,
+      "text": "@notp3rk thx my friend",
+      "username": null,
+      "withheld": null
+    }
+  ],
+  "users": {
+    "1172526145272762368": {
+      "affiliation": null,
+      "confirmed_email": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "id": "1172526145272762368",
+      "is_identity_verified": null,
+      "location": null,
+      "most_recent_post_id": null,
+      "name": "marfin",
+      "parody": null,
+      "pinned_post_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscribes_to_you": null,
+      "subscription": null,
+      "subscription_type": null,
+      "url": null,
+      "username": "marfinxx",
+      "verified": null,
+      "verified_followers_count": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "1989375507599953923": {
+      "affiliation": null,
+      "confirmed_email": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "id": "1989375507599953923",
+      "is_identity_verified": null,
+      "location": null,
+      "most_recent_post_id": null,
+      "name": "Do Duc Long",
+      "parody": null,
+      "pinned_post_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscribes_to_you": null,
+      "subscription": null,
+      "subscription_type": null,
+      "url": null,
+      "username": "DoDucLong47605",
+      "verified": null,
+      "verified_followers_count": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "2155166498": {
+      "affiliation": null,
+      "confirmed_email": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "id": "2155166498",
+      "is_identity_verified": null,
+      "location": null,
+      "most_recent_post_id": null,
+      "name": "Warun C. \u26a1",
+      "parody": null,
+      "pinned_post_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscribes_to_you": null,
+      "subscription": null,
+      "subscription_type": null,
+      "url": null,
+      "username": "ubinix_warun",
+      "verified": null,
+      "verified_followers_count": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "1757654527799676928": {
+      "affiliation": null,
+      "confirmed_email": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "id": "1757654527799676928",
+      "is_identity_verified": null,
+      "location": null,
+      "most_recent_post_id": null,
+      "name": "Matthew Carter",
+      "parody": null,
+      "pinned_post_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscribes_to_you": null,
+      "subscription": null,
+      "subscription_type": null,
+      "url": null,
+      "username": "KMyrtie79905",
+      "verified": null,
+      "verified_followers_count": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "1328750996261117955": {
+      "affiliation": null,
+      "confirmed_email": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "id": "1328750996261117955",
+      "is_identity_verified": null,
+      "location": null,
+      "most_recent_post_id": null,
+      "name": "Perk\ud83e\udd40",
+      "parody": null,
+      "pinned_post_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscribes_to_you": null,
+      "subscription": null,
+      "subscription_type": null,
+      "url": null,
+      "username": "notp3rk",
+      "verified": null,
+      "verified_followers_count": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "1212651734209724416": {
+      "affiliation": null,
+      "confirmed_email": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "id": "1212651734209724416",
+      "is_identity_verified": null,
+      "location": null,
+      "most_recent_post_id": null,
+      "name": "0xSean",
+      "parody": null,
+      "pinned_post_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscribes_to_you": null,
+      "subscription": null,
+      "subscription_type": null,
+      "url": null,
+      "username": "bookingX0",
+      "verified": null,
+      "verified_followers_count": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "1922941474024398848": {
+      "affiliation": null,
+      "confirmed_email": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "id": "1922941474024398848",
+      "is_identity_verified": null,
+      "location": null,
+      "most_recent_post_id": null,
+      "name": "0xSlyth",
+      "parody": null,
+      "pinned_post_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscribes_to_you": null,
+      "subscription": null,
+      "subscription_type": null,
+      "url": null,
+      "username": "0xSlyth",
+      "verified": null,
+      "verified_followers_count": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "1953863177592057856": {
+      "affiliation": null,
+      "confirmed_email": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "id": "1953863177592057856",
+      "is_identity_verified": null,
+      "location": null,
+      "most_recent_post_id": null,
+      "name": "Hussain Hashim | Building SundayBack",
+      "parody": null,
+      "pinned_post_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscribes_to_you": null,
+      "subscription": null,
+      "subscription_type": null,
+      "url": null,
+      "username": "itsthedonhashim",
+      "verified": null,
+      "verified_followers_count": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "1717914543450431488": {
+      "affiliation": null,
+      "confirmed_email": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "id": "1717914543450431488",
+      "is_identity_verified": null,
+      "location": null,
+      "most_recent_post_id": null,
+      "name": "0xbobaa",
+      "parody": null,
+      "pinned_post_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscribes_to_you": null,
+      "subscription": null,
+      "subscription_type": null,
+      "url": null,
+      "username": "0xbobaaa",
+      "verified": null,
+      "verified_followers_count": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "1918346924463202304": {
+      "affiliation": null,
+      "confirmed_email": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "id": "1918346924463202304",
+      "is_identity_verified": null,
+      "location": null,
+      "most_recent_post_id": null,
+      "name": "Gipp \ud83e\udd85",
+      "parody": null,
+      "pinned_post_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscribes_to_you": null,
+      "subscription": null,
+      "subscription_type": null,
+      "url": null,
+      "username": "gippp69",
+      "verified": null,
+      "verified_followers_count": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "1790585810644803585": {
+      "affiliation": null,
+      "confirmed_email": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "id": "1790585810644803585",
+      "is_identity_verified": null,
+      "location": null,
+      "most_recent_post_id": null,
+      "name": "Lummox",
+      "parody": null,
+      "pinned_post_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscribes_to_you": null,
+      "subscription": null,
+      "subscription_type": null,
+      "url": null,
+      "username": "Lummox_eth",
+      "verified": null,
+      "verified_followers_count": null,
+      "verified_type": null,
+      "withheld": null
+    }
+  },
+  "thread_fetch_error": null
+}
