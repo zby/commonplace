@@ -15,7 +15,7 @@ A claim's content is what it rules out. Popper's account (*Logic of Scientific D
 
 Defensive abstraction is a pure trade. The agent meets a case its concrete wording does not cover and answers by raising universality — which it can only do by lowering precision, since the sharper term was what excluded the case. Content does not move. Length does: the general term needs scaffolding to stay intelligible, and each round of scaffolding exposes a new edge that invites the next. Every turn of the ratchet is individually justifiable, and no turn is checkable on its own.
 
-The failure is invisible from inside the generating loop, because [an LLM's confidence tracks how typical a continuation is, not whether it is sound](./llm-generation-confidence-tracks-typicality-not-soundness.md) — and hedged abstract prose is maximally typical of the careful-technical register. The move feels like rigor exactly when it buys none.
+The failure can remain invisible from inside the generating loop because [generation confidence does not by itself certify soundness](./generation-confidence-does-not-by-itself-certify-soundness.md), and hedged abstract prose can be highly probable in the careful-technical register. The move can feel like rigor exactly when it buys none.
 
 ## Naming is the opposite move with the same surface
 
@@ -57,7 +57,7 @@ Relevant Notes:
 - [first-principles reasoning selects for explanatory-reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: an abstraction that cannot say what it excludes has fit, not explanatory-reach
 - [recognition, not linking, is the hard problem in knowledge systems](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — contrasts: naming a recognized structure is the productive direction, where universality and precision rise together
 - [narrowing bought to survive review is paid for in content](./narrowing-bought-to-survive-review-is-paid-for-in-content.md) — contrasts: the narrowing-direction escape from counterexamples, where content falls to zero as defensibility rises
-- [llm generation confidence tracks typicality not soundness](./llm-generation-confidence-tracks-typicality-not-soundness.md) — mechanism: why hedged abstract prose feels rigorous to the generator exactly when it is empty
+- [Generation confidence does not by itself certify soundness](./generation-confidence-does-not-by-itself-certify-soundness.md) — mechanism: why high-probability hedged prose can feel rigorous without certifying its content
 - [reverse compression is when LLM output expands without adding information](./reverse-compression-is-when-llm-output-expands-without-adding.md) — contrasts: measures prose volume against what a bounded reader can extract; this note measures claim vocabulary against what the claim forbids, so a short, link-dense note can still be hollow
 - [title as claim exposes commitments enabling Popperian maintenance](./title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) — enables: a claim title is where an unearned abstraction is cheapest to catch
 - [unearned generality gate](../instructions/review-gates/semantic/unearned-generality.md) — see-also: the forbids-test operationalized as a review gate

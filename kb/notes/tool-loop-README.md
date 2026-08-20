@@ -26,17 +26,17 @@ Frameworks own this loop because the mechanics are repetitive protocol work — 
 
 Many useful interventions can stay hidden inside this loop without changing its structure: logging, approvals, budget checks, checkpoints, deterministic transforms on tool results. A [stateful singleton runtime](./stateful-tools-recover-control-by-becoming-hidden-schedulers.md) behind the tool boundary can go further, holding recursion state and branch records. The recovery is genuine — but the question is not whether the loop can absorb bookkeeping. It is who gets to decide what the next step *can do*.
 
-## Forcing cases
+## Pressure and forcing cases
 
-Three cases where a single framework-owned loop becomes insufficient:
+Three cases expose where progression authority lives. The first two can make a single framework-owned loop insufficient; the third distinguishes a scheduler's role from its callable interface:
 
 - [subtasks that need different tools force loop exposure in agent frameworks](./subtasks-that-need-different-tools-force-loop-exposure-in-agent.md) — decomposition creates children that need different capability surfaces; the parent must construct fresh calls with different tool sets, which a fixed loop cannot express
 - [semantic sub-goals that exceed one context window become scheduling problems](./semantic-sub-goals-that-exceed-one-context-window-become-scheduling.md) — some sub-goals require deterministic orchestration over smaller semantic judgments because the material doesn't fit in one bounded call
-- [codified scheduling patterns can turn tools into hidden schedulers](./codified-scheduling-patterns-can-turn-tools-into-hidden-schedulers.md) — as next-step policies stabilize into code, hiding them in tools collapses orchestration into covert runtime logic
+- [cross-task transition policy remains scheduling behind a tool interface](./cross-task-transition-policy-remains-scheduling-behind-tools.md) — codifying cross-task progression creates scheduler logic wherever that logic is placed; a tool interface hides the role only when it obscures the progression authority
 
 ## Resolution
 
-The first and third cases call for **[sub-agents](./agent-is-a-tool-loop.md)** — fresh tool loops with their own prompt, capability surface, and stop condition. The second calls for something more: **symbolic composition** of agents — code-controlled iteration, filtering, and aggregation over multiple agent invocations. Sub-agents are the atomic unit; symbolic orchestration is what the application does with them.
+The first case calls for **[sub-agents](./agent-is-a-tool-loop.md)** — fresh tool loops with their own prompt, capability surface, and stop condition. The second calls for something more: **symbolic composition** of agents — code-controlled iteration, filtering, and aggregation over multiple agent invocations. The third is placement-neutral: an application loop, lower-level runtime, or explicitly named workflow tool can own the codified transitions, but the tool protocol does not make that responsibility ordinary capability implementation. Sub-agents are the atomic unit; symbolic orchestration is what the application does with them.
 
 The framework's job is therefore to [**keep the tool loop optional**](./llm-frameworks-should-keep-the-tool-loop-optional.md): run the frozen loop for the common case, but expose the bounded call beneath it so application code can spawn child loops and compose them. The mechanism is small — [the practical scheduler is the host language](./the-practical-scheduler-is-the-host-language.md): demote the loop to a returning, per-call-parameterized `agent()` call (plus one tool-execution hook), and ordinary host-language control flow becomes `select` while its variables hold `K`. ("Expose the loop" was the earlier name for this same move.) A further question, once orchestrators are written this way, is what to retain across runs: [run-state stays ephemeral while recurring strategies are the promotion target](./orchestration-strategies-and-run-state-have-opposite-persistence.md).
 

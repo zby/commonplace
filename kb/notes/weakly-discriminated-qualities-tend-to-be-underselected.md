@@ -1,5 +1,5 @@
 ---
-description: "Conjecture separating available model capability from selection: qualities weakly distinguished by the actual acceptance oracle lose to strongly verified objectives"
+description: "Statistical conjecture: under named proposal-selection conditions, unequal oracle discrimination yields unequal enrichment; absolute degradation needs an additional directional mechanism"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, llm-reliability, evaluation, self-improving-systems]
@@ -7,71 +7,67 @@ tags: [learning-theory, llm-reliability, evaluation, self-improving-systems]
 
 # Weakly discriminated qualities tend to be underselected
 
-When a selection loop judges several qualities with oracles of unequal discriminative power, its accepted outputs improve on whatever the strong oracles distinguish and drift on whatever the weak ones barely distinguish — even when the generator is entirely capable of producing the weakly verified quality. Candidate availability and candidate selection are different bottlenecks.
+Underselection means less enrichment through acceptance, not necessarily absolute decline. The **operative oracle** is the check that actually changes which candidates survive. All else equal, under a fixed candidate distribution and acceptance rule, a directionally aligned oracle creates greater expected enrichment in a quality when it more reliably separates better instances from worse ones.
 
-This is a conjecture about proposal-selection loops, not a claim that every unmeasured quality deteriorates. It predicts a directional selection pressure when three conditions hold:
+This note conjectures a statistical tendency in actual proposal-selection loops: under the conditions below, weakly discriminated qualities usually gain less from acceptance than strongly discriminated qualities, even when the generator produces usable variation in both. Candidate availability and candidate selection are therefore different bottlenecks. Representative loops that satisfy these conditions but usually produce equal or greater acceptance enrichment for weakly discriminated qualities would refute the conjecture.
 
-1. generated candidates vary on more than one quality;
-2. acceptance or retention depends more reliably on some qualities than others; and
-3. accepted outputs become the starting point, context, or training signal for later iterations.
+The argument separates three conditions; the third is needed only for accumulation:
 
-What acts under those conditions is the **operative oracle** — the check that actually changes which candidates survive, which need not be the rubric a system says it values. A quality can be named prominently in the instructions and still exert almost no selection pressure, if nothing in the loop separates its better instances from its worse ones.
+1. Generated candidates vary on more than one quality.
+2. Acceptance or retention distinguishes better from worse instances of some qualities more reliably than others, strongly enough to affect survival after accounting for scoring weights, hard constraints, and correlations among qualities.
+3. For the selection difference to accumulate, accepted outputs carry the relevant qualities into the starting point, context, or training signal for later iterations.
+
+The first two conditions create unequal enrichment within one selection round. The third lets that difference propagate. Absolute degradation requires another directional mechanism, such as adverse correlation between qualities, production biased toward locally expedient changes, irreversible accumulation of harmful changes, or repair costs that grow unless the weak quality is actively selected for. A loop can widen the gap between two qualities while the weakly discriminated one stays flat or improves more slowly.
+
+The operative oracle need not match the rubric a system says it values. A quality can be prominent in instructions or a schema yet exert little selection pressure if nothing in the loop separates its better instances from its worse ones.
 
 ## Oracle asymmetry creates selection asymmetry
 
-Suppose a coding loop selects patches for functional correctness and maintainability. Tests discriminate functional failures quickly: a candidate that breaks behavior is likely to be rejected. Maintainability review is delayed, noisy, or absent: two patches with very different future change costs may be equally likely to pass. Conditional on acceptance, the patch population is therefore enriched for correctness but only weakly enriched for maintainability.
+[Why Software Factories Fail](../sources/why-software-factories-fail-2080697380379427275.md) argues that coding benchmarks reward patches that pass tests while imposing little penalty for design costs that appear through later changes. Consider a candidate set that varies in functional correctness and maintainability. Tests reject behavioral failures quickly, while delayed or noisy maintainability review gives patches with different future change costs similar survival chances. Conditioning on acceptance then enriches the patch population more strongly for correctness than for maintainability.
 
-No tradeoff has to be made anywhere for this to happen: nothing sacrifices maintainability in order to pass the tests. Local fixes, duplicated logic, and awkward dependencies survive simply because the acceptance mechanism sees their immediate behavior more clearly than their delayed cost. Each accepted patch then changes the codebase the next task inherits, and repetition converts a per-change blind spot into directional system drift.
+The source's failed lights-off deployment is consistent with this mechanism but does not isolate it: missing generation capacity, weak global codebase comprehension, and poor activation predict similar visible failures. Absolute maintainability decline also needs an adverse production or inheritance dynamic. Local fixes, duplicated logic, and awkward dependencies can accumulate when candidate production favors immediate progress and later repair is costly, but unequal discrimination alone establishes only weaker enrichment.
 
-The same asymmetry appears in an agent-operated KB: structural validation strongly discriminates broken frontmatter, invalid types, and unresolved links, and weakly discriminates whether a note has explanatory-reach, whether a connection reduces navigation uncertainty, or whether a synthesis captures the right mechanism. A high-throughput authoring loop can therefore converge on artifacts that validate cleanly while their semantic quality degrades, [especially when maintenance does not scale with generation](./entropy-management-must-scale-with-generation-throughput.md).
+The same asymmetry can arise in an agent-operated KB. Structural validation strongly distinguishes broken frontmatter, invalid types, and unresolved links. It may distinguish less reliably whether a note has [explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md)—whether its explanation keeps working beyond the cases that produced it—or whether a connection reduces navigation uncertainty. A high-throughput authoring loop can therefore enrich accepted artifacts more strongly for structural validity than for semantic quality, [especially when maintenance does not scale with generation](./entropy-management-must-scale-with-generation-throughput.md). Semantic decline follows only if later production or inheritance also pushes in that direction.
 
-The asymmetry can also be designed in before any loop runs. One AI lab's research-ontology draft builds acceptance entirely from measurements: evidence records carry metric, value, and error; well-formed claims are digest-pinned threshold statements; object status derives from policy over signed attestations. Explanation is represented — a hypothesis carries an explanatory statement, and a Knowledge layer exists in the domain vocabulary — but nothing in the loop separates a better explanation from a worse one, and the draft marks the layer accordingly: an optional projection over accepted claims, not a source of truth. Accepted claims feed the next round of objects and procedures, so all three conditions hold by construction, and the conjecture predicts that the accepted-claim population will enrich for measurable fit and drift on explanatory quality. The case extends the operative-oracle point from instructions to schema: a first-class slot in the data model, like a prominent name in the rubric, exerts no selection pressure by itself.
+## Generation, activation, and selection are different hypotheses
 
-## Knowledge and selection are different hypotheses
+Poor retained output is often attributed to missing generator capability, but three different bottlenecks can produce the same visible failure:
 
-Poor retained output is usually blamed on missing model capability: the model does not know good design, cannot recognize a deep failure, cannot write a coherent theory. That explanation is sufficient but not necessary — three distinct cases predict the same visible failure:
+- **Generation failure:** The desired quality is absent from the candidates the generator can produce.
+- **Activation failure:** The generator can produce the quality under some prompts or contexts, but the current task frame does not elicit it.
+- **Selection failure:** Usable candidates appear in the current process, but the operative oracle does not favor them strongly enough to survive.
 
-- **Generation failure:** the desired quality is absent from the candidates the model can produce.
-- **Activation failure:** the model can produce it, but the task frame does not elicit the relevant knowledge.
-- **Selection failure:** good candidates appear, but the operative oracle does not favor them strongly enough to survive.
+The distinction matters because the remedies differ: improve the generator for generation failure, change the task frame or add probes for activation failure, or strengthen the acceptance checks for selection failure.
 
-The distinction matters because the remedies differ: better weights or broader context for generation, explicit perspectives and probes for activation, stronger external checks for selection.
+[The Bug That Shipped](../sources/the-bug-that-shipped-2035319413474206122.md) separates generation capacity from activation. Coding models rarely surfaced deployment failures under generic self-review yet diagnosed the same failures when directly probed. The changed task frame elicited behavior that generic review did not. The case does not show candidates with the desired quality appearing and then losing at an acceptance boundary, so it is not by itself evidence of selection failure.
 
-[The Bug That Shipped](../sources/the-bug-that-shipped-2035319413474206122.md) shows two of these cases coming apart. Coding models rarely surfaced deployment failures under generic self-review, yet diagnosed the same failures when directly probed: the knowledge was available and the undirected review simply did not select for it. That does not establish the same mechanism for maintainability, but it does make “the model lacks the knowledge” an inadequate default explanation.
+A controlled stronger-oracle intervention tests selection. Hold the candidate set fixed, or otherwise control its distribution, then compare the rankings produced by generic review with those produced by explicit maintainability probes, pairwise design comparisons, repeated-change evaluations, or repository-specific structural checks. If the stronger oracle reliably favors better designs in the same candidate set, selection was a material bottleneck. If candidates remain poor even under a discriminating oracle, generation capacity, activation, global comprehension, or the quality definition remains the better explanation. Changing the prompt that produces candidates does not isolate selection because it may also change activation.
 
-## Maintainability is the motivating case
+## Stronger oracles require independent discrimination
 
-[Why Software Factories Fail](../sources/why-software-factories-fail-2080697380379427275.md) argues that coding benchmarks strongly reward patches that pass tests while imposing little penalty for design choices whose cost appears through later changes. Its failed lights-off deployment is consistent with oracle asymmetry: immediate correctness remained visible while maintainability debt accumulated across accepted patches.
+A weak oracle can be strengthened from partial signals, but not by vote count alone. Combining checks helps only when each contributes genuine discrimination and their failure modes differ, [since error correction requires above-chance, decorrelated oracles](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md). Repeating the same model, prompt, and evidence can amplify a shared blind spot.
 
-Part II responds by restoring humans at product, architecture, program-design, and code-review boundaries and by delivering [short vertical slices](../sources/why-software-factories-fail-lights-back-on-2081058573556306030.md). That limits how much work accumulates under a mistaken judgment, but it leaves the diagnosis open — missing knowledge and weak selection both predict the same failed deployment.
-
-Intervention without new weights is the test that separates them. If explicit maintainability probes, pairwise design comparisons, repeated-change evaluations, or repository-specific structural checks reliably select better designs from the same generator, selection was a material bottleneck. If candidates stay poor even under a discriminating maintainability oracle, the better explanation is generation capacity, global codebase comprehension, or the quality definition itself.
-
-## Stronger oracles can be assembled, but not by vote count alone
-
-A weak oracle need not remain weak. Maintainability has multiple partial signals: dependency direction, duplication and complexity trends, change locality, mutation testing, failures on later modification tasks, independent design comparisons, and sampled human judgments. KB semantic quality likewise has partial signals from adversarial review, contradiction checks, use traces, graph structure, and human acceptance.
-
-Combining them helps only when the individual checks have genuine discrimination and sufficiently different failure modes, [since error correction requires above-chance, decorrelated oracles](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md); repeating the same model, prompt, and evidence amplifies a shared blind spot rather than quality. A composite oracle therefore needs calibration against later effects — did the code become easier to change, did the note support better decisions, did the connection improve traversal? Proxy agreement without outcome calibration merely constructs a louder proxy.
-
-This reframes human oversight as a source of labels and calibration rather than a permanent architectural constant. Where a composite oracle reaches sufficient discrimination, [warranted autonomy can expand into its domain](./warranted-autonomy-is-bounded-by-oracle-domain.md). Where it does not, removing the human changes actor allocation without warranting the accepted results.
+A composite oracle also needs calibration against effects on the target quality. For maintainability, later change locality or performance on modification tasks can test whether accepted designs became easier to change. For KB quality, later decisions and traversal behavior can test whether a note or connection helped. Proxy agreement without outcome calibration constructs a louder proxy. Human judgment is another candidate signal, not an automatic strong oracle; it must earn discrimination in the target domain too.
 
 ## Predictions
 
-- Strengthening an oracle for one quality should improve that quality among accepted outputs without requiring a weight change, provided the generator already produces usable variation.
-- Generic self-review should underperform checks that name distinct failure perspectives when activation is part of the bottleneck.
-- Sequential systems should show more drift than isolated tasks because accepted blind spots alter later starting states.
-- Increasing generation throughput without proportionally strengthening weak quality checks should widen the gap between strongly and weakly verified qualities.
-- Multiple correlated reviewers should plateau, while heterogeneous checks calibrated against delayed outcomes should continue to improve discrimination.
+- On a fixed candidate set, strengthening discrimination for one quality should increase that quality's enrichment among accepted outputs without a weight change, provided usable variation exists.
+- Across representative loops satisfying the named conditions, weakly discriminated qualities should usually receive less acceptance enrichment than strongly discriminated qualities. Equal or greater enrichment for the weak qualities would refute the statistical tendency.
+- Generic self-review should underperform checks that name distinct failure perspectives when activation contributes to the bottleneck.
+- Sequential systems should widen quality gaps only when accepted outputs materially shape later iterations; mere sequencing without inheritance is insufficient.
+- Absolute decline should appear only where candidate production, quality covariance, irreversibility, or repair costs supply an adverse direction.
+- Correlated reviewers should plateau, while heterogeneous checks should help only when they add above-chance marginal signal and remain calibrated against later outcomes.
 
-These predictions separate the conjecture from the trivial claim that “what gets measured gets managed.” The proposed mechanism is candidate selection under unequal discrimination, and it can fail in identifiable ways.
+These predictions distinguish the conjecture from “what gets measured gets managed.” The proposed mechanism is unequal candidate enrichment under unequal discrimination. Compounding and absolute decline make additional commitments that can fail separately.
 
 ## Scope and rival explanations
 
-- The claim requires a selection or retention pathway. In a one-shot call whose output is never compared, accepted, reused, or learned from, “underselection” is the wrong description.
+- The claim requires a selection or retention pathway. When output is produced without comparison or an acceptance decision, “underselection” is the wrong description. Reuse or learning is additionally required only for the effect to compound across iterations.
 - An oracle cannot select a quality absent from the candidate distribution. Strong verification does not manufacture generator capability.
+- Discrimination need not dominate scoring weight, hard constraints, or quality correlations in every loop. The population-level dominance needed for the stated tendency remains conjectural.
 - Some qualities genuinely conflict. A system may knowingly trade maintainability for latency or semantic nuance for consistency; that is objective weighting, not necessarily oracle weakness.
 - Delayed quality can degrade because the model lacks global state, context, or causal understanding. Oracle asymmetry is one mechanism to test against those rivals, not a universal diagnosis.
-- Human judgment is not automatically a strong oracle. It can be inconsistent, biased, expensive, or unable to observe delayed effects. Its value must also be established for the target domain.
+- Human judgment can be inconsistent, biased, expensive, or unable to observe delayed effects. Its value must also be established for the target domain.
 
 ---
 
@@ -80,8 +76,4 @@ Relevant Notes:
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: verification cost determines which qualities can support warranted automation
 - [The augmentation-automation boundary is discrimination not accuracy](./the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — grounds: aggregate generator accuracy cannot replace per-instance discrimination at the acceptance boundary
 - [A checked outcome licenses retaining an episode, not abstracting its explanation](./checked-outcome-licenses-episode-retention-not-abstraction.md) — extends: outcome and process checks can strongly verify different qualities of the same candidate
-- [Error correction works with above-chance oracles and decorrelated checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — mechanism: states the conditions under which multiple weak checks can become a stronger composite oracle
-- [Entropy management must scale with generation throughput](./entropy-management-must-scale-with-generation-throughput.md) — exemplifies: inherited weakly checked patterns compound as accepted generation becomes later context
 - [Inspectable artifact, not supervision, defeats the blackbox problem](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — enables: inspectable form supplies evidence a quality oracle can evaluate, without guaranteeing that the evaluator discriminates adequately
-- [The Bug That Shipped](../sources/the-bug-that-shipped-2035319413474206122.md) — evidenced-by: explicit failure probes elicited knowledge that undirected self-review rarely surfaced
-- [Why Software Factories Fail](../sources/why-software-factories-fail-2080697380379427275.md) — abstracted-from: motivates the maintainability case through benchmark incentives and a failed lights-off deployment

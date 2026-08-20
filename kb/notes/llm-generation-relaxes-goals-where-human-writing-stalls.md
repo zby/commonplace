@@ -29,7 +29,7 @@ What would produce that? Our hypothesis: generation behaves like an **argmax ove
 
 ## The cost falls on the reader
 
-The hidden gap can't be read off the surface — fluency tracks [typicality, not soundness](./llm-generation-confidence-tracks-typicality-not-soundness.md), so a fluent passage looks the same whether its constraint was met or dropped. The check can't be offloaded to the output: finding the gap means re-deriving, constraint by constraint, what the surface no longer shows.
+The surface supplies no certificate that every constraint was met because [generation confidence does not by itself certify soundness](./generation-confidence-does-not-by-itself-certify-soundness.md). A fluent passage may mask either success or a dropped constraint, so finding the gap means re-deriving, constraint by constraint, what the surface no longer shows.
 
 ## Scope and boundary
 
