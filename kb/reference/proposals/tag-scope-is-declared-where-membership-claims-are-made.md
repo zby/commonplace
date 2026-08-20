@@ -1,5 +1,5 @@
 ---
-description: "Proposal: one repo-wide tag namespace; every membership claim — marks, recipes, generated listings, skip rules — ranges over the library layers (kb/work/ and kb/sources/ excluded); data-shaped tags move into typed frontmatter fields; tag heads relocate to a new kb/tags/ connecting collection as the obligatory last adoption step"
+description: "Proposal: one repo-wide tag namespace; membership claims (marks, recipes, listings, skip rules) range over the library, kb/work/ and kb/sources/ excluded; data-shaped tags become typed fields; heads move last to kb/tags/, a connecting collection"
 type: ../types/design-proposal.md
 tags: [kb-maintenance, document-system]
 ---
