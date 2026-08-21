@@ -1,0 +1,55 @@
+# A provisional causal selective-evaluation model
+
+> **Status:** This is unvalidated workshop machinery. It separates the objects and uncertainty that a selective-evaluation method would need; it does not specify a settled ontology, objective, numerical policy, or acceptance rule.
+
+The proposal starts from the workshop's [reading of HCL](./hcl-reading.md): if a deployed harness is revisable and candidates are regression-gated, a theory of candidate effects might help decide which costly evidence is worth acquiring. That possibility does not establish that evidence can safely be omitted or that total evaluation cost will fall.
+
+## Levels of evaluation reasoning
+
+The first open choice is what the impact theory should be a theory *of*. For now, the workshop keeps four levels separate:
+
+1. A **behavioral function or relation** is something the system does or must preserve, such as parsing an objective, retrieving relevant experience, choosing a legal capability, routing a workflow, or satisfying an output contract.
+2. An **evaluation obligation** is a decision-relevant claim that warrants evidence, such as “this candidate does not newly break reliable tool selection for this class of inputs.”
+3. An **evaluation procedure** is a concrete observation process: rerun an anchor, execute a validator, sample repeated outputs, run a simulation, or ask a judge.
+4. An **acceptance criterion** decides whether to commit from the observed evidence and the uncertainty that remains.
+
+This is a provisional workshop ontology, not a settled definition. HCL supplies concrete procedures and a gate. The extension would add a theory of candidate effects and a mapping from affected functions or obligations to procedures capable of detecting them. That mapping matters because correctly predicting that a function may change does not identify a test that can observe the change. Whether a primary registry should contain functions, obligations, causal relations, or a layered combination remains open.
+
+## Working objects
+
+A compact working model uses six provisional objects:
+
+- `S` is the prediction boundary. It includes relevant assumptions about fixed model parameters, runtime and outer capabilities, environment, optimizer and evaluator configuration, decoding, authority, and routing—not only mutable harness state.
+- `Delta` is the candidate as a semantic intervention. It includes the changed artifact, its path to behavioral authority, and its activation conditions, rather than only a textual diff.
+- `C` is a revisable, scoped, assumption-bearing impact theory over the consequences of `do(Delta)` under `S`.
+- `M` maps affected functions or obligations to procedures capable of observing them. It may retrieve an existing procedure or propose an adapted or newly synthesized one.
+- `pi` is an evidence-acquisition policy. It chooses which procedures are worth selecting, constructing, validating, and executing from impact beliefs, evaluation costs, possible losses, dependencies among evaluations, and risk tolerance.
+- `G*` is a commitment rule that states what observed and omitted obligations mean.
+
+These objects are unvalidated workshop machinery. `B_n` remains reserved for HCL’s permitted observed historical loss; evaluation budget and risk tolerance require different names and semantics. “Material harmful effect” also remains undefined until a design fixes the behavior variable, direction, magnitude threshold, prediction horizon, and loss units. No universal threshold is proposed here.
+
+## Selector types and diagnostic scope
+
+Three kinds of selector should not be conflated. **Deterministic dependency reachability** follows declared consumption and authority edges. It can justify a hard exclusion only when the boundary, graph completeness, authority path, and execution semantics make non-influence mechanically defensible. **Probabilistic causal impact** represents uncertainty about consequences of the intervention, including uncertain routing, context assembly, interpreter response, and sampling. **Diff similarity** reasons from resemblance to earlier changes. Similarity may inform a prior, but it does not by itself encode authority or mechanism: similar text can have different force depending on where it is loaded, and dissimilar edits can reach the same function. The main hypothesis to test is a hybrid: use enforced structure as an over-approximation, then attach probabilities to reachable or uncertain cross-effects. An absent declared path is only an assumption-relative exclusion unless the relevant structure is enforced and complete. The workshop has no evidence yet that this hybrid predicts better or costs less than the alternatives.
+
+The `I`/`V`/`D` diagnosis has a narrower role. For a fixed assembled input, `I` denotes intended acceptable outputs, `V` outputs admitted by the specification, and `D` the interpreter’s output distribution. `V` extending beyond `I` indicates underspecification; mass of `D` outside `V` indicates interpreter failure; dispersion in `D` exposes sampling indeterminism. These distinctions can specialize downstream obligations. For example, a schema edit may make conformance checks especially relevant. But an interface or router edit can change the assembled input or context upstream, so it requires a whole-harness impact account before this fixed-input diagnosis applies. This boundary comes from [LLM output deviation requires a three-way diagnosis](../../notes/llm-output-deviation-requires-three-way-diagnosis.md); the schema/router contrast is an illustration, not a validated routing policy.
+
+## Selection changes what acceptance means
+
+The policy should first separate a mandatory core of cheap deterministic checks and non-negotiable constraints from costly, candidate-dependent evidence that might be suppressible. HCL’s validity checks are heterogeneous, including syntax, output-schema, tool-use, task, and environment checks; they should not all be described as LLM evaluation. A further open question is which obligations are always mandatory, which may be omitted only after mechanically established non-influence, and which may be selected probabilistically.
+
+The selection objective is also unsettled. Candidates include a qualitative policy, expected harmful missed loss, observer-relative value of information, and a constrained ceiling on residual risk. They need different assumptions and can choose different evidence. A rule such as `p_C(e | Delta, S) * L_e > c_e` is at most a simplified expected-loss heuristic: it requires calibrated probabilities, commensurable loss and cost, a stated horizon, and a treatment of correlated or redundant evaluations. When a procedure must be synthesized, `c_e` must include construction and validation as well as execution. Evidence can also be valuable because it changes a decision or improves the impact theory, as [Information value is observer-relative](../../notes/information-value-is-observer-relative.md) argues. This workshop selects no objective or numerical policy.
+
+Selective evaluation cannot retain HCL’s full-set acceptance semantics unchanged. If only some anchors are run, the system cannot make an unqualified claim that `D_n <= B_n` over all anchors. It has three honest options: leave omitted obligations unknown and refuse the corresponding warrant; still execute the full check; or define a new gate over observed results plus a declared residual-risk condition. The third option changes what acceptance means and remains an open design choice.
+
+Any residual-risk estimate would be conditional on `C`, `S`, and the observed results. It should remain separate from possible **theory error**. A wrong boundary, missing edge, bad probability, wrong loss model, or distribution shift can invalidate the conditional estimate. Reporting only modeled residual risk would hide the uncertainty created by the model used to omit evidence. The report also cannot be made precise until materiality, horizon, loss units, and aggregation across obligations are defined.
+
+The feedback loop creates a further failure mode. A selector mostly observes the checks it chooses to run. False negatives among omitted checks can therefore remain hidden, while apparently good calibration on selected checks becomes self-confirming. Always-run sentinels, randomized exploration among omitted checks, periodic or stratified full-suite audits, delayed monitoring, and recording impact predictions before selection are possible ways to expose misses. They are candidate methods, not proved corrections. Selected outcomes alone cannot calibrate missed effects or predictive performance in the omitted region without deliberate observation there or additional structural assumptions. The needed calibration protocol remains to be designed and tested.
+
+## Where a gain is plausible—and where it is not
+
+The locality hypothesis is strongest for sparse changes in a pre-existing matching decomposition with explicit dependencies and a small downstream impact closure. Its advantage may disappear under dense shifts, incomplete authority or routing information, or broad prompt effects. A revisable theory may need fewer observations when a shift preserves the mechanism named by that theory, but a wrong broad theory can also produce broader negative transfer. [Theory-mediated learning may improve sample efficiency under structured shifts](../../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) presents this as a conditional conjecture. It is not evidence that causal selection will reduce HCL evaluation work.
+
+Fewer evaluation calls establish neither a warranted safety claim, successful learning, nor compounding. A safety warrant remains bounded by the oracle’s domain, while residual and theory risk must be accounted for; disclosing them makes the uncertainty visible but does not reduce it. In this HCL-style proposal-selection path, learning requires an evidence-selected change to become operative in later behavior. Compounding requires a traced causal contribution to a later improvement episode; an unused saving is not enough. See [Compounding is tested in later improvement, not by the accepting metric](../../notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md). HCL offers controlled benchmark and task-stream evidence, not production-deployment, economic-feasibility, universal no-forgetting, or safety evidence. Our paired [source analysis](../../sources/harness-continual-learning-adaptation-beyond-model-parameters.ingest.md) also records that this KB has not reproduced the results and that the reported point estimates lack repeated-run uncertainty.
+
+The [experiment design](./experiment-design.md) describes a comparison that could test these claims and treats adaptive procedure generation as a separate factor.

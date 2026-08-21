@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [causal-impact-selective-evaluation](./causal-impact-selective-evaluation/README.md) — connecting HCL's deployment-time harness learning with causal impact theories for selective evaluation, and testing SPADE-inspired adaptive executable-procedure generation
 - [multistage-write-analyse-agentic-system-20260820](./multistage-write-analyse-agentic-system-20260820/README.md) — designing one system-first external-agentic analysis workflow with runtime, conditional memory/context, and conditional epistemic lenses; preserves functioning instructions and defers corpus migration until lens routing is trialled
 - [multistage-write-analyse-epistemic-architecture-20260820](./multistage-write-analyse-epistemic-architecture-20260820/README.md) — retained write-and-trial record for the promoted external-system epistemic-architecture instruction, including independent ARC and held-out GBrain applications
 - [multistage-write-arc-skill-reading-20260820](./multistage-write-arc-skill-reading-20260820/README.md) — completed the accepted ARC sixth-case reading; retained because a separately authorized fold into the behavioral-authority decomposition proposal remains pending
