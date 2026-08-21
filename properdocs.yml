@@ -86,6 +86,7 @@ plugins:
         'notes/execution-traces-are-observational-byproducts-not-default-handoff-artifacts.md': 'notes/session-history-should-not-be-the-default-next-context.md'
         'notes/execution-traces-may-be-worth-storing-but-should-not-be-default-next-context.md': 'notes/session-history-should-not-be-the-default-next-context.md'
         'notes/failure-modes-index.md': 'notes/failure-modes-README.md'
+        'notes/files-not-database.md': 'notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md'
         'notes/first-principles-are-inherited-constraints-not-design-choices.md': 'notes/a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md'
         'notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md': 'notes/exact-implementation-does-not-validate-a-requirement.md'
         'notes/formal-systems-can-assess-reach-through-causal-and-proof-obligations.md': 'notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md'

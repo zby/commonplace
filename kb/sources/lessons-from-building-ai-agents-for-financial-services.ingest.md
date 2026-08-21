@@ -30,7 +30,7 @@ Discovery via `/connect` identified 8 strong and 5 moderate connections.
 
 **Strong connections:**
 
-1. **[files-not-database](../notes/files-not-database.md)** — exemplifies at production scale. Fintool's S3-first architecture validates the files-not-database claim at commercial scale: S3 as source of truth, Lambda-synced PostgreSQL as derived index for fast queries, user data (memories, watchlists, skills) stored as YAML/markdown files. The "derived indexes for capabilities files alone can't provide" pattern is exactly what they built. Adds 11-nines durability and real paying users to the evidence base.
+1. **[files defer schema commitment until invariants stabilize](../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md)** — exemplifies at production scale. Fintool's S3-first architecture is the canonical-source-plus-derived-index shape at commercial scale: S3 as source of truth, Lambda-synced PostgreSQL as derived index for fast queries, user data (memories, watchlists, skills) stored as YAML/markdown files. The "derived indexes for capabilities files alone can't provide" pattern is exactly what they built. Adds 11-nines durability and real paying users to the evidence base.
 
 2. **[bitter-lesson-boundary](../notes/exact-implementation-does-not-validate-a-requirement.md)** — exemplifies the relaxing prediction. "The model will eat your scaffolding" is the bitter lesson applied to agent infrastructure. The author predicts basic skills become one-liners in two years as models improve, and describes the practical response: "write skills, delete them when unnecessary, build new ones for harder problems." This maps onto the codify-for-current-leverage-not-permanence heuristic. Critically, fiscal period normalization (10,000+ company calendars) is a clean calculator-regime counterexample — the spec IS the problem, so models will not absorb it.
 
@@ -75,7 +75,7 @@ Discovery via `/connect` identified 8 strong and 5 moderate connections.
 
 6. **Fiscal period normalization as a clean calculator-regime example.** 10,000+ company fiscal calendars where "Q1 2024" means different absolute date ranges per company. The spec IS the problem, making it a clean example of the calculator regime inside an otherwise vision-feature domain. Useful as a concrete example for the bitter lesson boundary note. [just-a-reference]
 
-7. **S3-first with derived PostgreSQL index as production-grade files-not-database.** Writes to S3, Lambda sync to PostgreSQL, reads from DB for lists / S3 for freshness. Two Lambda functions: real-time SNS-triggered sync plus 3-hour reconciliation sweep. Battle-tested implementation of the files-as-source-of-truth pattern with durability and audit trail guarantees. [just-a-reference]
+7. **S3-first with derived PostgreSQL index as a production-grade canonical-plus-derived split.** Writes to S3, Lambda sync to PostgreSQL, reads from DB for lists / S3 for freshness. Two Lambda functions: real-time SNS-triggered sync plus 3-hour reconciliation sweep. Battle-tested implementation of the files-as-source-of-truth pattern with durability and audit trail guarantees. [just-a-reference]
 
 ## Limitations (our opinion)
 

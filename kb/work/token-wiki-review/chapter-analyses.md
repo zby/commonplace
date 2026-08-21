@@ -298,7 +298,7 @@ depth, roll up costs to the parent.
   budget (separate message vs. tool transcripts) is a concrete instance of a frame that declares
   what bindings it inherits.
 - Ghost snapshots (zero-token state capture via git) are a beautiful instance of
-  [files beat a database for agent-operated knowledge bases](../../notes/files-not-database.md)
+  [files defer schema commitment until invariants stabilize](../../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md)
   applied to runtime: the execution substrate holds state outside the bounded call, providing
   undo for free.
 - The sub-agent filtering rule ("drop tool results, keep decisions") is [execution-boundary

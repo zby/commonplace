@@ -7,11 +7,11 @@ tags: [document-system]
 
 # Why directories despite their costs
 
-The KB uses [files not database](./files-not-database.md) for simplicity and human navigability. But a flat directory with hundreds of files isn't really navigable — you're back to needing tooling (search, indexes) to find anything, which is what a database gives you. Directories preserve the human-navigability guarantee at scale. Not at every scale — but for one or two orders of magnitude more files before the same problem recurs.
+The KB keeps [authored files canonical while write invariants are unsettled](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md), which also keeps the content directly navigable by humans. But a flat directory with hundreds of files isn't really navigable — you're back to needing tooling (search, indexes) to find anything, which is what a database gives you. Directories preserve the human-navigability guarantee at scale. Not at every scale — but for one or two orders of magnitude more files before the same problem recurs.
 
 ## What directories give us
 
-**Scale without tooling.** A `notes/` directory with 30 files is browsable. With 300, it isn't. Splitting into `notes/`, `claw-design/`, `sources/`, `adr/` keeps each directory in the browsable range. This isn't infinite — at thousands of notes you'd need deeper nesting or actual search infrastructure — but it extends the files-not-database sweet spot considerably.
+**Scale without tooling.** A `notes/` directory with 30 files is browsable. With 300, it isn't. Splitting into `notes/`, `claw-design/`, `sources/`, `adr/` keeps each directory in the browsable range. This isn't infinite — at thousands of notes you'd need deeper nesting or actual search infrastructure — but it extends the file-substrate sweet spot considerably.
 
 **Local conventions per subsystem.** Some directories benefit from their own rules that don't need to generalise. Tasks have lifecycle subdirectories (`backlog/`, `active/`, `completed/`). Sources have an ingest pipeline. These are what the [workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) note calls "small, self-contained subsystems with their own conventions." Directories are natural boundaries for them.
 
@@ -57,7 +57,7 @@ For now, the right default is: be reluctant to create new top-level directories.
 
 Relevant Notes:
 
-- [files not database](./files-not-database.md) — the foundational bet that directories extend
+- [incrementally constrained files defer centralized schema commitment until write invariants stabilize](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md) — the substrate bet that directories extend
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — local conventions per directory are proto-workshop subsystems
 - [available types](../reference/available-types.md) — the type system that operates independently of directory structure
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — routing decisions are part of the context loading problem

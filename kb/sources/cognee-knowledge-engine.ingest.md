@@ -32,7 +32,7 @@ The `/connect` discovery found 15 connections — 10 to KB notes, 4 to sibling m
 
 - [agentic-memory-systems-comparative-review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) (exemplifies) — Cognee fills the pipeline-first, schema-driven, graph+vector hybrid position in the current comparison. The review uses Cognee to illustrate extraction schema rigidity, the curation gap (memify ambitions vs implementation), and the developer-managed agency model.
 
-- [files-not-database](../notes/files-not-database.md) (contradicts) — Cognee is the poly-store maximalist position (Neo4j + Qdrant + PostgreSQL), the strongest database-side counterexample to the files-first thesis. Databases are the primary substrate, not a derived layer.
+- [files defer schema commitment until invariants stabilize](../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md) (contrasts) — Cognee is the poly-store maximalist position (Neo4j + Qdrant + PostgreSQL): databases are the primary substrate, not a derived layer. Against the note's conditional claim this is the other branch rather than a counterexample — an extraction schema committed up front, with no report that write invariants were unsettled.
 
 - [sift-kg](../agent-memory-systems/reviews/sift-kg.md) (extends) — Both are LLM-driven document-to-knowledge-graph pipelines with explicit stage boundaries, but they make opposite schema bets: sift-kg discovers schemas from corpus samples, Cognee requires custom Pydantic schemas upfront. This contrast sharpens the schema-discovery-vs-schema-definition axis. Strongest unlinked connection found.
 

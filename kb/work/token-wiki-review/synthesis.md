@@ -378,7 +378,7 @@ human review.
 
 - **Codex's ghost snapshot pattern (background git commit, filtered out of API calls) is a
   clever use of the execution substrate to provide undo at zero token cost.** This maps
-  perfectly onto [files beat a database for agent-operated knowledge bases](../../notes/files-not-database.md)
+  perfectly onto [files defer schema commitment until invariants stabilize](../../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md)
   applied to runtime: git itself is the substrate, and it already provides the invariants
   needed for rollback. Worth citing when we discuss execution substrate patterns.
 

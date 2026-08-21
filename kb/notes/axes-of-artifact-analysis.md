@@ -74,7 +74,7 @@ These attach to the consumption path. A note can be current as an artifact while
 
 Each field blocks a different category mistake.
 
-- **Substrate, not form.** [Files beat a database for agent-operated knowledge bases](./files-not-database.md) argues that a database schema forces premature commitment to access patterns. That is a substrate claim, not a claim about whether artifacts should be natural-language, symbolic, or distributed-parametric.
+- **Substrate, not form.** [Incrementally constrained files defer centralized schema commitment until write invariants stabilize](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md) argues that files keep schema commitments revisable while write invariants are unsettled. That is a substrate claim, not a claim about whether artifacts should be natural-language, symbolic, or distributed-parametric.
 - **Form, not storage label.** Comparing trajectory-informed memory tips to AgeMem policy weights is not "tips vs weights" but natural-language form vs distributed-parametric form. Tips are one natural-language package; weights are one distributed-parametric package.
 - **Lineage, not co-location.** A generated prompt view and its source notes may both live in repo files. The risk is not that the substrate differs, but that the derived view drifts from the canonical source while retaining high authority.
 - **Authority, not object identity.** "Knowledge artifact" and "system-definition artifact" are useful shorthands for authority families, but the precise claim is that an operative part is being consumed with a named force. A reflection retrieved as evidence and the same reflection loaded as standing instruction have different authority.
@@ -115,7 +115,7 @@ Relevant Notes:
 - [system-definition artifacts are crystallized reasoning under context scarcity](./system-definition-artifacts-are-crystallized-reasoning-under-context.md) - extends: system-definition artifacts split into heuristic crystallized reasoning and authority-bearing constraints
 - [Memory design adds operational axes to artifact analysis](./memory-design-adds-operational-axes-to-artifact-analysis.md) - extends: memory operational policies should attach to operative parts and consumption paths
 - [trace-learning techniques in related systems](../agent-memory-systems/trace-learning-techniques-in-related-systems.md) - grounds: surveyed systems distinguish promotion targets and future uses that span these fields
-- [files beat a database for agent-operated knowledge bases](./files-not-database.md) - sharpens: substrate choice is downstream of form, lineage, and authority
+- [incrementally constrained files defer centralized schema commitment until write invariants stabilize](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md) - sharpens: substrate choice is downstream of form, lineage, and authority
 - [inspectable artifact, not supervision, defeats the blackbox problem](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) - grounds: readability is shared by natural-language and symbolic forms
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) - contrasts: AgeMem is a distributed-parametric policy case that makes form and authority visible
 - [Cognee](../agent-memory-systems/reviews/cognee.md) - counterexample: database-backed natural-language artifacts show that files are not the only substrate

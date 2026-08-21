@@ -1,6 +1,6 @@
 # The freshness schema as a starting skeleton
 
-First pass. Recaps what the shipped store already gives for free, then runs the gap list against two checklists: the four capabilities [files-not-database.md](../../notes/files-not-database.md) says a database migration has to replace (versioning, browsing, agent access, infrastructure), and the obligations [reflective-system.md](../../notes/definitions/reflective-system.md) / [self-improving-system.md](../../notes/definitions/self-improving-system.md) impose on any system that wants to claim the properties this workshop is named after.
+First pass. Recaps what the shipped store already gives for free, then runs the gap list against two checklists: the four tool-chain capabilities [files defer schema commitment until invariants stabilize](../../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md) treats as contingent file affordances (versioning, browsing, agent access, infrastructure), which a DB-native system has to supply some other way, and the obligations [reflective-system.md](../../notes/definitions/reflective-system.md) / [self-improving-system.md](../../notes/definitions/self-improving-system.md) impose on any system that wants to claim the properties this workshop is named after.
 
 ## What's already there
 
@@ -18,7 +18,7 @@ This is real evidence the relational substrate is *viable* for a slice of Common
 
 ## Gap 1 — content identity and full versioning
 
-Files-not-database.md's first capability: "Git gives branching, diffing, and history for free." The freshness schema gives none of this today, deliberately — it isn't its job.
+The pre-reframe note's first capability: "Git gives branching, diffing, and history for free." The freshness schema gives none of this today, deliberately — it isn't its job.
 
 - **Identity is path, and path is fragile.** `freshness_inputs` and `review_pairs` key on `note_path`/`gate_path`. Relocation requires rekeying (`relocation.py`, flagged as a 703-line god-module partly *because* of this). [review-lineage-storage-case.md](../src-architecture-alternatives/review-lineage-storage-case.md) already asks the open question directly: "Should note identity be path-hash based, or should Commonplace introduce stable artifact ids?" A DB-native design that will never have git to fall back on for rename tracking has to answer this, not defer it — path can be a mutable attribute on a stable-ID row, the way most content-management schemas do it.
 - **No write-time versioning.** Every edit needs a row, not just accepted ones — otherwise there is no diff, no blame, no "what did this look like an hour ago." That means an append-only content-version table (`content_versions`: id, artifact_id, parent_version_id, text, hash, author/model, timestamp) with `artifact_snapshots`-style accepted baselines becoming a *labeled subset* of that history (something like a `head` or `accepted` pointer into it), not the only recorded state.
@@ -40,10 +40,10 @@ That forces the open question the note itself leaves unresolved: *"Every authore
 
 ## Gap 4 — browsing and agent access
 
-Files-not-database.md's second and third capabilities, both currently unmet by SQLite alone: "Files render in any editor or on GitHub with zero setup" and "Agents use Read/Write/Grep — tools they already have."
+The pre-reframe note's second and third capabilities, both currently unmet by SQLite alone: "Files render in any editor or on GitHub with zero setup" and "Agents use Read/Write/Grep — tools they already have."
 
-- A DB-native KB needs either a rendering layer (something ProperDocs-shaped that reads the DB instead of files, so a human can still browse without a client) or accepts that browsing becomes a build/export step, functionally re-creating the "derived index" pattern `files-not-database.md` already uses for search — except now *everything* is derived, including the readable form of the primary content, which inverts today's relationship (files are source, indexes are derived) rather than merely adding a store alongside files.
-- Agent access needs a query/mutation API standing in for Read/Grep/Edit. `rg`-shaped substring search over content still works (`LIKE`/FTS5 in SQLite), but structural navigation (walk this directory, follow this link) becomes query code instead of a tool call, and every skill/agent instruction that currently says "read this file" needs an equivalent "fetch this row by id/path" primitive with the same low ceremony. This is the cost `files-not-database.md` calls "an API layer or DB client on every interaction" — a DB-native design should treat minimizing that ceremony (e.g. a thin CLI that still feels like `cat`/`grep`) as a first-class requirement, not an afterthought, since it's exactly what made files cheap for agents in the first place.
+- A DB-native KB needs either a rendering layer (something ProperDocs-shaped that reads the DB instead of files, so a human can still browse without a client) or accepts that browsing becomes a build/export step, functionally re-creating the "derived index" pattern the schema-deferral note already uses for search — except now *everything* is derived, including the readable form of the primary content, which inverts today's relationship (files are source, indexes are derived) rather than merely adding a store alongside files.
+- Agent access needs a query/mutation API standing in for Read/Grep/Edit. `rg`-shaped substring search over content still works (`LIKE`/FTS5 in SQLite), but structural navigation (walk this directory, follow this link) becomes query code instead of a tool call, and every skill/agent instruction that currently says "read this file" needs an equivalent "fetch this row by id/path" primitive with the same low ceremony. This is the cost the pre-reframe note called "an API layer or DB client on every interaction" — a DB-native design should treat minimizing that ceremony (e.g. a thin CLI that still feels like `cat`/`grep`) as a first-class requirement, not an afterthought, since it's exactly what made files cheap for agents in the first place.
 
 ## Gap 5 — workshop/task lifecycle state
 

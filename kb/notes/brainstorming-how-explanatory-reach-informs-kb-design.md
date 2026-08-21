@@ -12,14 +12,14 @@ Deutsch's "reach" (*The Beginning of Infinity*), registered in this KB as **expl
 ## Notes sit on an explanatory-reach spectrum
 
 - **High explanatory-reach** — constraining, consumer-directed reshaping, context-efficiency — principles that apply across agent systems regardless of implementation
-- **Medium explanatory-reach** — files-not-database, short composable notes, title-as-claim — principles that apply to a class of KBs (authored, agent-navigated) but not universally
+- **Medium explanatory-reach** — schema-commitment deferral, short composable notes, title-as-claim — principles that apply to a class of KBs (authored, agent-navigated) but not universally
 - **Low explanatory-reach** — ADR 004 (tags not areas), ADR 002 (inline templates) — choices specific to this installation
 
-The boundary between levels is not always obvious. Many notes that look like local design choices are actually medium-explanatory-reach principles. Files-not-database derives from a general argument about premature schema commitment — it applies to any system that doesn't yet know its access patterns. The Graphiti section maps where that explanatory-reach ends, which is exactly what good explanations do: they have clear scope, not unlimited generality.
+The boundary between levels is not always obvious. Many notes that look like local design choices are actually medium-explanatory-reach principles. The schema-deferral claim derives from a general argument about when a commitment has to become binding — it applies to any system whose write invariants are not yet settled. Its Graphiti section maps where that explanatory-reach ends, which is exactly what good explanations do: they have clear scope, not unlimited generality.
 
 ## Explanatory-reach does not obviously help retrieval
 
-When searching for "should I use a database?", you want files-not-database regardless of its explanatory-reach level. We haven't identified a retrieval scenario where knowing a note's explanatory-reach would change what you look for or which results you prefer. But this deserves more thought — it's possible explanatory-reach could inform ranking or filtering in ways we haven't considered.
+When searching for "should I use a database?", you want the schema-deferral note regardless of its explanatory-reach level. We haven't identified a retrieval scenario where knowing a note's explanatory-reach would change what you look for or which results you prefer. But this deserves more thought — it's possible explanatory-reach could inform ranking or filtering in ways we haven't considered.
 
 ## Explanatory-reach is valuable and dangerous
 
@@ -32,7 +32,7 @@ But explanatory-reach creates fragility. The cost of changing a note is inversel
 
 So explanatory-reach is worth pursuing — but it demands care. This tension shapes two practical heuristics:
 
-1. **When writing**, push for the most general formulation the argument supports, but map the boundaries explicitly. Overclaiming explanatory-reach without marking where it ends (the way files-not-database maps its Graphiti boundary) produces brittle generality.
+1. **When writing**, push for the most general formulation the argument supports, but map the boundaries explicitly. Overclaiming explanatory-reach without marking where it ends (the way the schema-deferral note maps its Graphiti boundary) produces brittle generality.
 
 2. **When reviewing**, clusters of similar low-explanatory-reach notes suggest an unextracted higher-explanatory-reach principle. Three notes making the same argument in different contexts are a signal that a general principle is waiting to be named.
 

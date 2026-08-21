@@ -71,7 +71,7 @@ The sharpest divergence is governance. Commonplace is explicit about document co
 
 ## Relevant Notes
 
-- [files beat a database for agent-operated knowledge bases](../../notes/files-not-database.md) - aligns: Sig reports local markdown files as the memory source of truth and git as team sync substrate.
+- [incrementally constrained files defer centralized schema commitment until write invariants stabilize](../../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md) - aligns: Sig reports local markdown files as the memory source of truth and git as team sync substrate.
 - [agent statelessness means the context engine should inject context automatically](../../notes/agent-statelessness-means-the-context-engine-should-inject-context.md) - motivates: Sig addresses the "new chat starts from nothing" problem by making work context reusable.
 - [Napkin](../reviews/napkin.md) - compares: both adapt a local file substrate into an agent-facing memory interface; Napkin is code-inspected and vault-oriented, while Sig remains doc-grounded and workplace-capture oriented.
 - [engraph](../reviews/engraph.md) - compares: both treat local human-authored notes as agent-accessible memory; engraph exposes indexing and MCP/HTTP mechanisms, while Sig's implementation is not visible.

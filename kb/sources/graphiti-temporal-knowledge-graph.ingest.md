@@ -28,7 +28,7 @@ Graphiti is a framework for building temporally-aware knowledge graphs that serv
 
 The `/connect` discovery (2026-03-09) found 9 note connections and 5 source connections, rejected 6 candidates, and identified 1 synthesis opportunity.
 
-**Strongest tension.** Graphiti directly **contradicts** [files-not-database](../notes/files-not-database.md). It is the most compelling counterexample to the files-first position because it requires graph database capabilities (temporal queries, edge invalidation, community detection) that files genuinely cannot replicate. The connection report flags this as a legitimate challenge to our KB's architectural stance.
+**Boundary case.** Graphiti is the case [files defer schema commitment until invariants stabilize](../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md) now names as authoritative rather than derived: its bitemporal relationship validity is updated as facts change, so the graph store cannot be discarded and rebuilt from source documents without losing state. That files lack native graph operations does not by itself settle the question — a derived graph or temporal index could supply them. What decides it is where validity is maintained. Recorded in the 2026-03-09 connection report as a challenge to the KB's then-universal files-first stance.
 
 **Comparative review grounding.** The [agentic-memory-systems-comparative-review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) already evaluates Graphiti across the current shared architectural axes. The source snapshot provides the raw technical details that the review synthesises into comparative claims.
 
@@ -52,7 +52,7 @@ The `/connect` discovery (2026-03-09) found 9 note connections and 5 source conn
 
 1. **Bi-temporal model as a contradiction resolution pattern.** Graphiti's valid_at/invalid_at approach to handling contradictory facts is a concrete alternative to overwriting (Mem0), evolution (A-MEM), and recency decay (CrewAI). This pattern could inform how any KB handles conflicting information over time. [experiment]
 
-2. **The strongest counterexample to files-first.** Graphiti's graph-database dependency is not incidental — temporal queries, edge invalidation, and community detection are capabilities that genuinely require database infrastructure. This should sharpen the files-not-database argument by delineating exactly where the trade-off tips. [quick-win]
+2. **The boundary case for the schema-deferral argument.** Graphiti's graph-database dependency is not incidental: validity intervals are maintained by the store as facts change, so it cannot be discarded and rebuilt from source documents. **Executed 2026-08-21** — the note now uses exactly this to delineate where the trade-off tips. [quick-win]
 
 3. **Temporal model synthesis across memory systems.** With Graphiti, CrewAI, A-MEM, ClawVault, and commonplace's own git-based model now documented, there is enough material to synthesise what properties a good temporal model for agent memory requires. Each system embodies a different theory: bi-temporal tracking vs. recency decay vs. promotion-by-recurrence vs. explicit status transitions. [deep-dive]
 
@@ -78,4 +78,4 @@ The `/connect` discovery (2026-03-09) found 9 note connections and 5 source conn
 
 ## Recommended Next Action
 
-Update [files-not-database](../notes/files-not-database.md): add a section acknowledging Graphiti as the legitimate counterexample where graph database capabilities (bi-temporal queries, edge invalidation, community detection) justify the infrastructure trade-off. The note currently references Cludebot's database stack as a counterpoint but dismisses it because its patterns "can all be implemented over files." Graphiti's temporal invalidation and community detection cannot be — and saying so sharpens the argument by delineating the actual boundary of the files-first position. This was already flagged in the prior ingest (2026-03-05) and has not yet been executed.
+**Executed 2026-08-21** (full pass `20260821T105408Z-d10d21`). The standing request — flagged in the 2026-03-05 ingest and repeated here — was to make Graphiti the named boundary case in the files-first note. That pass reframed the note to [files defer schema commitment until invariants stabilize](../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md), removed the Cludebot aside and its "can all be implemented over files" claim, and states the boundary as rebuildable derived views versus authoritative state, with Graphiti as the authoritative illustration. No further action outstanding.

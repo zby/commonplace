@@ -28,7 +28,7 @@ State genuinely earns its keep in some cases. The strongest is **authorisation**
 
 ## The economic argument
 
-This is the [files-not-database](./files-not-database.md) argument applied to the tool layer. A database earns its complexity when you need transactions, concurrent access, and indexes. Files earn their simplicity when you need read/write/version. Most MCP tools are file-shaped operations — stateless, independent, no shared state — forced through a database-shaped runtime.
+This is the [argument for deferring centralized commitment until invariants stabilize](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md) applied to the tool layer. A database earns its complexity when you need transactions, concurrent access, and indexes. Files earn their simplicity when you need read/write/version. Most MCP tools are file-shaped operations — stateless, independent, no shared state — forced through a database-shaped runtime.
 
 The economic alternative: stateless tool invocation as the default, where the tool is a function call with no server process. State only where the tool genuinely requires it. This is what Claude Code's native tools already are — Read, Write, Grep, Bash are direct function calls with no intermediate server, no session, no lifecycle.
 
@@ -38,6 +38,6 @@ The pattern generalises: when an architecture bundles a simple common case with 
 
 Relevant Notes:
 
-- [files beat a database for agent-operated knowledge bases](./files-not-database.md) — same pattern at the storage layer: files are the stateless default, databases earn their complexity only for specific capabilities (temporal queries, graph analytics)
+- [incrementally constrained files defer centralized schema commitment until write invariants stabilize](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md) — same pattern at the storage layer: weak enforcement stays cheap while invariants are unsettled, and a database earns authority at write-time invariants or unowned mutable state
 - [ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — stateless tool invocation is ephemeral by design; MCP's persistent server pushes toward accumulating state whether or not the tools need it
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — unnecessary intermediate layers add latency and failure modes without improving the agent's context

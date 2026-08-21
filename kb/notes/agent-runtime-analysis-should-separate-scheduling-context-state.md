@@ -57,7 +57,7 @@ The [bounded-context orchestration model](./bounded-context-orchestration-model.
 
 [Context engineering](./definitions/context-engineering.md) is also broader than a runtime component. Its operational core—routing, loading, scoping, and maintaining bounded context—supplies the context-assembly responsibility here. Its wider questions about storage shape, session boundaries, and interfaces can cross the other two.
 
-The external-state concern is supported by [inspectable artifacts](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md): exact state outside the model can be diffed, tested, reviewed, and reverted. Files are one useful implementation because [files can defer schema commitment](./files-not-database.md), but repositories and shell commands are coding-agent examples, not requirements. Other runtimes may use databases, object stores, remote executors, or policy services.
+The external-state concern is supported by [inspectable artifacts](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md): exact state outside the model can be diffed, tested, reviewed, and reverted. Files are one useful implementation because [files can defer schema commitment](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md), but repositories and shell commands are coding-agent examples, not requirements. Other runtimes may use databases, object stores, remote executors, or policy services.
 
 ## What the mappings establish
 

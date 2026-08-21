@@ -7,7 +7,7 @@ tags: [architecture]
 
 # Churning state on a many-to-many edge is where files yield to a database
 
-[Files beat a database](./files-not-database.md) for authored, agent-navigated knowledge, but that argument has a boundary, and the clearest form of that boundary has a precise structural shape. The general trigger found so far: a files-first system is pushed toward a relational store when **mutable state that churns lives on the edge of a many-to-many relation**. This is the clearest structural condition the work has surfaced, not a proof that no other trigger exists. Where it holds, files lose; high churn alone does not force the move, and a many-to-many relation alone does not either.
+Files can [defer centralized schema commitment while write invariants are unsettled](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md) for authored, agent-navigated knowledge, but that deferral has a boundary, and the clearest form of that boundary has a precise structural shape. The general trigger found so far: a files-first system is pushed toward a relational store when **mutable state that churns lives on the edge of a many-to-many relation**. This is the clearest structural condition the work has surfaced, not a proof that no other trigger exists. Where it holds, files lose; high churn alone does not force the move, and a many-to-many relation alone does not either.
 
 ## Why a churning ownerless edge outgrows a tree of files
 
@@ -32,7 +32,7 @@ What forces the store is the *combination*: edges with no owner file **and** sta
 
 ## A witness
 
-Commonplace's review system is a simplified example of the regime. Take it in two dimensions: reviews relate notes and quality gates, where each note is reviewed against many gates and each gate applies to many notes — a many-to-many relation whose edge is the `(note, gate)` pair. The state on that edge — which version was reviewed, the verdict, whether it is still fresh — churns as notes and gates change, and the system must repeatedly recheck staleness from both endpoints: a gate change invalidates its note-dependents, a note change its gate-dependents. The review documents stay in markdown files, but that churning edge-state moved into a small relational store, because no single note file or gate file owns the pair. This is the scoped exception [the files-first argument already anticipated](./files-not-database.md) but did not name structurally.
+Commonplace's review system is a simplified example of the regime. Take it in two dimensions: reviews relate notes and quality gates, where each note is reviewed against many gates and each gate applies to many notes — a many-to-many relation whose edge is the `(note, gate)` pair. The state on that edge — which version was reviewed, the verdict, whether it is still fresh — churns as notes and gates change, and the system must repeatedly recheck staleness from both endpoints: a gate change invalidates its note-dependents, a note change its gate-dependents. The review documents stay in markdown files, but that churning edge-state moved into a small relational store, because no single note file or gate file owns the pair. This is the case [the deferral argument lists as mutable state no single document owns](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md), given a structural test here.
 
 (The real review system carries a further dimension and operational detail that this note deliberately sets aside; the two-dimensional version is enough to show the structure.)
 
@@ -54,7 +54,7 @@ This is a claim on the **storage-substrate** [axis of artifact analysis](./axes-
 
 Relevant Notes:
 
-- [files beat a database for agent-operated knowledge bases](./files-not-database.md) — extends: names the structural boundary that note's "a subsystem can outgrow files" exception leaves implicit
+- [Incrementally constrained files defer centralized schema commitment until write invariants stabilize](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md) — extends: develops that note's unowned-mutable-state exception into a structural trigger test
 - [axes of artifact analysis](./axes-of-artifact-analysis.md) — see-also: this is a claim on the storage-substrate axis, decided independently of representational form
 - [a derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — see-also: the disposition for the churn-without-mesh case (regenerate or validate, never store)
 - [review system architecture](../reference/review-architecture.md) — evidenced-by: the witness — a `(note, gate)` review relation whose churning edge-state lives in a relational store while review documents stay in files
