@@ -1,62 +1,49 @@
 ---
-description: Files beat a database early on — a schema commits to access patterns before you know them, and files let you constrain incrementally while getting free browsing, versioning, and agent access from day one
+description: When write invariants are unsettled, canonical files let systems add constraints gradually and rebuild read views; database authority becomes warranted when correctness depends on write-time invariants or unowned mutable state
 type: kb/types/note.md
-traits: []
+traits: [title-as-claim, has-external-sources]
 tags: [architecture]
 ---
 
-# Files beat a database for agent-operated knowledge bases
+# Incrementally constrained files defer centralized schema commitment until write invariants stabilize
 
-The temptation as a KB grows is to move to a database. But a database migration doesn't just change storage — it replaces the entire tool chain:
+Keeping authored files canonical does not eliminate schema. Filenames, directories, frontmatter, link labels, and validators still constrain the data. The advantage is narrower: a file-backed system can defer when those commitments become binding. While write-side invariants are unsettled, constraints can remain close to the authored documents and comparatively easy to revise rather than being enforced centrally on every write.
 
-- **Versioning**: Git gives branching, diffing, and history for free. Database versioning is either "diffs in a table" (fragile, no branching) or "shell out to git" (then why move?).
-- **Browsing**: Files render in any editor or on GitHub with zero setup. A database needs a viewing layer built for it — a whole application to build and maintain.
-- **Agent access**: Agents use Read/Write/Grep — tools they already have. A database requires an API layer or DB client on every interaction.
-- **Infrastructure**: Files need nothing. A database needs hosting, backups, migrations, and someone to maintain it.
+This advantage holds when three conditions are met:
 
-[Koylanai's Personal Brain OS](https://x.com/koylanai/status/2025286163641118915) arrived at the same conclusion independently: 80+ files in markdown, YAML, and JSONL, no database, no API keys, no build step.
+- agents already share file and Git tools;
+- canonical writes do not yet require transactions, uniqueness, per-record authorization, or similar invariants; and
+- missing read capabilities can be rebuilt from the authored documents.
 
-## Premature schema commitment
+Under these conditions, files provide a usable authoring surface immediately. Git records diffs, branches, and document history. Editors and repository browsers render the content without a purpose-built viewer. Agents can use ordinary read, write, and search tools without a storage-specific API. These are contingent tool-chain savings, not benefits that every environment grants files for free.
 
-The practical arguments above are real, but there's a deeper reason: a database schema is a commitment to access patterns you don't yet understand. When a project is young, you don't know what queries matter, what relationships will emerge, or how knowledge will be organized six months from now. A schema encodes those assumptions in DDL — and every reorganization becomes a migration.
+## Files still accumulate schema
 
-Files let you defer that commitment and [constrain incrementally](./definitions/constraining.md) as you learn. Raw markdown first, then frontmatter conventions, then grep-based queries, then derived indexes (semantic search, quality scores). Each step adds structure only after the access pattern has been observed in practice. This is the [constrain/relax cycle](./agentic-systems-interpret-underspecified-instructions.md) applied to storage architecture — stay at the least constrained medium until you've seen enough to know what to commit to.
+A file-backed KB does not choose between schema and no schema. It chooses weaker, distributed conventions before stronger centralized enforcement. Changing a frontmatter field across thousands of notes or repairing links after a path convention changes is still a data migration.
 
-This isn't a files-forever position. Once access patterns stabilize, a database may earn its place — either as a replacement or, more likely, as a derived layer alongside files. The point is that starting with a database front-loads a commitment you're not yet equipped to make. Files buy time to learn what the right schema would be. The browsing cost compounds this: early on, when the methodology is still forming, having to build a viewing layer before anyone can browse the knowledge is a real barrier. Files give a usable system from day one.
+The useful difference is the sequence in which commitments become binding. Files can [add constraints only after repeated use exposes a stable pattern](./progressive-constraining-commits-only-after-patterns-stabilize.md): raw Markdown can acquire frontmatter, typed links, validators, and derived indexes one observed need at a time. Each addition should make an actual access pattern cheaper or a known invalid state impossible.
 
-## What actually breaks at scale
+This is [incremental constraining](./definitions/constraining.md): postpone enforcement whose requirements are unknown, but do not postpone information that later enforcement will need. Stable identities and provenance needed later should be captured from the first record; write invariants already known should be enforced from the outset. A database can also defer normalization, for example through a document table with flexible metadata. The file choice is therefore warranted by the available authoring and inspection tools, not by a claim that databases are inherently rigid.
 
-The failure modes files hit at scale are all addressable without abandoning the substrate:
+## The boundary is derived views versus authoritative state
 
-1. **Finding things** — solved by semantic search indexes derived from the files
-2. **Too many files per directory** — solved by subdirectories
-3. **Structured queries with scoring** — the real gap, but solvable with [note quality scores](./notes-need-quality-scores-to-scale-curation.md)
+Once a system needs capabilities beyond direct file access, the decisive question is whether the supporting structure is rebuildable or authoritative. Read-side capabilities can remain derived when the canonical documents contain everything needed to reconstruct them. Semantic search, retrieval ranking, quality scores, and a traversable link graph can fit this pattern. A derived copy is safe only when it is [checked against its recomputable source or omitted](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md); otherwise the convenience layer quietly becomes a second, stale source of truth.
 
-The pattern is: files as source of truth, derived indexes for capabilities files alone can't provide. Each index is a build artifact rebuildable from files at any time. [Cludebot's database stack](../agent-memory-systems/reviews/cludebot.md) (Supabase, pgvector) provides a useful counterpoint: the techniques worth borrowing from it (typed link semantics, contradiction surfacing, staleness decay) can all be implemented over files.
+A database earns authority when an invariant must hold at write time or when mutable state cannot be assigned safely to a single document. Examples include concurrent uniqueness, transactional updates, per-record access control, fact-validity intervals, and mutable state on an ownerless many-to-many relation. The important question is not file count. It is whether the database can be discarded and rebuilt from the authored documents without losing information or violating correctness.
 
-## Where the trade-off tips: Graphiti
+[Graphiti](https://github.com/getzep/graphiti) illustrates the authoritative class. Its design puts bitemporal relationship validity and graph operations in a graph database. A file-backed system could retain source facts and build graph or temporal indexes from them. But if correctness depends on the database updating validity as facts change, that temporal state is not a disposable view. Commonplace reaches the same boundary at a smaller scale: documents remain Markdown, while churning review freshness on `(note, criterion)` edges lives in SQLite because [no single document owns that mutable relation](./many-to-many-edge-state-is-where-files-yield-to-a-database.md).
 
-[Graphiti](https://github.com/getzep/graphiti) is the strongest counterexample to the files-first position. Its graph database dependency is not incidental — it requires capabilities that files genuinely cannot replicate:
-
-- **Bi-temporal edge invalidation** — every relationship carries valid_at/invalid_at timestamps, enabling point-in-time queries ("what was true on date X?") and contradiction resolution through temporal supersession rather than overwriting. Git history tracks *when a file changed*, not *when the fact it describes became true or false*.
-- **Community detection** — label propagation over entity nodes discovers clusters automatically. Files have no native graph traversal; link-based clustering requires building an explicit graph representation first.
-- **Hybrid graph+semantic retrieval** — combining graph traversal with embedding similarity in a single query requires both representations co-located in a queryable store.
-
-The lesson is not that files are wrong for authored, agent-navigated knowledge where versioning, inspectability, and zero infrastructure matter most. The lesson is that the files-first argument has a boundary: systems that need temporal invalidation, automated graph analytics, or hybrid traversal+semantic queries have legitimate reasons to pay the database cost. Graphiti's use case (continuously streaming conversational data with contradictions over time) is genuinely different from authored-notes use cases (documents with explicit status transitions), and the architectural difference follows from the use case difference.
-
-A second kind of boundary shows up inside a mostly files-first system: a specific subsystem can outgrow the authored-document shape even when the rest of the KB stays file-backed. Once an artifact leaves git and the system mostly wants indexed state transitions over it, a local database is simpler than pretending the files are still the primary representation. That scoped exception is compatible with the files-first position, not a refutation of it.
+The decision rule is therefore conditional. Prefer incrementally constrained files when shared file tooling makes authored documents cheap to inspect and revise, canonical writes can tolerate weak enforcement, and added capabilities remain rebuildable. Prefer database authority when its infrastructure is already the cheaper shared substrate or when correctness requires stable write-time invariants. A mixed system often follows: files own authored knowledge, while databases serve either as disposable read views or as authoritative stores for scoped operational state. Whether the database can be rebuilt distinguishes those roles.
 
 ---
 
 Relevant Notes:
 
-- [storage-architecture](../reference/storage-architecture.md) — current-state: how Commonplace instantiates this argument today, including the derived-index layer and the scoped SQLite review-state exception
-- [cludebot](../agent-memory-systems/reviews/cludebot.md) — evaluates a database-backed agent memory system and concludes the valuable techniques transfer to files without the infrastructure cost
-- [Koylanai Personal Brain OS](https://x.com/koylanai/status/2025286163641118915) — independent practitioner report validating the same architectural choice at 80+ file scale
-- [Fintool: Lessons from Financial Services](https://x.com/nicbstme/status/2015174818497437834) — validates at commercial scale: S3 as source of truth with Lambda-synced PostgreSQL as derived index, paying users, 11-nines durability; strongest production evidence for files-first with derived indexes
-- [Coding Agents are Effective Long-Context Processors](https://arxiv.org/html/2603.20432v1) — extends: benchmark evidence that exposing corpora as navigable files changes agent strategy (coordinate-based read/slice beats monolithic scans), suggesting part of files' value is operational, not just storage ergonomics
-- [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — addresses the "structured queries" gap with composite note scores; derived indexes keep files as source of truth
-- [Graphiti](https://github.com/getzep/graphiti) — contradicts: the strongest counterexample — bi-temporal queries, edge invalidation, and community detection genuinely require database infrastructure
-- [churning state on a many-to-many edge is where files yield to a database](./many-to-many-edge-state-is-where-files-yield-to-a-database.md) — extends: names the structural predicate behind the "scoped exception" above — a subsystem escalates exactly when mutable, churning state lands on an ownerless many-to-many edge
-- [Agent-runtime analysis should separate scheduling, context assembly, and external state](./agent-runtime-analysis-should-separate-scheduling-context-state.md) — extends: files are one important choice among external state and action services
-- [Tracecraft](../agent-memory-systems/reviews/tracecraft.md) — tests: applies the files-over-database bet to ephemeral coordination state (write-heavy, latency-sensitive, disposable) rather than durable knowledge, where the access patterns differ significantly
+- [Progressive constraining commits only after patterns stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — mechanism: generalizes the timing rule behind adding storage constraints only after their need is observed
+- [A derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — extends: supplies the safety condition for file-backed indexes and views
+- [Current-task fit alone does not warrant costly structural entrenchment](./current-task-fit-alone-does-not-warrant-costly-entrenchment.md) — contrasts: distinguishes unknown future requirements from overcommitting to today's known queries
+- [Storage architecture](../reference/storage-architecture.md) — evidenced-by: shows the mixed file-and-SQLite boundary in the shipped Commonplace system
+- [Churning state on a many-to-many edge is where files yield to a database](./many-to-many-edge-state-is-where-files-yield-to-a-database.md) — extends: names one structural trigger for scoped database authority
+- [Lessons from Building AI Agents for Financial Services](../sources/lessons-from-building-ai-agents-for-financial-services.ingest.md) — evidenced-by: reports canonical object storage with PostgreSQL as a derived query index in a production workload
+- [What the matrix shows across 148 agent memory systems](../agent-memory-systems/agentic-memory-systems-comparative-review.md) — evidenced-by: file-backed systems are common in the reviewed corpus, while substrate alone predicts little about activation or verification
+- [The GitHub for Context Doesn't Exist Yet](../sources/the-github-for-context-doesn-t-exist-yet-2077772169455530152.ingest.md) — evidenced-by: qualifies Git history by showing that it does not supply semantic dependency or governance information
