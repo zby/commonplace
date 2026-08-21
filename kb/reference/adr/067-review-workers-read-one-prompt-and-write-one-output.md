@@ -37,8 +37,11 @@ parent-owned retention work, not part of review judgment.
 
 ## Decision
 
-The generated `prompt.md` is the complete and sole task contract presented to a
-review worker. Dispatch passes one instruction:
+The generated `prompt.md` is the complete and sole job-specific task contract
+presented to a review worker. The worker starts in a fresh context with parent
+conversation inheritance disabled. Ambient system, developer, and repository
+governance remains in force, but the parent's task and execution trace do not
+cross the boundary. Dispatch then passes one instruction:
 
 ```text
 Read {prompt_path} and follow it exactly.
@@ -114,7 +117,7 @@ remains parent-owned.
 
 ## Consequences
 
-- Review workers spend their context on the assay rather than job bookkeeping.
+- Review workers inherit no parent conversation and spend their context on the assay rather than job bookkeeping.
 - The prompt renderer is the single authority for output ownership and isolation.
 - Parent orchestration checks one file and does not parse or preserve a duplicate
   conversational result.

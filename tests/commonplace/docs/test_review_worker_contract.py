@@ -8,7 +8,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[3]
 
 
-def test_review_worker_dispatch_contains_only_the_prompt_path() -> None:
+def test_review_worker_dispatch_requires_fresh_context_and_only_the_prompt_path() -> None:
     instruction = (REPO_ROOT / "kb/instructions/run-review-batches.md").read_text(
         encoding="utf-8"
     )
@@ -18,5 +18,6 @@ def test_review_worker_dispatch_contains_only_the_prompt_path() -> None:
 
     task_blocks = re.findall(r"```text\n(.*?)\n```", delegate_section, re.DOTALL)
 
+    assert "fresh context that does not inherit the parent conversation" in delegate_section
+    assert '`fork_turns="none"`' in delegate_section
     assert task_blocks == ["Read {prompt_path} and follow it exactly."]
-

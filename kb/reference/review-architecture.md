@@ -116,7 +116,7 @@ State and inspection:
 ## Invariants
 
 - Job creation always consumes selector JSON. There is no direct note/pair creation mode.
-- Worker agents receive only the generated prompt path and write only its named job output file; they do not mutate notes, criteria, indexes, manifests, or review DB state. Their conversational response is not a pipeline input. An optional `self-reported-model` file field is preserved as a labelled claim, not promoted to harness provenance or freshness identity.
+- Worker agents start without inherited parent conversation turns, receive only the generated prompt path as their job-specific task, and write only its named job output file; they do not mutate notes, criteria, indexes, manifests, or review DB state. Ambient system, developer, and repository governance still applies. Their conversational response is not a pipeline input. An optional `self-reported-model` file field is preserved as a labelled claim, not promoted to harness provenance or freshness identity.
 - `MANIFEST.json` is inspectable output, not pipeline state.
 - Finalization accepts only `queued` jobs and moves them atomically to `completed` or `failed`.
 - Failed jobs write no freshness baseline rows and reset pair completion state (`outcome` and `completed_at` null).

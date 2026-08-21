@@ -87,9 +87,11 @@ Each returned job is one review batch for this procedure. Do not invent, merge, 
 
 Launch one sub-agent per returned job, subject to the harness's concurrency limit. If there are more jobs than available workers, queue the remaining jobs and launch them as workers finish and are closed.
 
+Start every worker in a fresh context that does not inherit the parent conversation. In Codex, pass `fork_turns="none"` to `spawn_agent`; use the equivalent no-history launch option in another harness. Ambient system, developer, and repository instructions still apply. If the harness cannot suppress parent-turn inheritance, stop and report that isolated review delegation is unavailable.
+
 When the harness supports explicit model selection, launch each worker with an available model that maps to the job's selected partition. Otherwise, use the harness's inherited or assigned worker model only when its partition was known at selection. Capture concrete model, effort, and telemetry only from harness-provided launch or execution metadata. The worker's optional `self-reported-model` is a separately labelled claim, not harness provenance. If the harness exposes no concrete model, leave `runner_model` unknown and finalize with only `--runner`.
 
-Give each sub-agent only this task:
+Give each fresh sub-agent only this task:
 
 ```text
 Read {prompt_path} and follow it exactly.
