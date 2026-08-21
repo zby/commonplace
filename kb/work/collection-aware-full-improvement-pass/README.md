@@ -18,6 +18,22 @@ This is not evidence that the current pass is defective for the theoretical note
 
 What applicability, review-routing, synthesis, mutation, and closing contracts let a full improvement pass advance an artifact according to its own collection and function rather than making every target resemble a theoretical claim note?
 
+## Starting hypothesis: artifact function is more legible in theory
+
+The theoretical profile makes the reason for an artifact's existence relatively easy to infer. A theory note normally advances a claim, explains a mechanism, or defines a concept, and its title, type, and collection contract further constrain that contribution. The full pass can therefore reconstruct a central commitment with a fairly strong prior about what kind of improvement would still serve the artifact.
+
+The workshop layer deliberately removes much of that prior. One file may be evidence, scratch reasoning, a proposal, a decision surface, a handoff, an experiment record, or material awaiting extraction. The collection-wide goal to “move the work forward” does not determine which of those jobs a particular file performs. A local README may narrow the inquiry while still leaving the individual file's role and decision authority implicit.
+
+**Hypothesis:** safe automatic improvement depends on how legible the artifact's function is, not only on how strong its collection text contract is. When a workshop file's function cannot be recovered confidently from its collection, type, local framing, and text, a note-shaped review suite will tend to supply the missing purpose itself. The resulting edit may be coherent while changing what the artifact is for or deciding questions it was meant only to expose.
+
+This predicts that:
+
+- independent reviewers will agree more often about the function and permitted edit boundary of theoretical notes than of otherwise comparable workshop files;
+- disagreement about artifact function will correlate with review-mode changes, type conversion, and newly selected commitments; and
+- an explicit function brief will reduce those changes while preserving ordinary structural and readability improvements.
+
+Comparable agreement and commitment preservation without an explicit function brief would weaken the hypothesis. So would a function brief that fails to improve reviewer agreement or edit fidelity. Until worked cases test it, “function must be explicit before mutation” remains a candidate rule rather than a workshop conclusion.
+
 ## Evaluation boundary
 
 The workshop concerns authored natural-language artifacts that their governing contracts permit an agent to revise. It includes system-definition prose, such as instructions, only if a candidate design accounts for its binding behavioral effects, authority, and appropriate validation.
