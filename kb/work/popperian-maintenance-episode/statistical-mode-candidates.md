@@ -12,6 +12,12 @@ Started 2026-08-19 to give the statistical mode its worked cases before the thre
 
 **Diagnosis.** The note already does modality work informally — hedges, scope concessions, a "working hypothesis" header — but the title must overclaim (universal "not X") because titles have no mode to declare, and the description quietly corrects it ("not just X"). With declared modes, the title claim is statistical and the mechanism section is a declared idealization; nothing about the content needs to weaken.
 
+## Status (2026-08-21): the survey is spent, and its predictions were not
+
+Twenty-one of the 22 candidates below have been through a full pass; only #6 (`knowledge-storage-does-not-imply-contextual-activation.md`) is unrun, parked on follow-up cost. Read the tiers below as a record of what the survey predicted, not as a queue and not as a diagnosis to trust. Every per-note class label that was tested against a pass was wrong about the landing: the predicted statistical conversions mostly lacked prevalence evidence and repaired by scope or category instead, and the predicted Class C ideal-types produced no domain-priced exceptions — including #13, which was scheduled last precisely because it looked like the strongest ideal-type case. Per-run readouts and the series verdict are in [adr-066-test-runs.md](./adr-066-test-runs.md).
+
+What the survey got right is the aggregate finding, and it is worth separating from the failed predictions: the corpus does state non-universal claims in universal titles, and the body does absorb the modality as hedges. What the survey could not see from the text alone is whether a given note has the *warrant* its apparent mode requires — and that, not the surface hedge pattern, is what decides the repair.
+
 ## Survey results (2026-08-19, one thorough sweep of kb/notes/)
 
 Classes: **A** — universal-stated, statistical-in-substance; **B** — hedged into vacuity; **C** — idealized model without the label. 22 candidates; the tiers rank exemplar quality for first conversions.
