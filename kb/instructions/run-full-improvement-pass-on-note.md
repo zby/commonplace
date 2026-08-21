@@ -17,7 +17,7 @@ Inputs:
 
 Concurrency precondition: from step 1 until the pass stops after step 8 or completes step 10, no other actor or process may edit `{note-path}`. The orchestrator's prescribed edits in steps 8 and 9 are the only exception. If step 7 inspects a proposed merge target, no other actor or process may edit that target until the packet is finalized and handed back. These are cooperative ownership rules, not filesystem locks; do not start the pass when they cannot be maintained.
 
-Derive `<note-name>` from `{note-path}` as the filename without its extension (`kb/notes/linking-theory.md` → `linking-theory`). At the start of every invocation mint a unique `<pass-id>` (a UTC timestamp plus a short random suffix is sufficient). Retain reports under `kb/reports/full-pass/<note-name>/<pass-id>/{initial,closing}/`; never reuse a pass ID or overwrite an initial report.
+Derive `<note-name>` once from the pass-start `{note-path}` as the filename without its extension (`kb/notes/linking-theory.md` → `linking-theory`). At the start of every invocation mint a unique `<pass-id>` (a UTC timestamp plus a short random suffix is sufficient). Retain reports under `kb/reports/full-pass/<note-name>/<pass-id>/{initial,closing}/`; never reuse a pass ID or overwrite an initial report. The `<note-name>` directory is historical packet identity: do not move or rename it if the note moves later.
 
 Steps 1 through 7 below only write reports; none of them edit the note. For a `keep` Disposition with a determined warranted contribution, steps 8 and 9 apply the packet and run a final flow pass, and step 10 closes review over those edits without starting another transformation round. When step 7 concludes that the note should not exist as a unit (Disposition `delete` or `merge`) or that its contribution is underdetermined, leave the note byte-identical and stop after handing back the packet — see step 8.
 
@@ -29,13 +29,15 @@ Here, **fresh sub-agent** means a newly isolated execution context that has not 
 
 ## Re-entrancy preflight
 
-Before minting a new pass ID, inspect existing `kb/reports/full-pass/*/*/full-pass-report.md` files whose `source` equals `{note-path}`:
+Before minting a new pass ID, run `commonplace-validate redirects` and stop if the repository redirect map fails validation. Then inspect existing `kb/reports/full-pass/*/*/full-pass-report.md` files whose historical `source` identifies `{note-path}`. A report matches when its `source` equals `{note-path}` or when the flat redirect map in `properdocs.yml` maps the source to `{note-path}`: remove the configured `docs_dir` prefix from both repository-relative paths, then compare the one-hop `redirect_maps` target for the source-relative path with the note-relative path.
+
+Use redirect resolution only to select prior reports. Do not rewrite `source`, rename the packet directory, or substitute the redirect target when invoking `commonplace-guard-full-pass-report`. The guard deliberately compares `source.txt` with the artifact at the recorded historical path, so a post-pass rename produces `missing`, not a diff against the renamed note.
 
 - If one has `resolution: pending`, run `commonplace-guard-full-pass-report <report-path>`. Exit 0 means the old recommendation is still current: return that report and stop. Exit 1 with a `changed` input means the old report must be resolved to `superseded` under `kb/instructions/resolve-full-pass-disposition.md` before a new pass starts. A `missing` or `corrupt-capture` result requires reconciliation and blocks a new pass. Exit 2 means the report is invalid and also blocks the pass.
 - If a prior report is `rejected`, run the guard. Exit 0 retains its resolution for step 7 synthesis: do not show it to review workers, and do not repeat the rejected disposition without materially new evidence. Exit 1 with `changed` removes that constraint while preserving the old report as history. A `missing` or `corrupt-capture` result, or exit 2, requires reconciliation before a new pass.
 - `not-required`, `accepted`, `alternative-applied`, and `superseded` reports do not block a new pass.
 
-At most one matching pending report may exist for a source. If more than one exists, stop for reconciliation.
+At most one matching pending report may exist for the resolved note identity. If more than one exists, stop for reconciliation.
 
 ## Why this order
 
@@ -51,7 +53,7 @@ At most one matching pending report may exist for a source. If more than one exi
 
 ## Procedure
 
-1. Mint `<pass-id>` and create its `initial/` and `closing/` directories. Read `{note-path}` once as UTF-8 text, write that exact Unicode character sequence as UTF-8 to `kb/reports/full-pass/<note-name>/<pass-id>/source.txt`, and compute the SHA-256 of the capture's UTF-8 text. Retain the logical `{note-path}`, packet-relative `source.txt`, and hash as three separate values. Never rewrite the capture. Then read the target note normally for the pass; assessment methods continue to receive `{note-path}`, never `source.txt`.
+1. Mint `<pass-id>` and create its `initial/` and `closing/` directories. Read `{note-path}` once as UTF-8 text, write that exact Unicode character sequence as UTF-8 to `kb/reports/full-pass/<note-name>/<pass-id>/source.txt`, and compute the SHA-256 of the capture's UTF-8 text. Retain the logical `{note-path}` as the historical `source`, alongside packet-relative `source.txt` and its hash. Never rewrite any member of this triple. Then read the target note normally for the pass; assessment methods continue to receive `{note-path}`, never `source.txt`.
 2. Run the compression bundle per `run-compression-bundle-on-note.md` (`kb/instructions/run-compression-bundle-on-note.md`), passing `kb/reports/full-pass/<note-name>/<pass-id>/initial/compression-bundle-review.md` as its `{output-path}` argument. No DB writes.
 3. Run `critique-note` through the requested-mode review pipeline in a fresh sub-agent:
 
@@ -89,6 +91,8 @@ At most one matching pending report may exist for a source. If more than one exi
    Set `Update` to one artifact-supported sentence, `UNDETERMINED`, or `NONE`. Use `UNDETERMINED` when materially different reader priors, angles, or contributions remain after applying the repository audience fallback and nothing in the authorized inputs selects one. This is a specification gap in the available inputs, not a reason to retry with a stronger model. A later run may close it if a memory channel supplies relevant retained intent. Before finalizing an `UNDETERMINED` packet, ask the user one focused question that presents the competing choices. If the user answers, record that live direction as the source of intent and finish synthesis. If no answer is available, retain `UNDETERMINED` and stop as step 8 specifies; a later invocation may use explicit user direction or supplied memory. Use `NONE` only when no distinct contribution remains after comparison with the reader and KB baseline; missing but repairable warrant belongs in the Warrant field, not in `NONE`. This section is a pass-local revision brief, not independent evidence of original intent.
 
    **A title that overreaches its warrant is a title finding, not a body edit.** Reach this only if the fit check above passed — a misfit is a `rehome`, not a reframe. Before you settle on `keep`, compare the strongest `Update` you can warrant against the note's title-level claim. Sometimes the warranted `Update` is not a qualified version of the title but a *weaker or different claim of another logical shape*: the title asserts more strength, or a different direction, scope, modality, or category, than the material supports, and no qualifier added inside the body reconciles the two — for instance a biconditional (`X iff Y`) where only one direction is warranted, a one-way test read as certifying its converse (a rival demotes a rule, so *finding no rival* is misread as certifying it), or a universal drawn from support for only some cases. The shape varies; the tell is constant: stating what the claim would have to be if the objection were fully valid changes the title's own assertion, not just a supporting qualifier — contrast a genuine hedge, where a body qualifier brings the claim into line and the title survives (the hedge test from "Reconciling disagreement," applied at title level). When it holds, do not silently repair the `Update` down to fit an ordinary `keep`; set `Update` to the warranted claim and record the Disposition as a **`keep` reframe** (Disposition value stays `keep`; write "reframe" in the Disposition line). The note stays and is edited in the pass like any `keep`, but its title and thesis are replaced with the warranted claim rather than qualified in place. This is distinct from a hedge — qualifying the body cannot fix a title that overreaches — and distinct from `delete`/`merge`, because the material is warranted and no other note owns it. Carry the retitle-and-rethesis as the first Body edit at note-level scope. The pass still edits only `{note-path}`, but a reframe leaves the rest of the KB asserting the old claim, so realigning it is a **required follow-up operation, not optional cleanup** — record it in Open items as one named operation with concrete scope, executed after the pass rather than inside it. That scope is: (a) rename the file with `commonplace-relocate-note`, which rewrites inbound link *paths* and the ProperDocs redirect map but leaves link text, inline paraphrases, and one-line summaries untouched; (b) update every inbound citer's visible link text and summary that still states the old claim — the rename tool does not touch these, so a path-only rename silently keeps the refuted wording live; (c) reconcile any citer that leaned on the old title as a premise, since a change in the claim's strength, direction, or category can invalidate it. Do not treat the reframed claim as settled across the KB until this operation runs.
+
+   The required follow-up must leave the retained packet untouched: do not realign `source`, the report's frontmatter description, H1, displayed Target, or the `<note-name>` directory. Those surfaces record the pass-start artifact; the redirect written by `commonplace-relocate-note` is the bridge from that history to the live note.
 
    **A modality reframe names its target mode and meets that mode's guard.** When the overreach is one of modality — the title asserts universally what the body supports as a tendency, or asserts as exact a model the body concedes is first-order — the reframe follows the claim-modality rules in `kb/notes/COLLECTION.md`. The premise report's counterexample-shape annotations are the routing signal: prevalence-shaped defeats of a universal premise point at a **statistical** target; priced-exception defeats point at an **ideal-type** candidate, decided by the two-stage criterion (pricing routes the exception to assessment; adequacy decides). The target-mode guards: a statistical retitle must still state what prevalence evidence would refute it — a bare "often/can/may" landing is a failed reframe, not a repair; an ideal-type conversion must write the adequacy record into the note body — declared use, omitted mechanism, consequence bound, explanatory dominance — where the closing cycle's premise rerun will attack it. That closing attack is the conversion's required resistance, not optional: an ideal-type conversion whose adequacy record is absent at step 9 fails the reframe. Modality reframes run in both directions: a title hedged below its warrant — the body supports a categorical or rated claim the title states as bare tendency — is the same title-overreach finding in reverse, repaired by reframing up to the warranted mode.
 
@@ -169,11 +173,13 @@ Append this section to the packet:
 
 ## Output Contract
 
+`source` is the pass-start `{note-path}` whose text was copied into `source.txt`, not a pointer that tracks the live artifact. Set it once. The frontmatter description, report H1, displayed Target, and `<note-name>` directory likewise use the pass-start title or path. A later rename, rehome, merge, or delete must not realign those surfaces or move the packet. ProperDocs redirects are used only to discover the packet from a later path; they do not change the guard target.
+
 ```markdown
 ---
-description: "Full improvement pass over <note title>"
+description: "Full improvement pass over <pass-start note title>"
 type: kb/reports/types/full-pass-report.md
-source: <note-path>
+source: <pass-start note path>
 source_capture: source.txt
 source_sha256: <SHA-256 of source.txt as UTF-8 text>
 pass_id: <pass-id>
@@ -190,9 +196,9 @@ resolution_rationale: null
 resulting_paths: []
 ---
 
-# Full Improvement Pass: <note title>
+# Full Improvement Pass: <pass-start note title>
 
-**Target:** `<note-path>`
+**Target:** `<pass-start note path>`
 **Reports used:** compression bundle, critique-note, composition-friction-gate, premise-decomposition-gate, catalog review bundles (`accessibility`, `complexity`, `frontmatter`, `prose`, `semantic`, `sentence`, `structural`), connect
 
 ## Warranted contribution

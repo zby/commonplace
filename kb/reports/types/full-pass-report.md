@@ -11,7 +11,11 @@ schema: kb/reports/types/full-pass-report.schema.yaml
 
 Use `full-pass-report` only for the packet produced by `kb/instructions/run-full-improvement-pass-on-note.md`. The report is authoritative for the pass's disposition and resolution. Its packet-owned `.txt` captures are immutable; resolving the report changes only its resolution fields and the canonical `Resolution` section.
 
-`source` and `merge_target` are repository-relative logical paths. Capture fields are normalized packet-relative `.txt` paths and must resolve to regular non-symlink files inside the report's packet directory. Never substitute a capture path for a logical path when invoking an assessment method.
+`source` is the historical repository-relative logical path read at pass start. It identifies the artifact copied to `source_capture` and hashed by `source_sha256`; set all three once and never realign `source` after a rename, rehome, merge, or delete. The packet's `<note-name>` directory, frontmatter description, H1, and displayed Target likewise retain the pass-start path or title. Do not retrofit retained packets when the live artifact moves.
+
+The guard compares the capture with the artifact at historical `source` and does not resolve redirects, so `missing` is the expected result after a rename. A later pass may resolve `source` through the validated flat redirect map in `properdocs.yml` to discover this packet as history for the live note; that lookup does not mutate the packet or change the guard target.
+
+`merge_target` is also a repository-relative logical path. Capture fields are normalized packet-relative `.txt` paths and must resolve to regular non-symlink files inside the report's packet directory. Never substitute a capture path for a logical path when invoking an assessment method.
 
 A `merge` disposition requires all merge-target fields. Other dispositions set them to null. A `keep` report begins `resolution: not-required`; `delete` and `merge` reports begin `pending`. Any of them may become `superseded` when its pre-transition live-version guard finds changed text. Only explicit user authority may accept, reject, or apply an alternative. A missing input or corrupted capture requires reconciliation and does not change resolution automatically.
 
@@ -21,7 +25,7 @@ Render the `Resolution` section exactly from the structured fields. Quote a term
 
 ```markdown
 ---
-description: "Full improvement pass over <source title>"
+description: "Full improvement pass over <pass-start source title>"
 type: kb/reports/types/full-pass-report.md
 source: kb/notes/example.md
 source_capture: source.txt
@@ -40,7 +44,7 @@ resolution_rationale: null
 resulting_paths: []
 ---
 
-# Full Improvement Pass: Example
+# Full Improvement Pass: <pass-start source title>
 
 <packet body>
 
