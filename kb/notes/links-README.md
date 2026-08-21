@@ -30,7 +30,7 @@ Our link semantics (extends, grounds, contradicts, exemplifies) are lighter than
 
 - [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — links, skills, and index entries are all contextual hints for read/skip decisions
 - [two-kinds-of-navigation](./link-following-and-search-impose-different-metadata-requirements.md) — link-following is local with context; search is long-range with titles/descriptions; indexes bridge both
-- [stale-indexes-are-worse-than-no-indexes](./stale-indexes-are-worse-than-no-indexes.md) — a missing index entry suppresses search; the note becomes invisible (now in [maintenance](./kb-maintenance-README.md))
+- [stale-indexes-reduce-discovery-when-they-suppress-fallback-search](./stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) — apparent completeness can suppress a broader fallback and lower recall along that route (now in [maintenance](./kb-maintenance-README.md))
 
 ## Analysis
 

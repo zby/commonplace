@@ -127,6 +127,7 @@ plugins:
         'notes/rlm-achieves-the-clean-scheduler-model-but-opts-out-of-accumulation.md': 'notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md'
         'notes/self-modification-requires-search-evaluation-and-retention.md': 'notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md'
         'notes/skills-derive-from-methodology-through-distillation.md': 'notes/skills-derive-from-methodology.md'
+        'notes/stale-indexes-are-worse-than-no-indexes.md': 'notes/stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md'
         'notes/storing-llm-outputs-is-constraining.md': 'notes/selecting-an-llm-output-fixes-a-result-not-its-interpretation.md'
         'notes/structure-activates-higher-quality-training-distributions.md': 'notes/structured-prompt-gains-do-not-establish-distribution-selection.md'
         'notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md': 'notes/rule-based-context-selection-needs-a-pre-existing-signal.md'

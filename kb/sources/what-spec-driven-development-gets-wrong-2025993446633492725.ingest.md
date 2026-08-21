@@ -22,7 +22,7 @@ Author: @augmentcode — the official account for Augment Code, an AI coding too
 
 ## Summary
 
-Augment argues that spec-driven development (SDD) fails for the same reason all documentation-first initiatives fail: documents decay because maintenance is invisible, unrewarded work that humans reliably won't do. Stale specs are worse than stale docs because agents execute them confidently without flagging mismatches. Their proposed fix is the bidirectional spec: a coordinator agent drafts a spec from human intent, agents update it as they discover reality diverges from the plan, and the human reviews at any point. The core design challenge is update granularity — surfacing directional decisions ("found an existing auth context, wired into that") without narrating every line. The "junior engineer" analogy captures the desired relationship: agents report interpretation choices, not implementation details.
+Augment argues that spec-driven development (SDD) fails for the same reason all documentation-first initiatives fail: documents decay because maintenance is invisible, unrewarded work that humans reliably won't do. It treats stale specs as especially risky because agents execute them confidently without flagging mismatches. Its proposed fix is the bidirectional spec: a coordinator agent drafts a spec from human intent, agents update it as they discover reality diverges from the plan, and the human reviews at any point. The core design challenge is update granularity — surfacing directional decisions ("found an existing auth context, wired into that") without narrating every line. The "junior engineer" analogy captures the desired relationship: agents report interpretation choices, not implementation details.
 
 ## Connections Found
 
@@ -50,7 +50,7 @@ The `/connect` discovery found 11 connections across the KB, with 5 strong, 4 mo
 
 2. **Update granularity as a design variable** — "Too much and the spec becomes noise you learn to ignore. Too little and you're back to guessing what happened." This is a signal-to-noise tradeoff on inspectable substrates that the KB hasn't articulated. What counts as a "directional decision" worth surfacing? [experiment]
 
-3. **The "confidence trap" of stale authoritative artifacts** — "A stale spec misleads agents that don't know any better. They'll execute a plan that no longer matches reality, confidently." This generalizes the [stale-indexes](../notes/stale-indexes-are-worse-than-no-indexes.md) phenomenon: any artifact that agents treat as authoritative is actively harmful when stale, because it suppresses the fallback to more current information. Multiple notes share this pattern but it hasn't been named. [deep-dive]
+3. **The "confidence trap" of stale authoritative artifacts** — "A stale spec misleads agents that don't know any better. They'll execute a plan that no longer matches reality, confidently." This generalizes the mechanism in [stale indexes reduce discovery when they suppress fallback search](../notes/stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md): an outdated artifact can lower discovery recall when consumers treat it as exhaustive and therefore skip a more current check. [deep-dive]
 
 4. **The junior engineer analogy as a design spec for agent reporting** — surface interpretation choices, not implementation details. This is a concrete operationalization of what "inspectable substrate" means in practice for agent-to-human communication. [just-a-reference]
 

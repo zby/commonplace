@@ -17,7 +17,7 @@ Curation adds editorial information that generation cannot: groupings that refle
 
 **Context phrases are the atomic unit of curation value.** The [COLLECTION.md](./COLLECTION.md) convention requires curated entries to have context phrases — "a bare link list is an address book, not a map." Curation adds the *relationship between note and topic*, stated in a phrase. A generated entry can reproduce a note's description, but it cannot say "defines the concept" or "the main counterargument" or "foundational for everything below" — those are editorial judgments about role.
 
-**Stale curation is costly, but the alternative is worse.** [Stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md) shows that a stale index suppresses search entirely — the agent trusts the map and stops exploring. Curated sections can fall behind as new notes arrive, but generated-tail indexes mitigate this by keeping the generated section always complete. A reader who doesn't find what they need in the curated section can fall back to the generated listing. The staleness risk applies to the curated section, not the index as a whole.
+**Stale curation is costly when it closes discovery.** [Stale indexes reduce discovery when they suppress fallback search](./stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md): an apparently complete curated view can make a reader stop before a more complete search. Curated sections can fall behind as new notes arrive, but generated-tail indexes mitigate this by keeping the generated section always complete. A reader who doesn't find what they need in the curated section can fall back to the generated listing. The staleness risk applies to the curated section, not the index as a whole.
 
 **Auto-aggregation loses editorial context.** The [OpenViking review](../agent-memory-systems/reviews/openviking.md) considered borrowing bottom-up summary aggregation for indexes, but noted that "our index entries carry editorial context phrases that auto-aggregation would lose." Orientation resists automation: it requires judgment about what matters, not summarization of what exists.
 
@@ -39,7 +39,7 @@ Curation has diminishing returns on small collections and increasing returns on 
 
 Relevant Notes:
 
-- [stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md) — foundation: establishes the cost of index staleness that curated sections must manage
+- [Stale indexes reduce discovery when they suppress fallback search](./stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) — foundation: establishes the fallback-suppression risk that curated sections must manage
 - [title-as-claim exposes commitments, enabling Popperian maintenance](./title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) — extends: claim titles add orientation even in generated listings, but curation adds relational structure that titles alone cannot carry
 - [two context boundaries govern collection operations](./two-context-boundaries-govern-collection-operations.md) — foundation: the index boundary defines the regime where curated orientation becomes operationally necessary
 - [004-replace-areas-with-tags](../reference/adr/004-replace-areas-with-tags.md) — evidenced-by: the generated-tail design architecturally separates the two kinds of index value this note distinguishes

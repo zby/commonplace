@@ -57,7 +57,7 @@ These conventions have further consequences:
 
 **Misplaced notes are actively harmful, not neutral.** A note in the wrong area isn't just poorly categorised — it consumes context in every pass without contributing. During orientation it's noise; during comparative reading it produces no results. Worse than an unassigned note, which at least doesn't waste other notes' context budget.
 
-**Orphaned notes are invisible to both operations.** A note with no area can only be found by search or /connect. It never appears in orientation or comparative reading, which means its relationships with existing notes go undetected. This is why [stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md) — a note that falls out of its area index disappears from maintenance.
+**Orphaned notes are absent from both operations.** A note with no area can only be found by search or /connect. It never appears in area-based orientation or comparative reading, so those routes cannot expose its relationships with existing notes. If an apparently complete area index causes readers to skip broader search, the omission reduces discovery along that route, as [stale indexes reduce discovery when they suppress fallback search](./stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) explains.
 
 **Single-area membership is the default.** If a note belongs to two areas, it gets loaded in both passes, doubling its context cost. Multi-area membership should be justified by the note genuinely participating in both domains' discourse — not by it being "sort of related" to both.
 
@@ -94,8 +94,7 @@ A synthesised index saves orientation cost but may hide notes from comparative r
 Relevant Notes:
 
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — foundation: context is the scarce resource that makes unbounded reading-together infeasible
-- [stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md) — consequence: a note missing from its area is invisible to both orientation and comparative reading
+- [Stale indexes reduce discovery when they suppress fallback search](./stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) — consequence: a note missing from an apparently complete area index can be omitted from orientation and comparative reading when that index closes broader discovery
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — areas are one resolution level; both operations work within a level
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — extends: comparative reading yield as a potential quality signal
 - [brainstorming how to enrich web search](./brainstorming-how-to-enrich-web-search.md) — complements: /connect handles the cross-area connections that within-area operations don't reach
-

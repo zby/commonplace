@@ -7,7 +7,7 @@ tags: [self-improving-systems, artifact-analysis]
 
 # Stale self-description conceals its own staleness
 
-A system that retains claims about itself, keeps consuming them, and can change the aspects those claims describe needs a **synchronization path**: some route by which a change in the referent reaches the claim. The general form of that requirement is already settled here. Source-dependent artifacts [need lineage recorded against the source](./artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md), and a stale authoritative artifact is worse than none, because [absence degrades to search while a stale index suppresses search entirely](./stale-indexes-are-worse-than-no-indexes.md) — a mechanism that note already generalizes to specs, plans, and architecture documents.
+A system that retains claims about itself, keeps consuming them, and can change the aspects those claims describe needs a **synchronization path**: some route by which a change in the referent reaches the claim. The general form of that requirement is already settled here. Source-dependent artifacts [need lineage recorded against the source](./artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md), and [stale indexes reduce discovery when they suppress fallback search](./stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) — a mechanism that note generalizes to specs, plans, and architecture documents when consumers treat them as exhaustive.
 
 What follows concerns only what the **reflexive** case adds: when the described system, the describing artifact, and the agent that consumes both are one loop. Three things change, and none of them is a special case of ordinary documentation drift.
 
@@ -62,7 +62,7 @@ Soundness needs the trigger and the operation. Revalidating everything on every 
 
 Relevant Notes:
 
-- [Stale indexes are worse than no indexes](./stale-indexes-are-worse-than-no-indexes.md) — grounds: the suppression asymmetry this note applies reflexively, where what gets suppressed is evidence of the artifact's own drift
+- [Stale indexes reduce discovery when they suppress fallback search](./stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) — grounds: the suppression mechanism this note applies reflexively, where the skipped fallback could expose evidence of the artifact's own drift
 - [Source changes should surface downstream review targets](./artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md) — grounds: the general dependency-record requirement, and the edit-time trigger criterion the reflexive case escapes
 - [Lineage](./definitions/lineage.md) — defined-in: the dependency record that supplies selectivity in the three-part path
 - [Reflective system](./definitions/reflective-system.md) — grounds: why synchronization rather than intercession is the requirement

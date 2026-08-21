@@ -11,8 +11,8 @@ The [observed trace](./tag-readme-trace-observed-causal-connection.md) discharge
 | Requirement | In the trace | Runs in |
 |---|---|---|
 | **Change to the system itself** | The edit landed on `kb/types/tag-readme.md`, a self-representing artifact rather than ordinary content. | — |
-| **Search** | Splits: a maintainer noticed the `index` type was doing two jobs and that the `learning-theory` head had outgrown its completeness claim. Formulating that into ADR 026's specific candidate ran through an agent retrieving [stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md) as self-representation and drafting the split around it. | Human, then computational; the candidate path is joint overall |
-| **Improvement objective** | The bar the change could have missed: a marked head must not mislead a thorough reader, per [stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md). ADR 026 makes it testable — `complete` is a mark the validator can falsify. | Human frames it; code checks it |
+| **Search** | Splits: a maintainer noticed the `index` type was doing two jobs and that the `learning-theory` head had outgrown its completeness claim. Formulating that into ADR 026's specific candidate ran through an agent retrieving [stale indexes reduce discovery when they suppress fallback search](../notes/stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) as self-representation and drafting the split around it. | Human, then computational; the candidate path is joint overall |
+| **Improvement objective** | The bar the change could have missed: a marked head must not mislead a thorough reader, per [stale indexes reduce discovery when they suppress fallback search](../notes/stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md). ADR 026 makes it testable — `complete` is a mark the validator can falsify. | Human frames it; code checks it |
 | **Evaluation** | Tests and the validator mechanically check that the marks are consistent; the judgment that the split was the right *shape* was the maintainer's. | Split |
 | **Operative retention** | The three consumers — enforcement, routing, advice — keep acting on the change after merge. | Code (after human merge) |
 
@@ -37,4 +37,4 @@ Relevant Notes:
 - [Self-improving system](../notes/definitions/self-improving-system.md) — rests-on: the definition this trace is read against
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — rests-on: the search/evaluation/retention grid used here
 - [warranted autonomy is bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) — rests-on: why the human gates sit where the oracle runs out
-- [stale indexes are worse than no indexes](../notes/stale-indexes-are-worse-than-no-indexes.md) — rests-on: the improvement objective the loop aims at
+- [Stale indexes reduce discovery when they suppress fallback search](../notes/stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) — rests-on: the improvement objective the loop aims at
