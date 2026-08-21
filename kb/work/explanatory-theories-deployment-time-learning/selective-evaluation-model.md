@@ -1,80 +1,67 @@
-# A provisional theory-guided selective-evaluation model
+# Theory-mediated selective evaluation
 
-> **Status:** This is an in-progress model. It identifies the objects and uncertainties that a selective-evaluation method would need; it does not specify a settled object model, objective, numerical policy, or acceptance rule.
+> **Status:** Working model. This note explains how a working theory could guide which evaluation evidence to acquire for one candidate change. It does not provide a validated selection policy or a safety guarantee. The comparisons are in the [experiment design](./experiment-design.md).
 
-Selective evaluation must distinguish two cases. A check may be **mechanically inapplicable** to a candidate, or it may remain **applicable but be omitted under uncertainty**. Only the first case narrows the applicable evaluation set. The second leaves an evidence gap and changes what acceptance can honestly mean. This model separates the objects needed to reason about that difference.
+Running every available evaluation after every change may be too expensive. The proposed alternative uses a working theory to predict which parts of the system a candidate can affect, then acquires evidence where the predicted effects justify its cost. The theory may instead conclude that the candidate has broad effects and recommend nearly the full evaluation set. Selectivity may result from the reasoning; it is not itself the objective.
 
-This is the evidence-acquisition slice of the broader [theory-mediated improvement loop](./theory-mediated-improvement-loop.md). A theory may also guide problem diagnosis, candidate search, and selection among candidate changes. Those uses must be tested separately before their joint effect is attributed to theory mediation.
+This is one role in the broader [theory-mediated improvement loop](./theory-mediated-improvement-loop.md). The central question here is narrower: how does a theory yield a candidate-specific evidence choice, and what can acceptance honestly claim when some evidence is not acquired?
 
-The proposal grows out of the companion [reading of Harness Continual Learning (HCL)](./hcl-reading.md). In controlled task streams, HCL revises persistent harness state and applies regression checks before accepting candidate changes. This workshop asks whether those techniques can govern changes proposed from real-world task evidence. A theory that explains relevant parts of the system's behavior might then support candidate-specific impact projections and help choose which costly evidence to acquire. Its claimed explanatory-reach must itself undergo [reach-assessment](../../notes/definitions/reach-assessment.md): an explicit theory does not by itself justify omitting evidence or show that total evaluation cost will fall.
+## From change to evidence
 
-## Levels of evaluation reasoning
+Four levels must remain distinct. A **behavioral function or relation** is something the system does or must preserve. An **evaluation obligation** is a decision-relevant claim about the candidate, such as “this change does not impair tool selection for these inputs.” An **evaluation procedure** produces evidence relevant to an obligation. A **commitment rule** determines whether the resulting evidence and unresolved uncertainty warrant accepting the candidate.
 
-The first open questions are what the system theory should represent and how its consequences become a candidate-specific impact projection. For now, the model keeps four levels of evaluation reasoning separate:
+Predicting that a function may change does not by itself identify a valid way to observe that change. One obligation may have several procedures, and one procedure may bear on several obligations.
 
-1. A **behavioral function or relation** is something the system does or must preserve, such as parsing an objective, retrieving relevant experience, choosing a legal capability, routing a workflow, or satisfying an output contract.
-2. An **evaluation obligation** is a decision-relevant claim about a candidate that warrants evidence, such as “this candidate does not newly break reliable tool selection for this class of inputs.”
-3. An **evaluation procedure** is a concrete process that produces evidence relevant to an obligation: rerun an anchor, execute a validator, sample repeated outputs, run a simulation, or ask a judge.
-4. An **acceptance criterion** turns the observed evidence and remaining uncertainty into a commitment decision.
+Let `S` be the current system state, `Omega` the assumptions that bound the prediction, `Delta` the candidate understood as a semantic change rather than merely a text diff, and `tau` the working theory. The candidate-specific impact projection
 
-These levels form a chain, but they are not interchangeable. HCL supplies concrete procedures and an acceptance criterion. This extension would add a system theory and a derivation from candidate change to affected functions or obligations, followed by a mapping to procedures capable of detecting those effects. Predicting that a function may change does not identify how to observe the change. Whether the primary registry should contain theory claims and assumptions, mechanisms or invariants, functions, obligations, or a layered combination remains open.
+`I_tau(S, Omega, Delta)`
 
-## Working objects
+states which obligations may be affected, which appear unaffected and on what grounds, and which remain unresolved. It is derived from the theory but is not the theory itself: the same theory can yield different projections for different candidates, and a sound theory can still be misapplied.
 
-A compact working model represents this chain with eight provisional objects:
+The reasoning chain is:
 
-- `S` is the deployed system or harness state at the decision point.
-- `Omega` is the prediction boundary. It includes the relevant assumptions about fixed model parameters, runtime and outer capabilities, environment, optimizer and evaluator configuration, decoding, authority, and routing—not only mutable harness state.
-- `Delta` is the candidate understood as a semantic change rather than only a textual diff. It includes the changed artifact, its path to behavioral authority, and its activation conditions. The explicit causal route can additionally represent it as `do(Delta)`.
-- `tau` is the scoped, assumption-bearing working theory available to the current episode. In an ephemeral treatment, an LLM constructs it on the spot and discards it after use. In a retained treatment, the episode produces `tau` by retrieving and applying `T_n` from prior state and may propose a separately gated revision to `T_{n+1}`. The experimental `tau` is an explicit, addressable natural-language, symbolic, programmatic, or mixed artifact whose content, assumptions, and applicability conditions remain criticizable. A latent or distributed-parametric computation can inform it or serve as a no-explicit-theory baseline, but does not satisfy that observability condition by itself. Calling `tau` explanatory does not establish explanatory-reach.
-- `M` maps affected functions or obligations to procedures capable of observing them. It may retrieve an existing procedure or propose an adapted or newly synthesized one.
-- `pi` is an evidence-acquisition policy. Given a candidate-specific impact projection, evaluation costs, possible losses, dependencies among evaluations, and risk tolerance, it chooses which procedures are worth selecting, constructing, validating, and executing.
-- `G_H` is the harness- or system-change commitment rule. It states how observed and omitted candidate-evaluation obligations bear on accepting or rejecting `Delta`.
-- `G_T` is the theory commitment rule. It uses theory-specific evidence, premise tests, rival-theory discrimination, and reach-assessment to retain, revise, or reject `T_n`; candidate acceptance does not settle that decision.
+```text
+working theory tau + (system S, boundary Omega, candidate Delta)
+    → impact projection I_tau over evaluation obligations
+    → map relevant obligations to valid procedures
+    → choose procedures based on cost, possible harm, and risk tolerance
+    → observed evidence + unresolved obligations
+    → bounded candidate decision
+```
 
-The derived object `I_tau(S, Omega, Delta)` is the impact projection supported by `tau` for this system state, candidate, and boundary. It may contain mechanically established non-influence, deterministic consequences, probabilistic beliefs, or explicitly unresolved effects. It is not the working or retained theory itself: one retained theory can produce different working theories and projections for different states and candidates, and a bad activation or derivation can fail even when some part of `T_n` is sound.
+These are stages of reasoning, not a required storage schema.
 
-Together, the episode's `tau` and the candidate produce `I_tau`; `M` identifies ways to observe the projected effects; `pi` chooses what evidence to acquire; and `G_H` determines what that evidence warrants for the candidate:
+## Not running a check has different meanings
 
-`tau + (S, Omega, Delta) -> I_tau(S, Omega, Delta) -> obligations -> M -> pi -> evidence -> G_H`
+Before commitment, selective evaluation records how each obligation was handled:
 
-`G_H` is the harness- or system-change commitment rule; it does not decide whether to retain the theory. A separate theory decision `G_T` must judge what the evidence warrants about `tau`, retained `T_n`, and their premises or scope. A working candidate can be supported by a false explanation, while a rejected candidate can still supply evidence that improves the theory.
+1. **Shown irrelevant.** The obligation does not apply to this candidate within a soundly established boundary.
+2. **Discharged without its usual procedure.** A proof, enforced invariant, or stronger substitute evidence establishes the obligation.
+3. **Tested.** A valid procedure is executed and produces usable evidence about the obligation.
+4. **Left unresolved.** The obligation remains applicable, but the policy omits it under uncertainty.
 
-HCL's permitted observed historical loss remains a distinct quantity. Evaluation budget and risk tolerance need different names and semantics. “Material harmful effect” also remains undefined until a design fixes the behavior variable, direction, magnitude threshold, prediction horizon, loss units, and aggregation across obligations. Until then, `tau`, `I_tau`, `pi`, and any residual-risk condition remain schematic and cannot license omission.
+Only the fourth case creates an evidence gap by omission. A test may still yield uncertain evidence, but that is measurement uncertainty rather than an unobserved obligation. Cost cannot make an obligation irrelevant or establish that it is satisfied. It can influence whether to acquire evidence or accept a declared residual risk.
 
-## Impact-derivation routes, baselines, and applicability
+This distinction also keeps “check” and “obligation” from collapsing into one object. Not running a familiar check may be justified when another route discharges its obligation. Conversely, executing a procedure does not discharge anything if that procedure cannot observe the claimed effect.
 
-The impact question concerns the consequences of a proposed change, but the working or retained theory need not be a formal causal model. Several routes can produce all or part of `I_tau`, and mixed theories may compose them:
+## What can support an impact projection
 
-- **Deductive structural projection** follows enforced dependencies, authority paths, types, contracts, invariants, or non-interference arguments. It can justify a hard exclusion only when the boundary, structural completeness, and execution semantics make non-influence mechanically defensible.
-- **Causal projection** represents the candidate as an intervention on explicit mechanisms. It may produce deterministic consequences or probabilistic beliefs under uncertainty about routing, context assembly, interpreter response, and sampling.
-- **Semantic explanatory projection** reasons over a natural-language account of intent, authority, organization, and behavior. It can cover relations that have not been formalized, but its premises, scope, and consequence derivation require semantic reach-assessment rather than inheriting warrant from fluent explanation.
-- **Learned predictive projection** uses an action-conditioned world model or other learned representation. It contributes explanatory-reach only insofar as its predictions survive the intervention or structured-shift class the theory claims to cover.
-- **Diff similarity** reasons from resemblance to earlier changes. It remains a non-theory baseline or auxiliary prior unless it identifies the mechanism or invariant that makes the resemblance matter: similar text can have different force depending on where it is loaded, and dissimilar edits can reach the same function.
+A projection may draw on enforced dependency and authority paths, formal causal models, invariants or proofs, semantic explanations, and learned action-conditioned predictions. Causal theory is one route, not the umbrella.
 
-The conservative baseline is therefore candidate-relative applicability followed by full evaluation of the applicable set. Enforced structure may prove some obligations inapplicable; where it cannot, the baseline keeps them applicable. Probabilistic evidence selection over the remaining obligations is a candidate extension, not a substitute for an incomplete dependency account.
+A hard exclusion requires sound entailment within a boundary whose relevant structure is complete. An absent edge in an incomplete dependency map supports only an assumption-relative omission, not a hard exclusion. Semantic or probabilistic projections can support risk-aware prioritization, but fluency or confidence does not prove non-influence. The theory's claimed scope therefore remains subject to [reach-assessment](../../notes/definitions/reach-assessment.md). Diff similarity is a useful baseline or prior; it becomes theory-like only when it identifies why the resemblance should preserve consequences.
 
-One hypothesis worth testing is a hybrid: use enforced structure to over-approximate the possibly affected obligations, then use causal, semantic, or learned predictive routes to reason about reachable or uncertain cross-effects. Unless the relevant structure is enforced and complete, an absent declared path supports only an assumption-relative exclusion. This investigation has no evidence yet that any theory-guided route predicts better or costs less than deterministic applicability, similarity, sampling, or full-evaluation baselines.
+## Acceptance and blind spots
 
-A fixed-input output diagnosis can refine downstream obligations once an input has been assembled. It cannot replace whole-harness impact analysis when an interface or router edit changes the assembled input or context upstream. This boundary comes from [LLM output deviation requires a three-way diagnosis](../../notes/llm-output-deviation-requires-three-way-diagnosis.md); it is not yet a validated routing policy.
+The evidence policy should consider evaluation cost, possible loss if a harmful effect is missed, procedure validity, and risk tolerance. At its simplest, it acquires evidence when the expected loss from leaving an obligation unresolved exceeds the cost of obtaining reliable evidence. Hard constraints and non-negotiable obligations must be declared before this tradeoff.
 
-## Evidence selection changes what acceptance means
+Passing the selected procedures supports only the obligations those procedures validly assess, together with any obligations discharged by sound reasoning. If an applicable obligation remains unresolved, the system can acquire more evidence, reject the candidate, or accept it under an explicit residual-risk rule. It cannot honestly report the omitted obligation as passed.
 
-A design must determine candidate-relative applicability and declare its non-negotiable constraints before cost enters the evidence-selection policy. HCL's validity checks span syntax, output-schema, tool-use, task, and environment checks. Cost alone cannot make any of them inapplicable.
+Any residual-risk claim is conditional on the whole chain. **Theory error** can start from a false premise. **Application error** can retrieve or apply the wrong theory. **Projection error** can derive the wrong consequences. **Measurement error** can map an obligation to an invalid procedure or rely on an unreliable executor or judge. Reporting only the modeled risk hides these additional ways the omission can fail.
 
-The evidence-selection objective also remains unsettled. Candidates include expected harmful missed loss, observer-relative value of information, and a constrained ceiling on residual risk. Where `I_tau` supplies probabilities, a numerical policy would require them to be calibrated, along with commensurable loss and cost, a stated horizon, dependencies among evaluations, and explicit risk tolerance. Deductive claims require soundness checks rather than probability calibration. When a procedure must be synthesized, its cost includes construction and validation as well as execution. Evidence can also be valuable because it changes a decision, tests or revises the working or retained theory, or calibrates `I_tau`, as [Information value is observer-relative](../../notes/information-value-is-observer-relative.md) argues.
+Selection also biases what the system learns about its selector. If it observes results mostly for the checks it predicted would matter, misses outside that surface remain hidden. For uncertainty-based omissions, independent audits must therefore sample obligations the policy would omit. Those audits test the impact projection and selection policy; a pass on self-selected evidence does not establish the theory's explanatory-reach.
 
-Mechanical exclusion and uncertain omission therefore support different commitment rules:
+## Claim to test
 
-- If enforced, complete structure proves an obligation inapplicable to the candidate, the ordinary HCL-style criterion may be applied to the candidate-relative applicable set. The resulting warrant remains conditional on the non-influence proof and its boundary.
-- If an applicable obligation is omitted under uncertainty, the system cannot claim that historical-anchor loss stayed within HCL's permitted budget across every anchor. At least three honest responses remain: leave the obligation unknown and refuse the corresponding warrant, execute the check, or define a new commitment rule over observed results plus a declared residual-risk condition.
+The useful claim is not that theory always reduces the number of evaluations. It is that theory-guided selection may lower the **total cost of reaching a candidate decision** while staying within a declared harmful-miss or residual-risk bound. Total cost includes constructing and checking the theory, mapping obligations to procedures, synthesizing and validating new procedures when needed, executing them, and auditing omitted regions.
 
-Any residual-risk estimate is conditional on `S`, `tau`, `I_tau`, `Omega`, and the observed results. **Theory error**, **activation error**, and **projection error** are separate uncertainties: a false retained premise, wrong retrieval or task-local application, dishonest scope, missing edge, invalid consequence derivation, bad probability, wrong loss model, or distribution shift can invalidate the conditional estimate. Reporting only modeled residual risk would hide the uncertainty introduced by the theory and projection used to omit evidence.
-
-Evidence selection also changes what the system observes. A selector mostly sees the checks it chooses to run, so false negatives among omitted checks can remain hidden while an adaptive-fit account appears to have explanatory-reach. Sentinels, randomized exploration, periodic full-suite audits, or delayed monitoring could expose such misses. Unless additional structural assumptions make it unnecessary, a reach-assessment and calibration protocol must deliberately observe some checks that the selector would otherwise omit, vary load-bearing premises, and test rival explanations on unseen change families. That protocol remains to be designed.
-
-## Where a gain is plausible—and where it is not
-
-The locality hypothesis is most plausible when a sparse change lands in a pre-existing decomposition that matches the evaluated functions, with explicit dependencies and a small downstream impact closure. Its advantage may disappear under dense shifts, incomplete authority or routing information, or broad prompt effects. The broader explanatory-reach hypothesis is not identical to locality: a sound theory may correctly derive that a superficially small change has broad consequences and recommend a nearly full evaluation set. A revisable theory may need fewer observations when a shift preserves the mechanism or invariant it names, but an overgeneralized theory can also produce broader negative transfer. [Theory-mediated learning may improve sample efficiency under structured shifts](../../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) presents this only as a conditional conjecture, not as evidence that theory-guided selection will reduce HCL evaluation work.
-
-A lower evaluation-call count alone establishes neither a full safety warrant nor a reduction in total cost. The warrant remains bounded by the procedures actually run, any mechanically justified exclusions, and the declared residual-, projection-, and theory-risk conditions. The linked [experiment design](./experiment-design.md) compares full evaluation and non-theory schedules with several theory-guided evidence-projection routes, including a causal variant, while treating adaptive procedure generation as a separate factor.
+This gain is most plausible when a change has bounded consequences that the theory represents correctly. A good theory may instead reveal broad impact and eliminate the expected saving; a bad theory may save calls by hiding regressions. The [experiment design](./experiment-design.md) turns these possibilities into comparisons with full evaluation and non-theory baselines.

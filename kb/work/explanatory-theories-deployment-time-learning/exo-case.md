@@ -1,215 +1,53 @@
-# Exo case: from self-rewrite to compounding
+# Why Exo can test retained theory-mediated self-improvement
 
-> **Track context:** This is the detailed case behind the [Exo-facing invitation](./for-exo-authors.md), within the broader [explanatory-theories deployment-time-learning workshop](./README.md). It preserves the Exo-specific argument while making its theory objects explicit.
+> **Status:** Workshop case. This note explains why Exo is a suitable experimental substrate and what result would support the retained-theory hypothesis. The [evidence ledger](./exo-evidence.md) owns pinned implementation facts, counterevidence, gaps, and falsifiers.
 
-## Proposition
+## Exo supplies the substrate, not the result
 
-Exo already has the central architecture needed for reflective self-improvement: a causally connected, inspectable representation of the organization that determines its behavior; processes that can revise that organization; reject-capable mechanical checks; and retention paths that make accepted changes available to later operation.
+Canonical Exo exposes an unusually direct reflective path. Its agent can inspect a source tree and self map that describe parts of its own behavior-determining organization, edit symbolic artifacts, run mechanical checks, and rebuild and restart the executor. Event history survives sandbox rewind. Memory, skills, prompts, update reasons, and managed tools provide additional retained forms and routes into later operation. The pinned basis for these claims is recorded in [Exo evidence](./exo-evidence.md#pinned-exo-and-exoworker-facts).
 
-The open question is not whether Exo can change itself. It is whether a retained benefit from one change helps produce a later improvement. That is the difference between accumulating improvements and compounding them.
+These mechanisms make Exo a promising substrate for three reasons. A theory about Exo can participate in the self-representation through which Exo changes itself. A capable model can interpret the theory and derive consequences from it. The theory can persist as a separately addressable artifact whose premises and scope remain open to criticism and revision. Together, those properties satisfy the architectural conditions for [theory-mediated self-improvement](../../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md).
 
-This pitch proposes one candidate mechanism. Represent the theories and machinery behind improvement—how Exo notices problems, forms candidates, evaluates them, promotes results, and routes them back into operation—as explicit, selectively revisable artifacts. Then test whether those artifacts make later improvement cheaper, broader, more reliable, or less dependent on human judgment.
+They do not establish that Exo already implements that mechanism. Existing memory facts, skills, self-update reasons, environment history, and source code are not automatically system theories. The inspected system does not require an explicit theory to mediate a self-change, govern a theory lifecycle, demonstrate that a retained change was beneficial, or trace one improvement's benefit into a later improvement episode.
 
-The claim is conditional. Reflection adds control and addressability, not guaranteed improvement. Natural-language theory may be the most practical present form for some unformalized commitments, but it earns its place only if it improves later episodes after its full lifecycle costs are counted.
+The distinctions matter. **Deployment-time learning** names the setting in which operational evidence drives retained change. **Theory-mediated learning** names an update mechanism in which a scoped, criticizable theory guides a decision. **Reflective self-improvement** names the architecture in which the system changes itself through a causally connected self-representation. Their intersection is **theory-mediated self-improvement**; when its evidence comes from operation, deployment time is the setting.
 
-## What Exo already has
+## The retained-theory treatment
 
-At refreshed main revision `ef4cfe057af0`, canonical Exo supplies:
+An episode-local theory `tau_n` could explain a current failure or opportunity, identify an intervention point, direct candidate search or choice, and derive consequences to evaluate. Constructing `tau_n` from current evidence and discarding it after the episode tests theory mediation, but not cumulative theory retention.
 
-- a source tree and checked-in self map through which the agent can inspect the organization that determines its behavior;
-- an append-only event history preserved across sandbox rewind;
-- source, configuration, build, test, restart, observation, rollback, and git paths through which the agent can retain symbolic changes;
-- a managed tool registry that installs validated local or commit-pinned sources and makes accepted tools active in later rounds;
-- natural-language memory facts, skills, prompts, and an agent-maintainable self map;
-- a durable self-update record containing a free-text reason and mechanical outcome; and
-- a capable model that can inspect current artifacts and prior episodes before acting.
+The stronger Exo treatment maintains an addressable and revisable `T_n`. A later episode retrieves an applicable part of `T_n` and uses it to form `tau_n`. Evidence from the episode can then support a proposed `T_{n+1}`. The experiment must record retrieval and use; storage alone cannot explain an effect.
 
-The separately linked ExoWorker branch makes the learning policy more explicit. Its standing instructions say to persist lasting facts with `remember`, reusable playbooks with `install_skill`, and repeated callable helpers with `install_agent_tool`. Its memory tool specifically names lessons from failures as suitable facts.
+Candidate acceptance and theory acceptance are separate decisions. A code change can work for a reason the theory gets wrong. A failed candidate can expose a valid counterexample and improve the theory. Exo's build, test, restart, and installation checks can reject mechanical failures, but they do not establish semantic improvement or theory warrant. The objective and comparison rule must therefore be fixed independently of the active candidate, and a theory revision needs its own evidence and gate.
 
-This is already a broad, agent-mediated, mixed-form revision path. The proposal does not add learning where none exists, and it does not repair a system that learns only in code. It asks whether Exo should make its current promotion and revision theory more explicit, general, revisable, and testable.
+The retained theory may describe an object-level mechanism in Exo, such as how a routing or memory change affects behavior. It may instead describe the improvement process: how failures should be diagnosed, which artifact should change, or which evaluator is adequate. Causal theories are one possible class, not the umbrella. Dependency structure, invariants, program semantics, and other explanatory relations may also constrain a decision.
 
-## Two levels of theory
+Exo's value here is addressability. A retained premise, scope condition, evaluator assumption, or promotion rule can be named and selectively revised. Addressability creates a controllable revision surface; it does not guarantee correct interpretation, discovery, retrieval, or improvement.
 
-The broader workshop distinguishes the theory used inside an episode from the theory retained across episodes. Let `tau_n` be an active, scoped explanation of the current failure or behavior. Exo could construct `tau_n` fresh from its source tree, self map, traces, and current evidence, then use it to direct diagnosis, candidate search, candidate ranking, and evaluation. This is useful even if the explanation is discarded afterward, but it is an ephemeral reasoning treatment rather than cumulative theory-mediated learning.
+## The result must appear in a later improvement episode
 
-Let `T_n` be an addressable body of system theories retained before episode `n`. Retrieving and applying a relevant part of `T_n` can produce the episode's `tau_n`; later evidence can support a separately judged update to `T_{n+1}`. The retained theory earns its cost only if this cross-episode path improves later search or selection after retrieval, maintenance, and correction costs are counted.
+An accepted Exo change can improve later task behavior without improving the process that produces subsequent changes. That is accumulation, not compounding. Compounding requires an earlier retained benefit to make a later improvement episode counterfactually more productive: cheaper, broader, more reliable, or less dependent on human judgment. [Improvements can accumulate without compounding](../../notes/improvements-can-accumulate-without-compounding.md) develops the distinction.
 
-Exo's **promotion and revision theory** is a different, meta-level object. It decides which episode-local interpretations enter `T_n`, which become skills, tests, tools, prompts, or code instead, how much authority each form receives, and when it should be revised or retired. Object-level theories explain parts of Exo and its environment; the meta-level theory governs their lifecycle. The latter can itself become a revision target without erasing the distinction.
+The metric that accepts the earlier change cannot establish this later link. A tool's tests can show that it installs and meets its immediate target. They cannot show that the next diagnosis or revision became easier. Evidence must come from the later episode and trace either direct use of the earlier benefit or actual reinvestment of saved time, compute, or judgment.
 
-## Occurrence, accumulation, and compounding
+An Exo canary gives the claim a concrete shape. Suppose an earlier episode produces a better behavioral evaluator from a retained theory about what Exo's mechanical checks miss. If that evaluator later rejects a judgment-degrading rewrite that the old checks would have admitted, the earlier benefit has improved a later selection. A matched replay without the evaluator can test the dependence. Merely installing the canary or passing its construction test would establish neither compounding nor even later use.
 
-Three claims must be kept separate.
+## An Exo-specific test
 
-**Self-improvement occurs** over a declared boundary, horizon, and objective when evidence bearing on that objective shapes an operative change to the system's own behavior-determining organization and later behavior uses that change. An accepted patch that is never installed, or a memory that is loaded but ignored, does not close the path. The term names an improvement-directed mechanism; it does not guarantee that every accepted change helps.
+Keep Exo's existing memory, skills, tools, prompts, symbolic edit paths, and raw episode history in every arm. Compare:
 
-**Improvements accumulate** when useful retained results build a stock that later operation uses. A new tool can prevent recurring task failures. A skill can guide a later task. A prompt change can shape future behavior. Each can be a real gain while the work of finding, evaluating, and installing the next improvement remains unchanged.
+1. direct reasoning over the available history with no required explicit theory;
+2. a fresh `tau_n` reconstructed from the same history in each episode; and
+3. a retained, revisable `T_n` that is retrieved and applied to form `tau_n`.
 
-**Improvements compound** when an earlier improvement's benefit feeds into producing a later improvement. The earlier result might improve diagnosis, candidate search, evaluation, installation, or retention directly. It can also free time, compute, or judgment that an allocation mechanism deliberately returns to improvement work. The indirect path must be observed; unused savings establish no feedback.
+Hold the base model, source observations, edit surface, available actions, evaluator, and total resource budget fixed where possible. The task stream should include later episodes that preserve a theory's stated mechanism, violate one premise, and invalidate it more broadly. Record whether `T_n` was retrieved, which decision it changed, and how outcomes affected any proposed theory revision.
 
-The accepting metric for the first change cannot establish the third claim. A tool test shows that the tool met its immediate target. It does not show that the next revision became more productive. Compounding evidence therefore comes from a later improvement episode, with a causal trace to the earlier benefit.
+Use later improvement quality at a fixed total cost, or total cost at a fixed quality and harm bound, as the primary endpoint. Charge theory construction, storage, retrieval, applicability checking, review, maintenance, stale-theory failures, and correction. A frozen retained-theory arm can later separate reuse from revision, but it is not needed to establish the first marginal comparison.
 
-One link provides local evidence. Repeated links establish a compounding pathway. The feedback may be modest, irregular, bottlenecked, or eventually saturated; it need not be exponential.
-
-## Reflection makes the revision surface controllable
-
-Compounding does not require reflection. Opaque parameter updates can improve later learning without exposing any individual retained commitment. Reflection adds a different affordance: **addressability**.
-
-Exo's source, prompts, skills, memories, tests, tools, and self map can make behavior-shaping commitments readable to processes inside the system. A represented commitment can be named, criticized, applied to another problem, revised selectively, or retired. A represented evaluator or promotion rule can become the target of a later improvement instead of remaining invisible machinery.
-
-This control is aspect-bounded. The current decomposition determines what Exo can notice and formulate:
-
-- what counts as evidence;
-- which failures have names;
-- which artifacts and relations are understood to shape behavior;
-- which change operations are available; and
-- which comparisons can admit or reject a candidate.
-
-A loop can optimize every named component while having no way to say that a responsibility is missing, an authority path was omitted, or the components were divided badly. Repository-wide writability marks an outer envelope, not the revision surface that a particular path can actually reach.
-
-The strongest proposal therefore makes the map itself revisable. If an episode reveals a missing authority path or a bad decomposition, Exo can revise the representation used by later audits. The revised map and the path that changed it must remain available to inspection and revision afterward. This keeps a redesign class open to further revision; it does not show that the path will discover every omission or that its changes will help.
-
-A fixed surface is not automatically a defect. Exo's protected Rust substrate provides identity, history, secrets, and recovery outside the executor it may replace. Tests, budgets, and operator controls may also be warranted boundaries. The diagnostic question is whether each fixed placement is deliberate and whether its scope is appropriate, not whether everything is mutable at once.
-
-## Promotion is part of the improvement machinery
-
-An experience does not arrive labelled with its reusable lesson. A failed integration, successful workaround, or adopted code change may support several incompatible promotions:
-
-- retain the episode because its detail is what a later case needs;
-- retain a fact about the local environment;
-- state a mechanism and applicability boundary in natural language;
-- write a reusable procedure;
-- create a test, validator, schema, tool, prompt rule, or code change;
-- record a decision among live alternatives; or
-- retain nothing because reconstruction is cheap or reuse is unlikely.
-
-The selection is ampliative: observed cases do not uniquely determine which generalization, if any, should govern new cases. A stronger model may choose better, but capability does not remove the choice. If the result is not retained, later calls choose again. If every plausible result is retained, the knowledge layer becomes a lossy second event log.
-
-The selection is also knowledge-laden. Which candidate lessons occur at all depends on background theories of the software, providers, model failures, and the improvement process. A policy that prices only storage can select correctly among an impoverished candidate set.
-
-ExoWorker's “lasting fact,” “reusable playbook,” and “same helper more than once” rules are useful local heuristics. A fuller promotion theory would answer at least four questions:
-
-1. **Value:** What future work is expected to reuse this interpretation or commitment?
-2. **Form:** Should the result remain an episode, become a semantic claim or procedure, or cross into a symbolic artifact?
-3. **Authority:** Is it evidence, advice, an instruction, a routing rule, or an enforced constraint?
-4. **Lifecycle:** What observations or system changes should cause review, rescoping, codification, supersession, or retirement?
-
-Promotion policy belongs inside the proposed revision surface. Later evidence should be able to show that its selection heuristic over-promotes fluent summaries, misses transferable mechanisms, gives weak evidence too much authority, or retains conclusions past their useful life. The system can then revise the policy and test whether the revision helps a subsequent improvement.
-
-## Three retained forms
-
-Exo's event records are mixed artifacts: symbolic envelopes around natural-language messages and tool payloads. The relevant distinction is the work each retained form performs, not its file extension.
-
-| Form | Retains | Later use | Characteristic limit |
-|---|---|---|---|
-| **Episode/example** — event and execution history | What happened, with local detail and tacit residue | Retrieve a similar case and infer what it teaches now | Semantic work recurs; the inferred lesson can vary and remains unnamed |
-| **Natural-language semantic artifact** — claim, rationale, theory, rule, decision, procedure | A prior interpretation with enough identity and scope to be used and contested | Retrieve, apply, criticize, revise, supersede, or codify it | It can be vague, inert, wrong, stale, or over-authoritative |
-| **Symbolic policy** — code, tests, tools, configuration, schemas | Exact adopted behavior or check | Execute, test, inspect, or modify it | The implementation underdetermines rationale, intended scope, and rejected alternatives |
-
-None subsumes the other two. Episodes preserve evidence and tacit residue that a generalized rule sheds. Symbolic artifacts enforce what has acquired formal semantics. Natural-language artifacts retain semantic work that remains judgment-shaped.
-
-### Semantic caches and commitments
-
-For a conclusion recoverable from current artifacts and episodes, retained natural language is a **semantic cache** or materialized view. Its expected value grows with recurrence, reconstruction cost or variance, transfer, the need for a shared object of criticism, and the cost of failing to activate relevant parametric knowledge. Its cost grows with formation, review, retrieval, context, maintenance, staleness, distraction, and over-application.
-
-Just-in-time reconstruction should therefore win for one-off cases, cheap and reliable deductions, high-drift conclusions unlikely to be reused before expiry, and competence whose value resides in example detail. Promotion should be favored when a mechanism recurs, transfers across surfaces, is expensive or unstable to reconstruct, or several actors need one named object to contest.
-
-Some conclusions are not caches. A generalization beyond observed cases, a decision among live alternatives, or an adopted applicability boundary adds a resolution that its evidence never determined. Code may embody the selected behavior without recording which rationale was adopted. These are **commitments**. A stale cache can be discarded and rebuilt; a lost commitment is gone.
-
-The limit-of-12 case is minimal. A concurrency cap may be a permanent safety ceiling or temporary tuning for one provider quota. Identical code and identical history support both readings, but a later provider change requires opposite responses. If the decision was not retained, a future model can invent a rationale but cannot recover the adopted one.
-
-## The evaluation boundary cannot be self-authored
-
-Each improvement episode is relative to an objective and a comparison rule identified independently of the candidate change. A candidate cannot establish that it is better by rewriting its own objective, relaxing its evaluator, excluding adverse evidence, or changing cost accounting. A proposal to change any of those is a separate revision requiring separate authority.
-
-This boundary can be time-indexed rather than permanently frozen. An objective, evaluator, scope, or stopping rule may remain addressable and revisable **between** episodes while staying fixed **within** the episode that judges a candidate. Otherwise the active candidate can move the standard that is supposed to judge it.
-
-Exo's present gates expose the oracle boundary. Build success, tests, restart outcome, and logs can reject a mechanically broken change. They can admit a change that degrades judgment while remaining mechanically sound. The managed registry strengthens shape and installation checks without establishing usefulness. Exo's proposed cloned-sandbox canary would create a behavioral comparison path, but any rubric used there would still warrant only the behavior it can assess.
-
-A maintained natural-language theory helps Exo state what its current evaluator misses and propose stronger checks. It does not manufacture a universal improvement criterion. The same model may propose and criticize a change, but the incumbent evaluation contract—not the candidate's preferred contract—must control adoption.
-
-## Concrete Exo-shaped cases
-
-### Managed tool adoption: accumulation or compounding
-
-Exo can install a validated tool from a local directory or exact Git commit. The registry preserves its stable id, source, initialization, and installed code. The event history preserves the failures and requests around installation.
-
-If the tool prevents later task failures, Exo has accumulated a useful retained capability. If the tool or its accompanying lesson also reduces the search, evaluation, or installation cost of a later improvement, that later episode provides local evidence of compounding. The tool's original validation result cannot decide between those readings.
-
-The same episode also poses a promotion question. Is the tool a one-provider workaround, an instance of a general integration mechanism, a temporary bridge, or a capability expected to become standard? The answer may belong in a memory fact, skill, semantic claim, regression test, the tool itself, several linked forms, or nowhere.
-
-### Rebuild reason: a partial semantic annotation
-
-`rebuild_and_restart_exo` asks for a short reason and stores it with the update id, status, timestamps, identities, and exit code. Exo is already retaining meaning that changed code and mechanical outcome do not carry by themselves.
-
-The annotation remains event-local. It has no independent applicability boundary, evidence links, review state, invalidation path, or recorded effect on a later improvement. It is a useful seed for a semantic layer, not evidence that the layer compounds.
-
-### Canary evaluation: revising an oracle
-
-Mechanical operability does not establish semantic improvement. A retained cross-cutting theory can make this limitation addressable and motivate a cloned-sandbox canary with a behavioral comparison.
-
-If the canary later rejects a judgment-degrading rewrite that the old checks would have admitted, then an earlier improvement to evaluation helped produce a better later selection. That is the right evidence shape. Installing the canary, or showing it works on its construction case, is not enough.
-
-### Concurrent memory repair: a commitment behind code
-
-Suppose Exo replaces whole-artifact memory updates with compare-and-swap after observing a lost update. The code records CAS. It does not uniquely state whether the intended guarantee is linearizability, prevention of silent loss, or merely fewer collisions, nor why CAS won over an append-entry design. Those distinctions control a later storage rewrite and cannot be derived from the implementation alone.
-
-## Why natural language is the frontier form
-
-The proposal does not privilege natural language forever. It routes selected content by what currently interprets it reliably:
-
-- **Episodes** preserve experience and tacit residue.
-- **Natural-language artifacts** retain mechanisms, reasons, applicability conditions, commitments, and unresolved theories that an LLM can interpret but no formal language yet receives.
-- **Symbolic artifacts** codify stable parts with mechanical semantics and tighter oracles.
-- **Distributed-parametric state** may absorb stable competence, but Exo does not currently update its base model and current weight-level retention lacks comparable per-commitment identity and revision.
-
-The practical operator is movement among forms. Codify when a rule becomes mechanically statable; relax when the codification overreaches. Preserve the source episodes because [retaining the episode keeps a distilled rule re-derivable](../../notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md).
-
-## Minimal proposal for Exo
-
-Commonplace should not enter Exo's protected substrate. At most it is one candidate implementation of a replaceable, agent-editable theory and maintenance policy above it. Commonplace is a hybrid of theory and implementation; this proposal transfers the hypothesis, not its current Markdown, YAML, collection, review, or storage choices.
-
-The minimum capability is:
-
-1. Maintain an explicit, revisable theory for which experiences deserve promotion, into which form, and with what authority.
-2. Maintain an aspect-bounded map of the artifacts and relations through which Exo's behavior and improvement process are shaped.
-3. Apply the theory selectively while preserving raw episodes and symbolic artifacts as drill-down evidence.
-4. Give each retained semantic conclusion enough identity to link it to source episodes, affected artifacts, triggers, mechanism, scope, status, and authority where those distinctions matter.
-5. Route retained conclusions into later situations and record whether they were used, ignored, contradicted, revised, codified, superseded, or retired.
-6. Hold the objective and comparison contract fixed within an improvement episode; route proposals to revise them through a separately authorized episode.
-7. Record causal links between improvement episodes and measure whether retained benefits make later revision cheaper, broader, more reliable, or less human-dependent.
-8. Use observed later benefits and failures to revise the promotion theory and revision map themselves.
-
-Exo's existing memory, skills, event records, update records, tool manifests, git repository, or another database and schema could implement this capability.
-
-## What independent verification must decide
-
-The baseline is refreshed Exo with the same episodes, model, free-form memory, skills, managed tools, prompts, tests, and freedom to modify symbolic artifacts.
-
-For one proposed compounding link:
-
-1. Identify an earlier retained gain and the later improvement it is expected to help.
-2. Measure the later episode through revision cost, reliability, breadth, human decisions, or another displaced productivity measure.
-3. Trace direct use of the earlier benefit, or trace a saving through allocation into later improvement work.
-4. Compare against a frozen-artifact, simpler-memory, or absent-theory baseline.
-5. Count formation, review, retrieval, context, maintenance, staleness, and repair costs.
-6. Repeat across further episodes before claiming a compounding pathway.
-
-The hypothesis predicts an interaction, not a universal win. Explicit theory should help when interpretations recur, cross implementations, require named criticism, change the decomposition of future work, improve an evaluator, or preserve commitments. It should lose or tie on one-off work, complete formal regimes, residue-heavy cases, and rapidly expiring conclusions.
-
-The proposal is weakened or falsified if Exo's existing heuristics and just-in-time reconstruction match or beat the explicit layer on later improvement productivity after full cost accounting. The operational falsifiers and revision triggers are in [Exo evidence](./exo-evidence.md#falsifiers-and-revision-triggers).
+Where possible, replay the later episode with the theory artifact frozen or absent. Some benefits, especially better noticing, may change whether an episode begins and resist paired replay; those need an initiation-rate measure plus a trace to what surfaced the opportunity. The general [experiment design](./experiment-design.md) owns the full protocol.
 
 ## Claim boundary
 
-- The proposal strengthens an existing mixed-form revision path; it does not add a missing representational form.
-- Reflection makes commitments and machinery addressable. It is neither necessary nor sufficient for compounding.
-- Raw episodes remain available. This is not summarize-and-discard.
-- Not every trace is promoted, and not every promoted conclusion receives instruction or execution authority.
-- Natural language is not the final form for every lesson, and the retained form does not determine who may evaluate it.
-- A path can remain open to revision without improving, and it can accumulate improvements without compounding.
-- A promotion theory or semantic cache that is vague, inert, stale, or more expensive than reconstruction has failed to earn its place.
+Exo demonstrates a mutable reflective substrate. It does not demonstrate an explicit theory lifecycle, beneficial self-improvement, or compounding. The proposed layer should preserve raw episodes and symbolic artifacts rather than replace them with summaries. Natural language is a practical form for currently unformalized theories, not a permanent or exclusive target; stable consequences should move into symbolic forms with mechanical semantics when warranted.
 
-## Evaluation boundary
-
-Pinned revisions, per-claim evidence status, and the relation to the earlier pinned reviews live in [Exo evidence](./exo-evidence.md#pinned-exo-and-exoworker-facts). Treating ExoWorker's standing instruction as a primitive promotion policy is our interpretation of the checked-in prompt, not a claim that its agent reliably follows it. The claim that a stronger semantic layer may improve later revision is our inference, not a position attributed to the Exo authors.
-
-Out of scope is a universal improvement criterion. Explicit theory can make candidates, evidence, form, scope, authority, revision machinery, and lifecycle legible. It cannot let a candidate become its own judge or solve open-ended evaluation by declaration.
+The proposal fails if Exo's existing surfaces plus just-in-time reconstruction match or beat retained theory on later improvement productivity after full costs and harmful transfer are counted. A positive result in one episode would support one local compounding link, not an exponential or indefinitely sustained pathway.
