@@ -24,6 +24,16 @@ def write_page(root: Path, relative_path: str) -> None:
     path.write_text("# Page\n", encoding="utf-8")
 
 
+def test_redirect_map_validation_skips_absent_config(tmp_path: Path) -> None:
+    results = validate_redirect_map(repo_root=tmp_path)
+
+    assert results.fails == []
+    assert results.passes == []
+    assert results.infos == [
+        "[repository] properdocs.yml: not configured; redirect validation skipped"
+    ]
+
+
 def test_redirect_map_validation_accepts_resolving_flat_map(tmp_path: Path) -> None:
     write_page(tmp_path, "notes/current.md")
     write_config(tmp_path, {"notes/old.md": "notes/current.md"})
@@ -82,3 +92,16 @@ def test_redirects_cli_target_reports_repository_validation(
     assert "=== VALIDATION: properdocs.yml ===" in output
     assert "Type: redirect-map" in output
     assert "notes/old.md -> notes/missing.md" in output
+
+
+def test_redirects_cli_target_skips_absent_config(
+    tmp_path: Path, monkeypatch, capsys
+) -> None:
+    monkeypatch.chdir(tmp_path)
+
+    exit_code = validate_notes.main(["redirects"])
+    output = capsys.readouterr().out
+
+    assert exit_code == 0
+    assert "properdocs.yml: not configured; redirect validation skipped" in output
+    assert "Overall: PASS (clean)" in output

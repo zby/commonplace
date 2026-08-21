@@ -940,13 +940,15 @@ def validate_collection_landings(*, repo_root: Path) -> CheckResults:
 
 
 def validate_redirect_map(*, repo_root: Path) -> CheckResults:
-    """Validate the live ProperDocs redirect map against its published tree."""
+    """Validate the live ProperDocs redirect map when the site is configured."""
     repo_root = repo_root.resolve()
     config_path = repo_root / "properdocs.yml"
     results = CheckResults(note_type="redirect-map")
 
     if not config_path.is_file():
-        results.fails.append("[repository] properdocs.yml: file does not exist")
+        results.infos.append(
+            "[repository] properdocs.yml: not configured; redirect validation skipped"
+        )
         return results
 
     try:
