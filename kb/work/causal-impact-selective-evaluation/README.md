@@ -2,7 +2,9 @@
 
 > **Workshop status:** This is an exploratory Commonplace workshop. It is not an HCL or SPADE summary, a validated evaluation method, an implementation proposal, or a safety claim.
 
-This workshop connects two ideas. [Harness Continual Learning (HCL)](../../sources/harness-continual-learning-adaptation-beyond-model-parameters.ingest.md) treats a deployed harness around frozen model weights as revisable, regression-gated state. [SPADE](../../sources/spade-self-play-in-adaptive-synthetic-executable-environments.ingest.md) shows how executable environments can themselves be generated, filtered, and valued for learning. Neither work proposes the causal selective-evaluation method explored here.
+This workshop asks how evidence from real-world tasks could train a deployed agent system. Here, training means using task outcomes, feedback, failures, and later consequences to propose and select persistent changes to behavior-shaping system state. It does not require updating the base model's weights, and a task result is evidence for an update rather than an update by itself.
+
+[Harness Continual Learning (HCL)](../../sources/harness-continual-learning-adaptation-beyond-model-parameters.ingest.md) develops useful techniques in controlled benchmark streams: isolated harness candidates, reject-capable evaluation, sampled retention checks, and atomic commitment. The workshop asks how those techniques might govern learning from real-world task evidence. [SPADE](../../sources/spade-self-play-in-adaptive-synthetic-executable-environments.ingest.md) supplies a separate precedent for generating, filtering, and valuing executable environments. Neither work studies the causal selective-evaluation method proposed here, and HCL does not establish the controlled-to-deployment transfer.
 
 ## Workshop question
 
@@ -14,7 +16,7 @@ The proposal is conditional. Local selection is plausible only when changes are 
 
 ## Reading map
 
-- [Reading HCL as deployment-time learning](./hcl-reading.md) — the workshop's interpretation of HCL, its sampled-retention boundary, the conditional evaluator-growth calculation, and why HCL's harness partition is not assumed to be a causal graph.
+- [From controlled HCL benchmarks to deployment-time learning](./hcl-reading.md) — the proposed transfer, HCL's sampled-retention boundary, the conditional evaluator-growth calculation, and why its harness partition is not assumed to be a causal graph.
 - [A provisional causal selective-evaluation model](./selective-evaluation-model.md) — the working ontology and objects, selector types, acceptance semantics, theory error, selective-observation problem, and limits of the locality hypothesis.
 - [Experiment design for causal selective evaluation](./experiment-design.md) — the SPADE-inspired procedure-generation option and a comparison among full evaluation, sampling, dependency, similarity, and causal selectors.
 - [An invitation to the HCL authors](./for-hcl-authors.md) — the shorter HCL-facing account and questions.
@@ -22,7 +24,7 @@ The proposal is conditional. Local selection is plausible only when changes are 
 
 ## Current boundary
 
-The workshop has not established that causal selection predicts impacts accurately, lowers total evaluation cost, preserves HCL's retention results, or supports a safety claim. It has not chosen the primary registry object, selection objective, materiality threshold, loss units, prediction horizon, calibration protocol, or final acceptance rule. A controlled comparison needs measured costs, detection coverage, harmful misses, calibration, held-out retention, and deliberate observation of checks the selector would otherwise omit.
+The workshop has not established that HCL's controlled techniques transfer to learning from real-world tasks, that causal selection predicts impacts accurately or lowers total evaluation cost, or that either supports a safety claim. It has not chosen the primary registry object, selection objective, materiality threshold, loss units, prediction horizon, calibration protocol, or final acceptance rule. A controlled comparison needs measured costs, detection coverage, harmful misses, calibration, held-out retention, and deliberate observation of checks the selector would otherwise omit. Evidence of deployment value would require a later study in the target setting.
 
 ## Closing the workshop
 

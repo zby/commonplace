@@ -2,7 +2,7 @@
 
 > **Status:** This is unvalidated workshop machinery. It separates the objects and uncertainty that a selective-evaluation method would need; it does not specify a settled ontology, objective, numerical policy, or acceptance rule.
 
-The proposal starts from the workshop's [reading of HCL](./hcl-reading.md): if a deployed harness is revisable and candidates are regression-gated, a theory of candidate effects might help decide which costly evidence is worth acquiring. That possibility does not establish that evidence can safely be omitted or that total evaluation cost will fall.
+The proposal grows out of the companion [reading of Harness Continual Learning (HCL)](./hcl-reading.md). In controlled task streams, HCL revises persistent harness state and applies regression checks before accepting candidate changes. This workshop asks whether those techniques can govern changes proposed from real-world task evidence. A theory of candidate effects might then help choose which costly evidence to acquire. It does not by itself justify omitting evidence or show that total evaluation cost will fall.
 
 ## Levels of evaluation reasoning
 
