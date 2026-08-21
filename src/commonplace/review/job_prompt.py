@@ -9,7 +9,6 @@ from commonplace.lib import frontmatter
 from commonplace.lib.note_parser import find_markdown_links_with_text
 from commonplace.review.protocol.prompt import NoteReviewTarget
 
-
 URL_SCHEME_RE = re.compile(r"^[a-z]+://", re.IGNORECASE)
 
 
@@ -58,7 +57,6 @@ def prepare_note_target(
     *,
     repo_root: Path,
     note_path: str,
-    review_job_id: int,
     criterion_paths: tuple[str, ...],
     note_text: str | None = None,
 ) -> NoteReviewTarget:
@@ -73,7 +71,6 @@ def prepare_note_target(
     )
     return NoteReviewTarget(
         note_path=note_path,
-        review_job_id=review_job_id,
         criterion_paths=criterion_paths,
         note_text=note_text,
         resolved_links=resolved_links,

@@ -149,7 +149,7 @@ commonplace-x-snapshot https://x.com/user/status/123456789
 
 The review system executes snapshot-anchored LLM assays against notes. Closed-ended review gates produce verdicts; open-ended assays such as critique record reports without an outcome. The persisted criterion field remains named `criterion_path`. For the vocabulary and full workflow, read [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md). For the code architecture, see [review-architecture.md](./review-architecture.md).
 
-Model flags: every partition-valued flag below is `--model-partition` and takes a partition name such as `claude-opus` or `codex` (the review-freshness key; registry in `src/commonplace/review/review_model.py`). The only `--model` flag is `commonplace-finalize-review-job`'s, which takes the concrete model the worker reported (for example `claude-fable-5`) and validates that it maps into the job's partition.
+Model flags: every partition-valued flag below is `--model-partition` and takes a partition name such as `claude-opus` or `codex` (the review-freshness key; registry in `src/commonplace/review/review_model.py`). The only `--model` flag is `commonplace-finalize-review-job`'s, which takes a concrete model supplied by harness launch metadata or telemetry (for example `claude-fable-5`) and validates that it maps into the job's partition. Missing harness provenance remains null. A job output's optional `self-reported-model` is preserved separately and never substituted for `--model`.
 
 ### commonplace-create-review-jobs
 
@@ -183,7 +183,7 @@ commonplace-finalize-review-job --review-job-id 42 --runner codex
 commonplace-finalize-review-job --review-job-id 42 --runner codex --model gpt-5 --effort high
 ```
 
-Optional provenance flags are recorded at finalization time. `--runner` may be supplied alone. `--model` may be supplied without `--runner`; it validates `build_model_partition(--model, --effort)` against the job's `model_partition` before state changes. `--effort` requires `--model`. `--telemetry-json` records an opaque harness-provided telemetry blob without interpreting it.
+Optional provenance flags are recorded at finalization time. `--runner` may be supplied alone. `--model` may be supplied without `--runner`; it validates `build_model_partition(--model, --effort)` against the job's `model_partition` before state changes. `--effort` requires `--model`. `--telemetry-json` records an opaque harness-provided telemetry blob without interpreting it. If `job-output.md` carries `self-reported-model`, the success JSON exposes it as `self_reported_model` and each generated result file repeats the hyphenated field in frontmatter; it remains artifact metadata rather than a review-job column.
 
 The command accepts `queued` jobs, rejects `completed` and `failed`, reads the job-owned `job-output.md`, writes per-pair result files to derived result paths with provenance frontmatter, refreshes `MANIFEST.json` for inspection, and prints JSON for success, mutated failure, and precondition failure. Result-file write failures are fatal evidence failures. Manifest refresh failures after DB completion do not fail the job; they are returned in an optional top-level `warnings` array.
 

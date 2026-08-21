@@ -9,16 +9,19 @@ whole-job failure.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Sequence
 
+from commonplace.review.protocol.format import (
+    PAIR_END_RE,
+    PAIR_START_RE,
+    SELF_REPORTED_MODEL_FIELD,
+)
 from commonplace.review.protocol.outcomes import (
     canonicalize_report_completion,
     parse_review_outcome,
     rewrite_review_result_footer,
 )
-from commonplace.review.protocol.format import PAIR_END_RE, PAIR_START_RE
-
 
 PairKey = tuple[str, str]
 
@@ -36,6 +39,27 @@ class ParsedJobOutput:
     reviews: dict[PairKey, ParsedPairResult]
     canonical_texts: dict[PairKey, str]
     missing: list[PairKey]
+    self_reported_model: str | None
+
+
+def _parse_self_reported_model(job_output_markdown: str) -> str | None:
+    """Parse the optional reviewer claim from the pre-pair preamble."""
+    prefix = f"{SELF_REPORTED_MODEL_FIELD}:"
+    values: list[str] = []
+    for raw_line in job_output_markdown.splitlines():
+        line = raw_line.strip()
+        if PAIR_START_RE.match(line) is not None:
+            break
+        if not line.startswith(prefix):
+            continue
+        value = line.removeprefix(prefix).strip()
+        if not value:
+            raise ValueError(f"{SELF_REPORTED_MODEL_FIELD} must not be empty")
+        values.append(value)
+
+    if len(values) > 1:
+        raise ValueError(f"duplicate {SELF_REPORTED_MODEL_FIELD} field")
+    return values[0] if values else None
 
 
 def extract_pair_results(
@@ -95,6 +119,7 @@ def parse_job_output(
     expected_pairs: Sequence[PairKey],
     result_kinds: dict[PairKey, str],
 ) -> ParsedJobOutput:
+    self_reported_model = _parse_self_reported_model(job_output_markdown)
     expected = set(expected_pairs)
     contracted = set(result_kinds)
     if contracted != expected:
@@ -138,4 +163,5 @@ def parse_job_output(
         reviews=reviews,
         canonical_texts=canonical_texts,
         missing=missing,
+        self_reported_model=self_reported_model,
     )

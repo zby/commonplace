@@ -11,14 +11,16 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from commonplace.review.artifacts import (
-    review_job_artifact_dir,
     job_output_path_rel,
     prompt_path_rel,
     result_paths_by_pair_id,
+    review_job_artifact_dir,
     write_manifest,
 )
-from commonplace.review.freshness import capture_review_inputs
+from commonplace.review.clock import iso_now
+from commonplace.review.critique import result_kind_for_criterion_path
 from commonplace.review.finalization import fail_active_review_jobs
+from commonplace.review.freshness import capture_review_inputs
 from commonplace.review.job_prompt import prepare_note_target
 from commonplace.review.protocol.prompt import NoteReviewTarget, render_pairs_prompt
 from commonplace.review.review_db import (
@@ -27,8 +29,6 @@ from commonplace.review.review_db import (
     create_job_with_pairs,
     load_review_pairs_for_job,
 )
-from commonplace.review.clock import iso_now
-from commonplace.review.critique import result_kind_for_criterion_path
 
 
 @dataclass(frozen=True)
@@ -45,7 +45,6 @@ class PreparedBatch:
 def _targets_for_pairs(
     *,
     repo_root: Path,
-    review_job_id: int,
     grouping: str,
     pairs: list[tuple[str, str, str]],
     note_texts: dict[str, str] | None = None,
@@ -59,7 +58,6 @@ def _targets_for_pairs(
             prepare_note_target(
                 repo_root=repo_root,
                 note_path=note_path,
-                review_job_id=review_job_id,
                 criterion_paths=tuple(criterion_path for _, criterion_path, _ in pairs),
                 note_text=note_texts.get(note_path) if note_texts else None,
             )
@@ -68,7 +66,6 @@ def _targets_for_pairs(
         prepare_note_target(
             repo_root=repo_root,
             note_path=note_path,
-            review_job_id=review_job_id,
             criterion_paths=(criterion_path,),
             note_text=note_texts.get(note_path) if note_texts else None,
         )
@@ -136,7 +133,6 @@ def prepare_grouped_review_job(
     try:
         targets = _targets_for_pairs(
             repo_root=repo_root,
-            review_job_id=review_job_id,
             grouping=grouping,
             pairs=pairs,
             note_texts=captured_inputs.note_texts,

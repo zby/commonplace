@@ -414,7 +414,6 @@ class TestPromptWrapper:
             notes=[
                 NoteReviewTarget(
                     note_path="kb/notes/definition.md",
-                    review_job_id=1,
                     criterion_paths=("kb/types/definition.md",),
                     note_text="# Definition note\n\nBody.",
                 )
@@ -432,7 +431,6 @@ class TestPromptWrapper:
             notes=[
                 NoteReviewTarget(
                     note_path="kb/notes/plain.md",
-                    review_job_id=1,
                     criterion_paths=("kb/instructions/review-gates/prose/source-residue.md",),
                     note_text="# Plain\n\nBody.",
                 )

@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Protocol, Sequence
+from typing import Protocol
 
 import yaml
 
+from commonplace.review.protocol.format import SELF_REPORTED_MODEL_FIELD
 
 MANIFEST_NAME = "MANIFEST.json"
 REVIEW_JOBS_ROOT = Path("kb/reports/review-jobs")
@@ -129,8 +131,9 @@ def result_frontmatter(
     *,
     job: ReviewJobForResult,
     pair: ReviewPairForResult,
+    self_reported_model: str | None,
 ) -> str:
-    payload = {
+    payload: dict[str, object] = {
         "review_job_id": job.review_job_id,
         "review_pair_id": pair.review_pair_id,
         "note_path": pair.note_path,
@@ -143,6 +146,8 @@ def result_frontmatter(
         "outcome": pair.outcome,
         "completed_at": pair.completed_at,
     }
+    if self_reported_model is not None:
+        payload[SELF_REPORTED_MODEL_FIELD] = self_reported_model
     return "---\n" + yaml.safe_dump(payload, allow_unicode=False, sort_keys=False) + "---\n"
 
 
@@ -152,6 +157,7 @@ def write_pair_result_files_to_derived_paths(
     job: ReviewJobForResult,
     pairs: Sequence[ReviewPairForResult],
     canonical_texts: dict[tuple[str, str], str],
+    self_reported_model: str | None,
 ) -> None:
     pending_writes: list[tuple[Path, str]] = []
     result_paths = result_paths_by_pair_id(
@@ -173,7 +179,12 @@ def write_pair_result_files_to_derived_paths(
         pending_writes.append(
             (
                 output_path,
-                result_frontmatter(job=job, pair=pair) + review_text,
+                result_frontmatter(
+                    job=job,
+                    pair=pair,
+                    self_reported_model=self_reported_model,
+                )
+                + review_text,
             )
         )
 

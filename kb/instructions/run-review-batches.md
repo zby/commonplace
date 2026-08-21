@@ -20,9 +20,11 @@ Inputs:
 - selector mode — `requested` for explicit execution, or default stale selection
 - grouping — `note` or `criterion`
 
-The partition is fixed at selection, before any worker runs, so the orchestrator must choose it up front. Commonplace designates no default review model or partition. If the harness exposes model selection, choose an available concrete model and select with the partition `build_model_partition` maps it to (registry: `MODEL_PARTITION_REGISTRY` in `src/commonplace/review/review_model.py`). If the harness does not expose model selection, use the partition of the model its workers are documented to inherit or receive. If that partition cannot be known before selection, stop rather than create jobs under a guessed partition. No per-gate requirements are currently declared; a gate's criterion file may later declare a required partition, and selection then splits by partition. The worker still reports the model it actually ran, and the orchestrator finalizes with that exact reported model; if the reported model maps to a different partition than the job's, the selected or inherited model did not hold — re-run under the correct partition rather than forcing the finalize.
+The partition is fixed at selection, before any worker runs, so the orchestrator must choose it up front. Commonplace designates no default review model or partition. If the harness exposes model selection, choose an available concrete model and select with the partition `build_model_partition` maps it to (registry: `MODEL_PARTITION_REGISTRY` in `src/commonplace/review/review_model.py`). If the harness does not expose model selection, use the partition of the model its workers are documented to inherit or receive. If that partition cannot be known before selection, stop rather than create jobs under a guessed partition. No per-gate requirements are currently declared; a gate's criterion file may later declare a required partition, and selection then splits by partition.
 
-Two model flags, two meanings: every partition-valued flag in the review CLI is named `--model-partition` and takes a partition name (`claude-sonnet-5`, `claude-opus-4.8`, `codex`). The one exception is `commonplace-finalize-review-job --model`, which takes the *concrete* model the worker reported (for example `claude-fable-5`) — finalization derives its partition and validates it against the job's. Never pass a partition name to finalize's `--model`, and never pass a concrete model where a `--model-partition` flag expects a partition (aliases normalize, but the JSON output and DB then record the canonical partition, not what you typed).
+Concrete execution provenance is separate and optional. Pass model and effort to finalization only when the harness supplies their exact values through launch configuration or execution telemetry. Do not infer them. A worker may include the generated prompt's optional `self-reported-model` field, but that claim stays separate from harness provenance and does not replace `--model`. If known harness metadata maps to a different partition than the job's, the selected or inherited model did not hold — re-run under the correct partition rather than forcing finalization. When the harness supplies no concrete model, finalize with only `--runner`.
+
+Two model flags, two meanings: every partition-valued flag in the review CLI is named `--model-partition` and takes a partition name (`claude-sonnet-5`, `claude-opus-4.8`, `codex`). The one exception is `commonplace-finalize-review-job --model`, which takes a concrete model supplied by the harness (for example `claude-fable-5`) — finalization derives its partition and validates it against the job's. Never pass a partition name to finalize's `--model`, and never pass a concrete model where a `--model-partition` flag expects a partition (aliases normalize, but the JSON output and DB then record the canonical partition, not what you typed).
 
 Always create jobs from selector JSON. The job creator has no direct note or pair mode.
 
@@ -72,7 +74,7 @@ Add `--reason {missing-baseline|criterion-changed|note-changed}` to the selector
 - Use `--grouping criterion` for criterion-centric work. Jobs are grouped by criterion and chunked by `--batch-size`.
 - `--batch-size` is valid only with `--grouping criterion`.
 
-The selector emits applicable pairs with their persisted result kinds. The creator consumes that JSON, creates queued homogeneous jobs, writes canonical prompts, and returns `jobs`. Capture especially:
+The selector emits applicable pairs with their persisted result kinds. The creator consumes that JSON, creates queued homogeneous jobs, writes canonical prompts, and returns `jobs`. The parent captures especially:
 
 - `review_job_id`
 - derived `prompt_path`
@@ -85,34 +87,26 @@ Each returned job is one review batch for this procedure. Do not invent, merge, 
 
 Launch one sub-agent per returned job, subject to the harness's concurrency limit. If there are more jobs than available workers, queue the remaining jobs and launch them as workers finish and are closed.
 
-When the harness supports explicit model selection, launch each worker with an available model that maps to the job's selected partition. Otherwise, use the harness's inherited or assigned worker model only when its partition was known at selection. The parent cannot observe which concrete model a sub-agent ran, so it must not record provenance from its own inference: require each worker to report its own exact model ID and reasoning effort when the environment states them, and finalize the job with the reported values. `build_model_partition(reported_model, reported_effort)` must equal the job's `model_partition`; a mismatch means the selected or inherited model did not hold. The worker only reports these; it never runs finalization or any other bookkeeping command. If a worker cannot report a concrete model, mark the model as unknown for that job and finalize with only `--runner`.
+When the harness supports explicit model selection, launch each worker with an available model that maps to the job's selected partition. Otherwise, use the harness's inherited or assigned worker model only when its partition was known at selection. Capture concrete model, effort, and telemetry only from harness-provided launch or execution metadata. The worker's optional `self-reported-model` is a separately labelled claim, not harness provenance. If the harness exposes no concrete model, leave `runner_model` unknown and finalize with only `--runner`.
 
-Give each sub-agent exactly one job object and this task:
+Give each sub-agent only this task:
 
 ```text
-Review job {review_job_id}.
-
-Read {prompt_path} and follow it exactly. It is the authoritative reviewer instruction for this job.
-Write the complete sentinel-bracketed review output to {job_output_path}.
-
-Do not edit the reviewed note, assay criteria, manifests, indexes, or any library artifact.
-Do not run commonplace-* commands.
-Do not finalize the output.
-Return each pair and its final result marker: PASS/WARN/FAIL/ERROR for verdict pairs, or REPORT for report pairs.
-Also return your exact model ID and reasoning effort, copied verbatim from the explicit model-ID line in your environment context. Do not guess or infer them.
+Read {prompt_path} and follow it exactly.
 ```
 
-The sub-agent owns only its `job_output_path`. The parent owns job creation, dispatch bookkeeping, worker scheduling, finalization, verification, and reporting.
+The generated prompt is the complete reviewer contract. It contains the captured inputs, reading scope, exact job output filename, write isolation, result protocol, and an optional `self-reported-model: <model-id>` line for workers whose environment states their exact model. Do not prepend the job id or output path, and do not request a conversational result summary or execution provenance. The sub-agent owns only the output file named by the prompt. The parent owns job creation, dispatch bookkeeping, worker scheduling, finalization, verification, and reporting.
 
-After a worker returns, verify that its `job_output_path` exists and is non-empty, then close, terminate, or release that worker with the harness's lifecycle operation before scheduling another worker. If the harness exposes stop/interrupt rather than close, use it after the output is safely on disk. Workers are single-use contexts: do not send follow-up tasks or retain them for later jobs.
+After a worker signals completion, ignore its conversational response and verify that the parent-held `job_output_path` exists and is non-empty. Finalization returns any parsed self-report as `self_reported_model`; the parent does not need to scrape the file. Then close, terminate, or release that worker with the harness's lifecycle operation before scheduling another worker. If the harness exposes stop/interrupt rather than close, use it after the output is safely on disk. Workers are single-use contexts: do not send follow-up tasks or retain them for later jobs.
 
 ## Finalize completed jobs
 
 ```bash
-commonplace-finalize-review-job --review-job-id {review-job-id} --runner {worker} --model {worker-model}
+commonplace-finalize-review-job --review-job-id {review-job-id} --runner {worker}
+commonplace-finalize-review-job --review-job-id {review-job-id} --runner {worker} --model {worker-model} [--effort {low|medium|high|xhigh}]
 ```
 
-Pass the model the worker reported to `--model`; finalization validates `build_model_partition(--model, --effort)` against the job's `model_partition` before mutating state. If the worker reported an explicit reasoning effort, also pass `--effort {low|medium|high|xhigh}`. Pass only `--runner` when the worker could not report a concrete model. If the harness exposes opaque execution telemetry, pass it with `--telemetry-json`.
+Use the second form only when the harness supplied the concrete model; finalization validates `build_model_partition(--model, --effort)` against the job's `model_partition` before mutating state. Include `--effort` only when the harness supplied it. If the harness exposes opaque execution telemetry, pass it with `--telemetry-json`. Never fill missing provenance from reviewer prose, inference, or `self-reported-model`; finalization preserves that optional field separately.
 
 Run finalization once per completed sub-agent output. It reads job-owned output, parses each block against the pair's persisted result kind, records provenance and per-kind completion, writes result files, creates or replaces current freshness baselines, prunes superseded evidence, and marks the job completed. Finalization is all-or-nothing: malformed or incomplete output fails the job and writes no freshness baseline.
 
@@ -139,4 +133,5 @@ For stale-mode runs, rerun the same selector command used for selection. An outp
 - Do not invoke retired manual review-writing or ingest commands; use `commonplace-finalize-review-job`.
 - Do not skip a requested pair block in job output.
 - Do not ask sub-agents to run finalization or any other bookkeeping command.
+- Do not ask sub-agents to repeat job metadata, result markers, or execution provenance in conversation.
 - Do not combine multiple jobs into one output file.

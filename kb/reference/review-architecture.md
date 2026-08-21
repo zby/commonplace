@@ -49,7 +49,7 @@ The DB is the source of truth; human-readable markdown is derived.
 
 - `review_pairs.result_kind` is `verdict` or `report`. Verdict outcomes use the lowercase enum `pass`, `warn`, `fail`; report pairs keep `outcome` null. `review_jobs.status` is `queued`, `completed`, or `failed`.
 - `created_at` is when the job row and prompt inputs were prepared. Runner provenance is optional and recorded during finalization.
-- The review **body** is not in the DB. The finalizer writes it to the derived per-pair result file from parsed `job-output.md`. The DB stores protocol state (`result_kind`, nullable `outcome`, `completed_at`), not review text. `MANIFEST.json` is reconstructed from DB rows and holds no review body.
+- The review **body** is not in the DB. The finalizer writes it to the derived per-pair result file from parsed `job-output.md`. An optional top-level `self-reported-model` claim is likewise artifact-only: finalization returns it and copies it into result frontmatter without populating `review_jobs.runner_model`. The DB stores protocol state (`result_kind`, nullable `outcome`, `completed_at`), not review text or worker self-report. `MANIFEST.json` is reconstructed from DB rows and holds neither.
 - Verdict output ends with one parseable `## Result: PASS|WARN|FAIL`; report output ends with `## Result: REPORT`. `ERROR` is an execution-failure signal: finalization fails the whole job without completing pairs or advancing baselines.
 
 ### Freshness mechanism
@@ -82,8 +82,8 @@ The two-input shape is also the growth path: the default answer to a new review 
 ### Protocol and finalization
 
 - `protocol/format.py` defines pair sentinels and render-time reserved-text checks.
-- `protocol/prompt.py` renders canonical review prompts from captured text; conformance gates add a mechanical wrapper explaining how to apply the embedded type spec or COLLECTION.md snapshot. The prompt instructs a worker to write exactly the job's derived `job_output_path`.
-- `protocol/parser.py` parses sentinel-bracketed pair output. Structural anomalies, missing expected pairs, duplicates, and malformed result footers fail the whole job.
+- `protocol/prompt.py` renders the complete worker contract from captured text; conformance gates add a mechanical wrapper explaining how to apply the embedded type spec or COLLECTION.md snapshot. The prompt instructs a worker to write exactly the job's derived `job_output_path` and no other file. Dispatch supplies only this prompt's path.
+- `protocol/parser.py` parses sentinel-bracketed pair output plus the optional pre-pair `self-reported-model` field. Structural anomalies, missing expected pairs, duplicates, malformed model fields, and malformed result footers fail the whole job.
 - `protocol/outcomes.py` strictly accepts the one final result marker allowed by the persisted pair kind: a verdict outcome or `REPORT`; `ERROR` raises a job-failing parse error.
 - `finalization.py` is the public library operation behind `commonplace-finalize-review-job`. It loads derived job output, validates optional runner/model/effort provenance, parses the job output, and — only after all parse and coverage preflight passes — writes result files, completes pair rows, creates or replaces freshness baselines, prunes superseded review rows/snapshots, and marks the job completed. Result-file write failures roll back and fail the job in a separate transaction; artifact-dir cleanup and `MANIFEST.json` refresh run after DB completion, with failures reported as non-fatal warnings.
 
@@ -116,7 +116,7 @@ State and inspection:
 ## Invariants
 
 - Job creation always consumes selector JSON. There is no direct note/pair creation mode.
-- Worker agents write only the job-owned job output file; they do not mutate notes, criteria, indexes, manifests, or review DB state.
+- Worker agents receive only the generated prompt path and write only its named job output file; they do not mutate notes, criteria, indexes, manifests, or review DB state. Their conversational response is not a pipeline input. An optional `self-reported-model` file field is preserved as a labelled claim, not promoted to harness provenance or freshness identity.
 - `MANIFEST.json` is inspectable output, not pipeline state.
 - Finalization accepts only `queued` jobs and moves them atomically to `completed` or `failed`.
 - Failed jobs write no freshness baseline rows and reset pair completion state (`outcome` and `completed_at` null).

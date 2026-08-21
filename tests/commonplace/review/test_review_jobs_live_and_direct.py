@@ -9,7 +9,6 @@ from commonplace.lib import frontmatter
 
 from ._run_cli import run_cli
 
-
 GATE_ONE = "accessibility/undefined-terms"
 GATE_TWO = "prose/source-residue"
 GATE_ONE_PATH = "kb/instructions/review-gates/accessibility/undefined-terms.md"
@@ -602,6 +601,38 @@ def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmat
         row = conn.execute("SELECT outcome, completed_at FROM review_pairs").fetchone()
     assert parsed_frontmatter.data["outcome"] == row["outcome"]
     assert parsed_frontmatter.data["completed_at"] == row["completed_at"]
+
+
+def test_finalize_review_job_preserves_optional_self_reported_model(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    prepared_job = create_single_review_job(repo, db_path)
+    review_job_id = prepared_job["review_job_id"]
+    write(
+        repo / prepared_job["job_output_path"],
+        "self-reported-model: gpt-5.6-sol\n\n" + single_pair_job_output(),
+    )
+
+    result = run_cli(
+        "finalize_review_job",
+        "--review-job-id",
+        str(review_job_id),
+        cwd=repo,
+        db_path=db_path,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["self_reported_model"] == "gpt-5.6-sol"
+    result_path = repo / (
+        f"kb/reports/review-jobs/review-job-{review_job_id}/"
+        "pair-1-undefined-terms.md"
+    )
+    parsed_frontmatter = frontmatter.parse(result_path.read_text(encoding="utf-8"))
+    assert parsed_frontmatter.data["self-reported-model"] == "gpt-5.6-sol"
+    assert parsed_frontmatter.data["runner_model"] is None
+
+    with sqlite3.connect(db_path) as conn:
+        runner_model = conn.execute("SELECT runner_model FROM review_jobs").fetchone()[0]
+    assert runner_model is None
 
 
 def test_finalize_review_job_result_write_failure_rolls_back_and_preserves_provenance(

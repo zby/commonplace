@@ -9,8 +9,8 @@ from __future__ import annotations
 
 import re
 
-
 PAIR_KEY_SEPARATOR = " :: "
+SELF_REPORTED_MODEL_FIELD = "self-reported-model"
 
 PAIR_START_RE = re.compile(r"^=== PAIR REVIEW START: (?P<note_path>.+?) :: (?P<criterion_path>.+?) ===$")
 PAIR_END_RE = re.compile(r"^=== PAIR REVIEW END: (?P<note_path>.+?) :: (?P<criterion_path>.+?) ===$")

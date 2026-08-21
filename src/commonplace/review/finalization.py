@@ -2,24 +2,23 @@
 
 from __future__ import annotations
 
-import sqlite3
 import shutil
+import sqlite3
+from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Sequence
 
+from commonplace.review import review_db
 from commonplace.review.artifacts import (
-    review_job_artifact_dir,
     repo_relative_path,
+    review_job_artifact_dir,
     write_manifest,
     write_pair_result_files_to_derived_paths,
 )
-from commonplace.review import review_db
 from commonplace.review.clock import iso_now
 from commonplace.review.protocol.parser import ParsedJobOutput, parse_job_output
 from commonplace.review.review_db import ReviewPairCompletion, ReviewPairRow
 from commonplace.review.review_model import build_model_partition
-
 
 ACTIVE_REVIEW_JOB_STATUSES = frozenset({"queued"})
 
@@ -57,7 +56,7 @@ def finalize_capture_refresh(
 class ExecutionMetadata:
     """Optional, per-harness execution provenance recorded at finalize time.
 
-    This is the single seam for worker-provided execution metadata. The core
+    This is the single seam for harness-provided execution metadata. The core
     stores these fields uninterpreted — ``telemetry_json`` in particular is an
     opaque blob the review system never parses. Harnesses that cannot produce
     provenance leave the fields ``None``; provenance is never required for a
@@ -85,6 +84,9 @@ class ExecutionMetadata:
         return build_model_partition(self.runner_model, self.runner_effort)
 
 
+EMPTY_EXECUTION_METADATA = ExecutionMetadata()
+
+
 @dataclass(frozen=True)
 class FinalizeReviewJobOutcome:
     completed: bool
@@ -94,6 +96,7 @@ class FinalizeReviewJobOutcome:
     failure_reason: str | None = None
     job_status: str | None = None
     reason: str | None = None
+    self_reported_model: str | None = None
     warnings: tuple[str, ...] = ()
 
     @property
@@ -124,6 +127,8 @@ class FinalizeReviewJobOutcome:
         }
         if self.warnings:
             payload["warnings"] = list(self.warnings)
+        if self.self_reported_model is not None:
+            payload["self_reported_model"] = self.self_reported_model
         return payload
 
 
@@ -150,7 +155,7 @@ def finalize_review_job_from_owned_output(
     repo_root: Path,
     db_path: Path,
     review_job_id: int,
-    execution: ExecutionMetadata = ExecutionMetadata(),
+    execution: ExecutionMetadata = EMPTY_EXECUTION_METADATA,
 ) -> FinalizeReviewJobOutcome:
     """Finalize one review job from its derived job output path."""
     with review_db.connect(db_path) as conn:
@@ -163,12 +168,11 @@ def finalize_review_job_from_owned_output(
         if plan.status not in ACTIVE_REVIEW_JOB_STATUSES:
             return _precondition_failure(review_job_id, f"review job is not finalizable: {plan.status}")
         model_partition = execution.derived_model_partition
-        if model_partition is not None:
-            if model_partition != plan.model_partition:
-                return _precondition_failure(
-                    review_job_id,
-                    f"review job model_partition {plan.model_partition!r} does not match supplied partition {model_partition!r}",
-                )
+        if model_partition is not None and model_partition != plan.model_partition:
+            return _precondition_failure(
+                review_job_id,
+                f"review job model_partition {plan.model_partition!r} does not match supplied partition {model_partition!r}",
+            )
         try:
             job_output_path = repo_relative_path(
                 repo_root,
@@ -220,6 +224,7 @@ def finalize_review_job_from_owned_output(
                 job=plan,
                 pairs=finalized.pairs,
                 canonical_texts=parsed.canonical_texts,
+                self_reported_model=parsed.self_reported_model,
             )
         except (ValueError, OSError, sqlite3.IntegrityError) as exc:
             failure_reason = str(exc)
@@ -249,6 +254,7 @@ def finalize_review_job_from_owned_output(
             review_job_id=review_job_id,
             completed_pair_count=len(finalized.pairs),
             job_status="completed",
+            self_reported_model=parsed.self_reported_model,
             warnings=warnings,
         )
 

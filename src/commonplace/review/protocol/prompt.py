@@ -22,19 +22,20 @@ deliberate corpus-wide re-review or ack outcome.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Sequence
 
+from commonplace.review.collection_conformance import is_collection_md_criterion_path
 from commonplace.review.protocol.format import (
     OUTCOME_LINE_INSTRUCTION,
     PAIR_END_TEMPLATE,
     PAIR_KEY_SEPARATOR,
     PAIR_START_TEMPLATE,
-    RESERVED_SENTINEL_RE,
     REPORT_LINE_TEMPLATE,
+    RESERVED_SENTINEL_RE,
     RESULT_LINE_TEMPLATE,
+    SELF_REPORTED_MODEL_FIELD,
 )
-from commonplace.review.collection_conformance import is_collection_md_criterion_path
 from commonplace.review.type_conformance import is_type_spec_criterion_path
 
 
@@ -95,7 +96,6 @@ REVIEW_RUNNER_SYSTEM_PROMPT = (
 @dataclass(frozen=True)
 class NoteReviewTarget:
     note_path: str
-    review_job_id: int
     criterion_paths: tuple[str, ...]
     note_text: str
     resolved_links: Sequence[tuple[str, str, str]] = ()
@@ -154,7 +154,13 @@ def render_pairs_prompt(
     criterion_paths = sorted({criterion_path for note in notes for criterion_path in note.criterion_paths})
     destination_lines = [
         f"- Write exactly one markdown document to `{job_output_path}`.",
+        "- Do not write or edit any other file.",
         "- Do not invoke review helper scripts while writing the job output.",
+        (
+            "- If your environment explicitly states your exact model ID, add exactly one top-level line "
+            f"before the first pair block: `{SELF_REPORTED_MODEL_FIELD}: <model-id>`."
+        ),
+        "- The model line is optional. Omit it when the model ID is unavailable; do not guess or infer it.",
     ]
 
     if result_kind not in {"verdict", "report"}:
@@ -205,7 +211,7 @@ def render_pairs_prompt(
     )
     for note in notes:
         for criterion_path in note.criterion_paths:
-            lines.append(f"- {note.note_path} :: {criterion_path} (review job id: {note.review_job_id})")
+            lines.append(f"- {note.note_path} :: {criterion_path}")
 
     lines.extend(
         [

@@ -403,7 +403,6 @@ class TestPromptWrapper:
             notes=[
                 NoteReviewTarget(
                     note_path="kb/notes/plain.md",
-                    review_job_id=1,
                     criterion_paths=("kb/notes/COLLECTION.md",),
                     note_text="# Plain note\n\nBody.",
                 )
@@ -421,7 +420,6 @@ class TestPromptWrapper:
             notes=[
                 NoteReviewTarget(
                     note_path="kb/notes/plain.md",
-                    review_job_id=1,
                     criterion_paths=("kb/instructions/review-gates/prose/source-residue.md",),
                     note_text="# Plain\n\nBody.",
                 )
@@ -437,7 +435,6 @@ class TestPromptWrapper:
             notes=[
                 NoteReviewTarget(
                     note_path="kb/notes/plain.md",
-                    review_job_id=1,
                     criterion_paths=("kb/notes/COLLECTION.md",),
                     note_text="# Plain note\n\nBody.",
                 )
