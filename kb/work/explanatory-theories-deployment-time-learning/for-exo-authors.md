@@ -1,5 +1,7 @@
 # Exo can rewrite itself. Can one improvement help produce the next?
 
+> **Exo-facing track:** This is the Exo invitation within the [explanatory-theories deployment-time-learning workshop](./README.md). It applies the workshop's distinction between an episode's working theory and a retained theory to Exo's unusually broad self-revision surface. It is a proposal for criticism, not a claim about what Exo already implements.
+
 Exo has built an unusually strong substrate for reflective self-improvement. Its source tree is an inspectable representation of the system that determines its behavior. The agent can edit the mutable executor and policy, rebuild, restart, and preserve the record of failed attempts outside the state it rewinds. It can also retain facts, skills, tools, prompts, tests, and code.
 
 Those capabilities make self-change possible, reversible, and reusable. They do not yet show that Exo's improvements **compound**.
@@ -31,6 +33,16 @@ The proposal is not another memory store. It is to represent the machinery that 
 
 Reflection's advantage here is control, not guaranteed improvement. Explicit commitments can be named, criticized, and selectively revised. The policy that chooses lessons can itself become a lesson and later a revision target. But an addressable artifact that no later improvement retrieves and uses does not compound.
 
+## Working theories, retained theories, and the policy between them
+
+The workshop separates three objects that this pitch previously called “theory” too loosely:
+
+- `tau_n` is the working theory active in improvement episode `n`: an explicit explanation of a failure or system behavior, with scope, assumptions, and predictions. Exo could construct it fresh from the current source, traces, and task evidence.
+- `T_n` is the retained, addressable body of system theories available before episode `n`. A relevant part of `T_n` can be retrieved and applied to produce `tau_n`, then be revised separately after the episode.
+- the **promotion and revision theory** is meta-level: it governs which episode-local conclusions should enter `T_n`, in which form and with what authority, and what later evidence should revise or retire them. It is not identical to the object-level theories of providers, tools, prompts, evaluators, or routing that it governs.
+
+Fresh construction of `tau_n` can improve one episode's diagnosis, candidate search, or evaluation without creating cumulative theory-mediated learning. The stronger Exo claim begins only when a retained `T_n` changes a later improvement episode and the meta-level policy remains separately criticizable and revisable.
+
 ## Three tests for an Exo improvement path
 
 | Test | Questions |
@@ -52,7 +64,7 @@ This is where Exo's current mechanical gates stop. Build success, tests, restart
 The minimum capability is smaller than adopting Commonplace:
 
 1. Maintain an explicit, agent-editable theory of promotion and a map of the artifacts and relations that shape Exo's behavior.
-2. Preserve raw episodes while promoting only selected conclusions, procedures, checks, and code.
+2. Let an episode construct a scoped working theory `tau_n`, while preserving raw episodes and promoting only selected conclusions into a retained `T_n`, procedures, checks, or code.
 3. Give retained conclusions enough identity to record their evidence, trigger, mechanism, scope, status, authority, and affected artifacts where those distinctions matter.
 4. Route them into later work and record whether they were retrieved, used, contradicted, revised, or ignored.
 5. Keep the evaluation contract fixed within an episode and revise it, when needed, through a separately judged episode.
@@ -77,11 +89,11 @@ The decisive experiment therefore compares later improvement episodes with the r
 
 You have the pitch; form your own view before opening the supporting documents. Then use your own agents, tools, and preferred methods to verify or attack it:
 
-- [Detailed argument](./argument.md) — Exo's present revision path, accumulation versus compounding, promotion economics, evaluation boundary, concrete cases, and minimal proposal
-- [Evidence and counterevidence](./evidence.md) — pinned Exo and ExoWorker facts, later-episode evidence, supporting theory, adverse results, open gaps, and falsifiers
+- [Detailed Exo case](./exo-case.md) — Exo's present revision path, accumulation versus compounding, promotion economics, evaluation boundary, concrete cases, and minimal proposal
+- [Exo evidence and counterevidence](./exo-evidence.md) — pinned Exo and ExoWorker facts, later-episode evidence, supporting theory, adverse results, open gaps, and falsifiers
 
 This pitch comes out of [Commonplace](https://github.com/zby/commonplace), a framework for agent-operated knowledge bases. Commonplace is itself testing whether retained natural-language theory can make heterogeneous revision more controllable and eventually compounding. It has installed and reused revisions, but it has not shown compounding through its theory layer. Exo is a sharper computational case of the same question. The proposal transfers the hypothesis, not Commonplace's Markdown, schemas, review system, or protected-boundary choices.
 
 ---
 
-*Workshop status: closes when the pitch has survived or failed independent criticism, the durable conclusions are extracted into the library, and we decide whether to bring the argument to Exo.*
+*Track status and independent exit: this Exo invitation is ready for author contact once its pinned Exo facts and claim boundaries have been rechecked and an outreach message links this page. Contact need not wait for the workshop's general experiments. The track closes when scoped criticism has been handled, durable conclusions have been extracted or explicitly declined, and contact has been made or deliberately declined. An author reply would be welcome but is not required.*

@@ -1,6 +1,8 @@
-# Evidence and counterevidence
+# Exo evidence and counterevidence
 
-This document exposes the evidence behind the [short pitch](./README.md). It separates facts about pinned Exo and ExoWorker, classifications grounded in those facts, theoretical inferences, later-episode evidence, evidence for semantic retention, adverse results, unresolved gaps, and falsifiers. It is an argument ledger, not a verification protocol.
+> **Track context:** This is the evidence ledger for the [Exo-facing invitation](./for-exo-authors.md), within the broader [explanatory-theories deployment-time-learning workshop](./README.md).
+
+This document separates facts about pinned Exo and ExoWorker, classifications grounded in those facts, theoretical inferences, later-episode evidence, evidence for semantic retention, adverse results, unresolved gaps, and falsifiers. It is an argument ledger, not a verification protocol.
 
 ## Pinned Exo and ExoWorker facts
 

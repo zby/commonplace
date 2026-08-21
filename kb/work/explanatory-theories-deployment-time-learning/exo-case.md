@@ -1,4 +1,6 @@
-# Detailed argument: from self-rewrite to compounding
+# Exo case: from self-rewrite to compounding
+
+> **Track context:** This is the detailed case behind the [Exo-facing invitation](./for-exo-authors.md), within the broader [explanatory-theories deployment-time-learning workshop](./README.md). It preserves the Exo-specific argument while making its theory objects explicit.
 
 ## Proposition
 
@@ -25,6 +27,14 @@ At refreshed main revision `ef4cfe057af0`, canonical Exo supplies:
 The separately linked ExoWorker branch makes the learning policy more explicit. Its standing instructions say to persist lasting facts with `remember`, reusable playbooks with `install_skill`, and repeated callable helpers with `install_agent_tool`. Its memory tool specifically names lessons from failures as suitable facts.
 
 This is already a broad, agent-mediated, mixed-form revision path. The proposal does not add learning where none exists, and it does not repair a system that learns only in code. It asks whether Exo should make its current promotion and revision theory more explicit, general, revisable, and testable.
+
+## Two levels of theory
+
+The broader workshop distinguishes the theory used inside an episode from the theory retained across episodes. Let `tau_n` be an active, scoped explanation of the current failure or behavior. Exo could construct `tau_n` fresh from its source tree, self map, traces, and current evidence, then use it to direct diagnosis, candidate search, candidate ranking, and evaluation. This is useful even if the explanation is discarded afterward, but it is an ephemeral reasoning treatment rather than cumulative theory-mediated learning.
+
+Let `T_n` be an addressable body of system theories retained before episode `n`. Retrieving and applying a relevant part of `T_n` can produce the episode's `tau_n`; later evidence can support a separately judged update to `T_{n+1}`. The retained theory earns its cost only if this cross-episode path improves later search or selection after retrieval, maintenance, and correction costs are counted.
+
+Exo's **promotion and revision theory** is a different, meta-level object. It decides which episode-local interpretations enter `T_n`, which become skills, tests, tools, prompts, or code instead, how much authority each form receives, and when it should be revised or retired. Object-level theories explain parts of Exo and its environment; the meta-level theory governs their lifecycle. The latter can itself become a revision target without erasing the distinction.
 
 ## Occurrence, accumulation, and compounding
 
@@ -186,7 +196,7 @@ For one proposed compounding link:
 
 The hypothesis predicts an interaction, not a universal win. Explicit theory should help when interpretations recur, cross implementations, require named criticism, change the decomposition of future work, improve an evaluator, or preserve commitments. It should lose or tie on one-off work, complete formal regimes, residue-heavy cases, and rapidly expiring conclusions.
 
-The proposal is weakened or falsified if Exo's existing heuristics and just-in-time reconstruction match or beat the explicit layer on later improvement productivity after full cost accounting. The operational falsifiers and revision triggers are in [evidence.md](./evidence.md#falsifiers-and-revision-triggers).
+The proposal is weakened or falsified if Exo's existing heuristics and just-in-time reconstruction match or beat the explicit layer on later improvement productivity after full cost accounting. The operational falsifiers and revision triggers are in [Exo evidence](./exo-evidence.md#falsifiers-and-revision-triggers).
 
 ## Claim boundary
 
@@ -200,6 +210,6 @@ The proposal is weakened or falsified if Exo's existing heuristics and just-in-t
 
 ## Evaluation boundary
 
-Pinned revisions, per-claim evidence status, and the relation to the earlier pinned reviews live in [evidence.md](./evidence.md#pinned-exo-and-exoworker-facts). Treating ExoWorker's standing instruction as a primitive promotion policy is our interpretation of the checked-in prompt, not a claim that its agent reliably follows it. The claim that a stronger semantic layer may improve later revision is our inference, not a position attributed to the Exo authors.
+Pinned revisions, per-claim evidence status, and the relation to the earlier pinned reviews live in [Exo evidence](./exo-evidence.md#pinned-exo-and-exoworker-facts). Treating ExoWorker's standing instruction as a primitive promotion policy is our interpretation of the checked-in prompt, not a claim that its agent reliably follows it. The claim that a stronger semantic layer may improve later revision is our inference, not a position attributed to the Exo authors.
 
 Out of scope is a universal improvement criterion. Explicit theory can make candidates, evidence, form, scope, authority, revision machinery, and lifecycle legible. It cannot let a candidate become its own judge or solve open-ended evaluation by declaration.
