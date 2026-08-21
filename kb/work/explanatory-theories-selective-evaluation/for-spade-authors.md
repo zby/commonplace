@@ -18,11 +18,11 @@ The released implementation supports this mechanism. The reported training and b
 
 [Harness Continual Learning (HCL)](../../sources/harness-continual-learning-adaptation-beyond-model-parameters.ingest.md) develops a proposal–evaluation–commitment loop for persistent harness state in controlled task streams. A candidate is committed only after evidence of current-task improvement, sampled historical retention, and validity. Our target setting is different: evidence from real-world tasks would drive proposals and selection over retained system state without requiring an update to the base model's weights. We call that target **deployment-time learning** and borrow HCL's techniques for it; we do not treat HCL's experiments as a test of the transfer. Repeatedly running a growing historical evaluation surface can still become costly.
 
-The proposed addition is a revisable **impact theory**. Given the current system and a candidate change, it predicts which behavioral functions or obligations may materially change. An evidence-acquisition policy then decides which evidence is worth buying. It would derive evaluation obligations from the predicted effects, select or generate procedures capable of observing them, validate those procedures, compare incumbent and candidate behavior, and feed the result into the commit decision.
+The proposed addition separates a revisable system theory `T` from the candidate-specific impact projection `I_T(S, Delta)` derived from it. `T` may represent causal mechanisms, dependency and authority paths, invariants, program structure, semantic contracts, learned action-conditioned predictions, or a mixture. Given the current system and a candidate change, `I_T` states which behavioral functions or obligations may materially change, which appear unaffected, and what remains unresolved. An evidence-acquisition policy then decides which evidence is worth buying. SPADE's role in the proposed bridge begins after that derivation: it could help generate a procedure for a theory-derived obligation, but it does not supply the theory or establish its [explanatory-reach](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md).
 
 SPADE suggests expanding that policy from selecting stored benchmarks or historical anchors to synthesizing an executable procedure for the particular change. That changes the generator's purpose. SPADE's matched contrast asks whether a privileged hint changes the current policy's return. The proposed acceptance contrast asks whether the incumbent and candidate differ on a specified obligation under the same procedure.
 
-In this setting, SPADE's environment designer becomes a precedent for an **obligation-directed test synthesizer**, not the same role transplanted unchanged. The synthesizer would seek procedures likely to expose a relevant incumbent/candidate difference on the predicted impact surface. Whether memory of earlier regressions, misses, and unsuitable procedures improves that search without narrowing it is a hypothesis for the experiment.
+In this setting, SPADE's environment designer becomes a precedent for an **obligation-directed test synthesizer**, not the same role transplanted unchanged. The synthesizer would seek procedures likely to expose a relevant incumbent/candidate difference on an obligation named by the theory-derived impact projection. A procedure could supply candidate-commitment evidence or act as a theory-discriminating audit where rival system theories predict different consequences; those roles should be recorded separately. Whether memory of earlier regressions, misses, and unsuitable procedures improves that search without narrowing it is a hypothesis for the experiment.
 
 ## Why acceptance needs stronger gates than curriculum generation
 
@@ -33,22 +33,23 @@ At least four questions therefore remain separate:
 - **Execution validity:** Does the procedure parse, run, terminate, and stay within an independently enforced containment boundary?
 - **Observation validity:** Does an independent check establish that success or failure measures the intended obligation rather than an incidental behavior or exploitable artifact?
 - **Decision value:** Is the expected information worth generation, validation, sandboxing, and execution cost for this candidate?
-- **Selection validity:** Does the generator expose harmful effects rather than co-adapt with the candidate, teach to the gate, or search only where its own impact theory already expects success?
+- **Selection validity:** Does the generator expose harmful effects rather than co-adapt with the candidate, teach to the gate, or search only where the theory and impact projection that scoped its search already expect success?
 
-SPADE is useful here because it keeps proposal breadth, validity, and value distinct. It does not answer these acceptance questions. Its use of generated Python with functional checks is also not, by itself, an execution-containment argument.
+SPADE is useful here because it keeps proposal breadth, validity, and value distinct. It does not answer these acceptance questions or provide evidence that a system theory has explanatory-reach. Its use of generated Python with functional checks is also not, by itself, an execution-containment argument.
 
 ## A minimal joint experiment
 
-A first experiment could use a fixed collection of recorded harness candidates and known behavioral obligations. For each incumbent–candidate pair, compare four arms:
+A first experiment should use a fixed collection of recorded harness candidates and known behavioral obligations while keeping the trusted procedure registry fixed. It would compare full registered-set evaluation, budget-matched sampling, diff similarity, deterministic structural selection, explicit causal-model selection, and mixed explanatory-theory selection. This phase tests impact projection and selection without attributing generated-procedure failures to them.
 
-1. The full registered evaluation set.
-2. Impact-guided selection from that set.
-3. Obligation-directed procedure synthesis without adaptive memory.
-4. SPADE-inspired adaptive generation conditioned on earlier procedure outcomes.
+A second phase would cross qualifying selectors with three procedure-source conditions:
 
-The synthesizer would receive the candidate change, predicted affected functions, and the obligation to observe, but not the final acceptance label. A held-out audit surface would test whether each arm detects seeded effects and misses effects outside its predicted surface. Designing that audit so it does not reproduce the impact theory's blind spots remains part of the problem.
+1. Selection from the fixed registered set.
+2. Obligation-directed procedure synthesis without adaptive memory.
+3. SPADE-inspired adaptive generation conditioned on earlier procedure outcomes.
 
-The analysis should separate failures of impact prediction, procedure synthesis, observation-validity certification, containment, and cost amortization. Primary measurements would include harmful misses, detection coverage, calibration, total evidence cost, procedure reuse, and held-out retention. Agent return alone would not establish useful acceptance evidence. Adaptive generation should outperform the non-adaptive synthesis baseline before its memory or curriculum machinery receives credit.
+The synthesizer would receive the candidate change, the `I_T`-derived obligation, and the relevant stated scope and premises, but not the final acceptance label. A held-out audit surface would test whether each arm detects seeded effects, effects outside `I_T`, and cases on which rival theories disagree. Designing that audit so it does not reproduce the system theory's blind spots remains part of the problem.
+
+The analysis should separate theory error, impact-derivation error, obligation mapping, procedure synthesis, observation-validity certification, containment, and cost amortization. Primary measurements would include harmful misses, detection coverage, projection calibration or deductive soundness, total evidence cost, procedure reuse, held-out retention, and rival-theory discrimination. Agent return alone would not establish useful acceptance evidence. Adaptive generation should outperform the non-adaptive synthesis baseline before its memory or curriculum machinery receives credit.
 
 The experiment does not yet specify the synthesizer's objective, choose an independent observation-validity authority, or define what approval means when possible effects were not tested.
 
@@ -57,10 +58,11 @@ The experiment does not yet specify the synthesizer's objective, choose an indep
 Your view would be especially useful on these questions:
 
 - Could SPADE's paired-play machinery be adapted from hint/no-hint learning value to incumbent/candidate discrimination without rewarding arbitrary behavioral difference?
+- Could designer generation target a consequence on which rival system theories disagree, rather than merely maximize incumbent/candidate behavioral difference?
 - What designer objective could target an explicit behavioral obligation while resisting reward hacking and candidate–evaluator co-adaptation?
 - Which parts of SPADE's environment validation could transfer to generated evaluations, and what additional checks would be required before treating an environment as acceptance evidence?
 - Could environment memory retain discovered regressions, false negatives, and redundant procedures without collapsing generation onto a narrow historical surface?
 - When would adaptive generation amortize its construction and validation cost better than selecting from a fixed procedure registry?
 - What experiment would most strongly falsify the claim that adaptive executable-procedure generation improves this selective-evaluation loop?
 
-The [full causal-impact and selective-evaluation workshop](./README.md) develops the proposed transfer from controlled HCL techniques to deployment-time learning, the impact model, the changed acceptance semantics, and the audit problem created by selectively unobserved effects. We would welcome criticism of the bridge above, especially where this evaluation use misreads what SPADE's mechanisms can support.
+The [full theory-guided selective-evaluation workshop](./README.md) develops the proposed transfer from controlled HCL techniques to deployment-time learning, the system-theory/impact-projection distinction, changed acceptance semantics, and the reach-assessment and audit problems created by selectively unobserved effects. We would welcome criticism of the bridge above, especially where this evaluation use misreads what SPADE's mechanisms can support.
