@@ -15,7 +15,7 @@ Deutsch's "reach" (*The Beginning of Infinity*), registered in this KB as **expl
 - **Medium explanatory-reach** — schema-commitment deferral, short composable notes, title-as-claim — principles that apply to a class of KBs (authored, agent-navigated) but not universally
 - **Low explanatory-reach** — ADR 004 (tags not areas), ADR 002 (inline templates) — choices specific to this installation
 
-The boundary between levels is not always obvious. Many notes that look like local design choices are actually medium-explanatory-reach principles. The schema-deferral claim derives from a general argument about when a commitment has to become binding — it applies to any system whose write invariants are not yet settled. Its Graphiti section maps where that explanatory-reach ends, which is exactly what good explanations do: they have clear scope, not unlimited generality.
+The boundary between levels is not always obvious. Many notes that look like local design choices are actually medium-explanatory-reach principles. The schema-deferral claim derives from a general argument about when a commitment has to become binding. Its separation of schema timing, workload pressure, and authority transfer maps where that explanatory-reach ends, which is exactly what good explanations do: they have clear scope, not unlimited generality.
 
 ## Explanatory-reach does not obviously help retrieval
 
@@ -32,7 +32,7 @@ But explanatory-reach creates fragility. The cost of changing a note is inversel
 
 So explanatory-reach is worth pursuing — but it demands care. This tension shapes two practical heuristics:
 
-1. **When writing**, push for the most general formulation the argument supports, but map the boundaries explicitly. Overclaiming explanatory-reach without marking where it ends (the way the schema-deferral note maps its Graphiti boundary) produces brittle generality.
+1. **When writing**, push for the most general formulation the argument supports, but map the boundaries explicitly. Overclaiming explanatory-reach without marking where it ends (the way the schema-deferral note separates pressure from authority transfer) produces brittle generality.
 
 2. **When reviewing**, clusters of similar low-explanatory-reach notes suggest an unextracted higher-explanatory-reach principle. Three notes making the same argument in different contexts are a signal that a general principle is waiting to be named.
 

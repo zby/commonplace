@@ -7,7 +7,7 @@ tags: [document-system]
 
 # Why directories despite their costs
 
-The KB keeps [authored files canonical while write invariants are unsettled](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md), which also keeps the content directly navigable by humans. But a flat directory with hundreds of files isn't really navigable — you're back to needing tooling (search, indexes) to find anything, which is what a database gives you. Directories preserve the human-navigability guarantee at scale. Not at every scale — but for one or two orders of magnitude more files before the same problem recurs.
+The KB keeps [authored files canonical while meanings and write rules remain unsettled](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md), which also keeps the content directly navigable by humans. But a flat directory with hundreds of files isn't really navigable — you're back to needing tooling (search, indexes) to find anything, which is what a database gives you. Directories preserve the human-navigability guarantee at scale. Not at every scale — but for one or two orders of magnitude more files before the same problem recurs.
 
 ## What directories give us
 
@@ -57,7 +57,7 @@ For now, the right default is: be reluctant to create new top-level directories.
 
 Relevant Notes:
 
-- [incrementally constrained files defer centralized schema commitment until write invariants stabilize](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md) — the substrate bet that directories extend
+- [Canonical files may defer a shared schema while database authority remains a separate commitment](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md) — supplies the local canonical-file premise whose human navigation directories extend; it does not settle the substrate comparison
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — local conventions per directory are proto-workshop subsystems
 - [available types](../reference/available-types.md) — the type system that operates independently of directory structure
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — routing decisions are part of the context loading problem

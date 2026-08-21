@@ -28,7 +28,7 @@ State genuinely earns its keep in some cases. The strongest is **authorisation**
 
 ## The economic argument
 
-This is the [argument for deferring centralized commitment until invariants stabilize](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md) applied to the tool layer. A database earns its complexity when you need transactions, concurrent access, and indexes. Files earn their simplicity when you need read/write/version. Most MCP tools are file-shaped operations — stateless, independent, no shared state — forced through a database-shaped runtime.
+The useful storage analogy is narrower. [Schema timing and database authority are separate commitments](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md), and [choosing files or a database requires a concrete workload comparison](./many-to-many-edge-state-is-where-files-yield-to-a-database.md). At the tool layer, the corresponding question is whether a call needs persistent runtime capabilities. Most operations described above are independent calls, so the comparison is direct invocation versus server-mediated invocation, with stateful infrastructure justified by requirements the tool actually uses.
 
 The economic alternative: stateless tool invocation as the default, where the tool is a function call with no server process. State only where the tool genuinely requires it. This is what Claude Code's native tools already are — Read, Write, Grep, Bash are direct function calls with no intermediate server, no session, no lifecycle.
 
@@ -38,6 +38,6 @@ The pattern generalises: when an architecture bundles a simple common case with 
 
 Relevant Notes:
 
-- [incrementally constrained files defer centralized schema commitment until write invariants stabilize](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md) — same pattern at the storage layer: weak enforcement stays cheap while invariants are unsettled, and a database earns authority at write-time invariants or unowned mutable state
+- [canonical files may defer a shared schema while database authority remains a separate commitment](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md) — grounds: separates schema timing from database authority; this note imports only the requirement-driven comparison for tool-runtime state
 - [ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — stateless tool invocation is ephemeral by design; MCP's persistent server pushes toward accumulating state whether or not the tools need it
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — unnecessary intermediate layers add latency and failure modes without improving the agent's context

@@ -1,5 +1,5 @@
 ---
-description: S3-backed CLI coordination tool for multi-agent systems — exemplifies coordination-without-guarantees and the schema-deferral bet applied to inter-agent state rather than knowledge storage
+description: S3-backed CLI coordination tool for multi-agent systems — exposes how file-backed coordination depends on workload-specific consistency and authority requirements
 source_snapshot: arrmlet-tracecraft.md
 ingested: "2026-04-04"
 type: kb/sources/types/ingest-report.md
@@ -34,7 +34,7 @@ Tracecraft is a CLI-based coordination layer for multi-agent AI systems that sto
 
 2. **[agent-orchestration-occupies-a-multi-dimensional-design-space](../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md)** (exemplifies) — Tracecraft occupies a distinctive point: no scheduler (agents bring their own), no persistence of orchestration logic (stateless CLI), shared-state/blackboard coordination (S3 JSON files), weak consistency guarantees (last-write-wins for memory, optimistic locking for claims), and structured return artifacts (handoff notes, uploaded files).
 
-3. **[files defer schema commitment until invariants stabilize](../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md)** (extends) — Tracecraft applies the schema-deferral argument to inter-agent coordination state rather than knowledge storage. Same architectural bet (defer schema commitment, get browsing and inspectability for free), different substrate (transient coordination state vs. durable knowledge). Tests whether the advantages generalize — and note that its optimistic locking for claims is the kind of write-time invariant the note names as a database trigger.
+3. **[Canonical files may defer a shared schema while database authority remains a separate commitment](../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md)** (compares-with) — Tracecraft applies a file-backed design to inter-agent coordination state, whose latency, concurrency, recovery, and lifecycle requirements differ from authored knowledge. Its S3 object layout is inspectable only through available bucket and CLI tooling. Claim collision prevention is a requirement to test against concrete S3 and database implementations; the invariant alone neither selects a database nor makes one canonical.
 
 4. **[multi-agent-memory-computer-architecture-perspective.ingest](multi-agent-memory-computer-architecture-perspective.ingest.md)** (exemplifies) — Tracecraft is a concrete implementation of the shared-memory paradigm that paper describes theoretically, with exactly the consistency gaps the paper predicts. The paper names memory consistency as the critical unsolved problem; tracecraft ships without addressing it.
 
@@ -46,7 +46,7 @@ Tracecraft is a CLI-based coordination layer for multi-agent AI systems that sto
 
 1. **Concrete instantiation of the coordination-guarantees framework.** Tracecraft's five primitives map directly onto the composition modes in the coordination-guarantees note: shared memory (inconsistency risk), task claiming (isolation via optimistic locking), messaging (no delivery guarantee), barriers (visibility guarantee via polling). This provides a worked example for the note's otherwise abstract framework. High reach — the analysis transfers to any shared-state coordination system. [quick-win]
 
-2. **Schema deferral for coordination state, not just knowledge.** The existing schema-deferral note argues the case for authored knowledge storage. Tracecraft extends the argument to ephemeral coordination state, where the tradeoffs differ: coordination state is write-heavy, latency-sensitive, and disposable, whereas knowledge is read-heavy, latency-tolerant, and durable. Whether the same architectural bet works for both is a testable question. Medium reach — the insight is specific to agent coordination architectures. [experiment]
+2. **File-backed coordination needs its own workload comparison.** Tracecraft applies object files to ephemeral coordination state, where latency, concurrency, and recovery requirements differ from authored knowledge. A useful test would compare its concrete S3 claim, message, memory, and barrier paths with a named database design under simultaneous writers and failures; topology or invariant shape alone cannot decide the result. Medium reach — the insight is specific to agent coordination architectures. [experiment]
 
 3. **CLI-as-coordination-interface pattern.** Tracecraft's design assumes agents coordinate through shell commands rather than API calls, function calls, or MCP servers. This is a bet on the lowest-common-denominator interface: any process that can invoke a CLI can participate. The pattern trades latency and type safety for universality and inspectability. Medium reach — relevant to any multi-agent system choosing its coordination API. [just-a-reference]
 
