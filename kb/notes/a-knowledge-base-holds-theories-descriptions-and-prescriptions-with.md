@@ -1,101 +1,97 @@
 ---
-description: "Theory, description, prescription are recurring attractors, not a provable partition; formulation constraint and maintenance asymmetry make the split real; content is orthogonal to operational roles"
+description: "Why theory, description, and prescription set communicative and review priorities while content kind, production lineage, and path-relative authority remain independent"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [document-system, foundations]
 ---
 
-# A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking
+# Theory, description, and prescription profiles do not determine content kind, lineage, or authority
 
-Many knowledge bases repeatedly need three default text-contract profiles, each with a different quality priority:
+A text-contract profile classifies an artifact's communicative contribution and the quality its writing and review should protect. It does not classify what kind of operative content the artifact retains, how that content was produced, or what force a particular consumption path gives it. Commonplace uses three reusable defaults in an open profile library:
 
-| Default profile | What it does | Quality priority | Context-efficiency strategy | Example query |
-|---|---|---|---|---|
-| **Theory** | Makes transferable claims about what is true | [Explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) | One claim covers many situations — compress *across* contexts | "Why is X a good idea?" |
-| **Description** | Accounts for what exists in a particular system | Fidelity + economy | One account covers the system in minimum tokens — compress *within* a single context | "How does X work here?" |
-| **Prescription** | Directs what to do or not do | Executability + precision | One instruction says exactly what to do — compress to what's *actionable* | "How do I do X?" |
+| Profile | Contribution | Quality priority | Reader question |
+|---|---|---|---|
+| Theoretical | Truth-apt claim, mechanism, or explanation | Assessable truth and explanatory-reach | Why does this hold, and when? |
+| Descriptive | Economical account of what exists | Fidelity | What exists here? |
+| Prescriptive | Direction for action | Executability and precision | What should the actor do, and how? |
 
-These are recurring defaults, not a partition of all knowledge. A stance-neutral dialectical/evidential collection, for example, needs a different quality bar: faithful attribution of a live disagreement rather than the collection's own claim about what is true. [ADR 042](../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) therefore makes the [profile](./definitions/text-contract.md) library open and worked-case-gated. A default earns its place when adopting the bundle saves repeated contract decisions and improves writing or review. A collection whose needs do not fit should write its own contract.
+These profiles are proposed as recurring attractors because consumer questions repeatedly take why, what, and how forms. This is a reason to keep reusable defaults, not evidence that the three are exhaustive, optimal, or prevalent across independently designed knowledge bases. A collection should adopt a profile when its orientation, quality priority, conventions, maintenance semantics, and link grammar travel together. Otherwise it should extend, replace, or write its own local contract.
 
-All profiles face bounded-attention pressure. In LLM-operated KBs, [context is the single scarce resource](./context-efficiency-is-the-central-design-concern-in-agent-systems.md), so excess or ambiguous text directly competes with the next action. Reach, fidelity, economy, executability, and precision are not exclusive properties—every artifact benefits from several—but each profile identifies the failure its writers and reviewers should treat as decisive.
+Each collection's contract remains authoritative for its formulation rules and link grammar. In Commonplace's theoretical profile, for example, claims should be general and should stand without any one cited description. The profiles are [defined as open-ended text-contract bundles](./definitions/text-contract.md), while the [theoretical](./COLLECTION.md) and [descriptive](../reference/COLLECTION.md) collection contracts fix their priorities more precisely.
 
-## Why the profiles are useful
+## The other axes are independent
 
-**Formulation discipline.** Commonplace's theoretical profile requires a claim to stand without reference to any particular system. Descriptions may supply evidence, but removing any one described system should not collapse the claim. This constraint enables transfer across contexts. It is a deliberate convention of this profile, not a claim that system-specific causal explanations are never theories in ordinary language.
+Profile, content kind, production lineage, and behavioral authority answer different questions:
 
-**Distinct review priorities.** A theoretical artifact fails when it merely records local fit without a transferable explanation. A descriptive artifact fails when it misstates its referent or spends context without improving fidelity. A prescriptive artifact fails when a first-time executor cannot determine what to do. The profiles are useful to the extent that these bundled priorities recur together.
-
-## Maintenance follows dependency and authority edges
-
-Profile membership does not itself determine change impact. The primary record is the authored dependency: what cites what, under which relationship, plus the operational authority of the consuming path. Profiles supply useful defaults for which dependencies are common, but explicit edges override the default.
-
-| Authored dependency | Meaning | Revision trigger |
+| Axis | Question | What it determines |
 |---|---|---|
-| Theory links to description with `evidenced-by` | The target observation supports, qualifies, or bounds the source claim | If the description or its referent changes, reassess the theory; other evidence may let it survive |
-| Prescription `rests-on` theory | The procedure depends on the claim | If the theory changes, reassess the procedure |
-| Description `rests-on` theory | The system was shaped by the claim | If the theory changes, reconsider the design; the description still follows the implemented referent |
-| Prescription cites description as `operates-on` | The procedure acts on the described system | If the system changes, revise the procedure |
+| Profile | What does this artifact contribute, and what should its writing optimize? | Formulation and review priority |
+| Content kind | Which distinctions apply to this operative region—for example, belief-bearing theory or choice-bearing resolution? | The relevant evaluation and defeat questions |
+| Lineage | Did the source and declared consumer goal determine this content, or did its author add something? | Ground truth and refresh versus supersession |
+| Authority | Does this artifact advise or bind here? | Force on this consumption path |
 
-The asymmetry is therefore characteristic rather than absolute. Theoretical artifacts often accumulate descriptive evidence and provide the rationale for prescriptions; descriptions track changing referents; prescriptions track both their rationale and the systems they operate on. But a schema-first description can be upstream of implementation, and a theory that rests on one volatile observation can be downstream of that evidence. Maintenance should follow the recorded dependency, not an inference from genre.
+The content-kind distinction is developed in [belief-bearing theories and choice-bearing resolutions are different kinds of system part](./design-proposals-differ-from-claims-in-kind-not-confidence.md). Its consequence here is simple: a theory can be inherited, derived, or authored abductively and then retained through commitment. In every case it remains truth-apt. Committing an abductive conjecture makes it a belief the system reasons from; it does not prove the conjecture, make it certain, or extend its scope beyond its evidence.
 
-A committed structure need not rest on any theory. A shared convention — a link label, a schema field, a routing key — can carry [coordination value](./definitions/coordination-value.md): worth created by every artifact and tool adopting the *same* one, not discovered as a property of the choice. Because the value is the sharedness and not the choice, a better-in-principle alternative does not increase it, and a structure carrying it has operational authority with no `rests-on` edge for a theory change to travel down. So a theory proposing a marginally better option does not trigger its revision the way a `rests-on` dependent would; only a theory showing the coordination *itself* is net-negative fires a change, and even then re-coordination carries a switching cost the theory must clear. This is the sharpest form of "follow the edge, not the genre": coordination value is a standing commitment, not a downstream crystallization.
+A choice-bearing design resolution arises only after applicable beliefs, requirements, and inherited or formal constraints have narrowed the space but still underdetermine a working design. Selecting among those residual live options is a commitment. This does not make every implementation region a choice: the same implementation can contain consequences determined by its inputs alongside committed resolutions those inputs did not determine.
 
-## One common path connects the profiles
+That boundary is distinct from profile. Under the narrow lineage rule, [commitment, not derivation, creates new ground truth](./commitment-not-derivation-creates-new-ground-truth.md): derived regions remain answerable to their source, while a committed addition must later be replaced by another commitment or supersession. A theoretical note may therefore hold a derived, inherited, or committed belief. A descriptive reference artifact may record that a commitment was made or give a claim-preserving account derived from implementation. Notes are not a derivation class, and reference is not a commitment class.
 
-Derivation and implementation often connect the profiles in a deliberately designed system:
+Authority is path-relative too. The same theory can be consumed as [knowledge](./definitions/knowledge-artifact.md) when it supplies evidence or advice and as [system definition](./definitions/system-definition-artifact.md) when a runtime, evaluator, validator, instruction-loading path, or similar mechanism directly consumes its content with binding force. An instruction that merely cites the theory as rationale does not make the theory itself binding. A change in force does not change the theory's profile, truth-aptness, or lineage.
 
+## The common path is characteristic and branched
+
+The independent axes still produce a common pattern of dependency:
+
+```text
+derived theory ────────────────────────────┐
+inherited theory ──────────────────────────┤
+abductive conjecture ──retain by commitment┘
+                                           ↓
+                              truth-apt beliefs
+                                           +
+                 requirements + inherited/formal constraints
+                                           ↓
+                     ┌─────────────────────┴────────────────────┐
+                     ↓                                          ↓
+        determined consequences                       residual live options
+                     │                                          ↓
+                     │                               committed resolution
+                     └─────────────────────┬────────────────────┘
+                                           ├──→ prescription
+                                           └──→ implementation
+
+actual system, decision, or design object ─────→ faithful description
 ```
-theory  →  prescription  →  implementation  →  description
-(claim)    (procedure)      (working system)    (account of what exists)
-```
 
-Theory explains why. A prescription condenses that reasoning into executable guidance. Implementation encounters constraints the theory did not settle, and description records what was actually built. The description must remain faithful even when implementation deviates from the originating rationale.
+The upper alternatives converge as truth-apt beliefs. Determined consequences and committed resolutions can then inform either prescriptions or implementation. The final line is separate because a description follows its actual referent rather than occupying a mandatory stage after implementation.
 
-This is one common path, not an origin law for descriptions. Existing systems are often described before anyone writes a theory about them; observations can revise theory; schema-first descriptions can direct implementation; and procedures can arise from local necessity without a general principle. These feedback and independent-origin paths are why the dependency edges, rather than the diagram, control maintenance.
+This is a characteristic dependency witness, not a lifecycle. Artifacts can combine, skip, or reorder these surfaces. Not every prescription begins in theory, not every implementation region is a residual choice, and no arrow follows automatically from a profile or directory. Commonplace's [design-rationale surfaces](../reference/design-rationale-management.md) illustrate the requirements, constraints, residual-choice, and decision-recording portion while explicitly leaving transitions unenforced.
 
-## Content profiles and operational roles are independent
+## Use each axis for its own decision
 
-Profiles classify what an artifact *says*—its linguistic content. Artifacts also have operational roles: what they *do* in the KB.
+Profile sets the first review priority: assess theoretical work for truth conditions, evidence, counterexamples, scope, and reach; descriptive work for fidelity and economy; and prescriptive work for executability and precision. Content kind adds a different test. An abductive belief must retain its conjectural force and be reviewed against evidence and rivals. A residual choice must satisfy its requirements and constraints and expose its consequences. Shared adoption can give such a choice [coordination value](./definitions/coordination-value.md), but only where common use creates that value; enforcement alone does not establish it.
 
-| Operational role | What the artifact does |
-|---|---|---|
-| Evidence | Supports or challenges a claim |
-| Executable instruction | Directs behavior at runtime |
-| Generated report | Records the output of an operation |
-| Routing surface | Helps consumers find other artifacts |
+Lineage then decides maintenance. Refresh or re-review a derived region from its source. Replace a committed addition through a later commitment or supersession. Author dependency links from actual premises, sources, implementations, and operational needs. A theory change makes another artifact due for review only where a real dependency connects them. Finally, inspect authority on each consumption path rather than inferring it from profile, importance, canonicality, or filename.
 
-These roles cross-cut content. A generated review report is descriptive; an index is a routing surface whose text describes what exists. An agent instruction illustrates the important dual case: it is prescriptive by content and executable by operational role. Its immediate maintenance consequence comes from that authority path—changing loaded instruction text changes system behavior—not from prescriptive wording alone. The content profile tells a writer how to formulate the artifact; operational roles and dependency edges tell a maintainer what the artifact can affect.
+One bounded rationale for the profile split is context compression. Since [context efficiency is a central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md), theory can preserve mechanism, truth conditions, and scope; description can preserve the minimum faithful state; and prescription can preserve executable direction while links or fallback sources retain omitted warrant. This is an inference about one benefit of distinct profiles, not a claim that context scarcity historically caused them, empirically validates them, or makes these three optimal.
 
-## Evidence from this KB
+The methodology-to-skill case is one bounded example. Methodology can retain reasons and scope while a skill reorganizes supported procedure into a context-saving fast path with the methodology as a live fallback. That establishes a real theoretical-to-prescriptive dependency, not whole-skill derivation. Ordering, defaults, operational detail, or coverage that the source plus consumer goal does not determine remain committed regions, and the case says nothing about skills produced from other sources.
 
-Commonplace's existing collections instantiate the three defaults:
+## Commonplace's directory mapping is contingent
 
-- `kb/notes/` → theoretical register (transferable claims, [title-as-claim](./title-as-claim-enables-traversal-as-reasoning.md), optimized for explanatory-reach)
-- `kb/reference/` → descriptive register (how the shipped system works, topical titles, optimized for fidelity)
-- `kb/instructions/` → prescriptive register (procedures and conventions, imperative titles, optimized for executability)
-- `kb/agent-memory-systems/` → another descriptive collection for an external landscape
+Commonplace assigns the theoretical profile to `kb/notes/`, the descriptive profile to `kb/reference/`, and the prescriptive profile to `kb/instructions/`. This placement makes the intended contribution and review priority visible. It does not turn directory names into content-kind, lineage, or authority declarations. In particular, `kb/notes/` is not where derivation lives, and `kb/reference/` is not where commitment lives.
 
-This separation emerged from practical pressure: `kb/reference/` was created because shipped-system documentation did not fit theory-oriented conventions. This worked example shows that the bundles can organize one KB, but it does not establish how often they recur elsewhere.
+## Open Questions
 
-## Practical consequences
-
-1. **Declare the actual contract.** Adopt a default profile when its orientation, quality priority, maintenance semantics, and link grammar travel together. Extend or replace it when they do not.
-2. **Choose an encoding that matches operation.** A KB may attach profiles to directories, types, metadata, or conventions. Commonplace uses directories because collection-wide rules must cover every artifact in a subtree. This choice is an implementation detail, not part of the content taxonomy.
-3. **Review dependencies explicitly.** Use profile defaults to guide prospecting, but use authored relationship labels and operational authority to decide what a change can invalidate.
-
-## Open questions
-
-- Across independently designed KBs, do orientation, quality goal, title convention, and maintenance semantics covary strongly enough for these three bundles to remain useful defaults?
-- After explicit dependency kinds and operational authority are known, what additional maintenance or review decision does profile membership predict?
-- How robust must a theory's evidence base be? A theory with one supporting observation is fragile. Is there a practical threshold (two systems? three?) or is this a judgment call?
+- Across independently designed knowledge bases, how often do these quality priorities covary, and what other stable profiles appear?
+- After controlling for actual dependency, content kind, lineage, and authority, what additional behavior or maintenance burden does profile predict?
+- What evidence threshold should govern retention and review of fragile or abductively committed theories?
 
 ---
 
 Relevant Notes:
 
-- [First-principles reasoning selects for explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — foundation: the explanatory-reach concept that serves as the quality criterion for the theoretical register
-- [Why directories despite their costs](./why-directories-despite-their-costs.md) — extends: the three-register split provides a principled reason for directory-level separation beyond topic grouping
-- [Skills derive from methodology](./skills-derive-from-methodology.md) — exemplifies: methodology → skill is an instance of the theory → prescription derivation path
-- [Instructions are typed callables](./instructions-are-typed-callables.md) — extends: the instruction duality (prescriptive content, executable authority) is a specific case of treating documents as typed callables; the callable framing captures the operational-authority axis
-- [Text contract](./definitions/text-contract.md) — defined-in: the requirement and profile vocabulary that replaces "register" as the taxonomy name
-- [ADR 042: register becomes a default profile under open-ended text contracts](../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — evidenced-by: the decision that weakens this note's exhaustiveness claim to an attractor claim and opens the profile set
+- [First-principles reasoning selects for explanatory-reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: the theoretical profile's explanatory-reach priority
+- [Text contract](./definitions/text-contract.md) — defined-in: the open profile model and its default quality priorities
+- [ADR 042: register becomes a default profile under open-ended text contracts](../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — evidenced-by: Commonplace's decision to keep the default profile library open and worked-case-gated
+- [Skills derive from methodology](./skills-derive-from-methodology.md) — evidenced-by: a bounded methodology-to-prescriptive-fast-path dependency with a live fallback, not a claim of whole-skill derivation

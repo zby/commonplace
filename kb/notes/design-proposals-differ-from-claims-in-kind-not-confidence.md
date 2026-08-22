@@ -1,35 +1,44 @@
 ---
-description: "Distinguishes hypotheses, which remain truth-apt at lower commitment, from designs judged by usefulness; substantive requirements can recast a design as an existential claim with a witness"
+description: "Separates retained truth-apt theories from residual design resolutions without confusing content kind with provenance or behavioral authority"
 type: kb/types/note.md
-traits: [title-as-claim]
+traits: [title-as-claim, has-comparison]
 tags: [artifact-analysis, document-system]
 ---
 
-# Design proposals differ from claims in kind, not confidence
+# Belief-bearing theories and choice-bearing resolutions are different kinds of system part
 
-A theory register sorts its artifacts by commitment — provisional, accepted, deliberately conjectural. That works for hypotheses, because a hypothesis is a claim with the commitment dial turned down: truth-apt, contestable, the same kind of thing as an accepted claim. It fails for design proposals, because a design proposal is a different kind of thing. It contains **free parameters** — choices that could have gone otherwise without anything being wrong — and an artifact with free parameters cannot be false, only unhelpful or unadopted. Filing a proposal as a low-confidence claim is a category error, not a weak claim: contestability tests don't fail against it, they don't apply.
+A system part, in this argument, is retained operative content available through a consumption path that can change the system's reasoning or behavior. It need not execute or bind anything itself. Content is truth-apt when it can be true or false independently of whether the system adopts it. A belief-bearing theory is truth-apt content retained for the system to reason from. A choice-bearing resolution instead fixes a residual option that beliefs, requirements, and inherited constraints do not uniquely determine. Both are system parts, but only the theory remains answerable to truth as its governing assessment.
 
-The discriminator is operational: ask whether the artifact's distinctive choices could be defended as *correct*, or only as *workable*. A factoring of a process into five stages rather than four, a metric definition, a schema's field list — these are workable, not correct. Whoever reviews such an artifact for truth will produce noise; the right quality test is design quality — problem stated, forces stated, free choices marked, adoption criteria named.
+## Content kind is independent of provenance and authority
 
-## The existential recast
+Abductive reasoning is the hard case for this distinction. It can favor one truth-apt conjecture without deriving it from prior sources. Retaining that conjecture makes it belief-bearing; it does not make the conjecture certain, prove it, or earn scope beyond the evidence. Its conjectural force must remain visible. As [derivation and inheritance give starting warrant while evidence earns scope](./derivation-and-inheritance-give-starting-warrant-earns-scope.md), a hypothesis remains a theory rather than becoming a choice merely because its sources did not entail it.
 
-A proposal whose requirements are substantive can re-enter the claims register honestly by changing the quantifier. "Maturation follows *this* ladder" is a universal claim that its own free parameters refute. "There exists a factoring of maturation into operations with distinct oracles — here is one" is an existential claim proved by construction. Inside a witness, arbitrary choices are legitimate: any witness proves an existential, so nobody needs to defend why the construction went this way rather than that.
+Content kind and production relation are therefore independent axes. Derivation means that a source plus its declared consumer goal determines the retained content. Commitment records an addition that those inputs do not determine. Both a theory and a design resolution can be committed additions. For a committed theory, the artifact can be the authoritative record of what the system retains without making the recorded theory epistemically true. This is the content-kind consequence of the lineage boundary in [commitment, not derivation, creates new ground truth](./commitment-not-derivation-creates-new-ground-truth.md).
 
-The recast has a crux: the requirements **R** must be substantive, or the existential is vacuous. "There exists a memory system with five stages" is trivially true and worthless; the recast earns its place only when R is demanding enough that exhibiting *any* witness is informative. The recast is therefore not a universal rescue — it covers proposals that carry real requirements, and the rest need a descriptive home instead.
+[Behavioral authority](./definitions/behavioral-authority.md) is a third axis. The same theory can advise as knowledge on one consumption path and bind as system definition on another. Changing that path changes the theory's force, not whether it is belief-bearing or choice-bearing. File kind, importance, and canonical status do not settle content kind.
 
-## The residue is descriptive, not theoretical
+## Choice occupies only the residual design space
 
-A design proposal that resists the recast is still a perfectly good *descriptive* artifact: an account of a design object can be faithful — problem, options, forces, free choices — without the design being true. That is why unadopted designs belong in a descriptive register rather than diluting a theory register with non-truth-apt content. The split has a recurring seam: a proposal's *requirements* are usually the transferable part and double as the theory register's claim material, so they extract to claims and the proposal cites them, inlining only system-specific constraints. The two halves also age differently — option spaces and current-state descriptions go stale as the surrounding system moves, while the extracted requirements survive — which is independent evidence that they belong to different registers.
+A resolution is choice-bearing only after beliefs, requirements, formal constraints, and inherited invariants have narrowed the options. The classification attaches to an individual rule, axis, or operative region, not automatically to every implementation detail or to a whole design. A [boundary-preserving rival that omits a rule](./a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md) proves that the rule is not inherited relative to that boundary. Failure to find such a rival does not prove inheritance.
 
-## Hypotheses need nothing new
+Choice-bearing is also broader than strictly arbitrary. [A choice is arbitrary only when the situation cannot determine it and the alternatives remain equivalent downstream](./fix-what-the-executor-cant-determine-not-what-it-will.md). Consequential alternatives can remain underdetermined after the governing constraints act, but their selection must expose the relevant consequences and trade-offs rather than present itself as an arbitrary convention.
 
-The taxonomy's other arm requires no machinery: hypotheses are ordinary claims at reduced commitment, served by a claim title plus a conjecture-marking status. The confusion this note resolves — observed in practice — was claims-versus-proposals, not hypotheses-versus-supported-claims. A finer epistemic-status marking becomes worth adding only when the second confusion actually appears.
+Classification follows the operative proposition or region rather than the file or its sentence form. “The system adopted X” is a truth-apt historical claim, while the operative resolution “use X” can remain a choice. A proposal can also contain truth-apt requirements, causal predictions, or rationale around its free selections. Extract such a region only when it forms an independently transferable claim. Otherwise preserve the distinction within the mixed artifact.
 
----
+## Placement follows the intended contribution
 
-Relevant Notes:
+In Commonplace, the [theoretical collection contract](./COLLECTION.md) places a transferable truth-apt theory in `kb/notes/`. An unadopted design belongs in proposals unless it serves as a witness for a substantive existential claim. The requirements are substantive when exhibiting any satisfying witness would itself be informative. Such a witness establishes that at least one qualifying design is possible. Its residual selections do not thereby become uniquely correct, optimal, inherited, or universally transferable, and they still must satisfy those requirements.
 
-- [register](./definitions/text-contract.md) — defined-in: the theoretical/descriptive/prescriptive register model this taxonomy operates over
-- [trace-extracted memory earns authority per operation, not at capture](./trace-extracted-memory-earns-authority-per-operation-not-at-capture.md) — see-also: the executed precedent of the recast — claim title carries the truth-apt part, a witness section carries the construction with free choices marked
-- [Alexander patterns and knowledge system design](./alexander-patterns-and-knowledge-system-design.md) — extends: Alexander's Context/Problem/Forces/Solution form is prior art for the design-quality test that replaces contestability
-- [Backlink surfacing](../reference/proposals/backlink-surfacing.md) — see-also: a residue-side instance — requirements extracted to a claim note and cited, option space held descriptively
+This classification does not replace the [theory, description, and prescription profiles](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md). A profile classifies an artifact's communicative contribution and assigns its writing and review priority. Belief-bearing versus choice-bearing classifies the operative content the artifact retains. Nor does either classification decide how the artifact was produced or what behavioral force a consumption path gives it.
+
+## Review content kind and behavioral force separately
+
+Review a theory for explicit truth conditions and modality, inferential support, counterevidence or proof, and the scope actually earned. For an abductive conjecture, review why it outranks its rivals while keeping its conjectural force visible. Review a choice for satisfied requirements and constraints, genuine residual underdetermination, the consequences of its free parameters, and any coordination or switching effects. A truth verdict cannot replace those choice-specific questions.
+
+Then review behavioral force at each consumption path. Whether an artifact advises, instructs, constrains, routes, validates, or otherwise binds behavior is a separate question from whether its operative content is a theory or a resolution.
+
+## Maintenance shares a lineage rule but not defeat conditions
+
+At the lineage level, derived content is refreshed from its source and declared consumer goal. A committed addition, whether theory or choice, cannot be regenerated from provenance alone; changing it requires a new commitment or supersession.
+
+Content kind supplies different revision triggers. New evidence, counterexamples, or failed scope can defeat a theory because adoption does not change its truth conditions. When several consumers need and enact the same resolution, shared adoption can instead create [coordination value](./definitions/coordination-value.md) without making the selected option true, uniquely correct, or best in isolation. A merely better-in-principle rival therefore does not defeat a coordination-bearing resolution. Change becomes warranted when the resolution violates its constraints or requirements, its consequences become unacceptable, or the gains from the replacement exceed both the coordination value lost and the cost of re-coordinating. A choice that carries no coordination value still answers to its requirements and consequences.
