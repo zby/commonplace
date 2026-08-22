@@ -1,6 +1,13 @@
 ---
 description: "Opinionated agent-memory design essay: hybrid retrieval, selective push, and organization-scoped storage, with anti-graph claims that outrun its evidence"
-source_snapshot: "three-dimensions-agent-memory-store-2054246434506199529.md"
+source: https://x.com/henrytdowling/status/2054246434506199529
+captured: "2026-08-11T10:29:52.213702+00:00"
+capture: xdk
+genre: conceptual-essay
+snapshot_sha256: 08be0e4be3c71360ce4159d55ec32a00fb63dffa8aba2a99681298c116c574ae
+status_id: 2054246434506199529
+conversation_id: 2054246434506199529
+post_count: 1
 ingested: "2026-08-11"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, context-engineering, retrieval, knowledge-bases]
@@ -8,14 +15,9 @@ domains: [agent-memory, context-engineering, retrieval, knowledge-bases]
 
 # Ingest: Three Dimensions That Matter To An Agent Memory Store
 
-Source: [three-dimensions-agent-memory-store-2054246434506199529.md](./three-dimensions-agent-memory-store-2054246434506199529.md)
-Captured: 2026-08-11
-From: https://x.com/henrytdowling/status/2054246434506199529
-
 ## Classification
 
-Genre: conceptual-essay -- a single-author, explicitly opinionated design argument that synthesizes other systems and reported results rather than documenting the author's own implementation or experiment.
-Domains: agent-memory, context-engineering, retrieval, knowledge-bases
+A single-author, explicitly opinionated design argument that synthesizes other systems and reported results rather than documenting the author's own implementation or experiment.
 Author: Henry Dowling is identified by name and X handle, but the capture supplies no affiliation, credentials, methods, or first-hand implementation record. Treat the author as a practitioner commentator and judge the claims through their cited evidence.
 
 ## Summary

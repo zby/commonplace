@@ -1,6 +1,10 @@
 ---
 description: "DreamCoder grows a symbolic library under a description-length gate; lands as the middle case between ungated and proof-gated self-improvement, and the formal-domain limit of mechanical abstraction"
-source_snapshot: "kb/sources/dreamcoder-wake-sleep-bayesian-program-learning.md"
+source: https://arxiv.org/abs/2006.08381
+captured: "2026-07-26"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: e49dfb17c3a5083681dccc0eaa0fa77fd3e889b16c145f872debfbc631647d05
 ingested: "2026-07-26"
 type: kb/sources/types/ingest-report.md
 domains: [self-improving-systems, program-synthesis, abstraction, compression]
@@ -8,14 +12,9 @@ domains: [self-improving-systems, program-synthesis, abstraction, compression]
 
 # Ingest: DreamCoder: growing interpretable knowledge with wake-sleep Bayesian program learning
 
-Source: dreamcoder-wake-sleep-bayesian-program-learning.md
-Captured: 2026-07-26
-From: https://arxiv.org/abs/2006.08381
-
 ## Classification
 
-Genre: scientific-paper -- peer-reviewed-track research system paper with eight evaluated domains, ablations, and stated limitations; the snapshot carries the arXiv landing page for the June 2020 preprint.
-Domains: self-improving-systems, program-synthesis, abstraction, compression
+Peer-reviewed-track research system paper with eight evaluated domains, ablations, and stated limitations; the snapshot carries the arXiv landing page for the June 2020 preprint.
 Author: Kevin Ellis, Catherine Wong, Maxwell Nye, Mathias Sable-Meyer, Luc Cary, Lucas Morales, Luke Hewitt, Armando Solar-Lezama, Joshua B. Tenenbaum (MIT CSAIL / BCS). High credibility for the mechanism; the rediscovery framing is the authors' own and carries the usual self-assessment discount.
 
 ## Summary

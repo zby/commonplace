@@ -1,6 +1,10 @@
 ---
 description: "HCL turns harness edits into retention-gated continual learning, but finite anchors bound its no-forgetting claim and fixed partitions limit its ablations"
-source_snapshot: "harness-continual-learning-adaptation-beyond-model-parameters.md"
+source: https://arxiv.org/abs/2608.19013
+captured: "2026-08-21"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 9b8bc1279c2d98bf2d7ffa271f19a9eb8ac07a93d3a13d9dc8f510789aabac68
 ingested: "2026-08-21"
 type: kb/sources/types/ingest-report.md
 domains: [harness-learning, continual-learning, self-improvement, evaluation]
@@ -8,14 +12,9 @@ domains: [harness-learning, continual-learning, self-improvement, evaluation]
 
 # Ingest: Harness Continual Learning: Continual Adaptation Beyond Model Parameters
 
-Source: [harness-continual-learning-adaptation-beyond-model-parameters.md](harness-continual-learning-adaptation-beyond-model-parameters.md)
-Captured: 2026-08-21
-From: https://arxiv.org/abs/2608.19013
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv v1 preprint that formalizes sequential harness updates and reports benchmark comparisons, a retention-budget sweep, and component ablations.
-Domains: harness-learning, continual-learning, self-improvement, evaluation
+An arXiv v1 preprint that formalizes sequential harness updates and reports benchmark comparisons, a retention-budget sweep, and component ablations.
 Author: Borui Kang, Jinrui Gu, Junhan Lv, Wenbin Li, Lei Wang, and Yang Gao, affiliated with Nanjing University and the University of Wollongong. They report direct implementation results, but this recent preprint is not peer reviewed and its outcomes have not been independently reproduced in this KB.
 
 ## Summary

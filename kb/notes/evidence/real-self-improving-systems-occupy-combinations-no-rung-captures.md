@@ -19,7 +19,7 @@ Selected profile fields, not the whole profile: the governance dimension appears
 |---|---|---|---|---|---|
 | [Ashby's Homeostat](../../sources/ashby-design-for-a-brain-ultrastability.md) | direct, viability-driven | no | no | computational | nothing — retention is negative |
 | Parametric self-improvers | direct, gradient | no | yes | computational | training-time evaluation |
-| [Self-Improving Algorithms](../../sources/self-improving-algorithms.md) | direct, staged | no | yes | computational | the declared input distribution |
+| [Self-Improving Algorithms](https://page.mi.fu-berlin.de/mulzer/pubs/selfimpSICOMP.pdf) | direct, staged | no | yes | computational | the declared input distribution |
 | [Continual Harness](../../sources/continual-harness-online-adaptation-foundation-agents.ingest.md) | direct, refiner-mediated | yes | yes | computational | the Refiner's own judgment — end metrics observed, never gating |
 | [DreamCoder](../../sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md) | proposal-selection | partly | yes | computational | statistical program fit |
 | [Gödel machine](../goedel-machines-are-a-proof-governed-case-of-self-modification.md) | proposal-selection | yes | yes | computational | what its proof system establishes |
@@ -64,7 +64,7 @@ Relevant Notes:
 - [Warranted autonomy is bounded by oracle domain](../warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: the evidential-limit column for the proposal-selection rows, why computational allocation does not fill it, and the scope that keeps it off the direct ones
 - [Measuring autonomy well enough to see it improve is an open problem](../measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — extends: why these rows still cannot be ordered even after the profile is fixed
 - [Ashby, Design for a Brain — ultrastability](../../sources/ashby-design-for-a-brain-ultrastability.md) — evidenced-by: the operative, non-cumulative, non-reflective floor
-- [Self-Improving Algorithms](../../sources/self-improving-algorithms.md) — evidenced-by: cumulative retention with no representation and no gate
+- [Self-Improving Algorithms](https://page.mi.fu-berlin.de/mulzer/pubs/selfimpSICOMP.pdf) — evidenced-by: cumulative retention with no representation and no gate
 - [DreamCoder](../../sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md) — evidenced-by: a statistical reject-capable gate, with coverage split across a symbolic library and an opaque network
 - [Knowledge-Centric Self-Improvement](../../sources/knowledge-centric-self-improvement-2607.19592.ingest.md) — evidenced-by: addressability operations exercised computationally, with warrant split by question
 - [An omitted improvement-loop function and a frozen one need different repairs](../an-omitted-loop-function-and-a-frozen-one-need-different-repairs.md) — contrasts: reads the 2025–26 rows at finer grain, by omitted or frozen loop function rather than by pathway profile

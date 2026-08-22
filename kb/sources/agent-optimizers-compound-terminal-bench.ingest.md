@@ -1,6 +1,10 @@
 ---
 description: "Two-phase optimizer study exposes transfer and re-optimization failures, but its compounding claim lacks a fresh-start causal control and rests on a fixed Terminal-Bench decomposition."
-source_snapshot: "agent-optimizers-compound-terminal-bench.md"
+source: https://arxiv.org/html/2607.14004v1
+captured: "2026-08-04"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 08b1a1e55d05498fd3e71b2407df86bec90dce73ca7b6ce244c325f3854a0847
 ingested: "2026-08-04"
 type: kb/sources/types/ingest-report.md
 domains: [self-improvement, harness-optimization, continual-learning, evaluation]
@@ -8,14 +12,9 @@ domains: [self-improvement, harness-optimization, continual-learning, evaluation
 
 # Ingest: Do Agent Optimizers Compound? A Continual-Learning Evaluation on Terminal-Bench 2.0
 
-Source: [agent-optimizers-compound-terminal-bench.md](agent-optimizers-compound-terminal-bench.md)
-Captured: 2026-08-04
-From: https://arxiv.org/html/2607.14004v1
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv v1 preprint that defines a phased continual-learning protocol and reports controlled benchmark outcomes for three agent-harness optimizers.
-Domains: self-improvement, harness-optimization, continual-learning, evaluation
+An arXiv v1 preprint that defines a phased continual-learning protocol and reports controlled benchmark outcomes for three agent-harness optimizers.
 Author: Wenxiao Wang, Priyatham Kattakinda, and Soheil Feizi of RELAI.ai. They release the compared artifacts and have direct implementation access, but they also introduce RELAI-VCL, the method that wins their comparison; the results have not been independently reproduced in this KB.
 
 ## Summary

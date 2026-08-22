@@ -1,6 +1,11 @@
 ---
 description: "Empirical RLM evidence that harness-level context offloading and programmatic sub-calls can turn length and domain shifts into locally familiar model calls."
-source_snapshot: "language-model-harnesses-are-compositional-generalizers.md"
+source: https://alexzhang13.github.io/blog/2026/harness/
+captured: "2026-07-21"
+capture: web-fetch
+genre: practitioner-report
+snapshot_sha256: 37b0bb6e84080027b9229eb43fb63a1762178f0f208adbc94f6366901182de57
+capture_note: Main argumentative text captured; interactive plots, image assets, and the appendix's detailed metric table were omitted.
 ingested: "2026-07-21"
 type: kb/sources/types/ingest-report.md
 domains: [harness-design, recursive-language-models, context-engineering, compositional-generalization]
@@ -8,14 +13,9 @@ domains: [harness-design, recursive-language-models, context-engineering, compos
 
 # Ingest: Language model harnesses are compositional generalizers
 
-Source: [language-model-harnesses-are-compositional-generalizers.md](./language-model-harnesses-are-compositional-generalizers.md)
-Captured: 2026-07-21
-From: https://alexzhang13.github.io/blog/2026/harness/
-
 ## Classification
 
-Genre: practitioner-report -- a system builder reports controlled RL experiments and proposes a harness-design mechanism, but the post is not presented as a peer-reviewed paper.
-Domains: harness-design, recursive-language-models, context-engineering, compositional-generalization
+A system builder reports controlled RL experiments and proposes a harness-design mechanism, but the post is not presented as a peer-reviewed paper.
 Author: Alex Zhang and Omar Khattab are the authors of the RLM work being evaluated; this gives strong implementation access but also makes the report a self-assessment.
 
 ## Summary

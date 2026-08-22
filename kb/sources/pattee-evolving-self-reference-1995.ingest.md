@@ -1,6 +1,10 @@
 ---
 description: "Semantic-closure vocabulary and limits for using matter-symbol complementarity as a cross-representational analogy"
-source_snapshot: "pattee-evolving-self-reference-1995.md"
+source: https://www.researchgate.net/profile/Howard-Pattee/publication/2515094_Evolving_Self-Reference_Matter_Symbols_And_Semantic_Closure/links/09e4150577eb05a2cd000000/Evolving-Self-Reference-Matter-Symbols-And-Semantic-Closure.pdf
+captured: "2026-07-14"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 91085b875d3d0ae89fd7c5d86fb0de8f52f553c03db81fe9be6d6091a77bfc77
 ingested: "2026-07-14"
 type: kb/sources/types/ingest-report.md
 domains: [semantic-closure, self-reference, representational-regimes]
@@ -8,14 +12,9 @@ domains: [semantic-closure, self-reference, representational-regimes]
 
 # Ingest: Evolving Self-Reference: Matter, Symbols, and Semantic Closure
 
-Source: [pattee-evolving-self-reference-1995.md](./pattee-evolving-self-reference-1995.md)
-Captured: 2026-07-14
-From: https://www.researchgate.net/profile/Howard-Pattee/publication/2515094_Evolving_Self-Reference_Matter_Symbols_And_Semantic_Closure/links/09e4150577eb05a2cd000000/Evolving-Self-Reference-Matter-Symbols-And-Semantic-Closure.pdf
-
 ## Classification
 
-Genre: scientific-paper -- a theoretical paper integrating physics, logic, computation, molecular biology, and evolution around necessary conditions for open-ended evolution.
-Domains: semantic-closure, self-reference, representational-regimes
+A theoretical paper integrating physics, logic, computation, molecular biology, and evolution around necessary conditions for open-ended evolution.
 Author: Howard H. Pattee is the primary theorist of the matter-symbol and semantic-closure framework used here.
 
 ## Summary

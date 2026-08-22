@@ -1,6 +1,10 @@
 ---
 description: Benchmark paper claiming coding agents beat RAG and context scaling on long-context tasks by using filesystem-native search, slicing, and scripting
-source_snapshot: coding-agents-are-effective-long-context-processors.md
+source: https://arxiv.org/html/2603.20432v1
+captured: "2026-03-31"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 035e98e99dcba36ea17a855bca372bb9ae2300b6ae5ff906d2b2009405f33cd0
 ingested: "2026-03-31"
 type: kb/sources/types/ingest-report.md
 domains: [context-engineering, long-context, tool-loop, evaluation]
@@ -8,13 +12,8 @@ domains: [context-engineering, long-context, tool-loop, evaluation]
 
 # Ingest: Coding Agents are Effective Long-Context Processors
 
-Source: coding-agents-are-effective-long-context-processors.md
-Captured: 2026-03-31
-From: https://arxiv.org/html/2603.20432v1
-
 ## Classification
-Type: scientific-paper — arXiv benchmark paper with comparative experiments, ablations, citations, and an explicit methods/results structure.
-Domains: context-engineering, long-context, tool-loop, evaluation
+ArXiv benchmark paper with comparative experiments, ablations, citations, and an explicit methods/results structure.
 Author: Academic authors presenting a preprint benchmark study with released code; worth attending to for comparative evidence, but it is still preprint evidence rather than production-system evidence.
 
 ## Summary

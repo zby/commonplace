@@ -1,6 +1,10 @@
 ---
 description: "Causal-learn grounds the observational-causal-discovery route to reach assessment, with the important limitation that discovery is assumption-relative"
-source_snapshot: "kb/sources/causal-learn-causal-discovery-in-python.md"
+source: https://arxiv.org/abs/2307.16405
+captured: "2026-07-16"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 24949c68e81336636e8db27e8e67aeb210754100cb3fe6d50dca3d0de44aa8e9
 ingested: "2026-07-16"
 type: kb/sources/types/ingest-report.md
 domains: [causal-inference, causal-discovery, reach-assessment]
@@ -8,14 +12,9 @@ domains: [causal-inference, causal-discovery, reach-assessment]
 
 # Ingest: Causal-learn: Causal Discovery in Python
 
-Source: [causal-learn-causal-discovery-in-python.md](./causal-learn-causal-discovery-in-python.md)
-Captured: 2026-07-16
-From: <https://arxiv.org/abs/2307.16405>
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv/JMLR-style software paper describing an open-source Python library and surveying causal-discovery method families. The genre recorded on the snapshot is correct.
-Domains: causal-inference, causal-discovery, reach-assessment
+An arXiv/JMLR-style software paper describing an open-source Python library and surveying causal-discovery method families. The genre recorded on the snapshot is correct.
 Author: Yujia Zheng, Biwei Huang, Wei Chen, Joseph Ramsey, Mingming Gong, Ruichu Cai, Shohei Shimizu, Peter Spirtes, and Kun Zhang; strong authority signal from researchers associated with modern causal-discovery tooling and the Tetrad/py-why ecosystem.
 
 ## Summary

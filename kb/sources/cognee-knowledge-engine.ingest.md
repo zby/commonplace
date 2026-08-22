@@ -1,6 +1,10 @@
 ---
 description: Pipeline-first knowledge engine with custom Pydantic schemas for LLM entity extraction, poly-store graph+vector design, and an undersized enrichment phase that concretely marks the boundary between automatable extraction and open enrichment problems
-source_snapshot: cognee-knowledge-engine.md
+source: https://github.com/topoteretes/cognee
+captured: "2026-03-05"
+capture: manual
+genre: tool-announcement
+snapshot_sha256: 3e84a01a5671cf93cb661d373ecfeb07dee7a03bd5ec6a615c1abba1b845b67a
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, knowledge-graphs, pipeline-architecture, LLM-extraction]
@@ -8,15 +12,9 @@ domains: [agent-memory, knowledge-graphs, pipeline-architecture, LLM-extraction]
 
 # Ingest: Cognee: Knowledge Engine for AI Agent Memory
 
-Source: cognee-knowledge-engine.md
-Captured: 2026-03-05
-From: https://github.com/topoteretes/cognee
-
 ## Classification
 
-Type: tool-announcement — Cognee is an open-source knowledge engine (Apache 2.0, $7.5M seed) with a companion arxiv paper (2505.24478). The snapshot documents its three-phase pipeline architecture, storage backends, and API surface. It reads as a system description with design analysis, not a research methodology or practitioner experience report.
-
-Domains: agent-memory, knowledge-graphs, pipeline-architecture, LLM-extraction
+Cognee is an open-source knowledge engine (Apache 2.0, $7.5M seed) with a companion arxiv paper (2505.24478). The snapshot documents its three-phase pipeline architecture, storage backends, and API surface. It reads as a system description with design analysis, not a research methodology or practitioner experience report.
 
 Author: Topoteretes team. Funded startup ($7.5M seed) with companion research paper on KG-LLM interface optimization. The architectural choices reflect a bet on pipeline composability and schema-driven extraction as the path to production-grade agent memory.
 
@@ -52,10 +50,10 @@ The `/connect` discovery found 15 connections — 10 to KB notes, 4 to sibling m
 
 **Sibling sources (4 connections, all contradicts — different architectural bets):**
 
-- [mem0-memory-layer](mem0-memory-layer.md) — Opposite memory units: Mem0 extracts isolated declarative facts with no schema; Cognee extracts schema-driven entity-relationship triplets via custom Pydantic models.
-- [graphiti-temporal-knowledge-graph](graphiti-temporal-knowledge-graph.md) — Both graph-first, but Graphiti has principled bi-temporal tracking while Cognee has optional temporal_cognify without temporal invalidation. Graphiti ingests episodes incrementally; Cognee ingests documents through batch pipelines.
-- [a-mem-agentic-memory-for-llm-agents](a-mem-agentic-memory-for-llm-agents.md) — Opposite schema philosophies: A-MEM avoids predefined schemas using Zettelkasten-inspired notes; Cognee embraces custom Pydantic schemas.
-- [letta-memgpt-stateful-agents](letta-memgpt-stateful-agents.md) — Different agency models: Letta gives agents self-managed memory; Cognee is developer-managed with pipeline architecture.
+- [mem0-memory-layer](https://github.com/mem0ai/mem0) — Opposite memory units: Mem0 extracts isolated declarative facts with no schema; Cognee extracts schema-driven entity-relationship triplets via custom Pydantic models.
+- [graphiti-temporal-knowledge-graph](https://github.com/getzep/graphiti) — Both graph-first, but Graphiti has principled bi-temporal tracking while Cognee has optional temporal_cognify without temporal invalidation. Graphiti ingests episodes incrementally; Cognee ingests documents through batch pipelines.
+- [a-mem-agentic-memory-for-llm-agents](https://arxiv.org/abs/2502.12110) — Opposite schema philosophies: A-MEM avoids predefined schemas using Zettelkasten-inspired notes; Cognee embraces custom Pydantic schemas.
+- [letta-memgpt-stateful-agents](https://github.com/letta-ai/letta) — Different agency models: Letta gives agents self-managed memory; Cognee is developer-managed with pipeline architecture.
 
 ## Extractable Value
 

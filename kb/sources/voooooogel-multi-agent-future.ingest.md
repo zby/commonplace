@@ -1,6 +1,10 @@
 ---
 description: Applied bitter-lesson analysis predicting which multi-agent patterns survive stronger models — argues filesystem, forking, and spawning are structural while fixed orchestration is a vision feature
-source_snapshot: voooooogel-multi-agent-future.md
+source: https://x.com/voooooogel/status/2015976774128341421
+captured: "2026-01-27"
+capture: manual-paste
+genre: conceptual-essay
+snapshot_sha256: ca2d4c52b889db55f68780a0b2132b49747ab21a9ea597f99de5a501888ef91c
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [multi-agent-systems, bitter-lesson, agent-orchestration, context-management]
@@ -8,15 +12,9 @@ domains: [multi-agent-systems, bitter-lesson, agent-orchestration, context-manag
 
 # Ingest: What Survives in Multi-Agent Systems
 
-Source: voooooogel-multi-agent-future.md
-Captured: 2026-01-27
-From: https://x.com/voooooogel/status/2015976774128341421
-
 ## Classification
 
-Type: **conceptual-essay** — Argues a theoretical position about which multi-agent infrastructure patterns will and won't survive model capability scaling. No empirical data, no system built; this is prediction from first principles and practitioner intuition.
-
-Domains: multi-agent-systems, bitter-lesson, agent-orchestration, context-management
+Argues a theoretical position about which multi-agent infrastructure patterns will and won't survive model capability scaling. No empirical data, no system built; this is prediction from first principles and practitioner intuition.
 
 Author: @voooooogel — active Claude Code power user and agent infrastructure thinker. Posts reflect hands-on experience with multi-agent workflows (e.g., manually performing post-hoc forking in Claude Code). Not an academic researcher; credibility comes from practitioner pattern-matching, not formal analysis.
 

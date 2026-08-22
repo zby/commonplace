@@ -1,6 +1,10 @@
 ---
 description: "Number-game evidence that Bayesian-like LLM hypothesis behavior is probe-dependent and fails structured domain extension"
-source_snapshot: "hypothesis-generation-and-updating-in-large-language-models.md"
+source: https://arxiv.org/abs/2605.05851
+captured: "2026-08-20"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 7bf01e9c3ef61e38841fb0dd963526f02b6d956e7371e0b69f29bddaee7cc0f0
 ingested: "2026-08-20"
 type: kb/sources/types/ingest-report.md
 domains: [llm-evaluation, inductive-reasoning, scientific-discovery, learning-theory]
@@ -8,14 +12,9 @@ domains: [llm-evaluation, inductive-reasoning, scientific-discovery, learning-th
 
 # Ingest: Hypothesis generation and updating in large language models
 
-Source: [hypothesis-generation-and-updating-in-large-language-models.md](./hypothesis-generation-and-updating-in-large-language-models.md)
-Captured: 2026-08-20
-From: https://arxiv.org/abs/2605.05851
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv v1 preprint reporting controlled number-game experiments across eight non-thinking pretrained LLMs, with matched thinking conditions for six, a configured Bayesian reference, and previously published human baselines.
-Domains: llm-evaluation, inductive-reasoning, scientific-discovery, learning-theory
+An arXiv v1 preprint reporting controlled number-game experiments across eight non-thinking pretrained LLMs, with matched thinking conditions for six, a configured Bayesian reference, and previously published human baselines.
 Author: Huadong Xiong, School of Psychological and Brain Sciences at Georgia Tech. The paper states its models, prompts, hypothesis construction, fitting objective, and evaluation metrics in detail; it remains a sole-author preprint without independent replication in the captured record.
 
 ## Summary

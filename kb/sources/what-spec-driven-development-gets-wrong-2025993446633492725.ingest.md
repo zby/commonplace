@@ -1,6 +1,13 @@
 ---
 description: Augment's argument that spec-driven development fails unless agents co-maintain the spec — bidirectional spec as a mechanism for matching maintenance throughput to generation throughput
-source_snapshot: what-spec-driven-development-gets-wrong-2025993446633492725.md
+source: https://x.com/augmentcode/status/2025993446633492725
+captured: "2026-03-10T13:09:52.885228+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: 3b77dfcef8ff0b5d30ac33cbc4239005ad12c64f5211ae2399477073f87f382f
+status_id: 2025993446633492725
+conversation_id: 2025993446633492725
+post_count: 1
 ingested: "2026-03-10"
 type: kb/sources/types/ingest-report.md
 domains: [spec-driven-development, agent-architecture, documentation-maintenance]
@@ -8,15 +15,9 @@ domains: [spec-driven-development, agent-architecture, documentation-maintenance
 
 # Ingest: What spec-driven development gets wrong
 
-Source: what-spec-driven-development-gets-wrong-2025993446633492725.md
-Captured: 2026-03-10
-From: https://x.com/augmentcode/status/2025993446633492725
-
 ## Classification
 
-Type: practitioner-report — Augment describes what they built (Intent) and why, grounded in a specific design problem they encountered. Not a conceptual essay: it makes an architectural claim backed by a product they shipped.
-
-Domains: spec-driven-development, agent-architecture, documentation-maintenance
+Augment describes what they built (Intent) and why, grounded in a specific design problem they encountered. Not a conceptual essay: it makes an architectural claim backed by a product they shipped.
 
 Author: @augmentcode — the official account for Augment Code, an AI coding tool company. This is a vendor post describing their own product (Intent). Credibility comes from having built and shipped the system; bias comes from the same source.
 

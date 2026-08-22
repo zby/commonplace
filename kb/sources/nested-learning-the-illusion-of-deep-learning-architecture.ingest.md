@@ -1,6 +1,10 @@
 ---
 description: "Nested Learning recasts architectures and optimizers as nested associative memories, but Hope's broad gains vary local components within a fixed weight-only decomposition"
-source_snapshot: "kb/sources/nested-learning-the-illusion-of-deep-learning-architecture.md"
+source: https://arxiv.org/abs/2512.24695
+captured: "2026-07-31"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: f34b33a3121a97592f5beea36f23dc5eec16872ec46670bf83119a7b68228324
 ingested: "2026-07-31"
 type: kb/sources/types/ingest-report.md
 domains: [continual-learning, learning-theory, optimization, agent-memory]
@@ -8,14 +12,9 @@ domains: [continual-learning, learning-theory, optimization, agent-memory]
 
 # Ingest: Nested Learning
 
-Source: nested-learning-the-illusion-of-deep-learning-architecture.md
-Captured: 2026-07-31
-From: https://arxiv.org/abs/2512.24695
-
 ## Classification
 
-Genre: scientific-paper -- a NeurIPS 2025 paper, captured from its arXiv version, combining a unifying mathematical account with new architectures, optimizers, benchmark comparisons, and ablations.
-Domains: continual-learning, learning-theory, optimization, agent-memory
+A NeurIPS 2025 paper, captured from its arXiv version, combining a unifying mathematical account with new architectures, optimizers, benchmark comparisons, and ablations.
 Author: Ali Behrouz, Meisam Razaviyayn, Peilin Zhong, and Vahab Mirrokni, with Google and Columbia affiliations. Publication and technical detail are strong credibility signals, but several central precursor systems and baselines share authorship with this paper, and no independent reproduction is recorded here.
 
 ## Summary

@@ -1,6 +1,13 @@
 ---
 description: "Jerry Liu on task-specific model routing: generic gateways handle provider routing, but workflow-specific routers earn cost and accuracy gains from private evals and input taxonomies"
-source_snapshot: "the-best-model-routing-is-task-specific-2077537847951945742.md"
+source: https://x.com/jerryjliu0/status/2077537847951945742
+captured: "2026-07-17T11:22:55.473932+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: 08bd5981cf7569fa182dc83de337d6b3af4b7b6e054cf1ecb3b0992578ce21fa
+status_id: 2077537847951945742
+conversation_id: 2077537847951945742
+post_count: 1
 ingested: "2026-07-17"
 type: kb/sources/types/ingest-report.md
 domains: [context-engineering, model-routing, vertical-agents, evaluation]
@@ -8,14 +15,9 @@ domains: [context-engineering, model-routing, vertical-agents, evaluation]
 
 # Ingest: The Best Model Routing is Task Specific
 
-Source: [the-best-model-routing-is-task-specific-2077537847951945742.md](./the-best-model-routing-is-task-specific-2077537847951945742.md)
-Captured: 2026-07-17T11:22:55.473932+00:00
-From: https://x.com/jerryjliu0/status/2077537847951945742
-
 ## Classification
 
-Genre: practitioner-report -- the source is a builder/operator argument from the LlamaIndex/LlamaParse founder about current routing products, vertical AI systems, and LlamaParse's document-routing architecture. It is grounded in product examples and reported benchmark/cost numbers rather than a controlled study.
-Domains: context-engineering, model-routing, vertical-agents, evaluation
+The source is a builder/operator argument from the LlamaIndex/LlamaParse founder about current routing products, vertical AI systems, and LlamaParse's document-routing architecture. It is grounded in product examples and reported benchmark/cost numbers rather than a controlled study.
 Author: @jerryjliu0, Jerry Liu of LlamaIndex/LlamaParse. High signal on document parsing and LlamaParse architecture; vendor-positioned on the claim that documents are a routing moat for LlamaParse.
 
 ## Summary

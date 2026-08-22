@@ -1,6 +1,10 @@
 ---
 description: Mem0's two-phase add pipeline (extract facts + LLM-judged CRUD reconciliation) is the purest production example of automated accretion-without-synthesis — now contextualized by the comparative review
-source_snapshot: mem0-memory-layer.md
+source: https://github.com/mem0ai/mem0
+captured: "2026-03-05"
+capture: manual
+genre: tool-announcement
+snapshot_sha256: 94fc8c834a272aa05fe4a7afb9deb59f1435e2dcd6e257cbbdb7a1bb2bf99fe8
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, vector-retrieval, LLM-mediated-curation, personalization]
@@ -8,15 +12,9 @@ domains: [agent-memory, vector-retrieval, LLM-mediated-curation, personalization
 
 # Ingest: Mem0: Universal Memory Layer for AI Agents
 
-Source: mem0-memory-layer.md
-Captured: 2026-03-05
-From: https://github.com/mem0ai/mem0
-
 ## Classification
 
-Type: tool-announcement — Mem0 is an open-source memory library (Apache 2.0, YC S24) with a published benchmark paper. The snapshot documents its architecture, API, and design decisions. The arxiv paper provides empirical claims (+26% accuracy over OpenAI Memory on LOCOMO, 91% faster responses, 90% fewer tokens), but the snapshot itself reads as a system description, not a research methodology.
-
-Domains: agent-memory, vector-retrieval, LLM-mediated-curation, personalization
+Mem0 is an open-source memory library (Apache 2.0, YC S24) with a published benchmark paper. The snapshot documents its architecture, API, and design decisions. The arxiv paper provides empirical claims (+26% accuracy over OpenAI Memory on LOCOMO, 91% faster responses, 90% fewer tokens), but the snapshot itself reads as a system description, not a research methodology.
 
 Author: Mem0.ai team (YC S24 company). Production-oriented project with significant adoption (30k+ GitHub stars). The architectural choices reflect enterprise deployment priorities — 20+ vector store backends, simple API surface, minimal integration footprint.
 
@@ -38,10 +36,10 @@ The `/connect` discovery found 12 genuine connections — 7 to KB notes and 4 to
 - [Canonical files may defer a shared schema while database authority remains a separate commitment](../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md) (compares-with) — Mem0 serves a different state class and workload through vector-database records and semantic retrieval. The snapshot does not compare that implementation with an available canonical-file design or specify whether exports, histories, and service records are canonical, derived, or archival. Database placement therefore shows a substrate choice, not an opposite authority rule or a universal loss of diffability and versioning.
 
 **Sibling sources (all contradicts — each makes different architectural bets):**
-- [A-MEM](a-mem-agentic-memory-for-llm-agents.md) — A-MEM explicitly critiques Mem0. Opposite storage: isolated facts vs linked Zettelkasten notes with seven-field structure. A-MEM's memory evolution (updating neighbors when new notes arrive) is a capability Mem0's fact-level storage cannot support.
-- [Letta/MemGPT](letta-memgpt-stateful-agents.md) — opposite agency models: Letta gives the agent self-managed memory; Mem0 keeps memory external as a developer-called API. The deepest architectural split in the comparative review's agency dimension.
-- [Graphiti](graphiti-temporal-knowledge-graph.md) — opposite ends of the memory model spectrum: Graphiti is graph-first with bi-temporal tracking (valid_at/invalid_at on every edge); Mem0 is vector-first with no temporal model.
-- [Cognee](cognee-knowledge-engine.md) — Cognee explicitly contrasts itself with Mem0. Both use LLM extraction, but Cognee builds graph+vector as co-equal stores with schema-driven extraction (Pydantic models); Mem0 is vector-primary with free-form fact extraction.
+- [A-MEM](https://arxiv.org/abs/2502.12110) — A-MEM explicitly critiques Mem0. Opposite storage: isolated facts vs linked Zettelkasten notes with seven-field structure. A-MEM's memory evolution (updating neighbors when new notes arrive) is a capability Mem0's fact-level storage cannot support.
+- [Letta/MemGPT](https://github.com/letta-ai/letta) — opposite agency models: Letta gives the agent self-managed memory; Mem0 keeps memory external as a developer-called API. The deepest architectural split in the comparative review's agency dimension.
+- [Graphiti](https://github.com/getzep/graphiti) — opposite ends of the memory model spectrum: Graphiti is graph-first with bi-temporal tracking (valid_at/invalid_at on every edge); Mem0 is vector-first with no temporal model.
+- [Cognee](https://github.com/topoteretes/cognee) — Cognee explicitly contrasts itself with Mem0. Both use LLM extraction, but Cognee builds graph+vector as co-equal stores with schema-driven extraction (Pydantic models); Mem0 is vector-primary with free-form fact extraction.
 
 **Synthesis opportunity identified:** A note about memory curation operations forming a complexity gradient from CRUD to structural mutation — synthesizing Mem0's ADD/UPDATE/DELETE, AgeMem's six operations, CrewAI's merge/keep/replace, A-MEM's construct/link/evolve, and the KB's boiling cauldron. The comparative review covers this partially in its "curation operations" dimension, but a dedicated note could argue that difficulty correlates with the reach of the knowledge being curated (facts are easy, theories are hard).
 

@@ -1,6 +1,10 @@
 ---
 description: "External paper derived from Commonplace's four-field artifact analysis; the ingest tracks paper-from-notes lineage, adds sovereignty-risk refinements, and may become a citable authority after acceptance"
-source_snapshot: "where-it-lives-architectural-vocabulary-retained-adaptation.md"
+source: https://conf.researchr.org/track/ecsa-2026/asisas-2026
+captured: "2026-05-28"
+capture: local-file
+genre: scientific-paper
+snapshot_sha256: b6b59122aaa48eaa2164abd45569ec31fcdb6d8ab4f874df93a71de0459be169
 ingested: "2026-05-28"
 type: kb/sources/types/ingest-report.md
 domains: [artifact-analysis, context-engineering, software-architecture]
@@ -8,14 +12,9 @@ domains: [artifact-analysis, context-engineering, software-architecture]
 
 # Ingest: Where It Lives Is Not What It Is (architectural vocabulary for retained adaptation)
 
-Source: where-it-lives-architectural-vocabulary-retained-adaptation.md
-Captured: 2026-05-28
-From: file:///home/zby/txt/paper/submissions/asisas-2026/paper.md
-
 ## Classification
 
-Type: scientific-paper -- a position paper (ASIS&S 2026 submission) with a citation apparatus (Perry & Wolf, Greshake et al., Park et al., Shinn et al., plus the recent agent-memory/skills survey line). It argues a thesis rather than reporting an experiment, but the methodology lens (what is and is not validated) applies, and the paper itself flags the absence of empirical validation.
-Domains: artifact-analysis, context-engineering, software-architecture
+A position paper (ASIS&S 2026 submission) with a citation apparatus (Perry & Wolf, Greshake et al., Park et al., Shinn et al., plus the recent agent-memory/skills survey line). It argues a thesis rather than reporting an experiment, but the methodology lens (what is and is not validated) applies, and the paper itself flags the absence of empirical validation.
 Author: This is the KB owner's own paper. It is the published, externally-framed statement of the exact vocabulary this KB has already codified across its definition notes and `axes-of-artifact-analysis.md`. Credibility for KB purposes is high because it *is* our position; the caveat is that it is self-authored, so it cannot serve as independent corroboration.
 
 ## Summary

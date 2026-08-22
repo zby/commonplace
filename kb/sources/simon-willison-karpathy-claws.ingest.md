@@ -1,6 +1,10 @@
 ---
 description: Willison and Karpathy framing "Claw" as a term of art for local persistent AI-agent systems with scheduling, context, tools, and personal-hardware execution.
-source_snapshot: simon-willison-karpathy-claws.md
+source: https://simonwillison.net/2026/Feb/21/claws/
+captured: "2026-02-22"
+capture: fetch
+genre: conceptual-essay
+snapshot_sha256: 45a5e14bf3dadbc4a4c176d4b06c4b1f0193e6bc1026b90a806fb7ccb7f2763b
 ingested: "2026-04-20"
 type: kb/sources/types/ingest-report.md
 domains: [ai-agents, terminology, agent-architecture, personal-computing]
@@ -8,14 +12,9 @@ domains: [ai-agents, terminology, agent-architecture, personal-computing]
 
 # Ingest: Andrej Karpathy talks about "Claws"
 
-Source: simon-willison-karpathy-claws.md
-Captured: 2026-02-22
-From: https://simonwillison.net/2026/Feb/21/claws/
-
 ## Classification
 
-Type: conceptual-essay -- Willison is amplifying and contextualizing Karpathy's mini-essay as a category definition. The source argues that "Claw" is becoming a term of art; it does not report an implementation, experiment, or formal design.
-Domains: ai-agents, terminology, agent-architecture, personal-computing
+Willison is amplifying and contextualizing Karpathy's mini-essay as a category definition. The source argues that "Claw" is becoming a term of art; it does not report an implementation, experiment, or formal design.
 Author: Simon Willison is a high-signal developer-tools and AI commentator; Andrej Karpathy, the quoted source, is an influential ML practitioner whose public terminology often propagates into AI engineering practice.
 
 ## Summary

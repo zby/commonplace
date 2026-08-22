@@ -15,7 +15,7 @@ A per-call permission check authorizes an *action*, not the *provenance of the c
 
 ## Two independent instances
 
-- The dynamic-workflows [triage pattern](../sources/a-harness-for-every-task-dynamic-workflows.md) bars agents that read untrusted public content (a support queue, an incident channel) from taking high-privilege actions; those actions are delegated to separate agents that act on the triage agent's output rather than the raw content.
+- The dynamic-workflows [triage pattern](https://x.com/trq212/status/2061907337154367865) bars agents that read untrusted public content (a support queue, an incident channel) from taking high-privilege actions; those actions are delegated to separate agents that act on the triage agent's output rather than the raw content.
 - [GBrain](../agentic-systems/gbrain.md)'s operations layer independently reaches the same split: every operation declares a scope (`read`/`write`/`admin`), and remote (agent-facing) callers — including the host agent GBrain otherwise instructs carefully through natural-language guidance — are classified untrusted at the API boundary regardless of what the skill instructions tell them to do, and lose certain write/admin capabilities as a result. The system's own framing is exact: trust in natural-language instructions and trust enforced in code are managed separately.
 
 Neither system cites the other. The convergence is on the role-level split itself — deny the content-exposed role the privileged capability, independent of what the untrusted content says — not on any shared implementation.
@@ -37,7 +37,7 @@ Quarantine moves the trust boundary from the tool call to the agent role, but it
 
 Relevant Notes:
 
-- [A harness for every task — dynamic workflows](../sources/a-harness-for-every-task-dynamic-workflows.md) — abstracted-from: the triage use case's quarantine description is the pattern's first witnessed instance
+- [A harness for every task — dynamic workflows](https://x.com/trq212/status/2061907337154367865) — abstracted-from: the triage use case's quarantine description is the pattern's first witnessed instance
 - [GBrain](../agentic-systems/gbrain.md) — evidenced-by: independently reaches the same read/act privilege split, with the host agent itself classified untrusted at the API boundary
 - [Compiling a coordination strategy preserves primitive authority but expands aggregate authority](./compiling-coordination-preserves-primitive-not-aggregate-authority.md) — see-also: a related but distinct enforcement gap — per-call scoping fails to bound aggregate call volume there, and fails to track diffuse single-call provenance here
 - [The four-field record exposes an efficiency, security, and sovereignty risk triad](./the-four-field-record-exposes-an-efficiency-security-and-sovereignty.md) — extends: quarantine is one architectural answer to that record's standing security-risk question, available when the untrusted-exposed role is known in advance

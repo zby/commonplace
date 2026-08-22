@@ -1,6 +1,10 @@
 ---
 description: "Earlier concise statement of Maes's causal reflection definition, with 3-KRS as an object/meta-object implementation and granularity case"
-source_snapshot: "kb/sources/maes-concepts-and-experiments-computational-reflection-1987.md"
+source: https://cse.hkust.edu.hk/~charlesz/comp610/paper/p147-maes.pdf
+captured: "2026-07-14"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: d3308fdd146a81c0242b898c0d028572d4e0f819af2146e83e87a18837ae6c9e
 ingested: "2026-07-14"
 type: kb/sources/types/ingest-report.md
 domains: [computational-reflection, object-oriented-reflection, meta-objects]
@@ -8,14 +12,9 @@ domains: [computational-reflection, object-oriented-reflection, meta-objects]
 
 # Ingest: Concepts and Experiments in Computational Reflection
 
-Source: [maes-concepts-and-experiments-computational-reflection-1987.md](./maes-concepts-and-experiments-computational-reflection-1987.md)
-Captured: 2026-07-14
-From: https://cse.hkust.edu.hk/~charlesz/comp610/paper/p147-maes.pdf
-
 ## Classification
 
-Genre: scientific-paper -- a peer-reviewed conference paper combining a concise general account of reflection with a system-design report on the 3-KRS object-oriented implementation.
-Domains: computational-reflection, object-oriented-reflection, meta-objects
+A peer-reviewed conference paper combining a concise general account of reflection with a system-design report on the 3-KRS object-oriented implementation.
 Author: Pattie Maes presents an early publication from her computational-reflection research and reports the design and use of 3-KRS; the later 1988 paper is the clearer general vocabulary source.
 
 ## Summary
@@ -24,7 +23,7 @@ Maes defines computational reflection as the behavior of a computational system 
 
 ## Connections Found
 
-This is a related earlier version of [Maes's 1988 Computational Reflection](./maes-computational-reflection-1988.md), not an independent foundation: the causal-connection and procedural/declarative claims should be deduplicated in favor of the later treatment. Its distinct value for [Reflective system](../notes/definitions/reflective-system.md) is the implemented 3-KRS topology—objects, meta-objects, and interpreter-mediated behavioral effect—and its local granularity. Its meta-circular discussion also limits the analogy in [LLM contexts interpret instructions and content through the same token medium](../notes/llm-context-interprets-instructions-and-content-through-one-medium.md): common program/data representation enables one reflective implementation strategy but is not the general definition.
+This is a related earlier version of [Maes's 1988 Computational Reflection](https://maxapress.com/data/article/ker/preview/pdf/S0269888900004355.pdf), not an independent foundation: the causal-connection and procedural/declarative claims should be deduplicated in favor of the later treatment. Its distinct value for [Reflective system](../notes/definitions/reflective-system.md) is the implemented 3-KRS topology—objects, meta-objects, and interpreter-mediated behavioral effect—and its local granularity. Its meta-circular discussion also limits the analogy in [LLM contexts interpret instructions and content through the same token medium](../notes/llm-context-interprets-instructions-and-content-through-one-medium.md): common program/data representation enables one reflective implementation strategy but is not the general definition.
 
 ## Extractable Value
 

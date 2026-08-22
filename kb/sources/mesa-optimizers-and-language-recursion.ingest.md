@@ -1,6 +1,10 @@
 ---
 description: Speculative essay arguing mesa optimizers may emerge suddenly because language recursion and learned search both compress many cases into reusable generative rules.
-source_snapshot: mesa-optimizers-and-language-recursion.md
+source: https://malloc.dog/blog/2021/10/12/mesa-optimizers-and-language-recursion/
+captured: "2026-03-31"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: 0cfc11a8df128465e669232e2b2ec1de564da988f3ac05785c39b8ab6a5fa9c9
 ingested: "2026-03-31"
 type: kb/sources/types/ingest-report.md
 domains: [mesa-optimization, language-theory, capability-emergence, learning-theory]
@@ -8,14 +12,9 @@ domains: [mesa-optimization, language-theory, capability-emergence, learning-the
 
 # Ingest: Mesa Optimizers and Language Recursion
 
-Source: mesa-optimizers-and-language-recursion.md
-Captured: 2026-03-31
-From: https://malloc.dog/blog/2021/10/12/mesa-optimizers-and-language-recursion/
-
 ## Classification
 
-Type: conceptual-essay — the piece advances a cross-domain analogy and a speculative forecast about capability emergence, but provides no methodology, experiment, or direct evidence beyond linked papers and examples.
-Domains: mesa-optimization, language-theory, capability-emergence, learning-theory
+The piece advances a cross-domain analogy and a speculative forecast about capability emergence, but provides no methodology, experiment, or direct evidence beyond linked papers and examples.
 Author: Peixian is a senior production engineer at WhatsApp writing an independent technical blog. Worth attending to as a thoughtful practitioner-synthesist, but this piece is explicitly speculative rather than an expert report from alignment or linguistics research.
 
 ## Summary

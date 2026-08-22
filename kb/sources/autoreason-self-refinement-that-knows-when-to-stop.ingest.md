@@ -1,6 +1,10 @@
 ---
 description: Autoreason paper showing self-refinement improves only when candidate synthesis is paired with blind comparative judging and incumbent survival, with gains concentrated in the generation-evaluation gap
-source_snapshot: autoreason-self-refinement-that-knows-when-to-stop.md
+source: https://github.com/NousResearch/autoreason/blob/main/paper/autoreason.pdf
+captured: "2026-04-13"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: cc18ebad423295af4a447666990412fa12afe0bab849f2bfacc652f0a9363800
 ingested: "2026-04-13"
 type: kb/sources/types/ingest-report.md
 domains: [evaluation, self-refinement, oracle-theory, agent-orchestration]
@@ -8,14 +12,9 @@ domains: [evaluation, self-refinement, oracle-theory, agent-orchestration]
 
 # Ingest: Autoreason: Self-Refinement That Knows When to Stop
 
-Source: autoreason-self-refinement-that-knows-when-to-stop.md
-Captured: 2026-04-13
-From: https://github.com/NousResearch/autoreason/blob/main/paper/autoreason.pdf
-
 ## Classification
 
-Type: scientific-paper -- GitHub-hosted preprint-style paper with a method, benchmark results, ablations, failure taxonomy, and citations; not confirmed peer-reviewed.
-Domains: evaluation, self-refinement, oracle-theory, agent-orchestration
+GitHub-hosted preprint-style paper with a method, benchmark results, ablations, failure taxonomy, and citations; not confirmed peer-reviewed.
 Author: SHL0MS / Hermes Agent; the author signal is less important than the source's concrete ablations and mixed subjective/objective evaluation, but provenance should be treated as preprint-level rather than peer-reviewed.
 
 ## Summary

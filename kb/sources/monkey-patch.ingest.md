@@ -1,6 +1,10 @@
 ---
 description: "Tertiary vocabulary evidence that 'monkey patch' names runtime class or module modification as a workaround and carries warnings about incompatibility, conflicts, hidden behavior, and patch warfare"
-source_snapshot: monkey-patch.md
+source: https://en.wikipedia.org/wiki/Monkey_patch
+captured: "2026-08-19"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: 1474a84a716fd4bb84d49465755b24d5c15649db5e66098550cbdc4a7414ac45
 ingested: "2026-08-19"
 type: kb/sources/types/ingest-report.md
 domains: [monkey-patching, runtime-modification, domain-pricing]
@@ -8,14 +12,9 @@ domains: [monkey-patching, runtime-modification, domain-pricing]
 
 # Ingest: Monkey patch
 
-Source: [monkey-patch.md](./monkey-patch.md)
-Captured: 2026-08-19
-From: https://en.wikipedia.org/wiki/Monkey_patch
-
 ## Classification
 
-Genre: conceptual-essay -- a collaboratively edited encyclopedia entry that defines a programming term, reports its proposed etymology and language-specific usage, and organizes cited operational warnings rather than presenting original research or a controlled comparison.
-Domains: monkey-patching, runtime-modification, domain-pricing
+A collaboratively edited encyclopedia entry that defines a programming term, reports its proposed etymology and language-specific usage, and organizes cited operational warnings rather than presenting original research or a controlled comparison.
 Author: Wikipedia contributors synthesize community and secondary sources. This is useful evidence that the vocabulary and warnings are publicly established, but it is tertiary and carries less authority about any one language community's norms than that community's own documentation or a usage study.
 
 ## Summary

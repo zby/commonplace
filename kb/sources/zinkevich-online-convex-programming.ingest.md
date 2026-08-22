@@ -1,6 +1,10 @@
 ---
 description: "Zinkevich's online convex-programming regret bounds provide a technical basis for direct, gateless evidence-responsive updates and their assumptions."
-source_snapshot: "zinkevich-online-convex-programming.md"
+source: https://www.cs.cmu.edu/~maz/publications/techconvex.pdf
+captured: "2026-07-21"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 0ee51178a57ff99805f95bee54a123ae773597e04898cc846faac06fe42e2bf2
 ingested: "2026-07-21"
 type: kb/sources/types/ingest-report.md
 domains: [online-learning, regret, self-improving-systems, optimization]
@@ -8,14 +12,9 @@ domains: [online-learning, regret, self-improving-systems, optimization]
 
 # Ingest: Online Convex Programming and Generalized Infinitesimal Gradient Ascent
 
-Source: [zinkevich-online-convex-programming.md](zinkevich-online-convex-programming.md)
-Captured: 2026-07-21
-From: [CMU technical report](https://www.cs.cmu.edu/~maz/publications/techconvex.pdf)
-
 ## Classification
 
-Genre: scientific-paper -- a Carnegie Mellon technical report that defines an online optimization model, proves regret bounds, and applies the algorithm to repeated games. The author signal is strong for the mathematical claims, but this is a theoretical result rather than a report on an implemented Commonplace-like system.
-Domains: online-learning, regret, self-improving-systems, optimization
+A Carnegie Mellon technical report that defines an online optimization model, proves regret bounds, and applies the algorithm to repeated games. The author signal is strong for the mathematical claims, but this is a theoretical result rather than a report on an implemented Commonplace-like system.
 Author: Martin Zinkevich, Carnegie Mellon University; CMU-CS-03-110 (February 2003).
 
 ## Summary

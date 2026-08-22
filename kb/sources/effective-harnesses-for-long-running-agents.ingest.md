@@ -1,6 +1,10 @@
 ---
 description: "Anthropic practitioner report separating context continuation from work continuation through persistent progress state, structured requirements, incremental commits, and end-to-end verification"
-source_snapshot: "effective-harnesses-for-long-running-agents.md"
+source: https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents
+captured: "2026-07-28"
+capture: web-fetch
+genre: practitioner-report
+snapshot_sha256: 92e6ec34be4095dd3b069f401b108d983441e9aff28a5c3d9c322dd0d6fe9c03
 ingested: "2026-07-28"
 type: kb/sources/types/ingest-report.md
 domains: [context-engineering, agent-memory, agent-harnesses, verification]
@@ -8,14 +12,9 @@ domains: [context-engineering, agent-memory, agent-harnesses, verification]
 
 # Ingest: Effective harnesses for long-running agents
 
-Source: [effective-harnesses-for-long-running-agents.md](./effective-harnesses-for-long-running-agents.md)
-Captured: 2026-07-28
-From: https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents
-
 ## Classification
 
-Genre: practitioner-report -- Anthropic describes an internal long-horizon coding experiment, the observed failure modes, and the harness changes its teams found useful.
-Domains: context-engineering, agent-memory, agent-harnesses, verification
+Anthropic describes an internal long-horizon coding experiment, the observed failure modes, and the harness changes its teams found useful.
 Author: Justin Young, writing with acknowledgements to Anthropic's code RL and Claude Code teams; first-party credibility is high for the implemented setup and low for comparative effectiveness because no runs, baselines, or failure distribution are reported.
 
 ## Summary

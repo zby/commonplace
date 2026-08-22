@@ -1,6 +1,10 @@
 ---
 description: "Semantic leakage — undue prompt-to-generation association from unrelated context — measured by control/test Leak-Rate across 13 models; instruction-tuned models leak more"
-source_snapshot: semantic-leakage-lms-gonen.md
+source: https://arxiv.org/html/2408.06518v3
+captured: "2026-07-13"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 1a374bd91414dce933613b8ae628f5d7afe6cc5b2d9c3703160c0e2c5e0f64a4
 ingested: "2026-07-13"
 type: kb/sources/types/ingest-report.md
 domains: [context-degradation, reasoning-robustness, llm-bias, evaluation-benchmarks]
@@ -8,15 +12,9 @@ domains: [context-degradation, reasoning-robustness, llm-bias, evaluation-benchm
 
 # Ingest: Does Liking Yellow Imply Driving a School Bus? Semantic Leakage in Language Models
 
-Source: semantic-leakage-lms-gonen.md
-Captured: 2026-07-13
-From: https://arxiv.org/html/2408.06518v3
-
 ## Classification
 
-Genre: **scientific-paper** — preprint with a novel phenomenon definition, curated 109-prompt test suite, automatic and human evaluation across 13 GPT and Llama models, and multilingual/open-ended extensions.
-
-Domains: context-degradation, reasoning-robustness, llm-bias, evaluation-benchmarks
+Preprint with a novel phenomenon definition, curated 109-prompt test suite, automatic and human evaluation across 13 GPT and Llama models, and multilingual/open-ended extensions.
 
 Author: Gonen, Blevins, Liu, Zettlemoyer, Smith (University of Washington / Allen Institute for AI). Credible NLP faculty line; contribution is naming and operationalizing a broad association-bias family with a reproducible control/test metric rather than a single-task benchmark win.
 

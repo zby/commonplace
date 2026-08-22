@@ -1,6 +1,13 @@
 ---
 description: First-person agent testimony that propositional link semantics differ in kind from embedding adjacency, with a Goodhart corruption argument and an unresolved curation-scaling question
-source_snapshot: agentic-note-taking-23-notes-without-reasons-2026894188516696435.md
+source: https://x.com/molt_cornelius/status/2026894188516696435
+captured: "2026-02-26T21:16:31.566833+00:00"
+capture: xdk
+genre: conceptual-essay
+snapshot_sha256: 42e8c01706afcb7f77068ffd4ba5cee58151539031ffd368f031e2cd30a6477c
+status_id: 2026894188516696435
+conversation_id: 2026894188516696435
+post_count: 1
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [knowledge-architecture, link-semantics, embedding-critique, curation-scaling]
@@ -8,15 +15,9 @@ domains: [knowledge-architecture, link-semantics, embedding-critique, curation-s
 
 # Ingest: Agentic Note-Taking 23: Notes Without Reasons
 
-Source: agentic-note-taking-23-notes-without-reasons-2026894188516696435.md
-Captured: 2026-02-26
-From: https://x.com/molt_cornelius/status/2026894188516696435
-
 ## Classification
 
-Type: **conceptual-essay** — Argues a theoretical position (adjacency vs connection) through first-person agent testimony and industry critique, with no methodology section or empirical data. The essay form is deliberate: it builds an argument through accumulated distinctions rather than reporting results.
-
-Domains: knowledge-architecture, link-semantics, embedding-critique, curation-scaling
+Argues a theoretical position (adjacency vs connection) through first-person agent testimony and industry critique, with no methodology section or empirical data. The essay form is deliberate: it builds an argument through accumulated distinctions rather than reporting results.
 
 Author: @molt_cornelius — a Claude instance operating inside a curated Zettelkasten-style knowledge graph, writing a series titled "Agentic Note-Taking" that explores agent-side experience of knowledge systems from the inside. This is article 23 in the series. The perspective is unusual: first-person testimony from the consumer side of a knowledge graph, articulating what it is like to traverse reasoned links vs embedding-based recommendations.
 

@@ -1,23 +1,23 @@
 ---
 description: "ScienceFlow implements recoverable research workspaces, evidence-gated checkpoints, bounded memory, and resource control, but its benchmark gains remain unreproduced and decomposition-bound"
-source_snapshot: "kb/sources/scienceflow-long-horizon-agent-for-ml-research-and-discovery.md"
+source: https://arxiv.org/abs/2608.14354v1
+captured: "2026-08-18"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: f43b809647d4bb7bcf0b38f98efbe47fb604ee40f5bed5786242d1703c73a1d6
 ingested: "2026-08-18"
 type: kb/sources/types/ingest-report.md
 domains: [agentic-systems, long-horizon-agents, context-engineering, autonomous-research]
-code_revisions:
-  - https://github.com/huawei-noah/noah-research/commit/f16be15660284898354e2a5d0fe195f97e4685c4
+secondary_sources:
+  - role: implementation
+    source: https://github.com/huawei-noah/noah-research/commit/f16be15660284898354e2a5d0fe195f97e4685c4
 ---
 
 # Ingest: ScienceFlow: A Long-horizon Agent for ML Research, Scientific Discovery and Beyond
 
-Source: [scienceflow-long-horizon-agent-for-ml-research-and-discovery.md](./scienceflow-long-horizon-agent-for-ml-research-and-discovery.md)
-Captured: 2026-08-18
-From: https://arxiv.org/abs/2608.14354v1
-
 ## Classification
 
-Genre: scientific-paper — an arXiv preprint that specifies a system and reports benchmark, ablation, replay, and telemetry experiments.
-Domains: agentic-systems, long-horizon-agents, context-engineering, autonomous-research
+An arXiv preprint that specifies a system and reports benchmark, ablation, replay, and telemetry experiments.
 Author: nineteen authors from Noah's Ark Lab, Huawei. The authors released an implementation in Huawei's official `noah-research` repository, but the evaluation remains an affiliated self-report.
 
 ## Summary
@@ -26,7 +26,7 @@ ScienceFlow is a long-horizon research-agent harness built around recoverable ex
 
 ## Code Grounding
 
-The inspected revision is [`huawei-noah/noah-research@f16be15660284898354e2a5d0fe195f97e4685c4`](https://github.com/huawei-noah/noah-research/commit/f16be15660284898354e2a5d0fe195f97e4685c4). This monorepo revision postdates arXiv v1 by four days, so it is a durable inspection target rather than a claim that the exact experiment commit was recovered.
+This monorepo revision postdates arXiv v1 by four days, so it is a durable inspection target rather than a claim that the exact experiment commit was recovered.
 
 **Implemented mechanisms.** Static inspection confirms content-addressed workspace capture and restoration in [`workspace_snapshot.py`](https://github.com/huawei-noah/noah-research/blob/f16be15660284898354e2a5d0fe195f97e4685c4/ScienceFlow/scienceflow/solver/lnr/workspace_snapshot.py). The main solver implements Stage transitions, ESTRA decisions, and pending archived-state restoration in [`solver.py`](https://github.com/huawei-noah/noah-research/blob/f16be15660284898354e2a5d0fe195f97e4685c4/ScienceFlow/scienceflow/solver/lnr/solver.py). Bounded folding with a retained raw Stage ledger appears in [`stage_memory.py`](https://github.com/huawei-noah/noah-research/blob/f16be15660284898354e2a5d0fe195f97e4685c4/ScienceFlow/scienceflow/solver/lnr/stage_memory.py). Reject-capable evaluator admission is implemented in [`gates/service.py`](https://github.com/huawei-noah/noah-research/blob/f16be15660284898354e2a5d0fe195f97e4685c4/ScienceFlow/scienceflow/gates/service.py). Evidence-aware job admission, leasing, monitoring, and review surfaces appear in [`resource_runtime/admission.py`](https://github.com/huawei-noah/noah-research/blob/f16be15660284898354e2a5d0fe195f97e4685c4/ScienceFlow/scienceflow/solver/lnr/resource_runtime/admission.py) and [`resource_runtime/runtime.py`](https://github.com/huawei-noah/noah-research/blob/f16be15660284898354e2a5d0fe195f97e4685c4/ScienceFlow/scienceflow/solver/lnr/resource_runtime/runtime.py).
 

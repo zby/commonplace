@@ -1,6 +1,10 @@
 ---
 description: Rosebud Journal memory essay reframing LLM memory as a policy stack over raw/derived artifacts, retrieval timing, curation, and forgetting propagation
-source_snapshot: everything-you-need-to-know-about-llm-memory.md
+source: https://rosebudjournal.notion.site/Everything-you-need-to-know-about-LLM-memory-33b328e8e3f780858d3df3acb06d23b9
+captured: "2026-04-13"
+capture: notion-api
+genre: conceptual-essay
+snapshot_sha256: 3cbfd804cfda76b6a1fdac87bd2dbcfce3643a458c646938d0e2fedc193590df
 ingested: "2026-04-13"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, context-engineering, memory-evaluation, knowledge-lifecycle]
@@ -8,14 +12,9 @@ domains: [agent-memory, context-engineering, memory-evaluation, knowledge-lifecy
 
 # Ingest: Everything you need to know about LLM memory
 
-Source: everything-you-need-to-know-about-llm-memory.md
-Captured: 2026-04-13
-From: https://rosebudjournal.notion.site/Everything-you-need-to-know-about-LLM-memory-33b328e8e3f780858d3df3acb06d23b9
-
 ## Classification
 
-Type: conceptual-essay -- a Notion essay arguing a framing and taxonomy for conversational LLM memory rather than reporting a controlled build, experiment, or tool release.
-Domains: agent-memory, context-engineering, memory-evaluation, knowledge-lifecycle
+A Notion essay arguing a framing and taxonomy for conversational LLM memory rather than reporting a controlled build, experiment, or tool release.
 Author: Unknown; the source appears on Rosebud Journal and includes Rosebud V1 in its comparison table, so treat it as practitioner-adjacent but not independently attributable from the captured page.
 
 ## Summary

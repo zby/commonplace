@@ -1,6 +1,13 @@
 ---
 description: "Shōbench's whole-state before/after study detects five clean gains but measures retained self-directed adaptation rather than recursive compounding"
-source_snapshot: "toward-measuring-recursive-self-improvement-2090411367819809047.md"
+source: https://x.com/anndvision/status/2090411367819809047
+captured: "2026-08-20T16:09:58.726619+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: 90013596333748df9e306a88d1e64568af6c226b01f7e904a61157aec19e63aa
+status_id: 2090411367819809047
+conversation_id: 2090411367819809047
+post_count: 2
 ingested: "2026-08-20"
 type: kb/sources/types/ingest-report.md
 domains: [self-improving-systems, agent-memory, evaluation, harness-engineering]
@@ -8,14 +15,9 @@ domains: [self-improving-systems, agent-memory, evaluation, harness-engineering]
 
 # Ingest: Toward measuring recursive self-improvement
 
-Source: [toward-measuring-recursive-self-improvement-2090411367819809047.md](toward-measuring-recursive-self-improvement-2090411367819809047.md)
-Captured: 2026-08-20T16:09:58.726619+00:00
-From: https://x.com/anndvision/status/2090411367819809047
-
 ## Classification
 
-Genre: practitioner-report -- the author describes an instrument he built, its protocol, and outcomes from its first twelve agent-domain cells.
-Domains: self-improving-systems, agent-memory, evaluation, harness-engineering
+The author describes an instrument he built, its protocol, and outcomes from its first twelve agent-domain cells.
 Author: Andrew Jesson (@anndvision) reports first-hand implementation and run details, including task counts, paired estimates, confidence intervals, incomplete runs, and a contaminated result. The account is unusually candid for a builder report, but it remains self-published and unreplicated.
 
 ## Summary

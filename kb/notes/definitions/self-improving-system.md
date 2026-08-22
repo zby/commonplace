@@ -71,7 +71,7 @@ Commonplace treats the predicate as frame-indexed. The bearer of the property is
 
 Self-representation and reject-capable evaluation are not membership conditions. Reflection instead names a structural property whose distinctive benefit is developed in [reflection buys addressability](../reflection-buys-addressability.md), while proposal selection names the narrower update architecture with a rejectable adoption decision.
 
-This architecture-neutral choice is consistent with uses of “self-improving” for gateless self-tuning algorithms ([Ailon et al. 2011](../../sources/self-improving-algorithms.md)) and with self-adaptive-systems literature treating feedback-loop models as engineering reference models rather than definitions ([Weyns](../../sources/weyns-software-engineering-self-adaptive-systems-tour.md); [Petrovska, Erjiage, and Kugele 2025](../../sources/defining-self-adaptive-systems-systematic-literature-review.md)). It is Commonplace's explication, not a claimed field consensus.
+This architecture-neutral choice is consistent with uses of “self-improving” for gateless self-tuning algorithms ([Ailon et al. 2011](https://page.mi.fu-berlin.de/mulzer/pubs/selfimpSICOMP.pdf)) and with self-adaptive-systems literature treating feedback-loop models as engineering reference models rather than definitions ([Weyns](https://people.cs.kuleuven.be/~danny.weyns/papers/2017HSE.pdf); [Petrovska, Erjiage, and Kugele 2025](https://arxiv.org/pdf/2505.17798)). It is Commonplace's explication, not a claimed field consensus.
 
 ---
 

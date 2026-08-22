@@ -1,6 +1,10 @@
 ---
 description: Practitioner decomposition of coding agent harnesses into six named components, with the central claim that apparent model quality is really context quality — independent convergent evidence for the KB's context-efficiency thesis.
-source_snapshot: components-of-a-coding-agent-raschka.md
+source: https://magazine.sebastianraschka.com/p/components-of-a-coding-agent
+captured: "2026-04-05"
+capture: web-fetch
+genre: practitioner-report
+snapshot_sha256: ed70897406230aa1184d33b9e5f516cb078edc489f31c43a84c335b6266e9efa
 ingested: "2026-04-05"
 type: kb/sources/types/ingest-report.md
 domains: [agent-architecture, context-engineering, coding-agents]
@@ -8,15 +12,9 @@ domains: [agent-architecture, context-engineering, coding-agents]
 
 # Ingest: Components of A Coding Agent
 
-Source: components-of-a-coding-agent-raschka.md
-Captured: 2026-04-05
-From: https://magazine.sebastianraschka.com/p/components-of-a-coding-agent
-
 ## Classification
 
-Type: **practitioner-report** — Raschka is not reporting on a system he built, but his analysis is grounded in observed behavior of production systems (Claude Code, Codex) and synthesizes what their harnesses actually do. It reads as "here is what works and why" rather than a theoretical argument or a tool release.
-
-Domains: agent-architecture, context-engineering, coding-agents
+Raschka is not reporting on a system he built, but his analysis is grounded in observed behavior of production systems (Claude Code, Codex) and synthesizes what their harnesses actually do. It reads as "here is what works and why" rather than a theoretical argument or a tool release.
 
 Author: Sebastian Raschka, PhD — well-known ML educator and author ("Machine Learning with PyTorch and Scikit-Learn"), active researcher. His audience is practitioners; his signal is pedagogical clarity rather than original research. Worth attending to for how he frames ideas for the practitioner community, less so for novel findings.
 

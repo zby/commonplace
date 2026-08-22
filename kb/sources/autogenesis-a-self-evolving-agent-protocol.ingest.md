@@ -1,6 +1,10 @@
 ---
 description: "Autogenesis makes the editable boundary of agent self-improvement explicit, but its benchmarks validate selected prompt, solution, and agent edits rather than the full protocol or safety claims"
-source_snapshot: "autogenesis-a-self-evolving-agent-protocol.md"
+source: https://arxiv.org/html/2604.15034v5
+captured: "2026-08-02"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 631aa4f497520508eed673a06de7d7bc4bd001e92f6823a633bbbac2b835e613
 ingested: "2026-08-02"
 type: kb/sources/types/ingest-report.md
 domains: [self-improvement, agent-protocols, deploy-time-learning, evaluation]
@@ -8,14 +12,9 @@ domains: [self-improvement, agent-protocols, deploy-time-learning, evaluation]
 
 # Ingest: Autogenesis: A Self-Evolving Agent Protocol
 
-Source: [autogenesis-a-self-evolving-agent-protocol.md](autogenesis-a-self-evolving-agent-protocol.md)
-Captured: 2026-08-02
-From: https://arxiv.org/html/2604.15034v5
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv v5 preprint that specifies a self-evolution protocol, supplies an implementation and project repository, and reports benchmark comparisons across reasoning, general-agent, and code tasks.
-Domains: self-improvement, agent-protocols, deploy-time-learning, evaluation
+An arXiv v5 preprint that specifies a self-evolution protocol, supplies an implementation and project repository, and reports benchmark comparisons across reasoning, general-agent, and code tasks.
 Author: A seven-author team from Nanyang Technological University, Stanford University, City University of Hong Kong, and the University of Science and Technology of China. The released project code raises inspectability, while the authors' dual role as system builders and evaluators makes independent reproduction important.
 
 ## Summary

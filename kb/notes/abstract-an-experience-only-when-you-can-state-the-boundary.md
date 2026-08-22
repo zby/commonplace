@@ -22,7 +22,7 @@ The sharpest reason to treat episodes differently by outcome is that successes a
 - A **success is an existence proof**: it shows the approach was *possible* here. It does not establish that the approach is *better than alternatives* across cases, so any lesson abstracted from it imports a boundary the agent has not earned. Preserve it as a concrete, replayable demonstration rather than a rule.
 - A **failure carries a directive** — "what to change" — that names a violated constraint. That directive is a candidate boundary, which makes failures the natural raw material for lessons. (This echoes Popper: a refutation is more informative than a confirmation because it locates a limit.)
 
-This predicts the finding of [SkillRL](../sources/skillrl-evolving-agents-recursive-skill-augmented-rl.md) — a skill-augmented RL framework that preserves successful trajectories as demonstrations while synthesizing failures into concise lessons — that processing successful episodes as replayable demonstrations while abstracting failures into concise lessons beats uniform compression of both. Uniform compression abstracts both kinds the same way, but the failures were the half where a boundary was already on hand; the loss concentrates on the successes, which get over-generalized into rules no boundary justifies.
+This predicts the finding of [SkillRL](https://arxiv.org/abs/2602.08234) — a skill-augmented RL framework that preserves successful trajectories as demonstrations while synthesizing failures into concise lessons — that processing successful episodes as replayable demonstrations while abstracting failures into concise lessons beats uniform compression of both. Uniform compression abstracts both kinds the same way, but the failures were the half where a boundary was already on hand; the loss concentrates on the successes, which get over-generalized into rules no boundary justifies.
 
 ## What supplies — or strips — the boundary
 
@@ -46,7 +46,7 @@ Read as a criterion, boundary-statability sharpens the [validity gate that decid
 ## Sources
 
 - [Inquiring line: "How can agents distinguish over-generalized lessons from genuinely useful long-tail knowledge?"](https://inquiringlines.com/inquiring-lines/how-can-agents-distinguish-over-generalized-lessons-from-genuinely-useful-long-t/) — poses the question and assembles the five mechanisms (SkillRL, Reflexion, feedback decomposition, process verification, VOYAGER) reorganized here under the boundary discriminator.
-- [SkillRL: Evolving Agents via Recursive Skill-Augmented Reinforcement Learning](../sources/skillrl-evolving-agents-recursive-skill-augmented-rl.md) — the differential-processing finding: successful trajectories preserved as demonstrations, failed ones synthesized into concise lessons, grounding the success/failure asymmetry directly rather than through the umbrella article.
+- [SkillRL: Evolving Agents via Recursive Skill-Augmented Reinforcement Learning](https://arxiv.org/abs/2602.08234) — the differential-processing finding: successful trajectories preserved as demonstrations, failed ones synthesized into concise lessons, grounding the success/failure asymmetry directly rather than through the umbrella article.
 - Karl Popper — refutations are more informative than confirmations; grounds the success/failure asymmetry.
 
 ---

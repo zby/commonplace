@@ -1,6 +1,10 @@
 ---
 description: Empirical study (N=112) finding experienced developers control AI agents through SE practices, not vibe coding -- grounds constraining, underspecification, and programming-practices-transfer arguments
-source_snapshot: professional-software-developers-dont-vibe-they-control.md
+source: https://arxiv.org/html/2512.14012v1
+captured: "2026-03-09"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 921751ccdaa195fbdd5cccc318be916d16b7086c111e380a6b09c08991365c3d
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [agentic-coding, developer-practices, task-suitability, human-ai-collaboration]
@@ -8,15 +12,9 @@ domains: [agentic-coding, developer-practices, task-suitability, human-ai-collab
 
 # Ingest: Professional Software Developers Don't Vibe, They Control
 
-Source: professional-software-developers-dont-vibe-they-control.md
-Captured: 2026-03-09
-From: https://arxiv.org/html/2512.14012v1
-
 ## Classification
 
-Type: **scientific-paper** -- mixed-methods empirical study with field observations (N=13) and qualitative survey (N=99), published as arXiv preprint (2512.14012v1, Dec 2025). Includes structured methodology, thematic analysis, and systematic task suitability coding (89 task codes from 189 raw mentions).
-
-Domains: agentic-coding, developer-practices, task-suitability, human-ai-collaboration
+Mixed-methods empirical study with field observations (N=13) and qualitative survey (N=99), published as arXiv preprint (2512.14012v1, Dec 2025). Includes structured methodology, thematic analysis, and systematic task suitability coding (89 task codes from 189 raw mentions).
 
 Author: Ruanqianqian (Lisa) Huang, Avery Reyna, Sorin Lerner, Haijun Xia, Brian Hempel (UC San Diego). Xia and Lerner are established HCI/PL researchers; this is a well-resourced academic team with access to professional developer populations through GitHub scraping of top agentic tool repos.
 
@@ -39,7 +37,7 @@ Huang et al. investigate how experienced professional developers (3+ years) actu
 
 **Moderate connections:** [context-efficiency](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) (avg 2.1 steps/prompt as behavioral evidence of context as binding constraint), [oracle-strength-spectrum](../notes/oracle-strength-spectrum.md) (task suitability maps to verification cost), [bounded-context-orchestration-model](../notes/bounded-context-orchestration-model.md) (developers act as symbolic scheduler driving bounded calls), [inspectable-artifact](../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) (partial tension: supervision *over* inspectable substrate is the actual pattern, not substrate alone), [writing-styles](../notes/writing-styles-are-strategies-for-managing-underspecification.md) (prompting strategies instantiate the five writing styles informally), [legal-drafting](../notes/legal-drafting-solves-the-same-problem-as-context-engineering.md) (S88's prompting style reads like a legal brief).
 
-**Complementary source:** [context-engineering-ai-agents-oss](context-engineering-ai-agents-oss.md) triangulates the same phenomenon from the artifact side (466 AGENTS.md files) while this paper examines the behavioral side.
+**Complementary source:** [context-engineering-ai-agents-oss](https://arxiv.org/pdf/2510.21413) triangulates the same phenomenon from the artifact side (466 AGENTS.md files) while this paper examines the behavioral side.
 
 **Key insight:** This paper is primarily an empirical grounding source -- it validates several theoretical positions already in the KB rather than introducing new concepts. The value is evidential weight, not novel framing.
 

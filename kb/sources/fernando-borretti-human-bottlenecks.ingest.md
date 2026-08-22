@@ -1,6 +1,10 @@
 ---
 description: "Borretti argues AI value has a human-side competence floor — knowledge, executive function, and intelligence are bottlenecks software cannot lift."
-source_snapshot: "fernando-borretti-human-bottlenecks.md"
+source: https://borretti.me/article/human-bottlenecks
+captured: "2026-06-15"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: f401bcc09e56ea69abe1b48fd7ee5e612ad0b2d6114939fe01408f97acfce37f
 ingested: "2026-06-15"
 type: kb/sources/types/ingest-report.md
 domains: [human-llm-differences, augmentation-automation, distillation]
@@ -8,14 +12,9 @@ domains: [human-llm-differences, augmentation-automation, distillation]
 
 # Ingest: Human Bottlenecks
 
-Source: fernando-borretti-human-bottlenecks.md
-Captured: 2026-06-15
-From: https://borretti.me/article/human-bottlenecks
-
 ## Classification
 
-Type: conceptual-essay -- a framing/position piece arguing a thesis about AI's ceiling. No data, methodology, or system; it reasons from observation and analogy.
-Domains: human-llm-differences, augmentation-automation, distillation
+A framing/position piece arguing a thesis about AI's ceiling. No data, methodology, or system; it reasons from observation and analogy.
 Author: Fernando Borretti — software engineer and essayist (borretti.me), known for sharp opinion writing on programming and tooling. This is the second of his snapshots in the KB (alongside `borretti-human-routers-of-machine-words.md`). Credible as an articulate practitioner-observer, not as an empirical source.
 
 ## Summary

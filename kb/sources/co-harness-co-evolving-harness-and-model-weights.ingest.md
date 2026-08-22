@@ -1,6 +1,10 @@
 ---
 description: "Co-Harness provides a provisional three-form learning case: validated harness repair alternates with fine-tuning on trajectories produced by the repaired harness"
-source_snapshot: "co-harness-co-evolving-harness-and-model-weights.md"
+source: https://arxiv.org/pdf/2607.22688
+captured: "2026-07-28"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 83c4f1716060cbdb060c50f8a0223e6e8c49f1bee4d2fe7d0b5ffdbd84bb0f45
 ingested: "2026-07-28"
 type: kb/sources/types/ingest-report.md
 domains: [representational-form, harness-learning, post-training, trace-learning]
@@ -8,14 +12,9 @@ domains: [representational-form, harness-learning, post-training, trace-learning
 
 # Ingest: Co-Harness: Co-Evolving Harnesses and Model Weights for LLM Agents
 
-Source: [co-harness-co-evolving-harness-and-model-weights.md](co-harness-co-evolving-harness-and-model-weights.md)
-Captured: 2026-07-28
-From: https://arxiv.org/pdf/2607.22688
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv v1 preprint that defines an alternating optimization procedure, reports benchmark experiments and an autonomous case study, and includes algorithm, configuration, validation, and attribution details.
-Domains: representational-form, harness-learning, post-training, trace-learning
+An arXiv v1 preprint that defines an alternating optimization procedure, reports benchmark experiments and an autonomous case study, and includes algorithm, configuration, validation, and attribution details.
 Author: Zhengyu Chen, Teng Xiao, Huaisheng Zhu, Yige Yuan, Luan Zhang, and Jingang Wang, affiliated with Meituan, the Allen Institute for AI, and independently; the paper is recent and its results have not been independently reproduced in this KB.
 
 ## Summary

@@ -1,6 +1,13 @@
 ---
 description: "BrainsAndTennis on vertical-agent quality as task-distribution-aware context compression, with L1/L2/L3 cache tiers for prompts, curated specs, and raw references"
-source_snapshot: "building-a-good-vertical-agent-2065190286519906657.md"
+source: https://x.com/BrainsAndTennis/status/2065190286519906657
+captured: "2026-06-12T10:11:23.632350+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: 2fd8d760ef0acc73ca7871b4753229416cf8331e9a63d653449695cc6d7fb16a
+status_id: 2065190286519906657
+conversation_id: 2065190286519906657
+post_count: 13
 ingested: "2026-06-12"
 type: kb/sources/types/ingest-report.md
 domains: [agent-architecture, context-engineering, vertical-agents, tool-design]
@@ -8,14 +15,9 @@ domains: [agent-architecture, context-engineering, vertical-agents, tool-design]
 
 # Ingest: Building a Good Vertical Agent
 
-Source: [building-a-good-vertical-agent-2065190286519906657.md](./building-a-good-vertical-agent-2065190286519906657.md)
-Captured: 2026-06-12T10:11:23.632350+00:00
-From: https://x.com/BrainsAndTennis/status/2065190286519906657
-
 ## Classification
 
-Type: practitioner-report -- the author reports from roughly a year building Shortcut's spreadsheet agent and argues from product architecture, customer selection pressure, and concrete tool/context design choices rather than from a controlled study.
-Domains: agent-architecture, context-engineering, vertical-agents, tool-design
+The author reports from roughly a year building Shortcut's spreadsheet agent and argues from product architecture, customer selection pressure, and concrete tool/context design choices rather than from a controlled study.
 Author: @BrainsAndTennis, reporting as a builder of Shortcut's spreadsheet agent; the credibility signal is high-stakes vertical-agent product experience, but the measurements and customer claims are self-reported.
 
 ## Summary

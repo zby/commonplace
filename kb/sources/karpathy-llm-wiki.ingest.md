@@ -1,6 +1,10 @@
 ---
 description: Karpathy's long-form agent-maintained wiki manifesto — explicit raw/wiki/schema architecture plus index/log separation beyond his earlier X-post workflow sketch
-source_snapshot: karpathy-llm-wiki.md
+source: https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
+captured: "2026-04-04"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: aa246c370f8b35d94cfd1b6ce778c90b20aba12b3470d5b986929191a5ca19ef
 ingested: "2026-04-04"
 type: kb/sources/types/ingest-report.md
 domains: [knowledge-management, context-engineering, file-based-systems, agentic-workflows]
@@ -8,20 +12,15 @@ domains: [knowledge-management, context-engineering, file-based-systems, agentic
 
 # Ingest: LLM Wiki
 
-Source: karpathy-llm-wiki.md
-Captured: 2026-04-04
-From: https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
-
 ## Classification
-Type: conceptual-essay — although grounded in Karpathy's own practice, the gist mainly argues a general pattern and analogy for agent-maintained wikis rather than reporting a measured implementation or a concrete software design for one named system.
-Domains: knowledge-management, context-engineering, file-based-systems, agentic-workflows
+Although grounded in Karpathy's own practice, the gist mainly argues a general pattern and analogy for agent-maintained wikis rather than reporting a measured implementation or a concrete software design for one named system.
 Author: Andrej Karpathy is a high-signal AI practitioner whose workflow choices often propagate into wider practice, but this is still a single-author manifesto rather than an inspectable system or empirical study.
 
 ## Summary
 Karpathy argues for replacing query-time rediscovery over raw documents with a persistent markdown wiki that an LLM incrementally maintains. The gist makes the pattern more explicit than his earlier short post: there are three layers, not two — immutable raw sources, an LLM-owned compiled wiki, and a schema/control file (`AGENTS.md` or `CLAUDE.md`) that defines structure and workflows. It also names a minimal lifecycle around ingest, query, and lint, and distinguishes two special coordination artifacts: `index.md` as the content-oriented map the model reads to navigate the wiki, and `log.md` as the chronological trace of what has happened recently. The core thesis is that knowledge work compounds when synthesis, cross-references, and outputs become durable file artifacts instead of being re-derived in chat on every question.
 
 ## Connections Found
-`/connect` placed this source in the file-first / control-plane / navigation cluster. It most directly **extends** the earlier Karpathy source [LLM Knowledge Bases](./llm-knowledge-bases-something-i-m-finding-very-useful-recently-using.md): the April 2, 2026 X post gave the workflow, while this April 4, 2026 gist turns it into an explicit architecture with raw/wiki/schema layers and separate roles for `index.md` and `log.md`. It **exemplifies** [AGENTS.md should be organized as a control plane](../notes/agents-md-should-be-organized-as-a-control-plane.md) and [Instruction specificity should match loading frequency](../notes/instruction-specificity-should-match-loading-frequency.md) because the schema file is treated as a first-class routing layer rather than incidental documentation. It also **exemplifies** [Files defer schema commitment until invariants stabilize](../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md), [Agents navigate by deciding what to read next](../notes/agents-navigate-by-deciding-what-to-read-next.md), and [Vibe-noting](../notes/vibe-noting.md): the wiki stays in inspectable markdown, maintained indexes and summaries guide what to load next, and Obsidian functions as the human-facing IDE over agent-maintained artifacts. The most useful extension is to [Knowledge storage does not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md): the compiled wiki is not just storage, it is an activation scaffold. The main tension is with [A functioning knowledge base needs a workshop layer, not just a library](../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md), because Karpathy files queries, maintenance, and chronology back into one wiki where our note argues durable and temporal artifacts may need different lifecycles.
+`/connect` placed this source in the file-first / control-plane / navigation cluster. It most directly **extends** the earlier Karpathy source [LLM Knowledge Bases](https://x.com/karpathy/status/2039805659525644595): the April 2, 2026 X post gave the workflow, while this April 4, 2026 gist turns it into an explicit architecture with raw/wiki/schema layers and separate roles for `index.md` and `log.md`. It **exemplifies** [AGENTS.md should be organized as a control plane](../notes/agents-md-should-be-organized-as-a-control-plane.md) and [Instruction specificity should match loading frequency](../notes/instruction-specificity-should-match-loading-frequency.md) because the schema file is treated as a first-class routing layer rather than incidental documentation. It also **exemplifies** [Files defer schema commitment until invariants stabilize](../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md), [Agents navigate by deciding what to read next](../notes/agents-navigate-by-deciding-what-to-read-next.md), and [Vibe-noting](../notes/vibe-noting.md): the wiki stays in inspectable markdown, maintained indexes and summaries guide what to load next, and Obsidian functions as the human-facing IDE over agent-maintained artifacts. The most useful extension is to [Knowledge storage does not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md): the compiled wiki is not just storage, it is an activation scaffold. The main tension is with [A functioning knowledge base needs a workshop layer, not just a library](../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md), because Karpathy files queries, maintenance, and chronology back into one wiki where our note argues durable and temporal artifacts may need different lifecycles.
 
 ## Extractable Value
 1. **[quick-win] Schema/control-plane is a first-class layer in agent-maintained wikis.** The earlier Karpathy post already implied raw sources plus a compiled wiki; this gist adds the missing third layer explicitly. High reach: many KB discussions collapse storage and retrieval while leaving the control-plane layer implicit.

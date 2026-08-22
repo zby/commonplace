@@ -1,6 +1,10 @@
 ---
 description: "Credence-goods microeconomics paper — evidence and refinement for the verification-boundary claim, adding liability as an institutional substitute for verifiability"
-source_snapshot: "dulleck-kerschbamer-doctors-mechanics-computer-specialists.md"
+source: https://papersecon.univie.ac.at/RePEc/vie/viennp/vie0101.pdf
+captured: "2026-07-06"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 45d87155c652fe10d0fc4f889ceb1b4ddcdc0db75ed5f4d7e39fae61b493a1d1
 ingested: "2026-07-06"
 type: kb/sources/types/ingest-report.md
 domains: [verification, information-asymmetry, mechanism-design]
@@ -8,14 +12,9 @@ domains: [verification, information-asymmetry, mechanism-design]
 
 # Ingest: On Doctors, Mechanics and Computer Specialists — Where are the Problems with Credence Goods?
 
-Source: dulleck-kerschbamer-doctors-mechanics-computer-specialists.md
-Captured: 2026-07-06
-From: https://papersecon.univie.ac.at/RePEc/vie/viennp/vie0101.pdf
-
 ## Classification
 
-Type: scientific-paper -- game-theoretic economics working paper with a formal model, lemmas, propositions, and proofs; the 2001 University of Vienna working-paper version of the paper later published as Dulleck & Kerschbamer, "On Doctors, Mechanics, and Computer Specialists: The Economics of Credence Goods," *Journal of Economic Literature* 44(1), 2006.
-Domains: verification, information-asymmetry, mechanism-design
+Game-theoretic economics working paper with a formal model, lemmas, propositions, and proofs; the 2001 University of Vienna working-paper version of the paper later published as Dulleck & Kerschbamer, "On Doctors, Mechanics, and Computer Specialists: The Economics of Credence Goods," *Journal of Economic Literature* 44(1), 2006.
 Author: Uwe Dulleck and Rudolf Kerschbamer, academic economists (University of Vienna; Kerschbamer also CEPR). This is the working-paper preprint, not the peer-reviewed JEL version, though the core unifying model is the same. The paper is a widely-cited survey-plus-synthesis in the credence-goods literature.
 
 ## Summary

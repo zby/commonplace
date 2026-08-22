@@ -1,23 +1,23 @@
 ---
 description: "Mobius implements shared routed FFN experts across reasoner layers, while its architecture, latent-reasoning, throughput, and self-evolution claims remain only partially isolated"
-source_snapshot: "intern-s2-mobius-arxiv-v1.md"
+source: https://arxiv.org/abs/2608.14290v1
+captured: "2026-08-18"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 72b20625d30d5f2c3932733cdd4dae9aef7ba5611ba6bc7a8ef189b14765af76
 ingested: "2026-08-18"
 type: kb/sources/types/ingest-report.md
 domains: [model-architecture, parametric-memory, reasoning, continual-learning]
-code_revisions:
-  - https://github.com/internlm/intern-s2-mobius/commit/2b0037c8603c6638f9173540b13562f0372896d1
+secondary_sources:
+  - role: implementation
+    source: https://github.com/internlm/intern-s2-mobius/commit/2b0037c8603c6638f9173540b13562f0372896d1
 ---
 
 # Ingest: Intern-S2-Mobius: Foundation Model with Decoupled Knowledge and Reasoning
 
-Source: [intern-s2-mobius-arxiv-v1.md](intern-s2-mobius-arxiv-v1.md)
-Captured: 2026-08-18
-From: https://arxiv.org/abs/2608.14290v1
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv v1 preprint with a proposed foundation-model architecture, training-from-scratch and continual-pretraining comparisons, throughput and output-length measurements, qualitative cases, and an official implementation release.
-Domains: model-architecture, parametric-memory, reasoning, continual-learning
+An arXiv v1 preprint with a proposed foundation-model architecture, training-from-scratch and continual-pretraining comparisons, throughput and output-length measurements, qualitative cases, and an official implementation release.
 Author: the Intern-S2-Mobius Team at Shanghai AI Laboratory; the paper and official release provide primary design evidence, but the four-day-old v1 preprint has no reported venue or independent replication.
 
 ## Summary
@@ -26,7 +26,7 @@ Mobius-v0 separates layer-local token mixing from a pool of FFN experts shared a
 
 ## Code Grounding
 
-The official repository was inspected at [commit `2b0037c8603c6638f9173540b13562f0372896d1`](https://github.com/internlm/intern-s2-mobius/commit/2b0037c8603c6638f9173540b13562f0372896d1). The association is direct: its [README](https://github.com/internlm/intern-s2-mobius/blob/2b0037c8603c6638f9173540b13562f0372896d1/README.md) names Intern-S2-Mobius, describes the same architecture and results, links the model release, and includes the technical report.
+The association is direct: its [README](https://github.com/internlm/intern-s2-mobius/blob/2b0037c8603c6638f9173540b13562f0372896d1/README.md) names Intern-S2-Mobius, describes the same architecture and results, links the model release, and includes the technical report.
 
 **Implemented.** The configuration exposes a block count, hybrid linear/full-attention layer pattern, routed-expert count, and experts selected per token ([configuration](https://github.com/internlm/intern-s2-mobius/blob/2b0037c8603c6638f9173540b13562f0372896d1/configuration_interns2_mobius.py#L175-L241)). The released defaults specify four shared blocks, 256 routed experts, and top-eight selection, though the repository does not include the deployed 35B checkpoint's `config.json`. The model constructs the configured number of shared routed MoE blocks, uses hidden-state-conditioned top-k routing, assigns each decoder layer to `layer_idx % num_blocks`, and combines that output with a per-layer shared expert ([router and decoder layer](https://github.com/internlm/intern-s2-mobius/blob/2b0037c8603c6638f9173540b13562f0372896d1/modeling_interns2_mobius.py#L736-L891), [model assembly and traversal](https://github.com/internlm/intern-s2-mobius/blob/2b0037c8603c6638f9173540b13562f0372896d1/modeling_interns2_mobius.py#L1381-L1468)). This confirms block-wise shared sparse FFN access across layers. It is more precise than the paper's “global vector database” metaphor: the operative state is distributed expert weights selected by a learned router, and the default implementation partitions it into four shared blocks while retaining layer-local experts.
 

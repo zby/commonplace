@@ -1,6 +1,10 @@
 ---
 description: "Primary cross-pairing evidence separates harness-edit production, artifact loading, judged procedural match, and downstream benefit while stopping short of causal uptake and compounding"
-source_snapshot: "harness-updating-is-not-harness-benefit.md"
+source: https://arxiv.org/abs/2605.30621
+captured: "2026-08-04"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 453897c0e4c13dd6cb076cb2d33fc83fcd3d8bd4348633f4f0d554beb0dbe4cd
 ingested: "2026-08-04"
 type: kb/sources/types/ingest-report.md
 domains: [self-improvement, harness-evolution, agent-capability, evaluation]
@@ -8,14 +12,9 @@ domains: [self-improvement, harness-evolution, agent-capability, evaluation]
 
 # Ingest: Harness Updating Is Not Harness Benefit
 
-Source: [harness-updating-is-not-harness-benefit.md](harness-updating-is-not-harness-benefit.md)
-Captured: 2026-08-04
-From: https://arxiv.org/abs/2605.30621
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv v1 preprint that formalizes two harness-evolution capabilities and reports controlled agent-evolver cross-pairings across three benchmarks.
-Domains: self-improvement, harness-evolution, agent-capability, evaluation
+An arXiv v1 preprint that formalizes two harness-evolution capabilities and reports controlled agent-evolver cross-pairings across three benchmarks.
 Author: Minhua Lin and a multi-institution research team from Penn State, UC Santa Cruz, Amazon, Emory, UIUC, and Northeastern; the paper releases code, but remains a new preprint rather than peer-reviewed evidence.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "Moen & Norman's history of the PDSA cycle as scientific method in industry — an applied-lineage witness for the discovery lifecycle and improvement-loop notes."
-source_snapshot: "circling-back-clearing-up-myths-about-the-deming-cycle.md"
+source: https://qicentral.rcpch.ac.uk/wp-content/uploads/sites/9/2021/10/Moen-and-Norman-on-Deming-circling-back-ph556x.pdf
+captured: "2026-07-22"
+capture: user-supplied-pdf-to-markdown
+genre: conceptual-essay
+snapshot_sha256: d59b81096e3e048f21ff9fec2d92014d4a82799ab6e798b6aeebbff263a81860
 ingested: "2026-07-22"
 type: kb/sources/types/ingest-report.md
 domains: [discovery-lifecycle, improvement-loops, scientific-method]
@@ -8,14 +12,9 @@ domains: [discovery-lifecycle, improvement-loops, scientific-method]
 
 # Ingest: Circling Back — Clearing Up Myths About the Deming Cycle
 
-Source: circling-back-clearing-up-myths-about-the-deming-cycle.md
-Captured: 2026-07-22
-From: https://qicentral.rcpch.ac.uk/wp-content/uploads/sites/9/2021/10/Moen-and-Norman-on-Deming-circling-back-ph556x.pdf
-
 ## Classification
 
-Genre: conceptual-essay -- a 2010 *Quality Progress* (ASQ) article that argues a historical framing (the PDSA cycle is the scientific method carried into industry) and corrects three myths about PDCA vs. PDSA. It carries references but no methodology, data, or experiment, so it is a framing/historical-position essay rather than a `scientific-paper`; the snapshot's capture-time `genre` was corrected to `conceptual-essay` during ingest.
-Domains: discovery-lifecycle, improvement-loops, scientific-method
+A 2010 *Quality Progress* (ASQ) article that argues a historical framing (the PDSA cycle is the scientific method carried into industry) and corrects three myths about PDCA vs. PDSA. It carries references but no methodology, data, or experiment, so it is a framing/historical-position essay rather than a `scientific-paper`; the snapshot's capture-time `genre` was corrected to `conceptual-essay` during ingest.
 Author: Ronald D. Moen (ASQ Deming Medal, 2002; assisted Deming at 70 of his four-day seminars, 1982-1993; managed Deming's monthly GM visits) and Clifford L. Norman, both partners at Associates in Process Improvement. First-hand proximity to Deming and the primary-letter evidence give unusual authority on the PDSA/PDCA distinction; the same proximity is a source of partisanship (see Limitations).
 
 ## Summary

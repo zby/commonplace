@@ -1,6 +1,10 @@
 ---
 description: "Hacker News reports on reader-burden and maintenance failures from unedited AI-generated text, with counterexamples that bound artifact-level bans"
-source_snapshot: "hacker-news-ai-dr-ai-didnt-read.md"
+source: https://news.ycombinator.com/item?id=49336573
+captured: "2026-08-18"
+capture: web-fetch
+genre: conversation-thread
+snapshot_sha256: 01efcb689b73612d11ba578ea25f69889da1583699c0c9c41b903ecfd24ac8df
 ingested: "2026-08-18"
 type: kb/sources/types/ingest-report.md
 domains: [llm-writing, review, maintenance, human-ai-collaboration]
@@ -8,14 +12,9 @@ domains: [llm-writing, review, maintenance, human-ai-collaboration]
 
 # Ingest: AI;DR (AI; Didn't Read) — Hacker News discussion
 
-Source: [hacker-news-ai-dr-ai-didnt-read.md](./hacker-news-ai-dr-ai-didnt-read.md)
-Captured: 2026-08-18
-From: https://news.ycombinator.com/item?id=49336573
-
 ## Classification
 
-Genre: conversation-thread -- a large, branching discussion with competing claims and no single authorial thesis.
-Domains: llm-writing, review, maintenance, human-ai-collaboration
+A large, branching discussion with competing claims and no single authorial thesis.
 Author: Hacker News participants provide many claimed first-hand software-engineering experiences, but their identities, expertise, and reports are not verified. The thread's size strengthens its value as a source of failure modes and counterexamples, not as prevalence evidence.
 
 ## Summary

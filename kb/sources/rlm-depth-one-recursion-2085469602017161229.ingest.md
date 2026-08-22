@@ -1,6 +1,13 @@
 ---
 description: "Analysis of Will Brown's depth-1 RLM examples, which separate recursive host programs from nested language-model calls"
-source_snapshot: "rlm-depth-one-recursion-2085469602017161229.md"
+source: https://x.com/willccbb/status/2085469602017161229
+captured: "2026-08-07T08:38:03.220556+00:00"
+capture: xdk
+genre: conceptual-essay
+snapshot_sha256: 1bc3421afcf98bf97cc971633a17554c5cc0df033dad8b67891cfbef7551e83a
+status_id: 2085469602017161229
+conversation_id: 2085469602017161229
+post_count: 5
 ingested: "2026-08-07"
 type: kb/sources/types/ingest-report.md
 domains: [computational-model, orchestration, context-engineering, tool-loop]
@@ -10,7 +17,7 @@ domains: [computational-model, orchestration, context-engineering, tool-loop]
 
 ## Classification
 
-- **Genre:** conceptual-essay — a short technical argument supported by executable-shaped pseudocode, diagrams, and implementation claims in follow-up replies
+A short technical argument supported by executable-shaped pseudocode, diagrams, and implementation claims in follow-up replies
 - **Author:** Will Brown (`@willccbb`); the thread presents him as speaking from experience with `prime-agent`, but this snapshot supplies no independent biography or code-level verification
 - **Evidence level:** illustrative — the examples make the computational distinction concrete, but the thread includes no execution trace, implementation, benchmark, or correctness evaluation
 

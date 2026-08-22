@@ -1,6 +1,10 @@
 ---
 description: "Passive distillation of existing agent trajectories into domain skills recovers much of a reasoning mode's performance at lower output-token cost, with skill and decomposition variance untested"
-source_snapshot: "reason-wide-not-deep-distilled-skills.md"
+source: https://arxiv.org/html/2608.07885v1
+captured: "2026-08-18"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 5563d6df0d4b948334753135a5d49408cdca7441d39e5fd721b13ceffc02ae9f
 ingested: "2026-08-18"
 type: kb/sources/types/ingest-report.md
 domains: [trace-learning, deploy-time-learning, skill-distillation, reasoning-economics]
@@ -8,14 +12,9 @@ domains: [trace-learning, deploy-time-learning, skill-distillation, reasoning-ec
 
 # Ingest: Reason Wide, Not Deep: Amortizing the Reasoning Premium into Distilled Skills
 
-Source: [reason-wide-not-deep-distilled-skills.md](reason-wide-not-deep-distilled-skills.md)
-Captured: 2026-08-18
-From: https://arxiv.org/html/2608.07885v1
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv preprint with a defined corpus-to-skill method, held-out evaluations, a corpus-source ablation, a prompt-optimizer comparison, and explicit limitations.
-Domains: trace-learning, deploy-time-learning, skill-distillation, reasoning-economics
+An arXiv preprint with a defined corpus-to-skill method, held-out evaluations, a corpus-source ablation, a prompt-optimizer comparison, and explicit limitations.
 Author: Six Microsoft researchers; the paper supplies primary experimental evidence and enough method detail to inspect the claimed comparison, but this KB has not independently reproduced the runs.
 
 ## Summary

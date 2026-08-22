@@ -1,6 +1,10 @@
 ---
 description: "Jacovi and Goldberg separate faithfulness from plausibility, expose the assumptions behind common explanation tests, and argue for graded rather than binary faithfulness"
-source_snapshot: "towards-faithfully-interpretable-nlp-systems.md"
+source: https://aclanthology.org/2020.acl-main.386/
+captured: "2026-07-23"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 82960e6ed591bacb0a4576fdd6b5da95a25a6da1c774e3d6486df785336438af
 ingested: "2026-07-23"
 type: kb/sources/types/ingest-report.md
 domains: [interpretability, faithfulness, explanation-evaluation, oversight]
@@ -8,14 +12,9 @@ domains: [interpretability, faithfulness, explanation-evaluation, oversight]
 
 # Ingest: Towards Faithfully Interpretable NLP Systems
 
-Source: [towards-faithfully-interpretable-nlp-systems.md](./towards-faithfully-interpretable-nlp-systems.md)
-Captured: 2026-07-23
-From: <https://aclanthology.org/2020.acl-main.386/>
-
 ## Classification
 
-Genre: scientific-paper -- an ACL opinion/survey paper that formalizes a vocabulary for explanation quality, surveys faithfulness tests, and proposes evaluation guidelines rather than presenting a new benchmark.
-Domains: interpretability, faithfulness, explanation-evaluation, oversight
+An ACL opinion/survey paper that formalizes a vocabulary for explanation quality, surveys faithfulness tests, and proposes evaluation guidelines rather than presenting a new benchmark.
 Author: Alon Jacovi and Yoav Goldberg; the paper is published in ACL 2020 and the authors have direct interpretability/NLP research standing, while the paper's prescriptive claims are explicitly an opinion piece.
 
 ## Summary
@@ -24,7 +23,7 @@ Jacovi and Goldberg argue that explanation quality must separate **plausibility*
 
 ## Connections Found
 
-The paper is direct evidence for [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md): it supplies the faithful/plausible distinction and the warning that utility can increase without validating the explanation's causal truth. It also gives [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) a non-mathematical instance of process validity being distinct from successful output, and it qualifies [Structured output is easier for humans to review](../notes/structured-output-is-easier-for-humans-to-review.md): readability helps a reviewer inspect an artifact but does not establish faithfulness. [Language Models Don't Always Say What They Think](./language-models-dont-always-say-what-they-think.md) is the empirical companion, testing this distinction with controlled input interventions.
+The paper is direct evidence for [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md): it supplies the faithful/plausible distinction and the warning that utility can increase without validating the explanation's causal truth. It also gives [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) a non-mathematical instance of process validity being distinct from successful output, and it qualifies [Structured output is easier for humans to review](../notes/structured-output-is-easier-for-humans-to-review.md): readability helps a reviewer inspect an artifact but does not establish faithfulness. [Language Models Don't Always Say What They Think](https://proceedings.neurips.cc/paper_files/paper/2023/hash/ed3fea9033a80fea1376299fa7863f4a-Abstract-Conference.html) is the empirical companion, testing this distinction with controlled input interventions.
 
 ## Extractable Value
 
@@ -49,4 +48,4 @@ Relevant Notes:
 - [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) -- is-evidence-for: supplies the target distinction and oversight boundary
 - [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) -- is-evidence-for: separates output utility from process validity
 - [Structured output is easier for humans to review](../notes/structured-output-is-easier-for-humans-to-review.md) -- is-evidence-for: readability does not entail faithfulness
-- [Language Models Don't Always Say What They Think](./language-models-dont-always-say-what-they-think.md) -- compares-with: controlled behavioral test of the conceptual distinction
+- [Language Models Don't Always Say What They Think](https://proceedings.neurips.cc/paper_files/paper/2023/hash/ed3fea9033a80fea1376299fa7863f4a-Abstract-Conference.html) -- compares-with: controlled behavioral test of the conceptual distinction

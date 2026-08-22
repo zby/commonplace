@@ -11,7 +11,7 @@ last-checked: "2026-06-02"
 
 Trajectory-Informed Memory Generation is an IBM Research framework that reportedly improves LLM agents by extracting actionable tips from completed execution trajectories, consolidating those tips, and injecting relevant guidance into later runs. Coverage here is **doc-grounded** from the paper snapshot and ingest, with no public source code inspected, so mechanisms are reported claims rather than code-grounded findings.
 
-**Source:** [Trajectory-Informed Memory Generation source snapshot](../../sources/trajectory-informed-memory-generation-self-improving-agents.md) and [ingest report](../../sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md), from arXiv 2603.10600v1.
+**Source:** [Trajectory-Informed Memory Generation paper](https://arxiv.org/html/2603.10600v1) and [ingest report](../../sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md), from arXiv 2603.10600v1.
 
 **Reviewed version:** arXiv 2603.10600v1, dated 2026-03-11; local snapshot captured 2026-03-13 and re-read 2026-06-02.
 

@@ -1,6 +1,10 @@
 ---
 description: "Controlled knowledge-centric self-improvement protocol in which stateless agents curate a shared knowledge base through task forums, cross-task forums, and scoped distillation"
-source_snapshot: "kb/sources/knowledge-centric-self-improvement-2607.19592.md"
+source: https://arxiv.org/abs/2607.19592
+captured: "2026-07-24"
+capture: user-supplied-pdf-to-markdown
+genre: scientific-paper
+snapshot_sha256: 80f403224562fdb55dc00d9425bc0ef9ad2e48c3db857f766e424ffd5cbf0ff0
 ingested: "2026-07-24"
 type: kb/sources/types/ingest-report.md
 domains: [knowledge-centric-learning, deploy-time-learning, agent-memory, self-improvement]
@@ -8,14 +12,9 @@ domains: [knowledge-centric-learning, deploy-time-learning, agent-memory, self-i
 
 # Ingest: Knowledge-Centric Self-Improvement
 
-Source: kb/sources/knowledge-centric-self-improvement-2607.19592.md  
-Captured: 2026-07-24  
-From: https://arxiv.org/abs/2607.19592
-
 ## Classification
 
-Genre: scientific-paper -- arXiv preprint with a defined curation protocol, benchmark setup, agent-centric and prompt-optimization baselines, cross-LLM tests, and held-out transfer experiments.  
-Domains: knowledge-centric-learning, deploy-time-learning, agent-memory, self-improvement  
+ArXiv preprint with a defined curation protocol, benchmark setup, agent-centric and prompt-optimization baselines, cross-LLM tests, and held-out transfer experiments.
 Author: Xuefei (Julie) Wang, Lauren Hyoseo Yoon, Chengrui Qu, Amanda Zichang Wang, Atharva Sehgal, Eric Mazumdar, and Yisong Yue (Caltech); the source is a current research preprint with public code at [recursive-knowledge/KSI](https://github.com/recursive-knowledge/KSI), not a peer-reviewed final publication.
 
 ## Summary

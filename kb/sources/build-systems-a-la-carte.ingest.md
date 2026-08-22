@@ -1,6 +1,10 @@
 ---
 description: "How the scheduler×rebuilder build-systems framework grounds the KB's derived-artifact freshness machinery (staleness, verifying traces, recompute-vs-store)"
-source_snapshot: "build-systems-a-la-carte.md"
+source: https://www.microsoft.com/en-us/research/wp-content/uploads/2018/03/build-systems.pdf
+captured: "2026-07-06"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: bc6837dbeca9a4ecf98b217de6053a8a4cff71307b46a1bdba67d4960727c64b
 ingested: "2026-07-06"
 type: kb/sources/types/ingest-report.md
 domains: [build-systems, incremental-computation, staleness-detection, caching]
@@ -8,14 +12,9 @@ domains: [build-systems, incremental-computation, staleness-detection, caching]
 
 # Ingest: Build Systems à la Carte
 
-Source: build-systems-a-la-carte.md
-Captured: 2026-07-06
-From: https://www.microsoft.com/en-us/research/wp-content/uploads/2018/03/build-systems.pdf
-
 ## Classification
 
-Type: scientific-paper -- peer-reviewed functional-programming paper (Proc. ACM Program. Lang., ICFP 2018) with executable Haskell abstractions and a formal correctness definition.
-Domains: build-systems, incremental-computation, staleness-detection, caching
+Peer-reviewed functional-programming paper (Proc. ACM Program. Lang., ICFP 2018) with executable Haskell abstractions and a formal correctness definition.
 Author: Andrey Mokhov (Newcastle), Neil Mitchell (Digital Asset / Shake author), Simon Peyton Jones (Microsoft Research). High credibility: SPJ is a foundational FP figure, Mitchell authored Shake, and the framework is executable rather than hand-waved.
 
 ## Summary

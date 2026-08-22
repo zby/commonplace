@@ -1,6 +1,10 @@
 ---
 description: Hallucination-driven self-learning LLM paper proposing Points in the Unknown, a self-question/search/train loop, and metrics for selecting models that can discover factual knowledge gaps
-source_snapshot: into-the-unknown-self-learning-large-language-models.md
+source: https://arxiv.org/html/2402.09147v4
+captured: "2026-04-16"
+capture: lynx-html
+genre: scientific-paper
+snapshot_sha256: 455c4e34ec8559a03e40a72ee2f004e6292b661adf0c221948b789c3dd4553e3
 ingested: "2026-04-16"
 type: kb/sources/types/ingest-report.md
 domains: [learning-theory, continual-learning, evaluation, hallucination]
@@ -8,14 +12,9 @@ domains: [learning-theory, continual-learning, evaluation, hallucination]
 
 # Ingest: Into the Unknown: Self-Learning Large Language Models
 
-Source: into-the-unknown-self-learning-large-language-models.md
-Captured: 2026-04-16
-From: https://arxiv.org/html/2402.09147v4
-
 ## Classification
 
-Type: scientific-paper -- arXiv preprint with a formal concept, methods for identifying unknown knowledge, proposed metrics, experiments across model families, and a training-loop evaluation.
-Domains: learning-theory, continual-learning, evaluation, hallucination
+ArXiv preprint with a formal concept, methods for identifying unknown knowledge, proposed metrics, experiments across model families, and a training-loop evaluation.
 Author: Teddy Ferdinan, Jan Kocon, and Przemyslaw Kazienko, Department of Artificial Intelligence, Wroclaw Tech. Academic NLP/AI affiliation and reproducibility artifacts are useful credibility signals, but treat the claims as preprint-level.
 
 ## Summary
@@ -24,7 +23,7 @@ The paper proposes a self-learning LLM loop organized around "Points in the Unkn
 
 ## Connections Found
 
-The connect report places this source in the KB's continual-learning, substrate, and oracle-construction cluster. It **contrasts** with [Treat continual learning as substrate coevolution](../notes/treat-continual-learning-as-representational-form-coevolution.md) because it is a clean opaque-substrate loop: identify unknowns, search for facts, train weights. It **qualifies** [Continual learning requires governing behaviour-changing writes, not just storing content](../notes/continual-learning-requires-governing-behaviour-changing-writes.md) because the paper's successful training would be durable capacity change, but the KB's criterion is durability rather than weights. It **extends** [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md) by offering a concrete "what to learn" operator, while also showing why factual hallucination scoring does not directly solve judgment-heavy KB mutations. The closest oracle comparison is [Memory management policy is learnable but oracle-dependent](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md): AgeMem uses task completion as the oracle; this paper uses hallucination/self-checking as an unknown detector and external search as supervision. The source also connects to [Oracle strength spectrum](../notes/oracle-strength-spectrum.md), [The boundary of automation is the boundary of verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md), and Letta's [Continual Learning in Token Space](./continual-learning-in-token-space.md).
+The connect report places this source in the KB's continual-learning, substrate, and oracle-construction cluster. It **contrasts** with [Treat continual learning as substrate coevolution](../notes/treat-continual-learning-as-representational-form-coevolution.md) because it is a clean opaque-substrate loop: identify unknowns, search for facts, train weights. It **qualifies** [Continual learning requires governing behaviour-changing writes, not just storing content](../notes/continual-learning-requires-governing-behaviour-changing-writes.md) because the paper's successful training would be durable capacity change, but the KB's criterion is durability rather than weights. It **extends** [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md) by offering a concrete "what to learn" operator, while also showing why factual hallucination scoring does not directly solve judgment-heavy KB mutations. The closest oracle comparison is [Memory management policy is learnable but oracle-dependent](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md): AgeMem uses task completion as the oracle; this paper uses hallucination/self-checking as an unknown detector and external search as supervision. The source also connects to [Oracle strength spectrum](../notes/oracle-strength-spectrum.md), [The boundary of automation is the boundary of verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md), and Letta's [Continual Learning in Token Space](https://www.letta.com/blog/continual-learning).
 
 ## Extractable Value
 

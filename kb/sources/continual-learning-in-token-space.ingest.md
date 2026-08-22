@@ -1,6 +1,10 @@
 ---
 description: Letta reframes continual learning as optimizing learned context rather than weights, but the KB's stronger frame is weight space versus repo artifacts, including codified procedures
-source_snapshot: continual-learning-in-token-space.md
+source: https://www.letta.com/blog/continual-learning
+captured: "2026-03-23"
+capture: web-open
+genre: conceptual-essay
+snapshot_sha256: c1860eaa8d9e25ba7389bb00ecadfd11a0eac66214af32526c335fa7580e1706
 ingested: "2026-03-23"
 type: kb/sources/types/ingest-report.md
 domains: [continuous-learning, agent-memory, context-engineering, learning-theory]
@@ -8,14 +12,9 @@ domains: [continuous-learning, agent-memory, context-engineering, learning-theor
 
 # Ingest: Continual Learning in Token Space
 
-Source: continual-learning-in-token-space.md
-Captured: 2026-03-23
-From: https://www.letta.com/blog/continual-learning
-
 ## Classification
 
-Type: conceptual-essay — a research-flavored blog post arguing for a reframing of continual learning in LLM agents, with some formalization and design directions but no new implementation or empirical evaluation.
-Domains: continuous-learning, agent-memory, context-engineering, learning-theory
+A research-flavored blog post arguing for a reframing of continual learning in LLM agents, with some formalization and design directions but no new implementation or empirical evaluation.
 Author: Letta, the team behind MemGPT/Letta's stateful-agent platform. Strong practitioner signal on agent memory and context management, but also clear vendor alignment.
 
 ## Summary

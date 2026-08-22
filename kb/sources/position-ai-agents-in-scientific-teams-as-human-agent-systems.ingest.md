@@ -1,6 +1,10 @@
 ---
 description: "Position paper restates human-inclusive evaluation for scientific AI, but the captured page neither resolves contribution attribution nor exposes enough evidence to advance KB methodology"
-source_snapshot: "position-ai-agents-in-scientific-teams-as-human-agent-systems.md"
+source: https://huggingface.co/papers/2608.14667
+captured: "2026-08-20"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 1230de7b14abcd6d7e701adfcabf585220d87e52952e2efd0af9c358f79bd977
 ingested: "2026-08-20"
 type: kb/sources/types/ingest-report.md
 domains: [human-agent-systems, scientific-discovery, agent-evaluation, function-allocation]
@@ -8,14 +12,9 @@ domains: [human-agent-systems, scientific-discovery, agent-evaluation, function-
 
 # Ingest: Position: AI Agents in Scientific Teams Should Be Studied as Human-Agent Systems
 
-Source: [position-ai-agents-in-scientific-teams-as-human-agent-systems.md](./position-ai-agents-in-scientific-teams-as-human-agent-systems.md)
-Captured: 2026-08-20
-From: https://huggingface.co/papers/2608.14667
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv position paper whose abstract reports literature and empirical analysis plus real-world case studies in support of a research agenda for human-agent scientific teams.
-Domains: human-agent-systems, scientific-discovery, agent-evaluation, function-allocation
+An arXiv position paper whose abstract reports literature and empirical analysis plus real-world case studies in support of a research agenda for human-agent scientific teams.
 Author: a 14-author team; the captured page identifies the National Laboratory of the Rockies, but does not expose individual affiliations, author credentials, or review status, so authority rests on the argument and evidence rather than the page metadata.
 
 ## Summary

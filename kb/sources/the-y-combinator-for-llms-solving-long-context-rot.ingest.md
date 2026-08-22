@@ -1,6 +1,10 @@
 ---
 description: "λ-RLM preprint replacing open-ended RLM REPL code with typed combinators, formal bounds, and long-context benchmark evidence"
-source_snapshot: "the-y-combinator-for-llms-solving-long-context-rot.md"
+source: https://arxiv.org/pdf/2603.20105
+captured: "2026-06-11"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: d072bcdcf6d40d56945c780d737a50ef25cf6fb6199291362e989429591b1423
 ingested: "2026-06-11"
 type: kb/sources/types/ingest-report.md
 domains: [computational-model, context-engineering, tool-loop, orchestration]
@@ -8,14 +12,9 @@ domains: [computational-model, context-engineering, tool-loop, orchestration]
 
 # Ingest: The Y-Combinator for LLMs
 
-Source: the-y-combinator-for-llms-solving-long-context-rot.md
-Captured: 2026-06-11
-From: https://arxiv.org/pdf/2603.20105
-
 ## Classification
 
-Type: scientific-paper -- arXiv preprint with formal definitions, theorems, experimental protocol, ablations, and references.
-Domains: computational-model, context-engineering, tool-loop, orchestration
+ArXiv preprint with formal definitions, theorems, experimental protocol, ablations, and references.
 Author: Amartya Roy, Rasul Tutunov, Xiaotong Ji, Matthieu Zimmer, and Haitham Bou-Ammar. The paper is from IIT Delhi, Robert Bosch GmbH, Huawei Noah's Ark Lab, and UCL Centre for Artificial Intelligence; credibility comes from a formal paper structure and reported experiments, but the source is still a preprint and the implementation was not inspected here.
 
 ## Summary

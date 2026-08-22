@@ -1,6 +1,10 @@
 ---
 description: "Filler-token study as evidence that monitorability depends on the observation surface and that hidden process traces can diagnose failures"
-source_snapshot: "reading-between-the-dots-decoding-hidden-computation.md"
+source: https://arxiv.org/abs/2607.03502
+captured: "2026-07-18"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: cd7310681fd221c5ae3dc1d08b62ab842d9a2c7233040d726b2662407be7d77e
 ingested: "2026-07-18"
 type: kb/sources/types/ingest-report.md
 domains: [mechanistic-interpretability, monitorability, reasoning, evaluation]
@@ -8,14 +12,9 @@ domains: [mechanistic-interpretability, monitorability, reasoning, evaluation]
 
 # Ingest: Reading Between the Dots: Decoding Hidden Computation across Filler Tokens
 
-Source: [reading-between-the-dots-decoding-hidden-computation.md](reading-between-the-dots-decoding-hidden-computation.md)
-Captured: 2026-07-18
-From: https://arxiv.org/abs/2607.03502
-
 ## Classification
 
-Genre: scientific-paper -- an ICML 2026 Mechanistic Interpretability Workshop paper with behavioral experiments, logit-lens analysis, causal KV-cache transplants, decoding evaluations, ablations, and explicit limitations.
-Domains: mechanistic-interpretability, monitorability, reasoning, evaluation
+An ICML 2026 Mechanistic Interpretability Workshop paper with behavioral experiments, logit-lens analysis, causal KV-cache transplants, decoding evaluations, ablations, and explicit limitations.
 Author: Academic mechanistic-interpretability researchers releasing code and data; the workshop venue, two principal models, quantized mechanistic runs, and dependence on open-weight access limit the strength and breadth of the evidence.
 
 ## Summary

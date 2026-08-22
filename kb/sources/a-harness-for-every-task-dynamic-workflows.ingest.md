@@ -1,6 +1,13 @@
 ---
 description: "Anthropic practitioner account of dynamic workflows in Claude Code: model-authored ephemeral JS orchestrators that spawn and coordinate sub-agents"
-source_snapshot: "a-harness-for-every-task-dynamic-workflows.md"
+source: https://x.com/trq212/status/2061907337154367865
+captured: "2026-06-03T06:56:27.332770+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: dad4f4a737c00d19d6203923ea64f5523adfb017344327e9ad0909d13b827128
+status_id: 2061907337154367865
+conversation_id: 2061907337154367865
+post_count: 7
 ingested: "2026-06-03"
 type: kb/sources/types/ingest-report.md
 domains: [agent-orchestration, sub-agent-coordination, context-engineering, verification]
@@ -8,14 +15,9 @@ domains: [agent-orchestration, sub-agent-coordination, context-engineering, veri
 
 # Ingest: A harness for every task: dynamic workflows in Claude Code
 
-Source: a-harness-for-every-task-dynamic-workflows.md
-Captured: 2026-06-03
-From: https://x.com/trq212/status/2061907337154367865
-
 ## Classification
 
-Type: practitioner-report -- a first-party account by the engineers who shipped the feature (Thariq Shihipar and Sid Bidasaria, technical staff at Anthropic working on Claude Code), describing what dynamic workflows are, why they help, and the patterns they observed in use. It announces a product but reads as a build-and-learnings report rather than a marketing announcement, with explicit "best practices are still developing" and "when not to use" caveats.
-Domains: agent-orchestration, sub-agent-coordination, context-engineering, verification
+A first-party account by the engineers who shipped the feature (Thariq Shihipar and Sid Bidasaria, technical staff at Anthropic working on Claude Code), describing what dynamic workflows are, why they help, and the patterns they observed in use. It announces a product but reads as a build-and-learnings report rather than a marketing announcement, with explicit "best practices are still developing" and "when not to use" caveats.
 Author: high credibility on the *what* (insider, ships the system), but vendor-positioned and anecdotal on the *how well* -- no measurements, no comparisons against alternatives.
 
 ## Summary

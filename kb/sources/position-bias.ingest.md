@@ -1,6 +1,10 @@
 ---
 description: Swapped-order pairwise-judging benchmark showing that across 27 LLM judges the median model flips its underlying winner in 44.8% of decisive cases, with large model-dependent first-position lifts on sibling story-edit pairs
-source_snapshot: kb/sources/position-bias/
+source: https://github.com/lechmazur/position_bias/tree/483150e8e1938c17331f9e82f86e41a653286651
+captured: "2026-04-21"
+capture: git-checkout
+genre: code-repository
+snapshot_sha256: a211f5c86410fd2c4fdffe50a2e29ea0b9eb4b8ac064e0919238124cdca05471
 ingested: "2026-04-23"
 type: kb/sources/types/ingest-report.md
 domains: [evaluation, judge-reliability, position-bias, llm-as-judge]
@@ -8,15 +12,9 @@ domains: [evaluation, judge-reliability, position-bias, llm-as-judge]
 
 # Ingest: LLM Position Bias Benchmark (Swapped-Order Pairwise Judging)
 
-Source: kb/sources/position-bias/
-Captured: 2026-04-21
-From: https://github.com/lechmazur/ (Mazur position-bias benchmark family; specific repo slug inferred from the "Related Benchmarks" list)
-Pin: 483150e
-
 ## Classification
 
-Type: code-repository -- public data-and-reports bundle (no runner code checked in, but 193 verified story pairs, 386 published prompt files, 10422 parsed model-answer rows with raw response text, and nine aggregate result CSVs); a reproducible measurement artifact rather than a codebase.
-Domains: evaluation, judge-reliability, position-bias, llm-as-judge
+Public data-and-reports bundle (no runner code checked in, but 193 verified story pairs, 386 published prompt files, 10422 parsed model-answer rows with raw response text, and nine aggregate result CSVs); a reproducible measurement artifact rather than a codebase.
 Author: Lechoslaw (Lech) Mazur (inferred from the GitHub org linked in "Related Benchmarks"; this snapshot has a single "initial" commit dated 2026-04-21). Credibility signal: the author runs a well-known suite of LLM public benchmarks; independent of model providers; methodology is transparent but single-team.
 
 ## Summary

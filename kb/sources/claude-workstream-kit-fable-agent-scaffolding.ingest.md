@@ -1,6 +1,13 @@
 ---
 description: "claude-workstream-kit announcement arguing that stronger models relax model-management scaffolding but make project-scoped, git-versioned active work state more important"
-source_snapshot: "claude-workstream-kit-fable-agent-scaffolding.md"
+source: https://x.com/ChristopherA/status/2065234780497883259
+captured: "2026-06-12T12:17:46.079283+00:00"
+capture: xdk
+genre: tool-announcement
+snapshot_sha256: c8a32b5b994e715a6dfbfd7203bc674f3723ce260355618f6aa4bdc766da747e
+status_id: 2065234780497883259
+conversation_id: 2065234780497883259
+post_count: 1
 ingested: "2026-06-12"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, context-engineering, workstreams, claude-code]
@@ -8,14 +15,9 @@ domains: [agent-memory, context-engineering, workstreams, claude-code]
 
 # Ingest: Claude Fable 5 Made Most of My Agent Scaffolding Obsolete
 
-Source: [claude-workstream-kit-fable-agent-scaffolding.md](./claude-workstream-kit-fable-agent-scaffolding.md)
-Captured: 2026-06-12T12:17:46.079283+00:00
-From: https://x.com/ChristopherA/status/2065234780497883259
-
 ## Classification
 
-Type: tool-announcement -- the post announces `claude-workstream-kit`, but it also reports the design rationale from rebuilding a larger private system for stronger Claude Code models.
-Domains: agent-memory, context-engineering, workstreams, claude-code
+The post announces `claude-workstream-kit`, but it also reports the design rationale from rebuilding a larger private system for stronger Claude Code models.
 Author: @ChristopherA, reporting as the tool author; credibility comes from building and dogfooding the system, while the model-behavior and acceptance-test claims remain self-reported.
 
 ## Summary

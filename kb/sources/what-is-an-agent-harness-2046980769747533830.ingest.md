@@ -1,6 +1,13 @@
 ---
 description: "Arize taxonomy separates nine harness components and adds permission/safety plus lifecycle hooks as first-class primitives, a fifth independent convergence on the harness decomposition"
-source_snapshot: what-is-an-agent-harness-2046980769747533830.md
+source: https://x.com/aparnadhinak/status/2046980769747533830
+captured: "2026-04-29T17:20:12.356351+00:00"
+capture: xdk
+genre: conceptual-essay
+snapshot_sha256: f187701c842785ed976a9b98d6052752712649b2729d9ddeac358605d54ea029
+status_id: 2046980769747533830
+conversation_id: 2046980769747533830
+post_count: 7
 ingested: "2026-04-23"
 type: kb/sources/types/ingest-report.md
 domains: [agent-systems, harness-engineering, permission-and-safety, framework-vs-harness]
@@ -8,14 +15,9 @@ domains: [agent-systems, harness-engineering, permission-and-safety, framework-v
 
 # Ingest: What is an Agent Harness
 
-Source: what-is-an-agent-harness-2046980769747533830.md
-Captured: 2026-04-29
-From: https://x.com/aparnadhinak/status/2046980769747533830
-
 ## Classification
 
-Type: conceptual-essay -- The post defines a term ("harness") against a contrasting term ("framework") and proposes a nine-component taxonomy. It cites Arize's own product (Alyx) as evidence of convergence but reports no experiments, benchmarks, or deployment data. The argumentative shape is definitional and polemical (anti-LangGraph), which puts it in conceptual-essay rather than practitioner-report.
-Domains: agent-systems, harness-engineering, permission-and-safety, framework-vs-harness
+The post defines a term ("harness") against a contrasting term ("framework") and proposes a nine-component taxonomy. It cites Arize's own product (Alyx) as evidence of convergence but reports no experiments, benchmarks, or deployment data. The argumentative shape is definitional and polemical (anti-LangGraph), which puts it in conceptual-essay rather than practitioner-report.
 Author: Aparna Dhinakaran -- co-founder of Arize AI (LLM observability/evals platform). Has industry visibility in the agent-evaluation space; the post is a public re-claiming of "harness" terminology against a competing framing from @akshay_pachaar (LangChain). Practitioner credibility from building Arize's in-product agent (Alyx) over two years, but the post itself is taxonomic rather than experiential.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "MDA splits scientific model discovery between LLM hypothesis proposal and Bayesian selection, improving interventional forecasts inside a fixed domain decomposition"
-source_snapshot: "model-discovery-agent-bayesian-experiment-design.md"
+source: https://arxiv.org/abs/2608.09696v1
+captured: "2026-08-12"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: c1052d16951c50545cb92113a2515726d5cffaa41fbbec43ab063c9de3d965d6
 ingested: "2026-08-12"
 type: kb/sources/types/ingest-report.md
 domains: [scientific-discovery, bayesian-experiment-design, mechanistic-world-models, learning-theory]
@@ -8,14 +12,9 @@ domains: [scientific-discovery, bayesian-experiment-design, mechanistic-world-mo
 
 # Ingest: Model Discovery Agent: LLM-assisted Bayesian Experiment Design
 
-Source: model-discovery-agent-bayesian-experiment-design.md
-Captured: 2026-08-12
-From: https://arxiv.org/abs/2608.09696v1
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv preprint that specifies a model-discovery method, introduces a benchmark, and reports controlled comparisons and ablations across three synthetic scientific domains.
-Domains: scientific-discovery, bayesian-experiment-design, mechanistic-world-models, learning-theory
+An arXiv preprint that specifies a model-discovery method, introduces a benchmark, and reports controlled comparisons and ablations across three synthetic scientific domains.
 Author: Kevin Murphy, Department of Computer Science, University of British Columbia. The paper gives unusually extensive method and benchmark detail, but it is a single-author preprint and has no independent replication in the captured record.
 
 ## Summary

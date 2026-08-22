@@ -1,6 +1,10 @@
 ---
 description: "Related 2002 version restating symbiotic reflection and up/down transfer; useful for lineage but not independent support."
-source_snapshot: wuyts-ducasse-2002-language-symbiosis.md
+source: https://www.researchgate.net/publication/2543816_Language_Symbiosis_through_Symbiotic_Reflection
+captured: "2026-07-14"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 6fa9d3497eca73e43b51b65bea44709d6a036472d2e6b87e828a854ec88600f7
 ingested: "2026-07-14"
 type: kb/sources/types/ingest-report.md
 domains: [reflection, language-symbiosis, source-lineage]
@@ -8,14 +12,9 @@ domains: [reflection, language-symbiosis, source-lineage]
 
 # Ingest: Language Symbiosis through Symbiotic Reflection
 
-Source: [wuyts-ducasse-2002-language-symbiosis.md](./wuyts-ducasse-2002-language-symbiosis.md)
-Captured: 2026-07-14
-From: https://www.researchgate.net/publication/2543816_Language_Symbiosis_through_Symbiotic_Reflection
-
 ## Classification
 
-Genre: scientific-paper -- an author-uploaded 2002 conference-paper version closely related to Wuyts and Ducasse's 2001 symbiotic-reflection paper.
-Domains: reflection, language-symbiosis, source-lineage
+An author-uploaded 2002 conference-paper version closely related to Wuyts and Ducasse's 2001 symbiotic-reflection paper.
 Author: Roel Wuyts and Stéphane Ducasse present the same SOUL/Smalltalk research line; its value here is version comparison and wording, not independent replication.
 
 ## Summary
@@ -24,7 +23,7 @@ This 2002 version defines **symbiotic reflection** as reflection between two lan
 
 ## Connections Found
 
-The durable relationship is a `compares-with` lineage edge to [the 2001 snapshot](./wuyts-ducasse-2001-symbiotic-reflection.md). It should not add a second evidence vote to [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md). [Representational form](../notes/definitions/representational-form.md) still supplies the local constraint on generalizing from programming paradigms to natural-language/symbolic forms.
+The durable relationship is a `compares-with` lineage edge to [the 2001 snapshot](https://scg.unibe.ch/archive/papers/Wuyt01a.pdf). It should not add a second evidence vote to [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md). [Representational form](../notes/definitions/representational-form.md) still supplies the local constraint on generalizing from programming paradigms to natural-language/symbolic forms.
 
 ## Inherited Vocabulary
 

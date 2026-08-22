@@ -1,6 +1,10 @@
 ---
 description: "Mature model defining inter-language reflection as traditional reflection plus linguistic symbiosis through data and protocol mappings."
-source_snapshot: gybels-et-al-2006-inter-language-reflection.md
+source: https://rmod-files.lille.inria.fr/Team/Texts/Papers/Gybe06aSymbioticReflectionESUGJournal.pdf
+captured: "2026-07-14"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: bd02c674a4f90e877e8ad9703b512ca08fcdcfe5abbec3ebf84c548f4fae7010
 ingested: "2026-07-14"
 type: kb/sources/types/ingest-report.md
 domains: [reflection, linguistic-symbiosis, protocol-mapping]
@@ -8,14 +12,9 @@ domains: [reflection, linguistic-symbiosis, protocol-mapping]
 
 # Ingest: Inter-language Reflection: A Conceptual Model and Its Implementation
 
-Source: [gybels-et-al-2006-inter-language-reflection.md](./gybels-et-al-2006-inter-language-reflection.md)
-Captured: 2026-07-14
-From: https://rmod-files.lille.inria.fr/Team/Texts/Papers/Gybe06aSymbioticReflectionESUGJournal.pdf
-
 ## Classification
 
-Genre: scientific-paper -- a peer-reviewed conceptual model with two implementation cases (Agora/Java and SOUL/Smalltalk).
-Domains: reflection, linguistic-symbiosis, protocol-mapping
+A peer-reviewed conceptual model with two implementation cases (Agora/Java and SOUL/Smalltalk).
 Author: Kris Gybels, Roel Wuyts, Stéphane Ducasse, and Maja D’Hondt consolidate the earlier symbiotic-reflection work into a published model that explicitly separates base-level data mappings from meta-level protocol mappings.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "DoWhy grounds the assumption boundary for causal reach assessment: causal estimates require declared assumptions and only partial validation"
-source_snapshot: "kb/sources/dowhy-expressing-and-validating-causal-assumptions.md"
+source: https://arxiv.org/abs/2108.13518
+captured: "2026-07-16"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: e918a866be472d575e0025c5bd7de18964a1b06c6e5e3a58d073ec1f6ace06e8
 ingested: "2026-07-16"
 type: kb/sources/types/ingest-report.md
 domains: [causal-inference, assumptions, reach-assessment]
@@ -8,14 +12,9 @@ domains: [causal-inference, assumptions, reach-assessment]
 
 # Ingest: DoWhy: Addressing Challenges in Expressing and Validating Causal Assumptions
 
-Source: [dowhy-expressing-and-validating-causal-assumptions.md](./dowhy-expressing-and-validating-causal-assumptions.md)
-Captured: 2026-07-16
-From: <https://arxiv.org/abs/2108.13518>
-
 ## Classification
 
-Genre: scientific-paper -- a workshop/method paper describing a causal-inference framework and the challenge of expressing and partially validating assumptions. The genre recorded on the snapshot is correct.
-Domains: causal-inference, assumptions, reach-assessment
+A workshop/method paper describing a causal-inference framework and the challenge of expressing and partially validating assumptions. The genre recorded on the snapshot is correct.
 Author: Amit Sharma, Vasilis Syrgkanis, Cheng Zhang, and Emre Kiciman from Microsoft Research; strong practitioner-research authority for causal inference tooling, with the usual tool-builder interest in the framework's framing.
 
 ## Summary

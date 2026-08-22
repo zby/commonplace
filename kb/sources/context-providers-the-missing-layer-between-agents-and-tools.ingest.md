@@ -1,6 +1,13 @@
 ---
 description: "Ashpreet Bedi's ContextProvider pattern: source-scoped sub-agents collapse many raw tools into query/update surfaces to reduce tool-context pollution"
-source_snapshot: "context-providers-the-missing-layer-between-agents-and-tools.md"
+source: https://x.com/ashpreetbedi/status/2048817143974613089
+captured: "2026-04-27T18:29:20.288781+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: e4e7c2b367e539a66bdb3a7f4aad17bfb7106ce157e8beb74c19028997ea09d7
+status_id: 2048817143974613089
+conversation_id: 2048817143974613089
+post_count: 1
 ingested: "2026-04-27"
 type: kb/sources/types/ingest-report.md
 domains: [context-engineering, tool-loop, agent-orchestration]
@@ -8,14 +15,9 @@ domains: [context-engineering, tool-loop, agent-orchestration]
 
 # Ingest: Context providers: the missing layer between agents and tools
 
-Source: context-providers-the-missing-layer-between-agents-and-tools.md
-Captured: 2026-04-27T18:29:20.288781+00:00
-From: https://x.com/ashpreetbedi/status/2048817143974613089
-
 ## Classification
 
-Type: practitioner-report -- the author reports testing a protocol and gives implementation-shaped examples, but the source is an X article rather than a formal design spec or paper.
-Domains: context-engineering, tool-loop, agent-orchestration
+The author reports testing a protocol and gives implementation-shaped examples, but the source is an X article rather than a formal design spec or paper.
 Author: Ashpreet Bedi; local authority is mostly practitioner evidence from building/testing this pattern, not external validation in the snapshot.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "Formal bound on the causal route to reach-assessment: IRM recovers the invariant predictor only under narrow conditions, and admits solutions that look invariant on training and revert to ERM at test"
-source_snapshot: "kb/sources/the-risks-of-invariant-risk-minimization.md"
+source: https://arxiv.org/abs/2010.05761
+captured: "2026-07-26"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: d3262a646db1e7cbbadb9d4e76cf1a1419cc59cf59f81bde2e0ee3edb1455024
 ingested: "2026-07-26"
 type: kb/sources/types/ingest-report.md
 domains: [causal-inference, invariance, reach-assessment]
@@ -8,14 +12,9 @@ domains: [causal-inference, invariance, reach-assessment]
 
 # Ingest: The Risks of Invariant Risk Minimization
 
-Source: [the-risks-of-invariant-risk-minimization.md](./the-risks-of-invariant-risk-minimization.md)
-Captured: 2026-07-26
-From: <https://arxiv.org/abs/2010.05761>
-
 ## Classification
 
-Genre: scientific-paper -- a theoretical analysis with a stated data model, theorems with proofs, an explicit failure construction, and confirming synthetic experiments. The genre recorded on the snapshot is correct. The snapshot was first captured from the arXiv abstract page and then extended in place with a body extraction covering the setup, the linear and non-linear results, and the conclusions, so the conditions cited below are checked against the paper rather than inferred from the abstract.
-Domains: causal-inference, invariance, reach-assessment
+A theoretical analysis with a stated data model, theorems with proofs, an explicit failure construction, and confirming synthetic experiments. The genre recorded on the snapshot is correct. The snapshot was first captured from the arXiv abstract page and then extended in place with a body extraction covering the setup, the linear and non-linear results, and the conclusions, so the conditions cited below are checked against the paper rather than inferred from the abstract.
 Author: Elan Rosenfeld, Pradeep Ravikumar, Andrej Risteski (CMU); ICLR 2021. High authority signal in learning theory; Ravikumar and Risteski are established in statistical machine learning theory.
 
 ## Summary

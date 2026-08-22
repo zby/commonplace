@@ -1,6 +1,10 @@
 ---
 description: "Historical evidence that PDCA/PDSA is the quality-engineering descendant of the conjecture-test learning loop"
-source_snapshot: "evolution-of-the-pdca-cycle.md"
+source: https://uploads.teachablecdn.com/attachments/aYpoH9SdSDO0k3KYVRRj_NA01MoenNormanFullpaper.pdf
+captured: "2026-07-22"
+capture: user-supplied-pdf-to-markdown
+genre: scientific-paper
+snapshot_sha256: 024d22c2159ca33e109620ff03ddca940f33c4db19516c4b8278dca0d86a0f94
 ingested: "2026-07-22"
 type: kb/sources/types/ingest-report.md
 domains: [discovery, improvement-cycles, scientific-method]
@@ -8,14 +12,9 @@ domains: [discovery, improvement-cycles, scientific-method]
 
 # Ingest: Evolution of the PDCA Cycle
 
-Source: evolution-of-the-pdca-cycle.md
-Captured: 2026-07-22
-From: https://uploads.teachablecdn.com/attachments/aYpoH9SdSDO0k3KYVRRj_NA01MoenNormanFullpaper.pdf
-
 ## Classification
 
-Genre: scientific-paper -- a conference/journal paper by Moen and Norman that documents a lineage with dated citations and figure-by-figure attribution; it argues a historical thesis rather than reporting an experiment, but the snapshot's `scientific-paper` classification holds because it is a peer-facing scholarly account with a full reference apparatus.
-Domains: discovery, improvement-cycles, scientific-method
+A conference/journal paper by Moen and Norman that documents a lineage with dated citations and figure-by-figure attribution; it argues a historical thesis rather than reporting an experiment, but the snapshot's `scientific-paper` classification holds because it is a peer-facing scholarly account with a full reference apparatus.
 Author: Ronald Moen and Clifford Norman, Associates in Process Improvement (API) — insider participants in the history they narrate (co-authors of the Model for Improvement and correspondents of Deming). High credibility on the API/PDSA lineage, with a corresponding stake in that lineage's framing (see Limitations).
 
 ## Summary

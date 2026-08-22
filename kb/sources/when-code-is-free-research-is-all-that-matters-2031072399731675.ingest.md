@@ -1,6 +1,13 @@
 ---
 description: Investor/researcher argument that oracle availability (not capability) determines automation boundary for cognitive work — research taste is unautomatable because problem selection has no ground truth
-source_snapshot: when-code-is-free-research-is-all-that-matters-2031072399731675269.md
+source: https://x.com/amytam01/status/2031072399731675269
+captured: "2026-03-10T13:19:25.932591+00:00"
+capture: xdk
+genre: conceptual-essay
+snapshot_sha256: f3d7319ac4880c039574959dd1845194c7f2c710b6f895ea3161fc499b2a8679
+status_id: 2031072399731675269
+conversation_id: 2031072399731675269
+post_count: 1
 ingested: "2026-03-10"
 type: kb/sources/types/ingest-report.md
 domains: [automation-boundary, research-methodology, oracle-theory, labor-economics]
@@ -8,15 +15,9 @@ domains: [automation-boundary, research-methodology, oracle-theory, labor-econom
 
 # Ingest: When code is free, research is all that matters
 
-Source: when-code-is-free-research-is-all-that-matters-2031072399731675269.md
-Captured: 2026-03-10
-From: https://x.com/amytam01/status/2031072399731675269
-
 ## Classification
 
-Type: **conceptual-essay** — argues a thesis (research taste as the scarce skill in an AI-automated world) through framing and analogy rather than data. No experimental methodology, no system being described; the coin-flipping metaphor and market-pricing examples serve a rhetorical function.
-
-Domains: automation-boundary, research-methodology, oracle-theory, labor-economics
+Argues a thesis (research taste as the scarce skill in an AI-automated world) through framing and analogy rather than data. No experimental methodology, no system being described; the coin-flipping metaphor and market-pricing examples serve a rhetorical function.
 
 Author: Amy Tam (investor at Bloomberg Beta), co-written with E Chi and Trenton Chang (researchers/founders at Quadrillion). Tam's perspective is that of a venture investor reasoning about where value accrues as engineering labor becomes commoditized. Bloomberg Beta's future-of-work focus gives her a legitimate vantage point on labor market dynamics; Quadrillion's focus on research tools gives the co-authors a practitioner stake in the thesis.
 

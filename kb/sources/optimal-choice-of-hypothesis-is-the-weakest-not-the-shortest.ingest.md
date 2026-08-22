@@ -1,6 +1,10 @@
 ---
 description: "Bennett's extension-size alternative to minimum description length, bounded by its uniform task prior and fixed representational decomposition"
-source_snapshot: "optimal-choice-of-hypothesis-is-the-weakest-not-the-shortest.md"
+source: https://arxiv.org/pdf/2301.12987v4
+captured: "2026-08-04"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 9afff9545a5a9aab03d98b9c115b06cf0c50f52759b73934b22f30763ba0b621
 ingested: "2026-08-04"
 type: kb/sources/types/ingest-report.md
 domains: [learning-theory, inductive-bias, generalisation, formal-methods]
@@ -8,14 +12,9 @@ domains: [learning-theory, inductive-bias, generalisation, formal-methods]
 
 # Ingest: The Optimal Choice of Hypothesis Is the Weakest, Not the Shortest
 
-Source: [optimal-choice-of-hypothesis-is-the-weakest-not-the-shortest.md](./optimal-choice-of-hypothesis-is-the-weakest-not-the-shortest.md)
-Captured: 2026-08-04
-From: https://arxiv.org/pdf/2301.12987v4
-
 ## Classification
 
-Genre: scientific-paper -- a formal induction paper that states three propositions and supplements them with binary-addition and binary-multiplication experiments; the captured version is an arXiv preprint rather than an identified peer-reviewed publication.
-Domains: learning-theory, inductive-bias, generalisation, formal-methods
+A formal induction paper that states three propositions and supplements them with binary-addition and binary-multiplication experiments; the captured version is an arXiv preprint rather than an identified peer-reviewed publication.
 Author: Michael Timothy Bennett (Australian National University). The paper provides an explicit formalism, proofs, quantitative tables, and a code-appendix reference, which makes its assumptions inspectable; it is a sole-author preprint, and this ingest did not independently verify the proof or reproduce the code.
 
 ## Summary

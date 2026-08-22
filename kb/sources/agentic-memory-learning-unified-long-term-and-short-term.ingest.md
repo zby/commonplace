@@ -1,6 +1,10 @@
 ---
 description: RL-trained unified LTM/STM memory policy for LLM agents — confirms memory management is learnable when task-completion oracles exist, but operates on opaque weights and low-reach facts
-source_snapshot: agentic-memory-learning-unified-long-term-and-short-term-memory.md
+source: https://arxiv.org/html/2601.01885v1
+captured: "2026-03-08"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: a374796280e80cf4c0ba6391a8d032f9a3d91b2083df29326b2808c8a4989aee
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, reinforcement-learning, context-management, llm-agents]
@@ -8,15 +12,9 @@ domains: [agent-memory, reinforcement-learning, context-management, llm-agents]
 
 # Ingest: Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for LLM Agents
 
-Source: agentic-memory-learning-unified-long-term-and-short-term-memory.md
-Captured: 2026-03-08
-From: https://arxiv.org/html/2601.01885v1
-
 ## Classification
 
-Type: scientific-paper -- preprint (arXiv, January 2025) with formalized problem statement, multi-stage RL training methodology, ablation studies, and evaluation across five benchmarks (ALFWorld, SciWorld, PDDL, BabyAI, HotpotQA) on multiple model backbones.
-
-Domains: agent-memory, reinforcement-learning, context-management, llm-agents
+Preprint (arXiv, January 2025) with formalized problem statement, multi-stage RL training methodology, ablation studies, and evaluation across five benchmarks (ALFWorld, SciWorld, PDDL, BabyAI, HotpotQA) on multiple model backbones.
 
 Author: Yi Yu, Liuyi Yao, Yuexiang Xie et al. (Alibaba Group, Wuhan University). Active in LLM agent infrastructure. The Alibaba affiliation signals production-scale orientation; the multi-backbone evaluation (Qwen, Llama) suggests practical deployment concerns rather than benchmark-only research.
 
@@ -47,7 +45,7 @@ Second-pass `/connect` (2026-03-09) confirmed this is one of the most thoroughly
 
 - [A-MEM](./a-mem-agentic-memory-for-llm-agents.ingest.md) -- **contrasts**: heuristic pipelines vs RL-trained policy for the same problem space.
 - [Letta (MemGPT)](./letta-memgpt-stateful-agents.ingest.md) -- **contrasts**: base-model instruction-following vs RL-trained policy. Together with A-MEM, they form a three-point spectrum (heuristic / instruction-following / RL-trained).
-- [Mem0](./mem0-memory-layer.md) -- **contrasts**: developer-managed external service vs RL-trained self-management.
+- [Mem0](https://github.com/mem0ai/mem0) -- **contrasts**: developer-managed external service vs RL-trained self-management.
 
 ## Extractable Value
 

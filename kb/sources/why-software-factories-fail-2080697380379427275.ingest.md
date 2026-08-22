@@ -1,6 +1,13 @@
 ---
 description: "Dex Horthy's failed lights-off software-factory case supports the verification boundary and challenges agent-only maintainability review"
-source_snapshot: "why-software-factories-fail-2080697380379427275.md"
+source: https://x.com/dexhorthy/status/2080697380379427275
+captured: "2026-07-26T07:15:32.486244+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: 9da3d3ce433e580a32bbbf65f089993e678bee2c2c7293a94b4912b707f39d7d
+status_id: 2080697380379427275
+conversation_id: 2080697380379427275
+post_count: 11
 ingested: "2026-07-26"
 type: kb/sources/types/ingest-report.md
 domains: [agentic-coding, maintainability, evaluation, verification]
@@ -8,14 +15,9 @@ domains: [agentic-coding, maintainability, evaluation, verification]
 
 # Ingest: Why Software Factories Fail
 
-Source: [why-software-factories-fail-2080697380379427275.md](why-software-factories-fail-2080697380379427275.md)
-Captured: 2026-07-26T07:15:32.486244+00:00
-From: https://x.com/dexhorthy/status/2080697380379427275
-
 ## Classification
 
-Genre: practitioner-report -- Horthy combines a firsthand account of running a lights-off coding factory for several months with an argument about training signals and coding benchmarks; the deployment experience, rather than the literature survey, is the source's distinctive evidence.
-Domains: agentic-coding, maintainability, evaluation, verification
+Horthy combines a firsthand account of running a lights-off coding factory for several months with an argument about training signals and coding benchmarks; the deployment experience, rather than the literature survey, is the source's distinctive evidence.
 Author: Dex Horthy writes as a long-time coding-agent practitioner and HumanLayer cofounder. That gives the failed deployment account useful operator signal, while his explicit admissions that maintainability lacks good benchmarks and that cited incident data are correlational appropriately limit its evidential strength.
 
 ## Summary
@@ -24,7 +26,7 @@ Horthy argues that lights-off software factories fail on long-lived, complex cod
 
 ## Connections Found
 
-The source is a strong practitioner anchor for [The boundary of automation is the boundary of verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md): maintainability is precisely a delayed, expensive-to-score property that blocks warranted lights-off automation. It also supplies the adverse case missing from [Maintenance capacity must match harmful-artifact inflow](../notes/maintenance-capacity-must-match-harmful-artifact-inflow.md): maintenance capacity must cover risk-weighted harmful inflow, but automated cleanup may itself share the evaluator ceiling that allowed structural degradation through. Most importantly, it qualifies [Inspectable artifact, not supervision, defeats the blackbox problem](../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md). Readable code makes failures inspectable, but inspectability alone does not establish that an unattended model reviewer can discriminate good long-horizon design from locally passing slop. The closest captured comparison is [Harness Engineering](harness-engineering-leveraging-codex-agent-first-world.md), which reports repository constraints and automated cleanup as a successful response to high-volume code generation; Horthy argues those measures do not yet settle maintainability.
+The source is a strong practitioner anchor for [The boundary of automation is the boundary of verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md): maintainability is precisely a delayed, expensive-to-score property that blocks warranted lights-off automation. It also supplies the adverse case missing from [Maintenance capacity must match harmful-artifact inflow](../notes/maintenance-capacity-must-match-harmful-artifact-inflow.md): maintenance capacity must cover risk-weighted harmful inflow, but automated cleanup may itself share the evaluator ceiling that allowed structural degradation through. Most importantly, it qualifies [Inspectable artifact, not supervision, defeats the blackbox problem](../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md). Readable code makes failures inspectable, but inspectability alone does not establish that an unattended model reviewer can discriminate good long-horizon design from locally passing slop. The closest captured comparison is [Harness Engineering](https://openai.com/index/harness-engineering/), which reports repository constraints and automated cleanup as a successful response to high-volume code generation; Horthy argues those measures do not yet settle maintainability.
 
 ## Extractable Value
 

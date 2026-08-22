@@ -1,6 +1,12 @@
 ---
 description: "Sentry co-founder's practitioner report on synthesizing Claude Code skills from domain-specific source material (commit history, security patches, OWASP docs) — found 8 real IDORs missed by professional pen testing"
-source_snapshot: skill-synthesis-materializing-knowledge-as-skills-2032179291031806408.md
+source: https://x.com/zeeg/status/2032179291031806408
+captured: "2026-03-13T00:00:00+00:00"
+capture: webfetch
+genre: practitioner-report
+snapshot_sha256: b9d7263006deec0be4b866e232e0c5cc8ce3c00f59323cd9721cbde3a640c706
+status_id: 2032179291031806408
+linked_url: https://cra.mr/skill-synthesis
 ingested: "2026-03-13"
 type: kb/sources/types/ingest-report.md
 domains: [skill-synthesis, security-automation, deploy-time-learning, context-engineering]
@@ -8,15 +14,9 @@ domains: [skill-synthesis, security-automation, deploy-time-learning, context-en
 
 # Ingest: Skill Synthesis — Materializing Knowledge as Skills
 
-Source: skill-synthesis-materializing-knowledge-as-skills-2032179291031806408.md
-Captured: 2026-03-13
-From: https://x.com/zeeg/status/2032179291031806408 + https://cra.mr/skill-synthesis
-
 ## Classification
 
-Type: **practitioner-report** — David Cramer describes a specific system he built (Warden), the process he used to build it (skill synthesis via Claude Code), the iterations he went through, and measurable results (17 candidates, 8 validated vulnerabilities). This is experience reporting, not conceptual argument.
-
-Domains: skill-synthesis, security-automation, deploy-time-learning, context-engineering
+David Cramer describes a specific system he built (Warden), the process he used to build it (skill synthesis via Claude Code), the iterations he went through, and measurable results (17 candidates, 8 validated vulnerabilities). This is experience reporting, not conceptual argument.
 
 Author: David Cramer (@zeeg), co-founder and CTO of Sentry. Long track record building developer tools at scale. His experience is with a large, mature, professionally pen-tested codebase — not a toy project. High credibility for "what works in a production codebase" claims.
 

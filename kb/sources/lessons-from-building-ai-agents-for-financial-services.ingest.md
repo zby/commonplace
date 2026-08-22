@@ -1,6 +1,13 @@
 ---
 description: "Production financial-agent report supports S3-first files with derived PostgreSQL, skill shadowing for customization, and 'model eats scaffolding,' with fiscal-period normalization as a calculator counterexample"
-source_snapshot: lessons-from-building-ai-agents-for-financial-services-201517481849743.md
+source: https://x.com/nicbstme/status/2015174818497437834
+captured: "2026-03-03T20:27:26.085015+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: 5d31480668eb9fedea35957fd66e72133d066c3e9300c80df68d1c3ee57cdebf
+status_id: 2015174818497437834
+conversation_id: 2015174818497437834
+post_count: 1
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [agent-architecture, context-engineering, skills-as-product, filesystem-first]
@@ -8,15 +15,9 @@ domains: [agent-architecture, context-engineering, skills-as-product, filesystem
 
 # Ingest: Lessons from Building AI Agents for Financial Services
 
-Source: [lessons-from-building-ai-agents-for-financial-services-201517481849743.md](./lessons-from-building-ai-agents-for-financial-services-201517481849743.md)
-Captured: 2026-03-03
-From: https://x.com/nicbstme/status/2015174818497437834
-
 ## Classification
 
-Type: **practitioner-report** — The author built Fintool, an AI agent product for professional investors, over two years and describes the architectural decisions, infrastructure choices, and lessons learned from production deployment. Includes specific technical details (S3 sync architecture, Temporal workflows, sandbox design, evaluation methodology) grounded in real operational experience with paying customers.
-
-Domains: agent-architecture, context-engineering, skills-as-product, filesystem-first
+The author built Fintool, an AI agent product for professional investors, over two years and describes the architectural decisions, infrastructure choices, and lessons learned from production deployment. Includes specific technical details (S3 sync architecture, Temporal workflows, sandbox design, evaluation methodology) grounded in real operational experience with paying customers.
 
 Author: @nicbstme, founder/builder of Fintool — an AI agent for financial services used by professional investors. Two years of production experience in a domain with zero tolerance for errors. Mentions direct collaboration with Anthropic's Claude Code team (Thariq). Credible practitioner with production stakes.
 

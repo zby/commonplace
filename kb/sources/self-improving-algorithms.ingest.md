@@ -1,6 +1,10 @@
 ---
 description: "Ailon et al. learn a product input distribution, then retain data structures that reach entropy-optimal limiting performance"
-source_snapshot: "kb/sources/self-improving-algorithms.md"
+source: https://page.mi.fu-berlin.de/mulzer/pubs/selfimpSICOMP.pdf
+captured: "2026-07-21"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 1b5b08e6d8a822658bcbba972bc59ec3897c54ca6119f515912af40306311acf
 ingested: "2026-07-21"
 type: kb/sources/types/ingest-report.md
 domains: [self-improvement, online-learning, algorithms, entropy]
@@ -8,14 +12,9 @@ domains: [self-improvement, online-learning, algorithms, entropy]
 
 # Ingest: Self-Improving Algorithms
 
-Source: [self-improving-algorithms.md](./self-improving-algorithms.md)  
-Captured: 2026-07-21  
-From: https://page.mi.fu-berlin.de/mulzer/pubs/selfimpSICOMP.pdf
-
 ## Classification
 
-Genre: scientific-paper -- a formal algorithms paper with explicit distributional assumptions, constructions, theorems, lower bounds, and proofs.  
-Domains: self-improvement, online-learning, algorithms, entropy  
+A formal algorithms paper with explicit distributional assumptions, constructions, theorems, lower bounds, and proofs.
 Author: Nir Ailon, Bernard Chazelle, Kenneth L. Clarkson, Ding Liu, Wolfgang Mulzer, and C. Seshadhri; the paper combines established algorithmic analysis with new constructions and lower bounds.
 
 ## Summary

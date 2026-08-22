@@ -1,6 +1,10 @@
 ---
 description: Mechanistic ICML paper showing in-context regression can be implemented as gradient descent inside Transformer forward passes, sharpening the internal half of the KB's in-context-learning theory
-source_snapshot: transformers-learn-in-context-by-gradient-descent.md
+source: https://arxiv.org/pdf/2212.07677
+captured: "2026-04-20"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 13ddba02808b6f29e716259e85e508f0edf183fb00003cd96fdccd023df3b0c1
 ingested: "2026-04-20"
 type: kb/sources/types/ingest-report.md
 domains: [in-context-learning, meta-learning, transformer-mechanisms, learning-theory]
@@ -8,14 +12,9 @@ domains: [in-context-learning, meta-learning, transformer-mechanisms, learning-t
 
 # Ingest: Transformers Learn In-Context by Gradient Descent
 
-Source: transformers-learn-in-context-by-gradient-descent.md
-Captured: 2026-04-20
-From: https://arxiv.org/pdf/2212.07677
-
 ## Classification
 
-Type: scientific-paper -- ICML 2023 paper with explicit constructions, regression-task experiments, ablations, and citations; the PDF is an arXiv preprint/proceedings version.
-Domains: in-context-learning, meta-learning, transformer-mechanisms, learning-theory
+ICML 2023 paper with explicit constructions, regression-task experiments, ablations, and citations; the PDF is an arXiv preprint/proceedings version.
 Author: Johannes von Oswald, Eyvind Niklasson, Ettore Randazzo, Joao Sacramento, Alexander Mordvintsev, Andrey Zhmoginov, and Max Vladymyrov from ETH Zurich and Google Research; credible ML researchers working directly on mechanistic accounts of Transformer learning.
 
 ## Summary

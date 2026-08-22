@@ -1,6 +1,10 @@
 ---
 description: "Early whole-harness optimizer treats prompts, tools, and pipeline topology as jointly learnable language-mediated artifacts, with cross-node credit assignment and same-oracle rollback"
-source_snapshot: symbolic-learning-enables-self-evolving-agents.md
+source: https://arxiv.org/pdf/2406.18532
+captured: "2026-07-28"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 4d38688e9e43c43c4220bea8c23ee3e2dd4234fc027ad10222dd1d6d6c8cf650
 ingested: "2026-07-28"
 type: kb/sources/types/ingest-report.md
 domains: [agent-learning, harness-optimization, representational-form, self-improvement]
@@ -8,14 +12,9 @@ domains: [agent-learning, harness-optimization, representational-form, self-impr
 
 # Ingest: Symbolic Learning Enables Self-Evolving Agents
 
-Source: [symbolic-learning-enables-self-evolving-agents.md](./symbolic-learning-enables-self-evolving-agents.md)
-Captured: 2026-07-28
-From: https://arxiv.org/pdf/2406.18532
-
 ## Classification
 
-Genre: scientific-paper -- a proof-of-concept preprint presenting an optimization algorithm, prompt templates, benchmark comparisons, and small open-ended task studies.
-Domains: agent-learning, harness-optimization, representational-form, self-improvement
+A proof-of-concept preprint presenting an optimization algorithm, prompt templates, benchmark comparisons, and small open-ended task studies.
 Author: A twelve-author AIWaves/Zhejiang University team that also built the underlying Agents framework; this supplies implementation access but creates an incentive to frame framework-specific results broadly.
 
 ## Summary
@@ -24,7 +23,7 @@ The paper models an agent pipeline as a network whose editable “weights” are
 
 ## Connections Found
 
-This is an early technical basis for [representational-form coevolution](../notes/treat-continual-learning-as-representational-form-coevolution.md) and especially [the readable-artifact loop](../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md): it jointly edits natural-language prompts plus symbolic tool/pipeline structure while keeping model weights fixed. The paper's vocabulary needs translation into the KB's terms—prompts are natural-language rather than symbolic merely because an optimizer edits them. It also forms a useful comparison with [Co-Harness](./co-harness-co-evolving-harness-and-model-weights.md): this paper performs backward language-mediated credit assignment across a fixed-weight harness, while Co-Harness later alternates validated harness edits with parametric fine-tuning.
+This is an early technical basis for [representational-form coevolution](../notes/treat-continual-learning-as-representational-form-coevolution.md) and especially [the readable-artifact loop](../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md): it jointly edits natural-language prompts plus symbolic tool/pipeline structure while keeping model weights fixed. The paper's vocabulary needs translation into the KB's terms—prompts are natural-language rather than symbolic merely because an optimizer edits them. It also forms a useful comparison with [Co-Harness](https://arxiv.org/pdf/2607.22688): this paper performs backward language-mediated credit assignment across a fixed-weight harness, while Co-Harness later alternates validated harness edits with parametric fine-tuning.
 
 ## Extractable Value
 

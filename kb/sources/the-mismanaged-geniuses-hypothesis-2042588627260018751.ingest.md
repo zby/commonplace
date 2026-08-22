@@ -1,6 +1,13 @@
 ---
 description: Hypothesis that current frontier LMs are bottlenecked by learned decomposition/scaffold policy rather than base capability, using RLMs and orchestrator-subagent systems as evidence
-source_snapshot: the-mismanaged-geniuses-hypothesis-2042588627260018751.md
+source: https://x.com/a1zhang/status/2042588627260018751
+captured: "2026-04-10T20:39:59.169708+00:00"
+capture: xdk
+genre: conceptual-essay
+snapshot_sha256: bbaa66c579f84a79fc501f5a1b289d088d1ab120f8f22bfc7551267cbe3e4e91
+status_id: 2042588627260018751
+conversation_id: 2042588627260018751
+post_count: 5
 ingested: "2026-04-10"
 type: kb/sources/types/ingest-report.md
 domains: [agent-architecture, orchestration, test-time-scaling, model-harness-coevolution]
@@ -8,15 +15,9 @@ domains: [agent-architecture, orchestration, test-time-scaling, model-harness-co
 
 # Ingest: The "Mismanaged Geniuses" Hypothesis
 
-Source: the-mismanaged-geniuses-hypothesis-2042588627260018751.md
-Captured: 2026-04-10T20:39:59.169708+00:00
-From: https://x.com/a1zhang/status/2042588627260018751
-
 ## Classification
 
-Type: conceptual-essay — The source proposes a broad hypothesis about what will drive the next AI capability jump and argues for two research directions. It cites systems and one RLM training result, but the captured post is not a full scientific paper or practitioner build report.
-
-Domains: agent-architecture, orchestration, test-time-scaling, model-harness-coevolution
+The source proposes a broad hypothesis about what will drive the next AI capability jump and argues for two research directions. It cites systems and one RLM training result, but the captured post is not a full scientific paper or practitioner build report.
 
 Author: Alex Zhang, Zhening Li, and Omar Khattab. The source itself names all three authors; the KB already tracks Khattab through DSPy/Stanford NLP-related agent-harness work, while the snapshot does not independently establish Alex Zhang or Zhening Li's track records.
 

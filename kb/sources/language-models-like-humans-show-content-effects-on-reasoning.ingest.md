@@ -1,6 +1,10 @@
 ---
 description: Empirical demonstration that LLMs mirror human content effects on reasoning (syllogisms, NLI, Wason) — content bias survives scaling and instruction tuning but chain-of-thought partially restores content-independent reasoning
-source_snapshot: language-models-like-humans-show-content-effects-on-reasoning-tasks.md
+source: https://academic.oup.com/pnasnexus/article/3/7/pgae233/7712372
+captured: "2026-03-08"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: cfd34d847c87ad80812295940b4ea41c8a5c49f1b09ba25c1edaf69ce09e9faa
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [cognitive-science, llm-reasoning, human-ai-comparison, dual-process-theory]
@@ -8,13 +12,8 @@ domains: [cognitive-science, llm-reasoning, human-ai-comparison, dual-process-th
 
 # Ingest: Language Models, Like Humans, Show Content Effects on Reasoning Tasks
 
-Source: language-models-like-humans-show-content-effects-on-reasoning-tasks.md
-Captured: 2026-03-08
-From: https://academic.oup.com/pnasnexus/article/3/7/pgae233/7712372
-
 ## Classification
-Type: scientific-paper — peer-reviewed in PNAS Nexus, systematic experiments across three reasoning tasks with statistical analyses, human participant studies, and multiple model evaluations.
-Domains: cognitive-science, llm-reasoning, human-ai-comparison, dual-process-theory
+Peer-reviewed in PNAS Nexus, systematic experiments across three reasoning tasks with statistical analyses, human participant studies, and multiple model evaluations.
 Author: Andrew K Lampinen (DeepMind) et al., including James L McClelland (Stanford) — strong credentials in both computational cognitive science and deep learning. McClelland is a foundational figure in connectionist/PDP models of cognition.
 
 ## Summary

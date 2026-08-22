@@ -1,6 +1,10 @@
 ---
 description: Agent memory platform where the LLM self-manages a three-tier memory hierarchy (core/recall/archival) using an OS analogy — the strongest existing exemplar of the agent-self-managed agency model, now evolving toward git-backed memory files
-source_snapshot: letta-memgpt-stateful-agents.md
+source: https://github.com/letta-ai/letta
+captured: "2026-03-05"
+capture: manual
+genre: design-proposal
+snapshot_sha256: 665d6fcf68ed9f5789b967b06ef350ff679684a27332ef51d6ff098220756bd9
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, context-engineering, stateful-agents, memory-architecture]
@@ -8,15 +12,9 @@ domains: [agent-memory, context-engineering, stateful-agents, memory-architectur
 
 # Ingest: Letta (MemGPT): Stateful Agents with Self-Managed Memory
 
-Source: letta-memgpt-stateful-agents.md
-Captured: 2026-03-05
-From: https://github.com/letta-ai/letta
-
 ## Classification
 
-Type: design-proposal — Letta is an architecture proposal and implementation for agent memory, originating from the MemGPT paper (2023) and evolving into a platform. The snapshot documents architecture, API design, and key design decisions rather than reporting experimental results or arguing a conceptual position.
-
-Domains: agent-memory, context-engineering, stateful-agents, memory-architecture
+Letta is an architecture proposal and implementation for agent memory, originating from the MemGPT paper (2023) and evolving into a platform. The snapshot documents architecture, API design, and key design decisions rather than reporting experimental results or arguing a conceptual position.
 
 Author: Letta AI (formerly MemGPT project). The MemGPT paper has academic credibility (published 2023, widely cited in agent memory literature). The project has evolved into a VC-backed platform with commercial hosting. The Agent-Skills framework explicitly cites Letta's 74% LoCoMo benchmark performance, giving it empirical grounding beyond the design claims.
 

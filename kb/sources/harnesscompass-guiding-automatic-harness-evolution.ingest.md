@@ -1,6 +1,10 @@
 ---
 description: "Grounded agent self-feedback raises search-set performance but hurts held-out transfer until two-track integration, while fixed-partition ablations limit the mechanism claim"
-source_snapshot: "harnesscompass-guiding-automatic-harness-evolution.md"
+source: https://arxiv.org/abs/2608.01918
+captured: "2026-08-06"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 61ecc14ec059bff03f9ee417f0711eb162fde0ad759b8476b6d66e583009910f
 ingested: "2026-08-06"
 type: kb/sources/types/ingest-report.md
 domains: [harness-evolution, self-improvement, diagnostic-feedback, evaluation]
@@ -8,14 +12,9 @@ domains: [harness-evolution, self-improvement, diagnostic-feedback, evaluation]
 
 # Ingest: HarnessCompass
 
-Source: [harnesscompass-guiding-automatic-harness-evolution.md](harnesscompass-guiding-automatic-harness-evolution.md)
-Captured: 2026-08-06
-From: https://arxiv.org/abs/2608.01918
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv v1 preprint that specifies an automatic harness-evolution method and reports a progressive ablation, disjoint held-out evaluation, and frozen cross-model transfer.
-Domains: harness-evolution, self-improvement, diagnostic-feedback, evaluation
+An arXiv v1 preprint that specifies an automatic harness-evolution method and reports a progressive ablation, disjoint held-out evaluation, and frozen cross-model transfer.
 Author: Luan Zhang, Ruochen Zhou, Dandan Song, and collaborators from Beijing Institute of Technology, City University of Hong Kong, and an independent affiliation. The manuscript is under review, reproduces its prompts, and reports direct implementation results, but this KB has not independently reproduced them.
 
 ## Summary

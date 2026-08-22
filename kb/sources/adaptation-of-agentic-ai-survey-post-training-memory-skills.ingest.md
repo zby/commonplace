@@ -1,6 +1,10 @@
 ---
 description: "Survey mapping agentic adaptation across A1/A2 agent training, T1/T2 tool adaptation, memory, skills, and dynamics-aware evaluation"
-source_snapshot: "adaptation-of-agentic-ai-survey-post-training-memory-skills.md"
+source: https://arxiv.org/html/2512.16301v3
+captured: "2026-04-27"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 66d05395bf706c0c8d6fb2b7a2036c4136217486f72583aa48d73e8b82108776
 ingested: "2026-06-09"
 type: kb/sources/types/ingest-report.md
 domains: [agentic-adaptation, learning-theory, agent-memory, evaluation-methodology]
@@ -8,14 +12,9 @@ domains: [agentic-adaptation, learning-theory, agent-memory, evaluation-methodol
 
 # Ingest: Adaptation of Agentic AI
 
-Source: adaptation-of-agentic-ai-survey-post-training-memory-skills.md
-Captured: 2026-04-27
-From: https://arxiv.org/html/2512.16301v3
-
 ## Classification
 
-Type: scientific-paper -- arXiv v3 survey/preprint with a formal taxonomy, extensive literature review, citations, comparative tables, and evaluation recommendations, but no new original experiment.
-Domains: agentic-adaptation, learning-theory, agent-memory, evaluation-methodology
+ArXiv v3 survey/preprint with a formal taxonomy, extensive literature review, citations, comparative tables, and evaluation recommendations, but no new original experiment.
 Author: Pengcheng Jiang, Jiacheng Lin, Zhiyi Shi, Zifeng Wang, Luxi He, Yichen Wu, Ming Zhong, Peiyang Song, Qizheng Zhang, Heng Wang, Xueqiang Xu, Hanwen Xu, Pengrui Han, Dylan Zhang, Jiashuo Sun, Chaoqi Yang, Kun Qian, Tian Wang, Changran Hu, Manling Li, Quanzheng Li, Hao Peng, Sheng Wang, Jingbo Shang, Chao Zhang, Jiaxuan You, Liyuan Liu, Pan Lu, Yu Zhang, Heng Ji, Yejin Choi, Dawn Song, Jimeng Sun, and Jiawei Han; the multi-institution author list includes established AI, ML, NLP, security, and data-mining researchers, so the paper is worth treating as a field-map signal rather than a single-system report.
 
 ## Summary

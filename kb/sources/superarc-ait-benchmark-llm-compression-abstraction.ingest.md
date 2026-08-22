@@ -1,6 +1,10 @@
 ---
 description: Ingest of SuperARC — AIT-grounded benchmark where frontier LLMs score phi ~0.03 while neuro-symbolic CTM/BDM achieves 1.000 on recursive compression; newer models regress; print-statement-only outputs demonstrate zero algorithmic abstraction
-source_snapshot: superarc-ait-benchmark-llm-compression-abstraction.md
+source: https://arxiv.org/html/2503.16743v5
+captured: "2026-03-26"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 8ad7f503f89df5ffa942fa83dda845f3d6d772049043f22619d65e2e512026fe
 ingested: "2026-03-26"
 type: kb/sources/types/ingest-report.md
 domains: [evaluation-methodology, learning-theory, algorithmic-information-theory, LLM-limitations]
@@ -8,15 +12,9 @@ domains: [evaluation-methodology, learning-theory, algorithmic-information-theor
 
 # Ingest: SuperARC — Can Complexity and Uncomputability Explain Intelligence?
 
-Source: superarc-ait-benchmark-llm-compression-abstraction.md
-Captured: 2026-03-26
-From: https://arxiv.org/html/2503.16743v5
-
 ## Classification
 
-Type: **scientific-paper** — peer-reviewed research with formal methodology (AIT-grounded benchmark design), quantitative results across multiple frontier LLMs, mathematical proofs (compression-prediction equivalence via Martingale theory), and systematic evaluation using a novel metric (phi).
-
-Domains: evaluation-methodology, learning-theory, algorithmic-information-theory, LLM-limitations
+Peer-reviewed research with formal methodology (AIT-grounded benchmark design), quantitative results across multiple frontier LLMs, mathematical proofs (compression-prediction equivalence via Martingale theory), and systematic evaluation using a novel metric (phi).
 
 Author: Hernández-Espinosa, Ozelim, Abrahão, and Zenil (Oxford Immune Algorithmics / Algorithmic Dynamics Lab). Zenil is a recognized researcher in algorithmic information theory and complexity science, with a track record in CTM/BDM methods applied to cognition. The group has published prior work on AIT-based evaluation of human and animal cognition. Credible in the AIT domain; less established in mainstream ML evaluation.
 
@@ -30,9 +28,9 @@ The `/connect` discovery identified 8 genuine connections and rejected 7 candida
 
 **Strongest connections:**
 
-1. **[From Entropy to Epiplexity](./from-entropy-to-epiplexity-rethinking-information-computationally.md)** — complements: both papers address the gap between statistical and algorithmic information measures, from opposite directions. Epiplexity formalizes what bounded observers CAN extract; SuperARC benchmarks what they CANNOT. SuperARC's explicit finding that Shannon entropy and GZIP/LZW "cannot capture algorithmic complexity" is precisely what epiplexity's framework predicts.
+1. **[From Entropy to Epiplexity](https://arxiv.org/html/2601.03220v1)** — complements: both papers address the gap between statistical and algorithmic information measures, from opposite directions. Epiplexity formalizes what bounded observers CAN extract; SuperARC benchmarks what they CANNOT. SuperARC's explicit finding that Shannon entropy and GZIP/LZW "cannot capture algorithmic complexity" is precisely what epiplexity's framework predicts.
 
-2. **[EsoLang-Bench](./esolang-bench-evaluating-genuine-reasoning-via-esoteric-programming.md)** — complements: sibling benchmarks both stripping away training-distribution shortcuts to expose the gap between standard benchmark performance and genuine reasoning. EsoLang-Bench strips familiar syntax; SuperARC strips statistical shortcuts. Both find frontier LLMs scoring near zero.
+2. **[EsoLang-Bench](https://arxiv.org/abs/2603.09678)** — complements: sibling benchmarks both stripping away training-distribution shortcuts to expose the gap between standard benchmark performance and genuine reasoning. EsoLang-Bench strips familiar syntax; SuperARC strips statistical shortcuts. Both find frontier LLMs scoring near zero.
 
 3. **[First-principles reasoning selects for explanatory reach over adaptive fit](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md)** — exemplifies: the integer-vs-binary performance gap is a clean empirical demonstration of adaptive fit without explanatory reach. LLMs "reach" on integer sequences (familiar territory) but collapse on binary sequences (where no training-distribution fit exists). The "newer models regress" finding strengthens this: models are becoming better adapted while losing general compression capability.
 
@@ -44,7 +42,7 @@ The `/connect` discovery identified 8 genuine connections and rejected 7 candida
 
 7. **[Oracle-strength spectrum](../notes/oracle-strength-spectrum.md)** — exemplifies: SuperARC sits at the hard-oracle end with deterministic, exact verification of both correctness and compression quality.
 
-8. **[Pathway/Sudoku-Bench](./pathway-beyond-transformers-sudoku-bench.md)** and **[Induction bias in sequence models](./induction-bias-sequence-models-ebrahimi-2026.md)** — complement: convergent evidence from different problem domains (constraint satisfaction, state tracking) reaching the same conclusion about fundamental transformer limitations.
+8. **[Pathway/Sudoku-Bench](https://pathway.com/research/beyond-transformers-sudoku-bench)** and **[Induction bias in sequence models](https://arxiv.org/pdf/2602.18333)** — complement: convergent evidence from different problem domains (constraint satisfaction, state tracking) reaching the same conclusion about fundamental transformer limitations.
 
 **Synthesis opportunity flagged:** The "LLMs score zero on well-specified problems" cluster now spans four independent sources and problem domains (recursive compression, esoteric code, constraint satisfaction, state tracking). A synthesis note cataloging these converging findings, identifying shared structural properties, and mapping them onto the bitter lesson boundary could be high-value.
 

@@ -1,6 +1,10 @@
 ---
 description: "Practitioner portability framing separates owned memory from disposable harnesses, but leaves access logic and skill execution as distinct lock-in boundaries"
-source_snapshot: "from-harness-lock-in-to-portable-context-layer.md"
+source: https://www.decodingai.com/p/the-context-layer
+captured: "2026-08-19"
+capture: web-fetch
+genre: practitioner-report
+snapshot_sha256: a09e786dc64f15a2967dd8823f6a12b60c44ec0ea3db470028b098700e7cf571
 ingested: "2026-08-19"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, context-engineering, harness-portability, storage-architecture]
@@ -8,14 +12,9 @@ domains: [agent-memory, context-engineering, harness-portability, storage-archit
 
 # Ingest: From Harness Lock-In to Portable Context Layer
 
-Source: [from-harness-lock-in-to-portable-context-layer.md](./from-harness-lock-in-to-portable-context-layer.md)
-Captured: 2026-08-19
-From: https://www.decodingai.com/p/the-context-layer
-
 ## Classification
 
-Genre: practitioner-report -- Paul Iusztin derives the architecture from two systems he is building, Scrabble and Tree, and reports design choices and operating observations rather than a controlled study or inspectable implementation.
-Domains: agent-memory, context-engineering, harness-portability, storage-architecture
+Paul Iusztin derives the architecture from two systems he is building, Scrabble and Tree, and reports design choices and operating observations rather than a controlled study or inspectable implementation.
 Author: Iusztin is an experienced AI engineer describing his own systems, which makes the source useful as builder testimony. MongoDB sponsored the article, so its MongoDB-specific cost and scaling claims have weaker independence than its broader portability observations.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "Graham separates epistemic composition into exact-word commitment and neutral-reader rereading, but his human self-report does not establish an agent-learning mechanism"
-source_snapshot: "putting-ideas-into-words.md"
+source: https://paulgraham.com/words.html
+captured: "2026-08-10"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: bba48fb235071ceeb14762c91ac2e0635b1d6d0e6a12cc4d8c7b5908fae6066b
 ingested: "2026-08-10"
 type: kb/sources/types/ingest-report.md
 domains: [writing-as-thinking, epistemic-writing, human-agent-transfer, tacit-knowledge]
@@ -8,14 +12,9 @@ domains: [writing-as-thinking, epistemic-writing, human-agent-transfer, tacit-kn
 
 # Ingest: Putting Ideas into Words
 
-Source: [putting-ideas-into-words.md](putting-ideas-into-words.md)
-Captured: 2026-08-10
-From: https://paulgraham.com/words.html
-
 ## Classification
 
-Genre: conceptual-essay -- a first-person argument from long writing practice, illustrated by examples and introspection rather than comparative evidence.
-Domains: writing-as-thinking, epistemic-writing, human-agent-transfer, tacit-knowledge
+A first-person argument from long writing practice, illustrated by examples and introspection rather than comparative evidence.
 Author: Paul Graham writes as an experienced essayist reflecting on his own process. That gives the account useful practitioner detail, but not independent authority for its universal cognitive claims.
 
 ## Summary
@@ -24,7 +23,7 @@ Graham argues that putting an idea into words reveals precision and completeness
 
 ## Connections Found
 
-This essay is the concise upstream anchor for the KB's human-side writing-as-thinking cluster. Its account of exact wording exposing incompleteness bears on [the human stall that LLM generation may hide](../notes/llm-generation-relaxes-goals-where-human-writing-stalls.md), while its imagined neutral stranger is a human comparator for [the adversarial human-agent loop](../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md). Exact-word commitment also resembles [constraining](../notes/definitions/constraining.md), though Graham distinguishes that commitment from the later act of testing the result. [Borretti](borretti-human-routers-of-machine-words.md) and [Grunewald](why-almost-never-use-ai-to-write-anything-substantive.md) extend the account into critiques of AI delegation; [Karlsson](how-to-think-in-writing.md) adds conjectures, premises, and counterexamples; [Karnofsky](learning-by-writing.md) adds hypothesis-guided inquiry. Those are functional comparisons, not evidence that an automated KB learns like a human: [human analogies can motivate functions without determining component boundaries](../notes/human-analogies-suggest-functions-not-component-boundaries.md).
+This essay is the concise upstream anchor for the KB's human-side writing-as-thinking cluster. Its account of exact wording exposing incompleteness bears on [the human stall that LLM generation may hide](../notes/llm-generation-relaxes-goals-where-human-writing-stalls.md), while its imagined neutral stranger is a human comparator for [the adversarial human-agent loop](../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md). Exact-word commitment also resembles [constraining](../notes/definitions/constraining.md), though Graham distinguishes that commitment from the later act of testing the result. [Borretti](https://borretti.me/article/human-routers-of-machine-words) and [Grunewald](https://www.erichgrunewald.com/posts/why-i-think-you-should-almost-never-use-ai-to-write-anything-substantive/) extend the account into critiques of AI delegation; [Karlsson](https://www.henrikkarlsson.xyz/p/writing-to-think) adds conjectures, premises, and counterexamples; [Karnofsky](https://www.cold-takes.com/learning-by-writing/) adds hypothesis-guided inquiry. Those are functional comparisons, not evidence that an automated KB learns like a human: [human analogies can motivate functions without determining component boundaries](../notes/human-analogies-suggest-functions-not-component-boundaries.md).
 
 ## Extractable Value
 

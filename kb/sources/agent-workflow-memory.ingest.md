@@ -1,6 +1,10 @@
 ---
 description: AWM paper showing web agents can learn reusable prompt workflows from successful trajectories, with online induction helping most as train-test domain gaps widen.
-source_snapshot: agent-workflow-memory.md
+source: https://arxiv.org/html/2409.07429v1
+captured: "2026-05-08"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 470b8ee461cb933d48a4eab1f53643baeb247e8b909c50c9d26a9cc6e4cbe0bd
 ingested: "2026-05-08"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, trace-learning, deploy-time-learning, web-agents]
@@ -8,14 +12,9 @@ domains: [agent-memory, trace-learning, deploy-time-learning, web-agents]
 
 # Ingest: Agent Workflow Memory
 
-Source: agent-workflow-memory.md
-Captured: 2026-05-08
-From: https://arxiv.org/html/2409.07429v1
-
 ## Classification
 
-Type: scientific-paper -- arXiv preprint with a defined method, experimental setup, ablations, benchmark comparisons, and citations.
-Domains: agent-memory, trace-learning, deploy-time-learning, web-agents
+ArXiv preprint with a defined method, experimental setup, ablations, benchmark comparisons, and citations.
 Author: Zora Zhiruo Wang, Jiayuan Mao, Daniel Fried, and Graham Neubig are CMU/MIT researchers working on LLM agents, web interaction, and tool use; the source is worth attention as a primary paper from the AWM authors.
 
 ## Summary

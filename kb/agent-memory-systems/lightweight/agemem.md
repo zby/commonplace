@@ -11,7 +11,7 @@ last-checked: "2026-06-02"
 
 AgeMem is an agent memory system whose distinctive contribution is a **memory-management policy learned by reinforcement learning** rather than hand-written or model-prompted. Coverage here is **doc-grounded** — drawn from the paper, local snapshot, and ingest, with no implementation repository inspected — so the mechanisms below are *reported*, not observed in code.
 
-**Source documents:** [arXiv HTML paper](https://arxiv.org/html/2601.01885v1); local snapshot [Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for LLM Agents](../../sources/agentic-memory-learning-unified-long-term-and-short-term-memory.md); local ingest [Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for LLM Agents](../../sources/agentic-memory-learning-unified-long-term-and-short-term.ingest.md); analysis note [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md).
+**Source documents:** captured edition [Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for LLM Agents](https://arxiv.org/html/2601.01885v1); local ingest [Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for LLM Agents](../../sources/agentic-memory-learning-unified-long-term-and-short-term.ingest.md); analysis note [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md).
 
 **Reviewed document version:** arXiv 2601.01885v1, captured locally 2026-03-08 and reconciled 2026-06-02.
 
@@ -74,5 +74,5 @@ AgeMem qualifies: it learns a durable artifact (the policy) from agent traces.
 
 - [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — primary analysis note: interprets AgeMem as learnable policy under a task-completion oracle
 - [trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) — cross-system placement: uses AgeMem as a lower-confidence source-ingested trajectory-to-weights case
-- [AgeMem local snapshot](../../sources/agentic-memory-learning-unified-long-term-and-short-term-memory.md) — retained source snapshot for the arXiv paper
+- [AgeMem paper](https://arxiv.org/html/2601.01885v1) — primary arXiv source
 - [AgeMem ingest](../../sources/agentic-memory-learning-unified-long-term-and-short-term.ingest.md) — source coverage: paper snapshot analysis and limitations

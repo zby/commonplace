@@ -1,6 +1,13 @@
 ---
 description: "Conceptual thread framing harness engineering as cybernetic feedback-loop design: sensors, actuators, constraints, and externalized judgment."
-source_snapshot: harness-engineering-is-cybernetics-2030416758138634583.md
+source: https://x.com/odysseus0z/status/2030416758138634583
+captured: "2026-03-09T06:54:13.921167+00:00"
+capture: xdk
+genre: conceptual-essay
+snapshot_sha256: 3613a2a2719a5d3aded7c7a5333f3bbdb02959e991f3344370417e1f1a450c4b
+status_id: 2030416758138634583
+conversation_id: 2030416758138634583
+post_count: 14
 ingested: "2026-04-20"
 type: kb/sources/types/ingest-report.md
 domains: [agent-systems, harness-engineering, cybernetics, verification]
@@ -8,14 +15,9 @@ domains: [agent-systems, harness-engineering, cybernetics, verification]
 
 # Ingest: Harness Engineering Is Cybernetics
 
-Source: harness-engineering-is-cybernetics-2030416758138634583.md
-Captured: 2026-03-09T06:54:13.921167+00:00
-From: https://x.com/odysseus0z/status/2030416758138634583
-
 ## Classification
 
-Type: conceptual-essay -- a single-author thread arguing a framing, not reporting new experiments or a concrete system build. Its contribution is the cybernetics analogy and the claim that harness work is really sensor/actuator calibration plus externalized judgment.
-Domains: agent-systems, harness-engineering, cybernetics, verification
+A single-author thread arguing a framing, not reporting new experiments or a concrete system build. Its contribution is the cybernetics analogy and the claim that harness work is really sensor/actuator calibration plus externalized judgment.
 Author: @odysseus0z -- unknown from local KB context. The signal worth attending to is the synthesis itself: it compresses current harness-engineering practice into a sharper control-systems model.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "Graphiti design summary: raw episodes, LLM-derived temporal graph facts, hybrid retrieval, and an unresolved clean-store replay boundary"
-source_snapshot: graphiti-temporal-knowledge-graph.md
+source: https://github.com/getzep/graphiti
+captured: "2026-03-05"
+capture: manual
+genre: design-proposal
+snapshot_sha256: c2327d5a49dfea8ba9492ee1f71c3a4227cac6d91b5109f5f92ebc87c3b685c2
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, knowledge-graphs, temporal-data, retrieval-systems]
@@ -8,15 +12,9 @@ domains: [agent-memory, knowledge-graphs, temporal-data, retrieval-systems]
 
 # Ingest: Graphiti: Temporal Knowledge Graph for AI Agents
 
-Source: [graphiti-temporal-knowledge-graph.md](./graphiti-temporal-knowledge-graph.md)
-Captured: 2026-03-05
-From: https://github.com/getzep/graphiti
-
 ## Classification
 
-Genre: design-proposal -- the snapshot describes and advocates an implemented architecture for agent memory: a temporal knowledge graph with a defined node-and-edge model, graph-database backends, and an LLM-driven ingestion pipeline. A later [code-grounded review](../agent-memory-systems/reviews/graphiti.md) is the stronger local account of what the pinned implementation does.
-
-Domains: agent-memory, knowledge-graphs, temporal-data, retrieval-systems
+The snapshot describes and advocates an implemented architecture for agent memory: a temporal knowledge graph with a defined node-and-edge model, graph-database backends, and an LLM-driven ingestion pipeline. A later [code-grounded review](../agent-memory-systems/reviews/graphiti.md) is the stronger local account of what the pinned implementation does.
 
 Author: Zep publishes Graphiti as the open-source core behind its commercial context-engineering product. That gives the authors direct implementation knowledge and a commercial interest in the graph-first framing; this snapshot provides no independent deployment or outcome evidence.
 

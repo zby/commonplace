@@ -1,6 +1,13 @@
 ---
 description: "Eval Engineering Skill announcement describing trace mining, user-guided task design, Harbor environments, verifier inspection, and iterative agent improvement"
-source_snapshot: "kb/sources/towards-automating-eval-engineering-2079976006644072796.md"
+source: https://x.com/Vtrivedy10/status/2079976006644072796
+captured: "2026-07-23T16:45:02.869267+00:00"
+capture: xdk
+genre: tool-announcement
+snapshot_sha256: 0a5c82a3ca1c324cf77cc76c56794f09c8dcc680e6d747fd0dc268fb7a54a46f
+status_id: 2079976006644072796
+conversation_id: 2079976006644072796
+post_count: 8
 ingested: "2026-07-23"
 type: kb/sources/types/ingest-report.md
 domains: [evaluation, harness-engineering, trace-learning, deploy-time-learning]
@@ -8,14 +15,9 @@ domains: [evaluation, harness-engineering, trace-learning, deploy-time-learning]
 
 # Ingest: Towards Automating Eval Engineering
 
-Source: [towards-automating-eval-engineering-2079976006644072796.md](./towards-automating-eval-engineering-2079976006644072796.md)
-Captured: 2026-07-23T16:45:02.869267+00:00
-From: https://x.com/Vtrivedy10/status/2079976006644072796
-
 ## Classification
 
-Genre: tool-announcement -- the source announces an Eval Engineering Skill, describes its workflow and output format, and reports an initial application, but does not provide a full implementation or quantitative evaluation.
-Domains: evaluation, harness-engineering, trace-learning, deploy-time-learning
+The source announces an Eval Engineering Skill, describes its workflow and output format, and reports an initial application, but does not provide a full implementation or quantitative evaluation.
 Author: @Vtrivedy10 and the LangChain team; first-party product/workflow description with useful operational detail but vendor incentive and limited independent validation.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "Moen's PDSA history as independent Deming-lineage corroboration that the KB's discovery-lifecycle learning core recurs outside philosophy of science"
-source_snapshot: "foundation-and-history-of-the-pdsa-cycle.md"
+source: https://deming.org/wp-content/uploads/2020/06/PDSA_History_Ron_Moen.pdf
+captured: "2026-07-22"
+capture: user-supplied-pdf-to-markdown
+genre: scientific-paper
+snapshot_sha256: 4f36793d26a3f48c6a3e0336071ee9f0bbcb3f1a629bd664a151a25c36f2ad25
 ingested: "2026-07-22"
 type: kb/sources/types/ingest-report.md
 domains: [pdsa, scientific-method, discovery-lifecycle, quality-improvement]
@@ -8,14 +12,9 @@ domains: [pdsa, scientific-method, discovery-lifecycle, quality-improvement]
 
 # Ingest: Foundation and History of the PDSA Cycle
 
-Source: foundation-and-history-of-the-pdsa-cycle.md
-Captured: 2026-07-22
-From: https://deming.org/wp-content/uploads/2020/06/PDSA_History_Ron_Moen.pdf
-
 ## Classification
 
-Genre: scientific-paper -- an ANQ conference proceedings paper with a full 18-item citation apparatus (books, journal articles, archival transcripts, personal letters). It sits at the documentary-history end of the genre rather than the empirical end: no methodology or data, and its evidential weight comes from participant testimony and primary-source citation, not experiment. The limitations lens below is read accordingly.
-Domains: pdsa, scientific-method, discovery-lifecycle, quality-improvement
+An ANQ conference proceedings paper with a full 18-item citation apparatus (books, journal articles, archival transcripts, personal letters). It sits at the documentary-history end of the genre rather than the empirical end: no methodology or data, and its evidential weight comes from participant testimony and primary-source citation, not experiment. The limitations lens below is read accordingly.
 Author: Ronald Moen (Associates in Process Improvement). High access, high interest: a Deming "helper" at ~70 four-day seminars (1982-1993), a direct correspondent holding personal letters from Deming, and co-author of the Moen/Nolan/Provost line the paper cites approvingly. Authoritative on the lineage and an advocate for it.
 
 ## Summary
@@ -24,7 +23,7 @@ The paper traces the ancestry of W. Edwards Deming's Plan-Do-Study-Act (PDSA) cy
 
 ## Connections Found
 
-Casebook notes do exist for this material, and the source's settled role is corroborating evidence, not new theory. It is an independent, applied instance of the same conjecture-consequence-test learning core that [discovery-lifecycle](../notes/definitions/discovery-lifecycle.md) adapts from Peirce's abduction/deduction/induction — that note currently cites only the Peirce SEP entry as support for its core, so this snapshot is a second, non-philosophical tradition (Deming-lineage quality improvement) landing on the same loop. It also corroborates [first-principles-reasoning-selects-for-explanatory-reach-over](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md): the source's "one improving test is not enough; build theory that predicts improvement under future conditions" argument mirrors that note's reach-over-adaptive-fit polarity. Secondarily, it is one of a three-snapshot Moen/Norman cluster (with [evolution-of-the-pdca-cycle](./evolution-of-the-pdca-cycle.md) and [circling-back-clearing-up-myths-about-the-deming-cycle](./circling-back-clearing-up-myths-about-the-deming-cycle.md)) that covers the same PDCA→PDSA lineage at different depths and is best cross-linked once all three are analysed.
+Casebook notes do exist for this material, and the source's settled role is corroborating evidence, not new theory. It is an independent, applied instance of the same conjecture-consequence-test learning core that [discovery-lifecycle](../notes/definitions/discovery-lifecycle.md) adapts from Peirce's abduction/deduction/induction — that note currently cites only the Peirce SEP entry as support for its core, so this snapshot is a second, non-philosophical tradition (Deming-lineage quality improvement) landing on the same loop. It also corroborates [first-principles-reasoning-selects-for-explanatory-reach-over](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md): the source's "one improving test is not enough; build theory that predicts improvement under future conditions" argument mirrors that note's reach-over-adaptive-fit polarity. Secondarily, it is one of a three-snapshot Moen/Norman cluster (with [evolution-of-the-pdca-cycle](https://uploads.teachablecdn.com/attachments/aYpoH9SdSDO0k3KYVRRj_NA01MoenNormanFullpaper.pdf) and [circling-back-clearing-up-myths-about-the-deming-cycle](https://qicentral.rcpch.ac.uk/wp-content/uploads/sites/9/2021/10/Moen-and-Norman-on-Deming-circling-back-ph556x.pdf)) that covers the same PDCA→PDSA lineage at different depths and is best cross-linked once all three are analysed.
 
 ## Extractable Value
 

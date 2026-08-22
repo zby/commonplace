@@ -1,6 +1,13 @@
 ---
 description: "Manifesto arguing text optimization is a legitimate, sample-efficient update mechanism enabling update-time compute — upstream restatement of the KB continual-learning cluster"
-source_snapshot: "we-should-take-text-optimization-more-seriously-2064027464926716154.md"
+source: https://x.com/yoonholeee/status/2064027464926716154
+captured: "2026-06-09T15:02:46.024584+00:00"
+capture: xdk
+genre: conceptual-essay
+snapshot_sha256: 92f5e344681380e18f5a3dd8628d192e5a21a6da09f2a7e90a81a7cb734181a8
+status_id: 2064027464926716154
+conversation_id: 2064027464926716154
+post_count: 1
 ingested: "2026-06-09"
 type: kb/sources/types/ingest-report.md
 domains: [continual-learning, context-engineering, text-optimization]
@@ -8,14 +15,9 @@ domains: [continual-learning, context-engineering, text-optimization]
 
 # Ingest: We Should Take Text Optimization More Seriously
 
-Source: we-should-take-text-optimization-more-seriously-2064027464926716154.md
-Captured: 2026-06-09T15:02:46Z
-From: https://x.com/yoonholeee/status/2064027464926716154 (cross-posted from yoonholee.com/blog/2026/we-should-take-text-optimization-more-seriously/)
-
 ## Classification
 
-Type: conceptual-essay -- a position piece/manifesto arguing a theoretical stance ("the text layer should be taken more seriously"). It argues by analogy, rebuttal, and existence-argument rather than reporting an experiment or proposing a specific system. Carries citation footnotes but no original methodology or data.
-Domains: continual-learning, context-engineering, text-optimization
+A position piece/manifesto arguing a theoretical stance ("the text layer should be taken more seriously"). It argues by analogy, rebuttal, and existence-argument rather than reporting an experiment or proposing a specific system. Carries citation footnotes but no original methodology or data.
 Author: @yoonholee (Yoonho Lee). Same author as the Meta-Harness paper already cited in this KB (`treat-continual-learning-as-substrate-coevolution`, the trace-learning survey). Acknowledges feedback from researchers including Omar Khattab (lateinteraction, DSPy/GEPA), Chelsea Finn, and others — strong research-community signal. The post is explicitly "a distillation of many conversations with researchers over the past year."
 
 ## Summary

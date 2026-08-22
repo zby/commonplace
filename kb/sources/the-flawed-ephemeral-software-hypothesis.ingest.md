@@ -1,6 +1,10 @@
 ---
 description: Essay distinguishing vibe coding from true software ephemerality, arguing that state, integration, interface stability, and auditability keep important systems anchored to durable artifact stacks.
-source_snapshot: the-flawed-ephemeral-software-hypothesis.md
+source: https://www.blackhc.net/essays/future_of_software/
+captured: "2026-03-19"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: 7eab79ab1a22f4affd64e50ca4ff745482dc936f04fc0afe4967510734570d9b
 ingested: "2026-03-19"
 type: kb/sources/types/ingest-report.md
 domains: [software-engineering, agent-systems, verification, artifact-durability]
@@ -8,13 +12,8 @@ domains: [software-engineering, agent-systems, verification, artifact-durability
 
 # Ingest: The Flawed Ephemeral Software Hypothesis
 
-Source: the-flawed-ephemeral-software-hypothesis.md
-Captured: 2026-03-19
-From: https://www.blackhc.net/essays/future_of_software/
-
 ## Classification
-Type: conceptual-essay — Kirsch is arguing for a framing, not reporting a built system or presenting original empirical results. The essay's contribution is conceptual decomposition: vibe coding vs ephemeral software, ambiguity vs formal semantics, and malleability vs disposability.
-Domains: software-engineering, agent-systems, verification, artifact-durability
+Kirsch is arguing for a framing, not reporting a built system or presenting original empirical results. The essay's contribution is conceptual decomposition: vibe coding vs ephemeral software, ambiguity vs formal semantics, and malleability vs disposability.
 Author: Andreas Kirsch is an ML researcher/practitioner writing from inside the current agentic-coding discourse. The signal here is not privileged data so much as a technically literate attempt to cash out hype claims in software-engineering mechanisms.
 
 ## Summary

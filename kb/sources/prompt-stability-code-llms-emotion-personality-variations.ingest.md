@@ -1,6 +1,10 @@
 ---
 description: "Code-LLM study finds performance and prompt stability are distinct, smaller models may be steadier, and emotional/personality variants expose confidence miscalibration missed by standard benchmarks"
-source_snapshot: prompt-stability-code-llms-emotion-personality-variations.md
+source: https://arxiv.org/pdf/2509.13680
+captured: "2026-03-11"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: f99aa8f3f6ce02954b9652a7852fe5dfcac8c5f33c55b85979221caa3e0802e2
 ingested: "2026-03-12"
 type: kb/sources/types/ingest-report.md
 domains: [prompt-sensitivity, llm-evaluation, code-generation, reliability]
@@ -8,15 +12,9 @@ domains: [prompt-sensitivity, llm-evaluation, code-generation, reliability]
 
 # Ingest: Prompt Stability in Code LLMs
 
-Source: prompt-stability-code-llms-emotion-personality-variations.md
-Captured: 2026-03-11
-From: https://arxiv.org/pdf/2509.13680
-
 ## Classification
 
-Type: scientific-paper — peer-reviewed preprint with controlled experiments across 14 models, 14,760 prompt variants, statistical analysis with FDR correction and bootstrap confidence intervals.
-
-Domains: prompt-sensitivity, llm-evaluation, code-generation, reliability
+Peer-reviewed preprint with controlled experiments across 14 models, 14,760 prompt variants, statistical analysis with FDR correction and bootstrap confidence intervals.
 
 Author: Wei Ma et al. (five authors). Academic team studying software engineering and LLM reliability. The paper introduces a novel framework (PromptSE) rather than reporting on production deployment experience. Credibility rests on experimental methodology rather than practitioner authority.
 
@@ -87,7 +85,7 @@ The `/connect` discovery identified 11 connections (4 strong, 7 moderate), mappi
 
 **Statistical power for the headline claim.** The performance-stability correlation (rho = -0.433, p = 0.122) is presented as "no statistically significant negative correlation" — but with only 14 models, the study is underpowered to detect moderate effects. The confidence interval [-0.875, 0.249] spans a wide range including strong negative correlation. The claim that performance and stability are "decoupled" is consistent with the data but not strongly supported by it; a larger model sample could reveal a relationship the current study lacks power to detect.
 
-**Missing baselines.** The paper does not compare PromptSE against simpler stability measures — e.g., variance of Pass@k across random prompt rephrasings without the emotion/personality structure, or stability under purely syntactic transformations (reordering clauses, adding whitespace). Without these baselines, it's unclear how much value the psychologically grounded templates add over random paraphrasing — the approach Rabanser et al. already used in [towards-a-science-of-ai-agent-reliability](towards-a-science-of-ai-agent-reliability.md).
+**Missing baselines.** The paper does not compare PromptSE against simpler stability measures — e.g., variance of Pass@k across random prompt rephrasings without the emotion/personality structure, or stability under purely syntactic transformations (reordering clauses, adding whitespace). Without these baselines, it's unclear how much value the psychologically grounded templates add over random paraphrasing — the approach Rabanser et al. already used in [towards-a-science-of-ai-agent-reliability](https://arxiv.org/pdf/2602.16666).
 
 **No causal mechanism for the non-monotonic scaling finding.** The observation that smaller models can be more stable is interesting but unexplained. The paper speculates about "simpler decision boundaries" but provides no evidence for this mechanism. Alternative explanations (distillation artifacts in the Qwen-1.5B model, limited solution diversity in small models that happens to look like stability) are not ruled out.
 

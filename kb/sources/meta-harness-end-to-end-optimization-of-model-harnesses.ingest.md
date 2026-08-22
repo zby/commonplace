@@ -1,6 +1,10 @@
 ---
 description: Controlled ablation showing raw execution traces (10 MTok/iter) outperform summaries by 10+ points in automated harness search — first empirical evidence for diagnostic richness as binding constraint
-source_snapshot: meta-harness-end-to-end-optimization-of-model-harnesses.md
+source: https://yoonholee.com/meta-harness/paper.pdf
+captured: "2026-03-31"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 95fd47e4603f8c6975cc4fa0df12fc349f730f82715557087a6ffcf0f5d2fa0f
 ingested: "2026-03-30"
 type: kb/sources/types/ingest-report.md
 domains: [learning-theory, context-engineering, evaluation, harness-engineering]
@@ -8,15 +12,9 @@ domains: [learning-theory, context-engineering, evaluation, harness-engineering]
 
 # Ingest: Meta-Harness: End-to-End Optimization of Model Harnesses
 
-Source: meta-harness-end-to-end-optimization-of-model-harnesses.md
-Captured: 2026-03-31
-From: https://yoonholee.com/meta-harness/paper.pdf
-
 ## Classification
 
-Type: **scientific-paper** — preprint with formal problem definition, three benchmark evaluations, controlled ablations, and quantitative baselines. Follows standard ML paper structure with appendices documenting qualitative proposer behavior.
-
-Domains: learning-theory, context-engineering, evaluation, harness-engineering
+Preprint with formal problem definition, three benchmark evaluations, controlled ablations, and quantitative baselines. Follows standard ML paper structure with appendices documenting qualitative proposer behavior.
 
 Author: Yoonho Lee (Stanford, Chelsea Finn's group), with collaborators from MIT (Kangwook Lee) and Stanford NLP (Omar Khattab / DSPy). This is a research lab with strong track record in meta-learning and LLM systems. Khattab's involvement connects this directly to the DSPy / prompt optimization lineage. The work uses Claude Code with Opus-4.6 as the proposer agent, making it one of the first papers to study what happens when you give a coding agent unrestricted filesystem access to diagnostic history for automated search.
 

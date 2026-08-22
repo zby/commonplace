@@ -1,6 +1,10 @@
 ---
 description: "Machine Studying defines corpus-only pre-task adaptation and evaluates it across inference budgets, but its preliminary interventions and fixed StudyBench decomposition support narrower claims than the headline"
-source_snapshot: "machine-studying.md"
+source: https://jacobxli.com/blog/2026/machine-studying/
+captured: "2026-08-18"
+capture: web-fetch
+genre: practitioner-report
+snapshot_sha256: a1e2d70a966db1cd1d47ec45a6f0c0db498a1b0b023166cf73263a9d5911f320
 ingested: "2026-08-18"
 type: kb/sources/types/ingest-report.md
 domains: [machine-studying, deploy-time-learning, agent-memory, evaluation]
@@ -8,14 +12,9 @@ domains: [machine-studying, deploy-time-learning, agent-memory, evaluation]
 
 # Ingest: Machine Studying
 
-Source: [machine-studying.md](machine-studying.md)
-Captured: 2026-08-18
-From: https://jacobxli.com/blog/2026/machine-studying/
-
 ## Classification
 
-Genre: practitioner-report -- the StudyBench builders introduce their problem formulation and benchmark, then report preliminary experiments and operational lessons from the project rather than presenting a peer-reviewed final study.
-Domains: machine-studying, deploy-time-learning, agent-memory, evaluation
+The StudyBench builders introduce their problem formulation and benchmark, then report preliminary experiments and operational lessons from the project rather than presenting a peer-reviewed final study.
 Author: Jacob Xiaochen Li and Omar Khattab are MIT CSAIL researchers, and Rick Battle is affiliated with Broadcom. Their direct role in building StudyBench gives the report strong first-party detail about the design and runs, but the blog is an early project account rather than independent validation.
 
 ## Summary

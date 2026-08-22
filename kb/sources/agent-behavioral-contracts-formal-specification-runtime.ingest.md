@@ -1,6 +1,10 @@
 ---
 description: "ABC extends Design by Contract to agents with probabilistic compliance, Lyapunov drift bounds, hard/soft constraints, typed recovery, and a YAML contract DSL"
-source_snapshot: agent-behavioral-contracts-formal-specification-runtime-enforcement.md
+source: https://arxiv.org/html/2602.22302v1
+captured: "2026-03-04"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: ade929d5270348c6fceae8745d185ffb452424d81ea48c3813b7123f4250c965
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [agent-reliability, formal-methods, runtime-enforcement, design-by-contract]
@@ -8,15 +12,9 @@ domains: [agent-reliability, formal-methods, runtime-enforcement, design-by-cont
 
 # Ingest: Agent Behavioral Contracts for Reliable Agents
 
-Source: agent-behavioral-contracts-formal-specification-runtime-enforcement.md
-Captured: 2026-03-04
-From: https://arxiv.org/html/2602.22302v1
-
 ## Classification
 
-Type: scientific-paper — preprint with formal theoretical framework (Lyapunov stability analysis, compositionality proofs), empirical evaluation (1,980 sessions across 7 models), benchmark suite (AgentContract-Bench), and practical tooling (ContractSpec DSL, AgentAssert library).
-
-Domains: agent-reliability, formal-methods, runtime-enforcement, design-by-contract
+Preprint with formal theoretical framework (Lyapunov stability analysis, compositionality proofs), empirical evaluation (1,980 sessions across 7 models), benchmark suite (AgentContract-Bench), and practical tooling (ContractSpec DSL, AgentAssert library).
 
 Author: Varun Pratap Bhardwaj, Senior Manager & Solution Architect at Accenture. Industry practitioner with solution architecture background rather than academic research group — attend to the engineering pragmatism but note the corporate context (Accenture's interest in enterprise agent deployments may shape the framing toward specifiable-upfront contracts rather than emergent behavioral discovery).
 

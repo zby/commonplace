@@ -1,6 +1,10 @@
 ---
 description: "Epistemic-cut vocabulary for symbolic constraints, material dynamics, and the limits of natural-language/code analogies"
-source_snapshot: "pattee-physics-of-symbols-2001.md"
+source: https://casci.binghamton.edu/publications/pattee/pattee.html
+captured: "2026-07-14"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 2e9c87d6e61641fb326a83004105fbb993b809dcb1b48f8bb2f0958c7697138e
 ingested: "2026-07-14"
 type: kb/sources/types/ingest-report.md
 domains: [epistemic-cut, symbols, material-dynamics]
@@ -8,14 +12,9 @@ domains: [epistemic-cut, symbols, material-dynamics]
 
 # Ingest: The Physics of Symbols: Bridging the Epistemic Cut
 
-Source: [pattee-physics-of-symbols-2001.md](./pattee-physics-of-symbols-2001.md)
-Captured: 2026-07-14
-From: https://casci.binghamton.edu/publications/pattee/pattee.html
-
 ## Classification
 
-Genre: scientific-paper -- a published theoretical synthesis in BioSystems on physical necessary conditions for symbols and living systems.
-Domains: epistemic-cut, symbols, material-dynamics
+A published theoretical synthesis in BioSystems on physical necessary conditions for symbols and living systems.
 Author: Howard H. Pattee developed the epistemic-cut and semantic-closure framework across several decades.
 
 ## Summary

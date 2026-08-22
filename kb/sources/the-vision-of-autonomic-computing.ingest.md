@@ -1,6 +1,10 @@
 ---
 description: "Kephart & Chess 2003, origin of MAPE-K and the four self-* properties; the primary source behind the KB's reference-model-not-definition reading of self-adaptive loops."
-source_snapshot: "the-vision-of-autonomic-computing.md"
+source: https://jmvidal.cse.sc.edu/library/kephart03a.pdf
+captured: "2026-07-22"
+capture: user-supplied-pdf-to-markdown
+genre: conceptual-essay
+snapshot_sha256: d831357c3c44781fe376d7b80959242f9dd3ca261198f7db8fbab809d54cd1b3
 ingested: "2026-07-22"
 type: kb/sources/types/ingest-report.md
 domains: [self-adaptive-systems, control-loops, self-improving-systems, agent-architecture]
@@ -8,14 +12,9 @@ domains: [self-adaptive-systems, control-loops, self-improving-systems, agent-ar
 
 # Ingest: The Vision of Autonomic Computing
 
-Source: the-vision-of-autonomic-computing.md
-Captured: 2026-07-22
-From: https://jmvidal.cse.sc.edu/library/kephart03a.pdf
-
 ## Classification
 
-Genre: conceptual-essay -- an IEEE Computer 2003 cover feature titled "The Vision of Autonomic Computing." Despite the peer-reviewed venue and reference list, it presents no methodology or data of its own; it is a manifesto and research agenda that argues by biological and economic analogy (the autonomic nervous system, cells, ant colonies, supply webs) and lays out engineering and scientific challenges. The capture-time `scientific-paper` label was corrected to `conceptual-essay` in the snapshot to match its evidential kind.
-Domains: self-adaptive-systems, control-loops, self-improving-systems, agent-architecture
+An IEEE Computer 2003 cover feature titled "The Vision of Autonomic Computing." Despite the peer-reviewed venue and reference list, it presents no methodology or data of its own; it is a manifesto and research agenda that argues by biological and economic analogy (the autonomic nervous system, cells, ant colonies, supply webs) and lays out engineering and scientific challenges. The capture-time `scientific-paper` label was corrected to `conceptual-essay` in the snapshot to match its evidential kind.
 Author: High. Jeffrey Kephart and David Chess, IBM T.J. Watson Research Center, writing the paper that named the field and introduced the MAPE-K loop and the managed-element / autonomic-manager split. This is the canonical, heavily-cited origin document for autonomic and self-adaptive computing.
 
 ## Summary
@@ -24,7 +23,7 @@ Kephart and Chess argue that rising software complexity is outstripping human ca
 
 ## Connections Found
 
-This snapshot's role is the missing origin source for a lineage the KB already engages through its derivatives. Two settled notes -- [a proposal-selection loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) and the [self-improving system definition](../notes/definitions/self-improving-system.md) -- both anchor the same claim (MAPE-K and its relatives are engineering reference models, not membership definitions of self-improvement or self-adaptation) but cite only the downstream self-adaptive-systems captures ([Weyns](./weyns-software-engineering-self-adaptive-systems-tour.md); [Petrovska, Erjiage, and Kugele 2025](./defining-self-adaptive-systems-systematic-literature-review.md)). This paper is where MAPE-K originates, so it belongs under those notes as primary evidence for the reference-model reading. Secondarily it sits alongside [Ashby's ultrastability](./ashby-design-for-a-brain-ultrastability.md) as an external self-regulation precedent the self-improving-systems cluster measures itself against, and it is the historical head of a control-loop lineage that contemporary agent-harness captures ([the self-healing agent harness](./the-self-healing-agent-harness-2048912026018484317.md), [harness engineering is cybernetics](./harness-engineering-is-cybernetics-2030416758138634583.md)) re-enact in miniature. The relationships that matter here are to notes that already exist; there is no need to pre-map its ties to other captures.
+This snapshot's role is the missing origin source for a lineage the KB already engages through its derivatives. Two settled notes -- [a proposal-selection loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) and the [self-improving system definition](../notes/definitions/self-improving-system.md) -- both anchor the same claim (MAPE-K and its relatives are engineering reference models, not membership definitions of self-improvement or self-adaptation) but cite only the downstream self-adaptive-systems captures ([Weyns](https://people.cs.kuleuven.be/~danny.weyns/papers/2017HSE.pdf); [Petrovska, Erjiage, and Kugele 2025](https://arxiv.org/pdf/2505.17798)). This paper is where MAPE-K originates, so it belongs under those notes as primary evidence for the reference-model reading. Secondarily it sits alongside [Ashby's ultrastability](./ashby-design-for-a-brain-ultrastability.md) as an external self-regulation precedent the self-improving-systems cluster measures itself against, and it is the historical head of a control-loop lineage that contemporary agent-harness captures ([the self-healing agent harness](https://x.com/intuitiveml/status/2048912026018484317), [harness engineering is cybernetics](https://x.com/odysseus0z/status/2030416758138634583)) re-enact in miniature. The relationships that matter here are to notes that already exist; there is no need to pre-map its ties to other captures.
 
 ## Extractable Value
 

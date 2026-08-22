@@ -1,6 +1,10 @@
 ---
 description: Epiplexity paper formalizing extractable structure for computationally bounded observers, useful for observer-relative information value and context-efficiency theory.
-source_snapshot: from-entropy-to-epiplexity-rethinking-information-computationally.md
+source: https://arxiv.org/html/2601.03220v1
+captured: "2026-03-05"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 26b4a18ec4bb6d004541946818245bd10a588d9e006c80356ea7171d0cc4c7e2
 ingested: "2026-04-20"
 type: kb/sources/types/ingest-report.md
 domains: [information-theory, learning-theory, context-engineering, computational-complexity]
@@ -8,14 +12,9 @@ domains: [information-theory, learning-theory, context-engineering, computationa
 
 # Ingest: From Entropy to Epiplexity: Rethinking Information for Computationally Bounded Intelligence
 
-Source: from-entropy-to-epiplexity-rethinking-information-computationally.md
-Captured: 2026-03-05
-From: https://arxiv.org/html/2601.03220v1
-
 ## Classification
 
-Type: scientific-paper -- The source is an arXiv paper with formal definitions, theorems, proposed measurement methods, and applications to machine learning phenomena.
-Domains: information-theory, learning-theory, context-engineering, computational-complexity
+The source is an arXiv paper with formal definitions, theorems, proposed measurement methods, and applications to machine learning phenomena.
 Author: Marc Finzi, Shikai Qiu, Yiding Jiang, Pavel Izmailov, J. Zico Kolter, and Andrew Gordon Wilson are ML researchers at Carnegie Mellon University and New York University; Kolter and Wilson are established figures in optimization, robust ML, Bayesian deep learning, and ML theory.
 
 ## Summary

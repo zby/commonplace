@@ -1,6 +1,10 @@
 ---
 description: GIANTS backcasts scientific discovery into a two-parent insight prediction benchmark, showing RL gains under a manufactured soft similarity oracle
-source_snapshot: giants-generative-insight-anticipation-scientific-literature.md
+source: https://giants-insights.github.io/
+captured: "2026-04-24"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: f858d8129dd04a65d5c1aaa4e93ffbd7428a39d712e5fbfc8022be8db95fd327
 ingested: "2026-04-24"
 type: kb/sources/types/ingest-report.md
 domains: [learning-theory, oracle-theory, scientific-discovery, evaluation]
@@ -8,15 +12,9 @@ domains: [learning-theory, oracle-theory, scientific-discovery, evaluation]
 
 # Ingest: GIANTS: Generative Insight Anticipation from Scientific Literature
 
-Source: giants-generative-insight-anticipation-scientific-literature.md
-Captured: 2026-04-24
-From: https://giants-insights.github.io/
-
 ## Classification
 
-Type: **scientific-paper** -- project page for an arXiv-style methods paper with a benchmark, training method, baselines, human validation, and model-release artifacts.
-
-Domains: learning-theory, oracle-theory, scientific-discovery, evaluation
+Project page for an arXiv-style methods paper with a benchmark, training method, baselines, human validation, and model-release artifacts.
 
 Author: Joy He-Yueya, Anikait Singh, Ge Gao, Michael Y. Li, Sherry Yang, Chelsea Finn, Emma Brunskill, and Noah D. Goodman, from Stanford University and New York University. The author set is credible for ML, decision-making, and scientific-reasoning work, but this capture is the public project page rather than the full paper.
 

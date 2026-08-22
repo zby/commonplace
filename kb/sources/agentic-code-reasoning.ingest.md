@@ -1,6 +1,10 @@
 ---
 description: "Explicit-premise reasoning templates with execution traces and formal conclusions improve code verification by 5–12 points, supporting structure as interpretation control at 2.8× step cost"
-source_snapshot: agentic-code-reasoning.md
+source: https://arxiv.org/html/2603.01896v2
+captured: "2026-03-07"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: acd2639d1e6041491cf9130a7d308cd5d69b8b735011991594f9d5f7d0a1a7ad
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [execution-free-verification, structured-reasoning, agentic-code-analysis, oracle-approximation]
@@ -8,13 +12,8 @@ domains: [execution-free-verification, structured-reasoning, agentic-code-analys
 
 # Ingest: Agentic Code Reasoning
 
-Source: agentic-code-reasoning.md
-Captured: 2026-03-07
-From: https://arxiv.org/html/2603.01896v2
-
 ## Classification
-Type: scientific-paper — arXiv preprint with explicit methodology, controlled ablations across three evaluation tasks, multiple baselines, error analyses, and quantitative results on established benchmarks (SWE-bench, Defects4J, RubberDuckBench).
-Domains: execution-free-verification, structured-reasoning, agentic-code-analysis, oracle-approximation
+ArXiv preprint with explicit methodology, controlled ablations across three evaluation tasks, multiple baselines, error analyses, and quantitative results on established benchmarks (SWE-bench, Defects4J, RubberDuckBench).
 Author: Shubham Ugare and Satish Chandra (Meta). Industry researchers reporting ablations on practical SWE-agent workflows with access to frontier models (Opus-4.5, Sonnet). Moderate-to-strong credibility for empirical claims.
 
 ## Summary
@@ -41,7 +40,7 @@ The `/connect` discovery identified 7 note connections and 2 source connections,
 
 7. **[methodology-enforcement-is-constraining](../notes/methodology-enforcement-is-constraining.md)** (exemplifies): Templates constrain how the agent reasons (must state premises, must trace paths, must derive conclusions) — methodology enforcement at the skill level with underspecified response, matching the note's enforcement gradient.
 
-**Source connections:** Synthesises with [ConvexBench ingest](./convexbench-can-llms-recognize-convex-functions.ingest.md) (both show structured process > free-form reasoning across different domains) and connects to [Towards a Science of AI Agent Reliability](./towards-a-science-of-ai-agent-reliability.md) (reliability framework applicable to the verification approach).
+**Source connections:** Synthesises with [ConvexBench ingest](./convexbench-can-llms-recognize-convex-functions.ingest.md) (both show structured process > free-form reasoning across different domains) and connects to [Towards a Science of AI Agent Reliability](https://arxiv.org/pdf/2602.16666) (reliability framework applicable to the verification approach).
 
 ## Extractable Value
 

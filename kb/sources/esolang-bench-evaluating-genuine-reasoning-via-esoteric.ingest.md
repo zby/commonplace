@@ -1,6 +1,10 @@
 ---
 description: Esoteric-language code benchmark arguing standard coding scores mostly measure pretraining fit, with interpreter feedback beating textual critique on OOD tasks
-source_snapshot: esolang-bench-evaluating-genuine-reasoning-via-esoteric-programming.md
+source: https://arxiv.org/abs/2603.09678
+captured: "2026-03-19"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 071ef4b58b32dd3a42334f7cf0ff2fd37574b064314ef8150436c68a5d9179f9
 ingested: "2026-03-19"
 type: kb/sources/types/ingest-report.md
 domains: [benchmarking, out-of-distribution-generalization, agentic-scaffolding, code-generation]
@@ -8,13 +12,8 @@ domains: [benchmarking, out-of-distribution-generalization, agentic-scaffolding,
 
 # Ingest: EsoLang-Bench
 
-Source: esolang-bench-evaluating-genuine-reasoning-via-esoteric-programming.md
-Captured: 2026-03-19
-From: https://arxiv.org/abs/2603.09678
-
 ## Classification
-Type: scientific-paper — arXiv preprint introducing a new hard-oracle benchmark, controlled comparisons across five models and multiple prompting/scaffolding strategies, plus explicit error analysis and stated limitations.
-Domains: benchmarking, out-of-distribution-generalization, agentic-scaffolding, code-generation
+ArXiv preprint introducing a new hard-oracle benchmark, controlled comparisons across five models and multiple prompting/scaffolding strategies, plus explicit error analysis and stated limitations.
 Author: Aman Sharma and Paras Chopra of Lossfunk. Limited prior-authority signal inside this KB, but the artifact signal is real: they built a concrete benchmark with interpreters, controlled task tiers, and reproducible evaluation logic.
 
 ## Summary

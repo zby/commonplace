@@ -1,6 +1,10 @@
 ---
 description: Practitioner report on 1M LOC fully agent-generated codebase — harness engineering as constrain/inform/verify/correct, entropy management via background cleanup agents, error messages as dual-function constraining
-source_snapshot: harness-engineering-leveraging-codex-agent-first-world.md
+source: https://openai.com/index/harness-engineering/
+captured: "2026-03-05"
+capture: web-fetch
+genre: practitioner-report
+snapshot_sha256: facbbe70d428ecf04e6446a1325652e9c3c0466aedd3f6e811c53c85e4098019
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [agent-systems, context-engineering, constraining, code-generation]
@@ -8,13 +12,8 @@ domains: [agent-systems, context-engineering, constraining, code-generation]
 
 # Ingest: Harness Engineering: Leveraging Codex in an Agent-First World
 
-Source: harness-engineering-leveraging-codex-agent-first-world.md
-Captured: 2026-03-05
-From: https://openai.com/index/harness-engineering/
-
 ## Classification
-Type: practitioner-report — An engineer on OpenAI's Codex team describing what they built (1M LOC, zero manual code over five months) and the practices that emerged. Concrete practices, scale numbers, and lessons learned from direct first-person experience.
-Domains: agent-systems, context-engineering, constraining, code-generation
+An engineer on OpenAI's Codex team describing what they built (1M LOC, zero manual code over five months) and the practices that emerged. Concrete practices, scale numbers, and lessons learned from direct first-person experience.
 Author: Ryan Lopopolo, Member of Technical Staff at OpenAI, on the Codex team that built the product described. Direct first-person experience at a scale few teams have reached with fully agent-generated codebases.
 
 ## Summary

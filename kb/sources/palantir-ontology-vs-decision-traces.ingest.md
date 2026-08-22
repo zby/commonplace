@@ -1,6 +1,13 @@
 ---
 description: "Jaya Gupta frames Palantir-style top-down ontology and workflow-first decision traces as two ways to build LLM-facing world models"
-source_snapshot: "palantir-competed-with-snowflake-before-llms.md"
+source: https://x.com/JayaGup10/status/2006384049485484145
+captured: "2026-07-06T18:28:32.161674+00:00"
+capture: xdk
+genre: conceptual-essay
+snapshot_sha256: b98dc7e5e9919a865f861d85586c1af18bc49286c90aaa02acd7db77eced6b6e
+status_id: 2006384049485484145
+conversation_id: 2006384049485484145
+post_count: 1
 ingested: "2026-07-06"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, trace-learning, ontology, context-engineering]
@@ -8,14 +15,9 @@ domains: [agent-memory, trace-learning, ontology, context-engineering]
 
 # Ingest: Palantir Ontology vs Decision Traces
 
-Source: [palantir-competed-with-snowflake-before-llms.md](./palantir-competed-with-snowflake-before-llms.md)
-Captured: 2026-07-06T18:28:32.161674+00:00
-From: https://x.com/JayaGup10/status/2006384049485484145
-
 ## Classification
 
-Type: conceptual-essay -- a single-author X post advancing an architectural framing, not an implementation report or evaluated system design.
-Domains: agent-memory, trace-learning, ontology, context-engineering
+A single-author X post advancing an architectural framing, not an implementation report or evaluated system design.
 Author: @JayaGup10 — Jaya Gupta, investor at Foundation Capital and co-author of the firm's ["context graphs" thesis](https://foundationcapital.com/ideas/context-graphs-ais-trillion-dollar-opportunity) that the post extends. The useful signal is the framing of ontology-first versus trace-first memory architecture; the post itself supplies no implementation evidence or evaluation, and the author has an investment thesis riding on the workflow-first side of the comparison.
 
 ## Summary

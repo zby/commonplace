@@ -1,6 +1,10 @@
 ---
 description: "Anthropic J-space paper as evidence for probeable parametric state, activation-vs-presence, and externalized reasoning as internal-workspace relief"
-source_snapshot: "verbalizable-representations-global-workspace-llms.md"
+source: https://transformer-circuits.pub/2026/workspace/index.html
+captured: "2026-07-06"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 2aefd13b249fec2f2f789aba269fd1c5e4eaee5e533ca53bc6ff3457db384a53
 ingested: "2026-07-06"
 type: kb/sources/types/ingest-report.md
 domains: [interpretability, activation, learning-theory, observability]
@@ -8,14 +12,9 @@ domains: [interpretability, activation, learning-theory, observability]
 
 # Ingest: Verbalizable Representations Form a Global Workspace in Language Models
 
-Source: [verbalizable-representations-global-workspace-llms.md](verbalizable-representations-global-workspace-llms.md)
-Captured: 2026-07-06
-From: https://transformer-circuits.pub/2026/workspace/index.html
-
 ## Classification
 
-Type: scientific-paper -- Anthropic Transformer Circuits research article with a new interpretability method, causal interventions, ablations, task batteries, training experiments, and limitations.
-Domains: interpretability, activation, learning-theory, observability
+Anthropic Transformer Circuits research article with a new interpretability method, causal interventions, ablations, task batteries, training experiments, and limitations.
 Author: Anthropic interpretability researchers; strong author signal for access to Claude-family internals and concrete experiments, with the normal vendor and closed-model replication caveats.
 
 ## Summary

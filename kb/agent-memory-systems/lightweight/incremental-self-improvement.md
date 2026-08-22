@@ -11,7 +11,7 @@ last-checked: "2026-06-02"
 
 Incremental Self-Improvement is Jürgen Schmidhuber's 1995 paradigm for a lifelong reinforcement-learning system that changes how it learns by executing self-modification programs. Coverage here is **doc-grounded**: the cited technical report describes a concrete toy implementation and experiments, but no reachable repository has been inspected, so the mechanisms below are reported from the paper and local ingest rather than code-grounded findings.
 
-**Source:** [On Learning How to Learn Learning Strategies](../../sources/on-learning-how-to-learn-learning-strategies.md), revised FKI-198-94 technical report snapshot captured 2026-04-29 from `https://people.idsia.ch/~juergen/fki198-94.pdf`.
+**Source:** [On Learning How to Learn Learning Strategies](https://people.idsia.ch/~juergen/fki198-94.pdf), revised FKI-198-94 technical report, captured 2026-04-29 from `https://people.idsia.ch/~juergen/fki198-94.pdf`.
 
 **Reviewed version:** revised January 31, 1995 technical report; local ingest [Ingest: On Learning How to Learn Learning Strategies](../../sources/on-learning-how-to-learn-learning-strategies.ingest.md), ingested 2026-04-29.
 

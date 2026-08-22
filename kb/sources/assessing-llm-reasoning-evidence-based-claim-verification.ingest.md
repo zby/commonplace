@@ -1,6 +1,10 @@
 ---
 description: "RECV's forced binary verifier confounds inference type with response policy, content, and prompt bundles"
-source_snapshot: "assessing-llm-reasoning-evidence-based-claim-verification.md"
+source: https://aclanthology.org/2025.findings-acl.1059.pdf
+captured: "2026-08-20"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: ac51d6384fc9aae49225bf9b28a0ec0f0043a6d2d45e85cb07325250ab8ae93e
 ingested: "2026-08-20"
 type: kb/sources/types/ingest-report.md
 domains: [llm-evaluation, claim-verification, reasoning, rationale-faithfulness]
@@ -8,14 +12,9 @@ domains: [llm-evaluation, claim-verification, reasoning, rationale-faithfulness]
 
 # Ingest: Assessing LLM Reasoning in Evidence-Based Claim Verification
 
-Source: [assessing-llm-reasoning-evidence-based-claim-verification.md](./assessing-llm-reasoning-evidence-based-claim-verification.md)
-Captured: 2026-08-20
-From: https://aclanthology.org/2025.findings-acl.1059.pdf
-
 ## Classification
 
-Genre: scientific-paper -- a Findings of ACL 2025 paper that defines a reasoning taxonomy, constructs an annotated benchmark, compares prompting conditions, and reports statistical and rationale evaluations.
-Domains: llm-evaluation, claim-verification, reasoning, rationale-faithfulness
+A Findings of ACL 2025 paper that defines a reasoning taxonomy, constructs an annotated benchmark, compares prompting conditions, and reports statistical and rationale evaluations.
 Author: John Dougrez-Lewis, Mahmud Elahi Akhter, Federico Ruggeri, Sebastian Löbbers, Yulan He, and Maria Liakata are affiliated with the University of Warwick, Queen Mary University of London, the University of Bologna, King's College London, and the Alan Turing Institute. Peer review and detailed appendices are positive signals, but the experiments were not independently reproduced for this ingest.
 
 ## Summary

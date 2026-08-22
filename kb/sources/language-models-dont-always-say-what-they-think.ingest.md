@@ -1,6 +1,10 @@
 ---
 description: "Turpin et al. use controlled input biases to show chain-of-thought can rationalize changed answers while omitting the feature that caused the change"
-source_snapshot: "language-models-dont-always-say-what-they-think.md"
+source: https://proceedings.neurips.cc/paper_files/paper/2023/hash/ed3fea9033a80fea1376299fa7863f4a-Abstract-Conference.html
+captured: "2026-07-23"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 8fa3187bfbfde952c97402972a76bf3757650bffadfcab076154a7410957b70a
 ingested: "2026-07-23"
 type: kb/sources/types/ingest-report.md
 domains: [chain-of-thought, faithfulness, evaluation, content-bias]
@@ -8,14 +12,9 @@ domains: [chain-of-thought, faithfulness, evaluation, content-bias]
 
 # Ingest: Language Models Don't Always Say What They Think
 
-Source: [language-models-dont-always-say-what-they-think.md](./language-models-dont-always-say-what-they-think.md)
-Captured: 2026-07-23
-From: <https://proceedings.neurips.cc/paper_files/paper/2023/hash/ed3fea9033a80fea1376299fa7863f4a-Abstract-Conference.html>
-
 ## Classification
 
-Genre: scientific-paper -- a NeurIPS experimental paper with controlled prompt interventions, two benchmark families, model comparisons, manual annotation of failure cases, and an explicit operational definition of systematic unfaithfulness.
-Domains: chain-of-thought, faithfulness, evaluation, content-bias
+A NeurIPS experimental paper with controlled prompt interventions, two benchmark families, model comparisons, manual annotation of failure cases, and an explicit operational definition of systematic unfaithfulness.
 Author: Miles Turpin, Julian Michael, Ethan Perez, and Samuel R. Bowman; the paper is a peer-reviewed NeurIPS 2023 study from researchers affiliated with NYU Alignment Research Group, Cohere, and Anthropic.
 
 ## Summary
@@ -24,7 +23,7 @@ Turpin et al. test whether chain-of-thought (CoT) explanations report the factor
 
 ## Connections Found
 
-The paper is direct evidence for [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md): it demonstrates the target note's predicted failure mode in which an unfaithful rationale can reduce probing while increasing confident errors. It grounds [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) with a concrete process-validity failure, and reinforces why [structured-prompt gains do not establish training-distribution selection](../notes/structured-prompt-gains-do-not-establish-distribution-selection.md): CoT can alter task performance or bias sensitivity without identifying the process that caused the change. It also supplies a correlated-error example for [Error correction works with above-chance oracles and decorrelated checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) and a model-level analogue of [Context contamination operates below an agent's compliance reasoning](../notes/context-contamination-operates-below-an-agents-compliance-reasoning.md). [Towards Faithfully Interpretable NLP Systems](./towards-faithfully-interpretable-nlp-systems.md) is the conceptual companion.
+The paper is direct evidence for [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md): it demonstrates the target note's predicted failure mode in which an unfaithful rationale can reduce probing while increasing confident errors. It grounds [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) with a concrete process-validity failure, and reinforces why [structured-prompt gains do not establish training-distribution selection](../notes/structured-prompt-gains-do-not-establish-distribution-selection.md): CoT can alter task performance or bias sensitivity without identifying the process that caused the change. It also supplies a correlated-error example for [Error correction works with above-chance oracles and decorrelated checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) and a model-level analogue of [Context contamination operates below an agent's compliance reasoning](../notes/context-contamination-operates-below-an-agents-compliance-reasoning.md). [Towards Faithfully Interpretable NLP Systems](https://aclanthology.org/2020.acl-main.386/) is the conceptual companion.
 
 ## Extractable Value
 
@@ -50,4 +49,4 @@ Relevant Notes:
 - [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) -- is-evidence-for: process-validity failure despite plausible output
 - [Context contamination operates below an agent's compliance reasoning](../notes/context-contamination-operates-below-an-agents-compliance-reasoning.md) -- is-evidence-for: hidden features steer output without explicit acknowledgement
 - [Structured-prompt gains do not establish training-distribution selection](../notes/structured-prompt-gains-do-not-establish-distribution-selection.md) -- is-evidence-for: changed performance and a structured rationale do not identify the causal mechanism
-- [Towards Faithfully Interpretable NLP Systems](./towards-faithfully-interpretable-nlp-systems.md) -- compares-with: conceptual definition and evaluation boundary
+- [Towards Faithfully Interpretable NLP Systems](https://aclanthology.org/2020.acl-main.386/) -- compares-with: conceptual definition and evaluation boundary

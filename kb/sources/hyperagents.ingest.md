@@ -1,6 +1,10 @@
 ---
 description: "HyperAgents paper provides cross-domain evidence for editable meta-agent transfer while leaving outer-loop machinery fixed and compounding unestablished"
-source_snapshot: "hyperagents.md"
+source: https://ar5iv.labs.arxiv.org/html/2603.19461
+captured: "2026-08-04"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: bfb5c4f6723cfeed3410392c7fdd2c390fa29406efd390fc4af61b0ead5d5c25
 ingested: "2026-08-04"
 type: kb/sources/types/ingest-report.md
 domains: [self-improving-systems, reflective-systems, agentic-systems, trace-learning]
@@ -8,14 +12,9 @@ domains: [self-improving-systems, reflective-systems, agentic-systems, trace-lea
 
 # Ingest: HyperAgents
 
-Source: [hyperagents.md](hyperagents.md)  
-Captured: 2026-08-04  
-From: https://ar5iv.labs.arxiv.org/html/2603.19461
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv preprint with specified algorithms, held-out evaluations, ablations, five repeated runs per method, bootstrap confidence intervals, statistical tests, and released code and experiment logs.  
-Domains: self-improving-systems, reflective-systems, agentic-systems, trace-learning  
+An arXiv preprint with specified algorithms, held-out evaluations, ablations, five repeated runs per method, bootstrap confidence intervals, statistical tests, and released code and experiment logs.
 Author: Jenny Zhang, Bingchen Zhao, Wannan Yang, Jakob Foerster, Jeff Clune, Minqi Jiang, Sam Devlin, and Tatiana Shavrina; the team provides a public Facebook Research implementation and experiment logs, but this remains a current preprint rather than a peer-reviewed final publication.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "DGM declares its own departure from the proof-governed Gödel machine, but its mechanism is looser than a benchmark gate: viability alone admits a child to a monotonic archive, and score only weights reproduction"
-source_snapshot: "darwin-godel-machine-open-ended-evolution-self-improving-agents.md"
+source: https://arxiv.org/abs/2505.22954
+captured: "2026-08-02"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 9ce2d857b213c66107e0b81be2f281bf691f6812d5146c89a83542e8041aa086
 ingested: "2026-08-02"
 type: kb/sources/types/ingest-report.md
 domains: [self-improvement, evolutionary-search, harness-learning, evaluation]
@@ -8,14 +12,9 @@ domains: [self-improvement, evolutionary-search, harness-learning, evaluation]
 
 # Ingest: Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents
 
-Source: [darwin-godel-machine-open-ended-evolution-self-improving-agents.md](darwin-godel-machine-open-ended-evolution-self-improving-agents.md)
-Captured: 2026-08-02
-From: https://arxiv.org/abs/2505.22954
-
 ## Classification
 
-Genre: scientific-paper -- an ICLR 2026 conference paper (arXiv v3) defining an evolutionary self-modification algorithm, with pseudocode, two benchmark comparisons, three ablations, transfer experiments, prompts, discovered code lineages, cost estimates, and a safety case study.
-Domains: self-improvement, evolutionary-search, harness-learning, evaluation
+An ICLR 2026 conference paper (arXiv v3) defining an evolutionary self-modification algorithm, with pseudocode, two benchmark comparisons, three ablations, transfer experiments, prompts, discovered code lineages, cost estimates, and a safety case study.
 Author: Jenny Zhang, Shengran Hu, Cong Lu (UBC / Vector Institute), Robert Lange (Sakana AI), and Jeff Clune (UBC / Vector / CIFAR AI Chair). Open-endedness and AI-generating algorithms are this group's own research programme, so the framing of archive-based exploration as the decisive ingredient is a house position; the promised release of code, prompts, and full archive lineage raises inspectability.
 
 ## Summary

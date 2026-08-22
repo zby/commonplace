@@ -1,6 +1,10 @@
 ---
 description: "Survey defining the LLM agent harness as execution loop, tool registry, context manager, state store, lifecycle hooks, and evaluation interface"
-source_snapshot: "agent-harness-large-language-model-agents-survey.md"
+source: https://www.preprints.org/manuscript/202604.0428
+captured: "2026-05-28"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: bd5d44820e83c105809c652913b0f2ad1dcf799a764a678b7a257d74c5a9dcc2
 ingested: "2026-05-28"
 type: kb/sources/types/ingest-report.md
 domains: [harness-engineering, agent-runtime, context-engineering, agent-reliability]
@@ -8,14 +12,9 @@ domains: [harness-engineering, agent-runtime, context-engineering, agent-reliabi
 
 # Ingest: Agent Harness for Large Language Model Agents
 
-Source: [agent-harness-large-language-model-agents-survey.md](agent-harness-large-language-model-agents-survey.md)
-Captured: 2026-05-28
-From: https://www.preprints.org/manuscript/202604.0428
-
 ## Classification
 
-Type: scientific-paper -- Preprints.org survey article with formal definitions, historical framing, taxonomy, component matrix, challenge analysis, and stated limitations.
-Domains: harness-engineering, agent-runtime, context-engineering, agent-reliability
+Preprints.org survey article with formal definitions, historical framing, taxonomy, component matrix, challenge analysis, and stated limitations.
 Author: Qianyu Meng et al. The source has academic form and a broad literature sweep, but the article is a preprint and its taxonomy/completeness ratings should be treated as survey judgment rather than empirical validation.
 
 ## Summary

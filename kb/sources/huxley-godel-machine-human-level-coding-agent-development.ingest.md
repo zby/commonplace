@@ -1,6 +1,10 @@
 ---
 description: "ICLR 2026 HGM paper arguing immediate benchmark score is a weak parent-selection signal for self-improving coding agents; clade-metaproductivity better predicts productive lineages"
-source_snapshot: huxley-godel-machine-human-level-coding-agent-development.md
+source: https://openreview.net/pdf?id=T0EiEuhOOL
+captured: "2026-04-24"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: bd3815e8d12e57a57c26c0976ba6f778fea3da45fe3f9edc4f56cfd38eb9482a
 ingested: "2026-04-24"
 type: kb/sources/types/ingest-report.md
 domains: [deploy-time-learning, harness-engineering, evaluation, self-improvement]
@@ -8,14 +12,9 @@ domains: [deploy-time-learning, harness-engineering, evaluation, self-improvemen
 
 # Ingest: Huxley-Gödel Machine
 
-Source: huxley-godel-machine-human-level-coding-agent-development.md
-Captured: 2026-04-24
-From: https://openreview.net/pdf?id=T0EiEuhOOL
-
 ## Classification
 
-Type: scientific-paper -- ICLR 2026 conference paper with formal definitions, an algorithm, benchmark comparisons, ablations/correlation analysis, and citations.
-Domains: deploy-time-learning, harness-engineering, evaluation, self-improvement
+ICLR 2026 conference paper with formal definitions, an algorithm, benchmark comparisons, ablations/correlation analysis, and citations.
 Author: Wenyi Wang, Piotr Piekos, Li Nanbo, Firas Laakom, Yimeng Chen, Mateusz Ostaszewski, Mingchen Zhuge, and Jurgen Schmidhuber at KAUST; worth attending to because the paper combines Schmidhuber's self-referential-machine lineage with current SWE-bench coding-agent experiments.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "NeurIPS workshop study injects irrelevant prior tasks into web-agent contexts and observes soft degradation, loops, and objective loss, extending controlled distractor findings to multi-session agents"
-source_snapshot: llm-webagents-long-context-reasoning-benchmark.md
+source: https://arxiv.org/html/2512.04307v1
+captured: "2026-03-26"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 6b1b99523cc2140db8972d6cd3434f68766632021e89da6a46f011484e88e931
 ingested: "2026-03-26"
 type: kb/sources/types/ingest-report.md
 domains: [context-degradation, agent-systems, web-agents, long-context-evaluation]
@@ -8,15 +12,9 @@ domains: [context-degradation, agent-systems, web-agents, long-context-evaluatio
 
 # Ingest: Evaluating Long-Context Reasoning in LLM-Based WebAgents
 
-Source: llm-webagents-long-context-reasoning-benchmark.md
-Captured: 2026-03-26
-From: https://arxiv.org/html/2512.04307v1
-
 ## Classification
 
-Type: **scientific-paper** — Peer-reviewed (NeurIPS 25 LAW Workshop), introduces a benchmark with controlled experimental design, measures four frontier models, reports quantitative results with failure-mode analysis.
-
-Domains: context-degradation, agent-systems, web-agents, long-context-evaluation
+Peer-reviewed (NeurIPS 25 LAW Workshop), introduces a benchmark with controlled experimental design, measures four frontier models, reports quantitative results with failure-mode analysis.
 
 Author: Andy Chung et al., with Joyce Chai (University of Michigan, well-known in grounded language understanding and interactive agents). The team is positioned at the intersection of language grounding and agent evaluation.
 
@@ -36,9 +34,9 @@ The `/connect` discovery identified strong connections to 7 KB notes and 4 other
 - **[context-efficiency-is-the-central-design-concern-in-agent-systems](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md)**, **[the-chat-history-model-trades-context-efficiency-for-implementation-simplicity](../notes/the-chat-history-model-trades-context-efficiency-for-implementation.md)**, **[llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model](../notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md)** — all exemplified by this benchmark.
 
 **Cross-source connections:**
-- **[gsm-dc-llm-reasoning-distracted-irrelevant-context](./gsm-dc-llm-reasoning-distracted-irrelevant-context.md)** — complements: GSM-DC measures irrelevant-context degradation in isolated math reasoning; this benchmark extends the same phenomenon to agentic web tasks with multi-session histories. Together they show the pattern is consistent across abstraction levels.
-- **[paulsen-maximum-effective-context-window-mecw](./paulsen-maximum-effective-context-window-mecw.md)** — complements: Paulsen measures MECW for model-level tasks; this measures effective context for agent-level multi-session tasks. Both confirm nominal window size drastically overstates usable capacity.
-- **[large-language-model-agents-are-not-always-faithful-self-evolvers](./llm-agents-are-not-always-faithful-self-evolvers.md)** — complements: self-evolvers paper shows agents fail to use condensed experience even when provided; this shows iRAG provides only modest improvement. Both converge on: simply providing relevant information in a long context does not guarantee the agent will use it effectively.
+- **[gsm-dc-llm-reasoning-distracted-irrelevant-context](https://arxiv.org/html/2505.18761v2)** — complements: GSM-DC measures irrelevant-context degradation in isolated math reasoning; this benchmark extends the same phenomenon to agentic web tasks with multi-session histories. Together they show the pattern is consistent across abstraction levels.
+- **[paulsen-maximum-effective-context-window-mecw](https://arxiv.org/pdf/2509.21361)** — complements: Paulsen measures MECW for model-level tasks; this measures effective context for agent-level multi-session tasks. Both confirm nominal window size drastically overstates usable capacity.
+- **[large-language-model-agents-are-not-always-faithful-self-evolvers](https://arxiv.org/html/2601.22436v3)** — complements: self-evolvers paper shows agents fail to use condensed experience even when provided; this shows iRAG provides only modest improvement. Both converge on: simply providing relevant information in a long context does not guarantee the agent will use it effectively.
 
 **Synthesis opportunity:** Three sources (GSM-DC, ConvexBench, this benchmark) now document irrelevant-context degradation at different abstraction levels — isolated math reasoning, compositional symbolic reasoning, multi-session agentic web tasks. No note yet names this cross-level consistency or draws the implication that the degradation pattern appears to be a fundamental property of attention-based architectures rather than task-specific.
 

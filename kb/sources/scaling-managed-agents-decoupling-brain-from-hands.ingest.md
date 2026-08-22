@@ -1,6 +1,10 @@
 ---
 description: Anthropic Managed Agents report showing brain/hand/session interface decomposition, durable session logs, and stale harness assumptions as model capability changes
-source_snapshot: scaling-managed-agents-decoupling-brain-from-hands.md
+source: https://www.anthropic.com/engineering/managed-agents
+captured: "2026-04-11"
+capture: web-fetch
+genre: practitioner-report
+snapshot_sha256: 5ec6012b83428cf0a4126e71d71c7f78715fd111ac77dc44765107eb860387b0
 ingested: "2026-04-11"
 type: kb/sources/types/ingest-report.md
 domains: [agent-runtime, context-engineering, orchestration, isolation]
@@ -8,14 +12,9 @@ domains: [agent-runtime, context-engineering, orchestration, isolation]
 
 # Ingest: Scaling Managed Agents: Decoupling the brain from the hands
 
-Source: scaling-managed-agents-decoupling-brain-from-hands.md
-Captured: 2026-04-11
-From: https://www.anthropic.com/engineering/managed-agents
-
 ## Classification
 
-Type: practitioner-report -- Anthropic's engineering team describes a hosted production agent service, the earlier coupled-container design that failed, the architecture they built instead, and operational effects such as recovery, security isolation, and latency.
-Domains: agent-runtime, context-engineering, orchestration, isolation
+Anthropic's engineering team describes a hosted production agent service, the earlier coupled-container design that failed, the architecture they built instead, and operational effects such as recovery, security isolation, and latency.
 Author: Lance Martin, Gabe Cemaj, and Michael Cohen are Anthropic engineers writing about Anthropic's Managed Agents implementation; the author signal is strong for production experience, weaker for independent evaluation.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "Study across 11 frontier LLMs finds maximum effective context windows up to 99% below advertised limits, task-dependent, with hallucinations approaching 100% beyond the effective window"
-source_snapshot: paulsen-maximum-effective-context-window-mecw.md
+source: https://arxiv.org/pdf/2509.21361
+captured: "2026-03-16"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 0b473ee651d3cf2b77a96ff9eb097a5f414c8885ee5565cf73ecec7af7af8302
 ingested: "2026-03-16"
 type: kb/sources/types/ingest-report.md
 domains: [context-windows, llm-evaluation, rag-systems, agent-architecture]
@@ -8,15 +12,9 @@ domains: [context-windows, llm-evaluation, rag-systems, agent-architecture]
 
 # Ingest: Maximum Effective Context Window
 
-Source: paulsen-maximum-effective-context-window-mecw.md
-Captured: 2026-03-16
-From: https://arxiv.org/pdf/2509.21361
-
 ## Classification
 
-Type: **scientific-paper** — empirical study with a formal definition (MECW), controlled experimental methodology across 11 models and 4 task types, 66k+ data points, statistical analysis with p-values, and a review of prior frameworks.
-
-Domains: context-windows, llm-evaluation, rag-systems, agent-architecture
+Empirical study with a formal definition (MECW), controlled experimental methodology across 11 models and 4 task types, 66k+ data points, statistical analysis with p-values, and a review of prior frameworks.
 
 Author: Norman Paulsen, Denver, Colorado. No institutional affiliation listed; appears to be an independent researcher. The paper is a 2025 arXiv preprint. The methodology is straightforward and the data collection is substantial (66k rows), but this has not yet been peer-reviewed.
 
@@ -76,7 +74,7 @@ The /connect discovery identified 7 KB notes and 1 sibling source with genuine c
 
 1. **Synthetic task bias** — All four task types involve structured data operations (counting, sorting, filtering) over a synthetic dataset of "person has N colored objects." These tasks test exact retrieval and arithmetic — areas where LLMs are known to be weak. Real-world use cases (document understanding, code analysis, multi-document reasoning over natural language) engage different model capabilities and may have substantially different MECW profiles. The paper's MECW values should not be directly applied to natural-language reasoning tasks without independent validation.
 
-2. **Volume and task difficulty are confounded** — The paper's experimental design varies token count, but the tasks themselves (exact counting, sorting, filtering) are in LLM-hard territory — precise enumeration over structured data is a known weakness. This means the extreme MECW values likely reflect volume × task-difficulty interaction, not pure volume degradation. A clean volume-only test would use tasks LLMs are strong at (e.g., natural-language comprehension) and measure degradation as input length grows. ConvexBench ([Liu et al., 2026](convexbench-can-llms-recognize-convex-functions.md)) has the same structure from the other direction: it varies compositional depth on a task (symbolic reasoning) that is also LLM-hard. Neither paper cleanly isolates a single dimension of the [two-dimensional context cost model](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md).
+2. **Volume and task difficulty are confounded** — The paper's experimental design varies token count, but the tasks themselves (exact counting, sorting, filtering) are in LLM-hard territory — precise enumeration over structured data is a known weakness. This means the extreme MECW values likely reflect volume × task-difficulty interaction, not pure volume degradation. A clean volume-only test would use tasks LLMs are strong at (e.g., natural-language comprehension) and measure degradation as input length grows. ConvexBench ([Liu et al., 2026](https://arxiv.org/html/2602.01075v2)) has the same structure from the other direction: it varies compositional depth on a task (symbolic reasoning) that is also LLM-hard. Neither paper cleanly isolates a single dimension of the [two-dimensional context cost model](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md).
 
 3. **No reasoning-model isolation** — The paper acknowledges "reasoning and non-reasoning models work in distinctly different ways" but does not systematically compare them. Reasoning models (o4-mini, DeepSeek r1, Gemini 2.5 Flash) may have fundamentally different MECW profiles than base models, and the paper's aggregate findings may mask this distinction.
 

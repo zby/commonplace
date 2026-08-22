@@ -1,6 +1,10 @@
 ---
 description: "Primary second-order-cybernetics vocabulary for observer-inclusive boundaries, purposes, and observing systems"
-source_snapshot: "von-foerster-cybernetics-of-cybernetics-1979.md"
+source: https://sites.evergreen.edu/arunchandra/wp-content/uploads/sites/395/2018/05/cybernetics.pdf
+captured: "2026-07-14"
+capture: pdf-read
+genre: conceptual-essay
+snapshot_sha256: 24964183ad29b72719a970191277987416c115f302459bbf3f5de8331c2b8b38
 ingested: "2026-07-14"
 type: kb/sources/types/ingest-report.md
 domains: [second-order-cybernetics, system-boundaries, observers]
@@ -8,14 +12,9 @@ domains: [second-order-cybernetics, system-boundaries, observers]
 
 # Ingest: Cybernetics of Cybernetics
 
-Source: [von-foerster-cybernetics-of-cybernetics-1979.md](./von-foerster-cybernetics-of-cybernetics-1979.md)
-Captured: 2026-07-14
-From: https://sites.evergreen.edu/arunchandra/wp-content/uploads/sites/395/2018/05/cybernetics.pdf
-
 ## Classification
 
-Genre: conceptual-essay -- a brief primary position paper defining the second-order move and its social consequence rather than reporting an experiment.
-Domains: second-order-cybernetics, system-boundaries, observers
+A brief primary position paper defining the second-order move and its social consequence rather than reporting an experiment.
 Author: Heinz von Foerster is the originator of the first-order/second-order formulation used here.
 
 ## Summary

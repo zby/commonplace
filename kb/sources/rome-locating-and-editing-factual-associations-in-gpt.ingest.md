@@ -1,6 +1,10 @@
 ---
 description: "ROME localizes factual associations to mid-layer MLPs and edits them with a rank-one weight update — the nearest approach to our named explicit-retention falsifier, but it lacks scope-addressability"
-source_snapshot: "rome-locating-and-editing-factual-associations-in-gpt.md"
+source: https://arxiv.org/abs/2202.05262
+captured: "2026-07-26"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: e71d53db9109b5331c646fcea42e3a4cb678d6ea8d32c1cc529af40405b4ad55
 ingested: "2026-07-26"
 type: kb/sources/types/ingest-report.md
 domains: [learning-theory, artifact-analysis, self-improving-systems, interpretability]
@@ -8,14 +12,9 @@ domains: [learning-theory, artifact-analysis, self-improving-systems, interpreta
 
 # Ingest: Locating and Editing Factual Associations in GPT
 
-Source: rome-locating-and-editing-factual-associations-in-gpt.md
-Captured: 2026-07-26
-From: https://arxiv.org/abs/2202.05262
-
 ## Classification
 
-Genre: scientific-paper — a NeurIPS 2022 archival research paper (Meng, Bau, Andonian, Belinkov) with a causal-intervention method, a new editing technique, a released evaluation dataset, and quantitative comparison against prior editors. It is empirical work with published code, not a position piece.
-Domains: learning-theory, artifact-analysis, self-improving-systems, interpretability
+A NeurIPS 2022 archival research paper (Meng, Bau, Andonian, Belinkov) with a causal-intervention method, a new editing technique, a released evaluation dataset, and quantitative comparison against prior editors. It is empirical work with published code, not a position piece.
 Author: David Bau's group with Yonatan Belinkov — a central and heavily replicated line in mechanistic interpretability. Strong credibility signal; the paper spawned the model-editing subfield, which also means the strongest criticisms of it come from inside that subfield.
 
 ## Summary

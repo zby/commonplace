@@ -1,6 +1,13 @@
 ---
 description: "Practitioner report on a PM skill that forces solution ideas back into problem statements, useful as a process-structure example for agent skills"
-source_snapshot: "kb/sources/problem-first-skill-inverts-solution-jumps-2063186118409929161.md"
+source: https://x.com/nurijanian/status/2063186118409929161
+captured: "2026-06-17T09:08:07.099475+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: 57e9d6f7e49319abb93da31c728a6842e41a6c524069ad6d2813386dcefc4316
+status_id: 2063186118409929161
+conversation_id: 2063186118409929161
+post_count: 1
 ingested: "2026-06-17"
 type: kb/sources/types/ingest-report.md
 domains: [skills, process-structure, product-management]
@@ -8,14 +15,9 @@ domains: [skills, process-structure, product-management]
 
 # Ingest: /problem-first: a simple skill to invert bad ideas
 
-Source: [problem-first-skill-inverts-solution-jumps-2063186118409929161.md](problem-first-skill-inverts-solution-jumps-2063186118409929161.md)
-Captured: 2026-06-17T09:08:07.099475+00:00
-From: https://x.com/nurijanian/status/2063186118409929161
-
 ## Classification
 
-Type: practitioner-report -- the author reports a product-management workflow they use as an AI skill, including an anecdotal run over roughly 50 ideas and a productized placement inside PM OS.
-Domains: skills, process-structure, product-management
+The author reports a product-management workflow they use as an AI skill, including an anecdotal run over roughly 50 ideas and a productized placement inside PM OS.
 Author: @nurijanian presents as a PM practitioner and PM OS vendor; the source has firsthand workflow detail, but also promotional bias.
 
 ## Summary

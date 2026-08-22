@@ -1,6 +1,10 @@
 ---
 description: "Latent-conditioning framework raises LLM output diversity on NoveltyBench/AUT while authors admit a missing low-quality/OOD oracle — a clean positive instance of generate-cheap-verify-expensive at the embedding substrate."
-source_snapshot: "geometry-of-knowledge-extending-diversity-boundaries-llms.md"
+source: https://arxiv.org/html/2507.13874v2
+captured: "2026-04-23"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: c9e7695932fec6cadfc1553cdab1d47bddacbd9bad686ed4948deb5e56172197
 ingested: "2026-04-23"
 type: kb/sources/types/ingest-report.md
 domains: [llm-generation-diversity, latent-space-conditioning, oracle-gap]
@@ -8,14 +12,9 @@ domains: [llm-generation-diversity, latent-space-conditioning, oracle-gap]
 
 # Ingest: Geometry of Knowledge Allows Extending Diversity Boundaries of Large Language Models
 
-Source: geometry-of-knowledge-extending-diversity-boundaries-llms.md
-Captured: 2026-04-23
-From: https://arxiv.org/html/2507.13874v2
-
 ## Classification
 
-Type: scientific-paper -- arXiv preprint (2507.13874v2) with a proposed method, topological argument, and two benchmark evaluations (NoveltyBench, Alternative Uses Test); no peer review yet but has the structural markers of a methods paper.
-Domains: llm-generation-diversity, latent-space-conditioning, oracle-gap
+ArXiv preprint (2507.13874v2) with a proposed method, topological argument, and two benchmark evaluations (NoveltyBench, Alternative Uses Test); no peer review yet but has the structural markers of a methods paper.
 Author: Bystroński, Han, Chawla, Kajdanowicz (Wrocław University of Science and Technology / University of Notre Dame). Chawla is a well-cited data-mining author; first-author and institutional signal is moderate — worth attending to as a methods proposal, not as an authority claim about LLM cognition.
 
 ## Summary

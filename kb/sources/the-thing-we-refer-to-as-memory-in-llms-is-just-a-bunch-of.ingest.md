@@ -1,6 +1,13 @@
 ---
 description: Deepfates argues LLM "memory" is just context-stuffing that creates false salience (Chekov's gun), advocates agentic context-building, but concludes weight updates are necessary — directly contradicts this KB's durability-not-weights position
-source_snapshot: the-thing-we-refer-to-as-memory-in-llms-is-just-a-bunch-of-superfici.md
+source: https://x.com/deepfates/status/2036857868914483592
+captured: "2026-03-25T18:29:38.213238+00:00"
+capture: xdk
+genre: conversation-thread
+snapshot_sha256: 4ab5d554070ad6d6cd236d4813f5bf278d8cbed7e86fa7a46dbcee7d3532e6f2
+status_id: 2036857868914483592
+conversation_id: 2036857868914483592
+post_count: 1
 ingested: "2026-03-25"
 type: kb/sources/types/ingest-report.md
 domains: [context-engineering, memory-architecture, learning-theory]
@@ -8,15 +15,9 @@ domains: [context-engineering, memory-architecture, learning-theory]
 
 # Ingest: Post by @deepfates — LLM "memory" as context stuffing
 
-Source: the-thing-we-refer-to-as-memory-in-llms-is-just-a-bunch-of-superfici.md
-Captured: 2026-03-25
-From: https://x.com/deepfates/status/2036857868914483592
-
 ## Classification
 
-Type: **conversation-thread** — A single-author thread on X arguing a position about LLM memory design. No formal methodology or data; structured as a chain of observations building toward a conclusion. Not a conceptual essay (too informal, not enough sustained argument) or practitioner report (no system built).
-
-Domains: context-engineering, memory-architecture, learning-theory
+A single-author thread on X arguing a position about LLM memory design. No formal methodology or data; structured as a chain of observations building toward a conclusion. Not a conceptual essay (too informal, not enough sustained argument) or practitioner report (no system built).
 
 Author: @deepfates — active in the AI/LLM discourse community on X. Not an academic researcher or published systems builder in this area. The thread responds to a Karpathy post (linked), suggesting engagement with mainstream AI commentary. Treat as informed commentary, not as expert testimony.
 
@@ -36,7 +37,7 @@ The `/connect` discovery found 9 KB notes across three clusters, plus 2 source-t
 
 **Cross-contamination:** [flat-memory-predicts-specific-cross-contamination-failures-that-are-empirically-testable](../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md) predicts the multi-agent scenario failures deepfates describes.
 
-**Source-to-source:** The Letta paper ([continual-learning-in-token-space](./continual-learning-in-token-space.md)) makes the opposite bet — continual learning in token space, not weights. The [unfaithful self-evolvers](./llm-agents-are-not-always-faithful-self-evolvers.md) paper provides evidence that raw trajectories (what deepfates advocates crawling) are more useful than condensed memory.
+**Source-to-source:** The Letta paper ([continual-learning-in-token-space](https://www.letta.com/blog/continual-learning)) makes the opposite bet — continual learning in token space, not weights. The [unfaithful self-evolvers](https://arxiv.org/html/2601.22436v3) paper provides evidence that raw trajectories (what deepfates advocates crawling) are more useful than condensed memory.
 
 **Synthesis opportunity flagged:** Indiscriminate context loading produces a double failure — irrelevant knowledge creates false salience (deepfates' Chekov's gun) while relevant knowledge fails to activate (the expert-witness problem from the KB) — and both failures are invisible due to soft degradation. No single KB note names this double failure yet.
 

@@ -1,6 +1,10 @@
 ---
 description: "Transformer analogy paper linking analogical transfer to relational-role alignment, with useful evidence for discovery, reach, and cognitive-analogy transfer methodology"
-source_snapshot: "emergent-analogical-reasoning-transformers.md"
+source: https://arxiv.org/html/2602.01992v4
+captured: "2026-05-26"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 0ebe3924c1cb2b50c30070aea6c08345ed98a29d30cc94e5c505a02793e9d731
 ingested: "2026-05-26"
 type: kb/sources/types/ingest-report.md
 domains: [learning-theory, analogical-reasoning, transformer-mechanisms, discovery]
@@ -8,14 +12,9 @@ domains: [learning-theory, analogical-reasoning, transformer-mechanisms, discove
 
 # Ingest: Emergent Analogical Reasoning in Transformers
 
-Source: emergent-analogical-reasoning-transformers.md
-Captured: 2026-05-26
-From: https://arxiv.org/html/2602.01992v4
-
 ## Classification
 
-Type: scientific-paper -- arXiv preprint with a controlled synthetic task, training dynamics, mechanistic representation probes, LLM prompt probes, ablations, and limitations; it should be treated as promising mechanistic evidence rather than settled theory.
-Domains: learning-theory, analogical-reasoning, transformer-mechanisms, discovery
+ArXiv preprint with a controlled synthetic task, training dynamics, mechanistic representation probes, LLM prompt probes, ablations, and limitations; it should be treated as promising mechanistic evidence rather than settled theory.
 Author: Gouki Minegishi, Jingyuan Feng, Hiroki Furuta, Takeshi Kojima, Yusuke Iwasawa, and Yutaka Matsuo; credible ML/AI research signal from an academic group, but the source is still a preprint.
 
 ## Summary

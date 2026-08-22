@@ -1,6 +1,10 @@
 ---
 description: Shannon's 1952 lecture cataloguing six explicit problem-solving operators (simplification, analogy, restatement, generalization, structural analysis, inversion) as a portable creative toolkit
-source_snapshot: creative-thinking-by-claude-shannon.md
+source: https://jamesclear.com/great-speeches/creative-thinking-by-claude-shannon
+captured: "2026-03-08"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: 93575f054f89b1a6ea3eeb6ca533e5665af98ce82eb7aad0d5b1ce72ee07eb2d
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [creativity, problem-solving, research-methods, agent-orchestration]
@@ -8,13 +12,8 @@ domains: [creativity, problem-solving, research-methods, agent-orchestration]
 
 # Ingest: "Creative Thinking"
 
-Source: creative-thinking-by-claude-shannon.md
-Captured: 2026-03-08
-From: https://jamesclear.com/great-speeches/creative-thinking-by-claude-shannon
-
 ## Classification
-Type: conceptual-essay — Shannon presents a reusable framing and heuristic toolkit for creative/research problem-solving rather than reporting an experiment or system build.
-Domains: creativity, problem-solving, research-methods, agent-orchestration
+Shannon presents a reusable framing and heuristic toolkit for creative/research problem-solving rather than reporting an experiment or system build.
 Author: Claude Shannon is the father of information theory and a foundational figure in digital communication. This is a high-signal historical primary source — a 1952 Bell Labs internal lecture capturing his practical thinking style, not his formal theory.
 
 ## Summary

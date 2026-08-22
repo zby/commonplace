@@ -1,6 +1,13 @@
 ---
 description: "Figma's practitioner account of turning security precedents into a trusted, tested policy artifact that drives agent review, repo auditing, and secure code generation."
-source_snapshot: "kb/sources/figma-agent-security-review-thread-2081739292859421118.md"
+source: https://x.com/frgx/status/2081739292859421118
+captured: "2026-07-28T11:52:12.808321+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: 1a8549f3226f47f586c7b48fe1c9685a63b1d19d152b62ece9b82be07a707a2f
+status_id: 2081739292859421118
+conversation_id: 2081739292859421118
+post_count: 9
 ingested: "2026-07-28"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, context-engineering, evaluation, security]
@@ -8,14 +15,9 @@ domains: [agent-memory, context-engineering, evaluation, security]
 
 # Ingest: Thread by @frgx
 
-Source: [Thread by @frgx](./figma-agent-security-review-thread-2081739292859421118.md)
-Captured: 2026-07-28
-From: https://x.com/frgx/status/2081739292859421118
-
 ## Classification
 
-Genre: practitioner-report -- a first-person account from the Figma security workflow describing what was built and what the team learned.
-Domains: agent-memory, context-engineering, evaluation, security
+A first-person account from the Figma security workflow describing what was built and what the team learned.
 Author: @frgx reports the Figma security team's experience, but the thread supplies no independent audit or reproducible study.
 
 ## Summary

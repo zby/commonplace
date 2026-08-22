@@ -33,7 +33,7 @@ This differs from the content-class defense that [a commitment's record resists 
 Current engineering reports illustrate both movements, without establishing a cross-generation trend:
 
 - At fixed difficulty, [a stronger model let one team delete checklists, compliance scripts, and synchronization layers](../sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md).
-- At a harder-task frontier, [a financial-services team reports that better models obsolete detailed skills for simpler work but prompt new skills for multi-step valuations, backtesting, and monitoring](../sources/lessons-from-building-ai-agents-for-financial-services-201517481849743.md).
+- At a harder-task frontier, [a financial-services team reports that better models obsolete detailed skills for simpler work but prompt new skills for multi-step valuations, backtesting, and monitoring](https://x.com/nicbstme/status/2015174818497437834).
 - Separately, [a stronger coding model still needed explicit work state, decomposition, and end-to-end verification on longer-horizon assignments](../sources/effective-harnesses-for-long-running-agents.ingest.md).
 
 These cases make recurrence a live hypothesis, not a measured trend. Settling it requires tracking the volume, function, and marginal contribution of external structure in comparable frontier deployments across model generations, rather than comparing fixed benchmarks.

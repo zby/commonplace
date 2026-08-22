@@ -1,6 +1,10 @@
 ---
 description: "HART hardens final-answer feedback for visual evidence selection by withholding alternative image access, while residual shortcuts bound the transfer to KB context routing"
-source_snapshot: "hart-high-resolution-annotation-free-reasoning-technique.md"
+source: https://arxiv.org/abs/2602.23615
+captured: "2026-08-21"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: e16f808f739d6d97dbed8c964d842d967a51eb0352e140b364afc6096f090d43
 ingested: "2026-08-21"
 type: kb/sources/types/ingest-report.md
 domains: [reinforcement-learning, context-selection, oracle-theory, multimodal-reasoning]
@@ -8,14 +12,9 @@ domains: [reinforcement-learning, context-selection, oracle-theory, multimodal-r
 
 # Ingest: HART: High-Resolution Annotation-Free Reasoning Technique through a Closed-loop Framework
 
-Source: [hart-high-resolution-annotation-free-reasoning-technique.md](./hart-high-resolution-annotation-free-reasoning-technique.md)
-Captured: 2026-08-21
-From: https://arxiv.org/abs/2602.23615
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv v3 preprint that specifies a reinforcement-learning method, pilot study, benchmark comparisons, grounding evaluation, and ablations.
-Domains: reinforcement-learning, context-selection, oracle-theory, multimodal-reasoning
+An arXiv v3 preprint that specifies a reinforcement-learning method, pilot study, benchmark comparisons, grounding evaluation, and ablations.
 Author: Eight Nanjing University researchers. The paper gives concrete prompts, objectives, data splits, baselines, and results across several visual benchmarks, but this ingest did not inspect its advertised code or reproduce the experiments.
 
 ## Summary

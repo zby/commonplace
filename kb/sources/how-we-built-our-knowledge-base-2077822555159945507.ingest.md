@@ -1,6 +1,13 @@
 ---
 description: "Cerebras practitioner report on an internal enterprise knowledge base: source-native ingestion, Slack/code retrieval, MCP tools, project scoping, and multi-consumer activation"
-source_snapshot: "how-we-built-our-knowledge-base-2077822555159945507.md"
+source: https://x.com/cerebras/status/2077822555159945507
+captured: "2026-07-17T11:11:46.803761+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: 35e8de20f5de41216eb8f9822806fc43f8dfea3c0927211a2948d9268988cef7
+status_id: 2077822555159945507
+conversation_id: 2077822555159945507
+post_count: 1
 ingested: "2026-07-17"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, context-engineering, enterprise-ai, retrieval]
@@ -8,14 +15,9 @@ domains: [agent-memory, context-engineering, enterprise-ai, retrieval]
 
 # Ingest: How we built our knowledge base
 
-Source: [how-we-built-our-knowledge-base-2077822555159945507.md](./how-we-built-our-knowledge-base-2077822555159945507.md)
-Captured: 2026-07-17T11:11:46.803761+00:00
-From: https://x.com/cerebras/status/2077822555159945507
-
 ## Classification
 
-Genre: practitioner-report -- Cerebras reports how it built and operates an internal knowledge base, including architecture choices, retrieval strategies, and adoption signals.
-Domains: agent-memory, context-engineering, enterprise-ai, retrieval
+Cerebras reports how it built and operates an internal knowledge base, including architecture choices, retrieval strategies, and adoption signals.
 Author: Official Cerebras post with named authors @hi_im_isaac_, @learnwdaniel, and @gaozenghao; high signal as a builder account, but vendor-positioned and not independently audited.
 
 ## Summary

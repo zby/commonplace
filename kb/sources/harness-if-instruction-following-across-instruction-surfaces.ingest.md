@@ -1,6 +1,10 @@
 ---
 description: "Harness-IF makes rule withholding a compliance baseline, finding 3.6–7.4-point prior-alignment inflation while leaving most surface effects unpaired"
-source_snapshot: "harness-if-instruction-following-across-instruction-surfaces.md"
+source: https://arxiv.org/abs/2608.11727
+captured: "2026-08-18"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: c491838cb8a3e1204c5d1b13685d7baddaf9c4e8596dd2651de08c24bd31484c
 ingested: "2026-08-18"
 type: kb/sources/types/ingest-report.md
 domains: [instruction-following, agent-evaluation, harness-engineering, llm-reliability]
@@ -8,14 +12,9 @@ domains: [instruction-following, agent-evaluation, harness-engineering, llm-reli
 
 # Ingest: Harness-IF: Evaluating Instruction Following Across Instruction Surfaces in Coding Agents
 
-Source: [harness-if-instruction-following-across-instruction-surfaces.md](./harness-if-instruction-following-across-instruction-surfaces.md)
-Captured: 2026-08-18
-From: https://arxiv.org/abs/2608.11727
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv v1 preprint that defines a rule-level coding-agent benchmark and reports a 12-build coding panel, a separate nine-build conflict pilot, and an exploratory non-coding extension.
-Domains: instruction-following, agent-evaluation, harness-engineering, llm-reliability
+An arXiv v1 preprint that defines a rule-level coding-agent benchmark and reports a 12-build coding panel, a separate nine-build conflict pilot, and an exploratory non-coding extension.
 Author: Zining Huang et al., primarily ByteDance Seed with Tsinghua University and Peking University affiliations. The paper reports substantial internal experiments and sensitivity analyses, but it is a new preprint whose planned benchmark release is not yet linked in this version.
 
 ## Summary

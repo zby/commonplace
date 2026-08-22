@@ -1,6 +1,10 @@
 ---
 description: Evans argues that separating modeling (schema creation) from classification (schema application) tames LLM non-determinism — a practitioner case study of constraining via taxonomy freezing
-source_snapshot: eric-evans-ai-components-deterministic-system.md
+source: https://www.domainlanguage.com/articles/ai-components-deterministic-system/
+captured: "2026-03-09"
+capture: web-fetch
+genre: practitioner-report
+snapshot_sha256: 4fd9b8bc5de54fe00fdc6d2867f0c13dc03893a33bf9a9caa4ea6a7a065d352f
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [constraining, classification-systems, LLM-integration, domain-driven-design]
@@ -8,15 +12,9 @@ domains: [constraining, classification-systems, LLM-integration, domain-driven-d
 
 # Ingest: AI Components for a Deterministic System (An Example)
 
-Source: eric-evans-ai-components-deterministic-system.md
-Captured: 2026-03-09
-From: https://www.domainlanguage.com/articles/ai-components-deterministic-system/
-
 ## Classification
 
-Type: **practitioner-report** — Evans built a concrete system (domain classification of OpenEMR code modules), reports what worked and what didn't, and extracts transferable design principles. It has a conceptual essay layer (the modeling-vs-classification distinction), but the article is grounded in a working implementation with specific results, not pure theory.
-
-Domains: constraining, classification-systems, LLM-integration, domain-driven-design
+Evans built a concrete system (domain classification of OpenEMR code modules), reports what worked and what didn't, and extracts transferable design principles. It has a conceptual essay layer (the modeling-vs-classification distinction), but the article is grounded in a working implementation with specific results, not pure theory.
 
 Author: Eric Evans, creator of Domain-Driven Design. His authority is in software architecture and strategic design, not ML/NLP per se. His DDD lens is what makes the article distinctive — he frames the LLM integration problem as a modeling/classification boundary, which is a DDD concept transplanted into the AI domain.
 

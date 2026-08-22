@@ -1,6 +1,10 @@
 ---
 description: "Sleep operationalizes offline consolidation as upward self-distillation into slower model weights plus RL-guided dreaming, separating scheduling posture from representational form"
-source_snapshot: "kb/sources/language-models-need-sleep-self-modify-consolidate-memories.md"
+source: https://arxiv.org/abs/2606.03979
+captured: "2026-07-31"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 59367fd808cf377175e43dc9fd3d505f86744dc287fa6a425a7728a88beae920
 ingested: "2026-07-31"
 type: kb/sources/types/ingest-report.md
 domains: [continual-learning, agent-memory, self-improving-systems, representational-form]
@@ -8,14 +12,9 @@ domains: [continual-learning, agent-memory, self-improving-systems, representati
 
 # Ingest: Language Models Need Sleep
 
-Source: language-models-need-sleep-self-modify-consolidate-memories.md
-Captured: 2026-07-31
-From: https://arxiv.org/abs/2606.03979
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv research preprint presenting a continual-learning architecture, objectives, benchmark comparisons, and ablations.
-Domains: continual-learning, agent-memory, self-improving-systems, representational-form
+An arXiv research preprint presenting a continual-learning architecture, objectives, benchmark comparisons, and ablations.
 Author: Ali Behrouz, Farnoosh Hashemi, Adel Javanmard, and Vahab Mirrokni. The mechanism is technically specified and evaluated across several task families, but the evidence is author-reported and not independently reproduced here.
 
 ## Summary

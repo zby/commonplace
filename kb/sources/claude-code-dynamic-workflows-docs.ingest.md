@@ -1,6 +1,10 @@
 ---
 description: "Claude Code dynamic-workflows docs — the saveable, script-authored counterpoint to RLM's ephemeral orchestrators; evidence for the orchestration/run-state persistence cluster"
-source_snapshot: "claude-code-dynamic-workflows-docs.md"
+source: https://code.claude.com/docs/en/workflows
+captured: "2026-06-03"
+capture: web-fetch
+genre: tool-announcement
+snapshot_sha256: 0e0d13fb475b5dadf7cc57f5b1da9534329db9958a62ae6f9802fa19e5d765d3
 ingested: "2026-06-03"
 type: kb/sources/types/ingest-report.md
 domains: [orchestration, sub-agents, persistence, context-engineering]
@@ -8,14 +12,9 @@ domains: [orchestration, sub-agents, persistence, context-engineering]
 
 # Ingest: Orchestrate subagents at scale with dynamic workflows
 
-Source: claude-code-dynamic-workflows-docs.md
-Captured: 2026-06-03
-From: https://code.claude.com/docs/en/workflows
-
 ## Classification
 
-Type: tool-announcement -- official Anthropic product documentation for a research-preview Claude Code feature ("dynamic workflows"). It announces and specifies a shipping capability, not a study or argument; treat its design framings as vendor-authored.
-Domains: orchestration, sub-agents, persistence, context-engineering
+Official Anthropic product documentation for a research-preview Claude Code feature ("dynamic workflows"). It announces and specifies a shipping capability, not a study or argument; treat its design framings as vendor-authored.
 Author: Anthropic (first-party docs for Claude Code). High authority on the feature's mechanics and constraints; no independent evaluation of whether the design works better than alternatives.
 
 ## Summary
@@ -32,7 +31,7 @@ The companion [connect report](../reports/connect/sources/claude-code-dynamic-wo
 - [Agent orchestration occupies a multi-dimensional design space](../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) — the docs' own five-axis comparison table is a practitioner instance of the multi-axis (not single-ladder) framing.
 - [Synthesis is not error correction](../notes/synthesis-is-not-error-correction.md) — `/deep-research` votes on each claim and filters claims that fail cross-checking rather than merging everything, exactly the distinction the note draws.
 
-The connect report also flags a **synthesis opportunity**: this docs capture plus the parallel X-article snapshot ([a-harness-for-every-task-dynamic-workflows](../sources/a-harness-for-every-task-dynamic-workflows.md)) together with the RLM cluster could ground a note framing dynamic workflows as the saveable counterpoint to RLM's ephemeral orchestrators — the deployed example the persistence note currently lacks. The connect report notes (non-actionable maintenance context) that a future ingest pass should cross-reference the two snapshots with `compares-with`.
+The connect report also flags a **synthesis opportunity**: this docs capture plus the parallel X-article snapshot ([a-harness-for-every-task-dynamic-workflows](https://x.com/trq212/status/2061907337154367865)) together with the RLM cluster could ground a note framing dynamic workflows as the saveable counterpoint to RLM's ephemeral orchestrators — the deployed example the persistence note currently lacks. The connect report notes (non-actionable maintenance context) that a future ingest pass should cross-reference the two snapshots with `compares-with`.
 
 ## Extractable Value
 

@@ -1,6 +1,10 @@
 ---
 description: "Cryptographic whole-chain supply-chain verification (in-toto) as a cross-domain exemplar for the KB's verification-cost, lineage, and staleness theory"
-source_snapshot: "in-toto-farm-to-table-guarantees.md"
+source: https://www.usenix.org/system/files/sec19-torres-arias.pdf
+captured: "2026-07-06"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: ddf9ee6e3c2920855afed80f504637a0bffc6d1e93bcc44fd6bcb08e85437263
 ingested: "2026-07-06"
 type: kb/sources/types/ingest-report.md
 domains: [supply-chain-security, provenance, verification, lineage]
@@ -8,14 +12,9 @@ domains: [supply-chain-security, provenance, verification, lineage]
 
 # Ingest: in-toto — Providing farm-to-table guarantees for bits and bytes
 
-Source: in-toto-farm-to-table-guarantees.md
-Captured: 2026-07-06
-From: https://www.usenix.org/system/files/sec19-torres-arias.pdf
-
 ## Classification
 
-Type: scientific-paper -- peer-reviewed USENIX Security '19 paper (pp. 1393-1410) with a formal threat model, security analysis, three production deployments, and quantitative evaluation against 30 real attacks.
-Domains: supply-chain-security, provenance, verification, lineage
+Peer-reviewed USENIX Security '19 paper (pp. 1393-1410) with a formal threat model, security analysis, three production deployments, and quantitative evaluation against 30 real attacks.
 Author: Strong. Torres-Arias, Cappos et al. (NYU/NJIT/Datadog) — the same lab behind TUF; in-toto ships in products used by millions and is a foundational reference in the software-supply-chain-integrity literature (later the basis for SLSA/sigstore-adjacent work).
 
 ## Summary
@@ -28,7 +27,7 @@ in-toto is a cross-domain (software-supply-chain security) source; every tie int
 
 - Strongest fit is [the-boundary-of-automation-is-the-boundary-of-verification.md](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md) (as `evidenced-by`): in-toto is a clean instance of the thesis — supply-chain trust decisions became *automatable* precisely because the chain became *cheaply verifiable* (Kubernetes admission controllers gate promotion on a sub-0.6s-per-package check). The verification-cost→automation mechanism is exactly the note's claim, not a loose rhyme, and it adds a fourth corroborating source from a distinct domain.
 - Softer reverse-edges: [distilled-artifacts-need-source-tracking.md](../notes/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md) (the dependency record lives *outside* the delivered artifact and is verifiable rather than trusted), [the-four-field-record-exposes-an-efficiency-security-and-sovereignty.md](../notes/the-four-field-record-exposes-an-efficiency-security-and-sovereignty.md) (in-toto operationalizes "untrusted-or-stale artifact reaching a high-authority channel" as the security question), and [definitions/lineage.md](../notes/definitions/lineage.md) (a canonical *full-provenance-plus-verification* system illustrating the boundary that definition deliberately excludes).
-- For a future synthesis, in-toto sits in a three-source cluster on "verify a chain of production steps" alongside [prov-overview.md](./prov-overview.md) (W3C PROV — descriptive provenance interchange) and [build-systems-a-la-carte.md](./build-systems-a-la-carte.md) (scheduler×rebuilder staleness/verifying-traces): the freshness side, the descriptive side, and the cryptographic-integrity side of the same shape.
+- For a future synthesis, in-toto sits in a three-source cluster on "verify a chain of production steps" alongside [prov-overview.md](https://www.w3.org/TR/prov-overview/) (W3C PROV — descriptive provenance interchange) and [build-systems-a-la-carte.md](https://www.microsoft.com/en-us/research/wp-content/uploads/2018/03/build-systems.pdf) (scheduler×rebuilder staleness/verifying-traces): the freshness side, the descriptive side, and the cryptographic-integrity side of the same shape.
 
 Discovery also flagged a durable gap: in-toto's "graceful degradation / not lose-one-lose-all under partial key compromise" has no corroborating KB note yet.
 

@@ -1,6 +1,13 @@
 ---
 description: "PostHog's human-governed SQL semantic catalogue operationalizes authority, drift detection, and agent-uptake evaluation, but reports design rather than outcomes"
-source_snapshot: "posthog-semantic-layer-2090858894419693598.md"
+source: https://x.com/posthog/status/2090858894419693598
+captured: "2026-08-22T07:54:34.187816+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: e1273f268f019ebe4144bcad54c824bab3e83dd7924dafc253c83ff95c31dc4e
+status_id: 2090858894419693598
+conversation_id: 2090858894419693598
+post_count: 1
 ingested: "2026-08-22"
 type: kb/sources/types/ingest-report.md
 domains: [context-engineering, agent-memory, data-governance, lineage]
@@ -8,14 +15,9 @@ domains: [context-engineering, agent-memory, data-governance, lineage]
 
 # Ingest: Building a semantic layer at PostHog
 
-Source: [posthog-semantic-layer-2090858894419693598.md](./posthog-semantic-layer-2090858894419693598.md)
-Captured: 2026-08-22T07:54:34.187816+00:00
-From: https://x.com/posthog/status/2090858894419693598
-
 ## Classification
 
-Genre: practitioner-report -- a first-party account by the PostHog team members who built and launched a beta feature, centered on concrete architecture and rejected design alternatives rather than independent evaluation.
-Domains: context-engineering, agent-memory, data-governance, lineage
+A first-party account by the PostHog team members who built and launched a beta feature, centered on concrete architecture and rejected design alternatives rather than independent evaluation.
 Authors: Lizzie Epton (Developer Marketer) and Thiago Rocha Salvatore (Product Engineer), published by PostHog. Their product access gives the account implementation value, while the vendor and launch context creates an incentive to foreground benefits and omit failures.
 
 ## Summary

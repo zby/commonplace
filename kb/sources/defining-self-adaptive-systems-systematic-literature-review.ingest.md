@@ -1,6 +1,10 @@
 ---
 description: "Petrovska, Erjiage, and Kugele's systematic review quantifies the definition gap in self-adaptive-systems research and identifies uncertainty and goal semantics as missing formal dimensions."
-source_snapshot: "defining-self-adaptive-systems-systematic-literature-review.md"
+source: https://arxiv.org/pdf/2505.17798
+captured: "2026-07-21"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 62d1fd5783529f8b13794654a9f2ce9bd544775470e0257b811117e968794098
 ingested: "2026-07-21"
 type: kb/sources/types/ingest-report.md
 domains: [self-adaptation, definitions, systematic-review, uncertainty]
@@ -8,14 +12,9 @@ domains: [self-adaptation, definitions, systematic-review, uncertainty]
 
 # Ingest: Defining Self-adaptive Systems: A Systematic Literature Review
 
-Source: defining-self-adaptive-systems-systematic-literature-review.md
-Captured: 2026-07-21
-From: https://arxiv.org/pdf/2505.17798
-
 ## Classification
 
-Genre: scientific-paper -- a systematic literature review with explicit search, selection, voting, threats-to-validity, and reproducibility procedures.
-Domains: self-adaptation, definitions, systematic-review, uncertainty
+A systematic literature review with explicit search, selection, voting, threats-to-validity, and reproducibility procedures.
 Author: Ana Petrovska, Guan Erjiage, and Stefan Kugele provide a recent multi-author review; its claims are bounded by the selected corpus and review protocol.
 
 ## Summary

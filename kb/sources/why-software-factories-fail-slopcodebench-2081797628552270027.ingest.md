@@ -1,6 +1,13 @@
 ---
 description: "Dex Horthy's SlopCodeBench run turns long-horizon code maintenance into a delayed benchmark signal while showing why deterministic proxies do not yet warrant lights-off autonomy"
-source_snapshot: "why-software-factories-fail-slopcodebench-2081797628552270027.md"
+source: https://x.com/dexhorthy/status/2081797628552270027
+captured: "2026-07-28T14:01:50.184617+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: bf4776cc6b2ddc1e8494dd21481e3ba2b7fe5a96483affefe115ebf17d30dd7c
+status_id: 2081797628552270027
+conversation_id: 2081797628552270027
+post_count: 8
 ingested: "2026-07-28"
 type: kb/sources/types/ingest-report.md
 domains: [agentic-coding, maintainability, evaluation, verification]
@@ -8,14 +15,9 @@ domains: [agentic-coding, maintainability, evaluation, verification]
 
 # Ingest: Why Software Factories Fail: Benchmarking the new frontier
 
-Source: [why-software-factories-fail-slopcodebench-2081797628552270027.md](why-software-factories-fail-slopcodebench-2081797628552270027.md)  
-Captured: 2026-07-28T14:01:50.184617+00:00  
-From: https://x.com/dexhorthy/status/2081797628552270027
-
 ## Classification
 
-Genre: practitioner-report -- Horthy reports a firsthand nine-run experiment using three Claude models, three SlopCodeBench problems, and 17 incrementally revealed checkpoints, with held-out black-box tests and deterministic code-structure metrics. It is an empirical continuation of his software-factory series, not a conceptual proposal and not a report of a self-improving system.
-Domains: agentic-coding, maintainability, evaluation, verification
+Horthy reports a firsthand nine-run experiment using three Claude models, three SlopCodeBench problems, and 17 incrementally revealed checkpoints, with held-out black-box tests and deterministic code-structure metrics. It is an empirical continuation of his software-factory series, not a conceptual proposal and not a report of a self-improving system.
 Author: Dex Horthy writes as a HumanLayer cofounder and coding-agent practitioner. The report has useful operator evidence because he ran and watched the trajectories, but the subset, model selection, metric port, and interpretation are author-controlled and commercially adjacent.
 
 ## Summary

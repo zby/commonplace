@@ -1,6 +1,10 @@
 ---
 description: "Gauntlet paper shows independent expert perspectives plus disagreement-preserving synthesis improve technical-paper critique, while calibration and confident-error rejection remain unsolved"
-source_snapshot: "can-llms-perform-deep-technical-comprehension.md"
+source: https://arxiv.org/abs/2607.11859
+captured: "2026-07-17"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 2c76c89f8311859973099707a475550c50f336c8c362926dcdebcde94ad8eea9
 ingested: "2026-07-17"
 type: kb/sources/types/ingest-report.md
 domains: [multi-agent-systems, scholarly-review, evaluation, synthesis]
@@ -8,14 +12,9 @@ domains: [multi-agent-systems, scholarly-review, evaluation, synthesis]
 
 # Ingest: Can LLMs Perform Deep Technical Comprehension of Computer Architecture Papers?
 
-Source: [can-llms-perform-deep-technical-comprehension.md](./can-llms-perform-deep-technical-comprehension.md)
-Captured: 2026-07-17
-From: https://arxiv.org/abs/2607.11859
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv preprint presenting a defined multi-agent pipeline, human comparison, automated ablation, quantitative results, failure analysis, and released data.
-Domains: multi-agent-systems, scholarly-review, evaluation, synthesis
+An arXiv preprint presenting a defined multi-agent pipeline, human comparison, automated ablation, quantitative results, failure analysis, and released data.
 Author: Nishant Aggarwal et al., affiliated with the University of Wisconsin-Madison and NVIDIA Research. The team has direct computer-architecture expertise and releases the pipeline, analyses, scores, rubric, and judge transcripts; the preprint's claims have not yet received independent peer-review validation.
 
 ## Summary

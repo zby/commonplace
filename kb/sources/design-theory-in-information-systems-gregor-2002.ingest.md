@@ -1,6 +1,10 @@
 ---
 description: "Gregor's initial Type V account grounds design-and-action theory while separating prescriptive content from Commonplace's proposed operator condition"
-source_snapshot: "design-theory-in-information-systems-gregor-2002.md"
+source: https://ajis.aaisnet.org/index.php/ajis/article/download/439/399/551
+captured: "2026-07-14"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: fd14a118046d6e1ea17c05f55c75bfcc66c78d9f6630c3d4d119b9e57274cf59
 ingested: "2026-07-14"
 type: kb/sources/types/ingest-report.md
 domains: [design-theory, theory-taxonomy, actionable-knowledge, information-systems]
@@ -8,14 +12,9 @@ domains: [design-theory, theory-taxonomy, actionable-knowledge, information-syst
 
 # Ingest: Design Theory in Information Systems
 
-Source: [design-theory-in-information-systems-gregor-2002.md](./design-theory-in-information-systems-gregor-2002.md)
-Captured: 2026-07-14
-From: https://ajis.aaisnet.org/index.php/ajis/article/download/439/399/551
-
 ## Classification
 
-Genre: scientific-paper -- a peer-reviewed conceptual research article that proposes and argues for a taxonomy of theory in information systems, then elaborates its fifth type.
-Domains: design-theory, theory-taxonomy, actionable-knowledge, information-systems
+A peer-reviewed conceptual research article that proposes and argues for a taxonomy of theory in information systems, then elaborates its fifth type.
 Author: Shirley Gregor, then at the Australian National University, is the originator of the five-type taxonomy developed more fully in 2006; this paper is the short, direct statement of its design-and-action branch.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "Gregor and Jones's six-core/two-additional anatomy separates design-theory content from implementation agents and physical instantiations"
-source_snapshot: "the-anatomy-of-a-design-theory-gregor-jones-2007.md"
+source: https://openresearch-repository.anu.edu.au/bitstreams/cb19f834-e47c-44dc-9331-1985afe75336/download
+captured: "2026-07-14"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 7d67a1116e0c5e5d8eed3256eb5a245e09800218b71a5de8c65c04dd2651a5ce
 ingested: "2026-07-14"
 type: kb/sources/types/ingest-report.md
 domains: [design-theory, theory-structure, artifact-design, implementation]
@@ -8,14 +12,9 @@ domains: [design-theory, theory-structure, artifact-design, implementation]
 
 # Ingest: The Anatomy of a Design Theory
 
-Source: [the-anatomy-of-a-design-theory-gregor-jones-2007.md](./the-anatomy-of-a-design-theory-gregor-jones-2007.md)
-Captured: 2026-07-14
-From: https://openresearch-repository.anu.edu.au/bitstreams/cb19f834-e47c-44dc-9331-1985afe75336/download
-
 ## Classification
 
-Genre: scientific-paper -- a peer-reviewed conceptual research essay that synthesizes prior theory and design-science work into a structural specification for information-systems design theories.
-Domains: design-theory, theory-structure, artifact-design, implementation
+A peer-reviewed conceptual research essay that synthesizes prior theory and design-science work into a structural specification for information-systems design theories.
 Authors: Shirley Gregor and David Jones. Gregor originated the five-type taxonomy; together they provide the mature component-level treatment of Type V design theory, extending Walls, Widmeyer, and El Sawy.
 
 ## Summary
@@ -24,7 +23,7 @@ Gregor and Jones distinguish eight possible components of an information-systems
 
 ## Connections Found
 
-The paper supplies supporting component anatomy for [Actionable methodology](../notes/definitions/actionable-methodology.md), especially by preventing four conflations: design principles with implementation principles, anticipated artifact mutability with an authorized write path, abstract theory with a physical instantiation, and human participation inside the target system with the external operator who applies the theory. It complements [Gregor 2006](./the-nature-of-theory-in-information-systems-gregor-2006.md), which defines Type V by prescriptive purpose, and refines [Gregor 2002](./design-theory-in-information-systems-gregor-2002.md), which introduced the product/process distinction without this complete anatomy. Broader local work on readable artifacts and design rationale is adjacent but does not directly depend on the ISDT component scheme.
+The paper supplies supporting component anatomy for [Actionable methodology](../notes/definitions/actionable-methodology.md), especially by preventing four conflations: design principles with implementation principles, anticipated artifact mutability with an authorized write path, abstract theory with a physical instantiation, and human participation inside the target system with the external operator who applies the theory. It complements [Gregor 2006](https://openresearch-repository.anu.edu.au/bitstreams/77077d0f-f636-40a8-89fb-d2d2365ad7ad/download), which defines Type V by prescriptive purpose, and refines [Gregor 2002](https://ajis.aaisnet.org/index.php/ajis/article/download/439/399/551), which introduced the product/process distinction without this complete anatomy. Broader local work on readable artifacts and design rationale is adjacent but does not directly depend on the ISDT component scheme.
 
 ## Extractable Value
 

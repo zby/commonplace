@@ -1,6 +1,13 @@
 ---
 description: "Dex Horthy's staged human-review workflow moves maintainability judgment upstream and limits unchecked agent work with vertical slices"
-source_snapshot: "why-software-factories-fail-lights-back-on-2081058573556306030.md"
+source: https://x.com/dexhorthy/status/2081058573556306030
+captured: "2026-07-26T07:26:05.314114+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: b0f6f5d21b59fdc5e4f87feca7313172cb1b6e147d199ddfcb742b9c5893569d
+status_id: 2081058573556306030
+conversation_id: 2081058573556306030
+post_count: 6
 ingested: "2026-07-26"
 type: kb/sources/types/ingest-report.md
 domains: [agentic-coding, specification, human-oversight, maintainability]
@@ -8,19 +15,14 @@ domains: [agentic-coding, specification, human-oversight, maintainability]
 
 # Ingest: Why Software Factories Fail: Turning the lights back on
 
-Source: [why-software-factories-fail-lights-back-on-2081058573556306030.md](why-software-factories-fail-lights-back-on-2081058573556306030.md)
-Captured: 2026-07-26T07:26:05.314114+00:00
-From: https://x.com/dexhorthy/status/2081058573556306030
-
 ## Classification
 
-Genre: practitioner-report -- Horthy prescribes the workflow his team adopted after its lights-off experiment: staged product, architecture, and program-design reviews followed by incrementally reviewed vertical slices.
-Domains: agentic-coding, specification, human-oversight, maintainability
+Horthy prescribes the workflow his team adopted after its lights-off experiment: staged product, architecture, and program-design reviews followed by incrementally reviewed vertical slices.
 Author: Dex Horthy writes as a coding-agent practitioner and HumanLayer cofounder. The workflow contains concrete artifacts and task-tiering rules, but the closing product pitch gives him a commercial interest in presenting human-agent collaboration as the durable answer.
 
 ## Summary
 
-Part II responds to the maintainability-oracle gap diagnosed in [Part I](why-software-factories-fail-2080697380379427275.md) by restoring humans at high-leverage decision surfaces rather than waiting to review a large generated diff. Horthy divides substantial work into product requirements, system architecture, program design, and vertical slices. Models draft product documents, mockups, diagrams, call-stack trees, file-tree diffs, types, and signatures; humans argue with and approve those artifacts before implementation. Agents then deliver one to three end-to-end slices at a time so functionality can be exercised and 100–200 lines can be reviewed before an error propagates through thousands. The process is risk-tiered: small tasks remain one-shot, medium tasks combine phases, and large or consequential work receives the full treatment. The claimed result is safer 2–3x leverage rather than lights-off 10–100x throughput.
+Part II responds to the maintainability-oracle gap diagnosed in [Part I](https://x.com/dexhorthy/status/2080697380379427275) by restoring humans at high-leverage decision surfaces rather than waiting to review a large generated diff. Horthy divides substantial work into product requirements, system architecture, program design, and vertical slices. Models draft product documents, mockups, diagrams, call-stack trees, file-tree diffs, types, and signatures; humans argue with and approve those artifacts before implementation. Agents then deliver one to three end-to-end slices at a time so functionality can be exercised and 100–200 lines can be reviewed before an error propagates through thousands. The process is risk-tiered: small tasks remain one-shot, medium tasks combine phases, and large or consequential work receives the full treatment. The claimed result is safer 2–3x leverage rather than lights-off 10–100x throughput.
 
 ## Connections Found
 

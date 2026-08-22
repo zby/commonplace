@@ -1,6 +1,10 @@
 ---
 description: "Causal representation learning grounds the claim that causal models support intervention, counterfactual, and reusable-mechanism generalization"
-source_snapshot: "kb/sources/towards-causal-representation-learning.md"
+source: https://arxiv.org/abs/2102.11107
+captured: "2026-07-16"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 01b81069b39510971650695d6e313c781f79f7419f495615e2cb812ceb498442
 ingested: "2026-07-16"
 type: kb/sources/types/ingest-report.md
 domains: [causal-inference, representation-learning, reach-assessment]
@@ -8,14 +12,9 @@ domains: [causal-inference, representation-learning, reach-assessment]
 
 # Ingest: Towards Causal Representation Learning
 
-Source: [towards-causal-representation-learning.md](./towards-causal-representation-learning.md)
-Captured: 2026-07-16
-From: <https://arxiv.org/abs/2102.11107>
-
 ## Classification
 
-Genre: scientific-paper -- a broad review and position paper connecting graphical causality with machine learning, transfer, robustness, and representation learning. The genre recorded on the snapshot is correct.
-Domains: causal-inference, representation-learning, reach-assessment
+A broad review and position paper connecting graphical causality with machine learning, transfer, robustness, and representation learning. The genre recorded on the snapshot is correct.
 Author: Bernhard Schoelkopf, Francesco Locatello, Stefan Bauer, Nan Rosemary Ke, Nal Kalchbrenner, Anirudh Goyal, and Yoshua Bengio; high authority signal across causality, representation learning, and deep learning.
 
 ## Summary

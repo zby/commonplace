@@ -1,6 +1,10 @@
 ---
 description: Objective-vs-subjective intelligence essay arguing that AI's real bottleneck is taste and boringness judgment, not benchmarked competence
-source_snapshot: adam-mastroianni-infinite-midwit.md
+source: https://www.experimental-history.com/p/infinite-midwit
+captured: "2026-04-06"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: 96bc4cd184039e5f5e26bf461eee8c2e46be3f76195af3b37de652747fa90aef
 ingested: "2026-04-06"
 type: kb/sources/types/ingest-report.md
 domains: [automation-boundary, oracle-theory, research-methodology, writing-quality]
@@ -8,15 +12,9 @@ domains: [automation-boundary, oracle-theory, research-methodology, writing-qual
 
 # Ingest: Infinite midwit
 
-Source: adam-mastroianni-infinite-midwit.md
-Captured: 2026-04-06
-From: https://www.experimental-history.com/p/infinite-midwit
-
 ## Classification
 
-Type: conceptual-essay — Mastroianni is arguing for a framing distinction, not presenting a system, dataset, or empirical study. The piece is built from analogy, examples, and lived-practice observations about writing and research.
-
-Domains: automation-boundary, oracle-theory, research-methodology, writing-quality
+Mastroianni is arguing for a framing distinction, not presenting a system, dataset, or empirical study. The piece is built from analogy, examples, and lived-practice observations about writing and research.
 
 Author: Adam Mastroianni is a psychologist and essayist at Experimental History. He is worth attending to here as a sharp observer of writing and research practice, but this is still an argumentative essay rather than an empirical demonstration.
 

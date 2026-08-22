@@ -1,6 +1,10 @@
 ---
 description: "Invariant prediction grounds reach assessment by treating cross-environment invariance as evidence for causal predictors rather than fitted correlations"
-source_snapshot: "kb/sources/causal-inference-using-invariant-prediction.md"
+source: https://arxiv.org/abs/1501.01332
+captured: "2026-07-16"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: b59816fe93710bfdaedc94306ff6a127ed1c6c4961b100bc735371bac9343c27
 ingested: "2026-07-16"
 type: kb/sources/types/ingest-report.md
 domains: [causal-inference, invariance, reach-assessment]
@@ -8,14 +12,9 @@ domains: [causal-inference, invariance, reach-assessment]
 
 # Ingest: Causal inference using invariant prediction
 
-Source: [causal-inference-using-invariant-prediction.md](./causal-inference-using-invariant-prediction.md)
-Captured: 2026-07-16
-From: <https://arxiv.org/abs/1501.01332>
-
 ## Classification
 
-Genre: scientific-paper -- a methodological causal-inference paper with assumptions, procedure, confidence statements, robustness discussion, and empirical studies. The genre recorded on the snapshot is correct.
-Domains: causal-inference, invariance, reach-assessment
+A methodological causal-inference paper with assumptions, procedure, confidence statements, robustness discussion, and empirical studies. The genre recorded on the snapshot is correct.
 Author: Jonas Peters, Peter Buehlmann, and Nicolai Meinshausen; high authority signal in statistical causal inference and invariant prediction.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "Qualified good-regulator theorem vocabulary for models, goals, disturbances, and optimal regulation"
-source_snapshot: "conant-ashby-every-good-regulator-1970.md"
+source: https://pespmc1.vub.ac.be/books/Conant_Ashby.pdf
+captured: "2026-07-14"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: f8dbf092bf0073da4c76ae462bc3713343e45477059f20a2242f62f161f5287b
 ingested: "2026-07-14"
 type: kb/sources/types/ingest-report.md
 domains: [regulation, models, cybernetics]
@@ -8,14 +12,9 @@ domains: [regulation, models, cybernetics]
 
 # Ingest: Every Good Regulator of a System Must Be a Model of That System
 
-Source: [conant-ashby-every-good-regulator-1970.md](./conant-ashby-every-good-regulator-1970.md)
-Captured: 2026-07-14
-From: https://pespmc1.vub.ac.be/books/Conant_Ashby.pdf
-
 ## Classification
 
-Genre: scientific-paper -- a formal theorem paper defining regulation and proving a model relation under explicit probabilistic/entropy assumptions.
-Domains: regulation, models, cybernetics
+A formal theorem paper defining regulation and proving a model relation under explicit probabilistic/entropy assumptions.
 Author: Roger C. Conant and W. Ross Ashby are primary cybernetics sources; the theorem is frequently quoted more broadly than its proof permits.
 
 ## Summary

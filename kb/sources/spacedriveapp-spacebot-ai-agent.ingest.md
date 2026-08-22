@@ -1,6 +1,10 @@
 ---
 description: Spacebot README ingest covering process-typed concurrent agent runtime architecture, branch scoping, cortex supervision, and typed unified memory
-source_snapshot: spacedriveapp-spacebot-ai-agent.md
+source: https://github.com/spacedriveapp/spacebot
+captured: "2026-02-23"
+capture: web-fetch
+genre: tool-announcement
+snapshot_sha256: f7f7b15a024430566fd8034e6097a64b4d38795686edbc0b03e5ffb40e6e2410
 ingested: "2026-04-20"
 type: kb/sources/types/ingest-report.md
 domains: [agent-architecture, orchestration, context-engineering, memory-systems]
@@ -8,15 +12,9 @@ domains: [agent-architecture, orchestration, context-engineering, memory-systems
 
 # Ingest: Spacebot: AI Agent for Teams and Communities
 
-Source: spacedriveapp-spacebot-ai-agent.md
-Captured: 2026-02-23
-From: https://github.com/spacedriveapp/spacebot
-
 ## Classification
 
-Type: tool-announcement -- The source is a GitHub README announcing and describing an open-source Rust framework for concurrent multi-user AI agents. It presents architecture and capabilities, but does not provide empirical evaluation or a sustained design argument.
-
-Domains: agent-architecture, orchestration, context-engineering, memory-systems
+The source is a GitHub README announcing and describing an open-source Rust framework for concurrent multi-user AI agents. It presents architecture and capabilities, but does not provide empirical evaluation or a sustained design argument.
 
 Author: spacedriveapp, the team behind Spacedrive. Their Rust product background makes the systems architecture worth attending to, but the README alone is still vendor-authored project material rather than independent evidence.
 

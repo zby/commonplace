@@ -1,6 +1,13 @@
 ---
 description: Thread proposing five psychology principles (Conway, Damasio, Bruner, Klein & Nichols) for AI memory as identity construction — directly engages the KB's open question about whether cognitive science analogies are decorative or mechanistic
-source_snapshot: psychology-solves-ai-memory-identity-construction-2025307030651871631.md
+source: https://x.com/rryssf_/status/2025307030651871631
+captured: "2026-04-04"
+capture: xdk
+genre: conversation-thread
+snapshot_sha256: 742e00b3c17cbb4cd56279be878711f4958f3c49a9bc0616df7a9ba69ffa13c4
+title: Psychology already solved AI memory — identity isn't stored, it's constructed
+author: Robert Youssef (@rryssf_)
+source_url: https://x.com/rryssf_/status/2025307030651871631
 ingested: "2026-04-04"
 type: kb/sources/types/ingest-report.md
 domains: [memory-architecture, learning-theory, context-engineering]
@@ -8,15 +15,9 @@ domains: [memory-architecture, learning-theory, context-engineering]
 
 # Ingest: Psychology already solved AI memory — identity isn't stored, it's constructed
 
-Source: psychology-solves-ai-memory-identity-construction-2025307030651871631.md
-Captured: 2026-04-04
-From: https://x.com/rryssf_/status/2025307030651871631
-
 ## Classification
 
-Type: **conversation-thread** — A single-author X thread presenting a thesis about AI memory design, citing psychology literature but without formal methodology, data, or experimental evidence. Structured as an argument building toward implementation proposals. Not quite a conceptual essay (no sustained development of a single line of reasoning) or a practitioner report (nothing was built).
-
-Domains: memory-architecture, learning-theory, context-engineering
+A single-author X thread presenting a thesis about AI memory design, citing psychology literature but without formal methodology, data, or experimental evidence. Structured as an argument building toward implementation proposals. Not quite a conceptual essay (no sustained development of a single line of reasoning) or a practitioner report (nothing was built).
 
 Author: Robert Youssef (@rryssf_) — unknown in terms of academic credentials or published systems. The thread demonstrates familiarity with cognitive psychology literature (Conway, Damasio, Bruner, Klein & Nichols) and proposes specific implementation mechanisms. High engagement (4,566 likes) suggests the framing resonated with the AI builder community. Treat as informed commentary with solid bibliography, not as expert testimony.
 

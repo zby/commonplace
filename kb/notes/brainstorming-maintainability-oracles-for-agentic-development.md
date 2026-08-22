@@ -125,7 +125,7 @@ This is oracle construction at task scale: the team decides what maintainability
 - Run perspective probes: maintainer, operator, migration author, security reviewer, future feature author.
 - Preserve rejected alternatives and reasons so implementation review can test whether the chosen mechanism survived.
 
-Part II of [Why Software Factories Fail](../sources/why-software-factories-fail-lights-back-on-2081058573556306030.md) places human judgment at these surfaces. The possible extension is to treat the artifacts as oracle inputs whose predictive value can later be measured, rather than as planning ceremony.
+Part II of [Why Software Factories Fail](https://x.com/dexhorthy/status/2081058573556306030) places human judgment at these surfaces. The possible extension is to treat the artifacts as oracle inputs whose predictive value can later be measured, rather than as planning ceremony.
 
 ### During implementation: shorten and instrument the span
 

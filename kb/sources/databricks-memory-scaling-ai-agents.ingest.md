@@ -1,6 +1,10 @@
 ---
 description: Databricks memory-scaling experiments showing enterprise agent gains from external memory only when retrieval, distillation, and governance scale with the store
-source_snapshot: databricks-memory-scaling-ai-agents.md
+source: https://www.databricks.com/blog/memory-scaling-ai-agents
+captured: "2026-04-11"
+capture: web-fetch-paraphrase
+genre: practitioner-report
+snapshot_sha256: 5010c98efa1a1b687a59c47e0c926f15bce2e881891cb4d6d35cfc1be1a23da9
 ingested: "2026-04-11"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, context-engineering, learning-theory, enterprise-ai]
@@ -8,15 +12,9 @@ domains: [agent-memory, context-engineering, learning-theory, enterprise-ai]
 
 # Ingest: Memory Scaling for AI Agents
 
-Source: databricks-memory-scaling-ai-agents.md
-Captured: 2026-04-11
-From: https://www.databricks.com/blog/memory-scaling-ai-agents
-
 ## Classification
 
-Type: practitioner-report -- a Databricks AI Research blog post reporting internal and product-adjacent experiments with MemAlign, Genie Spaces, and organizational knowledge stores, not a peer-reviewed paper or standalone conceptual essay.
-
-Domains: agent-memory, context-engineering, learning-theory, enterprise-ai
+A Databricks AI Research blog post reporting internal and product-adjacent experiments with MemAlign, Genie Spaces, and organizational knowledge stores, not a peer-reviewed paper or standalone conceptual essay.
 
 Author: Databricks AI Research Team, including Wenhao Zhan, Veronica Lyu, Jialu Liu, Michael Bendersky, Matei Zaharia, and Xing Chen; high signal for enterprise data-agent infrastructure, but also vendor-positioned.
 

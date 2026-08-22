@@ -1,6 +1,10 @@
 ---
 description: "Primary 1993 attestation that reflective language change can be routed through a documented, explicitly marked metaobject protocol while ordinary base-level syntax and defaults remain intact"
-source_snapshot: metaobject-protocols-why-we-want-them-and-what-else-they-can-do.md
+source: https://cseweb.ucsd.edu/~vahdat/papers/mop.pdf
+captured: "2026-08-19"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 02cfee9ebe676ff495272a2ed6717b26fd61f907ea70d37deb217d78fdcab957
 ingested: "2026-08-19"
 type: kb/sources/types/ingest-report.md
 domains: [metaobject-protocols, reflective-architecture, language-extensibility]
@@ -8,14 +12,9 @@ domains: [metaobject-protocols, reflective-architecture, language-extensibility]
 
 # Ingest: Metaobject Protocols: Why We Want Them and What Else They Can Do
 
-Source: [metaobject-protocols-why-we-want-them-and-what-else-they-can-do.md](./metaobject-protocols-why-we-want-them-and-what-else-they-can-do.md)
-Captured: 2026-08-19
-From: https://cseweb.ucsd.edu/~vahdat/papers/mop.pdf
-
 ## Classification
 
-Genre: scientific-paper -- a published programming-languages chapter that derives interface-design principles from the authors' CLOS MOP work and three Scheme MOP prototypes rather than reporting a controlled experiment.
-Domains: metaobject-protocols, reflective-architecture, language-extensibility
+A published programming-languages chapter that derives interface-design principles from the authors' CLOS MOP work and three Scheme MOP prototypes rather than reporting a controlled experiment.
 Author: Gregor Kiczales, J. Michael Ashley, Luis Rodriguez, Amin Vahdat, and Daniel G. Bobrow report the CLOS metaobject-protocol design and related PARC systems they helped build; the paper therefore carries primary designer testimony about why the base/meta interface was separated and how it was marked.
 
 ## Summary

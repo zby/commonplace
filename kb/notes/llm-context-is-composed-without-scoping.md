@@ -33,7 +33,7 @@ These are the LLM equivalent of coding conventions in a language without a modul
 
 ## Non-selective semantic integration
 
-"Spooky action at a distance" is measurable, not only architectural. [GSM-DC](../sources/gsm-dc-llm-reasoning-distracted-irrelevant-context.md) varies synthetic distractor count in math word problems and finds power-law error growth — the clean control where irrelevant material is semantically inert noise. [Gonen et al.](../sources/semantic-leakage-lms-gonen.md) varies injected concepts in completion prompts and finds Leak-Rate well above chance even when the concept is task-irrelevant (**semantic leakage**). [Lampinen et al.](../sources/language-models-like-humans-show-content-effects-on-reasoning-tasks.md) varies belief-congruence on logic tasks. These studies are not independent interference axes; they stress the same flat-context failure under different doses and task grains. Benchmark labels (noise, association, content bias) describe what each experiment varied, not separate mechanisms requiring separate mitigations.
+"Spooky action at a distance" is measurable, not only architectural. [GSM-DC](https://arxiv.org/html/2505.18761v2) varies synthetic distractor count in math word problems and finds power-law error growth — the clean control where irrelevant material is semantically inert noise. [Gonen et al.](https://arxiv.org/html/2408.06518v3) varies injected concepts in completion prompts and finds Leak-Rate well above chance even when the concept is task-irrelevant (**semantic leakage**). [Lampinen et al.](https://academic.oup.com/pnasnexus/article/3/7/pgae233/7712372) varies belief-congruence on logic tasks. These studies are not independent interference axes; they stress the same flat-context failure under different doses and task grains. Benchmark labels (noise, association, content bias) describe what each experiment varied, not separate mechanisms requiring separate mitigations.
 
 The realistic case — semantically linked material that should not govern the task — is what agent workflows encounter. [Context contamination below compliance reasoning](./context-contamination-operates-below-an-agents-compliance-reasoning.md) is that failure at agent dose: fine-grained stance drift despite expressed refusal. Counter-instructions can bias against integration; they cannot remove tokens from the window or make a scope boundary binding.
 
@@ -57,9 +57,9 @@ Empirical validation comes from ConvexBench ([Liu et al., 2026](https://arxiv.or
 
 Sources:
 - Anthropic (2025). [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — recommends sub-agents return 1,000–2,000 token summaries; the tens of thousands of tokens each sub-agent explores stay out of the caller's window. Validates the lexically scoped frames pattern.
-- Yang et al. (2025). [GSM-DC](../sources/gsm-dc-llm-reasoning-distracted-irrelevant-context.md) — power-law reasoning degradation under synthetic distractor count; the inert-noise control regime for non-selective integration.
-- Gonen et al. (2024/2025). [Semantic leakage in language models](../sources/semantic-leakage-lms-gonen.md) — control/test Leak-Rate metric; instruction-tuned models leak more.
-- Lampinen et al. (2024). [Content effects on reasoning tasks](../sources/language-models-like-humans-show-content-effects-on-reasoning-tasks.md) — belief-congruent content shifts logic-task accuracy across model families.
+- Yang et al. (2025). [GSM-DC](https://arxiv.org/html/2505.18761v2) — power-law reasoning degradation under synthetic distractor count; the inert-noise control regime for non-selective integration.
+- Gonen et al. (2024/2025). [Semantic leakage in language models](https://arxiv.org/html/2408.06518v3) — control/test Leak-Rate metric; instruction-tuned models leak more.
+- Lampinen et al. (2024). [Content effects on reasoning tasks](https://academic.oup.com/pnasnexus/article/3/7/pgae233/7712372) — belief-congruent content shifts logic-task accuracy across model families.
 
 Relevant Notes:
 

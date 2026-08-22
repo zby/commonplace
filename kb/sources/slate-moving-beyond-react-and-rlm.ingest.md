@@ -1,6 +1,10 @@
 ---
 description: "Practitioner architecture uses bounded worker threads that return compressed episodes to an orchestrator, converging on Commonplace's bounded-context model for memory, coherence, and decomposition"
-source_snapshot: slate-moving-beyond-react-and-rlm.md
+source: https://randomlabs.ai/blog/slate
+captured: "2026-03-12"
+capture: paste
+genre: practitioner-report
+snapshot_sha256: 61d5e484855106209ccb4629bf4f13922793bfa8baa4797bb0067141e3641056
 ingested: "2026-03-12"
 type: kb/sources/types/ingest-report.md
 domains: [agent-architecture, context-engineering, orchestration, episodic-memory]
@@ -8,13 +12,8 @@ domains: [agent-architecture, context-engineering, orchestration, episodic-memor
 
 # Ingest: Slate: Moving Beyond ReAct and RLM
 
-Source: slate-moving-beyond-react-and-rlm.md
-Captured: 2026-03-12
-From: https://randomlabs.ai/blog/slate
-
 ## Classification
-Type: practitioner-report — Random Labs built an agent product, diagnosed failure modes in existing architectures, and describes what they built to solve them. Claims are grounded in building and shipping, not in controlled experiments.
-Domains: agent-architecture, context-engineering, orchestration, episodic-memory
+Random Labs built an agent product, diagnosed failure modes in existing architectures, and describes what they built to solve them. Claims are grounded in building and shipping, not in controlled experiments.
 Author: Random Labs Team — small startup building coding agents (Slate CLI). They shipped a sliding-window agent in early 2025 and iterated to the thread-weaving architecture. Credibility comes from hands-on builder experience, not academic credentials.
 
 ## Summary

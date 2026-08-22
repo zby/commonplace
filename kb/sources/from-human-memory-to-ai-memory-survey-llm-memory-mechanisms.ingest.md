@@ -1,6 +1,10 @@
 ---
 description: "Ingest of the 3D-8Q LLM-memory survey: how object/form/time taxonomy fits our memory-axes and cognitive-analogy-skepticism notes"
-source_snapshot: "from-human-memory-to-ai-memory-survey-llm-memory-mechanisms.md"
+source: https://arxiv.org/html/2504.15965v2
+captured: "2026-06-09"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 02fe3278720d2ebcc4017d31daa43dff6c06049bc40abb84aa7c23387e03126f
 ingested: "2026-06-09"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, learning-theory, memory-taxonomy]
@@ -8,14 +12,9 @@ domains: [agent-memory, learning-theory, memory-taxonomy]
 
 # Ingest: From Human Memory to AI Memory: A Survey on Memory Mechanisms in the Era of LLMs
 
-Source: from-human-memory-to-ai-memory-survey-llm-memory-mechanisms.md
-Captured: 2026-06-09
-From: https://arxiv.org/html/2504.15965v2
-
 ## Classification
 
-Type: scientific-paper -- arXiv survey (2504.15965v2) with a formal taxonomy, a structured literature map, and dozens of cited systems; no original experiment, but methodology and citation density place it firmly in the scientific-paper class rather than essay.
-Domains: agent-memory, learning-theory, memory-taxonomy
+ArXiv survey (2504.15965v2) with a formal taxonomy, a structured literature map, and dozens of cited systems; no original experiment, but methodology and citation density place it firmly in the scientific-paper class rather than essay.
 Author: Huawei Noah's Ark Lab (Wu, Liang, Zhang, et al.). Industrial research lab with a track record in retrieval and recommendation; credible as a landscape survey, with the usual survey caveat that it organizes rather than tests.
 
 ## Summary

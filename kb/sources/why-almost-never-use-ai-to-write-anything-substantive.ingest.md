@@ -1,6 +1,10 @@
 ---
 description: "Grunewald's critique exposes passive-assent risk and a gap between expert interpretation of a writing commission and generic LLM completion"
-source_snapshot: "why-almost-never-use-ai-to-write-anything-substantive.md"
+source: https://www.erichgrunewald.com/posts/why-i-think-you-should-almost-never-use-ai-to-write-anything-substantive/
+captured: "2026-08-06"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: 15daf09817d95cbcedd639a30f4b05514b314851a0da86233ede134e1f39fa2e
 ingested: "2026-08-06"
 type: kb/sources/types/ingest-report.md
 domains: [writing-as-thinking, llm-reliability, human-ai-collaboration, authorship]
@@ -8,14 +12,9 @@ domains: [writing-as-thinking, llm-reliability, human-ai-collaboration, authorsh
 
 # Ingest: Why You Should Almost Never Use AI to Write Anything Substantive
 
-Source: why-almost-never-use-ai-to-write-anything-substantive.md
-Captured: 2026-08-06
-From: https://www.erichgrunewald.com/posts/why-i-think-you-should-almost-never-use-ai-to-write-anything-substantive/
-
 ## Classification
 
-Genre: conceptual-essay -- an argumentative essay built from quotations, first-person experience, and one worked model-output critique rather than a controlled study.
-Domains: writing-as-thinking, llm-reliability, human-ai-collaboration, authorship
+An argumentative essay built from quotations, first-person experience, and one worked model-output critique rather than a controlled study.
 Author: Erich Grunewald is a [Senior Researcher on the Institute for AI Policy and Strategy's compute policy team](https://www.iaps.ai/erich-grunewald), specializing in AI chip export controls and data-center security. That makes his line-by-line chip-smuggling audit unusually informed, but it does not give the essay's broader cognitive and ethical claims empirical authority.
 
 ## Summary
@@ -24,7 +23,7 @@ Grunewald argues that current AI models should almost never draft substantive pr
 
 ## Connections Found
 
-The chip-smuggling example compares with [A bare writing prompt does not determine its intended contribution](../notes/a-bare-writing-prompt-does-not-determine-its-intended-contribution.md): a sparse request may cue an expert to contribute distinctive judgment and find what is worth saying while cueing a model only to instantiate the requested prose form. The source is also a stress test for [An adversarial human-agent loop can reconstruct the writing-is-thinking filter](../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md): Grunewald agrees that naive delegation loses the filter but argues that post-hoc editing may still fail because generated wording anchors an expert toward passive assent and omits sensitivities the expert would have expressed while composing. His chip-smuggling audit is a concrete instance of [LLM generation relaxing a goal while hiding the dropped constraint](../notes/llm-generation-relaxes-goals-where-human-writing-stalls.md), and it illustrates the operational consequence of [Generation confidence not certifying soundness by itself](../notes/generation-confidence-does-not-by-itself-certify-soundness.md): the audit re-derives correctness instead of treating fluent generation as certification. Relative to [Borretti's earlier polemic](./borretti-human-routers-of-machine-words.md), this essay independently restates the writing-as-thinking and reader-burden arguments, while adding a domain-expert error audit, clearer exceptions, and an explicit disclosure-and-trust claim.
+The chip-smuggling example compares with [A bare writing prompt does not determine its intended contribution](../notes/a-bare-writing-prompt-does-not-determine-its-intended-contribution.md): a sparse request may cue an expert to contribute distinctive judgment and find what is worth saying while cueing a model only to instantiate the requested prose form. The source is also a stress test for [An adversarial human-agent loop can reconstruct the writing-is-thinking filter](../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md): Grunewald agrees that naive delegation loses the filter but argues that post-hoc editing may still fail because generated wording anchors an expert toward passive assent and omits sensitivities the expert would have expressed while composing. His chip-smuggling audit is a concrete instance of [LLM generation relaxing a goal while hiding the dropped constraint](../notes/llm-generation-relaxes-goals-where-human-writing-stalls.md), and it illustrates the operational consequence of [Generation confidence not certifying soundness by itself](../notes/generation-confidence-does-not-by-itself-certify-soundness.md): the audit re-derives correctness instead of treating fluent generation as certification. Relative to [Borretti's earlier polemic](https://borretti.me/article/human-routers-of-machine-words), this essay independently restates the writing-as-thinking and reader-burden arguments, while adding a domain-expert error audit, clearer exceptions, and an explicit disclosure-and-trust claim.
 
 ## Extractable Value
 

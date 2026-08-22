@@ -1,6 +1,10 @@
 ---
 description: Anthropic CEO's capability-timeline predictions implicitly confirm oracle-strength thesis — verifiable domains (coding, math) get confident timelines while unverifiable domains (novel writing, science) get hedged ones
-source_snapshot: dario-amodei-we-are-near-the-end-of-the-exponential.md
+source: https://www.dwarkesh.com/p/dario-amodei-2
+captured: "2026-03-12"
+capture: web-fetch
+genre: conversation-thread
+snapshot_sha256: d5d53c22a2adb7d01622ff2801b1d4aa27d656ba058d07706aa342b085206ccf
 ingested: "2026-03-12"
 type: kb/sources/types/ingest-report.md
 domains: [ai-scaling, automation-boundary, oracle-theory, deploy-time-learning]
@@ -8,15 +12,9 @@ domains: [ai-scaling, automation-boundary, oracle-theory, deploy-time-learning]
 
 # Ingest: Dario Amodei — "We are near the end of the exponential"
 
-Source: dario-amodei-we-are-near-the-end-of-the-exponential.md
-Captured: 2026-03-12
-From: https://www.dwarkesh.com/p/dario-amodei-2
-
 ## Classification
 
-Type: **conversation-thread** — a long-form podcast interview (Dwarkesh Patel interviewing Dario Amodei) where claims emerge through dialogue rather than from a single authorial thesis. Amodei drives the substance, but the format is conversational with pushback and topic shifts, not a structured argument.
-
-Domains: ai-scaling, automation-boundary, oracle-theory, deploy-time-learning
+A long-form podcast interview (Dwarkesh Patel interviewing Dario Amodei) where claims emerge through dialogue rather than from a single authorial thesis. Amodei drives the substance, but the format is conversational with pushback and topic shifts, not a structured argument.
 
 Author: Dario Amodei, CEO of Anthropic. One of the people with the most direct visibility into frontier model capabilities, training dynamics, and compute scaling. His predictions carry weight because he is both making capability claims and committing capital ($100B+) based on those claims — skin in the game provides a credibility signal that pure commentary lacks.
 

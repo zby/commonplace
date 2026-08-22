@@ -1,6 +1,10 @@
 ---
 description: "Ungar and Smith's primary classless-OO attestation: Self rejects the class/instance split for prototypes and parent-based sharing, gaining cloning and per-object flexibility while losing explicit organizational cues"
-source_snapshot: self-the-power-of-simplicity.md
+source: https://bibliography.selflanguage.org/_static/self-power.pdf
+captured: "2026-08-19"
+capture: pdf-read
+genre: design-proposal
+snapshot_sha256: f4bf50091d62d2e7028cf3784c8c772348d18583eeb63692158c7394ee3cb863
 ingested: "2026-08-19"
 type: kb/sources/types/ingest-report.md
 domains: [prototype-based-oo, class-instance-model, domain-pricing]
@@ -8,14 +12,9 @@ domains: [prototype-based-oo, class-instance-model, domain-pricing]
 
 # Ingest: SELF: The Power of Simplicity
 
-Source: [self-the-power-of-simplicity.md](./self-the-power-of-simplicity.md)
-Captured: 2026-08-19
-From: https://bibliography.selflanguage.org/_static/self-power.pdf
-
 ## Classification
 
-Genre: design-proposal -- a peer-reviewed programming-language design paper that argues for Self's classless object model and works through its mechanisms and tradeoffs without a comparative experiment.
-Domains: prototype-based-oo, class-instance-model, domain-pricing
+A peer-reviewed programming-language design paper that argues for Self's classless object model and works through its mechanisms and tradeoffs without a comparative experiment.
 Author: David Ungar and Randall B. Smith designed Self and compare it directly with Smalltalk; they are primary witnesses for the intended classless design, but interested advocates rather than independent evaluators of its benefits.
 
 ## Summary

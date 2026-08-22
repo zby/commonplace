@@ -1,6 +1,13 @@
 ---
 description: Practitioner taxonomy deriving harness components (filesystem, bash, sandboxes, memory, context management, long-horizon execution) from model limitations — provides the component anatomy that bridges Lopopolo's practice and the cybernetics framing
-source_snapshot: the-anatomy-of-an-agent-harness-2031408954517971368.md
+source: https://x.com/Vtrivedy10/status/2031408954517971368
+captured: "2026-03-10T18:10:51.011045+00:00"
+capture: xdk
+genre: conceptual-essay
+snapshot_sha256: def68ab5f3d58b23a2a7f2c2955c196faf2710770883a4b5d32d33cf32ccd67a
+status_id: 2031408954517971368
+conversation_id: 2031408954517971368
+post_count: 2
 ingested: "2026-03-12"
 type: kb/sources/types/ingest-report.md
 domains: [agent-systems, harness-engineering, context-engineering, model-harness-coevolution]
@@ -8,13 +15,8 @@ domains: [agent-systems, harness-engineering, context-engineering, model-harness
 
 # Ingest: The Anatomy of an Agent Harness
 
-Source: the-anatomy-of-an-agent-harness-2031408954517971368.md
-Captured: 2026-03-10
-From: https://x.com/Vtrivedy10/status/2031408954517971368
-
 ## Classification
-Type: conceptual-essay — The post does not report on a specific system built or present empirical data. It proposes a definition ("if you're not the model, you're the harness") and then derives a component taxonomy from first principles (model limitations). The Terminal Bench reference and apply_patch example are cited evidence, not the author's own experiments.
-Domains: agent-systems, harness-engineering, context-engineering, model-harness-coevolution
+The post does not report on a specific system built or present empirical data. It proposes a definition ("if you're not the model, you're the harness") and then derives a component taxonomy from first principles (model limitations). The Terminal Bench reference and apply_patch example are cited evidence, not the author's own experiments.
 Author: @Vtrivedy10 (Varun Trivedy), associated with LangChain's deepagents library. Practitioner perspective from building agent harness tooling, but this post is taxonomic/definitional rather than experiential.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "LongCoT-mini RLM case study where trace-extracted prompt tips, guardrails, and sub-answer checking improved graph-structured compositional reasoning"
-source_snapshot: "mini-exercise-mismanaged-geniuses-longcot-rlm.md"
+source: https://alexzhang13.github.io/blog/2026/longcot-rlm/
+captured: "2026-06-25"
+capture: web-fetch
+genre: practitioner-report
+snapshot_sha256: 2f827452949bb409adf674dbb920ca5658f9417048e045a2ebb7b26e8e7d1615
 ingested: "2026-06-25"
 type: kb/sources/types/ingest-report.md
 domains: [orchestration, rlm, decomposition-policy, trajectory-analysis]
@@ -8,14 +12,9 @@ domains: [orchestration, rlm, decomposition-policy, trajectory-analysis]
 
 # Ingest: A Mini Exercise on the Mismanaged Geniuses Hypothesis (RLMs on LongCoT)
 
-Source: mini-exercise-mismanaged-geniuses-longcot-rlm.md
-Captured: 2026-06-25
-From: https://alexzhang13.github.io/blog/2026/longcot-rlm/
-
 ## Classification
 
-Type: practitioner-report -- Alex Zhang and Omar Khattab report a hands-on mini experiment on LongCoT-mini RLM runs, including failure-trace inspection, prompt/tip revision, and before/after benchmark numbers. It is not a full scientific paper because the snapshot lacks full methodology, full benchmark results, and controlled ablations.
-Domains: orchestration, rlm, decomposition-policy, trajectory-analysis
+Alex Zhang and Omar Khattab report a hands-on mini experiment on LongCoT-mini RLM runs, including failure-trace inspection, prompt/tip revision, and before/after benchmark numbers. It is not a full scientific paper because the snapshot lacks full methodology, full benchmark results, and controlled ablations.
 Author: Alex Zhang and Omar Khattab. Khattab is already visible in this KB's DSPy and harness-learning sources; author credibility comes from direct involvement in RLM and benchmark work, but the post is still an informal case study.
 
 ## Summary

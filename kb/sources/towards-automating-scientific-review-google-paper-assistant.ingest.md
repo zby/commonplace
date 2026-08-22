@@ -1,6 +1,10 @@
 ---
 description: "Google PAT paper as evidence for verifiable-subrole review automation: segmenting manuscripts, scaling inference, and keeping humans accountable for final review authority."
-source_snapshot: "towards-automating-scientific-review-google-paper-assistant.md"
+source: https://arxiv.org/html/2606.28277v1
+captured: "2026-07-01"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: f59fc1c24f3f7bbd5b8aa8683a2e94872a6d41c4c844714ddce054449f0a5cb0
 ingested: "2026-07-01"
 type: kb/sources/types/ingest-report.md
 domains: [peer-review, agent-orchestration, oracle-theory, agent-reliability]
@@ -8,14 +12,9 @@ domains: [peer-review, agent-orchestration, oracle-theory, agent-reliability]
 
 # Ingest: Towards Automating Scientific Review with Google's Paper Assistant Tool
 
-Source: [towards-automating-scientific-review-google-paper-assistant.md](towards-automating-scientific-review-google-paper-assistant.md)
-Captured: 2026-07-01
-From: https://arxiv.org/html/2606.28277v1
-
 ## Classification
 
-Type: scientific-paper -- arXiv preprint describing a deployed-style internal research-agent pipeline, a SPOT benchmark case study, STOC/ICML author pilots, and a taxonomy of AI roles in peer review.
-Domains: peer-review, agent-orchestration, oracle-theory, agent-reliability
+ArXiv preprint describing a deployed-style internal research-agent pipeline, a SPOT benchmark case study, STOC/ICML author pilots, and a taxonomy of AI roles in peer review.
 Author: Rajesh Jayaram, Drew Tyler, David Woodruff, Corinna Cortes, Yossi Matias, Vahab Mirrokni, and Vincent Cohen-Addad from Google Research, Google Research & Carnegie Mellon, and related Google groups. The author signal is strong for the reported Google PAT pilots, but the implementation is closed and the paper should be treated as preprint-tier evidence.
 
 ## Summary

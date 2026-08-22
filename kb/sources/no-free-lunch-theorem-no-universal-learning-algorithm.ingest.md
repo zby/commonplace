@@ -1,6 +1,10 @@
 ---
 description: "No Free Lunch explainer grounding codification as an unavoidable inductive-bias bet: strategies win only when their assumptions match the problem distribution."
-source_snapshot: "no-free-lunch-theorem-no-universal-learning-algorithm.md"
+source: https://www.mindfiretechnology.com/blog/archive/the-no-free-lunch-theorem-why-no-learning-algorithm-is-universally-best/
+captured: "2026-05-19"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: bc51da32d48dcd816dbcb538eacd1c97c60d998dccd995b3eac203d0a9deacbc
 ingested: "2026-05-19"
 type: kb/sources/types/ingest-report.md
 domains: [learning-theory, inductive-bias, codification, system-design]
@@ -8,14 +12,9 @@ domains: [learning-theory, inductive-bias, codification, system-design]
 
 # Ingest: The No Free Lunch Theorem
 
-Source: no-free-lunch-theorem-no-universal-learning-algorithm.md
-Captured: 2026-05-19
-From: https://www.mindfiretechnology.com/blog/archive/the-no-free-lunch-theorem-why-no-learning-algorithm-is-universally-best/
-
 ## Classification
 
-Type: conceptual-essay -- practitioner-accessible exposition of Wolpert and Macready's No Free Lunch theorem, using a pathfinding toy problem to frame a theoretical position about inductive bias and learning assumptions. It cites primary/secondary theorem sources but does not present new empirical work.
-Domains: learning-theory, inductive-bias, codification, system-design
+Practitioner-accessible exposition of Wolpert and Macready's No Free Lunch theorem, using a pathfinding toy problem to frame a theoretical position about inductive bias and learning assumptions. It cites primary/secondary theorem sources but does not present new empirical work.
 Author: Bruce Nielson, writing for Mindfire Technology as an ML/AI specialist. Credibility comes from clear pedagogy and citations to Wolpert/Macready, Ho/Pepyne, and Mitchell; treat it as an explainer, not as the authoritative theorem source.
 
 ## Summary

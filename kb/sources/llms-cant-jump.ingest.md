@@ -1,6 +1,10 @@
 ---
 description: Position paper separating deduction within supplied axioms from abductive premise invention, using Einstein's path to general relativity to motivate action-controllable world models
-source_snapshot: llms-cant-jump.md
+source: https://www.tomzahavy.com/files/llms-cant-jump.pdf
+captured: "2026-08-20"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 7a3cb7297f3ea4e925b84367f63f6dddcf136bcb4582ba202c4443b6b13ef74a
 ingested: "2026-08-20"
 type: kb/sources/types/ingest-report.md
 domains: [scientific-discovery, learning-theory, world-models, evaluation]
@@ -8,15 +12,9 @@ domains: [scientific-discovery, learning-theory, world-models, evaluation]
 
 # Ingest: LLMs can’t jump
 
-Source: llms-cant-jump.md
-Captured: 2026-08-20
-From: https://www.tomzahavy.com/files/llms-cant-jump.pdf
-
 ## Classification
 
-Genre: **scientific-paper** -- a position paper that interprets a historical case through a computational account of scientific invention. It proposes a research direction but reports no experiment that tests its central capability claim.
-
-Domains: scientific-discovery, learning-theory, world-models, evaluation
+A position paper that interprets a historical case through a computational account of scientific invention. It proposes a research direction but reports no experiment that tests its central capability claim.
 
 Author: Tom Zahavy is a Google DeepMind researcher whose doctoral and professional work focuses on AI and deep reinforcement learning. He has a physics and electrical-engineering BSc and has co-authored physics papers, but explicitly disclaims expertise as a physicist or historian. That background supports the paper's AI-system comparisons more strongly than its reconstruction of Einstein's cognition. The author also discloses using Gemini to refine and rephrase parts of the text.
 

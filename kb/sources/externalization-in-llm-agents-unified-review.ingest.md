@@ -1,6 +1,10 @@
 ---
 description: Survey paper unifying LLM agent memory, skills, protocols, and harness engineering as externalized cognitive infrastructure rather than model-weight capability alone
-source_snapshot: externalization-in-llm-agents-unified-review.md
+source: https://arxiv.org/html/2604.08224v1
+captured: "2026-04-13"
+capture: arxiv-html-lynx
+genre: scientific-paper
+snapshot_sha256: 0e25b719d898b5c25e91ffcd02be791b09f94a893b249b9584788d04e6f955a4
 ingested: "2026-04-13"
 type: kb/sources/types/ingest-report.md
 domains: [agent-architecture, context-engineering, agent-memory, harness-engineering]
@@ -8,14 +12,9 @@ domains: [agent-architecture, context-engineering, agent-memory, harness-enginee
 
 # Ingest: Externalization in LLM Agents
 
-Source: externalization-in-llm-agents-unified-review.md
-Captured: 2026-04-13
-From: https://arxiv.org/html/2604.08224v1
-
 ## Classification
 
-Type: scientific-paper -- arXiv review/preprint with academic citations and a systems-level literature synthesis, but no original experiments.
-Domains: agent-architecture, context-engineering, agent-memory, harness-engineering
+ArXiv review/preprint with academic citations and a systems-level literature synthesis, but no original experiments.
 Author: Chenyu Zhou et al.; the paper is a 2026 arXiv survey/review with broad bibliography coverage across LLM agents, memory, skills, protocols, and harness systems.
 
 ## Summary

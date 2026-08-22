@@ -7,7 +7,7 @@ tags: [learning-theory]
 
 # A-MEM: Learning Operations Analysis
 
-**Document:** [a-mem-agentic-memory-for-llm-agents.md](./a-mem-agentic-memory-for-llm-agents.md)
+**Document:** [a-mem-agentic-memory-for-llm-agents.md](https://arxiv.org/abs/2502.12110)
 **Goal:** How does A-MEM's system learn? What are the operations? Are they all automatic?
 
 ## Summary

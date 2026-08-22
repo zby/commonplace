@@ -1,6 +1,10 @@
 ---
 description: "Assesses an LLM-assisted scholarly novelty-review paper as evidence for soft-oracle hardening, human-analysis-first evaluator design, and separating reasoning alignment from conclusion agreement"
-source_snapshot: "beyond-not-novel-enough-llm-assisted-scholarly-critique.md"
+source: https://arxiv.org/html/2508.10795v4
+captured: "2026-06-22"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 8cea8bd658eba13a6a21e20e260bc91a1013ce7dfc911cd563254e870143288c
 ingested: "2026-06-22"
 type: kb/sources/types/ingest-report.md
 domains: [evaluation, oracle-theory, peer-review, scholarly-literature]
@@ -8,14 +12,9 @@ domains: [evaluation, oracle-theory, peer-review, scholarly-literature]
 
 # Ingest: Beyond "Not Novel Enough"
 
-Source: beyond-not-novel-enough-llm-assisted-scholarly-critique.md
-Captured: 2026-06-22
-From: https://arxiv.org/html/2508.10795v4
-
 ## Classification
 
-Type: scientific-paper -- arXiv preprint with an explicit system pipeline, dataset construction, automated evaluation, human validation, baseline comparison, component analysis, and limitations.
-Domains: evaluation, oracle-theory, peer-review, scholarly-literature
+ArXiv preprint with an explicit system pipeline, dataset construction, automated evaluation, human validation, baseline comparison, component analysis, and limitations.
 Author: Osama Mohammed Afzal, Preslav Nakov, Tom Hope, and Iryna Gurevych, affiliated with UKP Lab/TU Darmstadt, MBZUAI, AI2, and hessian.AI. The author and institution signal is strong for NLP and scholarly-document work, but this should still be treated as preprint-tier evidence unless independently peer reviewed.
 
 ## Summary

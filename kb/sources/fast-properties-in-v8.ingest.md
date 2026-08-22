@@ -1,6 +1,10 @@
 ---
 description: "Official V8 implementation evidence that stable object layouts enable Map-guarded specialization, while property churn, dictionary mode, type pollution, and invalidated field assumptions incur runtime costs"
-source_snapshot: fast-properties-in-v8.md
+source: https://v8.dev/blog/fast-properties
+captured: "2026-08-19"
+capture: web-fetch
+genre: practitioner-report
+snapshot_sha256: be22144fed223513ce79e4d1d49cb9580d6355112f1df1499e3e896232ef3e53
 ingested: "2026-08-19"
 type: kb/sources/types/ingest-report.md
 domains: [object-shapes, inline-caches, deoptimization, runtime-pricing]
@@ -8,15 +12,11 @@ domains: [object-shapes, inline-caches, deoptimization, runtime-pricing]
 
 # Ingest: Fast properties in V8
 
-Source: [fast-properties-in-v8.md](./fast-properties-in-v8.md)
-Companion: [maps-hidden-classes-in-v8.md](./maps-hidden-classes-in-v8.md)
-Captured: 2026-08-19
-From: https://v8.dev/blog/fast-properties
+Companion: [maps-hidden-classes-in-v8.md](https://v8.dev/docs/hidden-classes)
 
 ## Classification
 
-Genre: practitioner-report -- an official V8 engineering explanation of the runtime's property representations and optimization dependencies, paired here with an official implementation walkthrough and reproducible `d8` deoptimization trace.
-Domains: object-shapes, inline-caches, deoptimization, runtime-pricing
+An official V8 engineering explanation of the runtime's property representations and optimization dependencies, paired here with an official implementation walkthrough and reproducible `d8` deoptimization trace.
 Author: Camillo Bruni authors the 2017 V8 blog post; the companion V8 documentation names no individual author. Both describe V8's own implementation on the project's official site, making them primary implementation testimony rather than independent performance evaluation.
 
 ## Summary
@@ -25,7 +25,7 @@ V8 turns a JavaScript object's named-property layout into a runtime identity: ev
 
 ## Connections Found
 
-These sources are primary implementation evidence for the tooling/runtime-charge signature in [Domain pricing routes an exception to idealization assessment but does not decide it](../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md): V8 makes stable layout assumptions valuable and charges operations that defeat them through lost IC applicability, slower dictionary access, weaker regenerated code, or deoptimization. They supply the concrete mechanism behind [Instantiation alone cannot model agent learning across sessions](../notes/instantiation-alone-cannot-model-agent-learning-across-sessions.md)'s statement that runtimes deoptimize code specialized on an old shape. The earlier [Metaobject Protocols ingest](./metaobject-protocols-why-we-want-them-and-what-else-they-can-do.ingest.md) attests a different signature—a marked interface—while V8 attests the optimizer/runtime price. The [hidden-classes companion](./maps-hidden-classes-in-v8.md) is load-bearing for the deoptimization claim; the main article alone establishes Map transitions, IC dependence, slow properties, and type pollution but does not print a deoptimization event.
+These sources are primary implementation evidence for the tooling/runtime-charge signature in [Domain pricing routes an exception to idealization assessment but does not decide it](../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md): V8 makes stable layout assumptions valuable and charges operations that defeat them through lost IC applicability, slower dictionary access, weaker regenerated code, or deoptimization. They supply the concrete mechanism behind [Instantiation alone cannot model agent learning across sessions](../notes/instantiation-alone-cannot-model-agent-learning-across-sessions.md)'s statement that runtimes deoptimize code specialized on an old shape. The earlier [Metaobject Protocols ingest](./metaobject-protocols-why-we-want-them-and-what-else-they-can-do.ingest.md) attests a different signature—a marked interface—while V8 attests the optimizer/runtime price. The [hidden-classes companion](https://v8.dev/docs/hidden-classes) is load-bearing for the deoptimization claim; the main article alone establishes Map transitions, IC dependence, slow properties, and type pollution but does not print a deoptimization event.
 
 ## Extractable Value
 

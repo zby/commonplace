@@ -1,6 +1,10 @@
 ---
 description: "Company Sudoku benchmark reports 97.4% for an undisclosed BDH model versus 0% for LLMs; weak methodology but a third domain suggesting architectural limits in constraint satisfaction"
-source_snapshot: pathway-beyond-transformers-sudoku-bench.md
+source: https://pathway.com/research/beyond-transformers-sudoku-bench
+captured: "2026-03-26"
+capture: web-fetch
+genre: practitioner-report
+snapshot_sha256: f12d155136a5a67e413a39b44785fc5c34f59075f0872a802d2b4c8d80e6a644
 ingested: "2026-03-26"
 type: kb/sources/types/ingest-report.md
 domains: [ml-architecture, constraint-satisfaction, reasoning-benchmarks]
@@ -8,15 +12,9 @@ domains: [ml-architecture, constraint-satisfaction, reasoning-benchmarks]
 
 # Ingest: Beyond Transformers: Sudoku Bench
 
-Source: pathway-beyond-transformers-sudoku-bench.md
-Captured: 2026-03-26
-From: https://pathway.com/research/beyond-transformers-sudoku-bench
-
 ## Classification
 
-Type: practitioner-report -- Pathway built something (BDH) and reports benchmark results, but the methodology and architecture are undisclosed. Not a scientific paper (no peer review, no methodology section, no reproducible setup). Not a conceptual essay (there are concrete benchmark numbers). The company is using its own product's results to argue a thesis about transformer limitations.
-
-Domains: ml-architecture, constraint-satisfaction, reasoning-benchmarks
+Pathway built something (BDH) and reports benchmark results, but the methodology and architecture are undisclosed. Not a scientific paper (no peer review, no methodology section, no reproducible setup). Not a conceptual essay (there are concrete benchmark numbers). The company is using its own product's results to argue a thesis about transformer limitations.
 
 Author: "Pathway Team" -- Pathway describes itself as a "post-transformer neo-lab." No individual authors named. The team has commercial incentive to overstate both transformer limitations and BDH capabilities. The company appears to be an AI startup positioning against the transformer-dominated landscape. Credibility is low for the BDH claims (vendor benchmarks), moderate for the framing of transformer limitations (which aligns with independent research).
 

@@ -1,6 +1,13 @@
 ---
 description: "iii ships a production agent harness as independently-versioned workers on one bus behind a uniform trigger primitive, making harness layers hot-swappable"
-source_snapshot: "how-to-build-your-own-agent-harness-2060069083878408689.md"
+source: https://x.com/mfpiccolo/status/2060069083878408689
+captured: "2026-05-29T07:13:46.021671+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: 726dde47f7f601e5a8293df177150cdf70694cb96952f1a841823ec58a18bfcc
+status_id: 2060069083878408689
+conversation_id: 2060069083878408689
+post_count: 2
 ingested: "2026-05-29"
 type: kb/sources/types/ingest-report.md
 domains: [agent-harness, orchestration, composability, calling-conventions]
@@ -8,14 +15,9 @@ domains: [agent-harness, orchestration, composability, calling-conventions]
 
 # Ingest: How to build your own agent harness??? (Mike Piccolo / iii)
 
-Source: how-to-build-your-own-agent-harness-2060069083878408689.md
-Captured: 2026-05-29
-From: https://x.com/mfpiccolo/status/2060069083878408689
-
 ## Classification
 
-Type: practitioner-report -- Mike Piccolo (Founder/CEO @iiidevs) describes the actual production stack driving an iii agent turn, naming workers, function ids, FSM states, and a shipped refactor. It is a build-and-ship account, not a peer-reviewed study or a neutral taxonomy; it also carries a clear product thesis (iii is the right substrate), so it sits at the practitioner-report/tool-announcement boundary but is dominated by the worked implementation detail.
-Domains: agent-harness, orchestration, composability, calling-conventions
+Mike Piccolo (Founder/CEO @iiidevs) describes the actual production stack driving an iii agent turn, naming workers, function ids, FSM states, and a shipped refactor. It is a build-and-ship account, not a peer-reviewed study or a neutral taxonomy; it also carries a clear product thesis (iii is the right substrate), so it sits at the practitioner-report/tool-announcement boundary but is dominated by the worked implementation detail.
 Author: Founder/CEO of the iii project (vendor-interested). Credible on the implementation he is describing because he cites concrete artifacts (iii-hq/workers monorepo, function ids, `iii-permissions.yaml`, the FSM 11→7 refactor); weak as a neutral comparison because the framework alternatives are characterized only to contrast against iii.
 
 ## Summary

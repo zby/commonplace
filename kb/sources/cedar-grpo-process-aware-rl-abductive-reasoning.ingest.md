@@ -1,6 +1,10 @@
 ---
 description: "CEDAR-GRPO's held-out gains support process-directed rewards, bounded by fixed task, judge, and trace-faithfulness assumptions"
-source_snapshot: "kb/sources/cedar-grpo-process-aware-rl-abductive-reasoning.md"
+source: https://arxiv.org/abs/2608.14791
+captured: "2026-08-20"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 1172425bb9ea3bf77cb16e8cdcb93ad9a14c34d6489b38ba4ac001c571364a49
 ingested: "2026-08-20"
 type: kb/sources/types/ingest-report.md
 domains: [reinforcement-learning, abductive-reasoning, llm-evaluation, learning-theory]
@@ -8,14 +12,9 @@ domains: [reinforcement-learning, abductive-reasoning, llm-evaluation, learning-
 
 # Ingest: CEDAR-GRPO: Process-Aware Reinforcement Learning for General Abductive Reasoning in LLMs
 
-Source: [cedar-grpo-process-aware-rl-abductive-reasoning.md](./cedar-grpo-process-aware-rl-abductive-reasoning.md)
-Captured: 2026-08-20
-From: https://arxiv.org/abs/2608.14791
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv v1 preprint that specifies a post-training method, controlled comparisons, held-out evaluations, and reproducibility details.
-Domains: reinforcement-learning, abductive-reasoning, llm-evaluation, learning-theory
+An arXiv v1 preprint that specifies a post-training method, controlled comparisons, held-out evaluations, and reproducibility details.
 Author: A nine-author academic team from Sharif University of Technology and the University of Tehran. The paper provides detailed prompts, reward definitions, dataset composition, hyperparameters, and a code-and-data link, but this ingest did not inspect the repository or independently reproduce the experiments.
 
 ## Summary

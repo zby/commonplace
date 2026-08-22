@@ -1,6 +1,10 @@
 ---
 description: "Karlsson's Lakatos-inspired writing loop fixes a conjecture, exposes its premises, and uses local or global counterexamples to revise thought"
-source_snapshot: "how-to-think-in-writing.md"
+source: https://www.henrikkarlsson.xyz/p/writing-to-think
+captured: "2026-08-10"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: db6be65be8bb012b571d5159e4b51c39bccd63c9cca1c40bcdf0fc55e76b2f52
 ingested: "2026-08-10"
 type: kb/sources/types/ingest-report.md
 domains: [writing-as-thinking, conjecture-testing, argumentation, constraining]
@@ -8,14 +12,9 @@ domains: [writing-as-thinking, conjecture-testing, argumentation, constraining]
 
 # Ingest: How to think in writing
 
-Source: [how-to-think-in-writing.md](how-to-think-in-writing.md)
-Captured: 2026-08-10
-From: https://www.henrikkarlsson.xyz/p/writing-to-think
-
 ## Classification
 
-Genre: conceptual-essay -- a first-person account that adapts ideas from Lakatos into a method for thinking on the page. It offers a framing and worked anecdotes, not an empirical evaluation.
-Domains: writing-as-thinking, conjecture-testing, argumentation, constraining
+A first-person account that adapts ideas from Lakatos into a method for thinking on the page. It offers a framing and worked anecdotes, not an empirical evaluation.
 Author: Henrik Karlsson -- an independent essayist writing from sustained personal practice. That makes him a useful practitioner witness, not a research authority for the method's effectiveness.
 
 ## Summary
@@ -26,7 +25,7 @@ Karlsson argues that writing improves thought only when it makes an idea vulnera
 
 The essay is an operational refinement of the writing-as-thinking mechanism already addressed by [the adversarial-loop note](../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md): it names the claim-fixing, premise-exposure, and counterexample operations that such a loop would need to reconstruct, without showing that an agent loop succeeds. Its definite positive claim illustrates [claim titles as exposed commitments](../notes/title-as-claim-exposes-commitments-enabling-popperian-maintenance.md); its premise expansion gives [structured review](../notes/structured-output-is-easier-for-humans-to-review.md) separately addressable targets; and its contrast between shifting ambiguity and rigid prose is a natural-language instance of [constraining](../notes/definitions/constraining.md). The full sequence independently instantiates the conjecture, consequence, and test core of the [discovery lifecycle](../notes/definitions/discovery-lifecycle.md).
 
-Among captured sources, Karlsson [compares with Borretti](borretti-human-routers-of-machine-words.md) on concretization exposing contradiction, but replaces Borretti's anti-delegation polemic with a constructive solo-writing procedure. It also [compares with Toulmin](purdue-owl-toulmin-argument.md): both decompose a conclusion into reasons, but Toulmin organizes a defensible argument while Karlsson deliberately enlarges a provisional explanation's surface for criticism.
+Among captured sources, Karlsson [compares with Borretti](https://borretti.me/article/human-routers-of-machine-words) on concretization exposing contradiction, but replaces Borretti's anti-delegation polemic with a constructive solo-writing procedure. It also [compares with Toulmin](https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html): both decompose a conclusion into reasons, but Toulmin organizes a defensible argument while Karlsson deliberately enlarges a provisional explanation's surface for criticism.
 
 ## Extractable Value
 

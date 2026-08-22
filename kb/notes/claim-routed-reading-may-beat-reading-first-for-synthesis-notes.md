@@ -7,7 +7,7 @@ tags: []
 
 # Claim-routed reading may beat reading-first for synthesis notes
 
-**Status: conjecture.** Motivated by one practitioner account ([Learning By Writing](../sources/learning-by-writing.md)); untested in this KB. Treat it as a hypothesis with a named test, not a finding.
+**Status: conjecture.** Motivated by one practitioner account ([Learning By Writing](https://www.cold-takes.com/learning-by-writing/)); untested in this KB. Treat it as a hypothesis with a named test, not a finding.
 
 The default multistage path reads the sources, then synthesizes: gather everything relevant, then find the claim. Karnofsky's inversion is to write a provisional bottom-line claim *first* — before being "qualified" — and let that claim decide what to read next: identify the subquestion most likely to change the claim, read narrowly toward it, revise, repeat. Reading is in service of writing, not the reverse.
 
@@ -43,4 +43,4 @@ Relevant Notes:
 - [Warranted reader update is the objective of substantive writing](./warranted-reader-update-is-the-objective-of-substantive-writing.md) — grounds: routing is a search strategy for the update, and the provisional claim is what exerts the selection pressure
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: reading only claim-relevant passages spares bounded context
 - [A bare writing prompt does not determine its intended contribution](./a-bare-writing-prompt-does-not-determine-its-intended-contribution.md) — contrasts: a provisional claim supplies, provisionally, the contribution direction a bare prompt leaves open
-- [Learning By Writing](../sources/learning-by-writing.md) — abstracted-from: Karnofsky's hypothesis-first investigation loop that motivates this conjecture
+- [Learning By Writing](https://www.cold-takes.com/learning-by-writing/) — abstracted-from: Karnofsky's hypothesis-first investigation loop that motivates this conjecture

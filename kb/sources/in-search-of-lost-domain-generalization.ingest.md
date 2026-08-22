@@ -1,6 +1,10 @@
 ---
 description: "DomainBed shows tuned ERM matches specialized domain-generalization methods once model selection is declared, giving the reach-assessment cluster its first captured empirical counterweight"
-source_snapshot: "kb/sources/in-search-of-lost-domain-generalization.md"
+source: https://arxiv.org/abs/2007.01434
+captured: "2026-07-26"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: b1ba7ca7cadf2cb0cf5a3a138f02651b5279c7ddaa552f5b0bba4a02ea2951cc
 ingested: "2026-07-26"
 type: kb/sources/types/ingest-report.md
 domains: [domain-generalization, evaluation-protocol, reach-assessment]
@@ -8,14 +12,9 @@ domains: [domain-generalization, evaluation-protocol, reach-assessment]
 
 # Ingest: In Search of Lost Domain Generalization
 
-Source: [in-search-of-lost-domain-generalization.md](./in-search-of-lost-domain-generalization.md)
-Captured: 2026-07-26
-From: <https://arxiv.org/abs/2007.01434>
-
 ## Classification
 
-Genre: scientific-paper -- an empirical benchmarking and methodology paper: it states a protocol defect in a subfield, builds a testbed to control for it, and reports comparative results. The genre recorded on the snapshot is correct.
-Domains: domain-generalization, evaluation-protocol, reach-assessment
+An empirical benchmarking and methodology paper: it states a protocol defect in a subfield, builds a testbed to control for it, and reports comparative results. The genre recorded on the snapshot is correct.
 Author: Ishaan Gulrajani and David Lopez-Paz (Facebook AI Research); Lopez-Paz is a co-author of the invariant risk minimization line this paper audits, so the negative result comes from inside the program rather than from a rival camp.
 
 ## Summary
@@ -24,7 +23,7 @@ The paper argues that a domain-generalization algorithm without a stated model-s
 
 ## Connections Found
 
-The KB already has casebook notes for this material, and one of them already cites this paper — [theory-mediated learning may improve sample efficiency under structured shifts](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) leans on it, now through this ingest, exactly for its headline finding. The source's role in that cluster is **counterweight**: the causal/invariance route to reach-assessment, as developed in [formal symbolic systems assess explanatory-reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md), is currently grounded on uniformly supportive sources (invariant prediction, causal representation learning, and the tooling ingests), while that note's own "formalization boundary" warning — that an invariant relation selected from narrow environments can track a sampling artifact — cites nothing. This paper is that warning measured. Its companion is [The Risks of Invariant Risk Minimization](./the-risks-of-invariant-risk-minimization.md), the formal counterpart to this empirical one; the two attack the invariance program from different directions and are cited in the same sentence of the same note.
+The KB already has casebook notes for this material, and one of them already cites this paper — [theory-mediated learning may improve sample efficiency under structured shifts](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) leans on it, now through this ingest, exactly for its headline finding. The source's role in that cluster is **counterweight**: the causal/invariance route to reach-assessment, as developed in [formal symbolic systems assess explanatory-reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md), is currently grounded on uniformly supportive sources (invariant prediction, causal representation learning, and the tooling ingests), while that note's own "formalization boundary" warning — that an invariant relation selected from narrow environments can track a sampling artifact — cites nothing. This paper is that warning measured. Its companion is [The Risks of Invariant Risk Minimization](https://arxiv.org/abs/2010.05761), the formal counterpart to this empirical one; the two attack the invariance program from different directions and are cited in the same sentence of the same note.
 
 Its second role is smaller and lands elsewhere: for [codification and relaxing navigate the bitter lesson boundary](../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) it is a worked case of nine explicit inductive-bias bets losing to the general method under a fair protocol, without a decade of scaling hindsight — the pattern [Sutton's bitter lesson](./wikipedia-bitter-lesson.ingest.md) describes, observed in a controlled comparison instead of retrospectively.
 
@@ -60,7 +59,7 @@ Relevant Notes:
 - [Formal symbolic systems assess explanatory-reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md) — is-evidence-for: the measured instance of that note's uncited "formalization boundary" warning
 - [Codification and relaxing navigate the bitter lesson boundary](../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — is-evidence-for: nine codification bets that lost to the general method under a fair protocol
 - [Reach-assessment](../notes/definitions/reach-assessment.md) — defined-in: the registered sense of the compound used throughout this report
-- [The Risks of Invariant Risk Minimization](./the-risks-of-invariant-risk-minimization.md) — compares-with: the formal counterpart to this empirical negative result
+- [The Risks of Invariant Risk Minimization](https://arxiv.org/abs/2010.05761) — compares-with: the formal counterpart to this empirical negative result
 - [Causal inference using invariant prediction](./causal-inference-using-invariant-prediction.ingest.md) — compares-with: proposes cross-environment invariance as a causal acceptance signal; parallel subject, opposite verdict
 - [Towards Causal Representation Learning](./towards-causal-representation-learning.ingest.md) — compares-with: the agenda paper whose deep-learning instantiations this one audits
 - [Position bias](./position-bias.ingest.md) — compares-with: the same defect in LLM judging; an undeclared protocol variable flips the reported winner

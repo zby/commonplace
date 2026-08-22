@@ -1,6 +1,10 @@
 ---
 description: "ACM improves three benchmarks inside a fixed two-tool decomposition, but neither tests that decomposition's scope nor shows lossless active context"
-source_snapshot: "acm-agentic-context-management-for-long-horizon-tasks.md"
+source: https://arxiv.org/abs/2607.23809
+captured: "2026-07-30"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 56d2f596d4bbb9ce785b0de456982a2dfff80af7a50d4f1f4ef16778d79d5de2
 ingested: "2026-07-30"
 type: kb/sources/types/ingest-report.md
 domains: [context-engineering, agent-memory, post-training, long-horizon-agents]
@@ -8,14 +12,9 @@ domains: [context-engineering, agent-memory, post-training, long-horizon-agents]
 
 # Ingest: ACM: Agentic Context Management for Long Horizon Tasks
 
-Source: [acm-agentic-context-management-for-long-horizon-tasks.md](./acm-agentic-context-management-for-long-horizon-tasks.md)
-Captured: 2026-07-30
-From: https://arxiv.org/abs/2607.23809
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv preprint with a formal method, public training pipeline, three-benchmark evaluation, ablations, case studies, prompts, and references.
-Domains: context-engineering, agent-memory, post-training, long-horizon-agents
+An arXiv preprint with a formal method, public training pipeline, three-benchmark evaluation, ablations, case studies, prompts, and references.
 Author: Xiaochuan Li, Ryan Ming, Meng Chu, Shuai Shao, Rong Jin, and Chenyan Xiong, affiliated with Carnegie Mellon University and Meta. The paper states that CMU conducted the experiments and data work while Meta advised; public code, data, and checkpoints improve inspectability, but this ingest does not inspect the implementation and the paper is not peer-reviewed.
 
 ## Summary

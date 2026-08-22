@@ -1,6 +1,13 @@
 ---
 description: "Lech Mazur's public benchmark announcement compressing the headline position-bias result, the GPT-5.4 callout, and the operational motivation from everyday comparison prompts"
-source_snapshot: "kb/sources/does-an-llm-keep-the-same-judgment-when-you-swap-the-answer-order.md"
+source: https://x.com/LechMazur/status/2046661738339430489
+captured: "2026-04-23T16:14:07.941709+00:00"
+capture: xdk
+genre: tool-announcement
+snapshot_sha256: 3c94142effca7a513279544e767d68b4ac424acd5b21020250f50e03709b92dd
+status_id: 2046661738339430489
+conversation_id: 2046661738339430489
+post_count: 13
 ingested: "2026-04-23"
 type: kb/sources/types/ingest-report.md
 domains: [evaluation, judge-reliability, position-bias, llm-as-judge]
@@ -8,14 +15,9 @@ domains: [evaluation, judge-reliability, position-bias, llm-as-judge]
 
 # Ingest: Thread by @LechMazur
 
-Source: kb/sources/does-an-llm-keep-the-same-judgment-when-you-swap-the-answer-order.md
-Captured: 2026-04-23T16:14:07.941709+00:00
-From: https://x.com/LechMazur/status/2046661738339430489
-
 ## Classification
 
-Type: tool-announcement -- this is a public launch thread for a new benchmark/repo rather than the benchmark artifact itself; it highlights headline findings, links to the repository, and frames why the failure mode matters.
-Domains: evaluation, judge-reliability, position-bias, llm-as-judge
+This is a public launch thread for a new benchmark/repo rather than the benchmark artifact itself; it highlights headline findings, links to the repository, and frames why the failure mode matters.
 Author: Lech Mazur is already represented in this KB through the deeper [position-bias benchmark ingest](./position-bias.ingest.md); the signal here is not institutional authority but that he is the benchmark author summarizing and motivating his own measurement artifact.
 
 ## Summary

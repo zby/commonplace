@@ -1,6 +1,10 @@
 ---
 description: "LibContinual exposes data access, retained-state accounting, and task-stream structure as hidden privileges in continual-learning evaluation"
-source_snapshot: "libcontinual-comprehensive-library-realistic-continual-learning.md"
+source: https://arxiv.org/abs/2512.22029
+captured: "2026-08-21"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 5ea8d8c15c4cdbdae7307422c9ac4e19de5d208d04a93f7f37e5c57d719546f4
 ingested: "2026-08-21"
 type: kb/sources/types/ingest-report.md
 domains: [continual-learning, evaluation-methodology, resource-accounting, benchmark-design]
@@ -8,14 +12,9 @@ domains: [continual-learning, evaluation-methodology, resource-accounting, bench
 
 # Ingest: LibContinual: A Comprehensive Library towards Realistic Continual Learning
 
-Source: [libcontinual-comprehensive-library-realistic-continual-learning.md](libcontinual-comprehensive-library-realistic-continual-learning.md)
-Captured: 2026-08-21
-From: https://arxiv.org/abs/2512.22029
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv v1 preprint that specifies a continual-learning library, reproduces 19 methods, and reports controlled benchmark investigations of data access, retained-state cost, and task composition.
-Domains: continual-learning, evaluation-methodology, resource-accounting, benchmark-design
+An arXiv v1 preprint that specifies a continual-learning library, reproduces 19 methods, and reports controlled benchmark investigations of data access, retained-state cost, and task composition.
 Author: Wenbin Li, Shangge Liu, Borui Kang, Yiyang Chen, KaXuan Lew, Yang Chen, Yinghuan Shi, Lei Wang, Yang Gao, and Jiebo Luo, affiliated with Nanjing University, the University of Wollongong, and the University of Rochester. They are direct implementers of the reported framework, but this recent preprint has not been independently reproduced in this KB.
 
 ## Summary

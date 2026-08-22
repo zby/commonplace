@@ -1,6 +1,10 @@
 ---
 description: "RL paper formalizing environment-side artifacts as externalized memory and testing memory by capacity/performance counterfactuals."
-source_snapshot: "artifacts-as-memory-beyond-agent-boundary.md"
+source: https://arxiv.org/abs/2604.08756
+captured: "2026-06-30"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 21a09181d30d875199af6288820ff6e3ff3d729d6221bcedf9fe4da111cdca88
 ingested: "2026-06-30"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, learning-theory, situated-cognition, reinforcement-learning]
@@ -8,14 +12,9 @@ domains: [agent-memory, learning-theory, situated-cognition, reinforcement-learn
 
 # Ingest: Artifacts as Memory Beyond the Agent Boundary
 
-Source: artifacts-as-memory-beyond-agent-boundary.md
-Captured: 2026-06-30
-From: https://arxiv.org/abs/2604.08756
-
 ## Classification
 
-Type: scientific-paper -- arXiv preprint with formal definitions, proofs, experiments, statistical tests, citations, and an empirical appendix.
-Domains: agent-memory, learning-theory, situated-cognition, reinforcement-learning
+ArXiv preprint with formal definitions, proofs, experiments, statistical tests, citations, and an empirical appendix.
 Author: John D. Martin, Fraser Mince, Esra'a Saleh, and Amy Pajak; affiliations include Openmind Research Institute, University of Alberta, Cohere Labs Community, Universite de Montreal, Mila, and University of Pennsylvania.
 
 ## Summary

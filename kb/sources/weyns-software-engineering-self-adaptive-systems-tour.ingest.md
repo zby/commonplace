@@ -1,6 +1,10 @@
 ---
 description: "Weyns's six-wave engineering perspective supplies a bounded self-adaptation vocabulary and a warning that MAPE-K is an engineering reference model, not a membership definition."
-source_snapshot: "weyns-software-engineering-self-adaptive-systems-tour.md"
+source: https://people.cs.kuleuven.be/~danny.weyns/papers/2017HSE.pdf
+captured: "2026-07-21"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 6166fb55b965bc7e20549a4aa9a89c24579631c4ddd2bd890f79fd606340f267
 ingested: "2026-07-21"
 type: kb/sources/types/ingest-report.md
 domains: [self-adaptation, feedback-loops, uncertainty, systems-engineering]
@@ -8,14 +12,9 @@ domains: [self-adaptation, feedback-loops, uncertainty, systems-engineering]
 
 # Ingest: Software Engineering of Self-Adaptive Systems: An Organised Tour and Future Challenges
 
-Source: weyns-software-engineering-self-adaptive-systems-tour.md
-Captured: 2026-07-21
-From: https://people.cs.kuleuven.be/~danny.weyns/papers/2017HSE.pdf
-
 ## Classification
 
-Genre: scientific-paper -- a scholarly handbook chapter that synthesizes research traditions, defines a conceptual model, and identifies future engineering problems.
-Domains: self-adaptation, feedback-loops, uncertainty, systems-engineering
+A scholarly handbook chapter that synthesizes research traditions, defines a conceptual model, and identifies future engineering problems.
 Author: Danny Weyns is a leading self-adaptive-systems researcher; this is a synthesis chapter rather than a controlled empirical study.
 
 ## Summary

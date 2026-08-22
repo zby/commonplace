@@ -1,6 +1,13 @@
 ---
 description: "Aaron Defazio argues that cheaper AI-assisted theory work can move auto-research from experiment search toward predictive models, while problem choice remains human work"
-source_snapshot: "a-new-era-of-theory-driven-ai-research-2084779496549548323.md"
+source: https://x.com/aaron_defazio/status/2084779496549548323
+captured: "2026-08-18T07:36:59.980126+00:00"
+capture: xdk
+genre: conceptual-essay
+snapshot_sha256: eb66910a34e9f06aefeb2baeb258e9794f9e8f7111a6ebd122ba4efd9dda6b16
+status_id: 2084779496549548323
+conversation_id: 2084779496549548323
+post_count: 1
 ingested: "2026-08-18"
 type: kb/sources/types/ingest-report.md
 domains: [scientific-discovery, theory-mediated-learning, auto-research, automation-boundary]
@@ -8,14 +15,9 @@ domains: [scientific-discovery, theory-mediated-learning, auto-research, automat
 
 # Ingest: A new Era Of Theory-Driven AI Research
 
-Source: [a-new-era-of-theory-driven-ai-research-2084779496549548323.md](./a-new-era-of-theory-driven-ai-research-2084779496549548323.md)
-Captured: 2026-08-18
-From: https://x.com/aaron_defazio/status/2084779496549548323
-
 ## Classification
 
-Genre: conceptual-essay -- an X article that advances a thesis through argument, forecasts, and one first-person anecdote rather than a reported study.
-Domains: scientific-discovery, theory-mediated-learning, auto-research, automation-boundary
+An X article that advances a thesis through argument, forecasts, and one first-person anecdote rather than a reported study.
 Author: Aaron Defazio writes as a researcher with long-running AI-theory problems and reports direct use of a coding agent, but the captured profile supplies no institutional affiliation or independent credibility signal.
 
 ## Summary

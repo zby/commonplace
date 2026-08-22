@@ -1,6 +1,10 @@
 ---
 description: Benchmark proving LLM compositional reasoning collapses with depth (not token count), recovered by recursive decomposition with focused context — quantitative evidence for scheduling model predictions
-source_snapshot: convexbench-can-llms-recognize-convex-functions.md
+source: https://arxiv.org/html/2602.01075v2
+captured: "2026-03-04"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: da64de7122873a671a6b79a75a54f4b812c09cebd6aec6b7d735e13db2e3ce11
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [compositional-reasoning, agentic-scaffolding, context-management, benchmarking]
@@ -8,15 +12,9 @@ domains: [compositional-reasoning, agentic-scaffolding, context-management, benc
 
 # Ingest: ConvexBench: Can LLMs Recognize Convex Functions?
 
-Source: convexbench-can-llms-recognize-convex-functions.md
-Captured: 2026-03-04
-From: https://arxiv.org/html/2602.01075v2
-
 ## Classification
 
-Type: **scientific-paper** — Peer-reviewed preprint with controlled experiments, ablation studies, and mechanically verified ground truth labels across multiple frontier models.
-
-Domains: compositional-reasoning, agentic-scaffolding, context-management, benchmarking
+Peer-reviewed preprint with controlled experiments, ablation studies, and mechanically verified ground truth labels across multiple frontier models.
 
 Author: Yepeng Liu, Yu Huang, Yu-Xiang Wang, Yingbin Liang, Yuheng Bu — academic researchers at Ohio State and UC Santa Barbara. Methodologically rigorous work (mechanically verifiable benchmark via DCP composition rules, controlled depth variable, multi-model testing). No obvious prior connection to agent architecture discourse, but the findings speak directly to it.
 

@@ -1,6 +1,10 @@
 ---
 description: "DeLM's verified shared-state experiments support coordination guarantees and hierarchical context scheduling while leaving the fixed decomposition untested"
-source_snapshot: "decentralized-multi-agent-systems-with-shared-context.md"
+source: https://arxiv.org/abs/2606.10662
+captured: "2026-08-12"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 6a5229d32f1addf3c0c59f5bca356ef2209540a3669b34b6c5390bf24f49bfdd
 ingested: "2026-08-12"
 type: kb/sources/types/ingest-report.md
 domains: [multi-agent-systems, agent-orchestration, context-engineering, test-time-scaling]
@@ -8,14 +12,9 @@ domains: [multi-agent-systems, agent-orchestration, context-engineering, test-ti
 
 # Ingest: Decentralized Multi-Agent Systems with Shared Context
 
-Source: [decentralized-multi-agent-systems-with-shared-context.md](./decentralized-multi-agent-systems-with-shared-context.md)
-Captured: 2026-08-12
-From: https://arxiv.org/abs/2606.10662
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv preprint with a specified architecture, benchmark comparisons, modular ablations, robustness checks, and trace-level mechanism examples.
-Domains: multi-agent-systems, agent-orchestration, context-engineering, test-time-scaling
+An arXiv preprint with a specified architecture, benchmark comparisons, modular ablations, robustness checks, and trace-level mechanism examples.
 Author: Yuzhen Mao and Azalia Mirhoseini are Stanford researchers; the paper gives enough implementation and experimental detail to inspect its design claims, but this captured `v1` is a first-party preprint rather than independent replication.
 
 ## Summary

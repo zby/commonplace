@@ -1,6 +1,13 @@
 ---
 description: Three-take Auto Research field report where optimization only worked after manual error analysis, failure taxonomy design, and judge calibration across the Three Gulfs.
-source_snapshot: improving-ai-skills-with-autoresearch-evals-skills-2035257434365976671.md
+source: https://x.com/nurijanian/status/2035257434365976671
+captured: "2026-03-21T19:45:41.107797+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: 1dc1ef267ff8461036b2be14622da1d06ace013cca0ef2db896a9658cb6521aa
+status_id: 2035257434365976671
+conversation_id: 2035257434365976671
+post_count: 1
 ingested: "2026-03-21"
 type: kb/sources/types/ingest-report.md
 domains: [evals, verification, skill-optimization]
@@ -8,13 +15,8 @@ domains: [evals, verification, skill-optimization]
 
 # Ingest: Improving AI Skills with autoresearch & evals-skills
 
-Source: improving-ai-skills-with-autoresearch-evals-skills-2035257434365976671.md
-Captured: 2026-03-21T19:45:41.107797+00:00
-From: https://x.com/nurijanian/status/2035257434365976671
-
 ## Classification
-Type: practitioner-report — first-person report of three concrete implementation attempts, what changed between attempts, and what failed before success improved.
-Domains: evals, verification, skill-optimization
+First-person report of three concrete implementation attempts, what changed between attempts, and what failed before success improved.
 Author: Nurijanian is reporting direct hands-on iteration with Auto Research and eval tooling; useful for workflow signals, but not a controlled or generalized benchmark.
 
 ## Summary

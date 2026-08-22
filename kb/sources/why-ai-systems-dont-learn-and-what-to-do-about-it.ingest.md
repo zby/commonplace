@@ -1,6 +1,10 @@
 ---
 description: Position paper arguing current AI externalizes learning into human-run MLOps and proposing an A-B-M architecture where meta-control arbitrates observation and action learning for lifelong adaptation.
-source_snapshot: why-ai-systems-dont-learn-and-what-to-do-about-it.md
+source: https://arxiv.org/html/2603.15381v1
+captured: "2026-03-18"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: 2e3ff65f398baf6d069d2911c04bd7432d0f9aa4ddb18a36e3cb6baea698970c
 ingested: "2026-03-18"
 type: kb/sources/types/ingest-report.md
 domains: [autonomous-learning, continuous-learning, cognitive-architecture, meta-control]
@@ -8,14 +12,9 @@ domains: [autonomous-learning, continuous-learning, cognitive-architecture, meta
 
 # Ingest: Why AI systems don't learn and what to do about it
 
-Source: why-ai-systems-dont-learn-and-what-to-do-about-it.md
-Captured: 2026-03-18
-From: https://arxiv.org/html/2603.15381v1
-
 ## Classification
 
-Type: conceptual-essay — arXiv position paper with an architectural proposal but no implemented system or empirical evaluation.
-Domains: autonomous-learning, continuous-learning, cognitive-architecture, meta-control
+ArXiv position paper with an architectural proposal but no implemented system or empirical evaluation.
 Authors: Emmanuel Dupoux, Yann LeCun, Jitendra Malik — cognitive science, frontier representation learning, and computer vision converging on the same architectural diagnosis. Strong signal for a framing paper even without validation.
 
 ## Summary

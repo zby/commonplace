@@ -1,6 +1,10 @@
 ---
 description: "Parasuraman, Sheridan, and Wickens provide a human-centered function-allocation matrix: four automation stages crossed with manual-to-autonomous levels and evaluated by performance consequences."
-source_snapshot: "model-types-levels-human-interaction-automation.md"
+source: https://www.cs.uml.edu/~holly/91.550/papers/sheridan-autonomy.pdf
+captured: "2026-07-21"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 8ddf9ba5b64a664c018e5198958b9384f6c74694d3fac2da35bf32fb8932bccb
 ingested: "2026-07-21"
 type: kb/sources/types/ingest-report.md
 domains: [human-automation, autonomy, function-allocation, evaluation]
@@ -8,14 +12,9 @@ domains: [human-automation, autonomy, function-allocation, evaluation]
 
 # Ingest: A Model for Types and Levels of Human Interaction with Automation
 
-Source: model-types-levels-human-interaction-automation.md
-Captured: 2026-07-21
-From: https://www.cs.uml.edu/~holly/91.550/papers/sheridan-autonomy.pdf
-
 ## Classification
 
-Genre: scientific-paper -- a foundational human-factors model with a conceptual taxonomy and design criteria, illustrated by system examples rather than a single controlled experiment.
-Domains: human-automation, autonomy, function-allocation, evaluation
+A foundational human-factors model with a conceptual taxonomy and design criteria, illustrated by system examples rather than a single controlled experiment.
 Author: Raja Parasuraman, Thomas B. Sheridan, and Christopher D. Wickens are established human-factors researchers; the model is influential but explicitly qualitative and incomplete for newer automation stages.
 
 ## Summary

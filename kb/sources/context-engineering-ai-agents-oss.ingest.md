@@ -1,6 +1,10 @@
 ---
 description: "Study of context files across 466 OSS projects identifies five constraint styles, add-then-modify evolution, and 50% stagnation, supplying naturalistic evidence for Commonplace's constraining theory"
-source_snapshot: context-engineering-ai-agents-oss.md
+source: https://arxiv.org/pdf/2510.21413
+captured: "2026-03-02"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 93e5218ca1b6eb38f119bae519fcc744c1c5507b183ead5e96d1ff5996150e6c
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [context-engineering, agentic-systems, open-source, software-artifacts]
@@ -8,15 +12,9 @@ domains: [context-engineering, agentic-systems, open-source, software-artifacts]
 
 # Ingest: Context Engineering for AI Agents in Open-Source Software
 
-Source: context-engineering-ai-agents-oss.md
-Captured: 2026-03-02
-From: https://arxiv.org/pdf/2510.21413
-
 ## Classification
 
-Type: scientific-paper — Peer-reviewed MSR 2026 paper with structured methodology (mining 10,000 GitHub repos, qualitative coding of 155 AGENTS.md files, commit-level evolution analysis of 169 commits), three formal research questions, and replication package.
-
-Domains: context-engineering, agentic-systems, open-source, software-artifacts
+Peer-reviewed MSR 2026 paper with structured methodology (mining 10,000 GitHub repos, qualitative coding of 155 AGENTS.md files, commit-level evolution analysis of 169 commits), three formal research questions, and replication package.
 
 Author: Mohsenimofidi, Galster, Treude, Baltes — mixed SE/MSR team. Treude and Baltes are established mining software repositories researchers; Galster has a software architecture background. The combination gives credibility on both the empirical methodology and the software engineering framing.
 
@@ -45,7 +43,7 @@ The `/connect` run (2026-03-09) found 4 existing links and 9 new connections. Th
 8. [programming-practices-apply-to-prompting](../notes/underspecification-and-indeterminism-complicate-programming-for.md) — **validates**: version control, code review, and testing applied to context files at scale across 466 projects.
 9. [legal-drafting-solves-the-same-problem-as-context-engineering](../notes/legal-drafting-solves-the-same-problem-as-context-engineering.md) — **complements**: the five writing styles are an independent taxonomy that overlaps with the legal constraint strategies (defined terms, enumeration, canons of interpretation).
 
-**Source-to-source**: [harness-engineering-leveraging-codex-agent-first-world](../sources/harness-engineering-leveraging-codex-agent-first-world.md) complements as depth vs breadth on the same phenomenon — one practitioner team's deliberate approach alongside the empirical survey of 466 projects.
+**Source-to-source**: [harness-engineering-leveraging-codex-agent-first-world](https://openai.com/index/harness-engineering/) complements as depth vs breadth on the same phenomenon — one practitioner team's deliberate approach alongside the empirical survey of 466 projects.
 
 **Synthesis opportunities** flagged by /connect:
 1. Context file evolution follows a growth-then-refinement pattern with a stagnation risk — combining the paper's 50% stagnation data with the methodology-enforcement maturation trajectory creates a testable prediction.

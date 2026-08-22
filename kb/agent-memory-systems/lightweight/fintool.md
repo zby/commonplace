@@ -10,7 +10,7 @@ last-checked: "2026-06-02"
 
 Fintool is an AI agent product for professional investors, covered here from a founder-authored practitioner report rather than inspectable application source. The report presents Fintool as a high-stakes finance agent built around normalized financial context, filesystem tools, markdown skills, S3-backed user data, sandboxed execution, and domain-specific evaluation. Because no reachable source was inspected, every mechanism below is **doc-grounded and reported**, not code-grounded.
 
-**Source:** [snapshot of @nicbstme's public practitioner report](../../sources/lessons-from-building-ai-agents-for-financial-services-201517481849743.md) and its [local ingest report](../../sources/lessons-from-building-ai-agents-for-financial-services.ingest.md).
+**Source:** [@nicbstme's public practitioner report](https://x.com/nicbstme/status/2015174818497437834) and its [local ingest report](../../sources/lessons-from-building-ai-agents-for-financial-services.ingest.md).
 
 **Reviewed version:** X article created 2026-01-24; local snapshot captured 2026-03-03 and ingest dated 2026-03-09.
 

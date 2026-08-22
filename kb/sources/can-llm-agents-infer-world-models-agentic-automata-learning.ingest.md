@@ -1,6 +1,10 @@
 ---
 description: "Agentic automata-learning paper showing that hard-oracle interaction tasks can separate LLM-agent evidence collection, hypothesis construction, and final world-model success."
-source_snapshot: "can-llm-agents-infer-world-models-agentic-automata-learning.md"
+source: https://arxiv.org/pdf/2606.16576
+captured: "2026-06-22"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 3ceb9962a2dfcf259396baf2498f4e08a8c4f844780d5bbd6c97c4dd28ba75b2
 ingested: "2026-06-22"
 type: kb/sources/types/ingest-report.md
 domains: [agent-evaluation, oracle-theory, contextual-activation, agent-benchmarks]
@@ -8,14 +12,9 @@ domains: [agent-evaluation, oracle-theory, contextual-activation, agent-benchmar
 
 # Ingest: Can LLM Agents Infer World Models?
 
-Source: can-llm-agents-infer-world-models-agentic-automata-learning.md
-Captured: 2026-06-22
-From: https://arxiv.org/pdf/2606.16576
-
 ## Classification
 
-Type: scientific-paper -- arXiv preprint with a formal task definition, procedural dataset generation, classical automata-learning baselines, multi-model experiments, error analysis, and stated limitations.
-Domains: agent-evaluation, oracle-theory, contextual-activation, agent-benchmarks
+ArXiv preprint with a formal task definition, procedural dataset generation, classical automata-learning baselines, multi-model experiments, error analysis, and stated limitations.
 Author: Reef Menaged, Gili Lior, Shauli Ravfogel, Roee Aharoni, and Gabriel Stanovsky; affiliations include Hebrew University of Jerusalem, New York University, and Google Research. The author signal is credible for an agent-evaluation paper, with the normal caution that this is a preprint under review.
 
 ## Summary

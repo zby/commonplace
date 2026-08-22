@@ -1,6 +1,13 @@
 ---
 description: "Practitioner dual-loop context-and-memory blueprint whose fast/slow separation is useful but whose convergence and performance claims are unsupported"
-source_snapshot: "autonomous-agent-context-memory-2088234998654472340.md"
+source: https://x.com/marfinxx/status/2088234998654472340
+captured: "2026-08-20T13:27:16.882050+00:00"
+capture: xdk
+genre: conceptual-essay
+snapshot_sha256: 995bb6369c9866ebab2890dd987d8dc7836f848de82ecf40ee3e0f6bfa74ada7
+status_id: 2088234998654472340
+conversation_id: 2088234998654472340
+post_count: 6
 ingested: "2026-08-20"
 type: kb/sources/types/ingest-report.md
 domains: [context-engineering, agent-memory, memory-curation, retrieval]
@@ -8,14 +15,9 @@ domains: [context-engineering, agent-memory, memory-curation, retrieval]
 
 # Ingest: Autonomous Agent Architecture: Unifying Context Engineering and Memory Engineering
 
-Source: [autonomous-agent-context-memory-2088234998654472340.md](./autonomous-agent-context-memory-2088234998654472340.md)
-Captured: 2026-08-20T13:27:16.882050+00:00
-From: https://x.com/marfinxx/status/2088234998654472340
-
 ## Classification
 
-Genre: conceptual-essay -- a single-author architecture prescription built from systems analogies, named tools, and uncited quantitative claims rather than a documented deployment or controlled evaluation.
-Domains: context-engineering, agent-memory, memory-curation, retrieval
+A single-author architecture prescription built from systems analogies, named tools, and uncited quantitative claims rather than a documented deployment or controlled evaluation.
 Author: The snapshot identifies only the X account `@marfinxx`. It provides no affiliation, implementation, methods, or citations that would independently establish expertise, so the post should be judged as unverified practitioner commentary.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "Cordis formalizes reversible component effects and reactive dependency lifecycles, supplying a missing deployment substrate for dynamically changing agent harnesses"
-source_snapshot: "a-programming-paradigm-for-spatiotemporal-composability.md"
+source: https://github.com/cordiverse/paper/blob/main/paper.pdf
+captured: "2026-08-14"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: eabef28217793ee9ee52a6bbba50234b31beac294222058f9df402b9f2b54919
 ingested: "2026-08-14"
 type: kb/sources/types/ingest-report.md
 domains: [runtime-composition, harness-engineering, effect-systems, self-improving-systems]
@@ -8,14 +12,9 @@ domains: [runtime-composition, harness-engineering, effect-systems, self-improvi
 
 # Ingest: A Programming Paradigm for Spatiotemporal Composability
 
-Source: [a-programming-paradigm-for-spatiotemporal-composability.md](a-programming-paradigm-for-spatiotemporal-composability.md)
-Captured: 2026-08-14
-From: https://github.com/cordiverse/paper/blob/main/paper.pdf
-
 ## Classification
 
-Genre: scientific-paper -- an 88-page preprint with a formal calculus, metatheory, TypeScript implementation, and an observational production case.
-Domains: runtime-composition, harness-engineering, effect-systems, self-improving-systems
+An 88-page preprint with a formal calculus, metatheory, TypeScript implementation, and an observational production case.
 Author: Yifan Shi, Wei Zhang, and Tianyi Cui are affiliated with Peking University and DeepSeek-AI. Their authorship gives first-hand access to Cordis and Koishi, but the paper has no stated peer-review status and its implementation or production claims have not been independently reproduced in this KB.
 
 ## Summary

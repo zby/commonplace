@@ -1,6 +1,10 @@
 ---
 description: Formal no-escape theorem for semantic memory interference, with exact-record and symbolic-verifier escape clauses that sharpen retrieval-vs-verification tradeoffs.
-source_snapshot: the-price-of-meaning-why-every-semantic-memory-system-forgets.md
+source: https://arxiv.org/html/2603.27116v1
+captured: "2026-04-10"
+capture: html-lynx
+genre: scientific-paper
+snapshot_sha256: 5366eb05978cf1745031a46567a6b40d5b837ab6b96b5c17a9d67e2d8c4af60d
 ingested: "2026-04-10"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, retrieval-architecture, forgetting, learning-theory]
@@ -8,14 +12,9 @@ domains: [agent-memory, retrieval-architecture, forgetting, learning-theory]
 
 # Ingest: The Price of Meaning: Why Every Semantic Memory System Forgets
 
-Source: the-price-of-meaning-why-every-semantic-memory-system-forgets.md
-Captured: 2026-04-10
-From: https://arxiv.org/html/2603.27116v1
-
 ## Classification
 
-Type: scientific-paper -- arXiv preprint with a stated theorem class, derivations, controlled experiments across five memory architectures, methods, code/data availability, and citations.
-Domains: agent-memory, retrieval-architecture, forgetting, learning-theory
+ArXiv preprint with a stated theorem class, derivations, controlled experiments across five memory architectures, methods, code/data availability, and citations.
 Author: Sambartha Ray Barman, Andrey Starenky, Sofia Bodnar, Nikhil Narasimhan, and Ashwin Gopinath -- Sentra/Dynamis-affiliated authors with an MIT-affiliated corresponding author; useful signal, but the paper's assumptions and methods matter more than author authority.
 
 ## Summary

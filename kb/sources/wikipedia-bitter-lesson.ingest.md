@@ -1,6 +1,10 @@
 ---
 description: Wikipedia-contextualized capture of Sutton's Bitter Lesson, useful for scaling arguments and caveats about general methods versus hand-coded knowledge.
-source_snapshot: wikipedia-bitter-lesson.md
+source: https://en.wikipedia.org/wiki/Bitter_lesson
+captured: "2026-02-23"
+capture: fetch
+genre: conceptual-essay
+snapshot_sha256: f16838d58d7f4c1693369995f9770aee8bbcd07e5ccd1667050c24b7c516d60d
 ingested: "2026-04-20"
 type: kb/sources/types/ingest-report.md
 domains: [ai-philosophy, scaling, learning-theory, system-design]
@@ -8,14 +12,9 @@ domains: [ai-philosophy, scaling, learning-theory, system-design]
 
 # Ingest: The Bitter Lesson
 
-Source: wikipedia-bitter-lesson.md
-Captured: 2026-02-23
-From: https://en.wikipedia.org/wiki/Bitter_lesson
-
 ## Classification
 
-Type: conceptual-essay — Although captured as a Wikipedia article, the underlying content is Sutton's 2019 essay arguing a theoretical position about AI strategy, plus its documented intellectual impact. The Wikipedia framing adds citation context and validation evidence but the core is a conceptual argument about how AI research investment should be directed.
-Domains: ai-philosophy, scaling, learning-theory, system-design
+Although captured as a Wikipedia article, the underlying content is Sutton's 2019 essay arguing a theoretical position about AI strategy, plus its documented intellectual impact. The Wikipedia framing adds citation context and validation evidence but the core is a conceptual argument about how AI research investment should be directed.
 Author: Richard S. Sutton — one of the founders of modern reinforcement learning, co-author of the standard RL textbook. His authority on this topic is first-hand: he watched decades of AI research from inside the field. The essay's hundreds of formal citations and wide acceptance validate his standing.
 
 ## Summary

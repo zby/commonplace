@@ -1,6 +1,13 @@
 ---
 description: Karpathy on agent-maintained research wikis in Obsidian — index files and brief summaries replacing fancy RAG at roughly 100-article scale
-source_snapshot: llm-knowledge-bases-something-i-m-finding-very-useful-recently-using.md
+source: https://x.com/karpathy/status/2039805659525644595
+captured: "2026-04-03T15:30:57.200477+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: d51b61bc089117277b83f4e083e95c57844f97e0084b95aad922ccb85157aaa6
+status_id: 2039805659525644595
+conversation_id: 2039805659525644595
+post_count: 1
 ingested: "2026-04-03"
 type: kb/sources/types/ingest-report.md
 domains: [knowledge-management, context-engineering, file-based-systems, agentic-workflows]
@@ -8,13 +15,8 @@ domains: [knowledge-management, context-engineering, file-based-systems, agentic
 
 # Ingest: LLM Knowledge Bases
 
-Source: llm-knowledge-bases-something-i-m-finding-very-useful-recently-using.md
-Captured: 2026-04-03T15:30:57.200477+00:00
-From: https://x.com/karpathy/status/2039805659525644595
-
 ## Classification
-Type: practitioner-report — a first-person workflow report describing how Karpathy uses LLMs to build and maintain a research wiki in markdown, with concrete mechanics and scale numbers but no directly inspectable repo or evaluation artifacts.
-Domains: knowledge-management, context-engineering, file-based-systems, agentic-workflows
+A first-person workflow report describing how Karpathy uses LLMs to build and maintain a research wiki in markdown, with concrete mechanics and scale numbers but no directly inspectable repo or evaluation artifacts.
 Author: Andrej Karpathy is a high-signal AI practitioner, so the workflow is worth attending to as practitioner testimony, but this is still anecdotal self-report from a single X post.
 
 ## Summary

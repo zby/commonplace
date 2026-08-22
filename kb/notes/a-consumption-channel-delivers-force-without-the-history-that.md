@@ -13,7 +13,7 @@ This boundary makes a writable self-representation an attack surface rather than
 
 ## Two ways in, one boundary
 
-The adversarial case is familiar. Content reaches a channel that treats it as instruction: a poisoned rule file, a memory written from a compromised tool result, or text in retrieved material that reads as a directive. In an [LLM context, instruction and data share one token medium](./llm-context-interprets-instructions-and-content-through-one-medium.md); typed envelopes help only when the consumer preserves their distinction. This is the indirect-prompt-injection failure [Greshake et al. identify in LLM-integrated applications](../sources/where-it-lives-retained-adaptation-2026-06-23.md), where an application “blurs the line between data and instructions.”
+The adversarial case is familiar. Content reaches a channel that treats it as instruction: a poisoned rule file, a memory written from a compromised tool result, or text in retrieved material that reads as a directive. In an [LLM context, instruction and data share one token medium](./llm-context-interprets-instructions-and-content-through-one-medium.md); typed envelopes help only when the consumer preserves their distinction. This is the indirect-prompt-injection failure [Greshake et al. identify in LLM-integrated applications](https://conf.researchr.org/track/ecsa-2026/asisas-2026), where an application “blurs the line between data and instructions.”
 
 The innocent case has no attacker at all:
 

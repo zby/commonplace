@@ -17,4 +17,4 @@ Author effort is not the objective. It matters only as a proxy for judgment. Tes
 
 Relevant Notes:
 
-- [AI;DR Hacker News discussion](../sources/hacker-news-ai-dr-ai-didnt-read.md) — evidenced-by: self-selected participants repeatedly describe using apparent generation effort and reviewer-side verification cost to decide whether text is worth inspecting; the thread establishes the signal's use, not its accuracy or prevalence
+- [AI;DR Hacker News discussion](https://news.ycombinator.com/item?id=49336573) — evidenced-by: self-selected participants repeatedly describe using apparent generation effort and reviewer-side verification cost to decide whether text is worth inspecting; the thread establishes the signal's use, not its accuracy or prevalence

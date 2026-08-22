@@ -1,6 +1,10 @@
 ---
 description: "Historical placement of observed versus observing systems and the observer's epistemological inclusion"
-source_snapshot: "scott-second-order-cybernetics-historical-introduction-2004.md"
+source: https://sites.ufpe.br/ixsimpa/wp-content/uploads/sites/49/2021/10/Ciber-2b-22-out.-second-order-cybernetcs.pdf
+captured: "2026-07-14"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: a766a42b5d71443b4d538c27798e294c9edc6ba2c00791d79131a82ccfd39841
 ingested: "2026-07-14"
 type: kb/sources/types/ingest-report.md
 domains: [second-order-cybernetics, history, observers]
@@ -8,14 +12,9 @@ domains: [second-order-cybernetics, history, observers]
 
 # Ingest: Second-Order Cybernetics: An Historical Introduction
 
-Source: [scott-second-order-cybernetics-historical-introduction-2004.md](./scott-second-order-cybernetics-historical-introduction-2004.md)
-Captured: 2026-07-14
-From: https://sites.ufpe.br/ixsimpa/wp-content/uploads/sites/49/2021/10/Ciber-2b-22-out.-second-order-cybernetcs.pdf
-
 ## Classification
 
-Genre: scientific-paper -- a peer-reviewed historical and conceptual reconstruction with primary-source citations and acknowledged personal perspective.
-Domains: second-order-cybernetics, history, observers
+A peer-reviewed historical and conceptual reconstruction with primary-source citations and acknowledged personal perspective.
 Author: Bernard Scott is a long-standing participant in cybernetics and explicitly presents the history as one perspective, including first-hand recollections.
 
 ## Summary

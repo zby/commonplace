@@ -1,6 +1,10 @@
 ---
 description: "HBR trendslop article: LLM strategy advice follows fashionable management discourse despite prompt and context variation."
-source_snapshot: "researchers-asked-llms-strategic-advice-trendslop.md"
+source: https://hbr.org/2026/03/researchers-asked-llms-for-strategic-advice-they-got-trendslop-in-return
+captured: "2026-04-21"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: f12d081a4723a3c78d9ab074824f52c37fcc95e28e80f47e520b99498dcbf6fa
 ingested: "2026-04-21"
 type: kb/sources/types/ingest-report.md
 domains: [llm-reasoning, prompt-sensitivity, strategy, evaluation]
@@ -8,14 +12,9 @@ domains: [llm-reasoning, prompt-sensitivity, strategy, evaluation]
 
 # Ingest: Researchers Asked LLMs for Strategic Advice. They Got "Trendslop" in Return.
 
-Source: researchers-asked-llms-strategic-advice-trendslop.md
-Captured: 2026-04-21
-From: https://hbr.org/2026/03/researchers-asked-llms-for-strategic-advice-they-got-trendslop-in-return
-
 ## Classification
 
-Type: conceptual-essay -- HBR article by academic researchers that names a framing ("strategy trendslop"), reports high-level experimental findings, and turns them into management guidance; it is not the primary paper/preprint.
-Domains: llm-reasoning, prompt-sensitivity, strategy, evaluation
+HBR article by academic researchers that names a framing ("strategy trendslop"), reports high-level experimental findings, and turns them into management guidance; it is not the primary paper/preprint.
 Author: Angelo Romasanta, Llewellyn D.W. Thomas, and Natalia Levina are business-school academics working on innovation, ecosystems, generative AI evaluation, and technology use in organizations.
 
 ## Summary

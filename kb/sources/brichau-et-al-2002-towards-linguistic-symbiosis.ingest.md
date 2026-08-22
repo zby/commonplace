@@ -1,6 +1,10 @@
 ---
 description: "Implementation evidence that linguistic symbiosis across logic and object-oriented paradigms requires explicit syntactic and semantic mappings."
-source_snapshot: brichau-et-al-2002-towards-linguistic-symbiosis.md
+source: https://soft.vub.ac.be/Publications/2002/vub-prog-tr-02-04.pdf
+captured: "2026-07-14"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: df342492eda6e4ac9100daa9b530845293bed8f57011afc1d9b217879bbc2d5e
 ingested: "2026-07-14"
 type: kb/sources/types/ingest-report.md
 domains: [linguistic-symbiosis, protocol-mapping, multiparadigm-programming]
@@ -8,14 +12,9 @@ domains: [linguistic-symbiosis, protocol-mapping, multiparadigm-programming]
 
 # Ingest: Towards Linguistic Symbiosis of an Object-Oriented and a Logic Programming Language
 
-Source: [brichau-et-al-2002-towards-linguistic-symbiosis.md](./brichau-et-al-2002-towards-linguistic-symbiosis.md)
-Captured: 2026-07-14
-From: https://soft.vub.ac.be/Publications/2002/vub-prog-tr-02-04.pdf
-
 ## Classification
 
-Genre: scientific-paper -- an implementation paper describing ongoing work on a transparent SOUL/Smalltalk integration and its unresolved semantic mismatches.
-Domains: linguistic-symbiosis, protocol-mapping, multiparadigm-programming
+An implementation paper describing ongoing work on a transparent SOUL/Smalltalk integration and its unresolved semantic mismatches.
 Author: Johan Brichau, Kris Gybels, and Roel Wuyts report directly on the SOUL system and explicitly distinguish what their implementation achieves from open mapping problems.
 
 ## Summary

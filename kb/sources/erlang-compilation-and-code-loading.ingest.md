@@ -1,6 +1,10 @@
 ---
 description: "Official Erlang/OTP evidence that runtime definition change uses explicit current/old module versions, a qualified-call transition, bounded coexistence, and load-time activation checks"
-source_snapshot: erlang-compilation-and-code-loading.md
+source: https://www.erlang.org/doc/system/code_loading.html
+captured: "2026-08-19"
+capture: web-fetch
+genre: technical-documentation
+snapshot_sha256: a6a0711854629a3ca085a052271a4c040182f2963a92e68e0e55ca9aba5f7574
 ingested: "2026-08-19"
 type: kb/sources/types/ingest-report.md
 domains: [erlang-otp, code-replacement, deployment-governance]
@@ -8,19 +12,14 @@ domains: [erlang-otp, code-replacement, deployment-governance]
 
 # Ingest: Compilation and Code Loading
 
-Source: [erlang-compilation-and-code-loading.md](./erlang-compilation-and-code-loading.md)
-Captured: 2026-08-19
-From: https://www.erlang.org/doc/system/code_loading.html
-
 ## Classification
 
-Genre: technical-documentation -- official Erlang/OTP system documentation that specifies the runtime's code-loading and replacement semantics.
-Domains: erlang-otp, code-replacement, deployment-governance
+Official Erlang/OTP system documentation that specifies the runtime's code-loading and replacement semantics.
 Author: Ericsson AB maintains the Erlang/OTP documentation; this is an authoritative description of the shipped runtime contract, not independent evidence about how often operators use it.
 
 ## Summary
 
-Erlang can replace a module while the system is running, but the runtime does not blur that change into ordinary execution. It gives each loaded module explicit `current` and `old` versions, allows both to run concurrently, and switches a lingering process only when it makes a fully qualified call into the module. Loading a third version purges the old one and terminates processes still executing it. The page also describes an `on_load` activation check: new code becomes callable only if its hook returns `ok`, while existing current code remains available during the check. The result is a small, explicit runtime protocol for definition change; the companion [Release Handling documentation](./erlang-release-handling.md) adds the release-level deployment ceremony.
+Erlang can replace a module while the system is running, but the runtime does not blur that change into ordinary execution. It gives each loaded module explicit `current` and `old` versions, allows both to run concurrently, and switches a lingering process only when it makes a fully qualified call into the module. Loading a third version purges the old one and terminates processes still executing it. The page also describes an `on_load` activation check: new code becomes callable only if its hook returns `ok`, while existing current code remains available during the check. The result is a small, explicit runtime protocol for definition change; the companion [Release Handling documentation](https://www.erlang.org/doc/system/release_handling.html) adds the release-level deployment ceremony.
 
 ## Connections Found
 

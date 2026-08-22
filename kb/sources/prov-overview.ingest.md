@@ -1,6 +1,10 @@
 ---
 description: "W3C PROV family roadmap — the canonical standard for 'full provenance' that the KB's lineage concept deliberately trims down from"
-source_snapshot: "prov-overview.md"
+source: https://www.w3.org/TR/prov-overview/
+captured: "2026-07-06"
+capture: web-fetch
+genre: design-proposal
+snapshot_sha256: 1d12d336ede0f8937768b2ff71d146c068b2e39704e80088c0136671d39cb360
 ingested: "2026-07-06"
 type: kb/sources/types/ingest-report.md
 domains: [provenance, lineage, standards]
@@ -8,14 +12,9 @@ domains: [provenance, lineage, standards]
 
 # Ingest: PROV-Overview — An Overview of the PROV Family of Documents
 
-Source: prov-overview.md
-Captured: 2026-07-06
-From: https://www.w3.org/TR/prov-overview/
-
 ## Classification
 
-Type: design-proposal -- a W3C Working Group Note that is the roadmap to a family of 12 standards specifications defining a specific conceptual model and its serializations (an architecture for representing provenance on the web). Not a research result and not a tool release; it is the entry map to a standards-body model.
-Domains: provenance, lineage, standards
+A W3C Working Group Note that is the roadmap to a family of 12 standards specifications defining a specific conceptual model and its serializations (an architecture for representing provenance on the web). Not a research result and not a tool release; it is the entry map to a standards-body model.
 Author: Strong. Editors Paul Groth (VU Amsterdam) and Luc Moreau (Southampton), both foundational provenance researchers; the document is a W3C Recommendation-track family with broad institutional review (April 2013).
 
 ## Summary

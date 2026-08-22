@@ -1,6 +1,13 @@
 ---
 description: Argues that pairwise judging plus round-robin win rates is a better evaluation primitive than absolute scoring for open-ended LLM tasks with no hard ground truth
-source_snapshot: kb/sources/even-if-you-set-aside-whether-citations-are-the-right-proxy-for.md
+source: https://x.com/koylanai/status/2035982137539559616
+captured: "2026-03-23T08:06:15.726975+00:00"
+capture: xdk
+genre: conceptual-essay
+snapshot_sha256: 50369d5f7e0fe378af88e07e38e2386b22821ecbd5e3f0acbf37ef458a8f74a4
+status_id: 2035982137539559616
+conversation_id: 2035982137539559616
+post_count: 1
 ingested: "2026-03-23"
 type: kb/sources/types/ingest-report.md
 domains: [evaluation, context-engineering, llm-reliability]
@@ -8,13 +15,8 @@ domains: [evaluation, context-engineering, llm-reliability]
 
 # Ingest: Post by @koylanai
 
-Source: kb/sources/even-if-you-set-aside-whether-citations-are-the-right-proxy-for.md
-Captured: 2026-03-23T08:06:15.726975+00:00
-From: https://x.com/koylanai/status/2035982137539559616
-
 ## Classification
-Type: conceptual-essay — a short argument generalizing a pattern from one paper into a broader evaluation framing for context engineering, not a report of a deployed system or an empirical study on its own.
-Domains: evaluation, context-engineering, llm-reliability
+A short argument generalizing a pattern from one paper into a broader evaluation framing for context engineering, not a report of a deployed system or an empirical study on its own.
 Author: Muratcan Koylan (`@koylanai`) is already a known voice in this KB through [Agent Skills for Context Engineering](../agent-memory-systems/reviews/agent-skills-for-context-engineering.md), so this reads as a practitioner extending an established line of thought on evaluation design for agents.
 
 ## Summary

@@ -1,6 +1,13 @@
 ---
 description: "Prukalpa on shared organizational context outliving agent-stack churn, with production failures motivating lineage, semantic impact review, controlled trace learning, security, and portability"
-source_snapshot: "the-github-for-context-doesn-t-exist-yet-2077772169455530152.md"
+source: https://x.com/prukalpa/status/2077772169455530152
+captured: "2026-07-17T18:28:59.706584+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: ebba6bb214e5fad097a0712701f617bc491851509ccca3b5a0ad93cd66a82d4e
+status_id: 2077772169455530152
+conversation_id: 2077772169455530152
+post_count: 3
 ingested: "2026-07-17"
 type: kb/sources/types/ingest-report.md
 domains: [context-engineering, agent-memory, governance, deploy-time-learning]
@@ -8,14 +15,9 @@ domains: [context-engineering, agent-memory, governance, deploy-time-learning]
 
 # Ingest: The GitHub for Context Doesn't Exist Yet
 
-Source: [the-github-for-context-doesn-t-exist-yet-2077772169455530152.md](./the-github-for-context-doesn-t-exist-yet-2077772169455530152.md)
-Captured: 2026-07-17T18:28:59.706584+00:00
-From: https://x.com/prukalpa/status/2077772169455530152
-
 ## Classification
 
-Genre: practitioner-report -- a founder/operator account of two internal agent architectures, five stack migrations, a roughly 300-skill shared context system serving 40 active agents, concrete dependency and security failures, and a proposed infrastructure layer.
-Domains: context-engineering, agent-memory, governance, deploy-time-learning
+A founder/operator account of two internal agent architectures, five stack migrations, a roughly 300-skill shared context system serving 40 active agents, concrete dependency and security failures, and a proposed infrastructure layer.
 Author: @prukalpa writes from direct experience building the system inside her company. The account is high-signal for the observed migration, drift, and governance problems, but the “GitHub for context” framing is also adjacent to the author's commercial domain and should be read as product-positioned.
 
 ## Summary

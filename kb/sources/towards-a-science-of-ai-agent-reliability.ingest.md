@@ -1,6 +1,10 @@
 ---
 description: Reliability framework paper arguing mean task success is inadequate for agents, replacing it with consistency, robustness, predictability, and safety.
-source_snapshot: towards-a-science-of-ai-agent-reliability.md
+source: https://arxiv.org/pdf/2602.16666
+captured: "2026-02-25"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 15188d3338a020da233ba02c935f6146113112528fbfdf4d778d1f5d21fbc401
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [agent-reliability, evaluation-methodology, safety-engineering, deployment-governance]
@@ -8,13 +12,8 @@ domains: [agent-reliability, evaluation-methodology, safety-engineering, deploym
 
 # Ingest: Towards a Science of AI Agent Reliability
 
-Source: towards-a-science-of-ai-agent-reliability.md
-Captured: 2026-02-25
-From: https://arxiv.org/pdf/2602.16666
-
 ## Classification
-Type: scientific-paper -- Princeton preprint with formal metric definitions, cross-domain survey of safety-critical engineering (aviation, nuclear, automotive), systematic evaluation of 14 models across two benchmarks (GAIA, tau-bench), multi-run protocols with fault injection and prompt perturbation. Structured as a proper empirical study with methodology, experimental results, and stated limitations.
-Domains: agent-reliability, evaluation-methodology, safety-engineering, deployment-governance
+Princeton preprint with formal metric definitions, cross-domain survey of safety-critical engineering (aviation, nuclear, automotive), systematic evaluation of 14 models across two benchmarks (GAIA, tau-bench), multi-run protocols with fault injection and prompt perturbation. Structured as a proper empirical study with methodology, experimental results, and stated limitations.
 Author: Stephan Rabanser, Sayash Kapoor, Peter Kirgis, Kangheng Liu, Saiteja Utpala, Arvind Narayanan (Princeton University). Narayanan is a well-known voice on AI accountability and measurement methodology; Kapoor co-authored influential work on AI evaluation pitfalls. This team has credibility on "how we measure AI systems" questions.
 
 ## Summary

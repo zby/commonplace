@@ -1,6 +1,10 @@
 ---
 description: "Enterprise self-evolving-agent architecture linking decision-shaped traces to governed selection among memory, skills, harnesses, tools, and weights"
-source_snapshot: "next-generation-agentic-reinforcement-learning-systems.md"
+source: https://arxiv.org/abs/2607.01120v1
+captured: "2026-08-06"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 9baec5bfaa2a519421a6de15c963929c398ff278c27f661d485b803046833e7f
 ingested: "2026-08-06"
 type: kb/sources/types/ingest-report.md
 domains: [self-evolving-agents, trajectory-learning, agent-governance, representational-form]
@@ -8,14 +12,9 @@ domains: [self-evolving-agents, trajectory-learning, agent-governance, represent
 
 # Ingest: Next-Generation Agentic Reinforcement Learning Systems Enable Self-Evolving Agents
 
-Source: [next-generation-agentic-reinforcement-learning-systems.md](next-generation-agentic-reinforcement-learning-systems.md)
-Captured: 2026-08-06
-From: https://arxiv.org/abs/2607.01120v1
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv position/design preprint with academic citations, formal event and controller sketches, and a scoped AReaL2.0 prototype, but no experiment evaluating the proposed three-pillar architecture.
-Domains: self-evolving-agents, trajectory-learning, agent-governance, representational-form
+An arXiv position/design preprint with academic citations, formal event and controller sketches, and a scoped AReaL2.0 prototype, but no experiment evaluating the proposed three-pillar architecture.
 Author: Ran Yan and 21 coauthors from Ant Group, HKUST, and Tsinghua University; several authors also built the AReaL system used for the prototype, giving the implementation discussion first-party engineering relevance without independent validation of the broader proposal.
 
 ## Summary

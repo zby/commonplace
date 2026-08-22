@@ -1,6 +1,11 @@
 ---
 description: "Updated self-authored ASISAS position paper adding 141-system corpus evidence to the four-field retained-artifact vocabulary."
-source_snapshot: "where-it-lives-retained-adaptation-2026-06-23.md"
+source: https://conf.researchr.org/track/ecsa-2026/asisas-2026
+captured: "2026-06-23"
+capture: local-file
+genre: scientific-paper
+snapshot_sha256: 1175359b299b670f255ba6f5f9df3fa15e4c71dd782e121090b56240fccc3508
+original_title: 'Where It Lives Is Not What It Is: An Architectural Vocabulary for Retained Adaptation in Agentic Systems'
 ingested: "2026-06-23"
 type: kb/sources/types/ingest-report.md
 domains: [artifact-analysis, agent-memory, software-architecture]
@@ -8,14 +13,9 @@ domains: [artifact-analysis, agent-memory, software-architecture]
 
 # Ingest: Where It Lives Is Not What It Is (June 2026 version)
 
-Source: where-it-lives-retained-adaptation-2026-06-23.md
-Captured: 2026-06-23
-From: file:///home/zby/txt/paper/submissions/asisas-2026/paper.md
-
 ## Classification
 
-Type: scientific-paper -- an ASISAS 2026 position paper with citations, a worked architectural record, and a new corpus-analysis section. It is still mostly a conceptual architecture argument, but the June 23 version adds descriptive evidence from 141 code-grounded agent-memory reviews.
-Domains: artifact-analysis, agent-memory, software-architecture
+An ASISAS 2026 position paper with citations, a worked architectural record, and a new corpus-analysis section. It is still mostly a conceptual architecture argument, but the June 23 version adds descriptive evidence from 141 code-grounded agent-memory reviews.
 Author: This is the KB owner's own paper. For Commonplace, its authority is lineage and external framing, not independent corroboration. The corpus section is grounded in this KB's review matrix and therefore inherits the matrix's strengths and biases.
 
 ## Summary

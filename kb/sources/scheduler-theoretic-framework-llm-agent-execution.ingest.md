@@ -1,6 +1,10 @@
 ---
 description: "Position paper formalising LLM agent execution as a scheduler; corroborates the KB's clean-model orchestration cluster and supplies ready-set cardinality as a quantitative axis"
-source_snapshot: "scheduler-theoretic-framework-llm-agent-execution.md"
+source: https://arxiv.org/html/2604.11378v1
+captured: "2026-06-28"
+capture: manual-paste
+genre: design-proposal
+snapshot_sha256: 29f27f080290d47425b621ba6a0c8aaec98e983130ef5060a383e96bc1637150
 ingested: "2026-06-28"
 type: kb/sources/types/ingest-report.md
 domains: [agent-orchestration, scheduling-theory, failure-recovery]
@@ -8,14 +12,9 @@ domains: [agent-orchestration, scheduling-theory, failure-recovery]
 
 # Ingest: A Scheduler-Theoretic Framework for LLM Agent Execution
 
-Source: scheduler-theoretic-framework-llm-agent-execution.md
-Captured: 2026-06-28
-From: https://arxiv.org/html/2604.11378v1
-
 ## Classification
 
-Type: design-proposal -- the paper self-describes as "a position paper and design proposal," contributing a theoretical framework, a design analysis, and an experimental protocol, explicitly not a production implementation or empirical results. It carries scientific-paper machinery (formal definitions, theorems, a 70-system survey), but its load-bearing output is an architecture (Graph Harness / SGH) and an untested seven-group evaluation protocol, which puts it in the design-proposal class rather than scientific-paper.
-Domains: agent-orchestration, scheduling-theory, failure-recovery
+The paper self-describes as "a position paper and design proposal," contributing a theoretical framework, a design analysis, and an experimental protocol, explicitly not a production implementation or empirical results. It carries scientific-paper machinery (formal definitions, theorems, a 70-system survey), but its load-bearing output is an architecture (Graph Harness / SGH) and an untested seven-group evaluation protocol, which puts it in the design-proposal class rather than scientific-paper.
 Author: single author (Hu Wei, sina.com email), no institutional affiliation given. The arXiv id (2604.11378) is future-dated relative to the 2026-06-28 capture; the snapshot itself flags this. Treat as an unreviewed preprint: the formal apparatus is internally checked, but credibility rests on argument quality, not provenance or peer review.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: Zettelkasten-inspired flat agent memory with embedding linking and LLM-driven evolution — benchmark success without curation operations or inspectable links
-source_snapshot: a-mem-agentic-memory-for-llm-agents.md
+source: https://arxiv.org/abs/2502.12110
+captured: "2026-02-28"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: be2ed6406d52872b01fa38c014ea4cedad66b8ebb3e654f3d8b44bf487793d44
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, knowledge-management, llm-agents, zettelkasten]
@@ -8,15 +12,9 @@ domains: [agent-memory, knowledge-management, llm-agents, zettelkasten]
 
 # Ingest: A-MEM: Agentic Memory for LLM Agents
 
-Source: a-mem-agentic-memory-for-llm-agents.md
-Captured: 2026-02-28
-From: https://arxiv.org/abs/2502.12110
-
 ## Classification
 
-Type: scientific-paper — peer-reviewed preprint (arXiv, Oct 2025) with methodology, ablation studies, scaling analysis, and comparison against four baselines across six foundation models on two benchmark datasets. Open-source code for both benchmark evaluation and production use.
-
-Domains: agent-memory, knowledge-management, llm-agents, zettelkasten
+Peer-reviewed preprint (arXiv, Oct 2025) with methodology, ablation studies, scaling analysis, and comparison against four baselines across six foundation models on two benchmark datasets. Open-source code for both benchmark evaluation and production use.
 
 Author: Wujiang Xu and collaborators at Rutgers University and AIOS Foundation. Active in LLM agent infrastructure research; the AIOS Foundation works on operating system abstractions for LLM agents.
 

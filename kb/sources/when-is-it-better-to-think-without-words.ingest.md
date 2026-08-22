@@ -1,6 +1,10 @@
 ---
 description: "Karlsson decomposes human thinking into wordless exploration and written testing, stabilization, and relay, while leaving the neuroscience and LLM analogy speculative"
-source_snapshot: "when-is-it-better-to-think-without-words.md"
+source: https://www.henrikkarlsson.xyz/p/wordless-thought
+captured: "2026-08-10"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: b4a7b5f52254c05a62811b8e3c1e84bdbf491d1e0c0e00ba05aa7bce5c0e20b7
 ingested: "2026-08-10"
 type: kb/sources/types/ingest-report.md
 domains: [writing-as-thinking, epistemic-writing, cognitive-offloading, human-agent-transfer]
@@ -8,23 +12,18 @@ domains: [writing-as-thinking, epistemic-writing, cognitive-offloading, human-ag
 
 # Ingest: When is it better to think without words?
 
-Source: [when-is-it-better-to-think-without-words.md](when-is-it-better-to-think-without-words.md)
-Captured: 2026-08-10
-From: https://www.henrikkarlsson.xyz/p/wordless-thought
-
 ## Classification
 
-Genre: conceptual-essay -- a synthesis of historical testimony, cited research, analogy, and first-person reflection that proposes a model of human thought rather than testing one.
-Domains: writing-as-thinking, epistemic-writing, cognitive-offloading, human-agent-transfer
+A synthesis of historical testimony, cited research, analogy, and first-person reflection that proposes a model of human thought rather than testing one.
 Author: Henrik Karlsson is an independent essayist reflecting on sustained writing practice and his reading of Jacques Hadamard. He repeatedly marks the neuroscience as speculation and does not claim research authority for either human cognition or LLM internals.
 
 ## Summary
 
-Karlsson presents this essay as a complement to [How to think in writing](how-to-think-in-writing.md). Drawing on Hadamard's reports of mathematicians who worked without clear words, images, or equations, he proposes that expert wordless thought can search a rich conceptual space faster and more broadly than sequential language, but with more unnoticed error. Writing then performs different functions: it forces intuition through explicit logic, stabilizes results enough to test them, and creates “relay results” that can be offloaded from working memory and reused in longer reasoning chains. Precision can also arrive too early, however, filling genuine uncertainty with plausible guesses and making them look settled. The resulting account is an alternation between exploratory vagueness and textual stabilization, not a claim that either words or wordlessness should dominate all thought.
+Karlsson presents this essay as a complement to [How to think in writing](https://www.henrikkarlsson.xyz/p/writing-to-think). Drawing on Hadamard's reports of mathematicians who worked without clear words, images, or equations, he proposes that expert wordless thought can search a rich conceptual space faster and more broadly than sequential language, but with more unnoticed error. Writing then performs different functions: it forces intuition through explicit logic, stabilizes results enough to test them, and creates “relay results” that can be offloaded from working memory and reused in longer reasoning chains. Precision can also arrive too early, however, filling genuine uncertainty with plausible guesses and making them look settled. The resulting account is an alternation between exploratory vagueness and textual stabilization, not a claim that either words or wordlessness should dominate all thought.
 
 ## Connections Found
 
-The essay is the explicit counterweight to Karlsson's earlier [writing procedure](how-to-think-in-writing.md): it retains writing as a test surface but moves exploratory search partly outside language. It also qualifies [Graham's stronger verbal-formation claim](putting-ideas-into-words.md), which it quotes, by distinguishing an intuition's generation from its later validation and use as a stable building block. Its warning that prose can impose false precision compares with [progressive constraining](../notes/progressive-constraining-commits-only-after-patterns-stabilize.md): both delay commitment until a pattern is ready to stabilize, though one concerns human cognition and the other LLM-generated code. For agent-operated systems, the transferable value is functional rather than architectural, as [human analogies can motivate functions without determining component boundaries](../notes/human-analogies-suggest-functions-not-component-boundaries.md). The [J-space experiments](verbalizable-representations-global-workspace-llms.ingest.md) provide the closest empirical model-side comparison: externalized chain-of-thought can relieve a limited internal workspace, but that does not establish Karlsson's broader human-to-LLM latent-thought analogy.
+The essay is the explicit counterweight to Karlsson's earlier [writing procedure](https://www.henrikkarlsson.xyz/p/writing-to-think): it retains writing as a test surface but moves exploratory search partly outside language. It also qualifies [Graham's stronger verbal-formation claim](https://paulgraham.com/words.html), which it quotes, by distinguishing an intuition's generation from its later validation and use as a stable building block. Its warning that prose can impose false precision compares with [progressive constraining](../notes/progressive-constraining-commits-only-after-patterns-stabilize.md): both delay commitment until a pattern is ready to stabilize, though one concerns human cognition and the other LLM-generated code. For agent-operated systems, the transferable value is functional rather than architectural, as [human analogies can motivate functions without determining component boundaries](../notes/human-analogies-suggest-functions-not-component-boundaries.md). The [J-space experiments](verbalizable-representations-global-workspace-llms.ingest.md) provide the closest empirical model-side comparison: externalized chain-of-thought can relieve a limited internal workspace, but that does not establish Karlsson's broader human-to-LLM latent-thought analogy.
 
 ## Extractable Value
 

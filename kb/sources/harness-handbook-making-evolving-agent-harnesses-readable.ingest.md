@@ -1,6 +1,10 @@
 ---
 description: "Source-validated behavior maps improve harness edit-site localization, while executed modification and self-evolution remain unevaluated."
-source_snapshot: "harness-handbook-making-evolving-agent-harnesses-readable.md"
+source: https://arxiv.org/abs/2607.13285
+captured: "2026-07-21"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 0038a32f8cdaf7678dc46f6efc474ce0bdd2d45361089ec06ca84b1ce345d03b
 ingested: "2026-07-21"
 type: kb/sources/types/ingest-report.md
 domains: [harness-evolution, behavior-localization, progressive-disclosure, reflective-systems]
@@ -8,14 +12,9 @@ domains: [harness-evolution, behavior-localization, progressive-disclosure, refl
 
 # Ingest: Harness Handbook
 
-Source: [harness-handbook-making-evolving-agent-harnesses-readable.md](./harness-handbook-making-evolving-agent-harnesses-readable.md)
-Captured: 2026-07-21
-From: https://arxiv.org/abs/2607.13285
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv preprint with a specified construction method, controlled comparison, quantitative evaluation, appendices, and reproducible prompt templates, but no stated peer-review status.
-Domains: harness-evolution, behavior-localization, progressive-disclosure, reflective-systems
+An arXiv preprint with a specified construction method, controlled comparison, quantitative evaluation, appendices, and reproducible prompt templates, but no stated peer-review status.
 Author: Ten authors affiliated primarily with Tencent HY LLM Frontier and several universities; the team designed and evaluated the proposed representation, so the paper is primary evidence with ordinary inventor self-evaluation risk.
 
 ## Summary

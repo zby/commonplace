@@ -1,23 +1,23 @@
 ---
 description: "SPADE is a code-grounded case of adaptive executable-environment generation inside a fixed training decomposition, with released mechanisms but unreleased outcome artifacts at the pinned commit."
-source_snapshot: "spade-self-play-in-adaptive-synthetic-executable-environments.md"
+source: https://arxiv.org/abs/2608.19197v1
+captured: "2026-08-21"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: fae1b572161af376154ca218604c1e7da6d42f2a70641c035e9a5260ebf01b23
 ingested: "2026-08-21"
 type: kb/sources/types/ingest-report.md
 domains: [self-improving-systems, learning-theory, evaluation, agent-memory]
-code_revisions:
-  - https://github.com/spade-rl/spade/commit/65421ccb15a6d501ad6217bd969816146da15e11
+secondary_sources:
+  - role: implementation
+    source: https://github.com/spade-rl/spade/commit/65421ccb15a6d501ad6217bd969816146da15e11
 ---
 
 # Ingest: SPADE: Self-Play in Adaptive Synthetic Executable Environments
 
-Source: [spade-self-play-in-adaptive-synthetic-executable-environments.md](spade-self-play-in-adaptive-synthetic-executable-environments.md)
-Captured: 2026-08-21
-From: https://arxiv.org/abs/2608.19197v1
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv v1 preprint that defines a self-play RL method, reports two training settings and held-out evaluations, and includes algorithms, ablations, qualitative environment analyses, and an official implementation.
-Domains: self-improving-systems, learning-theory, evaluation, agent-memory
+An arXiv v1 preprint that defines a self-play RL method, reports two training settings and held-out evaluations, and includes algorithms, ablations, qualitative environment analyses, and an official implementation.
 Author: Bo Liu, Simon Yu, Yiding Jiang, Ao Qu, Andrew Zhao, Zichen Liu, Junsu Kim, Zijian Zhou, Seungone Kim, Tongzheng Ren, Mickel Liu, Hanfei Yu, Zhaorun Chen, Weiyan Shi, Paul Pu Liang, Luke Zettlemoyer, Yejin Choi, and Natasha Jaques, spanning nine universities. The multi-institution team and official executable release are strong authorship signals, but the paper was submitted two days before ingestion as a v1 preprint and its outcomes have not been independently reproduced in this KB.
 
 ## Summary
@@ -25,8 +25,6 @@ Author: Bo Liu, Simon Yu, Yiding Jiang, Ao Qu, Andrew Zhao, Zichen Liu, Junsu Ki
 SPADE trains one language model in two roles: an Environment Designer writes complete Python environments and privileged hints, and a Reasoning Agent plays each environment with and without the hint. Both roles update the same weights. The deployed designer reward blends a difficulty target with the hint-conditioned return gap, while fresh corpus documents broaden what environments are about and a bounded memory of high-regret and too-easy or too-hard environments conditions later designs. On Qwen3 models up to 30B-A3B, the paper reports a 58.3 average on eight games-setting evaluations, 5.3 points above its strongest fixed-environment baseline, plus gains of 5.7 points on BFCL v4 multi-turn and 13.9 on ACEBench-Agent in the tool-use setting. For this KB, the main contribution is a worked separation among candidate generation, executable validity, learning value, and parametric retention—not evidence of an unconstrained or open-ended improvement loop.
 
 ## Code Grounding
-
-The official repository was reviewed at commit [65421ccb15a6d501ad6217bd969816146da15e11](https://github.com/spade-rl/spade/commit/65421ccb15a6d501ad6217bd969816146da15e11).
 
 **Implemented mechanisms.** The shared rollout adapter collects Environment Designer and Reasoning Agent trajectories into one training batch and delays designer credit until paired plays are available ([`spade/slime/spade_rollout.py`](https://github.com/spade-rl/spade/blob/65421ccb15a6d501ad6217bd969816146da15e11/spade/slime/spade_rollout.py)). The orchestrator generates hints with the same training model, plays hint and no-hint arms, computes their return gap, validates generated games, and carries delayed designer rewards ([`spade/core/orchestrator.py`](https://github.com/spade-rl/spade/blob/65421ccb15a6d501ad6217bd969816146da15e11/spade/core/orchestrator.py)). Corpus injection and the 200-entry example buffer are separate modules ([`spade/core/corpus_orchestrator.py`](https://github.com/spade-rl/spade/blob/65421ccb15a6d501ad6217bd969816146da15e11/spade/core/corpus_orchestrator.py), [`spade/core/env_memory.py`](https://github.com/spade-rl/spade/blob/65421ccb15a6d501ad6217bd969816146da15e11/spade/core/env_memory.py)). Structural/runtime checks and the model-based solvability screen are also present ([`spade/core/env_validator.py`](https://github.com/spade-rl/spade/blob/65421ccb15a6d501ad6217bd969816146da15e11/spade/core/env_validator.py), [`spade/core/envs/synthetic_game_env.py`](https://github.com/spade-rl/spade/blob/65421ccb15a6d501ad6217bd969816146da15e11/spade/core/envs/synthetic_game_env.py)). These files confirm the claimed mechanism, not its training outcome.
 

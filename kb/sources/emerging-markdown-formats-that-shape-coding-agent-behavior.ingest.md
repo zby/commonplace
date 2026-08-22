@@ -1,6 +1,10 @@
 ---
 description: "Practitioner taxonomy separating standing rules, task procedures, reviewed plans, domain context, and machine-local memory in agent-ready repositories"
-source_snapshot: "emerging-markdown-formats-that-shape-coding-agent-behavior.md"
+source: https://generativeprogrammer.com/p/emerging-markdown-formats-that-shape
+captured: "2026-08-03"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: fadeacc09687cc0e898e54a8821f72fa50650c88970e6a5aa87e525a711880e9
 ingested: "2026-08-03"
 type: kb/sources/types/ingest-report.md
 domains: [agent-instructions, context-engineering, document-systems, agent-memory]
@@ -8,14 +12,9 @@ domains: [agent-instructions, context-engineering, document-systems, agent-memor
 
 # Ingest: Emerging Markdown Formats That Shape Coding Agent Behavior
 
-Source: [emerging-markdown-formats-that-shape-coding-agent-behavior.md](./emerging-markdown-formats-that-shape-coding-agent-behavior.md)
-Captured: 2026-08-03
-From: https://generativeprogrammer.com/p/emerging-markdown-formats-that-shape
-
 ## Classification
 
-Genre: conceptual-essay -- a practitioner synthesis that organizes current agent-facing Markdown conventions and proposes a unifying “metacode” frame, without a study, implementation evaluation, or formal argument that the formats improve outcomes.
-Domains: agent-instructions, context-engineering, document-systems, agent-memory
+A practitioner synthesis that organizes current agent-facing Markdown conventions and proposes a unifying “metacode” frame, without a study, implementation evaluation, or formal argument that the formats improve outcomes.
 Author: Bilgin Ibryam. The essay cites first-party specifications and product documentation for the formats it inventories, which supports point-in-time factual orientation; the cross-format taxonomy and “intent compiler” conclusion remain the author's synthesis.
 
 ## Summary

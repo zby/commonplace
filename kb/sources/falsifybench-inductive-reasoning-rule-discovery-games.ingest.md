@@ -1,6 +1,10 @@
 ---
 description: "Wason 2-4-6 benchmark over 12 LLMs; lands as first behavioural evidence that falsification-seeking discriminates hypothesis-formers, and a process-scored counter-case to the known-target critique"
-source_snapshot: "kb/sources/falsifybench-inductive-reasoning-rule-discovery-games.md"
+source: https://arxiv.org/abs/2606.04751
+captured: "2026-07-26"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: f82893347f93366a4c1088844fe46df390b875d3b64387fc81230c29be9fb46b
 ingested: "2026-07-26"
 type: kb/sources/types/ingest-report.md
 domains: [scientific-discovery, evaluation, reasoning, learning-theory]
@@ -8,14 +12,9 @@ domains: [scientific-discovery, evaluation, reasoning, learning-theory]
 
 # Ingest: FALSIFYBENCH: Evaluating Inductive Reasoning in LLMs with Rule Discovery Games
 
-Source: falsifybench-inductive-reasoning-rule-discovery-games.md
-Captured: 2026-07-26
-From: https://arxiv.org/abs/2606.04751
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv (cs.AI) benchmark paper introducing an evaluation framework and reporting results across 12 models; the capture is abstract-level, so the genre is read from the artifact's form rather than from inspected methods.
-Domains: scientific-discovery, evaluation, reasoning, learning-theory
+An arXiv (cs.AI) benchmark paper introducing an evaluation framework and reporting results across 12 models; the capture is abstract-level, so the genre is read from the artifact's form rather than from inspected methods.
 Author: Leonardo Bertolazzi, Katya Tentori, Raffaella Bernardi (University of Trento). Bernardi is an established computational-semantics researcher and Tentori works on probabilistic reasoning and confirmation in cognitive psychology; the pairing is the right one for porting a Wason paradigm to LLMs. Independent academic group, no vendor stake in the result.
 
 ## Summary
@@ -28,11 +27,11 @@ The KB has a live casebook here, and this source's role in it is **process-level
 
 Its strongest role is as evidence for [first-principles reasoning selects for explanatory-reach over adaptive fit](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md), whose third negative test ("can it be criticized?") and its operationalization in [mechanistic constraints make Popperian KB recommendations actionable](../notes/mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) both rest on an untested premise about model behaviour: that criticism must be structurally forced because models will not seek disconfirmation ambiently. This paper is the first external measurement bearing on that premise, and it cuts both ways — falsification-seeking is confirmed as the discriminating behaviour, but the reasoning-model result shows the ambient capacity is real and varies by model rather than being uniformly absent. The Popperian note carries no external sources at all today, so this is its first empirical leg.
 
-Second, it is a worked instance for [known-target discovery benchmarks show reachability, not discovery closure](../notes/known-target-discovery-benchmarks-show-reachability-not-discovery.md), which currently runs on a single case ([GIANTS](./giants-generative-insight-anticipation-scientific-literature.md), the backcast construction). FALSIFYBENCH is the authored-hidden-target construction the note distinguishes but does not instantiate — and it is a partial counter-case to the note's own framing, because the scored quantity is the agent's test-selection policy, not its recovery of the planted rule. Planting the target here buys a measurable *process* signal rather than converting discovery into target reconstruction.
+Second, it is a worked instance for [known-target discovery benchmarks show reachability, not discovery closure](../notes/known-target-discovery-benchmarks-show-reachability-not-discovery.md), which currently runs on a single case ([GIANTS](https://giants-insights.github.io/), the backcast construction). FALSIFYBENCH is the authored-hidden-target construction the note distinguishes but does not instantiate — and it is a partial counter-case to the note's own framing, because the scored quantity is the agent's test-selection policy, not its recovery of the planted rule. Planting the target here buys a measurable *process* signal rather than converting discovery into target reconstruction.
 
 Third, it measures the transition [discovery lifecycle](../notes/definitions/discovery-lifecycle.md) posits between consequence derivation and test — stating what would count against a conjecture, then going and looking. That phase boundary has been justified by Peirce and PDSA analogues; this is the first LLM-side data on whether the step actually happens in a closed loop.
 
-Among sources it pairs most usefully with [DiscoverPhysics](./discoverphysics-benchmarking-llms-out-of-the-box-scientific-thinking.md) — same closed experimentation loop, concrete simulated worlds instead of an abstract rule, same "best agents well short of optimal" shape — and with [An Enigma of Artificial Reason](./an-enigma-of-artificial-reason-production-evaluation-gap-lrms.md), which finds the same confirmation-bias family at the evaluation locus where this paper finds it at the generation locus.
+Among sources it pairs most usefully with [DiscoverPhysics](https://arxiv.org/abs/2605.26087) — same closed experimentation loop, concrete simulated worlds instead of an abstract rule, same "best agents well short of optimal" shape — and with [An Enigma of Artificial Reason](https://arxiv.org/abs/2606.01462), which finds the same confirmation-bias family at the evaluation locus where this paper finds it at the generation locus.
 
 ## Extractable Value
 
@@ -65,7 +64,7 @@ Update [known-target discovery benchmarks show reachability, not discovery closu
 - [discovery lifecycle](../notes/definitions/discovery-lifecycle.md) — is-evidence-for: first LLM-side measurement of the consequence-derivation to test transition
 - [reach-assessment](../notes/definitions/reach-assessment.md) — is-evidence-for: the natural-language route to reach judgment varies measurably across models
 - [recognition, not linking, is the hard problem in knowledge systems](../notes/recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — is-evidence-for: turn-level data on how the posit-and-recognize loop breaks
-- [DiscoverPhysics](./discoverphysics-benchmarking-llms-out-of-the-box-scientific-thinking.md) — compares-with: the same closed experimentation loop in simulated worlds rather than an abstract rule game
-- [An Enigma of Artificial Reason](./an-enigma-of-artificial-reason-production-evaluation-gap-lrms.md) — compares-with: confirmation bias measured when models evaluate supplied reasoning rather than generate their own probes
-- [GIANTS](./giants-generative-insight-anticipation-scientific-literature.md) — compares-with: the backcast construction of a known-target discovery benchmark
-- [Language Models, Like Humans, Show Content Effects on Reasoning Tasks](./language-models-like-humans-show-content-effects-on-reasoning-tasks.md) — compares-with: the KB's other Wason-family source, on the selection task
+- [DiscoverPhysics](https://arxiv.org/abs/2605.26087) — compares-with: the same closed experimentation loop in simulated worlds rather than an abstract rule game
+- [An Enigma of Artificial Reason](https://arxiv.org/abs/2606.01462) — compares-with: confirmation bias measured when models evaluate supplied reasoning rather than generate their own probes
+- [GIANTS](https://giants-insights.github.io/) — compares-with: the backcast construction of a known-target discovery benchmark
+- [Language Models, Like Humans, Show Content Effects on Reasoning Tasks](https://academic.oup.com/pnasnexus/article/3/7/pgae233/7712372) — compares-with: the KB's other Wason-family source, on the selection task

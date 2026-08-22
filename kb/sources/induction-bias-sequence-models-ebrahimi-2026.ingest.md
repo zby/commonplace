@@ -1,6 +1,10 @@
 ---
 description: 190k-run empirical study showing transformers need orders-of-magnitude more data than RNNs for state tracking due to absence of step-by-step induction bias; introduces sharing factor kappa quantifying cross-length mechanism reuse
-source_snapshot: induction-bias-sequence-models-ebrahimi-2026.md
+source: https://arxiv.org/pdf/2602.18333
+captured: "2026-03-03"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 5dd5c670fc72a96a81812a3bbe6cf41379b2b71113bf52bc9c8424ac5153467d
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [ml-architecture, state-tracking, data-efficiency, inductive-bias]
@@ -8,15 +12,9 @@ domains: [ml-architecture, state-tracking, data-efficiency, inductive-bias]
 
 # Ingest: On the "Induction Bias" in Sequence Models
 
-Source: induction-bias-sequence-models-ebrahimi-2026.md
-Captured: 2026-03-03
-From: https://arxiv.org/pdf/2602.18333
-
 ## Classification
 
-Type: scientific-paper -- Large-scale empirical study (190,000+ training runs) with systematic methodology, quantitative metrics (sharing factor kappa), and controlled comparisons across architectures and supervision regimes. Published as a preprint by Qualcomm AI Research.
-
-Domains: ml-architecture, state-tracking, data-efficiency, inductive-bias
+Large-scale empirical study (190,000+ training runs) with systematic methodology, quantitative metrics (sharing factor kappa), and controlled comparisons across architectures and supervision regimes. Published as a preprint by Qualcomm AI Research.
 
 Author: M. Reza Ebrahimi, Defferrard, Panchal, Memisevic at Qualcomm AI Research. Ebrahimi has prior published work on transformer limitations in state tracking (COLM 2024) and bilinear RNN architectures (NeurIPS 2025). The team has systematic expertise in the transformer-vs-recurrent comparison space.
 

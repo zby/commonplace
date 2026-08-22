@@ -1,6 +1,13 @@
 ---
 description: MercadoLibre engineering lead's practitioner guide to Spec Driven Development — the spec/plan/task/implement cascade as methodology for eliminating agent ambiguity, with ecosystem convergence evidence and maturity-level progression
-source_snapshot: the-spec-is-the-new-code-a-guide-to-spec-driven-development.md
+source: https://x.com/juliandeangeIis/status/2033303156340240481
+captured: "2026-03-16T09:36:38.343417+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: 806914e9537fca9901b39d46a5a00a2d50fb25389d5b0d3364ff799107151fba
+status_id: 2033303156340240481
+conversation_id: 2033303156340240481
+post_count: 8
 ingested: "2026-03-16"
 type: kb/sources/types/ingest-report.md
 domains: [spec-driven-development, agent-architecture, context-engineering, constraining]
@@ -8,15 +15,9 @@ domains: [spec-driven-development, agent-architecture, context-engineering, cons
 
 # Ingest: The Spec Is the New Code — A Guide to Spec Driven Development
 
-Source: the-spec-is-the-new-code-a-guide-to-spec-driven-development.md
-Captured: 2026-03-16
-From: https://x.com/juliandeangeIis/status/2033303156340240481
-
 ## Classification
 
-Type: practitioner-report — DeAngelis describes a methodology MercadoLibre is rolling out to ~20,000 developers, grounded in hands-on workshops and a concrete four-step process. Not purely conceptual: there's a real deployment at scale, though the post focuses on methodology rather than empirical results.
-
-Domains: spec-driven-development, agent-architecture, context-engineering, constraining
+DeAngelis describes a methodology MercadoLibre is rolling out to ~20,000 developers, grounded in hands-on workshops and a concrete four-step process. Not purely conceptual: there's a real deployment at scale, though the post focuses on methodology rather than empirical results.
 
 Author: @juliandeangeIis — engineering lead at MercadoLibre (Latin America's largest e-commerce platform). Credibility comes from deploying SDD to a 20,000-developer organization with 5,000+ workshop attendees. This is practice at unusual scale, not theory.
 

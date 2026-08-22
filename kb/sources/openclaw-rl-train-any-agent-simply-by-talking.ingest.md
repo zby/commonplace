@@ -1,6 +1,10 @@
 ---
 description: "Deployment-time RL uses user replies, tool output, terminal feedback, and GUI state as next-state signals, collapsing training and deployment; the KB's retained-artifacts note now cites it as a deployment-time weight-update counterexample"
-source_snapshot: openclaw-rl-train-any-agent-simply-by-talking.md
+source: https://arxiv.org/html/2603.10165v1
+captured: "2026-03-14"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 402ab2b7ad33eefce675641afb7c32fec9c363cf3c0fcd0d20638498d381c32b
 ingested: "2026-03-14"
 type: kb/sources/types/ingest-report.md
 domains: [reinforcement-learning, continuous-learning, agent-training, personalization]
@@ -8,15 +12,9 @@ domains: [reinforcement-learning, continuous-learning, agent-training, personali
 
 # Ingest: OpenClaw-RL: Train Any Agent Simply by Talking
 
-Source: openclaw-rl-train-any-agent-simply-by-talking.md
-Captured: 2026-03-14
-From: https://arxiv.org/html/2603.10165v1
-
 ## Classification
 
-Type: scientific-paper — preprint with explicit methodology, controlled experiments across five interaction modalities (conversation, terminal, GUI, SWE, tool-call), quantitative results, and comparison of training methods (Binary RL, OPD, combined).
-
-Domains: reinforcement-learning, continuous-learning, agent-training, personalization
+Preprint with explicit methodology, controlled experiments across five interaction modalities (conversation, terminal, GUI, SWE, tool-call), quantitative results, and comparison of training methods (Binary RL, OPD, combined).
 
 Author: Yinjie Wang, Xuyang Chen, Xiaolong Jin, Mengdi Wang, Ling Yang. Mengdi Wang (Princeton) is a well-known RL/optimization researcher. The team demonstrates strong systems-level RL engineering (asynchronous four-loop architecture with SGLang + Megatron). First paper on this specific framework.
 

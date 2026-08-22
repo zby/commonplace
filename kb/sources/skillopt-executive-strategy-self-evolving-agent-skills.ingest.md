@@ -1,6 +1,10 @@
 ---
 description: "SkillOpt paper showing validation-gated text-space optimization of compact agent skills as readable deploy-time learning around frozen models"
-source_snapshot: "skillopt-executive-strategy-self-evolving-agent-skills.md"
+source: https://arxiv.org/html/2605.23904v2
+captured: "2026-05-28"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: bbb6e835d348b695d3c7e2d09c480af82b953b9891ea7e3f28b57839c8ff077b
 ingested: "2026-05-28"
 type: kb/sources/types/ingest-report.md
 domains: [skill-optimization, deploy-time-learning, trace-learning, readable-artifacts]
@@ -8,14 +12,9 @@ domains: [skill-optimization, deploy-time-learning, trace-learning, readable-art
 
 # Ingest Report: SkillOpt: Executive Strategy for Self-Evolving Agent Skills
 
-Source: [skillopt-executive-strategy-self-evolving-agent-skills.md](skillopt-executive-strategy-self-evolving-agent-skills.md)
-Captured: 2026-05-28
-From: https://arxiv.org/html/2605.23904v2
-
 ## Classification
 
-Type: scientific-paper -- arXiv preprint with a proposed optimization method, benchmark evaluation, baselines, ablations, and limitations.
-Domains: skill-optimization, deploy-time-learning, trace-learning, readable-artifacts
+ArXiv preprint with a proposed optimization method, benchmark evaluation, baselines, ablations, and limitations.
 Author signal: multi-author research paper with benchmark tables and ablation/transfer studies, but not yet independently reproduced in this KB.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "Production evidence for review-derived coding-agent rules, bounded by an instance-to-rule oracle gap and an uncontrolled, fixed-architecture deployment."
-source_snapshot: "kb/sources/self-improving-ai-coding-agents-through-accumulated-rules.md"
+source: https://arxiv.org/html/2607.13091v1?utm_source=chatgpt.com
+captured: "2026-08-02"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 485cd1c053eef5f1717c2c6309d109500b0dfa1564efb9d8b347a438923684ff
 ingested: "2026-08-02"
 type: kb/sources/types/ingest-report.md
 domains: [deploy-time-learning, agent-memory, evaluation, software-engineering]
@@ -8,14 +12,9 @@ domains: [deploy-time-learning, agent-memory, evaluation, software-engineering]
 
 # Ingest: Self-Improving AI Coding Agents Through Accumulated Behavioral Rules
 
-Source: [Self-Improving AI Coding Agents Through Accumulated Behavioral Rules](./self-improving-ai-coding-agents-through-accumulated-rules.md)
-Captured: 2026-08-02
-From: https://arxiv.org/html/2607.13091v1?utm_source=chatgpt.com
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv preprint that defines a framework, reports observational deployment data, and situates the work against cited research.
-Domains: deploy-time-learning, agent-memory, evaluation, software-engineering
+An arXiv preprint that defines a framework, reports observational deployment data, and situates the work against cited research.
 Author: Aditya Aggarwal and Nahid Farhady Ghalaty report first-hand results from their own deployment; the preprint supplies methods and counts but no independent replication or controlled comparison.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "Answer.AI's complexity argument is a bounded case of maintainability receiving weaker selection pressure than correctness, with ADRs able to supply the missing design context"
-source_snapshot: "why-llms-cant-make-your-code-simpler.md"
+source: https://www.answer.ai/posts/2026-08-19-llms-code-simpler.html
+captured: "2026-08-20"
+capture: web-fetch
+genre: practitioner-report
+snapshot_sha256: f42d4546182cc58aeb741b4383eb809ba02228a66a249e5f7c897efe29188c30
 ingested: "2026-08-20"
 type: kb/sources/types/ingest-report.md
 domains: [agentic-coding, maintainability, evaluation, design-rationale]
@@ -8,14 +12,9 @@ domains: [agentic-coding, maintainability, evaluation, design-rationale]
 
 # Ingest: Why LLMs can’t make your code simpler
 
-Source: [why-llms-cant-make-your-code-simpler.md](why-llms-cant-make-your-code-simpler.md)
-Captured: 2026-08-20
-From: https://www.answer.ai/posts/2026-08-19-llms-code-simpler.html
-
 ## Classification
 
-Genre: practitioner-report -- Pol Alvarez Vecino develops a conceptual argument from Peter Naur, but the source's distinctive evidence is his firsthand account of Answer.AI's Solveit billing redesign and launch-day payment constraint.
-Domains: agentic-coding, maintainability, evaluation, design-rationale
+Pol Alvarez Vecino develops a conceptual argument from Peter Naur, but the source's distinctive evidence is his firsthand account of Answer.AI's Solveit billing redesign and launch-day payment constraint.
 Author: Alvarez Vecino writes as a participant in the reported design exploration, Stripe integration, and launch response. That gives the account useful operator signal about the team's reasoning, while the implementation, prompt, alternatives, and outcomes remain self-reported and unaudited.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "Official Erlang/OTP attestation that live definition change is governed as deployment through versioned appup/relup plans, synchronized state migration, rollback, and explicit permanence"
-source_snapshot: erlang-release-handling.md
+source: https://www.erlang.org/doc/system/release_handling.html
+captured: "2026-08-19"
+capture: web-fetch
+genre: technical-documentation
+snapshot_sha256: a4a1c18c7d4575f917f40504d2a2009660ea34aa2207bee802f877a60e177e9a
 ingested: "2026-08-19"
 type: kb/sources/types/ingest-report.md
 domains: [erlang-otp, release-engineering, deployment-governance]
@@ -8,14 +12,9 @@ domains: [erlang-otp, release-engineering, deployment-governance]
 
 # Ingest: Release Handling
 
-Source: [erlang-release-handling.md](./erlang-release-handling.md)
-Captured: 2026-08-19
-From: https://www.erlang.org/doc/system/release_handling.html
-
 ## Classification
 
-Genre: technical-documentation -- official Erlang/OTP system documentation specifying the SASL release-upgrade and downgrade framework built on runtime code replacement.
-Domains: erlang-otp, release-engineering, deployment-governance
+Official Erlang/OTP system documentation specifying the SASL release-upgrade and downgrade framework built on runtime code replacement.
 Author: Ericsson AB maintains the Erlang/OTP documentation; it is authoritative for the framework's declared workflow and constraints, but not an independent empirical study of release-handling practice.
 
 ## Summary
@@ -24,7 +23,7 @@ OTP turns its runtime code-replacement capability into a versioned release proce
 
 ## Connections Found
 
-This page is direct technical evidence for the change-as-deployment claim in [instantiation alone cannot model agent learning across sessions](../notes/instantiation-alone-cannot-model-agent-learning-across-sessions.md): the fence consists of versioned artifacts, ordered transitions, synchronized migration callbacks, rollback, and explicit commitment. It is also a concrete governance-ritual attestation for [domain pricing routes an exception to idealization assessment but does not decide it](../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md). Its evidential role must remain the one that note now assigns to pricing: it routes the exception to assessment and blocks a purely post-hoc "edge case" label; it does not establish frequency, bounded consequences, or explanatory dominance. The companion [Code Loading snapshot](./erlang-compilation-and-code-loading.md) supplies the lower-level current/old module semantics on which this procedure operates.
+This page is direct technical evidence for the change-as-deployment claim in [instantiation alone cannot model agent learning across sessions](../notes/instantiation-alone-cannot-model-agent-learning-across-sessions.md): the fence consists of versioned artifacts, ordered transitions, synchronized migration callbacks, rollback, and explicit commitment. It is also a concrete governance-ritual attestation for [domain pricing routes an exception to idealization assessment but does not decide it](../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md). Its evidential role must remain the one that note now assigns to pricing: it routes the exception to assessment and blocks a purely post-hoc "edge case" label; it does not establish frequency, bounded consequences, or explanatory dominance. The companion [Code Loading snapshot](https://www.erlang.org/doc/system/code_loading.html) supplies the lower-level current/old module semantics on which this procedure operates.
 
 ## Extractable Value
 

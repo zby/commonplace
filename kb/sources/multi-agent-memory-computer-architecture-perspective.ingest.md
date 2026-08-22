@@ -1,6 +1,10 @@
 ---
 description: Computer-architecture analogy for multi-agent memory — shared/distributed paradigms, three-layer hierarchy, consistency protocols as the critical unsolved problem
-source_snapshot: multi-agent-memory-computer-architecture-perspective.md
+source: https://arxiv.org/html/2603.10062v1
+captured: "2026-03-13"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: b049592c83b5d5c25a1519beb017f76a93cff4fd23bd8816b516868d98b01c22
 ingested: "2026-03-13"
 type: kb/sources/types/ingest-report.md
 domains: [multi-agent-systems, memory-architecture, context-engineering, agent-coordination]
@@ -8,15 +12,9 @@ domains: [multi-agent-systems, memory-architecture, context-engineering, agent-c
 
 # Ingest: Multi-Agent Memory from a Computer Architecture Perspective
 
-Source: multi-agent-memory-computer-architecture-perspective.md
-Captured: 2026-03-13
-From: https://arxiv.org/html/2603.10062v1
-
 ## Classification
 
-Type: scientific-paper — Position paper from UC San Diego / Georgia Tech with formal structure, citations, and architectural proposals. Not empirical (no experiments), but fits the scientific paper mold as a structured theoretical contribution with literature survey.
-
-Domains: multi-agent-systems, memory-architecture, context-engineering, agent-coordination
+Position paper from UC San Diego / Georgia Tech with formal structure, citations, and architectural proposals. Not empirical (no experiments), but fits the scientific paper mold as a structured theoretical contribution with literature survey.
 
 Author: Zhongming Yu et al. (UC San Diego, Georgia Tech) — systems architecture researchers applying hardware memory paradigms to LLM agents. The computer architecture background is the distinctive angle; they bring vocabulary and models (cache coherence, consistency protocols, shared vs. distributed memory) from a mature engineering discipline.
 

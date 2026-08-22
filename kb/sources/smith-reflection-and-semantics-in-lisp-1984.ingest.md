@@ -1,6 +1,10 @@
 ---
 description: "Foundational procedural-reflection vocabulary: embedded self-theory, two-way causal connection, reflective vantage point, and explicit-versus-absorbed processor state"
-source_snapshot: "kb/sources/smith-reflection-and-semantics-in-lisp-1984.md"
+source: https://www.ageofsignificance.org/documents/Reflection%20and%20Semantics%20in%20Lisp.pdf
+captured: "2026-07-14"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 7078f2c86f97612906bfab0479238dfbc6cbd6b48a69281084c38a1129368be6
 ingested: "2026-07-14"
 type: kb/sources/types/ingest-report.md
 domains: [procedural-reflection, self-reference, programming-language-semantics]
@@ -8,14 +12,9 @@ domains: [procedural-reflection, self-reference, programming-language-semantics]
 
 # Ingest: Reflection and Semantics in Lisp
 
-Source: [smith-reflection-and-semantics-in-lisp-1984.md](./smith-reflection-and-semantics-in-lisp-1984.md)
-Captured: 2026-07-14
-From: https://www.ageofsignificance.org/documents/Reflection%20and%20Semantics%20in%20Lisp.pdf
-
 ## Classification
 
-Genre: scientific-paper -- a peer-reviewed programming-languages paper that develops a semantic architecture, constructs 2-Lisp and 3-Lisp, and argues for a finite implementation of procedural reflection.
-Domains: procedural-reflection, self-reference, programming-language-semantics
+A peer-reviewed programming-languages paper that develops a semantic architecture, constructs 2-Lisp and 3-Lisp, and argues for a finite implementation of procedural reflection.
 Author: Brian Cantwell Smith is the foundational source in this lineage; the paper supplies the embedded-theory, causal-connection, and vantage-point architecture later generalized by Maes.
 
 ## Summary
@@ -24,7 +23,7 @@ Smith argues that self-reference is not enough for reflection. A reflective syst
 
 ## Connections Found
 
-Smith is a historical anchor for [Reflective system](../notes/definitions/reflective-system.md): self-description and behavioral effect must be compared with Smith's embedded theory, two-way causality, and vantage point. The paper also supplies the primary Lisp lineage for [LLM contexts interpret instructions and content through the same token medium](../notes/llm-context-interprets-instructions-and-content-through-one-medium.md), but blocks the inference from homoiconicity or metacircular self-description to reflection. [Maes 1987](./maes-concepts-and-experiments-computational-reflection-1987.md) and [Maes 1988](./maes-computational-reflection-1988.md) retain the causal core while generalizing beyond procedural languages and using “reflection” for what Smith presents here as the narrower procedural case.
+Smith is a historical anchor for [Reflective system](../notes/definitions/reflective-system.md): self-description and behavioral effect must be compared with Smith's embedded theory, two-way causality, and vantage point. The paper also supplies the primary Lisp lineage for [LLM contexts interpret instructions and content through the same token medium](../notes/llm-context-interprets-instructions-and-content-through-one-medium.md), but blocks the inference from homoiconicity or metacircular self-description to reflection. [Maes 1987](https://cse.hkust.edu.hk/~charlesz/comp610/paper/p147-maes.pdf) and [Maes 1988](https://maxapress.com/data/article/ker/preview/pdf/S0269888900004355.pdf) retain the causal core while generalizing beyond procedural languages and using “reflection” for what Smith presents here as the narrower procedural case.
 
 ## Extractable Value
 

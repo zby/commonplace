@@ -1,6 +1,10 @@
 ---
 description: DiscoverPhysics authors 22 counterfactual physics worlds to defeat recall; agents that predict trajectories well still explain badly — a third target construction and an accuracy/explanation split
-source_snapshot: discoverphysics-benchmarking-llms-out-of-the-box-scientific-thinking.md
+source: https://arxiv.org/abs/2605.26087
+captured: "2026-07-26"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: e3fe2f6800b433fe40329d7c6aa3c05d15c3e6af376e248756e93d08b1d27587
 ingested: "2026-07-26"
 type: kb/sources/types/ingest-report.md
 domains: [scientific-discovery, evaluation, oracle-theory, learning-theory]
@@ -8,15 +12,9 @@ domains: [scientific-discovery, evaluation, oracle-theory, learning-theory]
 
 # Ingest: DiscoverPhysics: Benchmarking LLMs for Out-of-the-Box Scientific Thinking
 
-Source: discoverphysics-benchmarking-llms-out-of-the-box-scientific-thinking.md
-Captured: 2026-07-26
-From: https://arxiv.org/abs/2605.26087
-
 ## Classification
 
-Genre: **scientific-paper** -- an arXiv benchmark paper with a constructed task suite, an agent protocol, and an evaluation across eleven frontier models. The capture is the abstract page, not the full paper.
-
-Domains: scientific-discovery, evaluation, oracle-theory, learning-theory
+An arXiv benchmark paper with a constructed task suite, an agent protocol, and an evaluation across eleven frontier models. The capture is the abstract page, not the full paper.
 
 Author: a seven-author group mixing astrophysics/cosmology and machine-learning researchers, including Andrew Gordon Wilson and Pavel Izmailov, both established ML researchers with prior work on uncertainty and generalization. The domain pairing is the right one for authoring physically coherent counterfactual worlds, which is the load-bearing construction here.
 
@@ -30,7 +28,7 @@ This source's role in the KB is **evidence for the reach-assessment cluster**, w
 
 Its sharpest contribution is to [reach-assessment](../notes/definitions/reach-assessment.md). That definition's exclusions say reach-assessment is not empirical testing alone, and its scope says the assessment route must match the [representational form](../notes/definitions/representational-form.md) carrying the commitment. DiscoverPhysics collects a natural-language artifact and a symbolic artifact for the *same* commitment, tests the symbolic one empirically against the simulator, and then reports that the two come apart -- the exclusion measured rather than argued. The same finding is the adaptive-fit-versus-reach polarity of [first-principles reasoning](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) instrumented on a machine, and it is an independent report of the accuracy/mechanism separation that [theory-mediated learning may improve sample efficiency under structured shifts](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) predicts but currently supports only from transfer literature.
 
-Secondarily, it is a third target construction for [known-target discovery benchmarks show reachability, not discovery closure](../notes/known-target-discovery-benchmarks-show-reachability-not-discovery.md), whose "Two target constructions" section has [GIANTS](./giants-generative-insight-anticipation-scientific-literature.md) as its only worked exemplar. Where GIANTS uses temporal provenance as the leakage control and buys a soft similarity oracle, DiscoverPhysics authors a counterfactual world: leakage control is structural rather than temporal, and the oracle on the predictive half is hard and executable. The methodological sibling among captured sources is [EsoLang-Bench](./esolang-bench-evaluating-genuine-reasoning-via-esoteric-programming.md), which defeats recall the same way by moving the task into a domain the training corpus cannot contain.
+Secondarily, it is a third target construction for [known-target discovery benchmarks show reachability, not discovery closure](../notes/known-target-discovery-benchmarks-show-reachability-not-discovery.md), whose "Two target constructions" section has [GIANTS](https://giants-insights.github.io/) as its only worked exemplar. Where GIANTS uses temporal provenance as the leakage control and buys a soft similarity oracle, DiscoverPhysics authors a counterfactual world: leakage control is structural rather than temporal, and the oracle on the predictive half is hard and executable. The methodological sibling among captured sources is [EsoLang-Bench](https://arxiv.org/abs/2603.09678), which defeats recall the same way by moving the task into a domain the training corpus cannot contain.
 
 One connection is a tension rather than support: [the boundary of automation is the boundary of verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md) predicts automation stalls where verification is expensive, yet here verification is cheap and hard and agents still fail about half the worlds. That points at a generation-side bound the verification framing does not cover.
 
@@ -46,7 +44,7 @@ One connection is a tension rather than support: [the boundary of automation is 
 
 5. **A shipped controlled-shift family that separates accuracy from mechanism.** [Theory-mediated learning](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) asks in "What would test it" for controlled shifts of distinct kinds and warns that target accuracy alone will not separate the arms. Twenty-two authored worlds spanning distinct deviation families are that shift design, already built and already reporting the separation. Usable as a design template even without the paper's data. [experiment]
 
-6. **"Make the domain counterfactual so pretraining recall cannot carry the score" is an unnamed recurring design move.** Present now in at least three captured sources -- non-standard physics here, esoteric languages in [EsoLang-Bench](./esolang-bench-evaluating-genuine-reasoning-via-esoteric-programming.md), unusual encodings in [SuperARC](./superarc-ait-benchmark-llm-compression-abstraction.md) -- and named nowhere in `kb/notes/`. Naming it would give the anti-recall control a handle separate from leakage control for authored targets. [experiment]
+6. **"Make the domain counterfactual so pretraining recall cannot carry the score" is an unnamed recurring design move.** Present now in at least three captured sources -- non-standard physics here, esoteric languages in [EsoLang-Bench](https://arxiv.org/abs/2603.09678), unusual encodings in [SuperARC](https://arxiv.org/html/2503.16743v5) -- and named nowhere in `kb/notes/`. Naming it would give the anti-recall control a handle separate from leakage control for authored targets. [experiment]
 
 7. **Failures concentrate on latent structure.** Agents handle law-fitting over observed quantities better than positing an unobserved particular (a hidden dark-matter-like species) that the observed trajectories require. This is [recognition, not linking, is the hard problem in knowledge systems](../notes/recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md)'s "the hard problem is recognition" with a machine-side measurement attached. [just-a-reference]
 

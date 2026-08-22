@@ -1,6 +1,10 @@
 ---
 description: MAKER achieves zero errors over one million LLM steps via maximal decomposition into single-step microagents with first-to-ahead-by-k voting and red-flagging — proves O(s ln s) cost scaling when hard per-step oracles exist
-source_snapshot: meyerson-maker-million-step-llm-zero-errors.md
+source: https://arxiv.org/abs/2511.09030
+captured: "2026-02-26"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: cbfdcd1a4ae7008bf63b22b3654e374acad4992b98be8133b1bcffffb9a58b49
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [multi-agent-systems, error-correction, scaling-laws, reliability-engineering]
@@ -8,15 +12,9 @@ domains: [multi-agent-systems, error-correction, scaling-laws, reliability-engin
 
 # Ingest: Solving a Million-Step LLM Task with Zero Errors
 
-Source: meyerson-maker-million-step-llm-zero-errors.md
-Captured: 2026-02-26
-From: https://arxiv.org/abs/2511.09030
-
 ## Classification
 
-Type: **scientific-paper** — Preprint with formal scaling-law derivations (probabilistic analysis of voted micro-steps), controlled experiments on the Towers of Hanoi benchmark across 10 models, cost projections, and empirical validation of a million-step zero-error run.
-
-Domains: multi-agent-systems, error-correction, scaling-laws, reliability-engineering
+Preprint with formal scaling-law derivations (probabilistic analysis of voted micro-steps), controlled experiments on the Towers of Hanoi benchmark across 10 models, cost projections, and empirical validation of a million-step zero-error run.
 
 Author: Meyerson et al. at Cognizant AI Lab; Risto Miikkulainen (UT Austin & Cognizant). Miikkulainen is a well-known evolutionary computation researcher. Industry lab paper with academic rigor — formal proofs plus production-cost analysis.
 

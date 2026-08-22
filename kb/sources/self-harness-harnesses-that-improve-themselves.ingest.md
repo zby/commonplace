@@ -1,6 +1,10 @@
 ---
 description: "Same-model harness optimization improves three Terminal-Bench agents through structured failure mining and regression-gated local edits, within a tightly fixed outer method"
-source_snapshot: "self-harness-harnesses-that-improve-themselves.md"
+source: https://arxiv.org/html/2606.09498v1
+captured: "2026-08-02"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 28b4792629559f4ffd2bb587a64ee281d5f13a561cc0b49b1d36358cc1d63b11
 ingested: "2026-08-02"
 type: kb/sources/types/ingest-report.md
 domains: [self-improvement, harness-learning, trace-learning, evaluation]
@@ -8,14 +12,9 @@ domains: [self-improvement, harness-learning, trace-learning, evaluation]
 
 # Ingest: Self-Harness: Harnesses That Improve Themselves
 
-Source: [self-harness-harnesses-that-improve-themselves.md](self-harness-harnesses-that-improve-themselves.md)
-Captured: 2026-08-02
-From: https://arxiv.org/html/2606.09498v1
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv v1 preprint that defines an iterative harness-editing method and evaluates it on a fixed Terminal-Bench-2.0 subset across three base models.
-Domains: self-improvement, harness-learning, trace-learning, evaluation
+An arXiv v1 preprint that defines an iterative harness-editing method and evaluates it on a fixed Terminal-Bench-2.0 subset across three base models.
 Author: Hangfan Zhang, Shao Zhang, Kangcong Li, Chen Zhang, Yang Chen, Yiqun Zhang, Lei Bai, and Shuyue Hu of the Shanghai Artificial Intelligence Laboratory; the recent results have not been independently reproduced in this KB.
 
 ## Summary

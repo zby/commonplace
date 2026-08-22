@@ -1,6 +1,10 @@
 ---
 description: Google DeepMind conceptual framework makes verifiability and accountability constraints on task decomposition and delegation, contributing contract-first decomposition, task descriptors, and liability firebreaks
-source_snapshot: intelligent-ai-delegation-tomasev-franklin-osindero.md
+source: https://arxiv.org/pdf/2602.11865
+captured: "2026-03-16"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: a7cb2dff339f1ddabb75f9d29318db0072eeb660431c9fdcd2fb1e0fe9dc00b3
 ingested: "2026-03-16"
 type: kb/sources/types/ingest-report.md
 domains: [agent-orchestration, delegation, verification, multi-agent-coordination]
@@ -8,15 +12,9 @@ domains: [agent-orchestration, delegation, verification, multi-agent-coordinatio
 
 # Ingest: Intelligent AI Delegation
 
-Source: intelligent-ai-delegation-tomasev-franklin-osindero.md
-Captured: 2026-03-16
-From: https://arxiv.org/pdf/2602.11865
-
 ## Classification
 
-Genre: **scientific-paper** — The captured version is an arXiv preprint from Google DeepMind with formal structure (abstract, related work, framework definition, protocol analysis), grounded in organizational theory literature and citing prior multi-agent research.
-
-Domains: agent-orchestration, delegation, verification, multi-agent-coordination
+The captured version is an arXiv preprint from Google DeepMind with formal structure (abstract, related work, framework definition, protocol analysis), grounded in organizational theory literature and citing prior multi-agent research.
 
 Author: Nenad Tomasev, Matija Franklin, Simon Osindero (Google DeepMind). Tomasev has a track record in ML fairness and health applications at DeepMind; Franklin works on AI safety and governance; Osindero is a senior research scientist with deep generative modeling background. The combination signals a safety-aware perspective on agentic systems from within a major lab.
 
@@ -60,7 +58,7 @@ The permission model also compares with two narrower security claims. Privilege 
 
 **Blockchain and cryptographic verification bias.** The paper leans heavily on blockchain-based reputation ledgers, zk-SNARKs for verification, and smart contracts for delegation agreements. These are presented as near-default implementation choices without engaging with their known limitations: blockchain latency and cost, zk-SNARK computation overhead, smart contract inflexibility. The "reliability premium" concern in section 5.3 acknowledges the cost issue but does not quantify it or propose mitigation beyond "minimum viable reliability." The simpler account for most of these mechanisms is that centralized trusted authorities (the model providers themselves) handle trust and verification for the foreseeable future.
 
-**Missing engagement with empirical multi-agent failure data.** The KB already has access to [towards-a-science-of-scaling-agent-systems](./towards-a-science-of-scaling-agent-systems.md), which provides empirical data on error amplification in multi-agent systems (error rates compound multiplicatively, capability saturation thresholds exist). The delegation paper does not cite or engage with this kind of empirical work. Its framework assumes delegation can be made safe with the right protocols, but does not address the fundamental question of whether long delegation chains are viable given observed error amplification rates.
+**Missing engagement with empirical multi-agent failure data.** The KB already has access to [towards-a-science-of-scaling-agent-systems](https://arxiv.org/pdf/2512.08296), which provides empirical data on error amplification in multi-agent systems (error rates compound multiplicatively, capability saturation thresholds exist). The delegation paper does not cite or engage with this kind of empirical work. Its framework assumes delegation can be made safe with the right protocols, but does not address the fundamental question of whether long delegation chains are viable given observed error amplification rates.
 
 **Zone of indifference treatment is incomplete.** The paper identifies the zone of indifference as a systemic risk and proposes "dynamic cognitive friction" as the solution, but does not specify how an agent would recognize when to step outside its zone. This is exactly the problem of [silent disambiguation](../notes/silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — the agent must detect that a nominally safe instruction is contextually problematic, which requires the kind of discrimination the KB's augmentation-automation boundary note identifies as the hard problem.
 

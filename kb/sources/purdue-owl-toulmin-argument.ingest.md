@@ -1,6 +1,10 @@
 ---
 description: Pedagogical treatment of Toulmin's six-part argument model — canonical source for the structured-claim type's Evidence/Reasoning/Caveats sections
-source_snapshot: purdue-owl-toulmin-argument.md
+source: https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html
+captured: "2026-02-26"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: 45378ed5cecbe29a785644d5400ef2641531e6372321d0889d97fadc1fda97db
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [argumentation-theory, knowledge-representation, structured-reasoning]
@@ -8,15 +12,9 @@ domains: [argumentation-theory, knowledge-representation, structured-reasoning]
 
 # Ingest: Toulmin Argument
 
-Source: purdue-owl-toulmin-argument.md
-Captured: 2026-02-26
-From: https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html
-
 ## Classification
 
-Type: conceptual-essay — Presents Toulmin's six-part argumentation framework (claim, grounds, warrant, qualifier, rebuttal, backing) as an instructional reference. Not peer-reviewed research; not a practitioner report. It's a pedagogical essay introducing a theoretical framework with worked examples.
-
-Domains: argumentation-theory, knowledge-representation, structured-reasoning
+Presents Toulmin's six-part argumentation framework (claim, grounds, warrant, qualifier, rebuttal, backing) as an instructional reference. Not peer-reviewed research; not a practitioner report. It's a pedagogical essay introducing a theoretical framework with worked examples.
 
 Author: Purdue OWL (Online Writing Lab) — widely used academic writing reference maintained by Purdue University. Authoritative for composition and rhetoric pedagogy; this is a standard educational treatment of Toulmin, not an original contribution to argumentation theory.
 

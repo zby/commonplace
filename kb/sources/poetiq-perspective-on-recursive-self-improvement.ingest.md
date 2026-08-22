@@ -1,6 +1,10 @@
 ---
 description: "Poetiq's vendor account defines RSI as same-lineage recursive improvement and claims autonomous cross-benchmark harness evolution, but leaves redesign closure, compounding, and safety warrant unestablished"
-source_snapshot: "poetiq-perspective-on-recursive-self-improvement.md"
+source: https://poetiq.ai/posts/rsi_perspective/
+captured: "2026-08-07"
+capture: web-fetch
+genre: practitioner-report
+snapshot_sha256: 25a04abaa343d73ba6f395caf537472ede25f923bbd0b3754479e2722317970d
 ingested: "2026-08-07"
 type: kb/sources/types/ingest-report.md
 domains: [self-improving-systems, harness-optimization, compounding, evaluation]
@@ -8,14 +12,9 @@ domains: [self-improving-systems, harness-optimization, compounding, evaluation]
 
 # Ingest: A Poetiq Perspective on Recursive Self-Improvement
 
-Source: [poetiq-perspective-on-recursive-self-improvement.md](poetiq-perspective-on-recursive-self-improvement.md)
-Captured: 2026-08-07
-From: https://poetiq.ai/posts/rsi_perspective/
-
 ## Classification
 
-Genre: practitioner-report -- Poetiq defines its approach, describes the Metasystem it built, reports benchmark outcomes, and presents a product roadmap and safety case from first-hand implementation access.
-Domains: self-improving-systems, harness-optimization, compounding, evaluation
+Poetiq defines its approach, describes the Metasystem it built, reports benchmark outcomes, and presents a product roadmap and safety case from first-hand implementation access.
 Author: Poetiq is the system's builder and has privileged access to its operation, but is also promoting a proprietary product. The article exposes neither the implementation nor enough run evidence for independent reproduction.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "Toby Ord's hyperpolation paper gives a geometric vocabulary for off-subspace creativity, sharpening the KB's synthesis-oracle and discovery/reach notes."
-source_snapshot: "interpolation-extrapolation-hyperpolation.md"
+source: https://arxiv.org/pdf/2409.05513
+captured: "2026-05-19"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: c88e3e1af3156f19d5a9efa2150ead7a76277c4e605d6a5e1f3bcd8c264bb8ee
 ingested: "2026-05-19"
 type: kb/sources/types/ingest-report.md
 domains: [creativity, generalisation, oracle-theory, ai-limits]
@@ -8,14 +12,9 @@ domains: [creativity, generalisation, oracle-theory, ai-limits]
 
 # Ingest: Interpolation, Extrapolation, Hyperpolation
 
-Source: interpolation-extrapolation-hyperpolation.md
-Captured: 2026-05-19
-From: https://arxiv.org/pdf/2409.05513
-
 ## Classification
 
-Type: scientific-paper -- arXiv preprint with formal definitions, worked mathematical examples, citations, and a conceptual argument connecting generalisation, creativity, machine learning, and evolution. It is closer to a theoretical/conceptual paper than an empirical ML paper.
-Domains: creativity, generalisation, oracle-theory, ai-limits
+ArXiv preprint with formal definitions, worked mathematical examples, citations, and a conceptual argument connecting generalisation, creativity, machine learning, and evolution. It is closer to a theoretical/conceptual paper than an empirical ML paper.
 Author: Toby Ord is an academic philosopher best known for work on ethics and existential risk. The author signal is useful for conceptual clarity, not authority on ML benchmarking.
 
 ## Summary

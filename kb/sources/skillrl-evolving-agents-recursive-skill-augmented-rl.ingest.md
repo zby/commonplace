@@ -1,6 +1,10 @@
 ---
 description: "SkillRL paper showing trajectory-distilled skill banks co-evolving with GRPO-trained agent policy, bridging readable skill artifacts and weight-based learning"
-source_snapshot: "skillrl-evolving-agents-recursive-skill-augmented-rl.md"
+source: https://arxiv.org/abs/2602.08234
+captured: "2026-06-30"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 6e0ef8941da58926f2fd176f6a36acc300e3d70f0f4893a0ce8eefce07938e71
 ingested: "2026-06-30"
 type: kb/sources/types/ingest-report.md
 domains: [skill-learning, trace-learning, reinforcement-learning, deploy-time-learning]
@@ -8,14 +12,9 @@ domains: [skill-learning, trace-learning, reinforcement-learning, deploy-time-le
 
 # Ingest: SkillRL: Evolving Agents via Recursive Skill-Augmented Reinforcement Learning
 
-Source: [skillrl-evolving-agents-recursive-skill-augmented-rl.md](skillrl-evolving-agents-recursive-skill-augmented-rl.md)
-Captured: 2026-06-30
-From: https://arxiv.org/abs/2602.08234
-
 ## Classification
 
-Type: scientific-paper -- arXiv preprint with a proposed framework, algorithm, benchmark results, ablations, implementation details, and appendices containing prompts and example skills.
-Domains: skill-learning, trace-learning, reinforcement-learning, deploy-time-learning
+ArXiv preprint with a proposed framework, algorithm, benchmark results, ablations, implementation details, and appendices containing prompts and example skills.
 Author: multi-institution research team from UNC-Chapel Hill, University of Chicago, UCSD, NEC Labs America, UC Berkeley, and UC Santa Cruz; the evidence is useful but not yet independently reproduced in this KB.
 
 ## Summary

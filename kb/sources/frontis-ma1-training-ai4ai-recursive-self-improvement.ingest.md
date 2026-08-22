@@ -1,6 +1,10 @@
 ---
 description: "Frontis-MA1 couples execution-grounded operator training to fixed-controller evolutionary search, with large MLE gains but no revision of the improvement machinery"
-source_snapshot: "frontis-ma1-training-ai4ai-recursive-self-improvement.md"
+source: https://arxiv.org/abs/2607.28568
+captured: "2026-08-02"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: dd36923118e4c43c6546a20542c48c10cc2df6f5b38e8dc198cb05936233194e
 ingested: "2026-08-02"
 type: kb/sources/types/ingest-report.md
 domains: [harness-learning, post-training, evolutionary-search, self-improvement]
@@ -8,14 +12,9 @@ domains: [harness-learning, post-training, evolutionary-search, self-improvement
 
 # Ingest: Frontis-MA1: Training an AI4AI Model toward Recursive Self-Improvement in MLE
 
-Source: [frontis-ma1-training-ai4ai-recursive-self-improvement.md](frontis-ma1-training-ai4ai-recursive-self-improvement.md)
-Captured: 2026-08-02
-From: https://arxiv.org/abs/2607.28568
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv v1 preprint that defines a training corpus, supervised and reinforcement-learning procedures, a program-evolution harness, and benchmark experiments with ablations and repeated runs.
-Domains: harness-learning, post-training, evolutionary-search, self-improvement
+An arXiv v1 preprint that defines a training corpus, supervised and reinforcement-learning procedures, a program-evolution harness, and benchmark experiments with ablations and repeated runs.
 Author: Junlin Yang and 23 coauthors from Horizon Research/Frontis.AI, Tsinghua University, Zhejiang University, Shanghai Jiao Tong University, and Georgia Tech; the authors release the model, data, benchmark tasks, and evolutionary framework, but these recent results have not been independently reproduced in this KB.
 
 ## Summary

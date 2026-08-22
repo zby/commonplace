@@ -1,6 +1,10 @@
 ---
 description: "Primary precursor defining symbiotic reflection, mutual cross-language reasoning and action, and upping/downing entity transfer."
-source_snapshot: wuyts-ducasse-2001-symbiotic-reflection.md
+source: https://scg.unibe.ch/archive/papers/Wuyt01a.pdf
+captured: "2026-07-14"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: f9339ee61147d1fd96019f00d79a46013ca4caf4fe2622786fb2bb1ec2261c4c
 ingested: "2026-07-14"
 type: kb/sources/types/ingest-report.md
 domains: [reflection, language-symbiosis, representational-forms]
@@ -8,14 +12,9 @@ domains: [reflection, language-symbiosis, representational-forms]
 
 # Ingest: Symbiotic Reflection between an Object-Oriented and a Logic Programming Language
 
-Source: [wuyts-ducasse-2001-symbiotic-reflection.md](./wuyts-ducasse-2001-symbiotic-reflection.md)
-Captured: 2026-07-14
-From: https://scg.unibe.ch/archive/papers/Wuyt01a.pdf
-
 ## Classification
 
-Genre: scientific-paper -- a workshop paper that defines a computational-reflection variant, proposes an implementation schema, and demonstrates it in SOUL/Smalltalk.
-Domains: reflection, language-symbiosis, representational-forms
+A workshop paper that defines a computational-reflection variant, proposes an implementation schema, and demonstrates it in SOUL/Smalltalk.
 Author: Roel Wuyts and Stéphane Ducasse report the SOUL implementation from the Software Composition Group and position the work against Maes, Smith, Steyaert, and reflective-language precedents.
 
 ## Summary

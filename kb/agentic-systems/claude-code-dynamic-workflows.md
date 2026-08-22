@@ -7,7 +7,7 @@ tags: [computational-model, tool-loop]
 
 # Claude Code dynamic workflows
 
-**Evidence basis:** the official docs ([snapshot](../sources/claude-code-dynamic-workflows-docs.md), captured 2026-06-03) plus the Workflow tool contract observed first-hand from inside a running Claude Code session (2026-06-12) — the in-harness contract carries API details the docs omit.
+**Evidence basis:** the [official documentation](https://code.claude.com/docs/en/workflows), captured 2026-06-03, plus the Workflow tool contract observed first-hand from inside a running Claude Code session (2026-06-12) — the in-harness contract carries API details the docs omit.
 
 ## What it is
 
@@ -65,8 +65,8 @@ Dynamic workflows are the first shipped harness instance of [keeping the tool lo
 
 Relevant Notes:
 
-- [Claude Code dynamic workflows docs](../sources/claude-code-dynamic-workflows-docs.md) — derived-from: the official docs snapshot this analysis is grounded in
-- [A harness for every task — dynamic workflows](../sources/a-harness-for-every-task-dynamic-workflows.md) — see-also: practitioner walkthrough of the same feature
+- [Claude Code dynamic workflows docs](https://code.claude.com/docs/en/workflows) — derived-from: the official documentation this analysis is grounded in
+- [A harness for every task — dynamic workflows](https://x.com/trq212/status/2061907337154367865) — see-also: practitioner walkthrough of the same feature
 - [the practical scheduler is the host language](../notes/the-practical-scheduler-is-the-host-language.md) — rests-on: the minimal surface (returning primitive, host-language `select`/`K`, reify-`K`-when-forced) this API approximates and deviates from
 - [LLM frameworks should keep the tool loop optional](../notes/llm-frameworks-should-keep-the-tool-loop-optional.md) — is-evidence-for: the design stance this feature partially ships; the analysis feeds back as evidence there
 - [any barrier-delimited symbolic program with LLM calls is a batched select/call program](../notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md) — see-also: the lemma the mapping table instantiates — JS control flow playing `select`, `parallel` preserving batch membership, and script variables holding `K`

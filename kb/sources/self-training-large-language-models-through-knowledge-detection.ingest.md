@@ -1,7 +1,11 @@
 ---
 description: EMNLP paper turning unknown-detection scores into filtered DPO preference data, with selective self-training reducing hallucination and limiting forgetting on Wikipedia QA
 author: Wei Jie Yeo, Teddy Ferdinan, Przemyslaw Kazienko, Ranjan Satapathy, Erik Cambria
-source_snapshot: self-training-large-language-models-through-knowledge-detection.md
+source: https://aclanthology.org/2024.findings-emnlp.883.pdf
+captured: "2026-04-20"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: db3aba4de6a44c4e7f7888c055a4cbc0d8b4e737c54461d34b461982e01d8d3b
 ingested: "2026-04-20"
 type: kb/sources/types/ingest-report.md
 domains: [learning-theory, continual-learning, oracle-theory, trace-learning]
@@ -9,14 +13,9 @@ domains: [learning-theory, continual-learning, oracle-theory, trace-learning]
 
 # Ingest: Self-training Large Language Models through Knowledge Detection
 
-Source: self-training-large-language-models-through-knowledge-detection.md
-Captured: 2026-04-20
-From: https://aclanthology.org/2024.findings-emnlp.883.pdf
-
 ## Classification
 
-Type: scientific-paper -- EMNLP Findings 2024 paper with a concrete training method, datasets, model comparisons, ablations, OOD forgetting checks, and citations.
-Domains: learning-theory, continual-learning, oracle-theory, trace-learning
+EMNLP Findings 2024 paper with a concrete training method, datasets, model comparisons, ablations, OOD forgetting checks, and citations.
 Author: Wei Jie Yeo, Teddy Ferdinan, Przemyslaw Kazienko, Ranjan Satapathy, and Erik Cambria; academic NLP/AI researchers, including overlap with the already-ingested Into the Unknown line of work and a public Self-Training-LLM codebase reviewed in this KB.
 
 ## Summary

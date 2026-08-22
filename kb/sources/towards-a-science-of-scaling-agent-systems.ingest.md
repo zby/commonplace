@@ -1,6 +1,10 @@
 ---
 description: Controlled multi-agent scaling paper showing coordination gains depend on task decomposability, verification, and context overhead rather than agent count.
-source_snapshot: towards-a-science-of-scaling-agent-systems.md
+source: https://arxiv.org/pdf/2512.08296
+captured: "2026-03-08"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 29662edc0c80544b77f6dcf6a67822cab2490376599394fab9ac108db23035de
 ingested: "2026-04-20"
 type: kb/sources/types/ingest-report.md
 domains: [multi-agent-systems, agent-architecture, scaling-laws, coordination]
@@ -8,14 +12,9 @@ domains: [multi-agent-systems, agent-architecture, scaling-laws, coordination]
 
 # Ingest: Towards a Science of Scaling Agent Systems
 
-Source: towards-a-science-of-scaling-agent-systems.md
-Captured: 2026-03-08
-From: https://arxiv.org/pdf/2512.08296
-
 ## Classification
 
-Type: scientific-paper -- arXiv preprint with formal task/system definitions, 180 controlled configurations, mixed-effects modeling, statistical tests, and out-of-sample validation on a later model family.
-Domains: multi-agent-systems, agent-architecture, scaling-laws, coordination
+ArXiv preprint with formal task/system definitions, 180 controlled configurations, mixed-effects modeling, statistical tests, and out-of-sample validation on a later model family.
 Author: Kim et al. are researchers from Google Research, Google DeepMind, and MIT; the author signal is strong because the paper reports a controlled cross-model, cross-benchmark evaluation rather than a single-system demonstration.
 
 ## Summary

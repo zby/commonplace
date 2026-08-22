@@ -1,6 +1,10 @@
 ---
 description: "Schmidhuber's Gödel machine — rewrite of any part of one's own code, proof searcher included, gated on a proof of higher axiomatized utility: the proof-governed case of reflective self-modification"
-source_snapshot: "kb/sources/goedel-machines-schmidhuber.md"
+source: https://arxiv.org/abs/cs/0309048
+captured: "2026-07-14"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: d70201102d8f00e7e65cf36a8a89733256d8f163b6b6439941662c47c51fc1f7
 ingested: "2026-07-14"
 type: kb/sources/types/ingest-report.md
 domains: [self-modification, reflection, verification, oracle-strength]
@@ -8,16 +12,11 @@ domains: [self-modification, reflection, verification, oracle-strength]
 
 # Ingest: Gödel Machines — Provably Optimal Self-Improvements
 
-Source: [goedel-machines-schmidhuber.md](./goedel-machines-schmidhuber.md)
-Captured: 2026-07-14
-From: <https://arxiv.org/abs/cs/0309048>
-
 Citations below are given as (printed p. N; PDF p. N+1), matching the snapshot's capture note.
 
 ## Classification
 
-Genre: scientific-paper — a theoretical CS paper (TR IDSIA-19-03 v5, December 2006; v1 September 2003; cs.LO/cs.AI) whose contributions are a construction plus two theorems, with no experiments and no implementation. The genre recorded on the snapshot is correct.
-Domains: self-modification, reflection, verification, oracle-strength
+A theoretical CS paper (TR IDSIA-19-03 v5, December 2006; v1 September 2003; cs.LO/cs.AI) whose contributions are a construction plus two theorems, with no experiments and no implementation. The genre recorded on the snapshot is correct.
 Author: Jürgen Schmidhuber (IDSIA / TU München) — a principal in the universal-search and metalearning lineage (Universal Search extensions, OOPS, Incremental Self-Improvement). High authority on the formal content, and also an interested party in the priority framing, which shows in the structure: Section 6.4 is largely a comparison against Hutter's and his own prior work (printed pp. 18–21; PDF pp. 19–22).
 
 ## Summary

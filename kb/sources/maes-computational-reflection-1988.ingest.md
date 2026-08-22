@@ -1,6 +1,10 @@
 ---
 description: "Primary vocabulary anchor for computational reflection: causally connected self-representation, its representational variants, and its limits"
-source_snapshot: "kb/sources/maes-computational-reflection-1988.md"
+source: https://maxapress.com/data/article/ker/preview/pdf/S0269888900004355.pdf
+captured: "2026-07-14"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 2a549bdd73bf9c5cfc30e7b970c207250390f6628d5c5f4cb73d53be3b6f5209
 ingested: "2026-07-14"
 type: kb/sources/types/ingest-report.md
 domains: [computational-reflection, self-representation, meta-level-architecture]
@@ -8,14 +12,9 @@ domains: [computational-reflection, self-representation, meta-level-architecture
 
 # Ingest: Computational Reflection
 
-Source: [maes-computational-reflection-1988.md](./maes-computational-reflection-1988.md)
-Captured: 2026-07-14
-From: https://maxapress.com/data/article/ker/preview/pdf/S0269888900004355.pdf
-
 ## Classification
 
-Genre: scientific-paper -- a peer-reviewed conceptual synthesis that defines computational reflection, compares language architectures, and derives design consequences from implemented examples rather than reporting a controlled experiment.
-Domains: computational-reflection, self-representation, meta-level-architecture
+A peer-reviewed conceptual synthesis that defines computational reflection, compares language architectures, and derives design consequences from implemented examples rather than reporting a controlled experiment.
 Author: Pattie Maes developed this account from doctoral work on computational reflection and surveys procedural, logic-based, rule-based, and object-oriented architectures; this is the corpus's primary general definition.
 
 ## Summary

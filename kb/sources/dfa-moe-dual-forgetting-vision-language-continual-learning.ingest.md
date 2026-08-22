@@ -1,6 +1,10 @@
 ---
 description: "DFA-MoE separates forgetting acquired classes from eroding a model's pre-trained zero-shot baseline, but the captured repository exposes design and workflow rather than paper outcomes"
-source_snapshot: "dfa-moe-dual-forgetting-vision-language-continual-learning.md"
+source: https://github.com/RL-MIND/DFA-MoE
+captured: "2026-08-21"
+capture: web-fetch
+genre: code-repository
+snapshot_sha256: 39f1f8196272e57cb04978d0cc89b185b7b8a4e99b24013afc36fbb0350abc71
 ingested: "2026-08-21"
 type: kb/sources/types/ingest-report.md
 domains: [continual-learning, vision-language-models, model-editing, evaluation]
@@ -8,14 +12,9 @@ domains: [continual-learning, vision-language-models, model-editing, evaluation]
 
 # Ingest: DFA-MoE: Tackling Dual Forgetting in Vision-Language Continual Learning
 
-Source: [dfa-moe-dual-forgetting-vision-language-continual-learning.md](dfa-moe-dual-forgetting-vision-language-continual-learning.md)
-Captured: 2026-08-21
-From: https://github.com/RL-MIND/DFA-MoE
-
 ## Classification
 
-Genre: code-repository -- the captured README documents an official PyTorch implementation, its declared method, supported datasets, configuration, and evaluation workflow rather than presenting the unavailable paper itself.
-Domains: continual-learning, vision-language-models, model-editing, evaluation
+The captured README documents an official PyTorch implementation, its declared method, supported datasets, configuration, and evaluation workflow rather than presenting the unavailable paper itself.
 Author: RL-MIND publishes the repository for the ICML 2026 paper by Borui Kang, Jinrui Gu, Tao Feng, Qi Fan, Yinghuan Shi, Lei Wang, Wenbin Li, and Yang Gao. The authors have direct implementation access, but this ingest inspected only the captured README and did not verify the implementation or reported research outcomes.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "Mobius separates parametric knowledge storage from iterative reasoning inside one model, but its API abstract cannot validate the partition or efficiency claims"
-source_snapshot: "intern-s2-mobius-decoupled-knowledge-and-reasoning.md"
+source: https://paperswithcode.co/api/v1/papers/2608.14290?include_resources=true
+captured: "2026-08-18"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 2588a59801967d1a3d3f55d7b164c0802ebdd451d6084fba1282ca121d77df9d
 ingested: "2026-08-18"
 type: kb/sources/types/ingest-report.md
 domains: [model-architecture, parametric-memory, reasoning, learning-theory]
@@ -8,14 +12,9 @@ domains: [model-architecture, parametric-memory, reasoning, learning-theory]
 
 # Ingest: Intern-S2-Mobius: Foundation Model with Decoupled Knowledge and Reasoning
 
-Source: [intern-s2-mobius-decoupled-knowledge-and-reasoning.md](intern-s2-mobius-decoupled-knowledge-and-reasoning.md)
-Captured: 2026-08-18
-From: https://paperswithcode.co/api/v1/papers/2608.14290?include_resources=true
-
 ## Classification
 
-Genre: scientific-paper -- the captured item is a Papers with Code metadata record for an arXiv v1 preprint, preserving its abstract, authors, benchmark ranks, and official resource links rather than the full paper.
-Domains: model-architecture, parametric-memory, reasoning, learning-theory
+The captured item is a Papers with Code metadata record for an arXiv v1 preprint, preserving its abstract, authors, benchmark ranks, and official resource links rather than the full paper.
 Author: a large named author group; the record identifies no conference, reports zero citations, and describes a v1 paper published four days before capture, so it supplies little independent authority beyond locating the preprint and official resources.
 
 ## Summary

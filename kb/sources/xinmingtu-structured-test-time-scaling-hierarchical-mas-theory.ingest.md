@@ -1,6 +1,10 @@
 ---
 description: "Formal result connects topology compression, scope isolation, and verification as a causal chain enabling hierarchical multi-agent systems to avoid exponential error accumulation"
-source_snapshot: xinmingtu-structured-test-time-scaling-hierarchical-mas-theory.md
+source: https://xinmingtu.cn/blog/2026/hierarchical-mas-theory/
+captured: "2026-03-25"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: ac6674f3508027f9f1525c5492acefb55828579b0c980b87af9af08defb2f759
 ingested: "2026-03-25"
 type: kb/sources/types/ingest-report.md
 domains: [multi-agent-systems, error-correction, test-time-scaling, agent-orchestration]
@@ -8,15 +12,9 @@ domains: [multi-agent-systems, error-correction, test-time-scaling, agent-orches
 
 # Ingest: Structured Test-Time Scaling: From Multi-Agent Systems to General Inference Architectures
 
-Source: xinmingtu-structured-test-time-scaling-hierarchical-mas-theory.md
-Captured: 2026-03-25
-From: https://xinmingtu.cn/blog/2026/hierarchical-mas-theory/
-
 ## Classification
 
-Type: conceptual-essay — Despite the formal notation and "unified theoretical framework" framing, this is published as a blog post without peer review, methodology section, or novel experimental data. It synthesizes existing results (AOrchestra, RLM, coding agents) under a theoretical lens rather than presenting new empirical findings. The formal claims (e.g., O(log W) compression, exponential error suppression) are stated but the snapshot does not include proofs — they may exist in a longer paper, but what we have is an argued theoretical position.
-
-Domains: multi-agent-systems, error-correction, test-time-scaling, agent-orchestration
+Despite the formal notation and "unified theoretical framework" framing, this is published as a blog post without peer review, methodology section, or novel experimental data. It synthesizes existing results (AOrchestra, RLM, coding agents) under a theoretical lens rather than presenting new empirical findings. The formal claims (e.g., O(log W) compression, exponential error suppression) are stated but the snapshot does not include proofs — they may exist in a longer paper, but what we have is an argued theoretical position.
 
 Author: Xinming Tu, University of Washington. Academic affiliation provides some credibility on the theoretical side. The specific track record in multi-agent systems theory is unknown from this snapshot alone.
 

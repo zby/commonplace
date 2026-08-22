@@ -56,7 +56,7 @@ Relevant Notes:
 - [systematic prompt variation serves verification and diagnosis, not explanatory-reach testing](./systematic-prompt-variation-serves-verification-and-diagnosis-not.md) — contrasts: explanatory-reach testing varies an explanation's premises, not an LLM prompt surface
 - [SuperARC AIT benchmark](../sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md) — evidenced-by: integer-vs-binary sequence performance is suggestive for cue sensitivity and algorithmic-compression explanatory-reach, but not load-bearing here
 - [A framework rule with a boundary-preserving rival is not an inherited constraint](./a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md) — contrasts: a one-way test that demotes framework rules with boundary-preserving rivals; this note explains what first-principles filtering is for
-- [Moen, Foundation and History of the PDSA Cycle](../sources/foundation-and-history-of-the-pdsa-cycle.md) — evidenced-by: the explanatory-reach-over-fit polarity restated from improvement science — a change that improved during one test must still be predicted to improve under the different conditions ahead
+- [Moen, Foundation and History of the PDSA Cycle](https://deming.org/wp-content/uploads/2020/06/PDSA_History_Ron_Moen.pdf) — evidenced-by: the explanatory-reach-over-fit polarity restated from improvement science — a change that improved during one test must still be predicted to improve under the different conditions ahead
 
 Derived into:
 

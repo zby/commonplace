@@ -1,6 +1,13 @@
 ---
 description: "Sakhuja's practitioner reframe of skill graphs into a three-tier compositional hierarchy (atoms/molecules/compounds) driven by the reliability ceiling of deep skill chains and the 'brain RAM' bottleneck in parallel-agent supervision"
-source_snapshot: a-new-way-to-think-about-composing-skills-to-increase-leverage-skill.md
+source: https://x.com/shivsakhuja/status/2047124337191444844
+captured: "2026-04-23T07:19:24.259560+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: 8ac9f4bf04234f7a5d68b5946b4144375af4ede6853b84ba033aa48dae953412
+status_id: 2047124337191444844
+conversation_id: 2047124337191444844
+post_count: 1
 ingested: "2026-04-23"
 type: kb/sources/types/ingest-report.md
 domains: [skill-composition, agent-orchestration, reliability, capability-placement]
@@ -8,15 +15,9 @@ domains: [skill-composition, agent-orchestration, reliability, capability-placem
 
 # Ingest: A new way to think about composing skills to increase leverage — Skill Graphs 2.0
 
-Source: a-new-way-to-think-about-composing-skills-to-increase-leverage-skill.md
-Captured: 2026-04-23
-From: https://x.com/shivsakhuja/status/2047124337191444844
-
 ## Classification
 
-Type: **practitioner-report** — Sakhuja reports on a specific skill-library organisation his team built ("capabilities / composites / playbooks") and the empirical failure mode (deep skill graphs degrade in practice) that motivated abandoning the flat dependency-graph model. The argument carries some conceptual-essay character (it proposes a taxonomy) but the load-bearing claims are framed as "what we tried, what broke, what we now do."
-
-Domains: skill-composition, agent-orchestration, reliability, capability-placement
+Sakhuja reports on a specific skill-library organisation his team built ("capabilities / composites / playbooks") and the empirical failure mode (deep skill graphs degrade in practice) that motivated abandoning the flat dependency-graph model. The argument carries some conceptual-essay character (it proposes a taxonomy) but the load-bearing claims are framed as "what we tried, what broke, what we now do."
 
 Author: @shivsakhuja — practitioner building skill-driven agent workflows, active in the X skills discourse. Unknown depth of track record, but the reported observations (non-deterministic deep-graph traversal, ~8–10 fan-out ceiling) match what multiple voices on Reddit/X have reported. Take as one data point among several, not an authoritative source.
 

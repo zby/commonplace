@@ -1,6 +1,13 @@
 ---
 description: "Agno practitioner loop mines specifications and usage traces into probes, then iteratively edits a live agent within a fixed, weakly evaluated outer method"
-source_snapshot: "how-to-recursively-improve-your-agents-2084301728363462919.md"
+source: https://x.com/ashpreetbedi/status/2084301728363462919
+captured: "2026-08-03T18:05:02.311358+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: d03da8d4a6d955bd8da779ceb1d2496fa7c27473d9208965349c833c59a03b73
+status_id: 2084301728363462919
+conversation_id: 2084301728363462919
+post_count: 1
 ingested: "2026-08-03"
 type: kb/sources/types/ingest-report.md
 domains: [self-improving-systems, harness-engineering, evaluation, deploy-time-learning]
@@ -8,14 +15,9 @@ domains: [self-improving-systems, harness-engineering, evaluation, deploy-time-l
 
 # Ingest: How to Recursively Improve Your Agents
 
-Source: [how-to-recursively-improve-your-agents-2084301728363462919.md](./how-to-recursively-improve-your-agents-2084301728363462919.md)
-Captured: 2026-08-03T18:05:02.311358+00:00
-From: https://x.com/ashpreetbedi/status/2084301728363462919
-
 ## Classification
 
-Genre: practitioner-report -- Ashpreet Bedi describes a workflow he built and says he routinely uses it to improve Agno agents, with a worked Radar-agent walkthrough and self-reported before/after result but no independently inspectable experiment.
-Domains: self-improving-systems, harness-engineering, evaluation, deploy-time-learning
+Ashpreet Bedi describes a workflow he built and says he routinely uses it to improve Agno agents, with a worked Radar-agent walkthrough and self-reported before/after result but no independently inspectable experiment.
 Author: Ashpreet Bedi (@ashpreetbedi), writing as the builder of the Agno/AgentOS workflow. The first-person operational detail is useful architectural evidence, while the product affiliation and absence of raw results make the effectiveness claims promotional and unverified.
 
 ## Summary

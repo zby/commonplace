@@ -1,6 +1,13 @@
 ---
 description: "Practitioner report where live agent-response graders feed tickets, auto-fixes, re-grading, and rollout gates instead of sitting as offline eval dashboards"
-source_snapshot: "the-self-healing-agent-harness-2048912026018484317.md"
+source: https://x.com/intuitiveml/status/2048912026018484317
+captured: "2026-04-29T17:21:59.182403+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: 30ea2e503dd880a7f24e6ef4cf33f282a78db4df7e476e9b58fccbcad278a2ac
+status_id: 2048912026018484317
+conversation_id: 2048912026018484317
+post_count: 7
 ingested: "2026-04-29"
 type: kb/sources/types/ingest-report.md
 domains: [agent-evaluation, harness-engineering, deployment-reliability, oracle-theory]
@@ -8,14 +15,9 @@ domains: [agent-evaluation, harness-engineering, deployment-reliability, oracle-
 
 # Ingest: The Self-Healing Agent Harness
 
-Source: the-self-healing-agent-harness-2048912026018484317.md
-Captured: 2026-04-29T17:21:59.182403+00:00
-From: https://x.com/intuitiveml/status/2048912026018484317
-
 ## Classification
 
-Type: practitioner-report -- the author describes a production system they built and operate: a live-traffic grader, engineering pipeline, and rollout gate for an AI agent product.
-Domains: agent-evaluation, harness-engineering, deployment-reliability, oracle-theory
+The author describes a production system they built and operate: a live-traffic grader, engineering pipeline, and rollout gate for an AI agent product.
 Author: @intuitiveml is unknown from local KB context; the credibility signal is operational specificity about CREAO's production grading, ticketing, fix, verification, and rollout loops.
 
 ## Summary

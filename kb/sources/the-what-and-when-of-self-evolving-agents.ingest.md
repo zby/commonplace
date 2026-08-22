@@ -1,6 +1,10 @@
 ---
 description: "3×3 framework mapping self-evolving-agent updates across external files, harnesses, and model weights over task, session, and population horizons"
-source_snapshot: "kb/sources/the-what-and-when-of-self-evolving-agents.md"
+source: https://xinmingtu.cn/blog/2026/self-evolving-agents/
+captured: "2026-07-23"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: 0729fffb8a501e6b6ff568f078e13a609827ee948ff5803d530eab3d4650ef56
 ingested: "2026-07-23"
 type: kb/sources/types/ingest-report.md
 domains: [self-evolving-agents, continual-learning, deploy-time-learning, agent-harness]
@@ -8,14 +12,9 @@ domains: [self-evolving-agents, continual-learning, deploy-time-learning, agent-
 
 # Ingest: The What & When of Self-Evolving Agents
 
-Source: kb/sources/the-what-and-when-of-self-evolving-agents.md
-Captured: 2026-07-23
-From: https://xinmingtu.cn/blog/2026/self-evolving-agents/
-
 ## Classification
 
-Genre: conceptual-essay -- a framework essay that organizes named systems and mechanisms but does not present a controlled experiment or formal evaluation.
-Domains: self-evolving-agents, continual-learning, deploy-time-learning, agent-harness
+A framework essay that organizes named systems and mechanisms but does not present a controlled experiment or formal evaluation.
 Author: Xinming Tu; the page is a dated technical blog essay with a broad appendix and explicit acknowledgement of readers, but the source's claims remain authorial synthesis rather than independently validated results.
 
 ## Summary

@@ -1,6 +1,10 @@
 ---
 description: "Pure-inference tabular experiments separate column readability from multi-column integration and provide a reusable benchmark-contamination probe"
-source_snapshot: "why-large-language-models-fail-at-tabular-prediction.md"
+source: https://arxiv.org/abs/2608.02412
+captured: "2026-08-04"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 20359142804e3e299b661595bc706cc94eea2d75ce2ba207296c361723532482
 ingested: "2026-08-04"
 type: kb/sources/types/ingest-report.md
 domains: [context-engineering, evaluation, in-context-learning, benchmark-design]
@@ -8,14 +12,9 @@ domains: [context-engineering, evaluation, in-context-learning, benchmark-design
 
 # Ingest: Why Large Language Models Fail at Tabular Prediction
 
-Source: [why-large-language-models-fail-at-tabular-prediction.md](why-large-language-models-fail-at-tabular-prediction.md)
-Captured: 2026-08-04
-From: https://arxiv.org/abs/2608.02412
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv v1 preprint that uses controlled interventions, classical baselines, synthetic controls, and behavioral comparison to study single-pass in-context tabular classification.
-Domains: context-engineering, evaluation, in-context-learning, benchmark-design
+An arXiv v1 preprint that uses controlled interventions, classical baselines, synthetic controls, and behavioral comparison to study single-pass in-context tabular classification.
 Author: Marta Garnelo of Fundamental Technologies and Wojciech M. Czarnecki of Voylab; the paper provides detailed protocols and configurations, but its main result relies on one frontier model and has not been independently reproduced in this KB.
 
 ## Summary

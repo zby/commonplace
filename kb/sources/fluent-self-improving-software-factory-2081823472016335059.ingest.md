@@ -1,6 +1,13 @@
 ---
 description: "A practitioner account of Fluent, a software factory that turns observations into tested, reviewed, merged changes and reusable project expertise."
-source_snapshot: "kb/sources/fluent-self-improving-software-factory-2081823472016335059.md"
+source: https://x.com/mrinal/status/2081823472016335059
+captured: "2026-07-28T12:24:20.430766+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: ca3c52d76db3019c47656b21dde9f97c1a00812c238e60c0adddd590cf240416
+status_id: 2081823472016335059
+conversation_id: 2081823472016335059
+post_count: 5
 ingested: "2026-07-28"
 type: kb/sources/types/ingest-report.md
 domains: [self-improving-systems, agent-memory, evaluation, software-engineering]
@@ -8,14 +15,9 @@ domains: [self-improving-systems, agent-memory, evaluation, software-engineering
 
 # Ingest: How I built a self-improving software factory
 
-Source: [How I built a self-improving software factory](./fluent-self-improving-software-factory-2081823472016335059.md)
-Captured: 2026-07-28
-From: https://x.com/mrinal/status/2081823472016335059
-
 ## Classification
 
-Genre: practitioner-report -- a first-person account of building and using Fluent, with a detailed description of its workflow and claimed results rather than an independently evaluated study.
-Domains: self-improving-systems, agent-memory, evaluation, software-engineering
+A first-person account of building and using Fluent, with a detailed description of its workflow and claimed results rather than an independently evaluated study.
 Author: @mrinal describes a system he built and reports improving throughput and output quality over roughly two months; the account is useful architectural evidence but remains self-reported.
 
 ## Summary

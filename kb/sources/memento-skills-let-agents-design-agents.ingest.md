@@ -1,6 +1,10 @@
 ---
 description: "Memento-Skills supplies empirical evidence for frozen-LLM deploy-time learning through routed, rewritten executable skill memory, with transfer bounded by domain alignment"
-source_snapshot: memento-skills-let-agents-design-agents.md
+source: https://arxiv.org/pdf/2603.18743
+captured: "2026-07-28"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: b075afb1048ca61ba269c4fc2e8a53295b6e5b364e831d55c74814102b5abaf2
 ingested: "2026-07-28"
 type: kb/sources/types/ingest-report.md
 domains: [deploy-time-learning, agent-memory, skill-routing, self-improving-systems]
@@ -8,14 +12,9 @@ domains: [deploy-time-learning, agent-memory, skill-routing, self-improving-syst
 
 # Ingest: Memento-Skills: Let Agents Design Agents
 
-Source: [memento-skills-let-agents-design-agents.md](memento-skills-let-agents-design-agents.md)
-Captured: 2026-07-28
-From: https://arxiv.org/pdf/2603.18743
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv preprint presenting a formal framing, implemented system, controlled ablation, router evaluation, and held-out benchmark results.
-Domains: deploy-time-learning, agent-memory, skill-routing, self-improving-systems
+An arXiv preprint presenting a formal framing, implemented system, controlled ablation, router evaluation, and held-out benchmark results.
 Author: A 17-person academic and engineering team led by Huichi Zhou, with affiliations including University College London, Jilin University, HKUST (Guangzhou), and the Yangtze River Delta AI Lab; the paper links public code, but this ingest evaluates the paper rather than independently auditing the implementation.
 
 ## Summary

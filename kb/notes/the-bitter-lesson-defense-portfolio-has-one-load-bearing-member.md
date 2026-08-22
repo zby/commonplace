@@ -7,7 +7,7 @@ tags: [learning-theory, deploy-time-learning]
 
 # The bitter-lesson defense portfolio has one load-bearing member for the form-only rebuttal
 
-[Sutton's bitter lesson](../sources/sutton-the-bitter-lesson-original-essay.md) is the recurring observation that methods built around human knowledge tend to lose, over time, to general search and learning methods that exploit increasing computation. A form-only objection turns that observation into a categorical claim: retaining localized theories, instructions, tests, schemas, or programs is inherently incompatible with the lesson.
+[Sutton's bitter lesson](http://www.incompleteideas.net/IncIdeas/BitterLesson.html) is the recurring observation that methods built around human knowledge tend to lose, over time, to general search and learning methods that exploit increasing computation. A form-only objection turns that observation into a categorical claim: retaining localized theories, instructions, tests, schemas, or programs is inherently incompatible with the lesson.
 
 This KB offers several responses, but only the distinction between production method and representational form is needed to reject that narrow inference. The other responses bound the conclusion, specify what a stronger empirical case would require, guide method or measurement, or answer different objections. Classifying each response by role lets downstream consumers — especially the introductory article — cite only the premises their conclusions require.
 

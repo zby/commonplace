@@ -1,6 +1,10 @@
 ---
 description: "NLAH paper externalizes agent control logic as portable natural-language artifacts — key empirical finding: explicit structure helps only when it tightens alignment with evaluator acceptance criteria, not by adding process layers"
-source_snapshot: natural-language-agent-harnesses.md
+source: https://arxiv.org/html/2603.25723
+captured: "2026-03-28"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: d8823b9711edfde9beaeec244f34d9f6af857cbdd83f6b8201344dbc3897336b
 ingested: "2026-03-28"
 type: kb/sources/types/ingest-report.md
 domains: [agent-orchestration, harness-engineering, specification-level-separation, deploy-time-learning]
@@ -8,15 +12,9 @@ domains: [agent-orchestration, harness-engineering, specification-level-separati
 
 # Ingest: Natural-Language Agent Harnesses
 
-Source: natural-language-agent-harnesses.md
-Captured: 2026-03-28
-From: https://arxiv.org/html/2603.25723
-
 ## Classification
 
-Type: scientific-paper — preprint with a defined framework (NLAH + IHR), module ablation study, and evaluation on two established benchmarks (SWE-bench Verified, OSWorld). Has methodology, experimental structure, and citations.
-
-Domains: agent-orchestration, harness-engineering, specification-level-separation, deploy-time-learning
+Preprint with a defined framework (NLAH + IHR), module ablation study, and evaluation on two established benchmarks (SWE-bench Verified, OSWorld). Has methodology, experimental structure, and citations.
 
 Author: Linyue Pan, Lexiao Zou, Shuo Guo, Jingchen Ni, Hai-Tao Zheng (Tsinghua University affiliation based on Zheng's known faculty position). Academic research group — attend to the framework's rigor and benchmark methodology, but note this is a first publication of the framework without independent replication.
 

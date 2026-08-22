@@ -1,6 +1,10 @@
 ---
 description: "Observer participation and responsibility as ethical consequences of second-order cybernetics"
-source_snapshot: "von-foerster-ethics-and-second-order-cybernetics-1991.md"
+source: https://uranos.ch/research/references/VonFoerster1992/ethics.pdf
+captured: "2026-07-14"
+capture: pdf-read
+genre: conceptual-essay
+snapshot_sha256: 4d5756d8c4af2617be9b43ca424f06f4d4b71a0eefdc203aca41d4fc75f04339
 ingested: "2026-07-14"
 type: kb/sources/types/ingest-report.md
 domains: [second-order-cybernetics, ethics, participation]
@@ -8,14 +12,9 @@ domains: [second-order-cybernetics, ethics, participation]
 
 # Ingest: Ethics and Second-Order Cybernetics
 
-Source: [von-foerster-ethics-and-second-order-cybernetics-1991.md](./von-foerster-ethics-and-second-order-cybernetics-1991.md)
-Captured: 2026-07-14
-From: https://uranos.ch/research/references/VonFoerster1992/ethics.pdf
-
 ## Classification
 
-Genre: conceptual-essay -- a conference address and appended interview developing the ethical implications of participant-observer epistemology.
-Domains: second-order-cybernetics, ethics, participation
+A conference address and appended interview developing the ethical implications of participant-observer epistemology.
 Author: Heinz von Foerster restates and extends his own second-order-cybernetics formulation.
 
 ## Summary

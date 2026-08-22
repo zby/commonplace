@@ -1,6 +1,10 @@
 ---
 description: "Karnofsky's writing-centered investigation loop adds the working hypothesis as control state for evidence allocation, bounded to first-person human practice"
-source_snapshot: "learning-by-writing.md"
+source: https://www.cold-takes.com/learning-by-writing/
+captured: "2026-08-10"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: d49782e101c992486a80bf932af757ced573ac5ddc38e2e7ce37315d3bf81b36
 ingested: "2026-08-10"
 type: kb/sources/types/ingest-report.md
 domains: [writing-as-thinking, directed-reading, belief-revision, human-agent-transfer]
@@ -8,14 +12,9 @@ domains: [writing-as-thinking, directed-reading, belief-revision, human-agent-tr
 
 # Ingest: Learning By Writing
 
-Source: [learning-by-writing.md](learning-by-writing.md)
-Captured: 2026-08-10
-From: https://www.cold-takes.com/learning-by-writing/
-
 ## Classification
 
-Genre: conceptual-essay -- a first-person account of an investigation method, supported by one extended example and retrospective experience rather than a comparative evaluation.
-Domains: writing-as-thinking, directed-reading, belief-revision, human-agent-transfer
+A first-person account of an investigation method, supported by one extended example and retrospective experience rather than a comparative evaluation.
 Author: Holden Karnofsky writes as a practitioner explaining the method behind his own published investigations. That gives the procedure useful first-person detail but no independent authority for its efficiency, retention, or transferability claims.
 
 ## Summary
@@ -24,7 +23,7 @@ Karnofsky organizes learning around a repeatedly rewritten bottom-line view rath
 
 ## Connections Found
 
-This essay is the constructive investigation procedure in the existing writing-as-thinking cluster. [Borretti](borretti-human-routers-of-machine-words.md) and [Grunewald](why-almost-never-use-ai-to-write-anything-substantive.md) emphasize what naive delegation loses, while [Karlsson](how-to-think-in-writing.md) makes conjectures and their premises vulnerable to counterexamples. Karnofsky adds the missing inquiry-routing role: the current written hypothesis supplies the lens for [directed reading](../notes/definitions/directed-reading.md), because it determines which source or subquestion could change the bottom-line view. His repeated articulation, attack, revision, and feedback cycle also supplies a detailed human comparator for [the adversarial-loop account](../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md). It should not be treated as evidence that an automated KB learns in the same way: [human analogies motivate functions without fixing component boundaries](../notes/human-analogies-suggest-functions-not-component-boundaries.md), and durable agent learning additionally requires retained artifacts, activation, and behavioral effect.
+This essay is the constructive investigation procedure in the existing writing-as-thinking cluster. [Borretti](https://borretti.me/article/human-routers-of-machine-words) and [Grunewald](https://www.erichgrunewald.com/posts/why-i-think-you-should-almost-never-use-ai-to-write-anything-substantive/) emphasize what naive delegation loses, while [Karlsson](https://www.henrikkarlsson.xyz/p/writing-to-think) makes conjectures and their premises vulnerable to counterexamples. Karnofsky adds the missing inquiry-routing role: the current written hypothesis supplies the lens for [directed reading](../notes/definitions/directed-reading.md), because it determines which source or subquestion could change the bottom-line view. His repeated articulation, attack, revision, and feedback cycle also supplies a detailed human comparator for [the adversarial-loop account](../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md). It should not be treated as evidence that an automated KB learns in the same way: [human analogies motivate functions without fixing component boundaries](../notes/human-analogies-suggest-functions-not-component-boundaries.md), and durable agent learning additionally requires retained artifacts, activation, and behavioral effect.
 
 ## Extractable Value
 

@@ -1,6 +1,10 @@
 ---
 description: "Borretti polemic 'writing is thinking' — corroborating field evidence for reverse-compression and vibe-noting risks"
-source_snapshot: "borretti-human-routers-of-machine-words.md"
+source: https://borretti.me/article/human-routers-of-machine-words
+captured: "2026-06-14"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: d061401a188d0cbf33c5f1a73f1560920eb4719a2508c89784a33783154a43b5
 ingested: "2026-06-14"
 type: kb/sources/types/ingest-report.md
 domains: [writing-is-thinking, reverse-compression, vibe-noting, constraining]
@@ -8,14 +12,9 @@ domains: [writing-is-thinking, reverse-compression, vibe-noting, constraining]
 
 # Ingest: Human Routers of Machine Words
 
-Source: borretti-human-routers-of-machine-words.md
-Captured: 2026-06-14
-From: https://borretti.me/article/human-routers-of-machine-words
-
 ## Classification
 
-Type: conceptual-essay -- a polemical framing, not an empirical or methodological work. Borretti argues a theoretical position (writing is thinking; concretization forces precision) through analogy (tree search, programming-language trade-offs) and an authority citation (Weizenbaum), with no data or method.
-Domains: writing-is-thinking, reverse-compression, vibe-noting, constraining
+A polemical framing, not an empirical or methodological work. Borretti argues a theoretical position (writing is thinking; concretization forces precision) through analogy (tree search, programming-language trade-offs) and an authority citation (Weizenbaum), with no data or method.
 Author: Fernando Borretti — software engineer and prolific essayist (borretti.me), known for technical writing on programming languages, type systems, and tooling. Opinionated practitioner voice; no institutional research standing. The piece is deliberately inflammatory in register (the contempt framing), which is rhetorical packaging around a serious mechanism claim.
 
 ## Summary

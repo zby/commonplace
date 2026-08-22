@@ -1,6 +1,10 @@
 ---
 description: "ToolGate makes tool-state mutation transactional through typed symbolic state, pre-execution admissibility checks, and post-execution result verification"
-source_snapshot: toolgate-contract-grounded-and-verified-tool-execution-for-llms.md
+source: https://arxiv.org/pdf/2601.04688
+captured: "2026-07-28"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 2762a2420f1d46749f5c873397050d0e2ffc47a4dfdf24f8620a69359ce58172
 ingested: "2026-07-28"
 type: kb/sources/types/ingest-report.md
 domains: [tool-use, formal-methods, runtime-verification, agent-reliability]
@@ -8,14 +12,9 @@ domains: [tool-use, formal-methods, runtime-verification, agent-reliability]
 
 # Ingest: ToolGate: Contract-Grounded and Verified Tool Execution for LLMs
 
-Source: [toolgate-contract-grounded-and-verified-tool-execution-for-llms.md](./toolgate-contract-grounded-and-verified-tool-execution-for-llms.md)
-Captured: 2026-07-28
-From: https://arxiv.org/pdf/2601.04688
-
 ## Classification
 
-Genre: scientific-paper -- a preprint specifying a formal execution model, algorithm, experiments, ablations, rejection traces, and Hoare-style derivation sketches.
-Domains: tool-use, formal-methods, runtime-verification, agent-reliability
+A preprint specifying a formal execution model, algorithm, experiments, ablations, rejection traces, and Hoare-style derivation sketches.
 Author: An eight-author Zhejiang University/Southeast University/MIT team; the academic affiliations and extensive appendix raise the evidence signal, though this v1 preprint has visible editorial inconsistencies.
 
 ## Summary

@@ -1,6 +1,13 @@
 ---
 description: Tweet thread proposing "minimum viable ontology" — the smallest term list to orient a newcomer in a domain — with a vibecoded prototype (domainmaps.co) and pedagogical framing via "conceptual thresholds"
-source_snapshot: this-tweet-had-me-thinking-what-s-the-minimum-viable-ontology-or-li.md
+source: https://x.com/melodyskim/status/2029332670115614799
+captured: "2026-03-05T15:38:32.676423+00:00"
+capture: xdk
+genre: conversation-thread
+snapshot_sha256: dd40f081cb097d28589824dac4975bee02d7228898747d5d7d86471c461ec215
+status_id: 2029332670115614799
+conversation_id: 2029332670115614799
+post_count: 10
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [domain-onboarding, vocabulary-bootstrapping, learning-theory, prompt-engineering]
@@ -8,13 +15,8 @@ domains: [domain-onboarding, vocabulary-bootstrapping, learning-theory, prompt-e
 
 # Ingest: Minimum Viable Ontology / Domain Maps
 
-Source: this-tweet-had-me-thinking-what-s-the-minimum-viable-ontology-or-li.md
-Captured: 2026-03-05
-From: https://x.com/melodyskim/status/2029332670115614799
-
 ## Classification
-Type: conversation-thread — A tweet thread introducing a concept ("minimum viable ontology") with a vibecoded prototype (domainmaps.co), replies, and discussion. No developed argument or methodology.
-Domains: domain-onboarding, vocabulary-bootstrapping, learning-theory, prompt-engineering
+A tweet thread introducing a concept ("minimum viable ontology") with a vibecoded prototype (domainmaps.co), replies, and discussion. No developed argument or methodology.
 Author: @melodyskim — product/design practitioner who vibecoded the domainmaps.co prototype. Unknown depth of expertise, but the "conceptual thresholds" framing shows pedagogical awareness.
 
 ## Summary

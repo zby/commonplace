@@ -1,6 +1,10 @@
 ---
 description: "Gregor's mature taxonomy defines design-and-action theory by prescriptive purpose and exposes actionability as a separate theory-actor-context relation"
-source_snapshot: "the-nature-of-theory-in-information-systems-gregor-2006.md"
+source: https://openresearch-repository.anu.edu.au/bitstreams/77077d0f-f636-40a8-89fb-d2d2365ad7ad/download
+captured: "2026-07-14"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: c1347e7991eba7c5f2b1a903215fe15b957b4546da12b6646f646f68b4afffc8
 ingested: "2026-07-14"
 type: kb/sources/types/ingest-report.md
 domains: [theory-taxonomy, design-theory, prescription, information-systems]
@@ -8,14 +12,9 @@ domains: [theory-taxonomy, design-theory, prescription, information-systems]
 
 # Ingest: The Nature of Theory in Information Systems
 
-Source: [the-nature-of-theory-in-information-systems-gregor-2006.md](./the-nature-of-theory-in-information-systems-gregor-2006.md)
-Captured: 2026-07-14
-From: https://openresearch-repository.anu.edu.au/bitstreams/77077d0f-f636-40a8-89fb-d2d2365ad7ad/download
-
 ## Classification
 
-Genre: scientific-paper -- a peer-reviewed MIS Quarterly research essay that builds and tests a structural taxonomy of theory types against a sample of information-systems articles.
-Domains: theory-taxonomy, design-theory, prescription, information-systems
+A peer-reviewed MIS Quarterly research essay that builds and tests a structural taxonomy of theory types against a sample of information-systems articles.
 Author: Shirley Gregor, Australian National University; this is the mature primary statement of her five-type theory taxonomy and explicitly supersedes the shorter taxonomy presentation as the general account.
 
 ## Summary
@@ -24,7 +23,7 @@ Gregor classifies theories by four possible primary goals—analysis/description
 
 ## Connections Found
 
-The load-bearing target is [Actionable methodology](../notes/definitions/actionable-methodology.md): this paper supplies the mature Type V definition while preventing its collapse into the theory–operator relation. [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) is a secondary connection because Gregor's purpose taxonomy allows theory to be prescriptive, whereas Commonplace's theoretical and prescriptive profiles are local text contracts rather than ontological partitions. Relative to [Gregor 2002](./design-theory-in-information-systems-gregor-2002.md), the 2006 paper is the broader and more structurally explicit account, not merely independent corroboration.
+The load-bearing target is [Actionable methodology](../notes/definitions/actionable-methodology.md): this paper supplies the mature Type V definition while preventing its collapse into the theory–operator relation. [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) is a secondary connection because Gregor's purpose taxonomy allows theory to be prescriptive, whereas Commonplace's theoretical and prescriptive profiles are local text contracts rather than ontological partitions. Relative to [Gregor 2002](https://ajis.aaisnet.org/index.php/ajis/article/download/439/399/551), the 2006 paper is the broader and more structurally explicit account, not merely independent corroboration.
 
 ## Extractable Value
 

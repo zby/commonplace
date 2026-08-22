@@ -1,6 +1,10 @@
 ---
 description: Direct reply to “LLMs can’t jump” arguing that later interconnected knowledge can make a formerly abductive discovery deductively reconstructible, then extending the claim to safety and continual learning
-source_snapshot: hot-take-llm-can-jump.md
+source: https://yongzx.github.io/blog/2026/08/08/llm-can-jump
+captured: "2026-08-20"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: 310a317234cb8076895890852ef8c88468df603b0d64da60bffa63f4e53aeeac
 ingested: "2026-08-20"
 type: kb/sources/types/ingest-report.md
 domains: [scientific-discovery, knowledge-reconstruction, AI-safety, continual-learning]
@@ -8,15 +12,9 @@ domains: [scientific-discovery, knowledge-reconstruction, AI-safety, continual-l
 
 # Ingest: Hot Take: LLM can 'jump'
 
-Source: [hot-take-llm-can-jump.md](hot-take-llm-can-jump.md)
-Captured: 2026-08-20
-From: https://yongzx.github.io/blog/2026/08/08/llm-can-jump
-
 ## Classification
 
-Genre: **conceptual-essay** -- a personal technical response that develops a counterargument through a historical reconstruction, selected model examples, and cited studies rather than reporting an original experiment.
-
-Domains: scientific-discovery, knowledge-reconstruction, AI-safety, continual-learning
+A personal technical response that develops a counterargument through a historical reconstruction, selected model examples, and cited studies rather than reporting an original experiment.
 
 Author: Yong Zheng-Xin presents this as a provisional “hot take” and explicitly concedes both that reconstructing a known result is easier than discovering it and that the broader prediction may be wrong. The essay's value comes from that carefully bounded counterexample and its links to primary material. It does not present peer review, original measurements, or an author credential that independently establishes the wider scientific, safety, or continual-learning claims.
 

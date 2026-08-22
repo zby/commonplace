@@ -1,6 +1,13 @@
 ---
 description: "Convenient Claude+Obsidian second-brain setup guide -- useful adoption packaging, with live-account connectors as the risk boundary"
-source_snapshot: "claude-obsidian-second-brain-guide-2068306794116501544.md"
+source: https://x.com/undefinedKi/status/2068306794116501544
+captured: "2026-06-30T04:45:33.865959+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: f87e7ba5c864b79e9020844ac00de938654142a82d9195e96a971ee4ef26194b
+status_id: 2068306794116501544
+conversation_id: 2068306794116501544
+post_count: 1
 ingested: "2026-06-30"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, context-engineering, obsidian, skills]
@@ -8,14 +15,9 @@ domains: [agent-memory, context-engineering, obsidian, skills]
 
 # Ingest: How to Build an AI Second Brain With Claude and Obsidian That Gets Smarter Every Day
 
-Source: claude-obsidian-second-brain-guide-2068306794116501544.md
-Captured: 2026-06-30T04:45:33.865959+00:00
-From: https://x.com/undefinedKi/status/2068306794116501544
-
 ## Classification
 
-Type: practitioner-report -- a step-by-step public setup guide for an agent-operated personal vault: install Claude and Obsidian, connect through the Obsidian Local REST API and MCP, create `CLAUDE.md` profile/project context, use project folders, save reusable skills, optionally wire read-only live data, schedule maintenance, and prefer permission boundaries over prompt promises.
-Domains: agent-memory, context-engineering, obsidian, skills
+A step-by-step public setup guide for an agent-operated personal vault: install Claude and Obsidian, connect through the Obsidian Local REST API and MCP, create `CLAUDE.md` profile/project context, use project folders, save reusable skills, optionally wire read-only live data, schedule maintenance, and prefer permission boundaries over prompt promises.
 Author: `@undefinedKi` is presenting a practical how-to rather than an inspectable implementation or measured study. The source is useful as adoption evidence, but its strongest named implementation is already covered by the code-grounded [claude-obsidian](../agent-memory-systems/reviews/claude-obsidian.md) review.
 
 ## Summary

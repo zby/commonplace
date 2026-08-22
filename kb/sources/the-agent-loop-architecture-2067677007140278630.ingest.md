@@ -1,6 +1,13 @@
 ---
 description: "Inngest practitioner framing of durable agent loops as loop + skill + orchestrator, useful for the run-state and skill-persistence boundary"
-source_snapshot: "the-agent-loop-architecture-2067677007140278630.md"
+source: https://x.com/djfarrelly/status/2067677007140278630
+captured: "2026-06-19T06:32:44.632033+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: 209febda8bc9daaa438a6b96a53a21d31a0c2659827900252292837da6e3ae19
+status_id: 2067677007140278630
+conversation_id: 2067677007140278630
+post_count: 1
 ingested: "2026-06-19"
 type: kb/sources/types/ingest-report.md
 domains: [agent-orchestration, durable-execution, deploy-time-learning]
@@ -8,14 +15,9 @@ domains: [agent-orchestration, durable-execution, deploy-time-learning]
 
 # Ingest: The Agent Loop Architecture
 
-Source: [the-agent-loop-architecture-2067677007140278630.md](./the-agent-loop-architecture-2067677007140278630.md)
-Captured: 2026-06-19T06:32:44.632033+00:00
-From: https://x.com/djfarrelly/status/2067677007140278630
-
 ## Classification
 
-Type: practitioner-report -- a production-oriented essay by an Inngest author arguing from implementation patterns and an internally tested project, not a formal paper or neutral survey.
-Domains: agent-orchestration, durable-execution, deploy-time-learning
+A production-oriented essay by an Inngest author arguing from implementation patterns and an internally tested project, not a formal paper or neutral survey.
 Author: @djfarrelly writes from the perspective of an orchestration vendor and points to Inngest/Utah as a working example, so the report has strong practitioner signal but also vendor-positioning bias.
 
 ## Summary

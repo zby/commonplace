@@ -1,6 +1,12 @@
 ---
 description: "Crossed 4,946-run agent-analysis experiment separates sampling dispersion from model/persona steering and finds that auditing reduces but does not remove selective-reporting risk"
-source_snapshot: many-ai-analysts-one-dataset-agentic-data-science-multiverse.md
+source: https://www.pnas.org/doi/epdf/10.1073/pnas.2606495123
+captured: "2026-08-18"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 79188a6fed4a5f81ed20ec3dde4a39657a162ac43d4755b69a50ec94657c8fc4
+capture_via: https://www.ncbi.nlm.nih.gov/research/bionlp/RESTful/pmcoa.cgi/BioC_xml/PMC13393493/unicode
+capture_note: The PNAS ePDF endpoint returned HTTP 403; the article text was captured from its open-access NCBI PMC BioC mirror. The mirror omits some inline mathematical glyphs.
 ingested: "2026-08-18"
 type: kb/sources/types/ingest-report.md
 domains: [agentic-analysis, research-reproducibility, prompt-sensitivity, llm-evaluation]
@@ -8,14 +14,9 @@ domains: [agentic-analysis, research-reproducibility, prompt-sensitivity, llm-ev
 
 # Ingest: Many AI analysts, one dataset
 
-Source: [many-ai-analysts-one-dataset-agentic-data-science-multiverse.md](many-ai-analysts-one-dataset-agentic-data-science-multiverse.md)
-Captured: 2026-08-18
-From: https://www.pnas.org/doi/epdf/10.1073/pnas.2606495123
-
 ## Classification
 
-Genre: scientific-paper -- a peer-reviewed PNAS experiment with controlled model and persona conditions, three dataset–hypothesis tasks, approximately 5,000 autonomous analysis runs, and transcript-level AI auditing.
-Domains: agentic-analysis, research-reproducibility, prompt-sensitivity, llm-evaluation
+A peer-reviewed PNAS experiment with controlled model and persona conditions, three dataset–hypothesis tasks, approximately 5,000 autonomous analysis runs, and transcript-level AI auditing.
 Author: Martin Bertran and Riccardo Fogliato (Amazon) and Zhiwei Steven Wu (Amazon and Carnegie Mellon). The paper discloses its experimental scaffold, tasks, prompts, code, and transcripts, but the authors also designed the system and its AI auditor; credibility rests on the reported experiment rather than independent deployment evidence.
 
 ## Summary

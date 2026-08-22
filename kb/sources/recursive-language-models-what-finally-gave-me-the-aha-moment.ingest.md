@@ -1,6 +1,13 @@
 ---
 description: "Practitioner comparison of direct generation, RAG, ReAct, CodeAct, subagents, and RLM gives concrete evidence for REPL substrate, symbolic variable return, and scaffold-level truncation"
-source_snapshot: recursive-language-models-what-finally-gave-me-the-aha-moment.md
+source: https://x.com/neural_avb/status/2035040781074145412
+captured: "2026-03-22T12:45:38.021318+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: 8945672e1db3353ec2d96c8a54ac51aa10076bad2043ec28b0b47c12ff1f16c8
+status_id: 2035040781074145412
+conversation_id: 2035040781074145412
+post_count: 7
 ingested: "2026-03-22"
 type: kb/sources/types/ingest-report.md
 domains: [agent-architecture, context-engineering, orchestration]
@@ -8,15 +15,9 @@ domains: [agent-architecture, context-engineering, orchestration]
 
 # Ingest: Recursive Language Models - what finally gave me the 'aha' moment
 
-Source: recursive-language-models-what-finally-gave-me-the-aha-moment.md
-Captured: 2026-03-22
-From: https://x.com/neural_avb/status/2035040781074145412
-
 ## Classification
 
-Type: practitioner-report — The author spent a month implementing RLMs from scratch, produced a 50-minute tutorial, and answered 100+ questions. The thread distils what they learned through building, not through controlled experiments or theoretical argument.
-
-Domains: agent-architecture, context-engineering, orchestration
+The author spent a month implementing RLMs from scratch, produced a 50-minute tutorial, and answered 100+ questions. The thread distils what they learned through building, not through controlled experiments or theoretical argument.
 
 Author: @neural_avb — practitioner who implemented RLMs from scratch and produced educational content around it. Credibility comes from hands-on building experience and sustained engagement with community questions about the architecture. Not an academic researcher.
 

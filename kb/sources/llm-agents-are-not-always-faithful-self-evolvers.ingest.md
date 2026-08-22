@@ -1,6 +1,10 @@
 ---
 description: Causal-intervention paper (v3, 13 backbones) showing self-evolving agents faithfully use raw trajectories but largely ignore condensed experience, making behavioral faithfulness the missing evaluation criterion for distilled memory
-source_snapshot: llm-agents-are-not-always-faithful-self-evolvers.md
+source: https://arxiv.org/html/2601.22436v3
+captured: "2026-06-15"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: da3e80a514eba1cde15466360fda76ec201abb3bf4af9a3d7cde00951ed528ac
 ingested: "2026-06-15"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, distillation, verification, llm-agents]
@@ -8,14 +12,9 @@ domains: [agent-memory, distillation, verification, llm-agents]
 
 # Ingest: Large Language Model Agents Are Not Always Faithful Self-Evolvers
 
-Source: llm-agents-are-not-always-faithful-self-evolvers.md
-Captured: 2026-06-15
-From: https://arxiv.org/html/2601.22436v3
-
 ## Classification
 
-Type: scientific-paper -- arXiv preprint (cs.CL) with explicit methodology, controlled causal interventions, multiple frameworks/backbones/environments, and a falsifiable empirical claim about agent behavior. This ingest covers v3, which retains v2's structure and findings while expanding the backbone set from 10 to 13 models (adding GPT-5.2, Gemini-3-Pro, Claude-Sonnet-4.6) — strengthening the cross-scale, cross-vendor generality of the result.
-Domains: agent-memory, distillation, verification, llm-agents
+ArXiv preprint (cs.CL) with explicit methodology, controlled causal interventions, multiple frameworks/backbones/environments, and a falsifiable empirical claim about agent behavior. This ingest covers v3, which retains v2's structure and findings while expanding the backbone set from 10 to 13 models (adding GPT-5.2, Gemini-3-Pro, Claude-Sonnet-4.6) — strengthening the cross-scale, cross-vendor generality of the result.
 Author: Multi-author research team (Zhao, Wang, Zhang, Deng, Zhao, Che, Qin, Liu) working on self-evolving-agent benchmarks. Worth attending to because they evaluate four established frameworks (ExpeL, Dynamic Cheatsheet, ReasoningBank, G-Memory) under causal intervention rather than proposing a new memory design — a diagnosis paper, not a sales pitch.
 
 ## Summary

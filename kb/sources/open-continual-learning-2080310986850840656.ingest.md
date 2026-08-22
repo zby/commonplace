@@ -1,6 +1,13 @@
 ---
 description: "A short X design sketch that turns organizational expertise into evals, environments, agent behavior, and trace-driven continual improvement"
-source_snapshot: "kb/sources/open-continual-learning-2080310986850840656.md"
+source: https://x.com/Vtrivedy10/status/2080310986850840656
+captured: "2026-07-23T16:40:15.915587+00:00"
+capture: xdk
+genre: conceptual-essay
+snapshot_sha256: a07b31d3e4cf0b3fa298cf2434d6a30ef3aa8b8c352dfb237c3d1d5512fdb49a
+status_id: 2080310986850840656
+conversation_id: 2080310986850840656
+post_count: 1
 ingested: "2026-07-23"
 type: kb/sources/types/ingest-report.md
 domains: [learning-theory, deploy-time-learning, evaluation, agent-adaptation]
@@ -8,14 +15,9 @@ domains: [learning-theory, deploy-time-learning, evaluation, agent-adaptation]
 
 # Ingest: Open continual learning that you fully control
 
-Source: [open-continual-learning-2080310986850840656.md](./open-continual-learning-2080310986850840656.md)
-Captured: 2026-07-23T16:40:15.915587+00:00
-From: https://x.com/Vtrivedy10/status/2080310986850840656
-
 ## Classification
 
-Genre: conceptual-essay -- a short public design sketch that frames a continual-learning workflow, without reporting an implemented system, method, or measured result.
-Domains: learning-theory, deploy-time-learning, evaluation, agent-adaptation
+A short public design sketch that frames a continual-learning workflow, without reporting an implemented system, method, or measured result.
 Author: @Vtrivedy10; a public practitioner statement, with no captured implementation details or independent corroboration.
 
 ## Summary

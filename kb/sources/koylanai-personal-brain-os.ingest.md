@@ -1,6 +1,13 @@
 ---
 description: Practitioner report on a file-based personal OS for AI agents, useful as self-reported evidence for filesystem-first context engineering.
-source_snapshot: koylanai-personal-brain-os.md
+source: https://x.com/koylanai/status/2025286163641118915
+captured: "2026-02-22T11:51:03.499122+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: f35ce2cc242c59c8d34ef51155e47e100849a58219124d91420e8ac540313ffa
+status_id: 2025286163641118915
+conversation_id: 2025286163641118915
+post_count: 12
 ingested: "2026-03-09"
 type: kb/sources/types/ingest-report.md
 domains: [context-engineering, agent-architecture, knowledge-management, file-based-systems]
@@ -8,15 +15,9 @@ domains: [context-engineering, agent-architecture, knowledge-management, file-ba
 
 # Ingest: The File System Is the New Database: How I Built a Personal OS for AI Agents
 
-Source: [koylanai-personal-brain-os.md](./koylanai-personal-brain-os.md)
-Captured: 2026-02-22
-From: https://x.com/koylanai/status/2025286163641118915
-
 ## Classification
 
-Type: **practitioner-report** -- A first-person account of a system the author says he built and used. It includes concrete claimed file counts, schema decisions, and performance anecdotes, but all of the evidence comes through the author's own writeup rather than direct inspection.
-
-Domains: context-engineering, agent-architecture, knowledge-management, file-based-systems
+A first-person account of a system the author says he built and used. It includes concrete claimed file counts, schema decisions, and performance anecdotes, but all of the evidence comes through the author's own writeup rather than direct inspection.
 
 Author: Muratcan Koylan (@koylanai), Context Engineer at Sully.ai and author of the Agent Skills project. This makes the piece worth reading as practitioner testimony, but it remains self-reported evidence from an X article rather than a directly inspectable system artifact.
 

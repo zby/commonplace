@@ -1,6 +1,10 @@
 ---
 description: "EnvHarness turns fixed benchmarks into policy-targeted training environments through interface wrappers, while its gains test a fixed wrapper and skill-extraction bundle rather than validating that decomposition."
-source_snapshot: "envharness-awakening-static-worlds-for-agent-learning.md"
+source: https://arxiv.org/abs/2608.19880
+captured: "2026-08-22"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 3d8cdfbb0d331e1790897dcb6fd41ec02773fe000513f8852f9cf276c798fbe1
 ingested: "2026-08-22"
 type: kb/sources/types/ingest-report.md
 domains: [learning-theory, deploy-time-learning, self-improving-systems, evaluation]
@@ -8,14 +12,9 @@ domains: [learning-theory, deploy-time-learning, self-improving-systems, evaluat
 
 # Ingest: EnvHarness: Awakening Static Worlds for Agent Learning
 
-Source: [envharness-awakening-static-worlds-for-agent-learning.md](envharness-awakening-static-worlds-for-agent-learning.md)
-Captured: 2026-08-22
-From: https://arxiv.org/abs/2608.19880
-
 ## Classification
 
-Genre: scientific-paper -- an arXiv v1 preprint that defines an environment-wrapper architecture and autonomous designer loop, reports skill-learning and reinforcement-learning comparisons across five benchmarks, and includes scaling, cross-model, objective-targeting, and component analyses.
-Domains: learning-theory, deploy-time-learning, self-improving-systems, evaluation
+An arXiv v1 preprint that defines an environment-wrapper architecture and autonomous designer loop, reports skill-learning and reinforcement-learning comparisons across five benchmarks, and includes scaling, cross-model, objective-targeting, and component analyses.
 Author: Chengsong Huang and a research team from Washington University in St. Louis, Google Cloud AI Research, Google Cloud, and the University of North Carolina at Chapel Hill. The multi-institution team links an official Google Research repository and supplies unusually detailed prompts and implementation appendices, but this ingest did not inspect the code or independently reproduce the new preprint's outcomes.
 
 ## Summary

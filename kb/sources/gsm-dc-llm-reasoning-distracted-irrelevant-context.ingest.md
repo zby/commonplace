@@ -1,6 +1,10 @@
 ---
 description: "GSM-DC isolates irrelevant-context effects and finds power-law error growth with distractor count, grounding soft context degradation while comparing training- and inference-time mitigations"
-source_snapshot: gsm-dc-llm-reasoning-distracted-irrelevant-context.md
+source: https://arxiv.org/html/2505.18761v2
+captured: "2026-03-26"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 67a5f637c0e05ac2608dff1eea04f0470d2e1aa55288712c5923d6d68df1342c
 ingested: "2026-03-26"
 type: kb/sources/types/ingest-report.md
 domains: [reasoning-robustness, context-degradation, training-methodology, evaluation-benchmarks]
@@ -8,15 +12,9 @@ domains: [reasoning-robustness, context-degradation, training-methodology, evalu
 
 # Ingest: How Is LLM Reasoning Distracted by Irrelevant Context?
 
-Source: gsm-dc-llm-reasoning-distracted-irrelevant-context.md
-Captured: 2026-03-26
-From: https://arxiv.org/html/2505.18761v2
-
 ## Classification
 
-Type: **scientific-paper** — peer-reviewed benchmark paper with controlled experiments across six models, novel evaluation metrics (SAcc/PAcc/EAcc), and reproducible methodology using symbolic DAGs.
-
-Domains: reasoning-robustness, context-degradation, training-methodology, evaluation-benchmarks
+Peer-reviewed benchmark paper with controlled experiments across six models, novel evaluation metrics (SAcc/PAcc/EAcc), and reproducible methodology using symbolic DAGs.
 
 Author: Yang, Huang, Zhang, Surdeanu, Wang, Pan (UC Santa Barbara, University of Arizona). Surdeanu and Wang are established NLP faculty. The contribution is methodological rigor — symbolic DAG construction for controlled distractor injection — rather than scale or novelty of finding.
 
@@ -68,7 +66,7 @@ The `/connect` discovery identified 8 note connections and 5 source connections,
 
 - **Single training scale.** All training experiments use LLaMA-3.2-1B with 30K samples. Findings about Hard-IC training, continued pretraining vs LoRA, and PRM-guided search may not generalize to larger models or larger training sets. The difficulty-over-diversity result (Finding V) is particularly vulnerable — at sufficient scale, diversity may matter more.
 
-- **Template-based language only.** GSM-DC problems are generated from templated natural language. Real-world irrelevant context is semantically richer, more varied, and often partially relevant rather than cleanly irrelevant. The power-law scaling may not hold when distractors share semantic content with the target problem — but that is likely the **default case of the same mechanism**, not a different one. [Gonen semantic leakage](./semantic-leakage-lms-gonen.ingest.md) and Lampinen's [content-effects work](./language-models-like-humans-show-content-effects-on-reasoning-tasks.md) measure that realistic regime directly.
+- **Template-based language only.** GSM-DC problems are generated from templated natural language. Real-world irrelevant context is semantically richer, more varied, and often partially relevant rather than cleanly irrelevant. The power-law scaling may not hold when distractors share semantic content with the target problem — but that is likely the **default case of the same mechanism**, not a different one. [Gonen semantic leakage](./semantic-leakage-lms-gonen.ingest.md) and Lampinen's [content-effects work](https://academic.oup.com/pnasnexus/article/3/7/pgae233/7712372) measure that realistic regime directly.
 
 - **Math-only domain.** All findings are established on grade-school math. No evidence that the power-law scaling, dual-channel degradation, or training interventions transfer to reasoning tasks in other domains (code, planning, argumentation). The [explanatory reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) of the findings depends on whether the mechanisms (attention dilution, path selection corruption) are domain-general or exploit math-specific model behaviors.
 

@@ -1,6 +1,10 @@
 ---
 description: "CRUX shadow evaluations expose a gap between autonomous research engineering and open-ended judgment while supplying an expert-oracle design for uncontaminated tasks."
-source_snapshot: "can-ai-agents-conduct-open-ended-ai-research.md"
+source: https://cruxevals.com/crux/can-ai-agents-conduct-research/
+captured: "2026-08-06"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 24132cf17ad499684f2059ccff4dccc6ecd8d3959a7e728b01589352a124b628
 ingested: "2026-08-06"
 type: kb/sources/types/ingest-report.md
 domains: [agent-evaluation, scientific-discovery, oracle-theory, context-engineering]
@@ -8,15 +12,9 @@ domains: [agent-evaluation, scientific-discovery, oracle-theory, context-enginee
 
 # Ingest: Can AI agents conduct open-ended AI research?
 
-Source: [can-ai-agents-conduct-open-ended-ai-research.md](./can-ai-agents-conduct-open-ended-ai-research.md)  
-Captured: 2026-08-06  
-From: https://cruxevals.com/crux/can-ai-agents-conduct-research/
-
 ## Classification
 
-Genre: **scientific-paper** -- a full experimental report with a stated evaluation method, two case studies, pilot and robustness runs, expert reviews, trajectory analysis, collaborator survey, appendices, and released artifacts.
-
-Domains: agent-evaluation, scientific-discovery, oracle-theory, context-engineering
+A full experimental report with a stated evaluation method, two case studies, pilot and robustness runs, expert reviews, trajectory analysis, collaborator survey, appendices, and released artifacts.
 
 Author: a 24-author CRUX collaboration that includes the core evaluation team and authors of the two original NeurIPS submissions. The original authors supply unusually strong task-specific expertise, and the report releases reviews, repositories, logs, and telemetry. They are not independent evaluators: they helped formulate the questions, knew the papers were AI-generated, had their own solutions in mind, and the core team discloses prior skepticism about imminent recursive self-improvement.
 

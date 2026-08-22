@@ -1,6 +1,10 @@
 ---
 description: "Schmidhuber's reward-gated self-modification report as historical evidence for oracle-dependent behavior learning and reversible promotion"
-source_snapshot: on-learning-how-to-learn-learning-strategies.md
+source: https://people.idsia.ch/~juergen/fki198-94.pdf
+captured: "2026-04-29"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: d86ee69352ebd23010ac5738b71346f50d7cc6cd5bccdb81856e12a2b59fc990
 ingested: "2026-04-29"
 type: kb/sources/types/ingest-report.md
 domains: [learning-theory, self-improvement, oracle-theory, agent-memory]
@@ -8,14 +12,9 @@ domains: [learning-theory, self-improvement, oracle-theory, agent-memory]
 
 # Ingest: On Learning How to Learn Learning Strategies
 
-Source: on-learning-how-to-learn-learning-strategies.md
-Captured: 2026-04-29
-From: https://people.idsia.ch/~juergen/fki198-94.pdf
-
 ## Classification
 
-Type: scientific-paper -- revised technical report with a formal learning paradigm, concrete implementation, toy experiments, citations, and explicit claims about reinforcement learning and meta-learning.
-Domains: learning-theory, self-improvement, oracle-theory, agent-memory
+Revised technical report with a formal learning paradigm, concrete implementation, toy experiments, citations, and explicit claims about reinforcement learning and meta-learning.
 Author: Jurgen Schmidhuber is a long-running machine-learning researcher in recurrent networks, self-referential learning, and self-improving systems; the source matters as historical lineage even though the implementation is not repo-inspectable here.
 
 ## Summary

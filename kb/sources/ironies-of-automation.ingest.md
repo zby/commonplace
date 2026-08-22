@@ -1,6 +1,10 @@
 ---
 description: "Bainbridge 1983 — foundational precursor whose monitoring/deskilling ironies supply period evidence for the KB's automation-boundary and effort-relocation notes"
-source_snapshot: "ironies-of-automation.md"
+source: https://static1.squarespace.com/static/644321e78cd2dd37613af33e/t/6694873f71612132a84371c7/1721009983702/Ironies+of+Automation_Bainbridge_1983.pdf
+captured: "2026-07-22"
+capture: user-supplied-pdf-to-markdown
+genre: scientific-paper
+snapshot_sha256: da1010aad40c885ae1136a1d98f8db8bad404dd974c6ec38cf25f147c4a2ce97
 ingested: "2026-07-22"
 type: kb/sources/types/ingest-report.md
 domains: [automation, human-oversight, deskilling, verification-boundary]
@@ -8,14 +12,9 @@ domains: [automation, human-oversight, deskilling, verification-boundary]
 
 # Ingest: Ironies of Automation (Bainbridge 1983)
 
-Source: ironies-of-automation.md
-Captured: 2026-07-22
-From: https://static1.squarespace.com/static/644321e78cd2dd37613af33e/t/6694873f71612132a84371c7/1721009983702/Ironies+of+Automation_Bainbridge_1983.pdf
-
 ## Classification
 
-Genre: scientific-paper -- a peer-reviewed brief paper in *Automatica* (Vol. 19, No. 6, 1983), presenting argued claims grounded in cited empirical human-factors studies; it argues from the process-control and flight-deck literature rather than reporting a single new experiment, but its evidentiary standard and citation apparatus are those of a scholarly paper.
-Domains: automation, human-oversight, deskilling, verification-boundary
+A peer-reviewed brief paper in *Automatica* (Vol. 19, No. 6, 1983), presenting argued claims grounded in cited empirical human-factors studies; it argues from the process-control and flight-deck literature rather than reporting a single new experiment, but its evidentiary standard and citation apparatus are those of a scholarly paper.
 Author: Lisanne Bainbridge, Department of Psychology, University College London — a foundational human-factors researcher; this paper is one of the most-cited touchstones in the automation-and-human-supervision literature and a named precursor to the later levels-of-automation frameworks.
 
 ## Summary
@@ -24,7 +23,7 @@ Bainbridge argues that automating an industrial process expands rather than elim
 
 ## Connections Found
 
-Casebook notes for this domain already exist, and this source's role is **foundational precursor and period evidence** rather than a new topic. The strongest edge is to [increasing-computational-autonomy-relocates-human-effort](../notes/increasing-computational-autonomy-relocates-human-effort.md), which already names Bainbridge's ironies as the broader pattern behind its central claim (automation relocates rather than removes human effort) but cites the external DOI rather than the snapshot the KB now holds. Two further notes can draw on it as convergent evidence: [the-boundary-of-automation-is-the-boundary-of-verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md), for which Bainbridge's monitoring irony is a historically prior, independent arrival at "verification cost is the automation boundary," and [the-augmentation-automation-boundary-is-discrimination-not-accuracy](../notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md), for which Bainbridge names the exact loss of per-instance human discrimination once control goes fully automatic. Separately, the paper's skill-atrophy, vigilance-limit, and training-investment claims have no home note anywhere in `kb/notes/` — a writing opportunity, not a connection. A `compares-with` to the sibling snapshot [model-types-levels-human-interaction-automation](../sources/model-types-levels-human-interaction-automation.md) (Parasuraman–Sheridan–Wickens 2000) is real but is left for a future ingest to carry.
+Casebook notes for this domain already exist, and this source's role is **foundational precursor and period evidence** rather than a new topic. The strongest edge is to [increasing-computational-autonomy-relocates-human-effort](../notes/increasing-computational-autonomy-relocates-human-effort.md), which already names Bainbridge's ironies as the broader pattern behind its central claim (automation relocates rather than removes human effort) but cites the external DOI rather than the snapshot the KB now holds. Two further notes can draw on it as convergent evidence: [the-boundary-of-automation-is-the-boundary-of-verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md), for which Bainbridge's monitoring irony is a historically prior, independent arrival at "verification cost is the automation boundary," and [the-augmentation-automation-boundary-is-discrimination-not-accuracy](../notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md), for which Bainbridge names the exact loss of per-instance human discrimination once control goes fully automatic. Separately, the paper's skill-atrophy, vigilance-limit, and training-investment claims have no home note anywhere in `kb/notes/` — a writing opportunity, not a connection. A `compares-with` to the sibling snapshot [model-types-levels-human-interaction-automation](https://www.cs.uml.edu/~holly/91.550/papers/sheridan-autonomy.pdf) (Parasuraman–Sheridan–Wickens 2000) is real but is left for a future ingest to carry.
 
 ## Extractable Value
 

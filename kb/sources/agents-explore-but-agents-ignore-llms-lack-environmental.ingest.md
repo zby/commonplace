@@ -1,6 +1,10 @@
 ---
 description: "Solution-injection paper showing agents observe explicit task solutions in context but often fail to integrate them into action."
-source_snapshot: "agents-explore-but-agents-ignore-llms-lack-environmental-curiosity.md"
+source: https://arxiv.org/html/2604.17609v1
+captured: "2026-04-22"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 796cab7db761f58952fb36001a0309771ab41bd56fa47dc67972fe3753b72a4b
 ingested: "2026-04-22"
 type: kb/sources/types/ingest-report.md
 domains: [agent-reliability, evaluation, tool-loop, context-engineering]
@@ -8,14 +12,9 @@ domains: [agent-reliability, evaluation, tool-loop, context-engineering]
 
 # Ingest: Agents Explore but Agents Ignore
 
-Source: agents-explore-but-agents-ignore-llms-lack-environmental-curiosity.md
-Captured: 2026-04-22
-From: https://arxiv.org/html/2604.17609v1
-
 ## Classification
 
-Type: scientific-paper -- arXiv preprint with benchmark modifications, quantitative experiments across Terminal-Bench, SWE-Bench, and AppWorld, scaffold/tool/prompt/training ablations, and appendices testing alternative explanations.
-Domains: agent-reliability, evaluation, tool-loop, context-engineering
+ArXiv preprint with benchmark modifications, quantitative experiments across Terminal-Bench, SWE-Bench, and AppWorld, scaffold/tool/prompt/training ablations, and appendices testing alternative explanations.
 Author: Leon Englaender, Sophia Althammer, Ahmet Ustun, and Tom Sherborne are at Cohere; Matthias Galle is at Poolside. This is a credible agent-evaluation source, with the usual caveat that it is a vendor-adjacent preprint.
 
 ## Summary

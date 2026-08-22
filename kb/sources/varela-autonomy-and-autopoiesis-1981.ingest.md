@@ -1,6 +1,10 @@
 ---
 description: "Terminological guardrail separating autopoiesis, organizational closure, and general autonomy"
-source_snapshot: "varela-autonomy-and-autopoiesis-1981.md"
+source: https://mechanism.ucsd.edu/bill/teaching/w22/phil147/Varela%20-%201981%20-%20Autonomy%20and%20Autopoiesis.pdf
+captured: "2026-07-14"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: ddcc5d79bd0f0c3f2fa083fc4ea38e878e1946196f334c5b8a39ed6affeb14a0
 ingested: "2026-07-14"
 type: kb/sources/types/ingest-report.md
 domains: [autonomy, autopoiesis, organizational-closure]
@@ -8,14 +12,9 @@ domains: [autonomy, autopoiesis, organizational-closure]
 
 # Ingest: Autonomy and Autopoiesis
 
-Source: [varela-autonomy-and-autopoiesis-1981.md](./varela-autonomy-and-autopoiesis-1981.md)
-Captured: 2026-07-14
-From: https://mechanism.ucsd.edu/bill/teaching/w22/phil147/Varela%20-%201981%20-%20Autonomy%20and%20Autopoiesis.pdf
-
 ## Classification
 
-Genre: scientific-paper -- a theoretical systems-biology chapter that defines organizational closure and tests its reach against biological and social cases.
-Domains: autonomy, autopoiesis, organizational-closure
+A theoretical systems-biology chapter that defines organizational closure and tests its reach against biological and social cases.
 Author: Francisco J. Varela co-originated the autopoiesis framework and here explicitly narrows and generalizes its terminology.
 
 ## Summary

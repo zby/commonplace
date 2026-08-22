@@ -1,6 +1,13 @@
 ---
 description: "Practitioner architecture makes a governed repository the durable project substrate beneath replaceable models, sessions, roles, and interfaces"
-source_snapshot: "building-a-repo-centric-modular-agent-stack-2085784422339768686.md"
+source: https://x.com/yoheinakajima/status/2085784422339768686
+captured: "2026-08-10T10:52:37.315669+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: 04805b533168881ab7a6d15cec499b0b397faa32e43be258b76d7c107350f074
+status_id: 2085784422339768686
+conversation_id: 2085784422339768686
+post_count: 6
 ingested: "2026-08-10"
 type: kb/sources/types/ingest-report.md
 domains: [agent-architecture, context-engineering, agent-memory, orchestration]
@@ -8,14 +15,9 @@ domains: [agent-architecture, context-engineering, agent-memory, orchestration]
 
 # Ingest: Building a Repo-Centric Modular Agent Stack
 
-Source: [Building a Repo-Centric Modular Agent Stack](./building-a-repo-centric-modular-agent-stack-2085784422339768686.md)
-Captured: 2026-08-10
-From: https://x.com/yoheinakajima/status/2085784422339768686
-
 ## Classification
 
-Genre: practitioner-report -- Yohei Nakajima describes the modular architecture he says he currently uses for agentic projects and relates it to ActiveGraph, an approach he says he previously developed.
-Domains: agent-architecture, context-engineering, agent-memory, orchestration
+Yohei Nakajima describes the modular architecture he says he currently uses for agentic projects and relates it to ActiveGraph, an approach he says he previously developed.
 Author: @yoheinakajima is the designer reporting his own operating model. That gives the account direct authority for its design intent and practitioner vocabulary, but not independent evidence that the architecture improves reliability, substitution cost, or long-horizon performance.
 
 ## Summary

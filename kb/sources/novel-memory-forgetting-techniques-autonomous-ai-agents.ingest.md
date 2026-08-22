@@ -1,6 +1,10 @@
 ---
 description: Formula-based adaptive forgetting with constrained optimization for agent memory — the inspectable alternative to RL-trained memory policy, with empirical evidence that uncontrolled accumulation causes false memory propagation
-source_snapshot: novel-memory-forgetting-techniques-autonomous-ai-agents.md
+source: https://arxiv.org/html/2604.02280v1
+captured: "2026-04-04"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 6b678257a0799f11ea2ce44ed89a565f68c1a27f560ac8b39dcd2d9fd403e873
 ingested: "2026-04-04"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, context-efficiency, memory-curation, forgetting]
@@ -8,14 +12,9 @@ domains: [agent-memory, context-efficiency, memory-curation, forgetting]
 
 # Ingest: Novel Memory Forgetting Techniques for Autonomous AI Agents
 
-Source: novel-memory-forgetting-techniques-autonomous-ai-agents.md
-Captured: 2026-04-04
-From: https://arxiv.org/html/2604.02280v1
-
 ## Classification
 
-Type: scientific-paper — preprint with methodology, benchmark evaluation (LOCOMO, LOCCO, MultiWOZ 2.4), and quantitative results.
-Domains: agent-memory, context-efficiency, memory-curation, forgetting
+Preprint with methodology, benchmark evaluation (LOCOMO, LOCCO, MultiWOZ 2.4), and quantitative results.
 Author: Payal Fofadiya, Sunil Tiwari — not previously encountered in this KB; no strong prior signal on their experience. The work is evaluated on standard benchmarks, so the methodology can be assessed independently of author reputation.
 
 ## Summary

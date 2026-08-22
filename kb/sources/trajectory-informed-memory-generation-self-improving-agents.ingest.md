@@ -1,6 +1,10 @@
 ---
 description: "IBM pipeline extracts strategy, recovery, and optimization tips from trajectories for runtime retrieval; subtask granularity yields +14.3-point AppWorld gains under a narrow task-completion oracle"
-source_snapshot: trajectory-informed-memory-generation-self-improving-agents.md
+source: https://arxiv.org/html/2603.10600v1
+captured: "2026-03-13"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: d7aba0e339835a7b9840cb7469be7d854d889455f996df7a7d62c2dbafb7204c
 ingested: "2026-03-13"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, deploy-time-learning, trajectory-analysis, distillation]
@@ -8,15 +12,9 @@ domains: [agent-memory, deploy-time-learning, trajectory-analysis, distillation]
 
 # Ingest: Trajectory-Informed Memory Generation for Self-Improving Agent Systems
 
-Source: trajectory-informed-memory-generation-self-improving-agents.md
-Captured: 2026-03-13
-From: https://arxiv.org/html/2603.10600v1
-
 ## Classification
 
-Type: scientific-paper — peer-reviewed-track preprint with explicit methodology, controlled evaluation against baselines on a standard benchmark (AppWorld), ablation studies, and academic citations.
-
-Domains: agent-memory, deploy-time-learning, trajectory-analysis, distillation
+Peer-reviewed-track preprint with explicit methodology, controlled evaluation against baselines on a standard benchmark (AppWorld), ablation studies, and academic citations.
 
 Author: Gaodan Fang, Vatche Isahagian, K. R. Jayaram, Ritesh Kumar, Vinod Muthusamy, Punleuk Oum, Gegi Thomas — IBM Research. Credibility comes from institutional backing and work on enterprise agent infrastructure; this is their first paper in the agent memory space specifically.
 

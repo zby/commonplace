@@ -1,6 +1,10 @@
 ---
 description: "Architecture-side evidence that a parametric model's intermediates can be made inspectable and correctable by design rather than by interpretability tooling — but only per-inference, not retained"
-source_snapshot: "kb/sources/concept-bottleneck-models.md"
+source: https://arxiv.org/abs/2007.04612
+captured: "2026-07-26"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 3b61ecec073d95bff28a4eeb00c47e50b6d0e5be8c78255618d9dbfe8d651b9b
 ingested: "2026-07-26"
 type: kb/sources/types/ingest-report.md
 domains: [interpretability, addressability, human-oversight]
@@ -8,14 +12,9 @@ domains: [interpretability, addressability, human-oversight]
 
 # Ingest: Concept Bottleneck Models
 
-Source: [concept-bottleneck-models.md](./concept-bottleneck-models.md)
-Captured: 2026-07-26
-From: <https://arxiv.org/abs/2007.04612>
-
 ## Classification
 
-Genre: scientific-paper -- an ICML 2020 architecture paper with a stated model family, three training variants, two benchmark datasets, accuracy comparisons against end-to-end baselines, an intervention protocol, and reported failure modes. The genre recorded on the snapshot is correct. The snapshot was first captured from the arXiv abstract page and then extended in place with a body extraction covering the training variants, datasets, results, intervention procedure, and the authors' own caveats, so the specifics cited below are checked against the paper rather than inferred from the abstract.
-Domains: interpretability, addressability, human-oversight
+An ICML 2020 architecture paper with a stated model family, three training variants, two benchmark datasets, accuracy comparisons against end-to-end baselines, an intervention protocol, and reported failure modes. The genre recorded on the snapshot is correct. The snapshot was first captured from the arXiv abstract page and then extended in place with a body extraction covering the training variants, datasets, results, intervention procedure, and the authors' own caveats, so the specifics cited below are checked against the paper rather than inferred from the abstract.
 Author: Pang Wei Koh, Thao Nguyen, Yew Siang Tang, Stephen Mussmann, Emma Pierson, Been Kim, Percy Liang (Stanford, Google Brain). High authority signal; Kim and Liang are established in interpretability and robust machine learning respectively, and the paper is widely cited as the modern restatement of the concept-bottleneck idea.
 
 ## Summary

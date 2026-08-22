@@ -1,6 +1,10 @@
 ---
 description: "Harness self-improvement synthesis separates editable deployment machinery from the model, but its benchmark evidence remains bounded by fixed objectives, evaluators, and outer loops"
-source_snapshot: "harness-engineering-for-self-improvement.md"
+source: https://lilianweng.github.io/posts/2026-07-04-harness/
+captured: "2026-08-04"
+capture: web-fetch
+genre: conceptual-essay
+snapshot_sha256: d03b7654b417f28cb3baedab918f5d6cbe276e26e1e0c43a729be7c35a6d8eba
 ingested: "2026-08-04"
 type: kb/sources/types/ingest-report.md
 domains: [harness-engineering, self-improvement, context-engineering, evaluation]
@@ -8,14 +12,9 @@ domains: [harness-engineering, self-improvement, context-engineering, evaluation
 
 # Ingest: Harness Engineering for Self-Improvement
 
-Source: [harness-engineering-for-self-improvement.md](harness-engineering-for-self-improvement.md)
-Captured: 2026-08-04
-From: https://lilianweng.github.io/posts/2026-07-04-harness/
-
 ## Classification
 
-Genre: conceptual-essay -- a research synthesis that organizes many empirical papers and practitioner systems around one argument, but presents no new experiment of its own.
-Domains: harness-engineering, self-improvement, context-engineering, evaluation
+A research synthesis that organizes many empirical papers and practitioner systems around one argument, but presents no new experiment of its own.
 Author: Lilian Weng; the article is a detailed, cited technical synthesis by an established machine-learning writer, but its cross-paper conclusions remain the author's interpretation rather than an independently evaluated result.
 
 ## Summary

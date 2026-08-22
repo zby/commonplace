@@ -1,6 +1,10 @@
 ---
 description: Embedding-memory paper arguing that interference and low effective dimensionality, not time decay, drive forgetting and false recall in similarity retrieval.
-source_snapshot: the-geometry-of-forgetting.md
+source: https://arxiv.org/html/2604.06222v1
+captured: "2026-04-09"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 06960601e91a07701d6fed4b57dcecdfd74576e26ca6a6bc8bed1940d1354b21
 ingested: "2026-04-09"
 type: kb/sources/types/ingest-report.md
 domains: [agent-memory, retrieval-architecture, forgetting, learning-theory]
@@ -8,14 +12,9 @@ domains: [agent-memory, retrieval-architecture, forgetting, learning-theory]
 
 # Ingest: The Geometry of Forgetting
 
-Source: the-geometry-of-forgetting.md
-Captured: 2026-04-09
-From: https://arxiv.org/html/2604.06222v1
-
 ## Classification
 
-Type: scientific-paper — arXiv preprint with controlled experiments, quantitative comparisons to human-memory benchmarks, explicit methods, and citations.
-Domains: agent-memory, retrieval-architecture, forgetting, learning-theory
+ArXiv preprint with controlled experiments, quantitative comparisons to human-memory benchmarks, explicit methods, and citations.
 Author: Sambartha Ray Barman, Andrey Starenky, Sophia Bodnar, Nikhil Narasimhan, and Ashwin Gopinath — startup-affiliated authors plus an MIT-affiliated corresponding author; useful signal, but for this KB the experimental design matters more than author prestige.
 
 ## Summary

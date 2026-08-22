@@ -1,6 +1,10 @@
 ---
 description: S3-backed CLI coordination tool for multi-agent systems — exposes how file-backed coordination depends on workload-specific consistency and authority requirements
-source_snapshot: arrmlet-tracecraft.md
+source: https://github.com/Arrmlet/tracecraft
+captured: "2026-04-04"
+capture: gh-cli
+genre: tool-announcement
+snapshot_sha256: f07d19410626d51aab820f69307c73ee589d558635bfa323a5f44fb362b60945
 ingested: "2026-04-04"
 type: kb/sources/types/ingest-report.md
 domains: [multi-agent-coordination, agent-infrastructure, distributed-systems]
@@ -8,15 +12,9 @@ domains: [multi-agent-coordination, agent-infrastructure, distributed-systems]
 
 # Ingest: tracecraft
 
-Source: arrmlet-tracecraft.md
-Captured: 2026-04-04
-From: https://github.com/Arrmlet/tracecraft
-
 ## Classification
 
-Type: tool-announcement — Open-source tool release (PyPI package `tracecraft-ai`, MIT licensed). README-driven description of primitives and usage, no empirical evaluation, no architecture paper behind it.
-
-Domains: multi-agent-coordination, agent-infrastructure, distributed-systems
+Open-source tool release (PyPI package `tracecraft-ai`, MIT licensed). README-driven description of primitives and usage, no empirical evaluation, no architecture paper behind it.
 
 Author: Arrmlet (GitHub). Unknown outside this project; the repo has 7 stars. The tool itself is the signal, not the author's credentials.
 

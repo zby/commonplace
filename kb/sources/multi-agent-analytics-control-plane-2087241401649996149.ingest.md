@@ -1,6 +1,13 @@
 ---
 description: "A practitioner redesign centralizes diagnostic authority while retaining fact-returning sub-agents, deterministic anomaly detection, and graph-bounded hypothesis traversal"
-source_snapshot: "multi-agent-analytics-control-plane-2087241401649996149.md"
+source: https://x.com/monokern/status/2087241401649996149
+captured: "2026-08-12T11:04:23.078339+00:00"
+capture: xdk
+genre: practitioner-report
+snapshot_sha256: f18c1bad3d543fd929be683b4f41375e64cbd2966281b1122ec9576e00100e3a
+status_id: 2087241401649996149
+conversation_id: 2087241401649996149
+post_count: 1
 ingested: "2026-08-12"
 type: kb/sources/types/ingest-report.md
 domains: [agent-orchestration, context-engineering, analytical-systems, knowledge-graphs]
@@ -8,14 +15,9 @@ domains: [agent-orchestration, context-engineering, analytical-systems, knowledg
 
 # Ingest: Why Multi-Agent Pipelines Fail for Complex Analytics
 
-Source: [multi-agent-analytics-control-plane-2087241401649996149.md](multi-agent-analytics-control-plane-2087241401649996149.md)
-Captured: 2026-08-12T11:04:23.078339+00:00
-From: https://x.com/monokern/status/2087241401649996149
-
 ## Classification
 
-Genre: practitioner-report -- the post presents a claimed production failure, replacement architecture, troubleshooting guidance, and implementation roadmap rather than a general essay alone.
-Domains: agent-orchestration, context-engineering, analytical-systems, knowledge-graphs
+The post presents a claimed production failure, replacement architecture, troubleshooting guidance, and implementation roadmap rather than a general essay alone.
 Author: @monokern claims direct knowledge of a ZS Associates analytics redesign, but the snapshot provides no attributable role, code, data, or independent account with which to verify that access.
 
 ## Summary
