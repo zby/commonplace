@@ -113,12 +113,17 @@ Continue at `cp-skill-ingest` Step 2 with:
   `role: implementation` and `source: {commit URL}`;
 - the claim-to-code classifications and pinned file citations as drafting
   context;
-- the paper version, checkout paths, reviewed commits, and execution status as
-  final-report context.
+- the execution status as both drafting and final-report context; and
+- the paper version, checkout paths, and reviewed commits as final-report-only
+  context.
 
-During the normal draft step, include `secondary_sources` in frontmatter and
-add a `## Code Grounding` section after `## Summary`. Link pinned revisions and
-source files. State the claim classifications and execution status. Carry findings
+Pass only the `secondary_sources`, claim-to-code classifications, pinned file
+citations, evidence boundaries, and execution status to the worker executing
+[Draft an ingest report](./draft-ingest-report.md). Keep the paper version,
+checkout paths, and reviewed commits in the parent as final-report context. The
+worker's draft must include `secondary_sources` in frontmatter and add a `##
+Code Grounding` section after `## Summary`. Link pinned revisions and source
+files. State the claim classifications and execution status. Carry findings
 into `Connections Found`, `Extractable Value`, and `Limitations (our opinion)`
 where they change the judgment.
 

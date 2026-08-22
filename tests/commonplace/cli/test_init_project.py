@@ -60,6 +60,9 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
         tmp_path / "kb" / "commonplace" / "instructions" / "ingest-paper-with-code.md"
     ).is_file()
     assert (
+        tmp_path / "kb" / "commonplace" / "instructions" / "draft-ingest-report.md"
+    ).is_file()
+    assert (
         tmp_path / "kb" / "commonplace" / "instructions" / "cp-skill-health-check" / "SKILL.md"
     ).is_file()
     assert (tmp_path / "kb" / "commonplace" / "instructions" / "review-gates").is_dir()
