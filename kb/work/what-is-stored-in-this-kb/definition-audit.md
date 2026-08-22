@@ -6,12 +6,16 @@ Direct-backlink counts are included only as migration-cost evidence. High use do
 
 ## Disposition test
 
-- **Theory vocabulary:** theories need a stable distinction whose applicability can be contested across possible systems.
-- **Machinery vocabulary:** the term is true or binding because Commonplace chose, implemented, or stipulated a system boundary, contract, workflow, or catalogue.
+This is the workshop's [belief/choice boundary](./working-content-model.md) applied to vocabulary: would the term still mean this if Commonplace had chosen differently?
+
+- **Theory vocabulary (belief):** the term names a stable distinction whose applicability can be contested across possible systems. It survives the counterfactual.
+- **Machinery vocabulary (choice):** the term is true or binding because Commonplace chose, implemented, or stipulated a system boundary, contract, workflow, or catalogue. Had the choice gone otherwise, the term would not exist or would mean something else.
 - **Mixed:** independent propositions have different homes and should be split or folded separately.
 - **Retire candidate:** ordinary wording or an existing concept can do the work without a separate canonical term.
 
 A definition can describe machinery and remain theoretical. `behavioral authority`, for example, is a general way to analyse consumers, channels, and force across systems. Conversely, `text contract` is machinery vocabulary because its canonical meaning is constituted by Commonplace's chosen `COLLECTION.md` architecture.
+
+Stipulated vocabulary is the trap this test exists to catch. A stipulated term has a stable meaning, and stability reads as independence — but a term that is stable *because* it was fixed by decision is a choice wearing belief's most convincing disguise. Ask what makes the meaning hold, not whether it holds firmly.
 
 ## Strong theory-vocabulary candidates
 

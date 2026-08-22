@@ -16,6 +16,10 @@ The first attempted content split—derived content versus committed content—f
 
 The design-proposal discussion then established another boundary: a proposal is not a special information kind. It is a workflow surface for considering a possible process or system choice. The beliefs, requirements, alternatives, and candidate selections inside it retain their own kinds; adoption makes a residual selection operative.
 
+The workshop then acquired its organizing rule. **`kb/notes/` holds beliefs; `kb/reference/` holds choices** — notes are about the design space, reference about the selections Commonplace made within it. This promotes the content-kind axis to the collection boundary and demotes the communicative-profile axis, which is separately being retired in favour of [collection prototypes](./tasks/retire-profiles-for-collection-prototypes.md). It also survives the objection that killed the derived/committed split, because it asks what content *is* rather than how it was produced.
+
+Two independent arguments support it. **Maintenance:** beliefs are revised against evidence and rewritten in place, while choices are superseded and the earlier choice stays a fact — different regimes the profile labels had to state as a separate convention. **Publishability:** notes are distilled into articles for readers with no KB context, so a note may name a choice only as a bound variable — universally quantified, or existentially as a witness. A free choice-variable does not survive publication, and binding it is what produces explanatory-reach. Consequences are worked out in [the content model](./working-content-model.md).
+
 The text-contract audit found 30 direct backlinks from 22 files and traced the present artifact to commit `1ac2171d` (2026-07-09), which replaced the earlier `register` definition added by `7eb616d5` (2026-04-12). Its terms name the collection-contract architecture chosen by Commonplace. That makes their canonical description a reference concern even if the vocabulary is stable. No relocation has been executed; the decision is now an explicit workshop task.
 
 The prior conversation was handed off through `/tmp/commonplace-documentation-handoff.md`. Because `/tmp` is ephemeral, the load-bearing conclusions from it are restated above rather than linked as durable evidence.
@@ -37,12 +41,16 @@ This list is a starting inventory, not the final ontology. Requirements, inherit
 
 ## Working guard
 
-An artifact does not belong in theory merely because it defines a stable term, nor in reference merely because it discusses machinery. The test is what makes its content hold:
+The boundary is belief versus choice, and the operative question is the counterfactual: **would this still be true if Commonplace had chosen differently?** A belief survives it; a choice is what it varies.
+
+An artifact does not belong in theory merely because it defines a stable term, nor in reference merely because it discusses machinery. Subject matter is not content kind. The test is what makes its content hold:
 
 - A theoretical definition sharpens a transferable distinction needed by truth-apt claims about possible systems.
 - A reference definition names Commonplace's chosen architecture, current contract, or implemented classification.
 - An instruction prescribes how an operator should act.
 - A mixed artifact is split or routed proposition by proposition rather than assigned by its dominant vocabulary.
+
+Failing the test has two repairs, not one. A theory claim that depends on a Commonplace choice can be moved to reference, or the choice can be bound as a variable and the claim kept — the second is usually better, because it adds reach instead of relocating content.
 
 The structural `definition` type does not decide this placement. [Reference already contains a definition-typed artifact](../../reference/definitions/collection.md), so collection and type are demonstrably separate.
 
@@ -51,12 +59,13 @@ The structural `definition` type does not decide this placement. [Reference alre
 - [Working content model](./working-content-model.md) — reconstruct the candidate retained payload and the tests that separate its roles.
 - [Definition audit](./definition-audit.md) — initial disposition of all 23 artifacts under `kb/notes/definitions/`, including migration cost from direct backlinks.
 - [Text contract and profile disposition](./tasks/text-contract-and-profiles.md) — decide whether to fold the vocabulary into the profile catalogue, keep a small reference definition, or retire the standalone artifact.
+- [Retire profiles for collection prototypes](./tasks/retire-profiles-for-collection-prototypes.md) — first executable step: profiles bind nothing at use time and are prototypes copied at collection-creation time, so retire the term, define `collection prototype` in reference, and clear the always-loaded gloss. Deliberately leaves `text-contract` in place.
 - Reassess the generator/cache model against directly executed natural-language system definition and against rationale retained only for future change.
 - Derive collection-contract and type-contract changes only after the content model and definition dispositions agree.
 
 ## What closes this workshop
 
-- A content model states what Commonplace retains without conflating profile, content kind, lineage, authority, or recoverability.
+- A content model states what Commonplace retains without conflating collection prototype, content kind, lineage, authority, or recoverability, and works out the belief/choice boundary's consequences for every payload class.
 - Every current definition has a reasoned disposition: keep in theory, move or fold into reference, move operational rules into instructions, split, or retire.
 - The text-contract/profile task has one selected target and a complete backlink migration plan.
 - Required changes to `AGENTS.md`, collection contracts, type guidance, indexes, and durable artifacts are recorded as explicit implementation handoffs.
@@ -67,6 +76,8 @@ The structural `definition` type does not decide this placement. [Reference alre
 - [x] Reconstruct the conversation and governing question.
 - [x] Read and provisionally classify all 23 theory-collection definitions.
 - [x] Record the text-contract/profile disposition task.
+- [x] Scope the profile retirement as a separable first step.
+- [x] Adopt belief/choice as the collection boundary and align the content model to it.
 - [ ] Test the candidate content model against representative artifacts in every collection.
 - [ ] Resolve the mixed and machinery-first definitions.
 - [ ] Select and execute durable migrations.
