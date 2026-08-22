@@ -1,0 +1,104 @@
+# Promote the belief/choice boundary into binding artifacts
+
+## Status
+
+Open, unassigned. Five steps, ordered. Each step's gate is the reason it sits
+where it does — the ordering is the part worth following, not the step list.
+
+Everything this task promotes currently exists only in this workshop, which is
+a consumable layer. Until step 2 lands, the boundary has no reader: agents
+writing notes load `COLLECTION.md`, never `kb/work/`.
+
+## Gate before step 2
+
+The [bound-variable sweep](./bound-variable-sweep.md) must report first. It
+decides whether the contract clause is stated flatly or needs a transition
+provision. Steps 1, 3, 4, and 5 do not depend on it.
+
+## 1. Promote the two belief drafts
+
+[Superseded choices are retained](../draft-superseded-choices-are-retained-superseded-beliefs-are-not.md)
+and [a theory may name a choice only as a bound variable](../draft-a-theory-may-name-a-choice-only-as-a-bound-variable.md).
+Both are bare bones and need full note treatment through `cp-skill-write`.
+
+Each draft carries a "Not already covered" section naming the incumbent it was
+scoped against. Verify that scoping still holds before writing — if an
+incumbent moved, the draft's contribution may have evaporated.
+
+First, because the draft ADR's footer rests on both. Promoting the ADR first
+leaves dangling links.
+
+Watch for a tag-README carrying `complete: true` that must gain an entry, or
+validation hard-fails. `artifact-analysis-README.md` needed exactly this for
+the last note in this thread.
+
+## 2. Promote the ADR and apply the contract edits
+
+The [draft ADR](../draft-adr-collection-placement-follows-content-kind.md) and
+the [proposed edits](../draft-collection-contract-edits.md), which give exact
+replacement text for five locations across the two contracts.
+
+Claim the next free ADR number at execution time. The draft says 070 was free
+on 2026-08-23; another session may have taken it since.
+
+The edits file already records one conflict it does not resolve: the notes
+exclusion "descriptions of how a specific system works" contradicts the
+proposed opening, since an observation about this system is a belief that
+stays. A narrower wording is proposed there — confirm it before applying, and
+check whether the sweep surfaced others.
+
+This is the step that gives the boundary a reader. Everything after it becomes
+an application of a stated rule rather than an argument.
+
+## 3. Decide the text-contract home
+
+[The existing task](./text-contract-and-profiles.md) has options A, B, and C
+with decision tests and a post-ADR-069 backlink recount already done. It was
+stopped pending a general placement rule; step 2 supplies it.
+
+## 4. Act on the relocation candidates
+
+Three reference artifacts the ADR names as candidates and does not authorize:
+`tag-readme-trace-observed-causal-connection.md`,
+`harness-sub-agent-model-selection-regression.md`, and
+`commonplace-as-a-reflective-system.md`.
+
+Judge each against the rule rather than moving all three. The harness
+regression is the doubtful one — it may be a source observation about an
+external tool rather than a belief about this system.
+
+Present the candidate list and wait for maintainer approval before moving
+anything. Use `commonplace-relocate-note`, never `git mv` — it rewrites
+consumers and adds the redirect.
+
+After step 2, so a move applies a stated rule instead of a reviewer's opinion.
+
+## 5. Disposition the remaining definitions
+
+The [definition audit](../definition-audit.md) left machinery-first candidates
+(`answerability`, `text-contract`) and mixed candidates (`discovery-lifecycle`,
+`directed-reading`) undecided, plus a set flagged "keep provisionally" pending
+the content model. The model has since settled.
+
+The audit's own disposition test is the boundary applied to vocabulary, so
+this is mechanical once step 2 binds — except for the stipulation trap the
+audit records: a term stable *because* it was fixed by decision is a choice
+wearing belief's disguise.
+
+## Deliberately not in this sequence
+
+Current-state descriptions — `architecture.md`, `lib-modules.md`,
+`commands.md`, `storage-architecture.md`, `freshness-schemas.md`, and the
+code-architecture halves of `review-architecture.md` and
+`freshness-architecture.md`. The rule flags them as belonging to neither
+collection; disposing of them (generate, register for staleness, or minimize)
+depends on the recovery test rather than the placement rule and can run in
+parallel with any step here.
+
+## Completion condition
+
+The boundary binds in both collection contracts, an ADR records it, the two
+supporting notes are live and validated, the text-contract term has one
+canonical owner, and every definition in the audit has a disposition. The
+workshop's remaining open item is then the current-state descriptions, and it
+can close or hand that off.
