@@ -69,8 +69,7 @@ These are the real global affordances. They're thin — which is the point.
 
 Relevant Notes:
 
-- [type-loading](../reference/type-loading.md) — current-state: how Commonplace instantiates the thin-global, directory-scoped split today, including which types live in `kb/types/` vs `kb/*/types/`
-- [type-system](../reference/available-types.md) — current-state: the full Commonplace type inventory this argument thins out
+- [collections and types](../reference/collections-and-types.md) — current-state: how Commonplace instantiates the thin-global, collection-local split and resolves both scopes by path
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — foundation: the loading economy argument applies to types the same way it applies to instructions
 - [why directories despite their costs](./why-directories-despite-their-costs.md) — directories already carry local conventions; this note proposes making that load-bearing for types
 - [document types should be verifiable](./document-types-should-be-verifiable.md) — the verifiability principle still applies, but verification becomes directory-scoped

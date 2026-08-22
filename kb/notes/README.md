@@ -11,7 +11,7 @@ The central thread is [deploy-time learning](./retained-artifacts-enable-persist
 
 ## How to read these notes
 
-Titles are assertions, not topics, so following a link reads as a chain of reasoning: `since [title]` and `because [title]` compose into an argument rather than a table of contents. Each note carries a maturity mark (`seedling` → `current`) and links to the sources or notes it rests on, so you can tell how much weight a claim holds before you build on it.
+Titles are assertions, not topics, so following a link reads as a chain of reasoning: `since [title]` and `because [title]` compose into an argument rather than a table of contents. Each note carries a discriminating description and links to the sources or notes it rests on. An optional `user-verified: true` records explicit human attestation to the current contents; its absence makes no claim about truth, maturity, or currency.
 
 ## What belongs here
 

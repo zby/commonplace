@@ -51,22 +51,22 @@ without promotion is a signal. This mirrors the broader [constraining
 pattern](./methodology-enforcement-is-constraining.md): practices start
 stochastic and harden as they prove out.
 
-## Why free-form, not enum
+## Why path-valued, not a closed enum
 
-The `type` field is a string, not validated against a list. This is deliberate:
+The `type` field points to a type-spec document rather than selecting from one framework-wide enum. This keeps the set extensible without making type identity free-form:
 
 - **New domains.** Workshop documents, scenario types, recurring tasks — these emerged after the initial type system. A closed enum would have required updating a global definition for each.
 - **User adaptation.** Installed knowledge bases serve different purposes. A research project might need `experiment` and `literature-review` types. A product team might need `user-story` and `retrospective`. These should be addable locally.
-- **Tolerance of fuzziness.** Types are assigned by agents and humans, not compilers. The system must tolerate misclassification — nothing breaks if a type is wrong or novel. Types are search aids, not enforcement boundaries.
+- **Path identity.** A new value is valid only when its path resolves to a real type spec. Different paths remain different contracts even if their specs use the same shorthand name.
 
-Convention establishes common values. Directory `types/` folders document structural expectations. But the system doesn't require permission to use a new value.
+Type choice remains a fallible authoring judgment, but the selected contract is an enforcement boundary: its schema and type-conformance review apply to the artifact. Extensibility comes from adding a type spec, not from inventing an unresolvable value.
 
 ---
 
 Relevant Notes:
 
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — foundation: the verifiability principle that shapes what types can be
-- [available types](../reference/available-types.md) — the taxonomy: base types table and migration history
+- [collections and types](../reference/collections-and-types.md) — the current path-valued type model and examples
 - [directory-scoped-types-are-cheaper-than-global-types](./directory-scoped-types-are-cheaper-than-global-types.md) — the economic argument for thin global types and local extension
 - [a-knowledge-base-holds-theories-descriptions-and-prescriptions-with-asymmetric-linking](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) — explains the content-layer role that type and collection jointly identify
 - [types-give-agents-structural-hints-before-opening-documents](./types-give-agents-structural-hints-before-opening-documents.md) — develops: the navigation role of types

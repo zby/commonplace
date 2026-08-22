@@ -25,7 +25,7 @@ A task in `tasks/active/` has `type: task` defining its structure (Goal, Tasks c
 
 A `structured-claim` works identically whether it lives in `notes/`, `notes/definitions/`, or `claw-design/`. The directory carries provenance or topic grouping; the type carries structural expectations.
 
-If types depended on directories, you'd need to redefine types whenever someone creates a new subdirectory. If directories encoded type information, you'd lose the freedom to organise by whatever dimension matters — topic, lifecycle, provenance, project area. The [available types](../reference/available-types.md) system should work across any directory structure. Validation, search, and linking operate on individual documents via frontmatter, not on directory conventions.
+If types depended on arbitrary content directories, you'd need to redefine types whenever someone creates a new subdirectory. If those directories encoded type information, you'd lose the freedom to organise by whatever dimension matters — topic, lifecycle, provenance, project area. In the [current type system](../reference/collections-and-types.md), an artifact points to its contract directly; subdirectories inside the owning collection do not determine its type.
 
 ## Operational costs of directories
 
@@ -59,5 +59,5 @@ Relevant Notes:
 
 - [Canonical files may defer a shared schema while database authority remains a separate commitment](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md) — supplies the local canonical-file premise whose human navigation directories extend; it does not settle the substrate comparison
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — local conventions per directory are proto-workshop subsystems
-- [available types](../reference/available-types.md) — the type system that operates independently of directory structure
+- [collections and types](../reference/collections-and-types.md) — the path-valued type system that operates independently of arbitrary content subdirectories
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — routing decisions are part of the context loading problem

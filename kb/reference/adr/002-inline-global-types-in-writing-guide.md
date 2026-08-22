@@ -47,5 +47,4 @@ Directory-local types (`adr`, `index`, `related-system`, `source-review`, task t
 
 Relevant Notes:
 
-- [type-loading](../type-loading.md) — shows the resulting inlining exception in the shipped type-loading model
 - [scenario-architecture](../scenario-architecture.md) — the scenario view that makes the shared load path visible

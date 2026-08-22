@@ -62,5 +62,5 @@ Relevant Notes:
 
 - [link strength is encoded in position and prose](./link-strength-is-encoded-in-position-and-prose.md) — link strength weights feed into note scoring: strong inbound links count more than weak ones
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — note scores are the composite of graph-topology and content-proxy signals this note catalogues
-- [available types](../reference/available-types.md) — type as a scoring dimension depends on the type system being meaningful
+- [collections and types](../reference/collections-and-types.md) — type as a scoring dimension depends on path-valued contracts being meaningful
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — note scoring is what makes automated curation tractable at scale

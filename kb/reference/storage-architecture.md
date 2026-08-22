@@ -22,7 +22,7 @@ All authored content lives as markdown with YAML frontmatter under `kb/`. Normal
 | `kb/instructions/` | Skills and procedural guidance |
 | `kb/types/`, `kb/*/types/` | Global and collection-scoped type definitions |
 
-Document type is declared by `type:` in frontmatter and validated against the matching schema, resolved from the owning collection's `types/` directory with fallback to global `kb/types/`. See [available-types.md](./available-types.md) and [type-loading.md](./type-loading.md).
+Document type is declared by a path-valued `type:` pointer in frontmatter. The validator opens that exact global or collection-local type spec and validates the artifact against its schema; it does not perform a collection-local lookup with global fallback. See [collections and types](./collections-and-types.md).
 
 ## Version control is expected, not a correctness dependency
 

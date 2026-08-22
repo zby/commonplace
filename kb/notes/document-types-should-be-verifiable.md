@@ -100,7 +100,7 @@ The practical test: an agent that ignores the type field entirely and reads ever
 
 Relevant Notes:
 
-- [available types](../reference/available-types.md) — the spec implementing this design: base types, traits, and the migration table from old flat types
+- [collections and types](../reference/collections-and-types.md) — implemented-by: the current path-valued type model and its schema/review enforcement split
 - [automated-tests-for-text](./automated-tests-for-text.md) — enables enforcement: the test pyramid provides the "compiler" for type contracts (deterministic checks for structure, LLM rubrics for judgment-dependent traits)
 - [Selecting an LLM output fixes a result, not its interpretation](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — grounds: type assignment selects one classification for operative use without proving that it is the only valid reading, so the chosen classification still needs verification
 - [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — types and traits are the navigation hints this note describes; they tell agents what a document offers before opening it

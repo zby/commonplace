@@ -1,94 +1,108 @@
 ---
-description: "Explains how collection-level text and link contracts combine with path-referenced structural type contracts, including the COLLECTION.md surface consumed by write and connect workflows"
+description: "How Commonplace composes collection and type contracts, uses path-valued type pointers, and locates global and collection-local type specs"
 type: kb/types/note.md
 tags: []
 ---
 
 # Collections and types
 
-Every authored artifact in Commonplace makes two independent decisions:
+Every authored artifact in Commonplace is governed by two independent contracts:
 
-- **Which collection it lives in** — picks the *register* (theoretical, descriptive, prescriptive), the writing conventions, and the rules for how it links to artifacts in other collections.
-- **Which type it instantiates** — picks the *structural contract*: what frontmatter the artifact carries and what required sections the body must contain.
+- Its location selects a **collection**. The nearest containing `COLLECTION.md` supplies the text contract: purpose, quality goal, title and description conventions, lifecycle, and outbound-link rules.
+- Its `type:` frontmatter points to a **type spec**. The type spec supplies the artifact's structural and semantic contract: frontmatter fields, required sections, schema, authoring guidance, and any template.
 
-Collections and types are orthogonal. The collection answers "what kind of thing does this aim to be (a claim, a description, a procedure)?"; the type answers "what shape does the file have?". They meet in `COLLECTION.md`: each collection's `## Types` section lists the type-spec docs it offers for new writes, and an artifact's `type:` frontmatter stores the path of the chosen type-spec doc directly.
+The collection answers what role the artifact serves in this part of the KB. The type answers what shape the artifact takes. A `note` in `kb/notes/` is theoretical, while a `note` in `kb/reference/` describes the shipped system; both use the same structural type contract. A collection does not redefine the meaning of a type's fields.
 
-Read this document to get the model. For the type catalog see [available-types](./available-types.md); for the resolution mechanics see [type-loading](./type-loading.md); for the precise definition of "collection" see [definitions/collection](./definitions/collection.md).
+## How an artifact uses a type
 
-## Collections
+A typed artifact stores the path to its type spec directly:
 
-A **collection** is a subtree under `kb/` whose root contains `COLLECTION.md`. That file is the local authoring and routing contract for artifacts in the subtree: purpose, register or mode, quality goal, placement boundaries, title and description conventions, type guidance, outbound-link policy, labels, search guidance, and lifecycle rules. Subdirectories inside a collection are normally *areas* under the same contract. A `COLLECTION.md` inside a non-collection namespace, such as installed `kb/commonplace/notes/`, is an ordinary collection; a `COLLECTION.md` inside another collection is invalid.
+```yaml
+---
+description: Why this artifact is useful to a reader
+type: kb/types/note.md
+tags: []
+---
+```
 
-The current top-level source-repo collections:
+The pointer may be repository-relative (`kb/...`) or file-relative (`./...` or `../...`). It must end in `.md`, resolve beneath `kb/`, and identify a type-spec document. Absolute paths, URLs, repository-relative paths containing `..`, missing files, and `kb/types/text.md` as an explicit type all fail validation.
 
-| Collection | Register | Quality goal |
+File-relative pointers keep collection-local types stable when shipped content moves under an installed namespace. For example, an ADR under `kb/reference/adr/` can carry:
+
+```yaml
+type: ../types/adr.md
+```
+
+The path is the type's identity. Two type specs with the same `name:` at different paths are different contracts.
+
+For an existing artifact, an agent follows `type:` and opens that document; no catalogue lookup is needed. When writing a new artifact, the agent first selects the collection, then selects and opens a type spec appropriate to that collection before drafting.
+
+The current writing skills use each collection's `## Types` section as the shorthand selection menu for new writes. Explicit type resolution does not use that menu: the validator follows the stored path directly. It currently checks that the pointer and target are valid, loads the type's schema, and validates the artifact, but does not enforce that a collection-local type belongs to the artifact's collection.
+
+## What a type spec contains
+
+A type spec is itself a typed Markdown document. Its frontmatter has this shape:
+
+```yaml
+---
+type: kb/types/type-spec.md
+name: adr
+description: Architecture decision record for accepted or proposed system decisions
+schema: ./adr.schema.yaml
+---
+```
+
+The body contains the natural-language authoring contract and may include a template. `schema:` points to a JSON Schema sidecar expressed as YAML; `schema: null` means that the type has no structural schema. [`kb/types/type-spec.md`](../types/type-spec.md) is the self-referential root contract.
+
+The type contract is consumed in two ways:
+
+1. `commonplace-validate` checks the artifact against the resolved schema and the framework's deterministic base rules.
+2. Type-conformance review uses the type spec's body as the semantic criterion, covering requirements that a schema cannot decide.
+
+The collection contract is reviewed separately against the artifact's containing `COLLECTION.md`. This keeps structural type semantics independent from collection-specific writing and routing conventions.
+
+## Where type specs live
+
+The filesystem is the live inventory. There are two normal locations:
+
+- **Global type specs** live in [`kb/types/`](../types/README.md). They are intended for reuse across collections.
+- **Collection-local type specs** live in the owning collection's `types/` directory, such as [`kb/reference/types/`](./types/adr.md), [`kb/notes/types/`](../notes/types/structured-claim.md), and [`kb/sources/types/`](../sources/types/snapshot.md).
+
+Open those directories—or follow an artifact's `type:` pointer—to see the current definitions. A prose list elsewhere is only a snapshot and is not the authority for what exists.
+
+## Common examples
+
+These examples illustrate the model; they are not an exhaustive catalogue.
+
+| Type | Scope | Typical use |
 |---|---|---|
-| `kb/notes/` | theoretical | explanatory-reach |
-| `kb/reference/` | descriptive | fidelity + economy |
-| `kb/instructions/` | prescriptive | executability + precision |
-| `kb/agent-memory-systems/` | descriptive (with root-level analysis exceptions) | fidelity + economy |
-| `kb/agentic-systems/` | descriptive | fidelity + economy |
-| `kb/articles/` | editorial/expository | explanatory clarity + technical depth + onward path into the KB |
-| `kb/sources/` | descriptive (ingested external content) | faithful capture |
-| `kb/types/` | global system-definition contracts | self-contained checkability + economy |
-| `kb/work/` | catch-all workshop layer | move active work forward; extract durable conclusions |
+| [`text`](../types/text.md) | implicit | A Markdown file with no frontmatter; capture without a selectable `type:` value. |
+| [`note`](../types/note.md) | global | The base structured knowledge artifact. |
+| [`instruction`](../types/instruction.md) | global | Procedures, skills, prompts, and work packets. |
+| [`definition`](../types/definition.md) | global | Operational vocabulary definitions. |
+| [`adr`](./types/adr.md) | `kb/reference/` | Architecture decisions about the shipped system. |
+| [`structured-claim`](../notes/types/structured-claim.md) | `kb/notes/` | Developed arguments whose shape fits its Evidence and Reasoning contract. |
+| [`snapshot`](../sources/types/snapshot.md) | `kb/sources/` | Faithful captures of external source material. |
 
-Each collection's writing conventions live in its own `COLLECTION.md` at the collection root: title conventions, quality discipline, what does and does not belong, and the outbound linking table for that register. [ADR-017](./adr/017-collection-md-is-the-register-convention-boundary.md) is the decision that pinned register conventions to `COLLECTION.md` rather than to the type definitions. The contract is enforceable: each note in a collection has a derivable collection-conformance review pair whose gate is the `COLLECTION.md` itself, so editing a collection contract stales exactly that collection's notes ([ADR-041](./adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)).
+Each linked type spec, not this table, defines the type.
 
-`kb/types/` is both the global type layer and a collection. Its `COLLECTION.md` governs authoring and outbound links for the global type-spec artifacts; it does not own or reinterpret frontmatter semantics, which remain self-contained in each type spec and schema. Namespace directories such as installed `kb/commonplace/` are not collections unless they carry their own `COLLECTION.md`; their descendant `COLLECTION.md`-bearing directories are the collections. Some collections, such as `kb/instructions/`, are framework-shipped rather than primarily practitioner-authored, but they still carry authored artifacts and local authoring/routing contracts. See the [collection definition](./definitions/collection.md) for the full boundary.
+## Authoring composition
 
-## Types
+The ordinary writing path composes three files at read time:
 
-A **type** is a structural contract expressed as a hand-authored **type-spec doc**: a markdown file carrying type-spec frontmatter (`type: kb/types/type-spec.md`, `name`, `description`, `schema`) plus natural-language authoring instructions and an optional template block. Every artifact with frontmatter has exactly one type, declared as the path to its type-spec doc in the `type:` field — for example `type: ../types/adr.md` or `type: kb/reference/types/adr.md`. Consuming projects add types by dropping a new type-spec doc (and, when structural validation is desired, a sibling `.schema.yaml`) into the appropriate `types/` directory and listing it in the owning collection's `COLLECTION.md`. The same move **replaces a shipped default**: when a scaffolded type does not fit a KB's needs — for example a sources collection needing its own genre vocabulary beyond the shipped snapshot type's list — the KB declares its own type and points the Types menu at it, rather than editing the scaffolded spec. Types are the declared extension point; a controlled vocabulary that must vary per KB varies by type declaration, not by editing framework files or making field meanings collection-relative ([collections never own frontmatter semantics](./collections-never-own-frontmatter-semantics.md)).
+1. the writing skill for the general procedure;
+2. the target collection's `COLLECTION.md` for its text and link contract;
+3. the selected type spec for artifact shape and type-specific guidance.
 
-Two scopes:
-
-- **Global type-spec docs** live in `kb/types/`. The shipped globals are `type-spec` (the self-referential root), `note` (the base structured type), `instruction` (prescriptive procedures, skill bodies, wrapper prompts, work packets), `review-gate` (one quality check for the review system), `definition` (vocabulary), `tag-readme` (curated tag landings), and `index` (build-time generated directory listings only). Globals are global because they can occur in any collection. `kb/types/text.md` documents the implicit no-frontmatter case and is not itself a selectable type.
-- **Collection-local type-spec docs** live in `kb/<collection>/types/`. They apply only to artifacts in that collection. Examples: `adr` in `kb/reference/types/`, `structured-claim` in `kb/notes/types/`, `snapshot`, `ingest-report`, and `source-review` in `kb/sources/types/`, `connect-report` in `kb/reports/types/`.
-
-Type resolution is lexical: the path stored in `type:` names the type-spec doc directly. The collection does not participate in explicit type resolution; collection scoping shows up only in `COLLECTION.md`'s `## Types` menu when an author is picking a type for a new write. See [type-loading](./type-loading.md) for the full mechanics.
-
-Types carry two contract layers. The structural layer — required frontmatter and body sections, declared in the schema — is checked deterministically by the validator. The semantic layer — the type spec's authoring instructions — is enforced by review: each typed note has a derivable type-conformance pair whose gate is the type spec itself, so editing a type spec stales exactly its cohort ([ADR-038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)). Traits are an additional, opt-in semantic axis: the `traits` field on `note`-derived types routes trait-scoped review gates ([ADR-012](./adr/012-types-for-structure-traits-for-review.md), as amended by ADR-038/041).
-
-## Cross-collection linking
-
-The collection determines the *register* or content role of an artifact, and links between roles carry different meaning than links inside one. A theoretical note linking to a descriptive note may cite evidence; a descriptive or system-definition artifact linking to a theoretical note may assert that it `rests-on` the target claim.
-
-Each `COLLECTION.md`'s "Outbound linking conventions" section is **the single authoritative source** for that collection's outbound rules. The section is organised **per destination** — normally one block per destination collection the source may link to, plus the reserved `external` destination when the collection authorizes links outside the KB. The destination wildcard `any` authorizes every destination, including `external`; if neither `external` nor `any` appears, external links are unauthorized. Each destination block declares two things:
-
-- **Search guidance** — when to prospect this destination from the current source. Used by the connect skill to decide breadth and by writers manually choosing where to look for link candidates. `external` is the exception: connect does not prospect the open web, so its declaration constrains only targets already in hand.
-- **Authorised labels** — labels the writer may use for links to this destination, each with a one-line reader-need context specific to the *source → destination* pairing. Per-destination authorisation lets `kb/notes/ → kb/reference/` differ from `kb/notes/ → kb/agent-memory-systems/` even though both targets share the descriptive register.
-
-Two skills consume this directly:
-
-- **[cp-skill-write](../instructions/cp-skill-write/SKILL.md)** reads the source `COLLECTION.md`, treats its outbound section as the authoritative label and reader-need reference, and commits only links already in hand (a targeted `rg` duplicate check, already-loaded context, user-named targets).
-- **[cp-skill-connect](../instructions/cp-skill-connect/SKILL.md)** reads the source `COLLECTION.md`, enumerates destination blocks, runs the full prospecting procedure on each (search guidance, curated indexes, scoped `rg` description listings, body search, link-following), and labels candidates from the destination's authorised set. Candidates that pass the articulation test but fall outside any authorised label go in a dedicated "Off-authorisation candidates" report section as a signal for the collection author.
-
-There is no compiled topology and no separate vocabulary document for the skills to read; live `COLLECTION.md` reads remove the drift risk a compile step would introduce. A separate authoring resource at [`link-vocabulary.md`](./link-vocabulary.md) catalogues labels and authoring guidance for `COLLECTION.md` authors revising the outbound rules; note writers and the connect skill do not read it.
-
-The architecture and the per-destination structure are pinned by [ADR-019](./adr/019-collection-owned-link-vocabulary.md) (which extends ADR 017's COLLECTION.md boundary), [ADR-059](./adr/059-external-is-a-reserved-outbound-destination.md) (which adds the reserved external destination), and [ADR-020](./adr/020-theoretical-default-contrasts-mechanism.md) (which extends ADR 009's vocabulary).
-
-## How an artifact comes together
-
-For an existing artifact, the two axes resolve like this:
-
-1. The artifact's path identifies its collection. The collection's `COLLECTION.md` defines the writing conventions that apply, and its per-destination outbound linking section defines what relationship labels to use when linking outward.
-2. The artifact's `type:` frontmatter names the path of its type-spec doc directly. The validator opens that doc, confirms it is itself a type spec (its own `type:` resolves to `kb/types/type-spec.md`), and loads the schema declared in the doc's `schema:` field — or skips schema validation when `schema:` is `null`. The schema defines what frontmatter is required and what body sections must exist; natural-language authoring instructions and any template block live in the same doc.
-3. The validator checks structural conformance (the type's schema). Semantic conformance is reviewed on three axes: the type-conformance pair judges the note against its type spec's authoring instructions ([ADR-038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)), the collection-conformance pair judges it against its collection's `COLLECTION.md` contract ([ADR-041](./adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)), and trait-scoped review gates check whatever the note's `traits` declare.
-
-When authoring a new artifact, the same two decisions happen in reverse: pick the collection (which register fits the intent?), then pick the type (what shape best carries the content?).
+There is no generated write-context packet or resolver command. After writing, validation is authoritative for deterministic conformance.
 
 ---
 
-Relevant Notes:
+Relevant documentation:
 
-- [Collections never own frontmatter semantics](./collections-never-own-frontmatter-semantics.md) — contains: the asymmetry in the split above — a type spec fully owns frontmatter semantics, a collection owns only text-level features
-- [available-types](./available-types.md) — part-of: the catalog of shipped global and collection-scoped types
-- [type-loading](./type-loading.md) — part-of: the resolution mechanics for path-valued `type:` pointers and their type-spec docs
-- [definitions/collection](./definitions/collection.md) — defined-in: the precise definition of "collection" with scope, exclusions, and misuse cases
-- [link-vocabulary](./link-vocabulary.md) — part-of: the label catalogue and authoring guidance COLLECTION.md authors consult when writing outbound rules
-- [ADR-012: types for structure, traits for review](./adr/012-types-for-structure-traits-for-review.md) — evidenced-by: the decision that keeps structural validation deterministic and traits as a review-routing axis; its traits-only semantic boundary is amended by ADR-038/041
-- [ADR-017: COLLECTION.md is the register convention boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — evidenced-by: the decision to host register conventions in `COLLECTION.md` rather than in type definitions
-- [ADR-019: collection-owned link vocabulary](./adr/019-collection-owned-link-vocabulary.md) — evidenced-by: the decision pinning the per-destination outbound structure inside COLLECTION.md and retiring the compiled topology
-- [ADR-038: type-conformance reviews use the type spec as the gate](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — evidenced-by: the decision that makes the type spec's semantic layer enforceable as a review pair
-- [ADR-041: collection-conformance reviews use COLLECTION.md as the gate](./adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md) — evidenced-by: the decision that makes the collection contract enforceable the same way
+- [Collection](./definitions/collection.md) — defined-in: the precise collection boundary and the role of `COLLECTION.md`
+- [Validation contract](./validation-contract.md) — part-of: deterministic base rules, type-owned schemas, and semantic conformance review
+- [Collections never own frontmatter semantics](./collections-never-own-frontmatter-semantics.md) — extends: why a type owns its fields while a collection owns text-level conventions
+- [Architecture](./architecture.md) — part-of: where global and installed collection-local types sit in the shipped layout
+- [Type system](../notes/type-system-README.md) — see-also: theory explaining why document types exist and what they enable
+- [ADR 018](./adr/018-types-are-path-references-to-instruction-docs.md) — evidenced-by: the decision establishing path-valued type identity

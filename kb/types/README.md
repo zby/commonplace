@@ -16,4 +16,4 @@ Global structural contracts used across Commonplace collections. A type-spec doc
 - [Generated index](./generated-index.md) — build-time directory listings; never an authored landing page
 - [Text](./text.md) — the implicit no-frontmatter case, not a selectable `type:` value
 
-Collection-specific types live under their owning collection's `types/` directory. See [Available types](../reference/available-types.md) for the complete shipped inventory and [Type loading](../reference/type-loading.md) for path resolution.
+Collection-specific types live under their owning collection's `types/` directory. See [Collections and types](../reference/collections-and-types.md) for how artifacts use global and collection-local specs and how their paths resolve.

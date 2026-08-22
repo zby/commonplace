@@ -17,7 +17,7 @@ Tests for economy:
 
 ## Title and description conventions
 
-**Topical titles by default.** Answer "what is this about?" — "Type loading", "Storage architecture". A link like `see [type loading](./type-loading.md) for how types are resolved` reads naturally.
+**Topical titles by default.** Answer "what is this about?" — "Collections and types", "Storage architecture". A link like `see [collections and types](./collections-and-types.md) for how types are resolved` reads naturally.
 
 Exceptions: ADRs use numbered-decision format (`012-types-for-structure-traits-for-review.md`); definitions use the term as title.
 

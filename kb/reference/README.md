@@ -188,9 +188,7 @@ Look up how the shipped system is put together: its architecture, type system, a
 
 ### Type system and collection model
 
-- [collections-and-types.md](./collections-and-types.md) — orientation: how collections (register conventions, per-destination outbound rules) and types (structural contracts) compose, and how the connect/write skills read each source `COLLECTION.md` directly for linking rules
-- [available-types.md](./available-types.md) — catalog of shipped types: global (`text`, `note`, `instruction`, `definition`, `index`) and directory-scoped specialised types
-- [type-loading.md](./type-loading.md) — how authoring skills and validation resolve a type contract through collection-scoped lookup
+- [collections-and-types.md](./collections-and-types.md) — how collection and type contracts compose, how path-valued type pointers resolve, common examples, and where global and collection-local type specs live
 - [link-vocabulary.md](./link-vocabulary.md) — linking approach and label catalogue: collection-owned outbound rules, reader-need labels, articulation tests, connect reports, and guidance for `COLLECTION.md` authors
 - [text-contract-profiles.md](./text-contract-profiles.md) — catalogue of the proven, named bundles of quality goal, title conventions, attribution, and link grammar a `COLLECTION.md` may adopt, extend, or start from
 - [collections-never-own-frontmatter-semantics.md](./collections-never-own-frontmatter-semantics.md) — why the collection/type split is asymmetric: a type spec owns frontmatter semantics, `COLLECTION.md` owns only text-level features

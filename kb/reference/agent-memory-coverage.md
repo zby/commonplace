@@ -16,7 +16,7 @@ The requirements come from [Designing a Memory System for LLM-Based Agents](../n
 |---|---|---|
 | Control-plane memory | `AGENTS.md` keeps KB goals, scope, routing, vocabulary, commands, skills, and version-control conventions in always-loaded context. See [control-plane goals](./control-plane-goals.md). | There is no typed on-situation cue index yet. |
 | Direct memory creation | Agents and maintainers write notes, reference docs, ADRs, instructions, skills, source ingests, workshop artifacts, validators, and indexes as ordinary files. Commonplace implements direct-authored memory strongly through typed notes, indexes, instructions, skills, validation scripts, review gates, and explicit collection/type contracts. | Promotion decisions are still mostly manual. |
-| Artifact contracts | `COLLECTION.md` defines each collection's register, quality goal, scope, and outbound-linking rules. The `type:` field points to a type-spec doc with structure, natural-language guidance, and schema. See [collections and types](./collections-and-types.md) and [type loading](./type-loading.md). | Project-specific collections still depend on users defining good contracts. |
+| Artifact contracts | `COLLECTION.md` defines each collection's register, quality goal, scope, and outbound-linking rules. The `type:` field points to a type-spec doc with structure, natural-language guidance, and schema. See [collections and types](./collections-and-types.md). | Project-specific collections still depend on users defining good contracts. |
 | Import external knowledge | Source snapshots, ingest reports, conversion tooling, and staged workshops preserve external material and convert it toward Commonplace artifacts. | There is no mature graph-first or bulk-reingest pipeline. |
 | Preserve evidence | Source snapshots and ingests preserve evidence for external sources. | Broad session-trace capture, redaction, retention, and replay are not shipped as a memory substrate. |
 | Trace extraction | `kb/log.md` can serve as a manual observation inbox between raw traces and durable artifacts. The current system is strongest once an agent or maintainer already understands what should be written. | Automated session-trace extraction is not implemented. |
@@ -45,7 +45,6 @@ It is weaker as an autonomous learning system. Automated session-trace extractio
 - [Storage](./storage-architecture.md) — contains: authored markdown, generated indexes, reports, and review SQLite state
 - [Control-plane goals](./control-plane-goals.md) — contains: always-loaded KB goals and routing context in `AGENTS.md`
 - [Collections and types](./collections-and-types.md) — implements: collection contracts plus type contracts
-- [Type loading](./type-loading.md) — implements: path-valued type pointers and authoring-time contract loading
 - [Review system architecture](./review-architecture.md) — implements: semantic review, provenance, freshness baselines, and stale-pair detection
 - [Instruction generation](./instruction-generation.md) — implements: scaffold generation and multi-harness skill installation
 

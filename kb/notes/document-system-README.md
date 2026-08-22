@@ -9,11 +9,11 @@ index_key: document-system
 
 How documents are classified, structured, and quality-checked. These notes define the type system, writing conventions, and testing framework that make [knowledge artifacts](./definitions/knowledge-artifact.md) machine-verifiable and human-readable.
 
-For the live Commonplace repo's current type inventory and migration summary, see [../reference/available-types.md](../reference/available-types.md).
+For how the live Commonplace system uses global and collection-local type contracts, see [collections and types](../reference/collections-and-types.md).
 
 ## Foundations
 
-- [note base type](../types/note.md) — the base structured type: global fields (description, status, traits, areas), status ladder, traits system, design principles
+- [note base type](../types/note.md) — the base structured type: required path-valued type and description, optional traits and tags, and optional committed human verification
 - [text root type](../types/text.md) — the empty root type: no frontmatter, always valid
 - [human-llm-differences-are-load-bearing-for-knowledge-system-design](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — knowledge systems produce dual-audience documents (human + LLM), making cognitive differences a first-class design concern for type and convention design
 - [design-for-the-first-time-human-except-on-access-cost](./design-for-the-first-time-human-except-on-access-cost.md) — refines the dual-audience heuristic: design for newcomer-human ergonomics except where agent access mode makes whole-artifact reads expensive

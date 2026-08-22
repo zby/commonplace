@@ -41,7 +41,7 @@ The operations afforded by a type can range from precise semantics (does this `s
 Relevant Notes:
 
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — foundation: types mark affordances; this note extends the idea from data types to function types
-- [available types](../reference/available-types.md) — the spec defining the types that would appear in skill signatures
+- [collections and types](../reference/collections-and-types.md) — the artifact type model whose contracts would appear in skill signatures
 - [constraining and extraction can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — the capacity framework: each type step trades generality for reliability+speed+cost, making operations reliable without reading the full document
 - [codification](./definitions/codification.md) — the operations afforded by types can themselves codify from LLM to code
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — parent framing: operations on types range from underspecified to precise semantics; constraining commits to one interpretation

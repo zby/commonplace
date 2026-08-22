@@ -13,7 +13,7 @@ Why documents have types, what the type system does, and how structured writing 
 ## Overview
 
 - [why-notes-have-types](./why-notes-have-types.md) — seven roles of the type system: navigation hints, metadata enforcement, verifiable structure, local extensibility, content-layer identification, output quality, and maturation through constraining
-- [available types](../reference/available-types.md) — taxonomy: base types table and shipped collection-local types
+- [collections and types](../reference/collections-and-types.md) — current-state: how artifacts use path-valued contracts, with common global and collection-local examples
 
 ## Type Roles
 
@@ -21,7 +21,6 @@ Why documents have types, what the type system does, and how structured writing 
 - [type-system-enforces-metadata-that-navigation-depends-on](./type-system-enforces-metadata-that-navigation-depends-on.md) — enforcement: descriptions exist because the note base type requires them; without enforcement, navigation degrades
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — verification: types assert structural properties, not subject matter; verification gradient from deterministic to corpus-level
 - [directory-scoped-types-are-cheaper-than-global-types](./directory-scoped-types-are-cheaper-than-global-types.md) — extensibility: global types tax every session; local types load only when working in that directory
-- [type-loading](../reference/type-loading.md) — current-state: how Commonplace splits types across `kb/types/` (global) and `kb/*/types/` (directory-scoped) today, including WRITING.md inlining and schema lookup
 
 ## Output Quality
 

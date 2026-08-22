@@ -71,5 +71,4 @@ Type discovery for custom types follows the template file naming convention rath
 
 Relevant Notes:
 
-- [type-loading](../type-loading.md) — the resulting shipped loading model for template-and-instructions pairs
 - [002-inline-global-types-in-writing-guide](./002-inline-global-types-in-writing-guide.md) — the companion decision for the always-loaded `note` path

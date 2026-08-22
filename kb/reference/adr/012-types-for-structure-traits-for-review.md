@@ -58,7 +58,6 @@ That made it unclear whether moving a file between directories changed its type 
 
 Relevant Notes:
 
-- [available types](../available-types.md) — extends: adds the type/trait boundary test
-- [type-loading](../type-loading.md) — the shipped loading model that implements the structural side of this decision
+- [Collections and types](../collections-and-types.md) — implemented-by: the shipped model that applies structural types through path-valued contracts
 - [ADR-038: type-conformance reviews use the type spec as the gate](./038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — amended-by: makes the type contract itself semantically reviewable
 - [ADR-041: collection-conformance reviews use COLLECTION.md as the gate](./041-collection-conformance-reviews-use-collection-md-as-the-gate.md) — amended-by: extends the same enforcement to the collection contract surface

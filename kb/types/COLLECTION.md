@@ -10,7 +10,7 @@ Quality goal is **self-contained checkability + economy**. A type spec must tell
 
 ## Title and body conventions
 
-- Keep `README.md` as a concise route into the global contracts; detailed cross-collection inventory belongs in `kb/reference/available-types.md`.
+- Keep `README.md` as a concise, curated route into the global contracts; it is not an exhaustive cross-collection inventory. General usage and discovery belong in `kb/reference/collections-and-types.md`.
 - Name a type spec after the type it defines, except when that name would occupy a reserved directory landing path such as `index.md`.
 - Follow the `type-spec` contract in [`type-spec.md`](./type-spec.md); its schema and body own structural and semantic type requirements.
 - Do not place collection-local types here. Put them under `kb/<collection>/types/` and list them in that collection's `COLLECTION.md`.

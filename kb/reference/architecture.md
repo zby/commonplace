@@ -123,4 +123,4 @@ Relevant Notes:
 - [064-Install Commonplace commands as a user-level uv tool](./adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) — decision: the command-installation authority and project-environment removal
 - [014-scripts-as-python-package-one-tree-model](./adr/014-scripts-as-python-package-one-tree-model.md) — decision: package-and-init model that ADR-021 refines with the `kb/commonplace/` namespace
 - [013-skills-first-delivery-with-core-local-type-split](./adr/013-skills-first-delivery-with-core-local-type-split.md) — decision: the skills-first model and the core/local type split
-- [type-loading](./type-loading.md) — how shipped type definitions are discovered, including file-relative resolution for collection-local types
+- [collections and types](./collections-and-types.md) — how shipped type definitions are located and resolved, including file-relative pointers to collection-local types
