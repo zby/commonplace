@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [ingest-and-snapshot-redesign](./ingest-and-snapshot-redesign/README.md) — minimal v1 migration to local source material, one URL-backed primary, and commit-pinned implementation secondaries; the ingest body changes only where durable fields make lines redundant, with row-level recovery state for the corpus migration
 - [explanatory-theories-deployment-time-learning](./explanatory-theories-deployment-time-learning/README.md) — testing whether explicit system theories improve candidate search, candidate choice, and evidence acquisition in deployment-time learning, including on-the-spot versus retained theories, SPADE-inspired procedure generation, and an Exo-specific compounding track
 - [multistage-write-analyse-agentic-system-20260820](./multistage-write-analyse-agentic-system-20260820/README.md) — designing one system-first external-agentic analysis workflow with runtime, conditional memory/context, and conditional epistemic lenses; preserves functioning instructions and defers corpus migration until lens routing is trialled
 - [multistage-write-analyse-epistemic-architecture-20260820](./multistage-write-analyse-epistemic-architecture-20260820/README.md) — retained write-and-trial record for the promoted external-system epistemic-architecture instruction, including independent ARC and held-out GBrain applications
