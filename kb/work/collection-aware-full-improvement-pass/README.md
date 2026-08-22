@@ -108,6 +108,7 @@ A negative result can also close the workshop: the current pass may remain inten
 ## Starting evidence
 
 - [Case 01: workshop experiment design](./case-01-workshop-experiment-design.md) — the motivating cross-contract run.
+- [Atomic-claim assumptions and collection dependencies](./claim-instructions-and-collection-dependencies.md) — audit separating local claim checks, artifact function, and composition shape, including atomic reference records, composite synthesis/article exceptions, split pressure, and late or unguarded collection dependencies.
 - [Run a full improvement pass on one note](../../instructions/run-full-improvement-pass-on-note.md) — current operative procedure and baseline.
 - [Full improvement pass closure](../../reference/full-improvement-pass-closure.md) — closing behavior calibrated on substantive note edits, with an explicit warning against generalizing it to arbitrary transforming workflows.
 - [Design proposals differ from claims in kind, not confidence](../../notes/design-proposals-differ-from-claims-in-kind-not-confidence.md) — why proposal review needs problem, forces, free choices, and adoption criteria rather than claim contestability alone.
