@@ -1,0 +1,400 @@
+{
+  "source": "https://x.com/posthog/status/2090858894419693598",
+  "captured": "2026-08-22T07:54:34.187816+00:00",
+  "family": "x-article",
+  "status_id": "2090858894419693598",
+  "conversation_id": "2090858894419693598",
+  "target_post": {
+    "article": {
+      "cover_media": "3_2090857361548435456",
+      "entities": {
+        "urls": [
+          {
+            "text": "https://posthog.com/mcp"
+          },
+          {
+            "text": "https://posthog.com/docs/semantic-layer/mcp-tools"
+          },
+          {
+            "text": "https://posthog.com/blog/what-is-a-context-warehouse"
+          },
+          {
+            "text": "https://posthog.com/docs/semantic-layer/start-here"
+          },
+          {
+            "text": "https://posthog.com/docs/semantic-layer/query"
+          },
+          {
+            "text": "https://posthog.com/docs/cdp/sources/stripe"
+          },
+          {
+            "text": "https://posthog.com/newsletter/2030-shaped-software"
+          },
+          {
+            "text": "https://posthog.com/blog/what-is-a-context-warehouse"
+          },
+          {
+            "text": "https://posthog.com/docs/semantic-layer"
+          },
+          {
+            "text": "https://posthog.com/docs/data-warehouse/views"
+          },
+          {
+            "text": "https://posthog.com/docs/data-warehouse/sources"
+          }
+        ]
+      },
+      "media_entities": [
+        "3_2090857444750807040",
+        "3_2090857520139218944"
+      ],
+      "plain_text": "Ask Claude, Cursor, and PostHog AI the same question: \"what was our MRR last month?\", and you'll get three different queries and three different numbers.\nI did exactly this, half-expecting the tools to agree. They didn't; one summed a Stripe table, one found a slightly different Stripe table, and one tried to reconstruct recurring revenue from raw events and got the proration wrong. Every method and number was plausible, but there was no way to tell which was right.\nThe problem is what \"MRR\" means at PostHog, which table holds it, and how it's calculated all lives in people's heads. So every agent session reinvents the definition from scratch, slightly differently.\nHumans have this problem too. Every new analyst needs to learns which revenue table is the real one and how Stripe is connected. Agents just amplify the issue by answering confidently and hallucinating to fill the gaps in their knowledge, and nobody thinks to double check it.\nYou can't fix it with a smarter model. You need to give every agent a single place to read the definition from so \"MRR\", and every other metric you want to define, mean the same thing on every call. That place is the semantic layer, and this is the story of building it into PostHog's context warehouse.\n \nWhat is a semantic layer?\nA semantic layer is a dictionary of definitions that everyone (agent and human) reads from. You define MRR once, approve it once, and every query you run from then on returns the same number.\nThe most important thing to understand about it is what it doesn't do. It doesn't copy your data, replace your warehouse, or move a single row of data. It sits on top of the data you already have and describes it, \"this is what MRR means, this is the table to trust, this is how these two sources connect.\" It's a map, not a second copy of the territory. That's why it's called a layer.\nIt fixes is three kinds of knowledge that only exists as tribal memory:\nWhat our metrics are: MRR isn't just \"revenue\", it's a specific calculation over a specific source.\nWhich tables to trust (and which tables to avoid): A mature project imports dozens of sources and builds hundreds of data models. Plenty of them could answer \"revenue.\" Only one is current and blessed as accurate by the finance team. Others can be useful too, but there might be tables that we should avoid, e.g. they have been deprecated.\nHow the data joins together: The Stripe customer ID maps to an organization property, but only after it's reformatted, and nothing tells you that except the analyst who figured it out last time.\nIf you're a small company with a handful of tables you interact with regularly, you probably know where everything is. But, as you grow, you add more data sources and models, the meaning of those tables stop being obvious, least of all to an AI agent seeing your schema for the first time.\nSemantic layer /s\u026a\u02c8m\u00e6nt\u026ak \u02c8le\u026a\u0259/ \u2013 noun. \nA governed catalog of definitions that sits on top of your existing data and tells people and machines what it means: what each metric is, which tables to trust, and how sources connect. It describes the data; it doesn't copy or move it.\n\nGlossary\n- Catalog: the structured, queryable inventory the semantic layer maintains.\n- Metric: a named, governed definition of a business measure, like MRR.\n- Governed: nothing becomes official until a human approves it.\nWhere this lives: The context warehouse\nThe context warehouse is where PostHog pulls together everything an agent needs to answer questions. That includes product events, imported sources like your Stripe data, and data models. The semantic layer makes sure agents know what your data means and can interpret it correctly.\nA catalog actually stores the semantic layer. What integrates it so fully is that it is just SQL. Every definition shows up as ordinary tables. Metrics are a table. There's no bespoke \"catalog API\" for an agent to learn; if it can run execute-sql, it already knows how to read the entire semantic layer. Discovery is a query, not an integration.\nThe reason three tools gave three MRR numbers is that each had to invent an answer. When you have a catalog, it becomes the first thing any agent checks: is there an approved metric? If so, it runs the governed definition instead of writing its own SQL. Same question, same number, every time.\n \nAI generated, human owned\nAgents are genuinely good at proposing improvements to your data governance. Point one at your schema and it'll happily draft metric definitions, suggest canonical tables, and spot likely joins from column names and sample data. Letting agents do the first pass is useful, but letting it edit doesn't improve trust, it muddles it further.\nSo everything an agent creates lands as proposed. Nothing an agent touches is ever canonical on its own. A human promotes it, approving a metric, certifying a table, accepting a join. We added two guardrails to verify any definition changes even after approval:\nEditing an approved metric's definition drops it straight back to proposed. Changing what a number means re-opens the question of whether it's right.\nIf a metric was built from an existing insight and someone edits that insight, the metric gets flagged as drifted. It's a signal that the definition it was born from has moved and a human should re-review.\nThese give agents one simple rule to live by: a result is canonical only when status = 'approved' and is_drifted = false. Everything else including proposed, drifted, and archived, gets labeled non-canonical, and a well-trained agent will tell you so rather than passing it off as gospel.\nThe design decisions we made (and the ones we didn't)\nThe interesting part of building this was the tempting-looking architecture choices we walked away from. Almost every simplification you reach for breaks in a way that shows up later as a wrong number. Here are a few of the choices we didn't make:\n\"Why not just make every metric a SQL query?\"\nThis is the first thing everyone suggests: funnels and trends all compile down to SQL eventually, so why not require every metric to be SQL and be done with it? Because the same metric written by hand as SQL gives a different number than the insight it came from.\nTake activation, which at PostHog is a funnel. To make it SQL-only, someone must rewrite that funnel by hand. PostHog's funnel engine does a lot under the hood: steps happen in order, per person, inside a conversion window, with exclusions and deduplication applied. A hand-written SQL version gets some of that wrong.\nStoring the metric as the same funnel definition the insight uses, and running it through the same engine, makes that mismatch impossible. The metric and the dashboard execute identical queries. That guarantee is why we support insight-shaped metrics, not just SQL.\nSo where does that definition live? When you create a metric from an insight, PostHog snapshots the insight's query and stores it on the metric server-side. That snapshot is what runs, which is how the metric and the insight stay in lockstep.\nIt also means the metric can notice when it falls out of step. Because the snapshot is stored but the insight keeps evolving, PostHog compares the two every time you read the metric and flags it as drifted if someone has changed the insight underneath it. Nothing runs in the background, the check happens live.\n\"Why not write definitions in plain English?\"\nA good part of it is. Users can define how the agent should calculate a given metric using a Markdown structure. However, plain English is limited because it is less deterministic than insight-backed and SQL-backed metrics.\n\"Why not just point a metric at an existing insight?\"\nInsights already blend SQL, funnels, and trends. Pointing at one would keep the metric and the dashboard in lockstep. The problem is that insights are shared objects that people edit all day. \"Editing the definition resets approval\" is impossible to enforce on something everyone's mutating.\nInstead of pointing at the insight, metric-create takes the insight, snapshots its query, and remembers where it came from. You get lockstep awareness with the drift flag, without handing governance to an object anyone can change on a whim.\n\"Why not build a semantic query language, like dbt?\"\nThat's the \"right\" long-term answer for composing non-SQL metrics into arbitrary queries, and it's exactly what we chose not to build in v1. It's a whole new language for both humans and agents to learn, plus a compiler to maintain forever. Even dbt won't let you plain-SELECT a metric in a random editor, you must go through their compiling API.\nOur metric-run endpoint is the same architecture minus the language. If usage data later shows people really need in-editor composition, there's a path we can take to get there. Until then, it's complexity we haven't earned.\nSQL metrics are defined over a saved view. Create the view first, point the metric at it, and the metric stays composable with plain SQL. Views are already PostHog's \"queryable named SQL\" primitive, so we reused them instead of inventing a parallel one.\nWhat's next for semantic layering in PostHog\nThe PostHog semantic layer is in beta right now, you can work with it through MCP tools, PostHog's UI, and SQL.\nWe're measuring success around this by checking:\nDo agents get questions right? The bar we set is \u226580% on a fixed set of golden questions, clearly above a baseline with no catalog.\nWhen an approved metric exists, do agents actually use it instead of deriving their own number?\nDoes the catalog keep growing through everyday use, or does it spike during setup and then go silent?\nAs more of what we build becomes agent-driven, reliable data is the difference between an AI you can trust and one you can't.\nThe semantic layer is in beta. Get started with these instructions, or setup the PostHog MCP and ask your agent to recommend a new semantic layer catalog.\n\nWritten by Lizzie Epton (Developer Marketer) and Thiago Rocha Salvatore (Product Engineer) from PostHog.",
+      "preview_text": "Ask Claude, Cursor, and PostHog AI the same question: \"what was our MRR last month?\", and you'll get three different queries and three different numbers.\nI did exactly this, half-expecting the tools",
+      "title": "Building a semantic layer: What it is and how we did it at PostHog "
+    },
+    "article_title": {
+      "title": "Building a semantic layer: What it is and how we did it at PostHog "
+    },
+    "attachments": null,
+    "author_id": "1221534581045620736",
+    "card_uri": null,
+    "community_id": null,
+    "context_annotations": null,
+    "conversation_id": "2090858894419693598",
+    "created_at": "2026-08-21T17:49:41.000Z",
+    "display_text_range": null,
+    "edit_controls": null,
+    "edit_history_post_ids": [
+      "2090858894419693598"
+    ],
+    "entities": {
+      "cashtags": null,
+      "hashtags": null,
+      "mentions": null,
+      "urls": [
+        {
+          "end": 23,
+          "start": 0,
+          "description": null,
+          "display_url": "x.com/i/article/2090\u2026",
+          "expanded_url": "http://x.com/i/article/2090849020659060736",
+          "images": null,
+          "media_key": null,
+          "status": 404,
+          "title": null,
+          "unwound_url": "https://x.com/i/article/2090849020659060736",
+          "url": "https://t.co/yYGp6J8W66"
+        }
+      ]
+    },
+    "geo": null,
+    "id": "2090858894419693598",
+    "in_reply_to_user_id": null,
+    "lang": null,
+    "matched_media_notes": null,
+    "media_metadata": null,
+    "non_public_metrics": null,
+    "note_post": null,
+    "note_request_suggestions": null,
+    "organic_metrics": null,
+    "paid_partnership": null,
+    "possibly_sensitive": null,
+    "promoted_metrics": null,
+    "public_metrics": null,
+    "referenced_posts": null,
+    "reply_settings": null,
+    "scopes": null,
+    "source": null,
+    "suggested_source_links": null,
+    "suggested_source_links_with_counts": null,
+    "text": "https://t.co/yYGp6J8W66",
+    "username": null,
+    "withheld": null
+  },
+  "posts": [
+    {
+      "article": {
+        "cover_media": "3_2090857361548435456",
+        "entities": {
+          "urls": [
+            {
+              "text": "https://posthog.com/mcp"
+            },
+            {
+              "text": "https://posthog.com/docs/semantic-layer/mcp-tools"
+            },
+            {
+              "text": "https://posthog.com/blog/what-is-a-context-warehouse"
+            },
+            {
+              "text": "https://posthog.com/docs/semantic-layer/start-here"
+            },
+            {
+              "text": "https://posthog.com/docs/semantic-layer/query"
+            },
+            {
+              "text": "https://posthog.com/docs/cdp/sources/stripe"
+            },
+            {
+              "text": "https://posthog.com/newsletter/2030-shaped-software"
+            },
+            {
+              "text": "https://posthog.com/blog/what-is-a-context-warehouse"
+            },
+            {
+              "text": "https://posthog.com/docs/semantic-layer"
+            },
+            {
+              "text": "https://posthog.com/docs/data-warehouse/views"
+            },
+            {
+              "text": "https://posthog.com/docs/data-warehouse/sources"
+            }
+          ]
+        },
+        "media_entities": [
+          "3_2090857444750807040",
+          "3_2090857520139218944"
+        ],
+        "plain_text": "Ask Claude, Cursor, and PostHog AI the same question: \"what was our MRR last month?\", and you'll get three different queries and three different numbers.\nI did exactly this, half-expecting the tools to agree. They didn't; one summed a Stripe table, one found a slightly different Stripe table, and one tried to reconstruct recurring revenue from raw events and got the proration wrong. Every method and number was plausible, but there was no way to tell which was right.\nThe problem is what \"MRR\" means at PostHog, which table holds it, and how it's calculated all lives in people's heads. So every agent session reinvents the definition from scratch, slightly differently.\nHumans have this problem too. Every new analyst needs to learns which revenue table is the real one and how Stripe is connected. Agents just amplify the issue by answering confidently and hallucinating to fill the gaps in their knowledge, and nobody thinks to double check it.\nYou can't fix it with a smarter model. You need to give every agent a single place to read the definition from so \"MRR\", and every other metric you want to define, mean the same thing on every call. That place is the semantic layer, and this is the story of building it into PostHog's context warehouse.\n \nWhat is a semantic layer?\nA semantic layer is a dictionary of definitions that everyone (agent and human) reads from. You define MRR once, approve it once, and every query you run from then on returns the same number.\nThe most important thing to understand about it is what it doesn't do. It doesn't copy your data, replace your warehouse, or move a single row of data. It sits on top of the data you already have and describes it, \"this is what MRR means, this is the table to trust, this is how these two sources connect.\" It's a map, not a second copy of the territory. That's why it's called a layer.\nIt fixes is three kinds of knowledge that only exists as tribal memory:\nWhat our metrics are: MRR isn't just \"revenue\", it's a specific calculation over a specific source.\nWhich tables to trust (and which tables to avoid): A mature project imports dozens of sources and builds hundreds of data models. Plenty of them could answer \"revenue.\" Only one is current and blessed as accurate by the finance team. Others can be useful too, but there might be tables that we should avoid, e.g. they have been deprecated.\nHow the data joins together: The Stripe customer ID maps to an organization property, but only after it's reformatted, and nothing tells you that except the analyst who figured it out last time.\nIf you're a small company with a handful of tables you interact with regularly, you probably know where everything is. But, as you grow, you add more data sources and models, the meaning of those tables stop being obvious, least of all to an AI agent seeing your schema for the first time.\nSemantic layer /s\u026a\u02c8m\u00e6nt\u026ak \u02c8le\u026a\u0259/ \u2013 noun. \nA governed catalog of definitions that sits on top of your existing data and tells people and machines what it means: what each metric is, which tables to trust, and how sources connect. It describes the data; it doesn't copy or move it.\n\nGlossary\n- Catalog: the structured, queryable inventory the semantic layer maintains.\n- Metric: a named, governed definition of a business measure, like MRR.\n- Governed: nothing becomes official until a human approves it.\nWhere this lives: The context warehouse\nThe context warehouse is where PostHog pulls together everything an agent needs to answer questions. That includes product events, imported sources like your Stripe data, and data models. The semantic layer makes sure agents know what your data means and can interpret it correctly.\nA catalog actually stores the semantic layer. What integrates it so fully is that it is just SQL. Every definition shows up as ordinary tables. Metrics are a table. There's no bespoke \"catalog API\" for an agent to learn; if it can run execute-sql, it already knows how to read the entire semantic layer. Discovery is a query, not an integration.\nThe reason three tools gave three MRR numbers is that each had to invent an answer. When you have a catalog, it becomes the first thing any agent checks: is there an approved metric? If so, it runs the governed definition instead of writing its own SQL. Same question, same number, every time.\n \nAI generated, human owned\nAgents are genuinely good at proposing improvements to your data governance. Point one at your schema and it'll happily draft metric definitions, suggest canonical tables, and spot likely joins from column names and sample data. Letting agents do the first pass is useful, but letting it edit doesn't improve trust, it muddles it further.\nSo everything an agent creates lands as proposed. Nothing an agent touches is ever canonical on its own. A human promotes it, approving a metric, certifying a table, accepting a join. We added two guardrails to verify any definition changes even after approval:\nEditing an approved metric's definition drops it straight back to proposed. Changing what a number means re-opens the question of whether it's right.\nIf a metric was built from an existing insight and someone edits that insight, the metric gets flagged as drifted. It's a signal that the definition it was born from has moved and a human should re-review.\nThese give agents one simple rule to live by: a result is canonical only when status = 'approved' and is_drifted = false. Everything else including proposed, drifted, and archived, gets labeled non-canonical, and a well-trained agent will tell you so rather than passing it off as gospel.\nThe design decisions we made (and the ones we didn't)\nThe interesting part of building this was the tempting-looking architecture choices we walked away from. Almost every simplification you reach for breaks in a way that shows up later as a wrong number. Here are a few of the choices we didn't make:\n\"Why not just make every metric a SQL query?\"\nThis is the first thing everyone suggests: funnels and trends all compile down to SQL eventually, so why not require every metric to be SQL and be done with it? Because the same metric written by hand as SQL gives a different number than the insight it came from.\nTake activation, which at PostHog is a funnel. To make it SQL-only, someone must rewrite that funnel by hand. PostHog's funnel engine does a lot under the hood: steps happen in order, per person, inside a conversion window, with exclusions and deduplication applied. A hand-written SQL version gets some of that wrong.\nStoring the metric as the same funnel definition the insight uses, and running it through the same engine, makes that mismatch impossible. The metric and the dashboard execute identical queries. That guarantee is why we support insight-shaped metrics, not just SQL.\nSo where does that definition live? When you create a metric from an insight, PostHog snapshots the insight's query and stores it on the metric server-side. That snapshot is what runs, which is how the metric and the insight stay in lockstep.\nIt also means the metric can notice when it falls out of step. Because the snapshot is stored but the insight keeps evolving, PostHog compares the two every time you read the metric and flags it as drifted if someone has changed the insight underneath it. Nothing runs in the background, the check happens live.\n\"Why not write definitions in plain English?\"\nA good part of it is. Users can define how the agent should calculate a given metric using a Markdown structure. However, plain English is limited because it is less deterministic than insight-backed and SQL-backed metrics.\n\"Why not just point a metric at an existing insight?\"\nInsights already blend SQL, funnels, and trends. Pointing at one would keep the metric and the dashboard in lockstep. The problem is that insights are shared objects that people edit all day. \"Editing the definition resets approval\" is impossible to enforce on something everyone's mutating.\nInstead of pointing at the insight, metric-create takes the insight, snapshots its query, and remembers where it came from. You get lockstep awareness with the drift flag, without handing governance to an object anyone can change on a whim.\n\"Why not build a semantic query language, like dbt?\"\nThat's the \"right\" long-term answer for composing non-SQL metrics into arbitrary queries, and it's exactly what we chose not to build in v1. It's a whole new language for both humans and agents to learn, plus a compiler to maintain forever. Even dbt won't let you plain-SELECT a metric in a random editor, you must go through their compiling API.\nOur metric-run endpoint is the same architecture minus the language. If usage data later shows people really need in-editor composition, there's a path we can take to get there. Until then, it's complexity we haven't earned.\nSQL metrics are defined over a saved view. Create the view first, point the metric at it, and the metric stays composable with plain SQL. Views are already PostHog's \"queryable named SQL\" primitive, so we reused them instead of inventing a parallel one.\nWhat's next for semantic layering in PostHog\nThe PostHog semantic layer is in beta right now, you can work with it through MCP tools, PostHog's UI, and SQL.\nWe're measuring success around this by checking:\nDo agents get questions right? The bar we set is \u226580% on a fixed set of golden questions, clearly above a baseline with no catalog.\nWhen an approved metric exists, do agents actually use it instead of deriving their own number?\nDoes the catalog keep growing through everyday use, or does it spike during setup and then go silent?\nAs more of what we build becomes agent-driven, reliable data is the difference between an AI you can trust and one you can't.\nThe semantic layer is in beta. Get started with these instructions, or setup the PostHog MCP and ask your agent to recommend a new semantic layer catalog.\n\nWritten by Lizzie Epton (Developer Marketer) and Thiago Rocha Salvatore (Product Engineer) from PostHog.",
+        "preview_text": "Ask Claude, Cursor, and PostHog AI the same question: \"what was our MRR last month?\", and you'll get three different queries and three different numbers.\nI did exactly this, half-expecting the tools",
+        "title": "Building a semantic layer: What it is and how we did it at PostHog "
+      },
+      "article_title": {
+        "title": "Building a semantic layer: What it is and how we did it at PostHog "
+      },
+      "attachments": null,
+      "author_id": "1221534581045620736",
+      "card_uri": null,
+      "community_id": null,
+      "context_annotations": null,
+      "conversation_id": "2090858894419693598",
+      "created_at": "2026-08-21T17:49:41.000Z",
+      "display_text_range": null,
+      "edit_controls": null,
+      "edit_history_post_ids": [
+        "2090858894419693598"
+      ],
+      "entities": {
+        "cashtags": null,
+        "hashtags": null,
+        "mentions": null,
+        "urls": [
+          {
+            "end": 23,
+            "start": 0,
+            "description": null,
+            "display_url": "x.com/i/article/2090\u2026",
+            "expanded_url": "http://x.com/i/article/2090849020659060736",
+            "images": null,
+            "media_key": null,
+            "status": 404,
+            "title": null,
+            "unwound_url": "https://x.com/i/article/2090849020659060736",
+            "url": "https://t.co/yYGp6J8W66"
+          }
+        ]
+      },
+      "geo": null,
+      "id": "2090858894419693598",
+      "in_reply_to_user_id": null,
+      "lang": null,
+      "matched_media_notes": null,
+      "media_metadata": null,
+      "non_public_metrics": null,
+      "note_post": null,
+      "note_request_suggestions": null,
+      "organic_metrics": null,
+      "paid_partnership": null,
+      "possibly_sensitive": null,
+      "promoted_metrics": null,
+      "public_metrics": null,
+      "referenced_posts": null,
+      "reply_settings": null,
+      "scopes": null,
+      "source": null,
+      "suggested_source_links": null,
+      "suggested_source_links_with_counts": null,
+      "text": "https://t.co/yYGp6J8W66",
+      "username": null,
+      "withheld": null
+    }
+  ],
+  "users": {
+    "1221534581045620736": {
+      "affiliation": null,
+      "confirmed_email": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "id": "1221534581045620736",
+      "is_identity_verified": null,
+      "location": null,
+      "most_recent_post_id": null,
+      "name": "PostHog",
+      "parody": null,
+      "pinned_post_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscribes_to_you": null,
+      "subscription": null,
+      "subscription_type": null,
+      "url": null,
+      "username": "posthog",
+      "verified": null,
+      "verified_followers_count": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "67835339": {
+      "affiliation": null,
+      "confirmed_email": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "id": "67835339",
+      "is_identity_verified": null,
+      "location": null,
+      "most_recent_post_id": null,
+      "name": "Sid Jain",
+      "parody": null,
+      "pinned_post_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscribes_to_you": null,
+      "subscription": null,
+      "subscription_type": null,
+      "url": null,
+      "username": "TheBengaluruGuy",
+      "verified": null,
+      "verified_followers_count": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "150650969": {
+      "affiliation": null,
+      "confirmed_email": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "id": "150650969",
+      "is_identity_verified": null,
+      "location": null,
+      "most_recent_post_id": null,
+      "name": "koen | helius.dev (sol/acc)",
+      "parody": null,
+      "pinned_post_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscribes_to_you": null,
+      "subscription": null,
+      "subscription_type": null,
+      "url": null,
+      "username": "KoenRijpstra",
+      "verified": null,
+      "verified_followers_count": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "1463109633589997570": {
+      "affiliation": null,
+      "confirmed_email": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "id": "1463109633589997570",
+      "is_identity_verified": null,
+      "location": null,
+      "most_recent_post_id": null,
+      "name": "Mohan Kumar",
+      "parody": null,
+      "pinned_post_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscribes_to_you": null,
+      "subscription": null,
+      "subscription_type": null,
+      "url": null,
+      "username": "smhnkmrtweet",
+      "verified": null,
+      "verified_followers_count": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "2055360403673075712": {
+      "affiliation": null,
+      "confirmed_email": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "id": "2055360403673075712",
+      "is_identity_verified": null,
+      "location": null,
+      "most_recent_post_id": null,
+      "name": "Fagner Sales",
+      "parody": null,
+      "pinned_post_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscribes_to_you": null,
+      "subscription": null,
+      "subscription_type": null,
+      "url": null,
+      "username": "fagnersales25",
+      "verified": null,
+      "verified_followers_count": null,
+      "verified_type": null,
+      "withheld": null
+    },
+    "1307707318356905986": {
+      "affiliation": null,
+      "confirmed_email": null,
+      "connection_status": null,
+      "created_at": null,
+      "description": null,
+      "entities": null,
+      "id": "1307707318356905986",
+      "is_identity_verified": null,
+      "location": null,
+      "most_recent_post_id": null,
+      "name": "RaoulDuke",
+      "parody": null,
+      "pinned_post_id": null,
+      "profile_banner_url": null,
+      "profile_image_url": null,
+      "protected": null,
+      "public_metrics": null,
+      "receives_your_dm": null,
+      "subscribes_to_you": null,
+      "subscription": null,
+      "subscription_type": null,
+      "url": null,
+      "username": "RaoulDukeDegen",
+      "verified": null,
+      "verified_followers_count": null,
+      "verified_type": null,
+      "withheld": null
+    }
+  },
+  "thread_fetch_error": null
+}
