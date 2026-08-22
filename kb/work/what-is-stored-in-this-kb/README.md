@@ -59,6 +59,7 @@ The structural `definition` type does not decide this placement. [Reference alre
 - [Working content model](./working-content-model.md) — reconstruct the candidate retained payload and the tests that separate its roles.
 - [Definition audit](./definition-audit.md) — initial disposition of all 23 artifacts under `kb/notes/definitions/`, including migration cost from direct backlinks.
 - [Text-contract disposition](./tasks/text-contract-and-profiles.md) — after profile content is extracted in place, decide whether the remaining term belongs in the collection definition, a small standalone reference definition, or the collection/type composition document.
+- [Sweep kb/notes/ for free choice-variables](./tasks/bound-variable-sweep.md) — report-only, unassigned; blocks the contract edits.
 - [Draft ADR: collection placement follows content kind](./draft-adr-collection-placement-follows-content-kind.md) — the boundary as a decision, with the counterfactual test and the two repairs.
 - [Proposed COLLECTION.md edits](./draft-collection-contract-edits.md) — exact replacement text for both contracts, not yet applied.
 - [Draft: superseded choices are retained, superseded beliefs are not](./draft-superseded-choices-are-retained-superseded-beliefs-are-not.md) — promotion candidate, bare bones.
