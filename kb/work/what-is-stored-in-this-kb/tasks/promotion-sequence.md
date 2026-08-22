@@ -9,11 +9,20 @@ Everything this task promotes currently exists only in this workshop, which is
 a consumable layer. Until step 2 lands, the boundary has no reader: agents
 writing notes load `COLLECTION.md`, never `kb/work/`.
 
-## Gate before step 2
+## Gate before step 2 — cleared
 
-The [bound-variable sweep](./bound-variable-sweep.md) must report first. It
-decides whether the contract clause is stated flatly or needs a transition
-provision. Steps 1, 3, 4, and 5 do not depend on it.
+The [bound-variable sweep](./bound-variable-sweep.md) reported on 2026-08-23:
+0/27 failures. The clause is stated flatly, with no transition provision and
+no grandfathering, and its wording has already been corrected in the
+[proposed edits](../draft-collection-contract-edits.md). Step 2 is unblocked.
+
+The sweep left one targeted cleanup rather than a migration:
+`areas-exist-because-useful-operations-require-reading-notes-together.md`
+carries choice-dependent propositions after its opening — a threshold
+presented as generally determined, a selected membership policy, and
+assertions about the retired `areas:` machinery. Handle it as its own small
+piece of work; it is not a gate on anything here. Check first whether the note
+should be retired rather than repaired, since areas were replaced by tags.
 
 ## 1. Promote the two belief drafts
 

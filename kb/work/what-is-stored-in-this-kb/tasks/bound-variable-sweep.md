@@ -2,7 +2,11 @@
 
 ## Status
 
-Open, unassigned. Report-only — this task changes no note.
+**Closed 2026-08-23.** Results in [bound-variable-sweep-findings.md](../bound-variable-sweep-findings.md):
+0/27 failures across both strata. Recommendation is to state the clause flatly
+with no transition provision; three wording corrections have been applied to
+the proposed contract edit. One residue item found for targeted cleanup, not
+migration — see the findings' "Later choice-dependent residue".
 
 ## Why it exists
 
