@@ -4,7 +4,7 @@
 
 ## Pinned Exo and ExoWorker facts
 
-Evaluation boundary: canonical Exo main commit `ef4cfe057af0` and the separately linked ExoWorker branch commit `ed08a571`. The [whole-system analysis](../../agentic-systems/exo.md) uses the same canonical Exo pin. The [memory-system review](../../agent-memory-systems/reviews/exo.md) remains pinned to the earlier `baa07f67`; unchanged memory claims rely on that review, while refreshed claims rely on the checkout diff and branch inspection. Neither review ran a live Exo instance.
+The evaluation boundary includes Exo commit `ef4cfe057af0` from canonical main and ExoWorker commit `ed08a571` from the separately linked branch. The [whole-system analysis](../../agentic-systems/exo.md) uses the same canonical Exo pin. The [memory-system review](../../agent-memory-systems/reviews/exo.md) remains pinned to the earlier `baa07f67`. Unchanged memory claims rely on that review; refreshed claims rely on the checkout diff and branch inspection. Neither review included a live Exo run.
 
 | Claim | Evidence status | Pinned basis |
 |---|---|---|
@@ -21,17 +21,17 @@ Evaluation boundary: canonical Exo main commit `ef4cfe057af0` and the separately
 | Canonical Exo automatically extracts and evaluates lessons from traces | Negative at the refreshed pin | Memory and skill writes are deliberate, the registry performs explicit install/remove operations, and no added path mines the event log into accepted lessons |
 | Canonical Exo materializes complete conversation history | Code-grounded, unchanged | The canonical turn loop still materializes all message and tool events without an implemented history window, token budget, compaction, or relevance selector |
 
-The baseline must include all of these existing surfaces. Exo already retains episodes, natural-language artifacts, and symbolic policy. Its managed registry adds stable identity, pinned source, pre-installation validation, atomic replacement, and inspection for tools. A fair treatment therefore compares current Exo with the same system plus an explicit theory lifecycle; it does not compare theory against raw traces or ephemeral tools alone.
+The baseline must include all these existing surfaces. Exo already retains episodes, natural-language artifacts, and symbolic policy. Its managed registry adds stable identity, pinned source, preinstallation validation, atomic replacement, and tool inspection. A fair treatment therefore compares current Exo with the same system plus an explicit theory lifecycle. It does not compare theory against raw traces or ephemeral tools alone.
 
-Current artifacts may voluntarily contain rich reasoning, but the pinned system does not require them to state premises, scope, status, or an invalidation path. A rebuild reason remains event-local. ExoWorker's form-selection instructions are evidence of a heuristic, not evidence that the agent follows it reliably or that the resulting artifacts mediate later decisions. None of these artifacts should be relabelled `T_n` without evidence that it functions as a retained theory.
+Current artifacts may contain rich reasoning, but the pinned system does not require them to state premises, scope, status, or an invalidation path. A rebuild reason remains event-local. ExoWorker's form-selection instructions support the presence of a heuristic. They do not show that the agent follows it reliably or that the resulting artifacts mediate later decisions. None of these artifacts should be relabeled `T_n` without evidence that it functions as a retained theory.
 
 ## Adjacent supporting evidence
 
-These results support parts of the proposed pathway. None establishes the Exo treatment as a whole.
+The following results support parts of the proposed pathway. None establishes the Exo treatment as a whole.
 
 | Source | What it supports | What it does not support |
 |---|---|---|
-| [HyperAgents](../../sources/hyperagents.ingest.md) | In five runs, frozen hyperagents evolved on paper review and robotics generated stronger agents for unseen math grading than the initial hyperagent (`Improvement@50 = 0.630`). This is one bundled, cross-domain contribution from an earlier retained improver to later improvement. | The causal contribution of any prompt, insight, code change, or theory; an Exo effect; or sustained compounding. Continued evolution from transferred rather than fresh hyperagents had no significant advantage. |
+| [HyperAgents](../../sources/hyperagents.ingest.md) | In five runs, frozen hyperagents that had evolved on paper review and robotics generated stronger agents for unseen math grading than the initial hyperagent (`Improvement@50 = 0.630`). This is one bundled, cross-domain contribution from an earlier retained improver to later improvement. | The causal contribution of any prompt, insight, code change, or theory; an Exo effect; or sustained compounding. Continued evolution from transferred rather than fresh hyperagents had no significant advantage. |
 | [Agent Optimizers](../../sources/agent-optimizers-compound-terminal-bench.ingest.md) | Retention, transfer to an expanded task set, and further optimization under RELAI-VCL. | An equally budgeted fresh start or a trace showing that the first gain made the later phase more productive. |
 | [Co-Harness](../../sources/co-harness-co-evolving-harness-and-model-weights.ingest.md) | Repeated exchange among checked harness edits, training trajectories, updated weights, and another harness round. | A matched comparison separating feedback from additional training or search. |
 | [Trajectory-Informed Memory Generation](../../sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md) | Subtask-level natural-language tips with LLM-guided retrieval improve held-out AppWorld scenario completion by 14.3 percentage points. Semantic extraction and activation can transfer across recurring task structure with a clear oracle. | Exo-specific value, open-ended self-theory, lifecycle governance, a matched current-Exo baseline, or feedback into later improvement. |
@@ -42,15 +42,15 @@ These results support parts of the proposed pathway. None establishes the Exo tr
 
 ### Condensed experience may be inert
 
-[Large Language Model Agents Are Not Always Faithful Self-Evolvers](../../sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md) studies ExpeL, Dynamic Cheatsheet, ReasoningBank, and G-Memory. Across its tested frameworks, models, and environments, perturbing raw trajectories often changes behavior while perturbing automatically condensed experience often does not. The result is direct adverse evidence against assuming that a written memory artifact is operative.
+[Large Language Model Agents Are Not Always Faithful Self-Evolvers](../../sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md) studies ExpeL, Dynamic Cheatsheet, ReasoningBank, and G-Memory. Across the tested frameworks, models, and environments, perturbing raw trajectories often changes behavior, whereas perturbing automatically condensed experience often does not. This result is direct adverse evidence against assuming that a written memory artifact is operative.
 
-The experiment does not test a reviewed, episode-linked system theory with declared scope and authority, nor an Exo baseline with facts, skills, tools, code, and retained episodes. It also measures causal uptake, not truth, warrant, benefit, or later improvement productivity. Those boundaries prevent overgeneralization; they do not rescue the proposal. ReasoningBank's native prompt already asks for concrete, actionable advice, reasons, and exceptions, so “write a better summary” is not an adequate answer. Any proposed advantage must come from an observed combination of structure, gating, activation, and retained source evidence.
+The experiment does not test a reviewed, episode-linked system theory with declared scope and authority. It also does not test an Exo baseline with facts, skills, tools, code, and retained episodes. The experiment measures causal uptake, not truth, warrant, benefit, or later improvement productivity. These boundaries prevent overgeneralization; they do not rescue the proposal. ReasoningBank's native prompt already asks for concrete, actionable advice, reasons, and exceptions, so “write a better summary” is not an adequate answer. Any proposed advantage must come from an observed combination of structure, gating, activation, and retained source evidence.
 
 ### Consumer-blind summaries can damage search
 
-[Meta-Harness](../../sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md) reports 50.0 median text-classification accuracy when its proposer can inspect raw traces, compared with 34.6 for scores only and 34.9 for scores plus generated summaries. This is strong adverse evidence against replacing diagnostic episodes with fixed, consumer-blind summaries.
+[Meta-Harness](../../sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md) reports median text-classification accuracy of 50.0 when its proposer can inspect raw traces, compared with 34.6 for scores alone and 34.9 for scores plus generated summaries. This result provides strong adverse evidence against replacing diagnostic episodes with fixed, consumer-blind summaries.
 
-The tested summary arm removed raw-trace access, ran before the next proposer formed its diagnostic question, and supplied no demonstrated scoped mechanism or review operation. The full-trace arm also bundled raw traces with short causal reports. The contrast therefore rejects that summarize-and-discard treatment in the reported setup. It does not identify an episode-backed theory constructed for a named decision or show whether such a theory helps a later improvement episode. A credible Exo treatment must preserve the source episodes and measure the theory's marginal effect.
+The tested summary arm removed raw-trace access, ran before the next proposer formed its diagnostic question, and supplied no demonstrated scoped mechanism or review operation. The full-trace arm also bundled raw traces with short causal reports. The contrast therefore rejects the summarize-and-discard treatment in the reported setup. It neither identifies an episode-backed theory constructed for a named decision nor shows whether such a theory helps a later improvement episode. A credible Exo treatment must preserve the source episodes and measure the theory's marginal effect.
 
 ## Unresolved gaps
 
@@ -60,7 +60,7 @@ The tested summary arm removed raw-trace access, ran before the next proposer fo
 4. **Compounding:** No Exo result measures a later improvement episode and traces its dependence on an earlier retained benefit.
 5. **Marginal value:** No result compares current Exo with the same system plus explicit theory after full lifecycle costs.
 6. **Open oracle:** Positive semantic-memory results rely on benchmark success signals; Exo's most consequential self-theories may concern judgment quality without a cheap oracle.
-7. **Formation:** A model can produce post-hoc, overbroad, or self-flattering explanations. Structure and review may reduce this failure without solving it.
+7. **Formation:** A model can produce post hoc, overbroad, or self-flattering explanations. Structure and review may reduce this failure without solving it.
 8. **Activation:** A correct retained artifact that is not retrieved and causally used has no behavioral value.
 9. **Freshness:** A self-change can invalidate a theory about the system, allowing a stale theory to conceal its own error.
 10. **Cost:** Selection, review, routing, and maintenance may cost more than reconstruction, especially as model capability improves.
