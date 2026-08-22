@@ -1,3 +1,5 @@
+**Promoted 2026-08-23** into [kb/notes/a-theory-may-name-a-choice-only-as-a-bound-variable.md](../../notes/a-theory-may-name-a-choice-only-as-a-bound-variable.md). The sweep's three refinements were folded in; the draft's ranking of the two repairs was replaced by a selection rule.
+
 # A theory may name a choice only as a bound variable
 
 A theory claim that names a particular system's choice must quantify over it —

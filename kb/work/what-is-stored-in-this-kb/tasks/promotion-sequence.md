@@ -24,7 +24,7 @@ assertions about the retired `areas:` machinery. Handle it as its own small
 piece of work; it is not a gate on anything here. Check first whether the note
 should be retired rather than repaired, since areas were replaced by tags.
 
-## 1. Promote the two belief drafts
+## 1. Promote the two belief drafts — done 2026-08-23
 
 [Superseded choices are retained](../draft-superseded-choices-are-retained-superseded-beliefs-are-not.md)
 and [a theory may name a choice only as a bound variable](../draft-a-theory-may-name-a-choice-only-as-a-bound-variable.md).
@@ -36,6 +36,21 @@ incumbent moved, the draft's contribution may have evaporated.
 
 First, because the draft ADR's footer rests on both. Promoting the ADR first
 leaves dangling links.
+
+**Done.** Both live and validating clean:
+[superseded-choices-are-retained-superseded-beliefs-are-not.md](../../../notes/superseded-choices-are-retained-superseded-beliefs-are-not.md)
+and [a-theory-may-name-a-choice-only-as-a-bound-variable.md](../../../notes/a-theory-may-name-a-choice-only-as-a-bound-variable.md).
+Step 2 must cite them by their live paths, not the workshop drafts.
+
+Two things surfaced during promotion that step 2 should carry. The retention
+note's real neighbour was `commitment-not-derivation-creates-new-ground-truth.md`,
+not the artifact-classification note the draft scoped against; the commitment
+boundary settles which artifact is authoritative, content kind settles whether
+the displaced version survives. And the bound-variable note could not cite the
+sweep findings, because the notes contract forbids outbound links into
+`kb/work/` — the evidence is restated in prose so the note survives this
+workshop's deletion. Apply the same constraint to anything else promoted from
+here.
 
 Watch for a tag-README carrying `complete: true` that must gain an entry, or
 validation hard-fails. `artifact-analysis-README.md` needed exactly this for

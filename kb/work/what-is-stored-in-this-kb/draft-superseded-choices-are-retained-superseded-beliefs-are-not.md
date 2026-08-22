@@ -1,3 +1,5 @@
+**Promoted 2026-08-23** into [kb/notes/superseded-choices-are-retained-superseded-beliefs-are-not.md](../../notes/superseded-choices-are-retained-superseded-beliefs-are-not.md). Both Open questions were carried over unresolved.
+
 # Superseded choices are retained; superseded beliefs are not
 
 When a belief is revised, the version it replaces has no standing. It was
