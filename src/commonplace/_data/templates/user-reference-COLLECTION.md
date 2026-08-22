@@ -4,14 +4,17 @@
 This is your project's reference collection. The shipped Commonplace
 library has its own conventions at kb/commonplace/reference/COLLECTION.md
 for a worked example. Replace these placeholders with your own decisions.
+Once installed, this contract belongs to your project; Commonplace does not
+synchronize it with later changes to this template or to the worked example.
 -->
 
-## Register
+## Purpose and scope
 
 <!--
-Reference is typically the descriptive register: how a specific system
-works, its current-state documentation, and decision history (ADRs).
-See kb/commonplace/notes/definitions/register.md.
+State directly what artifacts in this collection describe and what belongs
+or does not belong here. A typical reference collection documents the current
+system, architecture, interfaces, and decision history. Write the operative
+conventions in this file in full.
 -->
 
 ## Quality goal

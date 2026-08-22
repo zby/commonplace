@@ -71,18 +71,18 @@ The knowledge base lives in `kb/`. Search it when the user asks about decisions,
 
 Collections are `kb/` subtrees with a local `COLLECTION.md`. Read the target collection's `COLLECTION.md` before writing or connecting artifacts there.
 
-| Path | Role | Use when |
-|---|---|---|
-| `kb/notes/` | user theoretical register | Writing transferable claims, mechanisms, definitions, synthesis, and project-specific theory. |
-| `kb/reference/` | user descriptive register | Describing the current system, architecture, interfaces, decisions, and operational surface. |
-| `kb/instructions/` | user prescriptive register | Writing project-specific procedures, skills, operational rules, and how-to guidance. |
-| `kb/sources/` | durable source records | Storing tracked ingests and source reviews; local source snapshots live ignored under `kb/sources/.snapshots/`. |
-| `kb/work/` | user workshop layer | Holding in-flight investigations, drafts, migration plans, and temporary work that should eventually close or promote durable artifacts. |
-| `kb/commonplace/notes/` | shipped methodology library | Reading Commonplace theory and examples without mixing them into the user's own notes. |
-| `kb/commonplace/reference/` | shipped Commonplace docs | Looking up Commonplace architecture, commands, type system, and ADRs. |
-| `kb/commonplace/instructions/` | shipped Commonplace procedures | Reading framework procedures and promoted `cp-skill-*` skill bodies. |
-| `kb/commonplace/` | namespace, not a collection | Locating shipped library collections; do not treat the namespace itself as governed content. |
-| `kb/types/` | global type surface, not a collection | Looking up shared type specs used by both user and shipped collections. |
+| Path | Use when |
+|---|---|
+| `kb/notes/` | Writing transferable claims, mechanisms, definitions, synthesis, and project-specific theory. |
+| `kb/reference/` | Describing the current system, architecture, interfaces, decisions, and operational surface. |
+| `kb/instructions/` | Writing project-specific procedures, skills, operational rules, and how-to guidance. |
+| `kb/sources/` | Storing tracked ingests and source reviews; local source snapshots live ignored under `kb/sources/.snapshots/`. |
+| `kb/work/` | Holding in-flight investigations, drafts, migration plans, and temporary work that should eventually close or promote durable artifacts. |
+| `kb/commonplace/notes/` | Reading Commonplace theory and examples without mixing them into the user's own notes. |
+| `kb/commonplace/reference/` | Looking up Commonplace architecture, commands, type system, and ADRs. |
+| `kb/commonplace/instructions/` | Reading framework procedures and promoted `cp-skill-*` skill bodies. |
+| `kb/commonplace/` | Locating shipped library collections; this is a namespace, not a collection. |
+| `kb/types/` | Looking up shared type specs used by both user and shipped collections. |
 
 ### Navigation
 

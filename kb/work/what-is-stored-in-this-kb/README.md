@@ -58,7 +58,7 @@ The structural `definition` type does not decide this placement. [Reference alre
 
 - [Working content model](./working-content-model.md) — reconstruct the candidate retained payload and the tests that separate its roles.
 - [Definition audit](./definition-audit.md) — initial disposition of all 23 artifacts under `kb/notes/definitions/`, including migration cost from direct backlinks.
-- [Text contract and profile disposition](./tasks/text-contract-and-profiles.md) — decide whether to fold the vocabulary into the profile catalogue, keep a small reference definition, or retire the standalone artifact.
+- [Text-contract disposition](./tasks/text-contract-and-profiles.md) — after profile content is extracted in place, decide whether the remaining term belongs in the collection definition, a small standalone reference definition, or the collection/type composition document.
 - [Retire profiles for collection prototypes](./tasks/retire-profiles-for-collection-prototypes.md) — first executable step: profiles bind nothing at use time and are prototypes copied at collection-creation time, so retire the term, define `collection prototype` in reference, and clear the always-loaded gloss. Deliberately leaves `text-contract` in place.
 - Reassess the generator/cache model against directly executed natural-language system definition and against rationale retained only for future change.
 - Derive collection-contract and type-contract changes only after the content model and definition dispositions agree.
@@ -67,7 +67,7 @@ The structural `definition` type does not decide this placement. [Reference alre
 
 - A content model states what Commonplace retains without conflating collection prototype, content kind, lineage, authority, or recoverability, and works out the belief/choice boundary's consequences for every payload class.
 - Every current definition has a reasoned disposition: keep in theory, move or fold into reference, move operational rules into instructions, split, or retire.
-- The text-contract/profile task has one selected target and a complete backlink migration plan.
+- The text-contract task has one selected reference owner and a complete post-profile backlink migration plan.
 - Required changes to `AGENTS.md`, collection contracts, type guidance, indexes, and durable artifacts are recorded as explicit implementation handoffs.
 - Accepted conclusions are promoted into the appropriate library collections, after which this workshop is deleted.
 
@@ -75,10 +75,9 @@ The structural `definition` type does not decide this placement. [Reference alre
 
 - [x] Reconstruct the conversation and governing question.
 - [x] Read and provisionally classify all 23 theory-collection definitions.
-- [x] Record the text-contract/profile disposition task.
+- [x] Record the text-contract disposition task.
 - [x] Scope the profile retirement as a separable first step.
 - [x] Adopt belief/choice as the collection boundary and align the content model to it.
 - [ ] Test the candidate content model against representative artifacts in every collection.
 - [ ] Resolve the mixed and machinery-first definitions.
 - [ ] Select and execute durable migrations.
-

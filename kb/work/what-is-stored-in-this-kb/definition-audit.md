@@ -51,7 +51,7 @@ Stipulated vocabulary is the trap this test exists to catch. A stipulated term h
 | Definition | Inbound files | Initial disposition |
 |---|---:|---|
 | [Answerability](../../notes/definitions/answerability.md) | 2 | Move, fold, or split. It explicitly calls itself a domain invariant that Commonplace stipulates for admission as knowledge. The general relation may support theory, but the current central force is a framework boundary and collection-contract obligation. |
-| [Text contract](../../notes/definitions/text-contract.md) | 22 | Move to reference or retire as a standalone artifact. It names adopted collection machinery and repeats the reference profile catalogue, ADR history, and live collection contracts. See the [dedicated task](./tasks/text-contract-and-profiles.md). |
+| [Text contract](../../notes/definitions/text-contract.md) | 22 | First extract all profile material in place; then move the text-contract remainder to reference or retire it as a standalone artifact. It names adopted collection machinery already described by the collection definition, collection/type composition doc, ADR history, and live collection contracts. See the [dedicated task](./tasks/text-contract-and-profiles.md). |
 
 ## Mixed and retirement candidates
 
@@ -75,4 +75,3 @@ Stipulated vocabulary is the trap this test exists to catch. A stipulated term h
 - For machinery-first candidates, choose between a reference definition, folding into an existing reference surface, or retirement.
 - Reassess the standalone value of `knowledge artifact`, `system-definition artifact`, `operative part`, `retained artifact`, and `storage substrate` after the content model settles.
 - Only then revise collection contracts, backlinks, indexes, and the definition-type guidance.
-

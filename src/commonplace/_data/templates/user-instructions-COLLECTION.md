@@ -4,14 +4,17 @@
 This is your project's instructions collection. The shipped Commonplace
 library has its own conventions at kb/commonplace/instructions/COLLECTION.md
 for a worked example. Replace these placeholders with your own decisions.
+Once installed, this contract belongs to your project; Commonplace does not
+synchronize it with later changes to this template or to the worked example.
 -->
 
-## Register
+## Purpose and scope
 
 <!--
-Instructions is the prescriptive register: imperative procedures and
-how-to guidance for operators and agents.
-See kb/commonplace/notes/definitions/register.md.
+State directly what actions this collection directs and what belongs or does
+not belong here. A typical instructions collection contains procedures,
+operational rules, and how-to guidance for operators and agents. Write the
+operative conventions in this file in full.
 -->
 
 ## Quality goal

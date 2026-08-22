@@ -4,18 +4,18 @@
 This is your project's notes collection. The shipped Commonplace library
 has its own conventions at kb/commonplace/notes/COLLECTION.md — read
 that for a worked example. Replace these placeholders with your own
-decisions.
+decisions. Once installed, this contract belongs to your project;
+Commonplace does not synchronize it with later changes to this template or
+to the worked example.
 -->
 
-## Register
+## Purpose and scope
 
 <!--
-Pick one: theoretical, descriptive, or prescriptive. See
-kb/commonplace/notes/definitions/register.md for definitions.
-
-- theoretical — transferable claims about what is true (mechanisms, arguments)
-- descriptive — how a specific system works
-- prescriptive — imperative procedures and how-to guidance
+State directly what artifacts in this collection contribute and what belongs
+or does not belong here. A typical notes collection retains claims,
+mechanisms, definitions, and synthesis used to reason about the project's
+domain. Write the operative conventions in this file in full.
 -->
 
 ## Quality goal
