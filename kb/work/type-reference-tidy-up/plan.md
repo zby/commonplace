@@ -33,13 +33,11 @@ The useful mechanics from the former `kb/reference/type-loading.md` were absorbe
 
 The canonical page remains faithful to current behavior while this workshop is open: it states that writing skills still read collection `## Types` menus and that validation does not yet enforce collection-local ownership. Steps 3–5 must update that paragraph atomically with the behavior change.
 
-## 2. Rescue clauses that are not enumeration
+## 2. Audit clauses that are not enumeration — completed 2026-08-22
 
-Some `## Types` rows carry a placement restriction rather than a menu entry — `design-proposal` "under `proposals/`", `index` "build-time generated only". These bind a shape wherever it lives, so per ADR 042's quantifier rule they belong on the type spec.
+The [row-by-row audit](menu-clause-audit.md) accounts for all 27 entries in the 8 collection menus. No clause needs to move into a type spec: every type-wide restriction mentioned in a row is already stated by its type contract.
 
-For each row in the 8 collection menus: if it states a restriction that exists **only** there, move it to the type spec. `kb/reference/types/design-proposal.md` already states its own placement rule — that row is a duplicate to drop, not to migrate.
-
-General name, path, and description copies should not survive. If a row carries collection-specific selection policy, retain that policy as prose at the surface that owns it. In particular, replace `kb/work/COLLECTION.md`'s peer-type rows with the rule that any valid type path is permitted under the lifecycle-layer validator exception.
+Two collection-local policies need to survive as ordinary collection prose when step 5 removes the menus: definitions of KB vocabulary belong under `kb/notes/definitions/`, and raw source captures may remain frontmatter-free while awaiting classification. Review gates need no migration: they belong to the instructions collection, and `review-gate` is an instruction type whose path supplies its complete type identity. This requires neither a subtype mechanism nor a change to the instruction contract.
 
 ## 3. Repoint the consumers
 
@@ -49,15 +47,18 @@ Three skills read the menu:
 - `kb/instructions/cp-skill-write-multistage/SKILL.md`
 - `kb/instructions/cp-skill-snapshot-web/SKILL.md` — templates `type: {snapshot type path from the Types menu, ...}`
 
-Remove the menu as an agent-side authorization gate. Type lookup is uniform because type identity is already a path: for an existing artifact, open the spec named by `type:`; for a new write identified by shorthand, search type-spec frontmatter and resolve the intended path.
+Remove the menu as an agent-side authorization gate. Resolve the type in four cases:
 
-```bash
-<frontmatter-aware listing of type specs under kb/**/types/>
-```
+- for an existing typed artifact, open the spec named by its `type:` pointer;
+- for a new write with an explicit type path supplied by the user or calling workflow, open that path;
+- for a new write identified by shorthand, search Markdown files under global and collection `types/` directories, inspect their own frontmatter, and require one exact `name:` match;
+- for a general new write with no supplied type, use `kb/types/note.md`.
+
+A workflow that requires another type supplies its exact path, so it creates no separate lookup case. In particular, the snapshot workflow supplies `kb/sources/types/snapshot.md` and opens it before using its `genre` vocabulary. Implicit `text` remains an explicit request for unstructured capture rather than a fallback.
 
 Open the chosen path and verify that it resolves to a type-spec doc. Do not add a `kb/work/` branch to the skills: the same lookup works there, and the validator owns the difference in eligibility. Validation already rejects missing type files, bare enum values, absolute paths, URLs, paths escaping `kb/`, and non-type-spec targets ([`collections-and-types.md`](../../reference/collections-and-types.md)). The new eligibility check rejects a peer-local type outside `kb/work/`.
 
-Keep the skills' fail-fast posture: if a requested shorthand has no unique match or the chosen path does not resolve, stop and report that condition. Do not guess a type path. After writing, run `commonplace-validate`; it is authoritative for collection eligibility.
+Keep the skills' fail-fast posture: if a requested shorthand has no unique match or the chosen path does not resolve, stop and report that condition. Report every matching path when a name is ambiguous; do not add collection-specific precedence or guess a type path. After writing, run `commonplace-validate`; it is authoritative for collection eligibility.
 
 ## 4. Enforce collection-local eligibility
 
@@ -82,6 +83,8 @@ Derivation-free, binding, cannot drift. Give each ordinary collection a sentence
 
 Give `kb/work/COLLECTION.md` the lifecycle-overlay rule instead: any valid type spec may be referenced from anywhere under `kb/work/`. This exception does not make peer types work-local and does not change the artifact's current workshop lifecycle.
 
+Preserve the two collection-local clauses identified by the [menu audit](menu-clause-audit.md) in the same change: put the definition placement rule in `kb/notes/COLLECTION.md` and the raw-capture allowance in `kb/sources/COLLECTION.md`. No other menu-row prose survives.
+
 ## 6. Fix the scaffold
 
 `src/commonplace/_data/templates/user-{notes,reference,instructions}-COLLECTION.md` ship `## Types` as an empty section with commented examples. Apply the eligibility rule sentence there too. This also removes the phantom `kb/types/skill.md` from `user-instructions-COLLECTION.md`.
@@ -94,6 +97,5 @@ Check whether `commonplace-init` or `scaffold_manifest.py` asserts anything abou
 
 ## Open items
 
-- Specify a frontmatter-aware listing that returns canonical paths and only the frontmatter `name:`/`description:` pair. The current `rg` sketch also matches examples inside type-spec template bodies; duplicate shorthand names must report their paths rather than be resolved by collection-specific agent logic.
 - Update `tests/commonplace/docs/test_type_contract_integrity.py`, which currently asserts the snapshot row in `kb/sources/COLLECTION.md`.
 - The collection-conformance pair hashes and reviews the whole `COLLECTION.md`; removing the section stales the affected collection pairs even though no parser special-cases the heading.
