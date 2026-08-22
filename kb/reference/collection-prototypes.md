@@ -1,6 +1,6 @@
 ---
 description: "Catalogue of optional Commonplace collection prototypes: creation-time contract text that may be copied and then becomes an independently owned COLLECTION.md"
-type: ../types/note.md
+type: kb/types/note.md
 tags: []
 ---
 
