@@ -19,6 +19,12 @@ def write(path: Path, content: str) -> Path:
     return path
 
 
+def write_collection(root: Path, rel_path: str) -> Path:
+    collection = root / rel_path
+    write(collection / "COLLECTION.md", "# Collection\n")
+    return collection
+
+
 def write_type_spec(
     root: Path,
     rel_path: str,
@@ -106,6 +112,140 @@ type: kb/types/note.md
     assert profile.type_name == "note"
     assert profile.schema_path == tmp_path / "kb" / "types" / "note.schema.yaml"
     assert profile.schema is not None
+
+
+def test_global_type_is_eligible_in_declared_collection(tmp_path: Path) -> None:
+    notes = write_collection(tmp_path, "kb/notes")
+    write_type_spec(
+        tmp_path,
+        "kb/types/note.md",
+        name="note",
+        schema=None,
+    )
+
+    profile = type_resolver.resolve_type(
+        notes / "sample.md",
+        {"type": "kb/types/note.md"},
+        repo_root=tmp_path,
+    )
+
+    assert profile.type_path == "kb/types/note.md"
+
+
+def test_own_collection_local_type_is_eligible(tmp_path: Path) -> None:
+    notes = write_collection(tmp_path, "kb/notes")
+    write_type_spec(
+        tmp_path,
+        "kb/notes/types/structured-claim.md",
+        name="structured-claim",
+        schema=None,
+    )
+
+    profile = type_resolver.resolve_type(
+        notes / "claim.md",
+        {"type": "kb/notes/types/structured-claim.md"},
+        repo_root=tmp_path,
+    )
+
+    assert profile.type_path == "kb/notes/types/structured-claim.md"
+
+
+def test_peer_collection_local_type_is_ineligible(tmp_path: Path) -> None:
+    notes = write_collection(tmp_path, "kb/notes")
+    write_collection(tmp_path, "kb/reference")
+    write_type_spec(
+        tmp_path,
+        "kb/reference/types/adr.md",
+        name="adr",
+        schema=None,
+    )
+
+    with pytest.raises(
+        ValueError,
+        match=r"kb/reference/types/adr\.md is not eligible in collection kb/notes",
+    ):
+        type_resolver.resolve_type(
+            notes / "decision.md",
+            {"type": "kb/reference/types/adr.md"},
+            repo_root=tmp_path,
+        )
+
+
+def test_file_relative_peer_collection_local_type_is_ineligible(
+    tmp_path: Path,
+) -> None:
+    notes = write_collection(tmp_path, "kb/notes")
+    write_collection(tmp_path, "kb/reference")
+    write_type_spec(
+        tmp_path,
+        "kb/reference/types/adr.md",
+        name="adr",
+        schema=None,
+    )
+
+    with pytest.raises(ValueError, match="not eligible in collection kb/notes"):
+        type_resolver.resolve_type(
+            notes / "decision.md",
+            {"type": "../reference/types/adr.md"},
+            repo_root=tmp_path,
+        )
+
+
+def test_work_subtree_accepts_peer_collection_local_type(tmp_path: Path) -> None:
+    write_collection(tmp_path, "kb/work")
+    nested_workshop = write_collection(tmp_path, "kb/work/type-trial")
+    write_collection(tmp_path, "kb/reference")
+    write_type_spec(
+        tmp_path,
+        "kb/reference/types/adr.md",
+        name="adr",
+        schema=None,
+    )
+
+    profile = type_resolver.resolve_type(
+        nested_workshop / "decision.md",
+        {"type": "kb/reference/types/adr.md"},
+        repo_root=tmp_path,
+    )
+
+    assert profile.type_path == "kb/reference/types/adr.md"
+
+
+def test_installed_collection_local_type_is_eligible(tmp_path: Path) -> None:
+    notes = write_collection(tmp_path, "kb/commonplace/notes")
+    write_type_spec(
+        tmp_path,
+        "kb/commonplace/notes/types/structured-claim.md",
+        name="structured-claim",
+        schema=None,
+    )
+
+    profile = type_resolver.resolve_type(
+        notes / "claim.md",
+        {"type": "./types/structured-claim.md"},
+        repo_root=tmp_path,
+    )
+
+    assert profile.type_path == "kb/commonplace/notes/types/structured-claim.md"
+
+
+def test_collectionless_namespace_keeps_referential_type_resolution(
+    tmp_path: Path,
+) -> None:
+    write_type_spec(
+        tmp_path,
+        "kb/reference/types/adr.md",
+        name="adr",
+        schema=None,
+    )
+
+    profile = type_resolver.resolve_type(
+        tmp_path / "kb" / "unclassified" / "decision.md",
+        {"type": "kb/reference/types/adr.md"},
+        repo_root=tmp_path,
+    )
+
+    assert profile.type_path == "kb/reference/types/adr.md"
 
 
 def test_resolve_type_definition_uses_already_parsed_frontmatter(

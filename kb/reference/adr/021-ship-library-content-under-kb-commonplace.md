@@ -10,6 +10,7 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-04-23
 **Relates to:** [ADR-014](./014-scripts-as-python-package-one-tree-model.md) (the one-tree model that placed shipped content at user-collection paths — this ADR refines that model by introducing a namespace within `kb/`)
+**Superseded (in part) by:** [ADR 068](./068-collection-contracts-stop-enumerating-available-types.md), which replaces scaffolded type-offerings placeholders with the global-plus-owned-local eligibility rule.
 
 ## Context
 

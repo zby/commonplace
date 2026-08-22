@@ -202,7 +202,8 @@ Type resolution now starts from the path stored in frontmatter. There is no coll
 2. If the file has frontmatter, require `type:` to be a markdown path under `kb/`, either repository-relative (`kb/...`) or file-relative (`./...` or `../...`).
 3. Open the referenced type-spec doc and verify it declares `type: kb/types/type-spec.md`.
 4. Read the type spec's `name`, `description`, and `schema` fields.
-5. If `schema` is a path, resolve it the same way from the type-spec doc, load that JSON Schema YAML file, and validate the parsed document against it. If `schema: null`, skip schema validation.
+5. For an artifact inside a declared collection, require the spec to be global under `kb/types/` or local to that collection's own `types/` directory. The `kb/work/` subtree may use any valid spec; files outside a declared collection retain referential-only resolution.
+6. If `schema` is a path, resolve it the same way from the type-spec doc, load that JSON Schema YAML file, and validate the parsed document against it. If `schema: null`, skip schema validation.
 
 Bare enum values, missing type files, missing `schema` fields in type specs, absolute paths, URLs, and paths outside `kb/` are validation errors.
 
@@ -217,10 +218,13 @@ Bare enum values, missing type files, missing `schema` fields in type specs, abs
 
 
 **`resolve_type(file_path: Path, frontmatter: dict | None, *, repo_root: Path, load_type_frontmatter=None) -> TypeProfile`**
-Note-oriented entry point. Validates the path-valued `type:` and delegates the referenced type document to `resolve_type_definition`. A validation run supplies its cached frontmatter loader; standalone callers omit it and the resolver reads the type document directly.
+Note-oriented entry point. Validates the path-valued `type:`, delegates the referenced type document to `resolve_type_definition`, and checks collection eligibility. A validation run supplies its cached frontmatter loader; standalone callers omit it and the resolver reads the type document directly.
 
 **`resolve_type_definition(type_doc_path: Path, *, repo_root: Path, type_frontmatter: dict | None = None) -> TypeProfile`**
 Load an identified type-spec document and its declared schema directly. Callers that already parsed the document may supply its frontmatter to avoid reopening it; ordinary note resolution omits the mapping and loads the type document itself.
+
+**`validate_type_eligibility(file_path: Path, type_doc_path: Path, *, repo_root: Path) -> None`**
+Reject a collection-local type used outside its owning collection, except beneath `kb/work/`. Global types and the artifact's own collection-local types pass; files outside a declared collection are unchanged.
 
 **`canonical_type_identity(profile: TypeProfile) -> str`**
 Return the portable path identity used by schemas and imperative type-rule dispatch. Installed framework paths under `kb/commonplace/` normalize to their source `kb/` identity; collection-local paths remain distinct.

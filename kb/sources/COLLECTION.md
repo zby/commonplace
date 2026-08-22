@@ -64,14 +64,9 @@ Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 | `defined-in` | notes/definitions | reader may not know the term |
 | `see-also` | notes, reference, sources, agent-memory, agentic-systems, external | adjacent companion; use sparingly |
 
-## Types
+## Type eligibility
 
-| type | file | use for |
-|---|---|---|
-| `snapshot` | `kb/sources/types/snapshot.md` | local verbatim external source captures |
-| `ingest-report` | `kb/sources/types/ingest-report.md` | durable source record and KB analysis |
-| `source-review` | `kb/sources/types/source-review.md` | structured extraction + relevance review |
-| `text` (implicit) | no frontmatter | raw captures awaiting classification |
+A typed artifact in this collection may use a global type spec under `kb/types/` or a local type spec under this collection's `types/` directory. Its `type:` value is the path to that contract. A raw capture awaiting classification may remain frontmatter-free as implicit `text`; once classified, it follows the selected type contract.
 
 ## What does NOT belong here
 

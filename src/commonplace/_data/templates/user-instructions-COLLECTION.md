@@ -33,10 +33,6 @@ Instructions typically link back to notes (rationale) and reference
 (operates-on). Skills live here as directories with SKILL.md files.
 -->
 
-## Types
+## Type eligibility
 
-<!-- Examples:
-- `instruction` (kb/types/instruction.md) — default
-- `skill` (kb/types/skill.md) — auto-loaded harness skills
-- `index` (kb/types/generated-index.md) — build-time generated directory listings
--->
+A typed artifact in this collection may use a global type spec under `kb/types/` or a local type spec under this collection's `types/` directory. Its `type:` value is the path to that contract. Frontmatter-free Markdown is implicit `text`.

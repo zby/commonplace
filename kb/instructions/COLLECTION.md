@@ -86,12 +86,9 @@ type: kb/types/instruction.md
 - {How to confirm the procedure succeeded}
 ```
 
-## Types
+## Type eligibility
 
-| type | file | use for |
-|---|---|---|
-| `instruction` | `kb/types/instruction.md` | procedures, skills, wrapper prompts, review gates |
-| `index` | `kb/types/generated-index.md` | build-time generated directory listings only |
+A typed artifact in this collection may use a global type spec under `kb/types/` or a local type spec under this collection's `types/` directory. Its `type:` value is the path to that contract. Frontmatter-free Markdown is implicit `text`.
 
 ## What does NOT belong here
 

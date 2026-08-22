@@ -35,11 +35,6 @@ Which collections does this one link into, with which labels?
 See kb/commonplace/reference/link-vocabulary.md for the shipped vocabulary.
 -->
 
-## Types
+## Type eligibility
 
-<!-- Which types do notes in this collection use? Examples:
-- `note` (kb/types/note.md) — default
-- `index` (kb/types/generated-index.md) — build-time generated directory listings
-- `definition` (kb/types/definition.md) — vocabulary entries
-Add collection-local types under ./types/ as needed.
--->
+A typed artifact in this collection may use a global type spec under `kb/types/` or a local type spec under this collection's `types/` directory. Its `type:` value is the path to that contract. Frontmatter-free Markdown is implicit `text`.

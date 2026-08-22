@@ -873,6 +873,35 @@ type: spec
     )
 
 
+def test_peer_collection_local_type_fails_validation(tmp_path: Path) -> None:
+    notes_root = configure_temp_repo(tmp_path)
+    write(tmp_path / "kb" / "reference" / "COLLECTION.md", "# Reference\n")
+    write_type_spec(
+        tmp_path,
+        "kb/reference/types/adr.md",
+        name="adr",
+        schema=None,
+    )
+    note = write(
+        notes_root / "wrong-local-type.md",
+        """---
+description: Peer collection local types should fail deterministic validation
+type: kb/reference/types/adr.md
+---
+
+# Wrong local type
+""",
+    )
+
+    results = validation.validate_note(note, repo_root=tmp_path)
+
+    assert results.note_type == "unknown"
+    assert any(
+        "kb/reference/types/adr.md is not eligible in collection kb/notes" in item
+        for item in results.fails
+    )
+
+
 def test_type_spec_validation_resolves_its_own_declared_schema(tmp_path: Path) -> None:
     configure_type_spec_repo(tmp_path)
     type_spec = write_type_spec(
@@ -912,7 +941,9 @@ def test_type_spec_validation_accepts_explicitly_schema_less_type(
 
 
 def test_agent_memory_review_fails_when_last_checked_missing(tmp_path: Path) -> None:
-    notes_root = configure_temp_repo(tmp_path)
+    configure_temp_repo(tmp_path)
+    reviews_root = tmp_path / "kb" / "agent-memory-systems"
+    write(reviews_root / "COLLECTION.md", "# Agent memory systems\n")
     write(
         tmp_path
         / "kb"
@@ -934,7 +965,7 @@ def test_agent_memory_review_fails_when_last_checked_missing(tmp_path: Path) -> 
         schema="kb/agent-memory-systems/types/agent-memory-system-review.schema.yaml",
     )
     note = write(
-        notes_root / "system.md",
+        reviews_root / "system.md",
         """---
 description: Related system note missing the review freshness field so the structural validator should flag it
 type: kb/agent-memory-systems/types/agent-memory-system-review.md

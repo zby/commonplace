@@ -10,6 +10,7 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-04-19
 **Supersedes (in part):** [ADR 016 — custom types use template/instruction pairs](./016-custom-types-use-template-instruction-pairs.md). Affects [ADR 002 — inline global types in writing guide](./002-inline-global-types-in-writing-guide.md) at the `note` migration step.
+**Superseded (in part) by:** [ADR 068](./068-collection-contracts-stop-enumerating-available-types.md), which retains filesystem discovery but removes per-collection type listings and makes collection eligibility a validator rule.
 **Related:** [ADR 009](./009-link-relationship-semantics.md).
 
 ## Context

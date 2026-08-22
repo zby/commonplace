@@ -45,15 +45,9 @@ Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 | `procedure` | instructions | for how to do this, see this instruction |
 | `see-also` | reference, notes, agent-memory, agentic-systems, sources, instructions, external | adjacent companion; use sparingly |
 
-## Types
+## Type eligibility
 
-| type | file | use for |
-|---|---|---|
-| `note` | `kb/types/note.md` | general shipped-system reference documents |
-| `adr` | `./types/adr.md` | architecture decision records |
-| `design-proposal` | `./types/design-proposal.md` | finished but unadopted designs under `proposals/` |
-| `definition` | `kb/types/definition.md` | shipped-system vocabulary terms |
-| `index` | `kb/types/generated-index.md` | build-time generated directory listings only |
+A typed artifact in this collection may use a global type spec under `kb/types/` or a local type spec under this collection's `types/` directory. Its `type:` value is the path to that contract. Frontmatter-free Markdown is implicit `text`.
 
 ## What does NOT belong here
 

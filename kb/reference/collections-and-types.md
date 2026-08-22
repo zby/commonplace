@@ -35,9 +35,9 @@ type: ../types/adr.md
 
 The path is the type's identity. Two type specs with the same `name:` at different paths are different contracts.
 
-For an existing artifact, an agent follows `type:` and opens that document; no catalogue lookup is needed. When writing a new artifact, the agent first selects the collection, then selects and opens a type spec appropriate to that collection before drafting.
+For an existing artifact, an agent follows `type:` and opens that document; no catalogue lookup is needed. For a new artifact, a user or workflow may supply the exact type path. A shorthand name is resolved by inspecting type-spec frontmatter under the global and collection `types/` directories and requiring one exact `name:` match; duplicate names remain ambiguous until a path is supplied. A general write with no supplied type defaults to `kb/types/note.md`. A workflow that requires another type supplies its exact path. Implicit `text` is an explicit choice to write frontmatter-free Markdown, not a fallback from failed type lookup.
 
-The current writing skills use each collection's `## Types` section as the shorthand selection menu for new writes. Explicit type resolution does not use that menu: the validator follows the stored path directly. It currently checks that the pointer and target are valid, loads the type's schema, and validates the artifact, but does not enforce that a collection-local type belongs to the artifact's collection.
+Lookup identifies the contract but does not authorize it for a collection. For an artifact inside a declared collection, validation permits global specs under `kb/types/` and local specs under that collection's own `types/` directory. A peer collection's local type fails. The entire `kb/work/` subtree is the lifecycle exception: a workshop may reference any valid type spec so that it can stage work for any target collection or test the real contract. Files outside declared collections retain referential validation only.
 
 ## What a type spec contains
 

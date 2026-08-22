@@ -37,14 +37,9 @@ Organised per destination: when to prospect for links, and the authorised labels
 
 `compares-with` (a difference in *systems* on a design axis) is distinct from theoretical `contrasts` (a difference in *claims*); use `compares-with` here.
 
-## Types
+## Type eligibility
 
-- `agent-memory-system-review` -> `./types/agent-memory-system-review.md`
-  Use for reviews of external agent memory or context-engineering systems. Set `source-tier: code-grounded` when source was inspected, `doc-grounded` (under `lightweight/`) when coverage is paper/README/article-only — same comparison elements, lower evidence tier.
-- `note` -> `kb/types/note.md`
-  Use for cross-system descriptive analyses and comparative reviews.
-- `index` -> `kb/types/generated-index.md`
-  Build-time generated directory listings only; the committed `README.md` navigation hub carries no frontmatter.
+A typed artifact in this collection may use a global type spec under `kb/types/` or a local type spec under this collection's `types/` directory. Its `type:` value is the path to that contract. Frontmatter-free Markdown is implicit `text`.
 
 ## What does NOT belong here
 

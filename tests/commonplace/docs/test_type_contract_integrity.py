@@ -115,13 +115,15 @@ def test_snapshot_type_pointer_matches_schema() -> None:
     collection_contract = (REPO_ROOT / "kb/sources/COLLECTION.md").read_text(
         encoding="utf-8"
     )
-    assert f"| `snapshot` | `{expected_pointer}` |" in collection_contract
+    assert "## Type eligibility" in collection_contract
+    assert f"| `snapshot` | `{expected_pointer}` |" not in collection_contract
 
     snapshot_skill = (
         REPO_ROOT / "kb/instructions/cp-skill-snapshot-web/SKILL.md"
     ).read_text(encoding="utf-8")
-    assert f"`{expected_pointer}` in the shipped default" in snapshot_skill
-    assert f"default {expected_pointer}" in snapshot_skill
+    assert f"supplies `{expected_pointer}` as the type" in snapshot_skill
+    assert f"type: {expected_pointer}" in snapshot_skill
+    assert "Types menu" not in snapshot_skill
 
 
 def test_ingest_owns_durable_source_and_snapshot_anchor() -> None:

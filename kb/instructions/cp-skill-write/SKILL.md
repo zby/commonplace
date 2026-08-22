@@ -13,7 +13,7 @@ argument-hint: "[path | collection | type] [topic or claim/purpose] — a note p
 
 **Target: $ARGUMENTS**
 
-All documents in the KB live in a **collection**: a directory under `kb/` with a local `COLLECTION.md`, such as `kb/notes/`, `kb/reference/`, `kb/instructions/`, or an installed library collection like `kb/commonplace/notes/`. Each collection that accepts writes has a `COLLECTION.md` with its register, quality goal, type offerings, and linking conventions.
+All documents in the KB live in a **collection**: a directory under `kb/` with a local `COLLECTION.md`, such as `kb/notes/`, `kb/reference/`, `kb/instructions/`, or an installed library collection like `kb/commonplace/notes/`. Each collection that accepts writes has a `COLLECTION.md` with its register, quality goal, and linking conventions.
 
 Documents with frontmatter carry a path-valued `type:` that points to a type-spec doc, for example `type: kb/types/note.md` or `type: kb/reference/types/adr.md`. Files with no frontmatter are implicit `text`.
 
@@ -21,9 +21,15 @@ Documents with frontmatter carry a path-valued `type:` that points to a type-spe
 
 **Edit mode**: first argument is a path to an existing `.md` file. Read it, infer collection from the path, and read its `type:` path from frontmatter. If it has frontmatter but no `type:`, stop and fix that structural problem before editing. If it has no frontmatter, treat it as implicit `text`. Open the type-spec doc named by `type:` before making structural edits.
 
-**New-write mode**: everything else. Extract collection, type, and topic from the arguments. Defaults: collection `notes`, type `kb/types/note.md`. If the requested type is an instruction and no collection is explicit, use collection `instructions`.
+**New-write mode**: everything else. Extract collection, type, and topic from the arguments. Default an unspecified collection to `notes` and an unspecified type to `kb/types/note.md`. If the requested type is an instruction and no collection is explicit, use collection `instructions`.
 
-For new writes, resolve the target collection to a directory under `kb/` with a local `COLLECTION.md`; shorthand names such as `notes` mean `kb/notes/`. Read that collection's `## Types` section and pick one listed type path. If the requested type is not listed and the user did not give an explicit path, stop and list the available types. If the user gives an explicit `kb/.../*.md` type path, open that file and verify it is a type-spec doc before using it.
+For new writes, resolve the target collection to a directory under `kb/` with a local `COLLECTION.md`; shorthand names such as `notes` mean `kb/notes/`. Resolve the type independently of the collection contract:
+
+- If the user or calling workflow supplied a type path, open it and verify that its own frontmatter identifies it as a type-spec doc.
+- If the user supplied a shorthand type name, search Markdown files under `kb/types/` and every collection `types/` directory below `kb/`. Inspect each candidate's own opening frontmatter and require exactly one type-spec doc whose `name:` equals the shorthand. If none or several match, stop and report the matching paths; do not guess or apply collection-specific precedence.
+- If no type was supplied, use `kb/types/note.md`.
+
+This lookup identifies the contract; it does not authorize the type for the target collection. Do not add collection-specific eligibility logic or a `kb/work/` branch. `commonplace-validate` owns that decision. An explicit request for `text` means frontmatter-free Markdown, not a `type:` pointer.
 
 ### Step 2 - Load Collection Conventions
 

@@ -62,11 +62,9 @@ Do not link into `kb/work/` or `kb/reports/`: unfinished investigations and gene
 
 In-prose links to the `external` destination are authorized for primary attribution, canonical sources, and material an external reader should be able to inspect directly; they carry no formal identifier. External prospecting is part of article research, not `cp-skill-connect`.
 
-## Types
+## Type eligibility
 
-| type | file | use for |
-|---|---|---|
-| `article` | `./types/article.md` | outward-facing dated articles distilled from the KB |
+A typed artifact in this collection may use a global type spec under `kb/types/` or a local type spec under this collection's `types/` directory. Its `type:` value is the path to that contract. Frontmatter-free Markdown is implicit `text`.
 
 ## What does NOT belong here
 

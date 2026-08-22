@@ -73,15 +73,11 @@ Scan `kb/notes/`, `kb/types/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/
 | `operationalized-from` | asym | instructions | procedure adds ordering, defaults, or stopping conditions this methodology note doesn't itself fix; not claim-preserving — see lineage semantics in `kb/reference/link-vocabulary.md` |
 | `see-also` | asym | reference, agent-memory, agentic-systems, sources, instructions | adjacent companion; use sparingly |
 
-## Types
+## Type eligibility
 
-| type | file | use for |
-|---|---|---|
-| `note` | `kb/types/note.md` | transferable theoretical notes |
-| `structured-claim` | `./types/structured-claim.md` | developed arguments with explicit evidence and reasoning sections |
-| `definition` | `kb/types/definition.md` | KB vocabulary under `kb/notes/definitions/` |
-| `tag-readme` | `kb/types/tag-readme.md` | a tag's curated head (`<tag>-README.md`); weight-gated, with optional validator-enforced `complete`/`covered_by` marks |
-| `index` | `kb/types/generated-index.md` | build-time generated listings only — do not author new committed indexes |
+A typed artifact in this collection may use a global type spec under `kb/types/` or a local type spec under this collection's `types/` directory. Its `type:` value is the path to that contract. Frontmatter-free Markdown is implicit `text`.
+
+Definitions of KB vocabulary belong under `kb/notes/definitions/`.
 
 ## Evidence placement
 

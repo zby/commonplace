@@ -32,12 +32,9 @@ Organised per destination; label semantics in [link-vocabulary.md](../reference/
 - **→ `kb/reference/`** — scan when a design element has a direct Commonplace analogue. Labels: `see-also`.
 - **→ `kb/instructions/`** — link a Commonplace procedure when the external system analysis directly maps onto an operating rule or workflow. Labels: `procedure`, `see-also`.
 
-## Types
+## Type eligibility
 
-- `note` -> `kb/types/note.md`
-  Use for system and feature analyses, and for cross-system comparisons.
-- `index` -> `kb/types/generated-index.md`
-  Build-time generated directory listings only (ADR 026); the committed `README.md` navigation hub carries no frontmatter.
+A typed artifact in this collection may use a global type spec under `kb/types/` or a local type spec under this collection's `types/` directory. Its `type:` value is the path to that contract. Frontmatter-free Markdown is implicit `text`.
 
 ## What does NOT belong here
 

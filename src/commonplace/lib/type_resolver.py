@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
+from typing import Any
 from urllib.parse import urlparse
-from typing import Any, Callable
 
 import yaml
 from jsonschema import Draft202012Validator, FormatChecker
@@ -14,7 +15,7 @@ from jsonschema.exceptions import ValidationError
 from referencing import Registry, Resource
 
 from commonplace.lib import frontmatter
-from commonplace.lib.project_paths import kb_root
+from commonplace.lib.project_paths import collection_for_path, kb_root
 
 
 @dataclass(frozen=True)
@@ -120,6 +121,54 @@ def validate_type_path(
         suffix=".md",
         field_name="frontmatter.type",
         source_file=source_file,
+    )
+
+
+def validate_type_eligibility(
+    file_path: Path,
+    type_doc_path: Path,
+    *,
+    repo_root: Path,
+) -> None:
+    """Reject collection-local types used outside their owning collection.
+
+    Global types under ``kb/types/`` are eligible everywhere. A collection may
+    also use specs under its own ``types/`` directory. The ``kb/work/``
+    lifecycle subtree may use any valid type spec. Files that are not inside a
+    declared collection retain the referential-only behavior.
+    """
+    workspace_root = repo_root.resolve()
+    boundary = kb_root(workspace_root).resolve()
+    artifact = file_path.resolve()
+    type_doc = type_doc_path.resolve()
+
+    try:
+        artifact_rel = artifact.relative_to(boundary)
+    except ValueError:
+        return
+
+    if artifact_rel.parts and artifact_rel.parts[0] == "work":
+        return
+
+    try:
+        collection = collection_for_path(artifact, workspace_root)
+    except ValueError:
+        return
+
+    if type_doc.is_relative_to(boundary / "types"):
+        return
+
+    local_types = collection / "types"
+    if type_doc.is_relative_to(local_types):
+        return
+
+    type_display = _display_path(type_doc, workspace_root)
+    collection_display = _display_path(collection, workspace_root)
+    local_display = _display_path(local_types, workspace_root)
+    raise ValueError(
+        f"frontmatter.type: {type_display} is not eligible in collection "
+        f"{collection_display}; use a global type under kb/types/ or a local "
+        f"type under {local_display}/"
     )
 
 
@@ -379,11 +428,18 @@ def resolve_type(
         if load_type_frontmatter is not None and type_doc_path.is_file()
         else None
     )
-    return resolve_type_definition(
+    profile = resolve_type_definition(
         type_doc_path,
         repo_root=workspace_root,
         type_frontmatter=type_frontmatter,
     )
+    assert profile.type_doc_path is not None
+    validate_type_eligibility(
+        file_path,
+        profile.type_doc_path,
+        repo_root=workspace_root,
+    )
+    return profile
 
 
 def validate_instance(

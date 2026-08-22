@@ -46,15 +46,9 @@ When the workshop's question is answered, extract the durable conclusions into t
 
 **No redirect, deliberately.** Workshops are published — `kb/work/` is not in `properdocs.yml`'s `exclude_docs`, because a live workshop is worth showing to someone for consultation. But closure does not add a `redirect_maps` entry the way [retiring a library artifact](../instructions/retire-artifact.md) does. The layer is temporary by design: a workshop URL was never a durable address, and a closed workshop often has several successors or none, so there is frequently no honest target to point at. Dead workshop URLs are an accepted cost, not an oversight — 84 closed workshops have left one redirect between them. Do not "fix" this by back-filling redirects.
 
-## Types
+## Type eligibility
 
-| type | file | use for |
-|---|---|---|
-| `note` | `kb/types/note.md` | workshop output that needs normal note metadata before promotion |
-| `instruction` | `kb/types/instruction.md` | temporary procedures, experimental gates, runbooks |
-| `structured-claim` | `kb/notes/types/structured-claim.md` | workshop draft already shaped as evidence/reasoning argument |
-| `index` | `kb/types/generated-index.md` | build-time generated workshop directory listings |
-| `text` (implicit) | no frontmatter | drafts, traces, scratch, anything pre-structural |
+An artifact anywhere under `kb/work/` may reference any valid type spec under `kb/`. This lifecycle exception lets a workshop stage an artifact for any target collection and test the real target contract; it does not relocate ownership of that type. Frontmatter-free Markdown remains implicit `text`.
 
 ## What does NOT belong here
 
