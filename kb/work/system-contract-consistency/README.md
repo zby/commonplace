@@ -252,10 +252,22 @@ notes collection's
 `covered_by` claim is therefore false at cross-collection scope while validation
 passes because it checks only notes.
 
-The plan adopts the proposal's collection-scoped option. A mark licenses
-skipping only its owning collection's sweep, cross-collection search is a union
-of independent sweeps, and tag-link routing cannot cross into a landing whose
-generated tail excludes the source artifact.
+The proposal has since converged on a different resolution: one namespace per
+KB root, with membership claims ranging over the root's explicitly
+participating library collections in the concrete projection. A shared resolver
+must drive validation, generated augmentation, connect, recipes, and every skip
+rule. Host and vendored KB roots remain independent, and shared `kb/types/`
+admits no tags because it has no single root owner.
+
+Under that proposed scope, two live violations remain: the external
+`learning-theory` member above, and the live reference proposal omitted by the
+`artifact-analysis` head. The plan also moves the 20 existing per-tag heads to
+canonical `kb/tags/` paths and adds a twenty-first `trace-learning` head. That
+tag remains the source for website navigation and the derived matrix Boolean,
+with the review contract enforcing its evidence requirements. Redundant
+source-family tags are removed, and source and installed projection fixtures
+guard the boundary. The design remains unadopted and current behavior remains
+collection-scoped until the ADR and coordinated implementation land.
 
 ## E1 — Native Windows support and promoted procedures disagree
 
@@ -375,9 +387,11 @@ presence, not that any legal invocation or supported execution channel works.
 5. **Expose truthful full validation (V1).** Consume the same collection
    enumeration, retain orphan-type and top-level-landing coverage, and replace
    the shell loop.
-6. **Land the other repairs.** T1 should precede M1's areas packet; E1 consumes
-   V1 and remains with the execution-channel workshop. S1 and I3's installed
-   sources template close together even if their edits are prepared separately.
+6. **Land the other repairs.** T1 consumes the settled I3/I2/I1 product boundary
+   and V1's truthful full check, then precedes M1's areas packet. E1 also
+   consumes V1 and remains with the execution-channel workshop. S1 and I3's
+   installed sources template close together even if their edits are prepared
+   separately.
 7. **Finish the M1 sweep and cheap drift guards.** Retain focused parity and
    lexical checks at the boundaries that drifted.
 
