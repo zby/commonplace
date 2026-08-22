@@ -139,35 +139,41 @@ recognizes only the example's literal quantifier would create false failures.
 
 ## Contract-clause recommendation
 
-State the clause flatly. Do not add a transition provision or grandfather
-existing notes: the observed focal failure rate is zero in both strata, so the
-sample gives no evidence of broad migration debt. Handle the late area residue
-as targeted cleanup, not as a collection-wide transition.
+State the clause flatly. The collection has long required titles and opening
+arguments to be statable in general terms; binding makes that existing rule
+operational rather than introducing a new obligation. Do not add a transition
+provision or grandfather existing notes. The observed focal failure rate is zero
+in both strata, and the late area residue was already contrary to the existing
+general-form requirement. Handle it as ordinary targeted cleanup, not migration
+debt caused by the clarification.
 
 Before applying the proposed contract edit, make three wording changes so the
 clause implements the test used here:
 
-1. Name all three measured surfaces: **title, description, and opening
-   argument**.
+1. Name all three measured surfaces, which state the artifact's intended
+   contribution: **title, description, and opening argument**.
 2. Say that binding may be grammatical. Generic and conditional forms such as
    “a system that chooses X,” “for systems built with X,” and “under X” count
    when they range over or scope the choice.
 3. Include the removal test: a system-specific term is not a free occurrence
    when replacing it with its general description leaves the claim's truth
-   conditions unchanged. Conversely, an explicitly local choice report may
-   avoid the free-variable defect but still belong in `kb/reference/` under
-   the placement rule.
+   conditions unchanged. Require an existential witness to support a substantive
+   feasibility, mechanism, or consequence claim; merely restating a local
+   assignment with existential grammar does not turn it into theory.
 
 The resulting clause can be written without re-reading this sample:
 
 > **Formulation constraint — bind the choices you name.** The title,
 > description, and opening argument must be statable in general terms, even
-> when derived from a specific system. Where a load-bearing claim names a
-> choice some system made, bind it universally, existentially as a witness, or
-> through equivalent generic or conditional grammar. A system-specific term
-> is not a free occurrence when replacing it with its general description
-> leaves the claim's truth conditions unchanged. An unbound occurrence that
-> reads as general but depends on a selection the reader does not share fails:
-> bind the choice and keep the claim, or move the proposition to
-> `kb/reference/` because it only reports what Commonplace selected.
-
+> when derived from a specific system. Where one of those surfaces names a
+> choice some system made, bind it universally, existentially as a substantive
+> witness, or through equivalent generic or conditional grammar. A
+> system-specific term is not a free occurrence when replacing it with its
+> general description leaves the claim's truth conditions unchanged.
+> Existential grammar is not enough when the sentence merely restates the
+> selected value. If no substantive claim remains after binding, move the
+> artifact to `kb/reference/` because its intended contribution is what
+> Commonplace selected or the state that selection produced. Claims offered as
+> theory later in the body obey the same binding rule; explicitly scoped local
+> reports and examples may support the theory without becoming the artifact's
+> intended contribution.

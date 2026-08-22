@@ -1,6 +1,6 @@
 # What is stored in this KB?
 
-This workshop asks what Commonplace must retain, why it must retain it, and which durable collection should own it. “Stored” is not limited to knowledge claims or to files called documentation. It includes beliefs, choices, sources, descriptions, operative rules, rationale, and temporary work when those play different roles in the system.
+This workshop asks what Commonplace must retain, why it must retain it, and—where the choice is between the two main library collections—whether `kb/notes/` or `kb/reference/` should own it. “Stored” is not limited to knowledge claims or to files called documentation. Beliefs, choices, sources, descriptions, operative rules, rationale, and temporary work play different roles, but the other collections keep their own local routing rules.
 
 The immediate trigger was [the text-contract definition](../../notes/definitions/text-contract.md). It defines chosen Commonplace machinery but lives in the theoretical collection. Moving that one file without checking the rest of the vocabulary could preserve the same category error elsewhere.
 
@@ -16,9 +16,9 @@ The first attempted content split—derived content versus committed content—f
 
 The design-proposal discussion then established another boundary: a proposal is not a special information kind. It is a workflow surface for considering a possible process or system choice. The beliefs, requirements, alternatives, and candidate selections inside it retain their own kinds; adoption makes a residual selection operative.
 
-The workshop then acquired its organizing rule. **`kb/notes/` holds beliefs; `kb/reference/` holds choices** — notes are about the design space, reference about the selections Commonplace made within it. This promotes the content-kind axis to the collection boundary and removes the former communicative-profile axis; reusable creation text now lives only as [collection prototypes](./tasks/retire-profiles-for-collection-prototypes.md). It also survives the objection that killed the derived/committed split, because it asks what content *is* rather than how it was produced.
+The workshop then acquired its organizing rule. **`kb/notes/` holds beliefs about the design space, with particular system choices bound; `kb/reference/` holds the choices Commonplace made and the current or historical state they produced.** A note's intended contribution must remain a substantive truth-apt claim when every particular choice it names is bound universally, through equivalent generic or conditional grammar, or existentially as a witness. If binding leaves only “Commonplace selected X” or “Commonplace currently does Y,” the contribution belongs in reference. This replaces the failed counterfactual test with the formulation rule already used by the notes collection. Reusable creation text now lives only as [collection prototypes](./tasks/retire-profiles-for-collection-prototypes.md).
 
-Two independent arguments support it. **Maintenance:** beliefs are revised against evidence and rewritten in place, while choices are superseded and the earlier choice stays a fact — different regimes the profile labels had to state as a separate convention. **Publishability:** notes are distilled into articles for readers with no KB context, so a note may name a choice only as a bound variable — universally quantified, or existentially as a witness. A free choice-variable does not survive publication, and binding it is what produces explanatory-reach. Consequences are worked out in [the content model](./working-content-model.md).
+Two independent arguments support it. **Maintenance:** beliefs are revised against evidence and rewritten in place, while choices are superseded and the earlier choice stays a fact — different regimes the profile labels had to state as a separate convention. **Publishability:** notes are distilled into articles for readers with no KB context, so a note may name a choice only as a bound variable — universally, through generic or conditional grammar, or existentially as a substantive witness. A free choice-variable does not survive publication. A merely local assignment acquires no reach by being wrapped in an existential sentence; the witness must support a claim about feasibility, mechanism, or consequence in the design space. Consequences are worked out in [the content model](./working-content-model.md).
 
 The text-contract audit found 30 direct backlinks from 22 files and traced the present artifact to commit `1ac2171d` (2026-07-09), which replaced the earlier `register` definition added by `7eb616d5` (2026-04-12). Its terms name the collection-contract architecture chosen by Commonplace. That makes their canonical description a reference concern even if the vocabulary is stable. No relocation has been executed; the decision is now an explicit workshop task.
 
@@ -26,7 +26,9 @@ The prior conversation was handed off through `/tmp/commonplace-documentation-ha
 
 ## Governing question
 
-What kinds of retained content and system state does an agent-operated KB need, and which collection should own each kind?
+What kinds of retained content and system state does an agent-operated KB need, and what separates theory in `kb/notes/` from Commonplace selections and state in `kb/reference/`?
+
+This workshop does not replace the special rules of `kb/instructions/`, `kb/sources/`, `kb/work/`, `kb/agent-memory-systems/`, `kb/agentic-systems/`, or `kb/articles/`. Their local contracts decide when an artifact's operative, source-fidelity, lifecycle, external-system, or publication role takes precedence. The binding test applies only after the live routing choice is notes versus reference.
 
 The answer must distinguish at least:
 
@@ -37,20 +39,24 @@ The answer must distinguish at least:
 - sources, evidence, lineage, rationale, alternatives, scope, and uncertainty;
 - temporary work whose value should be consumed rather than accumulated.
 
-This list is a starting inventory, not the final ontology. Requirements, inherited constraints, definitions, indexes, and historical decisions still need exact placement.
+This list is a starting inventory, not the final ontology. Requirements, inherited constraints, definitions, indexes, and historical decisions still need exact treatment where they raise a notes/reference choice; the other collection contracts continue to route their special cases.
 
 ## Working guard
 
-The boundary is belief versus choice, and the operative question is the counterfactual: **would this still be true if Commonplace had chosen differently?** A belief survives it; a choice is what it varies.
+The boundary is operationalized by binding, not by a counterfactual. Ask whether the artifact's intended contribution remains substantive after every particular system choice it names is treated as a variable:
+
+- Bind it universally or through equivalent generic or conditional grammar when the claim states what follows for systems making that choice.
+- Bind it existentially when the particular system is evidence for feasibility, a mechanism, or a bounded consequence.
+- If nothing remains except the selected value or the current or historical state it produced, the artifact records Commonplace and belongs in `kb/reference/`.
 
 An artifact does not belong in theory merely because it defines a stable term, nor in reference merely because it discusses machinery. Subject matter is not content kind. The test is what makes its content hold:
 
-- A theoretical definition sharpens a transferable distinction needed by truth-apt claims about possible systems.
-- A reference definition names Commonplace's chosen architecture, current contract, or implemented classification.
+- A theoretical definition still names a substantive, contestable distinction after Commonplace-specific choices are replaced by variables.
+- A reference definition names Commonplace's selected vocabulary, current contract, or implemented classification; abstracting the local term removes its intended contribution.
 - An instruction prescribes how an operator should act.
-- A mixed artifact is split or routed proposition by proposition rather than assigned by its dominant vocabulary.
+- Mixed artifacts are decided case by case. Prefer splitting when that yields atomic, independently useful notes; do not invent a general threshold before hard cases require one.
 
-Failing the test has two repairs, not one. A theory claim that depends on a Commonplace choice can be moved to reference, or the choice can be bound as a variable and the claim kept — the second is usually better, because it adds reach instead of relocating content.
+The test has two dispositions. Bind the choice and keep the theory when a substantive claim remains with the selection as a parameter or witness. Move the artifact to reference when the selected value or resulting state is the whole intended contribution. Neither is preferred independently of what survives binding.
 
 The structural `definition` type does not decide this placement. [Reference already contains a definition-typed artifact](../../reference/definitions/collection.md), so collection and type are demonstrably separate.
 
@@ -59,9 +65,9 @@ The structural `definition` type does not decide this placement. [Reference alre
 - [Working content model](./working-content-model.md) — reconstruct the candidate retained payload and the tests that separate its roles.
 - [Definition audit](./definition-audit.md) — initial disposition of all 23 artifacts under `kb/notes/definitions/`, including migration cost from direct backlinks.
 - [Text-contract disposition](./tasks/text-contract-and-profiles.md) — after profile content is extracted in place, decide whether the remaining term belongs in the collection definition, a small standalone reference definition, or the collection/type composition document.
-- [Promote the belief/choice boundary into binding artifacts](./tasks/promotion-sequence.md) — five ordered steps; step 2 is gated on the sweep.
+- [Promote the choice-binding boundary into binding artifacts](./tasks/promotion-sequence.md) — five ordered steps; step 2 is gated on the sweep.
 - [Sweep kb/notes/ for free choice-variables](./tasks/bound-variable-sweep.md) — **closed 2026-08-23**, 0/27 failures; [findings](./bound-variable-sweep-findings.md) corrected the clause wording and unblocked step 2.
-- [Draft ADR: collection placement follows content kind](./draft-adr-collection-placement-follows-content-kind.md) — the boundary as a decision, with the counterfactual test and the two repairs.
+- [Draft ADR: notes bind choices; reference records selections and state](./draft-adr-collection-placement-follows-content-kind.md) — the boundary as a decision, with the binding test and its two dispositions.
 - [Proposed COLLECTION.md edits](./draft-collection-contract-edits.md) — exact replacement text for both contracts, not yet applied.
 - [Draft: superseded choices are retained, superseded beliefs are not](./draft-superseded-choices-are-retained-superseded-beliefs-are-not.md) — **promoted 2026-08-23** into [the note](../../notes/superseded-choices-are-retained-superseded-beliefs-are-not.md); both open questions carried over.
 - [Draft: a theory may name a choice only as a bound variable](./draft-a-theory-may-name-a-choice-only-as-a-bound-variable.md) — **promoted 2026-08-23** into [the note](../../notes/a-theory-may-name-a-choice-only-as-a-bound-variable.md), with the sweep's three refinements folded in (grammatical binding, the removal test, explicit local reports failing placement rather than binding).
@@ -71,7 +77,7 @@ The structural `definition` type does not decide this placement. [Reference alre
 
 ## What closes this workshop
 
-- A content model states what Commonplace retains without conflating collection prototype, content kind, lineage, authority, or recoverability, and works out the belief/choice boundary's consequences for every payload class.
+- A content model states what Commonplace retains without conflating collection prototype, content kind, intended contribution, lineage, authority, or recoverability, and works out which payload classes cross the notes/reference boundary while preserving other collections' special rules.
 - Every current definition has a reasoned disposition: keep in theory, move or fold into reference, move operational rules into instructions, split, or retire.
 - The text-contract task has one selected reference owner and a complete post-profile backlink migration plan.
 - Required changes to `AGENTS.md`, collection contracts, type guidance, indexes, and durable artifacts are recorded as explicit implementation handoffs.
@@ -83,8 +89,8 @@ The structural `definition` type does not decide this placement. [Reference alre
 - [x] Read and provisionally classify all 23 theory-collection definitions.
 - [x] Record the text-contract disposition task.
 - [x] Scope the profile retirement as a separable first step.
-- [x] Adopt belief/choice as the collection boundary and align the content model to it.
+- [x] Adopt choice-binding as the notes eligibility test and make reference own Commonplace's selections and resulting state.
 - [x] Test the bound-variable requirement against a fixed sample of `kb/notes/` (0/27 failures).
-- [ ] Test the candidate content model against representative artifacts in every collection.
+- [ ] Test the choice-binding boundary against representative notes/reference cases while confirming that other collections' special rules take precedence.
 - [ ] Resolve the mixed and machinery-first definitions.
 - [ ] Select and execute durable migrations.

@@ -13,7 +13,7 @@ Complete. [ADR 069](../../../reference/adr/069-collection-contract-bundles-becom
 
 ## Why this is separable from the text-contract home question
 
-The open task asks which artifact should own the *text contract* vocabulary and where it lives. That question is about placement under the belief/choice rule and carries 30 backlinks across 22 files.
+The open task asks which artifact should own the *text contract* vocabulary and where it lives. That question is about placement under the choice-binding notes/reference rule; its backlink inventory is maintained in the dedicated task.
 
 Retiring profiles is a different question with a different answer: the concept is not misplaced, it is misdescribed. It is presented as a contract feature bundle and behaves as a starting template. Fixing the description does not require settling where the neighbouring term lives, and settling the neighbouring term does not fix the description. Doing the cheaper, independently-correct one first also shrinks the second: once profiles are gone, `text-contract.md` loses its largest section and the relocation options change shape.
 

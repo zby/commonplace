@@ -16,9 +16,11 @@ Binding is what produces reach. A claim with a free choice-variable has none
 beyond its origin system, so the requirement is not a separate stylistic rule
 but the same constraint the collection's quality goal already states.
 
-The repair matters as much as the test: a claim that fails can be bound and
-kept, or moved to wherever that system's choices are recorded. Binding is
-usually better, because it adds reach rather than relocating content.
+The disposition matters as much as the test. Bind and keep the claim when a
+substantive proposition remains with the choice as a parameter or witness. Move
+it to wherever that system's choices and state are recorded when the local
+assignment is the whole intended contribution. Neither disposition is preferred
+independently of what remains after binding.
 
 ## Not already covered
 
@@ -30,5 +32,7 @@ theory claim that names one.
 
 - Is a free choice-variable detectable more cheaply than semantic review? A
   proxy might be a system-specific identifier appearing outside a witness clause.
-- Do existing notes pass? The answer decides whether this describes practice or
-  prescribes a migration.
+- A fixed sweep found 0/27 failures at the title, description, and opening
+  surfaces. One later body residue remains targeted cleanup under the collection's
+  pre-existing general-form requirement, not migration debt created by the
+  clarification.

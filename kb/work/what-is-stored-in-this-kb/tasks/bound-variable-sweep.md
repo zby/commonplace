@@ -11,16 +11,17 @@ migration — see the findings' "Later choice-dependent residue".
 ## Why it exists
 
 The [draft ADR](../draft-adr-collection-placement-follows-content-kind.md) and
-the [proposed contract edits](../draft-collection-contract-edits.md) would add
-a bound-variable requirement to `kb/notes/COLLECTION.md`: a claim naming a
-choice must quantify over it. Nobody knows whether the corpus already
-satisfies this.
+the [proposed contract edits](../draft-collection-contract-edits.md) make the
+longstanding `kb/notes/COLLECTION.md` requirement that titles and openings be
+statable in general terms operational: a theoretical claim naming a choice must
+bind it. Before the sweep, nobody knew how consistently the corpus already
+followed that existing rule.
 
-The answer changes what gets written. A rule the corpus already follows can be
-stated flatly. A rule it broadly violates needs a transition provision, or the
-clause creates silent debt the day it lands — every existing note becomes
-nominally non-conforming with no migration scoped. Do not apply the contract
-edits before this reports.
+The answer changes how much pre-existing cleanup the clarification exposes. It
+does not create a new semantic obligation, so an isolated old violation neither
+breaks the collection nor requires a transition provision. A broad mismatch
+would still make the clarification misleading unless paired with a cleanup
+plan. Do not apply the contract edits before this reports.
 
 ## Question
 

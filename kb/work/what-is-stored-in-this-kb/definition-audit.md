@@ -6,16 +6,16 @@ Direct-backlink counts are included only as migration-cost evidence. High use do
 
 ## Disposition test
 
-This is the workshop's [belief/choice boundary](./working-content-model.md) applied to vocabulary: would the term still mean this if Commonplace had chosen differently?
+This is the workshop's [notes/reference boundary](./working-content-model.md) applied to vocabulary: after Commonplace-specific choices are replaced by variables or general descriptions, does the definition still state a substantive, contestable distinction?
 
-- **Theory vocabulary (belief):** the term names a stable distinction whose applicability can be contested across possible systems. It survives the counterfactual.
-- **Machinery vocabulary (choice):** the term is true or binding because Commonplace chose, implemented, or stipulated a system boundary, contract, workflow, or catalogue. Had the choice gone otherwise, the term would not exist or would mean something else.
+- **Theory vocabulary (belief):** the term names a distinction whose applicability can be stated and contested across possible systems after local choices are bound.
+- **Machinery vocabulary (selection or state):** binding or removing the Commonplace-specific term removes the intended contribution because the definition records a selected system boundary, contract, workflow, catalogue, or implemented classification.
 - **Mixed:** independent propositions have different homes and should be split or folded separately.
 - **Retire candidate:** ordinary wording or an existing concept can do the work without a separate canonical term.
 
 A definition can describe machinery and remain theoretical. `behavioral authority`, for example, is a general way to analyse consumers, channels, and force across systems. Conversely, `text contract` is machinery vocabulary because its canonical meaning is constituted by Commonplace's chosen `COLLECTION.md` architecture.
 
-Stipulated vocabulary is the trap this test exists to catch. A stipulated term has a stable meaning, and stability reads as independence — but a term that is stable *because* it was fixed by decision is a choice wearing belief's most convincing disguise. Ask what makes the meaning hold, not whether it holds firmly.
+Stipulated vocabulary is the trap this test exists to catch. A stipulated term has a stable meaning, and stability reads as theoretical reach. Replace the term with a general description. If a substantive distinction remains, the local name was only a label; if the proposition disappears, the definition records Commonplace's selected machinery.
 
 ## Strong theory-vocabulary candidates
 
@@ -70,7 +70,7 @@ Stipulated vocabulary is the trap this test exists to catch. A stipulated term h
 
 ## Next audit passes
 
-- Test the strong theory candidates against external-system counterexamples and the “would this survive a different Commonplace design?” question.
+- Test the strong theory candidates against external-system counterexamples and the choice-binding question: does a substantive distinction remain after local selections are parameterized or removed?
 - Inspect every material proposition in the mixed candidates instead of moving whole files by dominant theme.
 - For machinery-first candidates, choose between a reference definition, folding into an existing reference surface, or retirement.
 - Reassess the standalone value of `knowledge artifact`, `system-definition artifact`, `operative part`, `retained artifact`, and `storage substrate` after the content model settles.

@@ -1,4 +1,4 @@
-# Promote the belief/choice boundary into binding artifacts
+# Promote the choice-binding notes/reference boundary into binding artifacts
 
 ## Status
 
@@ -65,11 +65,11 @@ replacement text for five locations across the two contracts.
 Claim the next free ADR number at execution time. The draft says 070 was free
 on 2026-08-23; another session may have taken it since.
 
-The edits file already records one conflict it does not resolve: the notes
-exclusion "descriptions of how a specific system works" contradicts the
-proposed opening, since an observation about this system is a belief that
-stays. A narrower wording is proposed there — confirm it before applying, and
-check whether the sweep surfaced others.
+The edits file narrows the notes exclusion "descriptions of how a specific
+system works." A particular observation stays in notes only when it serves the
+artifact's substantive theoretical inference; current or historical Commonplace
+state remains reference. Confirm the exact wording before applying and check
+whether the sweep surfaced other conflicts.
 
 This is the step that gives the boundary a reader. Everything after it becomes
 an application of a stated rule rather than an argument.
@@ -87,9 +87,11 @@ Three reference artifacts the ADR names as candidates and does not authorize:
 `harness-sub-agent-model-selection-regression.md`, and
 `commonplace-as-a-reflective-system.md`.
 
-Judge each against the rule rather than moving all three. The harness
-regression is the doubtful one — it may be a source observation about an
-external tool rather than a belief about this system.
+Judge each against the binding rule rather than moving all three. A move needs a
+substantive theoretical contribution after Commonplace's choices are bound. The
+harness regression is the doubtful one — it is primarily an operational incident
+about an external tool and may remain reference or move with its external-system
+evidence.
 
 Present the candidate list and wait for maintainer approval before moving
 anything. Use `commonplace-relocate-note`, never `git mv` — it rewrites
@@ -105,24 +107,26 @@ The [definition audit](../definition-audit.md) left machinery-first candidates
 the content model. The model has since settled.
 
 The audit's own disposition test is the boundary applied to vocabulary, so
-this is mechanical once step 2 binds — except for the stipulation trap the
-audit records: a term stable *because* it was fixed by decision is a choice
-wearing belief's disguise.
+step 2 supplies the rule. The hard case is stipulated vocabulary: replace the
+local term with its general description and ask whether a substantive,
+contestable distinction remains.
 
 ## Deliberately not in this sequence
 
-Current-state descriptions — `architecture.md`, `lib-modules.md`,
-`commands.md`, `storage-architecture.md`, `freshness-schemas.md`, and the
-code-architecture halves of `review-architecture.md` and
-`freshness-architecture.md`. The rule flags them as belonging to neither
-collection; disposing of them (generate, register for staleness, or minimize)
-depends on the recovery test rather than the placement rule and can run in
-parallel with any step here.
+The maintenance-form audit of current-state reference artifacts —
+`architecture.md`, `lib-modules.md`, `commands.md`, `storage-architecture.md`,
+`freshness-schemas.md`, and the code-architecture halves of
+`review-architecture.md` and `freshness-architecture.md`. Their placement is
+settled: current and historical Commonplace state belongs in reference. The
+remaining per-artifact choice—generate, register for staleness, author only the
+irrecoverable part, or minimize—depends on the recovery test and can run in
+parallel with this sequence.
 
 ## Completion condition
 
 The boundary binds in both collection contracts, an ADR records it, the two
 supporting notes are live and validated, the text-contract term has one
-canonical owner, and every definition in the audit has a disposition. The
-workshop's remaining open item is then the current-state descriptions, and it
-can close or hand that off.
+canonical owner, and every definition in the audit has a disposition. Any
+per-artifact maintenance-form audit for current-state reference documentation
+may continue as a separate handoff; its placement no longer blocks this
+workshop.

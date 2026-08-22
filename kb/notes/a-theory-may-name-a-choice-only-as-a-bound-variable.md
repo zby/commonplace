@@ -72,30 +72,28 @@ definition would fail. A definition fails when removing its local term also
 removes the proposition — when the term records stipulated machinery rather
 than marking a distinction that can be stated and contested across systems.
 
-## An explicit local report fails a different test
+## A merely local assignment does not become theory through existential grammar
 
-A passage that says outright it reports one system's selection does not
-present as general, so it carries no free-variable defect at all. It can still
-be in the wrong place. Two properties are at work and they are independent:
-binding asks whether a claim offered as general has general truth conditions;
-placement asks which collection owns the proposition. Passing the binding test
-is not sufficient for staying in a theoretical collection — an honestly
-labelled choice report belongs where choices are recorded.
+A passage that says outright it reports one system's selection does not present
+as general, so it carries no free-variable defect. But recasting “Commonplace
+selected X” as “there exists a system that selected X” merely wraps the same
+assignment in a quantifier. An existential witness is substantive only when the
+particular establishes feasibility, exposes a mechanism, or supports a bounded
+consequence in the design space.
 
-## Two repairs, selected by what survives the counterfactual
-
-A claim that fails can be bound and kept, or the proposition can be relocated
-to where that system's choices are recorded. Which repair is available depends
-on what remains when the choice is varied. If a general proposition survives
-with the selection as a parameter, bind it: that adds reach rather than moving
-content. If the whole content of the proposition is the selection, there is
-nothing left to bind, and relocation preserves a record that binding would
-destroy. The two are not ranked alternatives for the same case.
+This supplies the placement test between theory and a local system record. Ask
+what remains after the choice is bound. If a substantive proposition remains
+with the selection as a parameter or witness, keep the theory. If the whole
+intended contribution is the selected value or the current or historical state
+it produced, there is nothing to generalize; it belongs where that system's
+choices and state are recorded. The two dispositions fit different surviving
+content and are not ranked alternatives for the same case.
 
 ## What one sweep found
 
-Commonplace is a witness that the constraint can describe existing practice
-rather than prescribe a migration. A systematic sample took every fifteenth of
+Commonplace is a witness that the binding language makes a longstanding
+collection rule operational rather than introducing a new obligation. A
+systematic sample took every fifteenth of
 the 310 files directly under `kb/notes/` and every third of the 23 under
 `kb/notes/definitions/`, sorted by filename — 27 files, each read whole. The
 scored surface was title, description, and opening argument. No sampled file
@@ -105,15 +103,18 @@ propositions, including the ~40-note threshold above.
 Two limits bound what this shows. A 27-file sample cannot establish a low rate
 throughout a collection, and the definition stratum happened to miss
 machinery-first candidates that a separate audit had already flagged. The
-result is enough to say that adopting the constraint at the scored surfaces
-creates no broad migration debt in this KB, and not enough to say the
-collection is clean.
+result is enough to say the clarification exposes no broad pre-existing
+nonconformance at the scored surfaces, and not enough to say the collection is
+clean. The later body residue was already contrary to the collection's general-
+form requirement; clarifying the rule does not create that debt.
 
 ## Scope
 
-- The unit is the proposition, not the file. A note can bind at its title and
-  opening and still carry free occurrences further down, which is what the
-  sweep observed.
+- Binding is judged per proposition. Collection placement uses the artifact's
+  intended contribution, stated by its title, description, and opening. A note
+  can pass placement and still carry a defective theoretical proposition later
+  in its body, which is what the sweep observed; explicitly scoped local reports
+  and examples may instead support the theory without becoming its contribution.
 - Naming a system after a general claim is illustration or witness use.
   Existential naming is a way of binding, not an exception to the
   requirement.
@@ -148,7 +149,7 @@ governs how a theory claim may mention whatever it classified.
 Relevant Notes:
 
 - [First-principles reasoning selects for explanatory-reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: supplies the quality goal from which the binding requirement is derived rather than added
-- [Superseded choices are retained; superseded beliefs are not](./superseded-choices-are-retained-superseded-beliefs-are-not.md) — contrasts: the sibling consequence of the same belief/choice boundary, governing what happens to a displaced choice where this note governs how a live one may be mentioned
+- [Superseded choices are retained; superseded beliefs are not](./superseded-choices-are-retained-superseded-beliefs-are-not.md) — contrasts: the sibling maintenance consequence of distinguishing beliefs from residual choices, where this note governs how a live choice may be used in theory
 - [Artifact classification separates content kind, lineage, and authority](./artifact-classification-separates-content-kind-lineage-and-authority.md) — grounds: supplies the belief versus residual-choice distinction that decides whether a named term is a choice at all
 - [A framework rule with a boundary-preserving rival is not an inherited constraint](./a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md) — contrasts: classifies a rule as chosen or inherited, where this note says how a theory claim may name whatever that test found
 - [Areas exist because useful operations require reading notes together](./areas-exist-because-useful-operations-require-reading-notes-together.md) — evidenced-by: the worked hard case for the removal test, passing at its opening mechanism and carrying free choice propositions later

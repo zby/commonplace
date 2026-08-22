@@ -19,7 +19,7 @@ The answer must start from the user's correction: `text contract` describes chos
 - Each live `COLLECTION.md` owns the binding contract actually applied to its subtree.
 - `AGENTS.md` carries an always-loaded text-contract gloss for operators; its profile half retires in the preceding task.
 
-Before profile extraction, the definition had 30 direct Markdown backlinks from 22 files, including six live collection contracts. That was migration cost and evidence of a shared term; it did not establish theoretical placement or the need for a separate file. The post-migration exact-path sweep still finds 22 files, but the composition changed: 13 active library surfaces (including four ADRs), one frozen proposal archive, and eight workshop files. None of the seven live collection contracts links to the definition now. Use that residual set, not the coincidentally equal pre-migration file count, as the move set for this decision.
+Before profile extraction, the definition had 30 direct Markdown backlinks from 22 files, including six live collection contracts. That was migration cost and evidence of a shared term; it did not establish theoretical placement or the need for a separate file. A resolved-link recount on 2026-08-23 now finds 16 direct backlink files: 11 active library surfaces, one frozen proposal archive, one generated connect report, and three files in this workshop. None of the seven live collection contracts links to the definition now. The active migration set is therefore the 11 library consumers plus the plain-path glossary reference in `AGENTS.md`; the archive stays historical, the generated report is regenerated rather than hand-edited, and this workshop disappears after promotion.
 
 ## History
 
@@ -70,7 +70,7 @@ Make `kb/reference/collections-and-types.md` canonical for `text contract`, expa
 
 ## Required migration work after selection
 
-- Classify the 13 active-library backlinks by whether they still need a standalone text-contract definition; the exact-path recount is complete.
+- Classify the 11 active-library backlinks and the `AGENTS.md` glossary reference by whether they still need a standalone text-contract definition; the resolved-link recount is complete.
 - Move or fold the text-contract-only content into the selected reference owner and retarget those residual consumers plus the `AGENTS.md` vocabulary entry.
 - Repair stale consumers that still call the local authoring contract `register`.
 - Do not make the prototype catalogue authoritative for existing collections or introduce a maintenance link from a prototype to a copied contract.

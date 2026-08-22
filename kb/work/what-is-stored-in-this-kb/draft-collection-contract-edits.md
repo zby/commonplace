@@ -14,9 +14,9 @@ Currently:
 
 Proposed:
 
-> This collection retains **beliefs** — truth-apt claims whose truth does not depend on what Commonplace chose. Mechanisms, principles, and arguments that hold across systems belong here, and so do observations about this system, which are equally truth-apt and record no selection.
+> This collection retains **beliefs about the design space** — transferable truth-apt claims about how systems of this kind can work. A claim may be grounded in a particular system, including Commonplace, when the particular is bound as a substantive witness for feasibility, mechanism, or a bounded consequence. Truth-aptness of a local observation alone does not place it here.
 >
-> The placement test is a counterfactual: **would this still be true if Commonplace had chosen differently?** If yes, it is a belief and belongs here. If no, it is a choice and belongs in `kb/reference/`. Subject matter does not decide this — a note may discuss Commonplace's machinery at length and remain a belief, if what it asserts would hold for any system built the same way.
+> Apply the placement test to the artifact's intended contribution: **after every particular system choice it names is bound, does a substantive claim about the design space remain?** Bind a choice universally, through equivalent generic or conditional grammar, or existentially as a witness. If binding leaves only what Commonplace selected or the current or historical state that selection produced, the artifact belongs in `kb/reference/`.
 
 ### 2. Replace the Formulation constraint
 
@@ -26,9 +26,9 @@ Currently:
 
 Proposed:
 
-> **Formulation constraint — bind the choices you name.** The title, description, and opening argument must be statable in general terms, even when derived from a specific system. Where a load-bearing claim names a choice some system made, bind it universally, existentially as a witness, or through equivalent generic or conditional grammar. A system-specific term is not a free occurrence when replacing it with its general description leaves the claim's truth conditions unchanged. An unbound occurrence that reads as general but depends on a selection the reader does not share fails: bind the choice and keep the claim, or move the proposition to `kb/reference/` because it only reports what Commonplace selected.
+> **Formulation constraint — bind the choices you name.** The title, description, and opening argument must be statable in general terms, even when derived from a specific system. Where one of those surfaces names a choice some system made, bind it universally, existentially as a substantive witness, or through equivalent generic or conditional grammar. A system-specific term is not a free occurrence when replacing it with its general description leaves the claim's truth conditions unchanged. Existential grammar is not enough when the sentence merely restates the selected value. If no substantive claim remains after binding, move the artifact to `kb/reference/` because its intended contribution is what Commonplace selected or the state that selection produced. Claims offered as theory later in the body obey the same binding rule; explicitly scoped local reports and examples may support the theory without becoming the artifact's intended contribution.
 
-Wording settled by the [bound-variable sweep](./bound-variable-sweep-findings.md), which found 0/27 failures and corrected three underspecifications in the first draft: the measured surfaces were unnamed, binding was written as though it required the literal "for any" formula when most passing notes bind with generic or conditional grammar, and the removal test lived only in the sweep task rather than in the clause. Note the sweep's caveat — an explicitly local choice report may avoid the free-variable defect and still belong in `kb/reference/` under the placement rule.
+Wording sharpened by the [bound-variable sweep](./bound-variable-sweep-findings.md), which found 0/27 failures at the title, description, and opening surfaces. The rule is not new: it makes the collection's longstanding “statable in general terms” clause operational. The sweep's later body residue is pre-existing targeted cleanup, not migration debt caused by this clarification.
 
 Leave the adjacent **Theory-independence constraint** unchanged. It governs
 citations ("must stand if any single cited description is removed"), which is
@@ -37,7 +37,7 @@ still carry one.
 
 ### 3. Add one line to "What does NOT belong here"
 
-> - Records of what Commonplace selected, and descriptions of what those selections produced → `kb/reference/`
+> - Records of what Commonplace selected, and descriptions of the current or historical state those selections produced → `kb/reference/`
 
 The existing line "Descriptions of how a specific system works → `kb/reference/`
 or `kb/agent-memory-systems/`" needs narrowing or it now contradicts the
@@ -56,9 +56,9 @@ Currently:
 
 Proposed:
 
-> This collection holds the **choices** Commonplace made and the state they produced — architecture, type system, operator surface, and decision history. Content belongs here when it is true because Commonplace adopted, implemented, or currently exposes it; that is, when it would not survive the counterfactual "would this still be true if we had chosen differently?" Aim at faithful representation of the system as built, not transferable theory.
+> This collection holds the **choices** Commonplace made and faithfully describes the **current or historical state** they produced — architecture, type system, operator surface, and decision history. Content belongs here when its intended contribution is the selected value, adopted contract, implemented interface, exposed behavior, or prior system state rather than a substantive claim about the design space that remains after those choices are bound. Aim at faithful representation of the system as built, not transferable theory.
 >
-> A reference artifact may contain belief propositions without becoming a note. What decides placement is the artifact's dominant contribution.
+> A reference artifact may contain supporting belief propositions without becoming a note. What decides placement is the artifact's intended contribution, stated by its title, description, and opening.
 
 ### 5. Add one line to "What does NOT belong here"
 
@@ -68,9 +68,9 @@ Proposed:
 
 - The three relocation candidates named in the ADR. Contract text first, moves
   after, so the moves are applications of a stated rule rather than opinion.
-- Current-state descriptions. The rule flags them as homeless; no contract
-  clause disposes of them yet, and inventing one before the disposition is
-  decided would pre-commit the answer.
+- The maintenance form of current-state descriptions. They belong in reference;
+  the remaining per-artifact choice is whether to generate them, register them
+  for staleness, author only irrecoverable content, or minimize them.
 - `kb/instructions/`, `kb/sources/`, and the external-system collections. Their
   boundaries are unaffected, but `kb/instructions/` deserves a check: an
   instruction is a choice with an imperative surface, and its contract should
