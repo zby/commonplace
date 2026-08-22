@@ -24,11 +24,11 @@ Types must assert [verifiable structural properties, not subject matter](./docum
 
 Different knowledge domains need different document structures. [Directory-scoped types are cheaper than global types](./directory-scoped-types-are-cheaper-than-global-types.md) — the global layer stays thin ([text](../types/text.md) and [note](../types/note.md)), while each collection has its own `types/` subdirectory with templates that extend the base. This keeps per-session context cost low and lets users introduce new types by adding a template locally, with no global configuration changes.
 
-## Communicative-profile identification
+## Collection and type remain separate inputs
 
-Types also help identify which communicative profile governs an artifact. The profile is not always encoded by the type name alone: a `note` in `kb/notes/` is theoretical, a `note` in `kb/reference/` is descriptive, and an `instruction` is prescriptive. But the `type:` field plus the collection-local type path gives tools and readers enough information to infer the relevant quality goal: explanatory-reach for theory, fidelity and economy for description, executability and precision for prescription.
+Types do not identify the local writing contract. The containing path selects the collection's `COLLECTION.md`, while `type:` selects a structural and semantic type contract. A `note` in `kb/notes/` therefore receives explanatory-reach from the notes collection; a `note` in `kb/reference/` receives fidelity and economy from the reference collection. The same type can compose with different local quality goals without changing its own meaning.
 
-This connects the type system to [the classifier that separates profile, content kind, lineage, and authority](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md). Once the communicative profile is deducible from collection and type, validation and review can become profile-specific without adding a separate field everywhere. That inference does not classify individual regions or consumption paths.
+This connects the type system to [the classifier that separates content kind, lineage, and authority](./artifact-classification-separates-content-kind-lineage-and-authority.md). Validation and review can combine the independently resolved collection and type contracts without adding a duplicate frontmatter field. Neither contract classifies every region or consumption path.
 
 ## Output quality
 
@@ -68,7 +68,7 @@ Relevant Notes:
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — foundation: the verifiability principle that shapes what types can be
 - [collections and types](../reference/collections-and-types.md) — the current path-valued type model and examples
 - [directory-scoped-types-are-cheaper-than-global-types](./directory-scoped-types-are-cheaper-than-global-types.md) — the economic argument for thin global types and local extension
-- [artifact classification separates profile, content kind, lineage, and authority](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) — explains the communicative-profile role that type and collection jointly identify, and the other questions they do not
+- [Artifact classification separates content kind, lineage, and authority](./artifact-classification-separates-content-kind-lineage-and-authority.md) — explains the region- and path-level questions that collection and type contracts do not answer
 - [types-give-agents-structural-hints-before-opening-documents](./types-give-agents-structural-hints-before-opening-documents.md) — develops: the navigation role of types
 - [type-system-enforces-metadata-that-navigation-depends-on](./type-system-enforces-metadata-that-navigation-depends-on.md) — develops: the enforcement role that makes navigation reliable
 - [human-writing-structures-transfer-to-llms-because-failure-modes-overlap](./human-writing-structures-transfer-to-llms-because-failure-modes.md) — develops: the failure-mode transfer argument for output quality

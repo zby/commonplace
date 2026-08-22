@@ -52,4 +52,4 @@ Relevant Notes:
 - [Trace-extracted memory earns authority per operation, not at capture](./trace-extracted-memory-earns-authority-per-operation-not-at-capture.md)
 - [Structure inference needs capture at the decision surface](./structure-inference-needs-capture-at-the-decision-surface.md) — decision rationale rather than quote fidelity
 - [ADR 046 — Verbatim quotes are validated against their cited source](../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)
-- [Text contract profiles](../reference/text-contract-profiles.md) — dialectical/evidential profile ships the grounding-layer marker
+- [Collection prototypes](../reference/collection-prototypes.md) — the experimental dialectical/evidential starting contract demonstrates the grounding-layer marker

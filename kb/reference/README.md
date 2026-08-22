@@ -190,7 +190,7 @@ Look up how the shipped system is put together: its architecture, type system, a
 
 - [collections-and-types.md](./collections-and-types.md) — how collection and type contracts compose, how path-valued type pointers resolve, common examples, and where global and collection-local type specs live
 - [link-vocabulary.md](./link-vocabulary.md) — linking approach and label catalogue: collection-owned outbound rules, reader-need labels, articulation tests, connect reports, and guidance for `COLLECTION.md` authors
-- [text-contract-profiles.md](./text-contract-profiles.md) — catalogue of the proven, named bundles of quality goal, title conventions, attribution, and link grammar a `COLLECTION.md` may adopt, extend, or start from
+- [collection-prototypes.md](./collection-prototypes.md) — optional creation-time contracts that may be copied into a new collection; the resulting `COLLECTION.md` is independently owned and receives no prototype updates
 - [collections-never-own-frontmatter-semantics.md](./collections-never-own-frontmatter-semantics.md) — why the collection/type split is asymmetric: a type spec owns frontmatter semantics, `COLLECTION.md` owns only text-level features
 - [definitions/](./definitions/dir-index.md) — vocabulary terms used by the shipped system (e.g., [collection](./definitions/collection.md))
 

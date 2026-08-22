@@ -10,6 +10,8 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-04-13
 
+> **Current terminology:** [ADR 069](./069-collection-contract-bundles-become-one-time-prototypes.md) retires the register/profile vocabulary. This ADR's operative boundary remains accepted: the nearest `COLLECTION.md` is the complete local authoring contract.
+
 ## Context
 
 Commonplace had a global writing guide (`kb/instructions/WRITING.md`) plus type templates. That split optimized for the early write path, where most artifacts were theory notes. It became the wrong boundary once the KB had several collections with different writing goals:
@@ -72,7 +74,7 @@ This keeps responsibilities separate:
 Relevant Notes:
 
 - [Register](../../notes/definitions/text-contract.md) - defines register as a content mode and notes that collection-level encoding is a design choice, not a theoretical necessity
-- [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](../../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) - foundation: the three-register theory and the argument for per-register conventions
+- [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](../../notes/artifact-classification-separates-content-kind-lineage-and-authority.md) - foundation: the three-register theory and the argument for per-register conventions
 - [Collections and types](../collections-and-types.md) - describes how authoring and validation resolve structural type contracts after the collection convention boundary is selected
 - [ADR-012: types for structure, traits for review](./012-types-for-structure-traits-for-review.md) - foundation: keeps structural type identity separate from semantic review and placement conventions
 - [ADR-016: custom types use template/instruction pairs](./016-custom-types-use-template-instruction-pairs.md) - preserved for specialized type packaging, but its `WRITING.md` loading assumption is superseded here

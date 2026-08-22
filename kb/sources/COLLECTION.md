@@ -1,9 +1,9 @@
-# Writing conventions for kb/sources/ (descriptive profile)
+# Writing conventions for kb/sources/
 
 ## Text contract and fidelity
 
-Descriptive [profile](../notes/definitions/text-contract.md): tracked analyses
-of external sources plus local reading copies. The quality goal is **faithful
+This collection contains tracked analyses of external sources plus local
+reading copies. The quality goal is **faithful
 capture** plus **clear ingest analysis**.
 
 Two roles, two shapes — don't blur capture and analysis in the same file:

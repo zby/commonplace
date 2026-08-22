@@ -23,7 +23,7 @@ Gregor classifies information-systems theory by primary purpose into analysis/de
 
 ## Connections Found
 
-The primary connection is [Actionable methodology](../notes/definitions/actionable-methodology.md): Gregor grounds the prescriptive theory subtype while showing that operator availability is a later relational addition rather than an inherited Type V criterion. A secondary connection is [Artifact classification separates profile, content kind, lineage, and authority](../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md): Gregor's taxonomy treats prescription as a possible primary goal of theory, so the local theory and prescription text profiles should not be mistaken for mutually exclusive kinds of knowledge.
+The primary connection is [Actionable methodology](../notes/definitions/actionable-methodology.md): Gregor grounds the prescriptive theory subtype while showing that operator availability is a later relational addition rather than an inherited Type V criterion. A secondary connection is [Artifact classification separates content kind, lineage, and authority](../notes/artifact-classification-separates-content-kind-lineage-and-authority.md): Gregor's taxonomy treats prescription as a possible primary goal of theory, so Commonplace's separate notes and instructions collection contracts should not be mistaken for mutually exclusive kinds of knowledge.
 
 ## Extractable Value
 

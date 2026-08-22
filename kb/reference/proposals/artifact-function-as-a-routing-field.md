@@ -117,7 +117,7 @@ This maximizes queryability and makes routing deterministic from artifact bytes.
 - **Function versus composition.** The field is useful only if `claim` does not silently mean atomic and `exposition` does not silently mean composite.
 - **Declared intent versus realized content.** A field can state what the artifact is meant to do; it cannot prove that the body succeeds. Procedures need to know whether they are repairing toward an intention or classifying the incumbent.
 - **Stable authorial choice versus repeatable derivation.** Persisting a choice can prevent classification drift. Persisting a value that type or code can recompute creates a stale cache.
-- **Global meaning versus collection evidence.** Collection profiles are strong routing inputs, but allowing them to redefine a frontmatter value would break type self-containment.
+- **Global meaning versus collection evidence.** Local collection contracts are strong routing inputs, but allowing them to redefine a frontmatter value would break type self-containment.
 - **Queryability versus false precision.** A small controlled vocabulary helps selection and search. Borderline and mixed-function artifacts need an honest unresolved state rather than the nearest convenient label.
 - **Optional companions versus universal procedures.** A companion may sharpen intent for exceptional artifacts, but ordinary review and writing must continue when no companion exists.
 - **Visible metadata versus hidden authoring context.** Artifact frontmatter travels with the reviewed bytes. A companion keeps reader-facing artifacts lean but introduces association, activation, precedence, and freshness work.

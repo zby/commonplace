@@ -21,7 +21,7 @@ The procedure, then: state the boundary invariants independently of the candidat
 
 Applying the test to Commonplace demotes rules that look foundational but have working rivals under the same boundary invariants:
 
-- The **three [text-contract profiles](./definitions/text-contract.md)** (theoretical, descriptive, and prescriptive) are a proven bundle, but a new kind of KB may require a fourth. The profile set therefore demotes to defaults.
+- The three standard [collection prototypes](../reference/collection-prototypes.md) preserve useful starting contracts for notes, reference, and instructions, but a new kind of KB may require a different local contract. They therefore remain creation-time defaults rather than an exhaustive content taxonomy.
 - **Link-label sets** such as `extends`, `grounds`, and `contradicts` are collection-owned selections from a shared catalogue. Another selection can preserve the same linking interface.
 - **Type sets** are open and collection-local. The machinery requires type identifiers to point to type-spec paths, but another set of types preserves that requirement.
 - **Spending the directory tree on content area rather than kind** is one routing choice. A kind-based tree can preserve the framework's other boundary guarantees.

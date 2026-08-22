@@ -1,8 +1,8 @@
-# Writing conventions for kb/instructions/ (prescriptive profile)
+# Writing conventions for kb/instructions/
 
 ## Text contract and precision
 
-Prescriptive [profile](../notes/definitions/text-contract.md): procedures, conventions, skill bodies, and operational rules. Directs what to do — optimised for an agent (or human) executing on first reading, without prior context.
+This collection contains procedures, conventions, skill bodies, and operational rules. It directs what to do — optimised for an agent (or human) executing on first reading, without prior context.
 
 Quality goal is **executability + precision** — every step actionable, every decision point explicit, ambiguity eliminated. A vague prescription wastes bounded context on interpretation rather than action.
 

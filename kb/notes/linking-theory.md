@@ -50,13 +50,13 @@ Each practice instantiates this principle:
 
 - **"Related" is not a relationship** — it carries zero bits of decision-relevant information, the linking equivalent of a null description.
 
-### Communicative profiles inform link interpretation
+### Collection contracts inform link interpretation
 
-The decision-cost model needs one more signal: the communicative profile of the source and target. [Artifact classification separates profile, content kind, lineage, and authority](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md): theoretical, descriptive, and prescriptive profiles have different quality goals, but profile alone does not determine maintenance direction. It helps a reader interpret a link; the authored relationship and actual dependency determine whether the link is load-bearing.
+The decision-cost model needs one more signal: the local collection contracts of the source and target. [Artifact classification separates content kind, lineage, and authority](./artifact-classification-separates-content-kind-lineage-and-authority.md): collections can impose different quality goals, but a contract alone does not determine maintenance direction. It helps a reader interpret a link; the authored relationship and actual dependency determine whether the link is load-bearing.
 
-A theory can cite a description as evidence while remaining generally stated; a description can cite theory as rationale for why the system is shaped that way; a prescription can cite both theory and system description because procedures must be justified and executable against the current system. These are characteristic uses, not directions imposed by profile. If a theory depends on a specific description for its formulation, the link reveals that the artifact has not yet been abstracted into theory. If an instruction omits the descriptive system target it acts on, executability suffers.
+A theory note can cite a description as evidence while remaining generally stated; a reference description can cite theory as rationale for why the system is shaped that way; an instruction can cite both theory and system description because procedures must be justified and executable against the current system. These are characteristic uses under the present local contracts, not directions imposed by a shared category. If a theory depends on a specific description for its formulation, the link reveals that the artifact has not yet been abstracted into theory. If an instruction omits the described system target it acts on, executability suffers.
 
-So relationship vocabulary is not enough by itself. Crossing communicative profiles can change the review obligations around a `grounds` or `rests-on` edge, but it does not make the edge load-bearing. Link review should check the authored relationship, the actual dependency, and the contracts and consumption paths at both ends.
+So relationship vocabulary is not enough by itself. Crossing collection contracts can change the review obligations around a `grounds` or `rests-on` edge, but it does not make the edge load-bearing. Link review should check the authored relationship, the actual dependency, and the contracts and consumption paths at both ends.
 
 ### What the theory predicts
 

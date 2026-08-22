@@ -133,7 +133,7 @@ follows:
 | `AGENTS.md`, `tasks/`, `src/`, `kb/articles/`, `kb/reports/` | 10 |
 | `kb/log.md` | 1 |
 
-The sole failure is [text-contract-profiles.md](../../reference/text-contract-profiles.md):
+The sole failure is [text-contract-profiles.md](../../reference/collection-prototypes.md):
 its file-relative `type:` pointer reaches global `kb/types/` in the source but
 resolves to absent `kb/commonplace/types/` after installation. Shared type
 contracts exhibit the inverse depth change when they link back into notes or

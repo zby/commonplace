@@ -62,7 +62,7 @@ Stipulated vocabulary is the trap this test exists to catch. A stipulated term h
 
 ## Cross-cutting findings
 
-1. `type: kb/types/definition.md` is structural and does not imply the theoretical profile. [The reference collection's `collection` definition](../../reference/definitions/collection.md) is the existing counterexample.
+1. `type: kb/types/definition.md` is structural and does not imply the notes collection's local text contract. [The reference collection's `collection` definition](../../reference/definitions/collection.md) is the existing counterexample.
 2. The blanket rule in `kb/notes/COLLECTION.md`—“Definitions of KB vocabulary belong under `kb/notes/definitions/`”—is too broad if vocabulary can name implemented machinery. Placement needs a contribution test.
 3. The `AGENTS.md` vocabulary list is an always-loaded glossary for operating the repository. Membership there says a term is operationally important, not that its canonical artifact belongs in theory.
 4. A definition's theoretical eligibility and its need for a standalone file are different questions. Several high-degree authority terms may be theoretically legitimate but redundant after the four-question classifier.

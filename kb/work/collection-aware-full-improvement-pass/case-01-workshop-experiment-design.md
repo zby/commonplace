@@ -88,6 +88,6 @@ Any of these could prevent this failure. They differ in complexity, reuse, and h
 ## Relevant context
 
 - [Workshop collection contract](../COLLECTION.md) — permits implicit text and defines progress, not note conformity, as the quality goal.
-- [Artifact classification separates profile, content kind, lineage, and authority](../../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) — supplies the region-level distinction exposed here: the design contained beliefs and candidate selections, while adopting those selections required separate authority.
+- [Artifact classification separates content kind, lineage, and authority](../../notes/artifact-classification-separates-content-kind-lineage-and-authority.md) — supplies the region-level distinction exposed here: the design contained beliefs and candidate selections, while adopting those selections required separate authority.
 - [Full improvement pass closure](../../reference/full-improvement-pass-closure.md) — says its reassessment evidence is local to the shipped note workflow and should not be generalized automatically.
 - [Original note-improvement workshop](../agent-note-improvement/README.md) — shows that the pass was derived and calibrated on library-note cases.

@@ -55,7 +55,7 @@ Harder / accepted costs:
 
 Relevant Notes:
 
-- [ADR 057 — Articles use an editorial profile and excluded drafts](./057-articles-use-an-editorial-profile-and-excluded-drafts.md) — supersedes: removes its excluded-draft placement while retaining the editorial profile and published-body lifecycle
+- [ADR 057 — Articles use an editorial profile and excluded drafts](./057-articles-use-an-editorial-profile-and-excluded-drafts.md) — supersedes: removes its excluded-draft placement while retaining the local article contract and published-body lifecycle
 - [ADR 062 — Drafts may circulate at the root behind a draft banner](./062-drafts-may-circulate-at-the-root-behind-a-draft-banner.md) — supersedes: makes its optional circulating mode the only draft mode and removes its approval and discovery-path gates
 - [Publish an article](../../instructions/publish-an-article.md) — implemented-by: executes the stable-path promotion this decision defines
 - [Documentation site](../documentation-site.md) — part-of: circulation channel that now renders every article draft

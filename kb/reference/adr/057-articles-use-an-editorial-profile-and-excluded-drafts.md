@@ -10,7 +10,7 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-07-26
 
-The editorial profile and published-body lifecycle remain accepted; [ADR 063](./063-all-article-drafts-circulate-behind-a-banner.md) supersedes this decision's excluded-draft placement.
+The local article contract and published-body lifecycle remain accepted. [ADR 069](./069-collection-contract-bundles-become-one-time-prototypes.md) supersedes the editorial-profile and shared-catalogue part of this decision; [ADR 063](./063-all-article-drafts-circulate-behind-a-banner.md) supersedes its excluded-draft placement.
 
 ## Context
 
@@ -20,7 +20,7 @@ The worked case established the missing shape. `kb/articles/` now has an editori
 
 ## Decision
 
-**`kb/articles/` adopts the editorial/expository profile.** Its audience is a highly technical reader with no project context. Bodies are reader-only prose: headlines rather than claim-titles, no agent-facing footer grammar, and in-prose links that deliberately lead into the KB. Articles carry a byline, lifecycle status, and source-note lineage. The exercised profile is promoted to the shared [profile catalogue](../text-contract-profiles.md).
+**`kb/articles/` adopts the editorial/expository profile.** Its audience is a highly technical reader with no project context. Bodies are reader-only prose: headlines rather than claim-titles, no agent-facing footer grammar, and in-prose links that deliberately lead into the KB. Articles carry a byline, lifecycle status, and source-note lineage. The exercised profile is promoted to the shared [profile catalogue](../collection-prototypes.md).
 
 **Drafts live under `kb/articles/drafts/`.** This subtree remains inside the article collection, so the collection contract, article type, write path, validation, and conformance review apply from the first commit. ProperDocs excludes `articles/drafts/**`, keeping drafts out of the published site and search index. Publication relocates the article to the collection root, sets `status: published` and a `published` date, and lists it in `kb/articles/README.md`.
 
@@ -65,7 +65,7 @@ Harder / accepted costs:
 
 Relevant Notes:
 
-- [Text contract profiles](../text-contract-profiles.md) — implemented-by: catalogue containing the promoted editorial/expository profile
+- [Text contract profiles](../collection-prototypes.md) — implemented-by: catalogue containing the promoted editorial/expository profile
 - [Documentation site](../documentation-site.md) — part-of: rendering and publication channel used by articles
 - [Publish an article](../../instructions/publish-an-article.md) — implemented-by: executable transition from approved draft to dated public artifact
 - [ADR 042 — Register becomes a default profile under open-ended text contracts](./042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — extends: worked-case-first rule under which the editorial profile is promoted

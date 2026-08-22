@@ -2,7 +2,7 @@
 
 ## Status
 
-Open, but narrowed. The previously proposed relocation was deliberately stopped before editing library artifacts so it could be decided under the workshop's general content model. Retiring `profile` in favour of one-time-copy [collection prototypes](./retire-profiles-for-collection-prototypes.md) is now a separate decided task. That task removes profile content from the current definition in place but deliberately does not move, rename, or delete the file; this task decides the home of the text-contract remainder.
+Open, but narrowed. The previously proposed relocation was deliberately stopped before editing library artifacts so it could be decided under the workshop's general content model. Retiring `profile` in favour of one-time-copy [collection prototypes](./retire-profiles-for-collection-prototypes.md) is complete under [ADR 069](../../../reference/adr/069-collection-contract-bundles-become-one-time-prototypes.md). That migration removed profile content from the current definition in place without moving, renaming, or deleting the file; this task now decides only the home of the text-contract remainder.
 
 ## Question
 
@@ -12,14 +12,14 @@ The answer must start from the user's correction: `text contract` describes chos
 
 ## Current ownership
 
-- [The theory-collection definition](../../../notes/definitions/text-contract.md) currently mixes the text-contract definition with profile material. The profile-retirement task removes the latter while preserving the former at the same path for this decision.
+- [The theory-collection definition](../../../notes/definitions/text-contract.md) now contains only the text-contract definition, preserved at the same path for this decision.
 - [The reference collection definition](../../../reference/definitions/collection.md) already says that `COLLECTION.md` is a collection's local authoring contract.
 - [Collections and types](../../../reference/collections-and-types.md) already explains how the containing `COLLECTION.md` supplies the text-level contract independently of the artifact's type contract.
 - [ADR 042](../../../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) owns the historical decision that introduced `text contract`; its profile decision is superseded separately without rewriting that history.
 - Each live `COLLECTION.md` owns the binding contract actually applied to its subtree.
 - `AGENTS.md` carries an always-loaded text-contract gloss for operators; its profile half retires in the preceding task.
 
-Before profile extraction, the present definition has 30 direct Markdown backlinks from 22 files, including six live collection contracts. That is migration cost and evidence of a shared term; it does not establish theoretical placement or the need for a separate file. Recount the residual text-contract consumers after the profile migration rather than treating this pre-migration count as the move set.
+Before profile extraction, the definition had 30 direct Markdown backlinks from 22 files, including six live collection contracts. That was migration cost and evidence of a shared term; it did not establish theoretical placement or the need for a separate file. The post-migration exact-path sweep still finds 22 files, but the composition changed: 13 active library surfaces (including four ADRs), one frozen proposal archive, and eight workshop files. None of the seven live collection contracts links to the definition now. Use that residual set, not the coincidentally equal pre-migration file count, as the move set for this decision.
 
 ## History
 
@@ -70,7 +70,7 @@ Make `kb/reference/collections-and-types.md` canonical for `text contract`, expa
 
 ## Required migration work after selection
 
-- Complete the profile-retirement task first, then recount backlinks whose remaining purpose is the text-contract definition.
+- Classify the 13 active-library backlinks by whether they still need a standalone text-contract definition; the exact-path recount is complete.
 - Move or fold the text-contract-only content into the selected reference owner and retarget those residual consumers plus the `AGENTS.md` vocabulary entry.
 - Repair stale consumers that still call the local authoring contract `register`.
 - Do not make the prototype catalogue authoritative for existing collections or introduce a maintenance link from a prototype to a copied contract.

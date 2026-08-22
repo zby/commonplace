@@ -20,7 +20,7 @@ What applicability, review-routing, synthesis, mutation, and closing contracts l
 
 ## Starting hypothesis: artifact function is more legible in theory
 
-The theoretical profile makes the reason for an artifact's existence relatively easy to infer. A theory note normally advances a claim, explains a mechanism, or defines a concept, and its title, type, and collection contract further constrain that contribution. The full pass can therefore reconstruct a central commitment with a fairly strong prior about what kind of improvement would still serve the artifact.
+The `kb/notes/` contract makes the reason for an artifact's existence relatively easy to infer. A theory note normally advances a claim, explains a mechanism, or defines a concept, and its title, type, and local contract further constrain that contribution. The full pass can therefore reconstruct a central commitment with a fairly strong prior about what kind of improvement would still serve the artifact.
 
 The workshop layer deliberately removes much of that prior. One file may be evidence, scratch reasoning, a proposal, a decision surface, a handoff, an experiment record, or material awaiting extraction. The collection-wide goal to “move the work forward” does not determine which of those jobs a particular file performs. A local README may narrow the inquiry while still leaving the individual file's role and decision authority implicit.
 
@@ -97,7 +97,7 @@ Use frozen copies or versioned captures when a trial might mutate an artifact. D
 The workshop closes when it has:
 
 - decided, from worked comparisons, whether to retain a specialized note pass, introduce routing or adapters, or ship separate procedures;
-- tested every collection/profile and artifact function that the selected design claims to support, including at least one held-out case for each supported non-theoretical profile;
+- tested every collection contract and artifact function that the selected design claims to support, including at least one held-out case for each supported non-notes collection;
 - defined preflight, method-selection, commitment-preservation, mutation-authority, packet, and closing behavior, including explicit abstention paths;
 - shown that the selected workflow improves its supported cases without unapproved type changes or substantive free-parameter selection;
 - landed the resulting durable instruction, reference, type, gate, or ADR changes with the appropriate validation; and
@@ -111,5 +111,5 @@ A negative result can also close the workshop: the current pass may remain inten
 - [Atomic-claim assumptions and collection dependencies](./claim-instructions-and-collection-dependencies.md) — audit separating local claim checks, artifact function, and composition shape, including atomic reference records, composite synthesis/article exceptions, split pressure, and late or unguarded collection dependencies.
 - [Run a full improvement pass on one note](../../instructions/run-full-improvement-pass-on-note.md) — current operative procedure and baseline.
 - [Full improvement pass closure](../../reference/full-improvement-pass-closure.md) — closing behavior calibrated on substantive note edits, with an explicit warning against generalizing it to arbitrary transforming workflows.
-- [Artifact classification separates profile, content kind, lineage, and authority](../../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) — why review must separate truth-apt regions from candidate selections instead of treating proposal status as a content kind.
+- [Artifact classification separates content kind, lineage, and authority](../../notes/artifact-classification-separates-content-kind-lineage-and-authority.md) — why review must separate truth-apt regions from candidate selections instead of treating proposal status as a content kind.
 - [Workshop collection contract](../COLLECTION.md) — the local quality goal and prohibition on adding note structure merely for conformity.

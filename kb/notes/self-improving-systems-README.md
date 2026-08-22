@@ -19,7 +19,7 @@ Evidence may **directly determine** an update that is always adopted, as gradien
 
 ## Pathway profile
 
-After membership and update architecture, profile the pathway across four parts rather than placing it on a ladder. The profile is descriptive and selects no order by itself; any comparison between pathways is indexed to a declared objective. (Not the [text-contract](./definitions/text-contract.md) sense of "profile", which is a normative bundle a collection adopts.)
+After membership and update architecture, profile the pathway across four parts rather than placing it on a ladder. The profile is descriptive and selects no order by itself; any comparison between pathways is indexed to a declared objective.
 
 - **Reflective structure** — [coverage of represented aspects and forms](./reflective-coverage-is-graded-across-representational-forms.md), plus the separate [addressability profile](./reflection-buys-addressability.md) over retained commitments.
 - **Improvement dynamics** — [cumulativity](./accumulation-counts-dependence-through-the-retained-result.md): later dependence through the retained result; [accumulation versus compounding](./improvements-can-accumulate-without-compounding.md), with compounding [tested in later improvement](./compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md).

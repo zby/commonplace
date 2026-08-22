@@ -1,6 +1,6 @@
-# Writing conventions for kb/articles/ (editorial profile)
+# Writing conventions for kb/articles/
 
-Editorial/expository [profile](../reference/text-contract-profiles.md): outward-facing articles distilled from the KB and published on the [documentation site](../reference/documentation-site.md). Adopted by [ADR 057](../reference/adr/057-articles-use-an-editorial-profile-and-excluded-drafts.md); draft circulation was simplified by [ADR 063](../reference/adr/063-all-article-drafts-circulate-behind-a-banner.md).
+This collection publishes outward-facing articles distilled from the KB on the [documentation site](../reference/documentation-site.md). Its local contract and lifecycle were adopted by [ADR 057](../reference/adr/057-articles-use-an-editorial-profile-and-excluded-drafts.md); draft circulation was simplified by [ADR 063](../reference/adr/063-all-article-drafts-circulate-behind-a-banner.md).
 
 **Audience and quality goal.** Highly technical readers with no KB context. The quality goal is **explanatory clarity with technical depth, plus a clear onward path into the KB**. The primary goal is to explain, not impress: a reader should understand the article's claims, mechanisms, evidence, and limits. An article must stand on its own and leave its reader knowing where in the KB to go next.
 

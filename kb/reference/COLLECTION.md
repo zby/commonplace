@@ -1,8 +1,8 @@
-# Writing conventions for kb/reference/ (descriptive profile)
+# Writing conventions for kb/reference/
 
 ## Text contract and fidelity
 
-Descriptive [profile](../notes/definitions/text-contract.md): accounts of what exists in the shipped Commonplace system — architecture, type system, operator surface, decision history. Aim at faithful representation of the system as built, not transferable theory.
+This collection accounts for what exists in the shipped Commonplace system — architecture, type system, operator surface, and decision history. Aim at faithful representation of the system as built, not transferable theory.
 
 Quality goal is **fidelity + economy** — say what the system actually does in minimum tokens, without omitting load-bearing details. An agent loading these docs is usually trying to act; every extra token competes with the task.
 

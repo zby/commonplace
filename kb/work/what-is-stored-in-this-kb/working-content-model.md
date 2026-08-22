@@ -25,7 +25,7 @@ A whole file is often the wrong unit. One artifact can carry a belief, a require
 
 Recoverability adds a fifth maintenance question without replacing these four: can another retained surface faithfully regenerate this content, and if so, at what cost and with what warrant?
 
-The fourth question was previously called communicative profile and was listed first, as though a live classifier. It is being retired in favour of collection prototypes — see [the retirement task](./tasks/retire-profiles-for-collection-prototypes.md) — because nothing is inherited from a profile at use time. Every `COLLECTION.md` restates its contract in full locally, so the label carries no force once the collection exists.
+The fourth question was previously called communicative profile and was listed first, as though a live classifier. It has been retired in favour of collection prototypes — see [the completed retirement task](./tasks/retire-profiles-for-collection-prototypes.md) — because nothing was inherited from a profile at use time. Every `COLLECTION.md` states its contract in full locally, so the former label carried no force once the collection existed.
 
 **The unit mismatch is real and unresolved by the rule.** Content kind attaches to a proposition or region; a collection boundary is necessarily file-level. The boundary can therefore track only an artifact's dominant contribution, and a genuinely mixed artifact has to be split rather than filed. The rule says where each proposition belongs, not how to avoid splitting.
 
@@ -142,4 +142,3 @@ Two existing notes supply the halves. [A framework rule with a boundary-preservi
 - What admits an artifact to the KB at all: a universal theory of answerability, a chosen framework boundary, or collection-specific contracts?
 - Is the binding requirement checkable? A free choice-variable is a semantic property, so detection is a Level B judgment — but a cheaper proxy may exist, such as a note naming a Commonplace-specific identifier outside a witness clause.
 - Do existing notes pass? A sweep for free choice-variables across `kb/notes/` would test whether the boundary describes current practice or prescribes a migration.
-

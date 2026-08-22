@@ -115,7 +115,7 @@ Catalog gates present a special constraint. Their criteria must remain self-cont
 
 The relevant authority is a composition of contracts and local facts:
 
-1. **Collection** supplies the quality goal, text-contract profile, lifecycle, link grammar, and broad mutation boundary.
+1. **Collection** supplies the local text contract: quality goal, lifecycle, link grammar, and broad mutation boundary.
 2. **Type** supplies structural kind and semantic expectations.
 3. **Traits** declare narrower review expectations and exceptions such as `title-as-claim` and `synthesis`.
 4. **Local framing and artifact text** establish the immediate purpose, open choices, and whether the current shape is intentional.
@@ -125,12 +125,12 @@ The collections demonstrate why no one-field routing rule is sufficient:
 
 - `kb/notes/` defaults toward claim titles and body-composable notes, but explicitly admits synthesis notes, multi-claim specs, definitions, indexes, and exploratory drafts as exceptions.
 - `kb/articles/` is claim-bearing and permits composite expository artifacts. Its titles are headlines and its case-first order can be intentional.
-- `kb/reference/` can contain atomic system-scoped accounts and decisions alongside composite architecture documents. Its descriptive profile changes the evaluation objective and title grammar, not the number of contributions an artifact may contain.
+- `kb/reference/` can contain atomic system-scoped accounts and decisions alongside composite architecture documents. Its local contract changes the evaluation objective and title grammar, not the number of contributions an artifact may contain.
 - other descriptive collections can contain an argumentative analysis whose individual claims deserve strong review without converting the whole analysis into a premise-like note.
 - `kb/work/` contains claims, designs, evidence, records, and decision surfaces under one heterogeneous workshop contract.
 - `kb/instructions/` contains claims, but its artifact-level identity is an executable behavior whose edits can change the deployed procedure.
 
-Collection is therefore a binding objective and a strong prior, not a complete atomicity classifier. Type alone also fails: the `note` type itself carries a `synthesis` exception, and the same general type can live under different collection profiles.
+Collection is therefore a binding objective and a strong prior, not a complete atomicity classifier. Type alone also fails: the `note` type itself carries a `synthesis` exception, and the same general type can live under different collection contracts.
 
 ### Reference supplies atomic non-theory cases
 
@@ -245,7 +245,7 @@ These are analysis results, not yet a choice between one routed workflow, severa
 - [Split and rehome critique](../agent-note-improvement/case-01-llm-generation-relaxes-goals/instruction-split-rehome-critique.md) — explicit one-main-note decomposition model behind the current split pressure.
 - [Notes collection contract](../../notes/COLLECTION.md) and [note type](../../types/note.md) — body-composability default and the explicit `synthesis` exception.
 - [Article collection contract](../../articles/COLLECTION.md) — valid multi-claim, headline-titled, case-first expository shape.
-- [Reference collection contract](../../reference/COLLECTION.md), [collection–type boundary](../../reference/collections-never-own-frontmatter-semantics.md), [full-pass closure](../../reference/full-improvement-pass-closure.md), and [ADR type](../../reference/types/adr.md) — atomic, system-scoped description and decision cases under a non-theoretical profile.
+- [Reference collection contract](../../reference/COLLECTION.md), [collection–type boundary](../../reference/collections-never-own-frontmatter-semantics.md), [full-pass closure](../../reference/full-improvement-pass-closure.md), and [ADR type](../../reference/types/adr.md) — atomic, system-scoped description and decision cases under the non-notes local contract.
 - [Review-gate type](../../types/review-gate.md) — current positive applicability fields and self-contained freshness requirement.
 - [Collection-conformance decision](../../reference/adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md) — existing factored collection dependency the full pass does not request.
 - [Collections and types](../../reference/collections-and-types.md) — the orthogonal collection/type model.

@@ -10,6 +10,8 @@ status: accepted
 **Status:** accepted  
 **Date:** 2026-07-12
 
+> **Current terminology:** [ADR 069](./069-collection-contract-bundles-become-one-time-prototypes.md) replaces the dialectical/evidential profile with an experimental creation-time prototype. This ADR's validator remains generic: any installation running `commonplace-validate` gets the check when a citation asserts `verbatim`; no collection inherits it from a prototype.
+
 ## Context
 
 A `verbatim` citation asserts that a quoted span is copied exactly from a source retained in the KB. The dialectical/evidential profile has mandated the three-part convention — file link, prose locator, and a grounding-layer marker of `verbatim` / `paraphrase layer` / `second-hand` — since [ADR 042](./042-register-becomes-a-default-profile-under-open-ended-text-contracts.md). Until now nothing checked it: an author wrote a quote, wrote `verbatim`, and the claim was hand-maintained and trusted.
@@ -36,7 +38,7 @@ Three outcomes, with deliberately asymmetric severity:
 
 The `verbatim` marker becomes load-bearing rather than decorative: it is now the cheapest of the three grounding-layer markers to assert and the only one that can be mechanically falsified. `paraphrase layer` and `second-hand` remain unchecked by construction — they never claimed exact text, and no derivation rule exists for them, which is precisely why [a citation cannot assert more fidelity than its capture preserved](../../notes/a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md).
 
-Downstream KBs adopting the dialectical/evidential profile inherit the check with no configuration. The 18 live mismatches in the sibling casebooks are not fixed here: those notes are slated for a from-scratch rebuild, and the point of shipping the checker first is that the rebuild's citations land machine-checked rather than hand-trusted.
+Downstream KBs running the shipped validator receive the generic check with no collection-specific configuration; using the experimental dialectical/evidential prototype is neither required nor a source of inheritance. The 18 live mismatches in the sibling casebooks are not fixed here: those notes are slated for a from-scratch rebuild, and the point of shipping the checker first is that the rebuild's citations land machine-checked rather than hand-trusted.
 
 The extraction heuristic is not complete, and `unresolved` is how it says so rather than passing silently. Normalization (quote-mark folding, whitespace collapse, emphasis stripping, `NFKC`) is load-bearing, not polish: an under-normalized checker would produce false mismatches on correct quotes, which is worse than no check.
 

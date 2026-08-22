@@ -12,7 +12,7 @@ Coordination value is the worth a structure has because every artifact, tool, or
 
 Use coordination value to explain why a shared convention resists replacement by a marginally better rival, and why committing to a standard can be right before any evidence that the standard transfers. It answers a *warrant* question — why a structure is worth committing to and keeping — on the value-source axis, alongside [reach](../first-principles-reasoning-selects-for-explanatory-reach-over.md) (value discovered by testing whether a claim keeps working past its origin cases) and inherited constraint (value forced by a boundary commitment).
 
-Maintenance follows actual dependency rather than communicative profile, as [artifact classification separates profile, content kind, lineage, and authority](../a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md). A structure carrying coordination value can have operational authority with no `rests-on` edge to an upstream theory, so a theory proposing a better option does not trigger its revision. Only a theory showing the coordination itself is net-negative fires a change, and even then re-coordination carries a switching cost.
+Maintenance follows actual dependency rather than collection category, as [artifact classification separates content kind, lineage, and authority](../artifact-classification-separates-content-kind-lineage-and-authority.md). A structure carrying coordination value can have operational authority with no `rests-on` edge to an upstream theory, so a theory proposing a better option does not trigger its revision. Only a theory showing the coordination itself is net-negative fires a change, and even then re-coordination carries a switching cost.
 
 ## Exclusions
 
@@ -32,8 +32,8 @@ It is not the runtime coordination of [agent orchestration](../agent-orchestrati
 
 Relevant Notes:
 
-- [Artifact classification separates profile, content kind, lineage, and authority](../a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) — grounds: maintenance follows actual lineage, dependency, and consumption paths rather than communicative profile
+- [Artifact classification separates content kind, lineage, and authority](../artifact-classification-separates-content-kind-lineage-and-authority.md) — grounds: maintenance follows actual lineage, dependency, and consumption paths rather than a whole-artifact category
 - [Current-task fit alone does not warrant costly structural entrenchment](../current-task-fit-alone-does-not-warrant-costly-entrenchment.md) — applies: coordination value is the third hardening warrant in its rule, alongside inherited constraint and discriminating transfer evidence
-- [A universal knowledge framework demotes content taxonomies to defaults](../a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) — evidenced-by: the shared catalogue's interoperability benefit is coordination value, deferred to a worked-case guard
+- [A universal knowledge framework demotes content taxonomies to defaults](../a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) — contrasts: clone-once defaults lower creation cost but do not preserve coordination after local contracts diverge
 - [Behavioral authority](./behavioral-authority.md) — contrast: force exerted when consumed versus the warrant for committing
 - [Knowledge artifact](./knowledge-artifact.md) — contrast: value that informs without binding, judged by reach rather than shared adoption

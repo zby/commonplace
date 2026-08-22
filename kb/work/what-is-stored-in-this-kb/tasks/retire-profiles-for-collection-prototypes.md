@@ -2,7 +2,7 @@
 
 ## Status
 
-Decided in direction, partially executed. The scaffolded user-collection prototypes now state their purpose directly, without register/profile selection; an opt-in dialectical/evidential prototype exists with an experimental banner; and the scaffolded `AGENTS.md.template` routing table no longer carries a `Role` column. The library-wide vocabulary migration is not executed. This is the **first** step of the vocabulary cleanup and is deliberately scoped to exclude relocating `text-contract`, which stays where it is and stays open as [its own task](./text-contract-and-profiles.md).
+Complete. [ADR 069](../../../reference/adr/069-collection-contract-bundles-become-one-time-prototypes.md) records the decision and implementation. The scaffolded user-collection prototypes state their purpose directly; an opt-in dialectical/evidential prototype carries an experimental banner; both root routing tables omit `Role`; and the library-wide profile vocabulary has been retired. This remains the **first** step of the vocabulary cleanup and deliberately excludes relocating `text-contract`, which stays where it is and remains open as [its own task](./text-contract-and-profiles.md).
 
 ## The move
 
@@ -29,29 +29,29 @@ Retiring profiles is a different question with a different answer: the concept i
 
 **The always-loaded cost is unearned.** The routing table reads `| Path | Role | Use when |`. Agents route on `Use when`; `Role` repeats the profile name in the most expensive context slot in the repository, and it is the surface that invites reading profiles as binding.
 
-## Migration inventory
+## Execution record
 
-Roughly 23 library files name a text-contract profile. `TypeProfile` in `type_resolver.py` is unrelated type-resolution vocabulary, but scaffold package data is affected: the three user-collection contract templates are the concrete creation-time prototypes, and `AGENTS.md.template` repeats the routing table. The broad `rg` hit count across `kb/` is dominated by ordinary-English "profile" in external-system reviews and workshop files.
+The pre-migration inventory found roughly 23 library files naming a text-contract profile. `TypeProfile` in `type_resolver.py` was confirmed to be unrelated type-resolution vocabulary. The broad `rg` hit count across `kb/` remains dominated by ordinary uses such as system, pathway, error, and execution profiles.
 
-- `AGENTS.md` — vocabulary entry and routing-table `Role` column; delete the column rather than replacing it.
-- `AGENTS.md.template` — scaffold routing-table `Role` column; already deleted.
-- `src/commonplace/_data/templates/user-{notes,reference,instructions}-COLLECTION.md` — the concrete scaffolded collection prototypes; already rewritten to state purpose and scope directly, require a complete local contract instead of register/profile selection, and disclaim synchronization after installation.
-- `src/commonplace/_data/templates/user-dialectical-evidential-COLLECTION.md` — an opt-in prototype with an experimental banner, not installed automatically; already added. Its worked-case evidence warrants availability as a starting point, while the mark records that it has not been tested across independently maintained collections.
-- Seven collection contracts declaring a profile in their heading and opening line: `notes`, `reference`, `instructions`, `agentic-systems`, `agent-memory-systems`, `sources`, `articles`. Six link the theory definition; `articles` links the catalogue.
-- `kb/reference/text-contract-profiles.md` — the catalogue, which becomes the prototype catalogue or is folded into the new definition.
-- `kb/notes/definitions/text-contract.md` — profile half removed, text-contract half untouched.
-- ADRs whose operative or explanatory text uses the retired model include 017, 042, 046, 057, 061, 062, and 063. Record the later change and any partial supersession without rewriting what each originally decided; occurrences confined to historical titles and links may remain.
-- `kb/notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md` — substantive rewrite required because communicative profile is currently one of its four classification axes, not a passing vocabulary use.
-- Other notes, reference docs, instructions, and articles using the term in live prose include `linking-theory.md`, `technical-constraints-make-kb-objective-choice-engineering.md`, `a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md`, `a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md`, `run-full-improvement-pass-on-note.md`, `publish-an-article.md`, `kb/reference/design-rationale-management.md`, and one draft article.
-- Active proposals using text-contract-profile semantics must be rewritten or explicitly retired so they cannot reintroduce the model. Frozen archive entries keep their historical wording except where link integrity requires maintenance.
+- `AGENTS.md` and `AGENTS.md.template` now route with `Path | Use when`; neither carries a replacement role column. The root glossary defines only text contract.
+- `src/commonplace/_data/templates/user-{notes,reference,instructions}-COLLECTION.md` are the concrete scaffolded prototypes. Each requires a complete local contract and disclaims synchronization after installation.
+- `src/commonplace/_data/templates/user-dialectical-evidential-COLLECTION.md` is opt-in, marked experimental, and not installed automatically.
+- The seven live collection contracts state their purpose and quality goal directly and claim no prototype relationship.
+- `kb/reference/text-contract-profiles.md` was relocated to [the collection prototype catalogue](../../../reference/collection-prototypes.md), with a published redirect. Its opening owns the one-time-copy definition.
+- `kb/notes/definitions/text-contract.md` stayed at its path and now contains only the binding local text-contract definition.
+- ADR 069 partially supersedes ADRs 042 and 057. ADRs 017, 042, 046, and 057 carry current-terminology or supersession annotations; historical titles and deliberation remain historical.
+- The former four-axis foundation note was relocated and rewritten as [Artifact classification separates content kind, lineage, and authority](../../../notes/artifact-classification-separates-content-kind-lineage-and-authority.md), with a published redirect from its old path.
+- Live notes, reference docs, the full-pass instruction, the draft article, and active proposals now read local collection contracts rather than profiles. Frozen proposal archives keep their historical wording.
 
-A new ADR is required. This supersedes part of ADR 042 — the open profile set with worked-case promotion — without disturbing its decision to retire the closed `register` taxonomy.
+[ADR 069](../../../reference/adr/069-collection-contract-bundles-become-one-time-prototypes.md) supersedes ADR 042's open profile set without disturbing its decision to retire the closed `register` taxonomy.
 
-## Open points for the executing session
+## Resolved choices
 
-- Whether `collection prototype` needs a standalone `kb/reference/definitions/` artifact or should be a section of the recast catalogue. The definition-typed artifact already in `kb/reference/definitions/collection.md` shows either is available.
-- Whether `editorial` survives as a prototype or collapses, given `kb/articles/` is its only realization and ADR 057 introduced it.
+- `collection prototype` is defined at the start of the recast catalogue; there is no standalone definition artifact.
+- Editorial/expository stays entirely local to `kb/articles/COLLECTION.md`. One realization and no creation-time consumer do not warrant a prototype.
 
-## Completion condition
+## Completion evidence
 
-`profile` is no longer registered vocabulary, `collection prototype` is defined in reference with one-time-copy semantics, `AGENTS.md` no longer glosses or tabulates profiles, neither routing table has a `Role` column, the scaffolded user-collection prototypes depend only on their complete local contracts, and no existing collection contract claims inheritance, conformance, synchronization, or updates through a prototype. Every consumer above is retargeted or rewritten, an ADR records the supersession, and validation plus a broken-link sweep pass. `kb/notes/definitions/text-contract.md` still exists and still defines text contract.
+`profile` is no longer registered vocabulary. `collection prototype` is defined in reference with one-time-copy semantics. Neither routing table has a `Role` column. Scaffolded and live collection contracts depend only on their complete local text. No existing collection contract claims inheritance, conformance, synchronization, or updates through a prototype. ADR 069 records the supersession, and `kb/notes/definitions/text-contract.md` still exists at its original path with a text-contract-only definition.
+
+Targeted artifact validation, the aggregate `commonplace-validate today` sweep, and redirect-map validation all pass cleanly. The preceding scaffold implementation passed its 18 initialization tests and a package build containing all four prototype templates.

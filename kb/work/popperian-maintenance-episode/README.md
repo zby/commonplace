@@ -29,7 +29,7 @@ Run 23 added a third machinery response to an unlabelled idealization, alongside
 
 ## Promoted at open
 
-- `kb/reference/proposals/repair-dispositions-for-defeated-claims.md` — the design object: make the repair policy for review-defeated claims explicit, with an option space (document the current universal, add a declared-modality/idealization repair with pricing-gated verdicts, or declare policy per text-contract profile)
+- `kb/reference/proposals/repair-dispositions-for-defeated-claims.md` — the design object: make the repair policy for review-defeated claims explicit, with an option space (document the current universal, add a declared-modality/idealization repair with pricing-gated verdicts, or declare policy in each installation's local notes contract)
 - `kb/notes/domain-pricing-routes-an-exception-to-idealization-assessment.md` (promoted under its original title, `a-domain-priced-exception-does-not-refute-an-idealization`, and reframed by the third episode's pass) — the transferable requirement the proposal rests on: the pricing test, its signatures, and the constraints that keep idealization from becoming an immunizing stratagem
 
 ## What closes this workshop

@@ -63,7 +63,7 @@ Terms needed to understand the project's structure and everyday operations, alph
 - **Representational form** — how retained content is encoded and consumed: natural-language, symbolic (code, schemas, grammars), distributed-parametric (model weights), or mixed. Codification is the natural-language→symbolic crossing on this axis, and form sets the default review method: read natural-language content, test symbolic artifacts, probe parametric ones. **Prompt** is a consumption-path shorthand for material supplied or assembled as model input, not a fourth form or a synonym for every natural-language artifact. See `kb/notes/definitions/representational-form.md`.
 - **Result kind** — the persisted pair protocol: `verdict` completes with an outcome; `report` completes without one. `REPORT` is a completion marker, not a fourth outcome. See `kb/reference/README-REVIEW-SYSTEM.md#concepts`.
 - **System-definition artifact** — a retained artifact the system consumes with binding force: instruction, enforcement, routing, validation, or configuration (skills, schemas, COLLECTION.md files, validators). Contrast a knowledge artifact, consumed as evidence or advice that informs without binding. See `kb/notes/definitions/system-definition-artifact.md`.
-- **Text contract** — the binding requirement a collection's `COLLECTION.md` declares: quality goal, title/description conventions, attribution requirements, maintenance semantics, and link grammar. A **profile** is a named, proven bundle of these features a collection may adopt, extend, or replace — theoretical, descriptive, and prescriptive are the shipped defaults; the set is open, guarded by worked-case-first promotion. See `kb/notes/definitions/text-contract.md` and the [profile catalogue](./kb/reference/text-contract-profiles.md).
+- **Text contract** — the binding requirement a collection's `COLLECTION.md` declares: purpose and scope, quality goal, title/description conventions, attribution requirements, maintenance semantics, and link grammar. See `kb/notes/definitions/text-contract.md`.
 - **Workshop** — a named workspace for work-in-flight documents under `kb/work/`. Workflow-owned runs may be grouped one level deeper, such as `kb/work/multistage/`. Value is consumed rather than accumulated: a finished workshop produces library artifacts (notes, ADRs) and is deleted. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
 
 ### Prose and registered identifiers
@@ -117,17 +117,17 @@ The knowledge base lives in `kb/`. Search it when working on methodology, design
 
 Read the target collection's `COLLECTION.md` before writing or connecting artifacts there.
 
-| Path | Role | Use when |
-|---|---|---|
-| `kb/notes/` | theoretical profile | Writing transferable claims, mechanisms, definitions, synthesis, and KB methodology theory. |
-| `kb/reference/` | descriptive profile | Describing the shipped Commonplace system, architecture, type system, commands, and ADRs. |
-| `kb/instructions/` | prescriptive profile | Writing procedures, skills, review gates, operational rules, and how-to guidance. |
-| `kb/agent-memory-systems/` | descriptive external-system coverage | Reviewing and comparing external agent memory, knowledge, and context-engineering systems. |
-| `kb/agentic-systems/` | descriptive external-system coverage | Analysing external agentic systems and harnesses as whole systems — execution loops, orchestration APIs, control surfaces. |
-| `kb/sources/` | durable source records | Storing tracked ingests and source reviews; local source snapshots live ignored under `kb/sources/.snapshots/`. |
-| `kb/articles/` | editorial/expository profile | Publishing self-standing technical articles distilled from the KB for external readers. |
-| `kb/work/` | workshop layer | Holding in-flight investigations, drafts, migration plans, and temporary work that should eventually close or promote durable artifacts. |
-| `kb/types/` | global type-contract collection | Looking up or authoring shared type specs used across collections. |
+| Path | Use when |
+|---|---|
+| `kb/notes/` | Writing transferable claims, mechanisms, definitions, synthesis, and KB methodology theory. |
+| `kb/reference/` | Describing the shipped Commonplace system, architecture, type system, commands, and ADRs. |
+| `kb/instructions/` | Writing procedures, skills, review gates, operational rules, and how-to guidance. |
+| `kb/agent-memory-systems/` | Reviewing and comparing external agent memory, knowledge, and context-engineering systems. |
+| `kb/agentic-systems/` | Analysing external agentic systems and harnesses as whole systems — execution loops, orchestration APIs, control surfaces. |
+| `kb/sources/` | Storing tracked ingests and source reviews; local source snapshots live ignored under `kb/sources/.snapshots/`. |
+| `kb/articles/` | Publishing self-standing technical articles distilled from the KB for external readers. |
+| `kb/work/` | Holding in-flight investigations, drafts, migration plans, and temporary work that should eventually close or promote durable artifacts. |
+| `kb/types/` | Looking up or authoring shared type specs used across collections. |
 
 ### Navigation
 

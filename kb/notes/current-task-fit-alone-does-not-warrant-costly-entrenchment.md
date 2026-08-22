@@ -15,11 +15,11 @@ Adoption and entrenchment are therefore different decisions. Adoption uses a cho
 
 ## The bill comes due before export
 
-Commonplace already makes this argument along one axis. [A universal knowledge framework demotes content taxonomies to defaults](./a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) because a taxonomy abstracted from the KBs its authors have seen — often just one — can mistake features of one structural profile, or bundle of structural choices, for universals. But that note draws the boundary at the framework's edge:
+Commonplace already makes this argument along one axis. [A universal knowledge framework demotes content taxonomies to defaults](./a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) because a taxonomy abstracted from the KBs its authors have seen — often just one — can mistake features of one structural configuration, or bundle of structural choices, for universals. But that note draws the boundary at the framework's edge:
 
-> A single-purpose KB can benefit from hardcoding its profile; the burden begins when that profile is exported.
+> A single-purpose KB can benefit from hardcoding its local contract; the burden begins when that contract is exported as a general taxonomy.
 
-For a long-lived KB, that boundary is too late. Export is not the only way a KB encounters questions it was not built for; its project can change around it. Drift and export pose the same transfer test: both bring structure fitted to one question set into contact with another. One does so across time, the other across installations. Hardcoding a profile therefore bets not only on other people's KBs, but also on the KB's own future. The internal bet can be harder to notice failing because no handover forces the mismatch into view.
+For a long-lived KB, that boundary is too late. Export is not the only way a KB encounters questions it was not built for; its project can change around it. Drift and export pose the same transfer test: both bring structure fitted to one question set into contact with another. One does so across time, the other across installations. Hardcoding a local contract therefore bets not only on other people's KBs, but also on the KB's own future. The internal bet can be harder to notice failing because no handover forces the mismatch into view.
 
 A KB expected to outlive its current question set therefore faces transfer risk before export. That risk is not always large enough to decide against entrenchment, but present fit alone does not price it.
 
