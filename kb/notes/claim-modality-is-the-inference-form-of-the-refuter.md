@@ -19,7 +19,7 @@ The mapping also yields a testable prediction about repair under review: reframe
 
 ## Scope
 
-Truth-apt empirical claims only. Normative claims, definitions, and design proposals fail differently — means-end failure, mis-sorting, usefulness — and the typology does not cover them; since [design proposals differ from claims in kind, not confidence](./design-proposals-differ-from-claims-in-kind-not-confidence.md), a design's free parameters put it outside the refutation relations entirely.
+Truth-apt empirical claims only. Normative claims and definitions fail differently, so this typology does not cover them. In a design record, apply it to empirical beliefs rather than residual selections: [a proposal can contain both kinds of region](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md), so proposal status does not put the whole artifact inside or outside the refutation relations.
 
 ## Open Questions
 

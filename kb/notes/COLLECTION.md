@@ -28,7 +28,7 @@ Apply explanatory-reach to claim formulation:
 
 **Theory-independence constraint.** The claim must stand if any single cited description is removed — otherwise it's still a description.
 
-**Existential recast for designs.** A design idea is not a weak claim — its free parameters make it evaluable by usefulness, not truth (rationale: [design proposals differ from claims in kind, not confidence](./design-proposals-differ-from-claims-in-kind-not-confidence.md)). It may stay here only recast as an existential claim: the title carries the truth-apt part, and the construction appears as a witness with its free choices explicitly marked. The requirements must be substantive enough that exhibiting any witness is informative; otherwise the design belongs in `kb/reference/proposals/` (ADR 028).
+**Design-shaped artifacts need a theoretical claim.** A construction may stay here when it witnesses a substantive truth-apt existential claim. Mark its [residual selections as choices](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md), not as evidence that the selections are uniquely correct. The requirements must be substantive enough that exhibiting any witness is informative; otherwise the unadopted design belongs in `kb/reference/proposals/` under [ADR 028](../reference/adr/028-design-proposals-live-in-reference-proposals.md). Proposal status is a workflow state, not an information kind.
 
 **Hypotheses stay recognizable in prose.** State the conjectural force in the title, description, opening, or a clearly named hypotheses/open-questions section. `user-verified: true` may attest that a note responsibly presents a conjecture; it does not turn the conjecture into established fact.
 

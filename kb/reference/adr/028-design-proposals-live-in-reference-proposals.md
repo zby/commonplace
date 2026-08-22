@@ -12,7 +12,7 @@ status: accepted
 
 ## Context
 
-Design proposals — finished but unadopted designs — had no home. The theory register (`kb/notes/`) demands contestable claims, and a proposal's free parameters make it evaluable by usefulness rather than truth, so proposals squatted there under `status: speculative` with hedged titles. The workshop layer was wrong (workshops close; proposals wait), and the prescriptive surface admitted only adopted artifacts: instructions are operative, and although the ADR type nominally allowed `Status: proposed`, in practice all five `proposed` ADRs (004, 005, 007, 019, 020) were long implemented — stale markers, not pending decisions. Meanwhile the AGENTS.md YAGNI rule routed every identified gap to `kb/notes/`, reinforcing the squatting.
+Design proposals — finished but unadopted designs — had no home. The theory collection (`kb/notes/`) requires a truth-apt central contribution. A proposal may contain beliefs, requirements, and rationale, but its candidate selections are not yet operative system choices; its central job is to preserve an undecided design problem, candidate options, and forces until adoption. Treating the whole artifact as a weak theory therefore misapplied claim review to its candidate selections, so proposals squatted there under `status: speculative` with hedged titles. The workshop layer was wrong (workshops close; proposals wait), and the prescriptive surface admitted only adopted artifacts: instructions are operative, and although the ADR type nominally allowed `Status: proposed`, in practice all five `proposed` ADRs (004, 005, 007, 019, 020) were long implemented — stale markers, not pending decisions. Meanwhile the AGENTS.md YAGNI rule routed every identified gap to `kb/notes/`, reinforcing the squatting.
 
 ## Decision
 
@@ -27,7 +27,7 @@ Lifecycle: workshop (active, closes) → proposal (finished, undecided, waits) �
 ## Consequences
 
 Easier:
-- The theory register's claim contract stays undiluted; review gates stop applying contestability tests to non-truth-apt artifacts.
+- The theory collection's claim contract stays undiluted; review gates stop applying contestability tests to whole heterogeneous proposals or to their candidate selections.
 - Proposals become first-class and findable instead of squatting as hedged speculative notes; partial adoption becomes visible because shipped content must leave the proposal.
 - The decision record sharpens: `Status: proposed` can no longer go stale, because it no longer exists.
 
@@ -40,4 +40,4 @@ Harder / accepted costs:
 
 Relevant Notes:
 
-- [design proposals differ from claims in kind, not confidence](../../notes/design-proposals-differ-from-claims-in-kind-not-confidence.md) — rests-on: the category distinction and existential recast this decision implements
+- [Artifact classification separates profile, content kind, lineage, and authority](../../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) — rests-on: the region-level belief/selection distinction, adoption boundary, and existential-witness rule to which this routing decision applies

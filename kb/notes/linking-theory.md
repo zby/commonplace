@@ -50,13 +50,13 @@ Each practice instantiates this principle:
 
 - **"Related" is not a relationship** — it carries zero bits of decision-relevant information, the linking equivalent of a null description.
 
-### Content registers constrain link direction
+### Communicative profiles inform link interpretation
 
-The decision-cost model needs one more axis: the content layer of the source and target. [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) argues that theory, description, and prescription have different quality goals and maintenance directions. Those differences constrain which links are load-bearing.
+The decision-cost model needs one more signal: the communicative profile of the source and target. [Artifact classification separates profile, content kind, lineage, and authority](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md): theoretical, descriptive, and prescriptive profiles have different quality goals, but profile alone does not determine maintenance direction. It helps a reader interpret a link; the authored relationship and actual dependency determine whether the link is load-bearing.
 
-A theory can cite a description as evidence while remaining generally stated; a description can cite theory as rationale for why the system is shaped that way; a prescription can cite both theory and system description because procedures must be justified and executable against the current system. Reversing those relationships changes the maintenance contract. If a theory depends on a specific description for its formulation, the link reveals that the artifact has not yet been abstracted into theory. If an instruction omits the descriptive system target it acts on, executability suffers.
+A theory can cite a description as evidence while remaining generally stated; a description can cite theory as rationale for why the system is shaped that way; a prescription can cite both theory and system description because procedures must be justified and executable against the current system. These are characteristic uses, not directions imposed by profile. If a theory depends on a specific description for its formulation, the link reveals that the artifact has not yet been abstracted into theory. If an instruction omits the descriptive system target it acts on, executability suffers.
 
-So relationship vocabulary is not enough by itself. A `grounds` or `rests-on` edge has different consequences depending on whether it stays within theory or crosses into description, prescription, or system-definition content. Link review should check both the local relationship phrase and the collection-crossing contract.
+So relationship vocabulary is not enough by itself. Crossing communicative profiles can change the review obligations around a `grounds` or `rests-on` edge, but it does not make the edge load-bearing. Link review should check the authored relationship, the actual dependency, and the contracts and consumption paths at both ends.
 
 ### What the theory predicts
 

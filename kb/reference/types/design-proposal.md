@@ -25,4 +25,4 @@ Proposals live under `kb/reference/proposals/`. This spec enforces only the mech
 | `traits` | No | Review-routing traits, e.g. `has-external-sources`. The type replaces the former `design-proposal` trait. |
 
 - The body must carry a dated current-state anchor — a `## Current state (as of YYYY-MM-DD)` section stating the system facts the proposal rests on. Going stale against later ADRs is lifecycle, not defect: refresh or retire.
-- Reviewed for design quality — problem stated, forces stated, free choices marked, adoption criteria named — not contestability; claim-title expectations do not apply.
+- Review separates the artifact's regions. Truth-apt statements remain contestable. Candidate options and selections are reviewed against requirements, constraints, consequences, and trade-offs. The artifact as a whole is also reviewed for proposal-process fitness — problem stated, forces stated, candidate selections marked, adoption criteria named — and claim-title expectations do not apply.

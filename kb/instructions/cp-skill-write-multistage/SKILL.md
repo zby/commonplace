@@ -14,7 +14,7 @@ context: fork
 
 **Target and inputs: $ARGUMENTS**
 
-Develop one substantive KB artifact through independent reconstruction, claim disposition, a claim skeleton, drafting, audit, and reconciliation. Keep every intermediate artifact under one `kb/work/` workshop. Do not add workflow-state fields to the target artifact's frontmatter, and do not write the target until promotion.
+Develop one substantive KB artifact through independent reconstruction, claim disposition, a claim skeleton, drafting, audit, and reconciliation. Keep every intermediate artifact under one `kb/work/multistage/` workshop. Do not add workflow-state fields to the target artifact's frontmatter, and do not write the target until promotion.
 
 This workflow requires fresh sub-agent contexts. If the runtime cannot create them, initialize the workshop, record the limitation, and stop before source reconstruction. Do not imitate source-first independence in a context that has already read the incumbent draft.
 
@@ -39,10 +39,10 @@ When the task is a mechanical update, a local prose edit, or a straightforward w
 
 ## Step 2 - Create Or Resume The Workshop
 
-Search `kb/work/` for an unfinished multistage workshop whose declared immutable run key or current intended target path exactly matches this run; do not match paths mentioned only in pending handoffs or prose. If exactly one exists, resume it. If several exist, stop and ask which one to use. Otherwise create:
+Search `kb/work/multistage/` for an unfinished multistage workshop whose declared immutable run key or current intended target path exactly matches this run; do not match paths mentioned only in pending handoffs or prose. If exactly one exists, resume it. If several exist, stop and ask which one to use. Otherwise create:
 
 ```text
-kb/work/multistage-write-<short-topic>-<YYYYMMDD>/
+kb/work/multistage/multistage-write-<short-topic>-<YYYYMMDD>/
 ```
 
 If that directory already exists for another target, append the smallest available numeric suffix, beginning with `-2`.

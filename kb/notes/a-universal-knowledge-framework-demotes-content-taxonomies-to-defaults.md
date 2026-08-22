@@ -46,7 +46,7 @@ Not every closed set is a content taxonomy. Sets fixed by the consumer's archite
 
 Relevant Notes:
 
-- [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) — contrasts: its three recurring attractors survive as profiles, while this note states the burden a closed content taxonomy must meet before becoming universal
+- [Artifact classification separates profile, content kind, lineage, and authority](./a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) — contrasts: treats open communicative profiles as one classification question rather than an exhaustive information taxonomy
 - [Title as claim exposes commitments, enabling Popperian maintenance](./title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) — contrasts: first-person commitment is one answerability relation among several, not the framework's definition
 - [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: why bounded-context economy is claimed from the consumer and applies across every collection contract
 - [KB goals in always-loaded context guide inclusion decisions](./kb-goals-in-always-loaded-context-guide-inclusion-decisions.md) — contrasts: the same universal/per-installation split seen from the operator side — purpose, scope, and quality bar need human input, while the demoted taxonomies arrive as framework-shipped defaults

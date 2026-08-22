@@ -23,7 +23,7 @@ Gregor classifies theories by four possible primary goals—analysis/description
 
 ## Connections Found
 
-The load-bearing target is [Actionable methodology](../notes/definitions/actionable-methodology.md): this paper supplies the mature Type V definition while preventing its collapse into the theory–operator relation. [A knowledge base holds theories, descriptions, and prescriptions with asymmetric linking](../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) is a secondary connection because Gregor's purpose taxonomy allows theory to be prescriptive, whereas Commonplace's theoretical and prescriptive profiles are local text contracts rather than ontological partitions. Relative to [Gregor 2002](https://ajis.aaisnet.org/index.php/ajis/article/download/439/399/551), the 2006 paper is the broader and more structurally explicit account, not merely independent corroboration.
+The load-bearing target is [Actionable methodology](../notes/definitions/actionable-methodology.md): this paper supplies the mature Type V definition while preventing its collapse into the theory–operator relation. [Artifact classification separates profile, content kind, lineage, and authority](../notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md) is a secondary connection because Gregor's purpose taxonomy allows theory to be prescriptive, whereas Commonplace's theoretical and prescriptive profiles are local text contracts rather than ontological partitions. Relative to [Gregor 2002](https://ajis.aaisnet.org/index.php/ajis/article/download/439/399/551), the 2006 paper is the broader and more structurally explicit account, not merely independent corroboration.
 
 ## Extractable Value
 
