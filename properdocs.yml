@@ -8,6 +8,7 @@ exclude_docs: |
   !sources/README.md
   !sources/COLLECTION.md
   !sources/types/**
+  sources/.snapshots/**
   work/review-revise-gated/baseline.md
   work/review-revise-gated/target.md
   work/review-revise-gated/gates/**

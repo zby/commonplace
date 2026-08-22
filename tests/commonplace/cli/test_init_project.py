@@ -28,6 +28,9 @@ def test_init_project_creates_core_directories(tmp_path: Path) -> None:
     assert (tmp_path / "kb" / "notes").is_dir()
     assert (tmp_path / "kb" / "reference").is_dir()
     assert (tmp_path / "kb" / "sources").is_dir()
+    assert (tmp_path / "kb" / "sources" / ".gitignore").read_text(
+        encoding="utf-8"
+    ) == ".snapshots/\n"
     assert (tmp_path / "kb" / "instructions").is_dir()
     assert (tmp_path / "kb" / "reports").is_dir()
     assert (tmp_path / "kb" / "types").is_dir()
@@ -91,6 +94,7 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
     assert (tmp_path / "kb" / "sources" / "types" / "snapshot.md").is_file()
     assert (tmp_path / "kb" / "sources" / "types" / "snapshot.schema.yaml").is_file()
     assert not (tmp_path / "kb" / "sources" / "types" / "snapshot.template.md").exists()
+    assert (tmp_path / "kb" / "sources" / ".gitignore").is_file()
 
     assert (tmp_path / "AGENTS.md.template").is_file()
 

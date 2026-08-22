@@ -3,7 +3,7 @@
 Two installs, by what you want from it:
 
 - **Reader install** — vendor the Commonplace knowledge base inside an existing project as a read-only reference: your agents consult the research when they face context, memory, or learning design decisions. A vendored copy (submodule, clone, or plain download) and one routing paragraph; no Python — the KB is plain markdown, so it works in a project written in any language. See [Reader install](#reader-install-the-kb-as-a-vendored-reference).
-- **Full install** — run your own knowledge base with the Commonplace type system, skills, and commands. The package carries the methodology — notes, reference docs, instructions, types, and skills — but not this repo's external-system reviews (`kb/agent-memory-systems/`, `kb/agentic-systems/`) or source snapshots. The numbered steps below: check prerequisites, install the library so `commonplace-*` commands run, create the project with `commonplace-init`, set up the control-plane file, install the skills for every agent that will work on the project, and start the runtime. Most steps end with a check you can run before moving on.
+- **Full install** — run your own knowledge base with the Commonplace type system, skills, and commands. The package carries the methodology — notes, reference docs, instructions, types, and skills — but not this repo's external-system reviews (`kb/agent-memory-systems/`, `kb/agentic-systems/`) or source corpus. The numbered steps below: check prerequisites, install the library so `commonplace-*` commands run, create the project with `commonplace-init`, set up the control-plane file, install the skills for every agent that will work on the project, and start the runtime. Most steps end with a check you can run before moving on.
 
 ## Reader install: the KB as a vendored reference
 
@@ -166,7 +166,7 @@ The `--name` flag sets the project name used in templates; if omitted it default
 
 This creates:
 
-- **User KB directories and collection heads** — `kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/sources/`, `kb/tasks/`, `kb/work/`, `kb/reports/`, `kb/log.md`; notes, reference, and instructions each receive a starter `COLLECTION.md` contract and `README.md` landing
+- **User KB directories and collection heads** — `kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/sources/`, `kb/tasks/`, `kb/work/`, `kb/reports/`, `kb/log.md`; notes, reference, and instructions each receive a starter `COLLECTION.md` contract and `README.md` landing, while `kb/sources/.gitignore` keeps local `.snapshots/` captures out of version control
 - **Commonplace library content** — shipped notes, reference docs, instructions, review gates, and skills under `kb/commonplace/notes/`, `kb/commonplace/reference/`, and `kb/commonplace/instructions/`
 - **Type definitions** — shared types under `kb/types/`, plus source/report type scaffolds
 - **Canonical skills** — `kb/commonplace/instructions/cp-skill-write/`, plus the matching `cp-skill-validate/`, `cp-skill-connect/`, etc. The `cp-skill-` prefix avoids collisions with your project's own skills and with the `commonplace-*` CLI commands.

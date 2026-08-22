@@ -199,7 +199,7 @@ def test_source_snapshot_validates_without_description(tmp_path: Path) -> None:
         tmp_path / "kb" / "sources" / "sample.md",
         """---
 source: https://example.com/article
-captured: 2026-04-19
+captured: "2026-04-19"
 capture: web-fetch
 genre: conceptual-essay
 type: kb/sources/types/snapshot.md
@@ -221,7 +221,7 @@ Captured text.
     )
 
 
-def test_source_snapshot_requires_genre(tmp_path: Path) -> None:
+def test_source_snapshot_allows_genre_to_be_omitted(tmp_path: Path) -> None:
     write(
         tmp_path / "kb" / "sources" / "types" / "snapshot.schema.yaml",
         (Path.cwd() / "kb" / "sources" / "types" / "snapshot.schema.yaml").read_text(
@@ -238,7 +238,7 @@ def test_source_snapshot_requires_genre(tmp_path: Path) -> None:
         tmp_path / "kb" / "sources" / "sample.md",
         """---
 source: https://example.com/article
-captured: 2026-04-19
+captured: "2026-04-19"
 capture: web-fetch
 type: kb/sources/types/snapshot.md
 ---
@@ -252,7 +252,7 @@ Captured text.
     results = validation.validate_note(snapshot, repo_root=tmp_path)
 
     assert results.note_type == "snapshot"
-    assert any("'genre' is a required property" in item for item in results.fails)
+    assert results.fails == []
 
 
 def test_source_snapshot_off_list_genre_warns_not_fails(tmp_path: Path) -> None:
@@ -272,7 +272,7 @@ def test_source_snapshot_off_list_genre_warns_not_fails(tmp_path: Path) -> None:
         tmp_path / "kb" / "sources" / "sample.md",
         """---
 source: https://example.com/article
-captured: 2026-04-19
+captured: "2026-04-19"
 capture: web-fetch
 genre: podcast-transcript
 type: kb/sources/types/snapshot.md
@@ -311,16 +311,30 @@ def configure_ingest_report_repo(tmp_path: Path) -> None:
     )
 
 
-def code_grounded_ingest(*, include_heading: bool) -> str:
+def code_grounded_ingest(
+    *,
+    include_heading: bool,
+    secondary_sources: str | None = None,
+) -> str:
     headings = "\n## Code Grounding\n\nStatic source inspection only.\n" if include_heading else ""
+    if secondary_sources is None:
+        secondary_sources = """secondary_sources:
+  - role: implementation
+    source: https://github.com/example/system/commit/0123456789abcdef0123456789abcdef01234567
+  - role: implementation
+    source: https://github.com/example/second/commit/89abcdef0123456789abcdef0123456789abcdef
+"""
     return f"""---
 description: Code-grounded analysis of a paper and its released implementation
-source_snapshot: paper.md
+source: https://arxiv.org/abs/2608.12345v1
+captured: "2026-08-18"
+capture: pdf-read
+genre: scientific-paper
+snapshot_sha256: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
 ingested: "2026-08-18"
 type: kb/sources/types/ingest-report.md
 domains: [agents, evaluation]
-code_revisions:
-  - https://github.com/example/system/commit/0123456789abcdef0123456789abcdef01234567
+{secondary_sources.rstrip()}
 ---
 
 # Ingest: Paper
@@ -363,7 +377,9 @@ def test_code_grounded_ingest_requires_code_grounding_section(tmp_path: Path) ->
     assert any("missing '## Code Grounding'" in item for item in results.fails)
 
 
-def test_code_grounded_ingest_accepts_pinned_revision_and_section(tmp_path: Path) -> None:
+def test_code_grounded_ingest_accepts_multiple_pinned_repositories(
+    tmp_path: Path,
+) -> None:
     configure_ingest_report_repo(tmp_path)
     ingest = write(
         tmp_path / "kb" / "sources" / "paper.ingest.md",
@@ -377,6 +393,136 @@ def test_code_grounded_ingest_accepts_pinned_revision_and_section(tmp_path: Path
         "type schema: ingest-report requirements satisfied" in item
         for item in results.passes
     )
+
+
+def test_ordinary_ingest_accepts_no_secondary_sources(tmp_path: Path) -> None:
+    configure_ingest_report_repo(tmp_path)
+    content = code_grounded_ingest(
+        include_heading=False,
+        secondary_sources="",
+    )
+    ingest = write(tmp_path / "kb" / "sources" / "paper.ingest.md", content)
+
+    results = validation.validate_note(ingest, repo_root=tmp_path)
+
+    assert results.fails == []
+
+
+@pytest.mark.parametrize(
+    ("secondary_sources", "expected"),
+    [
+        ("secondary_sources: []", "should be non-empty"),
+        (
+            """secondary_sources:
+  - role: evidence
+    source: https://github.com/example/system/commit/0123456789abcdef0123456789abcdef01234567""",
+            "'implementation' was expected",
+        ),
+        (
+            """secondary_sources:
+  - role: implementation
+    source: https://github.com/example/system""",
+            "does not match",
+        ),
+        (
+            """secondary_sources:
+  - role: implementation
+    source: https://github.com/example/system/commit/0123456789abcdef0123456789abcdef01234567
+    checkout: related-systems/example--system""",
+            "Additional properties are not allowed",
+        ),
+        (
+            """secondary_sources:
+  - role: implementation
+    source: https://github.com/example/system/commit/0123456789abcdef0123456789abcdef01234567
+  - role: implementation
+    source: https://github.com/example/system/commit/0123456789abcdef0123456789abcdef01234567""",
+            "has non-unique elements",
+        ),
+    ],
+)
+def test_ingest_rejects_invalid_secondary_source_shapes(
+    tmp_path: Path,
+    secondary_sources: str,
+    expected: str,
+) -> None:
+    configure_ingest_report_repo(tmp_path)
+    ingest = write(
+        tmp_path / "kb" / "sources" / "paper.ingest.md",
+        code_grounded_ingest(
+            include_heading=True,
+            secondary_sources=secondary_sources,
+        ),
+    )
+
+    results = validation.validate_note(ingest, repo_root=tmp_path)
+
+    assert any(expected in item for item in results.fails), results.fails
+
+
+@pytest.mark.parametrize("retired_field", ["source_snapshot: paper.md", "code_revisions: [old]"])
+def test_ingest_rejects_retired_source_fields(
+    tmp_path: Path,
+    retired_field: str,
+) -> None:
+    configure_ingest_report_repo(tmp_path)
+    content = code_grounded_ingest(include_heading=True).replace(
+        "domains: [agents, evaluation]",
+        f"domains: [agents, evaluation]\n{retired_field}",
+    )
+    ingest = write(tmp_path / "kb" / "sources" / "paper.ingest.md", content)
+
+    results = validation.validate_note(ingest, repo_root=tmp_path)
+
+    assert any("False schema does not allow" in item for item in results.fails)
+
+
+def test_ingest_off_list_genre_warns_not_fails(tmp_path: Path) -> None:
+    configure_ingest_report_repo(tmp_path)
+    content = code_grounded_ingest(include_heading=True).replace(
+        "genre: scientific-paper", "genre: podcast-transcript"
+    )
+    ingest = write(tmp_path / "kb" / "sources" / "paper.ingest.md", content)
+
+    results = validation.validate_note(ingest, repo_root=tmp_path)
+
+    assert results.fails == []
+    assert any("genre" in item for item in results.warns)
+
+
+@pytest.mark.parametrize(
+    ("old", "new", "expected"),
+    [
+        (
+            "source: https://arxiv.org/abs/2608.12345v1",
+            "source: arxiv:2608.12345v1",
+            "does not match",
+        ),
+        (
+            'captured: "2026-08-18"',
+            'captured: "not-a-date"',
+            "captured",
+        ),
+        (
+            "snapshot_sha256: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+            "snapshot_sha256: ABCD",
+            "does not match",
+        ),
+    ],
+)
+def test_ingest_rejects_invalid_primary_source_anchor(
+    tmp_path: Path,
+    old: str,
+    new: str,
+    expected: str,
+) -> None:
+    configure_ingest_report_repo(tmp_path)
+    content = code_grounded_ingest(include_heading=True).replace(old, new)
+    ingest = write(tmp_path / "kb" / "sources" / "paper.ingest.md", content)
+
+    results = validation.validate_note(ingest, repo_root=tmp_path)
+
+    assert any(expected in item for item in results.fails), results.fails
 
 
 @pytest.mark.parametrize(

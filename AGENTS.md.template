@@ -76,7 +76,7 @@ Collections are `kb/` subtrees with a local `COLLECTION.md`. Read the target col
 | `kb/notes/` | user theoretical register | Writing transferable claims, mechanisms, definitions, synthesis, and project-specific theory. |
 | `kb/reference/` | user descriptive register | Describing the current system, architecture, interfaces, decisions, and operational surface. |
 | `kb/instructions/` | user prescriptive register | Writing project-specific procedures, skills, operational rules, and how-to guidance. |
-| `kb/sources/` | user source material | Storing external snapshots, ingests, and source reviews. |
+| `kb/sources/` | durable source records | Storing tracked ingests and source reviews; local source snapshots live ignored under `kb/sources/.snapshots/`. |
 | `kb/work/` | user workshop layer | Holding in-flight investigations, drafts, migration plans, and temporary work that should eventually close or promote durable artifacts. |
 | `kb/commonplace/notes/` | shipped methodology library | Reading Commonplace theory and examples without mixing them into the user's own notes. |
 | `kb/commonplace/reference/` | shipped Commonplace docs | Looking up Commonplace architecture, commands, type system, and ADRs. |

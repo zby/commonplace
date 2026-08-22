@@ -63,6 +63,7 @@ MANIFEST = ScaffoldManifest(
     # Single files copied without a tree walk. User-collection contract and
     # landing templates seed empty collections with authoring and routing heads.
     files=(
+        ("kb/sources/.gitignore", "kb/sources/.gitignore"),
         ("templates/user-notes-COLLECTION.md", "kb/notes/COLLECTION.md"),
         ("templates/user-notes-README.md", "kb/notes/README.md"),
         ("templates/user-reference-COLLECTION.md", "kb/reference/COLLECTION.md"),

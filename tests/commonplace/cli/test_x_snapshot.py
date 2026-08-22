@@ -14,6 +14,7 @@ if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 from commonplace.cli import x_snapshot  # noqa: E402
+from commonplace.lib.snapshot import snapshot_sha256  # noqa: E402
 
 
 def frontmatter(path: Path) -> dict:
@@ -189,7 +190,7 @@ def test_x_snapshot_stamps_family_tag_into_frontmatter_and_sidecar(
         lambda _client, **_kwargs: (recent_posts, users, None),
     )
 
-    x_snapshot.snapshot_x_url(
+    result = x_snapshot.snapshot_x_url(
         f"https://x.com/alice/status/{target_post['id']}",
         out_dir=str(tmp_path),
         max_posts=200,
@@ -204,3 +205,28 @@ def test_x_snapshot_stamps_family_tag_into_frontmatter_and_sidecar(
     assert fm["tags"] == [expected_family]
     assert sidecar["family"] == expected_family
     assert "type" not in sidecar
+    assert f"SHA-256: {snapshot_sha256(md_path)}" in result
+    assert x_snapshot.DEFAULT_SNAPSHOT_DIR == "kb/sources/.snapshots"
+
+
+def test_x_snapshot_reports_checksum_for_existing_capture(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    existing = tmp_path / "existing.md"
+    existing.write_text(
+        "---\nsource: https://x.com/alice/status/1002\n---\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("X_BEARER_TOKEN", "token")
+
+    result = x_snapshot.snapshot_x_url(
+        "https://x.com/alice/status/1002",
+        out_dir=str(tmp_path),
+        max_posts=200,
+    )
+
+    assert result == (
+        f"Already snapshotted: {existing}\n"
+        f"SHA-256: {snapshot_sha256(existing)}"
+    )

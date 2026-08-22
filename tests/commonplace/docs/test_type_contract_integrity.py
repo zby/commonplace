@@ -122,3 +122,36 @@ def test_snapshot_type_pointer_matches_schema() -> None:
     ).read_text(encoding="utf-8")
     assert f"`{expected_pointer}` in the shipped default" in snapshot_skill
     assert f"default {expected_pointer}" in snapshot_skill
+
+
+def test_ingest_owns_durable_source_and_snapshot_anchor() -> None:
+    ingest_schema = yaml.safe_load(
+        (REPO_ROOT / "kb/sources/types/ingest-report.schema.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
+    ingest_contract = (REPO_ROOT / "kb/sources/types/ingest-report.md").read_text(
+        encoding="utf-8"
+    )
+    snapshot_schema = yaml.safe_load(
+        (REPO_ROOT / "kb/sources/types/snapshot.schema.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    ingest_fields = ingest_schema["allOf"][1]["properties"]["frontmatter"]
+    required = set(ingest_fields["required"])
+    assert {
+        "source",
+        "captured",
+        "capture",
+        "genre",
+        "snapshot_sha256",
+    } <= required
+    assert ingest_fields["properties"]["source_snapshot"] is False
+    assert ingest_fields["properties"]["code_revisions"] is False
+    assert "secondary_sources" in ingest_fields["properties"]
+    assert "`kb/sources/.snapshots/`" in ingest_contract
+
+    snapshot_required = set(snapshot_schema["properties"]["frontmatter"]["required"])
+    assert "genre" not in snapshot_required

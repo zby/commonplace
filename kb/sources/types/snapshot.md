@@ -1,7 +1,7 @@
 ---
 type: kb/types/type-spec.md
 name: snapshot
-description: Captured external source copy with capture metadata and no analysis
+description: Local external source copy with capture metadata and no analysis
 schema: kb/sources/types/snapshot.schema.yaml
 ---
 
@@ -9,9 +9,14 @@ schema: kb/sources/types/snapshot.schema.yaml
 
 ## Authoring Instructions
 
-Use `snapshot` for captured external source copies stored under `kb/sources/`.
+Use `snapshot` for captured external source copies stored under
+`kb/sources/.snapshots/`.
 
-A snapshot is stamped by capture tooling or a snapshot skill. It is not normally authored directly. The artifact should preserve the source content and capture metadata without analysis; analysis belongs in an adjacent `ingest-report`.
+A snapshot is stamped by capture tooling or a snapshot skill. It is not
+normally authored directly. It preserves source content and capture metadata
+without analysis. It is a local, ignored reading copy; durable identity,
+provenance, genre, checksum, and analysis belong in the tracked
+`kb/sources/<slug>.ingest.md` report.
 
 ## Metadata
 
@@ -19,7 +24,8 @@ A snapshot is stamped by capture tooling or a snapshot skill. It is not normally
 - Set `source` to the canonical URL of the original source.
 - Set `captured` to the capture date or datetime.
 - Set `capture` to the capture mechanism, such as `web-fetch`, `pdf-read`, `xdk`, or `gh-api`.
-- Set `genre` to the source's genre (see Genre below). This is the single authoritative genre record for the source; ingest reports read it and do not restate it.
+- `genre` is optional capture-time metadata. The ingest report is the durable
+  genre authority and may correct this surface classification after reading.
 - `tags` are optional topical tags. Do not put the content family in `tags` — genre carries it, and the platform or container is already visible from `capture` and the source URL.
 - Keep platform-specific metadata such as `status_id`, `conversation_id`, `post_count`, or `api_url` when the capture tool provides it.
 
@@ -46,10 +52,14 @@ Two extension paths:
 - **Occasional off-list source:** just use the new value and keep the warning — it is the standing signal of an undocumented genre, and a validation sweep lists every such extension.
 - **A KB whose sources need their own vocabulary** (recurring new genres, domain-specific lens guidance, extra capture fields): do not edit this shipped spec. Declare a collection-local snapshot type — drop a type-spec doc and schema into the sources collection's `types/` directory and point `COLLECTION.md`'s Types menu at it; the capture skill stamps whatever snapshot type that menu declares. The local type owns its genre list and lenses outright, with fixed meanings, the same way this spec owns the defaults. Types are the extension point; scaffolded specs are not editing surfaces.
 
-`genre` is stamped at capture as a surface judgment. If ingestion's closer reading disagrees, correct the snapshot's `genre` in place — the snapshot stays the single ground truth.
+When present, `genre` is a surface judgment made at capture. Ingestion's closer
+reading sets the durable value on the ingest without rewriting the captured
+file, because doing so would change its exact-file checksum.
 
 ## Boundaries
 
 - Do not add commentary, claims, or relevance analysis to the snapshot. The single `genre` classification is capture metadata, not analysis.
+- Do not link a tracked artifact to a local snapshot. Use the ingest or the
+  external source URL according to what the sentence cites.
 - Do not use source-family labels as `type:` values.
 - Do not create a template for snapshots unless direct human authoring becomes a real workflow.

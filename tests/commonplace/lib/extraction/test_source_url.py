@@ -54,35 +54,24 @@ def test_extract_url_from_supported_single_file_shapes(
     assert source_url.extract_url(snap) == expected
 
 
-def test_follow_source_snapshot_pointer_relative(tmp_path: Path) -> None:
-    write(tmp_path / "snap.md", "---\nsource: https://example.com/x\n---\n# X\n")
+def test_extracts_durable_source_directly_from_ingest(tmp_path: Path) -> None:
     ingest = write(
         tmp_path / "snap.ingest.md",
-        "---\ndescription: Ingest\nsource_snapshot: snap.md\n---\n# Ingest\n",
+        "---\ndescription: Ingest\nsource: https://example.com/x\n---\n# Ingest\n",
     )
 
     assert source_url.extract_url(ingest) == "https://example.com/x"
 
 
-def test_follow_source_snapshot_pointer_kb_absolute(tmp_path: Path) -> None:
-    write(
-        tmp_path / "kb" / "sources" / "snap.md",
-        "---\nsource: https://example.com/y\n---\n# Y\n",
-    )
+def test_does_not_follow_retired_source_snapshot_pointer(tmp_path: Path) -> None:
+    write(tmp_path / "snap.md", "---\nsource: https://example.com/y\n---\n# Y\n")
     ingest = write(
-        tmp_path / "kb" / "sources" / "snap.ingest.md",
-        "---\nsource_snapshot: kb/sources/snap.md\n---\n# Ingest\n",
+        tmp_path / "snap.ingest.md",
+        "---\nsource_snapshot: snap.md\n---\n# Ingest without a URL\n",
     )
 
-    assert source_url.extract_url(ingest, repo_root=tmp_path) == "https://example.com/y"
+    assert source_url.extract_url(ingest) is None
 
 
 def test_returns_none_for_missing_file(tmp_path: Path) -> None:
     assert source_url.extract_url(tmp_path / "nonexistent.md") is None
-
-
-def test_handles_cycle_in_source_snapshot_pointers(tmp_path: Path) -> None:
-    write(tmp_path / "a.md", "---\nsource_snapshot: b.md\n---\n# A no url\n")
-    write(tmp_path / "b.md", "---\nsource_snapshot: a.md\n---\n# B no url\n")
-
-    assert source_url.extract_url(tmp_path / "a.md") is None

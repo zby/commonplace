@@ -8,9 +8,8 @@ Commonplace KB tree:
 - ``link_audit.find_links(roots, url_pattern)`` → list of ``LinkOccurrence``
   records with file/line/text/url. Backtick-aware (skips inline-code
   examples by default).
-- ``source_url.extract_url(source_path, repo_root=)`` → external URL string
-  or ``None``. Looks at frontmatter ``source:``, follows
-  ``source_snapshot:`` pointers, falls back to body patterns.
+- ``source_url.extract_url(source_path)`` → external URL string or ``None``.
+  Looks at durable frontmatter ``source:`` and falls back to body patterns.
 
 These modules were extracted from one-off audit scripts written during the
 ``kb/commonplace/`` namespace migration (ADR-021). They are provided for

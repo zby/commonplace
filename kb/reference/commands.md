@@ -130,16 +130,19 @@ Writes results to `kb/reports/promotion-candidates.md`.
 
 ### commonplace-github-snapshot
 
-Snapshot a GitHub issue or PR into `kb/sources/`. Uses the `gh` CLI to fetch issue/PR data.
+Snapshot a GitHub issue or PR into ignored `kb/sources/.snapshots/`. Uses the
+`gh` CLI to fetch issue/PR data and reports the exact Markdown SHA-256.
 
 ```bash
 commonplace-github-snapshot https://github.com/owner/repo/issues/123
-commonplace-github-snapshot --out-dir kb/sources/ https://github.com/owner/repo/pull/456
+commonplace-github-snapshot https://github.com/owner/repo/pull/456
 ```
 
 ### commonplace-x-snapshot
 
-Snapshot an X/Twitter post into `kb/sources/`. Its runtime dependencies are included in the base Commonplace tool installation.
+Snapshot an X/Twitter post into ignored `kb/sources/.snapshots/` and report the
+exact Markdown SHA-256. Its runtime dependencies are included in the base
+Commonplace tool installation.
 
 ```bash
 commonplace-x-snapshot https://x.com/user/status/123456789

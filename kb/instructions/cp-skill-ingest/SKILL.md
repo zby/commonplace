@@ -1,26 +1,28 @@
 ---
 name: cp-skill-ingest
-description: Use when asked to ingest a URL or existing kb/sources snapshot into a .ingest.md source analysis.
+description: Use when asked to ingest one URL or an existing local snapshot into a tracked .ingest.md source analysis.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
 context: fork
 model: opus
-argument-hint: "[url-or-file] — URL (https://...) or path to .md file in kb/sources/. No argument lists recent snapshots."
+argument-hint: "[url-or-file] — URL (https://...) or path to .md file in kb/sources/.snapshots/. No argument lists recent snapshots."
 ---
 
 # Ingest source
 
-Ingest one source into a `kb/sources/*.ingest.md` report. The source may be a
-URL or an existing Markdown snapshot under `kb/sources/`.
+Ingest one URL-backed primary source into a tracked
+`kb/sources/*.ingest.md` report. The reading copy may already exist as a
+Markdown snapshot under `kb/sources/.snapshots/`.
 
 ## Contract
 
 **Target:** `$ARGUMENTS`
 
-The direct output is the `.ingest.md` report next to the source snapshot. URL
-snapshotting and connection discovery may write their own delegated artifacts.
-Do not directly write any other library artifacts.
+The direct output is the `.ingest.md` report in `kb/sources/`, with the local
+snapshot's slug. URL snapshotting and connection discovery may write their own
+local or generated artifacts. Do not directly write any other library
+artifacts.
 
 Interpret "our" through the installed KB's goals and local collection contracts.
 In this repository, "our" means agent-operated KB methodology. In another
@@ -34,8 +36,21 @@ wins.
 ## Steps
 
 1. **Resolve the target.**
-   - If `$ARGUMENTS` is empty, list recent `kb/sources/*.md` files excluding
-     `.json` and `.ingest.md`, then ask which one to ingest.
+   - If `$ARGUMENTS` is empty, list recent
+     `kb/sources/.snapshots/*.md` files, then ask which one to ingest.
+   - For a URL target, first search tracked `kb/sources/*.ingest.md` files for
+     an exact frontmatter `source` match. If several match, stop and report the
+     duplicate ingests. If one matches, read its `snapshot_sha256` and resolve
+     the local input by checksum before considering a URL duplicate:
+     - use the sole exact checksum match;
+     - stop and report every path if several local files match;
+     - if none matches, capture the ingest's `source` and compare the returned
+       file's checksum;
+     - continue only when recapture is exact;
+     - on adapter failure, report the source as unavailable;
+     - on different bytes, report both checksums and stop without changing the
+       ingest. Changing the durable observation requires explicit re-ingestion
+       after the analysis is reconsidered.
    - If the target is a `paperswithcode.co/paper/` URL, or it is an arXiv paper
      and the user explicitly requested code grounding, read and follow the
      conditional procedure `ingest-paper-with-code.md`. In an installed project
@@ -47,7 +62,18 @@ wins.
      `cp-skill-snapshot-web` on the URL. Parse the `Snapshot saved:` or
      `Already snapshotted:` line from its output; that path is the source
      snapshot for the next step.
-   - Otherwise, treat the target as the source snapshot path.
+   - Otherwise, require one Markdown file under
+     `kb/sources/.snapshots/`. A directory is not a v1 primary source.
+   - Read the snapshot frontmatter. Retain `source`, `captured`, `capture`, and
+     flat capture-adapter fields such as `status_id`, `conversation_id`,
+     `post_count`, or `api_url`. Do not copy snapshot `type`, `description`, or
+     `tags`.
+   - Compute lowercase SHA-256 from the exact Markdown file bytes after capture
+     completes. Do not hash a JSON, PDF, image, or other companion.
+   - Derive `kb/sources/<slug>.ingest.md`. If it already exists, require its
+     `snapshot_sha256` to equal the input file's checksum before overwriting its
+     analysis. A filename or canonical-URL match never overrides a checksum
+     mismatch.
 
 2. **Run connection discovery.**
    Invoke `cp-skill-connect` on the source snapshot path. Wait for it to finish.
@@ -87,7 +113,8 @@ wins.
 
    The connect report is generated, gitignored working context. Do not cite it,
    link to it, or name its path in the durable ingest report. Summarize its
-   findings and link only durable KB artifacts or source snapshots.
+   findings and link only durable KB artifacts or external source URLs. Never
+   link a tracked artifact to `kb/sources/.snapshots/`.
 
    Select, do not transcribe: connect casts a wide candidate net by design.
    Drop weak, speculative, or duplicate edges and keep only settled, durable
@@ -118,8 +145,14 @@ wins.
    report short, explain the mismatch, and recommend no promotion or source-only
    filing as appropriate.
 
-5. **Save the report next to the snapshot.**
-   - Input: `kb/sources/some-article.md`
+   Put the retained capture fields and computed checksum in frontmatter. Set
+   `genre` from the closer ingest reading; it may correct a capture-time genre
+   without editing the snapshot. Do not write `source_snapshot` or
+   `code_revisions`. Omit `secondary_sources` when there is no implemented
+   secondary role.
+
+5. **Save the tracked report.**
+   - Input: `kb/sources/.snapshots/some-article.md`
    - Output: `kb/sources/some-article.ingest.md`
 
 6. **Validate.**
@@ -129,7 +162,7 @@ wins.
    commonplace-validate kb/sources/some-article.ingest.md
    ```
 
-   If this run created or edited the source snapshot, validate that snapshot too.
+   If this run created the source snapshot, validate that snapshot explicitly.
    Fix validation failures in files this skill is allowed to write before
    stopping.
 
@@ -142,6 +175,9 @@ wins.
 
 - Run `cp-skill-connect` before classification or value extraction.
 - Write only the `.ingest.md` report directly.
+- Accept exactly one URL-backed primary source; reject directory primaries.
+- Never update an existing ingest's `snapshot_sha256` merely because a
+  recapture produced different bytes.
 - Base extractable value on what is new relative to the discovered connection
   context.
 - Include effort tags on extractable value items.

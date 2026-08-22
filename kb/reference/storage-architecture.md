@@ -1,12 +1,14 @@
 ---
-description: Where Commonplace stores data — authored markdown under kb/, derived indexes rebuilt from those files, and the review subsystem's local SQLite database
+description: Where Commonplace stores tracked knowledge, local source material, derived indexes, and the review subsystem's SQLite database
 type: kb/types/note.md
 tags: []
 ---
 
 # Storage
 
-Commonplace stores data in three layers: authored markdown files under `kb/`, derived indexes rebuilt from those files, and a local SQLite operational store for review execution and artifact freshness.
+Commonplace stores data in four layers: tracked authored Markdown, ignored
+source materializations, derived indexes, and a local SQLite operational store
+for review execution and artifact freshness.
 
 ## Authored markdown
 
@@ -16,13 +18,23 @@ All authored content lives as markdown with YAML frontmatter under `kb/`. Normal
 |---|---|
 | `kb/notes/` | Transferable claims and theory |
 | `kb/reference/` | Shipped-system reference docs and ADRs |
-| `kb/sources/` | Ingested external sources |
+| `kb/sources/` | Tracked source ingests and source reviews |
 | `kb/tasks/` | Task lifecycle documents |
 | `kb/work/` | Workshop artifacts |
 | `kb/instructions/` | Skills and procedural guidance |
 | `kb/types/`, `kb/*/types/` | Global and collection-scoped type definitions |
 
 Document type is declared by a path-valued `type:` pointer in frontmatter. The validator opens that exact global or collection-local type spec and validates the artifact against its schema; it does not perform a collection-local lookup with global fallback. See [collections and types](./collections-and-types.md).
+
+## Local source materializations
+
+`kb/sources/.snapshots/` holds captured source content and companion files. A
+nested `.gitignore` keeps the whole directory local. The tracked ingest is the
+durable authority for the external URL, capture metadata, genre, and lowercase
+SHA-256 of the exact primary Markdown snapshot bytes. The checksum detects
+whether another machine reconstructed the same observation; a differing
+recapture does not silently update it. Local filenames and duplicated snapshot
+frontmatter are not identity.
 
 ## Version control is expected, not a correctness dependency
 
@@ -42,7 +54,10 @@ Each surface below is derived from the authored markdown; none of it is committe
 
 Agents enumerate the same information on demand with the scoped `rg` recipes in [navigation.md](./navigation.md).
 
-The `redirect_maps` block in `properdocs.yml` preserves external URLs across published note renames. Source ingest analyses render on the site; their raw snapshots stay in Git for agent use but are excluded from the site because they duplicate externally hosted material.
+The `redirect_maps` block in `properdocs.yml` preserves external URLs across
+published note renames. Source ingest analyses render on the site. Raw
+snapshots are neither tracked nor published because they duplicate externally
+hosted material.
 
 ## Generated reports
 
@@ -65,7 +80,8 @@ The operational store (`kb/reports/commonplace-store.sqlite`; override `COMMONPL
 
 Prompt, job-output, manifest, and per-pair result paths remain derived from review job state. Review freshness baselines are `review-pair` targets over `note` and `criterion` `file-text` inputs; `current_review_freshness_baselines` is the review-shaped adapter view. `commonplace-freshness-status` reports all registered targets; `commonplace-review-target-selector` keeps applicable-pair discovery including `missing-baseline`. Malformed baselines raise store integrity errors. Successful supersede prunes obsolete review rows, unreferenced snapshots, and whole obsolete job artifact directories inline.
 
-Notes, criteria, instructions, and source material remain file-backed. See [freshness architecture](./freshness-architecture.md), [review architecture](./review-architecture.md), [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md), [ADR-032](./adr/032-review-freshness-uses-db-snapshots-not-git.md), and [ADR-052](./adr/052-general-freshness-store-review-first-migration.md).
+Notes, criteria, instructions, tracked source records, and local source
+materializations remain file-backed. See [freshness architecture](./freshness-architecture.md), [review architecture](./review-architecture.md), [ADR-010](./adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md), [ADR-032](./adr/032-review-freshness-uses-db-snapshots-not-git.md), and [ADR-052](./adr/052-general-freshness-store-review-first-migration.md).
 
 ## See also
 

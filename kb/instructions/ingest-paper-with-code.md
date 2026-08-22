@@ -33,7 +33,8 @@ paper's experiments can be reproduced.
 5. Set `paper_url` to
    `https://arxiv.org/abs/{arxiv_id}{version}` and invoke
    `cp-skill-snapshot-web` on it. Parse either `Snapshot saved:` or
-   `Already snapshotted:` to obtain `source_snapshot`.
+   `Already snapshotted:` to obtain the local primary snapshot. Retain its
+   capture metadata and exact-file SHA-256 for the ingest.
 
 Use `https://arxiv.org/html/{arxiv_id}{version}` as a reading and navigation
 surface when it contains the full paper. The PDF-derived snapshot remains the
@@ -104,16 +105,20 @@ if anything, was executed.
 
 Continue at `cp-skill-ingest` Step 2 with:
 
-- `source_snapshot` set to the version-pinned paper snapshot;
-- `code_revisions` containing each pinned commit URL;
+- the version-pinned `paper_url` as the primary `source` and the local paper
+  snapshot as reading input;
+- the snapshot's `captured`, `capture`, flat adapter metadata, and exact-file
+  `snapshot_sha256`;
+- one `secondary_sources` item per pinned commit URL, each with
+  `role: implementation` and `source: {commit URL}`;
 - the claim-to-code classifications and pinned file citations as drafting
   context;
 - the paper version, checkout paths, reviewed commits, and execution status as
   final-report context.
 
-During the normal draft step, include `code_revisions` in frontmatter and add a
-`## Code Grounding` section after `## Summary`. Link pinned revisions and source
-files. State the claim classifications and execution status. Carry findings
+During the normal draft step, include `secondary_sources` in frontmatter and
+add a `## Code Grounding` section after `## Summary`. Link pinned revisions and
+source files. State the claim classifications and execution status. Carry findings
 into `Connections Found`, `Extractable Value`, and `Limitations (our opinion)`
 where they change the judgment.
 

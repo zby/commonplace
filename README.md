@@ -81,8 +81,8 @@ A further family of commands drives the review system — selecting targets, que
 | `cp-skill-validate` | Validate artifacts, collection landings, and site redirects |
 | `cp-skill-connect` | Discover connections and write a `connect-report` |
 | `cp-skill-convert` | Convert raw text captures into structured notes |
-| `cp-skill-ingest` | Ingest an external source: snapshot → connect → classify → analyse |
-| `cp-skill-snapshot-web` | Capture a URL into `kb/sources/` |
+| `cp-skill-ingest` | Ingest an external source: local snapshot → connect → classify → tracked analysis |
+| `cp-skill-snapshot-web` | Capture a URL into ignored `kb/sources/.snapshots/` |
 | `cp-skill-health-check` | Diagnose a broken Commonplace install |
 | `cp-skill-revise-autoreason` | Revise a note with AutoReason-style incumbent/revision/synthesis judging |
 
@@ -94,7 +94,7 @@ Two ways to use Commonplace, by what you want from it: **install the system** to
 
 ### Installing into a project (full install)
 
-Commonplace installs as a user-level uv tool, then scaffolds its KB content into any project. Your agents get the same type system, conventions, and skills, and accumulate knowledge about your domain rather than this one. The package ships the methodology — the research notes, reference docs, instructions, types, skills, and `commonplace-*` commands — but not the external-system reviews (`kb/agent-memory-systems/`, `kb/agentic-systems/`) or the source snapshots in `kb/sources/`: those are research material specific to this repo, left out to keep the package small. The external-system reviews and source ingest analyses remain available on the [rendered site](https://zby.github.io/commonplace/). Raw source captures remain in Git but are deliberately not rendered as pages because they duplicate externally hosted material. See [**INSTALL.md**](https://github.com/zby/commonplace/blob/main/INSTALL.md) for the setup flow.
+Commonplace installs as a user-level uv tool, then scaffolds its KB content into any project. Your agents get the same type system, conventions, and skills, and accumulate knowledge about your domain rather than this one. The package ships the methodology — the research notes, reference docs, instructions, types, skills, and `commonplace-*` commands — but not the external-system reviews (`kb/agent-memory-systems/`, `kb/agentic-systems/`) or this repo's source corpus. The external-system reviews and source ingest analyses remain available on the [rendered site](https://zby.github.io/commonplace/). Raw source captures are local, ignored reading copies under `kb/sources/.snapshots/`; tracked ingests retain their external URL, capture provenance, and exact snapshot checksum without redistributing the captured source. See [**INSTALL.md**](https://github.com/zby/commonplace/blob/main/INSTALL.md) for the setup flow.
 
 ### Vendored inside your project (reader mode)
 

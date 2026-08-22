@@ -19,6 +19,7 @@ index_generated.py Build generated tag sections and shared collection tag indexe
 type_resolver.py  Resolve note types from scoped JSON Schema definitions
 validation.py     Deterministic artifact and repository validation rules (commonplace-validate lib)
 relocation.py     Move/rename a KB note or directory: rewrite backlinks and ProperDocs config
+snapshot.py       Hash, locate, and project metadata from local source snapshots
 ```
 
 Dependencies:
@@ -27,6 +28,41 @@ Dependencies:
 - `type_resolver` → `frontmatter`, `project_paths`
 - `validation` → `index_generated`, `note_parser`, `type_resolver`, `naming`
 - `relocation` → `naming`, `project_paths`
+- `snapshot` → `frontmatter`
+
+---
+
+## snapshot
+
+Support exact-file source anchors while keeping captured source bodies local.
+
+### Public API
+
+**`SNAPSHOT_DIR = Path("kb/sources/.snapshots")`**
+The default ignored materialization directory used by capture commands.
+
+**`snapshot_sha256(path: Path) -> str`**
+Hash the exact file bytes, including line endings and final-newline state.
+
+**`find_snapshot_by_sha256(snapshot_dir: Path, checksum: str) -> Path | None`**
+Return the single exact local Markdown match. Raise `DuplicateSnapshotError`
+instead of choosing when several files have the expected checksum.
+
+**`ingest_metadata_from_snapshot(path: Path) -> dict[str, object]`**
+Project capture-owned frontmatter into a new ingest. Preserve flat adapter
+fields; omit snapshot `description`, `genre`, `tags`, and `type`; reject
+collisions with ingest-owned fields. Ingestion sets durable genre from its
+closer reading rather than copying the capture-time surface judgment.
+
+**`resolve_ingest_snapshot(ingest_path: Path, snapshot_dir: Path, *, recapture=None) -> SnapshotResolution`**
+Resolve by the ingest's durable checksum first. An optional URL adapter may
+reconstruct absent material. Results distinguish `exact`, `mismatch`, and
+`unavailable`; the function never edits the ingest checksum. Duplicate exact
+copies raise `DuplicateSnapshotError`.
+
+**`dedup_existing_snapshot(out_dir: Path, source_url: str) -> Path | None`**
+Find a local capture with the same canonical frontmatter URL when snapshotting
+a new source before an ingest exists.
 
 ---
 

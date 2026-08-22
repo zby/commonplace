@@ -36,7 +36,7 @@ Substitution is a flat string replace in `_write_template`. Templates that don't
 - `kb/notes/`, `kb/notes/types/` — user's notes collection
 - `kb/reference/`, `kb/reference/types/` — user's reference collection
 - `kb/instructions/` — user's instructions collection
-- `kb/sources/`, `kb/sources/types/` — user's source captures
+- `kb/sources/`, `kb/sources/types/` — user's tracked source records and local-capture type contracts
 - `kb/tasks/backlog/`, `kb/tasks/active/`, `kb/tasks/completed/` — user's task lifecycle
 - `kb/work/`, `kb/reports/`, `kb/reports/connect/`, `kb/reports/types/` — user's workshops and reports
 
@@ -50,6 +50,7 @@ Substitution is a flat string replace in `_write_template`. Templates that don't
 
 **Scaffold files** — individual files copied into the user's collections:
 
+- `kb/sources/.gitignore` — ignores the local `.snapshots/` materialization directory
 - `kb/notes/COLLECTION.md` — minimal theoretical/descriptive/prescriptive template
 - `kb/notes/README.md` — curated empty-state landing
 - `kb/reference/COLLECTION.md` — minimal template

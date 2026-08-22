@@ -81,6 +81,7 @@ include = [
     "/kb/reference",
     "/kb/reports/types",
     "/kb/sources/types",
+    "/kb/sources/.gitignore",
     "/kb/types",
     "/src",
     "/tests",
@@ -105,6 +106,7 @@ include = [
 "kb/reference" = "commonplace/_data/kb/reference"
 "kb/reports/types" = "commonplace/_data/kb/reports/types"
 "kb/sources/types" = "commonplace/_data/kb/sources/types"
+"kb/sources/.gitignore" = "commonplace/_data/kb/sources/.gitignore"
 "kb/types" = "commonplace/_data/kb/types"
 
 [tool.pytest.ini_options]

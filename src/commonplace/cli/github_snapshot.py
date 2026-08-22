@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Snapshot GitHub issue/PR content into kb/sources/.
+"""Snapshot GitHub issue/PR content into kb/sources/.snapshots/.
 
 Usage:
     commonplace-github-snapshot "https://github.com/owner/repo/issues/123"
@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import re
 import subprocess
 import sys
@@ -19,9 +18,13 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 from commonplace.lib.naming import slugify_text
-from commonplace.lib.snapshot import dedup_existing_snapshot
+from commonplace.lib.snapshot import (
+    SNAPSHOT_DIR,
+    dedup_existing_snapshot,
+    snapshot_sha256,
+)
 
-DEFAULT_SNAPSHOT_DIR = "kb/sources"
+DEFAULT_SNAPSHOT_DIR = SNAPSHOT_DIR.as_posix()
 
 
 def _is_github_issue_api_path(path: str) -> bool:
@@ -120,7 +123,10 @@ def snapshot_github_url(url: str, out_dir: str) -> str:
 
     existing = dedup_existing_snapshot(dest, source_url)
     if existing:
-        return f"Already snapshotted: {existing}"
+        return (
+            f"Already snapshotted: {existing}\n"
+            f"SHA-256: {snapshot_sha256(existing)}"
+        )
 
     raw = _gh_api(api_url)
     data = json.loads(raw)
@@ -142,7 +148,7 @@ def snapshot_github_url(url: str, out_dir: str) -> str:
         f"---\n"
         f"source: {source_url}\n"
         f"api_url: {api_url}\n"
-        f"captured: {timestamp}\n"
+        f'captured: "{timestamp}"\n'
         f"capture: gh-api\n"
         f"type: kb/sources/types/snapshot.md\n"
         f"tags: [{family}]\n"
@@ -152,12 +158,17 @@ def snapshot_github_url(url: str, out_dir: str) -> str:
     md_path.write_text(md, encoding="utf-8")
 
     preview = md_body.replace("\n", " ").strip()[:200]
-    return f"Snapshot saved: {md_path}\nSource: {source_path}\n\nPreview: {preview}..."
+    return (
+        f"Snapshot saved: {md_path}\n"
+        f"Source: {source_path}\n"
+        f"SHA-256: {snapshot_sha256(md_path)}\n\n"
+        f"Preview: {preview}..."
+    )
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Snapshot a GitHub issue/PR URL into kb/sources/.",
+        description="Snapshot a GitHub issue/PR URL into kb/sources/.snapshots/.",
     )
     parser.add_argument(
         "url",
@@ -166,18 +177,13 @@ def parse_args() -> argparse.Namespace:
             "Example: https://github.com/owner/repo/issues/123"
         ),
     )
-    parser.add_argument(
-        "--out-dir",
-        default=os.getenv("TRIAGE_SNAPSHOT_DIR", DEFAULT_SNAPSHOT_DIR),
-        help=f"Snapshot root directory (default: {DEFAULT_SNAPSHOT_DIR})",
-    )
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
     try:
-        result = snapshot_github_url(args.url, out_dir=args.out_dir)
+        result = snapshot_github_url(args.url, out_dir=DEFAULT_SNAPSHOT_DIR)
     except Exception as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 1

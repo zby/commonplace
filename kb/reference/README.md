@@ -41,7 +41,7 @@ Most operations are things you ask the agent to do. Each entry below shows what 
 
 ### Ingest a source
 
-*What it's for.* Pull an external source (URL, PDF, GitHub issue, tweet) into the KB as a snapshot plus an analysis.
+*What it's for.* Analyse one URL-backed external source while keeping its reading copy local.
 
 *How to ask.*
 
@@ -49,9 +49,9 @@ Most operations are things you ask the agent to do. Each entry below shows what 
 - "Read this PDF and ingest the key claims."
 - "Ingest the README at github.com/org/project as a related system."
 
-*What happens.* The agent snapshots the source into `kb/sources/`, reads the snapshot, classifies it, finds related notes, and writes an analysis report. In this repo, agent-memory-system reviews use the local `write-agent-memory-system-review` skill so checkout setup, delegated drafting, semantic QA, and validation stay together.
+*What happens.* The agent snapshots the source into ignored `kb/sources/.snapshots/`, reads it, finds related notes, and writes a tracked analysis whose frontmatter carries the durable URL, capture provenance, genre, and exact snapshot checksum. In this repo, agent-memory-system reviews use the local `write-agent-memory-system-review` skill so checkout setup, delegated drafting, semantic QA, and validation stay together.
 
-*What you get.* A snapshot under `kb/sources/` and an ingest report named `<slug>.ingest.md` with summary, claims, and links into `kb/notes/`.
+*What you get.* A local snapshot under `kb/sources/.snapshots/` and a tracked ingest report at `kb/sources/<slug>.ingest.md` with summary, claims, and links into `kb/notes/`.
 
 *Limitations.* Paywalled or JavaScript-heavy pages can snapshot incompletely. Classification into "related system" versus "source" is sometimes a judgment call.
 
@@ -161,8 +161,8 @@ Most operations go through the agent, but a few CLI commands are reasonable to r
 | `commonplace-validate <target>` | Validate an artifact or collection, global type specs, collection landings, or the published redirect map |
 | `commonplace-guard-full-pass-report <report>` | Refuse a full-pass transition unless every packet capture still matches its live artifact |
 | `commonplace-relocate-note <note> --to <dest> [--apply]` | Move or rename a note with link rewrites and ProperDocs redirect; dry-run by default |
-| `commonplace-github-snapshot <url>` | Snapshot a GitHub issue, PR, or repo README into `kb/sources/` |
-| `commonplace-x-snapshot <url>` | Snapshot a Twitter/X post into `kb/sources/` |
+| `commonplace-github-snapshot <url>` | Snapshot a GitHub issue or PR into local `kb/sources/.snapshots/` |
+| `commonplace-x-snapshot <url>` | Snapshot a Twitter/X post into local `kb/sources/.snapshots/` |
 
 `commonplace-relocate-note` dry-runs by default. Pass `--apply` to write changes.
 

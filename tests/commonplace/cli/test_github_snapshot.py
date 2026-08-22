@@ -12,6 +12,7 @@ if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 from commonplace.cli import github_snapshot  # noqa: E402
+from commonplace.lib.snapshot import snapshot_sha256  # noqa: E402
 
 
 def frontmatter(path: Path) -> dict:
@@ -34,7 +35,7 @@ def test_github_snapshot_stamps_snapshot_issue_family(
     }
     monkeypatch.setattr(github_snapshot, "_gh_api", lambda _url: json.dumps(payload))
 
-    github_snapshot.snapshot_github_url(
+    result = github_snapshot.snapshot_github_url(
         "https://github.com/example/project/issues/123",
         out_dir=str(tmp_path),
     )
@@ -45,6 +46,8 @@ def test_github_snapshot_stamps_snapshot_issue_family(
     assert fm["type"] == "kb/sources/types/snapshot.md"
     assert fm["tags"] == ["github-issue"]
     assert fm["api_url"] == "https://api.github.com/repos/example/project/issues/123"
+    assert f"SHA-256: {snapshot_sha256(md_path)}" in result
+    assert github_snapshot.DEFAULT_SNAPSHOT_DIR == "kb/sources/.snapshots"
 
 
 def test_github_snapshot_stamps_snapshot_pr_family(
@@ -72,3 +75,28 @@ def test_github_snapshot_stamps_snapshot_pr_family(
     assert fm["type"] == "kb/sources/types/snapshot.md"
     assert fm["tags"] == ["github-pr"]
     assert fm["api_url"] == "https://api.github.com/repos/example/project/pulls/456"
+
+
+def test_github_snapshot_reports_checksum_for_existing_capture(
+    tmp_path: Path, monkeypatch
+) -> None:
+    existing = tmp_path / "existing.md"
+    existing.write_text(
+        "---\nsource: https://github.com/example/project/issues/123\n---\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(
+        github_snapshot,
+        "_gh_api",
+        lambda _url: (_ for _ in ()).throw(AssertionError("must not fetch")),
+    )
+
+    result = github_snapshot.snapshot_github_url(
+        "https://github.com/example/project/issues/123",
+        out_dir=str(tmp_path),
+    )
+
+    assert result == (
+        f"Already snapshotted: {existing}\n"
+        f"SHA-256: {snapshot_sha256(existing)}"
+    )

@@ -82,7 +82,7 @@ These examples illustrate the model; they are not an exhaustive catalogue.
 | [`definition`](../types/definition.md) | global | Operational vocabulary definitions. |
 | [`adr`](./types/adr.md) | `kb/reference/` | Architecture decisions about the shipped system. |
 | [`structured-claim`](../notes/types/structured-claim.md) | `kb/notes/` | Developed arguments whose shape fits its Evidence and Reasoning contract. |
-| [`snapshot`](../sources/types/snapshot.md) | `kb/sources/` | Faithful captures of external source material. |
+| [`snapshot`](../sources/types/snapshot.md) | `kb/sources/.snapshots/` | Local faithful captures of external source material. |
 
 Each linked type spec, not this table, defines the type.
 

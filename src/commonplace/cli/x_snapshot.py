@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Snapshot X/Twitter posts, threads, and article posts to kb/sources/.
+"""Snapshot X/Twitter posts, threads, and article posts to kb/sources/.snapshots/.
 
 Usage:
     commonplace-x-snapshot "https://x.com/<user>/status/<id>"
@@ -19,9 +19,13 @@ from urllib.parse import urlparse
 import xdk
 
 from commonplace.lib.naming import slugify_text
-from commonplace.lib.snapshot import dedup_existing_snapshot
+from commonplace.lib.snapshot import (
+    SNAPSHOT_DIR,
+    dedup_existing_snapshot,
+    snapshot_sha256,
+)
 
-DEFAULT_SNAPSHOT_DIR = "kb/sources"
+DEFAULT_SNAPSHOT_DIR = SNAPSHOT_DIR.as_posix()
 DEFAULT_MAX_POSTS = 200
 
 POST_FIELDS = [
@@ -249,7 +253,7 @@ def _render_markdown(
     lines: list[str] = [
         "---",
         f"source: {source_url}",
-        f"captured: {timestamp}",
+        f'captured: "{timestamp}"',
         "capture: xdk",
         "type: kb/sources/types/snapshot.md",
         f"tags: [{kind}]",
@@ -346,7 +350,10 @@ def snapshot_x_url(url: str, out_dir: str, max_posts: int) -> str:
 
     existing = dedup_existing_snapshot(dest, source_url)
     if existing:
-        return f"Already snapshotted: {existing}"
+        return (
+            f"Already snapshotted: {existing}\n"
+            f"SHA-256: {snapshot_sha256(existing)}"
+        )
 
     client = xdk.Client(bearer_token=token)
 
@@ -416,21 +423,24 @@ def snapshot_x_url(url: str, out_dir: str, max_posts: int) -> str:
     md_path.write_text(md, encoding="utf-8")
 
     preview = _post_text(target_post).replace("\n", " ").strip()[:200]
-    return f"Snapshot saved: {md_path}\nSource: {json_path}\n\nPreview: {preview}..."
+    return (
+        f"Snapshot saved: {md_path}\n"
+        f"Source: {json_path}\n"
+        f"SHA-256: {snapshot_sha256(md_path)}\n\n"
+        f"Preview: {preview}..."
+    )
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Snapshot X/Twitter post/thread/article text into kb/sources/.",
+        description=(
+            "Snapshot X/Twitter post/thread/article text into "
+            "kb/sources/.snapshots/."
+        ),
     )
     parser.add_argument(
         "url",
         help="X/Twitter URL from the web UI, e.g. https://x.com/<user>/status/<id>",
-    )
-    parser.add_argument(
-        "--out-dir",
-        default=os.getenv("TRIAGE_SNAPSHOT_DIR", DEFAULT_SNAPSHOT_DIR),
-        help=f"Snapshot root directory (default: {DEFAULT_SNAPSHOT_DIR})",
     )
     parser.add_argument(
         "--max-posts",
@@ -448,7 +458,7 @@ def main() -> int:
     args = parse_args()
     try:
         result = snapshot_x_url(
-            args.url, out_dir=args.out_dir, max_posts=args.max_posts
+            args.url, out_dir=DEFAULT_SNAPSHOT_DIR, max_posts=args.max_posts
         )
     except Exception as exc:
         print(f"Error: {exc}", file=sys.stderr)

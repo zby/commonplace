@@ -32,7 +32,9 @@ project/
       reference/                   ← user's own reference; starts with COLLECTION.md and README.md
         types/
       instructions/                ← user's own instructions; starts with COLLECTION.md and README.md
-      sources/                     ← user's captured sources
+      sources/                     ← user's tracked source records
+        .gitignore                 ← keeps .snapshots/ local
+        .snapshots/                ← local source reading copies
         types/
       tasks/                       ← user's task lifecycle
         backlog/
@@ -64,7 +66,7 @@ The Python package carries the scaffold inputs as packaged data in built wheels.
 | `kb/types/` | Shared global type contracts — library and user both use and extend |
 | `kb/notes/`, `kb/reference/`, `kb/instructions/` | User's own collections, each with a starter `COLLECTION.md` contract and `README.md` landing |
 | `kb/*/types/` | Collection-local structural contracts for specialised documents |
-| `kb/sources/` | User's captured external sources and source reviews |
+| `kb/sources/` | Tracked ingests/source reviews plus ignored local captures under `.snapshots/` |
 | `kb/tasks/` | User's task lifecycle artifacts |
 | `kb/work/` | User's temporal workshop material |
 | `kb/reports/` | User's generated operational artifacts |
@@ -75,7 +77,7 @@ The Python package carries the scaffold inputs as packaged data in built wheels.
 `commonplace-init` is the install step that materialises the KB surface inside a project. It does four things:
 
 1. Creates the directory shell under `kb/` — the user's collections, the user-space directories, and the `kb/commonplace/` hierarchy.
-2. Copies shipped library trees into `kb/commonplace/{notes,reference,instructions}/`. Shared `kb/types/` and user-space type scaffolds (`kb/sources/types/`, `kb/reports/types/`) land at their conventional top-level locations.
+2. Copies shipped library trees into `kb/commonplace/{notes,reference,instructions}/`. Shared `kb/types/` and user-space type scaffolds (`kb/sources/types/`, `kb/reports/types/`) land at their conventional top-level locations. A nested `kb/sources/.gitignore` keeps `.snapshots/` local without changing a project's root ignore file.
 3. Scaffolds a minimal `COLLECTION.md` contract and curated `README.md` landing into each empty user collection, giving write skills a conventions stub and readers a stable entry point.
 4. Promotes selected skills into known `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/` runtime surfaces as real copied directories of `kb/commonplace/instructions/<name>/`, and resolves the project-specific `AGENTS.md.template`. The canonical skill directories stay installed under `kb/commonplace/instructions/`; agent runtimes with a different discovery surface may need to copy, register, or import those directories themselves.
 

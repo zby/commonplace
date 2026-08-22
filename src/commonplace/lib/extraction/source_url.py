@@ -7,7 +7,6 @@ from pathlib import Path
 
 from commonplace.lib import frontmatter
 
-
 _URL_RE = re.compile(r"https?://\S+")
 _SOURCE_LINE_RE = re.compile(r"^\*{0,2}(?:Source|source|From|from):\*{0,2}\s*(.+)$")
 _BODY_SCAN_LIMIT = 40
@@ -17,34 +16,23 @@ def _strip_url_punctuation(url: str) -> str:
     return url.rstrip(".,);")
 
 
-def extract_url(
-    source_path: Path,
-    *,
-    repo_root: Path | None = None,
-    _seen: set[Path] | None = None,
-) -> str | None:
+def extract_url(source_path: Path) -> str | None:
     """Find the external URL for a source file.
 
     Resolution order:
 
-    1. Frontmatter ``source: <URL>`` (snapshot files)
-    2. Follow frontmatter ``source_snapshot: <path>`` to the snapshot, recurse
-    3. Body lines beginning with ``Source:`` or ``From:`` in the first 40 lines
+    1. Frontmatter ``source: <URL>`` (ingests and local snapshots)
+    2. Body lines beginning with ``Source:`` or ``From:`` in the first 40 lines
        (markdown link or bare URL)
-    4. First ``http(s)://`` URL in the first 40 lines
+    3. First ``http(s)://`` URL in the first 40 lines
 
-    Returns ``None`` if no URL can be derived. Cycles in
-    ``source_snapshot:`` chains are guarded.
-
-    ``repo_root`` is used to resolve ``kb/...``-absolute snapshot pointers;
-    if ``None``, only relative pointers are followed.
+    Returns ``None`` if no URL can be derived. The retired
+    ``source_snapshot`` pointer is not followed; tracked ingests carry their
+    canonical URL directly.
     """
-    if _seen is None:
-        _seen = set()
     source_path = source_path.resolve()
-    if not source_path.is_file() or source_path in _seen:
+    if not source_path.is_file():
         return None
-    _seen.add(source_path)
 
     text = source_path.read_text(encoding="utf-8", errors="replace")
     parsed = frontmatter.parse(text)
@@ -55,19 +43,7 @@ def extract_url(
     if isinstance(direct, str) and direct.strip().startswith("http"):
         return _strip_url_punctuation(direct.strip())
 
-    # 2. Follow source_snapshot pointer
-    snap = fm.get("source_snapshot")
-    if isinstance(snap, str):
-        snap = snap.strip()
-        if snap.startswith("kb/") and repo_root is not None:
-            snap_path = repo_root / snap
-        else:
-            snap_path = source_path.parent / snap
-        result = extract_url(snap_path, repo_root=repo_root, _seen=_seen)
-        if result:
-            return result
-
-    # 3 & 4. Body scan
+    # 2 & 3. Body scan
     body = frontmatter.strip(text)
     body_lines = body.splitlines()[:_BODY_SCAN_LIMIT]
 

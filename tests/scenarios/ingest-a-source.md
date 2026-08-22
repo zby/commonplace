@@ -6,7 +6,7 @@ frequency: occasional
 
 # Ingest a source
 
-The user provides a URL or document to capture and analyse. `cp-skill-ingest` (context: fork) drives a pipeline that itself invokes two further forked skills — `cp-skill-snapshot-web` to capture, `cp-skill-connect` to link — before writing the `.ingest.md` analysis. Four clean contexts, each paying overhead from scratch.
+The user provides one URL-backed document to capture and analyse. `cp-skill-ingest` (context: fork) drives a pipeline that itself invokes two further forked skills — `cp-skill-snapshot-web` to create a local reading copy, `cp-skill-connect` to link — before writing the tracked `.ingest.md` analysis. Four clean contexts, each paying overhead from scratch.
 
 ## Forks
 
@@ -22,12 +22,13 @@ Notes: AGENTS.md is always loaded; the orchestrator routes "source analysis" to 
 | load | kind | source | hops |
 |---|---|---|---|
 | ingest orchestration procedure | overhead | `kb/instructions/cp-skill-ingest/SKILL.md` | 0 |
-| source-review type-spec | overhead | `kb/sources/types/source-review.md` | 1 |
+| ingest-report type-spec | overhead | `kb/sources/types/ingest-report.md` | 1 |
 | sources collection conventions | overhead | `kb/sources/COLLECTION.md` | 1 |
 | the captured snapshot | content | variable | 1 |
 | related notes for extraction | content | variable | 2-3 |
 
-Notes: the driving fork — injects its skill body (0 hops), invokes Forks 3 and 4, then writes the `.ingest.md`. The source-review type-spec is tiny (~1 KB).
+Notes: the driving fork — injects its skill body (0 hops), invokes Forks 3 and
+4, then writes the `.ingest.md` under the ingest-report contract.
 
 ### Fork 3 — cp-skill-snapshot-web (context: fork)
 | load | kind | source | hops |
@@ -35,7 +36,7 @@ Notes: the driving fork — injects its skill body (0 hops), invokes Forks 3 and
 | capture procedure (URL routing) | overhead | `kb/instructions/cp-skill-snapshot-web/SKILL.md` | 0 |
 | the fetched source | content | variable | 1 |
 
-Notes: invoked by ingest for URL capture; writes the snapshot under `kb/sources/`. The fetched page is external content.
+Notes: invoked by ingest for URL capture; writes the snapshot under ignored `kb/sources/.snapshots/`. The fetched page is external content and is not a tracked artifact.
 
 ### Fork 4 — cp-skill-connect (context: fork)
 | load | kind | source | hops |

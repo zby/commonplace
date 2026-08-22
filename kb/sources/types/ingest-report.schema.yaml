@@ -7,16 +7,49 @@ allOf:
         type: object
         required:
           - description
-          - source_snapshot
+          - source
+          - captured
+          - capture
+          - genre
+          - snapshot_sha256
           - ingested
           - type
           - domains
         properties:
           type:
             const: kb/sources/types/ingest-report.md
-          source_snapshot:
+          source:
+            type: string
+            pattern: "^https?://"
+          captured:
+            anyOf:
+              - type: string
+                format: date
+                pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+              - type: string
+                format: date-time
+                pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt].+$"
+          capture:
             type: string
             minLength: 1
+          genre:
+            severity: warn
+            enum:
+              - scientific-paper
+              - practitioner-report
+              - conceptual-essay
+              - design-proposal
+              - tool-announcement
+              - github-issue
+              - conversation-thread
+              - code-repository
+              - court-opinion
+              - news-article
+              - official-statement
+          snapshot_sha256:
+            type: string
+            pattern: "^[0-9a-f]{64}$"
+          source_snapshot: false
           ingested:
             type: string
             format: date
@@ -28,13 +61,23 @@ allOf:
             items:
               type: string
               minLength: 1
-          code_revisions:
+          code_revisions: false
+          secondary_sources:
             type: array
             minItems: 1
             uniqueItems: true
             items:
-              type: string
-              pattern: "^https://github\\.com/[^/]+/[^/]+/commit/[0-9a-f]{40}$"
+              type: object
+              required:
+                - role
+                - source
+              properties:
+                role:
+                  const: implementation
+                source:
+                  type: string
+                  pattern: "^https://github\\.com/[^/]+/[^/]+/commit/[0-9a-f]{40}$"
+              additionalProperties: false
         additionalProperties: true
       headings:
         type: array
@@ -55,7 +98,7 @@ allOf:
       properties:
         frontmatter:
           required:
-            - code_revisions
+            - secondary_sources
     then:
       properties:
         headings:

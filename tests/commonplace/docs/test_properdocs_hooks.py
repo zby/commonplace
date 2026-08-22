@@ -3,9 +3,12 @@ from __future__ import annotations
 from pathlib import Path
 from types import SimpleNamespace
 
+import yaml
 from properdocs.structure.files import File, Files, InclusionLevel
 
 from commonplace.docs import properdocs_hooks
+
+REPO_ROOT = Path(__file__).resolve().parents[3]
 
 
 def write(path: Path, content: str) -> Path:
@@ -273,6 +276,17 @@ def test_on_files_publishes_source_index_with_only_published_pages(tmp_path: Pat
     assert generated.inclusion is InclusionLevel.INCLUDED
     assert "Published ingest" in generated.content_string
     assert "Excluded snapshot" not in generated.content_string
+
+
+def test_properdocs_excludes_local_snapshot_cache_after_ingest_reinclusion() -> None:
+    config = yaml.safe_load(
+        (REPO_ROOT / "properdocs.yml").read_text(encoding="utf-8")
+    )
+    patterns = config["exclude_docs"].splitlines()
+
+    ingest_reinclude = patterns.index("!sources/**/*.ingest.md")
+    cache_exclude = patterns.index("sources/.snapshots/**")
+    assert cache_exclude > ingest_reinclude
 
 
 def test_on_page_markdown_keeps_unindexed_tags_as_text(tmp_path: Path) -> None:

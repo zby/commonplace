@@ -1,7 +1,7 @@
 ---
 type: kb/types/type-spec.md
 name: ingest-report
-description: Analysis artifact recording how a source snapshot fits the KB
+description: Durable source record and analysis of how one external source fits the KB
 schema: kb/sources/types/ingest-report.schema.yaml
 ---
 
@@ -9,29 +9,51 @@ schema: kb/sources/types/ingest-report.schema.yaml
 
 ## Authoring Instructions
 
-Use `ingest-report` for source ingestion analysis. An ingest report records how one source snapshot fits the KB; it is an analysis artifact, not the source itself.
+Use `ingest-report` for source ingestion analysis. An ingest report is the
+tracked, durable record of one URL-backed primary source and the KB analysis
+derived from a local reading copy. It is not a copy of the source.
+
+The primary reading copy lives under ignored `kb/sources/.snapshots/`. Its
+path is local state and never appears in tracked frontmatter or links.
 
 Assess fit relative to the installed KB's goals, local collection contracts, and current connection context. Interpret "our theory", "our stack", "our codebase", and "our practices" through those local goals and contracts.
 
 ## Metadata
 
-- Set `source_snapshot` to the source snapshot filename or repo-root path.
+- Set `source` to the canonical external URL of the primary source.
+- Set `captured` to the date or datetime of the observation used for the
+  analysis, and `capture` to its capture mechanism.
+- Set `genre` to the primary source's evidential genre.
+- Set `snapshot_sha256` to the lowercase SHA-256 of the exact bytes of the
+  primary Markdown snapshot. The hash includes frontmatter, line endings, and
+  the presence or absence of a final newline. It excludes companion files.
 - Use `type: kb/sources/types/ingest-report.md` for the artifact type.
 - Use `domains` for two to four topic tags that make the report searchable.
-- For a code-grounded paper ingest, set `code_revisions` to the immutable
-  commit URL for every inspected repository. Do not record machine-local
-  checkout paths as durable source identity.
-- Use file-relative Markdown links in the report body for durable KB artifacts and source snapshots. Do not link to generated connect reports.
+- Copy capture-adapter metadata such as `status_id`, `conversation_id`,
+  `post_count`, and `api_url` under its existing flat field name. Do not copy a
+  snapshot's `type`, `description`, `genre`, or `tags`; set ingest `genre` from
+  the closer reading.
+- For a code-grounded ingest, add one `secondary_sources` item for every
+  inspected implementation repository. Each item has
+  `role: implementation` and a GitHub commit URL containing the full
+  40-character SHA. Do not record machine-local checkout paths.
+- Do not use the removed `source_snapshot` or `code_revisions` fields.
+- Link to durable KB artifacts and external sources in the report body. Never
+  link to the local `.snapshots/` cache or generated connect reports.
 
 ## Genre
 
-The source's genre lives on the snapshot (`genre` in the snapshot's frontmatter — vocabulary and meanings in [snapshot.md](./snapshot.md)); the report does not carry a copy. Read it from the snapshot: it selects the Limitations lens and is restated in the Classification section's prose with a brief justification. If closer reading during ingestion contradicts the capture-time classification, correct the snapshot's `genre` in place before writing the report.
+The ingest's `genre` is the durable source classification. Use the vocabulary
+and meanings in [snapshot.md](./snapshot.md). A local snapshot may contain a
+capture-time genre, but it is not authoritative. Set or correct the ingest
+field after reading the source. The vocabulary is open: an off-list value warns
+rather than fails.
 
 ## Sections
 
-- `Classification` identifies the source genre (from the snapshot), domain tags, and author signal.
+- `Classification` justifies the source genre and identifies the author signal.
 - `Summary` is one paragraph for someone deciding whether to read the full source.
-- `Code Grounding` is required when `code_revisions` is present. Link the
+- `Code Grounding` is required when `secondary_sources` is present. Link the
   reviewed revisions and pinned source files; distinguish mechanisms confirmed
   by inspection, experiment support artifacts that were present but not run,
   and claims that remain paper-only. State what code, if any, was executed.
@@ -53,7 +75,7 @@ The source's genre lives on the snapshot (`genre` in the snapshot's frontmatter 
 
 ## Limitations Standards
 
-`Limitations (our opinion)` is editorial judgment — label it as opinion. Name what is missing, cite a relevant KB note when one exists, and state what the gap means for the source's conclusions. The lens depends on the snapshot's `genre`:
+`Limitations (our opinion)` is editorial judgment — label it as opinion. Name what is missing, cite a relevant KB note when one exists, and state what the gap means for the source's conclusions. The lens depends on the ingest's `genre`:
 
 - **Scientific papers** — what was not tested: missing or naive baselines, limited benchmarks, configurations the literature or this KB already discusses, claims that do not generalize beyond the tested setup.
   Released source can confirm that a mechanism is implemented or expose its
@@ -72,7 +94,11 @@ The source's genre lives on the snapshot (`genre` in the snapshot's frontmatter 
 ```markdown
 ---
 description: "{one-line retrieval filter}"
-source_snapshot: "{input filename}"
+source: {canonical external URL}
+captured: "{date or datetime from snapshot frontmatter}"
+capture: {capture mechanism from snapshot frontmatter}
+genre: {source genre}
+snapshot_sha256: {lowercase SHA-256 of the exact snapshot file bytes}
 ingested: "{YYYY-MM-DD}"
 type: kb/sources/types/ingest-report.md
 domains: [{tag1}, {tag2}, {tag3}]
@@ -80,14 +106,9 @@ domains: [{tag1}, {tag2}, {tag3}]
 
 # Ingest: {source title}
 
-Source: {filename}
-Captured: {date from frontmatter}
-From: {source URL from frontmatter}
-
 ## Classification
 
-Genre: {genre from snapshot frontmatter} -- {brief justification}
-Domains: {tag1}, {tag2}, {tag3}
+{Brief genre justification without repeating the field as a label.}
 Author: {credibility signal}
 
 ## Summary
@@ -114,8 +135,9 @@ Author: {credibility signal}
 For a code-grounded paper ingest, add this frontmatter field:
 
 ```yaml
-code_revisions:
-  - https://github.com/{owner}/{repo}/commit/{40-character-sha}
+secondary_sources:
+  - role: implementation
+    source: https://github.com/{owner}/{repo}/commit/{40-character-sha}
 ```
 
 Add this section after `Summary`:

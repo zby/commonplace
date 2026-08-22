@@ -1,6 +1,6 @@
 ---
 name: cp-skill-snapshot-web
-description: Snapshot a URL into kb/sources/, routing GitHub, X/Twitter, PDF, and ordinary web sources to the appropriate capture path.
+description: Snapshot a URL into the local kb/sources/.snapshots/ cache, routing GitHub, X/Twitter, PDF, and ordinary web sources to the appropriate capture path.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, WebFetch, Bash
@@ -21,11 +21,19 @@ If URL provided, start Step 1 immediately.
 
 ---
 
-## Step 1: Check for Duplicates
+## Step 1: Verify Local Storage and Check for Duplicates
 
-Keep the provided URL as `source_url`. Use Grep to search for `source_url` in existing `.md` files in `kb/sources/`. If found, tell the user and stop:
+Keep the provided URL as `source_url`. Verify that
+`kb/sources/.snapshots/` is ignored by the project. The shipped scaffold does
+this through `kb/sources/.gitignore`. If the directory is not ignored, stop
+before writing and report the missing rule.
 
-> Already snapshotted: kb/sources/{filename}
+Use Grep to search for an exact frontmatter `source: {source_url}` in existing
+Markdown files in `kb/sources/.snapshots/`. If found, compute the SHA-256 of
+the exact file bytes, tell the user, and stop:
+
+> Already snapshotted: kb/sources/.snapshots/{filename}
+> SHA-256: {64-character lowercase checksum}
 
 ## Step 2: Route by URL Type
 
@@ -45,7 +53,9 @@ Run:
 commonplace-github-snapshot "{source_url}"
 ```
 
-Parse the "Snapshot saved:" line from the output to get the file path. Tell the user and stop — the script handles metadata, formatting, and saving.
+Parse either the `Snapshot saved:` or `Already snapshotted:` line from the
+output to get the file path. Tell the user and stop — the script handles
+metadata, formatting, and saving.
 
 ### Step 2b: X/Twitter Post
 
@@ -55,7 +65,9 @@ Run:
 commonplace-x-snapshot "{source_url}"
 ```
 
-Parse the "Snapshot saved:" line from the output to get the file path. Tell the user and stop — the script handles metadata, formatting, and saving.
+Parse either the `Snapshot saved:` or `Already snapshotted:` line from the
+output to get the file path. Tell the user and stop — the script handles
+metadata, formatting, and saving.
 
 ### Step 2c: Resolve and Fetch PDF
 
@@ -111,13 +123,13 @@ For academic papers: prefer the paper title over any page title, and extract aut
 
 ## Step 5: Write the Snapshot
 
-Save to `kb/sources/{slug}.md` with this format:
+Save to `kb/sources/.snapshots/{slug}.md` with this format:
 
 ```markdown
 ---
 source: {source_url}
 description: {description}
-captured: {YYYY-MM-DD}
+captured: "{YYYY-MM-DD}"
 capture: {capture_method}
 genre: {genre}
 type: {snapshot type path from the Types menu, default kb/sources/types/snapshot.md}
@@ -134,7 +146,11 @@ Date: {publication date if known}
 
 For PDFs: convert the read content to clean markdown. Preserve section structure, tables, and lists. Drop page numbers, headers/footers, and layout artifacts.
 
-Also tell the user where it was saved and show a 1-2 line preview.
+Compute SHA-256 after the file is complete. Hash the exact `.md` bytes,
+including frontmatter, line endings, and the presence or absence of a final
+newline. Do not include a PDF, JSON, image, or other capture companion. Tell
+the user where the snapshot was saved, its lowercase checksum, and a one- or
+two-line preview.
 
 ## Critical Constraints
 
@@ -142,7 +158,7 @@ Also tell the user where it was saved and show a 1-2 line preview.
 - Fabricate or hallucinate content not on the page
 - Add analysis or commentary — this is capture, not ingestion
 - Modify the extracted content beyond cleaning HTML/PDF artifacts
-- Save to any directory other than `kb/sources/`
+- Save to any directory other than `kb/sources/.snapshots/`
 - Install software — if a required tool is missing, bail with an error telling the user what to install
 
 **Always:**
@@ -150,4 +166,5 @@ Also tell the user where it was saved and show a 1-2 line preview.
 - Include the source URL in frontmatter
 - Use today's date for `captured`
 - Check for duplicates before fetching
+- Keep the snapshot and every capture companion local and ignored
 - Clean up temporary PDF files after reading

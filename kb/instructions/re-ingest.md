@@ -19,11 +19,23 @@ If target is empty, list `.ingest.md` files and ask which to re-ingest.
 
 1. Resolve the target to a full path under `kb/sources/`. If only a filename was given, prepend `kb/sources/`.
 2. Verify the `.ingest.md` file exists.
-3. Identify the source snapshot: read the `source_snapshot` frontmatter field. Verify the snapshot file exists in `kb/sources/`.
+3. Read `source` and `snapshot_sha256` from ingest frontmatter. Reject the
+   retired `source_snapshot` and `code_revisions` fields if present.
+4. Hash every Markdown file directly under `kb/sources/.snapshots/` and compare
+   exact lowercase SHA-256 values:
+   - exactly one match: use that snapshot;
+   - several matches: stop and report every duplicate path;
+   - no match: invoke `cp-skill-snapshot-web` on `source` and hash its returned
+     Markdown path;
+   - recapture unavailable: stop with the adapter error;
+   - recapture differs: report expected and observed checksums and stop. Do not
+     update the ingest or let the new file stand in for its grounded
+     observation without explicit user authorization to change that
+     observation and reconsider the analysis.
 
 ## Step 1: Re-ingest
 
-Run `/cp-skill-ingest <snapshot-file-path>` on the source snapshot.
+Run `/cp-skill-ingest <exact-snapshot-file-path>` on the resolved snapshot.
 
 This will:
 - Set up a workshop
@@ -89,5 +101,5 @@ Issues fixed: {broken links, missing description, stale references — or "none"
 ## Do NOT
 
 - Do not delete the old `.ingest.md` manually — `/cp-skill-ingest` overwrites it.
-- Do not modify the source snapshot.
+- Do not modify the source snapshot or silently replace its durable checksum.
 - Do not batch multiple re-ingests in one run. Each re-ingest may change the KB state that the next one depends on.
