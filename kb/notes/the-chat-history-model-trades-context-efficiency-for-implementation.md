@@ -29,7 +29,7 @@ The downstream claim that [session history should not be the default next contex
 Relevant Notes:
 
 - [session history should not be the default next context](./session-history-should-not-be-the-default-next-context.md) — sharpens: the mechanism-level claim that stored trace and next-context loading are separate decisions
-- [bounded-context orchestration model](./bounded-context-orchestration-model.md) — contrasts: the clean model assembles each bounded call from selected state rather than inheriting transcript by default
+- [bounded-context orchestration model](./bounded-context-orchestration-model.md) — contrasts: its conditional normal form assembles each bounded call from selected explicit state rather than inheriting transcript by default
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: bounded context makes selective loading a first-class architectural concern
 - [context engineering](./definitions/context-engineering.md) — extends: prompt assembly, session boundaries, and handoff artifacts are all architectural responses to bounded-context pressure
 - [conversation-vs-prompt-refinement-in-agent-to-agent-coordination](./conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) — exemplifies: one local instance of the broader tradeoff between trace preservation and compressed handoff

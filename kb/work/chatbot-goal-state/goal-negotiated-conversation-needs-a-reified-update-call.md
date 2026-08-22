@@ -7,7 +7,7 @@ tags: [computational-model]
 
 # Goal-negotiated conversation needs a reified update call
 
-[Bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) types its loop as symbolic computation over `K` alternating with bounded calls `r = call(P)`. [Any symbolic program with LLM calls is a select/call program](../../notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md) claims this covers the full space of such architectures, but its own Scope section carves out an exception: "external mutable state not represented in `K`." An unsolicited human turn that revises the goal itself is exactly that — not symbolic computation, and not a `call(P)` the scheduler asked for.
+[Bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) gives a normal form only when non-LLM execution between batch barriers is symbolic, transition-relevant state is explicit, and members of a selected batch do not interact before its barrier. [The conversion lemma](../../notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md) establishes that form for programs meeting those preconditions; its Scope section names the boundary case of "external mutable state not represented in `K`." An unsolicited human turn that revises the goal itself is exactly that — not symbolic execution, and not a member of a scheduler-selected batch `B`.
 
 The model stays clean only if that revision is reified as its own call: `K.goal' = call(interpret_goal_revision, K.goal, turn)`, inserted after every human turn. `select` stays symbolic; the one genuinely semantic operation — does this turn modify the goal, replace it, or leave it untouched — goes to the LLM side, where [scheduler-LLM separation exploits an error-correction asymmetry](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) says it belongs: free-text interpretation "resists cheap error correction" and can't be done as bookkeeping. This is a pattern inside the existing model, the same status as the ContextProvider pattern the orchestration note already names — not a new theory.
 
@@ -36,7 +36,7 @@ Sources:
 Relevant Notes:
 
 - [Bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) — extends: names a second concrete pattern within the select/call model, alongside ContextProvider
-- [Any symbolic program with LLM calls is a select/call program](../../notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md) — grounds: its own Scope section names the boundary case this note resolves
+- [Any barrier-delimited symbolic program with LLM calls is a batched select/call program](../../notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md) — grounds: its own Scope section names the boundary case this note resolves
 - [Scheduler-LLM separation exploits an error-correction asymmetry](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — grounds: why goal interpretation must be an LLM call, not symbolic bookkeeping
 - [The chat-history model trades context efficiency for implementation simplicity](../../notes/the-chat-history-model-trades-context-efficiency-for-implementation.md) — contrasts: names the raw-accumulation default this pattern replaces with an explicit update
 - [LLM context is composed without scoping](../../notes/llm-context-is-composed-without-scoping.md) — mechanism: explains why the raw-history default has no boundary between current and abandoned goal

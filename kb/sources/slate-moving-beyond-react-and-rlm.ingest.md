@@ -38,7 +38,7 @@ Key relationships:
 
 1. **Fourth point in the orchestration design space.** RLM note identifies three (LLM-is-scheduler, LLM-writes-scheduler, versioned-scheduler). Slate adds: LLM-dispatches-bounded-workers-with-episode-compression — achieves context efficiency without ephemeral computation's accumulation cost because episodes persist within-session. Update the RLM note. [quick-win]
 
-2. **Episode-boundary compression as a named primitive.** Slate's episodes, Spacebot's branch returns, and the bounded-context model's `r = call(P)` all describe the same mechanism: compression at execution boundaries. This unnamed pattern crosses five notes/sources and deserves its own note. [experiment]
+2. **Episode-boundary compression as a named primitive.** Slate's episodes, Spacebot's branch returns, and the bounded-context model's completed `r = call(C)` results all describe the same mechanism: compression at execution boundaries. This unnamed pattern crosses five notes/sources and deserves its own note. [experiment]
 
 3. **"Knowledge overhang" framing.** The gap between what a model knows and what it can tactically access without scaffolding (step-by-step prompting, file-based planning). This maps to the KB's information-value-is-observer-relative note — extraction requires computation, and scaffolding is the computation. Useful vocabulary if the framing holds up. [just-a-reference]
 

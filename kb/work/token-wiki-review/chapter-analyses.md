@@ -178,9 +178,9 @@ disk; strip media early.
 - The four-layer defense mechanically instantiates the maintenance component of
   [context engineering](../../notes/definitions/context-engineering.md).
 - Persistent storage with reference handle = externalization pattern: the scheduler's symbolic
-  state stores the full output while the bounded call sees a pointer. Maps cleanly to the
+  state retains the full output while the bounded call sees a pointer. Maps cleanly to the
   [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) —
-  `K` stores everything; `select(K)` injects a summary plus a recall handle.
+  `K` can retain more than one prompt loads; `select(K)` injects a summary plus a recall handle.
 - Duplicate read detection is empirical evidence for the "amnesia" problem that
   [session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md)
   argues against upstream: the model re-reads files because its effective working set *is* the
@@ -218,9 +218,7 @@ and post-processing order are load-bearing. Separate API history (strict) from U
   materialized as a data structure. Token-wiki's framing is that they maintain both because the
   API and UI have different requirements; our framing would say the bounded call should always
   receive a compressed/selected view of a richer substrate. Same structure, different motivation.
-- Non-destructive truncation is a clean implementation detail for the [bounded-context orchestration](../../notes/bounded-context-orchestration-model.md)
-  invariant that `K` is monotone: `K += r` rather than `K = select(K)`. Deletion as metadata
-  means the selector can be re-run or rolled back.
+- Non-destructive truncation is a clean implementation detail compatible with the [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md): its explicit `transition(K, B, R)` can preserve a retained record while the selector loads a derived view. This implementation is sequential, so `B = (C)` and `R = (r)`; monotonic `K += r` is its choice, not an invariant of the normal form. Deletion as metadata then lets the selector be re-run or rolled back.
 - Typed parts with state machines are an expression of [instructions are typed callables](../../notes/instructions-are-typed-callables.md)
   applied to message fragments — type discipline at the data-structure level.
 

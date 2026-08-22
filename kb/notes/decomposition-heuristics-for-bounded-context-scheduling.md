@@ -9,7 +9,7 @@ tags: [computational-model]
 
 Bounded-context scheduling is not just choosing what fits in a prompt. In the [symbolic scheduling model](./bounded-context-orchestration-model.md), the scheduler chooses what to expose to each LLM call, what to keep in symbolic state, and which intermediate products to preserve for later calls.
 
-The heuristics below are preliminary transformations within that program space. Since [any symbolic program with LLM calls is a select/call program](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md), applying a heuristic still leaves the system inside the same model. The question is which transformations improve the schedule.
+The heuristics below are preliminary transformations within that program space. For programs with barrier-delimited independent call batches, the [conversion lemma](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md) keeps a transformed program inside the same model when the transformation preserves those preconditions. The question is which such transformations improve the schedule.
 
 ## What is being optimised
 

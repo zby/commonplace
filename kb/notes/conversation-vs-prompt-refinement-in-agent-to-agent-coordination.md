@@ -29,11 +29,11 @@ Conversation feels natural because humans can't rewind. Once we've said somethin
 
 ## Where should complexity live?
 
-The tradeoff resolves differently depending on the architecture. In the [bounded-context orchestration model](./bounded-context-orchestration-model.md), the scheduler is already the coordination layer — it holds unbounded symbolic state, assembles prompts, and orchestrates the workflow. Adding prompt-refinement logic to the scheduler is incremental complexity in the right place. Adding conversation history to the sub-agent's context is wasted tokens in the [scarce resource](./context-efficiency-is-the-central-design-concern-in-agent-systems.md).
+The tradeoff resolves differently depending on the architecture. In the [bounded-context orchestration model](./bounded-context-orchestration-model.md), the scheduler is already the coordination layer — it holds explicit state outside each call, assembles call specifications, and orchestrates the workflow. Adding prompt-refinement logic there can be incremental complexity in the right place. Adding conversation history to the sub-agent's context spends more tokens in the [scarce resource](./context-efficiency-is-the-central-design-concern-in-agent-systems.md).
 
 When the caller is also an LLM (the [degraded variant](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) of the clean model), prompt refinement requires the caller to do integration work within its own bounded context. The "right place for complexity" argument weakens — both sides are context-constrained.
 
-This suggests a tentative design heuristic rather than a hard principle: **conversation is the natural interface for human-agent interaction; prompt refinement has advantages for agent-agent interaction when the caller is a symbolic scheduler.** The qualifier matters — the heuristic depends on the caller having unbounded state to work with.
+This suggests a tentative design heuristic rather than a hard principle: **conversation is the natural interface for human-agent interaction; prompt refinement has advantages for agent-agent interaction when the caller is a symbolic scheduler.** The qualifier matters — the heuristic depends on the caller keeping the needed transition state outside the bounded call.
 
 ## Onboarding and forking
 

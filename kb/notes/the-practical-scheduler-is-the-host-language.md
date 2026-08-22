@@ -7,7 +7,7 @@ tags: [computational-model, context-engineering, tool-loop]
 
 # The practical scheduler is the host language, not a reified select
 
-The [bounded-context orchestration model](./bounded-context-orchestration-model.md) gives the general shape of any system that drives bounded LLM calls: `while (P := select(K)) is not None: r = call(P); K = K + r`. As a model it is complete. As the basis for a library it is impractical for one specific reason: it asks you to **reify `select` and `K` as explicit objects** — author a selection function, maintain an explicit state blob, and assemble each prompt by hand. That is far more machinery than most work needs.
+For a closed-world workflow whose non-LLM execution between batch barriers is symbolic, state is explicit, and calls released together cannot affect one another before the barrier, the [bounded-context orchestration model](./bounded-context-orchestration-model.md) gives a batched select/call normal form: `while (B := select(K)) is not None: R = call_all(B); K = transition(K, B, R)`. A sequential workflow emits singleton batches. The form does not cover every architecture, but it is enough to expose one practical problem: a library that makes it literal asks you to **reify `select` and `K` as explicit objects** — author a selection function, maintain an explicit state blob, and assemble each batch by hand. That is far more machinery than most work needs.
 
 The framework-owned tool loop sits at the opposite pole: it reifies *nothing*. But it buys that convenience by [freezing `select`](./llm-frameworks-should-keep-the-tool-loop-optional.md) to one policy — append the tool result, re-ask with the same tools — and thereby owning progression. The application can no longer change the tool surface, project state selectively, branch, or decide when to halt.
 
@@ -24,7 +24,7 @@ Relative to the frozen loop, two changes are enough:
 
 These two changes suffice because they restore both halves of `select` to the caller: returning hands control back, and per-call parameters let host code decide what the next call sees and does. Together they put the halt/continue and framing decisions in the caller's hands — which is exactly what owning `select` means.
 
-And once those decisions are the caller's, there is nothing left for a library to reify. The host program's control flow already *realizes* `select`, distributed across its branches and loops; its live variables already *hold* `K`. This is not a departure from the model but an instance of it: [any symbolic program with LLM calls is a select/call program](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md). That lemma says any such program can be mechanically converted into an explicit `select`/`K` loop with the same calls in the same order — so `select` and `K` are *already present* in the host program, latent in its control state and locals, and could be reified at any point. The practical move is to leave them latent. The library's job is not to supply `select`; it is to hand back a loop the host language can call, then get out of the way.
+And once those decisions are the caller's, there is nothing left for a library to reify. The host program's control flow already *realizes* `select`, distributed across its branches and loops; its live variables already *hold* `K`. This is not a departure from the model but an instance of it: [symbolic programs with barrier-delimited LLM batches can be converted into a select/call program](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md). That lemma says the conversion preserves call specifications, batch membership, and barrier order — so `select` and `K` are *already present* in the host program, latent in its control state and locals, and could be reified at any point. The practical move is to leave them latent. The library's job is not to supply `select`; it is to hand back a loop the host language can call, then get out of the way.
 
 ## What falls out of composition
 
@@ -61,9 +61,9 @@ That boundary is the principled reason a heavier durable-execution or externaliz
 
 Relevant Notes:
 
-- [bounded-context orchestration model](./bounded-context-orchestration-model.md) — grounds: the general select/call loop whose `select`/`K` this note argues a practical library should not reify
+- [bounded-context orchestration model](./bounded-context-orchestration-model.md) — grounds: the conditional select/call normal form whose `select`/`K` this note argues a practical library should not reify
 - [llm frameworks should keep the tool loop optional](./llm-frameworks-should-keep-the-tool-loop-optional.md) — extends: sharpens "keep the loop optional" into "make the loop a returning value and let the host language be select and K"
 - ["agent" is a tool loop](./agent-is-a-tool-loop.md) — mechanism: the unit this primitive returns; sub-agents are recursive calls to it
-- [any symbolic program with LLM calls is a select/call program](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md) — grounds: why the host program already is the symbolic scheduler
+- [any barrier-delimited symbolic program with LLM calls is a batched select/call program](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md) — grounds: why a qualifying host program already is the symbolic scheduler
 - [llm-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — contrasts: not reifying `K` in code is the opposite failure mode from pushing `K` back into the conversation
 - [semantic sub-goals that exceed one context window become scheduling problems](./semantic-sub-goals-that-exceed-one-context-window-become-scheduling.md) — exemplifies: a forcing case that becomes an ordinary host-language loop once `agent()` returns

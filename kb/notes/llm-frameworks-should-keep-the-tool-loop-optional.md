@@ -27,7 +27,7 @@ That is exactly why frameworks tend to build a **framework-owned tool loop**. Th
 
 ## The tool loop is a frozen `select`
 
-In the [bounded-context orchestration model](./bounded-context-orchestration-model.md) the general shape is `while (P := select(K)) is not None: r = call(P); K = K + r`, where `select` assembles the next bounded prompt — including its tool surface and stop condition — from accumulated state `K`. The framework-owned tool loop is that loop with **`select` reified and frozen to a single policy: append the tool result to the running messages and re-ask with the same tools.**
+Within the [bounded-context orchestration model](./bounded-context-orchestration-model.md)'s conditions, the general loop is `while (B := select(K)) is not None: R = call_all(B); K = transition(K, B, R)`. The ordinary framework-owned tool loop is its singleton-batch case, `B = (C)`, where `C` includes the prompt, capabilities, and stop condition. It has **`select` reified and frozen to a single policy: append the tool result to the running messages and re-ask with the same tools.**
 
 This is the precise sense in which the loop is a convenience rather than a constraint on expressivity. The frozen policy is the right default for open-ended local progress, where "show the model everything so far and the same tools" is exactly what you want. But freezing `select` inside the framework means the framework, not the application, owns selection — what the next call sees, what it may do, and when to stop. "Keep the tool loop optional" is therefore the concrete form of **letting the application own `select`**: keep the frozen-`select` loop for the common case, but expose the underlying bounded call so application code can supply its own selection policy when one is needed.
 
@@ -68,7 +68,7 @@ Shaped this way, the framework still serves the common case well: most users can
 
 Relevant Notes:
 
-- [bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: the clean architecture is still a symbolic scheduler driving bounded semantic calls; the framework-owned loop is its `select` frozen to one policy
+- [bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: a conditional representation in which symbolic inter-call execution selects bounded calls; the framework-owned loop freezes that selection to one policy
 - [tool loop](./tool-loop-README.md) — prior framing: argues from expressivity loss; this draft restarts from why tool loops are a useful convenience layer in the first place
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — consequence: hidden tool loops push bookkeeping and progression back into the bounded conversational medium
 - [session history should not be the default next context](./session-history-should-not-be-the-default-next-context.md) — extends: once the framework owns progression it also tends to decide what later calls inherit

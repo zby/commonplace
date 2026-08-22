@@ -18,13 +18,13 @@ The operational core decomposes into four components within a single bounded cal
 
 **Routing** — deciding what knowledge is relevant before loading it. Examples include the [instruction-specificity/loading-frequency match](../instruction-specificity-should-match-loading-frequency.md), [CLAUDE.md as a router](../agents-md-should-be-organized-as-a-control-plane.md), and [retrieval-oriented descriptions](../agents-navigate-by-deciding-what-to-read-next.md) that let agents reject a target without loading it.
 
-**Loading** — assembling and framing the prompt from selected knowledge. The `select` function in the [bounded-context orchestration model](../bounded-context-orchestration-model.md) formalizes this: given state and a token budget, build a prompt that fits. Framing matters because the same knowledge can have different [extractable value](../information-value-is-observer-relative.md) under different presentations.
+**Loading** — assembling and framing prompts from selected knowledge. The `select` function in the [bounded-context orchestration model](../bounded-context-orchestration-model.md) formalizes this: given state, select a batch of call specifications whose prompts are feasible for their respective tasks and models. Framing matters because the same knowledge can have different [extractable value](../information-value-is-observer-relative.md) under different presentations.
 
 **Scoping** — isolating what each consumer sees. [Sub-agents as lexically scoped frames](../llm-context-is-composed-without-scoping.md) is the main local example: flat context has no scope, so architecture must impose it.
 
 **Maintenance** — keeping loaded context healthy over time. Compaction, observation masking, and the [workshop layer's](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) holistic-rewrite discipline prevent accumulated debris from [degrading reasoning](../context-efficiency-is-the-central-design-concern-in-agent-systems.md).
 
-Reshaping recorded knowledge for a specific task and context budget — producing adapted or derived views, summaries, and handoff artifacts — is the main operation these components perform, but not the only one. The [bounded-context orchestration model](../bounded-context-orchestration-model.md) formalizes the machinery as a `solve` loop where a symbolic scheduler drives routing, loading, and scoping for each bounded LLM call.
+Reshaping recorded knowledge for a specific task and context budget — producing adapted or derived views, summaries, and handoff artifacts — is the main operation these components perform, but not the only one. The [bounded-context orchestration model](../bounded-context-orchestration-model.md) formalizes the machinery as a conditional batched select/call loop where symbolic non-call execution between barriers drives routing, loading, and scoping for each bounded LLM call.
 
 ## Architectural scope beyond a single call
 
@@ -59,7 +59,7 @@ Context engineering is not observability. Observability can inform context-engin
 Relevant Notes:
 
 - [context efficiency is the central design concern](../context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: if bounded context is the governing cost model, context engineering must be architectural rather than local to prompt assembly
-- [bounded-context orchestration model](../bounded-context-orchestration-model.md) — formalisation: the select/call loop that structures context engineering decisions
+- [bounded-context orchestration model](../bounded-context-orchestration-model.md) — formalisation: the batched select/call loop that structures context engineering decisions
 - [instruction specificity should match loading frequency](../instruction-specificity-should-match-loading-frequency.md) — mechanism: the routing hierarchy (always-loaded → on-demand)
 - [LLM context is composed without scoping](../llm-context-is-composed-without-scoping.md) — mechanism: sub-agents as the scoping component
 - [agents navigate by deciding what to read next](../agents-navigate-by-deciding-what-to-read-next.md) — mechanism: routing through retrieval-oriented descriptions

@@ -2,7 +2,7 @@
 
 Goal: make "how big an archive can a bounded-context system read?" precise enough to reason about.
 
-This is a workshop note, so the model is deliberately narrow. The point is not realism; the point is to isolate the first-order constraints from the [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md).
+This is a workshop note, so the model is deliberately narrow. The point is not realism; the point is to isolate first-order constraints from the [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md). It adds a local scalar budget `M` for the toy analysis; the linked model instead treats feasibility as task- and model-relative.
 
 ## The task class
 
@@ -44,7 +44,7 @@ So in one call the system can read at most:
 
 or some mixture whose total effective cost stays below `M`.
 
-The scheduler can keep arbitrary symbolic state in `K`, so anything already read can be stored outside the prompt and does not need to be re-read unless the scheduler chooses to reload it.
+The scheduler can retain explicit symbolic state in `K` outside the prompt, so anything already read need not be re-read unless the scheduler chooses to reload it.
 
 ## Compression
 
@@ -63,7 +63,7 @@ That assumption is the whole game. We will relax it later.
 
 ### 1. Archive size is not bounded by `M`
 
-Because `K` is unbounded symbolic state, the archive can be arbitrarily large in principle. The system can scan it in many bounded calls.
+Because the retained state need not fit in any one bounded call, the toy model permits an arbitrarily large archive in principle. The system can scan it in many bounded calls.
 
 So the right question is not:
 

@@ -22,7 +22,7 @@ while not done(state):
         state = absorb(state, turn.output)
 ```
 
-Frameworks own this loop because the mechanics are repetitive protocol work — parsing tool requests, dispatching to handlers, serializing results, feeding them back, handling streaming and retries. Abstracting that away is good engineering, just as abstracting HTTP parsing is. In the [bounded-context orchestration model](./bounded-context-orchestration-model.md) this loop is `select` frozen to a single policy — append the result, re-ask with the same tools — owned by the framework rather than the application. [Keeping that loop optional](./llm-frameworks-should-keep-the-tool-loop-optional.md) is the design stance these notes argue for.
+Frameworks own this loop because the mechanics are repetitive protocol work — parsing tool requests, dispatching to handlers, serializing results, feeding them back, handling streaming and retries. Abstracting that away is good engineering, just as abstracting HTTP parsing is. In the [bounded-context orchestration model](./bounded-context-orchestration-model.md) this loop is the singleton-batch case with `select` frozen to one policy — append the result, re-ask with the same tools — owned by the framework rather than the application. [Keeping that loop optional](./llm-frameworks-should-keep-the-tool-loop-optional.md) is the design stance these notes argue for.
 
 Many useful interventions can stay hidden inside this loop without changing its structure: logging, approvals, budget checks, checkpoints, deterministic transforms on tool results. A [stateful singleton runtime](./stateful-tools-recover-control-by-becoming-hidden-schedulers.md) behind the tool boundary can go further, holding recursion state and branch records. The recovery is genuine — but the question is not whether the loop can absorb bookkeeping. It is who gets to decide what the next step *can do*.
 
@@ -58,7 +58,7 @@ The framework's job is therefore to [**keep the tool loop optional**](./llm-fram
 
 Relevant Notes:
 
-- [bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: each sub-agent is a bounded call with its own `select(K)` in the scheduling model
+- [bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: the framework-owned tool loop is a singleton-batch selection policy inside the scheduling model
 - [llm-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — consequence: workarounds for hidden loops push scheduling into the conversational medium
 - ["agent" is a tool loop](./agent-is-a-tool-loop.md) — convention: grounds the sub-agent mechanism by equating "agent" with "tool loop"
 - [agent orchestration occupies a multi-dimensional design space](./agent-orchestration-occupies-a-multi-dimensional-design-space.md) — broader context: the tool loop is one dimension; scheduler placement, persistence, coordination form, and return artifacts vary independently

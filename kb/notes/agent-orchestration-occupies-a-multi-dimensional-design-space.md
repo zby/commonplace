@@ -11,7 +11,7 @@ Agent orchestration architectures are often discussed as if they sit on a single
 
 ## Scheduler placement
 
-**Where the scheduler lives** — in the LLM conversation itself ([LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md)) or in symbolic code / an external runtime ([bounded-context orchestration model](./bounded-context-orchestration-model.md)). This is the clean-model / degraded-model split: whether bookkeeping and recursion run on exact state or inside bounded stochastic context. [RLM](./rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) is a boundary case — the scheduler lives on an exact substrate outside chat even when the model authors some of that scheduler code.
+**Where the scheduler lives** — in the LLM conversation itself ([LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md)) or in symbolic code / an external runtime ([bounded-context orchestration model](./bounded-context-orchestration-model.md)). The distinction is where transition-relevant state and progression live: inside bounded stochastic context, or in explicit symbolic state outside a call. The latter can meet the normal form's conditions; it is a placement dimension, not a ranking of architectures. [RLM](./rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) is a boundary case — the scheduler lives on an exact substrate outside chat even when the model authors some of that scheduler code.
 
 ## Decomposition-policy artifact
 
@@ -63,7 +63,7 @@ This should stay an open map, not a closed classification. The current dimension
 
 Relevant Notes:
 
-- [bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: the clean model supplies one important dimension, scheduler placement
+- [bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: identifies scheduler placement through the location of explicit state and symbolic progression
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — one region of the space: scheduling inside conversation
 - [RLM has the model write ephemeral orchestrators over sub-agents](./rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) — boundary case: model-authored external scheduler with ephemeral persistence
 - [tool loop](./tool-loop-README.md) — consequence: framework design concerns one dimension of the larger space

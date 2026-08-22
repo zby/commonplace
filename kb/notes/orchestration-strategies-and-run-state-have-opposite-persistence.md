@@ -7,7 +7,7 @@ tags: [computational-model, learning-theory, tool-loop, artifact-analysis]
 
 # Orchestration strategies and run-state have opposite persistence economics
 
-A scheduler over bounded LLM calls has two symbolic parts: the [accumulated state `K`](./bounded-context-orchestration-model.md) and the `select` logic that decides what the next call sees and does. When the [host language plays both roles](./the-practical-scheduler-is-the-host-language.md), it is tempting to treat them as one substrate with one lifecycle. It is the wrong instinct. Measured by **cross-task reuse value** — how much a later, different task gains from keeping the part around — `K` and `select` sit at opposite poles, so a system that promotes them symmetrically gets one of them wrong.
+A scheduler over bounded LLM calls has two symbolic parts: the [accumulated state `K`](./bounded-context-orchestration-model.md) and the `select` logic that decides which calls run next and what each sees and does. When the [host language plays both roles](./the-practical-scheduler-is-the-host-language.md), it is tempting to treat them as one substrate with one lifecycle. It is the wrong instinct. Measured by **cross-task reuse value** — how much a later, different task gains from keeping the part around — `K` and `select` sit at opposite poles, so a system that promotes them symmetrically gets one of them wrong.
 
 The axis here is *cross-task* persistence: whether a part is worth lifting into a durable library so later tasks reuse it. That is distinct from *within-run* survival — whether `K` outlives its process or fits in memory — which the [companion note](./the-practical-scheduler-is-the-host-language.md) treats separately and which can force `K` to be reified even when it has no cross-task value.
 

@@ -36,7 +36,7 @@ The `/connect` discovery run (2026-03-09) found **10 genuine connections** to KB
 
 **New connections not yet linked from notes (8):**
 
-- [Symbolic scheduling over bounded LLM calls is the right model for agent orchestration](../notes/bounded-context-orchestration-model.md) — **exemplifies**: ConvexBench's agentic framework is a concrete instance of the scheduling model. A symbolic scheduler manages the recursion stack and sub-expression tracking (bookkeeping), while bounded LLM calls handle the semantic judgment (is this sub-function convex?). The key finding — offloading bookkeeping to deterministic tools and giving each LLM call minimal focused context recovers full performance — is exactly the scheduling model's prediction.
+- [Bounded-context orchestration model](../notes/bounded-context-orchestration-model.md) — **exemplifies**: ConvexBench's agentic framework is a concrete instance of the conditional select/call normal form: a symbolic scheduler manages the recursion stack and sub-expression tracking, while bounded LLM calls handle the semantic judgment. Its full-performance recovery is evidence for focused recursive decomposition in this hard-oracle setting, not evidence that the normal form is generally superior.
 
 - [Decomposition rules for bounded-context scheduling](../notes/decomposition-heuristics-for-bounded-context-scheduling.md) — **exemplifies**: Demonstrates several rules empirically: "separate selection from joint reasoning" (parse deterministically, then ask LLM about convexity), "use symbolic operations wherever exactness is available" (deterministic AST parsing), "exploit clean frames recursively" (recursive verification with focused context outperforms flat). The ablation finding that finer decomposition (10-character sub-functions) consistently outperforms coarser provides quantitative evidence for aggressive decomposition.
 
@@ -46,7 +46,7 @@ The `/connect` discovery run (2026-03-09) found **10 genuine connections** to KB
 
 - [Oracle-strength spectrum](../notes/oracle-strength-spectrum.md) — **exemplifies**: ConvexBench has a perfect hard oracle: DCP composition rules mechanically verify labels with zero judgment. Exemplifies the hard-oracle end of the spectrum and shows how hard oracles enable rigorous benchmarking.
 
-- [Bounded-context orchestration model](../notes/bounded-context-orchestration-model.md) — **exemplifies**: The agentic framework with focused context is a concrete instance of the select/execute/absorb loop. Each recursive step selects what to include (only direct dependencies), executes in a clean sub-agent frame, absorbs the result, and feeds it forward. Recovery of full performance validates the claim that the loop works because of clean frame isolation.
+- [Bounded-context orchestration model](../notes/bounded-context-orchestration-model.md) — **exemplifies**: The agentic framework with focused context is a concrete instance of the select/execute/absorb loop. Each recursive step selects direct dependencies, executes in a clean sub-agent frame, and absorbs the result. Its full-performance recovery supports this arrangement for the tested hard-oracle task; it does not establish the loop's general effectiveness or superiority.
 
 - [Codification](../notes/definitions/codification.md) — **exemplifies**: The external AST parsing tool is codification — a deterministic code solution replacing LLM interpretation for the structural parsing sub-problem. The parsing specification IS the problem (parenthesis matching, operator scope), making it a natural codification candidate.
 
@@ -86,7 +86,7 @@ The `/connect` discovery run (2026-03-09) found **10 genuine connections** to KB
 
 **What was not tested:**
 
-- **Only tested in the hard-oracle regime.** Convexity verification via DCP rules is deterministic and mechanically verifiable. The paper does not test whether the agentic framework generalises to tasks where correctness is not mechanically checkable — soft-oracle problems where the LLM's judgment is genuinely needed at the aggregation level. The scheduling model notes in this KB ([symbolic-scheduling](../notes/bounded-context-orchestration-model.md)) predict the framework should work, but the empirical evidence here is restricted to the easy end of the [oracle-strength spectrum](../notes/oracle-strength-spectrum.md).
+- **Only tested in the hard-oracle regime.** Convexity verification via DCP rules is deterministic and mechanically verifiable. The paper does not test whether the agentic framework generalises to tasks where correctness is not mechanically checkable — soft-oracle problems where the LLM's judgment is genuinely needed at the aggregation level. The [scheduling model](../notes/bounded-context-orchestration-model.md) can represent this framework, but it does not license an effectiveness prediction beyond the hard-oracle evidence here.
 
 - **Narrow task domain.** The compositional structure tested (function composition with DCP rules) is highly regular — each sub-problem has the same structure. Real-world compositional reasoning (multi-step code generation, research synthesis, architectural design) involves heterogeneous sub-problems where decomposition strategies vary at each level. The clean recursive structure may flatter the divide-and-conquer approach.
 

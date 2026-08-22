@@ -12,7 +12,7 @@ An execution boundary — any point where one LLM call ends and another begins �
 1. **What to persist** in external state
 2. **What to load** into the next call's context
 
-These are not the same decision. Persistence is cheap; context window space is expensive. In the [bounded-context orchestration model](./bounded-context-orchestration-model.md), the scheduler's state can store everything — but the prompt for the next call should be assembled by a deliberate selection step, not inherited from the last session. Storing a trace is fine — the mistake is letting stored history automatically become the next call's context.
+These are not the same decision. Persistence is cheap; context window space is expensive. In the [bounded-context orchestration model](./bounded-context-orchestration-model.md), scheduler state can retain more than any one call should load — but the prompt for the next call should be assembled by a deliberate selection step, not inherited from the last session. Storing a trace is fine — the mistake is letting stored history automatically become the next call's context.
 
 ## How the conflation arises
 
