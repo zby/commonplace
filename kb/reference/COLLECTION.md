@@ -8,10 +8,28 @@ A reference artifact may contain supporting belief propositions without becoming
 
 Quality goal is **fidelity + economy** — say what the system actually does in minimum tokens, without omitting load-bearing details. An agent loading these docs is usually trying to act; every extra token competes with the task.
 
-Tests for economy:
+Tests for economy. The first two ask whether a passage should exist at all,
+given that the system it describes is available for inspection:
+
+- **Does another artifact already record this?** Search before writing: the ADR
+  set, the collection contracts, the type specs, and the code. A weaker
+  restatement is worse than no copy, because a reader who finds it stops before
+  reaching the fuller statement. Keep the stronger home and link to it.
+- **Would reading this close the reader's question, or would they read the
+  source anyway?** A passage that leaves an accuracy-requiring question
+  unanswered is not a cheaper path to the answer — it is cost added ahead of the
+  full path. Approximation is enough for orientation ("which module owns this"),
+  not for exactness ("what does this function return"). Compare the smallest
+  units a reader must select, not whole artifacts: a symbol is a search key, a
+  prose section is not.
 - Could this section be cut without losing information the reader needs to act?
-- Is the same fact stated in two places? Deduplicate or link.
 - Would a table or list say this more compactly than prose?
+
+**Where a passage warns a future changer** — a rejected refactor, a
+non-obvious constraint, a reason a boundary sits where it does — prefer the site
+it constrains over this collection: a test if the rule is enforceable, otherwise
+a comment or docstring at the code. A warning found only by someone who thought
+to read a reference document is a warning most changers will miss.
 
 **Fidelity constraint.** Describe the system as built, even when the implementation deviates from the theory that inspired it. If the system does X but the theory says Y, describe X and note the deviation — the `rests-on` link may carry the qualifier.
 
