@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Relocate a KB collection directory: move all contents, update links, add one redirect.
 
 Usage:

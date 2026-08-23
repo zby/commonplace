@@ -10,10 +10,13 @@ from pathlib import Path
 from commonplace.lib.naming import ensure_note_slug_length, slugify_note_filename
 from commonplace.lib.project_paths import (
     find_repo_markdown_files,
+)
+from commonplace.lib.project_paths import (
     kb_root as project_kb_root,
+)
+from commonplace.lib.project_paths import (
     resolve_note as resolve_project_note,
 )
-
 
 TOKEN_PATTERN = re.compile(
     r"(```.*?```|`[^`\n]+`)|(\[([^\]]+)\]\(([^)]+)\))",
@@ -386,7 +389,7 @@ def relocate_directory(
     move_path(source, destination)
 
     # Write updated markdown files (targets reflect post-move locations)
-    for _, (target, updated, _changes) in markdown_updates.items():
+    for target, updated, _changes in markdown_updates.values():
         target.write_text(updated, encoding="utf-8")
 
     # ProperDocs config

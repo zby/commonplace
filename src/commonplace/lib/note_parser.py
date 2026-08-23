@@ -8,7 +8,6 @@ from typing import Any
 
 from commonplace.lib import frontmatter as fm_mod
 
-
 _BODY_HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$", re.MULTILINE)
 _FENCED_CODE_RE = re.compile(r"```.*?```", re.DOTALL)
 _INLINE_CODE_RE = re.compile(r"`[^`\n]+`")

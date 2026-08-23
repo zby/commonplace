@@ -3,12 +3,14 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-
 SRC_ROOT = Path(__file__).resolve().parents[4] / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
-from commonplace.lib.note_parser import find_markdown_links_with_text, parse_document  # noqa: E402
+from commonplace.lib.note_parser import (
+    find_markdown_links_with_text,
+    parse_document,
+)
 
 
 def test_parse_document_extracts_headings_and_excludes_fenced_code() -> None:

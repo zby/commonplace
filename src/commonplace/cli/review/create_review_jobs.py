@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Create queued review jobs from selector output."""
 
 from __future__ import annotations
@@ -10,7 +9,19 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from commonplace.review.batch import prepare_grouped_review_job
-from commonplace.review.paths import criterion_id_for_path, normalize_criterion_path, review_gates_dir
+from commonplace.review.collection_conformance import (
+    is_collection_md_criterion_path,
+    note_collection_md_path,
+)
+from commonplace.review.critique import (
+    is_critique_criterion_path,
+    result_kind_for_criterion_path,
+)
+from commonplace.review.paths import (
+    criterion_id_for_path,
+    normalize_criterion_path,
+    review_gates_dir,
+)
 from commonplace.review.resolve_criteria import applicable_criterion_ids_for_note
 from commonplace.review.review_db import (
     connect,
@@ -18,9 +29,10 @@ from commonplace.review.review_db import (
     prepare_review_db,
 )
 from commonplace.review.review_model import normalize_model_partition
-from commonplace.review.collection_conformance import is_collection_md_criterion_path, note_collection_md_path
-from commonplace.review.critique import is_critique_criterion_path, result_kind_for_criterion_path
-from commonplace.review.type_conformance import is_type_spec_criterion_path, note_type_spec_path
+from commonplace.review.type_conformance import (
+    is_type_spec_criterion_path,
+    note_type_spec_path,
+)
 
 
 @dataclass(frozen=True)
@@ -62,7 +74,7 @@ def _load_selector_json(raw_json: str) -> dict[str, object]:
     except json.JSONDecodeError as exc:
         raise ValueError(f"invalid selector JSON: {exc}") from exc
     if not isinstance(payload, dict):
-        raise ValueError("selector JSON must be an object with model_partition and targets")
+        raise TypeError("selector JSON must be an object with model_partition and targets")
     return payload
 
 
@@ -81,12 +93,12 @@ def _selector_pairs(
     model_partition = normalize_model_partition(raw_model)
     raw_targets = payload.get("targets")
     if not isinstance(raw_targets, list):
-        raise ValueError("selector JSON targets must be a list")
+        raise TypeError("selector JSON targets must be a list")
 
     pairs: list[RequestedPair] = []
     for index, target in enumerate(raw_targets, start=1):
         if not isinstance(target, dict):
-            raise ValueError(f"selector target {index} must be an object")
+            raise TypeError(f"selector target {index} must be an object")
         note_raw = target.get("note_path")
         criterion_raw = target.get("criterion_path")
         criterion_id_raw = target.get("criterion_id")
@@ -325,7 +337,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
                 if plan is None:
                     raise ValueError(f"created review job not found: {review_job_id}")
                 plans.append(plan)
-    except (FileNotFoundError, ValueError, OSError) as exc:
+    except (FileNotFoundError, OSError, TypeError, ValueError) as exc:
         parser.error(str(exc))
 
     payload = {

@@ -12,16 +12,6 @@ from commonplace.lib.hashing import (
     content_sha256_for_text,
     file_content_sha256,
 )
-from commonplace.review.paths import criterion_id_for_path, criterion_id_from_stored_path, normalize_criterion_path, review_gates_dir
-from commonplace.review.resolve_criteria import applicable_criterion_ids_for_note
-from commonplace.review.review_db import (
-    FreshnessBaseline,
-    connect,
-    ensure_db,
-    load_current_freshness_baselines,
-    resolve_db_path,
-)
-from commonplace.review.review_model import normalize_model_partition
 from commonplace.review.collection_conformance import (
     COLLECTION_CONFORMANCE_LENS,
     is_collection_conformance_request,
@@ -33,6 +23,21 @@ from commonplace.review.critique import (
     is_critique_request,
     result_kind_for_criterion_path,
 )
+from commonplace.review.paths import (
+    criterion_id_for_path,
+    criterion_id_from_stored_path,
+    normalize_criterion_path,
+    review_gates_dir,
+)
+from commonplace.review.resolve_criteria import applicable_criterion_ids_for_note
+from commonplace.review.review_db import (
+    FreshnessBaseline,
+    connect,
+    ensure_db,
+    load_current_freshness_baselines,
+    resolve_db_path,
+)
+from commonplace.review.review_model import normalize_model_partition
 from commonplace.review.type_conformance import (
     TYPE_CONFORMANCE_LENS,
     is_type_conformance_request,

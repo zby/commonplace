@@ -5,8 +5,8 @@ from pathlib import Path
 import pytest
 
 from commonplace.cli.store_healthcheck import main as store_healthcheck_main
-from commonplace.store import check_store_health, connect, ensure_db
 from commonplace.review.review_db import snapshot_file
+from commonplace.store import check_store_health, connect, ensure_db
 
 
 def test_ensure_db_skips_snapshot_hash_verification(tmp_path: Path) -> None:

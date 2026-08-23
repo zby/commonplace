@@ -9,7 +9,11 @@ import pytest
 
 from commonplace.review import resolve_criteria, review_db, review_target_selector
 from commonplace.review.acknowledgement import ack_pairs
-from commonplace.review.paths import criterion_id_for_path, criterion_path_for_id, normalize_criterion_path
+from commonplace.review.paths import (
+    criterion_id_for_path,
+    criterion_path_for_id,
+    normalize_criterion_path,
+)
 from tests.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
 
 from ._run_cli import run_cli

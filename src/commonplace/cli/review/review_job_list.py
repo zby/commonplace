@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """List review jobs from the canonical review DB."""
 
 from __future__ import annotations
@@ -7,7 +6,12 @@ import argparse
 import json
 from pathlib import Path
 
-from commonplace.review.review_db import JOB_STATUS_VALUES, connect, list_review_job_plans, prepare_review_db
+from commonplace.review.review_db import (
+    JOB_STATUS_VALUES,
+    connect,
+    list_review_job_plans,
+    prepare_review_db,
+)
 from commonplace.review.review_model import normalize_model_partition
 
 

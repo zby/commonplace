@@ -4,7 +4,6 @@ import yaml
 
 import properdocs_site_assets
 
-
 ROOT = Path(__file__).resolve().parents[3]
 
 

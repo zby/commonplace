@@ -23,7 +23,6 @@ from commonplace.review.type_conformance import (
     type_criterion_id_for_path,
 )
 
-
 SOURCE_GATES_ROOT = Path("kb/instructions/review-gates")
 INSTALLED_GATES_ROOT = Path("kb/commonplace/instructions/review-gates")
 

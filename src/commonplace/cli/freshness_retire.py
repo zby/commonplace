@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Retire a registered freshness target."""
 
 from __future__ import annotations
@@ -40,7 +39,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
                 target_key=target_key,
             )
             conn.commit()
-    except (OSError, RuntimeError, ValueError) as exc:
+    except (OSError, RuntimeError, TypeError, ValueError) as exc:
         parser.error(str(exc))
 
     print("retired" if retired else "already-absent")

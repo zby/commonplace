@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Snapshot X/Twitter posts, threads, and article posts to kb/sources/.snapshots/.
 
 Usage:
@@ -11,7 +10,7 @@ import argparse
 import json
 import os
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
@@ -156,7 +155,7 @@ def _fetch_ancestors(
             break
         try:
             parent, parent_users = _fetch_post(client, parent_id)
-        except Exception:
+        except Exception:  # noqa: BLE001 - ancestor capture is best-effort
             break
         posts[str(parent.get("id"))] = parent
         users.update(parent_users)
@@ -199,7 +198,7 @@ def _fetch_thread_recent(
                 posts[post_id] = post
                 if len(posts) >= max_posts:
                     return posts, users, None
-    except Exception as exc:
+    except Exception as exc:  # noqa: BLE001 - thread expansion is best-effort
         error = str(exc)
 
     return posts, users, error
@@ -318,7 +317,7 @@ def _classify_family(target_post: dict, posts_sorted: list[dict]) -> str:
     article-bearing posts carry their own distinctive content.
     """
     article_text = str(
-        ((target_post.get("article") or {}).get("plain_text") or "")
+        (target_post.get("article") or {}).get("plain_text") or ""
     ).strip()
     if article_text:
         return "x-article"
@@ -343,7 +342,7 @@ def snapshot_x_url(url: str, out_dir: str, max_posts: int) -> str:
     if not token:
         raise RuntimeError("Missing X_BEARER_TOKEN in environment.")
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     timestamp = now.isoformat()
     dest = Path(out_dir)
     dest.mkdir(parents=True, exist_ok=True)
@@ -387,7 +386,7 @@ def snapshot_x_url(url: str, out_dir: str, max_posts: int) -> str:
     kind = _classify_family(target_post, posts_sorted)
 
     base_title = (
-        str(((target_post.get("article") or {}).get("title") or "")).strip()
+        str((target_post.get("article") or {}).get("title") or "").strip()
         or _post_text(target_post)[:70]
         or f"x-status-{status_id}"
     )
@@ -460,7 +459,7 @@ def main() -> int:
         result = snapshot_x_url(
             args.url, out_dir=DEFAULT_SNAPSHOT_DIR, max_posts=args.max_posts
         )
-    except Exception as exc:
+    except Exception as exc:  # noqa: BLE001 - report all CLI boundary failures
         print(f"Error: {exc}", file=sys.stderr)
         return 1
 

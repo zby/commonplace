@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import sqlite3
 from hashlib import sha256
 from pathlib import Path
-import sqlite3
 
 import pytest
 
@@ -611,6 +611,7 @@ def test_snapshot_file_rejects_non_repo_relative_paths(tmp_path: Path) -> None:
     repo.mkdir()
     review_db.ensure_db(db_path)
 
-    with review_db.connect(db_path) as conn:
-        with pytest.raises(ValueError, match="repo-relative"):
-            review_db.snapshot_file(conn, repo_root=repo, path="../outside.md")
+    with review_db.connect(db_path) as conn, pytest.raises(
+        ValueError, match="repo-relative"
+    ):
+        review_db.snapshot_file(conn, repo_root=repo, path="../outside.md")

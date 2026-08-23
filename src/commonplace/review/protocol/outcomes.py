@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import re
 
-
 OUTCOME_VALUES = ("pass", "warn", "fail")
 
 _STRICT_RESULT_LINE_RE = re.compile(r"^## Result: (?P<outcome>PASS|WARN|FAIL)$")

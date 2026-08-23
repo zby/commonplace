@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import sqlite3
 
+from commonplace.freshness.models import ArtifactSnapshot
 from commonplace.freshness.versioning import ResolvedVersion
 from commonplace.review.clock import iso_now
-from commonplace.freshness.models import ArtifactSnapshot
 
 
 def insert_or_get_snapshot(

@@ -13,7 +13,6 @@ from commonplace.review.batch import prepare_grouped_review_job
 
 from ._run_cli import run_cli
 
-
 GATE = "accessibility/undefined-terms"
 GATE_PATH = "kb/instructions/review-gates/accessibility/undefined-terms.md"
 CLAIM_GATE_PATH = "kb/instructions/review-gates/frontmatter/claim-strength.md"

@@ -35,11 +35,10 @@ from commonplace.lib.quote_verification import verify_content
 from commonplace.lib.type_resolver import (
     TypeProfile,
     canonical_type_identity,
-    resolve_type_definition,
     resolve_type,
+    resolve_type_definition,
     validate_instance,
 )
-
 
 # Weight gates for tag-readme artifacts: the type contract is that a tag's
 # curated head stays a cheap whole-read surface (ADR 026). Bytes gate; entry
@@ -174,7 +173,7 @@ class ValidationRun:
                 repo_root=self.repo_root,
                 load_type_frontmatter=self.load_type_frontmatter,
             )
-        except (FileNotFoundError, ValueError) as exc:
+        except (FileNotFoundError, TypeError, ValueError) as exc:
             result = (None, str(exc))
             self._notes[key] = result
             return result
@@ -557,7 +556,7 @@ def validate_type_spec_definition(
             repo_root=run.repo_root,
             type_frontmatter=parsed.document.frontmatter,
         )
-    except (FileNotFoundError, ValueError) as exc:
+    except (FileNotFoundError, TypeError, ValueError) as exc:
         results.fails.append(f"type definition: {exc}")
         return
 
@@ -875,9 +874,11 @@ def validate_collection_structure(
         failures.append(
             (
                 path,
-                "nested COLLECTION.md: "
-                f"{path.relative_to(repo_root)} is inside collection "
-                f"{collection.relative_to(repo_root)}",
+                (
+                    "nested COLLECTION.md: "
+                    f"{path.relative_to(repo_root)} is inside collection "
+                    f"{collection.relative_to(repo_root)}"
+                ),
             )
         )
     return failures

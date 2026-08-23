@@ -222,7 +222,7 @@ def refresh_target_from_captures(
 
 def parse_target_key(raw: object) -> dict[str, str]:
     if not isinstance(raw, dict):
-        raise ValueError("target_key must be an object")
+        raise TypeError("target_key must be an object")
     result: dict[str, str] = {}
     for key, value in raw.items():
         if not isinstance(key, str) or not isinstance(value, str) or not value.strip():
@@ -233,7 +233,7 @@ def parse_target_key(raw: object) -> dict[str, str]:
 
 def parse_input_observation(raw: object) -> InputObservation:
     if not isinstance(raw, dict):
-        raise ValueError("input observation must be an object")
+        raise TypeError("input observation must be an object")
     role = raw.get("input_role")
     path = raw.get("artifact_path")
     version_kind = raw.get("version_kind")
@@ -260,5 +260,5 @@ def load_json_input(raw: str) -> dict[str, object]:
     except json.JSONDecodeError as exc:
         raise ValueError(f"invalid JSON input: {exc}") from exc
     if not isinstance(payload, dict):
-        raise ValueError("JSON input must be an object")
+        raise TypeError("JSON input must be an object")
     return payload

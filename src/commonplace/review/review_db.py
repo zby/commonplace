@@ -1,20 +1,28 @@
-#!/usr/bin/env python3
 """Helpers for review tables in the commonplace operational store."""
 
 from __future__ import annotations
 
 import sqlite3
+from collections.abc import Sequence
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Sequence
-from commonplace.review.artifacts import job_output_path_rel, prompt_path_rel, result_path
-from commonplace.review.paths import criterion_id_from_stored_path
-from commonplace.review.review_model import build_model_partition, normalize_model_partition, normalize_reasoning_effort
+
 from commonplace import store
 from commonplace.freshness import baselines as freshness_baselines
 from commonplace.freshness.models import ArtifactSnapshot as ReviewFileSnapshot
 from commonplace.freshness.snapshots import insert_or_get_snapshot, load_snapshot_by_id
 from commonplace.freshness.versioning import resolve_file_text
+from commonplace.review.artifacts import (
+    job_output_path_rel,
+    prompt_path_rel,
+    result_path,
+)
+from commonplace.review.paths import criterion_id_from_stored_path
+from commonplace.review.review_model import (
+    build_model_partition,
+    normalize_model_partition,
+    normalize_reasoning_effort,
+)
 
 connect = store.connect
 

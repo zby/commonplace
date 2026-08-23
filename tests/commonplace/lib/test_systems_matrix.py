@@ -4,7 +4,6 @@ from pathlib import Path
 
 from commonplace.lib import systems_matrix as sm
 
-
 FIXTURES_DIR = Path(__file__).resolve().parent / "fixtures"
 
 
@@ -101,7 +100,7 @@ def test_missing_applicable_tokens_are_flagged() -> None:
         "**Storage substrate:** `files` — x\n"
         "**Read-back:** `push` — pushes stuff\n"
     )
-    row, flags = parse(text)
+    _row, flags = parse(text)
     # universal + push + trace axes all flagged as missing
     assert "Representational form: missing lead token" in flags
     assert "Lineage: missing lead token" in flags
@@ -178,7 +177,7 @@ def test_curation_none_cannot_be_mixed_with_controlled_values() -> None:
         "**Curation operations:** `dedup` `none` — x\n"
         "**Read-back:** `pull` — x\n"
     )
-    row, flags = parse(text)
+    _row, flags = parse(text)
     assert "Curation operations: `none` cannot be mixed with controlled values" in flags
 
 

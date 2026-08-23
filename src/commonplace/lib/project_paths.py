@@ -12,7 +12,6 @@ import os
 from collections.abc import Iterator
 from pathlib import Path
 
-
 # Directory names pruned from repository-wide markdown walks: build and vendor
 # trees that are never knowledge content. Collection walks under kb/ do not
 # apply these; they only matter when sweeping the whole repository.

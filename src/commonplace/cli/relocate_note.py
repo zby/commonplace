@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Relocate a KB note by renaming it, moving it, or both.
 
 Usage:

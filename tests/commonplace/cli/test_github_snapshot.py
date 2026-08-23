@@ -7,12 +7,11 @@ from pathlib import Path
 
 import yaml
 
-
 SRC_ROOT = Path(__file__).resolve().parents[4] / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
-from commonplace.cli import github_snapshot  # noqa: E402
+from commonplace.cli import github_snapshot
 
 
 def frontmatter(path: Path) -> dict:

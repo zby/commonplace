@@ -18,7 +18,6 @@ from commonplace.lib.project_paths import (
     iter_visible_markdown_files,
 )
 
-
 FIELD_NAME = "tags"
 MARKER = "<!-- generated -->"
 INDEX_TYPE = "kb/types/generated-index.md"

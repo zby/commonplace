@@ -6,12 +6,11 @@ from pathlib import Path
 
 import pytest
 
-
 SRC_ROOT = Path(__file__).resolve().parents[5] / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
-from commonplace.lib.extraction import link_audit  # noqa: E402
+from commonplace.lib.extraction import link_audit
 
 
 def write(path: Path, content: str) -> Path:

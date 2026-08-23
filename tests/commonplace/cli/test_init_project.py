@@ -5,20 +5,19 @@ from pathlib import Path
 
 import pytest
 
-
 REPO_ROOT = Path(__file__).resolve().parents[3]
 SRC_ROOT = REPO_ROOT / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
-from commonplace.cli import init_project as init_project_module  # noqa: E402
-from commonplace.cli.init_project import (  # noqa: E402
+from commonplace.cli import init_project as init_project_module
+from commonplace.cli.init_project import (
+    _resolve_scaffold_source,
     init_project,
     installation_warnings,
     main,
-    _resolve_scaffold_source,
 )
-from commonplace.lib.validation import validate_collection_landings  # noqa: E402
+from commonplace.lib.validation import validate_collection_landings
 
 
 def test_init_project_creates_core_directories(tmp_path: Path) -> None:

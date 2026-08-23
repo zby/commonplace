@@ -11,8 +11,8 @@ from __future__ import annotations
 
 import argparse
 import sys
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Sequence
 
 from commonplace.lib.quote_verification import (
     display_path,

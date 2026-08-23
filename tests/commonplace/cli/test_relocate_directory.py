@@ -57,7 +57,7 @@ def test_rebase_and_rewrite_in_moved_file_rebases_external_and_updates_internal(
     content = """Internal: [sibling](./sibling.md)
 External: [concept](../definitions/concept.md)
 """
-    updated, changes = relocation.rebase_and_rewrite_in_moved_file(
+    updated, _changes = relocation.rebase_and_rewrite_in_moved_file(
         content, old_self, new_self, moves
     )
     # Internal link to sibling stays relative but points to the new location

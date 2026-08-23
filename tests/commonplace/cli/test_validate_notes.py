@@ -4,22 +4,19 @@ import os
 import shutil
 import sys
 from collections import Counter
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
-
 
 SRC_ROOT = Path(__file__).resolve().parents[4] / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
-import pytest  # noqa: E402
+import pytest
+from jsonschema.exceptions import ValidationError
 
-from jsonschema.exceptions import ValidationError  # noqa: E402
-
-from commonplace.cli import validate_notes  # noqa: E402
-from commonplace.lib import project_paths, validation  # noqa: E402
-from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH  # noqa: E402
-
+from commonplace.cli import validate_notes
+from commonplace.lib import project_paths, validation
+from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH
 
 FIXTURES_ROOT = Path(__file__).resolve().parent / "fixtures" / "schemas"
 
@@ -1439,7 +1436,7 @@ traits: []
 # Old note
 """,
     )
-    old_ts = datetime(2020, 1, 1).timestamp()
+    old_ts = datetime(2020, 1, 1, tzinfo=UTC).timestamp()
     old_note.touch()
     today_note.touch()
     os.utime(old_note, (old_ts, old_ts))

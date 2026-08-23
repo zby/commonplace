@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Snapshot GitHub issue/PR content into kb/sources/.snapshots/.
 
 Usage:
@@ -13,7 +12,7 @@ import json
 import re
 import subprocess
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -64,6 +63,7 @@ def _gh_api(url: str, timeout: int = 30) -> str:
     result = subprocess.run(
         ["gh", "api", url],
         capture_output=True,
+        check=False,
         text=True,
         timeout=timeout,
     )
@@ -116,7 +116,7 @@ def snapshot_github_url(url: str, out_dir: str) -> str:
     api_url, source_url = _to_api_url(url)
     family = _github_family(api_url, source_url)
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     timestamp = now.isoformat()
     dest = Path(out_dir)
     dest.mkdir(parents=True, exist_ok=True)
@@ -184,7 +184,7 @@ def main() -> int:
     args = parse_args()
     try:
         result = snapshot_github_url(args.url, out_dir=DEFAULT_SNAPSHOT_DIR)
-    except Exception as exc:
+    except Exception as exc:  # noqa: BLE001 - report all CLI boundary failures
         print(f"Error: {exc}", file=sys.stderr)
         return 1
 

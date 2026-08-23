@@ -20,7 +20,6 @@ from commonplace.review.review_db import (
     prepare_review_db,
 )
 
-
 SECTION_END_LOOKAHEAD = (
     r"(?=^###\s|"
     r"^##\s*Result\b|"

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Run full integrity checks on the commonplace operational store."""
 
 from __future__ import annotations

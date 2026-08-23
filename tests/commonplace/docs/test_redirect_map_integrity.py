@@ -52,8 +52,10 @@ def test_redirect_map_validation_reports_missing_target(tmp_path: Path) -> None:
     results = validate_redirect_map(repo_root=tmp_path)
 
     assert results.fails == [
-        "[repository] redirect target does not exist: "
-        "notes/old.md -> notes/missing.md"
+        (
+            "[repository] redirect target does not exist: "
+            "notes/old.md -> notes/missing.md"
+        )
     ]
 
 

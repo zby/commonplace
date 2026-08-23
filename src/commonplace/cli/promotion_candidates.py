@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Generate a promotion candidates report for kb/notes/."""
 
 from __future__ import annotations

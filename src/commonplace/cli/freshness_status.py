@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Report repository-wide freshness status for registered targets."""
 
 from __future__ import annotations

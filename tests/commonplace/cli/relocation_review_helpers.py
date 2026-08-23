@@ -5,7 +5,6 @@ from pathlib import Path
 
 from commonplace.review import review_db
 
-
 TEST_MODEL = "claude-opus"
 TEST_RUNNER_MODEL = "opus-4-6"
 REVIEWED_AT = "2026-04-10T10:05:00+02:00"

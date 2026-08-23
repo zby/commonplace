@@ -13,7 +13,6 @@ from commonplace.lib.project_paths import (
     iter_visible_markdown_files,
 )
 
-
 SKIP_DIR_NAMES = {"types"}
 INDEX_TYPE = "kb/types/generated-index.md"
 
@@ -26,11 +25,7 @@ def entry_sort_key(entry: tuple[str, str, str, str]) -> tuple[str, str]:
 
 def _display_type(note_type: str) -> str:
     """Display path-valued types compactly in generated directory indexes."""
-    if note_type.endswith(".md") and (
-        note_type.startswith("kb/")
-        or note_type.startswith("./")
-        or note_type.startswith("../")
-    ):
+    if note_type.endswith(".md") and note_type.startswith(("kb/", "./", "../")):
         return Path(note_type).stem
     return note_type
 

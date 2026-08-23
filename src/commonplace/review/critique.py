@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-
 CRITIQUE_LENS = "critique"
 SOURCE_CRITIQUE_PATH = Path("kb/instructions/critique-note.md")
 INSTALLED_CRITIQUE_PATH = Path("kb/commonplace/instructions/critique-note.md")

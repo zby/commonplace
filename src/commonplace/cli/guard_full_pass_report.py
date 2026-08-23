@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Refuse full-pass transitions whose guarded artifacts no longer match."""
 
 from __future__ import annotations

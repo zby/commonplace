@@ -54,9 +54,10 @@ def test_healthcheck_rejects_unguarded_queued_pair(tmp_path: Path) -> None:
         )
         conn.commit()
 
-    with connect(db_path) as conn:
-        with pytest.raises(RuntimeError, match="exactly one CAS field"):
-            assert_queued_pair_cas_integrity(conn)
+    with connect(db_path) as conn, pytest.raises(
+        RuntimeError, match="exactly one CAS field"
+    ):
+        assert_queued_pair_cas_integrity(conn)
 
 
 def test_healthcheck_rejects_dual_populated_queued_pair(tmp_path: Path) -> None:
@@ -87,6 +88,7 @@ def test_healthcheck_rejects_dual_populated_queued_pair(tmp_path: Path) -> None:
         )
         conn.commit()
 
-    with connect(db_path) as conn:
-        with pytest.raises(RuntimeError, match="exactly one CAS field"):
-            assert_queued_pair_cas_integrity(conn)
+    with connect(db_path) as conn, pytest.raises(
+        RuntimeError, match="exactly one CAS field"
+    ):
+        assert_queued_pair_cas_integrity(conn)

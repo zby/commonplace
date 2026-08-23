@@ -15,11 +15,10 @@ with the dependency on the criterion side, not a wider per-pair input set.
 
 from __future__ import annotations
 
+import sqlite3
+from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Sequence
-
-import sqlite3
 
 from commonplace.lib import frontmatter
 from commonplace.review.review_db import ReviewPairRequest, snapshot_file

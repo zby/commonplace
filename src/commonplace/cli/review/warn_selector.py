@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Select actionable findings from effective warn reviews in the DB."""
 
 from __future__ import annotations

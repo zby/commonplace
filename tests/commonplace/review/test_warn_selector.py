@@ -4,7 +4,6 @@ from pathlib import Path
 
 from commonplace.review import review_db, warn_selector
 
-
 TEST_MODEL = "test-model"
 REVIEWED_AT = "2026-04-01T00:00:00+00:00"
 GATE_PATH = "kb/instructions/review-gates/prose/source-residue.md"

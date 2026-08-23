@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Select stale review targets from the canonical review DB."""
 
 from __future__ import annotations
@@ -8,13 +7,13 @@ from pathlib import Path
 
 from commonplace.review.paths import review_gates_dir
 from commonplace.review.resolve_criteria import criterion_ids_for_cli
+from commonplace.review.review_model import normalize_model_partition
 from commonplace.review.review_target_selector import (
     render_grouped,
     render_json,
     select_requested_criteria,
     select_stale_criteria,
 )
-from commonplace.review.review_model import normalize_model_partition
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:

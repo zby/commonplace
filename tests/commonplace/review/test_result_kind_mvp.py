@@ -10,7 +10,6 @@ from commonplace.review.batch import prepare_grouped_review_job
 from commonplace.review.finalization import finalize_review_job_from_owned_output
 from commonplace.review.protocol.parser import parse_job_output
 
-
 NOTE_PATH = "kb/notes/sample.md"
 CRITIQUE_PATH = "kb/instructions/critique-note.md"
 MODEL = "test-model"

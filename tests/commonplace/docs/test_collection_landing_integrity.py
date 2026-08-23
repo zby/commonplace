@@ -56,8 +56,10 @@ def test_collection_landings_reject_readme_index_collision(tmp_path: Path) -> No
     results = validate_collection_landings(repo_root=tmp_path)
 
     assert results.fails == [
-        "[repository] collection landing collision: "
-        "kb/types contains both README.md and index.md"
+        (
+            "[repository] collection landing collision: "
+            "kb/types contains both README.md and index.md"
+        )
     ]
 
 

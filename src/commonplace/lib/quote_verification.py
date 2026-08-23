@@ -30,12 +30,11 @@ from __future__ import annotations
 import html
 import re
 import unicodedata
+from collections.abc import Callable, Iterable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable, Iterable, Sequence
 
 from commonplace.lib.note_parser import blank_fenced_code_blocks
-
 
 LINK_RE = re.compile(r"\[([^]]*)\]\(([^)]+\.md)(?:#[^)]*)?\)")
 VERBATIM_RE = re.compile(r"\bverbatim\b", re.IGNORECASE)

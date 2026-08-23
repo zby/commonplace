@@ -7,7 +7,10 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from commonplace.freshness.versioning import resolve_file_text
-from commonplace.review.review_db import FreshnessBaseline, load_current_freshness_baselines
+from commonplace.review.review_db import (
+    FreshnessBaseline,
+    load_current_freshness_baselines,
+)
 
 
 @dataclass(frozen=True)

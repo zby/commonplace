@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Acknowledge changed inputs for a registered freshness target."""
 
 from __future__ import annotations
@@ -7,8 +6,17 @@ import argparse
 from pathlib import Path
 
 from commonplace.cli.freshness_io import read_input_payload
-from commonplace.freshness.transitions import ack_target_inputs, parse_input_observation, parse_target_key
-from commonplace.review.review_db import connect, ensure_db, prune_superseded_freshness_baselines, resolve_db_path
+from commonplace.freshness.transitions import (
+    ack_target_inputs,
+    parse_input_observation,
+    parse_target_key,
+)
+from commonplace.review.review_db import (
+    connect,
+    ensure_db,
+    prune_superseded_freshness_baselines,
+    resolve_db_path,
+)
 
 
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
@@ -54,7 +62,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
             )
             prune_superseded_freshness_baselines(conn, [superseded])
             conn.commit()
-    except (OSError, RuntimeError, ValueError) as exc:
+    except (OSError, RuntimeError, TypeError, ValueError) as exc:
         parser.error(str(exc))
 
     print("acked")

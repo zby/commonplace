@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Bulk-ack stale verdict pairs whose watched note parts did not change.
 
 Conformance pairs may be selected (via explicit requests or `--all-gates`) but
@@ -11,10 +10,10 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from commonplace.review.acknowledgement import ack_pairs
 from commonplace.review.ack_trivial_note_changes import qualifying_pairs
-from commonplace.review.resolve_criteria import criterion_ids_for_cli
+from commonplace.review.acknowledgement import ack_pairs
 from commonplace.review.paths import review_gates_dir
+from commonplace.review.resolve_criteria import criterion_ids_for_cli
 
 
 def build_parser() -> argparse.ArgumentParser:

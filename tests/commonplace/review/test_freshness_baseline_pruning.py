@@ -5,7 +5,6 @@ from pathlib import Path
 from commonplace.review import review_db
 from tests.commonplace.review.pair_helpers import accept_pair, source_criterion_path
 
-
 MODEL_PARTITION = "test-model"
 
 

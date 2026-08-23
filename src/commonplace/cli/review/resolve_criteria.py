@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Resolve criterion requests to concatenated instruction text.
 
 Usage:

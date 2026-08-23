@@ -13,6 +13,7 @@ from pathlib import Path
 
 from commonplace.scaffold_manifest import MANIFEST
 
+
 @dataclass
 class InitReport:
     created: list[Path] = field(default_factory=list)

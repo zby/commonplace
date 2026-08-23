@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Finalize a review job from its derived job output path."""
 
 from __future__ import annotations
@@ -7,9 +6,15 @@ import argparse
 import json
 from pathlib import Path
 
-from commonplace.review.finalization import ExecutionMetadata, finalize_review_job_from_owned_output
+from commonplace.review.finalization import (
+    ExecutionMetadata,
+    finalize_review_job_from_owned_output,
+)
 from commonplace.review.review_db import prepare_review_db
-from commonplace.review.review_model import REASONING_EFFORT_VALUES, normalize_reasoning_effort
+from commonplace.review.review_model import (
+    REASONING_EFFORT_VALUES,
+    normalize_reasoning_effort,
+)
 
 
 def _print_json(payload: dict[str, object]) -> None:

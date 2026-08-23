@@ -6,10 +6,16 @@ from pathlib import Path
 from typing import Any
 
 from commonplace.lib import frontmatter
-from commonplace.review.collection_conformance import COLLECTION_CONFORMANCE_LENS, is_collection_conformance_request
+from commonplace.review.collection_conformance import (
+    COLLECTION_CONFORMANCE_LENS,
+    is_collection_conformance_request,
+)
 from commonplace.review.critique import is_critique_request
 from commonplace.review.paths import reject_unsafe_relative
-from commonplace.review.type_conformance import TYPE_CONFORMANCE_LENS, is_type_conformance_request
+from commonplace.review.type_conformance import (
+    TYPE_CONFORMANCE_LENS,
+    is_type_conformance_request,
+)
 
 
 def criterion_ids_for_cli(gates_dir: Path, requests: list[str], *, all_gates: bool) -> list[str]:

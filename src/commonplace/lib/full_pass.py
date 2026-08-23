@@ -11,7 +11,6 @@ from typing import Any, Literal
 from commonplace.lib.hashing import content_sha256_for_text
 from commonplace.lib.note_parser import ParsedDocument, parse_document
 
-
 FULL_PASS_REPORT_TYPE = "kb/reports/types/full-pass-report.md"
 _SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 _RESOLUTION_HEADING_RE = re.compile(r"^## Resolution\s*$", re.MULTILINE)

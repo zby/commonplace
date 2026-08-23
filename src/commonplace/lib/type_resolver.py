@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
@@ -69,7 +69,7 @@ def _validate_repo_relative_kb_path(
     if path.is_absolute():
         raise ValueError(f"{field_name}: absolute paths are not valid: {rel}")
 
-    is_file_relative = rel.startswith("./") or rel.startswith("../")
+    is_file_relative = rel.startswith(("./", "../"))
     is_repo_relative = rel.startswith("kb/")
 
     if not (is_file_relative or is_repo_relative):
@@ -214,12 +214,12 @@ def _schema_path_from_type_doc(
     return schema_path
 
 
-@lru_cache(maxsize=None)
+@cache
 def _load_schema(path_str: str) -> dict[str, Any]:
     path = Path(path_str)
     raw = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(raw, dict):
-        raise ValueError(f"{path}: schema must load to a mapping")
+        raise TypeError(f"{path}: schema must load to a mapping")
     if "$id" not in raw:
         raw = {"$id": path.resolve().as_uri(), **raw}
     return raw
@@ -314,7 +314,7 @@ def _build_registry_for_path(
     return registry
 
 
-@lru_cache(maxsize=None)
+@cache
 def _validator_for_path(path_str: str) -> Draft202012Validator:
     path = Path(path_str).resolve()
     schema = _load_schema(str(path))

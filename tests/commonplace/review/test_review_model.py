@@ -1,6 +1,9 @@
 from __future__ import annotations
 
-from commonplace.review.review_model import build_model_partition, normalize_model_partition
+from commonplace.review.review_model import (
+    build_model_partition,
+    normalize_model_partition,
+)
 
 
 def test_normalize_model_partition_collapses_registered_aliases() -> None:

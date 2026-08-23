@@ -8,7 +8,11 @@ import sqlite3
 from dataclasses import dataclass
 from pathlib import Path
 
-from commonplace.freshness.selector import ChangedInput, StaleTarget, select_stale_review_targets
+from commonplace.freshness.selector import (
+    ChangedInput,
+    StaleTarget,
+    select_stale_review_targets,
+)
 from commonplace.freshness.snapshots import load_snapshot_by_id
 from commonplace.review.clock import iso_now
 

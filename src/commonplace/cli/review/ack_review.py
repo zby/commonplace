@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Carry assay evidence across a note change without rewriting its prose."""
 
 from __future__ import annotations

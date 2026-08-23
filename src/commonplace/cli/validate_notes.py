@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 import sys
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 
 from commonplace.lib.project_paths import (
@@ -22,7 +22,6 @@ from commonplace.lib.validation import (
     validate_collection_landings,
     validate_redirect_map,
 )
-
 
 _TOO_BROAD_MESSAGE = (
     "Validation scope must be a specific collection or file. "
@@ -58,13 +57,16 @@ def resolve_validation_target(
         return ResolvedValidationTarget(paths=tuple(list_type_spec_paths(repo_root)))
 
     if arg in {"recent", "today"}:
-        today = datetime.now().date()
+        today = datetime.now(UTC).astimezone().date()
         return ResolvedValidationTarget(
             paths=tuple(
                 sorted(
                     path
                     for path in list_notes_collection_paths(repo_root)
-                    if datetime.fromtimestamp(path.stat().st_mtime).date() == today
+                    if datetime.fromtimestamp(path.stat().st_mtime, tz=UTC)
+                    .astimezone()
+                    .date()
+                    == today
                 )
             )
         )

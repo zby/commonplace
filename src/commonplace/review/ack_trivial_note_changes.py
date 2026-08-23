@@ -24,7 +24,6 @@ from commonplace.review.review_db import (
 from commonplace.review.review_model import normalize_model_partition
 from commonplace.review.review_target_selector import select_stale_criteria
 
-
 _TITLE_RE = re.compile(r"^#\s+(.+)$", re.MULTILINE)
 KNOWN_WATCHES = {"body", "title", "description"}
 

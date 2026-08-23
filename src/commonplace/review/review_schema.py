@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Review store integrity checks; schema owned by commonplace.store."""
 
 from __future__ import annotations
@@ -6,6 +5,7 @@ from __future__ import annotations
 import sqlite3
 
 from commonplace import store
+
 REVIEW_SCHEMA_VERSION = store.STORE_SCHEMA_VERSION
 EXPECTED_REVIEW_TABLES = store.EXPECTED_TABLES
 EXPECTED_REVIEW_INDEXES = store.EXPECTED_INDEXES

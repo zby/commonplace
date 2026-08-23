@@ -6,7 +6,11 @@ from pathlib import Path
 
 from commonplace.freshness.baselines import REVIEW_PAIR_KIND
 from commonplace.freshness.transitions import ack_target_inputs
-from commonplace.review.paths import criterion_id_from_stored_path, normalize_criterion_path, normalize_repo_relative_path
+from commonplace.review.paths import (
+    criterion_id_from_stored_path,
+    normalize_criterion_path,
+    normalize_repo_relative_path,
+)
 from commonplace.review.review_db import (
     connect,
     ensure_db,

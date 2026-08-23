@@ -4,11 +4,15 @@ from __future__ import annotations
 
 from collections import defaultdict
 from dataclasses import dataclass
-from datetime import date
+from datetime import UTC, datetime
 from pathlib import Path
 
 from commonplace.lib import frontmatter as fm_mod
-from commonplace.lib.note_parser import extract_title, find_markdown_links, strip_frontmatter
+from commonplace.lib.note_parser import (
+    extract_title,
+    find_markdown_links,
+    strip_frontmatter,
+)
 from commonplace.lib.project_paths import list_collection_note_paths
 
 
@@ -21,7 +25,7 @@ class PromotionReportResult:
 
 def resolve_link(source: Path, target: str) -> Path | None:
     """Resolve a relative link target to an absolute path."""
-    if target.startswith("http://") or target.startswith("https://"):
+    if target.startswith(("http://", "https://")):
         return None
     target = target.split("#")[0]
     if not target:
@@ -98,7 +102,7 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
 
     text_with_links = rank(text_files)
     lines = [
-        f"# Unstructured Text Candidates - {date.today()}",
+        f"# Unstructured Text Candidates - {datetime.now(UTC).astimezone().date()}",
         "",
         f"Unstructured text files: {len(text_files)}",
         "",
