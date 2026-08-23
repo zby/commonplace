@@ -113,9 +113,9 @@ rg "^tags:.*my-tag" kb/notes/ kb/reference/ kb/instructions/ kb/commonplace/note
 
 The `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connect`, etc.) is available in this agent runtime. If a Commonplace skill is unexpectedly unavailable, use `cp-skill-health-check` to diagnose the installation.
 
-### Commands
+### Commands and implementation source
 
-The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, snapshots, note operations, and the review system. For the full reference, read [kb/commonplace/reference/commands.md](./kb/commonplace/reference/commands.md).
+The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, snapshots, note operations, and the review system. For exact command usage, prefer the live command's `--help`. For exact implementation behavior, inspect the source of the installed package rather than relying on a prose restatement; `commonplace-source` prints the package directory for the same installation that supplies the commands. Use `kb/commonplace/reference/` for architecture boundaries, invariants, rationale, and orientation that the implementation does not itself recover.
 
 Call `commonplace-*` commands by bare name. They come from the user-level `llm-commonplace` uv tool installation; do not prepend project-venv paths or wrap them in `uv run`. If a command is missing, use `cp-skill-health-check` to distinguish a missing tool installation, a missing tool-directory `PATH` entry, or a shadowing executable.
 
