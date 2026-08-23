@@ -64,16 +64,49 @@ proximity rather than by discipline — the editor cannot miss it the way a
 separate reference file is missed. The 72-of-120 commit coupling measured
 earlier is the cost of maintaining that discipline; docstrings do not need it.
 
+## The relocation was almost entirely unnecessary
+
+The staging-area finding above overstated what the prose holds. Applying the
+rule *a docstring should carry only what the source does not* — assuming a
+reader who can read the function — the 37 split as:
+
+- **13** lack both a docstring and any doc prose. Nothing to relocate; writing
+  them is a separate job.
+- **24** have doc prose. Judged one by one against their function bodies,
+  **one** carried something the code does not say.
+
+The survivor is `type_resolver.resolve_type`: *a validation run supplies its
+cached frontmatter loader; standalone callers omit it.* The signature shows the
+parameter is optional; nothing in the file says who passes it or why. Written.
+
+Everything else was restatement. `strip_frontmatter`'s prose is "Delegates to
+`frontmatter.strip()`" against a body of `return fm_mod.strip(content)`.
+`extract_title` is "First H1 heading text, or `Untitled`" against a regex and
+that literal. `validate_links_from_document` is "verify each local relative link
+target actually exists" against a loop doing exactly that.
+
+Three were marginal and judged out. `move_path`'s "Git is not involved; it
+detects the rename on commit" is a real absence-fact, but it is
+[ADR 039](../../reference/adr/039-tool-visibility-is-package-owned-and-git-is-never-invoked.md)'s;
+`remove_code_regions` and `find_markdown_links_with_text` name their callers,
+which a grep recovers. Under a strict reading of the rule, discoverable means
+drop.
+
+**So the prose was not a staging area after all — it was a paraphrase layer.**
+Relocating it wholesale would have imported 24 restatements into the code and
+called it a saving. The measurement that made it look valuable, 37 functions
+without docstrings, counted absence rather than content.
+
 ## Next actions
 
-1. Write docstrings for the 37 public functions that lack them, sourcing text
-   from the corresponding `lib-modules.md` passage where one exists.
-2. Decide the routing map: generated-and-checked from module docstrings, or
+1. Decide the routing map: generated-and-checked from module docstrings, or
    dropped in favour of a `rg` over docstrings.
-3. Then delete `lib-modules.md`, with a `properdocs.yml` redirect.
+2. Then delete `lib-modules.md`, with a `properdocs.yml` redirect.
+3. Separately, and not part of this disposition: the 13 functions lacking both
+   a docstring and doc prose. Whether they need one is the same question asked
+   of the code alone, with no prose to salvage.
 
-Step 1 is a code change of real size and is not started. Steps 2 and 3 depend on
-it: deleting first would discard the source text for step 1.
+The code change this worked case implied is done: one docstring, not 37.
 
 ## Open
 

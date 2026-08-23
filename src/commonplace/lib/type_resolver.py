@@ -405,6 +405,13 @@ def resolve_type(
     repo_root: Path,
     load_type_frontmatter: Callable[[Path], dict[str, Any]] | None = None,
 ) -> TypeProfile:
+    """Resolve a note's type profile from its frontmatter.
+
+    load_type_frontmatter exists for validation runs, which already hold a
+    parsed-frontmatter cache and pass its lookup in to avoid reopening each
+    type document once per artifact. Standalone callers omit it and the
+    resolver reads the type document itself.
+    """
     workspace_root = repo_root.resolve()
     if frontmatter is None:
         return TypeProfile(
