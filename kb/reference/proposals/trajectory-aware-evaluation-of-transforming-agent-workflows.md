@@ -21,6 +21,14 @@ This proposal defines a controlled comparison before Commonplace adds trajectory
 
 The system distinction rests on [reasoning production is not reasoning evaluation](../../notes/reasoning-production-is-not-reasoning-evaluation.md): reconstructing a plausible successful route from a good output is not checking the route that actually ran. The harness survey independently places trajectory and intermediate-state evaluation inside the harness evaluation interface rather than after final-output generation.
 
+## AutoResearchEval evidence and boundary
+
+The [AutoResearchEval ingest](../../sources/how-agents-fail-on-autoresearch.ingest.md) raises the prior that richer execution evidence improves diagnosis. Its artifact-aware agent judge inspected code, data, logs, and reports across 800 research-agent trajectories. Against human labels on 50 trajectories, it reached 80.7% pattern recall and $\kappa=0.75$, compared with 63.5% and $\kappa=0.53$ for a single transcript-only call. It also reports 660 trajectories in which the agent identified a severe flaw during review but delivered without repairing it. That second result adds a distinct outcome for this proposal: whether review findings actually cause revision, claim withdrawal, or an explicit unresolved-failure disposition before delivery.
+
+The comparison does not isolate artifact access. The artifact-aware arm also receives agentic navigation, selective code execution, a detailed stage rubric, nine judging rules, an automated coverage and evidence-anchor checker, and regeneration after failed checks. Its gains support that bundled pipeline on AutoResearch tasks, not any one component or Commonplace's workflow. They therefore motivate this comparison but do not satisfy its adoption criteria.
+
+The initial paired benchmark should likewise be interpreted as a test of the trajectory-aware bundle. If that bundle adds material discrimination, controlled evidence-surface ablations should hold the judge model, rubric, budget, adjudication, and retry policy fixed while varying access to chronological events, retained artifacts, and code execution. A positive bundle result warrants those ablations; it does not by itself license attributing the gain to artifact access.
+
 ## Proposed comparison
 
 Build a small paired benchmark from prospectively captured, complete full-improvement-pass histories. Each case has one frozen workflow request, its final artifacts, and—only for the trajectory arm—the chronological execution record. Run two independent judges against the same rubric:
@@ -34,6 +42,7 @@ Both judges answer the same questions:
 - Were isolation, freshness, ordering, ownership, and worker-lifecycle constraints followed?
 - Did tool failures or malformed results receive valid recovery?
 - Does each completion claim have matching durable evidence?
+- When self-review identified a material defect, did it cause revision, claim withdrawal, or an explicit unresolved-failure disposition before delivery?
 - Did the workflow violate a process constraint while still producing an acceptable-looking final artifact?
 
 Judges emit structured findings with `requirement`, `status`, `evidence`, `severity`, and `explanation`. They do not edit artifacts or propose workflow fixes during scoring.
@@ -53,6 +62,7 @@ The primary measurement is **confirmed incremental detection**: process failures
 - confirmed findings shared by both arms;
 - false-positive and indeterminate rates by arm;
 - evidence-localization quality;
+- review-to-revision closure: the share of material self-review findings followed by correction, withdrawal, or explicit disposition, plus judge accuracy in locating that transition;
 - repeat-run agreement on the same case;
 - cost, latency, and trace events inspected;
 - sensitivity to trajectory length;
