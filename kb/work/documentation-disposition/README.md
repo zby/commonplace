@@ -75,3 +75,8 @@ Every artifact in the class has a disposition with a reason, at least one is
 executed as a worked case, and the general rule — if one exists — is promoted.
 If the answer turns out to be per-artifact with no general rule, say so; that
 is a finding, not a failure to conclude.
+
+## Current draft
+
+- [Decide What Documentation an LLM Needs](./decide-what-documentation-an-llm-needs.md) — turns the workshop's recovery, addressability, value, placement, and maintenance findings into an executable disposition procedure. **Deliberately not promoted to `kb/instructions/`**: its write-time half is folded into [`kb/reference/COLLECTION.md`](../../reference/COLLECTION.md)'s economy tests, and its audit half fires only on a corpus sweep, which is one-off migration work. Promotion condition and reasoning are recorded on the draft itself.
+- [Worked case: `lib-modules.md`](./worked-case-lib-modules.md) — the first artifact through the full procedure; one survivor in six rule-shaped candidates, and a docstring relocation that shrank from 37 functions to one on inspection
