@@ -77,6 +77,6 @@ Relevant Notes:
 - [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — contrasts: the cross-system commensurability problem this test avoids only by staying intra-system
 - [Reflection buys addressability](./reflection-buys-addressability.md) — mechanism: why a readable artifact layer lets the cut set be read rather than only run
 - [Reflective system](./definitions/reflective-system.md) — defined-in: the causally connected self-representation that makes a pathway's allocation inspectable
-- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidenced-by: a declared human-inclusive boundary whose maintainers are currently a cut set of its improvement pathway
+- [Commonplace as a reflective system](./evidence/commonplace-as-a-reflective-system.md) — evidenced-by: a declared human-inclusive boundary whose maintainers are currently a cut set of its improvement pathway
 - [Ingest: A Poetiq Perspective on Recursive Self-Improvement](../sources/poetiq-perspective-on-recursive-self-improvement.ingest.md) — evidenced-by: scopes its reported zero-human-intervention result to harness construction after people choose the task, data, objective, evaluator, and outer process
 - [Improvements can accumulate without compounding](./improvements-can-accumulate-without-compounding.md) — extends: explains how the human cut set limits the scale and duration of compounding without entering its definition

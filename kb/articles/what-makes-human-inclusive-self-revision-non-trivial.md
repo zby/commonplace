@@ -21,9 +21,9 @@ source_notes:
   - kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md
   - kb/notes/evidence/six-commonplace-paths-establish-broad-addressability-not-completeness.md
   - kb/reference/commonplace-declared-frame.md
-  - kb/reference/commonplace-as-a-reflective-system.md
+  - kb/notes/evidence/commonplace-as-a-reflective-system.md
   - kb/reference/storage-architecture.md
-  - kb/reference/tag-readme-trace-observed-causal-connection.md
+  - kb/notes/evidence/tag-readme-trace-observed-causal-connection.md
   - kb/reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md
   - kb/reference/adr/053-retire-distillation-without-a-successor-term.md
   - kb/reference/adr/054-add-adapted-from-and-operationalized-from-lineage-relations.md
@@ -78,7 +78,7 @@ These are logical obligations, not required components. A proposal-selection pat
 
 The successor need not be a one-for-one replacement artifact. A better arrangement may narrow a rule, split one concept into several, reroute its useful work, or remove an artifact whose role is no longer warranted. What matters is comparing the successor with continued use of the incumbent arrangement.
 
-Complete addressability, like [reflective coverage](../reference/commonplace-as-a-reflective-system.md), is relative to a declared boundary and an operation profile. Commonplace may strongly support inspection and revision of natural-language theory, types, and validators while having weaker paths for objectives, evaluator validity, authority arrangements, or the realization of its internal binding requests at an external model dependency.
+Complete addressability, like [reflective coverage](../notes/evidence/commonplace-as-a-reflective-system.md), is relative to a declared boundary and an operation profile. Commonplace may strongly support inspection and revision of natural-language theory, types, and validators while having weaker paths for objectives, evaluator validity, authority arrangements, or the realization of its internal binding requests at an external model dependency.
 
 ## How the revision path works
 
@@ -109,7 +109,7 @@ Commonplace has already changed several kinds of load-bearing machinery:
 
 - [ADR 042](../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) replaced the claimed exhaustive three-register taxonomy after a worked dialectical collection supplied a counterexample. [ADR 069](../reference/adr/069-collection-contract-bundles-become-one-time-prototypes.md) later corrected the successor model: local collection contracts bind, while reusable starting text is copied once as a prototype and receives no synchronization. The article conventions remain local to `kb/articles/COLLECTION.md`.
 - [ADR 053](../reference/adr/053-retire-distillation-without-a-successor-term.md) retired a load-bearing theory term after a 464-occurrence audit showed that it merged operations with opposite maintenance requirements. Rather than preserve the term under a new name, the revision moved its useful work to the two-layer theory, explicit lineage relations, and the discovery lifecycle. When use exposed a missing relation, [ADR 054](../reference/adr/054-add-adapted-from-and-operationalized-from-lineage-relations.md) revised the successor arrangement instead of defending the first repair.
-- The [tag-README redesign](../reference/tag-readme-trace-observed-causal-connection.md) changed instructions, schema, validation, and rendering. Later validation used the new check and exposed a defect in the associated search recipe.
+- The [tag-README redesign](../notes/evidence/tag-readme-trace-observed-causal-connection.md) changed instructions, schema, validation, and rendering. Later validation used the new check and exposed a defect in the associated search recipe.
 - [ADR 056](../reference/adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md) revised the proposal and ADR lifecycle. [ADR 057](../reference/adr/057-articles-use-an-editorial-profile-and-excluded-drafts.md) then used its new alternatives requirement, and [ADR 063](../reference/adr/063-all-article-drafts-circulate-behind-a-banner.md) later challenged and revised the installed article lifecycle.
 
 Together these cases are more informative than a declaration that every file may be edited. They show theory replacement, vocabulary retirement, symbolic enforcement, revision of design machinery, and later dependence on installed successors. They leave open how evenly the affordance covers different authority paths and whether it improves outcomes.

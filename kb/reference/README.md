@@ -202,17 +202,17 @@ Imperative how-to procedures live in [kb/instructions/](../instructions/) rather
 - [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md) — how to use the review system: concepts, freshness, the batch workflow, and command surface (the how-it-is-built companion is [review-architecture.md](./review-architecture.md))
 - [FIX-SYSTEM.md](../instructions/FIX-SYSTEM.md) — current fix-system workflow
 - [full-improvement-pass-closure.md](./full-improvement-pass-closure.md) — how the full-improvement workflow reassays final note bytes, routes residual findings, and stops without claiming convergence
-- [harness-sub-agent-model-selection-regression.md](./harness-sub-agent-model-selection-regression.md) — an observed harness regression that removed per-worker model selection and mis-attributed review executions; read before trusting a model partition
+- [harness-sub-agent-model-selection-regression.md](./harness-sub-agent-model-selection-regression.md) — the July harness regression that mis-attributed review executions, the August partial restoration of bounded-fork model overrides, and why a requested model is still not execution provenance
 
 ### The repository as a worked case
 
 Commonplace runs on its own methodology, so this collection also documents *this repository* as an operating instance — what it has been observed to do, under which declared boundary, and what that does and does not establish. These describe the case, not the surface a consuming project installs.
 
 - [commonplace-declared-frame.md](./commonplace-declared-frame.md) — the declared boundary all the assessments below are made under: what is inside, what is outside, and how to cite or depart from it
-- [commonplace-as-a-reflective-system.md](./commonplace-as-a-reflective-system.md) — classifies the repository as a human-inclusive reflective self-improving system and locates which functions in one observed pathway are human, joint, or computational
+- [commonplace-as-a-reflective-system.md](../notes/evidence/commonplace-as-a-reflective-system.md) — classifies the repository as a human-inclusive reflective self-improving system and locates which functions in one observed pathway are human, joint, or computational
 - [commonplace-as-an-instrument.md](./commonplace-as-an-instrument.md) — what the KB application is *for* in the design program: the composition test, two worked provenance instances, and the transfer evidence the repository does not have
 - [design-rationale-management.md](./design-rationale-management.md) — how workshops, proposals, ADRs, contracts, and validators distribute design rationale, and the end-to-end continuity the shipped contracts do not enforce
-- [tag-readme-trace-observed-causal-connection.md](./tag-readme-trace-observed-causal-connection.md) — the ADR-026 change traced commit by commit as one observed instance of causal connection in both directions
+- [tag-readme-trace-observed-causal-connection.md](../notes/evidence/tag-readme-trace-observed-causal-connection.md) — the ADR-026 change traced commit by commit as one observed instance of causal connection in both directions
 - [tag-readme-trace-as-self-improving-loop.md](./tag-readme-trace-as-self-improving-loop.md) — the same trace mapped onto search, evaluation, and retention, showing which half of each step runs in code
 - [where-change-candidates-come-from-in-commonplace.md](./where-change-candidates-come-from-in-commonplace.md) — how problem-noticing and candidate-drafting happen beyond a maintainer's own judgment
 - [agent-memory-coverage.md](./agent-memory-coverage.md) — how the shipped surfaces realize agent-memory requirements, and where they currently fall short

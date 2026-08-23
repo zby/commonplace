@@ -74,7 +74,7 @@ These are obvious, but they belong to the infrastructure wave, not the first sem
 - `Distilled into:` footer labels and backlink grammar.
 - Filenames containing `distill*`.
 - Link-only references where the target note is itself being renamed.
-- Reference infrastructure and history: `../reference/link-vocabulary.md`, ADR 011's inline-gloss decision, ADR 005's historical "notes distill from which" comment, ADR 020's catalogue-sync wording, ADR 021's path-audit examples and old filename discussion, and `../reference/tag-readme-trace-observed-causal-connection.md`'s historical mention of `distillation-README.md`.
+- Reference infrastructure and history: `../reference/link-vocabulary.md`, ADR 011's inline-gloss decision, ADR 005's historical "notes distill from which" comment, ADR 020's catalogue-sync wording, ADR 021's path-audit examples and old filename discussion, and `../notes/evidence/tag-readme-trace-observed-causal-connection.md`'s historical mention of `distillation-README.md`.
 
 These should move after the semantic notes settle, otherwise generated navigation and backlinks will hide unresolved vocabulary decisions.
 

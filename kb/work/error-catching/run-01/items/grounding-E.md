@@ -19,7 +19,7 @@ Strengthening discrimination can instead expand the warranted domain. A better v
 
 The [Gödel machine](../../../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md) is the limiting case of assurance obtained through strict acceptance: a rewrite runs only when the machine proves that switching helps under its formalization. It gains warranted total autonomy within that proof surface and excludes improvements it cannot prove. The cost follows from its proof requirement, not from a general law that stronger oracles always accept less.
 
-[Commonplace](../../../../reference/commonplace-as-a-reflective-system.md) composes several oracles: tests and validators for structural constraints, human judgment for criteria that are not adequately automated. It could hand the latter gates to a model tomorrow and become more autonomous without becoming more warranted. Expanding warranted autonomy requires improving the relevant oracle's discrimination or narrowing the gate to cases it can establish.
+[Commonplace](../../../../notes/evidence/commonplace-as-a-reflective-system.md) composes several oracles: tests and validators for structural constraints, human judgment for criteria that are not adequately automated. It could hand the latter gates to a model tomorrow and become more autonomous without becoming more warranted. Expanding warranted autonomy requires improving the relevant oracle's discrimination or narrowing the gate to cases it can establish.
 
 The useful questions are therefore both *how autonomous is the loop?* and *which of that autonomy is warranted by its oracles?*
 
@@ -47,4 +47,4 @@ Relevant Notes:
 - [Gödel machines are a proof-governed case of reflective self-modification](../../../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: warranted autonomy bounded by a proof requirement
 - [Reach assessment](../../../../notes/definitions/reach-assessment.md) — contrasts: a different sense of "reach" — what an oracle's acceptance can establish here, versus whether a candidate's claimed generalization is genuine there
 - [Oracle-strength spectrum](../../../../notes/oracle-strength-spectrum.md) — extends: grades the verification surfaces that determine oracle domain
-- [Commonplace as a reflective system](../../../../reference/commonplace-as-a-reflective-system.md) — evidence: a pathway-mixed system whose autonomy profile aligns with heterogeneous oracle domain
+- [Commonplace as a reflective system](../../../../notes/evidence/commonplace-as-a-reflective-system.md) — evidence: a pathway-mixed system whose autonomy profile aligns with heterogeneous oracle domain

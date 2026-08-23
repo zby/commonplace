@@ -46,7 +46,7 @@ Pursued as a declared objective, moving the frontier outward has a well-formed s
 
 - The claim concerns computational allocation, not methodological closure: a person can execute a settled gate, while an unattended model can improvise. The two often advance together when settled criteria become executable, [but they track different changes](./methodological-and-computational-closure-track-different-changes.md).
 - The load-bearing premise is the elastic backlog. Where the workload is genuinely fixed — a bounded migration, a system in maintenance-only mode — increasing computational autonomy *should* reduce human hours, and observing it there would confirm the mechanism rather than refute this note.
-- The pattern is stated from one system class (agent-operated knowledge systems, [Commonplace among them](../reference/commonplace-as-a-reflective-system.md)) and Bainbridge's industrial precedent; whether it holds across self-improving systems generally is the conjecture.
+- The pattern is stated from one system class (agent-operated knowledge systems, [Commonplace among them](./evidence/commonplace-as-a-reflective-system.md)) and Bainbridge's industrial precedent; whether it holds across self-improving systems generally is the conjecture.
 
 ## Open Questions
 
@@ -62,7 +62,7 @@ Relevant Notes:
 - [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — extends: the commensurability problem the proposed measures inherit, now given a purpose
 - [Computationally directed self-improvement is a fixed-boundary reallocation ending in contraction](./computationally-directed-self-improvement-is-a-reallocation.md) — extends: horizon-indexed contraction failures operationalize the frontier this note locates human attention at
 - [Improvements can accumulate without compounding](./improvements-can-accumulate-without-compounding.md) — extends: explains how a human cut set can limit the scale and duration of compounding even when retained benefits help produce later improvements
-- [Commonplace as a reflective self-improving system](../reference/commonplace-as-a-reflective-system.md) — evidenced-by: the human-inclusive system whose growing computational allocation alongside continued human involvement motivated the pattern
+- [Commonplace as a reflective self-improving system](./evidence/commonplace-as-a-reflective-system.md) — evidenced-by: the human-inclusive system whose growing computational allocation alongside continued human involvement motivated the pattern
 - [The tag-readme trace read as a self-improving loop](../reference/tag-readme-trace-as-self-improving-loop.md) — evidenced-by: a worked instance of relocation — the automatable halves run in code and agents while the human keeps exactly the noticing and shape judgment
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: why the frontier is durable structure, not a temporary capability gap — automation stalls wherever verification is expensive
 - [Bainbridge, Ironies of Automation](https://static1.squarespace.com/static/644321e78cd2dd37613af33e/t/6694873f71612132a84371c7/1721009983702/Ironies+of+Automation_Bainbridge_1983.pdf) — evidenced-by: the industrial precedent — automation leaves the operator the residue the designer could not automate, transforming the role rather than removing it

@@ -25,7 +25,7 @@ source_notes:
   - kb/reference/commonplace-declared-frame.md
   - kb/reference/proposals/ablation-baselines-for-the-declared-objective.md
   - kb/reference/proposals/revise-behavioral-authority-decomposition.md
-  - kb/reference/tag-readme-trace-observed-causal-connection.md
+  - kb/notes/evidence/tag-readme-trace-observed-causal-connection.md
   - kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md
   - kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md
   - kb/sources/autogenesis-a-self-evolving-agent-protocol.ingest.md
@@ -124,7 +124,7 @@ Commonplace bets that linked natural-language theory can be both [interpreted an
 
 Commonplace's [six-path audit](../notes/evidence/six-commonplace-paths-establish-broad-addressability-not-completeness.md) identified many behavior-shaping artifacts that could be inspected and revised, but could not show that it found them all. It also exposed a flaw in its model of behavioral authority: the model could not express when different authority paths apply. That model is now a revision target. A [live proposal](../reference/proposals/revise-behavioral-authority-decomposition.md) considers replacements, but none has been installed.
 
-Separately, the [topic-index case](../reference/tag-readme-trace-observed-causal-connection.md) installed validator machinery that later work reused. Neither case shows that the natural-language theory layer causes compounding.
+Separately, the [topic-index case](../notes/evidence/tag-readme-trace-observed-causal-connection.md) installed validator machinery that later work reused. Neither case shows that the natural-language theory layer causes compounding.
 
 ## What remains to test
 

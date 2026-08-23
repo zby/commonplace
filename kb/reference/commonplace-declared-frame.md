@@ -30,5 +30,5 @@ Relevant Notes:
 
 - [Self-improving system](../notes/definitions/self-improving-system.md) — defined-in: the frame-indexed predicate whose ellipsis this declaration discharges for Commonplace
 - [Reflective system](../notes/definitions/reflective-system.md) — defined-in: the boundary-parametric criterion assessed against this frame
-- [Commonplace as a reflective self-improving system](./commonplace-as-a-reflective-system.md) — see-also: the classification and worked trace assessed under this frame
+- [Commonplace as a reflective self-improving system](../notes/evidence/commonplace-as-a-reflective-system.md) — see-also: the classification and worked trace assessed under this frame
 - [Methodological and computational closure track different changes](../notes/methodological-and-computational-closure-track-different-changes.md) — rests-on: the allocation and closure readings that require a declared frame to be well-formed

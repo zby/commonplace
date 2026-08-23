@@ -45,7 +45,7 @@ This is what a methodology's verification and authority machinery — typed arti
 
 ## Worked application
 
-The [Commonplace reference case](../reference/commonplace-as-a-reflective-system.md) applies all three axes to ADR 026: form, verification, and authority were settled for the completeness mark, while noticing the design problem and choosing the type split remained improvised. The example lives there so this note owns the criterion rather than a second telling of the trace.
+The [Commonplace reference case](./evidence/commonplace-as-a-reflective-system.md) applies all three axes to ADR 026: form, verification, and authority were settled for the completeness mark, while noticing the design problem and choosing the type split remained improvised. The example lives there so this note owns the criterion rather than a second telling of the trace.
 
 ## Closure under recommendations is not search closure
 
@@ -57,7 +57,7 @@ The three axes above belong to closure under recommendations because the recomme
 
 - **Closure is a direction, not a binary.** No real methodology settles every extension decision it could face. The claim is that methodology-governed self-extension scales with how much it settles, and stalls at the first consequential meta-decision it leaves open — the self-extension frontier. What operates past that frontier has a named architecture: in [the two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md), dropping back to the generator layer — theory, or the judgment the methodology did not settle — is an expected operation, and recurring fallback results are promotion candidates that move the frontier outward.
 - **The counter worth taking seriously.** A capable agent brings general competence and can improvise the decisions a methodology omits. Where that improvisation is reliable, closure buys less. The claim's force therefore tracks how *consequential and divergence-prone* the omitted decisions are. Choices whose divergence cannot affect the governed outcome are outside the assessed decision set rather than weakly closed.
-- **Whether Commonplace is closed is a separate assessment.** This note supplies the criterion; the [reference case](../reference/commonplace-as-a-reflective-system.md) applies it to one pathway, not the whole system.
+- **Whether Commonplace is closed is a separate assessment.** This note supplies the criterion; the [reference case](./evidence/commonplace-as-a-reflective-system.md) applies it to one pathway, not the whole system.
 - **Closure explains production, not retention.** Whether a codified artifact should then be kept rather than re-derived each session is a separate question. A persisted [symbolic artifact](./definitions/representational-form.md) can be deterministic and inspectable, but those properties do not by themselves settle its retention.
 
 ---
@@ -70,6 +70,6 @@ Relevant Notes:
 - [Behavioral authority](./definitions/behavioral-authority.md) — enables: names the consumer, channel, and force the authority axis demands
 - [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — extends: the representational-form axis widens to the mappings between forms when a recommendation spans them
 - [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — mechanism: why the verification axis is the ceiling
-- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidenced-by: applies the three closure axes to the centralized ADR 026 trace
+- [Commonplace as a reflective system](./evidence/commonplace-as-a-reflective-system.md) — evidenced-by: applies the three closure axes to the centralized ADR 026 trace
 - [Methodology with incomplete coverage and its live theory fallback form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — extends: the execution architecture past the closure frontier — fallback to the generator as expected operation, recurrence as the promotion signal that moves the frontier
 - [Only explicit retention is currently durable, writable, and addressable at once](./only-explicit-retention-is-durable-writable-and-addressable.md) — grounds: why an imported explicit criterion can belong to retained methodology while a decider's tacit criterion cannot

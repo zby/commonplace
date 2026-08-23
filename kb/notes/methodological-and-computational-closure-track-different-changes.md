@@ -52,7 +52,7 @@ What a model actor changes is how much [codification](./definitions/codification
 
 These are engineering dependencies, not definitions of one another. A settled gate can remain human-executed; an agent can read explicit commitments yet improvise how to apply them; and a computational procedure can encode a poor proxy. Moving evaluation to a model changes allocation without establishing that its acceptances are trustworthy.
 
-The [Commonplace reference case](../reference/commonplace-as-a-reflective-system.md) applies this conversion to ADR 026 and keeps the trace-specific facts in one place.
+The [Commonplace reference case](./evidence/commonplace-as-a-reflective-system.md) applies this conversion to ADR 026 and keeps the trace-specific facts in one place.
 
 ## Reflection is a separate question
 
@@ -87,6 +87,6 @@ Relevant Notes:
 - [Only explicit retention is currently durable, writable, and addressable at once](./only-explicit-retention-is-durable-writable-and-addressable.md) — grounds: the shared reason tacit expertise is not retained methodology and externalization is allocation's transport
 - [Increasing computational autonomy relocates human effort to the frontier instead of reducing it](./increasing-computational-autonomy-relocates-human-effort.md) — extends: states the human-side consequence when computational allocation advances
 - [Computationally directed self-improvement is a fixed-boundary reallocation ending in contraction](./computationally-directed-self-improvement-is-a-reallocation.md) — extends: restates the no-human endpoint as a testable boundary contraction, and frames the human-directed-to-computationally-directed transition the profile tracks
-- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidenced-by: applies both closure readings to one observed improvement pathway
+- [Commonplace as a reflective system](./evidence/commonplace-as-a-reflective-system.md) — evidenced-by: applies both closure readings to one observed improvement pathway
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — contrasts: states why computational allocation stalls where warranted checking is expensive
 - [A Model for Types and Levels of Human Interaction with Automation](https://www.cs.uml.edu/~holly/91.550/papers/sheridan-autonomy.pdf) — evidenced-by: the external per-function allocation precedent, whose within-function level scale is deliberately not inherited

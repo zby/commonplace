@@ -43,7 +43,7 @@ Out of scope:
 | [lineage-mechanisms](../lineage-mechanisms/README.md) | owns Commonplace's actual storage-weight decisions; this workshop may borrow its in-artifact/event-surface/operational-store weight vocabulary for the hypothetical design |
 | [src-architecture-alternatives](../src-architecture-alternatives/README.md) | owns the review-store source-of-truth debate for Commonplace; its three candidate shapes (SQLite-as-store, pure-file, append-only-log+index) are evidence, not a decision to redo |
 | [reflective-system.md](../../notes/definitions/reflective-system.md), [self-improving-system.md](../../notes/definitions/self-improving-system.md) | supply the two completeness checklists (five reflective obligations; evidence-responsive operative change, optionally a proposal-selection loop) the schema is graded against |
-| [commonplace-as-a-reflective-system.md](../../reference/commonplace-as-a-reflective-system.md) | worked example of what "reflective coverage" looks like when graded pathway-by-pathway; useful as a rubric for evaluating the hypothetical schema's coverage claims |
+| [commonplace-as-a-reflective-system.md](../../notes/evidence/commonplace-as-a-reflective-system.md) | worked example of what "reflective coverage" looks like when graded pathway-by-pathway; useful as a rubric for evaluating the hypothetical schema's coverage claims |
 
 ## Document map
 

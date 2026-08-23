@@ -17,7 +17,7 @@ The robustness is not a separate mechanism from the interpreted layer's characte
 
 Workarounds spend context, attention, and reasoning steps from a bounded pool, so an unfixed defect in the interpreted layer behaves like **debt taxed per encounter**: every traversal that meets it pays again. Accumulation does not produce a crash; it produces load — and because [context degrades silently under volume, complexity, and interference](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md), the approach to saturation is as quiet as the failures themselves. The interpreted layer's ceiling is workaround load crowding out task work, reached gradually and invisibly, where the exact layer's ceiling is one wrong transition, reached instantly and loudly.
 
-A system like this KB exhibits the pattern directly: its linking contracts accumulated contradictions over a year of normal operation, surfaced only when a review was commissioned, and [an index's completeness promise degraded quietly](../reference/tag-readme-trace-observed-causal-connection.md) until a validator made the breakage loud. Operation continued throughout — which is the point, in both directions.
+A system like this KB exhibits the pattern directly: its linking contracts accumulated contradictions over a year of normal operation, surfaced only when a review was commissioned, and [an index's completeness promise degraded quietly](./evidence/tag-readme-trace-observed-causal-connection.md) until a validator made the breakage loud. Operation continued throughout — which is the point, in both directions.
 
 ## Design consequences
 
@@ -48,4 +48,4 @@ Relevant Notes:
 - [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — extends: the failure-economics criterion added to the boundary decision
 - [Codify versus LLM decision heuristics](./codify-versus-llm-decision-heuristics.md) — extends: a failure-economics lens beside the four it lists
 - [A consumption channel delivers force without the history that earned it](./a-consumption-channel-delivers-force-without-the-history-that.md) — contrasts: the boundary carrying the failures this note's soft-failure claim excludes — believed errors, not noticed blockages
-- [The tag-readme change as an observed causal-connection trace](../reference/tag-readme-trace-observed-causal-connection.md) — evidenced-by: a quiet degradation absorbed by readers until a validator converted the silent tax into a tripwire
+- [The tag-readme change as an observed causal-connection trace](./evidence/tag-readme-trace-observed-causal-connection.md) — evidenced-by: a quiet degradation absorbed by readers until a validator converted the silent tax into a tripwire

@@ -2,7 +2,7 @@
 
 ## Status
 
-Open. Steps 1–3 are complete; step 4 is next. Five steps, ordered. Each
+Open. Steps 1–4 are complete; step 5 is next. Five steps, ordered. Each
 step's gate is the reason it sits where it does — the ordering is the part
 worth following, not the step list.
 
@@ -107,6 +107,15 @@ anything. Use `commonplace-relocate-note`, never `git mv` — it rewrites
 consumers and adds the redirect.
 
 ADR 070 now lets a move apply a stated rule instead of a reviewer's opinion.
+
+**Done 2026-08-23.** The tag-README causal-connection trace and the Commonplace
+reflective-system classification moved to `kb/notes/evidence/`. Both already
+used Commonplace as a substantive witness; their openings now state the bounded
+feasibility inference and the limits of the case. The harness model-selection
+regression remains in reference as a dated operational incident. Its fidelity
+review also recorded that the 2026-08-23 collaboration surface partially
+restored worker model overrides for bounded forks without repairing the 268
+misattributed results.
 
 ## 5. Disposition the remaining definitions
 

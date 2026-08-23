@@ -1,20 +1,29 @@
 ---
-description: "The ADR-026 tag-readme change traced commit by commit as one observed instance of causal connection between Commonplace and its self-representation, in both directions"
+description: "One bounded Commonplace trace establishes that operative self-representation can exert causal force in both directions; it does not establish system-wide reflective coverage"
 type: kb/types/note.md
 traits: [has-implementation]
 ---
 
 # The tag-readme change as an observed causal-connection trace
 
-Causal connection is the obligation that separates a reflective system from a merely well-documented one, and it has to be shown as an observed instance rather than argued from architecture. The `tag-readme` type (ADR 026) supplies one, end to end. This note is the full walkthrough behind the [classification](./commonplace-as-a-reflective-system.md); the [self-improving reading](./tag-readme-trace-as-self-improving-loop.md) interprets the same trace as an improvement loop.
+This bounded trace establishes an existence claim: an agent-operated KB's
+retained self-representation can exert causal force in both directions. It does
+not establish system-wide reflective coverage, computational closure, or
+improvement beyond this pathway. Causal connection is the obligation that
+separates a reflective system from a merely well-documented one, and it has to
+be shown as an observed instance rather than argued from architecture. The
+`tag-readme` type (ADR 026) supplies one end-to-end case. This note is the full
+walkthrough behind the [classification](./commonplace-as-a-reflective-system.md);
+the [self-improving reading](../../reference/tag-readme-trace-as-self-improving-loop.md)
+interprets the same trace as an improvement loop.
 
 ## The strain
 
-It began as a strain rather than a logged failure. The `index` type was doing two jobs at once — enumerating a tag's members completely and introducing the tag — and the `learning-theory` index had grown to 18.8 KB and 55 entries, past the point where anyone could still call it complete. The KB already held a claim that made sense of the strain: [stale indexes reduce discovery when they suppress fallback search](../notes/stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md), because a head marked complete tells a thorough reader to stop looking while members are still missing.
+It began as a strain rather than a logged failure. The `index` type was doing two jobs at once — enumerating a tag's members completely and introducing the tag — and the `learning-theory` index had grown to 18.8 KB and 55 entries, past the point where anyone could still call it complete. The KB already held a claim that made sense of the strain: [stale indexes reduce discovery when they suppress fallback search](../stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md), because a head marked complete tells a thorough reader to stop looking while members are still missing.
 
 ## Revising the self-representation
 
-The response was to revise the self-representation, and formulating that response into a specific candidate was not the maintainer's work alone. An agent working in the repository, in Claude Code, retrieved [stale indexes reduce discovery when they suppress fallback search](../notes/stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) as the claim that made sense of the strain and drafted the two-type split around it — one instance of a wider set of candidate-forming mechanisms [surveyed separately](./where-change-candidates-come-from-in-commonplace.md). Commit `91130f82` then added [ADR 026](./adr/026-tag-readme-type-with-completeness-and-coverage-marks.md), which split the type in two and made `complete` an *enforced* mark — the ADR insists the unenforced natural-language version must never be written, since a trusted-but-stale cache is exactly the failure it guards against. Commit `94769805` then carried that single decision into four forms at once: the natural-language spec (`kb/types/tag-readme.md`), the JSON schema, the validator (`src/commonplace/lib/validation.py`), and the build-time renderer. The tie between natural-language instruction and code is not loose — the validator dispatches on the spec's own path, so the spec file *is* the key that turns enforcement on:
+The response was to revise the self-representation, and formulating that response into a specific candidate was not the maintainer's work alone. An agent working in the repository, in Claude Code, retrieved [stale indexes reduce discovery when they suppress fallback search](../stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) as the claim that made sense of the strain and drafted the two-type split around it — one instance of a wider set of candidate-forming mechanisms [surveyed separately](../../reference/where-change-candidates-come-from-in-commonplace.md). Commit `91130f82` then added [ADR 026](../../reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md), which split the type in two and made `complete` an *enforced* mark — the ADR insists the unenforced natural-language version must never be written, since a trusted-but-stale cache is exactly the failure it guards against. Commit `94769805` then carried that single decision into four forms at once: the natural-language spec (`kb/types/tag-readme.md`), the JSON schema, the validator (`src/commonplace/lib/validation.py`), and the build-time renderer. The tie between natural-language instruction and code is not loose — the validator dispatches on the spec's own path, so the spec file *is* the key that turns enforcement on:
 
 ```python
 @type_rule("kb/types/tag-readme.md")
@@ -25,7 +34,7 @@ The ADR's numbers reappear as constants (`TAG_README_SOFT_BYTES`, `TAG_README_HA
 
 ## What changed afterward
 
-What makes this a causal connection rather than a coordinated edit is what changed afterward. Three consumers behave differently now, and [behavioral authority](../notes/definitions/behavioral-authority.md) lets us name each path precisely instead of saying the artifact vaguely "influenced" the system:
+What makes this a causal connection rather than a coordinated edit is what changed afterward. Three consumers behave differently now, and [behavioral authority](../definitions/behavioral-authority.md) lets us name each path precisely instead of saying the artifact vaguely "influenced" the system:
 
 | Consumer | Channel | Force |
 |---|---|---|
@@ -62,10 +71,10 @@ Two negatives the timeline pins down. First, no size or completeness validator e
 
 Relevant Notes:
 
-- [Commonplace as a reflective self-improving system](./commonplace-as-a-reflective-system.md) — part-of: the classification and allocation profile this trace supports
-- [The tag-readme trace read as a self-improving loop](./tag-readme-trace-as-self-improving-loop.md) — see-also: the same trace read as an improvement loop
-- [Where change candidates come from in Commonplace](./where-change-candidates-come-from-in-commonplace.md) — part-of: surveys the wider set of candidate-forming mechanisms the agent's drafting work here is one instance of
-- [Reflective system](../notes/definitions/reflective-system.md) — rests-on: the causal-connection obligation this trace instantiates
-- [Behavioral authority](../notes/definitions/behavioral-authority.md) — defined-in: names each consumer, channel, and force in the trace
-- [Stale indexes reduce discovery when they suppress fallback search](../notes/stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) — rests-on: the retained claim the strain was read through
-- [ADR 026: tag-readme type with completeness and coverage marks](./adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) — part-of: the decision this trace documents
+- [Commonplace as a reflective self-improving system](./commonplace-as-a-reflective-system.md) — extends: classifies the system and actor allocation this trace supports
+- [The tag-readme trace read as a self-improving loop](../../reference/tag-readme-trace-as-self-improving-loop.md) — see-also: the same trace read as an improvement loop
+- [Where change candidates come from in Commonplace](../../reference/where-change-candidates-come-from-in-commonplace.md) — see-also: surveys the wider set of candidate-forming mechanisms the agent's drafting work here is one instance of
+- [Reflective system](../definitions/reflective-system.md) — rests-on: the causal-connection obligation this trace instantiates
+- [Behavioral authority](../definitions/behavioral-authority.md) — defined-in: names each consumer, channel, and force in the trace
+- [Stale indexes reduce discovery when they suppress fallback search](../stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) — rests-on: the retained claim the strain was read through
+- [ADR 026: tag-readme type with completeness and coverage marks](../../reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) — evidenced-by: records the decision and implemented contract reconstructed by this trace

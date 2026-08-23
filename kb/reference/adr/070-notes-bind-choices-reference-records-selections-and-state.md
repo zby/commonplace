@@ -154,6 +154,13 @@ for a claim about the design space. The harness regression is primarily an
 operational incident about an external tool and may remain reference or move
 with its external-system evidence.
 
+**Follow-up, 2026-08-23.** The causal-connection trace and reflective-system
+classification now live in `kb/notes/evidence/`: each states the bounded
+design-space inference the Commonplace case supports and what the case does not
+establish. The harness model-selection regression remains in reference because
+its intended contribution is the dated operational incident and its effect on
+Commonplace review provenance.
+
 Requirements usually decompose rather than forming a third kind. A requirement
 typically pairs a belief that supports it with a commitment that adopts it,
 joined by `rests-on`. Externally imposed constraints—a platform limit or

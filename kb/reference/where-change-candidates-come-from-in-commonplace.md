@@ -6,7 +6,7 @@ tags: [foundations, computational-model, self-improving-systems]
 
 # Where change candidates come from in Commonplace
 
-[A proposal-selection improvement loop](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) needs search — noticing a problem, generating a candidate — before evaluation or retention can act on anything. [Commonplace as a reflective self-improving system](./commonplace-as-a-reflective-system.md) traces one instance of that — a maintainer noticing the `index` type doing two jobs, an agent formulating the fix as ADR 026 — and reads Search as jointly performed across the human and computational components. That single trace understates how much of this Commonplace channels through its own mechanisms rather than a maintainer's unaided judgment; this note surveys the wider set.
+[A proposal-selection improvement loop](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) needs search — noticing a problem, generating a candidate — before evaluation or retention can act on anything. [Commonplace as a reflective self-improving system](../notes/evidence/commonplace-as-a-reflective-system.md) traces one instance of that — a maintainer noticing the `index` type doing two jobs, an agent formulating the fix as ADR 026 — and reads Search as jointly performed across the human and computational components. That single trace understates how much of this Commonplace channels through its own mechanisms rather than a maintainer's unaided judgment; this note surveys the wider set.
 
 ## Candidate formulation is channeled through self-representation
 
@@ -16,7 +16,7 @@ Channeling search through self-representation is not unique to editing a self-re
 
 ## Noticing is not purely human either
 
-The ADR 026 trace's own third change — the `covered_by` check catching what the `rg` recipe had missed, described in [Commonplace as a reflective system](./commonplace-as-a-reflective-system.md) — is a case in point: a symbolic check noticing a gap no human had, not a maintainer's insight.
+The ADR 026 trace's own third change — the `covered_by` check catching what the `rg` recipe had missed, described in [Commonplace as a reflective system](../notes/evidence/commonplace-as-a-reflective-system.md) — is a case in point: a symbolic check noticing a gap no human had, not a maintainer's insight.
 
 Commonplace also keeps designed channels for noticing besides a maintainer's own attention. [`kb/log.md`](../log.md) is an append-only observation log, rarely used in practice. `cp-skill-connect`'s Maintenance Observations section is a best-effort signal that surfaces on every connect run. And `commonplace-freshness-status` is a more systematic one: it compares each registered target's accepted input snapshots against current text and flags drift automatically, so a note or criterion changing since a baseline was accepted becomes a visible staleness signal without anyone reading for it (`kb/reference/freshness-architecture.md`). It is new and unproven at scale, and v1 registers only `review-pair` targets — the general theory-to-implementation lineage this note's companion trace already names as mostly absent is exactly what a wider freshness substrate would still need to cover. None of the four — mechanical check, log, connect report, or freshness status — closes the loop unattended: promoting an entry from any of them into an actual candidate still needs an explicit maintenance or triage step nobody has automated.
 
@@ -30,8 +30,8 @@ None of this runs on rails. The instructions above name conventions to read and 
 
 Relevant Notes:
 
-- [Commonplace as a reflective self-improving system](./commonplace-as-a-reflective-system.md) — evidenced-by: the ADR 026 allocation trace this note generalizes beyond
-- [The tag-readme change as an observed causal-connection trace](./tag-readme-trace-observed-causal-connection.md) — evidenced-by: the full walkthrough of the agent-assisted drafting this note's opening trace summarizes
+- [Commonplace as a reflective self-improving system](../notes/evidence/commonplace-as-a-reflective-system.md) — evidenced-by: the ADR 026 allocation trace this note generalizes beyond
+- [The tag-readme change as an observed causal-connection trace](../notes/evidence/tag-readme-trace-observed-causal-connection.md) — evidenced-by: the full walkthrough of the agent-assisted drafting this note's opening trace summarizes
 - [The tag-readme trace read as a self-improving loop](./tag-readme-trace-as-self-improving-loop.md) — evidenced-by: reads the same agent-assisted drafting as the computational part of jointly performed Search
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — rests-on: defines the search function this note catalogs mechanisms for
 - [Freshness architecture](./freshness-architecture.md) — evidenced-by: the newer, systematic staleness-noticing mechanism, still limited to review-pair targets

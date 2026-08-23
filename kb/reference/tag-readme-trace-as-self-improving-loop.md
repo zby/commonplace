@@ -6,7 +6,7 @@ traits: [has-implementation]
 
 # The tag-readme trace read as a self-improving loop
 
-The [observed trace](./tag-readme-trace-observed-causal-connection.md) discharges causal connection. Read against [self-improving system](../notes/definitions/self-improving-system.md), the same change also discharges that definition, which asks for two things the reflective obligations do not: a change to the system's own organization, and a response to evidence about an objective it could have failed. Commonplace improves in the [proposal-selection](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) shape — draft a candidate, review it with a real chance of rejection, merge selectively — so that loop is the grid to lay over the trace. This note does the full mapping; the [classification](./commonplace-as-a-reflective-system.md) draws the human, joint, and computational allocation profile from it.
+The [observed trace](../notes/evidence/tag-readme-trace-observed-causal-connection.md) discharges causal connection. Read against [self-improving system](../notes/definitions/self-improving-system.md), the same change also discharges that definition, which asks for two things the reflective obligations do not: a change to the system's own organization, and a response to evidence about an objective it could have failed. Commonplace improves in the [proposal-selection](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) shape — draft a candidate, review it with a real chance of rejection, merge selectively — so that loop is the grid to lay over the trace. This note does the full mapping; the [classification](../notes/evidence/commonplace-as-a-reflective-system.md) draws the human, joint, and computational allocation profile from it.
 
 | Requirement | In the trace | Runs in |
 |---|---|---|
@@ -30,8 +30,8 @@ Search and evaluation are joint: the maintainer chooses the target and judges th
 
 Relevant Notes:
 
-- [Commonplace as a reflective self-improving system](./commonplace-as-a-reflective-system.md) — part-of: the classification and allocation profile this reading supports
-- [The tag-readme change as an observed causal-connection trace](./tag-readme-trace-observed-causal-connection.md) — part-of: the trace this reading interprets
+- [Commonplace as a reflective self-improving system](../notes/evidence/commonplace-as-a-reflective-system.md) — part-of: the classification and allocation profile this reading supports
+- [The tag-readme change as an observed causal-connection trace](../notes/evidence/tag-readme-trace-observed-causal-connection.md) — part-of: the trace this reading interprets
 - [Where change candidates come from in Commonplace](./where-change-candidates-come-from-in-commonplace.md) — part-of: surveys the wider set of candidate-forming mechanisms the agent's role in Search is one instance of
 - [Methodological and computational closure track different changes](../notes/methodological-and-computational-closure-track-different-changes.md) — rests-on: why actor allocation is reported separately from the pathway's reflectivity
 - [Self-improving system](../notes/definitions/self-improving-system.md) — rests-on: the definition this trace is read against

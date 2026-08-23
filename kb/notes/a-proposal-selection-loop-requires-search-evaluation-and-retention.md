@@ -92,7 +92,7 @@ Relevant Notes:
 - [Actionable methodology](./definitions/actionable-methodology.md) — grounds: the operator, available operations, and setting that make a criterion usable in the loop
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — extends: asks whether a system's methodology governs changes to its own change process
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: realizes the three functions under a formal acceptance gate
-- [Commonplace as a reflective system](../reference/commonplace-as-a-reflective-system.md) — evidenced-by: traces the functions through an observed repository change loop
+- [Commonplace as a reflective system](./evidence/commonplace-as-a-reflective-system.md) — evidenced-by: traces the functions through an observed repository change loop
 - [Schmidhuber, Gödel Machines](../sources/goedel-machines-schmidhuber.ingest.md) — evidenced-by: supplies the proof-governed limit case
 - [Self-improving system](./definitions/self-improving-system.md) — grounds: the base category this loop is a named subtype of — membership requires evidence-responsive operative change, not the gate architecture
 - [Reflection buys addressability](./reflection-buys-addressability.md) — extends: what routing the loop through a self-representation adds to bare retention
