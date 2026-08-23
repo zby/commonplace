@@ -23,10 +23,17 @@ the expensive step, so
 exactly where ordinary software would call it premature denormalization. The
 decision is economic, not a cleanup.
 
-**An unchecked cache is the hazard.** Hand-maintained-and-trusted is the state
+**The hazard is real in principle but is not what is happening here.**
+Hand-maintained-and-trusted is the state
 [the enforce-or-omit rule](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md)
-forbids, because a false copy suppresses the read that would have exposed it.
-Most of these artifacts are currently in exactly that state.
+forbids. These artifacts are formally in it — no validator checks them — but
+[measurement](./staleness-baseline.md) shows they are not drifting: lag runs
+0–3 commits and they are largely updated in the same commit as the code.
+
+So the operative problem is **cost, not rot**. They stay current because a
+co-maintenance tax is paid on every code change that touches them. The question
+is which disposition reduces that tax without losing what the descriptions
+provide.
 
 ## Scope
 
