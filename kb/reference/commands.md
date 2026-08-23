@@ -21,6 +21,16 @@ commonplace-init --root /path/to/project
 
 `--name` sets the project name for templates (defaults to directory name). Safe to rerun — never overwrites existing files, and reports whether preserved files already match the scaffold or differ from what the current run would generate.
 
+### commonplace-source
+
+Print the filesystem path of the `commonplace` package that supplies the running command. Use it when an exact implementation question requires reading the live installed source rather than a prose description.
+
+```bash
+commonplace-source
+```
+
+For command-line usage and options, prefer the target command's `--help`; use the source path for exact implementation behavior. Reference documentation remains the place for architecture boundaries, invariants, rationale, and other information the implementation does not cheaply recover.
+
 ## Validation and indexing
 
 ### commonplace-validate
