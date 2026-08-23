@@ -85,7 +85,7 @@ Audit outcomes applied to the library drafts:
 ### Not changing
 
 - ADR 009's core vocabulary remains the theoretical default; `kb/notes/` adopts it (extended by ADR 020) via its `COLLECTION.md`.
-- ADR 017's boundary — `COLLECTION.md` owns register conventions — stands; this ADR specifies the internal structure of the outbound-linking section that `COLLECTION.md` owns.
+- ADR 017's boundary — `COLLECTION.md` owns collection conventions — stands; this ADR specifies the internal structure of the outbound-linking section that `COLLECTION.md` owns. The historical ADR title retains “register.”
 - Type definitions (`definition`, `index`, `adr`) remain free to override collection conventions for types whose linking behaviour genuinely differs.
 - The articulation test, inline-vs-footer positions, and path-must-resolve rules are unchanged.
 
@@ -95,5 +95,5 @@ Audit outcomes applied to the library drafts:
 - [ADR-017: COLLECTION.md is the register convention boundary](./017-collection-md-is-the-register-convention-boundary.md) — foundation: the convention boundary this ADR specifies the internal structure of
 - [ADR-020: theoretical-default additions — contrasts and mechanism](./020-theoretical-default-contrasts-mechanism.md) — extends ADR 009 within the theoretical default template this ADR scopes
 - [Links encode conditional possibilities, not obligations](../../notes/links-encode-conditional-possibilities-not-obligations.md) — rests-on: the reader-need theory the label discipline rests on
-- [Register](../../notes/definitions/text-contract.md) — defined-in: content-mode groupings used to organise the catalogue
+- [Collection and text contract](../definitions/collection.md) — defined-in: the current collection-local convention boundary this ADR's link rules inhabit
 - [link-vocabulary.md](../link-vocabulary.md) — the catalogue that COLLECTION.md authors consult

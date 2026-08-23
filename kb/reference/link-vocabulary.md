@@ -37,9 +37,10 @@ Collection authors use this page when defining or revising outbound-linking rule
 
 The architecture is deliberately loose because the link theory is still developing. Invent intra-collection labels your work needs, propose additions to the catalogue, and diverge from suggestions where it makes sense.
 
-("Register" means one of three content modes — theoretical, descriptive, prescriptive — that determines a collection's quality goal, title conventions, and linking rules. See [`register`](../notes/definitions/text-contract.md).)
-
-Organise the outbound-linking section **per destination**, not per register. A destination is normally a collection path; use the reserved token `external` for targets outside the KB. For each destination your source links to, declare:
+Organise the outbound-linking section **per destination**, not per inherited
+content-mode label. A destination is normally a collection path; use the
+reserved token `external` for targets outside the KB. For each destination your
+source links to, declare:
 
 1. **Search guidance** — when the [connect skill](../instructions/cp-skill-connect/SKILL.md) (or an author manually prospecting for links) should search this destination from the source. Concrete triggers work best: *"search when the source asserts a claim without evidence,"* not *"search when relevant."*
 2. **Authorised labels** — the labels writers in the source collection may use for links to this destination. Give each a one-line reader-need context specific to this *source → destination* pairing.
@@ -50,11 +51,11 @@ If a destination isn't listed, it isn't an active link target from this collecti
 
 **Search latitude.** Search guidance should be specific enough to keep results within the agent's effective context, but open enough to surface serendipitous finds. Over-narrow triggers miss adjacent connections the agent might usefully make; over-broad triggers drown the connect skill in noise. When the destination is small or the query sparse, prefer slight over-retrieval — the agent can filter results in context, whereas missed links are harder to recover. Avoid phrasing that rules out whole classes of plausible connection (e.g., "only when X").
 
-Per-destination rules enable fine-grained experimentation. `kb/notes/ -> kb/reference/` can diverge from `kb/notes/ -> kb/agent-memory-systems/`, even though both destinations share a register.
+Per-destination rules enable fine-grained experimentation. `kb/notes/ -> kb/reference/` can diverge from `kb/notes/ -> kb/agent-memory-systems/` even when both destinations have similar text-contract shapes.
 
 ## Label catalogue
 
-Labels cluster by register-of-origin: the kind of content they emerged to describe. Each `COLLECTION.md` selects whichever labels fit each destination. The register grouping is advisory.
+Labels cluster by the source shape they emerged to describe. Each `COLLECTION.md` selects whichever labels fit each destination. The grouping is advisory and does not classify collections.
 
 Every directional identifier completes `source <label> target`: the artifact containing the link is the grammatical subject and the linked artifact is the target. A catalogue entry therefore states what the source asserts about the target, not merely what role the target serves. Omitted helper verbs such as “is” are acceptable when they do not reverse the endpoints. Pre-existing identifiers that fail this invariant are explicit migration debt and retain their declared meaning until their own scoped migration; new or changed identifiers must satisfy it ([ADR 058](./adr/058-directional-identifiers-use-source-as-subject.md)).
 
@@ -114,7 +115,7 @@ Usable from any source to any destination.
 
 | label | reader-need |
 |---|---|
-| `defined-in` | reader doesn't know the term; target is under `kb/notes/definitions/` |
+| `defined-in` | reader doesn't know the term; target is a definition authorized by the source collection |
 | `see-also` | reader might benefit but author can't name a specific need; escape hatch — use only after ruling out a more specific label |
 
 ## Lineage semantics
@@ -177,7 +178,7 @@ Do not use this page as a fallback for lazy labelling. If the source `COLLECTION
 
 ## Open questions
 
-- Is register-of-origin the right catalogue grouping, or would alphabetical be cleaner? Register-of-origin helps authors find labels that match their source's shape; alphabetical is flatter but less suggestive.
+- Is source-shape grouping better than an alphabetical catalogue? Shape helps authors find labels that fit their source; alphabetical is flatter but less suggestive.
 - How should the connect skill treat authorized-but-rarely-used destinations? Speculative — probably depends on use-frequency signal.
 - Should `supersedes` be restricted to intra-descriptive use? Most use is ADR chains inside `kb/reference/`; cross-collection supersession is rare.
 
@@ -193,4 +194,4 @@ Relevant Notes:
 - [Links encode conditional possibilities, not obligations](../notes/links-encode-conditional-possibilities-not-obligations.md) — rests-on: the reader-need theory behind the label test
 - [Theory and methodology form a two-layer execution system](../notes/theory-and-methodology-form-a-two-layer-execution-system.md) — rests-on: the maintenance regime the derived side of the lineage semantics asserts
 - [Load-bearing vocabulary collisions should be prevented or visibly scoped at write time](../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — rests-on: why the derived/abstracted boundary is drawn at labelled edges rather than in unstructured natural-language content
-- [Register](../notes/definitions/text-contract.md) — defined-in: content-mode groupings used to organise the catalogue
+- [Collection and text contract](./definitions/collection.md) — defined-in: collections own the binding local link rules that select from this catalogue

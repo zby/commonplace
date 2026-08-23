@@ -68,7 +68,7 @@ Scan `kb/notes/`, `kb/types/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/
 | `mechanism` | asym | notes | wants to understand how the claim operates |
 | `contradicts` | sym | notes | wants to resolve a disagreement |
 | `contrasts` | sym | notes | wants the neighbouring-shape distinction |
-| `defined-in` | asym | notes/definitions | reader may not know the term |
+| `defined-in` | asym | notes/definitions, reference/definitions | reader may not know the term |
 | `evidenced-by` | asym | notes, types, reference, agent-memory, agentic-systems, sources, external | the target observation, case, or source corroborates, qualifies, or bounds this assertion |
 | `derived-from` | asym | reference, agent-memory, agentic-systems, sources | claim is worked out from this source, adding nothing beyond it — see the lineage semantics in `kb/reference/link-vocabulary.md` |
 | `abstracted-from` | asym | reference, agent-memory, agentic-systems, sources | claim generalizes beyond this source; the source is evidence, authority is earned by testing |

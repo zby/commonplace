@@ -37,7 +37,7 @@ The surviving objective is not monolithic. It is specialized down a two-level hi
 
 - **Global KB goals set the loss.** The always-loaded control-plane goals — purpose, scope, quality bar — are the top-level objective every session optimizes against, and they decide inclusion before anything else does, since [KB goals in always-loaded context guide inclusion decisions](./kb-goals-in-always-loaded-context-guide-inclusion-decisions.md). This is the domain filter: it deletes off-scope material however well-written.
 
-- **COLLECTION.md text contracts specialize the loss per collection.** Each writable collection declares a quality goal in its [text contract](./definitions/text-contract.md) — the local objective its writers and reviewers treat as decisive. `kb/notes/` optimizes explanatory-reach; `kb/reference/` optimizes fidelity and economy; `kb/instructions/` optimizes executability and precision. Same global goal, different residual loss per subtree.
+- **COLLECTION.md text contracts specialize the loss per collection.** Each writable collection declares a quality goal in its [text contract](../reference/definitions/collection.md#text-contract) — the local objective its writers and reviewers treat as decisive. `kb/notes/` optimizes explanatory-reach; `kb/reference/` optimizes fidelity and economy; `kb/instructions/` optimizes executability and precision. Same global goal, different residual loss per subtree.
 
 The [collection prototypes](../reference/collection-prototypes.md) may lower the one-time cost of drafting a new contract, but they are not a third objective level. After copying, only the destination's local `COLLECTION.md` binds; prototype changes do not specialize or update it. [Artifact classification separates the local authoring objective from content kind, lineage, and authority](./artifact-classification-separates-content-kind-lineage-and-authority.md).
 
@@ -69,7 +69,7 @@ That the collection objective with the weakest oracle governs the KB's most valu
 Relevant Notes:
 
 - [KB goals in always-loaded context guide inclusion decisions](./kb-goals-in-always-loaded-context-guide-inclusion-decisions.md) — grounds: the global goals are the always-loaded top-level loss the hierarchy specializes
-- [Text contract](./definitions/text-contract.md) — defined-in: the binding local declaration through which the objective hierarchy specializes
+- [Text contract](../reference/definitions/collection.md#text-contract) — defined-in: the binding local declaration through which the objective hierarchy specializes
 - [Artifact classification separates content kind, lineage, and authority](./artifact-classification-separates-content-kind-lineage-and-authority.md) — grounds: separates a collection's authoring objective from region- and path-level classifications
 - [A framework rule with a boundary-preserving rival is not an inherited constraint](./a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md) — grounds: inherited-versus-chosen is relative to declared boundary commitments, so the dissolution is framework-relative
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: bounded context, the first pruning constraint

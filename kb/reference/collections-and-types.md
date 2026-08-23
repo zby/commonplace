@@ -8,7 +8,7 @@ tags: []
 
 Every authored artifact in Commonplace is governed by two independent contracts:
 
-- Its location selects a **collection**. The nearest containing `COLLECTION.md` supplies the text contract: purpose, quality goal, title and description conventions, lifecycle, and outbound-link rules.
+- Its location selects a [**collection**](./definitions/collection.md). The nearest containing `COLLECTION.md` supplies that collection's [text contract](./definitions/collection.md#text-contract): purpose, quality goal, title and description conventions, lifecycle, and outbound-link rules.
 - Its `type:` frontmatter points to a **type spec**. The type spec supplies the artifact's structural and semantic contract: frontmatter fields, required sections, schema, authoring guidance, and any template.
 
 The collection answers what role the artifact serves in this part of the KB. The type answers what shape the artifact takes. A `note` in `kb/notes/` is theoretical, while a `note` in `kb/reference/` describes the shipped system; both use the same structural type contract. A collection does not redefine the meaning of a type's fields.
@@ -100,7 +100,7 @@ There is no generated write-context packet or resolver command. After writing, v
 
 Relevant documentation:
 
-- [Collection](./definitions/collection.md) — defined-in: the precise collection boundary and the role of `COLLECTION.md`
+- [Collection and text contract](./definitions/collection.md) — defined-in: the precise collection boundary and the binding local declaration in `COLLECTION.md`
 - [Validation contract](./validation-contract.md) — part-of: deterministic base rules, type-owned schemas, and semantic conformance review
 - [Collections never own frontmatter semantics](./collections-never-own-frontmatter-semantics.md) — extends: why a type owns its fields while a collection owns text-level conventions
 - [Architecture](./architecture.md) — part-of: where global and installed collection-local types sit in the shipped layout

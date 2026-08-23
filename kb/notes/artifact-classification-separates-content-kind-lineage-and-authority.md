@@ -13,7 +13,7 @@ proposition or operative region, that region's production relation, and the
 behavioral authority of each consumption path. The answers attach to different
 units, so none can substitute for the others.
 
-The artifact's [text contract](./definitions/text-contract.md) is a separate
+The artifact's [text contract](../reference/definitions/collection.md#text-contract) is a separate
 input. It sets the intended contribution and quality bar for artifacts in the
 containing collection. It does not classify what every region contains, how
 that content arose, or what force a consumer gives it.

@@ -7,7 +7,7 @@ tags: []
 
 # The collection–type split is asymmetric: collections never own frontmatter semantics
 
-Collections and types look like symmetric complements — two contract surfaces that together specify an artifact — and design work has repeatedly asked which properties belong on which side. The split is not symmetric, and the asymmetry is deliberate. A type-spec doc fully and self-containedly determines what an artifact's frontmatter *means*: which fields exist, what values they admit, and the truth conditions of each — validator-checkable, interpretable without reading anything else. A [`COLLECTION.md`](./collections-and-types.md) owns only text-level contract features: the [text contract](../notes/definitions/text-contract.md) or register, the quality goal, title and description conventions, and the outbound-link policy. Collections never define, redefine, or select frontmatter-field semantics.
+Collections and types look like symmetric complements — two contract surfaces that together specify an artifact — and design work has repeatedly asked which properties belong on which side. The split is not symmetric, and the asymmetry is deliberate. A type-spec doc fully and self-containedly determines what an artifact's frontmatter *means*: which fields exist, what values they admit, and the truth conditions of each — validator-checkable, interpretable without reading anything else. A [`COLLECTION.md`](./collections-and-types.md) owns only text-level contract features: the [text contract](./definitions/collection.md#text-contract), including the quality goal, title and description conventions, and outbound-link policy. Collections never define, redefine, or select frontmatter-field semantics.
 
 ## Why the boundary holds this way
 

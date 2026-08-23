@@ -16,7 +16,7 @@ it. Commonplace does not synchronize the copy, apply later prototype changes to
 it, or treat the collection as conforming to the prototype. A prototype update
 therefore affects only future copies.
 
-This differs from a [text contract](../notes/definitions/text-contract.md),
+This differs from a [text contract](./definitions/collection.md#text-contract),
 which is the current, binding declaration in a collection's own
 `COLLECTION.md`. Writing, connection, conformance review, and validation consume
 the local contract; they do not resolve a prototype or inherit rules from this
@@ -72,5 +72,5 @@ available starting points fits.
 
 Relevant Notes:
 
-- [Text contract](../notes/definitions/text-contract.md) — defined-in: distinguishes the binding local declaration from optional creation-time material
+- [Text contract](./definitions/collection.md#text-contract) — defined-in: distinguishes the binding local declaration from optional creation-time material
 - [ADR 069: Collection contract bundles become one-time prototypes](./adr/069-collection-contract-bundles-become-one-time-prototypes.md) — evidenced-by: records the clone-only semantics and retirement of text-contract profiles
