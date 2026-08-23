@@ -4,16 +4,16 @@ Run [run-full-improvement-pass-on-note.md](../../instructions/run-full-improveme
 once per note, one note at a time, **in the order listed**. Read the
 [workshop README](./README.md) for operating constraints before starting.
 
-Status: not started.
+Status: complete.
 
 ## Notes
 
 | # | Path | Status |
 |---|---|---|
-| 1 | `kb/notes/llm-recompute-cost-inverts-the-store-vs-recompute-default.md` | not started |
-| 2 | `kb/notes/superseded-choices-are-retained-superseded-beliefs-are-not.md` | not started |
-| 3 | `kb/notes/areas-exist-because-useful-operations-require-reading-notes-together.md` | not started |
-| 4 | `kb/notes/documentation-generates-the-system-rather-than-describing-it.md` | not started |
+| 1 | `kb/notes/llm-recompute-cost-inverts-the-store-vs-recompute-default.md` | complete — keep (reframe); follow-up open |
+| 2 | `kb/notes/superseded-choices-are-retained-superseded-beliefs-are-not.md` | complete — keep (reframe); follow-up open |
+| 3 | `kb/notes/areas-exist-because-useful-operations-require-reading-notes-together.md` | complete — keep |
+| 4 | `kb/notes/documentation-generates-the-system-rather-than-describing-it.md` | complete — keep (reframe); follow-up open |
 
 Order is binding. The seven notes are topologically sorted across both batches
 so every note runs after the notes it cites, and a reframe therefore lands
