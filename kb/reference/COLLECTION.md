@@ -8,6 +8,8 @@ A reference artifact may contain supporting belief propositions without becoming
 
 Quality goal is **fidelity + economy** — say what the system actually does in minimum tokens, without omitting load-bearing details. An agent loading these docs is usually trying to act; every extra token competes with the task.
 
+**For exact implementation facts, live implementation is the default read path.** In the Commonplace source checkout, inspect `src/commonplace/`. In an installed project, `commonplace-source` prints the source directory of the same installed package that supplies the `commonplace-*` commands; use a command's `--help` for its live CLI contract. Reference prose earns a separate place when it supplies orientation, architecture boundaries, cross-component invariants, rationale, or other information the implementation does not cheaply recover. Do not create a prose copy merely to make installed code inspectable.
+
 Tests for economy. The first two ask whether a passage should exist at all,
 given that the system it describes is available for inspection:
 
