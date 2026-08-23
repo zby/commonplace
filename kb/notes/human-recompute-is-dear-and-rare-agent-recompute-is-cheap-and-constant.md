@@ -1,11 +1,11 @@
 ---
-description: "Documentation is a cache whose value is per-read recompute cost times recomputes avoided; human and agent readers invert on both factors, so segmenting by audience needs magnitudes rather than a one-property argument"
+description: "Reconstructing a system from its source is expensive but rarely repeated for a human, cheap but repaid every session for an agent; the opposite profiles leave documentation's audience question to magnitudes rather than principle"
 type: kb/types/note.md
 traits: [title-as-claim, has-comparison]
 tags: [document-system, context-engineering]
 ---
 
-# Documentation audience segmentation cannot be decided from one reader property
+# Human recompute is dear and rare; agent recompute is cheap and constant
 
 Documentation that describes a system a reader could instead read directly is a **cache**. The source is the ground truth; the document is a materialized answer that spares the reader the work of reconstructing it. So the decision to write it, and the decision to write two of it, is a cache-value decision:
 
@@ -13,9 +13,11 @@ Documentation that describes a system a reader could instead read directly is a 
 
 Segmenting by audience — a human-facing layer and an agent-facing layer over the same subject matter — is justified when the two audiences' values diverge enough that one artifact serves neither well. It is not free: each layer pays its own maintenance term, and the terms do not share.
 
-The claim here is that **neither factor alone settles the divergence**, because a human reader and an agent reader invert on *both*, in opposite directions.
+The claim here is about the two readers' profiles. **Reconstructing a system's shape from its source is expensive for a human but rarely repeated, and cheap for an agent but repaid every session.** The inversion runs in opposite directions on the two terms.
 
-## The two readers invert on both factors
+That is what leaves the segmentation question open. Were the readers to invert on cost alone, one of them would plainly need the cache more, and the design question would be settled before any measuring. Two opposed inversions compose into no ordering at all, so which reader benefits more is a question about magnitudes. The value model below is one decomposition, not an exhaustive account of what makes a cache worth keeping — other terms exist, and adding them does not restore an ordering the first two failed to supply.
+
+## The two readers invert on cost and on frequency
 
 **Per-read recompute cost.** For a human, reconstructing a system's shape from its source is expensive: reading is slow in wall-clock terms, and holding the relationships among many files exceeds working memory, so the reconstruction has to be rebuilt in pieces and stitched. For an agent, the same reconstruction is cheap: it reads at machine speed, and it can target the slice it needs by search rather than by reading through. Cheap does not mean free — an agent [pays linearly for every byte it loads](./design-for-the-first-time-human-except-on-access-cost.md), where a human reading the same artifact pays sublinearly — but per unit of understanding recovered, the agent's price is the lower one.
 
