@@ -6,7 +6,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [what-is-stored-in-this-kb](./what-is-stored-in-this-kb/README.md) — resolving the notes/reference boundary: theory binds particular system choices, while reference records Commonplace's selections and current or historical state; other collections retain their local routing rules
 - [adr-routing](./adr-routing/README.md) — 71 ADRs, no index, and no instruction that routes a self-improvement run into them; the change loop is the only loop without an instruction, so the decisions that bind a change are consulted by luck. Shape is open: index, instruction, subsystem-keyed routing, or none of these
 - [documentation-disposition](./documentation-disposition/README.md) — whether to generate, register for staleness, author only irrecoverable content, or minimize each description of shipped-system state; placement is settled and recoverability established, so only the maintenance form is open
 - [ingest-and-snapshot-redesign](./ingest-and-snapshot-redesign/README.md) — minimal v1 migration to local source material, one URL-backed primary, and commit-pinned implementation secondaries; the ingest body changes only where durable fields make lines redundant, with row-level recovery state for the corpus migration
