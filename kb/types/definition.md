@@ -21,6 +21,12 @@ Create a definition note when the KB needs a low-cost canonical gloss that also 
 
 A separate definition is especially justified when the term appears across multiple workflows or notes, when misuse is plausible, or when nearby concepts need a stable boundary. Do not create one merely because the term is important; ordinary notes can serve as glossary targets while they remain cheap and focused enough for that job.
 
+The type is structural, not a collection assignment. Put vocabulary whose
+intended contribution supports transferable theory in `kb/notes/definitions/`.
+Put vocabulary constituted by a Commonplace selection, contract, or
+implemented classification in `kb/reference/definitions/`. Apply the target
+collection's contribution test before this type's authoring guidance.
+
 ## Explication Frame
 
 Use Carnap's explication criteria pragmatically:

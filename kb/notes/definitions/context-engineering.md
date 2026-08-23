@@ -20,6 +20,13 @@ The operational core decomposes into four components within a single bounded cal
 
 **Loading** — assembling and framing prompts from selected knowledge. The `select` function in the [bounded-context orchestration model](../bounded-context-orchestration-model.md) formalizes this: given state, select a batch of call specifications whose prompts are feasible for their respective tasks and models. Framing matters because the same knowledge can have different [extractable value](../information-value-is-observer-relative.md) under different presentations.
 
+Supplying selected material with an explicit task lens is one loading and
+framing pattern: the lens changes what the consumer treats as relevant and the
+shape of the result. It may produce a report, judgment, or rewritten artifact;
+that output's authority and promotion remain separate decisions. In
+[claim-routed reading](../claim-routed-reading-may-beat-reading-first-for-synthesis-notes.md),
+a provisional hypothesis becomes an evolving version of this lens.
+
 **Scoping** — isolating what each consumer sees. [Sub-agents as lexically scoped frames](../llm-context-is-composed-without-scoping.md) is the main local example: flat context has no scope, so architecture must impose it.
 
 **Maintenance** — keeping loaded context healthy over time. Compaction, observation masking, and the [workshop layer's](../a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) holistic-rewrite discipline prevent accumulated debris from [degrading reasoning](../context-efficiency-is-the-central-design-concern-in-agent-systems.md).

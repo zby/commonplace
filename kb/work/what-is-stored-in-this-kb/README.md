@@ -4,7 +4,10 @@ This workshop asks what Commonplace must retain, why it must retain it, and—wh
 
 The immediate trigger was the former theory-side text-contract definition. It defined chosen Commonplace machinery while living in the theoretical collection. The audit first checked the rest of the vocabulary, then folded the term into the [collection definition](../../reference/definitions/collection.md#text-contract) under [ADR 071](../../reference/adr/071-text-contract-is-part-of-the-collection-definition.md).
 
-This is exploratory work. Its files record candidate distinctions and dispositions, not accepted library conclusions.
+The investigation is complete. Its accepted boundary and dispositions are now
+recorded in ADRs 069–071, the two collection contracts, the definition type,
+and the migrated library artifacts. These workshop files remain only until the
+final validation and closure commit.
 
 ## Work so far
 
@@ -20,7 +23,7 @@ The workshop then acquired its organizing rule. **`kb/notes/` holds beliefs abou
 
 Two independent arguments support it. **Maintenance:** beliefs are revised against evidence and rewritten in place, while choices are superseded and the earlier choice stays a fact — different regimes the profile labels had to state as a separate convention. **Publishability:** notes are distilled into articles for readers with no KB context, so a note may name a choice only as a bound variable — universally, through generic or conditional grammar, or existentially as a substantive witness. A free choice-variable does not survive publication. A merely local assignment acquires no reach by being wrapped in an existential sentence; the witness must support a claim about feasibility, mechanism, or consequence in the design space. Consequences are worked out in [the content model](./working-content-model.md).
 
-The text-contract audit found 30 direct backlinks from 22 files and traced the present artifact to commit `1ac2171d` (2026-07-09), which replaced the earlier `register` definition added by `7eb616d5` (2026-04-12). Its terms name the collection-contract architecture chosen by Commonplace. That makes their canonical description a reference concern even if the vocabulary is stable. No relocation has been executed; the decision is now an explicit workshop task.
+The text-contract audit found 30 direct backlinks from 22 files and traced the present artifact to commit `1ac2171d` (2026-07-09), which replaced the earlier `register` definition added by `7eb616d5` (2026-04-12). Its terms name the collection-contract architecture chosen by Commonplace. ADR 071 folded the useful term into the reference-side collection definition and retired the duplicate theory artifact.
 
 The prior conversation was handed off through `/tmp/commonplace-documentation-handoff.md`. Because `/tmp` is ephemeral, the load-bearing conclusions from it are restated above rather than linked as durable evidence.
 
@@ -65,7 +68,7 @@ The structural `definition` type does not decide this placement. [Reference alre
 - [Working content model](./working-content-model.md) — reconstruct the candidate retained payload and the tests that separate its roles.
 - [Definition audit](./definition-audit.md) — initial disposition of all 23 artifacts under `kb/notes/definitions/`, including migration cost from direct backlinks.
 - [Text-contract disposition](./tasks/text-contract-and-profiles.md) — after profile content is extracted in place, decide whether the remaining term belongs in the collection definition, a small standalone reference definition, or the collection/type composition document.
-- [Promote the choice-binding boundary into binding artifacts](./tasks/promotion-sequence.md) — five ordered steps; steps 1 and 2 are complete, and the text-contract disposition is next.
+- [Promote the choice-binding boundary into binding artifacts](./tasks/promotion-sequence.md) — **complete 2026-08-23**; all five ordered steps were implemented and validated.
 - [Sweep kb/notes/ for free choice-variables](./tasks/bound-variable-sweep.md) — **closed 2026-08-23**, 0/27 failures; [findings](./bound-variable-sweep-findings.md) corrected the clause wording and unblocked step 2.
 - [Draft ADR: notes bind choices; reference records selections and state](./draft-adr-collection-placement-follows-content-kind.md) — **promoted 2026-08-23** as [ADR 070](../../reference/adr/070-notes-bind-choices-reference-records-selections-and-state.md).
 - [Applied COLLECTION.md edits](./draft-collection-contract-edits.md) — execution record for the six changes applied with ADR 070.
@@ -91,6 +94,6 @@ The structural `definition` type does not decide this placement. [Reference alre
 - [x] Scope the profile retirement as a separable first step.
 - [x] Adopt choice-binding as the notes eligibility test and make reference own Commonplace's selections and resulting state.
 - [x] Test the bound-variable requirement against a fixed sample of `kb/notes/` (0/27 failures).
-- [ ] Test the choice-binding boundary against representative notes/reference cases while confirming that other collections' special rules take precedence.
-- [ ] Resolve the mixed and machinery-first definitions.
-- [ ] Select and execute durable migrations.
+- [x] Test the choice-binding boundary against representative notes/reference cases while confirming that other collections' special rules take precedence.
+- [x] Resolve the mixed and machinery-first definitions.
+- [x] Select and execute durable migrations.

@@ -161,6 +161,27 @@ establish. The harness model-selection regression remains in reference because
 its intended contribution is the dated operational incident and its effect on
 Commonplace review provenance.
 
+The definition audit applied the same rule. `answerability` moved to
+`kb/reference/definitions/` because its intended force is Commonplace's
+stipulated admission boundary. The standalone `directed reading` term was
+retired because context-engineering language and the claim-routed-reading note
+carry its useful distinctions without another canonical name. `discovery
+lifecycle` remains theory as an explicitly bounded ideal-type model; its local
+adoption remains a framework choice recorded by ADR 053 and operative
+instructions. `actionable methodology` remains theoretical, while the rule
+that technical uses of *actionable* link the definition moved to the operative
+root vocabulary. `reach-assessment` remains a definition after its developed
+route arguments were compressed into links to ordinary theory notes.
+
+The provisional artifact-analysis definitions also remain in theory.
+`operative part`, `retained artifact`, and `storage substrate` separate
+part-level behavior, persistence eligibility, and operational location across
+systems. `knowledge artifact` and `system-definition artifact` remain cheap,
+path-relative behavioral-authority shorthands rather than intrinsic artifact
+classes. `coordination value` remains a distinct warrant source. The global
+`definition` type now says explicitly that type does not decide collection;
+the intended contribution does.
+
 Requirements usually decompose rather than forming a third kind. A requirement
 typically pairs a belief that supports it with a commitment that adopts it,
 joined by `rests-on`. Externally imposed constraints—a platform limit or

@@ -1,8 +1,47 @@
-# Initial audit of `kb/notes/definitions/`
+# Definition disposition audit
 
-This audit asks whether each definition supplies vocabulary required by transferable theories or instead specifies Commonplace machinery. It is a first disposition, not authorization to move or retire anything.
+This audit asks whether each definition supplies vocabulary required by transferable theories or instead specifies Commonplace machinery. The initial tables preserve the evidence and first disposition; the final result below records the implemented outcome.
 
 Direct-backlink counts are included only as migration-cost evidence. High use does not make a term theoretical, and low use does not make it wrong.
+
+## Final disposition (2026-08-23)
+
+- **Moved to reference:** `answerability`. Its general three-part relation is
+  useful, but the artifact's intended force is the admission invariant
+  Commonplace stipulates for knowledge collections.
+- **Retired:** `directed reading`. The label carried no independent load-bearing
+  distinction beyond task-framed loading and ordinary reading language. Its
+  useful framing now lives in `context engineering`; the source-specific
+  mechanism already lives in the claim-routed-reading conjecture.
+- **Kept after binding:** `discovery lifecycle`. It now declares the six-phase
+  sequence as an ideal-type model and states KB routing conditionally. The
+  model remains contestable theory; Commonplace's adoption of it is recorded
+  in ADR 053 and operative instructions.
+- **Kept, with machinery extracted:** `actionable methodology`. The
+  operator-relative relation stays theoretical. The corpus rule requiring a
+  link for the technical predicate now lives in the root vocabulary.
+- **Kept as standalone theory vocabulary:** `coordination value`, `operative
+  part`, `retained artifact`, and `storage substrate`. Each separates a
+  cross-system analytical axis used by later artifacts; persistence, part
+  boundary, location, and coordination warrant do not collapse into one
+  another.
+- **Kept as path-family shorthands:** `knowledge artifact` and
+  `system-definition artifact`. Their definitions already make consumption
+  path, rather than intrinsic file kind, decisive, and external-system reviews
+  use the pair extensively as cheap glossary targets.
+- **Kept as a definition, compressed:** `reach-assessment`. The central
+  contribution is the evaluator-capability boundary. Developed causal, proof,
+  and world-model arguments remain in ordinary theory notes and are now linked
+  rather than repeated.
+- **Kept unchanged:** every other strong theory-vocabulary candidate. Replacing
+  Commonplace terminology with general descriptions leaves a substantive,
+  contestable distinction in every case.
+
+The collection contracts and global definition type now state the resulting
+placement rule: theory vocabulary belongs under `kb/notes/definitions/`;
+definitions constituted by Commonplace selections, contracts, or implemented
+classifications belong under `kb/reference/definitions/`. Type is structural
+and does not choose the collection.
 
 ## Disposition test
 
@@ -50,7 +89,7 @@ Stipulated vocabulary is the trap this test exists to catch. A stipulated term h
 
 | Definition | Inbound files | Initial disposition |
 |---|---:|---|
-| [Answerability](../../notes/definitions/answerability.md) | 2 | Move, fold, or split. It explicitly calls itself a domain invariant that Commonplace stipulates for admission as knowledge. The general relation may support theory, but the current central force is a framework boundary and collection-contract obligation. |
+| [Answerability](../../reference/definitions/answerability.md) | 2 | Move, fold, or split. It explicitly calls itself a domain invariant that Commonplace stipulates for admission as knowledge. The general relation may support theory, but the current central force is a framework boundary and collection-contract obligation. |
 | [Text contract](../../reference/definitions/collection.md#text-contract) | 22 | Complete: profile material became creation-only collection prototypes under ADR 069; the remainder was folded into the collection definition and the duplicate theory artifact retired under ADR 071. It names selected collection machinery rather than a theory distinction. |
 
 ## Mixed and retirement candidates
@@ -58,7 +97,7 @@ Stipulated vocabulary is the trap this test exists to catch. A stipulated term h
 | Definition | Inbound files | Initial disposition |
 |---|---:|---|
 | [Discovery lifecycle](../../notes/definitions/discovery-lifecycle.md) | 28 | Split or reframe. Peircean conjecture/consequence/test relations and the process/product distinction can support theory; the chosen six-phase evaluation, routing, acceptance, and integration sequence may be Commonplace methodology rather than a belief. |
-| [Directed reading](../../notes/definitions/directed-reading.md) | 1 | Likely retire or move operational residue into instructions. It mostly names a task-contract pattern, has one external inbound file, and already records that ordinary reading-and-reshaping language may suffice. |
+| Directed reading (retired; [context-engineering successor](../../notes/definitions/context-engineering.md)) | 1 | Likely retire or move operational residue into instructions. It mostly names a task-contract pattern, has one external inbound file, and already records that ordinary reading-and-reshaping language may suffice. |
 
 ## Cross-cutting findings
 

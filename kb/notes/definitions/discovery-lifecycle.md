@@ -1,12 +1,25 @@
 ---
-description: "Definition — the discovery lifecycle is a proposed six-phase evaluation of an ampliative conjecture; the compound is technical, bare 'discovery' stays ordinary English"
+description: "Definition — the discovery lifecycle is an ideal-type six-phase evaluation of an ampliative conjecture; the compound is technical, bare 'discovery' stays ordinary English"
 type: kb/types/definition.md
 tags: [learning-theory, discovery]
 ---
 
 # Discovery lifecycle
 
-The **discovery lifecycle** is this note's proposed six-phase model for evaluating one *ampliative* conjecture — a claim not entailed by the evidence in hand — within a knowledge base. It tracks that candidate from the observation that motivates it through testing and, on a successful branch, integration. Its conjecture–consequence–test core adapts American philosopher Charles Sanders Peirce's cycle of abduction, deduction, and induction, while its distinction between inquiry in progress and accepted discovery draws on the discovery literature's process/product distinction. The complete sequence and its KB-operation mappings are this note's construction. The term lets an author state which phase an artifact has reached without letting an untested conjecture claim accepted status.
+The **discovery lifecycle** is an ideal-type six-phase model for evaluating one
+*ampliative* conjecture — a claim not entailed by the evidence in hand — within
+a knowledge base. It tracks that candidate from the observation that motivates
+it through testing and, on a successful branch, integration. Its
+conjecture–consequence–test core adapts American philosopher Charles Sanders
+Peirce's cycle of abduction, deduction, and induction, while its distinction
+between inquiry in progress and accepted discovery draws on the discovery
+literature's process/product distinction. The complete sequence and its
+KB-operation mappings are this note's construction. The model deliberately
+suppresses overlap, telescoping, iteration inside a phase, and
+workflow-specific thresholds. Those omissions are acceptable only while the
+phase boundaries predict different evidence, authority, or maintenance
+obligations; ordinary cases that cannot usefully be separated this way, or a
+rival model that explains those obligations better, defeat the idealization.
 
 | Phase | Proposed Peircean analogue | KB operation |
 |---|---|---|
@@ -23,7 +36,14 @@ From testing, acceptance proceeds to integration, revision returns to conjecture
 
 ## Scope
 
-**The routing rule.** An artifact that advances an ampliative claim enters at the *conjecture* phase. An untested generalization never inherits accepted status from the sentence that states it. The recurring authoring decision this vocabulary supports is whether to retain and cite an artifact as a candidate or as an accepted rule. Naming a structure shared by several cases is one common way to enter the conjecture phase; what makes that act expensive, and when naming pays off, is developed in [recognition, not linking, is the hard problem in knowledge systems](../recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md).
+**Application to KB routing.** For a knowledge base that adopts this lifecycle
+as its admission model, an artifact advancing an ampliative claim enters at the
+*conjecture* phase. An untested generalization never inherits accepted status
+from the sentence that states it. The recurring authoring decision this model
+supports is whether to retain and cite an artifact as a candidate or as an
+accepted rule. Naming a structure shared by several cases is one common way to
+enter the conjecture phase; what makes that act expensive, and when naming pays
+off, is developed in [recognition, not linking, is the hard problem in knowledge systems](../recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md).
 
 The linked [trace-extraction ladder](../trace-extracted-memory-earns-authority-per-operation-not-at-capture.md) is a separate framework with different units. Its Abstract rung generalizes a fact that has already been verified, so the Abstract rung cannot be identified with this lifecycle's untested conjecture phase. A trace-learning workflow supplies concrete acceptance checks through the [validity and learning-value gates](../choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md): the rule must be trustworthy enough to learn from and worth retaining. [Boundary-statability](../abstract-an-experience-only-when-you-can-state-the-boundary.md) checks its scope within that application. This note therefore places a successfully abstracted trace rule closer to the acceptance branch, but those trace-promotion checks do not define acceptance for every discovery lifecycle.
 

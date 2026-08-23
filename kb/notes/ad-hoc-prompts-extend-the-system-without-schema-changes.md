@@ -46,7 +46,7 @@ Ad hoc extension without schema changes is possible because [instructions and co
 ## Open Questions
 
 - When does an ad hoc prompt become expensive enough to justify extracting a skill or writing code? Is "wrote the same kind three times" the right threshold, or does it depend on how costly a mistake is?
-- Can ad hoc prompts reference skills ("follow the directed reading procedure, but also..."), or does that create confusing layering?
+- Can ad hoc prompts reference skills ("follow the source-reading procedure, but also..."), or does that create confusing layering?
 - How do you discover useful past ad hoc prompts? They're ephemeral by design, but some patterns are worth finding again.
 - Outside KBs, what are the best examples of this pattern? CLAUDE.md rules, PR description templates, agent system prompts — are these all instances of the same technique?
 

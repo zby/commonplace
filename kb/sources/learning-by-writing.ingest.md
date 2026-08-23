@@ -7,7 +7,7 @@ genre: conceptual-essay
 snapshot_sha256: d49782e101c992486a80bf932af757ced573ac5ddc38e2e7ce37315d3bf81b36
 ingested: "2026-08-10"
 type: kb/sources/types/ingest-report.md
-domains: [writing-as-thinking, directed-reading, belief-revision, human-agent-transfer]
+domains: [writing-as-thinking, claim-routed-reading, belief-revision, human-agent-transfer]
 ---
 
 # Ingest: Learning By Writing
@@ -23,11 +23,11 @@ Karnofsky organizes learning around a repeatedly rewritten bottom-line view rath
 
 ## Connections Found
 
-This essay is the constructive investigation procedure in the existing writing-as-thinking cluster. [Borretti](https://borretti.me/article/human-routers-of-machine-words) and [Grunewald](https://www.erichgrunewald.com/posts/why-i-think-you-should-almost-never-use-ai-to-write-anything-substantive/) emphasize what naive delegation loses, while [Karlsson](https://www.henrikkarlsson.xyz/p/writing-to-think) makes conjectures and their premises vulnerable to counterexamples. Karnofsky adds the missing inquiry-routing role: the current written hypothesis supplies the lens for [directed reading](../notes/definitions/directed-reading.md), because it determines which source or subquestion could change the bottom-line view. His repeated articulation, attack, revision, and feedback cycle also supplies a detailed human comparator for [the adversarial-loop account](../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md). It should not be treated as evidence that an automated KB learns in the same way: [human analogies motivate functions without fixing component boundaries](../notes/human-analogies-suggest-functions-not-component-boundaries.md), and durable agent learning additionally requires retained artifacts, activation, and behavioral effect.
+This essay is the constructive investigation procedure in the existing writing-as-thinking cluster. [Borretti](https://borretti.me/article/human-routers-of-machine-words) and [Grunewald](https://www.erichgrunewald.com/posts/why-i-think-you-should-almost-never-use-ai-to-write-anything-substantive/) emphasize what naive delegation loses, while [Karlsson](https://www.henrikkarlsson.xyz/p/writing-to-think) makes conjectures and their premises vulnerable to counterexamples. Karnofsky adds the missing inquiry-routing role: the current written hypothesis supplies the task lens for [context loading and framing](../notes/definitions/context-engineering.md#scope), because it determines which source or subquestion could change the bottom-line view. His repeated articulation, attack, revision, and feedback cycle also supplies a detailed human comparator for [the adversarial-loop account](../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md). It should not be treated as evidence that an automated KB learns in the same way: [human analogies motivate functions without fixing component boundaries](../notes/human-analogies-suggest-functions-not-component-boundaries.md), and durable agent learning additionally requires retained artifacts, activation, and behavioral effect.
 
 ## Extractable Value
 
-1. **A written working hypothesis can serve as inquiry-control state** -- The explicit current claim does more than expose error: it defines what could change the author's mind, which evidence is relevant, and which reading can be skipped. This sharpens `directed reading` from a supplied task lens into an evolving lens revised by the investigation itself. [deep-dive]
+1. **A written working hypothesis can serve as inquiry-control state** -- The explicit current claim does more than expose error: it defines what could change the author's mind, which evidence is relevant, and which reading can be skipped. This turns a supplied task lens into an evolving lens revised by the investigation itself. [deep-dive]
 
 2. **Writing and evidence acquisition form a coupled learning loop** -- Articulation exposes a weakness; the weakness selects a subquestion; reading changes the claim; the changed claim reallocates subsequent reading. This explains why “writing rather than reading” is not a choice between media but an ordering and feedback relation between two operations. [deep-dive]
 

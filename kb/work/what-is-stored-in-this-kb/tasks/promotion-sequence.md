@@ -2,7 +2,7 @@
 
 ## Status
 
-Open. Steps 1–4 are complete; step 5 is next. Five steps, ordered. Each
+Complete 2026-08-23. All five steps ran in order. Each
 step's gate is the reason it sits where it does — the ordering is the part
 worth following, not the step list.
 
@@ -128,6 +128,15 @@ The audit's own disposition test is the boundary applied to vocabulary, so
 ADR 070 supplies the rule. The hard case is stipulated vocabulary: replace the
 local term with its general description and ask whether a substantive,
 contestable distinction remains.
+
+**Done 2026-08-23.** `answerability` moved to reference; `directed reading` was
+retired into context-engineering and ordinary task-lens language; `discovery
+lifecycle` remained theory as an explicit ideal-type; the `actionable` linking
+rule moved to root vocabulary machinery; `reach-assessment` was compressed
+back to a definition; and every provisional or redundancy candidate received
+a final keep disposition. The collection contracts and definition type now
+state that intended contribution, not type, chooses between theory and
+reference definitions.
 
 ## Deliberately not in this sequence
 

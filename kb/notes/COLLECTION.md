@@ -79,7 +79,10 @@ Scan `kb/notes/`, `kb/types/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/
 
 A typed artifact in this collection may use a global type spec under `kb/types/` or a local type spec under this collection's `types/` directory. Its `type:` value is the path to that contract. Frontmatter-free Markdown is implicit `text`.
 
-Definitions of KB vocabulary belong under `kb/notes/definitions/`.
+Definitions whose intended contribution supplies vocabulary for transferable
+theory belong under `kb/notes/definitions/`. Definitions constituted by a
+Commonplace selection, contract, or implemented classification belong under
+`kb/reference/definitions/`. The `definition` type does not decide placement.
 
 ## Evidence placement
 

@@ -42,7 +42,6 @@ Actionability implies neither that the methodology is correct nor that an interv
 - Calling a classification actionable because a resourceful operator could invent a use for it, even though the classification supplies no intervention-relevant mapping.
 - Treating actionability as an intrinsic property of natural language, independent of an operator and setting.
 - Using **actionable theory** as a noun, as if actionability sorted artifacts into kinds rather than relating a methodology to an operator.
-- Predicating **actionable** of a methodology without linking to this definition. The bare word is common English with many unrelated ordinary uses (findings, edits, steps, guidance); the technical sense is licensed only where the occurrence links here, on "actionable" itself or on "methodology" in the same clause. An unlinked "actionable" is the ordinary word, not this relation.
 
 ---
 

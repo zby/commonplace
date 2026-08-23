@@ -26,7 +26,7 @@ The vocabulary for analyzing retained artifacts: where behavior-shaping state pe
 - [lineage](./definitions/lineage.md) — source dependencies and derivation status needed to invalidate, regenerate, retire, or review retained behavior
 - [behavioral authority](./definitions/behavioral-authority.md) — who consumes an artifact, through which channel, with what force
 - [knowledge artifact](./definitions/knowledge-artifact.md) — retained artifact consumed as evidence, reference, context, explanation, or advice
-- [answerability](./definitions/answerability.md) — the stipulated domain-admission invariant for knowledge: a nameable referent, asserted property, and correction-triggering discrepancy
+- [answerability](../reference/definitions/answerability.md) — the stipulated domain-admission invariant for knowledge: a nameable referent, asserted property, and correction-triggering discrepancy
 - [system-definition artifact](./definitions/system-definition-artifact.md) — retained artifact consumed with instruction, enforcement, routing, validation, configuration, evaluation, or learning force
 
 ## Applications

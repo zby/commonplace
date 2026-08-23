@@ -6,66 +6,92 @@ tags: [foundations, computational-model, self-improving-systems]
 
 # Reach-assessment
 
-**Reach-assessment** is the capability of a system's evaluation process to judge whether a candidate commitment's claimed [explanatory-reach](../first-principles-reasoning-selects-for-explanatory-reach-over.md) — that the pattern it names holds beyond the evidence that produced it — is genuine, rather than adaptive fit dressed up as an explanation. This is a judgment about the *content* of a claim, not a check on its *form*. For example: a coding agent that retains "route prompts under 500 tokens to a cheaper model" after early tasks succeed has an adaptive-fit-shaped claim until something checks whether token count is actually why those tasks were easy, or just what they happened to share.
+**Reach-assessment** is the capability of an evaluation process to judge
+whether a candidate commitment's claimed
+[explanatory-reach](../first-principles-reasoning-selects-for-explanatory-reach-over.md)
+is genuine rather than adaptive fit presented as explanation. It evaluates the
+content of the claim: whether the proposed mechanism or invariant supports the
+generality claimed. Checking that a new case matches the commitment's stated
+condition checks only the condition, not whether that condition names the real
+boundary.
 
-[Reflectivity](./reflective-system.md) does not supply this for free. A reflective system can represent a commitment's stated applicability condition, read it, and rewrite it — [rejecting or rescoping a prior commitment](../reflection-makes-retained-lessons-second-order.md) is a structural operation reflection makes available. None of that requires judging whether the commitment's stated boundary is honest. A process can mechanically compare a new case against a stated condition and act on the match — without ever assessing whether the underlying explanation captures an invariant, or is dressed-up curve-fitting that happened to generalize once. A boundary-matching process checks only whether the new prompt is under 500 tokens and swaps in the cheap model, and misapplies the commitment the first time a short prompt encodes a hard multi-step task — token count was never the mechanism, only something that happened to correlate with it in the cases that produced the commitment.
+For example, retaining “route prompts under 500 tokens to a cheaper model”
+after several successes does not establish that length explains task
+difficulty. Reach-assessment must distinguish that mechanism from a correlation
+in the fitting cases, such as by varying complexity while holding length fixed.
 
 ## Scope
 
-- Reach-assessment operates on the *content* of a candidate commitment — its causal or explanatory structure — not on metadata about it. Checking that a new case satisfies a stated condition clause is boundary-matching, [the discriminator memory formation already uses](../abstract-an-experience-only-when-you-can-state-the-boundary.md); reach-assessment is what would be needed to judge whether that stated condition is itself trustworthy.
-- What it would need to do is apply something like [the four-part negative test](../first-principles-reasoning-selects-for-explanatory-reach-over.md) — can a load-bearing premise be varied and the conclusion predictably change; does the claim reach into an untested domain; can it be criticized in a specific way; does it survive contact with observed fit — to a system's own candidate commitments inside its improvement pathway, not to a human author's KB note. Applied to the routing commitment: does varying task complexity while holding length fixed change the outcome predictably; does the claim reach to prompt types not yet tried; can a specific failure case be named in advance; does it hold up against the tasks that actually produced it.
-- Which route is available depends on the candidate commitment's [representational form](./representational-form.md). In this KB's artifact vocabulary, reach-assessment can be mediated by all three retained forms: natural-language artifacts need semantic judgment such as the [first-principles explanatory-reach test](../first-principles-reasoning-selects-for-explanatory-reach-over.md); symbolic artifacts can use explicit causal or proof obligations; distributed-parametric artifacts can use learned predictive world models. Mixed artifacts can compose those routes, but the route must match the form that actually carries the commitment.
-- The symbolic route has two forms. Causal theories: a system has reach-assessment for a proposed mechanism when its acceptance process tests that mechanism against interventions, counterfactuals, or cross-environment invariance, rather than merely fitting observed correlations. Proof, which can wrap the causal route when causal inference itself is axiomatized: where a commitment can be expressed as a typed claim, formally specified invariant, or target theorem, proof search can establish that it holds across its stated domain — the [Gödel machine](../goedel-machines-are-a-proof-governed-case-of-self-modification.md)'s proof-gated self-rewrite acceptance is the worked case. See [Formal symbolic systems assess explanatory-reach only through causal and proof obligations](../formal-systems-assess-explanatory-reach-through-causal-and-proof.md) for the developed argument, mechanics, and source grounding.
-- A learned predictive world model is the canonical distributed-parametric route: reach-assessment means testing whether a learned predictor's action-conditioned predictions remain valid across the interventions or environment shifts a commitment claims to cover. See [World models assess explanatory-reach through action-conditioned prediction](../world-models-assess-explanatory-reach-through-action-conditioned.md) for the developed argument and LeCun/JEPA grounding.
-- Where a commitment remains in natural-language form — an explanation not yet reduced to a checkable formal claim — no comparable formal apparatus exists yet. There, reach-assessment is observed only in LLM-mediated evaluation: an agent asked to judge whether a proposed lesson generalizes correctly appears able to do so with some reliability, and Commonplace has no theory for why. See [Provenance and departures](#provenance-and-departures).
+The assessment route must match the
+[representational form](./representational-form.md) carrying the commitment:
+
+- Natural-language commitments require semantic judgment of their mechanism,
+  alternatives, scope, and observed fit, such as the
+  [four-part explanatory-reach test](../first-principles-reasoning-selects-for-explanatory-reach-over.md).
+- Symbolic commitments can be assessed through intervention, invariance, or
+  proof obligations when the relevant causal structure or domain has been
+  formalized. The developed boundary is
+  [formal symbolic systems assess explanatory-reach only through causal and proof obligations](../formal-systems-assess-explanatory-reach-through-causal-and-proof.md).
+- Distributed-parametric commitments can be assessed through
+  action-conditioned predictions tested over the interventions or shifts the
+  commitment claims to cover. The developed route is
+  [world models assess explanatory-reach through action-conditioned prediction](../world-models-assess-explanatory-reach-through-action-conditioned.md).
+
+Mixed artifacts may compose these routes, but an assessment of one form does
+not automatically warrant the others. Proof reaches only across its
+axiomatized domain; observed predictive fit reaches only across the tested
+shift class.
+
+[Reflectivity](./reflective-system.md) supplies addressability, not this
+judgment. A reflective process may represent, match, reject, or rescope a
+commitment without being able to tell whether its stated scope is honest.
 
 ## Exclusions
 
-- **Reach-assessment is not reflectivity.** [Reflective system](./reflective-system.md)'s five requirements — boundary, represented aspects, self-representation, processes, causal connection — are purely structural. A reflective system built entirely on exact- or fuzzy-string matching against a stated condition clause has every one of those five properties and no reach-assessment at all.
-- **Reach-assessment is not causal vocabulary.** A retained sentence that uses words like "cause," "mechanism," or "intervention" has no reach-assessment unless the system's evaluator can test, identify, or otherwise warrant the causal structure it is relying on.
-- **Reach-assessment is not empirical testing alone.** A test suite that passes on every case it checks establishes that a candidate holds on those cases, not that it holds beyond them — the explanatory-reach question stays unanswered by passing tests. Observational causal discovery is the important exception only because the observations are interpreted through causal assumptions and discovery criteria, not because observation by itself contains causality. A proof oracle is a different matter: proving a claim within an axiomatized model does establish that it holds across the model's stated domain, a genuine, non-semantic route to reach-assessment (see Scope) — but only as far as the axiomatization reaches, [which is what warranted autonomy is bounded by](../warranted-autonomy-is-bounded-by-oracle-domain.md).
-- **Reach-assessment is not a learned world model by itself.** A latent predictor has reach-assessment value only when its action-conditioned predictions are tested against the intervention or shift class at issue; otherwise it may be another adaptive fit artifact.
-- **Reach-assessment is not confidence.** A system reporting high confidence in a rescoped commitment is not evidence the rescoping was reach-assessed; confidence and correctness come apart exactly where reach-assessment would matter most — a fluent, wrong generalization is the failure mode this capability exists to catch.
+- Reach-assessment is not boundary matching, metadata checking, confidence, or
+  the structural capacity to rewrite a commitment.
+- Empirical success on the fitting cases does not establish the mechanism or
+  its reach beyond them.
+- Causal vocabulary, a proof engine, or a learned world model does not by
+  itself supply reach-assessment. The evaluation process must exercise the
+  relevant causal, proof, intervention, or shift test.
+- Observational causal discovery is not assumption-free; its warrant remains
+  conditional on its discovery assumptions.
+
+## Provenance and open boundary
+
+The causal, proof, and predictive-world-model routes are established external
+machinery. Commonplace's contribution is to group them by the role they play
+when an improvement pathway evaluates a retained commitment. The
+natural-language route remains unexplained: LLM-mediated evaluators appear able
+to judge prose generalizations with some reliability, but this definition
+names that missing capability rather than supplying a theory of it.
+
+The hyphenated compound **reach-assessment** carries this technical sense, and
+**explanatory-reach** names the property it judges. Bare *reach* remains
+ordinary English. The oracle-side limit is **oracle domain** and the
+generator-side limit is **search range**.
 
 ## Misuse Cases
 
-- Assuming any reflective pathway automatically has reach-assessment because it can represent and rewrite a commitment's scope — the operation being available says nothing about whether it is exercised well.
-- Treating a match between a stated condition clause and a new case as evidence that the underlying commitment has genuine explanatory-reach — that is boundary-matching, which presupposes the stated boundary is honest rather than testing it.
-- Treating a system as having reach-assessment merely because it stores causal-shaped theories. The assessment enters through the causal learning or evaluation process: selecting mechanisms that survive the relevant intervention, counterfactual, or environment-shift tests.
-- Treating a learned world model as having reach-assessment merely because it predicts next states. The assessment enters when action-conditioned predictions are evaluated over the intended interventions or shifts.
-- Treating observational causal discovery as assumption-free induction. It can infer causal theories from observations under discovery assumptions; it does not make explanatory-reach available from raw correlations alone.
-- Treating the Gödel machine as evidence that proof search can assess the explanatory-reach of arbitrary natural-language explanations, or as evidence for causal discovery without causal axioms in the system. It supports the formal case: commitments expressible as target theorems under the machine's axioms.
-- Citing this note to claim reach-assessment is unique to LLMs. It is not: causal inference, do-calculus, and proof search are traditional, formal routes to reach-assessment for symbolic claims, and predate LLMs by decades. What is genuinely unexplained is narrower — semantic judgment of a claim still in natural-language form, where LLM-mediated evaluation is the only route currently observed.
-
-## Provenance and departures
-
-This is Commonplace's own concept, without a single inherited definition to depart from, but its routes have different provenance.
-
-The causal route — structural causal models, intervention semantics, do-calculus, invariant prediction, and causal discovery from observational or interventional data — is established science, not Commonplace's own. Commonplace's terminology only names the role that machinery plays when it evaluates whether a retained mechanism really reaches beyond its fitting cases.
-
-The proof route is also external. The [Gödel machine](../goedel-machines-are-a-proof-governed-case-of-self-modification.md) is the worked self-modification case already in this cluster, grounded in Schmidhuber's target-theorem construction rather than in Commonplace's vocabulary.
-
-The learned-world-model route comes from predictive representation-learning work such as LeCun's JEPA line, where a latent predictor supports planning by anticipating how the world changes under candidate actions.
-
-A vocabulary registration, [following the write-time collision rule](../vocabulary-collisions-prevented-at-write-time-not-read-time.md): the load-bearing senses here ride on rare compounds — **reach-assessment** for this capability, **explanatory-reach** for the judged property (already registered in the `review-explanatory-reach` criterion). Bare *reach* carries no technical sense anywhere in the KB — the compound carries the sense corpus-wide, not only in this cluster; the oracle-side limit is named **oracle domain** ([warranted autonomy](../warranted-autonomy-is-bounded-by-oracle-domain.md)) and the generator-side limit **search range** ([the proposal-selection loop](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md)).
-
-Commonplace's own gap is the natural-language route. The four-part negative test it builds on is adapted from Deutsch by [first-principles-reasoning-selects-for-explanatory-reach-over.md](../first-principles-reasoning-selects-for-explanatory-reach-over.md), and the observation that stating a boundary is itself a judgment — not a mechanical derivation — is already made by [abstract-an-experience-only-when-you-can-state-the-boundary.md](../abstract-an-experience-only-when-you-can-state-the-boundary.md). That leaves who or what can reliably make that judgment, for a claim still in natural-language form, as an open problem: this note names the missing capability, it does not close the open problem, and why LLM-mediated evaluators appear capable of it is not theorized here.
+- Assuming that a reflective system has reach-assessment because it can revise
+  a stored scope statement.
+- Treating a passing test suite or accurate predictor as evidence of reach
+  without testing the claimed mechanism, intervention, or shift boundary.
+- Citing this definition to claim that reach-assessment is unique to LLMs;
+  causal inference and proof provide older formal routes.
 
 ---
 
 Relevant Notes:
 
-- [Reflective system](./reflective-system.md) — contrasts: supplies the structural capacity to represent and rewrite scope; this note is the judgment reflectivity does not supply
-- [Representational form](./representational-form.md) — grounds: the natural-language, symbolic, and distributed-parametric forms that decide which reach-assessment route is available
-- [Formal symbolic systems assess explanatory-reach only through causal and proof obligations](../formal-systems-assess-explanatory-reach-through-causal-and-proof.md) — extends: develops the symbolic causal and proof routes, including the conditional Gödel-machine placement
-- [World models assess explanatory-reach through action-conditioned prediction](../world-models-assess-explanatory-reach-through-action-conditioned.md) — extends: develops the distributed-parametric route through learned predictive artifacts
-- [Theory-mediated learning may improve sample efficiency under structured shifts](../theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — extends: makes this capability the load-bearing condition of the sample-efficiency payoff of any retained theory, in any domain
-- [Gödel machines are a proof-governed case of reflective self-modification](../goedel-machines-are-a-proof-governed-case-of-self-modification.md) — evidenced-by: the worked case of proof search assessing a symbolic self-rewrite utility claim
-- [Schmidhuber, Gödel Machines](../../sources/goedel-machines-schmidhuber.ingest.md) — evidenced-by: primary-literature grounding for the target theorem, global-optimality claim, and unprovable-improvement limitation
-- [First-principles reasoning selects for explanatory-reach over adaptive fit](../first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: the four-part negative test this note asks a system's own evaluator to apply, not only a human author
-- [Abstract an experience into a lesson only when you can state where the lesson stops](../abstract-an-experience-only-when-you-can-state-the-boundary.md) — grounds: names stating a boundary as itself a judgment and leaves who can make it open; this note names the missing capability
-- [Reflection buys addressability](../reflection-buys-addressability.md) — extends: addressability makes a bad change findable; reach-assessment is what would make finding it as bad reliable
-- [Reflection makes retained lessons second-order: a lesson can reject or rescope a prior commitment](../reflection-makes-retained-lessons-second-order.md) — extends: rejection and rescoping are structural operations reflection enables; reach-assessment is what would make exercising them reliable
+- [Reflective system](./reflective-system.md) — contrasts: supplies the structural capacity to represent and rewrite scope; reach-assessment is the judgment that capacity does not supply
+- [Representational form](./representational-form.md) — grounds: the form carrying the commitment determines which assessment route is available
+- [Formal symbolic systems assess explanatory-reach only through causal and proof obligations](../formal-systems-assess-explanatory-reach-through-causal-and-proof.md) — extends: develops the symbolic causal and proof routes and their formalization boundary
+- [World models assess explanatory-reach through action-conditioned prediction](../world-models-assess-explanatory-reach-through-action-conditioned.md) — extends: develops the distributed-parametric route and its shift boundary
+- [First-principles reasoning selects for explanatory-reach over adaptive fit](../first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: supplies the four-part negative test for natural-language commitments
+- [Abstract an experience into a lesson only when you can state where the lesson stops](../abstract-an-experience-only-when-you-can-state-the-boundary.md) — grounds: identifies boundary selection as judgment rather than mechanical derivation
+- [Theory-mediated learning may improve sample efficiency under structured shifts](../theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — extends: makes reach-assessment the load-bearing condition of the proposed sample-efficiency payoff
 
 Derived into:
 

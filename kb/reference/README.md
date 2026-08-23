@@ -192,6 +192,7 @@ Look up how the shipped system is put together: its architecture, type system, a
 - [link-vocabulary.md](./link-vocabulary.md) — linking approach and label catalogue: collection-owned outbound rules, reader-need labels, articulation tests, connect reports, and guidance for `COLLECTION.md` authors
 - [collection-prototypes.md](./collection-prototypes.md) — optional creation-time contracts that may be copied into a new collection; the resulting `COLLECTION.md` is independently owned and receives no prototype updates
 - [collections-never-own-frontmatter-semantics.md](./collections-never-own-frontmatter-semantics.md) — why the collection/type split is asymmetric: a type spec owns frontmatter semantics, `COLLECTION.md` owns only text-level features
+- [Answerability](./definitions/answerability.md) — Commonplace's stipulated admission boundary: what an artifact answers to, the property it asserts, and the discrepancy that triggers correction
 - [Collection and text contract](./definitions/collection.md) — canonical definitions of the collection boundary and its complete local authoring declaration
 
 ### Authoring and operator procedures

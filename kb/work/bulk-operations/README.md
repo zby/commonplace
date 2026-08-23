@@ -36,7 +36,7 @@ Generative bulk operations cannot be sharded, validated, or refreshed without a 
 
 Use these existing workflows as witnesses:
 
-- **Deep research / directed reading** - source discovery, snapshot/ingest, instruction packet, clean-context synthesis, and promotion decision.
+- **Deep research / task-framed reading** - source discovery, snapshot/ingest, instruction packet, clean-context synthesis, and promotion decision.
 - **Agent-memory review reruns** - select rows from `systems.csv`, dispatch one source-grounded worker per review, edit only the review, then regenerate the matrix.
 - **Review batches** - selector JSON, queued jobs, one output file per job, finalization, and freshness verification.
 - **Connect maintenance triage** - scan generated reports, extract maintenance observations, classify each as done/open/moved/watch, and promote only the durable residue.
@@ -66,10 +66,10 @@ And two aspirational generative cases that stress the frame (detailed in [genera
 
 ## Retained Inputs From Deep Search
 
-- [Directed-reading contract inventory](./directed-reading-inventory.md) - map of stable and ad hoc reading contracts that already exist in the KB.
+- [Task-framed reading contract inventory](./directed-reading-inventory.md) - historical map of stable and ad hoc reading contracts that already exist in the KB. The standalone technical label was retired; the inventory remains useful as a bulk-operation casebook.
 - [Instructions: A-MEM automation-quality trade-off](./instructions-amem-automation-quality.md) - concrete example of a frontloaded instruction packet used in an experiment.
 
-These files are historical inputs to the broader bulk-operations pattern. They should be revised or promoted only if the new frame needs a durable directed-reading subpattern.
+These files are historical inputs to the broader bulk-operations pattern. They should be revised or promoted only if the new frame needs a durable task-framed-reading subpattern.
 
 ## What Would Close This Workshop
 
@@ -82,4 +82,4 @@ Close when this workshop produces one of:
 
 If the document-set-spec prerequisite grows into its own direction, spinning it off into a separate workshop (or a design proposal in `kb/reference/proposals/`) also counts as partial progress — this workshop then narrows to pipeline mechanics and consumes the spec as an input contract.
 
-Before closing, remove stale active-workshop entries for superseded or missing workshops and decide whether the directed-reading files above should be promoted, retained as examples, or deleted.
+Before closing, remove stale active-workshop entries for superseded or missing workshops and decide whether the task-framed-reading inventory above should be promoted, retained as an example, or deleted.

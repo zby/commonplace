@@ -24,7 +24,7 @@ Mere usefulness, provenance, audience response, or authorial intent does not mak
 
 ## Boundary with nearby terms
 
-[Knowledge artifact](./knowledge-artifact.md) names a behavioral-authority family — how a retained artifact is consumed (as evidence, reference, context, explanation, or advice). Answerability names what an admitted artifact answers to. The axes are independent: a prompt may answer to observed behavior as a system-definition artifact without being knowledge, and workshop text may be consumed as context without being answerable.
+[Knowledge artifact](../../notes/definitions/knowledge-artifact.md) names a behavioral-authority family — how a retained artifact is consumed (as evidence, reference, context, explanation, or advice). Answerability names what an admitted artifact answers to. The axes are independent: a prompt may answer to observed behavior as a system-definition artifact without being knowledge, and workshop text may be consumed as context without being answerable.
 
 ## Misuse Cases
 
@@ -36,5 +36,5 @@ Mere usefulness, provenance, audience response, or authorial intent does not mak
 
 Relevant Notes:
 
-- [A universal knowledge framework demotes content taxonomies to defaults](../a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) — context: the demotion argument whose stipulated remainder this definition now carries
-- [Knowledge artifact](./knowledge-artifact.md) — contrast: the consumption-path family; answerability is the domain-admission axis, not the authority axis
+- [A universal knowledge framework demotes content taxonomies to defaults](../../notes/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) — rests-on: the demotion argument whose stipulated domain boundary this definition records
+- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) — see-also: the consumption-path family; answerability is the domain-admission axis, not the authority axis
