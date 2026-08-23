@@ -1,89 +1,97 @@
-# What these descriptions actually spare, and for whom
+# What these descriptions spare here
 
-Measured 2026-08-23.
+Local application. The general model — that human recompute is dear and rare
+while agent recompute is cheap and constant, so audience segmentation turns on
+magnitudes rather than principle — lives in
+[the note](../../notes/human-recompute-is-dear-and-rare-agent-recompute-is-cheap-and-constant.md).
+This file supplies Commonplace's magnitudes and the disposition that follows
+from them. It does not re-derive the model.
 
-## The calculation
-
-A cache is worth its maintenance when the work it spares, times how often that
-work would otherwise happen, exceeds the cost of keeping it accurate. Every
-term differs by consumer, so one disposition for both readers is unlikely to be
-right.
-
-## Sizes
+## The magnitudes
 
 | Subject | Source | Doc | Compression |
 |---|---:|---:|---:|
-| `src/commonplace/lib` | 160 KB, 20 files | `lib-modules.md` 21 KB | 7.6× |
-| `src/commonplace/review` | 153 KB, 24 files | `review-architecture.md` 14 KB | 11.1× |
-| `src/commonplace/freshness` | 40 KB, 11 files | `freshness-architecture.md` 6 KB | 6.7× |
-| `src/commonplace/freshness` | 40 KB | `freshness-schemas.md` 3 KB | 13.3× |
+| `src/commonplace/lib` | 160 KB, 20 files | `lib-modules.md` 21 KB | 7.6x |
+| `src/commonplace/review` | 153 KB, 24 files | `review-architecture.md` 14 KB | 11.1x |
+| `src/commonplace/freshness` | 40 KB, 11 files | `freshness-architecture.md` 6 KB | 6.7x |
+| `src/commonplace/freshness` | 40 KB | `freshness-schemas.md` 3 KB | 13.3x |
 
-Whole package: 463 KB, 13,218 lines, 85 files — roughly 115k tokens, so not
-readable entire. But that is the wrong comparison.
+Whole package: about 460 KB across 85 modules, averaging roughly 5 KB. Reader
+turnover on the human side is close to zero — one long-tenured maintainer, plus
+infrequent outside readers. On the agent side it is unbounded: every session is
+a new reader.
 
-## For an agent, the comparison is per-file, not per-subtree
+## Correcting an earlier argument in this workshop
 
-An agent does not read `lib/`. It reads the one module it needs. `lib/` averages
-8 KB per file, about 2k tokens.
+An earlier version of this file argued that reading `lib-modules.md` at 21 KB
+costs more than reading the 15 KB module it describes, so the doc loses on
+tokens alone. That comparison was unfair: an agent can read just the doc's
+section on the module it cares about, perhaps 2 KB, and on that basis the doc
+wins comfortably.
 
-So the real choice is: read `lib-modules.md` at 21 KB (~5k tokens), or read
-`type_resolver.py` at 15 KB (~4k tokens) and have the authoritative answer.
-Reading the doc costs *more* than reading the file it describes, and leaves the
-agent with a copy rather than the truth.
+The argument that survives is about sufficiency, not size. **A summary is
+enough only for questions where approximate knowledge suffices.** For anything
+requiring accuracy — changing the code, debugging it, checking a signature —
+the source read happens regardless, and the doc read is additive cost rather
+than a substitute. The questions a summary genuinely closes are orientation
+questions: which module owns this, where should I look. That is routing.
 
-The doc's remaining advantage is knowing *which* file to open. That is routing,
-and it is already present: `lib-modules.md` opens with a nine-line module map,
-roughly 1 KB. **The routing layer is about 4% of the doc and carries most of
-the agent-facing value.** Routing plus one targeted file read costs ~2.3k
-tokens against ~5k for the description, and ends on the source.
+## What the products come to here
 
-## Where the summary still earns its place
+**Per-module description.** Agent value is near zero: the questions it closes
+are routing questions, and routing is already available more cheaply. Human
+value is also near zero, because the resident reader has long since paid the
+recompute and retains it. Two low products, and a maintenance term paid on
+every commit that touches the code.
 
-Not uniformly. `validation.py` is 38 KB — around 9.5k tokens — so a faithful
-summary of it genuinely spares work an agent would otherwise repeat. The
-break-even is module size: below roughly a doc's own length, read the source;
-well above it, a summary compresses something real.
+**Routing.** High value per token for agents, and the cheapest layer in the
+system. Already present twice over: `lib-modules.md` opens with a nine-line
+module map, and 83 of 85 modules carry a docstring saying nearly the same thing
+in nearly the same words. `lib/` is 20 of 20.
 
-This makes the disposition per-region rather than per-artifact, and gives it a
-cheap first cut: compare each described unit's size against the description of
-it.
+**Within-file navigation.** Already in the files. `validation.py` carries 31
+comment blocks, several citing the ADR whose decision the code implements.
 
-## For a human, the spared work is different
+**Cross-module invariants.** Recompute cost is not merely high but unbounded,
+because the content is not recoverable from the source at any price — see the
+correction below. Both products are therefore high, and this is the layer worth
+authoring.
 
-A human needs orientation — how the pieces fit, why the shape is what it is,
-what the subsystem is for. That does not compress into a routing table, and it
-is not recoverable by reading one file quickly, because the question is about
-relations rather than any single module.
+## Disposition
 
-It also changes slowly. Architecture moves at a different rate than API detail,
-so the human-facing narrative carries a much lower maintenance tax than the
-per-module description that surrounds it today.
+Follows from the model plus the two local magnitudes: sources are small, and
+human reader turnover is near zero.
 
-## The punchline
+| Layer | Disposition |
+|---|---|
+| Per-module description | Drop |
+| Module routing map | Generate from docstrings, or drop as redundant with them |
+| Within-file navigation | Nothing to do |
+| Import and call structure | Do not author; mechanically recoverable |
+| Cross-module invariants, layering, protocol | Keep and author well |
+| Orientation for first contact | Already scoped: README, `kb/index.md`, collection landings, `kb/articles/` |
 
-The co-maintenance tax is concentrated in the fast-changing per-module API
-detail — which is precisely the part an agent does not need, because it can
-read the source faster and get an authoritative answer.
+The disposition depends on those magnitudes and does not transfer. A project
+with large modules, or with reader turnover on the human side, would land
+differently under the same model.
 
-The two low-tax, high-value layers are the routing map and the human-facing
-narrative. Both are small. Both change slowly. They are currently bundled with
-the expensive layer in the same artifacts.
+## Promotion candidates
 
-Separating them is the candidate move, and it is not "delete the docs": it
-keeps what each reader actually uses and stops paying for the part neither one
-needs in prose form.
+Two claims here look general rather than local, and neither is in the note:
+
+- A summary substitutes for source only on questions where approximate
+  knowledge suffices; for accuracy-requiring questions it is additive cost.
+- Relations split into mechanically recoverable structure and irrecoverable
+  invariants, and only the second is worth authoring.
 
 ## Open
 
-- Does the routing map need to be authored at all, or can it be generated from
-  module docstrings and checked?
-- Is the human narrative currently written anywhere, or would separating the
-  layers reveal it was never there and has to be authored?
-- What is the size threshold where a summary starts to pay? `validation.py` at
-  38 KB is above it and an 8 KB average module is below it; the crossing point
-  is unmeasured.
-- Does the same split apply to `commands.md`, where the described unit is a CLI
-  surface rather than a module, and `--help` output already exists?
+- Does the routing map need authoring at all, or is a generated-and-checked
+  map from docstrings strictly better?
+- What is the size threshold where a summary starts to pay for an
+  accuracy-requiring question? `validation.py` at 38 KB may be above it.
+- Does the same split apply to `commands.md`, where the unit is a CLI surface
+  and `--help` already exists?
 
 ---
 

@@ -17,11 +17,14 @@ them homeless; that was an artifact of a placement test since replaced.
 marks them cache rather than generator. Deleting one costs a bounded
 recomputation, never a fact.
 
-**Recoverable does not mean deletable.** For a model reader the recompute is
-the expensive step, so
-[a materialized derived value is often worth keeping](../../notes/llm-recompute-cost-inverts-the-store-vs-recompute-default.md)
-exactly where ordinary software would call it premature denormalization. The
-decision is economic, not a cleanup.
+**Recoverable does not mean deletable, and the reader decides.** The value of a
+description is per-read recompute cost times recomputes avoided, minus
+maintenance, and [human and agent readers invert on both terms](../../notes/human-recompute-is-dear-and-rare-agent-recompute-is-cheap-and-constant.md)
+— dear and rare against cheap and constant. That model is the workshop's basis;
+the local work is supplying Commonplace's magnitudes and reading the disposition
+off them. Relatedly, [in-context recompute is dear next to a CPU's](../../notes/llm-recompute-cost-inverts-the-store-vs-recompute-default.md),
+which is why materializing can pay at all — a different comparison class, not a
+competing claim.
 
 **The hazard is real in principle but is not what is happening here.**
 Hand-maintained-and-trusted is the state
