@@ -51,6 +51,7 @@ commonplace-relocate-note = "commonplace.cli.relocate_note:main"
 commonplace-review-job-list = "commonplace.cli.review.review_job_list:main"
 commonplace-resolve-criteria = "commonplace.cli.review.resolve_criteria:main"
 commonplace-review-target-selector = "commonplace.cli.review.review_target_selector:main"
+commonplace-source = "commonplace.cli.source:main"
 commonplace-validate = "commonplace.cli.validate_notes:main"
 commonplace-verify-quotes = "commonplace.cli.verify_quotes:main"
 commonplace-warn-selector = "commonplace.cli.review.warn_selector:main"
@@ -81,8 +82,6 @@ include = [
     "/kb/reference",
     "/kb/reports/types",
     "/kb/sources/types",
-    "/kb/sources/.gitignore",
-    "/kb/types",
     "/src",
     "/tests",
 ]
