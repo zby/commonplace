@@ -326,7 +326,14 @@ def relocate_directory(
         print(f"Destination already exists: {destination.relative_to(repo_root)}", file=sys.stderr)
         return 1
 
-    # Collect moved file map (old_path -> new_path) for all files under source
+    # Collect moved file map (old_path -> new_path) for all files under source.
+    # rglob is deliberately unfiltered, not a visibility-respecting walk: the
+    # rename below moves the payload wholesale, so the map must cover every file
+    # whose path changes, hidden entries and nested-repository contents included.
+    # Substituting walk_visible here would leave the map incomplete without
+    # changing what the rename moves — links pointing at a hidden moved file
+    # would silently keep their old paths. See ADR 039 for the visibility
+    # contract this walk is exempt from and why.
     moves: dict[Path, Path] = {}
     for f in source.rglob("*"):
         if not f.is_file():

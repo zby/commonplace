@@ -188,6 +188,7 @@ this workshop had classified as cache.
 | Within-file navigation | Already in-file | Nothing to do; `validation.py` carries 31 comment blocks, several citing ADRs |
 | Import/call structure | Yes — mechanically | Do not author |
 | Cross-module invariants, layering, protocol | **No** | **Keep and author well; needed by agents and humans alike** |
+| A warning aimed at whoever would change the code | No | **Relocate to the site it constrains** — see below; prose in a reference doc is the weakest available home |
 | Orientation narrative | No | Keep; overlaps heavily with the row above |
 
 The earlier framing had the last two rows as a human concession. They are the
@@ -207,3 +208,67 @@ takes the tax to near zero without touching anything a reader needs.
 That is the "enforced decision needs no consultation" pattern already happening
 in practice, unprompted. Worth sampling more broadly when that workshop resumes:
 the routable ADR residue may be smaller than assumed.
+
+
+---
+
+# Recovery by search, and the missing disposition
+
+Added 2026-08-23, after two of three candidate keep-passages turned out to be
+recorded elsewhere.
+
+## Run the recovery test as a search, not a judgment
+
+Three passages in `lib-modules.md` looked irrecoverable on inspection. Searched:
+
+| Passage | Verdict |
+|---|---|
+| "Git and gitignore are never consulted" | Recorded in [ADR 039](../../reference/adr/039-tool-visibility-is-package-owned-and-git-is-never-invoked.md), **more completely** than in the doc |
+| Type-spec eligibility rule | Recorded in [ADR 068](../../reference/adr/068-collection-contracts-stop-enumerating-available-types.md), plus every `COLLECTION.md`, plus the validator |
+| The `walk_visible` counterfactual | Genuinely nowhere else |
+
+One survivor of three. Judging irrecoverability by reading is the error the
+recovery test exists to prevent, and it is easy to make because a passage that
+states a rule *reads* load-bearing regardless of how many other homes it has.
+
+**Execution procedure:** before keeping any passage, grep the ADR set, the
+collection contracts, and the code for the same rule. Most restatements will
+surface.
+
+**A lossy copy is worse than no copy.** The doc's version of the visibility rule
+is weaker than ADR 039's — a reader who finds it stops looking for the fuller
+statement. Dropping such passages improves accuracy, not just volume, which is a
+stronger argument than the maintenance tax.
+
+## The missing disposition: relocate to the site
+
+The survivor was a warning aimed at whoever might change the code — a
+counterfactual about a plausible refactor. "Keep it in the doc" is the wrong
+answer for that content, and so is an ADR: it is a one-function implementation
+choice, and the ADR set is already 511 KB with nothing routing to it.
+
+Preference order for a change-loop warning, strongest first:
+
+1. **A test.** The decision defends itself; no consultation needed.
+2. **A comment at the site.** Found by whoever is about to break it.
+3. **An ADR.** Found only by someone who consults the set.
+4. **A reference doc.** Found reliably by nobody.
+
+**Executed:** the counterfactual now sits in `relocation.py` beside the
+unfiltered `rglob` it explains, and is removed from `lib-modules.md`. The site
+already carried a comment saying *what* the walk does; only the *why not* was
+missing.
+
+**Test deferred, with a reason.** The invariant is not cheaply assertable and
+may not be correct as stated. The observable result of the move is identical
+either way — the passage says so — so a test would have to assert that links
+*pointing at a hidden moved file* get rebased. Whether that is desired is
+unclear: [ADR 039](../../reference/adr/039-tool-visibility-is-package-owned-and-git-is-never-invoked.md)
+makes hidden entries invisible to every markdown walk, so tracking hidden
+markdown may contradict the visibility contract this walk is exempt from.
+Resolving that is a question for whoever owns relocation, not something to
+settle by writing a test that encodes a guess.
+
+This is also a worked instance for the [ADR routing workshop](../adr-routing/README.md):
+content moving out of the unroutable-prose category into the sited category is
+what shrinks the residue needing routing at all.

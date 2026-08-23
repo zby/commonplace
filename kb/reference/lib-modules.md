@@ -310,7 +310,7 @@ Move or rename a KB note or directory: rewrite inbound and outbound links across
 Top-level orchestrator. Resolves the source note from a path or unique stem, computes the destination, walks all repo markdown files to plan link rewrites, and either prints a dry-run plan or executes everything (file move, link rewrites, ProperDocs update). The ProperDocs step is skipped when the project has no `properdocs.yml`. Returns a process exit code.
 
 **`relocate_directory(*, root: Path, source_arg: str, dest_path: str, redirect_from: str | None = None, redirect_to: str | None = None, apply: bool = False) -> int`**
-Move a directory payload wholesale with `Path.rename`, while rewriting links only in visible repository Markdown. The move map includes every payload file because every path changes when the directory is renamed; hidden files and nested-repository contents move verbatim but are not opened for link rewriting. Replacing the payload walk with `walk_visible` would make the move map incomplete without changing what the final rename moves.
+Move a directory payload wholesale with `Path.rename`, while rewriting links only in visible repository Markdown. The move map includes every payload file because every path changes when the directory is renamed; hidden files and nested-repository contents move verbatim but are not opened for link rewriting.
 
 **`resolve_note(arg, *, root)`**
 Find a note by absolute path, repo-relative path, full filename, or unique stem. Searches the entire `kb/` tree, not just `kb/notes/`, so notes can be relocated between collections.
