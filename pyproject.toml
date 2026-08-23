@@ -82,6 +82,8 @@ include = [
     "/kb/reference",
     "/kb/reports/types",
     "/kb/sources/types",
+    "/kb/sources/.gitignore",
+    "/kb/types",
     "/src",
     "/tests",
 ]
