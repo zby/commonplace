@@ -1,5 +1,5 @@
 ---
-description: Areas are defined by operations that require reading notes together — orientation and comparative reading — which need sets that are both small enough for context and related enough to yield results
+description: "Explains why orientation and comparative reading need bounded, sufficiently related note sets, while fixed sizes, membership rules, tags, and index layouts remain implementation choices"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: []
@@ -7,94 +7,154 @@ tags: []
 
 # Areas exist because useful operations require reading notes together
 
-This note is the analytical companion to [COLLECTION.md](./COLLECTION.md): `COLLECTION.md` specifies how to assign and maintain areas, while this note explains why area boundaries exist and what makes them effective.
+Some useful knowledge-base operations get their output from relationships among
+notes. One-at-a-time retrieval cannot perform those operations by itself. When
+the consumer has a bounded working context, it needs a selected set that is
+small enough to process jointly and related enough to justify the cost.
 
-## The operations
+This note calls such a read-together set an **area**. The claim is about the
+set's function, not its implementation. An area may be a persistent index, a
+query result, a graph neighbourhood, a tag-selected slice, or a temporary
+batch. No particular frontmatter field, membership rule, hierarchy, or index
+layout follows from the name.
 
-Two operations justify areas. Both require loading a set of notes together, and both impose the same structural constraints on that set.
+## Two operations create the grouping requirement
 
-**Orientation** means loading a set of notes to reconstruct the current state of understanding in a topic — what is known, what is in tension, what is open. This is the entry cost of any session that touches a topic. Without a bounded set, an agent must search, read individual notes, and piece together relationships from scratch — spending context on reconstruction rather than productive work.
+**Orientation** reconstructs what is known about a subject: the accepted
+claims, live tensions, and open questions. It can use full notes or a compressed
+representation such as a curated index. When it uses notes directly, their
+joint reading supplies the larger model that no individual note contains.
 
-**Comparative reading** means loading a set of notes together and looking for redundancy, contradiction, tension, complementarity, and merge candidates. This is the maintenance operation that turns a collection of notes into a coherent body of knowledge. Without it, notes accumulate but never integrate.
+**Comparative reading** examines several notes for relationships that cannot be
+judged reliably from isolated retrieval. Its outputs include:
 
-Concrete outputs of comparative reading:
+- redundancy between arguments that should be consolidated;
+- contradiction between claims, or a scope distinction that resolves it;
+- tension between compatible claims that recommend different actions;
+- complementary arguments for the same conclusion;
+- missing links, missing support, and gaps in the represented design space.
 
-- **Redundancy** — two notes making the same argument in different words. One should absorb the other.
-- **Contradiction** — two notes asserting incompatible claims. Either one is wrong, or they apply in different scopes that should be made explicit.
-- **Tension** — two notes that don't contradict but pull in different directions. The tension is often more interesting than either note alone.
-- **Complementarity** — notes that are independent arguments for the same conclusion (like the [three output-quality arguments](./type-system-README.md)). Worth linking explicitly.
-- **Merge candidates** — notes that are halves of one argument, or overlapping early drafts that haven't differentiated.
-- **Missing connections** — notes that should reference each other but don't.
-- **Gaps** — a claim that needs support, a category that has no instances, an argument with no counterargument.
+Comparative reading normally needs more of each note than orientation does.
+Titles and descriptions may support routing, but comparison often needs the
+claims, reasons, and scope in the bodies. The two operations therefore need not
+use the same representation or the same set size.
 
-The two operations are complementary. Orientation is read-only — it loads the current state. Comparative reading is the write operation — it improves the state that future orientation will load. An area that supports both creates a virtuous cycle: good orientation enables focused comparative reading, which produces a more coherent set, which makes future orientation faster.
+When one area serves both operations, they reinforce each other. Orientation
+focuses the next comparative pass. That pass integrates the set, making later
+orientation cheaper. This cycle explains why a persistent area can be useful;
+it does not make persistence a requirement.
 
-## The constraints
+## Capacity and expected yield determine the boundary
 
-Both operations impose the same two constraints on the note set:
+Every joint-reading operation has a capacity bound. The bound depends on the
+consumer's usable context, note lengths, the resolution loaded, instruction and
+tool overhead, and the room needed to reason about relationships. A fixed note
+count cannot express those variables. A count can be a local planning heuristic,
+but it is not a general split threshold.
 
-**Context is finite.** An agent cannot load all notes simultaneously. Even a small KB of 100 notes at 500 words each is 50,000 words — well beyond what fits in a productive working context where the agent also needs instructions, methodology, and room to reason. The set must be bounded.
+The other constraint is expected yield. A note belongs in a pass when reading
+it with the other candidates is likely to change the operation's output. For
+orientation, an unrelated note consumes capacity without improving the subject
+model. For comparison, it creates another pair or cluster to inspect without a
+credible relationship to find.
 
-**Yield depends on relatedness.** For orientation, unrelated notes add noise — they consume context without contributing to the mental model being reconstructed. For comparative reading, unrelated notes produce null results — two notes with disjoint subjects have nothing to be redundant about, nothing to contradict, nothing to tension against. In both cases, loading unrelated notes wastes context.
+Relatedness is relative to the operation, not just to a taxonomy. Two notes
+from different topics may be highly related for a question about a shared
+mechanism. Two notes carrying the same tag may be poor comparison candidates
+when one is already integrated and the other addresses a disjoint concern.
+Prior comparative work also changes expected yield: a well-integrated set may
+need another pass only after its members change or new notes enter.
 
-Relatedness is a continuum, not a binary. Surprising cross-domain connections exist — a scheduling insight might illuminate a type system design. But the expected yield drops off steeply with decreasing relatedness. Running either operation on the full KB is infeasible — context limits prevent it — and inefficient, since most notes don't contribute. Cross-domain connections are rare enough to justify a different operation ([/connect](./brainstorming-how-to-enrich-web-search.md) with corpus expansion) rather than routine loading within a single area.
+The useful boundary therefore maximizes expected result per unit of joint
+attention. Changing the consumer, resolution, question, or state of the notes
+can change the boundary without changing the subject taxonomy.
 
-**Yield also depends on prior comparative work.** Two newly structured drafts are more likely to be redundant than two notes that have already been through comparative passes. This means comparative reading isn't one-shot — it should be re-run as notes evolve — but the area boundary remains the right unit for scoping each pass.
+## Operational cohorts are not classifications
 
-## Areas are the mechanism
+A classification answers what a note is about or where readers might find it.
+An area answers which notes should be processed together for a stated
+operation. Conflating these questions transfers constraints from one objective
+to the other.
 
-An area defines a set of notes where reading together is expected to be productive — both for orientation and for comparative reading. The area is a bet: "these notes, loaded together, will provide coherent orientation and surface useful redundancies, tensions, and connections at a rate that justifies the context cost."
+Navigation usually benefits from high recall. A note can carry many tags, and
+a broad tag can remain useful even when all tagged bodies cannot be loaded at
+once. Joint reading instead needs a capacity bound and enough precision to keep
+expected yield above its cost. A system may use navigation metadata to propose
+a cohort, but the operation still needs its own selection step.
 
-This grounds several conventions:
+Commonplace supplies one bounded witness. It replaced constrained `areas:`
+membership with free-form tags after the size and parent/child rules required
+by comparative batches reduced navigation value. The decision deliberately
+left future comparative reading to a purpose-built scoping mechanism
+([ADR 004](../reference/adr/004-replace-areas-with-tags.md)). This shows that a
+system can separate discovery from joint-processing scope; it does not show
+that tags or any other particular mechanism are required.
 
-**Size limits follow from context limits.** The [split threshold of ~40 notes](../reference/adr/004-replace-areas-with-tags.md) isn't arbitrary — it's the approximate point where an area stops fitting in working context. The context budget must also hold instructions and reasoning space, so the area itself can't consume the full window. An area that can't be read together can't serve either operation.
+Several consequences follow from keeping the objectives separate:
 
-**Precision follows from yield.** A precise area isn't just intellectually satisfying — it's operationally necessary. An area of 48 notes where only 15 are related to each other wastes 33 notes' worth of context — noise during orientation, null results during comparative reading. Splitting into more precise areas concentrates the context budget where it's productive.
+- **No universal membership cardinality.** Overlap is useful when a note has
+  high expected yield in several operations. It is wasteful only when repeated
+  inclusion adds cost without changing results.
+- **No universal parent/child rule.** Hierarchy may help navigation, while
+  comparison cohorts cut across it. Whether a parent and child both name a
+  note is an implementation choice, not a consequence of bounded context.
+- **Omission is operation-relative.** A note omitted from a purportedly
+  complete orientation set can hide relevant knowledge, especially when the
+  set suppresses fallback search. A note omitted from one comparative pass may
+  simply be out of scope for that pass.
+- **Splits and merges optimize work, not ontology.** Split a cohort when its
+  members no longer fit or rarely interact. Merge cohorts when cross-boundary
+  relationships justify the added cost. The best partition may look untidy as
+  a taxonomy.
+- **Stable and temporary cohorts trade different costs.** A stable set
+  amortizes selection and orientation but can become stale. A generated set
+  follows the current question but pays selection cost on each run.
 
-**Related Areas links are the cross-area operation.** When an agent follows a "Related Areas" link from one index to another, it's expanding the set. This is more expensive (two areas' worth of notes) but sometimes necessary — tensions between areas are real. The link makes this expansion deliberate rather than accidental.
+## Orientation and comparison need different views
 
-These conventions have further consequences:
+Orientation benefits from synthesis: a compact account of the current claims,
+tensions, and gaps. Comparative reading benefits from coverage: the candidate
+notes must remain visible so editorial selection does not hide a contradiction
+or duplicate.
 
-**Misplaced notes are actively harmful, not neutral.** A note in the wrong area isn't just poorly categorised — it consumes context in every pass without contributing. During orientation it's noise; during comparative reading it produces no results. Worse than an unassigned note, which at least doesn't waste other notes' context budget.
+One index does not automatically satisfy both needs. A curated narrative can
+orient quickly while omitting material needed for a comparison. A flat manifest
+can support complete loading while providing no compressed model. Systems can
+keep separate views or combine a curated layer with a complete generated
+listing. The choice depends on which representations fit at each context
+boundary; [two context boundaries govern collection operations](./two-context-boundaries-govern-collection-operations.md)
+develops that distinction.
 
-**Orphaned notes are absent from both operations.** A note with no area can only be found by search or /connect. It never appears in area-based orientation or comparative reading, so those routes cannot expose its relationships with existing notes. If an apparently complete area index causes readers to skip broader search, the omission reduces discovery along that route, as [stale indexes reduce discovery when they suppress fallback search](./stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) explains.
+## Scope
 
-**Single-area membership is the default.** If a note belongs to two areas, it gets loaded in both passes, doubling its context cost. Multi-area membership should be justified by the note genuinely participating in both domains' discourse — not by it being "sort of related" to both.
+The claim applies when an operation must hold enough content in one working
+context to reason across notes. A system that streams, externalizes, or
+schedules pairwise comparisons may avoid loading the whole cohort at once, but
+it still has to choose which relationships to inspect and preserve enough state
+to integrate their results. The capacity problem moves into scheduling and
+state rather than disappearing.
 
-**Area splits are yield optimisations, not taxonomic refinements.** When an area is split, the question isn't "what's the most logical subdivision?" but "which partition maximises expected yield per context-unit?" A conceptually clean split that puts highly related notes on opposite sides is worse than an ugly split that keeps high-tension pairs together.
+Areas also do not replace broad discovery. A bounded cohort concentrates an
+expensive operation where it is likely to pay off. Search, graph traversal, and
+other widening mechanisms remain necessary for relationships that the current
+boundary did not predict.
 
-The area system is a form of probabilistic triage: allocate the expensive read-together operations where they're most likely to produce results, and use cheaper operations (search, /connect) for the long tail of cross-area connections.
+## Open Questions
 
-## Conventions that follow
-
-**Tag the most precise useful area.** The `areas:` field generates Topics footer links, which lead readers to area indexes for comparative reading. A large area like `kb-design` (48 notes) is too imprecise — too many notes, too low a yield per context-unit. Tag the area whose index concentrates the most relevant notes.
-
-**Don't dual-tag parent and child.** `type-system` is a sub-area of `document-system` — that relationship is real. But `areas: [document-system, type-system]` forces the reader to choose between two indexes without guidance. Tag the most precise area only; the broader area is one hop away via "Related Areas" links. This mirrors the existing pattern — `document-system` notes don't carry `areas: [kb-design]`.
-
-**Multiple areas are fine for independent dimensions.** `areas: [kb-design, computational-model]` is fine — independent dimensions, not parent-child. The test: would comparative reading of each area surface useful tensions with this note?
-
-**Split when an area becomes imprecise.** The [~40 note threshold](../reference/adr/004-replace-areas-with-tags.md) reflects context limits, but the deeper signal is precision: if comparative reading consistently yields nothing because most note-pairs are unrelated, the area is too broad regardless of size. Splits produce peer areas linked via "Related Areas."
-
-**areas.md stays flat.** All areas listed as peers. Sub-area relationships expressed in each area's "Related Areas" section, not in the hub.
-
-## Tension: orientation and comparative reading pull index design in opposite directions
-
-Orientation benefits from synthesis — current state in prose, tensions highlighted, gaps noted. An agent reading a synthesised index gets the mental model without loading every note. Comparative reading benefits from a flat loadable list — every note visible, no editorial filtering hiding potential redundancies or tensions.
-
-A synthesised index saves orientation cost but may hide notes from comparative reading. A flat list enables comparative reading but provides no orientation shortcut. Current area indexes try to do both (context phrases on every entry, plus editorial grouping), but the two demands are genuinely in tension.
-
-## Open questions
-
-- Can we measure actual yield per area? If comparative reading of area X consistently produces zero results, the area is either too precise (all notes already integrated) or poorly constructed (notes aren't actually related).
-- Should areas have a minimum size? An area of 2 notes doesn't need either operation — the two notes can reference each other directly. The area mechanism adds overhead without value below some threshold.
-- How does this interact with the [quality signals](./quality-signals-for-kb-evaluation.md) work? Comparative reading yield could be a quality signal for area construction.
+- How should expected comparative yield be estimated before paying for the
+  comparison?
+- When does a stable cohort's amortized orientation value exceed its staleness
+  and maintenance cost?
+- Can observed outputs distinguish a well-integrated cohort from a poorly
+  related one when both produce few new findings?
 
 ---
 
 Relevant Notes:
 
-- [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — foundation: context is the scarce resource that makes unbounded reading-together infeasible
-- [Stale indexes reduce discovery when they suppress fallback search](./stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) — consequence: a note missing from an apparently complete area index can be omitted from orientation and comparative reading when that index closes broader discovery
-- [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — areas are one resolution level; both operations work within a level
-- [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — extends: comparative reading yield as a potential quality signal
-- [brainstorming how to enrich web search](./brainstorming-how-to-enrich-web-search.md) — complements: /connect handles the cross-area connections that within-area operations don't reach
+- [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: finite usable attention creates the capacity side of the cohort boundary
+- [Stale indexes reduce discovery when they suppress fallback search](./stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) — grounds: explains why omission becomes harmful when an apparently complete set closes broader discovery
+- [Two context boundaries govern collection operations](./two-context-boundaries-govern-collection-operations.md) — extends: separates full-body comparison from title-and-description orientation and derives the resulting operating regimes
+- [A knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: places read-together cohorts among the resolution levels a consumer must move between
+- [Quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — extends: treats comparative-reading yield as a possible signal for evaluating cohort construction
+- [004-Replace areas with tags](../reference/adr/004-replace-areas-with-tags.md) — evidenced-by: records one system separating high-recall navigation tags from future purpose-built comparative scope

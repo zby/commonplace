@@ -61,10 +61,10 @@ happened to the claim's truth conditions.
   leaves the opening mechanism intact, so the local noun is not the defect
   even though it also named selected machinery.
 - **Gone** — removing the term removed the proposition, because the term was
-  recording something the system stipulated. In the same note, "the split
+  recording something the system stipulated. The assertion "the split
   threshold of ~40 notes isn't arbitrary" has no general residue once the
-  number goes. What survives is the dependence on a usable context budget,
-  with 40 as one system's instantiation of it.
+  number goes. What survives is the dependence on a usable context budget;
+  any count is one system's planning heuristic rather than the theory.
 
 Definitions need this test most, because a definition necessarily selects a
 word and draws a boundary. That selection alone cannot be the defect, or every
@@ -98,7 +98,9 @@ the 310 files directly under `kb/notes/` and every third of the 23 under
 `kb/notes/definitions/`, sorted by filename — 27 files, each read whole. The
 scored surface was title, description, and opening argument. No sampled file
 failed. Later body material in one sampled note did carry free choice
-propositions, including the ~40-note threshold above.
+propositions, including the ~40-note threshold above. That note has since been
+generalized, so the finding now records what the sweep detected rather than a
+live defect.
 
 Two limits bound what this shows. A 27-file sample cannot establish a low rate
 throughout a collection, and the definition stratum happened to miss
@@ -152,4 +154,4 @@ Relevant Notes:
 - [Superseded choices are retained; superseded beliefs are not](./superseded-choices-are-retained-superseded-beliefs-are-not.md) — contrasts: the sibling maintenance consequence of distinguishing beliefs from residual choices, where this note governs how a live choice may be used in theory
 - [Artifact classification separates content kind, lineage, and authority](./artifact-classification-separates-content-kind-lineage-and-authority.md) — grounds: supplies the belief versus residual-choice distinction that decides whether a named term is a choice at all
 - [A framework rule with a boundary-preserving rival is not an inherited constraint](./a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md) — contrasts: classifies a rule as chosen or inherited, where this note says how a theory claim may name whatever that test found
-- [Areas exist because useful operations require reading notes together](./areas-exist-because-useful-operations-require-reading-notes-together.md) — evidenced-by: the worked hard case for the removal test, passing at its opening mechanism and carrying free choice propositions later
+- [Areas exist because useful operations require reading notes together](./areas-exist-because-useful-operations-require-reading-notes-together.md) — evidenced-by: the repaired hard case preserves the general read-together mechanism while treating fixed thresholds and membership policies as system choices
