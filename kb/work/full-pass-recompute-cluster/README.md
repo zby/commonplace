@@ -3,8 +3,8 @@
 ## Goal
 
 Run [run-full-improvement-pass-on-note.md](../../instructions/run-full-improvement-pass-on-note.md)
-over the six notes this cluster produced or altered on 2026-08-22/23. Not yet
-started.
+over the seven notes this cluster produced or altered on 2026-08-22/23, plus one
+older note the work implicated. Not yet started.
 
 The notes were written fast, in one conversation, several of them revised or
 retitled hours after landing. None has been through a full pass. They validate
@@ -13,12 +13,12 @@ claim survives on structural plausibility.
 
 ## Batches
 
-Two batches of four and two, ordered by dependency rather than by topic. A pass
+Two batches ordered by dependency rather than by topic, five and two. A pass
 can reframe a note's title and thesis, which invalidates citers — so the
 most-depended-on notes go first, and the second batch runs against a settled
 first batch.
 
-- [Batch 1 — most-depended-on](./batch-1.md) — four notes, ready to run.
+- [Batch 1 — most-depended-on](./batch-1.md) — five notes, ready to run.
 - [Batch 2 — dependents](./batch-2.md) — two notes, blocked on batch 1.
 
 Batch 2 cites batch 1 four ways: `addressability-grain` extends

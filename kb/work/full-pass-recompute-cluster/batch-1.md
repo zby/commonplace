@@ -14,9 +14,14 @@ Status: not started.
 | 2 | `kb/notes/documentation-generates-the-system-rather-than-describing-it.md` | not started |
 | 3 | `kb/notes/superseded-choices-are-retained-superseded-beliefs-are-not.md` | not started |
 | 4 | `kb/notes/human-recompute-is-dear-and-rare-agent-recompute-is-cheap-and-constant.md` | not started |
+| 5 | `kb/notes/areas-exist-because-useful-operations-require-reading-notes-together.md` | not started |
 
-Order within the batch is not binding; all four are cited by batch 2, so any
-order finishes the batch before batch 2 should start.
+Five, not four. `areas-exist` is cited by batch 2 and so belongs on this side
+of the boundary; keeping the dependency invariant matters more than an even
+split, since the invariant is the reason for the split.
+
+Order within the batch is not binding; every note here is cited by batch 2, so
+any order finishes the batch before batch 2 should start.
 
 ## Per-note context
 
@@ -46,3 +51,30 @@ one of them, segmentation strips the drift detector from the low-traffic layer,
 is a maintenance claim on an economics note and more general than its host.
 Split candidate. Also cites Commonplace as an existential witness — the
 collection-fit check is a live test of the bound-variable requirement here.
+
+**5. `areas-exist-because-useful-operations-require-reading-notes-together`** —
+the one note here most likely to come back `delete` or `rehome` rather than
+`keep`, and the one whose disposition has consequences outside this cluster.
+
+The bound-variable sweep flagged it for choice-dependent propositions after its
+opening: a ~40-note split threshold presented as generally determined, a
+single-area membership default, and assertions about the `areas:` field, Topics
+footers, and `areas.md`. That machinery is retired —
+[ADR 004](../../reference/adr/004-replace-areas-with-tags.md) replaced areas
+with tags — so parts of the note describe a system that no longer exists.
+
+Two things temper that. Its description already reads "while fixed sizes,
+membership rules, tags, and index layouts remain implementation choices", so a
+binding repair has been partly applied since the sweep; check the body against
+that before assuming the sweep's findings still stand. And the opening mechanism
+— orientation and comparative reading need bounded, sufficiently related note
+sets — survives the removal test independently of the retired machinery, which
+is what makes retire-versus-repair a real question rather than a formality.
+
+**Consequences of a non-`keep` disposition.** `a-theory-may-name` in batch 2
+cites this note `evidenced-by` as the worked hard case for its removal test; a
+delete would take that evidence with it. Two citers outside the cluster,
+`execution-shaping-determines-directory-placement` and
+`two-context-boundaries-govern-collection-operations`, would also need
+reconciling. Record these in the packet's Open items rather than acting on them
+in the pass.
