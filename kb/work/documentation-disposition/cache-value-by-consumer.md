@@ -36,6 +36,50 @@ the source read happens regardless, and the doc read is additive cost rather
 than a substitute. The questions a summary genuinely closes are orientation
 questions: which module owns this, where should I look. That is routing.
 
+## Selective doc reading against selective source reading
+
+The sufficiency argument above still understated the case, because it compared
+a doc *section* against a whole source file. Agents read source selectively
+too — grep a symbol, read one function — so the fair comparison is selective
+against selective.
+
+Measured on `type_resolver`:
+
+| | bytes | authoritative? |
+|---|---:|---|
+| `lib-modules.md` section on the module | 3,657 | no |
+| the module itself | 15,052 | yes |
+| median function in it | 773 | yes |
+
+Answering a symbol-level question — what does `validate_type_eligibility` do —
+costs about 3,657 bytes from the doc, because its section is the smallest unit
+the prose offers, and yields an approximate answer. From source it costs a grep
+plus 1,530 bytes, and yields the truth. **Selective source reading is both
+cheaper and correct.**
+
+### The mechanism is addressability, not size
+
+Source is addressable at symbol granularity: a name is a search key, so the
+reader can select exactly the function it needs. Prose is addressable only at
+heading granularity, so the smallest selectable unit is a section covering a
+whole module.
+
+The source therefore supports finer selection than the document does, and the
+advantage grows as the question gets more specific. This is why the compression
+ratios above are misleading: they compare whole artifacts, but neither reader
+consumes whole artifacts, and the two are not selectable at the same grain.
+
+### What follows
+
+A summary earns its place exactly where **the content has no locus in the
+source that a search could find**. An invariant spanning four modules has no
+symbol. A layering rule has no symbol. A protocol ordering has no symbol. That
+is the sharper reason such content is irrecoverable — not merely that it spans
+files, but that nothing in the files is the thing to look for.
+
+The operational test is one question: *what would I grep for?* If there is an
+answer, read the source. If there is not, that is the content worth authoring.
+
 ## What the products come to here
 
 **Per-module description.** Agent value is near zero: the questions it closes
@@ -79,6 +123,14 @@ differently under the same model.
 
 Two claims here look general rather than local, and neither is in the note:
 
+- **Addressability sets the granularity of selective reading, and source is
+  finer-grained than prose about it.** A symbol is a search key; a prose
+  section is the smallest unit a document offers. So selective source reading
+  beats selective doc reading on cost and on correctness, and the margin grows
+  with question specificity. This looks like the strongest candidate here.
+- A summary earns its place exactly where the content has no locus in the
+  source a search could find — the operational test being "what would I grep
+  for?"
 - A summary substitutes for source only on questions where approximate
   knowledge suffices; for accuracy-requiring questions it is additive cost.
 - Relations split into mechanically recoverable structure and irrecoverable
