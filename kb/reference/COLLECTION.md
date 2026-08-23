@@ -2,7 +2,9 @@
 
 ## Text contract and fidelity
 
-This collection accounts for what exists in the shipped Commonplace system — architecture, type system, operator surface, and decision history. Aim at faithful representation of the system as built, not transferable theory.
+This collection holds the **choices** Commonplace made and faithfully describes the **current or historical state** they produced — architecture, type system, operator surface, and decision history. Content belongs here when its intended contribution is the selected value, adopted contract, implemented interface, exposed behavior, or prior system state rather than a substantive claim about the design space that remains after those choices are bound. Aim at faithful representation of the system as built, not transferable theory.
+
+A reference artifact may contain supporting belief propositions without becoming a note. What decides placement is the artifact's intended contribution, stated by its title, description, and opening.
 
 Quality goal is **fidelity + economy** — say what the system actually does in minimum tokens, without omitting load-bearing details. An agent loading these docs is usually trying to act; every extra token competes with the task.
 
@@ -52,6 +54,7 @@ A typed artifact in this collection may use a global type spec under `kb/types/`
 ## What does NOT belong here
 
 - Transferable claims about KB methodology → `kb/notes/`
+- Bounded datasets, experiments, traces, or casebooks whose intended contribution states what they establish about the design space and the limit of that inference → `kb/notes/evidence/`
 - Procedures and how-to guidance → `kb/instructions/`
 - Descriptions of external systems → `kb/agent-memory-systems/reviews/` for memory/context-engineering systems, or `kb/agentic-systems/` for whole agentic systems and harnesses
 - Work in progress → `kb/work/` (workshops)

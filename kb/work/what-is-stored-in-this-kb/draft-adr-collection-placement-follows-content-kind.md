@@ -1,9 +1,13 @@
 # DRAFT ADR — Notes bind choices; reference records Commonplace selections and state
 
-Workshop draft. Number provisional (070 is next free as of 2026-08-23, but
-another session may claim it). Type/frontmatter to be added on promotion.
+**Promoted 2026-08-23** as
+[ADR 070](../../reference/adr/070-notes-bind-choices-reference-records-selections-and-state.md).
+The accepted record is authoritative. It also records the final decision that
+unresolved evidence stays in `kb/work/`, first occurrences or pure pattern
+records stay in `kb/log.md`, and `kb/notes/evidence/` requires its own bounded
+inference even when the larger theory remains incomplete.
 
-**Status:** proposed
+**Draft status:** promoted
 **Date:** 2026-08-23
 
 ## Context

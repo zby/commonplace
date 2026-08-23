@@ -2,19 +2,20 @@
 
 ## Status
 
-Open, unassigned. Five steps, ordered. Each step's gate is the reason it sits
-where it does — the ordering is the part worth following, not the step list.
+Open. Steps 1 and 2 are complete; step 3 is next. Five steps, ordered. Each
+step's gate is the reason it sits where it does — the ordering is the part
+worth following, not the step list.
 
-Everything this task promotes currently exists only in this workshop, which is
-a consumable layer. Until step 2 lands, the boundary has no reader: agents
-writing notes load `COLLECTION.md`, never `kb/work/`.
+The boundary now has a reader: agents writing notes or reference artifacts load
+the collection's `COLLECTION.md`, not this workshop. The remaining steps apply
+that accepted rule.
 
 ## Gate before step 2 — cleared
 
 The [bound-variable sweep](./bound-variable-sweep.md) reported on 2026-08-23:
 0/27 failures. The clause is stated flatly, with no transition provision and
 no grandfathering, and its wording has already been corrected in the
-[proposed edits](../draft-collection-contract-edits.md). Step 2 is unblocked.
+[applied edits](../draft-collection-contract-edits.md). This cleared step 2.
 
 The sweep left one targeted cleanup rather than a migration:
 `areas-exist-because-useful-operations-require-reading-notes-together.md`
@@ -56,29 +57,31 @@ Watch for a tag-README carrying `complete: true` that must gain an entry, or
 validation hard-fails. `artifact-analysis-README.md` needed exactly this for
 the last note in this thread.
 
-## 2. Promote the ADR and apply the contract edits
+## 2. Promote the ADR and apply the contract edits — done 2026-08-23
 
 The [draft ADR](../draft-adr-collection-placement-follows-content-kind.md) and
-the [proposed edits](../draft-collection-contract-edits.md), which give exact
-replacement text for five locations across the two contracts.
+the [applied edits](../draft-collection-contract-edits.md) supplied the starting
+text. ADR 070 was free at execution. Final review expanded the five drafted
+changes to six by making the evidence/work/log lifecycle explicit and added the
+missing `kb/agentic-systems/` route. A particular observation stays in notes
+only when the artifact states its bounded theoretical inference and limit;
+current or historical Commonplace state remains reference.
 
-Claim the next free ADR number at execution time. The draft says 070 was free
-on 2026-08-23; another session may have taken it since.
+**Done.** [ADR 070](../../../reference/adr/070-notes-bind-choices-reference-records-selections-and-state.md)
+records the accepted decision, and both collection contracts carry the binding
+placement rule. Final review also fixed the observation boundary: unresolved
+theory-facing evidence remains in `kb/work/`; first occurrences and pure pattern
+records without explanation belong in `kb/log.md`; `kb/notes/evidence/` requires
+a bounded inference and its limit even when the larger theory is incomplete.
 
-The edits file narrows the notes exclusion "descriptions of how a specific
-system works." A particular observation stays in notes only when it serves the
-artifact's substantive theoretical inference; current or historical Commonplace
-state remains reference. Confirm the exact wording before applying and check
-whether the sweep surfaced other conflicts.
-
-This is the step that gives the boundary a reader. Everything after it becomes
-an application of a stated rule rather than an argument.
+This step gave the boundary a reader. Everything after it is an application of
+a stated rule rather than an argument.
 
 ## 3. Decide the text-contract home
 
 [The existing task](./text-contract-and-profiles.md) has options A, B, and C
 with decision tests and a post-ADR-069 backlink recount already done. It was
-stopped pending a general placement rule; step 2 supplies it.
+stopped pending a general placement rule; ADR 070 now supplies it.
 
 ## 4. Act on the relocation candidates
 
@@ -97,7 +100,7 @@ Present the candidate list and wait for maintainer approval before moving
 anything. Use `commonplace-relocate-note`, never `git mv` — it rewrites
 consumers and adds the redirect.
 
-After step 2, so a move applies a stated rule instead of a reviewer's opinion.
+ADR 070 now lets a move apply a stated rule instead of a reviewer's opinion.
 
 ## 5. Disposition the remaining definitions
 
@@ -107,7 +110,7 @@ The [definition audit](../definition-audit.md) left machinery-first candidates
 the content model. The model has since settled.
 
 The audit's own disposition test is the boundary applied to vocabulary, so
-step 2 supplies the rule. The hard case is stipulated vocabulary: replace the
+ADR 070 supplies the rule. The hard case is stipulated vocabulary: replace the
 local term with its general description and ask whether a substantive,
 contestable distinction remains.
 

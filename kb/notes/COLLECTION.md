@@ -2,7 +2,9 @@
 
 ## Text contract and explanatory-reach
 
-This collection retains transferable claims about what is true — mechanisms, principles, and arguments that should hold across systems.
+This collection retains **beliefs about the design space** — transferable truth-apt claims about how systems of this kind can work. A claim may be grounded in a particular system, including Commonplace, when the particular is bound as a substantive witness for feasibility, mechanism, or a bounded consequence. Truth-aptness of a local observation alone does not place it here.
+
+Apply the placement test to the artifact's intended contribution: **after every particular system choice it names is bound, does a substantive claim about the design space remain?** Bind a choice universally, through equivalent generic or conditional grammar, or existentially as a witness. If binding leaves only what Commonplace selected or the current or historical state that selection produced, the artifact belongs in `kb/reference/`.
 
 Quality goal is **explanatory-reach** — the most general formulation the argument supports, with boundaries mapped. A note with explanatory-reach compresses many situations into one explanation.
 
@@ -24,7 +26,7 @@ Apply explanatory-reach to claim formulation:
 
 **Admit real gaps instead of hedging around them.** Precision means an agent can't misread the claim — it does not mean stacking qualifications against every conceivable pushback. When the argument has an actual gap — an assumption you can't yet defend, a case you haven't worked through — name it plainly in `## Scope` or `## Open Questions` as an opening for later investigation. A named gap is more useful than one padded shut with defensive language, and it's what review and later notes are for.
 
-**Formulation constraint.** Title and opening argument must be statable in general terms, even when derived from a specific system.
+**Formulation constraint — bind the choices you name.** The title, description, and opening argument must be statable in general terms, even when derived from a specific system. Where one of those surfaces names a choice some system made, bind it universally, existentially as a substantive witness, or through equivalent generic or conditional grammar. A system-specific term is not a free occurrence when replacing it with its general description leaves the claim's truth conditions unchanged. Existential grammar is not enough when the sentence merely restates the selected value. If no substantive claim remains after binding, move the artifact to `kb/reference/` because its intended contribution is what Commonplace selected or the state that selection produced. Claims offered as theory later in the body obey the same binding rule; explicitly scoped local reports and examples may support the theory without becoming the artifact's intended contribution.
 
 **Theory-independence constraint.** The claim must stand if any single cited description is removed — otherwise it's still a description.
 
@@ -81,12 +83,13 @@ Definitions of KB vocabulary belong under `kb/notes/definitions/`.
 
 ## Evidence placement
 
-Use `kb/notes/evidence/` when a note's primary contribution is what a bounded dataset, experiment, trace cohort, or comparative casebook establishes. These remain theoretical notes under this collection contract: state both the inference the evidence supports and its limit. Put raw captures in `kb/sources/`, descriptions of particular systems or Commonplace episodes in their descriptive collection, and unsettled audits in `kb/work/`.
+Use `kb/notes/evidence/` when a note's primary contribution is what a bounded dataset, experiment, trace cohort, or comparative casebook establishes about the design space. These remain theoretical notes under this collection contract: state both the inference the evidence supports and its limit. The larger theory may still be incomplete, but the evidence artifact must make its own bounded inference. Keep observations whose theory-facing inference is unresolved in `kb/work/`; put first occurrences and pure pattern records without explanation in `kb/log.md`. Put raw captures in `kb/sources/` and descriptions retained to represent a particular system's current or historical state in that system's descriptive collection.
 
 ## What does NOT belong here
 
 - Unadopted system designs → `kb/reference/proposals/` (`design-proposal` type), unless recast as an existential claim per above
-- Descriptions of how a specific system works → `kb/reference/` or `kb/agent-memory-systems/`
+- Records of what Commonplace selected, and descriptions of the current or historical state those selections produced → `kb/reference/`
+- Descriptions of a specific system's contract, interface, or current construction → `kb/reference/` for Commonplace, or `kb/agent-memory-systems/` and `kb/agentic-systems/` for external systems
 - Procedures and how-to guidance → `kb/instructions/`
 - Raw captures without frontmatter → `text` type, any collection
 - Work in progress → `kb/work/` (workshops)

@@ -232,6 +232,7 @@ Commonplace runs on its own methodology, so this collection also documents *this
 - [ADR-016: custom types use template/instruction pairs](./adr/016-custom-types-use-template-instruction-pairs.md) — how specialised types are packaged
 - [ADR-017: COLLECTION.md is the register convention boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — why collection files own register conventions while types stay structural
 - [ADR-068: collection contracts stop enumerating available types](./adr/068-collection-contracts-stop-enumerating-available-types.md) — global-plus-owned-local type eligibility, the `kb/work/` exception, and filesystem-backed type discovery
+- [ADR-070: notes bind choices; reference records selections and state](./adr/070-notes-bind-choices-reference-records-selections-and-state.md) — the intended-contribution and choice-binding test that separates transferable theory from Commonplace's selected and resulting state
 - [ADR-019: collection-owned link vocabulary with per-destination outbound rules](./adr/019-collection-owned-link-vocabulary.md) — why each `COLLECTION.md` owns outbound rules per local destination collection, and why the connect/write skills read it directly instead of a compiled topology
 - [ADR-059: external is a reserved outbound destination](./adr/059-external-is-a-reserved-outbound-destination.md) — extends collection-owned authorization to external targets without making the open web a connect-search surface
 - [ADR-060: rationale becomes rests-on](./adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md) — applies source-as-subject grammar to design dependencies, reclassifies off-pattern grounds, and gives the global type surface a collection contract
@@ -241,8 +242,8 @@ Commonplace runs on its own methodology, so this collection also documents *this
 
 ## Collection boundary
 
-- Use `kb/notes/` for transferable claims and theory.
-- Use `kb/reference/` for shipped-system documentation, operator guidance, and decision history.
+- Use `kb/notes/` for beliefs about the design space whose particular system choices are bound.
+- Use `kb/reference/` for Commonplace's selections and the current or historical state they produced.
 - Use `kb/instructions/` for imperative procedures and operator-facing process details.
 
 Keep these docs self-contained within the shipped surface. A consuming project should be able to read `kb/reference/` without needing links back to the Commonplace source repository or methodology library.
