@@ -13,13 +13,13 @@ claim survives on structural plausibility.
 
 ## Batches
 
-Two batches ordered by dependency rather than by topic, five and two. A pass
+Two batches of four and three. The seven notes are topologically sorted across both batches, and order is binding within each — every note runs after the notes it cites. A pass
 can reframe a note's title and thesis, which invalidates citers — so the
 most-depended-on notes go first, and the second batch runs against a settled
 first batch.
 
-- [Batch 1 — most-depended-on](./batch-1.md) — five notes, ready to run.
-- [Batch 2 — dependents](./batch-2.md) — two notes, blocked on batch 1.
+- [Batch 1](./batch-1.md) — four notes, ready to run.
+- [Batch 2](./batch-2.md) — three notes, blocked on batch 1.
 
 Batch 2 cites batch 1 four ways: `addressability-grain` extends
 `documentation-generates`, contrasts `human-recompute`, and grounds on
