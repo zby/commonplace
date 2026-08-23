@@ -18,17 +18,8 @@ can reframe a note's title and thesis, which invalidates citers — so the
 most-depended-on notes go first, and the second batch runs against a settled
 first batch.
 
-**Batch 1 — most-depended-on.**
-
-1. `kb/notes/llm-recompute-cost-inverts-the-store-vs-recompute-default.md`
-2. `kb/notes/documentation-generates-the-system-rather-than-describing-it.md`
-3. `kb/notes/superseded-choices-are-retained-superseded-beliefs-are-not.md`
-4. `kb/notes/human-recompute-is-dear-and-rare-agent-recompute-is-cheap-and-constant.md`
-
-**Batch 2 — dependents.**
-
-5. `kb/notes/a-theory-may-name-a-choice-only-as-a-bound-variable.md`
-6. `kb/notes/addressability-grain-not-compression-ratio-decides-whether-a.md`
+- [Batch 1 — most-depended-on](./batch-1.md) — four notes, ready to run.
+- [Batch 2 — dependents](./batch-2.md) — two notes, blocked on batch 1.
 
 Batch 2 cites batch 1 four ways: `addressability-grain` extends
 `documentation-generates`, contrasts `human-recompute`, and grounds on
