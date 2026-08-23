@@ -2,8 +2,18 @@
 
 ## Governing question
 
-Commonplace holds 71 ADRs. Nothing routes a self-improvement run into them.
-What should?
+Commonplace holds 72 ADRs and nothing routes a self-improvement run into them.
+Before designing a mechanism: **when is consultation actually needed, when has
+it proved useful, and when should it have happened and did not?**
+
+This is deliberately an observation workshop first. The set is not yet large —
+511 KB, and its description layer is only 17 KB — so the pressure that would
+justify building something may not have arrived. Past sessions appear to have
+consulted ADRs exhaustively; if that is still workable, the missing piece is an
+instruction, not a routing surface. Build nothing until observation says what
+is failing.
+
+Reasoning so far: [trigger analysis](./trigger-analysis.md).
 
 ## The gap, as measured 2026-08-23
 
@@ -52,7 +62,12 @@ same reasoning applies to superseded ADRs and has not been applied to them.
 
 ## What a later session should not assume
 
-The shape is open. An ADR index, a change-loop instruction, subsystem-keyed
+Do not start by building. The first tasks are observational: partition the
+ADRs by whether their decision already has an enforcement trace elsewhere, and
+test whether the existing `description` layer is discriminating enough to route
+on. Both are cheaper than any mechanism and either could dissolve the problem.
+
+The shape, if a mechanism is eventually warranted, is open. An ADR index, a change-loop instruction, subsystem-keyed
 routing, frontmatter that lets a routing query be computed, per-ADR scope
 declarations, or something else entirely. Two or three of these may compose;
 the measured gap does not select among them.
@@ -71,8 +86,12 @@ consults.
 
 ## What closes this workshop
 
-A change run can reliably reach the decisions that constrain it, by a mechanism
-whose completeness properties are stated and, where claimed, enforced. Whatever
-is built is recorded as an ADR, and the reasoning that generalizes is promoted.
-Deciding that no routing surface is warranted also closes it, provided the
-reason is written down.
+Observed evidence exists about when consultation helped, when it was skipped
+and should not have been, and what the actual failure rate looks like — enough
+that a decision to build or not to build rests on something.
+
+If a mechanism is warranted, a change run can reliably reach the decisions that
+constrain it, with completeness properties stated and, where claimed, enforced.
+Concluding that none is warranted closes the workshop equally well, provided
+the reason and the evidence are written down. Whatever is decided is recorded
+as an ADR; reasoning that generalizes is promoted.
