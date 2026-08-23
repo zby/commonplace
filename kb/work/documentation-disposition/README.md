@@ -12,29 +12,35 @@ describes, author only the part no recovery reaches, or minimize it?
 which owns the state Commonplace's choices produced. An earlier framing had
 them homeless; that was an artifact of a placement test since replaced.
 
-**They are predominantly, not wholly, recoverable — and that is a result, not a
-premise.** An earlier version of this section asserted that the running system
-can regenerate their content, full stop. That was wrong three ways, and the
-error was load-bearing: it licensed judging passages by reading them instead of
-searching for their other homes, which produced two wrong calls in the first
-worked case.
-
+**Every artifact is a mixture, and the split is the operative thing.**
 Recoverability attaches to **units of content, not to artifacts** — the central
 move of [the recovery test](../../notes/documentation-generates-the-system-rather-than-describing-it.md)
-this workshop rests on. A file is a mixture, and the mixture is the whole
-problem. `lib-modules.md` returned one irrecoverable passage in six rule-shaped
+this workshop rests on. Where a unit is recoverable, deleting it costs a bounded
+recomputation and never a fact; where it is not, deletion is unbounded loss.
+Which one applies is what the procedure determines, per unit, by search.
+
+An earlier version of this section asserted the artifacts in scope are
+recoverable, as settled background. The error was load-bearing: it licensed
+judging passages by reading them instead of searching for their other homes,
+which produced two wrong calls in the first worked case before the search caught
+them. `lib-modules.md` returned one irrecoverable passage in six rule-shaped
 candidates; a blanket claim would have deleted it.
 
-It is also not a property of documentation, or of `kb/reference/`. **ADRs are
-the counterexample**: they live in the same collection, and no running system
-regenerates a decision, its rejected alternatives, or the reason a boundary
-sits where it does. What distinguishes the artifacts in scope here is that most
-of their content happens to describe current state, which is recoverable — a
-contingent fact about this class, established per unit by search, never assumed.
+**Do not state a ratio.** Any proportion is a measurement of one moment, and it
+is not stable. **ADRs are the counterexample that shows recoverability is not a
+property of documentation, or of `kb/reference/`**: they sit in the same
+collection, and no running system regenerates a decision, its rejected
+alternatives, or the reason a boundary sits where it is.
 
-Where a unit *is* recoverable, deleting it costs a bounded recomputation and
-never a fact. Where it is not, deletion is unbounded loss. Which one applies is
-what the procedure determines.
+**And the mixture drifts one way.** Irrecoverable content accretes: every
+recorded rationale, rejected option, or warning to a future changer adds some,
+while recoverable content is cheap to regenerate or correct. The sharpened
+economy tests now in [`kb/reference/COLLECTION.md`](../../reference/COLLECTION.md)
+push the same direction by construction, since they filter recoverable additions
+at write time and let irrecoverable ones through. So an artifact dispositioned
+today can accumulate a generator core and need re-examination. This audit is not
+once-and-done, and a disposition should record the date and the basis it was
+decided on rather than reading as permanent.
 
 **Recoverable does not mean deletable, and the reader decides.** The value of a
 description is per-read recompute cost times recomputes avoided, minus
@@ -92,10 +98,14 @@ trades waiting for evidence.
 
 ## What closes this workshop
 
-Every artifact in the class has a disposition with a reason, at least one is
-executed as a worked case, and the general rule — if one exists — is promoted.
-If the answer turns out to be per-artifact with no general rule, say so; that
-is a finding, not a failure to conclude.
+Every artifact in the class has a disposition with a reason **and a date**, at
+least one is executed as a worked case, and the general rule — if one exists —
+is promoted. If the answer turns out to be per-artifact with no general rule,
+say so; that is a finding, not a failure to conclude.
+
+Dates matter because the mixture drifts. A disposition is a judgment about an
+artifact's composition at a time, not a permanent property, so a later session
+needs to know when it was made and against what.
 
 ## Current draft
 
