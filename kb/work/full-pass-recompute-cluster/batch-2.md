@@ -17,9 +17,11 @@ Status: blocked on batch 1.
 | 5 | `kb/notes/human-recompute-is-dear-and-rare-agent-recompute-is-cheap-and-constant.md` | blocked |
 | 6 | `kb/notes/a-theory-may-name-a-choice-only-as-a-bound-variable.md` | blocked |
 | 7 | `kb/notes/addressability-grain-not-compression-ratio-decides-whether-a.md` | blocked |
+| 8 | `kb/notes/an-insufficient-summary-precedes-the-source-rather-than-replacing.md` | blocked |
 
-Order is binding: 7 cites 5, so 5 must settle first. This is the one dependency
-edge that falls inside a batch rather than across the boundary.
+Order is binding. Two dependency edges fall inside this batch rather than
+across the boundary: 7 cites 5, and 8 cites 7. Note 8 is last because nothing
+cites it — it was written after the batches were first drawn and is a leaf.
 
 ## Inbound dependencies on batch 1
 
@@ -28,6 +30,8 @@ edge that falls inside a batch rather than across the boundary.
   3 `evidenced-by`.
 - 7 `addressability-grain` **grounds** on batch 1's note 1, **extends** batch 1's
   note 4, and **contrasts** note 5 in this batch.
+- 8 `an-insufficient-summary-precedes-the-source` **extends** batch 1's note 1,
+  **contrasts** batch 1's note 4, and **contrasts** note 7 in this batch.
 
 Recheck each edge before its pass: if the target was reframed, the citing
 sentence here may state a claim its target no longer makes.
@@ -59,3 +63,20 @@ universal rather than hedged; a pass that widens the scope would break that. Its
 central evidence is a pair of instances running opposite ways under one rule, so
 a compression finding that trims one instance would remove the discrimination
 the note rests on. Cites Commonplace as an existential witness.
+
+**8. `an-insufficient-summary-precedes-the-source-rather-than-replacing`** —
+written 2026-08-23, after the batches were drawn, to close a dependency: the
+workshop's disposition procedure asserted its claim without a note behind it.
+
+Two features to protect. It separates a general ledger from its sharp case —
+an insufficient summary can still narrow the source read, so the strict
+universal is *precedence*, and the cost verdict follows conditionally where
+nothing is narrowed. A compression finding that collapsed that distinction would
+restore the overclaim it was written to avoid. And its `## Scope` declares a
+modality split: universal per (summary, source, question, required reliability)
+tuple, statistical for the aggregate judgment about whether a layer is worth
+maintaining. Under ADR 066 both landings carry their own guards.
+
+Its independence from note 7 is developed in both directions and is the reason
+both notes exist rather than one. If a pass on 7 or 8 weakens that
+demonstration, check the other before accepting it.

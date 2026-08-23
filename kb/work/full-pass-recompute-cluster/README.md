@@ -4,7 +4,7 @@
 
 Run [run-full-improvement-pass-on-note.md](../../instructions/run-full-improvement-pass-on-note.md)
 over the seven notes this cluster produced or altered on 2026-08-22/23, plus one
-older note the work implicated. Not yet started.
+older note the work implicated — eight in all. Not yet started.
 
 The notes were written fast, in one conversation, several of them revised or
 retitled hours after landing. None has been through a full pass. They validate
@@ -13,18 +13,25 @@ claim survives on structural plausibility.
 
 ## Batches
 
-Two batches of four and three. The seven notes are topologically sorted across both batches, and order is binding within each — every note runs after the notes it cites. A pass
+Two batches of four. The notes are topologically sorted across both batches, and order is binding within each — every note runs after the notes it cites. A pass
 can reframe a note's title and thesis, which invalidates citers — so the
 most-depended-on notes go first, and the second batch runs against a settled
 first batch.
 
 - [Batch 1](./batch-1.md) — four notes, ready to run.
-- [Batch 2](./batch-2.md) — three notes, blocked on batch 1.
+- [Batch 2](./batch-2.md) — four notes, blocked on batch 1.
 
-Batch 2 cites batch 1 four ways: `addressability-grain` extends
-`documentation-generates`, contrasts `human-recompute`, and grounds on
-`llm-recompute`; `a-theory-may-name` contrasts `superseded-choices`. If batch 1
-reframes any of those, batch 2's premises move before its own pass reads them.
+Batch 2 depends on batch 1 six ways: `addressability-grain` extends
+`documentation-generates` and grounds on `llm-recompute`; `a-theory-may-name`
+contrasts `superseded-choices` and cites `areas-exist` as evidence;
+`an-insufficient-summary` extends `llm-recompute` and contrasts
+`documentation-generates`. If batch 1 reframes any of those, batch 2's premises
+move before its own pass reads them.
+
+Two further edges fall inside batch 2 — `addressability-grain` contrasts
+`human-recompute`, and `an-insufficient-summary` contrasts
+`addressability-grain` — which is why order is binding within a batch and not
+only across the boundary.
 
 Excluded: `artifact-analysis-README.md`, `document-system-README.md`,
 `context-engineering-README.md`. They are type `tag-readme`, weight-gated, and
