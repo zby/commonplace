@@ -12,10 +12,29 @@ describes, author only the part no recovery reaches, or minimize it?
 which owns the state Commonplace's choices produced. An earlier framing had
 them homeless; that was an artifact of a placement test since replaced.
 
-**They are recoverable.** The running system can regenerate their content, so
-[the recovery test](../../notes/documentation-generates-the-system-rather-than-describing-it.md)
-marks them cache rather than generator. Deleting one costs a bounded
-recomputation, never a fact.
+**They are predominantly, not wholly, recoverable — and that is a result, not a
+premise.** An earlier version of this section asserted that the running system
+can regenerate their content, full stop. That was wrong three ways, and the
+error was load-bearing: it licensed judging passages by reading them instead of
+searching for their other homes, which produced two wrong calls in the first
+worked case.
+
+Recoverability attaches to **units of content, not to artifacts** — the central
+move of [the recovery test](../../notes/documentation-generates-the-system-rather-than-describing-it.md)
+this workshop rests on. A file is a mixture, and the mixture is the whole
+problem. `lib-modules.md` returned one irrecoverable passage in six rule-shaped
+candidates; a blanket claim would have deleted it.
+
+It is also not a property of documentation, or of `kb/reference/`. **ADRs are
+the counterexample**: they live in the same collection, and no running system
+regenerates a decision, its rejected alternatives, or the reason a boundary
+sits where it does. What distinguishes the artifacts in scope here is that most
+of their content happens to describe current state, which is recoverable — a
+contingent fact about this class, established per unit by search, never assumed.
+
+Where a unit *is* recoverable, deleting it costs a bounded recomputation and
+never a fact. Where it is not, deletion is unbounded loss. Which one applies is
+what the procedure determines.
 
 **Recoverable does not mean deletable, and the reader decides.** The value of a
 description is per-read recompute cost times recomputes avoided, minus
@@ -49,8 +68,10 @@ Membership is a finding to re-test, not a fixed list. Some of these are mixed �
 partly a recoverable compression of code, partly level-native vocabulary that
 no implementation determines. The mixed ones are where the work is.
 
-Out of scope: ADRs, proposals, purpose and frame documents, and anything else
-whose content the system cannot regenerate.
+Out of scope as artifacts: ADRs, proposals, purpose and frame documents. Their
+content is overwhelmingly irrecoverable, so the disposition question does not
+arise for them — but that is a judgment about where the work is worth doing,
+not a claim that every unit inside them is unique.
 
 ## What a later session should not assume
 
