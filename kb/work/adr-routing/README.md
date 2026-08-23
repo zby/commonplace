@@ -1,0 +1,78 @@
+# How does a change run find the decisions that bind it?
+
+## Governing question
+
+Commonplace holds 71 ADRs. Nothing routes a self-improvement run into them.
+What should?
+
+## The gap, as measured 2026-08-23
+
+- `kb/reference/adr/` has **no index** — no README, no INDEX.
+- **No instruction routes to them.** The two instruction files matching `adr/`
+  cite specific ADRs as sources for a claim; neither tells anyone to consult
+  the ADR set before changing something.
+- **The change loop is the only loop without an instruction.** Write, review,
+  revise, critique, ingest, connect, validate, migrate, retire, publish, fix,
+  and triage all have one. Changing the system has none.
+- `AGENTS.md` names the directory as a navigation entry point, which is
+  discovery by listing.
+
+So ADRs are pointed *at* by artifacts and never routed *to* from a task. They
+are consulted by luck: full maintenance cost, unreliable consumption.
+
+## Why this is the right frame
+
+An ADR is data, not a system-definition artifact. It asserts what was decided
+and why; it binds nothing by itself. Getting a constraint out of one requires
+defeasible reasoning, and an agent may legitimately conclude the ADR should be
+superseded. The binding force would live in whatever instruction consults them
+— and that instruction does not exist.
+
+That makes this a routing problem, not a volume problem. Reduction would not
+help: the constraint is that 71 ADRs cannot fit in a bounded context beside
+the code and the task.
+
+## Constraints a solution must respect
+
+**A partial index is worse than none.** [Stale indexes reduce discovery when
+they suppress fallback search](../../notes/stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md):
+an agent that finds three relevant ADRs stops looking for the fourth. Any
+index either carries a completeness guarantee it can keep, or must not read as
+complete.
+
+**Enforce or omit.** If a routing surface caches anything recomputable from the
+ADR set, [it must be machine-checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md).
+The `complete`/`covered_by` marks on tag-READMEs are the shipped precedent for
+how that can work.
+
+**Retention is cheap; standing search surface is not.** `proposals/README.md`
+already applies this — archived proposals are named in prose rather than
+linked, so they stay retrievable without diluting what a reader sweeps. The
+same reasoning applies to superseded ADRs and has not been applied to them.
+
+## What a later session should not assume
+
+The shape is open. An ADR index, a change-loop instruction, subsystem-keyed
+routing, frontmatter that lets a routing query be computed, per-ADR scope
+declarations, or something else entirely. Two or three of these may compose;
+the measured gap does not select among them.
+
+Nor should it assume the ADR set partitions cleanly by subsystem. Whether a
+change-target-keyed head is even well-formed is an open question — the ADRs
+may smear across targets, which would rule out the most obvious design.
+
+## Downstream consumer
+
+[The documentation disposition workshop](../documentation-disposition/README.md)
+would use the same change-target-keyed mapping if one lands, since a change run
+needs the current architecture description alongside the decisions. It also
+gains an empirical test from it: a description nothing routes to is one nobody
+consults.
+
+## What closes this workshop
+
+A change run can reliably reach the decisions that constrain it, by a mechanism
+whose completeness properties are stated and, where claimed, enforced. Whatever
+is built is recorded as an ADR, and the reasoning that generalizes is promoted.
+Deciding that no routing surface is warranted also closes it, provided the
+reason is written down.
