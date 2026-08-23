@@ -84,3 +84,66 @@ needs in prose form.
   is unmeasured.
 - Does the same split apply to `commands.md`, where the described unit is a CLI
   surface rather than a module, and `--help` output already exists?
+
+---
+
+# Correction: relations are not a human-only need
+
+Added 2026-08-23, after the objection that agents need cross-module
+documentation too. The objection holds, and the earlier split was wrong.
+
+## Why "read the source" does not reach relations
+
+Reading `type_resolver.py` tells an agent what that module does. It does not
+tell it that collection discovery in `project_paths.py` determines which type
+specs are in scope, or that `validation.py` depends on the resolution order.
+Relations live between files, so recovering them means reading several and
+inferring — the expensive case, not the cheap one.
+
+The change loop needs them most: what breaks if this signature moves, which
+subsystem owns this concern, what invariant am I about to violate. That is the
+question an agent cannot answer from the file in front of it.
+
+## But relations split into two kinds, and only one is worth authoring
+
+**Mechanically recoverable.** Imports, call structure, which module references
+which. A `grep` over import statements reconstructs the static dependency graph
+cheaply and authoritatively. Authoring this is the same duplication as the
+routing map.
+
+**Not recoverable.** Invariants that span modules, layering rules ("this may
+import that, never the reverse"), protocol and sequencing facts, and why a
+boundary sits where it does. `review-architecture.md`'s canonical-state versus
+derived-output distinction and its finalization invariants are this kind. No
+amount of reading the files yields the rule, because the rule is what the files
+were written to satisfy — it is the generator content, sitting inside artifacts
+this workshop had classified as cache.
+
+## Revised disposition
+
+| Layer | Recoverable? | Disposition |
+|---|---|---|
+| Per-module description | Yes — docstrings say nearly the same words | Drop |
+| Module routing map | Yes — derivable from docstrings | Generate or drop |
+| Within-file navigation | Already in-file | Nothing to do; `validation.py` carries 31 comment blocks, several citing ADRs |
+| Import/call structure | Yes — mechanically | Do not author |
+| Cross-module invariants, layering, protocol | **No** | **Keep and author well; needed by agents and humans alike** |
+| Orientation narrative | No | Keep; overlaps heavily with the row above |
+
+The earlier framing had the last two rows as a human concession. They are the
+load-bearing content for both readers, and they are the part currently diluted
+by the four rows above them.
+
+## What this does to the tax argument
+
+The tax was never on the valuable layer. Cross-module invariants change at
+architecture speed, not commit speed. What is being co-maintained on every
+commit is the per-module detail that duplicates docstrings — so removing it
+takes the tax to near zero without touching anything a reader needs.
+
+## Side evidence for the parked ADR workshop
+
+`validation.py`'s comments cite ADR 026 at the site the decision constrains.
+That is the "enforced decision needs no consultation" pattern already happening
+in practice, unprompted. Worth sampling more broadly when that workshop resumes:
+the routable ADR residue may be smaller than assumed.
