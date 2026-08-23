@@ -118,7 +118,7 @@ def _ingest_anchor(ingest_path: Path) -> tuple[str, str]:
         raise ValueError("ingest frontmatter must contain an http(s) source")
     checksum = parsed.data.get("snapshot_sha256")
     if not isinstance(checksum, str):
-        raise ValueError("ingest frontmatter must contain snapshot_sha256")
+        raise TypeError("ingest frontmatter must contain snapshot_sha256")
     _validate_sha256(checksum)
     return source, checksum
 

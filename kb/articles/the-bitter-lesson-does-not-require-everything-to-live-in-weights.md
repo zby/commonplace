@@ -16,7 +16,6 @@ source_notes:
   - kb/notes/parametric-reproduction-cannot-replace-an-authoritative-record.md
   - kb/notes/commitment-not-derivation-creates-new-ground-truth.md
   - kb/notes/oracle-accumulation-improves-the-selection-environment.md
-  - kb/sources/sutton-the-bitter-lesson-original-essay.md
   - kb/sources/symbolic-learning-enables-self-evolving-agents.ingest.md
   - kb/sources/memento-skills-let-agents-design-agents.ingest.md
   - kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md

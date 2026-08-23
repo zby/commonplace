@@ -29,7 +29,10 @@ define another supported input shape.
   the exact primary-snapshot checksum, and retain their analytical body except
   for direct field duplication.
 - Existing source material is preserved locally before tracked copies retire.
-- Links that depended on retiring snapshots have valid replacement targets.
+- Durable-library links that depended on retiring snapshots have valid
+  replacement targets. Peer workshops and frozen workflow fixtures remain
+  outside the corpus migration's authority and retain their working-history
+  paths until their owners revise or close them.
 - The full relevant test and validation suite passes.
 - One ADR records the shipped choice. Its `Postponed` section is the only
   retained list of extensions not implemented in v1.

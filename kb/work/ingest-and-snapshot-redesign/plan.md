@@ -100,8 +100,8 @@ For each ingest/source unit:
    preserve that file at the adopted ignored local path;
 3. remove only body lines that directly duplicate the new fields;
 4. validate the migrated ingest;
-5. replace links to the retiring snapshot with the external source, ingest, or
-   another target that supports the original sentence;
+5. replace durable-library links to the retiring snapshot with the external
+   source, ingest, or another target that supports the original sentence;
 6. stop tracking the source body and capture assets only after the row's prior
    steps are complete.
 
@@ -124,7 +124,8 @@ Run:
 
 - relevant collection validation;
 - `uv run pytest`;
-- `uv run ruff check .`;
+- `uv run ruff check .`, recording repository-wide baseline findings honestly,
+  plus a scoped check proving the redesign introduced no remaining finding;
 - package, scaffold, and documentation publication checks;
 - one fresh-checkout reconstruction test with source material absent, covering
   both an exact reconstruction and a changed-source checksum mismatch.

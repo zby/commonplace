@@ -1,14 +1,13 @@
 # Recovery state
 
-**Updated:** 2026-08-22
+**Updated:** 2026-08-23
 
 **Overall:** `ACTIVE`
 
-**Resume pointer:** P3 is complete and its 942 ledger rows are terminal. The
-root operator should review and commit only the ledger-defined P3 write set,
-including the 325 pending tracked-source deletions and 13 new tracked-candidate
-files. P4 remains pending; do not write its ADR or close the workshop as part
-of the P3 commit.
+**Resume pointer:** P3 was committed as `90422c11`; its 942 ledger rows remain
+terminal. P4 is in progress. Extract the implemented decision into ADR 072 and
+align the current genre/immutability contracts before archiving the adopted
+proposal and deleting this workshop.
 
 **Safety hold:** do not remove or untrack source material until P3 has recorded
 its durable fields, verified its local copy, and assigned its dependent links a
@@ -46,18 +45,37 @@ At most one phase may be `IN_PROGRESS`.
 | P1 — write the exact v1 shape | `COMPLETE` | User accepted the validated `v1-shape.md` contract on 2026-08-22. |
 | P2 — implement v1 | `COMPLETE` | The accepted schema, local cache, checksum-first resolver, capture defaults, instructions, distribution surfaces, and focused tests are implemented. |
 | P3 — migrate repository data | `COMPLETE` | All 942 ledger rows are terminal; 275 ingests, 338 local assets, and 329 link occurrences have exact final parity and pass the P3 audit. |
-| P4 — verify, record ADR, and close | `PENDING` | — |
+| P4 — verify, record ADR, and close | `IN_PROGRESS` | P3 is committed; the live worktree was clean when P4 started on 2026-08-23. |
 
 ## Exact next action
 
-Review the 1,011-path P3 write set against `migration.tsv`, preserve every
-dirty path outside it, and stage and commit only the P3 migration. After that
-commit is accepted, start P4 by recording its own exact write set before
-writing the ADR or closing the workshop.
+Write and validate ADR 072 plus the contract-consistency repairs in the P4
+write set below. Then run the full P4 gates, record their exact results here,
+commit the durable extraction, and only then archive the adopted proposal and
+delete this workshop.
 
 ## Active write set
 
-P3 owns the exact 1,011-path set derived from the immutable row identities in
+P4 may touch only:
+
+- this workshop's `README.md`, `plan.md`, and `state.md` before the whole
+  workshop directory is deleted at closure;
+- `src/commonplace/lib/snapshot.py` and the GitHub/X snapshot CLI tests for the
+  three P2-introduced Ruff findings;
+- `kb/sources/types/snapshot.md` and `ingest-report.md` for the durable genre
+  authority and extension boundary;
+- ADR 045 and new ADR 072;
+- `kb/articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md`
+  for the one remaining retired-source frontmatter pointer;
+- `kb/work/extensible-controlled-vocabularies/README.md` and the S1 finding,
+  plan index, and plan under `kb/work/system-contract-consistency/`;
+- `kb/work/README.md` for the corrected peer-workshop summary and final removal
+  of this workshop's navigation entry;
+- the source-unit proposal at its current and archive paths,
+  `kb/reference/proposals/archive/README.md`, and `properdocs.yml` for proposal
+  retirement and its published redirect.
+
+P3's completed write set was the exact 1,011-path set derived from the immutable row identities in
 `migration.tsv`. The pre-execution ledger file SHA-256 is
 `20b4900cab3c9f830ee8f1c36e8690312daf1f83948e49e07499912531f9517b`;
 because statuses and evidence notes advance during execution, the stable
@@ -170,6 +188,13 @@ workshop closure remain reserved for P4.
 | 2026-08-22 | P3 | Final validation of the 275 migrated ingests reported 255 clean passes, 20 passes with warnings, and zero failures. Eighteen warnings are existing links to the already-absent `kb/notes/definitions/distillation.md`; two are the schema's accepted open-genre warnings for `technical-documentation`. `commonplace-validate kb/sources` analysed 290 files with 20 warning notes and zero failures, and all 48 changed non-source link authors passed individually. |
 | 2026-08-22 | P3 | Final mechanical checks passed: `.venv/bin/ruff check kb/work/ingest-and-snapshot-redesign/migrate.py`, `python3 -m py_compile`, the ledger-defined `git diff --check`, and the unchanged write-set/projection hashes. All 337 retiring source paths are absent from the worktree; the 325 formerly tracked ones are represented exactly as pending deletions for the root commit. No `.snapshots/` file is tracked or staged. |
 | 2026-08-22 | P3 | Root review independently reran `migrate.py audit-final`, `commonplace-validate kb/sources`, all 48 changed non-source author validations, retired-field and tracked-cache-link searches, and the ledger-scoped `git diff --check`. It reproduced the 1,011-path write-set hash, found no staged paths, and sampled ordinary, code-grounded, Position Bias, Gentle Coding, Sutskever-chapter, and dependent-link migrations without finding scope drift. |
+| 2026-08-23 | P4 | A fresh current-corpus scan found 278 tracked ingests, 341 ignored local assets including 285 Markdown snapshots, zero tracked cache paths, and exactly one checksum match for every ingest. All ingests carry the five required durable fields; none retains `source_snapshot`, `code_revisions`, or a non-`implementation` secondary. The three ingests created normally after P3 explain why the historical 275-unit ledger is no longer an exact current-corpus enumerator. |
+| 2026-08-23 | P4 | New ADR 072, superseded ADR 045, both edited source type specs, the Bitter Lesson article residue fix, the two peer-workshop consistency updates, and all three edited closure-state files passed individual `commonplace-validate` checks cleanly. `commonplace-validate kb/reference` passed; `kb/sources` passed across 293 files with the existing 20 warning-bearing ingests and zero failures. The edited Bitter Lesson article passed cleanly; full `kb/articles` still reports the unrelated pre-existing stale `source_notes` path in `reflective-self-improvement.md`. |
+| 2026-08-23 | P4 | `uv run pytest` passed all 534 tests. The focused snapshot subset passed all 24 tests. Production snapshot code passed Ruff rules `E4,E7,E9,F,I,TRY004`, and the two edited CLI tests passed `E4,E7,E9,F,RUF100`. |
+| 2026-08-23 | P4 | The required full `uv run ruff check . --statistics` ran and reported 132 repository-wide baseline findings. It is nonzero, but the three redesign-introduced findings identified before P4 are removed and the scoped changed-code checks are clean; P4 does not claim or sweep the unrelated repository lint backlog. |
+| 2026-08-23 | P4 | A fresh-checkout simulation used the real Position Bias ingest with an absent temporary cache: exact recapture installed byte-identical material and a changed recapture returned `mismatch` without creating the cache entry or changing the ingest. |
+| 2026-08-23 | P4 | `uv build` produced the 0.1.5 sdist and wheel. Wheel inspection found the source ignore rule, both source type specs and schemas, both promoted source skills, and ADR 072. A temporary `commonplace-init` scaffold contained the source contracts and promoted skills, and both installed source types validated from the generated project root. |
+| 2026-08-23 | P4 | `uv run --extra docs properdocs build --site-dir /tmp/commonplace-ingest-site` completed successfully. Its warnings are the existing excluded-target and workshop-link baseline; the new ADR and source contracts published without a build failure. |
 
 ## Event log
 
@@ -225,3 +250,13 @@ workshop closure remain reserved for P4.
   and all changed non-source link authors, and accepted representative normal
   and boundary-case diffs. The migration remains deliberately unstaged for an
   atomic P3-only commit; P4 remains pending.
+- **2026-08-23 — P3 commit confirmed.** The ledger-defined migration is commit
+  `90422c11`. Three later ordinary ingests follow the new contract and are not
+  retroactive rows in that historical ledger.
+- **2026-08-23 — P4 decision extraction verified.** ADR 072 records the
+  implemented authority, local materialization, primary/secondary semantics,
+  migration, alternatives, consequences, and postponed extensions. ADR 045 is
+  superseded; source contracts and the two dependent workshops now agree.
+  Tests, focused lint, package, scaffold, current-corpus, reconstruction, and
+  publication checks are complete. Proposal archiving and workshop deletion
+  remain before P4 can close.

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -12,7 +13,6 @@ if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 from commonplace.cli import github_snapshot  # noqa: E402
-from commonplace.lib.snapshot import snapshot_sha256  # noqa: E402
 
 
 def frontmatter(path: Path) -> dict:
@@ -46,7 +46,8 @@ def test_github_snapshot_stamps_snapshot_issue_family(
     assert fm["type"] == "kb/sources/types/snapshot.md"
     assert fm["tags"] == ["github-issue"]
     assert fm["api_url"] == "https://api.github.com/repos/example/project/issues/123"
-    assert f"SHA-256: {snapshot_sha256(md_path)}" in result
+    checksum = hashlib.sha256(md_path.read_bytes()).hexdigest()
+    assert f"SHA-256: {checksum}" in result
     assert github_snapshot.DEFAULT_SNAPSHOT_DIR == "kb/sources/.snapshots"
 
 
@@ -98,5 +99,5 @@ def test_github_snapshot_reports_checksum_for_existing_capture(
 
     assert result == (
         f"Already snapshotted: {existing}\n"
-        f"SHA-256: {snapshot_sha256(existing)}"
+        f"SHA-256: {hashlib.sha256(existing.read_bytes()).hexdigest()}"
     )

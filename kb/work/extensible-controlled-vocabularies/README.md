@@ -1,14 +1,14 @@
 # Extensible controlled vocabularies
 
-**Note-status disposition (2026-07-11).** [ADR 044](../../reference/adr/044-user-verification-replaces-global-note-status.md) removed the global note `status` field rather than making it collection-expandable. This workshop now concerns only genuinely coherent controlled vocabularies such as `source_type`; the status analysis below is retained as the investigation that ruled note status out of this mechanism.
+**Note-status disposition (2026-07-11).** [ADR 044](../../reference/adr/044-user-verification-replaces-global-note-status.md) removed the global note `status` field rather than making it collection-expandable. This workshop now concerns only genuinely coherent controlled vocabularies such as source `genre`; the status analysis below is retained as the investigation that ruled note status out of this mechanism.
 
-**Field placement disposition (2026-07-12, adopted same day).** [ADR 045](../../reference/adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md) shipped the trigger case: source genre is now one required `genre` field on the *snapshot* (the report's `source_type` is removed and rejected), with the known values as a severity-warn enum — **direction B below, implemented**. The meaning-vs-values guard is stated generally in [collections never own frontmatter semantics](../../reference/collections-never-own-frontmatter-semantics.md). What this workshop still owns: whether direction A (a structured vocabulary file with documented default-list growth and a promotion guard) should sit on top of the warn floor, whether `source-tier` gets the same treatment, and how per-value prose guidance (the Limitations lenses) scales with an open list.
+**Field placement disposition (2026-08-23).** [ADR 072](../../reference/adr/072-ingests-own-source-authority-and-snapshots-are-local.md) supersedes ADR 045's placement: the tracked ingest now owns the required durable `genre`; an ignored local snapshot may retain only a provisional capture-time hint. Direction B's severity-warn floor remains implemented. The earlier conclusion that a local snapshot type could extend durable genre and its ingest lens is no longer operative, because the tracked report uses the fixed ingest-report type. What this workshop owns again is the missing ingest-side extension mechanism for recurring genres and their lenses, plus the separate `source-tier` question. The meaning-vs-values guard remains [collections never own frontmatter semantics](../../reference/collections-never-own-frontmatter-semantics.md).
 
 Workshop for designing how a **code-enforced, closed enum field** becomes open-ended per installed KB while staying validator-checkable.
 
-## Trigger
+## Original trigger (2026-07-09)
 
-`kb/sources/types/ingest-report.schema.yaml`'s `source_type` is a JSON-schema `enum` — currently 11 values (`scientific-paper`, `practitioner-report`, `conceptual-essay`, `design-proposal`, `tool-announcement`, `github-issue`, `conversation-thread`, `code-repository`, `court-opinion`, `news-article`, `official-statement`). The last three were just added because casework in the sibling `epistack-casebooks` repo hit legal filings and press coverage that had no honest fit and were getting forced into `conceptual-essay`/`conversation-thread`, degrading retrieval. That's a PR against this repo's schema to unblock a downstream KB — the same "argue a new category into the closed set" pattern [ADR 042](../../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) retired for registers, recurring on a different field.
+At the time, `kb/sources/types/ingest-report.schema.yaml`'s `source_type` was a JSON-schema `enum` with 11 values (`scientific-paper`, `practitioner-report`, `conceptual-essay`, `design-proposal`, `tool-announcement`, `github-issue`, `conversation-thread`, `code-repository`, `court-opinion`, `news-article`, `official-statement`). The last three had just been added because casework in the sibling `epistack-casebooks` repo hit legal filings and press coverage that had no honest fit and were getting forced into `conceptual-essay`/`conversation-thread`, degrading retrieval. That required a PR against this repo's schema to unblock a downstream KB — the same "argue a new category into the closed set" pattern [ADR 042](../../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) retired for registers, recurring on a different field.
 
 ## Why this isn't just "do the register move again"
 
@@ -55,7 +55,13 @@ None of this is ready to promote, and it deliberately stays here rather than in 
 
 **Exception: verifiable quotes.** One piece is more ready than the rest, and on reflection it isn't really an external borrowing at all — it's already covered by this KB's own **derived-copy rule**: "a copy of information recomputable from a ground-truth source must be machine-checked against that source or not exist." A casebook citation marked *verbatim* (per the citation grounding-layer marker) is exactly that — a copy of a source-snapshot substring. Right now it's a hand-maintained-and-trusted copy: an agent asserts "verbatim" and nothing checks it, which is precisely the trap [a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) warns against. The machinery this needs already has a name and a deferred slot: [factored dependency pairs for review freshness](../../reference/proposals/factored-dependency-pairs-for-review-freshness.md) names **source-as-gate** — a `(note, source)` pair checking "a derived note's consistency with the source snapshot it distills" — as the next factored-pair instance after `COLLECTION.md`-as-gate shipped (ADR 041). A verbatim-quote check (does the quoted text still appear in the cited snapshot?) is a specific instance of exactly that. Not building this now — flagging it as the one candidate in this whole thread that's already first-principled today, not speculative, with a mechanism already designed and waiting.
 
-## Disposition (2026-07-12): the type system is already the extension point — A′ retired as overbuild
+## Superseded disposition (2026-07-12): snapshot types as the extension point
+
+This conclusion applied only while the snapshot owned durable genre. ADR 072
+made the ingest authoritative, so a local snapshot type can no longer extend
+the field consumed by the fixed ingest-report type or its Limitations lenses.
+The following paragraphs are retained as the decision trail, not current
+guidance.
 
 Maintainer conclusion after working A′ through its consequences: the escalating machinery it needed to stay coherent — vocabulary file pair with union semantics, rendered projections into type specs, validator staleness checks on the projections, an init carve-out for regenerating marked blocks — is the signal that the modification was mis-sized. It looked like "just a list," too small for a type; it is actually type-sized, and the framework already ships the type-sized extension mechanism: **a KB whose sources collection needs a different genre vocabulary declares its own snapshot type** (drop a type-spec doc + schema in the collection's `types/`, list it in `COLLECTION.md`'s Types menu). The genre list and the Limitations lenses travel inside that type spec, exactly where they live in the shipped default. This is sanctioned alternative 3 of [collections never own frontmatter semantics](../../reference/collections-never-own-frontmatter-semantics.md) — a collection-local type owning the field outright — and, in A′'s own OO framing, subclassing at the designed boundary instead of a value-level plugin system.
 
@@ -65,9 +71,12 @@ The resulting layering, no new machinery anywhere:
 2. **Casual extension:** use an off-list value, live with the standing warning. The warning doubles as the promotion prompt.
 3. **Structural extension:** author a collection-local snapshot type. Authoring a type *is* the promotion guard this workshop asked about; read cost stays type + collection, same as today; the fork is honest (a declared type stops tracking the shipped one — ordinary subclassing contract) rather than silent divergence in a scaffolded copy.
 
-One consequential edit shipped with this disposition: `cp-skill-snapshot-web` now takes the snapshot type from `kb/sources/COLLECTION.md`'s Types menu instead of hardcoding the shipped path, so a KB's local snapshot type is stamped without skill edits.
+One consequential edit was intended with this disposition: `cp-skill-snapshot-web` would take the snapshot type from `kb/sources/COLLECTION.md`'s Types menu instead of hardcoding the shipped path. The current v1 workflow instead supplies `kb/sources/types/snapshot.md`, and even a local capture type would not change the ingest contract.
 
-Directions A/A′/B below are retained as the worked evaluation trail. What remains open in this workshop is only `source-tier` — which differs because a *code* consumer (`scripts/build_systems_matrix.py`) branches on its values, so a locally-declared type doesn't relieve that coupling by itself — and whether that remainder justifies keeping the workshop open at all or closing it with the source-tier note filed as a smaller question.
+Directions A/A′/B below are retained as the worked evaluation trail. The open
+questions are now an operative ingest-side genre-and-lens extension path and
+`source-tier`, whose code consumer (`scripts/build_systems_matrix.py`) branches
+on its exact values.
 
 ## Candidate directions (unevaluated)
 

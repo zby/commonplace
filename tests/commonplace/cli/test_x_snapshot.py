@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -14,7 +15,6 @@ if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 from commonplace.cli import x_snapshot  # noqa: E402
-from commonplace.lib.snapshot import snapshot_sha256  # noqa: E402
 
 
 def frontmatter(path: Path) -> dict:
@@ -205,7 +205,8 @@ def test_x_snapshot_stamps_family_tag_into_frontmatter_and_sidecar(
     assert fm["tags"] == [expected_family]
     assert sidecar["family"] == expected_family
     assert "type" not in sidecar
-    assert f"SHA-256: {snapshot_sha256(md_path)}" in result
+    checksum = hashlib.sha256(md_path.read_bytes()).hexdigest()
+    assert f"SHA-256: {checksum}" in result
     assert x_snapshot.DEFAULT_SNAPSHOT_DIR == "kb/sources/.snapshots"
 
 
@@ -228,5 +229,5 @@ def test_x_snapshot_reports_checksum_for_existing_capture(
 
     assert result == (
         f"Already snapshotted: {existing}\n"
-        f"SHA-256: {snapshot_sha256(existing)}"
+        f"SHA-256: {hashlib.sha256(existing.read_bytes()).hexdigest()}"
     )

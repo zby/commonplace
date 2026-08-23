@@ -2,21 +2,23 @@
 
 **Opened:** 2026-07-29
 
-**Last recheck:** 2026-08-19
+**Last recheck:** 2026-08-23
 
-**State:** eight findings remain open; C1 and F1 were resolved on 2026-08-19.
-Plans and outcomes are recorded in the [plan index](./plans/README.md)
+**State:** seven findings remain open; C1 and F1 were resolved on 2026-08-19,
+and S1 was resolved on 2026-08-23. Plans and outcomes are recorded in the
+[plan index](./plans/README.md)
 
 **Scope:** current Commonplace contracts outside the linking and lineage
 domains
 
 ## Current verdict
 
-Eight of the ten confirmed contradictions remain open. C1 closed by documenting
+Seven of the ten confirmed contradictions remain open. C1 closed by documenting
 the omitted executable and enforcing exact catalogue parity. F1 closed by
-withdrawing a generic freshness command that had no legal target. Four other
-findings received partial repairs at one edge, but both conflicting witnesses
-remain live:
+withdrawing a generic freshness command that had no legal target. S1 closed
+when ADR 072 moved durable genre authority to the tracked ingest and restored
+whole-file immutability for local snapshots. Three other findings received
+partial repairs at one edge, but both conflicting witnesses remain live:
 
 - E1: the health check gained one PowerShell-paired step and dropped obsolete
   activation instructions, but several promoted procedures are still
@@ -26,9 +28,6 @@ remain live:
 - I3: the global type collection now explains its dual role, but the generated
   control plane still denies that role and installed sources/work still lack
   contracts;
-- S1: ingest validation now acknowledges a possibly edited snapshot, but no
-  ingest step authorizes the edit and the direct-write constraint still forbids
-  it.
 
 The install-integrity result worsened from 447 broken links on 2026-07-29 to
 **516** on 2026-08-19: 502 in the three shipped library collections and 14 in
@@ -70,7 +69,7 @@ Priorities mean:
 | I2 | P0 | Source-valid local paths are copied through a topology change without shipping or translating their targets | A pristine install has 516 broken links and one type failure | [Install projection integrity](./plans/i2-install-projection-integrity.md) |
 | V1 | P0 | Both documented `all` procedures use `kb/*/COLLECTION.md`, while installed library collections are nested below `kb/commonplace/` | The normal completion path skips the shipped library | [Validate all](./plans/v1-validate-all.md) |
 | I3 | P1 | Generated routing treats sources/work as collections without contracts and treats contract-bearing `kb/types/` as not a collection | Read-before-write is impossible at two routed destinations and discovery excludes a real collection | [Installed topology](./plans/i3-installed-topology.md) |
-| S1 | P1 | Snapshots are categorically immutable, yet ingest must correct `genre` in place while being told to write only its report | Ingest cannot obey its collection, type, and skill contracts together | [Snapshot mutation boundary](./plans/s1-snapshot-mutation-boundary.md) |
+| S1 | P1 | **Resolved 2026-08-23:** the tracked ingest owns durable `genre`; a local snapshot's optional genre is provisional and its bytes remain immutable after capture | ADR 072 removes the mutation exception and aligns the collection, types, and ingest write boundary | [Completed outcome](./plans/s1-snapshot-mutation-boundary.md) |
 | T1 | P1 | Tag coverage is stated and routed beyond one collection but generated and checked within one collection | A validated mark can falsely license a reader to stop searching | [Tag scope](./plans/t1-tag-scope.md) |
 | E1 | P1 | Native Windows is supported, but promoted skills retain unpaired POSIX-only commands | Selected recovery and authoring procedures are non-operative on a declared channel | [Windows execution](./plans/e1-windows-execution.md) |
 | F1 | P1 | **Resolved 2026-08-19:** the unsupported generic accept entry point, transition, schema, and current-facing claims were withdrawn | ADR 065 requires a concrete non-review target before the surface can return | [Completed outcome](./plans/f1-freshness-accept.md) |
@@ -216,25 +215,23 @@ collections, classifies types as the global type collection, and keeps
 machine-readable declaration must drive or be parity-checked against manifest,
 routing, discovery, top-level landing coverage, and smoke tests.
 
-## S1 — Snapshot immutability has an undeclared exception
+## S1 — Snapshot immutability contradiction is resolved
 
-The [sources collection](../../sources/COLLECTION.md) still says snapshots are
-categorically immutable. [ADR
-045](../../reference/adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md),
-the [snapshot type](../../sources/types/snapshot.md), and the [ingest-report
-type](../../sources/types/ingest-report.md) require ingest to correct `genre` in
-place when closer reading changes the classification.
+[ADR 072](../../reference/adr/072-ingests-own-source-authority-and-snapshots-are-local.md)
+supersedes ADR 045's placement and mutation exception. The tracked ingest owns
+durable `genre`; a local snapshot may retain a provisional capture-time value,
+but ingestion writes its closer-reading judgment only to the report. Because
+the ingest checksum covers every snapshot byte, the snapshot now remains
+whole-file immutable after capture.
 
-[cp-skill-ingest](../../instructions/cp-skill-ingest/SKILL.md) now says final
-validation may cover a snapshot the run “created or edited.” Its direct-output
-rule and final constraint still permit only the `.ingest.md` report, and no step
-authorizes or performs the correction. [cp-skill-connect](../../instructions/cp-skill-connect/SKILL.md)
-also retains categorical immutability language.
-
-The selected resolution names **captured-content immutability**: body,
-provenance, identity, and authored-link surface remain fixed; ingest may correct
-only the `genre` scalar. The collection, ADR, types, ingest, connect, and I3's
-installed source contract must state and test that same byte-level boundary.
+The [sources collection](../../sources/COLLECTION.md), [snapshot
+type](../../sources/types/snapshot.md), [ingest-report
+type](../../sources/types/ingest-report.md), and
+[cp-skill-ingest](../../instructions/cp-skill-ingest/SKILL.md) now agree on the
+same boundary: snapshotting may create the ignored reading copy; ingestion
+writes only the tracked report and verifies that the reading copy's checksum
+did not change. I3's future installed source template must project this resolved
+contract rather than revive the old exception.
 
 ## T1 — Tag completeness claims have incompatible scopes
 
@@ -374,14 +371,15 @@ presence, not that any legal invocation or supported execution channel works.
 ## Implementation order
 
 1. **Settle the installed-product inputs.** I3 defines the collection roles,
-   discovery semantics, and machine-readable topology shape; S1 settles the
-   sources mutation boundary; I2 chooses which dependency classes ship and
-   which receive explicit external projections.
+   discovery semantics, and machine-readable topology shape; I2 chooses which
+   dependency classes ship and which receive explicit external projections.
+   S1's source mutation boundary is already settled by ADR 072.
 2. **Record the combined decision (I1).** The successor ADR marks ADR 021
    superseded and records the actual bundle, topology, and preserve-only upgrade
    semantics.
-3. **Finish material topology (I3).** Scaffold sources/work contracts using S1,
-   apply I2's library routing, and align discovery and conformance review.
+3. **Finish material topology (I3).** Scaffold sources/work contracts using the
+   resolved ADR 072 boundary, apply I2's library routing, and align discovery
+   and conformance review.
 4. **Close the projection and test the packaged product (I2).** Translate every
    included edge and make unresolved dependencies fail release acceptance.
 5. **Expose truthful full validation (V1).** Consume the same collection
@@ -389,9 +387,8 @@ presence, not that any legal invocation or supported execution channel works.
    the shell loop.
 6. **Land the other repairs.** T1 consumes the settled I3/I2/I1 product boundary
    and V1's truthful full check, then precedes M1's areas packet. E1 also
-   consumes V1 and remains with the execution-channel workshop. S1 and I3's
-   installed sources template close together even if their edits are prepared
-   separately.
+   consumes V1 and remains with the execution-channel workshop. I3 must copy
+   S1's resolved source contract into the installed sources template.
 7. **Finish the M1 sweep and cheap drift guards.** Retain focused parity and
    lexical checks at the boundaries that drifted.
 

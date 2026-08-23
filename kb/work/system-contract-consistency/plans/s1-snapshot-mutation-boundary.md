@@ -1,54 +1,29 @@
-# S1 plan — Name the snapshot's mutable envelope
+# S1 outcome — Remove the snapshot mutation exception
 
-**State:** open. The ingest skill now acknowledges that a run may have edited a
-snapshot during validation, but no step authorizes the edit and its final
-constraint still forbids it.
+**State:** resolved 2026-08-23.
 
-## Resolution selected
+## Outcome
 
-Replace whole-file immutability with **captured-content immutability**. After
-capture, the body, source identity, capture provenance, and authored-link
-surface do not change. Ingestion may correct exactly the snapshot frontmatter
-`genre` field when closer reading disproves the capture-time classification.
-Capture cleanup remains part of initial capture, not a later general mutation
-right. Any other later mutation is refused and reported as requiring a
-separately authorized workflow that does not exist yet.
+[ADR 072](../../../reference/adr/072-ingests-own-source-authority-and-snapshots-are-local.md)
+superseded ADR 045's field placement instead of implementing this plan's
+one-field exception. The tracked ingest now owns durable `genre`. A local
+snapshot may contain a provisional capture-time genre, but ingestion records
+its closer-reading classification on the report and never edits the snapshot.
 
-## Work
+This is a stronger boundary than the planned captured-content envelope:
+snapshots are whole-file immutable after capture, and `snapshot_sha256` covers
+the exact bytes that grounded the ingest. The source collection, both source
+types, and `cp-skill-ingest` agree that snapshotting may create the ignored
+reading copy while ingestion writes only the tracked report.
 
-1. Tighten ADR 045's Decision and Consequences so the one-field exception and
-   the immutable remainder are stated together.
-2. Rewrite both categorical passages in `kb/sources/COLLECTION.md`. The fidelity
-   section should distinguish captured content from correctable classification;
-   the outbound section should say that no links or annotations are authored
-   into the captured body.
-3. Align the snapshot and ingest-report type specs on the same terms. Preserve
-   the snapshot as the single authoritative genre record and keep the report's
-   Classification prose as justification, not a second field.
-4. Update `cp-skill-ingest` to:
-   - authorize direct writes to the report plus the narrow snapshot correction;
-   - load the resolved snapshot type and read the current `genre`;
-   - compare it with the classification reached by closer reading;
-   - when they differ, edit only the `genre` scalar before drafting the report;
-   - validate both changed artifacts and report old/new genre values only in
-     the final user response; the durable report records only the corrected
-     current genre in its Classification prose.
-5. Qualify `cp-skill-connect`'s remaining statement that snapshots are
-   immutable so it means body and authored-link immutability, not a prohibition
-   on the ADR-authorized metadata correction.
-6. Carry the same wording into the installed sources template created by I3.
+## Acceptance evidence
 
-## Acceptance
-
-- With a correct capture-time classification, ingest creates the report and the
-  snapshot remains byte-identical.
-- With a wrong classification, the snapshot diff changes only the `genre`
-  scalar value; every other byte, including the body and every other
-  frontmatter field, remains identical.
-- Both artifacts validate, and the report names the corrected genre without
-  storing a duplicate frontmatter field.
-- A requested change to any other snapshot part is refused and the response
-  states that it needs a separately authorized recapture/correction workflow.
-
-S1 closes when the collection, ADR, both types, ingest, connect, and installed
-template all authorize exactly the same write boundary.
+- The ingest schema requires `genre` and `snapshot_sha256`; the snapshot schema
+  makes `genre` optional.
+- `cp-skill-ingest` copies no snapshot genre, asks the drafting worker to set
+  genre after reading, and verifies that the snapshot checksum is unchanged
+  across the handoff.
+- Exact recapture, checksum mismatch, and absent-material behavior are covered
+  by the snapshot resolver tests without any ingest or snapshot rewrite.
+- I3 retains one follow-through obligation: its future installed sources
+  template must project this resolved contract.

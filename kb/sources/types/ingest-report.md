@@ -47,7 +47,10 @@ The ingest's `genre` is the durable source classification. Use the vocabulary
 and meanings in [snapshot.md](./snapshot.md). A local snapshot may contain a
 capture-time genre, but it is not authoritative. Set or correct the ingest
 field after reading the source. The vocabulary is open: an off-list value warns
-rather than fails.
+rather than fails. V1 has no operative local extension path that adds a known
+value and its Limitations lens to this fixed ingest type. A recurring off-list
+genre therefore remains warned until an ingest-side vocabulary mechanism is
+adopted; a collection-local snapshot type does not extend this contract.
 
 ## Sections
 

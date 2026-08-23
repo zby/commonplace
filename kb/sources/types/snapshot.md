@@ -45,12 +45,23 @@ Classify what kind of document the source is as evidence. The default vocabulary
 - `news-article` for journalistic reporting on current events from a news outlet.
 - `official-statement` for a statement, release, or announcement issued by an organization, agency, or public figure in an official capacity.
 
-The vocabulary is open: a value outside this list validates with a warning, not a failure. Extend deliberately — a new genre should name an evidential kind that recurs, not a one-off container. Genre meanings are fixed everywhere; collections and installed KBs extend the value list, never reinterpret existing values.
+The vocabulary is open: a value outside this list validates with a warning,
+not a failure. Extend deliberately — a new genre should name an evidential
+kind that recurs, not a one-off container. Genre meanings are fixed everywhere.
+The ingest-report schema carries the same warned list because the tracked
+ingest, not this local capture, is the durable genre authority.
 
 Two extension paths:
 
 - **Occasional off-list source:** just use the new value and keep the warning — it is the standing signal of an undocumented genre, and a validation sweep lists every such extension.
-- **A KB whose sources need their own vocabulary** (recurring new genres, domain-specific lens guidance, extra capture fields): do not edit this shipped spec. Declare a collection-local snapshot type by adding a type-spec doc and schema to the sources collection's `types/` directory, then use a capture workflow that supplies that exact type path. The shipped capture workflow supplies `kb/sources/types/snapshot.md`; another workflow may deliberately supply the local contract instead. The local type owns its genre list and lenses outright, with fixed meanings, the same way this spec owns the defaults. Types are the extension point; scaffolded specs are not editing surfaces.
+- **A KB with recurring local genres or domain-specific ingest lenses:** v1 has
+  no operative local extension path for the durable ingest vocabulary. A
+  collection-local snapshot type may govern extra capture fields or
+  capture-time hints, but it cannot change the fixed ingest-report type that
+  validates the tracked `genre` or supplies its Limitations lenses. Keep
+  off-list values warned until a durable ingest-side extension mechanism is
+  adopted; do not present a local snapshot type as if it changed ingest
+  semantics.
 
 When present, `genre` is a surface judgment made at capture. Ingestion's closer
 reading sets the durable value on the ingest without rewriting the captured

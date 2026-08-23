@@ -1,13 +1,14 @@
 ---
-description: "Source genre becomes one required open-vocabulary `genre` field on the snapshot; the ingest-report drops and rejects `source_type`, and snapshot tags return to optional topical duty"
+description: "Superseded decision that placed the required open-vocabulary source genre on snapshots before tracked ingests became the durable source authority"
 type: ../types/adr.md
 tags: []
-status: accepted
+status: superseded
 ---
 
 # 045-Source genre is a single open field on the snapshot
 
-**Status:** accepted  
+**Status:** superseded by [ADR 072](./072-ingests-own-source-authority-and-snapshots-are-local.md)
+
 **Date:** 2026-07-12
 
 ## Context
