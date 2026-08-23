@@ -7,7 +7,7 @@ type: kb/types/instruction.md
 
 This is one opinionated recipe for turning a fresh `commonplace-init` workspace into a personal Second Brain — a knowledge base shaped around a specific operator, their projects, and their context.
 
-It is **not** the canonical Commonplace onboarding. Phases 1–3 use only Commonplace primitives (collections, registers, note types, context summaries, the connect/validate skills). Phases 4–5 add Claude Code harness extensions (hooks, custom skills) that sit *alongside* Commonplace — adopt or skip them independently.
+It is **not** the canonical Commonplace onboarding. Phases 1–3 use only Commonplace primitives (collections, local text contracts, note types, context summaries, the connect/validate skills). Phases 4–5 add Claude Code harness extensions (hooks, custom skills) that sit *alongside* Commonplace — adopt or skip them independently.
 
 Treat each phase as a gate: confirm it works before moving on. If a step fails, propose two alternatives rather than retrying.
 
@@ -17,7 +17,7 @@ Treat each phase as a gate: confirm it works before moving on. If a step fails, 
 - `rg` available for fast local search. No semantic-search service is required; the baseline is generated indexes plus keyword search.
 - The operator available for an interview (Phase 1 is conversational, not a form).
 
-Read `CLAUDE.md`, `kb/notes/COLLECTION.md`, and `kb/instructions/COLLECTION.md` before starting so register vocabulary is loaded.
+Read `CLAUDE.md`, `kb/notes/COLLECTION.md`, and `kb/instructions/COLLECTION.md` before starting so the routing and local contract vocabulary is loaded.
 
 ## Phase 1 — Profile and collection design
 
@@ -31,41 +31,41 @@ Run `/cp-skill-connect kb/notes/me.md` to surface candidate links. Apply the one
 
 ### 1b. Design new collections
 
-Commonplace ships three collections that are already register-anchored:
+Commonplace ships three collections with complete local contracts:
 
-| Path | Register | Quality goal |
+| Path | Intended contribution | Quality goal |
 |---|---|---|
-| `kb/notes/` | theoretical | explanatory-reach |
-| `kb/reference/` | descriptive | accuracy |
-| `kb/instructions/` | prescriptive | executability |
+| `kb/notes/` | transferable claims about the design space | explanatory-reach |
+| `kb/reference/` | Commonplace selections and resulting state | fidelity + economy |
+| `kb/instructions/` | executable procedures | executability + precision |
 
 A Second Brain usually needs more. Interview the operator about what else they want to capture. Common candidates (ask, don't assume):
 
-- Journal/log (narrative register — what happened, what was noticed)
-- People/contacts (descriptive — relationship context)
-- Project notes (descriptive, plus workshop layer for in-flight work)
-- Evaluations (evaluative — pitches, tools, opportunities)
-- Condensed context (theoretical or descriptive — strategic, role, historical summaries)
-- Personal reference (descriptive — the operator's own systems, separate from Commonplace's)
-- Personal instructions (prescriptive — the operator's own procedures, separate from Commonplace's)
+- Journal/log — what happened and what was noticed
+- People/contacts — relationship context
+- Project notes — durable project knowledge, plus a workshop layer for in-flight work
+- Evaluations — pitches, tools, and opportunities judged against explicit criteria
+- Condensed context — strategic, role, or historical summaries
+- Personal reference — the operator's own systems, separate from Commonplace's
+- Personal instructions — the operator's own procedures, separate from Commonplace's
 
 For each agreed collection:
 
 1. Create the directory under `kb/`.
-2. Write a `COLLECTION.md` defining: register, quality goal, title conventions, scope (what belongs and what doesn't), and outbound linking conventions organised per destination (normally one block per destination collection, plus the reserved `external` destination only when links outside the KB are authorized; each declares search guidance and authorised labels — see `kb/reference/link-vocabulary.md` for the catalogue and ADRs 019 and 059 for the architecture). Use the existing three `COLLECTION.md` files as models — do not invent a new schema.
+2. Write a `COLLECTION.md` defining: purpose and scope, intended contribution, quality goal, title conventions, maintenance semantics, and outbound linking conventions organised per destination (normally one block per destination collection, plus the reserved `external` destination only when links outside the KB are authorized; each declares search guidance and authorised labels — see `kb/reference/link-vocabulary.md` for the catalogue and ADRs 019 and 059 for the architecture). Use the existing three `COLLECTION.md` files as models — do not invent a new schema.
 3. Distinguish library collections (value accumulates) from workshop collections (value is consumed). In-flight project work belongs in `kb/work/<project-name>/`, not in a long-lived collection. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
 4. Add the collection to the routing table in `CLAUDE.md`.
 
 The write and connect skills read each new `COLLECTION.md` directly — there is no compile step to run after editing.
 
-**Verify Phase 1**: every new collection has a `COLLECTION.md` whose register and quality goal an agent could state without re-reading. The routing table in `CLAUDE.md` mentions every collection. `me.md` exists, validates, and has at least one connection.
+**Verify Phase 1**: every new collection has a `COLLECTION.md` whose intended contribution and quality goal an agent could state without re-reading. The routing table in `CLAUDE.md` mentions every collection. `me.md` exists, validates, and has at least one connection.
 
 ## Phase 2 — Populate the knowledge base
 
 Bulk-import the operator's existing material into the collections designed in Phase 1.
 
 1. Ask where documents live: Google Docs, Notion exports, local files, web pages, GitHub issues, X threads.
-2. Route each document to the collection whose register matches its content. A pitch deck evaluation is evaluative; a meeting transcript is narrative; a project status doc is descriptive. The routing table in `CLAUDE.md` is the source of truth.
+2. Route each document to the collection whose purpose and intended contribution match it. A pitch deck evaluation belongs where judgments against criteria are retained; a meeting transcript belongs where faithful records are retained; a project status document belongs where current project state is retained. The routing table in `CLAUDE.md` is the source of truth.
 3. For web sources, use `/cp-skill-snapshot-web <url>`. For local files, place them in the right collection and run `/cp-skill-ingest <path>` to classify and connect.
 4. Test together. Ask the operator for three things they remember working on. Search the KB with generated indexes, `rg` over descriptions, and `rg` over note bodies. If recall is poor, improve descriptions, tags, and index membership before moving on.
 
@@ -87,7 +87,7 @@ For each note, follow the standard Commonplace content workflow:
 1. Search first with generated indexes, tag indexes, and `rg` over descriptions and note bodies. Run at least 10 distinct query/read passes that mix exact terms, synonyms, named projects, and mechanism vocabulary.
 2. Read the target collection's `COLLECTION.md` before writing.
 3. Use `/cp-skill-write` with the appropriate type.
-4. Cite source notes with markdown links and the right link semantics for the register pair (`evidenced-by` / `is-evidence-for`, `derived-from`, `since`, `because` — see each `COLLECTION.md`).
+4. Cite source notes with Markdown links and the link semantics authorized for the source and destination collections (`evidenced-by` / `is-evidence-for`, `derived-from`, `since`, `because` — see each `COLLECTION.md`).
 5. Flag inferences explicitly. Do not blur quotation and synthesis.
 6. Run `/cp-skill-validate <note>` before considering it done.
 
@@ -133,4 +133,4 @@ Three feedback loops, separately useful:
 
 - The canonical Commonplace onboarding. Commonplace itself does not require a profile, context summaries, hooks, or learning loops.
 - A spec for Phases 4–5. The hook and skill bodies sketched there are illustrative; treat them as prompts for design, not finished code.
-- A justification of *why* these choices work. The reasoning lives in the methodology notes under `kb/notes/` (context summaries, registers, workshop layer). This file is execution-only.
+- A justification of *why* these choices work. The reasoning lives in the methodology notes under `kb/notes/` (context summaries, collection boundaries, workshop layer). This file is execution-only.

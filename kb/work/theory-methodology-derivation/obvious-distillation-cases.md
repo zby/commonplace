@@ -70,7 +70,7 @@ These are not the mistake. They are mostly use-shaped rewrites of existing reaso
 These are obvious, but they belong to the infrastructure wave, not the first semantic wave:
 
 - `distillation-README.md`, `learning-theory-README.md`, `tags-README.md`, `README.md`, tag fields, and `covered_by` fields.
-- `definitions/distillation.md` and cross-definition references in `definitions/constraining.md`, `definitions/codification.md`, `definitions/context-engineering.md`, `definitions/directed-reading.md`, `definitions/text-contract.md`.
+- `definitions/distillation.md` and cross-definition references in `definitions/constraining.md`, `definitions/codification.md`, `definitions/context-engineering.md`, and `definitions/directed-reading.md`. The former text-contract definition has since been folded into `reference/definitions/collection.md`.
 - `Distilled into:` footer labels and backlink grammar.
 - Filenames containing `distill*`.
 - Link-only references where the target note is itself being renamed.

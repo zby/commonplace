@@ -6,7 +6,7 @@ tags: [context-engineering, kb-maintenance]
 
 # Per-artifact write briefs
 
-Collection and type contracts say what belongs in a register and what shape an artifact takes. They do not select why one particular artifact should exist. The ordinary writing skill establishes that contribution from the live request and, for an edit, the incumbent artifact. A completely new note has no incumbent, and later revisions have no independent retained account of the audience, angle, scope, and reader update that commissioned it.
+Collection and type contracts say what belongs in a collection and what shape an artifact takes. They do not select why one particular artifact should exist. The ordinary writing skill establishes that contribution from the live request and, for an edit, the incumbent artifact. A completely new note has no incumbent, and later revisions have no independent retained account of the audience, angle, scope, and reader update that commissioned it.
 
 The new, untested multistage writing skill creates a temporary workshop brief. That experiment shows one way to separate task-fixed intent from evidence, but it is neither the architectural baseline nor a required consumer of this proposal. A smaller version of that separation could instead enter ordinary new-note writing through deterministic context assembly.
 
@@ -83,7 +83,7 @@ This makes intended contribution uniformly explicit and reviewable. It adds an a
 - **Continuity versus staleness.** Durable intent can prevent accidental drift, but audience priors, neighboring notes, and project needs change. A once-distinctive update can become redundant.
 - **Optional value versus uniform machinery.** Ambiguous, commissioned, or consequential artifacts benefit most. Many small notes do not need another file.
 - **Pre-draft independence.** A brief written or accepted before drafting contains counterfactual information. A brief generated from the finished artifact may only restate it.
-- **Authority and precedence.** Artifact-specific intent may narrow the collection default but cannot silently override register, type, linking, or validation requirements.
+- **Authority and precedence.** Artifact-specific intent may narrow the collection default but cannot silently override collection, type, linking, or validation requirements.
 - **Association lifecycle.** New targets do not yet have frontmatter; renames, moves, retirement, splits, and merges must preserve or deliberately revise any relation.
 - **Context cost.** A compact commission can spare reconstruction. An accreted history, outline, source dump, or critique packet would compete with the writing itself.
 - **Experimental precedent.** The multistage brief suggests useful separations, but copying its whole lifecycle into ordinary writing would turn an untested experiment into architecture by accident.

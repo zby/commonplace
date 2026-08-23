@@ -51,7 +51,7 @@ Stipulated vocabulary is the trap this test exists to catch. A stipulated term h
 | Definition | Inbound files | Initial disposition |
 |---|---:|---|
 | [Answerability](../../notes/definitions/answerability.md) | 2 | Move, fold, or split. It explicitly calls itself a domain invariant that Commonplace stipulates for admission as knowledge. The general relation may support theory, but the current central force is a framework boundary and collection-contract obligation. |
-| [Text contract](../../notes/definitions/text-contract.md) | 22 | First extract all profile material in place; then move the text-contract remainder to reference or retire it as a standalone artifact. It names adopted collection machinery already described by the collection definition, collection/type composition doc, ADR history, and live collection contracts. See the [dedicated task](./tasks/text-contract-and-profiles.md). |
+| [Text contract](../../reference/definitions/collection.md#text-contract) | 22 | Complete: profile material became creation-only collection prototypes under ADR 069; the remainder was folded into the collection definition and the duplicate theory artifact retired under ADR 071. It names selected collection machinery rather than a theory distinction. |
 
 ## Mixed and retirement candidates
 

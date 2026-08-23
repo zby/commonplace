@@ -6,7 +6,7 @@ tags: [type-system]
 
 # Why notes have types
 
-The type system serves seven distinct roles. Each is developed in its own note or nearby register theory; this page provides context and links.
+The type system serves seven distinct roles. Each is developed in its own note or nearby collection-and-type theory; this page provides context and links.
 
 ## Navigation
 

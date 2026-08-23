@@ -2,7 +2,7 @@
 
 ## Status
 
-Open. Steps 1 and 2 are complete; step 3 is next. Five steps, ordered. Each
+Open. Steps 1–3 are complete; step 4 is next. Five steps, ordered. Each
 step's gate is the reason it sits where it does — the ordering is the part
 worth following, not the step list.
 
@@ -82,6 +82,12 @@ a stated rule rather than an argument.
 [The existing task](./text-contract-and-profiles.md) has options A, B, and C
 with decision tests and a post-ADR-069 backlink recount already done. It was
 stopped pending a general placement rule; ADR 070 now supplies it.
+
+**Done 2026-08-23.** Option A was selected. The complete definition was folded
+into the [collection definition](../../../reference/definitions/collection.md#text-contract),
+[ADR 071](../../../reference/adr/071-text-contract-is-part-of-the-collection-definition.md)
+records the placement choice, and the duplicate theory definition was retired
+with direct redirects from both of its published paths.
 
 ## 4. Act on the relocation candidates
 

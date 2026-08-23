@@ -65,9 +65,9 @@ separate definition artifact. Creation-only vocabulary does not belong in the
 always-loaded root glossary. `AGENTS.md` keeps the text-contract gloss, drops
 its profile half, and removes the routing table's `Role` column. Live collection
 contracts state their purpose and quality goal directly. The profile material
-is removed from `kb/notes/definitions/text-contract.md` in place, leaving its
-text-contract definition for the separate decision about that term's eventual
-home.
+was removed from the then-current theory-side text-contract definition in
+place, leaving that term for a separate placement decision. [ADR 071](./071-text-contract-is-part-of-the-collection-definition.md)
+later folded the surviving vocabulary into the collection definition.
 
 This decision partially supersedes [ADR 042](./042-register-becomes-a-default-profile-under-open-ended-text-contracts.md):
 the closed register taxonomy remains retired, but its open set of adopted
@@ -136,7 +136,8 @@ for unrelated concepts, such as execution or system profiles, are unaffected.
 
 Relevant Notes:
 
-- [Text contract](../../notes/definitions/text-contract.md) — defined-in: the binding local declaration that prototypes may help an author create but never replace
+- [Collection and text contract](../definitions/collection.md) — defined-in: the binding local declaration that prototypes may help an author create but never replace
 - [Collection prototypes](../collection-prototypes.md) — implemented-by: catalogues the actual creation-time starting contracts
 - [ADR 042: Register becomes a default profile under open-ended text contracts](./042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — supersedes: replaces its adopted-profile model while preserving retirement of the closed register taxonomy
+- [ADR 071: Text contract is part of the collection definition](./071-text-contract-is-part-of-the-collection-definition.md) — see-also: records the later canonical owner of the text-contract vocabulary
 - [ADR 057: Articles use an editorial profile and excluded drafts](./057-articles-use-an-editorial-profile-and-excluded-drafts.md) — supersedes: retires the shared editorial-profile claim while preserving the local article contract and lifecycle

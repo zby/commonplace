@@ -2,29 +2,33 @@
 
 ## Status
 
-Open, but narrowed. The previously proposed relocation was deliberately stopped before editing library artifacts so it could be decided under the workshop's general content model. Retiring `profile` in favour of one-time-copy [collection prototypes](./retire-profiles-for-collection-prototypes.md) is complete under [ADR 069](../../../reference/adr/069-collection-contract-bundles-become-one-time-prototypes.md). That migration removed profile content from the current definition in place without moving, renaming, or deleting the file; this task now decides only the home of the text-contract remainder.
+Complete 2026-08-23. Option A was selected and implemented under [ADR 071](../../../reference/adr/071-text-contract-is-part-of-the-collection-definition.md): **text contract** is a facet of collection, so the [collection definition](../../../reference/definitions/collection.md#text-contract) is its canonical reference owner. The duplicate theory definition was retired after its content was extracted.
+
+## Decision
+
+Fold the term into `kb/reference/definitions/collection.md`. A text contract has no independent proposition beyond being the complete local authoring declaration of a collection. A standalone file would duplicate that definition, while the collection/type composition page has a broader job. The slightly larger retrieval target is accepted because it gives the term and its type-contract boundary together.
 
 ## Question
 
-Should Commonplace retain a standalone definition of **text contract**, and if so, which reference artifact should own it?
+The question was whether Commonplace should retain a standalone definition of **text contract**, and if so, which reference artifact should own it.
 
 The answer must start from the user's correction: `text contract` describes chosen Commonplace machinery. It is not a definition required to state a theory merely because its meaning is stable.
 
 ## Current ownership
 
-- [The theory-collection definition](../../../notes/definitions/text-contract.md) now contains only the text-contract definition, preserved at the same path for this decision.
-- [The reference collection definition](../../../reference/definitions/collection.md) already says that `COLLECTION.md` is a collection's local authoring contract.
+- The retired theory-collection definition contained only the text-contract remainder after profile extraction.
+- [The reference collection definition](../../../reference/definitions/collection.md) now owns that remainder and says that `COLLECTION.md` is a collection's complete local authoring contract.
 - [Collections and types](../../../reference/collections-and-types.md) already explains how the containing `COLLECTION.md` supplies the text-level contract independently of the artifact's type contract.
 - [ADR 042](../../../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) owns the historical decision that introduced `text contract`; its profile decision is superseded separately without rewriting that history.
 - Each live `COLLECTION.md` owns the binding contract actually applied to its subtree.
 - `AGENTS.md` carries an always-loaded text-contract gloss for operators; its profile half retires in the preceding task.
 
-Before profile extraction, the definition had 30 direct Markdown backlinks from 22 files, including six live collection contracts. That was migration cost and evidence of a shared term; it did not establish theoretical placement or the need for a separate file. A resolved-link recount on 2026-08-23 now finds 16 direct backlink files: 11 active library surfaces, one frozen proposal archive, one generated connect report, and three files in this workshop. None of the seven live collection contracts links to the definition now. The active migration set is therefore the 11 library consumers plus the plain-path glossary reference in `AGENTS.md`; the archive stays historical, the generated report is regenerated rather than hand-edited, and this workshop disappears after promotion.
+Before profile extraction, the definition had 30 direct Markdown backlinks from 22 files, including six live collection contracts. That was migration cost and evidence of a shared term; it did not establish theoretical placement or the need for a separate file. A resolved-link recount on 2026-08-23 found 16 direct backlink files: 11 active library surfaces, one frozen proposal archive, one generated connect report, and three files in this workshop. The active library links and `AGENTS.md` glossary reference now point to the collection definition. The archive was changed only for link integrity, and the generated report remains generated rather than hand-edited.
 
 ## History
 
 - Commit `7eb616d584d86bbc3a5f6198a888a3c8aa2189d2` (2026-04-12) added `kb/notes/definitions/register.md` while stripping universal mechanics out of collection contracts.
-- Commit `1ac2171dd38d2cc0e661e348ae546cfc2d8fbd31` (2026-07-09) replaced it with `text-contract.md`, added ADR 042 and the profile catalogue, and demoted theoretical/descriptive/prescriptive from an exhaustive taxonomy to default profiles.
+- Commit `1ac2171dd38d2cc0e661e348ae546cfc2d8fbd31` (2026-07-09) replaced it with a `text-contract` definition, added ADR 042 and the profile catalogue, and demoted theoretical/descriptive/prescriptive from an exhaustive taxonomy to default profiles.
 - ADR 042 says invariant “theory” should remain in the definition while changing system state belongs in the catalogue. The workshop now contests the word *theory*: invariant system vocabulary and mutable system state can both belong in reference while still benefiting from separate maintenance surfaces.
 
 ## Settled boundary from profile retirement
@@ -37,7 +41,7 @@ A text contract and a collection prototype attach at different times:
 
 The prototype catalogue may repeat a short text-contract gloss for local readability, but it is not a candidate for the canonical definition. An existing collection must be understandable and operable without loading the creation-time prototype it may once have copied.
 
-## Live options
+## Considered options
 
 ### A. Fold the term into the collection definition
 
@@ -47,7 +51,7 @@ This is the most economical definition surface: a text contract exists only as t
 
 ### B. Keep a small reference definition
 
-Create `kb/reference/definitions/text-contract.md` containing only the canonical distinction:
+Create a standalone `text-contract` definition under `kb/reference/definitions/` containing only the canonical distinction:
 
 - text contract: the binding local declaration;
 - it states purpose and scope, quality goal, title and description conventions, attribution requirements where applicable, maintenance semantics, and outbound link grammar;
@@ -68,17 +72,17 @@ Make `kb/reference/collections-and-types.md` canonical for `text contract`, expa
 - Is the term important enough for an always-loaded `AGENTS.md` gloss after the profile half is removed?
 - Which option leaves one canonical reference owner while allowing other pages to use a one-sentence local restatement?
 
-## Required migration work after selection
+## Migration completed
 
-- Classify the 11 active-library backlinks and the `AGENTS.md` glossary reference by whether they still need a standalone text-contract definition; the resolved-link recount is complete.
-- Move or fold the text-contract-only content into the selected reference owner and retarget those residual consumers plus the `AGENTS.md` vocabulary entry.
-- Repair stale consumers that still call the local authoring contract `register`.
-- Do not make the prototype catalogue authoritative for existing collections or introduce a maintenance link from a prototype to a copied contract.
-- Record the later placement change without falsifying ADR 042's historical decision; add a supersession pointer rather than rewriting what it originally decided.
-- Reconcile link labels with each source collection's authorized vocabulary.
-- Update collection headings, reference navigation, and any generated definition index.
-- If the old theory path retires, follow the library-artifact retirement/redirect procedure, validate every touched artifact, and run a backlink plus broken-link sweep confirming it is no longer canonical.
+- [x] Classified and retargeted the active-library backlinks and `AGENTS.md` glossary reference.
+- [x] Folded the text-contract content into the collection definition before retirement.
+- [x] Repaired live consumers that still used `register` for the local authoring contract; historical ADR wording remains historical.
+- [x] Kept collection prototypes creation-only and non-authoritative for existing collections.
+- [x] Added ADR 071 and a current-placement pointer to ADR 042 without changing its historical decision.
+- [x] Authorized reference definitions as `defined-in` targets in the notes and reference collection contracts.
+- [x] Updated reference navigation; no generated reference-definition index exists.
+- [x] Added direct redirects for both the retired text-contract path and its earlier register path, retired freshness state where present, and ran backlink, redirect, and artifact validation.
 
 ## Completion condition
 
-One reference owner is selected under the workshop's collection-placement rule, the post-profile backlink set is enumerated, and the implementation can be executed atomically without leaving a theory artifact or a creation-time prototype as canonical documentation for the binding text contract.
+Met. One reference owner is selected under the workshop's collection-placement rule, the post-profile backlink set was enumerated and migrated, and neither a theory artifact nor a creation-time prototype is canonical documentation for the binding text contract.

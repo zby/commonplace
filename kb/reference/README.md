@@ -192,13 +192,13 @@ Look up how the shipped system is put together: its architecture, type system, a
 - [link-vocabulary.md](./link-vocabulary.md) — linking approach and label catalogue: collection-owned outbound rules, reader-need labels, articulation tests, connect reports, and guidance for `COLLECTION.md` authors
 - [collection-prototypes.md](./collection-prototypes.md) — optional creation-time contracts that may be copied into a new collection; the resulting `COLLECTION.md` is independently owned and receives no prototype updates
 - [collections-never-own-frontmatter-semantics.md](./collections-never-own-frontmatter-semantics.md) — why the collection/type split is asymmetric: a type spec owns frontmatter semantics, `COLLECTION.md` owns only text-level features
-- [definitions/](./definitions/dir-index.md) — vocabulary terms used by the shipped system (e.g., [collection](./definitions/collection.md))
+- [Collection and text contract](./definitions/collection.md) — canonical definitions of the collection boundary and its complete local authoring declaration
 
 ### Authoring and operator procedures
 
 Imperative how-to procedures live in [kb/instructions/](../instructions/) rather than this collection, but they are part of the shipped surface:
 
-- Each collection's `COLLECTION.md` — register-specific writing conventions, quality goals, and placement rules
+- Each collection's `COLLECTION.md` — collection-specific writing conventions, quality goals, and placement rules
 - [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md) — how to use the review system: concepts, freshness, the batch workflow, and command surface (the how-it-is-built companion is [review-architecture.md](./review-architecture.md))
 - [FIX-SYSTEM.md](../instructions/FIX-SYSTEM.md) — current fix-system workflow
 - [full-improvement-pass-closure.md](./full-improvement-pass-closure.md) — how the full-improvement workflow reassays final note bytes, routes residual findings, and stops without claiming convergence
@@ -230,13 +230,14 @@ Commonplace runs on its own methodology, so this collection also documents *this
 - [ADR-012: types for structure, traits for review](./adr/012-types-for-structure-traits-for-review.md) — why structural types and semantic-review traits are separate axes
 - [ADR-015: standardize authored type definitions on JSON schema](./adr/015-standardize-authored-type-definitions-on-json-schema.md) — the authored type-definition format
 - [ADR-016: custom types use template/instruction pairs](./adr/016-custom-types-use-template-instruction-pairs.md) — how specialised types are packaged
-- [ADR-017: COLLECTION.md is the register convention boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — why collection files own register conventions while types stay structural
+- [ADR-017: COLLECTION.md is the register convention boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — why collection files became the boundary for the then-current register conventions while types stayed structural
 - [ADR-068: collection contracts stop enumerating available types](./adr/068-collection-contracts-stop-enumerating-available-types.md) — global-plus-owned-local type eligibility, the `kb/work/` exception, and filesystem-backed type discovery
 - [ADR-070: notes bind choices; reference records selections and state](./adr/070-notes-bind-choices-reference-records-selections-and-state.md) — the intended-contribution and choice-binding test that separates transferable theory from Commonplace's selected and resulting state
+- [ADR-071: text contract is part of the collection definition](./adr/071-text-contract-is-part-of-the-collection-definition.md) — why collection and text-contract vocabulary have one reference owner while each local `COLLECTION.md` remains the binding surface
 - [ADR-019: collection-owned link vocabulary with per-destination outbound rules](./adr/019-collection-owned-link-vocabulary.md) — why each `COLLECTION.md` owns outbound rules per local destination collection, and why the connect/write skills read it directly instead of a compiled topology
 - [ADR-059: external is a reserved outbound destination](./adr/059-external-is-a-reserved-outbound-destination.md) — extends collection-owned authorization to external targets without making the open web a connect-search surface
 - [ADR-060: rationale becomes rests-on](./adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md) — applies source-as-subject grammar to design dependencies, reclassifies off-pattern grounds, and gives the global type surface a collection contract
-- [ADR-020: theoretical-default link vocabulary additions](./adr/020-theoretical-default-contrasts-mechanism.md) — the `contrasts` and `mechanism` labels and the directional-asymmetry principle for the theoretical register
+- [ADR-020: theoretical-default link vocabulary additions](./adr/020-theoretical-default-contrasts-mechanism.md) — the `contrasts` and `mechanism` labels and the directional-asymmetry principle under the historical theoretical-default grouping
 - [ADR-035: review jobs finalize all-or-nothing with derived artifacts](./adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) — established all-or-nothing finalization and derived artifact paths
 - [ADR-043: review state separates completion, outcomes, and freshness baselines](./adr/043-review-state-separates-completion-outcomes-and-freshness-baselines.md) — current review vocabulary, schema-v7 state model, and v5 preservation decision
 

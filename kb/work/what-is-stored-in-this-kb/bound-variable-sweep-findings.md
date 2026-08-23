@@ -13,7 +13,7 @@ choice-variable.
 
 This is a sample result, not proof that every note conforms. In particular,
 the fixed definition sample did not select the machinery-first candidates
-`answerability.md` and `text-contract.md`, or the mixed
+`answerability.md` and the now-retired theory-side text-contract definition, or the mixed
 `discovery-lifecycle.md`, from the separate definition audit.
 
 ## Sampling and judgment

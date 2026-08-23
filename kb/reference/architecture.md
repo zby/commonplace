@@ -60,7 +60,7 @@ The Python package carries the scaffold inputs as packaged data in built wheels.
 
 | Area | Role |
 |------|------|
-| `kb/commonplace/notes/` | Shipped methodology library (theoretical register) |
+| `kb/commonplace/notes/` | Shipped transferable methodology theory |
 | `kb/commonplace/reference/` | Shipped-system documentation plus ADR history |
 | `kb/commonplace/instructions/` | Shipped methodology procedures and cp-skill-* skills |
 | `kb/types/` | Shared global type contracts — library and user both use and extend |

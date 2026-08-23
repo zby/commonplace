@@ -2,7 +2,7 @@
 
 This workshop asks what Commonplace must retain, why it must retain it, and—where the choice is between the two main library collections—whether `kb/notes/` or `kb/reference/` should own it. “Stored” is not limited to knowledge claims or to files called documentation. Beliefs, choices, sources, descriptions, operative rules, rationale, and temporary work play different roles, but the other collections keep their own local routing rules.
 
-The immediate trigger was [the text-contract definition](../../notes/definitions/text-contract.md). It defines chosen Commonplace machinery but lives in the theoretical collection. Moving that one file without checking the rest of the vocabulary could preserve the same category error elsewhere.
+The immediate trigger was the former theory-side text-contract definition. It defined chosen Commonplace machinery while living in the theoretical collection. The audit first checked the rest of the vocabulary, then folded the term into the [collection definition](../../reference/definitions/collection.md#text-contract) under [ADR 071](../../reference/adr/071-text-contract-is-part-of-the-collection-definition.md).
 
 This is exploratory work. Its files record candidate distinctions and dispositions, not accepted library conclusions.
 

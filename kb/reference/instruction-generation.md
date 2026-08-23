@@ -58,7 +58,7 @@ Substitution is a flat string replace in `_write_template`. Templates that don't
 - `kb/instructions/COLLECTION.md` — minimal template
 - `kb/instructions/README.md` — curated empty-state landing
 
-Each `COLLECTION.md` template invites the practitioner to pick a register, state a quality goal, and declare outbound link rules, with pointers to the shipped `kb/commonplace/<collection>/COLLECTION.md` as a worked example. Each `README.md` supplies the collection's stable reader landing, points authors to that contract, and states that the collection has no artifacts yet.
+Each `COLLECTION.md` template invites the practitioner to state the collection's purpose, intended contribution, quality goal, and outbound link rules, with pointers to the shipped `kb/commonplace/<collection>/COLLECTION.md` as a worked example. Each `README.md` supplies the collection's stable reader landing, points authors to that contract, and states that the collection has no artifacts yet.
 
 **Resolved templates** — read, substituted, written:
 

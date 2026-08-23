@@ -22,7 +22,7 @@ An accepted review is a build product and its inputs are prerequisites — [make
 
 Each new review dependency becomes its own `(note_path, dependency_path)` pair with the dependency document as the gate:
 
-- **`COLLECTION.md`-as-gate** — *adopted by [ADR 041](../adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)*: a note's conformance to its collection's register and conventions. One pair per note, criterion side the collection's `COLLECTION.md`.
+- **`COLLECTION.md`-as-gate** — *adopted by [ADR 041](../adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)*: a note's conformance to its collection's text contract. One pair per note, criterion side the collection's `COLLECTION.md`.
 - **Source-as-gate** — a derived note's consistency with the source snapshot from which it was worked out. This is the multi-source invalidation case: one pair per `(note, source)` edge, so each source invalidates independently with its own diff.
 
 Each factored pair reuses the entire freshness/ack/warn stack unchanged, exactly as type-conformance pairs do. Like the type spec, neither `COLLECTION.md` nor a source snapshot is written as a Failure mode / Test procedure, so each needs a mechanical wrapper (or an authored review section in the dependency document, which the hash then sees).

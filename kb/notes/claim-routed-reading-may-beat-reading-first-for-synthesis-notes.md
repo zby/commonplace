@@ -25,7 +25,7 @@ The same claim that routes reading can bias it. If the provisional claim only ev
 
 ## Scope
 
-The claim is about multi-source synthesis notes — the ingest-and-multistage register where a note's value is the selected relation among sources. It does not apply to single-source capture, faithful transcription, or a note whose contribution is already determined before any reading.
+The claim is about multi-source synthesis notes — the ingest-and-multistage workflow where a note's value is the selected relation among sources. It does not apply to single-source capture, faithful transcription, or a note whose contribution is already determined before any reading.
 
 ## How this could be wrong
 

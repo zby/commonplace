@@ -22,7 +22,7 @@ An output spec resolves this by declaring, ahead of any specific observation, wh
 
 ## Where this shows up in practice
 
-This KB's own Goals section (`CLAUDE.md`: purpose, scope, quality bar) is an output spec in this sense — it is what makes "does this observation deserve a note?" answerable before any note is drafted. `cp-skill-write` starts from a declared type and topic — a need to fill — rather than a transcript to mine, which is the same output-driven move applied to the authoring workflow itself. `COLLECTION.md` files extend the same spec to the register level (theoretical, descriptive, prescriptive), so each collection carries its own local admission criterion.
+This KB's own Goals section (`CLAUDE.md`: purpose, scope, quality bar) is an output spec in this sense — it is what makes "does this observation deserve a note?" answerable before any note is drafted. `cp-skill-write` starts from a declared type and topic — a need to fill — rather than a transcript to mine, which is the same output-driven move applied to the authoring workflow itself. `COLLECTION.md` files specialize the same spec per collection, so each collection carries its own local admission criterion.
 
 Claude Code's own conversational auto-memory system, by contrast, is input-driven: it watches sessions and applies retention heuristics with no declared spec to check coverage against. The tradeoff described above is visible in practice — coverage of any given memory category is whatever happened to come up in conversation, and a missing category produces no signal that anything is missing.
 

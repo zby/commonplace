@@ -13,7 +13,7 @@ argument-hint: "[path | collection | type] [topic or claim/purpose] — a note p
 
 **Target: $ARGUMENTS**
 
-All documents in the KB live in a **collection**: a directory under `kb/` with a local `COLLECTION.md`, such as `kb/notes/`, `kb/reference/`, `kb/instructions/`, or an installed library collection like `kb/commonplace/notes/`. Each collection that accepts writes has a `COLLECTION.md` with its register, quality goal, and linking conventions.
+All documents in the KB live in a **collection**: a directory under `kb/` with a local `COLLECTION.md`, such as `kb/notes/`, `kb/reference/`, `kb/instructions/`, or an installed library collection like `kb/commonplace/notes/`. Each collection that accepts writes has a `COLLECTION.md` with its purpose, intended contribution, quality goal, and linking conventions.
 
 Documents with frontmatter carry a path-valued `type:` that points to a type-spec doc, for example `type: kb/types/note.md` or `type: kb/reference/types/adr.md`. Files with no frontmatter are implicit `text`.
 
@@ -35,7 +35,7 @@ This lookup identifies the contract; it does not authorize the type for the targ
 
 Read the target collection's `COLLECTION.md` for the collection's writing conventions, including outbound-linking rules. Find the outbound-linking section (heading varies — look for the one that names destinations and labels) and treat it as authoritative. It tells you which local collections this source may link to, whether the reserved `external` destination is authorized, which destinations are excluded, which labels are authorised for which source->destination pairs, and the reader-need each label serves. The destination wildcard `any` includes `external`. Internal format varies (per-destination blocks, a single labels table with a destinations column, prose) — read it for content, not shape. There is no separate linking doc to consult.
 
-**Hard fail** if the target collection has no `COLLECTION.md`. Every collection that accepts writes must have a `COLLECTION.md`; its register, quality goal, and linking rules are what distinguish collections. Do not proceed with default conventions.
+**Hard fail** if the target collection has no `COLLECTION.md`. Every collection that accepts writes must have a `COLLECTION.md`; its purpose, intended contribution, quality goal, and linking rules are what distinguish collections. Do not proceed with default conventions.
 
 ### Step 3 - Load The Type Spec
 
@@ -54,7 +54,7 @@ Before drafting, identify from the user's request and the target artifact in edi
 - what the reader should understand, infer, or do because this artifact exists; and
 - any scope or angle needed to distinguish it from materially different artifacts on the same topic.
 
-The repository and collection contracts constrain the register, acceptable contribution class, and often the default audience. They do not by themselves select an artifact-specific claim or purpose. Resolve that choice from the task, the incumbent artifact, and any retained intent supplied for this write. Treat a context block as retained intent only when it identifies its source, subject, scope, and whether its role is authoritative or advisory. Current user direction prevails. If retained intent conflicts with the incumbent or another applicable input and no explicit precedence resolves the conflict, ask the user rather than silently amending the commission.
+The repository and collection contracts constrain the acceptable contribution class, quality bar, and often the default audience. They do not by themselves select an artifact-specific claim or purpose. Resolve that choice from the task, the incumbent artifact, and any retained intent supplied for this write. Treat a context block as retained intent only when it identifies its source, subject, scope, and whether its role is authoritative or advisory. Current user direction prevails. If retained intent conflicts with the incumbent or another applicable input and no explicit precedence resolves the conflict, ask the user rather than silently amending the commission.
 
 Remembered intent may complete a bare request, but it is not meaning contained in that request, a choice licensed by model priors, or evidence that warrants factual claims. Do not add an ad hoc history search to this skill; older interaction history counts only when a memory mechanism supplies it through the retained-intent input.
 

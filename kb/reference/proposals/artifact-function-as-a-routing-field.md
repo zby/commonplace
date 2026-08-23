@@ -13,7 +13,7 @@ This proposal asks whether Commonplace should introduce an `artifact_function` d
 ## Current state (as of 2026-08-22)
 
 - Frontmatter `type:` identifies the artifact's type contract. Types carry structural and semantic expectations; explicit traits add independently checkable review expectations. The review selector can currently narrow a catalog gate by type or trait, but not by a separate artifact-function axis.
-- A type spec wholly owns the semantics of its frontmatter fields. A collection supplies register, quality goal, title and description conventions, lifecycle, and link grammar; it cannot redefine what the same field value means in different directories.
+- A type spec wholly owns the semantics of its frontmatter fields. A collection supplies purpose, intended contribution, quality goal, title and description conventions, lifecycle, and link grammar; it cannot redefine what the same field value means in different directories.
 - Specialized types already imply some whole-artifact jobs. An ADR records a decision, an instruction directs behavior, a definition pins a term, and a design proposal preserves an undecided design surface. The general `note` type does not determine one function.
 - Collection placement is informative but not decisive. `kb/notes/` defaults toward composable theory claims while admitting synthesis notes; `kb/reference/` contains both bounded system accounts and composite architecture descriptions; `kb/articles/` admits self-standing, multi-claim exposition.
 - [`run-full-improvement-pass-on-note`](../../instructions/run-full-improvement-pass-on-note.md) checks collection and type fit during synthesis, after several methods have already treated one central claim as the target's identity. Its packet records one `Update` sentence, and its compression, critique, split, reframe, merge, and delete logic mostly fit the `claim + atomic` case.
@@ -32,7 +32,7 @@ The design must therefore separate four things that are currently easy to collap
 
 | Axis | Question it answers | Current or proposed carrier |
 |---|---|---|
-| Collection | Under which register, quality goal, lifecycle, and link grammar is this artifact maintained? | Path plus `COLLECTION.md` |
+| Collection | Under which purpose, quality goal, lifecycle, and link grammar is this artifact maintained? | Path plus `COLLECTION.md` |
 | Type | Which structural and semantic artifact contract applies? | `type:` |
 | Traits | Which independently checkable review expectations apply? | `traits:` |
 | Artifact function | What primary whole-artifact job should guide artifact-level writing and review? | Proposed `artifact_function` declaration or resolved value |

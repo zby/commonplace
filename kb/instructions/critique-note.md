@@ -13,7 +13,7 @@ The caller owns reviewer lifecycle. After the report has been written and verifi
 
 ## The critique
 
-Attack the note's central commitment in the mode its register calls for — steelman the opposing position for a claim, find the counterexample or the idle distinction for a definition, show the wrong outcome for a procedure, find the discrepancy for a description.
+Attack the note's central commitment in the mode its artifact kind calls for — steelman the opposing position for a claim, find the counterexample or the idle distinction for a definition, show the wrong outcome for a procedure, find the discrepancy for a description.
 
 Make the attack **maximally strong**: the version an informed opponent would actually make, named to a concrete stance — not a balanced "some might disagree." If the author could dismiss it in one sentence, it is not strong enough yet.
 

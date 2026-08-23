@@ -19,7 +19,7 @@ Do **not** emit an overall "sound / unsound" or pass/fail verdict, and do not ac
 
 ## Step 1 — State the central commitment
 
-State the note's central commitment in **one sentence**. Match its register:
+State the note's central commitment in **one sentence**. Match its artifact kind:
 
 - **claim** — the proposition the note asserts is true;
 - **definition** — the boundary it draws and asserts is the right cut;
@@ -27,7 +27,7 @@ State the note's central commitment in **one sentence**. Match its register:
 
 ## Step 2 — Decompose into load-bearing premises
 
-Enumerate the premises the commitment **rests on and takes as given** — including background premises the note treats as obvious and never argues for. What counts as a premise follows the register:
+Enumerate the premises the commitment **rests on and takes as given** — including background premises the note treats as obvious and never argues for. What counts as a premise follows the artifact kind:
 
 - **claim** — a proposition that must be true for the claim to hold;
 - **definition** — a commitment that makes this the correct boundary (that the distinguished cases differ in the way named, that the distinction is not idle, that nothing important is mis-sorted);
@@ -43,7 +43,7 @@ For each premise, actively hunt a concrete **counterexample** or a specific reas
 - `DOUBTFUL` — a plausible reason or edge case dents it (state it);
 - `DEFEATED` — a concrete counterexample makes it false (state it).
 
-Counterexample by register: for a claim, a case where the premise is false; for a definition, a case the boundary mis-sorts (over- or under-includes) or a distinction that changes nothing; for a procedure, a situation where the assumption fails and the steps misfire.
+Counterexample by artifact kind: for a claim, a case where the premise is false; for a definition, a case the boundary mis-sorts (over- or under-includes) or a distinction that changes nothing; for a procedure, a situation where the assumption fails and the steps misfire.
 
 **Read each premise at its stated modality** (`kb/notes/COLLECTION.md`, "Claim modality"). A premise stated as a tendency ("usually", "most", "under conditions C") is dented or defeated only by prevalence-shaped evidence — the exceptions being common or the ordinary case going the other way — never by one instance it already concedes. A premise stated as a first-order model with adequacy commitments is attacked through those commitments — an exception its domain treats as ordinary unmarked practice, or the model losing dominance — not by conceded, accounted-for exceptions. A premise with no stated mode reads as universal, and one genuine counterexample defeats it. The modes differ in the inference form of the refuter: deductive for universal (one instance, modus tollens), inductive for statistical (a sample-based prevalence result), comparative for ideal-type (loss of dominance to the corrections or a rival, or an exception ordinary in its own domain) — hunt each premise's defeater in its mode's form.
 

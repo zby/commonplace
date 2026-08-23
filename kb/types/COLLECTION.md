@@ -26,7 +26,7 @@ Do not link to external sources or into `kb/work/`, `kb/sources/`, `kb/agent-mem
 
 ## Types
 
-Every Markdown artifact in this collection other than `COLLECTION.md`, `README.md`, and `text.md` is a type spec and carries `type: kb/types/type-spec.md`. The root [`type-spec.md`](./type-spec.md) is self-referential. `COLLECTION.md` governs local authoring and routing, `README.md` is curated navigation, `text.md` documents the implicit text contract, and schema files are symbolic sidecars rather than Markdown artifacts.
+Every Markdown artifact in this collection other than `COLLECTION.md`, `README.md`, and `text.md` is a type spec and carries `type: kb/types/type-spec.md`. The root [`type-spec.md`](./type-spec.md) is self-referential. `COLLECTION.md` governs local authoring and routing, `README.md` is curated navigation, `text.md` documents the implicit no-frontmatter artifact type, and schema files are symbolic sidecars rather than Markdown artifacts.
 
 ## What does not belong here
 

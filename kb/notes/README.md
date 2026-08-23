@@ -1,13 +1,13 @@
 # Notes
 
-The theoretical register of the Commonplace KB: transferable claims, mechanisms, definitions, and synthesis about how agent-operated knowledge bases — LLM wikis — should be built and operated. This is the theory the rest of the repository runs on; the methodology these notes describe is what agents follow to maintain this wiki.
+The theory collection of the Commonplace KB: transferable claims, mechanisms, definitions, and synthesis about how agent-operated knowledge bases — LLM wikis — should be built and operated. This is the theory the rest of the repository runs on; the methodology these notes describe is what agents follow to maintain this wiki.
 
 The central thread is [deploy-time learning](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — how deployed AI systems improve through structured knowledge that accumulates alongside the code — developed through [constraining](./definitions/constraining.md), source-derived reshaping, and the [discovery lifecycle](./definitions/discovery-lifecycle.md).
 
 ## Navigation
 
 - [tags index](./tags-README.md) — the top-level hub linking every tag README (foundations, evaluation, learning theory, links, and the rest), plus the workshop layer and open gaps.
-- [definitions/](./definitions/dir-index.md) — the project's core vocabulary (register, constraining, codification, discovery lifecycle, and the rest), one term per file.
+- `definitions/` — transferable vocabulary such as constraining, codification, and discovery lifecycle, one term per file. Selected Commonplace vocabulary lives in reference definitions instead.
 
 ## How to read these notes
 
@@ -15,7 +15,7 @@ Titles are assertions, not topics, so following a link reads as a chain of reaso
 
 ## What belongs here
 
-A claim earns a note when it changes how someone would build or operate a knowledge base. Pure pattern-recording without explanation belongs in `kb/log.md`, not here. For the full authoring contract — register, the explanatory-reach quality bar, title and link conventions, and types — see [COLLECTION.md](./COLLECTION.md).
+A claim earns a note when it changes how someone would build or operate a knowledge base. Pure pattern-recording without explanation belongs in `kb/log.md`, not here. For the full authoring contract — intended contribution, the explanatory-reach quality bar, title and link conventions, and type eligibility — see [COLLECTION.md](./COLLECTION.md).
 
 ## Not the right collection?
 

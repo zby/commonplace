@@ -33,7 +33,7 @@ Line numbers below identify the reviewed baseline. Migration must reconcile sour
 | `kb/agentic-systems/claude-code-dynamic-workflows.md:70` | `is-evidence-for` | The feature analysis feeds back as evidence for the target design stance; the stance did not motivate the analysis artifact. |
 | `kb/sources/goedel-machines-schmidhuber.ingest.md:134` | `is-evidence-for` | The source is an existence proof bearing on the target claim. |
 | `kb/notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md:99` | `evidenced-by` | ADR 042 records the decision that qualifies and narrows the source assertion. |
-| `kb/notes/definitions/text-contract.md:57` | `evidenced-by` | ADR 042 is the decision record supporting the definition's open profile set. |
+| retired theory-side text-contract definition, former line 57 | `evidenced-by` | ADR 042 was the decision record supporting the definition's then-open profile set. |
 | `kb/reference/adr/045-source-genre-is-a-single-open-field-on-the-snapshot.md:53` | `implements` | The ADR's concrete mechanism realizes the target's type-owned-semantics boundary. |
 | `kb/reference/adr/058-directional-identifiers-use-source-as-subject.md:57` | `implements` | The directional-identifier decision preserves and realizes ADR 019's collection-owned authorization architecture. |
 | `kb/reference/collections-and-types.md:87-91` | `evidenced-by` | The five ADRs are decision records corroborating the shipped architecture this reference page describes. |

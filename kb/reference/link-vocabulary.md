@@ -166,7 +166,7 @@ The downstream artifact carries no backlinks to its sources by default. Its read
 
 Rationale: [source changes should surface downstream review targets, while reverse lineage can remain searchable](../notes/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md).
 
-**Migration status.** `Distilled into:` is retired — write no new instances. Existing `Distilled into:` footers and pre-existing `derived-from` edges predate this boundary; they are classified into the new labels during the vocabulary-migration passes. Until reclassified, treat them as unclassified lineage — carrying neither regime's semantics. `derived-from` is tested per source-to-destination pairing against its reconstructibility condition; it is not banned merely because a source or target uses a descriptive, prescriptive, or generated register. A pairing remains eligible when the target is genuinely mechanically reconstructible and the source collection authorizes it.
+**Migration status.** `Distilled into:` is retired — write no new instances. Existing `Distilled into:` footers and pre-existing `derived-from` edges predate this boundary; they are classified into the new labels during the vocabulary-migration passes. Until reclassified, treat them as unclassified lineage — carrying neither regime's semantics. `derived-from` is tested per source-to-destination pairing against its reconstructibility condition; it is not banned merely because a source or target is descriptive, prescriptive, or generated content. A pairing remains eligible when the target is genuinely mechanically reconstructible and the source collection authorizes it.
 
 ## Limits
 

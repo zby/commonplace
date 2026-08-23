@@ -81,7 +81,7 @@ The following ledger reconciles all 134 active `rationale` edges. Multiple edges
 | `kb/instructions/retire-artifact.md` | 139 → `notes/stale-indexes-are-worse-than-no-indexes.md` | R |
 | `kb/instructions/review-gates/semantic/unearned-generality.md` | 53 → `notes/generality-bought-to-avoid-counterexamples-is-paid-for-in.md` | R |
 | `kb/notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md` | 99 → `reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md` | N |
-| `kb/notes/definitions/text-contract.md` | 57 → `reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md` | N |
+| retired theory-side text-contract definition | former line 57 → `reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md` | N |
 | `kb/reference/adr/025-complete-generated-indexes-are-build-time-only.md` | 66 → `notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md`; 67 → `notes/two-context-boundaries-govern-collection-operations.md`; 68 → `notes/feasibility-is-the-heaviest-forks-net-load.md`; 69 → `notes/index-curation-adds-orientation-that-generation-cannot-produce.md` | R |
 | `kb/reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md` | 67 → `notes/stale-indexes-are-worse-than-no-indexes.md`; 68 → `notes/design-for-the-first-time-human-except-on-access-cost.md`; 69 → `notes/index-curation-adds-orientation-that-generation-cannot-produce.md`; 70 → `notes/frontloading-spares-execution-context.md`; 71 → `notes/feasibility-is-the-heaviest-forks-net-load.md` | R |
 | `kb/reference/adr/028-design-proposals-live-in-reference-proposals.md` | 43 → `notes/design-proposals-differ-from-claims-in-kind-not-confidence.md` | R |
