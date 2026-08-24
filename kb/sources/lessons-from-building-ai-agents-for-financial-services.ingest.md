@@ -27,7 +27,16 @@ A comprehensive practitioner report covering 11 architectural lessons from build
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** In a first-person report about Fintool, the author says the system maintains fiscal calendars for more than 10,000 companies, normalizes period references to absolute date ranges, and has more than 200 tests for period extraction because labels such as “Q1 2024” map to different calendar ranges across companies.
+  - **Source extract (verbatim):** Fiscal period normalization is critical. “Q1 2024” is ambiguous:
+  - **Source location:** “The Parsing Problem,” fiscal-period-normalization discussion.
+  - **Source extract (verbatim):** We maintain a fiscal calendar database for 10,000+ companies. Every date reference gets normalized to absolute date ranges. When the agent retrieves “Apple Q1 2024 revenue,” it knows to look for data from October-December 2023.
+  - **Source location:** “The Parsing Problem,” immediately after the company-specific examples.
+  - **Source extract (verbatim):** We maintain fiscal calendars for 10,000+ companies. Every period reference gets normalized to absolute date ranges. We have 200+ test cases just for period extraction.
+  - **Source location:** “The Evaluation Suite,” fiscal-period discussion.
+  - **Scope:** The author's account of Fintool's company-calendar normalization and period-extraction evaluation in one production financial-agent system.
+  - **Confidence:** High that the source reports these system practices and quantities; they are explicit first-person statements from the builder.
+  - **Limitation:** This practitioner report provides no independent audit of the implementation, test coverage, or resulting accuracy. It does not establish that every fiscal-period interpretation is deterministic or constitutive, nor that passing period-extraction tests validates downstream financial analysis.
 
 ## Connections Found
 

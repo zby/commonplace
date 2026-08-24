@@ -160,10 +160,11 @@ The Gao and Chen ingest already contained the exact normalized claim used for
 
 ### 1. `knowledge-storage-does-not-imply-contextual-activation` — blob `2438659f`
 
-190 inbound references, the highest in the corpus. Five cited ingests, four
-groundable, one blocked.
+190 inbound references, the highest in the corpus. At execution start, five
+ingests were cited: four were groundable and one was blocked. The blocked pair
+was repaired in the post-completion follow-up below.
 
-- `agents-explore-but-agents-ignore-llms-lack-environmental` — **blocked**, needs re-ingest
+- `agents-explore-but-agents-ignore-llms-lack-environmental` — **blocked during the sealed run**; exact-pair repair recorded below
 - `llm-agents-are-not-always-faithful-self-evolvers`
 - `machine-studying`
 - `the-second-brain-trap-2041486539067154753`
@@ -224,8 +225,9 @@ different demands without entry conflict.
 
 ### 4. `exact-implementation-does-not-validate-a-requirement` — blob `c32dc467`
 
-19 inbound, four cited ingests, three groundable, one blocked
-(`lessons-from-building-ai-agents-for-financial-services`).
+19 inbound, four cited ingests. At execution start, three were groundable and
+`lessons-from-building-ai-agents-for-financial-services` was blocked; the
+post-completion follow-up below repairs that exact pair.
 
 **Deliberately includes a blocked item** so the run exercises re-ingest routing
 and the `unavailable` disposition rather than discovering that path mid-sweep.
@@ -378,3 +380,53 @@ to have been too pessimistic about already bounded empirical footers. Future
 sealed predictions should name the unit and define whether “grounded as written”
 means no wording change, source-side support for the frozen proposition, or a
 whole target needing no repair.
+
+## Post-completion exact-pair repair — 2026-08-24
+
+This follow-up began after the sealed prediction was opened and scored. It does
+not retroactively change the original run's prediction result or erase its two
+`unavailable` dispositions.
+
+No new network observation was needed. Both expected source byte streams were
+already present at the checksums recorded by their ingests, but under
+adapter-generated snapshot slugs that could not be used as ingest filenames
+because they exceeded the 70-character filename limit. A fresh capture would
+have hit the duplicate-source guard and reproduced the same naming conflict.
+The ignored local Markdown captures were therefore renamed, without changing
+their bytes, to the valid ingest basenames:
+
+- `agents-explore-but-agents-ignore-llms-lack-environmental-curiosity.md` →
+  `agents-explore-but-agents-ignore-llms-lack-environmental.md`, retaining
+  SHA-256 `796cab7db761f58952fb36001a0309771ab41bd56fa47dc67972fe3753b72a4b`.
+- `lessons-from-building-ai-agents-for-financial-services-201517481849743.md`
+  → `lessons-from-building-ai-agents-for-financial-services.md`, retaining
+  SHA-256 `5d31480668eb9fedea35957fd66e72133d066c3e9300c80df68d1c3ee57cdebf`.
+  Its ignored X capture companion was renamed to the same stem.
+
+Two mechanically verified Claims entries were then appended:
+
+- **E17 — Agents Explore:** Across three solution-injected agent benchmarks,
+  evaluated agents often surfaced complete task solutions without subsequently
+  interacting with them; on AppWorld's validation split, discovery@1 exceeded
+  90% for every tested model while interaction@1 never exceeded 6.3%.
+- **E18 — Fintool fiscal periods:** In a first-person report about Fintool, the
+  author says the system maintains fiscal calendars for more than 10,000
+  companies, normalizes period references to absolute date ranges, and has
+  more than 200 tests for period extraction because labels such as “Q1 2024”
+  map to different calendar ranges across companies.
+
+The follow-up changes `KSA-4` from `unavailable` to `narrowed`: the restored
+note uses discovery and interaction as the paper defines them instead of
+calling interaction exploitation, and it preserves the artificial-benchmark
+and process-metric limits. It changes `EIR-2` from `unavailable` to `narrowed`:
+the restored footer cites the reported calendar mapping and test suite while
+keeping “constitutive” or “calculator-like” status as local analysis that the
+source does not establish.
+
+The post-follow-up distribution is seven grounded, ten narrowed, two
+contradicted/repaired, four retained local deltas, zero unavailable, one
+literature handoff, and zero false positives. Both ingests and both targets
+validate cleanly. Fresh-context source-conformance jobs 8015 and 8016 returned
+PASS for all ten pairs affected by the two note edits. The stale selector then
+returned `targets: []` for all five cohort targets under the `codex`
+partition; requested-mode enumeration counted 19 linked source pairs.
