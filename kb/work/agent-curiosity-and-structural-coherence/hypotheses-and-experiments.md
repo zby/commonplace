@@ -70,6 +70,14 @@ A direct experimental contrast can hold the artifact and budget fixed:
 
 Score paper-doubt yield separately from living-doubt completion. Include rule-holds and tempting-false-lead controls so indiscriminate investigation cannot win by producing more concerns. The useful dependent variable is not rhetorical force but the fraction of warranted concerns that traverse the full sequence at acceptable investigation cost.
 
+### Elicitation can be bidirectional without making authority symmetric
+
+A question or criterion need not originate wholly within one participant. In Mike Briggs's [simplification anecdote](../../sources/simplification-2090443748077416467.ingest.md), the model names four similar code paths while proposing an interface; the maintainer treats the stated repetition as an object of inquiry and redirects the search toward its cause. The [adversarial writing loop](../../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md) begins from the other side: a human supplies an underdetermined idea, the model renders one candidate concretization, and the human's reaction can expose a missing constraint or redirect the idea. In both sequences, one participant's provisional contribution gives the other something definite enough to question.
+
+The working hypothesis is that a candidate's epistemic value can lie in the criterion or question it elicits rather than in its acceptance. Question origination is then a property of the interaction: a vague seed, concrete proposal, noticed mismatch, and redirected search may be distributed across turns and actors. This does not make their roles interchangeable. In the observed cases the human still judges significance and controls the new direction, and the same concrete candidate could reveal a tacit prior constraint, cause a genuinely new objective, or merely anchor the human on the model's framing.
+
+A later comparison should preserve dialogue traces and distinguish those outcomes. Record who supplied the seed, candidate, question, significance judgment, probe, and update; whether the later criterion was recoverable from earlier human commitments; and whether it changed the investigation or artifact. Compare direct solution generation, assumption-exposing concretization, broad curiosity, and explicit anomaly-to-root-cause framing. Score warranted new questions and downstream updates separately from candidate acceptance. Until such cases accumulate, this remains a follow-on hypothesis rather than evidence that interaction reliably improves question origination.
+
 ## Curiosity, taste, representation, and selection
 
 A working distinction:
