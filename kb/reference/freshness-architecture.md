@@ -1,113 +1,107 @@
 ---
-description: "Code architecture of the general freshness substrate: commonplace store, file-text versioning, target baselines, transitions, global status, and the review adapter"
+description: "Architecture boundaries of Commonplace freshness: target identity, accepted-input applicability, review adaptation, transitions, and concurrency guards"
 type: kb/types/note.md
 tags: []
 ---
 
-# Freshness architecture (`commonplace.store` + `commonplace.freshness`)
+# Freshness architecture
 
-General artifact freshness records exact input snapshots against which a target was accepted, compares them with current resolved versions, and selects affected targets. It does not adjudicate truth, run reviews, or rewrite notes. Review is the first consumer: `review-pair` targets with `note` and `criterion` `file-text` inputs.
+Freshness says whether a registered target's current inputs match the versions
+accepted for it. It says nothing about truth, approval, or whether findings
+were handled. A baseline is an applicability boundary for retained evidence.
 
-For review execution (jobs, pairs, finalization, prompts), see [review architecture](./review-architecture.md). For operator workflows, see [commands](./commands.md) and [README-REVIEW-SYSTEM](./README-REVIEW-SYSTEM.md).
+This page records the relations that span the generic freshness substrate and
+its review adapter. Exact store objects, schema versions, JSON fields, command
+arguments, status labels, and exit codes belong to the executing
+`commonplace.store`, `commonplace.freshness`, and `commonplace.cli.freshness_*`
+source and command help. [Storage](./storage-architecture.md) places the SQLite
+store among Commonplace's other authorities.
 
-## Physical store
+## Target and input boundary
 
-| path | role |
-|---|---|
-| `kb/reports/commonplace-store.sqlite` | Current operational database (review + freshness) |
-| `kb/reports/review-store.sqlite` | Schema-v7 backup; read-only migration source |
-| `COMMONPLACE_STORE` | Env override for store path |
+The generic substrate identifies a target by kind plus a complete canonical
+key. It records each role-labelled input's identity, version kind, and exact
+accepted version.
 
-`commonplace.store` owns connection setup, schema version refusal (`PRAGMA user_version = 1`), foreign-key enforcement, and whole-store integrity dispatch. `commonplace.review.review_schema` delegates to it. If the new default is absent but the legacy backup exists beside it, store preparation refuses with a migration command rather than creating an empty database.
+The only v1 specialization is a `review-pair` target. Its key consists of note
+path, criterion path, and model partition. Its two inputs are the `note` and
+`criterion` files, both versioned as UTF-8 text. The model partition belongs to
+target identity: evidence under one partition does not make another partition
+fresh.
 
-Migrate retained evidence with `scripts/migrate-review-db-v7-to-commonplace-store.py` ([ADR 052](./adr/052-general-freshness-store-review-first-migration.md)).
+Each review baseline points to the completed pair whose evidence it makes
+current. Acknowledgement can advance the baseline while preserving that pair;
+a new review replaces it. The store records which evidence still applies, not
+whether its outcome or prose deserves endorsement.
 
-## Data model
+## Registered status and review discovery
 
-| Table / view | Role |
-|---|---|
-| `artifact_snapshots` | Path-keyed `file-text` versions: exact UTF-8 text, SHA-256, capture time |
-| `freshness_baselines` | One current row per `(target_kind, target_key_json)` with monotonic `revision` |
-| `freshness_inputs` | Accepted input roles for a target, each FK to an `artifact_snapshots` row |
-| `review_freshness_evidence` | Review-only bridge retaining the completed evidence pair for a `review-pair` target |
-| `review_jobs`, `review_pairs` | Review execution state (unchanged role; snapshot FKs retargeted to `artifact_snapshots`) |
-| `current_review_freshness_baselines` | Review adapter view over generic tables — not canonical state |
+Repository-wide status starts from registered baselines. It can find changed,
+missing, or unresolvable registered inputs, but not a target that never had a
+baseline. Applicable-pair discovery remains review-owned: the review selector
+combines notes and criteria and reports `missing-baseline` for an unregistered
+pair. The two paths answer different questions.
 
-v1 admits only `file-text` versioning and `review-pair` targets. Target identity is canonical JSON (`target_kind` + sorted `target_key_json`). Review keys use `{note_path, criterion_path, model_partition}`.
+Malformed registered state is a store error, not an absent baseline or
+ordinary staleness. Exact status rendering and filtering remain in live source
+and `--help`.
 
-## Package layout
+## Transition boundaries
 
-```
-commonplace.store          Connection, schema, integrity, path resolution
-commonplace.freshness/
-  models.py                ArtifactSnapshot dataclass
-  keys.py                  Canonical target JSON encoding
-  versioning.py            file-text resolution from repo paths
-  snapshots.py             Insert/dedupe/load artifact snapshots
-  baselines.py             Review-pair baseline read/write (capture + acknowledgement)
-  selector.py              Repository-wide stale target selection
-  status.py                Status projection and JSON rendering
-  transitions.py           ack, retire, capture refresh primitives
-  integrity.py             Hash and review-pair structural checks
-commonplace.cli.freshness_*   Global status, ack, retire CLIs
-```
-
-Review adapters in `commonplace.review` call into `freshness` for compare/persist; they retain review-specific discovery (`missing-baseline`), reason mapping (`criterion-changed` before `note-changed`), trivial ack, and capture finalization.
-
-## Transitions
-
-| transition | owner | live check | evidence |
+| Transition | Input authority | Concurrency intent | Evidence effect |
 |---|---|---|---|
-| capture refresh | `finalize_capture_refresh()` in review finalization | no | replaced |
-| observation ack | `commonplace-freshness-ack`, `commonplace-ack-review` | yes | preserved on review-pair |
-| retirement | `commonplace-freshness-retire` | — | cascade delete bridge |
+| Capture refresh | Snapshots captured when a review job was created | Baseline state observed at queue time must still be current | Replace with the completed pair |
+| Observation acknowledgement | Files resolved live when the acknowledgement executes | Caller revision and any supplied observed hashes must still match | Preserve the existing pair |
+| Retirement | Registered target identity | Idempotent removal; revision generation remains advanced | Remove the current evidence association |
 
-An observation acknowledgement always compares the caller's expected baseline
-revision with the current one. When the caller selects particular inputs from
-a status observation, it also re-resolves their live files and requires the
-observed hashes to match before advancing the baseline. Omitting that selection
-instead observes both registered inputs at execution time. Either form
-preserves the review evidence attached to a `review-pair` target.
+Capture refresh belongs to successful finalization. It accepts the snapshots
+the worker judged rather than substituting a later live-file read. Its guard
+asks whether baseline state changed while the job was queued; success replaces
+the evidence association with the accepted inputs.
 
-Queued review jobs record `review_pairs.expected_baseline_revision` at pair create. Capture finalization CASes that revision; a moved baseline after queue yields `stale-baseline-revision` (or `stale-queued-capture` at migration).
+Observation acknowledgement applies only to an existing baseline. It compares
+the caller's expected revision, resolves live text, and preserves the evidence
+pair. Hashes supplied from an earlier status result guard against change
+between inspection and acknowledgement; omitting them observes both registered
+inputs at execution time.
 
-## Selection and status
+Retirement removes the current baseline, inputs, and evidence association. It
+does not imply deletion of historical jobs or artifacts. The retirement
+instruction owns the larger artifact-removal workflow.
 
-`commonplace-freshness-status` reports all registered targets. It dedupes
-resolution and supports `--json`, `--diff`, `--all`, and `--model-partition`.
-Exit `0` means every selected target's accepted inputs still match; exit `1`
-means an input changed or disappeared; exit `2` means resolution, store, or
-invocation failed. These classes report input applicability, not whether the
-target's result is true or false.
+## Queue-to-finalize concurrency invariant
 
-The live [status serializer](../../src/commonplace/freshness/status.py),
-[acknowledgement manifest parser](../../src/commonplace/cli/freshness_ack.py),
-[retirement manifest parser](../../src/commonplace/cli/freshness_retire.py), and
-[input-observation parser](../../src/commonplace/freshness/transitions.py) own
-their exact JSON fields and validation.
+A queued pair records exactly one expectation: the current baseline revision
+when one exists, or the next revision from a persistent generation ledger when
+none exists. Finalization must still see that expectation.
 
-`commonplace-review-target-selector` keeps `missing-baseline` discovery for applicable pairs not yet registered. Global status does not replace that discovery path.
+The revision guard rejects advance, removal, and retire/recreate. The generation
+guard catches the otherwise invisible absent/create/retire sequence. Revisions
+are never reused after retirement. These guards protect baseline concurrency,
+not live-file currency: the result stays tied to its captured inputs, and a
+later file change makes it stale on the next comparison.
 
-Malformed registered state is a store error — never downgraded to `missing-baseline` or ordinary staleness.
+## Registration scope
 
-## Command surface
+Review finalization is the only v1 path that creates or replaces a baseline;
+status, acknowledgement, and retirement operate on registered targets. No
+generic creation command ships because no adopted non-review target supplies a
+complete identity, dependency, producer, evidence, and registration contract.
+[ADR 065](./adr/065-publish-only-supported-freshness-transitions.md) owns the
+rule that an interface returns only with such a consumer.
 
-- `commonplace-freshness-status` — repository-wide status over registered targets
-- `commonplace-freshness-ack` — ack changed inputs from a status-derived manifest
-- `commonplace-freshness-retire` — remove a registered baseline
+## Maintenance scope
 
-## Deferred
-
-Collection-as-artifact freshness (`collection-text`, `collection-maintenance`) is not implemented. See [proposal: collection-as-artifact freshness](./proposals/collection-as-artifact-freshness.md).
-
-No generic initial-acceptance or refresh command ships. Review finalization owns
-creation and replacement of the only supported target kind. A generic
-transition may return only with an adopted non-review target and its complete
-registration contract ([ADR 065](./adr/065-publish-only-supported-freshness-transitions.md)).
+Review this page when target identity, input dependency, registered-status
+ownership, review discovery, transition evidence semantics, or queue-to-finalize
+concurrency changes. Module additions, store paths, schema objects and versions,
+JSON fields, command options, status labels, and exit codes do not by themselves
+require an edit; their exact owners remain source, schema, and command help.
 
 ## See also
 
-- [ADR 052](./adr/052-general-freshness-store-review-first-migration.md) — decision record
-- [ADR 065](./adr/065-publish-only-supported-freshness-transitions.md) — withdrawal rule for unsupported transitions
-- [Storage](./storage-architecture.md) — where the store sits among authored markdown and derived indexes
-- [Review architecture](./review-architecture.md) — review adapter and execution flow
+- [Review architecture](./review-architecture.md) — job creation, external dispatch, and atomic finalization
+- [Review-system guide](./README-REVIEW-SYSTEM.md) — operator concepts and workflows
+- [Commands](./commands.md) — discovery route for status, acknowledgement, retirement, and review commands
+- [ADR 052](./adr/052-general-freshness-store-review-first-migration.md) — decision to generalize the store around targets and inputs
+- [ADR 065](./adr/065-publish-only-supported-freshness-transitions.md) — no interface without an implemented target consumer

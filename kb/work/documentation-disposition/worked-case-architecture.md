@@ -79,7 +79,7 @@ commands remain implementation-owned.
 
 ## Next
 
-`freshness-architecture.md` is the last originally scoped artifact. It is
-likely the densest mixed case: target identity and transition boundaries may
-survive, while its schema, package map, command flags, exit codes, and deferred
-inventory must be tested against live source and stronger decision records.
+[The `freshness-architecture.md` worked case](./worked-case-freshness-architecture.md)
+completed the original scope. It retained target identity and transition
+boundaries, removed schema, package, command, and serialization inventories,
+and added the missing generation guard for retire/recreate concurrency.

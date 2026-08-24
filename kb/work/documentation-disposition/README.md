@@ -85,7 +85,7 @@ not a claim that every unit inside them is unique.
 
 The four dispositions are candidates, not a menu to allocate across. A fifth
 may fit better, and one artifact may need different dispositions for different
-regions. The first six worked cases showed why appearance is not a
+regions. The seven worked cases showed why appearance is not a
 disposition: `lib-modules.md` was retired after live source proved the better
 routing surface; `commands.md` retained a small checked catalogue because
 command-local help cannot discover an unknown command; and
@@ -97,6 +97,9 @@ catalogues. `storage-architecture.md` retained the authority-and-lifecycle map
 while dropping exact layout, build, command, migration, and schema inventories.
 `architecture.md` kept a deliberately approximate topology and four ownership
 or invariance boundaries while routing exact scaffold facts to its manifest.
+`freshness-architecture.md` retained target, discovery, transition, and
+concurrency semantics while dropping physical-store, schema, module, command,
+and serialization catalogues.
 
 ## Dependency worth exploiting
 
@@ -127,3 +130,4 @@ needs to know when it was made and against what.
 - [Worked case: `review-architecture.md`](./worked-case-review-architecture.md) — the fourth artifact through the procedure; removed source-recoverable inventories and retained execution ownership, canonical-state, finalization, and freshness boundaries
 - [Worked case: `storage-architecture.md`](./worked-case-storage-architecture.md) — the fifth artifact through the procedure; retained the cross-representation authority and lifecycle map while routing exact layout, build, migration, and schema facts to their live owners
 - [Worked case: `architecture.md`](./worked-case-architecture.md) — the sixth artifact through the procedure; retained an orientation topology plus ownership, runtime, projection, and path-invariance boundaries while routing the exact scaffold to its live manifest
+- [Worked case: `freshness-architecture.md`](./worked-case-freshness-architecture.md) — the seventh artifact through the procedure; retained identity, discovery, transition, and concurrency boundaries while routing exact store, schema, module, command, and serialization facts live

@@ -187,7 +187,7 @@ invariants, and orientation that the implementation does not cheaply recover.
 - [control-plane-goals.md](./control-plane-goals.md) — how Commonplace ships KB goals in always-loaded context via `AGENTS.md`
 - [instruction-generation.md](./instruction-generation.md) — build-time instruction generation flow and `commonplace-init`
 - [review-architecture.md](./review-architecture.md) — review dispatch ownership, canonical state versus derived artifacts, all-or-nothing finalization, and the freshness hash boundary (the build-side companion to [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md))
-- [freshness-architecture.md](./freshness-architecture.md) — the general freshness substrate: commonplace store, file-text versioning, target baselines, transitions, global status, and the review adapter
+- [freshness-architecture.md](./freshness-architecture.md) — target and input identity, registered-status versus review discovery, transition semantics, and queue-to-finalize concurrency
 
 ### Type system and collection model
 
