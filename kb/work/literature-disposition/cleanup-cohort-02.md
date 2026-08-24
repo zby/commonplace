@@ -47,6 +47,26 @@ the current corpus. That outcome is a `literature handoff`, and it is a direct
 test of whether the procedure reports a missing tradition instead of grounding
 the claim in whatever ingest is nearest.
 
+**Progress 2026-08-24 — one bounded grounding pull complete; disposition still
+open.** The target's context-to-action discussion supplied this source-side
+need: whether explicitly consulted documentation is consistently followed by
+implementation and verification in observed coding-agent traces. [Gao and
+Chen's trace study](../../sources/from-agent-behaviour-to-agent-friendly-documentation.ingest.md)
+was captured and ingested, then received one demand-driven Claims entry:
+"In Gao and Chen's observational coding-agent traces, explicit documentation
+consultation was not consistently coupled to immediate implementation and
+verification: the code-edit association depended on statistical adjustment,
+while test and build actions were less frequent within the next three events in
+both unadjusted and adjusted analyses." All three retained extracts matched the
+checksum-verified primary snapshot, and the populated ingest passed
+`commonplace-validate` cleanly.
+
+This grounds only the paper's short-horizon observational result. It does not
+establish the note's general proposition, identify consultation with contextual
+activation, or replace the cognitive-psychology source assignment above. The
+target remains unchanged at its frozen blob; comparison, disposition, any note
+edit, and source-lens review remain open.
+
 ### 2. `axes-of-artifact-analysis` — blob `85748ef0`
 
 178 inbound, one cited ingest (`intern-s2-mobius-arxiv-v1`). The clean
