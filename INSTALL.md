@@ -77,6 +77,12 @@ git -C commonplace sparse-checkout set kb
 - **uv** — installs Commonplace and selects or provisions a compatible Python 3.11+ interpreter
 - **git**
 - **ripgrep** (`rg`) — agent runtimes use it for fast KB search
+- **curl** — downloads PDFs for `cp-skill-snapshot-web`
+- **Trafilatura 2.2+** — extracts ordinary web pages as clean Markdown; install
+  its CLI with `uv tool install "trafilatura>=2.2"`
+- **Poppler** — supplies `pdfinfo` and `pdftotext` for PDF snapshots (the
+  package is commonly named `poppler-utils` on Debian/Ubuntu and `poppler` on
+  Homebrew; WinGet identifies it as `oschwartz10612.Poppler`)
 - **An agent runtime** — Codex, Claude Code, or another LLM/IDE that can load a project control-plane file (`AGENTS.md`/`CLAUDE.md`) and expose skill directories to the agent
 
 Normal KB maintenance is expected to happen under version control. The shipped procedures and examples use Git, so it is included in the out-of-the-box prerequisites above. A project may substitute another VCS if it adapts Git-specific procedures; the `commonplace-*` commands do not use Git history as correctness state.
@@ -91,6 +97,10 @@ Linux/macOS:
 uv --version
 git --version
 rg --version
+curl --version
+trafilatura --version
+pdfinfo -v
+pdftotext -v
 ```
 
 Windows PowerShell:
@@ -99,6 +109,10 @@ Windows PowerShell:
 uv --version
 git --version
 rg --version
+curl --version
+trafilatura --version
+pdfinfo -v
+pdftotext -v
 ```
 
 ## 2. Install Commonplace as a user-level tool

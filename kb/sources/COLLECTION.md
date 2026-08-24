@@ -39,7 +39,9 @@ cp-skill-snapshot-web https://example.com/some-article
 cp-skill-ingest kb/sources/.snapshots/some-article.md
 ```
 
-The ingest skill picks the snapshot backend by URL (GitHub API for issues/PRs, X SDK for tweets, WebFetch for everything else).
+The ingest skill picks the snapshot backend by URL: GitHub API for issues and
+pull requests, the X SDK for posts, Poppler for PDFs, and Trafilatura for
+ordinary web pages.
 
 ## Outbound links
 

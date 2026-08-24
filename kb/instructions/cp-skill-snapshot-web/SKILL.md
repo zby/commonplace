@@ -3,7 +3,7 @@ name: cp-skill-snapshot-web
 description: Snapshot a URL into the local kb/sources/.snapshots/ cache, routing GitHub, X/Twitter, PDF, and ordinary web sources to the appropriate capture path.
 type: kb/types/instruction.md
 user-invocable: true
-allowed-tools: Read, Write, Grep, Glob, WebFetch, Bash
+allowed-tools: Read, Write, Grep, Glob, Bash
 context: fork
 model: sonnet
 argument-hint: "[url] — URL to snapshot (web page, PDF, GitHub issue/PR, or X/Twitter post)"
@@ -71,41 +71,88 @@ metadata, formatting, and saving.
 
 ### Step 2c: Resolve and Fetch PDF
 
-Set `pdf_url`:
-
-- For an arXiv abstract URL, replace `/abs/` with `/pdf/` and discard any query string or fragment. Preserve an explicit terminal version such as `v1`. If the abstract URL has no terminal version, leave the PDF URL unversioned so arXiv serves the latest paper version. For example, `https://arxiv.org/abs/2606.03979` becomes `https://arxiv.org/pdf/2606.03979`. Do not fetch the abstract page with WebFetch.
-- For an existing PDF URL, use `source_url` unchanged.
-
-Download the PDF to a temporary file:
+Verify that the PDF capture prerequisites are available:
 
 ```bash
-curl -fsSL -o /tmp/snapshot_download.pdf "{pdf_url}"
+command -v curl
+command -v pdfinfo
+command -v pdftotext
 ```
 
-Then use the Read tool to read the PDF:
-- For short papers (< 20 pages): `Read(file_path="/tmp/snapshot_download.pdf")`
-- For longer papers: read in chunks using the `pages` parameter (max 20 pages per request), e.g. `pages: "1-20"`, then `pages: "21-40"`, etc.
+If any command is missing, go to **Step 3**. Do not probe for an alternative
+converter.
 
-Set `capture_method` to `pdf-read` and go to **Step 4**.
+Set `pdf_url`:
+
+- For an arXiv abstract URL, replace `/abs/` with `/pdf/` and discard any query string or fragment. Preserve an explicit terminal version such as `v1`. If the abstract URL has no terminal version, leave the PDF URL unversioned so arXiv serves the latest paper version. For example, `https://arxiv.org/abs/2606.03979` becomes `https://arxiv.org/pdf/2606.03979`. Do not route the abstract page through ordinary HTML capture.
+- For an existing PDF URL, use `source_url` unchanged.
+
+Run this as one Bash invocation. Retain the printed directory path as
+`{snapshot_tmp}`:
+
+```bash
+set -e
+snapshot_tmp=$(mktemp -d)
+printf 'Snapshot temp: %s\n' "$snapshot_tmp"
+curl -fsSL -o "$snapshot_tmp/source.pdf" "{pdf_url}"
+pdfinfo -isodates "$snapshot_tmp/source.pdf" > "$snapshot_tmp/pdfinfo.txt"
+pdftotext -enc UTF-8 -eol unix -nopgbrk \
+  "$snapshot_tmp/source.pdf" "$snapshot_tmp/extracted.txt"
+```
+
+Use Read to inspect `pdfinfo.txt`, then read `extracted.txt` in chunks until
+EOF. Treat `pdfinfo` fields as metadata leads, not as authority: confirm the
+title and authors against the document text when available. If
+`extracted.txt` is empty or contains no substantive text, go to **Step 3**.
+
+Set `capture_method` to `pdftotext` and go to **Step 4**.
 
 ### Step 2d: Fetch Web Page
 
-Use WebFetch with this prompt:
+Verify that the HTML capture prerequisites are available:
 
-> Extract the main article/post content from this page as clean markdown.
-> Return ONLY the content — no navigation, sidebars, ads, cookie banners, or boilerplate.
-> Preserve: headings, block quotes, code blocks, links, lists, emphasis.
-> For blog posts: include the author name, publication date, and tags if visible.
-> If the page has no extractable content (login wall, JS-only, error page), say "NO_CONTENT:" followed by a brief reason.
+```bash
+command -v trafilatura
+```
 
-Set `capture_method` to `web-fetch` and go to **Step 4**.
+If the command is missing, go to **Step 3**. Do not probe for another HTML
+converter.
+
+Run this as one Bash invocation to download and extract the page. Retain the
+printed directory path as `{snapshot_tmp}`:
+
+```bash
+set -e
+snapshot_tmp=$(mktemp -d)
+printf 'Snapshot temp: %s\n' "$snapshot_tmp"
+trafilatura -u "{source_url}" \
+  --markdown --with-metadata --links --no-comments --recall \
+  > "$snapshot_tmp/extracted.md"
+```
+
+Use Read to inspect `extracted.md`. Its leading YAML block, when present, is
+Trafilatura metadata: retain it as input to Step 4 but do not copy that block
+into the snapshot body. If the file is empty or contains no substantive main
+content, go to **Step 3**.
+
+Set `capture_method` to `trafilatura` and go to **Step 4**.
 
 ## Step 3: Handle Failures
 
-If any fetch method fails (WebFetch NO_CONTENT, curl error, script error):
-- Tell the user what happened
+If any fetch or extraction method fails (missing prerequisite, curl error,
+empty Trafilatura result, or PDF with no embedded text):
+
+- Tell the user exactly what happened.
+- For a missing prerequisite, name the canonical installation:
+  - `trafilatura`: `uv tool install "trafilatura>=2.2"`
+  - `pdfinfo` or `pdftotext`: install Poppler (`poppler-utils` on
+    Debian/Ubuntu, `poppler` through Homebrew, or
+    `oschwartz10612.Poppler` through WinGet)
+  - `curl`: install curl
+- For an image-only PDF, say that this workflow has no OCR fallback.
 - Suggest they paste the content manually: "You can paste the text and I'll save it as a snapshot"
-- Stop
+- Remove `{snapshot_tmp}` if one was created.
+- Stop.
 
 ## Step 4: Determine Metadata
 
@@ -113,7 +160,7 @@ If any fetch method fails (WebFetch NO_CONTENT, curl error, script error):
 
 This workflow supplies `kb/sources/types/snapshot.md` as the type. Open that path and verify from its own frontmatter that it is a type spec before determining metadata. Stop if it is missing or invalid.
 
-From the fetched content and `source_url`, determine:
+From the extracted content, extractor metadata, and `source_url`, determine:
 
 - **title**: The article/post title. Use the first H1 if present, otherwise derive from content.
 - **author**: If identifiable from the content or URL (e.g. simonwillison.net → Simon Willison)
@@ -121,7 +168,8 @@ From the fetched content and `source_url`, determine:
 - **description**: One sentence describing what makes this source worth retrieving. Not a summary — a retrieval filter (e.g. "Anthropic CEO's capability-timeline predictions — verifiable domains get confident timelines, unverifiable ones get hedged"). Focus on what distinguishes this source from others on the same topic.
 - **slug**: Lowercase, hyphenated, max 70 chars. Derived from title. Example: `simon-willison-karpathy-claws`
 
-For academic papers: prefer the paper title over any page title, and extract authors from the author list.
+For academic papers: prefer the title and complete author list printed in the
+paper over `pdfinfo` or Trafilatura metadata.
 
 ## Step 5: Write the Snapshot
 
@@ -146,7 +194,10 @@ Date: {publication date if known}
 {extracted content}
 ```
 
-For PDFs: convert the read content to clean markdown. Preserve section structure, tables, and lists. Drop page numbers, headers/footers, and layout artifacts.
+For PDFs: convert the extracted text to clean Markdown. Preserve section
+structure, tables, and lists. Drop page numbers, repeated headers/footers, and
+layout artifacts. For web pages: use Trafilatura's Markdown as the body after
+removing its metadata block and any residual boilerplate; do not summarize it.
 
 Compute SHA-256 after the file is complete. Hash the exact `.md` bytes,
 including frontmatter, line endings, and the presence or absence of a final
@@ -169,4 +220,5 @@ two-line preview.
 - Use today's date for `captured`
 - Check for duplicates before fetching
 - Keep the snapshot and every capture companion local and ignored
-- Clean up temporary PDF files after reading
+- Remove the unique temporary download/extraction directory after the snapshot
+  is written and hashed

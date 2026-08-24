@@ -1,9 +1,19 @@
 # Known Limitations
 
-## WebFetch summarizes large pages
+## Client-rendered and access-controlled pages may have no extractable HTML
 
-The WebFetch tool processes content through a small model and condenses long documents. Academic papers on arxiv HTML, long blog posts, and documentation pages may be reduced to short summaries rather than captured in full. Affected snapshots have `capture: web-fetch` in frontmatter.
+The ordinary-page pathway downloads and extracts the page with Trafilatura. It
+does not execute JavaScript, authenticate, or bypass a paywall. A
+client-rendered page, login wall, bot challenge, or error shell may therefore
+yield no substantive content.
 
-**Workaround for academic papers:** Use the PDF URL instead (e.g. `arxiv.org/pdf/XXXX.XXXXX` rather than `arxiv.org/html/XXXX.XXXXXv1`). For arXiv, the paper's main `arxiv.org/abs/XXXX.XXXXX` page also enters the PDF pathway: an unversioned abstract URL resolves to the latest-version PDF, while an explicit version such as `v1` remains pinned. The PDF pathway downloads the file and reads it directly — no summarization occurs.
+**How to detect:** Trafilatura produces an empty result or extracts only an
+access message or application shell. Compare the result with the
+browser-visible source before treating a short extraction as complete.
 
-**How to detect:** If a web-fetch snapshot of a long-form source is under ~100 lines, it was likely summarized. Compare against the original URL to verify completeness.
+## Image-only PDFs require OCR
+
+Poppler's `pdftotext` extracts text embedded in a PDF. A scanned or image-only
+PDF may produce an empty file even when every page is visually readable. The
+snapshot workflow has no OCR prerequisite or fallback; provide an OCR-produced
+text copy or paste the content manually.

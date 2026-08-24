@@ -124,6 +124,8 @@ Restart the shells, IDEs, and agent runtimes that need the commands, then call e
 | [git](https://git-scm.com/) | yes | Versioning, history-preserving renames in `convert` |
 | [ripgrep](https://github.com/BurntSushi/ripgrep) (`rg`) | yes | Structured search — frontmatter queries, keyword matching, link scanning |
 | [curl](https://curl.se/) | yes | PDF downloads in `snapshot-web` |
+| [Trafilatura](https://trafilatura.readthedocs.io/) | yes | Main-content HTML extraction and Markdown conversion in `snapshot-web` |
+| [Poppler](https://poppler.freedesktop.org/) (`pdfinfo`, `pdftotext`) | yes | PDF metadata and text extraction in `snapshot-web` |
 | [gh](https://cli.github.com/) | no | GitHub issue/PR snapshots in `snapshot-web` and `commonplace-github-snapshot` |
 
 ## License

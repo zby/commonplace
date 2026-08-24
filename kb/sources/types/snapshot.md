@@ -23,7 +23,8 @@ provenance, genre, checksum, and analysis belong in the tracked
 - Set `type: kb/sources/types/snapshot.md`.
 - Set `source` to the canonical URL of the original source.
 - Set `captured` to the capture date or datetime.
-- Set `capture` to the capture mechanism, such as `web-fetch`, `pdf-read`, `xdk`, or `gh-api`.
+- Set `capture` to the capture mechanism, such as `trafilatura`, `pdftotext`,
+  `xdk`, or `gh-api`.
 - `genre` is optional capture-time metadata. The ingest report is the durable
   genre authority and may correct this surface classification after reading.
 - `tags` are optional topical tags. Do not put the content family in `tags` — genre carries it, and the platform or container is already visible from `capture` and the source URL.
