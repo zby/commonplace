@@ -21,42 +21,64 @@ If target is empty, list `.ingest.md` files and ask which to re-ingest.
 2. Verify the `.ingest.md` file exists.
 3. Read `source` and `snapshot_sha256` from ingest frontmatter. Reject the
    retired `source_snapshot` and `code_revisions` fields if present.
-4. Hash every Markdown file directly under `kb/sources/.snapshots/` and compare
-   exact lowercase SHA-256 values:
-   - exactly one match: use that snapshot;
-   - several matches: stop and report every duplicate path;
-   - no match: invoke `cp-skill-snapshot-web` on `source` and hash its returned
-     Markdown path;
-   - recapture unavailable: stop with the adapter error;
-   - recapture differs: report expected and observed checksums and stop. Do not
-     update the ingest or let the new file stand in for its grounded
-     observation without explicit user authorization to change that
-     observation and reconsider the analysis.
+4. Derive the only eligible snapshot by name: an ingest at
+   `kb/sources/<slug>.ingest.md` pairs with
+   `kb/sources/.snapshots/<slug>.md`. Do not search for another snapshot by
+   checksum. If the named file is missing, invoke `cp-skill-snapshot-web` on
+   `source` and continue only if it returns that exact path.
+5. Require the snapshot frontmatter `source` to equal the ingest's canonical
+   `source`. Hash the exact named snapshot bytes and retain the incumbent and
+   observed lowercase SHA-256 values for reporting.
 
 ## Step 1: Re-ingest
 
-Run `/cp-skill-ingest <exact-snapshot-file-path>` on the resolved snapshot.
+Invoke `cp-skill-ingest` with this exact request first:
 
-This will:
-- Set up a workshop
-- Run `/cp-skill-connect` against current KB state
-- Produce a fresh analysis
-- Overwrite the `.ingest.md` file
+```yaml
+re_ingest_request:
+  ingest_path: <exact ingest path>
+  snapshot_path: <name-paired snapshot path>
+  allow_checksum_change: false
+```
+
+If the named snapshot checksum differs, this call stops without changing the
+ingest. Disclose the canonical source, both paired paths, both checksums, and
+that approval would replace the durable observation and redraft its analysis.
+
+- If Claims are populated, stop. A checksum change with populated Claims is
+  never eligible.
+- If Claims are empty and the user explicitly approves this changed
+  observation, recheck that the canonical source and paired paths are
+  unchanged, then repeat the same request with `allow_checksum_change: true`.
+- If the incumbent has no Claims section during the corpus migration, treat it
+  as the canonical empty section; do not infer entries from its other sections.
+
+An approved changed observation starts with the canonical empty Claims section.
+A same-checksum refresh retains the incumbent Claims section exactly.
+
+The ingest skill runs connection discovery, delegates fresh analysis, and
+accepts an overwrite only after exact Claims preservation, handoff checks, and
+full validation. Before any worker sees an existing output, it creates and
+verifies an exact-byte backup outside `kb/`. If the primary and single repair
+attempt both fail, it restores and verifies the incumbent bytes before
+reporting failure.
 
 The new report reflects the current KB — new notes that didn't exist during the original ingest will appear as connections, and stale connections to deleted/renamed notes will be dropped.
 
-## Step 2: Review the new report
+## Step 2: Confirm the accepted report
 
-Read the newly generated `.ingest.md`. Check:
+Continue only after `cp-skill-ingest` reports a validated replacement. Read the
+accepted `.ingest.md` and audit:
 
 1. **Link health** — every relative link resolves to an existing file.
-2. **Section completeness** — Classification, Summary, Connections Found, Extractable Value, Recommended Next Action are all present.
+2. **Section completeness** — Claims, Classification, Summary, Connections Found, Extractable Value, Recommended Next Action are all present.
 3. **Connection quality** — relationship types (validates, extends, grounds, contrasts, exemplifies) are specific, not vague.
 4. **No stale project references** — no references to project names, systems, or concepts that no longer exist in this KB.
 
-If any check fails, fix the report in place before proceeding.
+If any check fails, report the post-success discrepancy. Do not edit the
+validated ingest or dispatch a second drafting pass from this procedure.
 
-## Step 3: Update inbound links
+## Step 3: Audit inbound links
 
 Search the entire KB for markdown links pointing to this `.ingest.md` file:
 
@@ -100,6 +122,9 @@ Issues fixed: {broken links, missing description, stale references — or "none"
 
 ## Do NOT
 
-- Do not delete the old `.ingest.md` manually — `/cp-skill-ingest` overwrites it.
+- Do not delete or edit the old `.ingest.md` manually — `cp-skill-ingest` owns
+  overwrite, validation, and handled-failure restoration.
 - Do not modify the source snapshot or silently replace its durable checksum.
+- Do not search for a checksum-matching snapshot under another name.
+- Do not rewrite the validated ingest during the post-success audit.
 - Do not batch multiple re-ingests in one run. Each re-ingest may change the KB state that the next one depends on.

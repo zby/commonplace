@@ -23,6 +23,7 @@ Require the caller to supply these values in the task:
 - `connect_report_path`: its completed, non-empty connect report
 - `output_path`: the `.ingest.md` report to write
 - `snapshot_sha256`: the expected lowercase SHA-256 of the exact snapshot bytes
+- `retained_claims`: the complete Claims section to place in the report
 - `code_grounding_context`: `none` or the prepared paper-with-code context
 - `validation_failures`: `none` in `create` mode; a non-empty list of exact
   failures in `repair` mode
@@ -48,7 +49,9 @@ local snapshot link in the durable report.
    3. `snapshot_path`
    4. `connect_report_path`
 
-   The ingest-report type spec wins if it conflicts with this instruction.
+   The ingest-report type spec wins if it conflicts with this instruction, but
+   it never authorizes changing `retained_claims`. If the report cannot satisfy
+   both, stop and return that conflict.
 
 2. Compute SHA-256 from the exact bytes of `snapshot_path`. Require it to equal
    `snapshot_sha256` before analysis. Do not hash a companion PDF, JSON, image,
@@ -57,6 +60,9 @@ local snapshot link in the durable report.
    In `repair` mode, read the existing `output_path` only after this check. If
    it does not exist, draft it from the authoritative inputs. Treat an existing
    draft as a repair candidate, not as source evidence.
+
+   `retained_claims` is authoritative retained text, not source evidence. Do
+   not derive it from the snapshot, connect report, or repair candidate.
 
 3. Analyze the source under the ingest-report contract and the installed KB's
    goals and local collection contracts. In the Commonplace source repository,
@@ -112,6 +118,13 @@ local snapshot link in the durable report.
    removed `source_snapshot` or `code_revisions` fields. Do not link to
    `.snapshots/` or cite a machine-local checkout such as `related-systems/`.
 
+   Place `retained_claims` immediately before `## Connections Found`, verbatim.
+   Preserve every character, line ending, blank line, heading, and entry in the
+   supplied block. Do not interpret, normalize, merge, re-indent, or rewrite it,
+   and do not write another Claims section. In `repair` mode, replace any Claims
+   block in the repair candidate with the supplied value rather than using the
+   candidate's version.
+
    When `code_grounding_context` is `none`, omit `secondary_sources` and the
    `Code Grounding` section. Otherwise apply its pinned commit URLs, claim
    classifications, source citations, and evidence boundaries. State what code
@@ -126,7 +139,10 @@ local snapshot link in the durable report.
 
    Fix only `output_path` and rerun validation until it passes cleanly. Confirm
    that every `Extractable Value` item has an effort tag and that
-   `Recommended Next Action` contains one action. Do not edit the snapshot,
+   `Recommended Next Action` contains one action. Recheck that the Claims block
+   is byte-for-byte equal to `retained_claims` and immediately precedes
+   `## Connections Found`. If validation cannot pass without changing that
+   block, return the failure without changing it. Do not edit the snapshot,
    connect report, a connected artifact, an index, a collection file, or any
    other library artifact.
 
