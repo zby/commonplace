@@ -14,11 +14,11 @@ happens to the notes.
 
 ## The parallel worth exploiting, and where it breaks
 
-[documentation-disposition](../documentation-disposition/README.md) asks the
-same shape of question about a different recovery authority: should a
-description of shipped-system state exist when the code can regenerate it? Four
-worked cases in, its method is transferable and should be borrowed rather than
-reinvented:
+[The seven-case documentation disposition
+evidence](../../notes/evidence/seven-documentation-cases-left-routing-and-synthesis.md)
+asks the same shape of question about a different recovery authority: should a
+description of shipped-system state exist when the code can regenerate it? Its
+method is transferable and should be borrowed rather than reinvented:
 
 - recoverability attaches to **units of content, not to artifacts**, so an
   artifact can be part retire and part keep;
@@ -85,8 +85,8 @@ asserts that several of these notes are information-foraging theory in local
 vocabulary. That is plausible — `agents-navigate-by-deciding-what-to-read-next`
 states the scent mechanism almost in its canonical form and cites nobody for it
 — but plausible is not established, and establishing it means reading the
-sources. Treating the diagnosis as settled background is the exact error
-`documentation-disposition` already paid for once.
+sources. Treating the diagnosis as settled background is the exact error the
+documentation disposition sweep already paid for once.
 
 **That the four dispositions are a menu to allocate across.** Retire / thin
 node / rewrite around the delta / leave operative documentation alone are

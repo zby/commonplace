@@ -78,11 +78,12 @@ may smear across targets, which would rule out the most obvious design.
 
 ## Downstream consumer
 
-[The documentation disposition workshop](../documentation-disposition/README.md)
-would use the same change-target-keyed mapping if one lands, since a change run
-needs the current architecture description alongside the decisions. It also
-gains an empirical test from it: a description nothing routes to is one nobody
-consults.
+[The seven-case documentation disposition
+evidence](../../notes/evidence/seven-documentation-cases-left-routing-and-synthesis.md)
+retained curated routing where live lookup requires a name, but did not measure
+consultation frequency. If a change-target-keyed mapping lands here, future
+reference audits can use it to test whether descriptions are actually served
+instead of inferring their value from plausible use.
 
 ## What closes this workshop
 
