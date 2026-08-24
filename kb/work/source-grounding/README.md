@@ -116,6 +116,61 @@ Check the contract before proposing the shape, and if the shape is right and the
 contract forbids it, that is a contract question to hand off, not a shape to
 abandon quietly.
 
+## Horizon: eventually a maintenance sweep
+
+The destination is an operation the KB can re-run — a sweep that asks of the
+corpus, not of one note, "which claims here rest on established results the KB
+has never read?" Recording that constrains what a good answer looks like: an
+extraction contract only a careful human reader can apply is not on the path,
+and a finding phrased as "these twelve notes" is worth less than one phrased as
+a rule a sweep could apply.
+
+It is not what this workshop builds, and the first move must not be the command.
+
+Two reasons to expect the destination is smaller than a new command, both worth
+checking before proposing one:
+
+- **The deterministic half is probably a validator check or a report.** Does a
+  note cite any source? Does the citation resolve to an ingest in `kb/sources/`
+  rather than a bare URL or an unattributed surname? Does a tag-README's prior-
+  work section route to captured sources? All mechanically decidable.
+  `commonplace-verify-quotes` is the existing precedent for a deterministic
+  source-fidelity check.
+- **The judgment half is already the review system's shape.** "Is this claim
+  established outside Commonplace?" is an open-ended, report-kind assay
+  criterion over `(note, criterion, model partition)` — what
+  `commonplace-review-target-selector`, `commonplace-create-review-jobs`, and
+  the freshness baselines already execute. If that holds, the deliverable is a
+  criterion under `kb/instructions/review-gates/`, not a command.
+
+The judgment half carries the same defect this workshop exists to fix, and the
+design has to absorb it rather than route around it: a model asked "is this
+already established?" answers from training data, which is precisely how
+`links-README.md`'s unsystematic prior-work survey came to be written. The
+resolution is to give that answer no verdict authority —
+[candidacy evidence licenses escalation to assessment, not acceptance](../../notes/candidacy-evidence-licenses-escalation-not-acceptance.md).
+A recall that a claim "sounds like Pirolli" is cheap author-external evidence
+that routes to the expensive step, capturing and reading the source, and settles
+nothing on its own. A sweep that emitted verdicts instead of reading assignments
+would industrialize the original error at corpus scale.
+
+## Where to start
+
+Simpler than the sweep, and simpler than the schema question: take **one claim
+through the whole chain by hand**. Pick a claim, find and capture the source
+that would settle it, ingest it under the existing contract, then try to use
+that ingest to judge the note — and record what the ingest fails to carry.
+
+The ordering is the point. The extraction contract is this workshop's main
+question, and it is far easier to answer from one instance of the contract
+failing than from reasoning about what a contract ought to contain. The same
+holds for the intermediate node: whether it is needed becomes visible once a
+real ingest and a real note exist for it to sit between.
+
+Do not begin by ingesting the corpus. Ingests made before anyone has tried to
+use one for this purpose will be shaped by the current contract's questions,
+and finding where those questions fall short is the reason to do the work.
+
 ## Boundaries
 
 In scope:
@@ -154,6 +209,10 @@ Out of scope:
 
 "No new machinery is needed" is a legitimate close for 2 and 3, but only after a
 worked case, not from the armchair.
+
+The maintenance sweep is a **successor**, not a closure condition. Recording
+which half is deterministic and which is an assay criterion is in scope;
+building either is not.
 
 ## Bookkeeping
 
