@@ -280,6 +280,11 @@ workshop which claims the corpus has to adjudicate.
   rollout's own run, rebuilt from diffs after being deleted with all eight
   completion rows still `pending`: six narrowed, two contradicted, zero grounded
   as written
+- **Dispatch prompts** — [02](./cleanup-cohort-02-prompt.md) ·
+  [03](./cleanup-cohort-03-prompt.md) · [04](./cleanup-cohort-04-prompt.md) ·
+  [05](./cleanup-cohort-05-prompt.md) · [06](./cleanup-cohort-06-prompt.md) ·
+  [07](./cleanup-cohort-07-prompt.md) — one self-contained prompt per cohort;
+  point an agent at the file and nothing else
 - [Cleanup cohorts 03–07](./cleanup-cohort-03.md) — 24 notes in five manifests,
   mutually disjoint from each other and from cohort 02 on both notes and ingests,
   so all six run in parallel without coordination
