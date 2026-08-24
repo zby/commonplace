@@ -17,6 +17,10 @@ Quality goal is **fidelity + economy** — say what the system actually does in 
 
 **For exact implementation facts, live implementation is the default read path.** In the Commonplace source checkout, inspect `src/commonplace/`. In an installed project, `commonplace-source` prints the source directory of the same installed package that supplies the `commonplace-*` commands; use a command's `--help` for its live CLI contract. Reference prose earns a separate place when it supplies orientation, architecture boundaries, cross-component invariants, rationale, or other information the implementation does not cheaply recover. Do not create a prose copy merely to make installed code inspectable.
 
+This Commonplace default rests on [a seven-artifact disposition
+sweep](../notes/evidence/seven-documentation-cases-left-routing-and-synthesis.md),
+which bounds the result to a source-readable Python CLI repository.
+
 Tests for economy. The first two ask whether a passage should exist at all,
 given that the system it describes is available for inspection:
 

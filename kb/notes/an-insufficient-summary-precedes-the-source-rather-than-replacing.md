@@ -73,3 +73,4 @@ Nothing here claims that summaries are usually insufficient. A routing layer bui
 Relevant Notes:
 
 - [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: the premise that makes an added read a real cost rather than a rounding error
+- [Seven documentation cases left routing and synthesis](./evidence/seven-documentation-cases-left-routing-and-synthesis.md) — evidenced-by: a bounded Commonplace sweep where exactness prose left source inspection in the path while orientation and cross-component synthesis survived as separate uses
