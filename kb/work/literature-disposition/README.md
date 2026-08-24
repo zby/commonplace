@@ -222,6 +222,10 @@ workshop which claims the corpus has to adjudicate.
 
 ## Files
 
+- [How far the pointer-context monotone actually spread](./c4-propagation-sweep.md)
+  — 2026-08-24 sweep of all 20 citing artifacts: one inheritor by verbatim copy,
+  zero operative reach, and the shipped description band already set on the
+  corrected rationale by a July retrieval assay
 - [External critique of the navigation cluster](./chatgpt-critique.md) — the
   pasted 2026-08-24 input that opened this work; unedited, and its diagnosis,
   disposition table, and migration order are all candidate proposals
