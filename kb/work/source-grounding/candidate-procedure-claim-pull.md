@@ -80,3 +80,77 @@ in them asks whether a claim the note already makes survives contact.
   here. `is-evidence-for` was used as the nearest fit. Whether that needs a label
   is a conclusion for [linking-foundations](../linking-foundations/README.md);
   surfacing the need is this workshop's part.
+
+## The retention gap this exposes — and a correction
+
+An earlier claim in this file's "inherits for free" section was **wrong**: a
+ledger entry carrying a verbatim quote is *not* machine-checked today, and the
+wiring cannot exist under the current rules.
+
+Measured 2026-08-24 with `commonplace-verify-quotes` over `kb/sources`,
+`kb/notes`, `kb/reference`, and `kb/agent-memory-systems`:
+
+```
+Checked 1257 Markdown files: 0 match, 0 mismatch, 12 unresolved.
+```
+
+Not one verbatim quote resolves anywhere in this repo, and all twelve candidates
+cite an **internal KB note**, not a source. No source quotation in the tracked
+corpus is verifiable, because none exists in a checkable form.
+
+The cause is structural, and two artifacts state the opposing halves:
+
+- [ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)
+  resolves a quote "against the markdown source it links," and lists as its
+  third precondition that "the source snapshot is a checked-in file present at
+  validation time."
+- [`kb/sources/COLLECTION.md`](../../sources/COLLECTION.md) makes that false here:
+  snapshots are "local materializations, not tracked authority," `.snapshots/` is
+  ignored (`kb/sources/.gitignore:1`), authors must "never author a durable link
+  to `.snapshots/`," and "a citation of what the source says points to the
+  external `source` URL" — which the resolver cannot dereference, since it
+  resolves file paths.
+
+The mechanism is not broken. ADR 046 was prototyped on the sibling
+`epistack-casebooks` corpus, where sources *are* checked in, and found 63 match /
+18 mismatch / 6 unresolved over 87 candidates. Its precondition simply does not
+hold in Commonplace.
+
+**This makes carrying the quote in the ingest necessary, not merely tidy.** The
+ingest is the only tracked artifact in the chain. Under a contract that declares
+the snapshot non-authority and forbids linking to it, the quoted span has nowhere
+else durable to live. A ledger that pointed at the snapshot would be pointing at
+something a fresh clone does not have.
+
+It is plausibly also the licensing-compatible retention form — a public repo can
+carry short quotations where it cannot carry whole papers, which would explain
+why `.snapshots/` is ignored in the first place. Recorded as a likely reason; the
+motivation has not been verified against a decision record.
+
+**The honest cost.** Once the quote lives in the ingest and the snapshot is gone,
+nothing can re-derive it from the repo alone. The guarantee drops from
+continuously checked to **attested once, with a recomputation path**:
+`snapshot_sha256` names exactly which bytes the attestation was made against, so
+verification is recoverable by re-fetching or by any local snapshot matching that
+checksum — but it is not standing enforcement. That is weaker than
+[enforce-or-omit](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md),
+whose precondition 3 is precisely source-present-at-validation-time. The
+weakening should be stated in whatever ships, not glossed.
+
+It also extends a claim the KB already holds:
+[a citation cannot assert more fidelity than its capture preserved](../../notes/a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md).
+The wrinkle here is retention rather than capture — a citation cannot assert more
+*verifiability* than its retention preserves.
+
+**Options, none selected.** Track snapshots for sources that claims are drawn
+from; resolve opportunistically against a checksum-matched local snapshot when
+one is present; extend ADR 046 to resolve through `source` plus checksum rather
+than a body link; or accept attestation and say so. Each trades repo weight,
+licensing exposure, and enforcement strength differently, and the option space is
+what a proposal owes before an ADR — this belongs in
+[`kb/reference/proposals/`](../../reference/proposals/README.md) once the forces
+are laid out, not in a workshop conclusion.
+
+**One incidental defect found on the way.** `commonplace-verify-quotes` walks
+into the ignored `.snapshots/` directory and tries to resolve a mangled URL as a
+file path (`kb/sources/.snapshots/http:/memory.md`). It scans ignored files.
