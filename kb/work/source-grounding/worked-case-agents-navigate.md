@@ -109,9 +109,10 @@ at: a Bayesian log-odds account in which the estimate of distal feature *i* is
 — implemented as spreading activation and turned into a choice by a Random
 Utility Model.
 
-**Correction, 2026-08-24, from a stricter independent pass.** The
-[claim-pull evidence summary](../claim-pull-implementation/claims-shape-evidence.md#pirolli)
-re-ran this comparison under blind separation: one fresh worker reconstructed
+**Correction, 2026-08-24, from a stricter independent pass.** The retained
+[rollout evidence](./README.md#claim-pull-rollout-evidence-2026-08-24) and
+[Pirolli Claims ledger](../../sources/pirolli-proximal-information-scent-distal-content.ingest.md#claims)
+record the result. The comparison ran under blind separation: one fresh worker reconstructed
 the source's claims from the checksum-pinned observation without seeing this
 note or this worked case, and a second judged C1–C4 against only the resulting
 claim entries. It tightened three of the four verdicts, and it is right.

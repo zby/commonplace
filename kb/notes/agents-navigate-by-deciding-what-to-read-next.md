@@ -1,23 +1,25 @@
 ---
-description: Context surrounding a pointer determines how cheaply an agent judges relevance without loading the target; inline links carry most, search results least — descriptions are load-bearing
+description: "Models agent navigation as repeated follow/skip judgment under bounded context: cue diagnosticity must repay its own context cost, so longer pointer context is not automatically better"
 type: kb/types/note.md
-traits: []
+traits: [title-as-claim, has-external-sources]
 tags: [links]
 ---
 
 # Agents navigate by deciding what to read next
 
-An agent has a task and needs information she doesn't yet have. She can't read everything, so at every step she encounters pointers — links, index entries, search results, skill descriptions — and decides which to follow. That decision is the fundamental unit of navigation.
+An agent has a task and needs information she does not yet have. She cannot read everything, so each pointer — a link, index entry, search result, or skill description — creates a local decision: follow now or skip for now. This note uses that decision as a model of navigation; it does not claim that every navigation operation reduces to it.
 
 ## What makes the decision tractable
 
-Every pointer asks the same question: **should I follow this?** The agent can never be sure before following — the content might not deliver. So the decision is always probabilistic: how likely is this pointer to lead somewhere relevant, and what does it cost to find out?
+Every pointer asks the same question: **should I follow this?** The decision is made under uncertainty because a cue predicts relevance rather than revealing it. In the LLM-agent setting, the reader must compare the expected benefit of following with the context and interaction cost of finding out.
 
-What makes it tractable is *context* — information surrounding the pointer that hints at what the target contains. A bare filename forces the agent to load the target just to judge relevance. A pointer embedded in explanatory prose lets her judge without paying that cost. The more context a pointer carries, the cheaper the navigation decision.
+[Pirolli's Web-navigation account](../sources/pirolli-proximal-information-scent-distal-content.ingest.md) provides a narrower human source-side analogue: information-scent cues such as links and citations give users concise information about content that is not immediately available, and users assess proximal cues to choose actions leading toward distal information sources. The transfer rests on the shared information structure: both a human Web user and an LLM agent choose among distal sources from proximal cues. The resource and mechanism do not transfer automatically; Pirolli studies human judgment and interaction cost, while an LLM agent pays context tokens and tool calls.
+
+For an LLM agent, diagnostic context can make the decision tractable by reducing uncertainty before the target is loaded. A cue that does not discriminate among candidates leaves the agent needing another information-bearing step, often target loading. Explanatory prose can defer that step when its added information justifies its own context cost. As [linking theory](./linking-theory.md) formalizes, the useful quantity is navigation-uncertainty reduction per unit of context consumed. More context is not automatically better.
 
 ## Context varies by navigation mode
 
-Different pointer types carry different amounts of context. Inline links carry the most — the surrounding prose explains both what the target contains and why it matters. Search results carry the least — the agent has only titles and descriptions. Since [link-following and search impose different metadata requirements](./link-following-and-search-impose-different-metadata-requirements.md), the knowledge system must invest in different metadata for each mode: surrounding prose for link-following, titles and descriptions for search, and both for indexes that bridge the two.
+Different pointer types expose different kinds and typical amounts of context. Inline links can use surrounding prose to explain both what the target contains and why it matters. Search results usually expose only titles and descriptions. Since [link-following and search impose different metadata requirements](./link-following-and-search-impose-different-metadata-requirements.md), the knowledge system must invest in different metadata for each mode: surrounding prose for link-following, titles and descriptions for search, and both for indexes that bridge the two.
 
 ## Design implication
 

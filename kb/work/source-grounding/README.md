@@ -141,11 +141,34 @@ extraction contract only a careful human reader can apply is not on the path,
 and a finding phrased as "these twelve notes" is worth less than one phrased as
 a rule a sweep could apply.
 
-The [claim-pull implementation](../claim-pull-implementation/README.md)
-workshop now owns making the prospective rule operative and running retrospective
-cleanup as one rollout workstream. The results feed back into this workshop's
-ingest-extraction and intermediate-node conclusions. The first move must still
-not be a new sweep command.
+[ADR 073](../../reference/adr/073-untracked-source-snapshots-require-ingest-grounding.md)
+and the promoted claim-pull instructions made the prospective rule operative;
+the first retrospective cleanup returned the results below. They settle the V1
+implementation, not this workshop's broader source-corpus question. The next
+move here must still not be a new sweep command.
+
+### Claim-pull rollout evidence, 2026-08-24
+
+The implementation's first cleanup cohort returned the evidence this workshop
+requested. Two demand-driven Claims entries in the Pirolli ingest were enough to
+ground, narrow, or repair eight frozen uses across two notes. Each entry carried
+the source proposition, extracts and locations, scope, confidence, and
+limitation. This made the source boundary inspectable without requiring either
+note to recover the ignored snapshot.
+
+Whole-ingest links were also sufficient in this small run. The source review
+lens derived one pair per note, judged every use against the complete Claims
+section, passed both repaired notes, and left no stale pair. No ambiguous claim
+identity, similar-entry accumulation, or need for a thin intermediate node was
+observed. This supports the ingest-ledger design as the V1 answer; it does not
+settle whether a larger or denser source corpus will eventually earn claim IDs
+or separate nodes.
+
+The cohort also confirmed that transfer belongs in the target. Pirolli grounded
+the human proximal-cue/distal-source structure, while the notes separately
+argued what carries to bounded-context LLM agents and replaced an unsupported
+monotone context claim. No source was unavailable, and no case required an
+artifact-level literature-disposition handoff.
 
 Two reasons to expect the destination is smaller than a new command, both worth
 checking before proposing one:
