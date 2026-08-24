@@ -21,6 +21,10 @@ Author: Minhua Lin and a multi-institution research team from Penn State, UC San
 
 The paper separates an evolver's ability to produce useful persistent harness changes from a task-solving agent's ability to benefit from them. It pairs seven model backbones as evolvers and six as agents across SWE-bench Verified, MCP-Atlas, and SkillsBench while holding the solve-evolve loop, prompts, task stream, budget, and writable harness surfaces fixed. Harness-updating gain varies by at most 3.1 percentage points between evolvers on each benchmark, and the smallest evolver can match frontier-model update gains in one case. Harness-benefit is non-monotonic: middle-tier agents often gain most, strong agents have less headroom, and weak agents gain little. On SkillsBench, weak agents also show lower skill loading and lower judge-rated procedural match after loading.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This paper is the primary empirical anchor behind the update-versus-benefit distinction reported in [Harness Engineering for Self-Improvement](harness-engineering-for-self-improvement.ingest.md). Its skill-load and harness-following measurements separate read-back from judged procedural match, but [an experiment identifies only the contrast it actually runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md): without a matched withheld- or replaced-skill condition, the latter does not identify causal uptake of the skill content. For the KB's account of [compounding](../notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md), harness benefit is an intermediate causal stage: an accepted update must become available and improve task outcomes before its benefit could feed into further improvement, but task benefit alone does not establish that final feedback step. The experimental claims remain bounded by the [fixed decomposition](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) of editable substrates, interfaces, prompts, tasks, scoring, and anchor sets.

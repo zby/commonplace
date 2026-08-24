@@ -24,6 +24,10 @@ Author: Dex Horthy writes as a HumanLayer cofounder and coding-agent practitione
 
 Horthy evaluates Opus 5, Opus 4.8, and Sonnet 5 on three SlopCodeBench problems whose requirements arrive checkpoint by checkpoint and whose held-out black-box tests accumulate across the trajectory. Opus 5 achieves four of 17 strict passes, versus one each for the other models, but no model completes any problem without a defect; all models also increase complexity or other slop indicators over time. Horthy treats this as an early signal that current models cannot maintain real-shaped codebases lights-off, while arguing that deterministic structural metrics are useful diagnostics but not yet a complete maintainability oracle. He proposes larger runs, quality-feedback variants, and a cross-model handoff test in which a smaller model must extend a stronger model's codebase.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The report is new practitioner evidence for [The boundary of automation is the boundary of verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md): functional checks can be cheap and repeatable while maintainability remains a delayed property. It also operationalizes the mixed hard/soft/delayed oracle framing in [Oracle strength spectrum](../notes/oracle-strength-spectrum.md) and supplies a concrete test case for the synthetic-futures and longitudinal-outcomes design space in [Brainstorming: maintainability oracles for agentic development](../notes/brainstorming-maintainability-oracles-for-agentic-development.md). Relative to [Part I](why-software-factories-fail-2080697380379427275.ingest.md) it adds measured longitudinal evidence; relative to [Part II](why-software-factories-fail-lights-back-on-2081058573556306030.ingest.md) it explores whether a stronger verifier could eventually replace some human steering. The source does not belong as a self-improving-system case: repeated checkpoint execution is evaluation of a codebase trajectory, with no evidence that prompts, code, or harness policy learn from the outcomes and become operative.

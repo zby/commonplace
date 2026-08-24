@@ -22,6 +22,10 @@ Author: Mem0.ai team (YC S24 company). Production-oriented project with signific
 
 Mem0 is a memory layer for AI assistants that extracts declarative facts from conversations and stores them in a vector database with user/agent/run scoping. Its key architectural contribution is the two-phase `add()` pipeline: first, an LLM extracts facts from conversation using a "Personal Information Organizer" prompt; second, another LLM call reconciles new facts against existing memories, deciding to ADD, UPDATE, DELETE, or NOOP each one. This "accretion + curation" pattern prevents unbounded memory growth through LLM-judged reconciliation. Mem0 is designed as an external API — it sits outside the agent loop, memories are retrieved before LLM calls and injected into system prompts. It supports 20+ vector store backends and optional graph storage (Neo4j, Memgraph, Kuzu), reflecting enterprise deployment priorities over architectural purity.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery found 12 genuine connections — 7 to KB notes and 4 to sibling sources — plus 1 to the previous ingest report. Since the original ingestion, the [comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) has been written, synthesizing Mem0's architecture across the current shared architectural axes, and the [memory-management-policy](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) note now exists, creating a new tension with Mem0's hard-coded policy approach.

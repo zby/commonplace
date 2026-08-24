@@ -22,6 +22,10 @@ Author: Eric Evans, creator of Domain-Driven Design. His authority is in softwar
 
 Evans demonstrates that asking an LLM to both create a classification scheme and apply it in a single step produces inconsistent, incomparable results. His solution: separate the modeling phase (generate or select a canonical taxonomy) from the classification phase (apply frozen categories to individual items). Using OpenEMR code classification as a case study, he shows that adopting published standards like NAICS for generic domains yields dramatically better consistency than custom LLM-generated categories. He also explores iterative refinement with critic/judge models for cases where custom taxonomies are needed, and proposes an incremental update pattern for evolving schemas. The key claim: "Creating a classification system is a modeling task, which is much harder than the classification task itself."
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery found 7 connections, all in the learning-theory cluster.

@@ -20,6 +20,10 @@ This is a conversation thread: its evidence comes from many participants' report
 
 The thread is useful as a broad failure-mode and boundary-case inventory for AI-assisted knowledge writing. Participants repeatedly describe small informational payloads expanded into polished prose, missing mechanisms hidden by fluent presentation, generic comparison structures, invented terminology, loss of author voice, poor recall, reader fatigue, automatic rejection, and review work shifted from sender to recipient. Other participants report effective technical use, better results from explicit style constraints or iterative dialogue, false positives in AI detection, and survivorship bias toward conspicuously bad outputs. Read it to generate and discriminate hypotheses about document quality and review burden, not to estimate how common the effects are or establish what causes them.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The thread serves as a qualitative field corpus for [reverse compression](../notes/reverse-compression-is-when-llm-output-expands-without-adding.md), especially the claim that a longer artifact can leave the reader to recover a much smaller payload. Reports of polished pseudo-language and plans whose missing high-level logic must be reconstructed also bear on [hidden constraint relaxation](../notes/llm-generation-relaxes-goals-where-human-writing-stalls.md). Workplace triage accounts support [cheap generation breaking text volume as an effort signal](../notes/cheap-generation-breaks-text-volume-as-an-effort-signal.md), while the false-positive and high-quality-output counterexamples reinforce that this signal is not an AI detector. Relative to the [original essay ingest](./im-becoming-ai-blind.ingest.md), the discussion's main role is to broaden the candidate failure inventory and supply boundaries; its recurring distinction between polished topical coverage and an actual contribution also exemplifies why [warranted reader update](../notes/warranted-reader-update-is-the-objective-of-substantive-writing.md) is a better objective than stylistic fluency.

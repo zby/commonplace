@@ -21,6 +21,10 @@ Author: Howard H. Pattee developed the epistemic-cut and semantic-closure framew
 
 Pattee defines the primeval epistemic cut as the genotype/phenotype separation between energy-degenerate, rate-independent genetic symbols and rate-dependent construction dynamics that those symbols control (abstract; §10). Measurement runs the inverse direction, coding dynamical states into quiescent symbols (§5). Non-integrable constraints are necessary to bridge the cut through measurement, control, and coding, but additional material properties are required for biological evolution (abstract; §§8, 11, 13). The cut is an epistemic necessity rather than ontological dualism: changing the descriptive boundary can absorb a measuring/control device into dynamics, but doing so loses its pragmatic function as measurer or controller (§§9-10).
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The source constrains analogies used in [Representational form](../notes/definitions/representational-form.md) and [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md). It should not be used to redefine the KB's [Codification](../notes/definitions/codification.md) boundary.

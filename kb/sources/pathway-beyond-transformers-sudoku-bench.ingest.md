@@ -22,6 +22,10 @@ Author: "Pathway Team" -- Pathway describes itself as a "post-transformer neo-la
 
 Pathway reports that their BDH (Dragon Hatchling) model achieves 97.4% accuracy on approximately 250,000 extreme Sudoku puzzles, while leading LLMs (O3-mini, DeepSeek R1, Claude 3.7) score 0%. They use this gap as evidence that the transformer architecture has fundamental limits for constraint-satisfaction reasoning -- arguing that the bottleneck is the token-by-token processing with limited internal state per token (~1,000 floats), which prevents holding multiple candidate strategies in parallel. The article then argues that "post-transformer" architectures with larger latent reasoning spaces are necessary for progress toward AGI, and positions BDH as such a system -- one that maintains language fluency while adding native constraint-solving capability via "intrinsic memory mechanisms" and "continual learning." The article extends the Sudoku result into a claim about "generative strategy" for real-world constraint problems in medicine, law, operations, and planning.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 `/connect` discovered 7 genuine connections, rejected 8 candidates, and flagged one synthesis opportunity.

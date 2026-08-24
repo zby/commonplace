@@ -21,6 +21,10 @@ Author: Bernard Scott is a long-standing participant in cybernetics and explicit
 
 Scott reconstructs second-order cybernetics as a development internal to early cybernetics rather than a disconnected invention. He reports von Foerster's canonical distinction: first-order cybernetics studies observed systems, second-order cybernetics studies observing systems (journal p. 1373; PDF p. 10). Natural-science hypothesis testing remains possible at first order, but those systems are defined from second-order perspectives and understandings. The paper situates this move among circular causality, constructivist epistemology, autopoiesis, conversation theory, and reflexive metadisciplinary work without collapsing those programs into one definition.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This paper is historical support for the human-inclusive boundary in [Reflective system](../notes/definitions/reflective-system.md), subordinate to von Foerster's 1979 primary text.

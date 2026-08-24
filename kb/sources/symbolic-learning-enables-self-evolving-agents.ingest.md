@@ -21,6 +21,10 @@ Author: A twelve-author AIWaves/Zhejiang University team that also built the und
 
 The paper models an agent pipeline as a network whose editable “weights” are prompts, tools, nodes, and their connections. A run records a trajectory; another LLM produces a language loss; textual feedback is propagated backward across nodes so each revision accounts for downstream requirements; prompt, tool, and pipeline optimizers then mutate the configuration, retry illegal code-space edits, and roll back changes whose re-evaluated loss worsens. Against prompt-only and search baselines, the method reports gains on HotPotQA, MATH, HumanEval, five tiny software-building tasks, and an LLM-judged creative-writing task. Its enduring contribution is the attempt to make the whole readable harness—not one prompt—the unit of credit assignment and optimization.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This is an early technical basis for [representational-form coevolution](../notes/treat-continual-learning-as-representational-form-coevolution.md) and especially [the readable-artifact loop](../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md): it jointly edits natural-language prompts plus symbolic tool/pipeline structure while keeping model weights fixed. The paper's vocabulary needs translation into the KB's terms—prompts are natural-language rather than symbolic merely because an optimizer edits them. It also forms a useful comparison with [Co-Harness](https://arxiv.org/pdf/2607.22688): this paper performs backward language-mediated credit assignment across a fixed-weight harness, while Co-Harness later alternates validated harness edits with parametric fine-tuning.

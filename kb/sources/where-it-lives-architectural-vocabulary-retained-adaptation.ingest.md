@@ -21,6 +21,10 @@ Author: This is the KB owner's own paper. It is the published, externally-framed
 
 The paper argues that retained behavior-shaping artifacts in agentic systems (prompts, workflows, validators, routing rules, memories, adapters, checkpoints) should not be classified by storage substrate (memory system, flat file, repo, vector store, etc.) but by the properties that determine how they affect behavior. It proposes a four-field architectural record: storage substrate (where state lives), representational form (natural-language / symbolic / distributed-parametric, each with its own default inspection method — read / test / probe), lineage (review-relevant source dependencies for invalidation and rollback), and behavioral authority (consumer x channel x force). Classification attaches to the operative part or consumption path, not the stored object, because objects bundle several behavior-shaping parts. A worked dependency-resolution example shows the same lesson retained five ways, each with a distinct review-evidence / invalidation / rollback profile. The framework is offered as a design and review discipline that exposes efficiency, security, and sovereignty risk; the paper claims no empirical validation and proposes design-review and incident-analysis trials as future work.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The companion [connect report](../reports/connect/sources/where-it-lives-is-not-what-it-is-architectural-vocabulary-retained-adaptation.connect.md) found **zero existing inbound edges** and (correctly, since snapshots author no outbound links) no outbound connections. Its grep showed the KB reproduces this paper's vocabulary across at least nine notes — every field/term definition and the central synthesis note paraphrasing a paper section almost verbatim.

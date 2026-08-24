@@ -21,6 +21,10 @@ Author: An eight-author Zhejiang University/Southeast University/MIT team; the a
 
 ToolGate places a typed key-value “trusted state” between LLM reasoning and external tools. Semantic retrieval and reranking propose tools, a Hoare-style precondition removes candidates whose required state is absent or invalid, and a postcondition checks result structure, typing, semantic constraints, and state consistency before the runtime commits the result. Failed outputs leave state unchanged and can send execution to another candidate. Across ToolBench and three MCP-Universe task groups, the paper reports higher success/win rates and shorter tool trajectories than ReAct, search, chain, and planner baselines; ablations attribute most gains to pre/postcondition enforcement, with postconditions especially important for preventing superficially successful but empty or inconsistent results from propagating.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 ToolGate is a worked instance of the [bounded-context orchestration model](../notes/bounded-context-orchestration-model.md): probabilistic semantic choice remains with the LLM, while tool selection, execution admissibility, result acceptance, and state update are explicit symbolic operations. It depends on the prior claim that [verification needs a typed target before it needs an oracle](../notes/verification-needs-a-typed-target-before-it-needs-an-oracle.md), because predicates can only govern tool transitions after state and results have typed addressable fields. Its closest captured comparison is [Agent Behavioral Contracts](./agent-behavioral-contracts-formal-specification-runtime.ingest.md): ABC governs whole-agent behavior with probabilistic compliance and bounded recovery, whereas ToolGate governs individual tool transitions with deterministic pre/postconditions and a no-commit-on-failure rule.

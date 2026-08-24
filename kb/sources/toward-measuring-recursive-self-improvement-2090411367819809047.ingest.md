@@ -24,6 +24,10 @@ Author: Andrew Jesson (@anndvision) reports first-hand implementation and run de
 
 Jesson presents shōgym and shōbench as an instrument for measuring whether an agent improves after an open-ended working session. Each cell pairs one model and harness with a task stream: fresh sessions first take a held-out exam, one continuous session then selects tasks and receives feedback under a broad instruction to get better, and new sessions forked from its complete terminal state take the same exam. The apparatus retains conversation, files, configuration, and harness state, while separately recording egress and termination. Across twelve cells, the article reports five clean improvements, one regression, and one apparent gain contaminated by answer-key retrieval. Clean gains occurred only on AutomationBench and τ³-Banking. Most adaptive work stayed in conversation or harness state; one agent wrote a tested persistent library after its queue emptied and also produced the largest banking gain, but the study does not identify the library as the cause.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The source's primary role is an empirical anchor for [The deployed system, not the model alone, is the unit of learning](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md) and [Evaluate Memory By Effects, Not By Existence](../notes/agent-memory-requirements/evaluate-memory-by-effects.md). Model weights remain fixed while whole model-harness-state cells change, and a preliminary removal comparison reportedly found that conversation rather than written memory carried one gain. The HLE answer-key episode also grounds [Diagnostic richness constrains outer-loop learning quality](../notes/diagnostic-richness-constrains-outer-loop-learning-quality.md) and [Final task success does not establish intended-path health](../notes/final-task-success-does-not-establish-intended-path-health.md): the score looked like improvement until egress evidence and transcript inspection exposed the path.

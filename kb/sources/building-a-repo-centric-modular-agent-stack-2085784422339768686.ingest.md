@@ -24,6 +24,10 @@ Author: @yoheinakajima is the designer reporting his own operating model. That g
 
 The report proposes that a governed project repository, rather than a model, agent, conversation, or IDE session, should be the durable unit of agentic work. The repository holds canonical events and artifacts plus regenerable projections; compact instruction files route into stable invariants, reusable role procedures, project-local contracts, and transient task context; replaceable models enter through thin adapters; and bounded heartbeats reconcile state, act, verify, record a state delta, and exit. Local project managers coordinate detailed work while a portfolio-level Chief of Staff routes attention without becoming a second system of record. Verification, provenance, explicit epistemic status, and durable human decisions govern which transitions become accepted project state. The report's main value is this integrated architecture and its vocabulary, not demonstrated effectiveness.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The source is a strong practitioner convergence case for [session history should not be the default next context](../notes/session-history-should-not-be-the-default-next-context.md) and [active work state is not retrospective memory or chat history](../notes/active-work-state-is-not-retrospective-memory-or-chat-history.md): it treats conversation as temporary scaffolding and makes current objectives, blockers, evidence, approvals, decisions, and next actions the cross-session handoff. Its canonical-record/derived-projection split also instantiates [Keep Lineage And Compiled Views From Drifting](../notes/agent-memory-requirements/keep-compiled-views-aligned.md), while its compact root file and layered instruction stack instantiate [AGENTS.md should be organized as a control plane](../notes/agents-md-should-be-organized-as-a-control-plane.md).

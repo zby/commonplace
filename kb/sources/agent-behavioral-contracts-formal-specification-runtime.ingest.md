@@ -22,6 +22,10 @@ Author: Varun Pratap Bhardwaj, Senior Manager & Solution Architect at Accenture.
 
 The paper introduces Agent Behavioral Contracts (ABC), applying Design-by-Contract (Meyer, 1988) to autonomous AI agents. The core contribution is a formal compliance model — (p,delta,k)-satisfaction — that handles LLM non-determinism by treating compliance probabilistically: a constraint is satisfied if the agent complies with probability p, within tolerance delta, recovering within k steps of any violation. The framework distinguishes hard constraints (zero-tolerance invariants) from soft constraints (transient violations permitted with bounded recovery), and provides a Drift Bounds Theorem using Lyapunov stability analysis showing behavioral drift converges to D*=alpha/gamma (natural drift rate divided by recovery rate). Practical deliverables include ContractSpec (a YAML DSL for specifying contracts) and AgentAssert (a runtime enforcement library with <10ms overhead). Evaluation across 1,980 sessions shows contracted agents detect 5.2-6.8 soft violations per session that uncontracted baselines miss entirely, with hard constraint compliance of 88-100% and recovery success of 17-100%.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery found 11 genuine connections, concentrated in two clusters.

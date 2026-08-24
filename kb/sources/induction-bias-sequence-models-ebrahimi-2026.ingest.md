@@ -22,6 +22,10 @@ Author: M. Reza Ebrahimi, Defferrard, Panchal, Memisevic at Qualcomm AI Research
 
 The paper conducts a large-scale empirical study comparing transformers and recurrent neural networks (LSTMs, Dense-SSMs) on state-tracking tasks (modular addition, permutation composition), focusing on in-distribution data efficiency rather than the usual OOD length-generalization framing. The central finding is that transformers require dramatically more training data than RNNs for state tracking -- sometimes by orders of magnitude -- because they lack what the authors call "induction bias": the structural constraint that forces step-by-step state updates. The paper introduces a sharing factor (kappa) that quantifies whether a model reuses learned mechanisms across different sequence lengths. Transformers show kappa near or below 1 (learning length-specific solutions in isolation, with destructive interference under CoT), while RNNs show kappa >> 1 (amortized learning via shared transition operators). The paper further shows that in-distribution data efficiency and cross-length weight sharing are highly correlated with OOD length-generalization ability, connecting the in-distribution and OOD failures as manifestations of the same underlying architectural limitation.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery found 4 strong and 4 moderate connections. Because this is an ML-architecture paper and the KB focuses on knowledge-system methodology, the connections are analogical -- cross-domain mappings between architectural constraints in neural networks and structural constraints in knowledge systems.

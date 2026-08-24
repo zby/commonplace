@@ -21,6 +21,10 @@ Author: Fernando Borretti — software engineer and essayist (borretti.me), know
 
 Borretti argues that people systematically overestimate how much AI will transform their lives, for two reasons. First, most imagined AI use cases (flashcard generators, tutors, executive assistants, note-taking systems) lack a genuine underlying need — the "serious context of use" is missing, exemplified by the digital-garden crowd whose only deliverable is "a screenshot of your Obsidian graph." Second, and more fundamentally, the real ceiling is internal: executive function/neurochemistry saturates against external scaffolding, intelligence cannot be augmented without the AI doing all the thinking (making the human irrelevant), and — most critically — foundational knowledge is a hard bottleneck, because "if you don't have the knowledge, you don't understand the question." His counterintuitive conclusion: intelligent, educated people with functional neurology gain the most from AI, contradicting the claim that human capital is becoming worthless.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The companion connect report found no outbound edges (the source is an immutable snapshot) but surfaced **three reverse-edge candidates**, all `evidenced-by`-typed, that library notes could later cite this source from:

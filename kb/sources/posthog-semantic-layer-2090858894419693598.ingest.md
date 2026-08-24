@@ -24,6 +24,10 @@ Authors: Lizzie Epton (Developer Marketer) and Thiago Rocha Salvatore (Product E
 
 PostHog argues that agents produce inconsistent business answers when metric meanings, canonical tables, and joins remain tribal knowledge. Its semantic layer records those commitments in a SQL-readable catalogue over existing data rather than copying the data or requiring a separate catalogue API. Agents may propose metrics, tables, and joins, but only humans can approve them; editing an approved definition revokes approval, and an insight-backed metric is marked drifted when its stored query snapshot diverges from the source insight. The catalogue therefore gives consumers a simple canonicality rule—approved and not drifted—while preserving native execution paths for SQL-, Markdown-, and insight-shaped metrics. The article closes with planned measures of answer accuracy, governed-metric uptake, and catalogue growth, but reports no results.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This source is a concrete implementation witness for [Make Authority Explicit](../notes/agent-memory-requirements/make-authority-explicit.md) and [Keep Lineage And Compiled Views From Drifting](../notes/agent-memory-requirements/keep-compiled-views-aligned.md): agent output remains proposed, human approval grants authority, edits revoke it, and an insight-derived definition retains enough lineage to expose divergence. Its opening case also supports the distinction in [Parametric reproduction alone cannot replace an authoritative record](../notes/parametric-reproduction-cannot-replace-an-authoritative-record.md): several agents can generate plausible metric logic without any generated answer thereby becoming the operative definition.

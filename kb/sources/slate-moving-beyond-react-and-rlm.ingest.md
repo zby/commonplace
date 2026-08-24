@@ -20,6 +20,10 @@ Author: Random Labs Team — small startup building coding agents (Slate CLI). T
 
 Slate introduces a "thread-weaving" agent architecture where a central orchestrator dispatches bounded actions to worker threads, each of which executes one action and returns a compressed "episode" to the orchestrator. Episodes are compositionally reusable — one thread can be initialized with another thread's episode. The architecture claims to solve working memory management, strategic coherence, task decomposition, and cross-context synchronization simultaneously, while maintaining the expressivity of ReAct-style loops. The report frames this through a taxonomy of prior approaches (ReAct, markdown planning, task trees, RLM, Devin/Manus/Altera, Claude Code/Codex) and argues each accepts tradeoffs that Slate avoids. The core thesis: "the real bottleneck in long-horizon agentic tasks is context management, not model intelligence."
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The /connect discovery found 10 connections, concentrated in the Scheduling & Orchestration cluster of the computational-model area. The strongest finding: Slate's thread-weaving is a concrete implementation of the KB's [bounded-context orchestration model](../notes/bounded-context-orchestration-model.md). The orchestrator is the symbolic scheduler, threads are bounded LLM calls, episodes are compressed results appended to scheduler state K, and thread dispatch is the `select` function.

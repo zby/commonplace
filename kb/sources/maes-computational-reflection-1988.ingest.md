@@ -21,6 +21,10 @@ Author: Pattie Maes developed this account from doctoral work on computational r
 
 Maes defines computational reflection for any computational model as the behavior of a computational system that reasons about itself “in a causally connected way.” A reflective system contains a self-representation—structures representing aspects of itself—whose maintained causal connection makes the representation track those aspects and makes the system's status and behavior comply with the representation. The paper then separates procedural from declarative reflection, explains that every reflective architecture is relative to the terminology and granularity of its self-representation, distinguishes implicit from explicit activation, and stresses that reflection is necessarily partial and can reduce external understandability and control (printed pp. 1–2, 8–9, 14–18; PDF pp. 1–2, 8–9, 14–18).
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This source is the primary vocabulary anchor for [Reflective system](../notes/definitions/reflective-system.md): self-description and editability remain weaker than Maes's causal-connection requirement. It also narrows the Lisp precedent in [LLM contexts interpret instructions and content through the same token medium](../notes/llm-context-interprets-instructions-and-content-through-one-medium.md): a common program/data format enables the meta-circular route to procedural reflection but is not itself reflection. Maes's theory-relativity and declarative/procedural continuum complement, without collapsing into, Commonplace's broader [representational-form](../notes/definitions/representational-form.md) vocabulary.

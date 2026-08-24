@@ -22,6 +22,10 @@ Author: Arrmlet (GitHub). Unknown outside this project; the repo has 7 stars. Th
 
 Tracecraft is a CLI-based coordination layer for multi-agent AI systems that stores all coordination state as JSON files in any S3-compatible bucket (MinIO, AWS S3, Cloudflare R2, HuggingFace Buckets). It provides five primitives: shared key-value memory (`memory set/get`), direct and broadcast messaging (`send/inbox`), task claiming with collision prevention (`claim/complete`), dependency barriers (`wait-for`), and artifact sharing (`artifact upload/download`). The core architectural bet is that these primitives suffice for multi-agent coordination and that no server, database, or custom protocol is needed beyond what S3 already provides. It targets CLI-calling agents (Claude Code, Codex, Hermes Agent) and scripts.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 `/connect` found 4 genuine connections and 1 index membership candidate, rejecting 8 candidates that had only surface vocabulary overlap.

@@ -21,6 +21,10 @@ Author: Ronald D. Moen (ASQ Deming Medal, 2002; assisted Deming at 70 of his fou
 
 Moen and Norman trace the plan-do-study-act (PDSA) cycle as a lineage of the scientific method reaching industry: Galilean designed experiment and Baconian induction, then Peirce/James/Dewey/Lewis pragmatism, then Shewhart's specification-production-inspection cycle (1939), Deming's four-step "wheel" presented in Japan in 1950, its Japanese recasting into PDCA (1951, later extended by Ishikawa), and Deming's own return to and renaming of the cycle as the Shewhart Cycle for Learning and Improvement — PDSA (1986, 1993). Their central corrective claims: Deming did not create PDCA and disowned it ("Be sure to call it PDSA, not the corruption PDCA"); PDCA and PDSA "seem related only through the scientific method"; and the 1991 Moen/Nolan/Provost addition made the cycle require prediction and associated theory, so that the "study" step supplies the deductive-inductive interplay learning demands. Read it to get the primary-source history and the argued distinction between a management/learning loop (PDSA) and a local problem-solving loop (PDCA).
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 No casebook-style notes exist for this lineage: a body search for `pdsa|deming|shewhart|plan-do` across notes, reference, and the external-system collections returned zero hits, so this source is a new anchor for the discovery and self-improving-systems areas rather than a participant in an existing map. Its durable role is an applied, decades-old external witness for three existing `kb/notes/` claims that connect discovery treats as candidates for an `evidenced-by` link into this snapshot. The single relationship most likely to bear on the source's role: it is a worked industrial instantiation of the conjecture-consequence-test core that [discovery-lifecycle](../notes/definitions/discovery-lifecycle.md) adapts from Peirce — the paper's own "study = deductive-inductive interplay" language maps directly onto that definition's derive-consequences and test phases.

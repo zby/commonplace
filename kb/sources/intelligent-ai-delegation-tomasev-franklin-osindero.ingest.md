@@ -22,6 +22,10 @@ Author: Nenad Tomasev, Matija Franklin, Simon Osindero (Google DeepMind). Tomase
 
 The paper proposes a framework for "intelligent AI delegation" — delegation as more than task allocation, involving authority, responsibility, accountability, trust, and bounded autonomy across human-AI and AI-AI chains. It is organized around five core requirements (dynamic assessment, adaptive execution, structural transparency, scalable market coordination, systemic resilience) and nine technical components (task decomposition, assignment, multi-objective optimization, adaptive coordination, monitoring, trust/reputation, permission handling, verifiable completion, security). The paper grounds the framework in organizational theory (principal-agent problem, span of control, authority gradient, zone of indifference, transaction cost economics, contingency theory) and closes with a protocol gap analysis of MCP, A2A, AP2, and UCP. The key architectural move is "contract-first decomposition": if a sub-task is too subjective, costly, or complex to verify, it should be decomposed further or routed with stronger oversight rather than delegated loosely.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The paper's durable role is a conceptual bridge between bounded-context scheduling and governed delegation. It is evidence for [the boundary of automation is the boundary of verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md): verification cost affects decomposition depth, oversight, and delegatee choice. Two of its strongest ideas are already incorporated locally. [Decomposition heuristics for bounded-context scheduling](../notes/decomposition-heuristics-for-bounded-context-scheduling.md) treats checkability as an objective distinct from context fit, while [agent orchestration needs coordination guarantees, not just coordination channels](../notes/agent-orchestration-needs-coordination-guarantees-not-just.md) uses accountability vacuum and liability firebreaks as the governance failure and matching primitive for delegation chains.

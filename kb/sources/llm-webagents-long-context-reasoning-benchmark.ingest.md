@@ -22,6 +22,10 @@ Author: Andy Chung et al., with Joyce Chai (University of Michigan, well-known i
 
 Chung et al. introduce a benchmark for evaluating LLM-based web agents on long-context multi-session tasks. The experimental design injects irrelevant task sequences between dependent subtasks, scaling context from 25k to 150k tokens. Testing Claude-3.7, GPT-4.1, Llama 4, and o4-mini, they find success rates collapse from 40-50% at baseline to under 10% at 150k tokens. The dominant failure modes are loop entrapment (agents repeating actions without progress) and objective loss (agents forgetting or drifting from the original task goal). An implicit RAG (iRAG) approach that generates task-relevant summaries provides modest improvements but does not resolve the fundamental degradation. The paper's contribution is extending controlled irrelevant-context degradation measurements from isolated reasoning tasks to realistic agentic web interaction.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery identified strong connections to 7 KB notes and 4 other sources, with the soft-degradation note as the primary hub.

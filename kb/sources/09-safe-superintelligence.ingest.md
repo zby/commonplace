@@ -21,6 +21,10 @@ Author: Richard Heimann is a secondary interpreter of Legg, Hutter, Good, Vinge,
 
 The final chapter starts with Shane Legg's performance-based definition of intelligence, universal intelligence measure, and AIXI, an idealized reward-maximizing agent over computable environments. It then traces the safety canon from intelligence explosion and singularity through superintelligence and “foom,” before criticizing definitions that masquerade as explanations and metrics that quietly inherit behaviorist or functionalist commitments. Its proposed alternative is procedural: name the game, state public criteria and limits, keep philosophical possibility separate from claims used for engineering or policy, and preserve oversight where objectives, reward channels, environments, or robustness remain uncertain.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The universal measure is a strong case for [a proximate target being checked for achievement rather than warrant](../notes/a-proximate-target-is-checked-for-achievement-not-for-warrant.md): formal score maximization does not prove that the score captures understanding, value, or safety. AIXI's exogenous reward and environment assumptions support [warranted autonomy being bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md). Recursive-improvement rhetoric compares with [self-improvement relative to a declared objective](../notes/self-improvement-is-relative-to-a-declared-objective.md) and [computational direction as fixed-boundary reallocation](../notes/computationally-directed-self-improvement-is-a-reallocation.md): without a boundary, horizon, objective, and allocation trace, “foom” is not an operational improvement account.

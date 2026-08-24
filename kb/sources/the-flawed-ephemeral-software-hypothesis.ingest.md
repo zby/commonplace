@@ -20,6 +20,10 @@ Author: Andreas Kirsch is an ML researcher/practitioner writing from inside the 
 
 Kirsch argues that AI coding tools make software easier to generate and modify, but do not make important software disposable. His core thesis is that code generation has never been the dominant bottleneck in mature systems; the hard part is discovering correct behavior under real-world ambiguity, edge cases, state migrations, integration quirks, interface expectations, and audit requirements. On this view, the future is not "ephemeral software" regenerated from prompts with high trust, but "malleable software": code and surrounding artifacts become cheaper to update together, while durable stacks of code, tests, specs, logs, schemas, and operational memory grow rather than disappear.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 `/connect` found a tight learning-theory cluster rather than a broad "AI coding" cluster. The strongest connection is to [agentic-systems-interpret-underspecified-instructions](../notes/agentic-systems-interpret-underspecified-instructions.md), because Kirsch's decisive objection to ephemerality is exactly that natural-language specifications remain underspecified and each regeneration is a fresh interpretation, not a deterministic rebuild. It also extends [deploy-time-learning-the-missing-middle](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md): Kirsch's "malleable software" is basically deploy-time learning stated at whole-system scale, with durable artifact stacks rather than prompt tweaks as the adaptation substrate.

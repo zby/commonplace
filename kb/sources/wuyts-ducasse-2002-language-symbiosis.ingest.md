@@ -21,6 +21,10 @@ Author: Roel Wuyts and Stéphane Ducasse present the same SOUL/Smalltalk researc
 
 This 2002 version defines **symbiotic reflection** as reflection between two languages in which both play base- and meta-language roles, represent/reason about/act on one another, and can modify one another at runtime. It restates causal connection, reflection, introspection, intercession, reification, symbiotic introspection/intercession, and the automatic up/down entity-transfer schema. Relative to the 2001 paper, the core mechanism and examples are substantially the same; it should therefore be treated as a related presentation of one contribution rather than a second theoretical foundation.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The durable relationship is a `compares-with` lineage edge to [the 2001 snapshot](https://scg.unibe.ch/archive/papers/Wuyt01a.pdf). It should not add a second evidence vote to [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md). [Representational form](../notes/definitions/representational-form.md) still supplies the local constraint on generalizing from programming paradigms to natural-language/symbolic forms.

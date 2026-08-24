@@ -24,6 +24,10 @@ Author: @Vtrivedy10; a public practitioner statement, with no captured implement
 
 The post argues that organization-specific continual learning should start from knowledge distributed across company data and expert minds. Its proposed loop is to interview experts, convert what matters into evaluations and environments, fit agents on those tasks, and collect more traces for another cycle. It treats observability and continual learning as one coupled process of data collection, curation, and integration into agent behavior, and presents open skills as an accessible way to begin. The post does not specify how accepted changes become durable, how evaluations reject bad changes, or how trace quality is controlled.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This source is a compact design sketch that provides practitioner framing for [Continual learning requires governing behaviour-changing writes, not just storing content](../notes/continual-learning-requires-governing-behaviour-changing-writes.md) and [Retained system-definition artifacts enable persistent deployment-time adaptation](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md): it describes task behavior being improved through surrounding artifacts and feedback, not merely through knowledge accumulation or weight updates. Its four-stage sequence is also a concrete pressure-to-surface example for [Adaptation signals choose pressure; artifact analysis chooses the retained surface](../notes/research/adaptation-agentic-ai-analysis.md), although the post leaves the retained artifact and its authority path unspecified.

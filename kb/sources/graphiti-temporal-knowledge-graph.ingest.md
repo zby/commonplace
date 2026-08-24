@@ -22,6 +22,10 @@ Author: Zep publishes Graphiti as the open-source core behind its commercial con
 
 Graphiti accepts text, JSON, and message episodes, extracts entities and factual relationships with LLMs, resolves them against existing graph state, attaches provenance and validity intervals, and serves the result through semantic, keyword, and graph retrieval. Its useful distinction is between episodes that preserve imported or trace material and generated facts, summaries, embeddings, duplicate resolutions, and invalidation judgments. Those state classes coexist in a graph database but do not thereby have the same lineage or authority. Graphiti demonstrates temporal graph operations and a path for reprocessing retained episodes; the available evidence does not establish either that its generated graph is irrebuildable or that clean reprocessing reproduces equivalent graph state.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The later [Graphiti review](../agent-memory-systems/reviews/graphiti.md) is now the primary technical companion to this snapshot. At pinned commit `34f56e65e0fe2096132c8d16f3a1a4ac9300a5f6`, it classifies episodes as imported or trace-extracted source material and entities, facts, timestamps, summaries, duplicate resolutions, contradiction decisions, and communities as generated views. The implementation's bulk path accepts retained raw episodes and constructs nodes, edges, provenance, and invalidations from them. This supports reprocessing, but not a deterministic replay contract: outputs can depend on the configured LLM, embedder, ontology, prompts, ordering, and graph context.

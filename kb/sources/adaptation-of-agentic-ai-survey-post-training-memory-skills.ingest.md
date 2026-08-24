@@ -21,6 +21,10 @@ Author: Pengcheng Jiang, Jiacheng Lin, Zhiyi Shi, Zifeng Wang, Luxi He, Yichen W
 
 The paper surveys adaptation in agentic AI under a four-paradigm taxonomy: A1 adapts the agent from tool-execution feedback, A2 adapts the agent from final-output or holistic rewards, T1 trains agent-agnostic tools, and T2 adapts tools under supervision from a fixed agent. Its most relevant contribution for this KB is not any one method but the organizing frame: post-training, memory, skill libraries, retrievers, planners, subagents, and tool ecosystems are all adaptation surfaces. The survey also argues that evaluation must be paradigm-aware, component-counterfactual, and dynamics-aware, because endpoint success rates hide data efficiency, forgetting, co-adaptation instability, safety regression, and tool-vs-agent attribution.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The regenerated connect report (2026-06-09) confirms the source's primary landing zone has since been realized as a note. The prior report's recommended synthesis — that agentic adaptation taxonomies need an artifact-substrate axis — was written as [The adaptation survey corroborates memory requirements but misses artifact governance](../notes/agent-memory-requirements/adaptation-survey-corroborates-memory-requirements.md), which already authors an `evidenced-by` link back to this ingest report. No new synthesis note is required for that thread.

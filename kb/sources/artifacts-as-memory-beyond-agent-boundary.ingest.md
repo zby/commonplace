@@ -21,6 +21,10 @@ Author: John D. Martin, Fraser Mince, Esra'a Saleh, and Amy Pajak; affiliations 
 
 The paper formalizes a situated-cognition claim inside reinforcement learning: environment-side observations can function as memory when they reveal information about an agent's past. It defines artifacts as observations that imply prior observations, proves an artifact-reduction theorem showing such histories can be represented with fewer observations, and defines externalized memory by comparing performance and capacity between artifactual and artifactless environments. Gridworld experiments with Q-learning and DQN agents show spatial paths and landmarks can reduce the capacity needed to achieve comparable reward, sometimes unintentionally through the ordinary sensory stream rather than an explicit memory API.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The source lands in the KB's agent-memory and learning-theory cluster. It supports [The adaptation survey corroborates memory requirements but misses artifact governance](../notes/agent-memory-requirements/adaptation-survey-corroborates-memory-requirements.md) by giving a primary formal case for "keep the model fixed, adapt the surrounding environment" as memory. It supports [Agent memory is a crosscutting concern, not a separable niche](../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) and [Designing a Memory System for LLM-Based Agents](../notes/designing-agent-memory-systems.md) because memory here is not a storage component; it is an effect of environment state, observation channel, policy, and task. It directly reinforces [Evaluate Memory By Effects, Not By Existence](../notes/agent-memory-requirements/evaluate-memory-by-effects.md) by defining externalized memory through capacity/performance deltas. It also gives [Information value is observer-relative](../notes/information-value-is-observer-relative.md) a formal bounded-agent case: an artifact's value depends on what this agent can infer through this interface and task history.

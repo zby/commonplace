@@ -21,6 +21,10 @@ Author: The author team is predominantly Netflix engineers and researchers with 
 
 The paper treats an LLM judge as a maintained production component with four phases: experts first create rationale-annotated, difficulty-enriched benchmarks; a reflector then revises criterion rubrics from label errors and right-label/wrong-reason cases; the selected judge both blocks bad explanations and supplies bounded-retry revision feedback; and weekly human review monitors drift, augments the benchmark, and can trigger re-tuning behind manual review and rollback. Its label-only ablation supports the narrower claim that rationale mismatch feedback can improve held-out specificity and reasoning agreement when the default rubric leaves headroom. Its five-week mobile A/B test supports the value of the entire judge-aligned explanation pipeline relative to no explanations, not any lifecycle component in isolation.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This paper is a production-scale technical anchor for treating a soft evaluator as a lifecycle-managed system component. Human-authored criteria and rationale-labelled boundary cases precede automation, which is evidence for [evaluation automation being phase-gated by comprehension](../notes/evaluation-automation-is-phase-gated-by-comprehension.md) and a concrete analogue to [calibrating semantic gates against labelled fixtures](../reference/proposals/calibrating-semantic-gates-against-labelled-fixtures.md). The RART ablation is direct but narrow evidence that [diagnostic richness constrains outer-loop learning quality](../notes/diagnostic-richness-constrains-outer-loop-learning-quality.md): adding human-rationale mismatches to label mismatches improves the next rubric where the initial rubric leaves room. Because a rejection reason becomes the generator's revision instruction, the deployment also supplies a mechanism-level case for why [selective revision needs a faithful rationale](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md), although agreement with a human rationale does not establish causal faithfulness.

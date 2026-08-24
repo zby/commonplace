@@ -24,6 +24,10 @@ Author: @ChristopherA, reporting as the tool author; credibility comes from buil
 
 The source announces `claude-workstream-kit`, a small Claude Code project add-on for durable, git-versioned multi-session work tracking. Its central distinction is that stronger "Fable-class" models made much of the author's prior model-management scaffolding unnecessary, but did not solve session mortality: compaction, laptop closure, machine switching, and fresh sessions still erase work context unless the project records it outside conversation history. The kit keeps active work in two markdown files, `workstream.md` and `ACTIVE.md`, plus lifecycle skills, pinned subagents, a session-start hook, and an installer. The most relevant KB value is the distinction between account memory, CLAUDE.md, task tracking, specs, GitHub Issues, chat history, and project-scoped active work state.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The connect report found the strongest links to [session history should not be the default next context](../notes/session-history-should-not-be-the-default-next-context.md) and [a functioning KB needs a workshop layer](../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md). The source names the failure mode "reconstruction tax": when work state lives only in conversation history, each new session re-explains goals and may remake old decisions differently. It also supplies a concrete workshop-layer design: durable active work has backlog, decisions with reasoning, lessons, blockers, deletion criteria, closure evidence, archive, and a current next-action pointer. Additional connections land in the agent-memory requirements for preserving evidence without loading history, direct memory creation, lifecycle operations, and multiple consumer surfaces. The source also supports the "model eats scaffolding" cluster already represented by the Fintool ingest, but adds a sharper boundary: authority-bearing human decisions and cited evidence gates survive even when checklists and compliance scripts become dead weight.

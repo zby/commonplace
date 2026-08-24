@@ -22,6 +22,10 @@ Author: Wei Ma et al. (five authors). Academic team studying software engineerin
 
 Ma et al. introduce PromptSE, a framework for measuring how sensitive code generation models are to semantically equivalent prompts that vary in emotional tone (frustrated, anxious, focused, etc.) and personality style (algorithm expert, pragmatic engineer, etc.). Using psychologically grounded templates at three controlled perturbation distances (d=0.1 light lexical, d=0.2 moderate style, d=0.3 substantial transformation), they generate 14,760 variants of HumanEval prompts and evaluate 14 models across three architecture families (Llama, Qwen, DeepSeek). The core finding is that performance (Pass@1) and stability (AUC-E, their proposed area-under-curve metric) are statistically uncorrelated (Spearman rho = -0.433, p = 0.122), meaning these are decoupled optimization objectives. Additional findings: smaller models can outperform larger ones on stability (Qwen-1.5B achieves AUC-E 0.646, highest in the study), stability does not scale monotonically with model size, and high-arousal negative-valence prompts induce confidence miscalibration (ECE ranging from 0.055 to 0.622 across model-emotion combinations) not visible in standard benchmarks.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery identified 11 connections (4 strong, 7 moderate), mapping cleanly into the KB's three-phenomena taxonomy, reliability/oracle framework, and bitter lesson boundary.

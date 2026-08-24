@@ -24,6 +24,10 @@ Author: @JayaGup10 — Jaya Gupta, investor at Foundation Capital and co-author 
 
 The post argues that pre-LLM enterprise data platforms optimized different surfaces: Snowflake and Databricks around SQL/query throughput, Palantir around an ontology or world model of objects, relationships, properties, and interactions. LLMs make the latter look attractive because models need structured, language-shaped context they can traverse and linearize, not just raw rows. The author then reframes "decision traces" as a workflow-first alternative to Palantir-style platform-first ontology: capture inputs, policies, exception paths, approvals, actions, and outcomes at decision surfaces, then infer the minimal entities and relations from those trajectories over time. The important claim for this KB is that bottom-up decision traces are still an ontology strategy; the ontology is inferred from use rather than prescribed upfront.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 Connection discovery found a tight trace-extracted memory cluster. The source corroborates [Use Trace Extraction As Meta-Learning](../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) because it treats ordinary decision activity as material from which reusable entities and relationships can later be learned. It also supports [Raw accumulation does not create usable memory](../notes/raw-accumulation-does-not-create-usable-memory.md): the post's distinction between state and legible "why" is exactly the ingress problem of adding handles, provenance, relationships, and scope. [Memory design adds operational axes to artifact analysis](../notes/memory-design-adds-operational-axes-to-artifact-analysis.md) is the best router for the full mechanism because the post touches capture, extraction/synthesis, activation, and authority at once.

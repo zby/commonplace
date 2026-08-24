@@ -22,6 +22,10 @@ Author: @voooooogel — active Claude Code power user and agent infrastructure t
 
 The author applies a bitter-lesson-style argument to multi-agent infrastructure: most current orchestration patterns (fixed role hierarchies, retry loops, bespoke swarm systems) are vision features that stronger models will dissolve, just as LangChain pipelines were dissolved by reasoning models. What survives is structural: multi-agent parallelism itself (N contexts of M tokens beats one NxM context — a sparsity argument), the filesystem as collaboration substrate, and agent spawning mechanisms. The author's most original contribution is arguing that **forking** (context-preserving instance duplication) will replace fresh spawning as the primary multi-agent primitive, because it solves context poverty, enables KV cache sharing, and composes better with RL training. A secondary argument predicts that continual learning (user-specific LoRAs) will further dissolve harness-baked workflows by letting models discover their own organizational patterns per project.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery found 9 genuine connections to KB notes, making this one of the most connected sources in the KB. The key relationships:

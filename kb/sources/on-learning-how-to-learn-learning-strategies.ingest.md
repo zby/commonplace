@@ -21,6 +21,10 @@ Author: Jurgen Schmidhuber is a long-running machine-learning researcher in recu
 
 Schmidhuber introduces "incremental self-improvement": a lifelong reinforcement-learning system whose action language includes ordinary environment actions and self-delimiting self-modification programs. Those programs can modify the probability distribution over future action sequences, including future self-modifications, so the system can shift its own inductive bias without a hard learning/meta-learning boundary. A fixed top-level credit-assignment strategy keeps only probability changes whose observed payoff-per-time exceeds the system or the previous useful self-modification, restoring older probability distributions from a stack when they stop qualifying. The report's durable contribution is not the toy-task performance itself but the architecture of reward-gated, reversible, whole-life behavior learning.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 `/connect` found that the strongest existing connection is the local source-only Incremental Self-Improvement coverage note, which already covers this exact report as related-system lineage but is not part of this commit. The source also supports [oracle strength spectrum](../notes/oracle-strength-spectrum.md), [automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md), and [memory management policy is learnable but oracle-dependent](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md): Schmidhuber's system can automate promotion because payoff per time supplies a promotion oracle. It is evidence for [Continual learning requires governing behaviour-changing writes, not just storing content](../notes/continual-learning-requires-governing-behaviour-changing-writes.md), because the learned state changes future behavior rather than accumulating retrievable facts. It also compares with [Huxley-Godel Machine](./huxley-godel-machine-human-level-coding-agent-development.ingest.md), which moves the same self-improvement lineage into benchmark-guided search over inspectable coding-agent scaffolds.

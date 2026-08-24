@@ -21,6 +21,10 @@ Author: Martin Zinkevich, Carnegie Mellon University; CMU-CS-03-110 (February 20
 
 The paper defines online convex programming as choosing each feasible point before seeing that round's convex cost function. Its Greedy Projection update takes a gradient step on the revealed cost and projects back into the feasible set; with a square-root-decaying learning rate, average regret against the best fixed feasible point tends to zero under boundedness, differentiability, bounded gradients, gradient access, and projection access. It also gives dynamic-regret and lazy-projection bounds, then shows that repeated games are online linear programs and that generalized infinitesimal gradient ascent (GIGA) is universally consistent. The important Commonplace-facing result is architectural: the gradient/error signal directly determines an adopted update, without a separately represented candidate or reject-capable gate.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 Repo-local discovery read `kb/sources/COLLECTION.md`, the connect-report type, the notes titles/descriptions, and the complete `self-improving-systems` tag head. Scoped body searches for `regret`, `gradient`, `online convex`, `universal consistency`, `projection`, and `oracle` followed [A proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md), [Self-improving system](../notes/definitions/self-improving-system.md), [Evidence bearing on an improvement objective](../notes/definitions/evidence-bearing-on-an-improvement-objective.md), and [Real self-improving systems occupy combinations no single rung captures](../notes/evidence/real-self-improving-systems-occupy-combinations-no-rung-captures.md). The source is a technical basis/evidence anchor for those notes: it supplies the concrete direct-determination case that the notes distinguish from proposal-selection, and it makes the cumulative-but-opaque gradient example mathematically precise. No durable source-to-source connection was strong enough to retain.

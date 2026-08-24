@@ -22,6 +22,10 @@ Author: Gaodan Fang, Vatche Isahagian, K. R. Jayaram, Ritesh Kumar, Vinod Muthus
 
 The paper presents a three-phase pipeline for agent self-improvement: (1) analyze completed execution trajectories to extract "tips" — categorized as strategy (from successes), recovery (from failures), and optimization (from inefficient successes) — at both task and subtask granularity; (2) store, generalize, and consolidate tips through LLM-based merging; (3) retrieve relevant tips at runtime via either cosine similarity or LLM-guided selection and inject them into the agent prompt before reasoning. Evaluated on the AppWorld benchmark with a ReAct-style GPT-4 agent, the best configuration (subtask-level tips with LLM-guided retrieval) achieves +14.3 percentage points on scenario goal completion for held-out tasks, with the largest gains on the most complex tasks (difficulty-3: +28.5 pp SGC, a 149% relative increase). The key finding is that granularity matters — subtask-level tips outperform task-level because subtask patterns recur across tasks — and retrieval strategy matters for consistency across task variants.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery identified 8 genuine connections. The paper lands squarely in the KB's learning theory and agent memory neighborhood:

@@ -22,6 +22,10 @@ Author: Yang, Huang, Zhang, Surdeanu, Wang, Pan (UC Santa Barbara, University of
 
 GSM-DC (Grade School Math with Distracting Context) is a synthetic benchmark that represents math word problems as directed acyclic graphs (DAGs), enabling precise injection of irrelevant context (IC) while preserving a unique correct solution path. The key contribution is methodological control: unlike prior work that used ad hoc distractors, GSM-DC independently varies distractor count and reasoning depth, then evaluates with stepwise metrics (step accuracy SAcc, path accuracy PAcc, extraction accuracy EAcc) rather than just final-answer correctness. Six findings: (1) accuracy degrades with distractor count following a power law whose exponent grows with reasoning depth; (2) IC degrades both reasoning path selection and arithmetic execution independently; (3) continued pretraining outperforms LoRA for robustness; (4) training on IC-injected data yields the strongest robustness; (5) hard-IC training generalizes best to out-of-distribution settings; and (6) PRM-guided tree search preserves in-distribution accuracy while boosting OOD robustness by up to 6.29%.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery identified 8 note connections and 5 source connections, with substantial integration into existing KB theory.

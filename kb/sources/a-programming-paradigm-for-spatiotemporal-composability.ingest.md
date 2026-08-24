@@ -21,6 +21,10 @@ Author: Yifan Shi, Wei Zhang, and Tianyi Cui are affiliated with Peking Universi
 
 The paper splits dynamic software composition into two obligations: temporal composability, in which removing a component restores the effects it introduced, and spatial composability, in which components declare dependencies and react to their availability. It models the first with state-specific inverse witnesses accumulated for later recovery, the second with reactive coeffect specifications and notifications, and combines both in a unified context and component calculus. Under explicit assumptions, the authors prove preservation, recovery, dependency ordering, progress, and confluence properties. Cordis implements the model with effect tracking, dependency isolation and interception, component lifecycle management, declarative configuration reconciliation, and transactional hot module replacement. Koishi's four-year, 4,000-plus-plugin history supplies existence-and-adoption evidence for an earlier Cordis version; self-evolving agent harnesses remain a proposed application rather than an evaluated one.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The paper is a formal technical basis for [Agent orchestration needs coordination guarantees, not just coordination channels](../notes/agent-orchestration-needs-coordination-guarantees-not-just.md): component registries and shared contexts become reliable only when their composition mode carries recovery, visibility, ordering, and isolation guarantees. It also bears on [Runtime structure determines the control surfaces available to governance](../notes/runtime-structure-determines-governance-control-surfaces.md), because Cordis obtains interception, dependency notification, local withdrawal, and rollback by forcing relevant operations through a mediated context.

@@ -21,6 +21,10 @@ Author: Richard Heimann is a secondary synthesizer. Karpathy's and Olah's essays
 
 The chapter follows recurrent neural networks from character-level demonstrations and visual LSTM explanations through selective recurrent dropout and Deep Speech 2. Its technical through-line is controlled information flow: LSTM gates preserve useful state, selective dropout regularizes without corrupting recurrent memory, and end-to-end speech learning replaces phonetic dictionaries and modular pipelines while relying on convolution, recurrent stacks, normalization, CTC, decoding, language models, and distributed training. It also argues that exposition and open code expanded participation, and it carefully limits Deep Speech 2's “human-level” claim to the subsets on which it actually won.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 Deep Speech 2 is a second strong case for [learning inside a fixed decomposition](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md): it relaxes fixed linguistic intermediates into learned representations but leaves other architecture and evaluation choices fixed. The bounded WER comparison supports [exact implementation does not validate a requirement](../notes/exact-implementation-does-not-validate-a-requirement.md), while the retained “kitchen-sink” engineering supports the KB's [structure-aware Bitter Lesson](../notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md). The pedagogical essays compare with [curation as orientation](../notes/index-curation-adds-orientation-that-generation-cannot-produce.md) because explanation changes navigability and experimentation without adding a new theorem.

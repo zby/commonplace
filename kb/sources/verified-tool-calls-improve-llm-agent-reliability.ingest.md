@@ -21,6 +21,10 @@ Author: Isham Kalappurackal Mansoor and Pratip Rana are affiliated with Old Domi
 
 The paper separates a tool's response channel from its effect on world state: a timeout, stale read, or incomplete response may coexist with an already-applied action. It wraps a ReAct-style Gemini Flash-Lite agent with task-specific postcondition checks, three-valued verification (`true`, `false`, or `unknown`), verify-before-retry control, and idempotency keys. In 300 main-comparison runs over two simulated workflows and three injected-fault levels, the wrapper sharply lowers duplicate messages and writes while keeping or improving final task success. The strongest result is execution safety rather than retry itself: in a separate one-task ablation, verify-only outperforms the full verify-before-retry method, so another retry can add faults even after verification.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The source is a bounded empirical anchor for [Final task success does not establish intended-path health](../notes/final-task-success-does-not-establish-intended-path-health.md): successful terminal state and safe execution diverge when retries duplicate effects. It gives [structured recovery](../notes/enforcement-without-structured-recovery-is-incomplete.md) a concrete tool-boundary branch over verified effect state. Its closest technical comparison is [ToolGate](./toolgate-contract-grounded-and-verified-tool-execution-for-llms.ingest.md), which validates returned results before trusted-state commit; this paper instead verifies external effects after an ambiguous response and before retry. [GBrain](../agentic-systems/gbrain.md) provides the closest inspected runtime comparison through durable tool-execution journaling and replay of only pending idempotent tools. The paper's evidence remains bounded by [learning inside a fixed decomposition](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md): it improves recovery inside a supplied task, verifier, action, and simulator design without testing whether those fixed choices are the right decomposition.

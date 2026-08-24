@@ -21,6 +21,10 @@ Author: Howard H. Pattee is the primary theorist of the matter-symbol and semant
 
 Pattee distinguishes logical self-reference, material causal loops, and cognitive introspection before defining the form relevant to open-ended evolution: an autonomous closure between material dynamics governed by physical laws and symbolic constraints governed by syntactic rules. He calls that relation **semantic closure**, because selected symbolic aspects make law-determined material aspects functional (§1). The genotype/phenotype, hardware/software, and law/initial-condition distinctions are parallel instances, but the paper's claim is specifically about material organizations capable of open-ended evolution (§§1-3). Symbols are material structures whose functions depend on a self-referent organization, a population, use in construction and control, and an environment; neither physical-law description alone nor free-floating formalism captures that function (§§3-6).
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The paper is a structural analogue and boundary warning for [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md) and [Representational form](../notes/definitions/representational-form.md). It is not a direct theory of Markdown, code, or LLM systems.

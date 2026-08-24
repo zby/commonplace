@@ -21,6 +21,10 @@ Author: Rafal Cymerys writes from first-person workplace experience with design,
 
 Cymerys reports that he sometimes fails to process workplace documents, later asks questions those documents already answered, and has come to associate the episodes with low-effort AI-marked prose. His examples combine four complaints: simple material expanded at length, exploratory model reasoning left in a final document, irrelevant technical detail mixed into another discipline's artifact, and routine features presented as breakthroughs. He hypothesizes that repeated exposure to low-meaning AI text taught him to suppress familiar cues automatically, like banner blindness. The claim is scoped to low-effort output, not all AI-assisted writing; its distinctive consequence is that a tool meant to save author time can create reader and coordination costs even when a document contains useful material.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The essay is a bounded naturalistic case for [cheap generation breaking text volume as an effort signal](../notes/cheap-generation-breaks-text-volume-as-an-effort-signal.md) and for [reverse compression](../notes/reverse-compression-is-when-llm-output-expands-without-adding.md). Relative to the [AI;DR discussion](./hacker-news-ai-dr-ai-didnt-read.ingest.md), which already captures effort-based triage and false positives from AI-associated style, Cymerys adds a temporal self-report: repeated low-yield encounters allegedly turn a noisy cue into automatic suppression, which then misses present information and causes extra back-and-forth. Its strongest conceptual comparison is the [credibility-erosion mechanism](../notes/quality-signals-for-kb-evaluation.md#credibility-erosion), where agents learn to discount all links after enough links fail to deliver. This cross-domain resemblance suggests a general channel-level failure mode, but the essay does not establish that either case shares a causal learning mechanism.

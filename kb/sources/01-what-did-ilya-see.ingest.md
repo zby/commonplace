@@ -21,6 +21,10 @@ Author: Richard Heimann is a technical author synthesizing published papers, int
 
 The opening chapter frames Sutskever's secret reading list as a map of the commitments behind his career: confidence in deep learning, preference for empirically successful engineering, belief in scale and compression, and concern about increasingly capable systems. It moves from AlexNet and OpenAI through GPT-2's staged release and the 2023 OpenAI board crisis, then argues that omissions—especially symbolic AI, classical planning, and reinforcement learning—are also informative. Its main value is not a new account of any one event but a hypothesis about how a curated canon reveals the design space its curator treats as important.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The source is most useful as evidence for [curation as orientation](../notes/index-curation-adds-orientation-that-generation-cannot-produce.md): selection, grouping, and omission communicate a worldview that an exhaustive list would not. It also compares productively with [first-principles design-space mapping](../notes/first-principles-analysis-maps-design-space-before-selection.md), because reconstructing a field from selected winners hides rival dimensions, and with the KB's narrower reading of [the Bitter Lesson](../notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md). Its fit with reflective self-improvement is limited: it describes learning and institutional action, but not improvement routed through an addressable self-representation.

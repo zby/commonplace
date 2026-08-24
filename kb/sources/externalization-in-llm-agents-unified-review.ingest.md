@@ -21,6 +21,10 @@ Author: Chenyu Zhou et al.; the paper is a 2026 arXiv survey/review with broad b
 
 The paper argues that practical LLM-agent progress increasingly comes from externalizing cognitive burdens into infrastructure around the model rather than only improving weights. It frames the trajectory as weights -> context -> harness: memory externalizes state across time, skills externalize procedural expertise, protocols externalize interaction structure, and the harness coordinates those modules through permissions, control flow, observability, policy, and context-budget management. Its useful contribution for this KB is not a new empirical result but a unifying systems vocabulary: externalization transforms the model's task from recall to retrieval, improvisation to guided composition, and ad hoc coordination to structured contracts.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The connection report found the strongest fit with [agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate](../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md), because the paper's broad "harness" frame needs the KB's sharper runtime decomposition to avoid becoming an everything-not-the-model bucket. It also connects strongly to [context-efficiency-is-the-central-design-concern-in-agent-systems](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md), since the paper treats externalization as a way to reduce what the bounded model must carry in context.

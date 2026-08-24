@@ -21,6 +21,10 @@ Author: John Dougrez-Lewis, Mahmud Elahi Akhter, Federico Ruggeri, Sebastian Lö
 
 Dougrez-Lewis et al. introduce the RECV framework, which distinguishes deductive, abductive, inductive, and analogical inference, then operationalize only deduction and abduction in a 1,500-item claim-verification benchmark drawn equally from VitaminC, CLIMATE-FEVER, and PHEMEPlus. They evaluate Claude 3 Sonnet, GPT-4, and GPT-4o under zero-shot and manual chain-of-thought prompts, with and without generated rationales. Across the tested configurations, items annotated as abductive have much higher error rates than items annotated as deductive: 32% versus 10.31% on VitaminC, 48.58% versus 15.58% on CLIMATE-FEVER, and 44.68% versus 20.06% on PHEMEPlus. Rationale generation and chain-of-thought have heterogeneous effects, sometimes helping on VitaminC and often hurting on the more complex datasets or abductive subsets. Generated rationales can remain similar to selected human explanations even when verdicts are wrong. The paper therefore establishes a substantial within-RECV performance gap and useful prompt sensitivity results, but it does not identify inference type as the cause of that gap or show that the generated rationales faithfully report the models' decision process.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 RECV is most useful to this KB as a benchmark-design case and a bounded empirical anchor. Its reasoning label is not the same variable as [claim modality](../notes/claim-modality-is-the-inference-form-of-the-refuter.md): RECV labels the route thought necessary to reach a supplied verification verdict, whereas local claim modality names the inference form available to a refuter. The benchmark also asks models to produce verdicts and explanations rather than [evaluate a submitted piece of reasoning](../notes/reasoning-production-is-not-reasoning-evaluation.md). Even the term *abduction* is construct-dependent: [CEDAR-GRPO](./cedar-grpo-process-aware-rl-abductive-reasoning.ingest.md) evaluates hypothesis generation and selection, while RECV forces a binary verdict from a supplied claim-evidence pair.

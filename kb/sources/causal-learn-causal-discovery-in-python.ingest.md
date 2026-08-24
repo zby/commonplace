@@ -21,6 +21,10 @@ Author: Yujia Zheng, Biwei Huang, Wei Chen, Joseph Ramsey, Mingming Gong, Ruichu
 
 The paper presents `causal-learn`, a Python library for causal discovery. Its relevant point for this KB is not the library API itself but the taxonomy it makes concrete: causal relations can be inferred from observational data through constraint-based, score-based, functional-causal-model, and latent-variable methods, each relying on explicit assumptions such as conditional independence, causal sufficiency or latent-confounder handling, score choices, functional form, and noise structure. It therefore grounds the claim that observational causal discovery exists, while also blocking the stronger and false claim that observations alone contain causality without assumptions.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This source is a technical basis for [reach assessment](../notes/definitions/reach-assessment.md) and [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md). It supplies the concrete "causal theories from observations under assumptions" part of the causal route. It also compares with [DoWhy's assumptions paper](./dowhy-expressing-and-validating-causal-assumptions.ingest.md), which covers assumption declaration and validation after or alongside graph discovery, and with [invariant prediction](./causal-inference-using-invariant-prediction.ingest.md), which gives one specific invariance-based discovery strategy.

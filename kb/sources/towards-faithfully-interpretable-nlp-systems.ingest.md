@@ -21,6 +21,10 @@ Author: Alon Jacovi and Yoav Goldberg; the paper is published in ACL 2020 and th
 
 Jacovi and Goldberg argue that explanation quality must separate **plausibility** (how convincing an interpretation is to people) from **faithfulness** (how accurately it reflects the model's actual reasoning process). They organize existing faithfulness tests around three assumptions--model, prediction, and linearity--and show how each yields counterexamples or stress tests. Their guidelines reject human utility or user-performance measures as faithfulness tests, reject unverified claims of inherent interpretability, and warn that gold-label evaluation pushes judgments toward what humans think the model should do. Because exact faithfulness is an unrealistically high global bar for approximate explanations, they recommend graded criteria across models/tasks and across regions of input space. This is the conceptual source for the target note's condition that an oversight-saving rationale must be faithful, not merely readable or persuasive.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The paper is direct evidence for [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md): it supplies the faithful/plausible distinction and the warning that utility can increase without validating the explanation's causal truth. It also gives [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) a non-mathematical instance of process validity being distinct from successful output, and it qualifies [Structured output is easier for humans to review](../notes/structured-output-is-easier-for-humans-to-review.md): readability helps a reviewer inspect an artifact but does not establish faithfulness. [Language Models Don't Always Say What They Think](https://proceedings.neurips.cc/paper_files/paper/2023/hash/ed3fea9033a80fea1376299fa7863f4a-Abstract-Conference.html) is the empirical companion, testing this distinction with controlled input interventions.

@@ -24,6 +24,10 @@ Author: @Vtrivedy10 and the LangChain team; first-party product/workflow descrip
 
 The announcement describes a skill that reads an agent repository and optional production traces, maps the agent's prompts, models, tools, skills, hooks, data, and services, and proposes abilities worth testing. It interviews the user to refine and approve eval directions, packages each task as a Harbor instruction/environment/verifier bundle, and iterates by inspecting both agent and verifier trajectories. The source highlights reward-hacking failures—irrelevant citations, false claims of completed actions, exposed answers, and proxy satisfaction—and presents a loop of mining traces, identifying failures, building evals, improving the agent, and rerunning against a stable environment. It frames continual learning as production data mining that turns recurring failures into fixed targets for harness or model changes.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This source is a concrete tool workflow supporting [Evaluation automation is phase-gated by comprehension](../notes/evaluation-automation-is-phase-gated-by-comprehension.md): user interviews and trace inspection precede automated generalization and verifier use. It provides strong diagnostic detail for [Diagnostic richness constrains outer-loop learning quality](../notes/diagnostic-richness-constrains-outer-loop-learning-quality.md), because the skill preserves tool calls, errors, agent trajectories, verifier reasoning, and scores as distinct inspection surfaces. Its reward-hacking examples also instantiate [The boundary of automation is the boundary of verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md). Relative to [Improving AI Skills with autoresearch & evals-skills](./improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md) and [Meta-Harness](./meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md), this source emphasizes building stable tasks and verifiers from production behavior before optimizing the agent.

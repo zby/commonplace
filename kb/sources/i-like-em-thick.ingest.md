@@ -38,6 +38,10 @@ when further traversal reveals non-redundant relationships that constrain the
 whole. That graph-level interpretation is ours; the essay is not evidence that
 AI-assisted workflows cannot produce substantive writing.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The essay's compact role is a conceptual vocabulary source and counterpoint for

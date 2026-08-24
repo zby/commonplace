@@ -24,6 +24,10 @@ Author: @monokern claims direct knowledge of a ZS Associates analytics redesign,
 
 The source argues that a pharma-analytics pipeline failed because it copied four human workflow stages into four reasoning agents: local conclusions survived, but their quantitative nuance and causal meaning decayed across handoffs, so final actions no longer matched upstream diagnosis. Its replacement moves anomaly detection into deterministic SQL/Python, gives one main agent end-to-end diagnostic authority, restricts dynamic sub-agents to narrow data processing, and uses a domain knowledge graph as a hypothesis grammar. The main agent begins from a thresholded signal, is instructed to traverse only declared graph edges, queries data to support or reject each path, prunes weak branches, and retains the whole investigation state through final synthesis. The post claims this reduced weeks of analyst iteration to 20–30 minutes, but supplies no evaluation record behind that number.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This source is a practitioner instance of the allocation test in [Human analogies can motivate functions without determining component boundaries](../notes/human-analogies-suggest-functions-not-component-boundaries.md): copying human analyst stages into agent boundaries reportedly failed, while the replacement preserved the functions and reassigned them among code, one judgment owner, bounded workers, and a graph. It also corroborates [Scheduler-LLM separation exploits an error-correction asymmetry](../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) by moving thresholding and anomaly detection to exact code. Its strongest correction to its own “kill distributed reasoning” rhetoric comes from [Agent orchestration occupies a multi-dimensional design space](../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md): the replacement remains multi-agent, but centralizes decision authority and changes worker return artifacts from intermediate judgments to processed facts.

@@ -21,6 +21,10 @@ Author: Yuzhen Mao and Azalia Mirhoseini are Stanford researchers; the paper giv
 
 The paper presents Decentralized Language Models (DeLM), a multi-agent framework in which workers asynchronously claim tasks, read compact verified updates from a shared context, and publish new gists after compression and evidence checking. Long source units remain recoverable through a `gist -> reference-grounded summary -> raw evidence` hierarchy, while a dependency-aware queue controls ready work and lets the last finishing worker propose more tasks or finalize. On SWE-bench Verified, DeLM reports the best Avg.@1, Pass@2, and Pass@4 results for Gemini 3 Flash and Claude Opus 4.6, including 65.7% Avg.@1 and 77.4% Pass@4 at $0.12 per task with Gemini. On LongBench-v2 Multi-Doc QA it reports the highest average accuracy across four model families; with GPT-5.4, removing admission verification lowers accuracy from 60.1% to 55.2% and removing the intermediate summary layer lowers it to 57.7%. On aggregation-heavy OOLONG, natural-language DeLM trails code-mediated RLM, but a hybrid of decentralized coordination and RLM workers outperforms either alone.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This paper is an empirical anchor for [Agent orchestration needs coordination guarantees, not just coordination channels](../notes/agent-orchestration-needs-coordination-guarantees-not-just.md): its shared channel is paired with evidence-grounded admission, write-before-publish atomicity, and snapshot visibility, and its no-verification ablation measures one missing guarantee. It is also a worked implementation of [Decomposition heuristics for bounded-context scheduling](../notes/decomposition-heuristics-for-bounded-context-scheduling.md), especially representation choice, reusable intermediate state, selective co-loading, and verifiable boundaries.

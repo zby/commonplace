@@ -21,6 +21,10 @@ Author: Richard Heimann provides technically detailed secondary synthesis; the c
 
 The chapter traces the move from AlexNet through VGG and GoogLeNet to ResNet, whose identity shortcuts made very deep networks trainable by letting layers learn residual functions and preserving signal and gradient paths. It follows residual learning into preactivation and dense prediction, then asks what scale actually acts on: compute and data compound only when architecture turns them into usable representations. Its most KB-relevant critique is that crossing a top-5 ImageNet threshold was marketed as “human-level” despite narrow annotator comparisons, a fixed label taxonomy, distributional brittleness, and failures outside the benchmark.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The source supplies a clean case for [the Bitter Lesson selecting against unearned reach rather than structure](../notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md): residual structure is what lets scale pay. Its benchmark critique directly supports [a proximate target is checked for achievement, not for warrant](../notes/a-proximate-target-is-checked-for-achievement-not-for-warrant.md) and [exact implementation does not validate a requirement against its objective](../notes/exact-implementation-does-not-validate-a-requirement.md). It also qualifies [scaffolding absorption](../notes/scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md): depth obstacles shrink on fixed tasks while robustness gaps remain at the frontier.

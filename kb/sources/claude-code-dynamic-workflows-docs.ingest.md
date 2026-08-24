@@ -21,6 +21,10 @@ Author: Anthropic (first-party docs for Claude Code). High authority on the feat
 
 Dynamic workflows are a JavaScript script that Claude writes to orchestrate up to 1,000 subagents per run (16 concurrent), executed by a background runtime in an isolated environment so the session stays responsive. The defining move is that the plan lives "in code": the script holds the loop, branching, and intermediate results in script variables, so Claude's context window receives only the final answer rather than every agent's output. A run can be saved as a reusable `/<name>` command (project or user scope), accept `args` as structured input, and be resumed within a session via cached agent results. The docs position workflows against subagents, skills, and agent teams along five axes (who decides next, where intermediate results live, what's repeatable, scale, interruption), and ship one bundled workflow, `/deep-research`, which fans out searches, has independent agents adversarially cross-check sources, votes on each claim, and filters claims that don't survive. For someone deciding whether to read the full source: read it if you work on agent-orchestration, run-state persistence, or context-window economics — the comparison table and the "where intermediate results live" framing are the load-bearing parts.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The companion [connect report](../reports/connect/sources/claude-code-dynamic-workflows-docs.connect.md) found no existing note names this feature (`rg` for "dynamic workflow", "ultracode", "deep-research" returned zero hits) — this is fresh source material. The strongest cluster is orchestration / scheduler-persistence. The report records three outbound `is-evidence-for` edges for this ingest's eventual authored surface and five reverse-edge candidates (the primary signal for a snapshot), all into that cluster:

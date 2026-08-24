@@ -22,6 +22,10 @@ Author: a seven-author group mixing astrophysics/cosmology and machine-learning 
 
 DiscoverPhysics builds 22 simulated worlds whose laws of motion deliberately deviate from ours -- screened and fractional-power gravity, multi-species couplings, hidden dark-matter-like particles, non-coordinate-free dynamics, time-varying interactions -- and asks an LLM agent to discover the governing law by proposing rounds of experiments and observing raw trajectory data. The agent submits two artifacts for the same inferred law: a natural-language explanation and a Python implementation. Across eleven frontier models, the strongest agents pass roughly half the worlds, failures concentrate on discovering latent structure, open-source models trail commercial ones, and -- the finding that matters most here -- strong predictive accuracy does not guarantee a good conceptual explanation. The benchmark's contribution is less "can LLMs do science" than a clean experimental separation of two things this KB already treats as distinct: passing an empirical test on the outputs, and holding a mechanism that reaches.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This source's role in the KB is **evidence for the reach-assessment cluster**, with a secondary role as a **new exemplar for the discovery-benchmark cluster**.

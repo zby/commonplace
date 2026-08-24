@@ -25,6 +25,10 @@ Author: @nicbstme, founder/builder of Fintool — an AI agent for financial serv
 
 A comprehensive practitioner report covering 11 architectural lessons from building Fintool, an AI agent for professional investors. The central thesis is that "the model is not the product — the experience around the model is the product." Key architectural bets include: mandatory sandboxing for code execution, filesystem-first data architecture (S3 as source of truth with PostgreSQL as derived index), markdown-based skills as the primary product surface, and a conviction that models will eventually absorb basic scaffolding (the "model will eat your scaffolding" thesis). The author explicitly adopted Claude Code's filesystem-first approach, retired their RAG pipeline in favor of agentic search, and built a skill system with copy-on-write shadowing (private > shared > public priority). The report also covers Temporal for long-running task reliability, real-time streaming with delta updates, and domain-specific evaluation with ~2,000 test cases where PRs are blocked if eval score drops >5%.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 Discovery via `/connect` identified 8 strong and 5 moderate connections.

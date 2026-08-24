@@ -25,6 +25,10 @@ Author: Muratcan Koylan (@koylanai), Context Engineer at Sully.ai and author of 
 
 Koylan reports building "Personal Brain OS," a Git-repository-based personal operating system comprising, by his account, 80+ files in Markdown, YAML, and JSONL that provide persistent context to AI coding assistants. The core idea he presents is "progressive disclosure" -- a three-level loading system (routing file, module instructions, data files) intended to give the model only task-relevant context. He also describes 11 isolated modules, append-only episodic memory logs, Anthropic-style agent skills, and automation chains for weekly reviews and content pipelines. The useful value here is not a verified system design but a compact practitioner narrative arguing that append-only formats, scoped modules, and structured voice constraints improved his own setup.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery run found 9 new connections beyond the 5 already established in the KB. The source touches context efficiency theory, loading strategy, scoping, memory architecture, and writing-style constraint theory. Those connections are useful as hypothesis links, but they should be read through the source's evidence class: an authorial report, not an inspected implementation.

@@ -24,6 +24,10 @@ Author: Official Cerebras post with named authors @hi_im_isaac_, @learnwdaniel, 
 
 Cerebras describes Cerebras Knowledge, an internal knowledge base used by employees, automations, and agents. The system rejects a single-platform "source of truth" migration and instead ingests information where it already lives: Slack, docs, code repositories, Jira-like metadata, and custom team databases. It stores embeddings, summaries, and metadata in a common Postgres-backed interface, uses specialized ingestion for Slack threads and code repositories, combines lexical, vector, IDF, recency, RRF, reranking, and context expansion at retrieval time, exposes low-level MCP retrieval tools to agents, and runs a fuller planner/executor/synthesizer path in the web UI. Projects and default scopes keep search relevant for teams and new employees.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This source is a production enterprise-memory case for the KB's agent-memory and context-engineering notes. It corroborates that [agent memory is crosscutting](../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md): storage, ingress, retrieval, activation, governance, and action surfaces all matter. It also supports [raw accumulation does not create usable memory](../notes/raw-accumulation-does-not-create-usable-memory.md), [knowledge storage does not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md), [import external knowledge into internal form](../notes/agent-memory-requirements/import-external-knowledge.md), and [serve multiple consumers, not one retrieval interface](../notes/agent-memory-requirements/serve-multiple-consumers.md). The closest comparisons are [CocoIndex](../agent-memory-systems/reviews/cocoindex.md), because Cerebras reports using it for code indexing, and [Databricks memory scaling](./databricks-memory-scaling-ai-agents.ingest.md), another enterprise memory practitioner report.

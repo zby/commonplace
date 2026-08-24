@@ -25,6 +25,10 @@ Author: Robert Youssef (@rryssf_) — unknown in terms of academic credentials o
 
 Youssef argues that psychology has already solved the problems AI memory systems struggle with, and that the field just needs to adopt psychological models of autobiographical memory and identity construction. He proposes five principles drawn from cognitive psychology: hierarchical temporal organization (Conway's Self-Memory System), goal-relevant filtering (the "working self"), emotional weighting (Damasio's Somatic Marker Hypothesis), narrative coherence (Bruner), and co-emergent self-model (Klein & Nichols). The core reframing is that agent memory should be treated as identity systems rather than data storage, with implementation via graph databases, sentiment metadata, attention mechanisms, and meta-learning loops.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 `/connect` found 7 note connections, 1 source-to-source connection, and 1 synthesis opportunity across three clusters:

@@ -21,6 +21,10 @@ Author: Sambartha Ray Barman, Andrey Starenky, Sophia Bodnar, Nikhil Narasimhan,
 
 The paper argues that several canonical memory phenomena can emerge from retrieval geometry rather than from specifically biological machinery. Using embedding-based memory simulations, the authors claim that human-like forgetting is driven primarily by interference from competing memories rather than by passive temporal decay, that production embedding models are much more interference-prone than their nominal dimensionality suggests because their effective dimensionality is low, and that false memories can arise directly from semantic clustering in raw embedding space without any special engineering. Their broader thesis is that any system organizing information by meaning and retrieving by proximity inherits these tradeoffs: semantic usefulness, interference, and false recall come from the same geometry.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The connection report found the strongest fit in the KB's memory-architecture cluster:

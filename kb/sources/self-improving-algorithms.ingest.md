@@ -21,6 +21,10 @@ Author: Nir Ailon, Bernard Chazelle, Kenneth L. Clarkson, Ding Liu, Wolfgang Mul
 
 The paper studies algorithms that improve expected running time by learning an unknown product distribution over fixed-length inputs. During a training phase, the algorithm gathers distributional information and builds data structures; in a stationary phase, those structures are held fixed and used to process later inputs. For comparison sorting, the limiting expected complexity is O(n + H(π(I))), where H(π(I)) is the entropy of the input's induced rank permutation, with worst-case O(n log n) time; a parallel result gives O(n + H(T(I))) for planar Delaunay triangulation. The paper also proves storage lower bounds and shows that unrestricted distribution classes force large space, making the restriction to product distributions and the time/space trade-off substantive parts of the design.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 Repo-local discovery read the notes README and self-improving-systems index, scanned note titles and descriptions, and ran focused searches for “self-improv*”, “training phase”, “stationary phase”, “entropy”, “distribution D”, and “online learning”. The source is a technical basis and boundary case for [Real self-improving systems occupy combinations no single rung captures](../notes/evidence/real-self-improving-systems-occupy-combinations-no-rung-captures.md): it is self-improving through learned operative state, but its training/stationary split is non-reflective and computationally allocated. It also sharpens [Learning is not only about generality](../notes/learning-is-not-only-about-generality.md) by making speed and expected cost the improvement objective. The source does not instantiate the rejectable-candidate architecture in [A proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md); its learner directly builds and then uses tuned data structures, which is a useful excluded-side example for that subtype.

@@ -23,6 +23,10 @@ Author: @melodyskim — product/design practitioner who vibecoded the domainmaps
 
 Melody Kim proposes the idea of a "minimum viable ontology" — a curated list of key terms needed to quickly orient yourself in a new domain and improve your prompts when working with AI. She built domainmaps.co to showcase the concept, generating domain maps for areas like 3D graphics. She frames these in pedagogical terms as "conceptual thresholds" — the vocabulary that, once acquired, unlocks comprehension of a domain. In the replies, she notes these could function as "skills for humans" and hints they could also steer AI agents toward correct domain-specific behavior. The prototype uses AI-generated lists with links to examples, choosing flat lists over graphs for simplicity.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 `/connect` confirmed the four connections from the previous ingest and discovered one new connection:

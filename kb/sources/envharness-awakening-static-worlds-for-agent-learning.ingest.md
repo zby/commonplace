@@ -21,6 +21,10 @@ Author: Chengsong Huang and a research team from Washington University in St. Lo
 
 EnvHarness wraps an existing environment at its standard interface rather than generating a replacement. A Stage replays actions to change the initial state, a Contract rewrites permitted actions, transitions, or observations, and a Chain composes base environments, while the original task verifiers remain the scoring authority. EnvRigger observes successful and failed policy rollouts, diagnoses weaknesses, writes candidate wrappers, and accepts or revises them using fresh rollouts. Skills distilled from its environments outperform skills distilled from original environments on ALFWorld, WebArena, SWE-bench Verified, OfficeQA, and SpreadsheetBench; the paper also reports stronger GRPO-trained policies, gains across four policy backbones, and continued held-out improvement when later environment batches target a policy carrying earlier skills. The useful contribution is a reusable environment-side learning surface with preserved base verifiers, not evidence that its three wrapper types or surrounding learning decomposition are generally optimal.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The source is an environment-side empirical anchor for [the deployed system, not the model alone, being the unit of learning](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md) and for [a retained instruction preserving what testing selected](../notes/a-retained-instruction-preserves-what-testing-selected.md): with the policy backbone and extraction pipeline held fixed, changing the trajectories upstream produces skills that improve later held-out behavior. Its active comparison is [SPADE](spade-self-play-in-adaptive-synthetic-executable-environments.ingest.md), which generates executable environments and jointly updates shared model weights, whereas EnvHarness reuses base environments and their verifiers before retaining natural-language skills or training a policy.

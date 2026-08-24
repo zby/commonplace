@@ -21,6 +21,10 @@ Author: Amit Sharma, Vasilis Syrgkanis, Cheng Zhang, and Emre Kiciman from Micro
 
 The paper argues that causal-effect estimation depends on assumptions about the data-generating process, and unlike predictive modeling there is no global validator for a causal estimate. DoWhy's response is to make assumptions explicit through causal graphs, use identification procedures such as graph-based criteria and do-calculus, estimate effects, and run refutation or validation tests for subsets of the assumptions. For this KB, the source is the boundary condition on causal reach assessment: causal formalism can assess reach only as far as the assumptions are declared and partially checkable.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This source supports [reach assessment](../notes/definitions/reach-assessment.md) and [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md) by grounding the warning that causal discovery and causal inference are not assumption-free. It also fits [Warranted autonomy is bounded by oracle reach](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) as a domain-specific example: automation can run the causal pipeline, but the warrant stops where assumptions cannot be globally validated.

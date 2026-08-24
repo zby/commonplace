@@ -20,6 +20,10 @@ Author: Andrew K Lampinen (DeepMind) et al., including James L McClelland (Stanf
 
 Lampinen et al. systematically test whether large language models exhibit the same "content effects" as humans on logical reasoning tasks — the tendency to reason more accurately when semantic content supports the correct logical inference. Across three tasks (natural language inference, syllogisms, Wason selection task), LMs mirror human accuracy patterns: both perform better on familiar/believable content and worse on abstract or belief-violating content. Model confidence correlates negatively with human response times on the same problems, even after controlling for task variables and accuracy. The key divergence is the Wason selection task, where LMs generally outperform humans and show a different error distribution (fewer matching-bias errors, more antecedent-false errors). Chain-of-thought prompting can partially restore content-independent reasoning in strong models by improving performance on abstract/unfamiliar conditions without degrading familiar ones. The authors argue these findings show dual-system-like behavior can emerge from a single system without explicit symbolic reasoning, and that content effects may arise from training on human-generated text reflecting real-world statistical regularities. Content effects survive instruction tuning (Flan-PaLM 2) and scale (larger models are more accurate but not less content-biased).
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery identified four genuine connections in the KB — three previously established and one new:

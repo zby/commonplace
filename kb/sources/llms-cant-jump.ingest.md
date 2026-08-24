@@ -22,6 +22,10 @@ Author: Tom Zahavy is a Google DeepMind researcher whose doctoral and profession
 
 Zahavy uses Einstein's sense-experience → jump → axiom → deduction diagram to separate three functions in scientific invention. Induction learns patterns from observations, deduction derives consequences from supplied premises, and abduction proposes an explanatory premise. On the paper's reconstruction, Einstein did not reach general relativity by fitting a large anomalous dataset: Newtonian gravity still predicted most observations well, while the equivalence principle arose from an imagined experience of free fall. The paper therefore argues that a modern LLM might derive and check general relativity after receiving Einstein's postulates yet still lack the sensory-grounded, manipulative simulation needed to formulate those postulates. It proposes physically consistent, action-controllable world models as a substrate for counterfactual intervention and for translating simulated experience into formal axioms. This is a conceptual research hypothesis, not a demonstrated architectural impossibility or a result showing that world models supply the missing mechanism.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The source's strongest role is as a proposed scientific-invention case for [learning inside a fixed decomposition inherits its mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) and [a proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md). Deduction can evaluate or unfold only premises that its search space can express. Zahavy's additional claim is that a text-trained symbolic space omits the sensory-to-concept mapping needed to produce some physical premises. The first part follows from the existing notes; the claimed omission remains the paper's conjecture.

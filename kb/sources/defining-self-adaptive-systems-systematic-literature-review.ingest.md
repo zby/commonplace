@@ -21,6 +21,10 @@ Author: Ana Petrovska, Guan Erjiage, and Stefan Kugele provide a recent multi-au
 
 The review searches 1,493 papers, selects 314 relevant papers, and finds only nine primary studies whose objective is to define self-adaptive systems formally. Only one formally defines adaptation itself; two specify adaptive behaviour implicitly; two specify MAPE behaviour while assuming adaptation follows. Context and system state are common formal dimensions, but none of the nine studies includes uncertainty, even though uncertainty motivates the field. Four studies include adaptation goals and only one distinguishes domain goals from adaptation goals. The authors conclude that MAPE-K is an engineering reference model lacking sufficient semantics for membership, and propose that future definitions distinguish adaptation from ordinary function, model uncertainty, and remain independent of collaboration/decentralisation.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This source is direct evidence for [a proposal-selection loop requires search, evaluation, and retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md), which already uses this review to caution that loop architecture does not settle category membership. It also reinforces [the curated self-improving-systems head](../notes/self-improving-systems-README.md): the review's missing dimensions (uncertainty, domain versus adaptation goals, context, system state) are precisely reasons to report a multidimensional pathway profile. The review is a limitation/negative-result anchor rather than a replacement definition.

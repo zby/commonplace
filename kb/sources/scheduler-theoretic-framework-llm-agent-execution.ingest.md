@@ -21,6 +21,10 @@ Author: single author (Hu Wei, sina.com email), no institutional affiliation giv
 
 The paper recasts the dominant "Agent Loop" (ReAct-style observe-reason-act) as a *single-ready-unit scheduler*: at every step at most one executable unit is active (|𝒰|=1) and the choice of next unit is an opaque LLM inference rather than an inspectable policy. This characterization places Agent Loops and graph executors on one semantic continuum parameterized by ready-set cardinality and policy explicitness/determinism. It then proposes Graph Harness (SGH), which lifts control structure into an explicit static DAG and makes three commitments: plan structure is immutable for the lifetime of a plan version; planning, execution, and recovery are separated into three layers with disjoint execution and diagnostic contexts; and recovery follows a strict three-level escalation (retry → patch → replan) with mechanically enforced no-level-skipping. These trade expressiveness (no competitive/`first_of` parallelism, no recursive expansion, no parent-chain rollback) for controllability, verifiability, and auditability, with proven bounded termination and a "validation gap" result bounding correctness by per-node validation reliability. No empirical results are reported; a seven-group ablation protocol is specified for future work.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The source maps almost one-to-one onto the KB's clean-model orchestration cluster and is one of the richest source fits in the recent academic-paper batch. Connection discovery surfaced six strong reverse-edge candidates, all in the `evidenced-by` relationship (the snapshot corroborates existing claims rather than originating them):

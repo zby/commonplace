@@ -21,6 +21,10 @@ Author: Andrey Mokhov (Newcastle), Neil Mitchell (Digital Asset / Shake author),
 
 The paper unifies Make, Excel, Shake, Bazel, CloudBuild, Buck, and Nix as points in a single design space rather than isolated systems. Its central move is to separate two choices that are normally wired deep into any build system: the **scheduler** (which tasks run and in what order — topological, restarting, or suspending) and the **rebuilder** (whether a key needs rebuilding — dirty bit, verifying traces, constructive traces, or deep constructive traces). These axes are orthogonal, so any scheduler composes with any rebuilder to yield a correct build system, tabulated as a 3×4 grid where 8 of 12 cells are occupied by existing systems and the empty cells are buildable (notably "suspending constructive traces" = a monadic cloud build system the authors call Cloud Shake). Along the way it gives crisp definitions of **minimality** (rebuild only what transitively depends on changed inputs, at most once), **early cutoff** (stop when a recomputed result is unchanged), and dynamic vs static dependencies, and shows (§7.3) that minimal build systems are a strict generalization of memoization.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The paper has **no lexical footprint** in the KB — none of its vocabulary (à la carte, early cutoff, content-addressable, verifying trace) appears anywhere. Every connection is conceptual, and all connections are **reverse edges**: the snapshot is immutable and authors no outbound links, so the value is which library artifacts should cite this paper as `evidenced-by`. Discovery surfaced one tight neighborhood — the KB's "derived-artifact freshness" cluster — plus a review-freshness cluster in reference:

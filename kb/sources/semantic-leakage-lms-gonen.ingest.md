@@ -22,6 +22,10 @@ Author: Gonen, Blevins, Liu, Zettlemoyer, Smith (University of Washington / Alle
 
 Gonen et al. define **semantic leakage**: generations that reflect undue semantic influence from prompt words that should not govern the completion ("He likes yellow. He works as a" → "school bus driver"). They operationalize it with paired **control** and **test** prompts that differ only by an injected unrelated concept, then score **Leak-Rate** — the fraction of instances where the test generation is more semantically similar to the concept than the control generation (chance = 50%). Across 109 hand-crafted prompts (colors, animals, food, occupations, idioms), 13 models, four temperatures, and three embedding metrics, Leak-Rate stays well above 50% with human validation. Key findings: leakage is universal across tested models; **instruction-tuned variants leak more** than base models (Llama chat/instruct; GPT-4o > GPT-4 > GPT-3.5); lower Llama temperature increases leakage; leakage persists in Chinese, Hebrew, crosslingual, storytelling, and recipe generation. The authors frame semantic leakage as an umbrella over stereotype bias and relate it to psychological semantic priming and to distraction via overshadowing (Zhang et al., 2024).
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This source is the **association-mechanism anchor** for the KB's irrelevant-context evidence — not a separate failure family, but the named channel behind several existing claims that currently describe interference architecturally without a measured mechanism.

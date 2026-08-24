@@ -21,6 +21,10 @@ Authors: Shirley Gregor and David Jones. Gregor originated the five-type taxonom
 
 Gregor and Jones distinguish eight possible components of an information-systems design theory. Six are core: purpose and scope, constructs, principles of form and function, artifact mutability, testable propositions, and justificatory knowledge. Two are additional: principles of implementation and an expository instantiation. The first six suffice to specify the idea of an artifact that could be constructed; implementation guidance and a physical example may follow and can strengthen communication or credibility. The paper also distinguishes abstract theory, material instantiation, and human understanding, and locates IS artifacts in human-machine systems. Agents and actions enter explicitly in the implementation process, but a present, capable operator is not a core component of the theory itself.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The paper supplies supporting component anatomy for [Actionable methodology](../notes/definitions/actionable-methodology.md), especially by preventing four conflations: design principles with implementation principles, anticipated artifact mutability with an authorized write path, abstract theory with a physical instantiation, and human participation inside the target system with the external operator who applies the theory. It complements [Gregor 2006](https://openresearch-repository.anu.edu.au/bitstreams/77077d0f-f636-40a8-89fb-d2d2365ad7ad/download), which defines Type V by prescriptive purpose, and refines [Gregor 2002](https://ajis.aaisnet.org/index.php/ajis/article/download/439/399/551), which introduced the product/process distinction without this complete anatomy. Broader local work on readable artifacts and design rationale is adjacent but does not directly depend on the ISDT component scheme.

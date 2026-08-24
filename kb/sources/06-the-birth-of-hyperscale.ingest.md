@@ -21,6 +21,10 @@ Author: Richard Heimann provides a secondary synthesis of Kaplan, Chinchilla, GP
 
 This chapter explains how language-model loss follows power laws in model size, data, and compute, and how those relations turned progress into a resource-allocation problem. It emphasizes that the laws hold within a fixed regime, that smooth loss can coexist with jagged or measurement-induced capability thresholds, and that later Chinchilla work revised the preferred parameter/data balance. The second half reconstructs the hidden infrastructure—data, tensor, pipeline, and memory sharding; micro-batches; checkpointing; precision; communication; and fault tolerance—that made the curves physically realizable. Its closing judgment is deliberately bounded: scale reliably improved models but did not by itself produce dependable planning or multistep reasoning.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The source strongly supports the KB's [structure-aware Bitter Lesson](../notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md): scale is conditional on extensive architecture and infrastructure. Its explicit definition of a scaling regime supports [learning inside a fixed decomposition](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md), because parameters, data, and compute are varied while objective, tokenizer, context, optimizer, and distribution remain fixed. Smooth loss versus jagged evaluation supports [proximate target versus objective warrant](../notes/a-proximate-target-is-checked-for-achievement-not-for-warrant.md), and the remaining reasoning frontier compares with [scaffolding absorption](../notes/scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md).

@@ -28,6 +28,18 @@ Require the caller to supply these values in the task:
 - `validation_failures`: `none` in `create` mode; a non-empty list of exact
   failures in `repair` mode
 
+For a fresh output or an approved changed observation, the caller supplies this
+exact `retained_claims` value:
+
+```markdown
+## Claims
+
+No claims have been grounded yet.
+```
+
+For a same-checksum refresh, the caller supplies the incumbent Claims block
+unchanged. In both cases, treat the supplied block as opaque retained text.
+
 Stop without writing if a required value or input file is missing, unreadable,
 inconsistent, or invalid for the selected mode. In `create` mode, do not read
 or reuse an existing `output_path`; replace it only after the checksum check

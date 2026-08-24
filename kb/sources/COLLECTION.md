@@ -43,6 +43,37 @@ The ingest skill picks the snapshot backend by URL: GitHub API for issues and
 pull requests, the X SDK for posts, Poppler for PDFs, and Trafilatura for
 ordinary web pages.
 
+## Claims in ingest reports
+
+Every ingest report has exactly one `## Claims` section immediately before
+`## Connections Found`. Claims retain bounded source-side propositions and
+their primary-source support. This lets a tracked ingest support later checks
+when its local snapshot is unavailable. Keep target-specific transfer reasoning
+in the artifact that uses the claim, not in the ingest.
+
+The empty section is exactly:
+
+```markdown
+## Claims
+
+No claims have been grounded yet.
+```
+
+A populated entry has this shape:
+
+```markdown
+- **Claim (paraphrase):** <bounded source-side proposition>
+  - **Source extract (verbatim):** <exact supporting content>
+  - **Source location:** <human-resolvable locator for that extract>
+  - **Scope:** <population, conditions, and exclusions>
+  - **Confidence:** <scoped prose>
+  - **Limitation:** <boundary needed to prevent overstatement>
+```
+
+Use one or more adjacent `Source extract (verbatim)` / `Source location` pairs.
+Repeat both fields when support is non-contiguous. Scope, confidence, and
+limitation apply to the complete entry.
+
 ## Outbound links
 
 **Snapshots are immutable local inputs.** Don't add, edit, or annotate after

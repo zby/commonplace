@@ -25,6 +25,10 @@ Author: @augmentcode — the official account for Augment Code, an AI coding too
 
 Augment argues that spec-driven development (SDD) fails for the same reason all documentation-first initiatives fail: documents decay because maintenance is invisible, unrewarded work that humans reliably won't do. It treats stale specs as especially risky because agents execute them confidently without flagging mismatches. Its proposed fix is the bidirectional spec: a coordinator agent drafts a spec from human intent, agents update it as they discover reality diverges from the plan, and the human reviews at any point. The core design challenge is update granularity — surfacing directional decisions ("found an existing auth context, wired into that") without narrating every line. The "junior engineer" analogy captures the desired relationship: agents report interpretation choices, not implementation details.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery found 11 connections across the KB, with 5 strong, 4 moderate, and 2 weaker-but-genuine.

@@ -22,6 +22,10 @@ Author: Joy He-Yueya, Anikait Singh, Ge Gao, Michael Y. Li, Sherry Yang, Chelsea
 
 GIANTS introduces "insight anticipation": given summaries of two parent papers, generate the core insight of a later paper that cites and combines them. GiantsBench builds this into a 17,839-example backcast benchmark across arXiv domains, then trains GIANTS-4B from Qwen3-4B with GRPO against an LM similarity judge. The useful contribution for this KB is not the broad claim that AI can do scientific discovery; it is the narrower mechanism: historical downstream papers can manufacture a soft oracle for one slice of discovery, making conditional synthesis trainable while leaving parent selection, problem selection, and real-world validation mostly outside the automated loop.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The companion connect report found a tight oracle/discovery cluster. GIANTS is evidence for [automated-synthesis-is-missing-good-oracles](../notes/automated-synthesis-is-missing-good-oracles.md) because it makes scientific synthesis trainable only after building a target-reconstruction oracle from downstream papers. It grounds [oracle-strength-spectrum](../notes/oracle-strength-spectrum.md) as a worked soft-oracle hardening case: reward and evaluation judges are separated, the judge is checked against humans, Qwen3-14B is used as an additional evaluator, and SciJudge-30B provides an impact-oriented pairwise preference signal. It also tests the boundary described in [the-boundary-of-automation-is-the-boundary-of-verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md): open-ended discovery is not automated directly; a verified historical target is substituted.

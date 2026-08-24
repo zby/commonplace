@@ -23,6 +23,10 @@ The paper replaces the usual train/test division with a lifecycle of active or �
 
 The experiments report gains over in-context learning and continual-learning baselines on class-incremental classification, unseen-language translation, long-context tasks, mathematical reasoning, SQuAD knowledge incorporation, and a filtered few-shot ARC setting. The most useful result for this KB is architectural rather than biological: transient experience is periodically transferred into slower distributed-parametric state, while consolidation and capability improvement are treated as separate processes. The retained result is durable and cumulative but remains encoded in weights, so the “memory blocks” are not inspectable records or addressable commitments.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The paper **is-evidence-for** [Continual learning requires governing behaviour-changing writes, not just storing content](../notes/continual-learning-requires-governing-behaviour-changing-writes.md): it implements continual learning as durable behavioral change and makes the distributed-parametric branch's characteristic tradeoffs visible -- interference, regression risk, training cost, and opaque read-back. Its memory terminology is **defined-in** [Representational form](../notes/definitions/representational-form.md): despite the short-term/long-term labels, the durable artifact is model weights or adapters rather than an external retrievable record.

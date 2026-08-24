@@ -22,6 +22,10 @@ Author: Yoonho Lee (Stanford, Chelsea Finn's group), with collaborators from MIT
 
 Meta-Harness is an outer-loop system that searches over LLM harness code by giving a coding agent (Claude Code with Opus-4.6) full filesystem access to prior harness source code, evaluation scores, and raw execution traces. The key finding is that access to rich diagnostic information — 10 million tokens per iteration, three orders of magnitude beyond prior text optimizers — enables the proposer to do causal reasoning about why harnesses fail, not just that they fail. On three benchmarks (online text classification, IMO-level math retrieval, TerminalBench-2 agentic coding), Meta-Harness outperforms both hand-engineered baselines and prior program-search methods. The critical ablation shows that summaries do not recover the signal lost by compressing raw traces, and may even hurt — scores-only and scores+summary variants both trail the full-trace version by 15+ points on median accuracy.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` pass identified 9 connections to existing KB notes, with two synthesis opportunities:

@@ -22,6 +22,10 @@ Author: Yepeng Liu, Yu Huang, Yu-Xiang Wang, Yingbin Liang, Yuheng Bu — academ
 
 The paper introduces ConvexBench, a benchmark testing whether LLMs can determine convexity of deeply composed symbolic functions. The key contribution is demonstrating a sharp "compositional reasoning gap": one-shot LLM performance collapses from perfect (F1=1.0) at depth 2 to near-failure (F1~0.2) at depth 100, even though the total token count (5,331 at depth 100) is far below context window limits. This proves that reasoning degradation is an attention-distribution and reasoning-horizon problem, not a token-capacity problem. The authors then show that agentic frameworks using divide-and-conquer with focused context (pruning irrelevant history at each recursive step) fully recover performance to F1=1.0 at all depths, because each sub-step gets a clean reasoning frame with only the information it needs.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery run (2026-03-09) found **10 genuine connections** to KB notes and **3 source-to-source connections**, substantially expanding the original 5-note analysis.

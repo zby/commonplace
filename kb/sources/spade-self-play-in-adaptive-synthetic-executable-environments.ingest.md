@@ -32,6 +32,10 @@ SPADE trains one language model in two roles: an Environment Designer writes com
 
 **Paper-only outcomes and execution status.** The reported training curves, benchmark scores, diversity measurements, scaling behavior, and qualitative trajectory shift remain paper-only. Appendix C.3 says evaluation outputs and every figure script ship with the code, but no result artifact or figure/plot script was tracked at the reviewed commit. Five cheap existing test modules were executed without installing dependencies or downloading data: `50 passed in 0.32s` for environment reward assignment, learning potential, game utilities, delayed environment rewards, and optional imports. No training, model inference, benchmark evaluation, dataset or weight download, or submodule initialization was performed. Passing these unit tests is not a reproduction of any paper result.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 SPADE is a strong second-domain case for [choosing what to learn requires both validity and learning-value gates](../notes/choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md). Candidate environments must first survive parse, instantiate, reset, runtime-probe, and—in tool use—semantic feasibility checks. Only then do the difficulty anchor and hint-conditioned return gap supply learning value. Corpus grounding controls search breadth upstream, so generation, validity, and value remain distinguishable rather than becoming one opaque “quality” score.

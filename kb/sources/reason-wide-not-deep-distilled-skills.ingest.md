@@ -21,6 +21,10 @@ Author: Six Microsoft researchers; the paper supplies primary experimental evide
 
 The paper presents passive skill distillation: a coding agent analyzes 35–50 existing training trajectories for one model/domain pair, computes failure and action patterns, and writes a 40–130-line Markdown skill that is appended to a non-reasoning model's system prompt. On four held-out agent benchmarks, the GPT-5.4-mini skills recover 55%–100%+ of the measured no-think-to-think performance gap, exceed the reasoning mode on ALFWorld and retail, and use 2.9–4.5 times fewer output tokens than that model's reasoning condition. A second model improves on three of four benchmarks but regresses on retail. Skills distilled from no-think trajectories remain competitive with skills given paired think/no-think traces, and on two customer-service domains the method beats GEPA at lower reported production cost. The authors interpret this as replacing repeated within-episode reasoning about domain-invariant procedure with one corpus-wide analysis pass, while reserving reasoning for instance-specific work.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This paper is a direct empirical anchor for [system-definition artifacts as crystallized reasoning](../notes/system-definition-artifacts-are-crystallized-reasoning-under-context.md), [frontloading](../notes/frontloading-spares-execution-context.md), and [deployment-time constraining as learning](../notes/constraining-during-deployment-is-continuous-learning.md): an offline trace analysis produces an operative natural-language artifact that displaces recurring reasoning work without changing model weights. It also adds a distinct case to [Trace-learning techniques in related systems](../agent-memory-systems/trace-learning-techniques-in-related-systems.md): one passive coding-agent pass, one always-pushed model/domain skill, no fresh distillation rollouts, no runtime retrieval, and no policy training.

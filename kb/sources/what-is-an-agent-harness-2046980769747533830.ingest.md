@@ -24,6 +24,10 @@ Author: Aparna Dhinakaran -- co-founder of Arize AI (LLM observability/evals pla
 
 Dhinakaran responds to public confusion about what an "agent harness" is by drawing a sharp line: harnesses are not frameworks. Frameworks (LangChain, LangGraph) are top-down configuration surfaces for humans assembling agents from abstractions; a harness is a working agent that ships out of the box, born bottom-up from coding-agent products (Cursor, Claude Code, Windsurf, Codex) that independently converged on the same architecture. She enumerates nine components of "Harness 1.0" -- outer iteration loop, context management/compression, skills/tools management, sub-agent management, built-in pre-packaged skills, session persistence, system-prompt assembly, life-cycle hooks, and a permission/safety layer. The closing thesis is that the maturation pattern in winning harnesses is to "push decisions to the model": early harnesses hardcoded truncation limits, permission rules, and context budgets; current harnesses defer those decisions to the LLM via runtime feedback. The harness is the feedback scaffolding that turns a one-shot generator into a closed-loop agent.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The connect report (`kb/reports/connect/sources/what-is-an-agent-harness-2046980769747533830.connect.md`) found 13 candidate connections across 10 `is-evidence-for` and 3 `compares-with` edges, plus 7 reverse-edge candidates. The strongest is [agent runtimes decompose into scheduler, context engine, and execution substrate](../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) -- this source is the **fifth** independent practitioner taxonomy converging on the same three-part decomposition (joining Vtrivedy10, Raschka, Lopopolo, and the @odysseus0z cybernetics thread). Dhinakaran's nine cuts map cleanly: outer loop + sub-agents + hooks = scheduler; context management + system-prompt assembly = context engine; skills/tools + built-in skills + persistence + permission = execution substrate.

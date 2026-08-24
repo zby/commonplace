@@ -21,6 +21,10 @@ Author: Michael Timothy Bennett (Australian National University). The paper prov
 
 Bennett defines a finite implementable language whose statements denote sets of possible decisions, then calls a hypothesis's extension cardinality its **weakness**: a weaker statement excludes fewer possibilities. Assuming a uniform distribution over tasks in that language and induction from a child task to an unknown parent, the paper argues that choosing the valid hypothesis with the largest extension is necessary and sufficient to maximize generalisation probability, while minimum description length (MDL) is neither. In toy 8-bit addition and multiplication tasks, weakest-hypothesis selection attains 1.1–5 times the exact-generalisation rate of MDL and 1.03–1.56 times its average extent, depending on training-set size. The paper reads this as a challenge to compression-as-intelligence and as a possible explanation for the Apperception Engine's generalisation.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This source is most useful as a **bounded technical counterpoint** to the KB's DreamCoder and No Free Lunch material. DreamCoder shows a curated symbolic domain where a description-length gate participates in successful transfer, while No Free Lunch makes every strategy's advantage conditional on a problem distribution; Bennett supplies the missing constructive case where a different proxy wins after both the representation and distribution are fixed. Its proper theoretical home is therefore the boundary established by [learning inside a fixed decomposition inherits its mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md), not an unqualified replacement of MDL. It is also a clean worked example for the proof route in [formal symbolic systems assess explanatory-reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md): the theorem establishes reach inside its formal model while leaving the model-to-world translation outside the proof.

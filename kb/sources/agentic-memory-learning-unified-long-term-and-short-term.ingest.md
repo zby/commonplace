@@ -22,6 +22,10 @@ Author: Yi Yu, Liuyi Yao, Yuexiang Xie et al. (Alibaba Group, Wuhan University).
 
 AgeMem proposes unifying long-term memory (LTM) and short-term memory (STM) management as learnable tool-based actions within an LLM agent's policy, trained through reinforcement learning. Instead of treating memory as an external service or relying on in-context instructions, the system exposes six memory operations (Add, Update, Delete for LTM; Retrieve, Summary, Filter for STM) and trains the agent to use them through a three-stage progressive RL strategy: first learning LTM storage, then STM context management, then coordinating both. A step-wise GRPO mechanism addresses sparse rewards from memory operations. Results show 23-49% improvement over no-memory baselines, 3-5% token reduction in context, and meaningful RL contribution (8-9 percentage points) beyond the base model's capability.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 Second-pass `/connect` (2026-03-09) confirmed this is one of the most thoroughly connected sources in the KB. The primary analysis note ([memory-management-policy-is-learnable-but-oracle-dependent](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md)) integrates AgeMem into the bitter-lesson boundary, oracle theory, and deploy-time learning frameworks. The [comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) covers AgeMem across the current shared architectural axes.

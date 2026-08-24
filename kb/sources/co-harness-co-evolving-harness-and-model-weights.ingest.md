@@ -21,6 +21,10 @@ Author: Zhengyu Chen, Teng Xiao, Huaisheng Zhu, Yige Yuan, Luan Zhang, and Jinga
 
 Co-Harness treats an agent's model weights and runtime harness as coupled learning targets. In each round, an LLM critic classifies failed trajectories into prompt, tool, skill, middleware, memory, or model-side causes; proposes local harness diffs; and accepts only patches that improve the targeted failure set without regressing held-out behavior. The repaired harness then generates verified trajectories for supervised fine-tuning, and the updated model enters the next harness-repair round. Across Qwen3-8B and Qwen3-32B on three tool-integrated math benchmarks, the authors report an average rise from 58.5% after initial harness evolution to 78.9% after two full rounds, plus a 200-hour harness-only case study that recovered from crashes, reduced inference time, and selected an ensemble strategy.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This paper is the clearest current empirical anchor for [representational-form coevolution](../notes/treat-continual-learning-as-representational-form-coevolution.md): distributed-parametric weights and a harness containing natural-language prompts/skills plus symbolic tools, middleware, schemas, and registry diffs remain separately retained learning targets. It qualifies [the readable-artifact loop](../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md), whose point-in-time inventory says distributed-parametric plus symbolic learning has no clean instantiation, and it exemplifies [diagnostic richness](../notes/diagnostic-richness-constrains-outer-loop-learning-quality.md) through structured trace-grounded attribution before local repair. Relative to [SkillRL](skillrl-evolving-agents-recursive-skill-augmented-rl.ingest.md), Co-Harness broadens the localized target from natural-language skills to the whole mixed-form harness; relative to [Meta-Harness](meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md), it adds a weight-update loop instead of freezing the model.

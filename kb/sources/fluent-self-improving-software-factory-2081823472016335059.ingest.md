@@ -24,6 +24,10 @@ Author: @mrinal describes a system he built and reports improving throughput and
 
 Fluent is presented as a software factory that turns observations, feedback, production data, and agent traces into working software through two queues: one for human context, judgment, expertise, and authority, and one for agent and compute capacity. Human-guided shaping produces a Brief, behavior specifications, a Technical Approach, and an Implementation Plan; execution then creates isolated Work Item Attempts with a Writer, an independent deterministic Tester, parallel Reviewers, and a Learner. Accepted changes become merge candidates, while the Learner can retain project-specific conventions, constraints, testing patterns, and gotchas as explicit Expertise that future shaping and execution can reuse. Follow-ups become later Observations or corrective Work Items, so the factory improves both the product and the machinery that produces future changes.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The primary connection is the existing [self-improving-systems](../notes/self-improving-systems-README.md) cluster. Fluent is a practitioner anchor for [A proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md): observations and shaping search the change space, deterministic tests and independent reviewers can reject candidates, and merge plus retained Expertise give accepted work future behavioral force. It also grounds the cluster's actor-allocation claim in [Increasing computational autonomy relocates human effort to the frontier](../notes/increasing-computational-autonomy-relocates-human-effort.md), while its Learner supplies a concrete trace-to-explicit-memory path for [Use Trace Extraction As Meta-Learning](../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md). This is source-level practitioner evidence, not a code-grounded Fluent review.

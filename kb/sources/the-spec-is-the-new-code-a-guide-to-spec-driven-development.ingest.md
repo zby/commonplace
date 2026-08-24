@@ -25,6 +25,10 @@ Author: @juliandeangeIis — engineering lead at MercadoLibre (Latin America's l
 
 DeAngelis argues that AI coding agents fail primarily because of ambiguous instructions, not model limitations. His solution is Spec Driven Development (SDD): a four-step methodology — specify (functional requirements), plan (technical decisions), decompose (ordered tasks), implement (one task at a time per agent session). The post documents ecosystem convergence on this pattern (GitHub Spec Kit at 77k stars, OpenAI Symphony, Claude Code's Plan Mode) and introduces a three-level maturity model: Spec-First (write and discard), Spec-Anchored (spec lives in the repo), and Spec-as-Source (spec is the primary artifact, code is regenerated to match). Key design choice: the functional spec is deliberately technology-agnostic, separating "what" from "how" to reduce LLM uncertainty. DeAngelis acknowledges SDD's tradeoffs — 2-3x token cost, learning curve, overhead for small changes — and reports that hands-on workshops, not explanations, drive adoption at MercadoLibre.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery found 6 strong and 8 moderate connections, forming a dense cluster around the KB's underspecification-constraining-context-engineering core.

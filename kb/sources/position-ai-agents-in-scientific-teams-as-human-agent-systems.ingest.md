@@ -21,6 +21,10 @@ Author: a 14-author team; the captured page identifies the National Laboratory o
 
 The authors argue that evaluating autonomous “AI Scientists” in isolation misses the social system that produces scientific work. They propose the human-agent pair as the unit of analysis, identify reduced inquiry diversity as a near-term risk, and call for models of collaboration benefit and coordination cost. This is a useful scientific-team application of human-inclusive evaluation, but the current KB already states the broader system-boundary and actor-allocation claims. The captured Hugging Face page contains the abstract and community descriptions, not the paper's full methods, evidence, or proposed framework.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This source is primarily a domain-specific restatement of [The deployed system, not the model alone, is the unit of learning](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md): causally consequential human participants and interaction protocols belong inside the evaluated system boundary. [Methodological and computational closure track different changes](../notes/methodological-and-computational-closure-track-different-changes.md) already supplies the more discriminating human, computational, and joint actor profile that the captured page does not.

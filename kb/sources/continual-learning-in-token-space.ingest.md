@@ -21,6 +21,10 @@ Author: Letta, the team behind MemGPT/Letta's stateful-agent platform. Strong pr
 
 Letta argues that continual learning for LLM agents should be understood primarily as learning in token space rather than weight space. The core move is to redefine an agent as `(theta, C)` — model plus context — and treat the editable, portable context as the main learning substrate for deployed agents. On this view, append-only in-context learning is only a weak form of learning; real progress requires active maintenance of learned context through memory refinement, contradiction repair, compression, and versioned updates over time. The post positions sleep-time compute, self-managed memory, and eventual tokens-to-weights distillation as the path toward agents that preserve identity and capability across long horizons and model upgrades. Relative to this KB, the essay is best read as a memory-first slice of a broader repo-artifact learning story, not as a general theory of non-weight learning.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` report places this source squarely in the KB's learning-theory cluster rather than as an isolated Letta artifact.

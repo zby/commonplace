@@ -21,6 +21,10 @@ Author: Lilian Weng; the article is a detailed, cited technical synthesis by an 
 
 Weng defines a harness as the deployment machinery around a base model that controls workflow, tools, context, persistent state, sub-agents, permissions, and evaluation. She argues that practical near-term recursive self-improvement is more likely to optimize this machinery than to begin with direct weight rewriting. The article traces an optimization surface from prompts through structured context, workflows, harness code, and optimizer code. It surveys context and workflow optimization, self-editing harnesses, evolutionary program search, and joint harness-weight updates. It closes with limits around weak evaluators, memory lifecycle, negative-result retention, diversity collapse, reward hacking, long-term objectives, and the continuing role of human oversight.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The article is a secondary map for the KB's self-improving-systems casebook. Its harness-evolution examples repeatedly instantiate the [proposal-selection loop](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md), while the [self-improving-system definition](../notes/definitions/self-improving-system.md) makes explicit the boundary, objective, horizon, operative update, and later use that the essay sometimes leaves implicit. Its broad conclusions must be read through [learning inside a fixed decomposition](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md): the cited systems search editable harness surfaces while keeping consequential objectives, task partitions, evaluators, representations, permission boundaries, and outer methods fixed.

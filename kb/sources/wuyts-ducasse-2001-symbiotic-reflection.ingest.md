@@ -21,6 +21,10 @@ Author: Roel Wuyts and Stéphane Ducasse report the SOUL implementation from the
 
 Wuyts and Ducasse define **symbiotic reflection** as an extension of reflective interpretation in which a base language can manipulate not only its causally connected self-representation but also the distinct meta-language that implements it, so both languages can reason about and act on one another. Their SOUL/Smalltalk case introduces **symbiotic introspection** and **symbiotic intercession**, then treats entity transfer between different programming paradigms as an implementation obligation solved by an automatic **upping/downing schema**. The paper is a direct precursor for cross-representational reflection, but its boundary is a pair of computational languages and their interpreter; it does not include people or natural-language artifacts as system components.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This source is the early technical anchor for [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md): causal connection and mutual access/action are stronger conditions than co-location or co-evolution. [Representational form](../notes/definitions/representational-form.md) remains the local vocabulary for any later generalization, because the paper's distinction is between programming languages and paradigms rather than Commonplace's natural-language, symbolic, and distributed-parametric forms.

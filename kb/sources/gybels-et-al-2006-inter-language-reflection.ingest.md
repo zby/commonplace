@@ -21,6 +21,10 @@ Author: Kris Gybels, Roel Wuyts, Stéphane Ducasse, and Maja D’Hondt consolida
 
 Gybels et al. define **inter-language reflection** as traditional reflection in each of two languages combined with **linguistic symbiosis** between them. Traditional reflection supplies causal connection and reflective access; linguistic symbiosis supplies transparent exchange of data and invocation of behavior. The conceptual advance is to decompose that symbiosis into a base-level **data mapping** and a meta-level **protocol mapping**, making clear that apparent native values require the other interpreter's operations to apply to their meta-representations. This is the strongest source here for the conditions of cross-language reflection and for separating representation transfer from operation/behavior transfer.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The paper supplies the mature technical model for [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md) and adds a useful qualification to [Unified calling conventions enable bidirectional refactoring](../notes/unified-calling-conventions-enable-bidirectional-refactoring.md): sharing a callable surface requires both data mappings and protocol mappings when regimes disagree about values and behavior. [Representational form](../notes/definitions/representational-form.md) constrains the proposed generalization beyond programming languages.

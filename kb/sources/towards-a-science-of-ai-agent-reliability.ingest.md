@@ -20,6 +20,10 @@ Author: Stephan Rabanser, Sayash Kapoor, Peter Kirgis, Kangheng Liu, Saiteja Utp
 
 The paper argues that mean task success rate is an inadequate measure for deployed AI agents and proposes a four-dimensional reliability framework grounded in safety-critical engineering: consistency (repeatable outcomes across runs), robustness (stability under perturbations), predictability (calibrated confidence), and safety (bounded harm severity). Evaluating 14 models from OpenAI, Google, and Anthropic over 18 months of releases, they find that capability gains have far outpaced reliability gains. Key empirical findings: outcome consistency remains low across all models; prompt robustness is the weakest robustness dimension (models handle real infrastructure faults better than paraphrased instructions); calibration has improved but discrimination has not; larger models are sometimes less consistent than smaller ones because they have more solution strategies; and safety is deliberately excluded from the aggregate reliability score and reported as a hard constraint, because averaging would obscure tail risks.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The source connects deeply into the KB's learning theory and oracle verification stack. The primary synthesis note -- [reliability-dimensions-map-to-oracle-hardening-stages](../notes/reliability-dimensions-map-to-oracle-hardening-stages.md) -- was written in direct response to this paper and maps the four reliability dimensions onto oracle-hardening moves. That note is the main hub connecting this source into the knowledge graph.

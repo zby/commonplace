@@ -21,6 +21,10 @@ Author: Brian Cantwell Smith is the foundational source in this lineage; the pap
 
 Smith argues that self-reference is not enough for reflection. A reflective system needs an embedded account or theory of itself, a systematic two-way causal relationship between that theory and the system, and a vantage point combining enough detachment to represent the system with enough connection to affect it. The paper deliberately narrows its technical target to **procedural reflection** in serial programming languages and builds 3-Lisp as a causally connected reflective tower. It also makes reflection theory-relative: the chosen self-theory determines which processor aspects are explicit, while other aspects are “absorbed”; even 3-Lisp leaves its animating agency implicit (printed pp. 23–25, 31–35; PDF pp. 1–3, 9–13).
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 Smith is a historical anchor for [Reflective system](../notes/definitions/reflective-system.md): self-description and behavioral effect must be compared with Smith's embedded theory, two-way causality, and vantage point. The paper also supplies the primary Lisp lineage for [LLM contexts interpret instructions and content through the same token medium](../notes/llm-context-interprets-instructions-and-content-through-one-medium.md), but blocks the inference from homoiconicity or metacircular self-description to reflection. [Maes 1987](https://cse.hkust.edu.hk/~charlesz/comp610/paper/p147-maes.pdf) and [Maes 1988](https://maxapress.com/data/article/ker/preview/pdf/S0269888900004355.pdf) retain the causal core while generalizing beyond procedural languages and using “reflection” for what Smith presents here as the narrower procedural case.

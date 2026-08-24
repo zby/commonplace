@@ -21,6 +21,10 @@ Author: Richard Heimann is a secondary synthesizer. The chapter is strongest whe
 
 The chapter groups VLAE, relation networks, message-passing neural networks, and relational recurrent memory as attempts to organize information and computation so that global structure, object relations, graph interactions, or memory-to-memory comparison become easier to learn. It then turns to modern language-model brittleness: perturbed planning scripts, the reversal curse, and prompts that improve familiar reasoning forms without guaranteeing recomputation under new constraints. Search, verification, explicit states, and test-time compute are presented as attempts to stabilize reasoning. The final “paper doubts versus living doubts” section argues that skepticism earns force when it changes benchmarks or experiments, using ARC benchmark succession to show that a leaderboard win can be local rather than general.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The source strongly supports [reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md): a model may reconstruct a familiar answer path while failing to enforce the changed constraints. Each historical architecture also exemplifies [learning within a fixed decomposition](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md), because it preselects where information lives and which interactions are expressible. The prompting discussion limits [prompt ablation](../notes/prompt-ablation-converts-human-insight-to-deployable-framing.md), and ARC turnover compares with [known-target benchmarks showing reachability rather than closure](../notes/known-target-discovery-benchmarks-show-reachability-not-discovery.md). The reflective-self-improvement fit is negative: test-time deliberation changes an answer, not the system's retained organization.

@@ -25,6 +25,10 @@ Author: Amy Tam (investor at Bloomberg Beta), co-written with E Chi and Trenton 
 
 Tam argues that as AI coding tools commoditize software engineering, the scarce differentiator shifts from implementation (finding solutions to known-solvable problems) to research (deciding which problems are worth solving when solutions might not exist). The core mechanism: engineering has built-in verification — tests, specs, benchmarks — that enables RL-driven automation, while research lacks ground truth. "Research taste" — the ability to select which of a vast number of possible problems deserve investment — is portable across domains (physicists become quants become AI researchers), hard to train, and hard to automate because neither success data nor failure data is publicly available. Current AI tools like Karpathy's autoresearch automate execution (hyperparameter sweeps) but not problem selection. Tam expects the gap to close, but argues the bottleneck is currently the researcher deciding what to try and what to skip.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery found 7 connections, all clustering tightly around the KB's oracle theory and learning theory neighborhoods:

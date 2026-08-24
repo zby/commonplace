@@ -36,6 +36,10 @@ This monorepo revision postdates arXiv v1 by four days, so it is a durable inspe
 
 **Execution status.** No project code or tests were run. The checkout had no prepared virtual environment and lacked declared dependencies such as Pydantic and OmegaConf. The code-grounded ingest procedure excludes dependency installation, data or weight downloads, and full evaluations. The evidence here is static inspection, not reproduction.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 ScienceFlow supplies a code-grounded whole-system example for [active work state being distinct from retrospective memory or chat history](../notes/active-work-state-is-not-retrospective-memory-or-chat-history.md): its recoverable state includes the executable workspace, memory, evidence, and resource records. Its retained raw Stage ledger and bounded folded views support the requirement to [preserve evidence without loading history](../notes/agent-memory-requirements/preserve-evidence-without-loading-history.md). The design also instantiates the [scheduler, context engine, and execution-substrate runtime decomposition](../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) and a reject-capable [search, evaluation, and retention loop](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md). Compared with [ACM](./acm-agentic-context-management-for-long-horizon-tasks.ingest.md), ScienceFlow couples bounded context to exact executable-state restoration. Compared with [Exo](../agentic-systems/exo.md), it similarly restores mutable state without erasing the surrounding record, but preserves research evidence and cumulative resource accounting rather than an event log around self-modification.

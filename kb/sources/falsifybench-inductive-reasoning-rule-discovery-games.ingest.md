@@ -21,6 +21,10 @@ Author: Leonardo Bertolazzi, Katya Tentori, Raffaella Bernardi (University of Tr
 
 FALSIFYBENCH adapts the Wason 2-4-6 rule-discovery game into an interactive benchmark: an agent must identify a hidden semantic property by repeatedly proposing example instances and reading back whether each satisfies the rule. The paradigm exercises hypothesis generation, evidence gathering, and belief revision under both confirming and disconfirming feedback, in a closed loop where the agent chooses its own probes. Across 12 models spanning families and scales, reasoning models outscore instruction-tuned models but none approach optimal play. The paper's headline result is about *how* rather than *how well*: the primary driver of success is the capacity for negative testing — models that actively construct probes intended to falsify their current hypothesis consistently beat models that mostly propose confirming instances. A turn-level analysis, which the authors present as neglected in prior work, ties failure to identifiable patterns in how models traverse the hypothesis space rather than to a single aggregate score. Worth reading in full for anyone who needs the operationalization of "negative testing" or the failure taxonomy; the abstract alone already carries the load-bearing claim.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The KB has a live casebook here, and this source's role in it is **process-level evidence for the falsification premise the discovery cluster currently asserts without external grounding**. Three of its landing points are load-bearing rather than decorative.

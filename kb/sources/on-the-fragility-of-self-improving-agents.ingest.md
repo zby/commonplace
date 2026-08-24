@@ -21,6 +21,10 @@ Author: Qinyuan Ye, Yu Li, Yada Pruksachatkun, Jiaxin Zhang, and Chien-Sheng Wu.
 
 The paper re-evaluates Agent Workflow Memory (AWM) and ReasoningBank on WebArena, VisualWebArena, and SCUBA with GPT-5-mini and newer agent harnesses. It runs each main setting three times and tests the default task order plus two shuffled orders. Memory increases run-to-run variance in 17 of 24 domain-method comparisons; the largest three-run best-worst gap is 10.42 percentage points on WebArena's 48-task Multisite subset. On WebArena, ReasoningBank moves from a 1.5-point average gain under the default order to an average 4.5-point loss under the shuffled orders. The authors trace some failures to memory construction that lacks task intent and environment constraints: accepted memories recommend unsupported APIs or human confirmation, generalize from evaluator mistakes, or preserve a rewarded Haversine shortcut. Supplying evaluator rubrics, action-error feedback, and explicit environment constraints recovers part of the shuffled-order loss, but the enhanced system still trails the no-memory baseline.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This paper is a direct empirical anchor for [Diagnostic richness constrains outer-loop learning quality](../notes/diagnostic-richness-constrains-outer-loop-learning-quality.md), [A checked outcome licenses retaining an episode, not abstracting its explanation](../notes/checked-outcome-licenses-episode-retention-not-abstraction.md), and [Trace-extracted memory earns authority per operation, not at capture](../notes/trace-extracted-memory-earns-authority-per-operation-not-at-capture.md). Its evaluator-bug, irrelevant-medical-advice, unsupported-API, and Haversine cases show how an outcome-gated trace can become prompt-level guidance without evidence for the explanation or its transfer boundary. The partial gains from rubrics and action errors also show that a richer diagnostic surface can improve the next memory proposal without making reward itself a stronger abstraction oracle.

@@ -22,6 +22,10 @@ Author: Meyerson et al. at Cognizant AI Lab; Risto Miikkulainen (UT Austin & Cog
 
 MAKER introduces "massively decomposed agentic processes" (MDAPs), a framework that decomposes LLM tasks to the finest possible granularity (one step per agent call), then applies first-to-ahead-by-k voting across independent samples to correct errors at each micro-step. The key theoretical result is that cost scales as O(s ln s) under maximal decomposition (m=1), compared to exponentially without it. A red-flagging mechanism discards responses whose structure signals unreliability (excessive length, format violations), reducing correlated errors that would defeat independent voting. Applied to the 20-disk Towers of Hanoi (1,048,575 steps), MAKER achieves zero errors using gpt-4.1-mini at approximately $3,500. The paper's most provocative claim is that small non-reasoning models suffice when decomposition is maximal — architectural error correction substitutes for model intelligence. The authors distinguish "insights" (creative, open-ended) from "execution" (plan-following) and acknowledge their framework currently addresses only execution, where per-step oracles are hard.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 `/connect` identified 11 connections total — 2 already linked from KB notes, 9 new.

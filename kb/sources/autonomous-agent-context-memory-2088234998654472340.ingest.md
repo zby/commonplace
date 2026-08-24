@@ -24,6 +24,10 @@ Author: The snapshot identifies only the X account `@marfinxx`. It provides no a
 
 The post proposes a dual-loop agent architecture. A latency-sensitive inner loop assembles a stable prompt prefix, retrieves a small memory and repository slice through lexical, vector, and graph channels, removes redundancy with MMR, and runs inference and tools. An asynchronous outer loop turns execution traces into atomic memories, updates relations, applies decay and eviction, and consolidates long-term state. The proposal packages this with a four-tier memory hierarchy, an `ADD`/`UPDATE`/`DELETE`/`NOOP` mutation policy, AST-derived code maps, and a three-layer prompt layout. It is useful as a compact architecture checklist and as a public statement of a popular context-as-RAM/memory-as-SSD framing. It does not provide evidence that the bundle works, that its fixed choices are preferable, or that the ecosystem has converged on it.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The source is best treated as a practitioner synthesis and counterpoint. Its definition of context engineering as single-turn prompt assembly is narrower than the KB's [architectural definition](../notes/definitions/context-engineering.md), which includes the storage, lifecycle, routing, and maintenance choices that make later prompt assembly possible. Its two-box separation also compares with the finding that [agent memory is a crosscutting concern](../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) spanning storage, activation, learning, and action capacity. The proposed retrieval and consolidation loops rest on the valid distinctions that [storage does not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md) and [raw accumulation does not create usable memory](../notes/raw-accumulation-does-not-create-usable-memory.md), but the post assumes rather than tests the final transition from injected memory to changed behavior.

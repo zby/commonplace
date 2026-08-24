@@ -25,6 +25,10 @@ Author: @shivsakhuja — practitioner building skill-driven agent workflows, act
 
 The tweet argues that the naive "skill graph" model (skills linking to dependent skills via Obsidian-style markdown links) breaks once the dependency depth grows: agents stop reliably traversing deep chains, circular dependencies cause trouble, and the human operator loses intent-level control. Sakhuja proposes replacing the flat graph with a three-tier compositional hierarchy — **atoms** (narrow, near-deterministic primitives that don't call other skills), **molecules** (small structured workflows or few-atom orchestrators, 2–10 atoms, explicit instructions on when to call what), and **compounds** (higher-level orchestrators over molecules, human-driven, deliberately less deterministic). The leverage argument: each tier is an order of magnitude more output per "brain RAM" slot, so operators should spend their parallel-supervision budget on compounds, not atoms. Reliability ceiling conjecture: compounds past ~8–10 molecules start breaking. Open problem: per-tier testing is expensive; Sakhuja hopes autoresearch can eventually automate it.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The connect report mapped this tweet to a dense ring of already-present theoretical notes — the KB has strong coverage of the underlying ideas. Key edges:

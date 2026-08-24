@@ -24,6 +24,10 @@ Author: @odysseus0z -- unknown from local KB context. The signal worth attending
 
 The thread argues that "harness engineering" is best understood as cybernetics: the engineer's job shifts from directly producing code to designing the feedback loops, sensors, actuators, and constraints that steer agent behavior. It compares agentic coding harnesses to Watt's centrifugal governor and Kubernetes controllers: in each case, work moves from direct manual intervention to specifying the loop that observes state and reconciles drift. The central claim is that LLMs let the software-development feedback loop close at higher layers than compilers, tests, and linters, but only if teams externalize system-specific judgment into architecture rules, parseable CI, remediation-rich errors, and explicit standards for what good looks like. The closing move sharpens the human role: because generation is harder than verification, humans do not need to out-implement agents; they need to out-evaluate them.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The connection report found that this source mostly adds a framing layer over mechanisms the KB already tracks. Its strongest connection is to [agent-runtimes-decompose-into-scheduler-context-engine-and-execution-substrate](../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md): the thread exemplifies that runtime decomposition by giving it control-theoretic language. Sensors and actuators cut across the scheduler/substrate boundary; the scheduler observes state and writes corrective action through the execution substrate.

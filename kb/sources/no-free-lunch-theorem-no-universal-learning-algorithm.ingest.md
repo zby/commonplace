@@ -21,6 +21,10 @@ Author: Bruce Nielson, writing for Mindfire Technology as an ML/AI specialist. C
 
 Nielson explains the No Free Lunch theorem by enumerating all possible two-path distance assignments in a small pathfinding problem: if every possible problem is counted, always choosing path 1 and always choosing path 2 have equal total performance. Real algorithms work because real problems are not uniformly drawn from all possible functions; they contain structure that a strategy's inductive bias can exploit. A-star is effective when geometric distance predicts travel distance, but its same heuristic fails in a constructed "hopper" world where that relationship breaks. The essay applies the same logic to neural networks: smooth interpolation helps on smooth functions and hurts on anti-smooth ones. The Popperian conclusion is that learning and discovery require assumptions, and the useful question is whether those assumptions match the world being acted in.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The connect report found the strongest fit in the KB's fixed-artifact and codify/relax cluster. The source is evidence for [fixed artifacts split into exact specs and proxy theories](../notes/exact-implementation-does-not-validate-a-requirement.md), because it explains why local wins imply hidden assumptions about the problem distribution. It also supports [codification and relaxing navigate the bitter lesson boundary](../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md): every codified strategy is an inductive-bias bet that improves reliability, speed, or cost only where the world matches its assumptions. The A-star hopper example gives [operational signals that a component is a relaxing candidate](../notes/operational-signals-that-a-component-is-a-relaxing-candidate.md) a simple distribution-shift exhibit, and the final "assumptions match the world" framing supports [specification strategy should follow where understanding lives](../notes/specification-strategy-should-follow-where-understanding-lives.md).

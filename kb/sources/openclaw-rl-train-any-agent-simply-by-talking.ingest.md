@@ -24,6 +24,10 @@ Models: All experiments use the Qwen3 family. The policy model — the one being
 
 OpenClaw-RL introduces a framework that treats "next-state signals" — user replies, tool outputs, terminal feedback, GUI state changes — as universal learning sources for RL training during deployment. The system recovers two signal types: evaluative signals (how well an action performed) converted to scalar rewards via process reward models, and directive signals (how actions should differ) extracted through Hindsight-Guided On-Policy Distillation providing token-level supervision. A fully asynchronous four-loop architecture (policy serving, environment management, PRM judging, training) enables a single policy to simultaneously personalize to individual users and improve at general agentic tasks from interactions it is already having. Experiments show a student agent learns natural writing style within 36 interactions and a teacher agent develops friendlier feedback within 24 interactions; integrating process and outcome rewards outperforms outcome-only training on general agentic tasks.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery identified 7 genuine connections and rejected 10 candidates. The paper lands at the intersection of the KB's learning theory, oracle strength, and deploy-time learning neighborhoods, but in a way that creates productive tension rather than simple alignment.

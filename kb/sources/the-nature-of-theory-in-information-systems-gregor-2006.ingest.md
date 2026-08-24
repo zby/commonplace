@@ -21,6 +21,10 @@ Author: Shirley Gregor, Australian National University; this is the mature prima
 
 Gregor classifies theories by four possible primary goals—analysis/description, explanation, prediction, and prescription—whose combinations yield five interrelated types. Type V, theory for design and action, “says how to do something” by giving explicit prescriptions such as methods, techniques, or principles of form and function for constructing an artifact. All communicable theory requires representation, constructs, relationship statements, and scope; causal explanations, testable propositions, and prescriptive statements are contingent on purpose. Prescription is framed as a special case of prediction: if a recipe is acted upon, it is expected to cause an artifact of a certain type to come into being. This mature formulation therefore treats design-and-action as a purpose-defined subtype, while the availability and capability of whoever acts on the prescription remain outside the taxonomy.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The load-bearing target is [Actionable methodology](../notes/definitions/actionable-methodology.md): this paper supplies the mature Type V definition while preventing its collapse into the theory–operator relation. [Artifact classification separates content kind, lineage, and authority](../notes/artifact-classification-separates-content-kind-lineage-and-authority.md) is a secondary connection because Gregor's purpose taxonomy allows theory to be prescriptive, whereas Commonplace's separate notes and instructions contracts are local authoring choices rather than ontological partitions. Relative to [Gregor 2002](https://ajis.aaisnet.org/index.php/ajis/article/download/439/399/551), the 2006 paper is the broader and more structurally explicit account, not merely independent corroboration.

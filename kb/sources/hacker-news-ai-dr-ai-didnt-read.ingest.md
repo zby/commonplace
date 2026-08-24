@@ -21,6 +21,10 @@ Author: Hacker News participants provide many claimed first-hand software-engine
 
 The discussion responding to Rick Manelius's “AI;DR” post centers on an effort asymmetry: generating plausible text is cheap, while checking whether it is relevant, correct, and worth retaining remains costly. Commenters report code comments that explain nonexistent alternatives, documentation that outruns review, fluent technical claims that omit load-bearing mechanisms, and retained explanations that later agents copy or trust. Others argue that quality matters more than provenance and describe useful translation, accessibility, editing, review, and enforcement workflows. The thread is therefore most useful as naturalistic evidence about reader burden, maintenance debt, and workflow boundaries, not as consensus about AI-assisted writing.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The thread is a field-report anchor for [reverse compression](../notes/reverse-compression-is-when-llm-output-expands-without-adding.md): many participants describe large textual expansions whose usable payload is small. Its strongest KB-specific role is evidence for [harmful-artifact inflow](../notes/maintenance-capacity-must-match-harmful-artifact-inflow.md), because generated comments can persist as maintenance work and as context for later agents. One domain-expert PCIe-over-TCP account concretely illustrates [hidden constraint relaxation](../notes/llm-generation-relaxes-goals-where-human-writing-stalls.md), while reported failures and counterexamples stress-test the condition in [the adversarial-loop claim](../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md): human presence is not enough unless review actively recomputes, compresses, and sometimes rejects the output. Relative to [Grunewald's substantive-writing ingest](./why-almost-never-use-ai-to-write-anything-substantive.ingest.md), this source adds heterogeneous operational reports and disagreement, but weaker attribution and no stronger empirical design.

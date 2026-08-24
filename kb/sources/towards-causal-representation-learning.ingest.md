@@ -21,6 +21,10 @@ Author: Bernhard Schoelkopf, Francesco Locatello, Stefan Bauer, Nan Rosemary Ke,
 
 The paper reviews why causal models matter for machine learning: they add the notion of intervention, distinguish statistical dependence from causal mechanism, support counterfactual reasoning, and explain why modular mechanisms can transfer or adapt under distribution shifts. It also highlights the hard problem of discovering causal variables from low-level observations. For this KB, it is the broadest grounding source for saying causal theories have reach: their value comes from representing mechanisms that imply more than one observed distribution.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The source connects to [reach assessment](../notes/definitions/reach-assessment.md) and [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md) as the broad causal-model grounding for intervention and counterfactual reach. It also supports [Theory-mediated learning may improve sample efficiency under structured shifts](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md), because the note's transfer mechanism depends on reusable causal mechanisms that survive structured shifts.

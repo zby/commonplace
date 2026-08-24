@@ -21,6 +21,10 @@ Author: Ten authors affiliated primarily with Tencent HY LLM Frontier and severa
 
 The paper identifies **behavior localization**—finding every code location that implements a requested behavior—as a prerequisite bottleneck in agent-harness evolution. It introduces Harness Handbook, a behavior-centric representation compiled from a harness repository through deterministic static analysis plus LLM-assisted organization. The representation has an L1 system overview, L2 execution-stage views, L3 source-backed function/file cards, and a cross-stage state-register view. Behavior-Guided Progressive Disclosure (BGPD) navigates from behavior descriptions through stages and shared state to candidate implementation sites, then verifies those sites against current source before planning. Any executed diff is designed to trigger scoped resynchronization, using fingerprints, hashes, reparsing, and conservative freezing when a derived entry cannot be revalidated. In read-only planning experiments on 30 requests each for Codex and Terminus-2, handbook access raises overall judged win rate from 28.3% to 38.3% and from 26.7% to 45.6%, respectively, while reducing planner-token use by 12.7% and 8.6%; all 24 reported recall, precision, and F1 comparisons against two model-generated reference-plan sets improve.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The paper is a concrete technical basis for the KB's claim that [a derived copy of recomputable truth must be checked or absent](../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md): its generated handbook remains subordinate to source through locator validation, fingerprints and hashes, diff-driven invalidation, scoped regeneration, and freezing of unverifiable entries. Its L1-L3 navigation supplies evaluated evidence for [progressive-disclosure pointer design](../notes/pointer-design-tradeoffs-in-progressive-disclosure.md), and its synchronized caches instantiate the requirement to [keep lineage and compiled views from drifting](../notes/agent-memory-requirements/keep-compiled-views-aligned.md).

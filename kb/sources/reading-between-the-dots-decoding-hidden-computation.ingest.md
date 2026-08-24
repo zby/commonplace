@@ -21,6 +21,10 @@ Author: Academic mechanistic-interpretability researchers releasing code and dat
 
 Brauer, Mayrink Verdun, and Marks show that DeepSeek V3 and Kimi K2 can use content-free filler tokens as additional computation positions: filler improves accuracy across retrieval, composition, letter-position, and synthetic equation tasks; attention forms a question-to-filler-to-answer relay; intermediate values appear at ordered filler positions in residual-stream readouts; and transplanting filler-only KV caches causally moves answers toward a donor computation. They then aggregate residual logit-lens scores and use an LLM judge to recover discrete hidden intermediates without training labels, generally reaching 80-95% accuracy on correct examples. The important result is bounded: surface-token opacity does not imply total unauditability when white-box hidden states expose vocabulary-aligned, nameable intermediates.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The paper gives [Oracle strength spectrum](../notes/oracle-strength-spectrum.md) a concrete oracle-manufacturing case: changing the observation surface from meaningless output tokens to residual states produces a useful soft process oracle. It provides direct evidence for [An outcome check licenses replay; a rule needs the process verified](../notes/checked-outcome-licenses-episode-retention-not-abstraction.md), since decoded traces distinguish retrieval failure from composition failure where final correctness cannot. That failure localization also supports [Diagnostic richness constrains outer-loop learning quality](../notes/diagnostic-richness-constrains-outer-loop-learning-quality.md). Its closest source companion is the [J-space/global-workspace ingest](verbalizable-representations-global-workspace-llms.ingest.md): both recover causally relevant verbalizable hidden content, but this paper contributes temporal localization across filler positions and a label-free aggregation pipeline, while remaining narrower in task and concept scope.

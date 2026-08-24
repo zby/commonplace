@@ -21,6 +21,10 @@ Author: Richard Heimann synthesizes mathematical texts, experiments, and popular
 
 The chapter argues that prediction and compression reveal latent structure. A coffee automaton separates monotonic microscopic entropy from non-monotonic apparent complexity measured after coarse-graining; Kolmogorov complexity and MDL formalize short descriptions; Hinton and van Camp regularize weights through description length; grokking appears as a transition from memorization to a compressible rule; and double descent suggests that overparameterized models may find simpler interpolating functions beyond a brittle threshold. It ends by reframing the “blurry JPEG of the web” from a defective archive into a lossy, generative interface. Across these cases, however, compression changes meaning—from objective, to proxy measurement, to explanatory metaphor, to product interface.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The source complements [epiplexity](../notes/epiplexity-by-example-what-entropy-and-complexity-miss.md) and supports [observer-relative information value](../notes/information-value-is-observer-relative.md), because visible structure depends on the coarse-graining, compressor, tolerance, tools, and task. It also illustrates [proximate-target warrant](../notes/a-proximate-target-is-checked-for-achievement-not-for-warrant.md): shorter descriptions may correlate with generalization without universally explaining it. The blurry-JPEG claim is bounded by [parametric reproduction cannot replace an authoritative record](../notes/parametric-reproduction-cannot-replace-an-authoritative-record.md), and the reflective cluster supplies the key contrast that compressed weights remain indirectly rather than reflectively addressable, as in [reflection buys addressability](../notes/reflection-buys-addressability.md).

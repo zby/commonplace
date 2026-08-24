@@ -23,6 +23,10 @@ Author: @Vtrivedy10 (Varun Trivedy), associated with LangChain's deepagents libr
 
 Vtrivedy10 proposes a clean definition of "harness" — everything that is not the model — and derives the core components an agent harness needs by working backwards from what models cannot do out of the box: maintain state, execute code, access real-time knowledge, or configure environments. The post walks through six component categories (filesystem for durable storage, bash for general-purpose execution, sandboxes for safe environments, memory/search for continual learning, context management for battling context rot, and long-horizon execution patterns like Ralph Loops). It closes with a section on model-harness co-evolution: harness primitives get baked into model training, creating a feedback loop where models become more capable within their training harness but potentially overfit to it (the apply_patch example). The author argues harness engineering will remain valuable even as models absorb current harness features, because harnesses engineer systems around intelligence rather than merely patching model deficiencies.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 `/connect` (re-run 2026-03-12) validated 11 source-to-note connections, 2 source-to-source connections, and rejected 12 candidates. The density is high because the source's component taxonomy maps systematically onto the KB's theoretical framework — each harness component corresponds to one or more existing notes.

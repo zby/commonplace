@@ -21,6 +21,10 @@ Author: Rajesh Jayaram, Drew Tyler, David Woodruff, Corinna Cortes, Yossi Matias
 
 Jayaram et al. describe Google's Paper Assistant Tool (PAT), an agentic scientific-review pipeline that segments a manuscript, assigns adaptive compute budgets to logical sections, runs specialized deep-review agents, and synthesizes critiques with grounding and deduplication. The paper reports that PAT improves over a zero-shot Gemini baseline on a filtered SPOT subset of math/CS equation/proof errors, and that STOC/ICML author pilots produced positive survey feedback, including reports of substantive theory gaps and new experiments. Its most valuable contribution for this KB is not a claim that AI can replace reviewers, but a concrete design and policy pattern: automate verifiable review subroles first, and preserve human accountability where methodological judgment, hallucination risk, and publication authority remain unresolved.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 Connection discovery placed this source in the KB's verification, orchestration, and review-automation cluster. The strongest theoretical ties are [The boundary of automation is the boundary of verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md), [The augmentation-automation boundary is discrimination not accuracy](../notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md), [Bounded-context orchestration model](../notes/bounded-context-orchestration-model.md), [Decomposition heuristics for bounded-context scheduling](../notes/decomposition-heuristics-for-bounded-context-scheduling.md), [Agent orchestration needs coordination guarantees, not just coordination channels](../notes/agent-orchestration-needs-coordination-guarantees-not-just.md), [Synthesis is not error correction](../notes/synthesis-is-not-error-correction.md), [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md), and [Process structure and output structure are independent levers](../notes/process-structure-and-output-structure-are-independent-levers.md).

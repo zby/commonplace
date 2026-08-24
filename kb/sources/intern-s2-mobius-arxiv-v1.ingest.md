@@ -34,6 +34,10 @@ The association is direct: its [README](https://github.com/internlm/intern-s2-mo
 
 **Paper-only.** The checkout does not demonstrate that shared experts contain semantically identifiable knowledge, that selected experts causally mediate correct answers, or that parameter sharing implements a backward residual connection in the stronger semantic sense. The released forward method traverses the configured decoder layers once; no explicit adaptive latent-iteration loop or dynamic per-token iteration budget appears in this checkout. The claimed data efficiency, shorter reasoning, throughput, benchmark quality, catastrophic-forgetting advantage, and future self-evolution properties remain paper claims. No model code was executed: the repository supplies no cheap test environment, and running inference would require downloading a 35B checkpoint and dependencies, which this ingest deliberately did not do.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The source is a useful same-form role-separation case for [Axes of artifact analysis](../notes/axes-of-artifact-analysis.md) and [representational form](../notes/definitions/representational-form.md): Memory and Reasoners have distinct architectural roles but remain distributed-parametric. Its implemented top-k router provides a concrete model-internal selection path bearing on [Knowledge storage does not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md), without showing semantic faithfulness. The experiment interpretation rests on [Learning inside a fixed decomposition inherits its mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md), because compound gains do not independently validate the fixed memory partition, routing, hybrid attention, training recipe, or serving path.

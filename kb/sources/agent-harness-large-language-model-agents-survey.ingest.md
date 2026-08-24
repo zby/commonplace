@@ -21,6 +21,10 @@ Author: Qianyu Meng et al. The source has academic form and a broad literature s
 
 The paper defines an LLM agent harness as a six-component runtime governance layer: execution loop, tool registry, context manager, state store, lifecycle hooks, and evaluation interface. Its central claim is that deployed agent reliability is determined by the model-plus-harness system, not the model alone, because the harness controls tool access, context assembly, state persistence, policy enforcement, observability, and evaluation feedback. The survey traces harness concepts from software testing and reinforcement learning environments into LLM agents, classifies representative systems by stack position and domain scope, and organizes open problems around sandboxing, evaluation, protocols, context management, tool governance, memory, planning, multi-agent coordination, and compute economics. Its strongest contribution for this KB is not the component list by itself, but the way it elevates lifecycle hooks and evaluation interfaces into the formal harness definition.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The companion connect report found the strongest notes cluster around runtime decomposition, context loading, memory-as-crosscutting concern, enforcement, coordination guarantees, and verification. [Agent-runtime analysis should separate scheduling, context assembly, and external state](../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) is the central target: the survey independently confirms a model-surrounding runtime layer, but its `E/T/C/S/L/V` tuple also pressures the KB to decide whether lifecycle hooks and evaluation interfaces are separate runtime components or cross-cutting governance/evaluation layers over the existing scheduler, context engine, and execution substrate split.

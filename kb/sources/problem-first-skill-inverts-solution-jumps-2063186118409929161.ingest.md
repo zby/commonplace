@@ -24,6 +24,10 @@ Author: @nurijanian presents as a PM practitioner and PM OS vendor; the source h
 
 The post describes `problem-first`, a product-management skill that treats a proposed solution as a compressed signal of an unarticulated problem, then expands it into underlying problem statements, assumption challenges, alternative framings, validation tests, and a stakeholder message. The author argues that this works better than telling a team to stop and restart discovery because existing roadmaps carry political momentum. The same skill can run in reverse for idea triage: feed an idea in, extract the problem it is supposed to solve, and discard ideas with no evidence status. For Commonplace, the useful part is not PM doctrine itself but the example of a lightweight AI skill whose value comes from forcing skipped reasoning moves under time pressure.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The companion connect report, [problem-first-skill-inverts-solution-jumps-2063186118409929161.connect.md](../reports/connect/sources/problem-first-skill-inverts-solution-jumps-2063186118409929161.connect.md), found four strong connections. The source is evidence for [Process structure and output structure are independent levers](../notes/process-structure-and-output-structure-are-independent-levers.md) because the skill's reported value comes from mandatory reasoning sections, especially assumption challenges, alternative framings, and a draft message. It also supports [Skills are instructions plus routing and execution policy](../notes/skills-are-instructions-plus-routing-and-execution-policy.md), [Skills derive from methodology through distillation](../notes/skills-derive-from-methodology.md), and [Methodology enforcement is constraining](../notes/methodology-enforcement-is-constraining.md) by showing a domain reasoning practice packaged as a user-invoked skill that makes a protocol run consistently. Weaker matches to typed callables, instruction testing, frontloading, and agent-memory-system coverage were rejected as too indirect.

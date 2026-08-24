@@ -21,6 +21,10 @@ Author: Danny Weyns is a leading self-adaptive-systems researcher; this is a syn
 
 Weyns defines self-adaptation through complementary external and internal principles: autonomous handling of change and uncertainty, plus a distinction between a managed system serving domain concerns and a managing system serving adaptation concerns. The four-element model (environment, managed system, adaptation goals, managing system) organizes six research waves: automating tasks, architecture-based adaptation, runtime models, goal-driven adaptation, guarantees under uncertainty, and control-based adaptation. MAPE-K is presented as one engineering pattern within this history. The chapter's central value for Commonplace is a disciplined separation between a feedback-loop architecture and the harder question of what qualifies as self-improvement or self-adaptation.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The source is a technical anchor for [a proposal-selection loop requires search, evaluation, and retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md): both treat loop decompositions as conceptual engineering models rather than category definitions. It also directly supports [real self-improving systems occupy combinations no single rung captures](../notes/evidence/real-self-improving-systems-occupy-combinations-no-rung-captures.md), whose profile separates architecture, allocation, and governance instead of collapsing them into one autonomy score. No durable note currently uses Weyns's six-wave vocabulary as an operational taxonomy.

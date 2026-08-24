@@ -25,6 +25,10 @@ Author: @deepfates — active in the AI/LLM discourse community on X. Not an aca
 
 Deepfates argues that what passes for "memory" in current LLM systems is just indiscriminate document-stuffing into context windows, creating a Chekov's gun effect where injected facts create false salience expectations. The post proposes agentic context-building (searching/crawling previous conversations) as a better alternative, noting that agents are more confident in single-player terminal environments where they control their own context narrative. In multi-agent scenarios, the user introduces "confusing, unclear, possibly contradictory desires" through a mishmash of instructions, memories, and tools. The post speculates that this context mess explains weak higher-order theory of mind and persona drift, ultimately concluding that "real" memory requires continual learning (weight updates), not just in-context learning.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery found 9 KB notes across three clusters, plus 2 source-to-source connections.

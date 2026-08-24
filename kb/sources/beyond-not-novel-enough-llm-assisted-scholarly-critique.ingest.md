@@ -21,6 +21,10 @@ Author: Osama Mohammed Afzal, Preslav Nakov, Tom Hope, and Iryna Gurevych, affil
 
 Afzal, Nakov, Hope, and Gurevych introduce a human-informed pipeline for automated novelty assessment in peer review. The system analyzes ICLR 2025 novelty-review comments, derives reviewer patterns such as independent verification and gap identification, then evaluates submissions through document processing, related-work discovery, structured extraction, landscape analysis, novelty-delta comparison, and final novelty-assessment generation. On 182 annotated ICLR 2025 submissions, the paper reports 86.5% alignment with human reasoning and 75.3% agreement on novelty conclusions, outperforming adapted LLM review baselines. For this KB, the important contribution is not "AI can replace reviewers"; it is the evaluator-construction pattern for a soft, knowledge-intensive task.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The companion connect report saved [beyond-not-novel-enough-llm-assisted-scholarly-critique.connect.md](../reports/connect/sources/beyond-not-novel-enough-llm-assisted-scholarly-critique.connect.md). It found the source belongs in the KB's evaluation and oracle-design cluster. The strongest note connections are [Evaluation automation is phase-gated by comprehension](../notes/evaluation-automation-is-phase-gated-by-comprehension.md), [Oracle strength spectrum](../notes/oracle-strength-spectrum.md), [The boundary of automation is the boundary of verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md), [Process structure and output structure are independent levers](../notes/process-structure-and-output-structure-are-independent-levers.md), [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md), and [Prompt ablation converts human insight into deployable agent framing](../notes/prompt-ablation-converts-human-insight-to-deployable-framing.md).

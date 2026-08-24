@@ -22,6 +22,10 @@ Author: the AutoResearchEval and ARFT research team, reporting first-party analy
 
 The paper constructs 100 research tasks across seven scientific domains, including 70 open-ended tasks without an execution-feedback signal and 30 target-anchored tasks, then runs each task once under eight harness-model combinations for 800 full trajectories. Its AutoResearch Failure Taxonomy (ARFT) assigns 45 patterns across six lifecycle stages plus cross-stage dynamics and four proposed root-cause pillars. A human-calibrated agent judge inspects code, data, logs, and reports rather than only the final output; against human labels on 50 trajectories, this pipeline reaches 80.7% pattern recall and $\kappa=0.75$, versus 63.5% and $\kappa=0.53$ for a single transcript-only call. Across 12,712 attributed hits, the paper emphasizes unsupported claims, invalid proxy optimization, and especially failures that agents themselves noticed but did not repair: uncorrected self-awareness appears in 660 of 800 analyses. This is useful evidence for artifact-aware diagnosis and for making review findings govern delivery, but it does not establish that the shared failures are irreducibly model-level, because task structure, prompts, budgets, evidence partitions, judging machinery, and most orchestration choices remain fixed rather than experimentally varied.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This paper is an empirical anchor for [Diagnostic richness constrains outer-loop learning quality](../notes/diagnostic-richness-constrains-outer-loop-learning-quality.md) and [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md): a judge with access to the producing artifacts diagnosed more human-labelled failures than a transcript-only call, and polished endpoints often concealed routes that did not support them. The measured advantage belongs to the full artifact-aware judging bundle, not to artifact access alone.

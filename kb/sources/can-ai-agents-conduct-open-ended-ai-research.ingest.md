@@ -22,6 +22,10 @@ Author: a 24-author CRUX collaboration that includes the core evaluation team an
 
 CRUX introduces **shadow evaluation** for open-ended AI research: give an agent the central question from a high-quality unpublished paper, withhold the paper and its findings, then have the original researchers grade the output as a conference submission. Claude Opus 4.8 on OpenClaw received six days, $3,000 in API credit, GPU compute, a VM, the web, subagents, and AI review tools for each of two NeurIPS 2026 questions. The agents autonomously completed literature review, engineering, experiments, and paper production, but the original authors scored the papers 2/6 and 1/6. Log analysis attributes the failures to weak judgment about publishable evidence, uncreative responses to design problems, ineffective project-level backtracking, poor resource awareness, and instruction drift. A GPT-5.6 Sol Ultra/Codex robustness run on one question reproduced most failure modes while consuming its budget differently. The result is early evidence for an engineering/judgment split, not a general measurement of all AI research capability.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This source is a bounded empirical anchor for [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md) and [The boundary of automation is the boundary of verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md): extensive autonomous execution coexisted with failure on hypothesis selection, evidence calibration, substantive reframing, and knowing what to abandon. It supplies the observed cases that the earlier [When code is free, research is all that matters](./when-code-is-free-research-is-all-that-matters-2031072399731675.ingest.md) source lacked.

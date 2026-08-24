@@ -21,6 +21,10 @@ Author: Gregor Kiczales, J. Michael Ashley, Luis Rodriguez, Amin Vahdat, and Dan
 
 Kiczales et al. present a metaobject protocol (MOP) as a documented interface that “opens up” selected parts of a language's semantics and implementation without exposing arbitrary implementation details. Ordinary programs keep the base language's syntax and default behavior; programmer-supplied meta-code changes selected definition machinery through protocol generic functions, and a base definition explicitly opts into the alternate behavior through a mark such as CLOS's `:metaclass`. The separation answers two design pressures at once: keep the base language small and its implementation abstract, while giving exceptional programs a sanctioned way to revise implementation tradeoffs or language semantics. The paper's locality principles make the fence more precise: extensions should target one feature, object, strategy, and marked textual region, and should be incremental deviations from a good default rather than replacements for the whole implementation.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This paper is a primary historical attestation for the “marked separate interface” signature in [Domain pricing routes an exception to idealization assessment but does not decide it](../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md): protocol entry points and explicit base-level marks existed as part of MOP design decades before the local idealization dispute. It also supplies the technical basis for the fenced definition-change analogy in [Instantiation alone cannot model agent learning across sessions](../notes/instantiation-alone-cannot-model-agent-learning-across-sessions.md): the base program does not perform ordinary instance work and definition change through one undifferentiated mechanism. [Maes's Computational Reflection](./maes-computational-reflection-1988.ingest.md) remains the better source for causal connection and self-representation; Kiczales et al. add the distinct protocol-design account of how selected reflective operations are exposed and localized.

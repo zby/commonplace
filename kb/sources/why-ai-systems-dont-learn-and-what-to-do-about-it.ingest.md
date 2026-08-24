@@ -21,6 +21,10 @@ Authors: Emmanuel Dupoux, Yann LeCun, Jitendra Malik — cognitive science, fron
 
 The paper argues that current AI systems do not truly learn after deployment because adaptation has been externalized into a human-operated MLOps loop. Its proposed remedy is a three-part architecture: System A learns from observation, System B learns from action, and System M acts as a meta-control plane that selects inputs, modulates objectives, switches modes, and routes information between learning subsystems and memory. The main contribution is not a new algorithm but a reframing: autonomous learning is an architectural problem about integrating observation, action, and meta-signals into one adaptive system, with an outer evolutionary-developmental loop needed to bootstrap the whole stack.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 Five genuine note connections, all in the KB's learning-theory cluster, plus one recurring tension in the control-plane vocabulary.

@@ -21,6 +21,10 @@ Author: Ericsson AB maintains the Erlang/OTP documentation; this is an authorita
 
 Erlang can replace a module while the system is running, but the runtime does not blur that change into ordinary execution. It gives each loaded module explicit `current` and `old` versions, allows both to run concurrently, and switches a lingering process only when it makes a fully qualified call into the module. Loading a third version purges the old one and terminates processes still executing it. The page also describes an `on_load` activation check: new code becomes callable only if its hook returns `ok`, while existing current code remains available during the check. The result is a small, explicit runtime protocol for definition change; the companion [Release Handling documentation](https://www.erlang.org/doc/system/release_handling.html) adds the release-level deployment ceremony.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This snapshot is the technical substrate behind [instantiation alone cannot model agent learning across sessions](../notes/instantiation-alone-cannot-model-agent-learning-across-sessions.md): a running process can cross from one definition version to another, but only through named version states and an explicit call path distinct from local continuation. It also supplies bounded routing evidence for [domain pricing routes an exception to idealization assessment but does not decide it](../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md): code replacement is a marked runtime path, but this mechanism alone says nothing about whether the immutable-class idealization remains adequate for a declared use. The release-handling snapshot is the stronger governance-ritual attestation because it adds versioned plans, migration, rollback, and permanence.

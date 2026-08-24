@@ -21,6 +21,10 @@ Author: Strong. Torres-Arias, Cappos et al. (NYU/NJIT/Datadog) — the same lab 
 
 in-toto is a framework that cryptographically verifies the integrity of an entire software supply chain — not just its individual steps. A project owner signs a *layout* (a JSON recipe naming steps, permitted functionary keys, per-step artifact rules, and k-of-n signing thresholds); each *functionary* who performs a step emits signed *link* metadata recording the command, materials, and products (with hashes). At delivery, the client runs `VERIFY_FINAL_PRODUCT`, checking that the collected links satisfy the layout: correct steps in order, `MATCH` artifact rules tying each step's output byte-for-byte to the next step's input, and thresholds met. This closes the gap that point solutions (commit signing, reproducible builds) leave open: tampering *between* otherwise-correct steps. The design degrades gracefully under partial key compromise (it is explicitly not "lose-one-lose-all"), and against a survey of 30 real 2010-2019 supply-chain compromises, the deployments would have caught 23 that involved no key compromise at all, with the TUF+in-toto combination reaching 100%.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 in-toto is a cross-domain (software-supply-chain security) source; every tie into this KB is an analogy from supply-chain provenance/verification onto the KB's own lineage, staleness, and verification-cost theory. Connection discovery found one link that transfers without an analogical discount and several softer ones:

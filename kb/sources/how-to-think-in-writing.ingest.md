@@ -21,6 +21,10 @@ Author: Henrik Karlsson -- an independent essayist writing from sustained person
 
 Karlsson argues that writing improves thought only when it makes an idea vulnerable to failure. His sequence is to turn a diffuse impression into a definite positive conjecture, expand the conjecture into explicit premises and reasoning, and then test those parts against research or concrete counterexamples. A local counterexample defeats part of the explanation while leaving the conclusion standing; a global counterexample propagates to the conclusion and forces a replacement. The essay also warns that a scaffold optimized for discovery may obstruct beauty, speed, and publication.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The essay is an operational refinement of the writing-as-thinking mechanism already addressed by [the adversarial-loop note](../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md): it names the claim-fixing, premise-exposure, and counterexample operations that such a loop would need to reconstruct, without showing that an agent loop succeeds. Its definite positive claim illustrates [claim titles as exposed commitments](../notes/title-as-claim-exposes-commitments-enabling-popperian-maintenance.md); its premise expansion gives [structured review](../notes/structured-output-is-easier-for-humans-to-review.md) separately addressable targets; and its contrast between shifting ambiguity and rigid prose is a natural-language instance of [constraining](../notes/definitions/constraining.md). The full sequence independently instantiates the conjecture, consequence, and test core of the [discovery lifecycle](../notes/definitions/discovery-lifecycle.md).

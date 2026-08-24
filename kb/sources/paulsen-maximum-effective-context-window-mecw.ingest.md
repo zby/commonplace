@@ -22,6 +22,10 @@ Author: Norman Paulsen, Denver, Colorado. No institutional affiliation listed; a
 
 Paulsen defines the Maximum Effective Context Window (MECW) as the longest span of token input, for a given problem type, before model performance degrades measurably — distinguishing it from the advertised Maximum Context Window (MCW). Testing 11 frontier LLMs (GPT-5, Claude 3.5, Gemini 2.5, DeepSeek r1, Llama 3.3, etc.) across four task types (single-needle retrieval, multi-needle retrieval, summarization, find-and-sort), the study finds that MECW falls short of MCW by up to >99%, that most models show severe accuracy degradation by 1,000-2,000 tokens for complex tasks, that MECW varies substantially by problem type (and model rankings shift across tasks), and that exceeding MECW drives hallucination rates toward 100%. The paper argues that context window size — not temperature, top_p, or other settings — is the dominant factor determining model accuracy, and that RAG systems improve performance only when operating under the MECW threshold.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The /connect discovery identified 7 KB notes and 1 sibling source with genuine connections:

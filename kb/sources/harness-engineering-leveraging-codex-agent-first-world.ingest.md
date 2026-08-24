@@ -20,6 +20,10 @@ Author: Ryan Lopopolo, Member of Technical Staff at OpenAI, on the Codex team th
 
 Lopopolo reports on OpenAI's Codex team shipping an internal beta product with over one million lines of agent-generated code across five months, with zero manually written lines. The core thesis is that the engineer's role shifts from writing code to designing "harnesses" — systems that constrain, inform, verify, and correct agent behavior. The article identifies three pillars: context engineering (short AGENTS.md as a map with pointers, plus dynamic observability), architectural constraints (enforced dependency graphs, structural tests, linters whose error messages teach the agent the fix), and entropy management (background cleanup agents that scan for drift and open small refactoring PRs, treated as "garbage collection for code quality"). The compounding effect is the central insight: each constraint makes future agent work more reliable, and each cleanup agent reduces the maintenance burden, so the system improves as it grows.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery validated all 7 connections from the original ingest and found 7 additional ones, for 14 total. Only one note currently links back to this source ([error-messages-that-teach-are-a-constraining-technique](../notes/error-messages-that-teach-are-a-constraining-technique.md)), meaning 13 connections remain unmaterialised as bidirectional links.

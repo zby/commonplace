@@ -21,6 +21,10 @@ Author: Johan Brichau, Kris Gybels, and Roel Wuyts report directly on the SOUL s
 
 Brichau et al. start from a SOUL/Smalltalk system already described as symbiotically reflective and ask how to make the two languages transparently usable from one another. They call that integration **linguistic symbiosis** and show why it is difficult across paradigms: object-oriented messages and logic predicates disagree about argument binding, number of results, failure, control flow, and dispatch. Their implementation maps modules to classes and messages to queries, later separating the mapping's language-specific syntactic “look” from its paradigm-specific semantic “feel.” The paper is evidence about the mechanisms and unresolved costs of cross-representational interoperability, not an independent foundation for the definition of reflection.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The strongest landing point is [Unified calling conventions enable bidirectional refactoring](../notes/unified-calling-conventions-enable-bidirectional-refactoring.md): this source shows that a common call surface needs semantic mappings, not only shared names. [Representational form](../notes/definitions/representational-form.md) prevents equating programming-paradigm mismatch with Commonplace's natural-language/symbolic distinction. The paper is secondary to the 2001 and 2006 sources for defining reflection itself.

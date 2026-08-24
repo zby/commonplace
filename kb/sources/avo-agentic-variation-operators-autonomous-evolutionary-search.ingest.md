@@ -21,6 +21,10 @@ Author: Terry Chen, Zhifan Ye, Bing Xu, and 20 coauthors at NVIDIA. The team has
 
 AVO replaces a prescribed evolutionary `Sample`-then-`Generate` variation step with a general-purpose coding agent that can inspect the full committed lineage, consult CUDA/PTX/Blackwell documentation and reference kernels, edit CUDA code, run correctness and throughput checks, diagnose failures, and decide when to try again. In one single-lineage run on B200 attention kernels, the authors report more than 500 explored directions and 40 accepted versions over seven unattended days. The final MHA kernels reach up to 1668 BF16 TFLOPS and beat the measured cuDNN and FlashAttention-4 baselines by up to 3.5% and 10.5%; adapting the result to GQA takes about 30 additional minutes and reports gains up to 7.0% and 9.3%. Three adjacent-version analyses attribute gains to branchless accumulator rescaling plus a lighter fence, correction/MMA overlap, and register rebalancing. The experiment demonstrates productive autonomous code search in a hard-oracle domain, but it does not compare AVO with a fixed variation workflow under matched model, tools, evaluation budget, and wall time.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 AVO is a clean, non-reflective instance of [a proposal-selection improvement loop](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md): the agent searches over code edits, correctness or non-improvement can prevent commitment, and accepted kernels become the lineage used by later variation. Its main conceptual value is the boundary exposed by [learning inside a fixed decomposition](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md). AVO moves parent consultation, implementation, diagnostic testing, and evaluation timing inside the agent, but leaves the task representation, scoring function, benchmark suite, seed, agent/model/tool surface, single-lineage policy, commit rule, and supervisor outside its update space.

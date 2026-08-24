@@ -21,6 +21,10 @@ Author: Ericsson AB maintains the Erlang/OTP documentation; it is authoritative 
 
 OTP turns its runtime code-replacement capability into a versioned release procedure. Modified applications receive `.appup` files that map explicit prior versions to upgrade and downgrade instruction lists; `systools` compiles these into an ordered release-wide `relup`; and `release_handler` unpacks and installs the package on the running system. Simple functional-module changes may load directly, while state-format changes use synchronized replacement: find affected supervised processes, suspend them, invoke `code_change/3` through the system protocol to transform state and switch code, remove the old version, and resume. Installation is reversible and staged: failure can reboot into the old release, success still requires a separate `make_permanent` step before the new version becomes the reboot default. A runtime famous for hot swapping therefore treats nontrivial definition change as governed deployment, not as an ordinary execution step.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This page is direct technical evidence for the change-as-deployment claim in [instantiation alone cannot model agent learning across sessions](../notes/instantiation-alone-cannot-model-agent-learning-across-sessions.md): the fence consists of versioned artifacts, ordered transitions, synchronized migration callbacks, rollback, and explicit commitment. It is also a concrete governance-ritual attestation for [domain pricing routes an exception to idealization assessment but does not decide it](../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md). Its evidential role must remain the one that note now assigns to pricing: it routes the exception to assessment and blocks a purely post-hoc "edge case" label; it does not establish frequency, bounded consequences, or explanatory dominance. The companion [Code Loading snapshot](https://www.erlang.org/doc/system/code_loading.html) supplies the lower-level current/old module semantics on which this procedure operates.

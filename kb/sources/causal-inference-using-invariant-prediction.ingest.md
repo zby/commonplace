@@ -21,6 +21,10 @@ Author: Jonas Peters, Peter Buehlmann, and Nicolai Meinshausen; high authority s
 
 The paper asks what distinguishes causal prediction from non-causal prediction under interventions or environment changes. Its answer is invariance: the conditional distribution of a target given its direct causes should remain stable across suitable environments, while non-causal predictors can fail under intervention. The method collects models whose predictions are invariant across experimental settings and gives confidence intervals for causal relationships under stated assumptions. For this KB, it is the cleanest source for turning "reach" into a formal causal obligation: a candidate mechanism must survive the relevant intervention or environment-shift test.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This source directly supports [reach assessment](../notes/definitions/reach-assessment.md) and [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md): it gives a specific formal signal for assessing whether a proposed causal commitment reaches beyond the distribution that fitted it. It also grounds the structured-shift premise in [Theory-mediated learning may improve sample efficiency under structured shifts](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md), because it makes "stable mechanism across environments" statistically explicit.

@@ -22,6 +22,10 @@ Author: Hernández-Espinosa, Ozelim, Abrahão, and Zenil (Oxford Immune Algorith
 
 SuperARC is an open-ended benchmark grounded in Algorithmic Information Theory that tests AI models' capacity for recursive compression and abstraction on binary sequences of increasing algorithmic complexity. The central finding is stark: frontier LLMs (GPT-4.5, Claude 3.5, Gemini, etc.) score phi = 0.007–0.042 while a neuro-symbolic AIXI/BDM/CTM baseline scores 1.000 (perfect). Most LLM-generated "correct" programs are bare print statements that reproduce sequences without any compression — zero abstraction. Newer model versions often regress on this benchmark despite improving on standard human-centric benchmarks. LLMs perform dramatically better on integer sequences, which the authors attribute to memorization of common mathematical sequences from training data — confirming that binary sequences strip away statistical shortcuts. The paper argues that recursive compression and optimal prediction are mathematically equivalent (proved via Martingale theory), and that current LLM architectures are fundamentally limited to the statistical subspace of their training distribution.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery identified 8 genuine connections and rejected 7 candidates (including distillation, structure-activates, and discovery — all surface-vocabulary matches without mechanistic overlap).

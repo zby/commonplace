@@ -21,6 +21,10 @@ Author: Richard Heimann is a secondary technical narrator; the cited papers prov
 
 The chapter explains the Transformer by reconstructing the problems it relaxed: a fixed thought vector compressing an entire sequence, recurrence creating long information and gradient paths, arbitrary ordering burdening set tasks, and sequential execution limiting parallel scale. Bahdanau attention lets a decoder query encoder states; pointer networks turn attention into an output mechanism; Neural Turing Machines add differentiable addressing; order experiments expose serialization as a hidden design choice; and self-attention removes recurrence while retaining positional, residual, normalization, masking, and feed-forward structure. The historical reversal trick provides a particularly clear example of temporary scaffolding whose benefit vanished as architecture changed.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The chapter is strong evidence for [learning inside a fixed decomposition inherits its mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md): thought vectors, recurrence, and arbitrary orderings bound accessible information and expressible mappings. It also supports [first-principles design-space mapping](../notes/first-principles-analysis-maps-design-space-before-selection.md) by unpacking “sequence model” into independent choices. The reversal trick materially supports [scaling absorbs scaffolding at fixed difficulty](../notes/scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md), and the Transformer supports the [structure-aware Bitter Lesson](../notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md).

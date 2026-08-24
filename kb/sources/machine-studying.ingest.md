@@ -21,6 +21,10 @@ Author: Jacob Xiaochen Li and Omar Khattab are MIT CSAIL researchers, and Rick B
 
 The authors define **machine studying** as any pre-task change an agent makes to its model or harness from a corpus alone, before the downstream task distribution or reward is known. They define domain **expertise** as weighted performance across inference-compute budgets and propose a second, nested curve over study compute as “studying intelligence.” StudyBench instantiates the idea with current and post-cutoff coding corpora plus a large literature corpus. Preliminary results suggest that search access does not erase model-knowledge differences, continual pre-training and synthetic fine-tuning do not reliably improve Qwen3.5-9B as a tool-using agent, a generated cheatsheet helps mainly at cheap DSPy budgets, and two frontier models can retrieve similar recent papers yet differ substantially in which retrieved papers they retain for a review.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 This source is a useful empirical anchor for the KB's claim that [the deployed system, not the model alone, is the unit of learning](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md). Its definition permits changes to weights, prompts, tools, indexes, and notes, and its evaluation holds corpus access open at test time while asking whether preparation changes later quality and cost. The DSPy cheatsheet is a bounded instance of [frontloading](../notes/frontloading-spares-execution-context.md): a precomputed repository map helps most at low budgets, while forced long search lets the base agent recover much of the gap. The literature task similarly supports the narrower claim that [learning must improve action capacity, not just retrieval](../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md), because relevant-paper reach stays close while final selection diverges.

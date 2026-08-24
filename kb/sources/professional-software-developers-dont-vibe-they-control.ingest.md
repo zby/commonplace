@@ -22,6 +22,10 @@ Author: Ruanqianqian (Lisa) Huang, Avery Reyna, Sorin Lerner, Haijun Xia, Brian 
 
 Huang et al. investigate how experienced professional developers (3+ years) actually use AI coding agents, through 45-minute field observations and a broader qualitative survey. The central finding is that professionals do not "vibe code" -- they carefully control agents through planning, explicit prompting with rich context, step-by-step supervision, and established software engineering practices (testing, version control, code review). Developers average only 2.1 agent steps per prompt, maintain design authority, and review most generated code. Task suitability maps cleanly to complexity: agents excel at straightforward, repetitive, and scaffolding tasks but fail at business logic, complex reasoning, and domain-specific work. No respondent believed agents could replace human decision-making. The paper positions developer expertise -- not AI capability -- as the binding constraint on effective agent use.
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 `/connect` discovered 12 connections (6 strong, 6 moderate), plus 1 complementary source.

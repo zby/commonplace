@@ -22,6 +22,10 @@ Author: Sebastian Raschka, PhD — well-known ML educator and author ("Machine L
 
 Raschka decomposes the architecture of coding agents into six components: live repo context, prompt shape and cache reuse, tool access, context bloat minimization, structured session memory, and delegation with bounded subagents. His central argument is that these harness components — not the base model — account for most of the perceived quality difference between agent-mode tools (Claude Code, Codex) and the same models used via plain chat. The article is a pedagogical breakdown aimed at practitioners who want to understand why "wrapping" a model matters, organized around the claim that "a lot of apparent 'model quality' is really context quality."
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The `/connect` discovery identified 9 genuine connections. The source is currently completely unconnected in the KB despite strong alignment with central claims.

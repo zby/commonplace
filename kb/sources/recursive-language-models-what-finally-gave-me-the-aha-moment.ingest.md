@@ -25,6 +25,10 @@ Author: @neural_avb — practitioner who implemented RLMs from scratch and produ
 
 The thread walks through a progressively more capable set of agent architectures — direct generation, RAG, ReAct (tool calling), CodeAct, CodeAct+subagents — and shows how each fails or scales poorly on a concrete "count letter R in 50 fruit names" problem, before presenting RLMs as the architecture that solves the underlying issues. The key RLM mechanisms are: (1) a persistent REPL where the LLM receives a reference to a `context` variable rather than loading the full prompt, (2) programmatic exploration via print/regex/slicing rather than context-loading, (3) scaffold-level output truncation that prevents self-overload, (4) subagent results returned as Python variables in the REPL namespace rather than injected into parent context, and (5) the ability to return constructed variables rather than autoregressively generating the final answer. The author frames the REPL exploration stage as "distilling the complete prompt into smaller useful variables."
 
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 The /connect discovery found 7 connections to KB notes and 1 to another source. The source is remarkably well-connected — it provides primary evidence for several core KB notes about agent architecture.
