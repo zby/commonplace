@@ -117,6 +117,7 @@ case.
 
 ## Next
 
-`freshness-schemas.md` remains the strongest opposite case: exact serialized
-shapes may be removable, while the semantic distinction between stale inputs
-and a false target may survive.
+The proposed opposite case is complete: [the `freshness-schemas.md` worked
+case](./worked-case-freshness-schemas.md) retired the exact serialized-shape
+copy while preserving the accepted-input-versus-truth distinction in freshness
+architecture.

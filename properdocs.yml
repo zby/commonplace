@@ -160,6 +160,7 @@ plugins:
         'reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-are-reclassified.md': 'reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md'
         'reference/available-types.md': 'reference/collections-and-types.md'
         'reference/commonplace-as-a-reflective-system.md': 'notes/evidence/commonplace-as-a-reflective-system.md'
+        'reference/freshness-schemas.md': 'reference/freshness-architecture.md'
         'reference/lib-modules.md': 'reference/README.md'
         'reference/proposals/anchored-validation-checks-with-declared-dependencies.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'
         'reference/proposals/artifact-anchored-validation-over-a-run-scoped-context.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'

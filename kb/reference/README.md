@@ -188,7 +188,6 @@ invariants, and orientation that the implementation does not cheaply recover.
 - [instruction-generation.md](./instruction-generation.md) — build-time instruction generation flow and `commonplace-init`
 - [review-architecture.md](./review-architecture.md) — how the review subsystem is built: package layout, storage schema, canonical-state-vs-derived-output, freshness mechanism, module map, and invariants (the build-side companion to [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md))
 - [freshness-architecture.md](./freshness-architecture.md) — the general freshness substrate: commonplace store, file-text versioning, target baselines, transitions, global status, and the review adapter
-- [freshness-schemas.md](./freshness-schemas.md) — canonical JSON shapes for `commonplace-freshness-status`, `ack`, and `retire`
 
 ### Type system and collection model
 

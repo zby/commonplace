@@ -119,9 +119,9 @@ pair results, and advance their freshness baselines.
 
 ### commonplace-freshness-status
 
-Report freshness for registered targets. The
-[freshness schemas](./freshness-schemas.md) define its JSON and the manifests
-consumed by acknowledgement and retirement.
+Report freshness for registered targets. [Freshness architecture](./freshness-architecture.md)
+explains status, acknowledgement, and retirement; the live implementation owns
+their exact JSON fields.
 
 ### commonplace-freshness-ack
 

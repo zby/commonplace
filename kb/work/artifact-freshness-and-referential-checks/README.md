@@ -28,7 +28,7 @@ Referential-check class design (general cross-artifact prose validation, positio
 | [implementer-handoff.md](./implementer-handoff.md) | compressed entry point — verdict, milestones, traps |
 | [implementation-plan.md](./implementation-plan.md) | sequence, gates M1–M4, done-when |
 | [database-design.md](./database-design.md) | schema authority — migration map, DDL, transactions |
-| [freshness-schemas.md](../../reference/freshness-schemas.md) | canonical status/ack/retire JSON (promoted to reference) |
+| [status serializer](../../../src/commonplace/freshness/status.py) and ack/retire parsers | live status/ack/retire JSON authority; former reference copy retired 2026-08-24 |
 | [future-work-collection-freshness.md](./future-work-collection-freshness.md) | deferred sketch → M4 proposal source |
 
 ## Implemented foundation

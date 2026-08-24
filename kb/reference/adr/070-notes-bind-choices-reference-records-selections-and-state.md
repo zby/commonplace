@@ -193,8 +193,7 @@ joined by `rests-on`. Externally imposed constraints—a platform limit or
 inherited interface nobody here selected—remain an open placement case.
 
 Current-state descriptions belong in reference. `architecture.md`,
-`commands.md`, `storage-architecture.md`,
-`freshness-schemas.md`, and the code-architecture portions of
+`commands.md`, `storage-architecture.md`, and the code-architecture portions of
 `review-architecture.md` and `freshness-architecture.md` faithfully represent
 the state Commonplace's choices produced. Whether each should be generated,
 registered for staleness, partly authored, or minimized is a maintenance

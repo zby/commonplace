@@ -73,7 +73,18 @@ Queued review jobs record `review_pairs.expected_baseline_revision` at pair crea
 
 ## Selection and status
 
-`commonplace-freshness-status` reports all registered targets. It dedupes resolution, supports `--json`, `--diff`, `--all`, and `--model-partition`, and exits `0`/`1`/`2` per [freshness JSON contracts](./freshness-schemas.md).
+`commonplace-freshness-status` reports all registered targets. It dedupes
+resolution and supports `--json`, `--diff`, `--all`, and `--model-partition`.
+Exit `0` means every selected target's accepted inputs still match; exit `1`
+means an input changed or disappeared; exit `2` means resolution, store, or
+invocation failed. These classes report input applicability, not whether the
+target's result is true or false.
+
+The live [status serializer](../../src/commonplace/freshness/status.py),
+[acknowledgement manifest parser](../../src/commonplace/cli/freshness_ack.py),
+[retirement manifest parser](../../src/commonplace/cli/freshness_retire.py), and
+[input-observation parser](../../src/commonplace/freshness/transitions.py) own
+their exact JSON fields and validation.
 
 `commonplace-review-target-selector` keeps `missing-baseline` discovery for applicable pairs not yet registered. Global status does not replace that discovery path.
 
@@ -98,6 +109,5 @@ registration contract ([ADR 065](./adr/065-publish-only-supported-freshness-tran
 
 - [ADR 052](./adr/052-general-freshness-store-review-first-migration.md) — decision record
 - [ADR 065](./adr/065-publish-only-supported-freshness-transitions.md) — withdrawal rule for unsupported transitions
-- [Freshness JSON contracts](./freshness-schemas.md) — status, ack, and retire shapes and exit codes
 - [Storage](./storage-architecture.md) — where the store sits among authored markdown and derived indexes
 - [Review architecture](./review-architecture.md) — review adapter and execution flow
