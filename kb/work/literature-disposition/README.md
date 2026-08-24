@@ -163,9 +163,15 @@ against a captured, read source (Pirolli on proximal information scent) on
 workshop closes and is deleted while this one still needs the result.
 
 **The critique's diagnosis was half right, and the half it missed matters more.**
-Three claims are subsumed — the follow/skip unit, the probabilistic judgment
-under uncertainty, and the proximal cue that lets a reader judge without loading
-the target. Those are information scent, near-paraphrase, cited to nobody. But a
+Three claims overlap the source — the follow/skip unit, the probabilistic
+judgment under uncertainty, and the proximal cue that lets a reader judge
+without loading the target — and are cited to nobody. **A stricter blind re-run
+found that overlap is not subsumption**: of those three, the source does not
+establish the "fundamental unit" wording, does not compose its two separate
+results into a pointer-level tradeoff, and supports only the proximal/distal
+core of the third. All three need narrowing rather than deletion, which moves
+the note further from retirement. See the correction in the
+[worked case](../source-grounding/worked-case-agents-navigate.md). But a
 fourth claim, "the more context a pointer carries, the cheaper the navigation
 decision," is **not** in the source and is wrong by the source's own lights: it
 merges estimate quality with interaction cost where the source separates them,

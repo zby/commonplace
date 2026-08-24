@@ -81,9 +81,9 @@ skill, not to this workshop.
 
 | id | Verdict |
 |---|---|
-| C1 | **Subsumed.** The source's whole subject is navigation choice over cues |
-| C2 | **Subsumed, and far more precisely modelled** |
-| C3 | **Subsumed.** Near-paraphrase of the source's central construct |
+| C1 | ~~Subsumed~~ → **Narrowing needed.** See the correction below |
+| C2 | ~~Subsumed~~ → **Narrowing needed.** See the correction below |
+| C3 | ~~Subsumed~~ → **Partly supported, needs narrowing.** See the correction below |
 | C4 | **Not established — and the source separates the two things the note merges** |
 | C5 | **Absent from the source.** Local, and locally untested |
 | C6 | **Absent.** Local design consequence |
@@ -108,6 +108,37 @@ at: a Bayesian log-odds account in which the estimate of distal feature *i* is
 `A_i = B_i + Σ_j S_ji` — a base rate plus one strength term per proximal feature
 — implemented as spreading activation and turned into a choice by a Random
 Utility Model.
+
+**Correction, 2026-08-24, from a stricter independent pass.** The
+[claim-pull implementation workshop](../claim-pull-implementation/pirolli-claims-worked-case.md)
+re-ran this comparison under blind separation: one fresh worker reconstructed
+the source's claims from the checksum-pinned observation without seeing this
+note or this worked case, and a second judged C1–C4 against only the resulting
+claim entries. It tightened three of the four verdicts, and it is right.
+
+- **C1.** Pirolli models link choice, site leaving, keyword search, and URL
+  search. The paper does not establish the "fundamental unit of navigation"
+  wording. This worked case's own prose already said as much — "'fundamental
+  unit' is the note's framing choice, not a claim the source makes or needs" —
+  and the table above still said *subsumed*. The table overstated its own prose.
+- **C2.** The source gives a stochastic link-choice account **and**, separately,
+  a system-level value-over-cost tendency. It does not compose them into a
+  pointer-level tradeoff, which is what C2 asserts.
+- **C3.** The proximal/distal core is supported. "Surrounding context," "makes
+  the decision tractable," and the avoided-load mechanism are not established as
+  written and need narrowing.
+- **C4.** Both passes agree.
+
+**Why this matters beyond bookkeeping.** *Subsumed* and *needs narrowing* are
+different dispositions. Reading thematic overlap as support is the exact error
+that would license retiring a note into a source route that does not carry its
+claims. The correction moves this note further from retirement, not closer:
+more of its content survives contact with the source than this pass credited.
+
+The method that caught it is worth keeping — blind separation of source-side
+reconstruction from claim-side verification, neither worker seeing the other's
+input. A single reader holding both the note and the source at once is the setup
+that produces charitable over-attribution.
 
 **C4 is where the note goes past the source, and does so by conflating two
 quantities the source keeps apart.**
