@@ -2,13 +2,17 @@
 
 from __future__ import annotations
 
+import argparse
 import sys
+from collections.abc import Sequence
 from pathlib import Path
 
 from commonplace.lib.promotion import write_promotion_candidates_report
 
 
-def main() -> int:
+def main(argv: Sequence[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.parse_args(argv)
     root = Path.cwd().resolve()
     try:
         result = write_promotion_candidates_report(root)

@@ -56,7 +56,7 @@ Real link: [raw](./raw-capture.md)
 
     monkeypatch.chdir(tmp_path)
 
-    promotion_candidates.main()
+    promotion_candidates.main([])
 
     captured = capsys.readouterr()
     assert "Wrote" in captured.out
@@ -99,7 +99,7 @@ description: Missing closing delimiter
     )
     monkeypatch.chdir(tmp_path)
 
-    exit_code = promotion_candidates.main()
+    exit_code = promotion_candidates.main([])
 
     captured = capsys.readouterr()
     assert exit_code == 0

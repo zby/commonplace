@@ -1,7 +1,6 @@
 from pathlib import Path
 
 import commonplace
-
 from commonplace.cli.source import main, source_path
 
 
@@ -10,5 +9,5 @@ def test_source_path_points_at_executing_package() -> None:
 
 
 def test_main_prints_source_path(capsys) -> None:
-    assert main() == 0
+    assert main([]) == 0
     assert capsys.readouterr().out.strip() == str(source_path())

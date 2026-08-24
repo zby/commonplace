@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import argparse
+from collections.abc import Sequence
 from pathlib import Path
 
 import commonplace
@@ -15,7 +17,9 @@ def source_path() -> Path:
     return Path(package_file).resolve().parent
 
 
-def main() -> int:
+def main(argv: Sequence[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.parse_args(argv)
     print(source_path())
     return 0
 

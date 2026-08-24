@@ -6,291 +6,161 @@ tags: []
 
 # Commonplace CLI commands
 
-All commands are installed together with `uv tool install --python ">=3.11" llm-commonplace` and resolve as `commonplace-*` from uv's user-level tool executable directory. Run any command with `--help` for full usage. Source contributors install the checkout with the same command plus `--editable .`; project-only executables such as `pytest`, `ruff`, and `properdocs` run through `uv run` instead.
+All commands are installed together with
+`uv tool install --python ">=3.11" llm-commonplace` and resolve as
+`commonplace-*` from uv's user-level tool executable directory. Source
+contributors add `--editable .`; development-only executables such as `pytest`,
+`ruff`, and `properdocs` run through `uv run`.
+
+This page is the complete published command-name catalogue and a routing guide.
+Package entry-point metadata is authoritative, and a test keeps it in exact
+parity with the headings below. Run any command with `--help` for its live
+arguments. For exact implementation behavior, use `commonplace-source` and
+read the executing package. The prose here retains only purpose, composition,
+and operational distinctions that help a reader choose the right command.
 
 ## Project setup
 
 ### commonplace-init
 
-Initialize or update a Commonplace project. Creates KB directories and starter collection contracts and landings, seeds instructions and type definitions, copies shipped skills into the known `.claude/skills/` and `.agents/skills/` runtime layouts, and resolves templates. Runtimes with a different skill-discovery surface can expose the canonical `kb/commonplace/instructions/cp-skill-*` directories through their own skill mechanism.
-
-```bash
-commonplace-init --name my-project
-commonplace-init --root /path/to/project
-```
-
-`--name` sets the project name for templates (defaults to directory name). Safe to rerun — never overwrites existing files, and reports whether preserved files already match the scaffold or differ from what the current run would generate.
+Create or extend a Commonplace project without overwriting existing files. See
+[architecture](./architecture.md) for the installed topology and package/user
+boundary.
 
 ### commonplace-source
 
-Print the filesystem path of the `commonplace` package that supplies the running command. Use it when an exact implementation question requires reading the live installed source rather than a prose description.
-
-```bash
-commonplace-source
-```
-
-For command-line usage and options, prefer the target command's `--help`; use the source path for exact implementation behavior. Reference documentation remains the place for architecture boundaries, invariants, rationale, and other information the implementation does not cheaply recover.
+Print the filesystem path of the `commonplace` package that supplies the
+running commands.
 
 ## Validation and indexing
 
 ### commonplace-validate
 
-Deterministic validator for KB artifacts and explicit repository invariants. Artifact targets check frontmatter validity, schema constraints, link health, the proposal-archive link boundary, verbatim-quote resolution, structural description presence, description length warnings, required sections, and batch signals such as orphan detection. Repository targets check collection landings and the published redirect map. Description discrimination quality is handled by review gates, not deterministic validation.
-
-Findings are labelled with the source that produced them — `[base]` (every typed note), `[type: <name>]` (rules the type owns), `[schema]` (the type's declarative constraints). What each source can express, and what every typed note is checked for regardless of type, is the [validation contract](./validation-contract.md).
-
-```bash
-commonplace-validate notes               # validate one collection by name
-commonplace-validate types               # validate every global and collection-local type spec
-commonplace-validate landings            # validate top-level collection landing pages
-commonplace-validate redirects           # validate properdocs.yml against the published tree
-commonplace-validate kb/notes/           # validate one collection by path
-commonplace-validate kb/notes/my-note.md # validate one note
-```
-
-Collection-scoped validation prunes any subtree containing a
-`.commonplace-validation-ignore` marker and lists each excluded subtree in its
-batch output. Use this for Markdown-bearing experimental or fixture data that
-lives inside a collection but is not itself KB content. The marker may be
-tracked or live inside a local-only ignored subtree; its semantics come from
-Commonplace, not Git. It affects only collection-scoped validation: an explicit
-file target still validates, and the subtree remains visible to other
-Commonplace commands. `.gitignore` alone has no effect on validation visibility.
-
-Bare `kb` and `all` are rejected — scope must be a specific collection, file, or repository check. To validate the authored library, loop over the collections explicitly; projects with `properdocs.yml` should then validate its redirects once:
-
-```bash
-for contract in kb/*/COLLECTION.md; do
-  commonplace-validate "$(basename "$(dirname "$contract")")"
-done
-commonplace-validate landings
-test ! -f properdocs.yml || commonplace-validate redirects
-```
-
-The `landings` and `redirects` targets check repository state rather than a note contract. `landings` requires every collection directly under `kb/` to have a `README.md` and rejects a sibling `index.md` that would shadow it. `redirects` requires every redirect target to exist under `docs_dir`, forbids a redirect key from shadowing a live page, and requires every redirect to point directly to a live page rather than another redirect. Software tests exercise this logic against fixtures; these explicit targets check the current project.
+Run deterministic validation on one artifact, collection, type surface,
+collection-landing set, or redirect map. The
+[validation contract](./validation-contract.md) owns the exact check domains.
 
 ### commonplace-verify-quotes
 
-Report corpus-wide verification of quotations whose citations are marked
-`verbatim`. Each target is a Markdown file or directory; directory targets are
-searched recursively while collection contracts named `COLLECTION.md` are
-skipped. The command reports `mismatch` and `unresolved` results by default,
-then prints match, mismatch, and unresolved totals. Use `--show-matches` to
-include successful checks in the per-quotation output.
-
-```bash
-commonplace-verify-quotes kb/notes kb/reference
-commonplace-verify-quotes --show-matches kb/notes/my-note.md
-```
-
-A normal run exits `1` when at least one quotation mismatches its linked
-source. It exits `0` when none mismatch; unresolved pairings remain visible but
-do not by themselves fail the sweep. The command does not modify any files.
+Audit `verbatim`-marked quotations over one or more Markdown files or
+directories, including unresolved pairings that do not fail ordinary
+validation.
 
 ### Generated indexes (no command)
 
-Complete generated listings — per-collection `dir-index.md` pages and per-tag generated tails — are not committed and have no rebuild command. The ProperDocs hook (`src/commonplace/docs/properdocs_hooks.py`) materializes them in-memory at build time for the published site (ADR 025); `uv run --extra docs properdocs build` is the only way to produce them in this source checkout. Agents enumerate candidates with the scoped `rg` recipes in [navigation.md](./navigation.md). The retired commands `commonplace-refresh-indexes`, `commonplace-sync-generated-index`, and `commonplace-generate-notes-index` no longer exist.
+Complete `dir-index.md` listings and generated tag tails have no rebuild
+command. The ProperDocs hook materializes them during the site build; agents
+use the scoped `rg` routes in [navigation](./navigation.md). The retired
+`commonplace-refresh-indexes`, `commonplace-sync-generated-index`, and
+`commonplace-generate-notes-index` commands do not exist.
 
 ## Note operations
 
 ### commonplace-guard-full-pass-report
 
-Compare every packet-owned capture named by one full-pass report with its current logical artifact. The command always emits JSON with one `matching`, `changed`, `missing`, or `corrupt-capture` result per guarded input; changed results include a capture-to-current unified diff.
-
-```bash
-commonplace-guard-full-pass-report kb/reports/full-pass/my-note/<pass-id>/full-pass-report.md
-```
-
-Exit 0 only when every input matches. Exit 1 is a valid guard refusal. Exit 2 means the report or invocation is invalid. The command never mutates the report or live artifacts.
+Compare a full-pass packet's guarded captures with their live artifacts before
+any disposition is executed. The
+[full-improvement instruction](../instructions/run-full-improvement-pass-on-note.md)
+owns the refusal and reconciliation workflow.
 
 ### commonplace-relocate-note
 
-Rename or move a note, updating all backlinks across the KB.
-
-```bash
-commonplace-relocate-note old-note "New note title" --apply
-commonplace-relocate-note old-note --to kb/notes/definitions --apply
-commonplace-relocate-note old-note --to kb/notes/new-path.md --apply
-```
-
-Without `--apply`, previews changes without writing.
+Rename or move one note and rewrite its KB backlinks. The command dry-runs
+unless `--apply` is supplied.
 
 ### commonplace-relocate-directory
 
-Move a KB directory, updating links and optionally adding one ProperDocs redirect.
-
-```bash
-commonplace-relocate-directory kb/notes/related-systems kb/agent-memory-systems --apply
-commonplace-relocate-directory kb/notes/related-systems kb/agent-memory-systems --redirect notes/related-systems/related-systems-index.md:agent-memory-systems/index.md --apply
-```
-
-Without `--apply`, previews changes without writing. `--redirect` takes `OLD:NEW` docs paths for a single redirect entry.
+Move a KB directory, rewrite links, and optionally add one ProperDocs redirect.
+The command dry-runs unless `--apply` is supplied.
 
 ### commonplace-promotion-candidates
 
-List unstructured text files ranked by incoming links so operators can decide which captures are worth structuring. The report separately surfaces files whose opened frontmatter cannot be parsed; they are invalid notes, not text candidates.
-
-```bash
-commonplace-promotion-candidates
-```
-
-Writes results to `kb/reports/promotion-candidates.md`.
+Rank unstructured note files by incoming links and write
+`kb/reports/promotion-candidates.md`, separating invalid frontmatter from text
+candidates.
 
 ## Snapshots
 
 ### commonplace-github-snapshot
 
-Snapshot a GitHub issue or PR into ignored `kb/sources/.snapshots/`. Uses the
-`gh` CLI to fetch issue/PR data and reports the exact Markdown SHA-256.
-
-```bash
-commonplace-github-snapshot https://github.com/owner/repo/issues/123
-commonplace-github-snapshot https://github.com/owner/repo/pull/456
-```
+Capture a GitHub issue or pull request under the ignored
+`kb/sources/.snapshots/` reading cache.
 
 ### commonplace-x-snapshot
 
-Snapshot an X/Twitter post into ignored `kb/sources/.snapshots/` and report the
-exact Markdown SHA-256. Its runtime dependencies are included in the base
-Commonplace tool installation.
-
-```bash
-commonplace-x-snapshot https://x.com/user/status/123456789
-```
+Capture an X/Twitter post, thread, or article under the ignored
+`kb/sources/.snapshots/` reading cache.
 
 ## Review system
 
-The review system executes snapshot-anchored LLM assays against notes. Closed-ended review gates produce verdicts; open-ended assays such as critique record reports without an outcome. The persisted criterion field remains named `criterion_path`. For the vocabulary and full workflow, read [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md). For the code architecture, see [review-architecture.md](./review-architecture.md).
+Review execution composes selection, job creation, an external worker, and
+finalization. Use [the review-system guide](./README-REVIEW-SYSTEM.md) for the
+operator workflow, [run review batches](../instructions/run-review-batches.md)
+for the executable procedure, and [review architecture](./review-architecture.md)
+for internal invariants.
 
-Model flags: every partition-valued flag below is `--model-partition` and takes a partition name such as `claude-opus` or `codex` (the review-freshness key; registry in `src/commonplace/review/review_model.py`). The only `--model` flag is `commonplace-finalize-review-job`'s, which takes a concrete model supplied by harness launch metadata or telemetry (for example `claude-fable-5`) and validates that it maps into the job's partition. Missing harness provenance remains null. A job output's optional `self-reported-model` is preserved separately and never substituted for `--model`.
+Partition-valued flags are named `--model-partition`. The only `--model` flag
+is finalization's concrete worker-model provenance; it must map into the job's
+partition.
 
 ### commonplace-create-review-jobs
 
-Create one or more queued review job records in the review database and write their canonical prompts and `MANIFEST.json` files for live-agent review. Artifact paths are derived from the job id and pair set. Creation is runner-agnostic: `runner`, `runner_model`, and `runner_effort` stay null until execution.
-
-```bash
-commonplace-review-target-selector --mode requested --json --model-partition claude-opus accessibility prose semantic --note kb/notes/my-note.md \
-  | commonplace-create-review-jobs --input - --grouping note
-commonplace-review-target-selector --json --model-partition claude-opus prose --note kb/notes/my-note.md \
-  | commonplace-create-review-jobs --input - --grouping note
-```
-
-The canonical path is selector JSON piped into `--input -`. The command prints a JSON payload with `input_mode`, `model_partition`, `grouping`, `jobs`, and `skipped_pairs`. Each result-kind-homogeneous job includes `review_job_id`, `status`, nullable runner provenance, `grouping`, derived `prompt_path`, derived `job_output_path`, and pair rows with `criterion_id`, `result_kind`, nullable `outcome`, nullable `completed_at`, and derived `result_path`. `MANIFEST.json` is display/debug output written beside the artifacts, not a returned JSON field; pipeline commands use derived job paths as state. Note-grouped jobs use criterion-leaf filenames such as `source-residue.md`; criterion-grouped jobs use note filenames such as `my-note.md`.
+Consume selector JSON and create queued, result-kind-homogeneous review jobs
+grouped by note or criterion.
 
 ### commonplace-review-job-list
 
-List review jobs and their pair rows.
-
-```bash
-commonplace-review-job-list --status queued --json
-commonplace-review-job-list --model-partition claude-opus
-```
+List queued, completed, or failed review jobs and optionally emit JSON.
 
 ### commonplace-finalize-review-job
 
-Finalize a queued review job from its derived job output path. The command strictly parses all expected pair blocks, writes per-pair result files, records completion under each pair's persisted result kind, creates or replaces freshness baselines, prunes superseded review evidence, and moves the job to `completed` in one successful finalization. Verdict pairs record an outcome; report pairs retain a null outcome and complete via `completed_at`. `ERROR`, missing, duplicate, unexpected, malformed, or result-less pair blocks fail the whole job and write no freshness baseline rows. Exit 1 if the job failed or if a precondition fails before state changes.
-
-```bash
-commonplace-finalize-review-job --review-job-id 42
-commonplace-finalize-review-job --review-job-id 42 --runner codex
-commonplace-finalize-review-job --review-job-id 42 --runner codex --model gpt-5 --effort high
-```
-
-Optional provenance flags are recorded at finalization time. `--runner` may be supplied alone. `--model` may be supplied without `--runner`; it validates `build_model_partition(--model, --effort)` against the job's `model_partition` before state changes. `--effort` requires `--model`. `--telemetry-json` records an opaque harness-provided telemetry blob without interpreting it. If `job-output.md` carries `self-reported-model`, the success JSON exposes it as `self_reported_model` and each generated result file repeats the hyphenated field in frontmatter; it remains artifact metadata rather than a review-job column.
-
-The command accepts `queued` jobs, rejects `completed` and `failed`, reads the job-owned `job-output.md`, writes per-pair result files to derived result paths with provenance frontmatter, refreshes `MANIFEST.json` for inspection, and prints JSON for success, mutated failure, and precondition failure. Result-file write failures are fatal evidence failures. Manifest refresh failures after DB completion do not fail the job; they are returned in an optional top-level `warnings` array.
+Finalize one job-owned output all-or-nothing, record worker provenance, write
+pair results, and advance their freshness baselines.
 
 ### commonplace-freshness-status
 
-Report repository-wide freshness for registered targets. v1 covers migrated `review-pair` targets only. JSON shapes and exit codes: [freshness-schemas.md](./freshness-schemas.md). Exit `0` when all selected targets are fresh, `1` when any input changed or is missing, `2` on misuse or store errors.
-
-`--missing` narrows the report to baselines whose input artifact no longer exists. These need `commonplace-freshness-retire`, not re-review — no edit can make a deleted artifact match its accepted snapshot again, so without the filter they sit in the stale set indistinguishable from artifacts that merely changed. The default report also names the distinct deleted paths and the remedy at the end of its output, so the condition is visible without knowing the flag. The JSON shape is unchanged; `--missing` only selects targets.
-
-```bash
-commonplace-freshness-status --json
-commonplace-freshness-status --all --json --model-partition codex
-commonplace-freshness-status --json --diff
-commonplace-freshness-status --missing
-```
+Report freshness for registered targets. The
+[freshness schemas](./freshness-schemas.md) define its JSON and the manifests
+consumed by acknowledgement and retirement.
 
 ### commonplace-freshness-ack
 
-Acknowledge changed inputs for a registered target from a status-derived manifest. Review-pair targets preserve evidence automatically.
-
-```bash
-commonplace-freshness-ack --input ack.json
-```
+Acknowledge changed inputs for an existing registered target from a
+status-derived manifest.
 
 ### commonplace-freshness-retire
 
-Remove a registered baseline when an artifact or target should leave global status. Idempotent when the target is already absent.
-
-```bash
-commonplace-freshness-retire --input retire.json
-```
+Remove a registered freshness baseline from a retire manifest, including a
+baseline whose input artifact was deleted.
 
 ### commonplace-store-healthcheck
 
-Run full store integrity checks: schema structure, foreign keys, snapshot hash consistency, and review freshness baseline invariants. Use after manual DB edits or when diagnosing store corruption. `ensure_db` and routine review/freshness commands check structure only; this command adds content verification.
-
-```bash
-commonplace-store-healthcheck
-commonplace-store-healthcheck --db kb/reports/commonplace-store.sqlite
-```
+Verify operational-store structure, snapshot hashes, foreign keys, and
+freshness-baseline invariants.
 
 ### commonplace-ack-review
 
-Advance an existing freshness baseline for specific criteria without re-running the assay. For report pairs this reuses current evidence; it does not endorse or resolve the report.
-
-```bash
-commonplace-ack-review kb/notes/my-note.md --model-partition claude-opus prose/source-residue semantic/grounding-alignment
-```
+Advance existing review freshness without rerunning the assay. It preserves
+the evidence review pair; for a report, it does not endorse or resolve the
+findings.
 
 ### commonplace-ack-trivial-note-changes
 
-Auto-acknowledge `note-changed` stale pairs when only non-watched note parts changed. Each gate declares what it watches (body, title, description) — changes outside the watched set are acked automatically. Conformance pairs may be selected (`type`/`collection` requests or `--all-gates`) but never qualify: neither a type spec nor a COLLECTION.md declares watches, so each watches the whole note and no change is trivial against it.
-
-Running this command is the explicit human-authorized trivial-change workflow under which an existing `user-verified: true` may be preserved. It advances review freshness only; it never adds or computes user verification.
-
-```bash
-commonplace-ack-trivial-note-changes prose --model-partition claude-opus --note kb/notes kb/reference  # all prose gates
-commonplace-ack-trivial-note-changes prose --model-partition claude-opus --user-verified        # committed user-verified notes only
-commonplace-ack-trivial-note-changes prose --model-partition claude-opus --note kb/notes kb/reference --dry-run  # preview what would ack
-```
+Auto-acknowledge `note-changed` verdict pairs when none of the criterion's
+watched note parts changed. Invoking it is explicit human authorization for
+the qualifying trivial-change workflow.
 
 ### commonplace-resolve-criteria
 
-Resolve criterion requests and output their definitions. Catalog bundle names expand to individual gate IDs; concrete `type/{name}`, `collection/{path}`, and `critique` requests resolve to their criterion documents. Broad `type` and `collection` lenses require note scope and belong at the selector boundary.
-
-```bash
-commonplace-resolve-criteria prose                                    # all gates in prose bundle
-commonplace-resolve-criteria prose/source-residue semantic/grounding-alignment  # specific gates
-commonplace-resolve-criteria critique                                 # report-kind critique criterion
-```
+Resolve gate, bundle, concrete conformance, or critique requests into their
+criterion definitions.
 
 ### commonplace-review-target-selector
 
-List assay target pairs. Default mode lists stale `(note, criterion)` pairs by comparing current note/criterion text hashes against baseline DB snapshots. JSON and schema fields use `criterion_*` names. `--mode requested` emits the explicitly requested applicable pairs without checking freshness, for piping into `commonplace-create-review-jobs --input -`.
-
-Besides catalog gate ids and bundles, the selector accepts conformance requests and the report-kind `critique` assay. Type-conformance: `type` derives one pair per typed note in scope with the note's type spec as the criterion, `type/{name}` narrows to one type's cohort. Collection-conformance: `collection` derives one pair per in-collection note with the collection's COLLECTION.md as the criterion, `collection/{path}` narrows to one collection's cohort (path relative to `kb/`, e.g. `collection/notes`). `--all-gates` selects all applicable verdict criteria — catalog gates plus both conformance pairs — and intentionally excludes heavyweight report assays. Jobs created from selector output are result-kind homogeneous.
-
-```bash
-commonplace-review-target-selector prose --model-partition claude-opus --note kb/notes kb/reference
-commonplace-review-target-selector prose --model-partition claude-opus --user-verified --json    # JSON output
-commonplace-review-target-selector prose --model-partition claude-opus --note kb/notes kb/reference --reason note-changed     # filter by staleness reason
-commonplace-review-target-selector prose --note kb/notes kb/reference --reason missing-baseline     # pairs missing under every model partition
-commonplace-review-target-selector --mode requested prose --model-partition claude-opus --note kb/notes/my-note.md --json
-commonplace-review-target-selector type/definition --model-partition claude-opus --user-verified  # type-conformance pairs for one type's verified cohort
-commonplace-review-target-selector collection/notes --model-partition claude-opus --user-verified # collection-conformance pairs for one collection's verified cohort
-commonplace-review-target-selector critique --model-partition claude-opus --note kb/notes/my-note.md  # report-kind critique pair
-```
+Select applicable assay pairs either by current staleness or by an explicit
+requested-mode scope, for inspection or piping into job creation.
 
 ### commonplace-warn-selector
 
-Extract warn-level findings from effective reviews.
-
-```bash
-commonplace-warn-selector                                          # all notes
-commonplace-warn-selector kb/notes/my-note.md                     # specific note
-commonplace-warn-selector --json                                   # JSON output
-```
+Extract actionable findings from effective `warn` review pairs. It is the
+entry point to the [fix system](../instructions/FIX-SYSTEM.md).
