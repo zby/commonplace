@@ -23,7 +23,36 @@ Memento-Skills treats a folder containing a declarative `SKILL.md`, prompts, and
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** In Memento-Skills' router evaluation on real execution trajectories, the behaviour-trained Memento-Qwen router raised route hit rate from 0.53 for the Qwen3 embedding router to 0.58 and judge success rate from 0.79 to 0.80; route hit denotes an appropriate top-1 skill and judge success denotes solving the full trajectory.
+  - **Source extract (verbatim):** To test whether offline retrieval gains translate into real execution improvements, we measure two end-to-end metrics: route hit rate (whether the router’s top-1 choice is an appropriate skill for the task) and judge success rate (whether the full trajectory actually solves the task). Fig. 9 (right) reveals that Memento-Qwen lifts route hit rate from 0.29 (BM25) and 0.53 (Qwen3) to 0.58, and judge success rate from 0.50 and 0.79 to 0.80.
+  - **Source location:** p. 12, "Router Evaluation," Figure 9 results paragraph
+  - **Scope:** The comparison covers BM25, Qwen3-Embedding-0.6B, and the paper's Memento-Qwen router on the paper's real-trajectory evaluation; the quoted target values are Memento-Qwen versus Qwen3.
+  - **Confidence:** High for the metric definitions and reported point values because the prose states them directly.
+  - **Limitation:** The paper does not report uncertainty or the real-trajectory sample count here, and the paired router-level metrics do not independently test whether a retrieved skill caused the later action.
+
+- **Claim (paraphrase):** With Gemini-3.1-Flash, the full Memento-Skills system outperformed a Read-Write ablation that retained skill retrieval, LLM execution, and feedback collection but jointly disabled failure attribution, skill rewriting, and skill discovery: 66.0% versus 52.3% test accuracy on GAIA and 38.7% versus 17.9% on HLE.
+  - **Source extract (verbatim):** To isolate the contribution of the self-evolving mechanism, we compare Memento-Skills (the full system) against a Read-Write ablation that retains the same read–write reflective learning loop—skill retrieval, LLM execution, and feedback collection— but disables all skill-level optimisation: no failure attribution, no skill rewriting, and no skill discovery. All the experiments in this paper use the Gemini-3.1-Flash as the underlying LLM.
+  - **Source location:** p. 15, "Experimental Settings," Baselines paragraph
+  - **Source extract (verbatim):** On the unseen test set, the full Memento-Skills system achieves 66.0% overall accuracy, compared with 52.3% for the Read-Write ablation, confirming that the skill optimisation pipeline contributes a 13.7 percentage-point gain beyond what retrieval and execution alone can provide.
+  - **Source location:** p. 15, "Results of GAIA"
+  - **Source extract (verbatim):** On the test set, Memento-Skills achieves 38.7% overall, more than doubling the Read-Write baseline (17.9%).
+  - **Source location:** p. 17, "Results of HLE"
+  - **Scope:** Test-set overall accuracy on the paper's GAIA split and sampled HLE split, using Gemini-3.1-Flash and the reported full-system and compound Read-Write conditions.
+  - **Confidence:** High for the arm definitions and reported point differences because the methods and results state them directly.
+  - **Limitation:** Because failure attribution, rewriting, and discovery are disabled together, the contrast estimates the skill-optimisation bundle relative to the retained baseline; it does not identify any one component or the effect of any selected skill.
+
+- **Claim (paraphrase):** Memento-Skills keeps the underlying LLM parameters fixed while deployment feedback creates and revises persistent structured skills containing prompts, code or scripts, and declarative specifications; its behaviour-aligned router is a contrastive retrieval model trained through single-step offline RL.
+  - **Source extract (verbatim):** The system is built on a memory-based reinforcement learning framework with stateful prompts, where reusable skills (stored as structured markdown files) serve as persistent, evolving memory. These skills encode both behaviour and context, enabling the agent to carry forward knowledge across interactions.
+  - **Source location:** p. 1, abstract
+  - **Source extract (verbatim):** In the read phase, a behaviour-trainable skill router selects the most relevant skill conditioned on the current stateful prompt; in the write phase, the agent updates and expands its skill library based on new experience. This closed-loop design enables continual learning without updating LLM parameters, as all adaptation is realised through the evolution of externalised skills and prompts.
+  - **Source location:** p. 1, abstract
+  - **Source extract (verbatim):** Crucially, the memory is not limited to episodic traces but consists of reusable skills, each containing a declarative specification (SKILL.md) together with helper scripts and prompts. Because the write operation rewrites the prompt or program that will be executed next, each write step directly improves the policy embodied in the skill.
+  - **Source location:** p. 9, "The Skill-Level Read–Write Loop"
+  - **Source extract (verbatim):** Behaviour-aligned skill router. We train a contrastive retrieval model via single-step offline RL, casting skill routing as a KL-regularised Boltzmann policy that optimises for execution success rather than semantic similarity.
+  - **Source location:** p. 8, Contributions, item 2
+  - **Scope:** The paper's proposed Memento-Skills architecture, with deployment-time skill-memory updates around a fixed underlying LLM and a behaviour-aligned router trained by the reported offline procedure.
+  - **Confidence:** High for the stated artifact forms, fixed-LLM boundary, feedback-driven writes, and router training method because each is described directly in the architecture and contributions.
+  - **Limitation:** The paper presents router training and deployment-time skill evolution as different procedures; it does not report joint online optimization of router parameters and skill contents under one selection rule.
 
 ## Connections Found
 

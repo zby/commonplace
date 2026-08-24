@@ -27,7 +27,20 @@ Koylan reports building "Personal Brain OS," a Git-repository-based personal ope
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** In a first-person account of Personal Brain OS, Koylan describes a Git-resident file system split into isolated modules and distinct files for voice and brand guidance, goals and values, process-encoding skills, and append-only experience, decision, and failure logs that retain judgment and rationale.
+  - **Source extract (verbatim):** I call it Personal Brain OS. It's a file-based personal operating system that lives inside a Git repository. Clone it, open it in Cursor or Claude Code, and the AI assistant has everything: my voice, my brand, my goals, my contacts, my content pipeline, my research, my failures. No database, no API keys, no build step. Just 80+ files in markdown, YAML, and JSONL that both humans and language models read natively.
+  - **Source location:** Opening description
+  - **Source extract (verbatim):** Instead of writing one massive system prompt, I split Personal OS into 11 isolated modules. When I ask the AI to write a blog post, it loads my voice guide and brand files. When I ask it to prepare for a meeting, it loads my contact database and interaction history.
+  - **Source location:** Section 1, "The Core Problem: Context, Not Prompts"
+  - **Source extract (verbatim):** My system uses 11 JSONL files (posts, contacts, interactions, bookmarks, ideas, metrics, experiences, decisions, failures, engagement, meetings), 6 YAML files (goals, values, learning, circles, rhythms, heuristics), and 50+ Markdown files (voice guides, research, templates, drafts, todos).
+  - **Source location:** Section 2, "The File System as Memory"
+  - **Source extract (verbatim):** The `memory/` module contains three append-only logs: `experiences.jsonl` (key moments with emotional weight scores from 1-10), `decisions.jsonl` (key decisions with reasoning, alternatives considered, and outcomes tracked), and `failures.jsonl` (what went wrong, root cause, and prevention steps).
+  - **Source location:** Section 2, "Episodic Memory"
+  - **Source extract (verbatim):** Files store knowledge. Skills encode process.
+  - **Source location:** Section 3, "The Skill System: Teaching AI How to Do Your Work"
+  - **Scope:** A single practitioner's self-reported personal system and its stated file/module architecture, not a survey of Claw implementations or observed user population.
+  - **Confidence:** High that the author reports these distinct artifacts and modules because the architecture description names them directly; confidence in their operational effects is limited to the author's account.
+  - **Limitation:** The source does not itself classify these materials under the exact categories “preferences, procedures, precedents, and voice,” and it does not establish that other practitioner-built systems use the same separation.
 
 ## Connections Found
 

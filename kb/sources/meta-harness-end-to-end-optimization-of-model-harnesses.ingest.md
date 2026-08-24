@@ -24,7 +24,20 @@ Meta-Harness is an outer-loop system that searches over LLM harness code by givi
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** In Meta-Harness's online text-classification ablation, all proposer arms could inspect scores and code; Scores Only reached 34.6% median and 41.3% best accuracy, Scores + Summary reached 34.9% median and 38.7% best without traces, and the full arm reached 50.0% median and 56.7% best with traces. The experiment shows that the fixed summary-only feedback arm did not recover the full trace-access arm's performance in this setup.
+  - **Source extract (verbatim):** It uses an agentic proposer that accesses the source code, scores, and execution traces of all prior candidates through a filesystem.
+  - **Source location:** Abstract
+  - **Source extract (verbatim):** | Scores Only | ✓ | ✓ | ✗ | ✗ | 34.6 | 41.3 | 26 |
+  - **Source location:** Section 4.1, "Ablation: information available to the proposer" table
+  - **Source extract (verbatim):** | Scores + Summary | ✓ | ✓ | ✓ | ✗ | 34.9 | 38.7 | 23 |
+  - **Source location:** Section 4.1, "Ablation: information available to the proposer" table
+  - **Source extract (verbatim):** | **Meta-Harness** (full) | ✓ | ✓ | - | ✓ | 50.0 | 56.7 | 39 |
+  - **Source location:** Section 4.1, "Ablation: information available to the proposer" table
+  - **Source extract (verbatim):** Summaries do not recover the missing signal, and may even hurt by compressing away diagnostically useful details.
+  - **Source location:** Section 4.1, paragraph following the ablation table
+  - **Scope:** The reported point values are for the paper's online text-classification harness search, whose proposer is a coding agent and whose arms differ in access to prior scores, code, generated summaries, and execution traces.
+  - **Confidence:** High for the arm contents and reported median and best accuracies because the ablation table states them directly.
+  - **Limitation:** The paper reports point summaries rather than a statistical-significance estimate for these arm differences. The contrast tests one trace-removing summary treatment, not summaries or abstraction in general, and it does not test a summary that retains trace access, query-conditioned derived views, or joint optimization of the representation.
 
 ## Connections Found
 

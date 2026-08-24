@@ -23,7 +23,14 @@ Karpathy frames "Claws" as a new layer above LLM agents: systems that add orches
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** In Simon Willison's account, quoting Andrej Karpathy, Claws are a layer above LLM agents that advances orchestration, scheduling, context, tool calls, and persistence; Willison describes the category as OpenClaw-like agents generally running on personal hardware, communicating through messaging protocols, and acting on direct instructions or scheduled tasks.
+  - **Source extract (verbatim):** But I do love the concept and I think that just like LLM agents were a new layer on top of LLMs, Claws are now a new layer on top of LLM agents, taking the orchestration, scheduling, context, tool calls and a kind of persistence to a next level.
+  - **Source location:** Quoted Andrej Karpathy mini-essay, first blockquote paragraph
+  - **Source extract (verbatim):** "Claw" is becoming a term of art for the entire category of OpenClaw-like agent systems - AI agents that generally run on personal hardware, communicate via messaging protocols and can both act on direct instructions and schedule tasks.
+  - **Source location:** Simon Willison's paragraph following the Karpathy quotation
+  - **Scope:** A short conceptual blog post reporting Karpathy's proposed category and Willison's own descriptive gloss, not a systematic survey or operational definition.
+  - **Confidence:** High for the two authors' stated characterizations because both appear directly in the captured post.
+  - **Limitation:** The post mentions context and persistence but does not specify that a Claw accumulates retained knowledge about a domain, user, or project, and “direct instructions” and scheduled tasks do not by themselves establish the broader phrase “acts on a user's behalf.”
 
 ## Connections Found
 

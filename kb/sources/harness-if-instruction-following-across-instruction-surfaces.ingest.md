@@ -23,7 +23,20 @@ Harness-IF evaluates whether coding agents follow individual operational rules d
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** Harness-IF uses a nine-build zero-injection probe, supplemented by curated labels, to classify rules by unprompted behavior; AP-Acc then scores only pass/fail opportunities for rules labeled against-prior. Across its 12-model coding panel, aggregate Accuracy exceeded AP-Acc for every model, with a mean gap of 5.81 points, but this is a behavioral stratum comparison rather than a paired estimate of injecting each rule.
+  - **Source extract (verbatim):** A zero-injection ablation runs each task with the target rule withheld across nine probe builds; a rule receives a consensus label when at least five of those nine agree, which is recoverable for 287 rules. Other final labels use recoverable pre-existing curation or have unknown lineage, as detailed in the full reliability analysis.
+  - **Source location:** Appendix A, taxonomy entry "Prior (3)"
+  - **Source extract (verbatim):** We introduce against-prior accuracy (AP-Acc), which only evaluates constraints in the against-prior set P. This metric reports performance on constraints labeled as opposing the corresponding default behavior:
+  - **Source location:** Section 3.4, "AP-Acc"
+  - **Source extract (verbatim):** Against-prior rules expose a consistent compliance gap.
+  - **Source location:** Section 4.1, results discussion following Table 2
+  - **Source extract (verbatim):** Under the like-for-like binary definition, the mean Acc–AP-Acc gap is 5.81 points across 37,616 eligible verdicts and remains positive for all 12 models.
+  - **Source location:** Section 4.1, results discussion following Table 2
+  - **Source extract (verbatim):** AP-Acc is a behavioral stratification over observed or curated defaults, not a claim about model training provenance.
+  - **Source location:** Section 6, "Measurement"
+  - **Scope:** The zero-injection evidence covers nine probe builds and 287 recoverable consensus-labeled rules; the reported Acc/AP-Acc result covers the paper's 12-model, 60-item, three-round coding panel and its pass/fail verdicts.
+  - **Confidence:** High for the probe design, metric definition, and aggregate gap because the methods, appendix, and results state them directly.
+  - **Limitation:** AP-Acc compares all eligible rule instances with the against-prior subset, whose labels partly come from curation and whose probe-build overlap with the evaluated panel is incomplete; it does not compare matched opportunities for the same rule with and without injection and therefore does not estimate an instruction effect.
 
 ## Connections Found
 
