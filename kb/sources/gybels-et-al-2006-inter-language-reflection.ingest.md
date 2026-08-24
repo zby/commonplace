@@ -24,7 +24,9 @@ Gybels et al. define **inter-language reflection** as traditional reflection in 
 ## Claims
 
 - **Claim (paraphrase):** Gybels et al.'s linguistic-symbiosis model separates a base-level data mapping, which makes each language's data appear native in the other and entails translating invoked operations, from a meta-level protocol mapping, which passes the data's meta-representations between interpreters and makes the receiving interpreter's meta-operations applicable to them.
-  - **Source extract (verbatim):** Two languages are in linguistic symbiosis when they can transparently invoke each other’s behaviour and exchange data. Linguistic symbiosis enables the representation of data of one language in the other, as well as the activation of behavior described in one language from the other.
+  - **Source extract (verbatim):** Two languages are in linguistic symbiosis when they can transparently exchange data and invoke each other's behavior.
+  - **Source location:** §3, “Linguistic symbiosis model overview” (printed pp. 111–112; PDF pp. 3–4)
+  - **Source extract (verbatim):** Linguistic symbiosis enables the representation of data of one language in the other, as well as the activation of behavior described in one language from the other.
   - **Source location:** §3, “Linguistic symbiosis model overview” (printed pp. 111–112; PDF pp. 3–4)
   - **Source extract (verbatim):** Data mapping: To achieve a tight integration at the syntactic level when passing data between the programs in the different languages, the data should “appear” in each language as seemingly native data. This means that it should be possible for programs in B to apply operations on data of A as though it was native data of B, and vice versa. Therefore, operations invoked in B on data of A somehow need to be translated to operations of A, and vice versa.
   - **Source location:** §3, “Linguistic symbiosis model overview” (printed p. 112; PDF p. 4)
