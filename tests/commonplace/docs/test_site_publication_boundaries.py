@@ -13,6 +13,7 @@ def test_raw_sources_stay_out_while_ingests_are_published() -> None:
     assert excluded.match_file("sources/example.md")
     assert excluded.match_file("sources/example.json")
     assert excluded.match_file("sources/nested/assets/example.png")
+    assert excluded.match_file("sources/.snapshots/example.md")
     assert not excluded.match_file("sources/example.ingest.md")
     assert not excluded.match_file("sources/nested/example.ingest.md")
     assert not excluded.match_file("sources/README.md")

@@ -3,12 +3,9 @@ from __future__ import annotations
 from pathlib import Path
 from types import SimpleNamespace
 
-import yaml
 from properdocs.structure.files import File, Files, InclusionLevel
 
 from commonplace.docs import properdocs_hooks
-
-REPO_ROOT = Path(__file__).resolve().parents[3]
 
 
 def write(path: Path, content: str) -> Path:
@@ -72,7 +69,6 @@ def test_on_page_markdown_links_every_tag_with_declared_index(tmp_path: Path) ->
 
 
 def test_on_page_markdown_appends_generated_tail_to_tag_index(tmp_path: Path) -> None:
-    properdocs_hooks._notes_by_tag.cache_clear()
     notes = tmp_path / "kb" / "notes"
     write(notes / "COLLECTION.md", "# Notes collection\n")
     index = tag_index(notes, "kb-design")
@@ -107,6 +103,7 @@ tags: [kb-design]
         file=SimpleNamespace(abs_src_path=str(index)),
     )
     curated_body = "# kb-design\n\n## Notes\n\n- [Curated](curated.md) — placed\n"
+    properdocs_hooks.on_config({"docs_dir": str(tmp_path / "kb")})
 
     result = properdocs_hooks.on_page_markdown(
         curated_body,
@@ -122,7 +119,6 @@ tags: [kb-design]
 
 
 def test_on_page_markdown_appends_tail_to_tag_readme_type(tmp_path: Path) -> None:
-    properdocs_hooks._notes_by_tag.cache_clear()
     notes = tmp_path / "kb" / "notes"
     write(notes / "COLLECTION.md", "# Notes collection\n")
     readme = write(
@@ -156,6 +152,7 @@ tags: [kb-design]
         },
         file=SimpleNamespace(abs_src_path=str(readme)),
     )
+    properdocs_hooks.on_config({"docs_dir": str(tmp_path / "kb")})
 
     result = properdocs_hooks.on_page_markdown(
         "# kb-design\n\nOrientation.\n",
@@ -168,7 +165,6 @@ tags: [kb-design]
 
 
 def test_on_page_markdown_skips_empty_tail_for_complete_readme(tmp_path: Path) -> None:
-    properdocs_hooks._notes_by_tag.cache_clear()
     notes = tmp_path / "kb" / "notes"
     write(notes / "COLLECTION.md", "# Notes collection\n")
     readme = write(
@@ -205,6 +201,7 @@ tags: [kb-design]
         file=SimpleNamespace(abs_src_path=str(readme)),
     )
     curated_body = "# kb-design\n\n- [Curated](./curated.md) — placed\n"
+    properdocs_hooks.on_config({"docs_dir": str(tmp_path / "kb")})
 
     result = properdocs_hooks.on_page_markdown(
         curated_body,
@@ -214,22 +211,6 @@ tags: [kb-design]
 
     # Every member is curated, so no generated section is appended at all
     assert "Other tagged notes" not in result
-
-
-def test_on_page_markdown_links_collection_readme_to_dir_index(tmp_path: Path) -> None:
-    notes = tmp_path / "kb" / "notes"
-    readme = write(notes / "README.md", "# Notes\n")
-    properdocs_hooks._generated_index_dirs.add(notes)
-    try:
-        page = SimpleNamespace(
-            meta={},
-            file=SimpleNamespace(abs_src_path=str(readme)),
-        )
-        result = properdocs_hooks.on_page_markdown("# Notes\n\nBody\n", page)
-    finally:
-        properdocs_hooks._generated_index_dirs.discard(notes)
-
-    assert "[Complete file listing](./dir-index.md)" in result
 
 
 def test_on_files_publishes_source_index_with_only_published_pages(tmp_path: Path) -> None:
@@ -266,27 +247,22 @@ def test_on_files_publishes_source_index_with_only_published_pages(tmp_path: Pat
         ]
     )
 
-    try:
-        properdocs_hooks.on_files(files, config)
-        generated = files.get_file_from_path("sources/dir-index.md")
-    finally:
-        properdocs_hooks._generated_index_dirs.clear()
+    properdocs_hooks.on_files(files, config)
+    generated = files.get_file_from_path("sources/dir-index.md")
+    readme_page = SimpleNamespace(
+        meta={},
+        file=SimpleNamespace(abs_src_path=str(readme)),
+    )
+    rendered_readme = properdocs_hooks.on_page_markdown(
+        "# Sources\n\nBody\n",
+        readme_page,
+    )
 
     assert generated is not None
     assert generated.inclusion is InclusionLevel.INCLUDED
     assert "Published ingest" in generated.content_string
     assert "Excluded snapshot" not in generated.content_string
-
-
-def test_properdocs_excludes_local_snapshot_cache_after_ingest_reinclusion() -> None:
-    config = yaml.safe_load(
-        (REPO_ROOT / "properdocs.yml").read_text(encoding="utf-8")
-    )
-    patterns = config["exclude_docs"].splitlines()
-
-    ingest_reinclude = patterns.index("!sources/**/*.ingest.md")
-    cache_exclude = patterns.index("sources/.snapshots/**")
-    assert cache_exclude > ingest_reinclude
+    assert "[Complete file listing](./dir-index.md)" in rendered_readme
 
 
 def test_on_page_markdown_keeps_unindexed_tags_as_text(tmp_path: Path) -> None:

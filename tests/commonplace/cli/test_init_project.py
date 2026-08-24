@@ -12,7 +12,6 @@ if str(SRC_ROOT) not in sys.path:
 
 from commonplace.cli import init_project as init_project_module
 from commonplace.cli.init_project import (
-    _resolve_scaffold_source,
     init_project,
     installation_warnings,
     main,
@@ -21,87 +20,104 @@ from commonplace.lib.project_paths import is_collection_dir
 from commonplace.lib.validation import validate_collection_landings
 
 
-def test_init_project_creates_core_directories(tmp_path: Path) -> None:
+def relative_files(root: Path) -> set[Path]:
+    return {
+        path.relative_to(root)
+        for path in root.rglob("*")
+        if path.is_file()
+    }
+
+
+def relative_directories(root: Path) -> set[Path]:
+    return {
+        path.relative_to(root)
+        for path in root.rglob("*")
+        if path.is_dir()
+    }
+
+
+def test_init_project_creates_core_layout_and_is_idempotent(tmp_path: Path) -> None:
     report = init_project(tmp_path)
 
     assert report.created
-    assert (tmp_path / "kb" / "notes").is_dir()
-    assert (tmp_path / "kb" / "reference").is_dir()
-    assert (tmp_path / "kb" / "sources").is_dir()
+    assert {
+        Path("kb/notes"),
+        Path("kb/reference"),
+        Path("kb/sources"),
+        Path("kb/instructions"),
+        Path("kb/reports"),
+        Path("kb/types"),
+        Path("kb/reports/types"),
+    } <= relative_directories(tmp_path)
     assert (tmp_path / "kb" / "sources" / ".gitignore").read_text(
         encoding="utf-8"
     ) == ".snapshots/\n"
-    assert (tmp_path / "kb" / "instructions").is_dir()
-    assert (tmp_path / "kb" / "reports").is_dir()
-    assert (tmp_path / "kb" / "types").is_dir()
-    assert (tmp_path / "kb" / "reports" / "types").is_dir()
     assert (tmp_path / "kb" / "log.md").is_file()
 
     rerun = init_project(tmp_path)
-    assert rerun.created == []
-    assert rerun.preserved_identical
-    assert rerun.preserved_different == []
+    assert (rerun.created, bool(rerun.preserved_identical), rerun.preserved_different) == (
+        [],
+        True,
+        [],
+    )
 
 
 def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
     init_project(tmp_path)
 
-    # Shipped library content lives under kb/commonplace/ (ADR-021).
-    assert (tmp_path / "kb" / "commonplace" / "instructions" / "README.md").is_file()
-    assert (tmp_path / "kb" / "commonplace" / "instructions" / "COLLECTION.md").is_file()
-    assert (tmp_path / "kb" / "commonplace" / "notes" / "COLLECTION.md").is_file()
-    assert (tmp_path / "kb" / "commonplace" / "reference" / "COLLECTION.md").is_file()
-    assert (tmp_path / "kb" / "commonplace" / "reference" / "README-REVIEW-SYSTEM.md").is_file()
-    assert (tmp_path / "kb" / "commonplace" / "instructions" / "FIX-SYSTEM.md").is_file()
-    assert (tmp_path / "kb" / "commonplace" / "instructions" / "cp-skill-write" / "SKILL.md").is_file()
-    assert (tmp_path / "kb" / "commonplace" / "instructions" / "cp-skill-connect" / "SKILL.md").is_file()
-    assert (tmp_path / "kb" / "commonplace" / "instructions" / "cp-skill-ingest" / "SKILL.md").is_file()
-    assert (
-        tmp_path / "kb" / "commonplace" / "instructions" / "ingest-paper-with-code.md"
-    ).is_file()
-    assert (
-        tmp_path / "kb" / "commonplace" / "instructions" / "draft-ingest-report.md"
-    ).is_file()
-    assert (
-        tmp_path / "kb" / "commonplace" / "instructions" / "cp-skill-health-check" / "SKILL.md"
-    ).is_file()
-    assert (tmp_path / "kb" / "commonplace" / "instructions" / "review-gates").is_dir()
-    assert (tmp_path / "kb" / "commonplace" / "reference" / "README.md").is_file()
-    assert (tmp_path / "kb" / "commonplace" / "reference" / "types" / "adr.md").is_file()
-    assert (tmp_path / "kb" / "commonplace" / "reference" / "types" / "adr.schema.yaml").is_file()
-    assert not (tmp_path / "kb" / "commonplace" / "agent-memory-systems").exists()
+    files = relative_files(tmp_path)
+    expected = {
+        # Shipped library content.
+        Path("kb/commonplace/instructions/README.md"),
+        Path("kb/commonplace/instructions/COLLECTION.md"),
+        Path("kb/commonplace/notes/COLLECTION.md"),
+        Path("kb/commonplace/reference/COLLECTION.md"),
+        Path("kb/commonplace/reference/README-REVIEW-SYSTEM.md"),
+        Path("kb/commonplace/instructions/FIX-SYSTEM.md"),
+        Path("kb/commonplace/instructions/cp-skill-write/SKILL.md"),
+        Path("kb/commonplace/instructions/cp-skill-connect/SKILL.md"),
+        Path("kb/commonplace/instructions/cp-skill-ingest/SKILL.md"),
+        Path("kb/commonplace/instructions/cp-skill-health-check/SKILL.md"),
+        Path("kb/commonplace/instructions/ingest-paper-with-code.md"),
+        Path("kb/commonplace/instructions/draft-ingest-report.md"),
+        Path("kb/commonplace/reference/README.md"),
+        Path("kb/commonplace/reference/types/adr.md"),
+        Path("kb/commonplace/reference/types/adr.schema.yaml"),
+        # User collection landings and global types.
+        Path("kb/notes/COLLECTION.md"),
+        Path("kb/notes/README.md"),
+        Path("kb/reference/COLLECTION.md"),
+        Path("kb/reference/README.md"),
+        Path("kb/instructions/COLLECTION.md"),
+        Path("kb/instructions/README.md"),
+        Path("kb/sources/COLLECTION.md"),
+        Path("kb/sources/README.md"),
+        Path("kb/types/note.schema.yaml"),
+        Path("kb/types/instruction.md"),
+        Path("kb/types/instruction.schema.yaml"),
+        Path("kb/types/type-spec.md"),
+        Path("kb/types/type-spec.schema.yaml"),
+        # User-space source and report types.
+        Path("kb/reports/types/connect-report.md"),
+        Path("kb/reports/types/connect-report.schema.yaml"),
+        Path("kb/sources/types/ingest-report.md"),
+        Path("kb/sources/types/ingest-report.schema.yaml"),
+        Path("kb/sources/types/snapshot.md"),
+        Path("kb/sources/types/snapshot.schema.yaml"),
+        Path("kb/sources/.gitignore"),
+        Path("AGENTS.md.template"),
+    }
+    retired_files = {
+        Path("kb/types/instruction.instructions.md"),
+        Path("kb/reports/types/connect-report.instructions.md"),
+        Path("kb/sources/types/snapshot.template.md"),
+    }
+    directories = relative_directories(tmp_path)
 
-    # User collections get minimal authoring contracts and curated landings.
-    assert (tmp_path / "kb" / "notes" / "COLLECTION.md").is_file()
-    assert (tmp_path / "kb" / "notes" / "README.md").is_file()
-    assert (tmp_path / "kb" / "reference" / "COLLECTION.md").is_file()
-    assert (tmp_path / "kb" / "reference" / "README.md").is_file()
-    assert (tmp_path / "kb" / "instructions" / "COLLECTION.md").is_file()
-    assert (tmp_path / "kb" / "instructions" / "README.md").is_file()
-    assert (tmp_path / "kb" / "sources" / "COLLECTION.md").is_file()
-    assert (tmp_path / "kb" / "sources" / "README.md").is_file()
-
-    # Shared global types stay at top-level kb/types/ (ADR-021: B1 paths are
-    # invariant when the global types dir is shared, not nested under commonplace).
-    assert (tmp_path / "kb" / "types" / "note.schema.yaml").is_file()
-    assert (tmp_path / "kb" / "types" / "instruction.md").is_file()
-    assert not (tmp_path / "kb" / "types" / "instruction.instructions.md").exists()
-    assert (tmp_path / "kb" / "types" / "instruction.schema.yaml").is_file()
-    assert (tmp_path / "kb" / "types" / "type-spec.md").is_file()
-    assert (tmp_path / "kb" / "types" / "type-spec.schema.yaml").is_file()
-
-    # User-space type scaffolds (sources, reports) stay in the user's tree.
-    assert (tmp_path / "kb" / "reports" / "types" / "connect-report.md").is_file()
-    assert not (tmp_path / "kb" / "reports" / "types" / "connect-report.instructions.md").exists()
-    assert (tmp_path / "kb" / "reports" / "types" / "connect-report.schema.yaml").is_file()
-    assert (tmp_path / "kb" / "sources" / "types" / "ingest-report.md").is_file()
-    assert (tmp_path / "kb" / "sources" / "types" / "ingest-report.schema.yaml").is_file()
-    assert (tmp_path / "kb" / "sources" / "types" / "snapshot.md").is_file()
-    assert (tmp_path / "kb" / "sources" / "types" / "snapshot.schema.yaml").is_file()
-    assert not (tmp_path / "kb" / "sources" / "types" / "snapshot.template.md").exists()
-    assert (tmp_path / "kb" / "sources" / ".gitignore").is_file()
-
-    assert (tmp_path / "AGENTS.md.template").is_file()
+    assert expected <= files
+    assert retired_files.isdisjoint(files)
+    assert Path("kb/commonplace/agent-memory-systems") not in directories
+    assert Path("kb/commonplace/instructions/review-gates") in directories
 
 
 def test_init_project_satisfies_collection_landing_invariant(tmp_path: Path) -> None:
@@ -224,23 +240,6 @@ def test_init_project_treats_raw_template_source_as_matching(tmp_path: Path) -> 
 
     assert Path("AGENTS.md.template") in report.preserved_identical
     assert Path("AGENTS.md.template") not in report.preserved_different
-
-
-def test_scaffold_source_resolves_canonical_files_without_data_symlinks() -> None:
-    data_root = SRC_ROOT / "commonplace" / "_data"
-
-    assert _resolve_scaffold_source(data_root, "AGENTS.md.template") == (
-        REPO_ROOT / "AGENTS.md.template"
-    )
-    assert _resolve_scaffold_source(data_root, "kb/instructions") == (
-        REPO_ROOT / "kb" / "instructions"
-    )
-
-
-def test_package_data_tree_has_no_scaffold_symlinks() -> None:
-    data_root = SRC_ROOT / "commonplace" / "_data"
-
-    assert not any(path.is_symlink() for path in data_root.rglob("*"))
 
 
 def test_main_reports_preserved_file_statuses(

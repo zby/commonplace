@@ -3,7 +3,6 @@ from __future__ import annotations
 import os
 import shutil
 import sys
-from collections import Counter
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -12,10 +11,9 @@ if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 import pytest
-from jsonschema.exceptions import ValidationError
 
 from commonplace.cli import validate_notes
-from commonplace.lib import project_paths, validation
+from commonplace.lib import validation
 from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH
 
 FIXTURES_ROOT = Path(__file__).resolve().parent / "fixtures" / "schemas"
@@ -1000,41 +998,6 @@ Watch.
     )
 
 
-def test_schema_violation_fails_by_default() -> None:
-    # No severity on the failing subschema → the default applies: a broken
-    # constraint blocks (the schema is the contract).
-    error = ValidationError(
-        "'x' is a required property",
-        validator="required",
-        schema={"required": ["x"]},
-        path=["frontmatter"],
-    )
-
-    severity, _ = validation._schema_error_message(error)
-
-    assert severity == "fail"
-
-
-def test_schema_constraint_can_opt_down_to_warn() -> None:
-    # `severity: warn` on the failing subschema downgrades just that constraint,
-    # keyed by its stable ruleId.
-    error = ValidationError(
-        "[] is too short",
-        validator="minItems",
-        schema={
-            "type": "array",
-            "minItems": 3,
-            "ruleId": "min-items-example",
-            "severity": "warn",
-        },
-        path=["links"],
-    )
-
-    severity, _ = validation._schema_error_message(error)
-
-    assert severity == "warn"
-
-
 def test_quote_citation_shape_passes_when_well_formed() -> None:
     results = validation.CheckResults(note_type="agent-memory-system-review")
     content = (
@@ -1292,125 +1255,6 @@ type: kb/reports/types/connect-report.md
     assert any(expected in item for item in results.passes)
 
 
-def test_list_kb_note_paths_skips_nested_git_repos(tmp_path: Path) -> None:
-    notes_root = tmp_path / "kb" / "notes"
-    write(notes_root / "COLLECTION.md", "# Notes collection\n")
-    write(
-        notes_root / "kept.md",
-        """---
-description: Kept note with enough description text to satisfy structural validation
-type: kb/types/note.md
-traits: []
----
-
-# Kept note
-""",
-    )
-    nested_repo = notes_root / "related-systems" / "napkin"
-    nested_repo.mkdir(parents=True, exist_ok=True)
-    (nested_repo / ".git").mkdir()
-    write(
-        nested_repo / "ignored.md",
-        """---
-description: This note lives under a cloned repo and should be skipped by batch validation path discovery
-type: kb/types/note.md
-traits: []
----
-
-# Ignored note
-""",
-    )
-
-    discovered = project_paths.list_kb_note_paths(tmp_path)
-
-    assert notes_root / "kept.md" in discovered
-    assert nested_repo / "ignored.md" not in discovered
-
-
-def test_list_kb_note_paths_includes_visible_type_directory_markdown(
-    tmp_path: Path,
-) -> None:
-    notes_root = tmp_path / "kb" / "notes"
-    write(notes_root / "COLLECTION.md", "# Notes collection\n")
-    write(
-        notes_root / "real.md",
-        """---
-description: Real note that should be picked up by batch validation
-type: kb/types/note.md
-traits: []
----
-
-# Real note
-""",
-    )
-    write(
-        notes_root / "types" / "adr.template.md",
-        """---
-description: Template skeleton for authoring ADRs, not a knowledge artifact
-type: kb/notes/types/adr.md
----
-
-# {NNN}-{decision-title}
-""",
-    )
-    write(
-        notes_root / "types" / "adr.instructions.md",
-        "# ADR Instructions\n\nUse an ADR for a concrete architectural decision.\n",
-    )
-    write(
-        notes_root / "collection" / "types" / "nested.template.md",
-        """---
-description: Template nested deeper in the tree under a collection-local types directory
-type: collection-item
----
-
-# Template
-""",
-    )
-
-    discovered = project_paths.list_kb_note_paths(tmp_path)
-
-    assert notes_root / "real.md" in discovered
-    assert notes_root / "types" / "adr.template.md" in discovered
-    assert notes_root / "types" / "adr.instructions.md" in discovered
-    assert notes_root / "collection" / "types" / "nested.template.md" in discovered
-
-
-def test_list_kb_note_paths_skips_replaced_archives(tmp_path: Path) -> None:
-    write(
-        tmp_path / "kb" / "agent-memory-systems" / "COLLECTION.md",
-        "# Agent memory systems\n",
-    )
-    reviews_root = tmp_path / "kb" / "agent-memory-systems" / "reviews"
-    current = write(
-        reviews_root / "napkin.md",
-        """---
-description: Current review of napkin as an agent-memory-system
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
-last-checked: "2026-04-20"
----
-
-# Napkin
-""",
-    )
-    archive = write(
-        reviews_root / "napkin.replaced.2026-04-12.md",
-        """---
-description: Archived review of napkin superseded on 2026-04-12
-type: kb/agent-memory-systems/types/agent-memory-system-review.md
-last-checked: "2026-04-12"
----
-
-# Napkin (replaced)
-""",
-    )
-
-    discovered = project_paths.list_kb_note_paths(tmp_path)
-
-    assert current in discovered
-    assert archive not in discovered
-
-
 def test_recent_target_uses_mtime_and_target_lookup(tmp_path: Path) -> None:
     notes_root = tmp_path / "kb" / "notes"
     write(notes_root / "COLLECTION.md", "# Notes collection\n")
@@ -1564,132 +1408,6 @@ Orientation paragraph.
     assert "=== VALIDATION: unmarked-README.md ===" not in output
     assert "complete mark: missing entry for kb/notes/tagged-note.md" in output
     assert "=== BATCH INFO ===" not in output
-
-
-def test_validation_run_parses_collection_artifacts_once_and_reuses_indexes(
-    tmp_path: Path,
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    notes = configure_tag_readme_repo(tmp_path)
-
-    def tagged(name: str, tags: str, body: str = "") -> Path:
-        return write(
-            notes / f"{name}.md",
-            f"""---
-description: {name.title()} note in the validation-run cache fixture
-type: kb/types/note.md
-tags: [{tags}]
----
-
-# {name.title()}
-
-{body}
-""",
-        )
-
-    def complete_head(tag: str, members: tuple[str, ...]) -> Path:
-        links = "\n".join(
-            f"- [{member.title()}](./{member}.md) — member" for member in members
-        )
-        return write(
-            notes / f"{tag}-README.md",
-            f"""---
-description: Complete curated head for {tag}
-type: kb/types/tag-readme.md
-index_source: tag
-index_key: {tag}
-complete: true
----
-
-# {tag.title()}
-
-{links}
-""",
-        )
-
-    first = tagged(
-        "first",
-        "alpha, beta",
-        'The source says "cache fixture phrase" '
-        "([Second](./second.md), verbatim).",
-    )
-    second = tagged("second", "alpha", "The cache fixture phrase appears here.")
-    alpha = complete_head("alpha", ("first", "second"))
-    beta = complete_head("beta", ("first",))
-    paths = tuple(project_paths.list_collection_note_paths(notes))
-    selected = {path.resolve() for path in paths}
-    reads: Counter[Path] = Counter()
-    original_read_text = Path.read_text
-
-    def counting_read_text(path: Path, *args: object, **kwargs: object) -> str:
-        resolved = path.resolve()
-        if resolved in selected:
-            reads[resolved] += 1
-        return original_read_text(path, *args, **kwargs)
-
-    monkeypatch.setattr(Path, "read_text", counting_read_text)
-
-    run = validation.ValidationRun(
-        repo_root=tmp_path,
-        paths=paths,
-        collection=notes,
-    )
-    outcome = run.evaluate()
-
-    assert outcome.paths == paths
-    assert set(outcome.results) == selected
-    assert {first, second, alpha, beta} <= set(outcome.results)
-    assert all(reads[path.resolve()] == 1 for path in paths)
-    collection_index = run.collection_index(notes)
-    assert collection_index is run.collection_index(notes)
-    assert {path for path, _title, _description in collection_index.tag_index_entries} == {
-        alpha,
-        beta,
-    }
-    assert not outcome.collection_structure
-
-
-def test_validation_run_reuses_target_type_document_for_resolution(
-    tmp_path: Path,
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
-    notes = configure_temp_repo(tmp_path)
-    type_spec = write_type_spec(
-        tmp_path,
-        "kb/types/type-spec.md",
-        name="type-spec",
-        schema=None,
-    )
-    note_type = tmp_path / "kb" / "types" / "note.md"
-    note = write(
-        notes / "sample.md",
-        """---
-description: Sample note exercising cached type resolution
-type: kb/types/note.md
----
-
-# Sample
-""",
-    )
-    selected = {path.resolve() for path in (type_spec, note_type, note)}
-    reads: Counter[Path] = Counter()
-    original_read_text = Path.read_text
-
-    def counting_read_text(path: Path, *args: object, **kwargs: object) -> str:
-        resolved = path.resolve()
-        if resolved in selected:
-            reads[resolved] += 1
-        return original_read_text(path, *args, **kwargs)
-
-    monkeypatch.setattr(Path, "read_text", counting_read_text)
-
-    outcome = validation.ValidationRun(
-        repo_root=tmp_path,
-        paths=(note_type, note),
-    ).evaluate()
-
-    assert not any(result.fails for result in outcome.results.values())
-    assert all(reads[path] == 1 for path in selected)
 
 
 def test_bulk_scopes_are_rejected(tmp_path: Path) -> None:

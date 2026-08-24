@@ -1,13 +1,14 @@
 from pathlib import Path
 
 import commonplace
-from commonplace.cli.source import main, source_path
+from commonplace.cli.source import main
 
 
-def test_source_path_points_at_executing_package() -> None:
-    assert source_path() == Path(commonplace.__file__).resolve().parent
+def test_main_prints_executing_package_path(capsys) -> None:
+    exit_code = main([])
+    output = capsys.readouterr().out.strip()
 
-
-def test_main_prints_source_path(capsys) -> None:
-    assert main([]) == 0
-    assert capsys.readouterr().out.strip() == str(source_path())
+    assert (exit_code, output) == (
+        0,
+        str(Path(commonplace.__file__).resolve().parent),
+    )

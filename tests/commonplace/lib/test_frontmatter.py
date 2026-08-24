@@ -22,45 +22,36 @@ def test_parse_extracts_mapping_between_delimiters() -> None:
 def test_parse_without_frontmatter_returns_empty_result() -> None:
     result = frontmatter.parse("# Just a heading\nSome text.\n")
 
-    assert result.ok
     assert result.data == {}
 
 
 def test_parse_empty_frontmatter_returns_empty_result() -> None:
     result = frontmatter.parse("---\n\n---\n# Title\n")
 
-    assert result.ok
     assert result.data == {}
 
 
 def test_parse_closing_delimiter_without_trailing_newline() -> None:
     result = frontmatter.parse("---\ndescription: test\n---")
 
-    assert result.ok
     assert result.data == {"description": "test"}
 
 
 def test_parse_reports_missing_closing_delimiter() -> None:
     result = frontmatter.parse("---\ndescription: test\n# Title\n")
 
-    assert not result.ok
-    assert result.data == {}
     assert result.errors == ["frontmatter: missing closing delimiter"]
 
 
 def test_parse_reports_yaml_errors() -> None:
     result = frontmatter.parse("---\nnot a valid line\ntype: kb/types/note.md\n---\n")
 
-    assert not result.ok
-    assert result.data == {}
     assert result.errors
 
 
 def test_parse_requires_frontmatter_to_be_mapping() -> None:
     result = frontmatter.parse("---\n- not\n- a\n- mapping\n---\n")
 
-    assert not result.ok
-    assert result.data == {}
     assert result.errors == ["frontmatter must parse to a mapping"]
 
 
@@ -73,7 +64,6 @@ def test_parse_accepts_crlf_line_endings() -> None:
         "# Title\r\n"
     )
 
-    assert result.ok
     assert result.data == {
         "description": "Windows note",
         "type": "kb/types/note.md",

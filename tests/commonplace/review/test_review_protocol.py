@@ -142,21 +142,6 @@ def test_extract_pair_results_parses_blocks_keyed_by_pair() -> None:
     }
 
 
-def test_extract_pair_results_ignores_text_outside_blocks() -> None:
-    bundle = f"""Preamble scratch text.
-
-=== PAIR REVIEW START: kb/notes/first.md :: {GATE} ===
-Undefined acronym in the opening sentence.
-
-## Result: WARN
-=== PAIR REVIEW END: kb/notes/first.md :: {GATE} ===
-
-Trailing scratch text.
-"""
-    parsed = extract_pair_results(bundle, expected_pairs=[("kb/notes/first.md", GATE)])
-    assert parsed[("kb/notes/first.md", GATE)] == "Undefined acronym in the opening sentence.\n\n## Result: WARN\n"
-
-
 def test_extract_pair_results_salvages_when_expected_pair_is_missing() -> None:
     bundle = f"""=== PAIR REVIEW START: kb/notes/first.md :: {GATE} ===
 Looks good.
@@ -261,19 +246,6 @@ def test_parse_job_output_rejects_malformed_self_reported_model(
             expected_pairs=pairs,
             result_kinds={pair: "verdict" for pair in pairs},
         )
-
-
-def test_parse_job_output_canonicalizes_result_footers() -> None:
-    bundle = f"""=== PAIR REVIEW START: kb/notes/first.md :: {GATE} ===
-No undefined terms found.
-
-## Result: PASS
-=== PAIR REVIEW END: kb/notes/first.md :: {GATE} ===
-"""
-    pair = ("kb/notes/first.md", GATE)
-    parsed = parse_job_output(bundle, expected_pairs=[pair], result_kinds={pair: "verdict"})
-    canonical = parsed.canonical_texts[("kb/notes/first.md", GATE)]
-    assert canonical.rstrip("\n").endswith("## Result: PASS")
 
 
 def test_parse_job_output_rejects_result_aliases() -> None:

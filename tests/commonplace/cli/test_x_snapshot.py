@@ -4,7 +4,6 @@ import hashlib
 import json
 import sys
 from pathlib import Path
-from types import SimpleNamespace
 
 import pytest
 import yaml
@@ -22,11 +21,6 @@ def frontmatter(path: Path) -> dict:
     return yaml.safe_load(raw)
 
 
-class FakeClient:
-    def __init__(self, bearer_token: str) -> None:
-        self.bearer_token = bearer_token
-
-
 class FakeResponse:
     def __init__(self, payload: dict) -> None:
         self.payload = payload
@@ -35,106 +29,86 @@ class FakeResponse:
         return self.payload
 
 
-def test_fetch_post_uses_xdk_0_10_post_vocabulary() -> None:
-    target_post = {
-        "id": "1002",
-        "text": "Truncated text",
-        "author_id": "42",
-        "referenced_posts": [{"type": "replied_to", "id": "1001"}],
-        "note_post": {"text": "Full post text"},
-    }
+class FakePosts:
+    def __init__(
+        self,
+        target_post: dict,
+        recent_posts: dict[str, dict],
+        users: list[dict],
+    ) -> None:
+        self.target_post = target_post
+        self.ancestor_post = {
+            "id": "1001",
+            "text": "Ancestor post",
+            "author_id": "42",
+            "created_at": "2026-04-19T09:59:00Z",
+            "conversation_id": "1002",
+        }
+        self.recent_posts = recent_posts
+        self.users = users
 
-    class LookupPosts:
-        def get_by_id(
-            self,
-            post_id: str,
-            *,
-            post_fields: list[str],
-            expansions: list[str],
-            user_fields: list[str],
-        ) -> FakeResponse:
-            assert post_id == "1002"
-            assert "referenced_posts" in post_fields
-            assert "note_post" in post_fields
-            assert "referenced_tweets" not in post_fields
-            assert expansions == [
-                "author_id",
-                "in_reply_to_user_id",
-                "referenced_posts",
-            ]
-            assert user_fields == x_snapshot.USER_FIELDS
-            return FakeResponse(
+    def get_by_id(
+        self,
+        post_id: str,
+        *,
+        post_fields: list[str],
+        expansions: list[str],
+        user_fields: list[str],
+    ) -> FakeResponse:
+        post = (
+            self.target_post
+            if post_id == self.target_post["id"]
+            else self.ancestor_post
+        )
+        returned_fields = {"id", *post_fields}
+        return FakeResponse(
+            {
+                "data": {
+                    key: value for key, value in post.items() if key in returned_fields
+                },
+                "includes": {"users": self.users},
+            }
+        )
+
+    def search_recent(
+        self,
+        *,
+        query: str,
+        max_results: int,
+        sort_order: str,
+        post_fields: list[str],
+        expansions: list[str],
+        user_fields: list[str],
+    ) -> list[FakeResponse]:
+        returned_fields = {"id", *post_fields}
+        return [
+            FakeResponse(
                 {
-                    "data": target_post,
-                    "includes": {
-                        "users": [{"id": "42", "username": "alice", "name": "Alice"}]
-                    },
+                    "data": [
+                        {
+                            key: value
+                            for key, value in post.items()
+                            if key in returned_fields
+                        }
+                        for post in self.recent_posts.values()
+                    ],
+                    "includes": {"users": self.users},
                 }
             )
-
-    client = SimpleNamespace(posts=LookupPosts())
-    post, users = x_snapshot._fetch_post(client, "1002")
-
-    assert users["42"]["username"] == "alice"
-    assert x_snapshot._reply_parent_id(post) == "1001"
-    assert x_snapshot._post_text(post) == "Full post text"
+        ]
 
 
-def test_fetch_thread_recent_uses_xdk_0_10_post_fields() -> None:
-    class RecentPosts:
-        def search_recent(
-            self,
-            *,
-            query: str,
-            max_results: int,
-            sort_order: str,
-            post_fields: list[str],
-            expansions: list[str],
-            user_fields: list[str],
-        ) -> list[FakeResponse]:
-            assert query == "conversation_id:1002"
-            assert max_results == 100
-            assert sort_order == "recency"
-            assert "referenced_posts" in post_fields
-            assert "note_post" in post_fields
-            assert expansions == [
-                "author_id",
-                "in_reply_to_user_id",
-                "referenced_posts",
-            ]
-            assert user_fields == x_snapshot.USER_FIELDS
-            return [
-                FakeResponse(
-                    {
-                        "data": [{"id": "1003", "author_id": "42"}],
-                        "includes": {
-                            "users": [
-                                {"id": "42", "username": "alice", "name": "Alice"}
-                            ]
-                        },
-                    }
-                )
-            ]
-
-    client = SimpleNamespace(posts=RecentPosts())
-    posts, users, error = x_snapshot._fetch_thread_recent(
-        client,
-        conversation_id="1002",
-        thread_author_id="42",
-        max_posts=200,
-    )
-
-    assert error is None
-    assert list(posts) == ["1003"]
-    assert users["42"]["username"] == "alice"
+class FakeClient:
+    def __init__(self, posts: FakePosts) -> None:
+        self.posts = posts
 
 
 @pytest.mark.parametrize(
-    ("target_overrides", "recent_posts", "expected_family"),
+    ("target_overrides", "recent_posts", "expected_family", "expected_content"),
     [
-        ({}, {}, "x-post"),
+        ({}, {}, "x-post", ("Full opener text",)),
         (
-            {},
+            {"referenced_posts": [{"type": "replied_to", "id": "1001"}]},
             {
                 "1003": {
                     "id": "1003",
@@ -145,6 +119,7 @@ def test_fetch_thread_recent_uses_xdk_0_10_post_fields() -> None:
                 }
             },
             "x-thread",
+            ("Ancestor post", "Full opener text", "Thread reply"),
         ),
         (
             {"article": {"title": "Article title", "plain_text": "Article body."}},
@@ -158,36 +133,35 @@ def test_fetch_thread_recent_uses_xdk_0_10_post_fields() -> None:
                 }
             },
             "x-article",
+            ("Article body.",),
         ),
     ],
 )
-def test_x_snapshot_stamps_family_tag_into_frontmatter_and_sidecar(
+def test_x_snapshot_captures_each_content_family(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
     target_overrides: dict,
     recent_posts: dict,
     expected_family: str,
+    expected_content: tuple[str, ...],
 ) -> None:
     target_post = {
         "id": "1002",
-        "text": "Thread opener",
+        "text": "Truncated opener",
+        "note_post": {"text": "Full opener text"},
         "author_id": "42",
         "created_at": "2026-04-19T10:00:00Z",
         "conversation_id": "1002",
     }
     target_post.update(target_overrides)
-    users = {"42": {"id": "42", "username": "alice", "name": "Alice"}}
+    users = [{"id": "42", "username": "alice", "name": "Alice"}]
+
+    def fake_client(bearer_token: str) -> FakeClient:
+        assert bearer_token == "token"
+        return FakeClient(FakePosts(target_post, recent_posts, users))
+
     monkeypatch.setenv("X_BEARER_TOKEN", "token")
-    monkeypatch.setattr(x_snapshot.xdk, "Client", FakeClient)
-    monkeypatch.setattr(
-        x_snapshot, "_fetch_post", lambda _client, _post_id: (target_post, users)
-    )
-    monkeypatch.setattr(x_snapshot, "_fetch_ancestors", lambda _client, _post: ({}, {}))
-    monkeypatch.setattr(
-        x_snapshot,
-        "_fetch_thread_recent",
-        lambda _client, **_kwargs: (recent_posts, users, None),
-    )
+    monkeypatch.setattr(x_snapshot.xdk, "Client", fake_client)
 
     result = x_snapshot.snapshot_x_url(
         f"https://x.com/alice/status/{target_post['id']}",
@@ -204,9 +178,10 @@ def test_x_snapshot_stamps_family_tag_into_frontmatter_and_sidecar(
     assert fm["tags"] == [expected_family]
     assert sidecar["family"] == expected_family
     assert "type" not in sidecar
+    rendered = md_path.read_text(encoding="utf-8")
+    assert all(content in rendered for content in expected_content)
     checksum = hashlib.sha256(md_path.read_bytes()).hexdigest()
     assert f"SHA-256: {checksum}" in result
-    assert x_snapshot.DEFAULT_SNAPSHOT_DIR == "kb/sources/.snapshots"
 
 
 def test_x_snapshot_reports_checksum_for_existing_capture(

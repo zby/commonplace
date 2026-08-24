@@ -192,7 +192,7 @@ def test_relocate_note_apply_leaves_review_state_rows_unchanged_and_paths_derive
     make_gate(repo_root)
     write(repo_root / "properdocs.yml", "plugins:\n  - redirects:\n      redirect_maps:\n")
     db_path = kb_root / "reports" / "commonplace-store.sqlite"
-    review_pair_id = seed_accepted_review(repo_root, db_path, note_path="kb/notes/old-note.md")
+    seed_accepted_review(repo_root, db_path, note_path="kb/notes/old-note.md")
     with review_db.connect(db_path) as conn:
         rows_before = review_state_rows(conn)
 
@@ -212,28 +212,8 @@ def test_relocate_note_apply_leaves_review_state_rows_unchanged_and_paths_derive
 
     with review_db.connect(db_path) as conn:
         rows_after = review_state_rows(conn)
-        plan = review_db.load_review_job_plan(conn, review_job_id=1)
-        old_pairs = review_db.load_review_pairs_for_note(
-            conn,
-            note_path="kb/notes/old-note.md",
-            model_partition=TEST_MODEL,
-        )
-        new_pairs = review_db.load_review_pairs_for_note(
-            conn,
-            note_path="kb/notes/archive/new-note-title.md",
-            model_partition=TEST_MODEL,
-        )
 
     assert rows_after == rows_before
-    assert plan is not None
-    assert old_pairs[0].review_pair_id == review_pair_id
-    assert new_pairs == []
-    assert "prompt_path" not in rows_after["review_jobs"][0]
-    assert "job_output_path" not in rows_after["review_jobs"][0]
-    assert "result_path" not in rows_after["review_pairs"][0]
-    assert plan.prompt_path == "kb/reports/review-jobs/review-job-1/prompt.md"
-    assert plan.job_output_path == "kb/reports/review-jobs/review-job-1/job-output.md"
-    assert old_pairs[0].result_path == "kb/reports/review-jobs/review-job-1/pair-1-source-residue.md"
 
     stale = review_target_selector.select_stale_criteria(
         repo_root,

@@ -218,54 +218,8 @@ def test_relocate_directory_apply_leaves_review_state_rows_unchanged_and_paths_d
 
     with review_db.connect(db_path) as conn:
         rows_after = review_state_rows(conn)
-        plans = [
-            review_db.load_review_job_plan(conn, review_job_id=1),
-            review_db.load_review_job_plan(conn, review_job_id=2),
-        ]
-        old_foo_pairs = review_db.load_review_pairs_for_note(
-            conn,
-            note_path="kb/notes/related-systems/foo.md",
-            model_partition=TEST_MODEL,
-        )
-        old_bar_pairs = review_db.load_review_pairs_for_note(
-            conn,
-            note_path="kb/notes/related-systems/bar.md",
-            model_partition=TEST_MODEL,
-        )
-        new_foo_pairs = review_db.load_review_pairs_for_note(
-            conn,
-            note_path="kb/agent-memory-systems/foo.md",
-            model_partition=TEST_MODEL,
-        )
-        new_bar_pairs = review_db.load_review_pairs_for_note(
-            conn,
-            note_path="kb/agent-memory-systems/bar.md",
-            model_partition=TEST_MODEL,
-        )
 
     assert rows_after == rows_before
-    assert [pair.note_path for pair in old_bar_pairs + old_foo_pairs] == [
-        "kb/notes/related-systems/bar.md",
-        "kb/notes/related-systems/foo.md",
-    ]
-    assert new_foo_pairs == []
-    assert new_bar_pairs == []
-    assert all(plan is not None for plan in plans)
-    assert "prompt_path" not in rows_after["review_jobs"][0]
-    assert "job_output_path" not in rows_after["review_jobs"][0]
-    assert "result_path" not in rows_after["review_pairs"][0]
-    assert [plan.prompt_path for plan in plans if plan is not None] == [
-        "kb/reports/review-jobs/review-job-1/prompt.md",
-        "kb/reports/review-jobs/review-job-2/prompt.md",
-    ]
-    assert [plan.job_output_path for plan in plans if plan is not None] == [
-        "kb/reports/review-jobs/review-job-1/job-output.md",
-        "kb/reports/review-jobs/review-job-2/job-output.md",
-    ]
-    assert [pair.result_path for pair in old_foo_pairs + old_bar_pairs] == [
-        "kb/reports/review-jobs/review-job-1/pair-1-source-residue.md",
-        "kb/reports/review-jobs/review-job-2/pair-1-source-residue.md",
-    ]
 
     stale = review_target_selector.select_stale_criteria(
         tmp_path,

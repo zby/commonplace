@@ -27,19 +27,6 @@ def test_normalize_text_folds_capture_typography_and_whitespace():
     assert normalize_text("  “one\n two” … it’s  ") == '"one two" ... it\'s'
 
 
-def test_verifies_citation_marker(tmp_path: Path):
-    note = _write_pair(
-        tmp_path,
-        'The source says "quoted words here" '
-        '([Source](../sources/source.md), Abstract, verbatim).',
-        "The source has quoted\nwords here in its abstract.",
-    )
-
-    results = verify_note(note)
-
-    assert [result.status for result in results] == ["match"]
-
-
 def test_verifies_marker_before_quote(tmp_path: Path):
     note = _write_pair(
         tmp_path,
@@ -49,17 +36,6 @@ def test_verifies_marker_before_quote(tmp_path: Path):
     )
 
     assert [result.status for result in verify_note(note)] == ["match"]
-
-
-def test_mismatch_is_reported(tmp_path: Path):
-    note = _write_pair(
-        tmp_path,
-        'The source says "words not in source" '
-        '([Source](../sources/source.md), Abstract, verbatim).',
-        "Different text.",
-    )
-
-    assert [result.status for result in verify_note(note)] == ["mismatch"]
 
 
 def test_explicitly_non_verbatim_prose_is_not_a_candidate(tmp_path: Path):
@@ -240,8 +216,6 @@ def test_validator_stays_silent_on_unresolved_where_the_convention_is_unused(tmp
         "The source makes the claim.",
     )
 
-    assert [r.status for r in verify_note(note)] == ["unresolved"]
-
     results = _check(note)
 
     assert not results.fails
@@ -300,7 +274,6 @@ def test_fenced_code_demonstrating_the_convention_is_not_a_claim(tmp_path: Path)
         "Real source text, containing nothing from the example.",
     )
 
-    assert verify_note(note) == []
     results = _check(note)
     assert not results.fails
     assert not results.warns

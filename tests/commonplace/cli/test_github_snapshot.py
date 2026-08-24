@@ -5,6 +5,7 @@ import json
 import sys
 from pathlib import Path
 
+import pytest
 import yaml
 
 SRC_ROOT = Path(__file__).resolve().parents[4] / "src"
@@ -20,52 +21,44 @@ def frontmatter(path: Path) -> dict:
     return yaml.safe_load(raw)
 
 
-def test_github_snapshot_stamps_snapshot_issue_family(
-    tmp_path: Path, monkeypatch
+@pytest.mark.parametrize(
+    ("url", "number", "expected_family", "expected_api_url"),
+    [
+        (
+            "https://github.com/example/project/issues/123",
+            123,
+            "github-issue",
+            "https://api.github.com/repos/example/project/issues/123",
+        ),
+        (
+            "https://github.com/example/project/pull/456",
+            456,
+            "github-pr",
+            "https://api.github.com/repos/example/project/pulls/456",
+        ),
+    ],
+)
+def test_github_snapshot_captures_issue_and_pull_request_families(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    url: str,
+    number: int,
+    expected_family: str,
+    expected_api_url: str,
 ) -> None:
     payload = {
-        "title": "Issue title",
-        "number": 123,
-        "state": "open",
-        "repository_url": "https://api.github.com/repos/example/project",
-        "user": {"login": "alice"},
-        "labels": [{"name": "bug"}],
-        "body": "Issue body",
-    }
-    monkeypatch.setattr(github_snapshot, "_gh_api", lambda _url: json.dumps(payload))
-
-    result = github_snapshot.snapshot_github_url(
-        "https://github.com/example/project/issues/123",
-        out_dir=str(tmp_path),
-    )
-
-    md_path = next(tmp_path.glob("*.md"))
-    fm = frontmatter(md_path)
-
-    assert fm["type"] == "kb/sources/types/snapshot.md"
-    assert fm["tags"] == ["github-issue"]
-    assert fm["api_url"] == "https://api.github.com/repos/example/project/issues/123"
-    checksum = hashlib.sha256(md_path.read_bytes()).hexdigest()
-    assert f"SHA-256: {checksum}" in result
-    assert github_snapshot.DEFAULT_SNAPSHOT_DIR == "kb/sources/.snapshots"
-
-
-def test_github_snapshot_stamps_snapshot_pr_family(
-    tmp_path: Path, monkeypatch
-) -> None:
-    payload = {
-        "title": "PR title",
-        "number": 456,
+        "title": "Capture title",
+        "number": number,
         "state": "open",
         "repository_url": "https://api.github.com/repos/example/project",
         "user": {"login": "alice"},
         "labels": [],
-        "body": "PR body",
+        "body": "Capture body",
     }
     monkeypatch.setattr(github_snapshot, "_gh_api", lambda _url: json.dumps(payload))
 
-    github_snapshot.snapshot_github_url(
-        "https://github.com/example/project/pull/456",
+    result = github_snapshot.snapshot_github_url(
+        url,
         out_dir=str(tmp_path),
     )
 
@@ -73,8 +66,10 @@ def test_github_snapshot_stamps_snapshot_pr_family(
     fm = frontmatter(md_path)
 
     assert fm["type"] == "kb/sources/types/snapshot.md"
-    assert fm["tags"] == ["github-pr"]
-    assert fm["api_url"] == "https://api.github.com/repos/example/project/pulls/456"
+    assert fm["tags"] == [expected_family]
+    assert fm["api_url"] == expected_api_url
+    checksum = hashlib.sha256(md_path.read_bytes()).hexdigest()
+    assert f"SHA-256: {checksum}" in result
 
 
 def test_github_snapshot_reports_checksum_for_existing_capture(

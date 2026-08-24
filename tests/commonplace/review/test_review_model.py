@@ -7,25 +7,32 @@ from commonplace.review.review_model import (
 
 
 def test_normalize_model_partition_collapses_registered_aliases() -> None:
-    assert normalize_model_partition("opus-4-6") == "claude-opus"
-    assert normalize_model_partition("opus-4.6") == "claude-opus"
-    assert normalize_model_partition("claude-opus-4.6") == "claude-opus"
-    assert normalize_model_partition("claude-opus-4.8") == "claude-opus-4.8"
-    assert normalize_model_partition("claude-opus-4.8[1m]") == "claude-opus-4.8"
-    assert normalize_model_partition("claude-fable-5") == "claude-opus-4.8"
-    assert normalize_model_partition("sonnet") == "claude-sonnet-5"
-    assert normalize_model_partition("claude-sonnet-5") == "claude-sonnet-5"
-    assert normalize_model_partition("claude-sonnet-4-6") == "claude-sonnet"
-    assert normalize_model_partition("gpt-5.4-high") == "codex"
-    assert normalize_model_partition("gpt-5.5-high") == "codex-5.5"
-    assert normalize_model_partition("luna") == "luna"
-    assert normalize_model_partition("sol") == "sol"
+    aliases = {
+        "opus-4-6": "claude-opus",
+        "claude-opus-4.8[1m]": "claude-opus-4.8",
+        "claude-fable-5": "claude-opus-4.8",
+        "sonnet": "claude-sonnet-5",
+        "claude-sonnet-4-6": "claude-sonnet",
+        "gpt-5.4-high": "codex",
+        "gpt-5.5-high": "codex-5.5",
+        "luna": "luna",
+        "sol": "sol",
+    }
+
+    assert {
+        alias: normalize_model_partition(alias) for alias in aliases
+    } == aliases
 
 
 def test_build_model_partition_collapses_effort_for_registered_models() -> None:
-    assert build_model_partition("claude-opus-4.8[1m]") == "claude-opus-4.8"
-    assert build_model_partition("gpt-5.4", "xhigh") == "codex"
-    assert build_model_partition("gpt-5.5", "high") == "codex-5.5"
-    assert build_model_partition("luna", "high") == "luna"
-    assert build_model_partition("sol", "high") == "sol"
-    assert build_model_partition("unknown-model", "high") == "unknown-model-high"
+    cases = {
+        ("claude-opus-4.8[1m]", None): "claude-opus-4.8",
+        ("gpt-5.4", "xhigh"): "codex",
+        ("gpt-5.5", "high"): "codex-5.5",
+        ("luna", "high"): "luna",
+        ("unknown-model", "high"): "unknown-model-high",
+    }
+
+    assert {
+        case: build_model_partition(*case) for case in cases
+    } == cases

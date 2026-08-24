@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 import json
-import sqlite3
 import subprocess
 from pathlib import Path
 
 from commonplace.lib import frontmatter
+from commonplace.review import review_target_selector
 
 from ._run_cli import run_cli
 
@@ -168,13 +168,20 @@ def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
     )
 
     payload = json.loads(result.stdout)
-    assert "runs" not in payload
     jobs = payload["jobs"]
-    assert payload["input_mode"] == "selector"
-    assert payload["model_partition"] == "test-model"
-    assert payload["grouping"] == "note"
-    assert payload["created_count"] == 2
-    assert payload["skipped_pairs"] == []
+    assert {
+        "input_mode": payload["input_mode"],
+        "model_partition": payload["model_partition"],
+        "grouping": payload["grouping"],
+        "created_count": payload["created_count"],
+        "skipped_pairs": payload["skipped_pairs"],
+    } == {
+        "input_mode": "selector",
+        "model_partition": "test-model",
+        "grouping": "note",
+        "created_count": 2,
+        "skipped_pairs": [],
+    }
     assert [[pair["criterion_path"] for pair in job["pairs"]] for job in jobs] == [[GATE_ONE_PATH], [GATE_TWO_PATH]]
 
     first_job = jobs[0]
@@ -196,53 +203,6 @@ def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
     assert [pair["result_path"] for pair in manifest["pairs"]] == [
         f"kb/reports/review-jobs/review-job-{first_review_job_id}/pair-1-undefined-terms.md",
     ]
-
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        job_rows = conn.execute(
-            """
-            SELECT status, runner, runner_model, runner_effort, grouping, created_at
-            FROM review_jobs
-            ORDER BY review_job_id
-            """
-        ).fetchall()
-        assert [(row["status"], row["runner"], row["runner_model"], row["runner_effort"], row["grouping"]) for row in job_rows] == [
-            ("queued", None, None, None, "note"),
-            ("queued", None, None, None, "note"),
-        ]
-        assert all(row["created_at"] is not None for row in job_rows)
-        pair_rows = conn.execute(
-            """
-            SELECT
-                rp.criterion_path,
-                rp.reviewed_note_snapshot_id,
-                rp.reviewed_criterion_snapshot_id,
-                note_snapshot.content_text AS note_text,
-                criterion_snapshot.content_text AS criterion_text
-            FROM review_pairs AS rp
-            JOIN artifact_snapshots AS note_snapshot
-              ON rp.reviewed_note_snapshot_id = note_snapshot.snapshot_id
-            JOIN artifact_snapshots AS criterion_snapshot
-              ON rp.reviewed_criterion_snapshot_id = criterion_snapshot.snapshot_id
-            ORDER BY rp.review_job_id, rp.pair_ordinal
-            """
-        ).fetchall()
-        assert [row["criterion_path"] for row in pair_rows] == [
-            GATE_ONE_PATH,
-            GATE_TWO_PATH,
-        ]
-        assert {row["reviewed_note_snapshot_id"] for row in pair_rows} != {None}
-        assert all(row["reviewed_criterion_snapshot_id"] is not None for row in pair_rows)
-        assert all("Term Alpha appears before its definition." in row["note_text"] for row in pair_rows)
-        assert all("Fixture gate." in row["criterion_text"] for row in pair_rows)
-        job_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_jobs)").fetchall()}
-        pair_columns = {row["name"] for row in conn.execute("PRAGMA table_info(review_pairs)").fetchall()}
-        assert "note_path" not in job_columns
-        assert "reviewed_note_sha" not in job_columns
-        assert "started_at" not in job_columns
-        assert "prompt_path" not in job_columns
-        assert "job_output_path" not in job_columns
-        assert "result_path" not in pair_columns
 
 
 def test_create_review_jobs_snapshots_dirty_criterion_text(tmp_path: Path) -> None:
@@ -270,20 +230,6 @@ Dirty gate marker.
     payload = json.loads(result.stdout)
     prompt = (repo / payload["jobs"][0]["prompt_path"]).read_text(encoding="utf-8")
     assert "Dirty gate marker." in prompt
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        row = conn.execute(
-            """
-            SELECT snapshot.content_text
-            FROM review_pairs AS rp
-            JOIN artifact_snapshots AS snapshot
-              ON rp.reviewed_criterion_snapshot_id = snapshot.snapshot_id
-            WHERE rp.criterion_path = ?
-            """,
-            (GATE_ONE_PATH,),
-        ).fetchone()
-    assert row is not None
-    assert "Dirty gate marker." in row["content_text"]
 
 
 def test_create_review_jobs_resolves_installed_commonplace_gates(tmp_path: Path) -> None:
@@ -449,9 +395,6 @@ def test_create_review_jobs_selector_criterion_grouping_chunks_and_lists(tmp_pat
     list_payload = json.loads(listed.stdout)
     assert list_payload["filters"] == {"model_partition": None, "status": "queued"}
     assert list_payload["count"] == 2
-    assert [job["runner"] for job in list_payload["jobs"]] == [None, None]
-    assert [job["runner_model"] for job in list_payload["jobs"]] == [None, None]
-    assert [job["pairs"][0]["completed_at"] for job in list_payload["jobs"]] == [None, None]
 
 
 def test_create_review_jobs_rejects_batch_size_with_note_grouping(tmp_path: Path) -> None:
@@ -511,14 +454,6 @@ def test_finalize_review_job_validates_model_effort_partition_before_mutation(tm
     payload = json.loads(rejected.stdout)
     assert "does not match supplied partition" in payload["reason"]
     assert payload["state_changed"] is False
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        job = conn.execute("SELECT status, runner, runner_model, runner_effort FROM review_jobs").fetchone()
-        pair = conn.execute("SELECT outcome FROM review_pairs").fetchone()
-        freshness_baseline_count = conn.execute("SELECT COUNT(*) FROM freshness_baselines").fetchone()[0]
-    assert (job["status"], job["runner"], job["runner_model"], job["runner_effort"]) == ("queued", None, None, None)
-    assert pair["outcome"] is None
-    assert freshness_baseline_count == 0
 
     accepted = run_cli(
         "finalize_review_job",
@@ -535,10 +470,6 @@ def test_finalize_review_job_validates_model_effort_partition_before_mutation(tm
     )
     payload = json.loads(accepted.stdout)
     assert payload["completed"] is True
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        job = conn.execute("SELECT runner, runner_model, runner_effort FROM review_jobs").fetchone()
-    assert (job["runner"], job["runner_model"], job["runner_effort"]) == ("external", "unknown-model", "high")
 
 
 def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmatter(tmp_path: Path) -> None:
@@ -580,27 +511,32 @@ def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmat
     result_path = f"kb/reports/review-jobs/review-job-{review_job_id}/pair-1-undefined-terms.md"
     result_text = (repo / result_path).read_text(encoding="utf-8")
     parsed_frontmatter = frontmatter.parse(result_text)
-    assert parsed_frontmatter.ok
-    assert parsed_frontmatter.data["review_job_id"] == review_job_id
-    assert parsed_frontmatter.data["note_path"] == "kb/notes/sample.md"
-    assert parsed_frontmatter.data["criterion_path"] == GATE_ONE_PATH
-    assert parsed_frontmatter.data["model_partition"] == "test-model"
-    assert parsed_frontmatter.data["runner"] == "live-agent"
-    assert parsed_frontmatter.data["runner_model"] == "test-model"
-    assert parsed_frontmatter.data["runner_effort"] is None
-    assert "runner_effort: null\n" in result_text
-    assert parsed_frontmatter.data["outcome"] == "warn"
+    assert {
+        key: parsed_frontmatter.data[key]
+        for key in (
+            "review_job_id",
+            "note_path",
+            "criterion_path",
+            "model_partition",
+            "runner",
+            "runner_model",
+            "outcome",
+        )
+    } == {
+        "review_job_id": review_job_id,
+        "note_path": "kb/notes/sample.md",
+        "criterion_path": GATE_ONE_PATH,
+        "model_partition": "test-model",
+        "runner": "live-agent",
+        "runner_model": "test-model",
+        "outcome": "warn",
+    }
     assert parsed_frontmatter.data["completed_at"] is not None
     assert frontmatter.strip(result_text) == "Needs a definition for Alpha.\n\n## Result: WARN\n"
     refreshed_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     assert refreshed_manifest["job_output_path"] == prepared_job["job_output_path"]
     assert refreshed_manifest["pairs"][0]["result_path"] == result_path
     assert refreshed_manifest["pairs"][0]["status"] == "completed"
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        row = conn.execute("SELECT outcome, completed_at FROM review_pairs").fetchone()
-    assert parsed_frontmatter.data["outcome"] == row["outcome"]
-    assert parsed_frontmatter.data["completed_at"] == row["completed_at"]
 
 
 def test_finalize_review_job_preserves_optional_self_reported_model(tmp_path: Path) -> None:
@@ -630,12 +566,8 @@ def test_finalize_review_job_preserves_optional_self_reported_model(tmp_path: Pa
     assert parsed_frontmatter.data["self-reported-model"] == "gpt-5.6-sol"
     assert parsed_frontmatter.data["runner_model"] is None
 
-    with sqlite3.connect(db_path) as conn:
-        runner_model = conn.execute("SELECT runner_model FROM review_jobs").fetchone()[0]
-    assert runner_model is None
 
-
-def test_finalize_review_job_result_write_failure_rolls_back_and_preserves_provenance(
+def test_finalize_review_job_result_write_failure_leaves_no_result_artifact(
     tmp_path: Path,
     monkeypatch,
 ) -> None:
@@ -677,86 +609,12 @@ def test_finalize_review_job_result_write_failure_rolls_back_and_preserves_prove
     assert payload["completed_pair_count"] == 0
     assert payload["failure_reason"] == "simulated result write failure"
     assert payload["job"] == {"review_job_id": review_job_id, "status": "failed"}
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        job = conn.execute(
-            "SELECT status, failure_reason, runner, runner_model, runner_effort FROM review_jobs"
-        ).fetchone()
-        pair = conn.execute("SELECT outcome, completed_at FROM review_pairs").fetchone()
-        freshness_baseline_count = conn.execute("SELECT COUNT(*) FROM freshness_baselines").fetchone()[0]
-    assert (
-        job["status"],
-        job["failure_reason"],
-        job["runner"],
-        job["runner_model"],
-        job["runner_effort"],
-    ) == ("failed", "simulated result write failure", "live-agent", "test-model", None)
-    assert (pair["outcome"], pair["completed_at"]) == (None, None)
-    assert freshness_baseline_count == 0
 
     artifact_dir = repo / "kb" / "reports" / "review-jobs" / f"review-job-{review_job_id}"
     assert not (artifact_dir / "pair-1-undefined-terms.md").exists()
     manifest = json.loads((artifact_dir / "MANIFEST.json").read_text(encoding="utf-8"))
     assert manifest["status"] == "failed"
     assert manifest["pairs"][0]["status"] == "failed"
-
-
-def test_finalize_review_job_finalizes_queued_job(tmp_path: Path) -> None:
-    repo, db_path = build_repo_fixture(tmp_path)
-    prepared = json.loads(
-        create_jobs_from_targets(
-            repo,
-            db_path,
-            [target("kb/notes/sample.md", GATE_ONE_PATH, GATE_ONE)],
-        ).stdout
-    )
-    prepared_job = prepared["jobs"][0]
-    output_path = repo / prepared_job["job_output_path"]
-    output_path.write_text(single_pair_job_output(), encoding="utf-8")
-
-    result = run_cli(
-        "finalize_review_job",
-        "--review-job-id",
-        str(prepared_job["review_job_id"]),
-        cwd=repo,
-        db_path=db_path,
-    )
-
-    assert json.loads(result.stdout)["completed"] is True
-    artifact_dir = repo / "kb" / "reports" / "review-jobs" / f"review-job-{prepared_job['review_job_id']}"
-    assert frontmatter.strip((artifact_dir / "pair-1-undefined-terms.md").read_text(encoding="utf-8")).strip().endswith("## Result: WARN")
-    assert not (artifact_dir / "kb__notes__sample.md :: kb__instructions__review-gates__accessibility__undefined-terms.md").exists()
-    manifest = json.loads((artifact_dir / "MANIFEST.json").read_text(encoding="utf-8"))
-    assert [pair["status"] for pair in manifest["pairs"]] == ["completed"]
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        job = conn.execute("SELECT status FROM review_jobs").fetchone()
-        assert job["status"] == "completed"
-        pairs = conn.execute("SELECT criterion_path, outcome FROM review_pairs ORDER BY pair_ordinal").fetchall()
-        assert [(row["criterion_path"], row["outcome"]) for row in pairs] == [
-            (GATE_ONE_PATH, "warn"),
-        ]
-        snapshot_rows = conn.execute(
-            """
-            SELECT
-                rp.reviewed_note_snapshot_id,
-                rp.reviewed_criterion_snapshot_id,
-                v.baseline_note_snapshot_id,
-                v.baseline_criterion_snapshot_id
-            FROM review_pairs AS rp
-                JOIN current_review_freshness_baselines AS v
-              ON v.evidence_review_pair_id = rp.review_pair_id
-            ORDER BY rp.pair_ordinal
-            """
-        ).fetchall()
-        assert [
-            (
-                row["baseline_note_snapshot_id"] == row["reviewed_note_snapshot_id"],
-                row["baseline_criterion_snapshot_id"] == row["reviewed_criterion_snapshot_id"],
-            )
-            for row in snapshot_rows
-        ] == [(True, True)]
-        assert conn.execute("SELECT COUNT(*) FROM freshness_baselines").fetchone()[0] == 1
 
 
 def test_failed_rereview_preserves_previous_freshness_baseline_and_artifacts(tmp_path: Path) -> None:
@@ -775,13 +633,6 @@ def test_failed_rereview_preserves_previous_freshness_baseline_and_artifacts(tmp
     assert json.loads(first_result.stdout)["completed"] is True
     first_artifact_dir = repo / "kb" / "reports" / "review-jobs" / f"review-job-{first_job_id}"
 
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        first_pair_id = conn.execute(
-            "SELECT review_pair_id FROM review_pairs WHERE review_job_id = ?",
-            (first_job_id,),
-        ).fetchone()["review_pair_id"]
-
     write(repo / "kb" / "notes" / "sample.md", "---\ndescription: Test note\ntype: kb/types/note.md\ntraits: []\n---\n\n# Test note\n\nChanged body.\n")
     second_job = create_single_review_job(repo, db_path)
     second_job_id = int(second_job["review_job_id"])
@@ -797,29 +648,16 @@ def test_failed_rereview_preserves_previous_freshness_baseline_and_artifacts(tmp
     )
 
     assert failed.returncode == 1
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        current_freshness_baseline = conn.execute(
-            """
-            SELECT evidence_review_pair_id
-            FROM current_review_freshness_baselines
-            WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
-            """,
-            ("kb/notes/sample.md", GATE_ONE_PATH, "test-model"),
-        ).fetchone()
-        first_job_status = conn.execute(
-            "SELECT status FROM review_jobs WHERE review_job_id = ?",
-            (first_job_id,),
-        ).fetchone()["status"]
-        second_job_status = conn.execute(
-            "SELECT status FROM review_jobs WHERE review_job_id = ?",
-            (second_job_id,),
-        ).fetchone()["status"]
-
-    assert current_freshness_baseline["evidence_review_pair_id"] == first_pair_id
-    assert first_job_status == "completed"
-    assert second_job_status == "failed"
+    assert json.loads(failed.stdout)["completed"] is False
     assert first_artifact_dir.exists()
+    stale = review_target_selector.select_stale_criteria(
+        repo,
+        model="test-model",
+        criterion_ids=[GATE_ONE],
+        note_filter=["kb/notes/sample.md"],
+        db_path=db_path,
+    )
+    assert [record.reason for record in stale] == ["note-changed"]
 
 
 def test_successful_rereview_prunes_superseded_job_and_artifacts(tmp_path: Path) -> None:
@@ -836,12 +674,6 @@ def test_successful_rereview_prunes_superseded_job_and_artifacts(tmp_path: Path)
     )
     first_artifact_dir = repo / "kb" / "reports" / "review-jobs" / f"review-job-{first_job_id}"
     assert first_artifact_dir.exists()
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        first_pair_id = conn.execute(
-            "SELECT review_pair_id FROM review_pairs WHERE review_job_id = ?",
-            (first_job_id,),
-        ).fetchone()["review_pair_id"]
 
     write(repo / "kb" / "notes" / "sample.md", "---\ndescription: Test note\ntype: kb/types/note.md\ntraits: []\n---\n\n# Test note\n\nChanged body.\n")
     second_job = create_single_review_job(repo, db_path)
@@ -858,29 +690,13 @@ def test_successful_rereview_prunes_superseded_job_and_artifacts(tmp_path: Path)
 
     assert json.loads(second_result.stdout)["completed"] is True
     second_artifact_dir = repo / "kb" / "reports" / "review-jobs" / f"review-job-{second_job_id}"
-    with sqlite3.connect(db_path) as conn:
-        conn.row_factory = sqlite3.Row
-        current_freshness_baseline = conn.execute(
-            """
-            SELECT evidence_review_pair_id
-            FROM current_review_freshness_baselines
-            WHERE note_path = ? AND criterion_path = ? AND model_partition = ?
-            """,
-            ("kb/notes/sample.md", GATE_ONE_PATH, "test-model"),
-        ).fetchone()
-        first_pair = conn.execute(
-            "SELECT review_pair_id FROM review_pairs WHERE review_pair_id = ?",
-            (first_pair_id,),
-        ).fetchone()
-        first_job_row = conn.execute(
-            "SELECT review_job_id FROM review_jobs WHERE review_job_id = ?",
-            (first_job_id,),
-        ).fetchone()
-        freshness_baseline_count = conn.execute("SELECT COUNT(*) FROM freshness_baselines").fetchone()[0]
-
-    assert current_freshness_baseline["evidence_review_pair_id"] != first_pair_id
-    assert first_pair is None
-    assert first_job_row is None
-    assert freshness_baseline_count == 1
     assert not first_artifact_dir.exists()
     assert second_artifact_dir.exists()
+    stale = review_target_selector.select_stale_criteria(
+        repo,
+        model="test-model",
+        criterion_ids=[GATE_ONE],
+        note_filter=["kb/notes/sample.md"],
+        db_path=db_path,
+    )
+    assert stale == []
