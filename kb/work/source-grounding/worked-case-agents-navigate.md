@@ -110,7 +110,7 @@ at: a Bayesian log-odds account in which the estimate of distal feature *i* is
 Utility Model.
 
 **Correction, 2026-08-24, from a stricter independent pass.** The
-[claim-pull implementation workshop](../claim-pull-implementation/pirolli-claims-worked-case.md)
+[claim-pull evidence summary](../claim-pull-implementation/claims-shape-evidence.md#pirolli)
 re-ran this comparison under blind separation: one fresh worker reconstructed
 the source's claims from the checksum-pinned observation without seeing this
 note or this worked case, and a second judged C1–C4 against only the resulting

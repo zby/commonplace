@@ -1,67 +1,33 @@
-# Ingest-template structural migration
+# Ingest-template migration
 
-## Purpose
-
-Add the required home for claim grounding to every tracked ingest without
-inventing claims from old prose. Semantic population belongs to the
-[cleanup plan](./cleanup-plan.md).
-
-## Candidate template delta
-
-Add one required top-level section:
+Add this section immediately before `## Connections Found` in every tracked
+ingest:
 
 ```markdown
 ## Claims
 
-No claims have been grounded in this ingest yet.
+No claims have been grounded yet.
 ```
 
-Place it after `## Code Grounding` when that conditional section exists, and
-otherwise after `## Summary`. `## Connections Found` follows it.
+## Boundary
 
-The final entry shape, empty-state wording, and position must be fixed in the ADR
-before migration. V1 adds no claim identifiers, anchors, or reverse-use section.
+Freeze the live `kb/sources/*.ingest.md` path list before editing. Add only the
+heading, blank line, and empty sentence. Do not infer claims, reflow prose, or
+change frontmatter, checksums, links, or analysis. Stop for an ingest that
+already has an experimental Claims representation.
 
-## Migration boundary
+## Order
 
-As of 2026-08-24 there are 284 tracked `kb/sources/*.ingest.md` files. The
-migration may add only the heading and selected empty-state sentence. It must not
-infer claims from `Summary`, split `Extractable Value`, convert connections into
-claims, or change frontmatter, checksums, links, or existing analysis.
+1. Validate the frozen corpus and separate pre-existing failures.
+2. Make same-checksum re-ingest preserve Claims.
+3. Update the template and drafting instruction.
+4. Insert the section using each file's newline convention.
+5. Update the type and require exactly one Claims heading in the existing
+   schema.
+6. Validate and review the diff against the frozen paths.
 
-An ingest already carrying an experimental claim section stops the mechanical
-run for adjudication.
+Separate commits are fine. Do not enable populated grounding until refresh,
+template, corpus, and schema agree.
 
-## Atomic rollout
-
-1. Freeze the tracked ingest path list and count.
-2. Validate every ingest before mutation and separate pre-existing failures.
-3. Test insertion on an ordinary ingest and every conditional template shape,
-   including one with `## Code Grounding`.
-4. Update the type spec, schema, template, drafting instruction, and corpus in
-   one coherent change so no intermediate revision invalidates all ingests.
-5. Make same-checksum re-ingestion preserve the complete `Claims` section before
-   any populated cache is deployed. A changed checksum with non-empty `Claims`
-   blocks pending explicit regrounding or invalidation.
-6. Insert the exact section without reflowing surrounding prose.
-7. Require every frozen path to contain `## Claims` exactly once and preserve its
-   pre-migration `snapshot_sha256`.
-8. Run `commonplace-validate kb/sources` and relevant type-contract, schema,
-   and instruction tests.
-9. Review the diff for changes outside the allowed insertion and commit the
-   contract plus migration atomically.
-
-## Failure and recovery
-
-Stop on duplicate claim headings, unrecognized section order, an experimental
-claim representation, checksum change, path-set drift, or mutation beyond the
-permitted insertion. After an ambiguous partial failure, inspect state with a
-separate read-only check before any rerun.
-
-## Completion
-
-- Every frozen ingest contains one `## Claims` heading.
-- Empty states make no source claim.
-- Existing frontmatter, checksums, links, and prose are unchanged.
-- Collection validation and relevant tests pass.
-- Semantic cleanup begins only when a source is actually read.
+Completion requires one Claims heading per frozen ingest and no other change to
+existing artifacts.
