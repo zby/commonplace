@@ -78,6 +78,30 @@ discarded the premises notes actually lean on. The rollout ratio is the argument
 two demand-driven entries in the Pirolli ingest grounded, narrowed, or repaired
 **eight** frozen uses across two notes.
 
+## Cohort 01 baseline, carried from the closed source-grounding workshop
+
+The claim-pull rollout's own run is the baseline against which "pressure for
+finer identity" is judged. [ADR 073](../../reference/adr/073-untracked-source-snapshots-require-ingest-grounding.md)
+records the decision — "V1 has no claim IDs, merge, deduplication, or
+reconciliation protocol" — but not the evidence for it, which was held in a
+workshop now deleted.
+
+Two demand-driven Claims entries in the Pirolli ingest were enough to ground,
+narrow, or repair **eight** frozen uses across two notes, each entry carrying the
+source proposition, extracts and locations, scope, confidence, and limitation.
+Whole-ingest links sufficed: the source lens derived one pair per note, judged
+every use against the complete section, passed both repaired notes, and left no
+stale pair. **No ambiguous claim identity, similar-entry accumulation, or need
+for a thin intermediate node was observed** — in a run of two entries over two
+notes, which is what that finding is worth. It does not settle whether a denser
+corpus earns claim IDs or separate nodes.
+
+The run also confirmed that transfer belongs in the target: Pirolli grounded the
+human proximal-cue/distal-source structure while the notes separately argued what
+carries to bounded-context agents. No source was unavailable, and no case needed
+an artifact-level disposition handoff — both untested paths that cohort 02
+deliberately exercises.
+
 ## Corpus state at freeze (2026-08-24)
 
 | Measure | Count |
