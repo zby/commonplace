@@ -78,7 +78,8 @@ arguments, and protocol fields from its review obligation.
 
 ## Next
 
-The three remaining scoped artifacts can now be swept without another genre
-probe. `storage-architecture.md` is first because this case exposed its role as
-the stronger home for physical-store facts; `architecture.md` and
-`freshness-architecture.md` follow.
+[The `storage-architecture.md` worked case](./worked-case-storage-architecture.md)
+confirmed that physical schema facts belong to live source. The reference
+survived for a different reason: it relates authority and lifecycle across
+authored files, local materializations, derived artifacts, stateful report
+packets, and SQLite.

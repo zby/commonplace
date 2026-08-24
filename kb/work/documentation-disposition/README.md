@@ -85,7 +85,7 @@ not a claim that every unit inside them is unique.
 
 The four dispositions are candidates, not a menu to allocate across. A fifth
 may fit better, and one artifact may need different dispositions for different
-regions. The first four worked cases showed why appearance is not a
+regions. The first five worked cases showed why appearance is not a
 disposition: `lib-modules.md` was retired after live source proved the better
 routing surface; `commands.md` retained a small checked catalogue because
 command-local help cannot discover an unknown command; and
@@ -93,7 +93,8 @@ command-local help cannot discover an unknown command; and
 live serializers and parsers while its semantic residue belonged in freshness
 architecture. `review-architecture.md` then retained only the cross-component
 boundaries that require synthesis, dropping its module, schema, and command
-catalogues.
+catalogues. `storage-architecture.md` retained the authority-and-lifecycle map
+while dropping exact layout, build, command, migration, and schema inventories.
 
 ## Dependency worth exploiting
 
@@ -122,3 +123,4 @@ needs to know when it was made and against what.
 - [Worked case: `commands.md`](./worked-case-commands.md) — the second artifact through the procedure; retained the complete 22-name catalogue as checked routing, removed repeated manuals, and made side-effect-free live help a tested command-wide contract
 - [Worked case: `freshness-schemas.md`](./worked-case-freshness-schemas.md) — the third artifact through the procedure; retired an unchecked exact-field copy after moving its one missing cross-command invariant into freshness architecture
 - [Worked case: `review-architecture.md`](./worked-case-review-architecture.md) — the fourth artifact through the procedure; removed source-recoverable inventories and retained execution ownership, canonical-state, finalization, and freshness boundaries
+- [Worked case: `storage-architecture.md`](./worked-case-storage-architecture.md) — the fifth artifact through the procedure; retained the cross-representation authority and lifecycle map while routing exact layout, build, migration, and schema facts to their live owners

@@ -40,9 +40,9 @@ owns that worker boundary; the generated prompt is its executable instance.
 ## Canonical state and artifacts
 
 SQLite is canonical for job and pair protocol state, execution provenance, and
-freshness. [Storage architecture](./storage-architecture.md) owns the physical
-tables and store location; live schema and query behavior remain in
-`commonplace.store` and `commonplace.review.review_db`.
+freshness. [Storage architecture](./storage-architecture.md) places that state
+among Commonplace's other storage roles; live schema, location, and query
+behavior remain in `commonplace.store` and `commonplace.review.review_db`.
 
 Review artifacts have narrower roles:
 
