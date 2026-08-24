@@ -25,7 +25,7 @@ Skipping comprehension leaves specification unconstrained by observed reality. S
 
 This is why "more automation" cannot reliably substitute for the early verifier-construction work in cold-start or subjective domains. Automation can help once failure patterns and judges exist, but it cannot safely assume them from zero context.
 
-Meta-Harness shows the important boundary condition. In hard-oracle domains, rich diagnostic access can automate part of comprehension: the proposer can inspect raw execution traces, prior harness code, and scores to infer why candidates failed before writing the next candidate. The phase gate is not "a human must always understand first." It is "optimization needs enough diagnostic access to form a causal failure model before it generalizes." Scores alone do not supply that model, and Meta-Harness's ablation suggests summaries may not preserve it either.
+Meta-Harness shows the important boundary condition. In hard-oracle domains, rich diagnostic access can automate part of comprehension: the proposer can inspect raw execution traces, prior harness code, and scores to infer why candidates failed before writing the next candidate. The phase gate is not "a human must always understand first." It is "optimization needs enough diagnostic access to form a causal failure model before it generalizes." Scores alone do not supply that model. In Meta-Harness's online text-classification ablation, the tested fixed summary-without-traces arm reached 34.9% median accuracy and did not recover the full trace-access arm's 50.0% median.
 
 ## Scope limits
 

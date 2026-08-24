@@ -25,7 +25,16 @@ V8 turns a JavaScript object's named-property layout into a runtime identity: ev
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** V8 uses dynamically updated HiddenClasses to identify object shapes; its optimizing compiler can inline property access when a HiddenClass ensures a compatible structure, while shape or property-type changes create different HiddenClasses and can prevent generation of optimal code through type pollution.
+  - **Source extract (verbatim):** Hence, in this case V8, HiddenClasses are created on the fly and updated dynamically as objects change. HiddenClasses serve as an identifier for the shape of an object and as such a very important ingredient for V8's optimizing compiler and inline caches. The optimizing compiler for instance can directly inline property accesses if it can ensure a compatible objects structure through the HiddenClass.
+  - **Source location:** “HiddenClasses and DescriptorArrays,” opening explanation
+  - **Source extract (verbatim):** Every time a new property is added, the object's HiddenClass is changed. In the background V8 creates a transition tree that links the HiddenClasses together.
+  - **Source location:** “HiddenClasses and DescriptorArrays,” transition-tree explanation
+  - **Source extract (verbatim):** Changing the property or element type typically causes V8 to create a different HiddenClass which can lead to type pollution which [prevents V8 from generating optimal code](http://mrale.ph/blog/2015/01/11/whats-up-with-monomorphism.html).
+  - **Source location:** Closing paragraph
+  - **Scope:** V8's documented internal representation and optimization of JavaScript object properties through HiddenClasses, descriptor arrays, and inline caches.
+  - **Confidence:** High for the shape-sensitive optimization mechanism because the V8 documentation states it directly.
+  - **Limitation:** This snapshot does not describe invalidation or deoptimization of already optimized code when a layout assumption stops holding; it supports only shape-sensitive inlining and prevention of optimal-code generation through type pollution.
 
 ## Connections Found
 

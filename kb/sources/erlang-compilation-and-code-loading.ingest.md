@@ -23,7 +23,16 @@ Erlang can replace a module while the system is running, but the runtime does no
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** During Erlang runtime module replacement, current and old code variants may execute concurrently; a process moves to current code through a fully qualified call, while loading a third version purges the old variant and terminates processes still in it.
+  - **Source extract (verbatim):** The code of a module can exist in two variants in a system: _current_ and _old_. When a module is loaded into the system for the first time, the code becomes 'current'. If then a new instance of the module is loaded, the code of the previous instance becomes 'old' and the new instance becomes 'current'.
+  - **Source location:** “Code Replacement,” opening description
+  - **Source extract (verbatim):** Both old and current code are valid, and can be evaluated concurrently. Fully qualified function calls always refer to current code. Old code can still be evaluated because of processes lingering in the old code.
+  - **Source location:** “Code Replacement,” current/old execution rules
+  - **Source extract (verbatim):** If a third instance of the module is loaded, the code server removes (purges) the old code and any processes lingering in it are terminated. Then the third instance becomes 'current' and the previously current code becomes 'old'.
+  - **Source location:** “Code Replacement,” third-load behavior
+  - **Scope:** Erlang/OTP module-level code replacement in a running runtime system, limited to the current/old version mechanism documented on this page.
+  - **Confidence:** High because the runtime documentation states the version and transition rules directly.
+  - **Limitation:** This mechanism describes coexistence, switching, and purging; by itself it does not establish release-level migration, rollback, learning, or why a code change should be accepted.
 
 ## Connections Found
 

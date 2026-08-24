@@ -39,6 +39,15 @@ Meta-Harness is an outer-loop system that searches over LLM harness code by givi
   - **Confidence:** High for the arm contents and reported median and best accuracies because the ablation table states them directly.
   - **Limitation:** The paper reports point summaries rather than a statistical-significance estimate for these arm differences. The contrast tests one trace-removing summary treatment, not summaries or abstraction in general, and it does not test a summary that retains trace access, query-conditioned derived views, or joint optimization of the representation.
 
+- **Claim (paraphrase):** Meta-Harness searches over task-specific executable harnesses that modify prompting, retrieval, memory, and orchestration while keeping the domain's base language model frozen.
+  - **Source extract (verbatim):** Meta-Harness is an outer-loop procedure for searching over task-specific harnesses.
+  - **Source location:** Section 3, opening paragraph
+  - **Source extract (verbatim):** Each harness is a single-file Python program that modifies task-specific prompting, retrieval, memory, and orchestration logic. The proposer is Claude Code with Opus-4.6, guided by a minimal domain-specific skill that describes where to write new harnesses, how to inspect previous harnesses and their execution traces, and what files it can and cannot modify. The base model M varies by domain and is always frozen.
+  - **Source location:** Section 3, “Practical implementation”
+  - **Scope:** The claim covers the three evaluated domains and the task-specific single-file Python harness surface exposed in the paper's implementation.
+  - **Confidence:** High because the method and implementation sections state both the mutable harness surface and frozen-model condition directly.
+  - **Limitation:** “End-to-end” is bounded by the exposed harness program and fixed task objective; it does not mean that model weights, the proposer, evaluation function, or every surrounding system choice are optimized.
+
 ## Connections Found
 
 The `/connect` pass identified 9 connections to existing KB notes, with two synthesis opportunities:
