@@ -23,7 +23,16 @@ The discussion responding to Rick Manelius's “AI;DR” post centers on an effo
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** Several commenters in one Hacker News discussion report that retained AI-generated code comments become later model input, can mislead or anchor the model on its own prior ideas, and may compound context poisoning.
+  - **Source extract (verbatim):** Comments become a huge maintenance burden, especially in the age of AI. They just grow and grow, and then mislead the AI later on.
+  - **Source location:** Comment by `preg_match`, item 49339942.
+  - **Source extract (verbatim):** Now the code is fully uncommented and it has saved lots of input tokens and also lots of meandering because the model is no longer getting stuck on bad ideas it told itself about.
+  - **Source location:** Reply by `Taek`, item 49342055.
+  - **Source extract (verbatim):** It's probably also a compounding source of context poisoning when a minority of the comments/documentation are about how the current code actually works.
+  - **Source location:** Comment by `_--__--__`, item 49338569.
+  - **Scope:** Self-selected, unverified reports and speculation from one discussion about comments and documentation in agent-assisted codebases; not all retained explanations or agent workflows.
+  - **Confidence:** High that the captured commenters report this experience; low for causal or population-level generalization because the reports are anonymous and uncontrolled.
+  - **Limitation:** The discussion measures neither prevalence nor effect size and does not establish that influenced later outputs became defects. “Context poisoning” is one commenter's interpretation, and the wider thread contains counterexamples to artifact-level bans.
 
 ## Connections Found
 

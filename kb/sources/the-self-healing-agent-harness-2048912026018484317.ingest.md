@@ -26,7 +26,14 @@ The source argues that for AI agent products, evaluation and QA should be the sa
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** In the reported CREAO harness, graders evaluate final responses rather than trajectories; low outcome scores then trigger separate engineering investigation that can work backward to integration, infrastructure, tool-contract, context, or deployment failures.
+  - **Source extract (verbatim):** Grade the outcome, not the trajectory. Agents often take paths that look inefficient or strange to humans, but still produce the right answer.
+  - **Source location:** Opening “two lessons” list.
+  - **Source extract (verbatim):** We don’t need to know the root cause at scoring time, we just need to catch the failure fast. Then our triage system can pick it up and work backward from the signal.
+  - **Source location:** “The Thesis: Evaluation and QA Are the Same Loop,” after the failure-cause list.
+  - **Scope:** Low-scoring live responses in the practitioner's described production harness. Root-cause investigation follows outcome grading and may inspect infrastructure and execution evidence.
+  - **Confidence:** High that the source describes this division of labor; operational effectiveness is a first-party report without independent validation.
+  - **Limitation:** The source does not advocate monitoring successful trajectories or show that successful outcomes can hide path failures; its engineering pipeline is triggered by low outcome scores. It therefore does not directly support an inference from final success to intended-path health.
 
 ## Connections Found
 

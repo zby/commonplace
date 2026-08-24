@@ -46,7 +46,7 @@ A batch with more than one member represents parallel calls. It contains the ind
 
 LLM-assisted planning also fits. A planning call returns a result in `R`; `transition` records the plan in `K`; and a later `select` consumes it. Hierarchical decomposition repeats the same loop rather than introducing a different mechanism.
 
-The ContextProvider pattern is a source-scoped singleton-batch instance. A parent offers a small action set such as `query_slack`, and `select(K)` chooses the source boundary and frames the request. A provider sub-agent owns the raw tools, source quirks, permissions, and optional skills used by its `call(C)`. The source supplies no reproducible token or latency evidence, so it illustrates the decomposition without establishing its efficacy.
+Bedi reports a ContextProvider pattern in which each provider wraps one source behind two natural-language query/update tools; a source-scoped sub-agent owns the underlying tools and source-specific operating details and may load a source skill. In this note's terms, that is a source-scoped singleton-batch instance: the parent-facing query or update is `call(C)`, while `select(K)` chooses the source boundary and frames the request. The reported database and GitHub examples can also isolate read/write permissions inside providers; the source does not make that a universal property. It reports rough Scout token and latency trends but no measurement table, workload definition, raw data, or pinned implementation revision, so it illustrates the decomposition without supplying reproducible efficacy evidence.
 
 ## Boundary
 

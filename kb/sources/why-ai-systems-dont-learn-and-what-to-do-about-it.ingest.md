@@ -23,7 +23,16 @@ The paper argues that current AI systems do not truly learn after deployment bec
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** Dupoux, LeCun, and Malik propose observation learning and action learning as interacting subsystems: observational world models can support action learning, action can improve observational data, and meta-control decides when and how the interactions occur.
+  - **Source extract (verbatim):** The paper argues that observation and action learning should not remain separate paradigms.
+  - **Source location:** “Interaction Between Systems” section, opening sentence.
+  - **Source extract (verbatim):** System A can help System B by compressing state spaces, building predictive world models, and generating intrinsic rewards for exploration.
+  - **Source location:** “Interaction Between Systems” section.
+  - **Source extract (verbatim):** System B can help System A by collecting better data, disambiguating perception through intervention, and generating task-relevant trajectories rather than passive, uncurated streams. System M sits above both, deciding when and how these interactions should occur.
+  - **Source location:** “Interaction Between Systems” section, closing sentences.
+  - **Scope:** The A-B-M architecture in a conceptual position paper. World modeling is one component of observational System A, while action learning includes reinforcement learning, planning, adaptive control, and search.
+  - **Confidence:** High that the paper proposes this relationship; the snapshot presents a conceptual roadmap, not an implemented or empirically evaluated system.
+  - **Limitation:** The source does not establish that action-conditioned prediction assesses explanatory-reach. It supports only the broader architectural interaction among observational world modeling, action learning, and meta-control.
 
 ## Connections Found
 

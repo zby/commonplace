@@ -22,7 +22,16 @@ Lopopolo reports on OpenAI's Codex team shipping an internal beta product with o
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** In the Codex team's reported codebase, recurring manual AI-slop cleanup was replaced by repository-encoded standards and automated cleanup, alongside structural tests and custom linters that enforce architecture and other rules.
+  - **Source extract (verbatim):** Early on, the team spent roughly 20% of their time (Fridays) manually cleaning "AI slop" — low-quality generated artifacts accumulating in the codebase. This did not scale. The solution: encode standards directly into the repository and automate cleanup.
+  - **Source location:** “Entropy Management” section.
+  - **Source extract (verbatim):** Structural tests validate compliance and prevent layer violations before merge. Custom linters enforce naming conventions, module boundaries, and semantic correctness.
+  - **Source location:** “Architectural Constraints” section.
+  - **Source extract (verbatim):** When agents struggled, engineers asked: what capability is missing? What constraint is unenforced? They then built the tool, wrote the linter, or added the structural test to make the failure category impossible.
+  - **Source location:** “What humans started doing” section.
+  - **Scope:** A first-party report about one internal beta codebase built over five months by a team that grew from three to seven engineers.
+  - **Confidence:** High that the source reports these practices and their sequence; their effectiveness and recurrence prevention are not independently evaluated in the snapshot.
+  - **Limitation:** The report does not trace each check to a specific repeated failure, measure discrimination on later failures, or establish net benefit after execution, triage, and maintenance costs. “Make the failure category impossible” is the source's practitioner framing, not demonstrated universal prevention.
 
 ## Connections Found
 
