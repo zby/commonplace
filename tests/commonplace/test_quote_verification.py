@@ -293,3 +293,65 @@ def test_line_numbers_survive_a_preceding_code_fence(tmp_path: Path):
 
     assert [r.status for r in results] == ["match"]
     assert results[0].line == 8
+
+
+class TestClaimsExtractValidation:
+    """`Source extract (verbatim)` resolves against the ingest's pinned snapshot.
+
+    Conditional on retention: `kb/sources/.snapshots/` is gitignored, so a fresh
+    clone has the checksum but not the bytes. Absent snapshot is silence.
+    """
+
+    @staticmethod
+    def _ingest(tmp_path, extract: str, *, snapshot: str | None, sha: str | None = None):
+        from commonplace.lib.hashing import content_sha256_for_text
+
+        sources = tmp_path / "kb" / "sources"
+        (sources / ".snapshots").mkdir(parents=True)
+        body = snapshot if snapshot is not None else ""
+        digest = sha if sha is not None else content_sha256_for_text(body)
+        if snapshot is not None:
+            (sources / ".snapshots" / "src.md").write_text(body, encoding="utf-8")
+        ingest = sources / "src.ingest.md"
+        ingest.write_text(
+            f"---\nsnapshot_sha256: {digest}\n---\n\n"
+            f"## Claims\n\n- **Claim (paraphrase):** a claim.\n"
+            f"  - **Source extract (verbatim):** {extract}\n",
+            encoding="utf-8",
+        )
+        return ingest
+
+    def _run(self, ingest):
+        from commonplace.lib.validation import CheckResults, validate_claims_extracts
+
+        results = CheckResults(note_type="ingest-report")
+        validate_claims_extracts(results, ingest.read_text(encoding="utf-8"), ingest)
+        return results
+
+    def test_extract_present_in_snapshot_passes(self, tmp_path):
+        ingest = self._ingest(tmp_path, "the exact words", snapshot="here are the exact words indeed")
+        results = self._run(ingest)
+        assert not results.fails
+        assert any("resolve against the pinned snapshot" in p for p in results.passes)
+
+    def test_extract_absent_from_snapshot_fails(self, tmp_path):
+        ingest = self._ingest(tmp_path, "words never written", snapshot="something else entirely")
+        results = self._run(ingest)
+        assert any("not found in the checksum-verified snapshot" in f for f in results.fails)
+
+    def test_extract_spanning_wrapped_lines_passes(self, tmp_path):
+        """Normalization collapses whitespace, so a quote may cross a wrapped line."""
+        ingest = self._ingest(tmp_path, "one continuous sentence", snapshot="one continuous\nsentence")
+        results = self._run(ingest)
+        assert not results.fails
+
+    def test_missing_snapshot_is_silent(self, tmp_path):
+        ingest = self._ingest(tmp_path, "anything at all", snapshot=None, sha="0" * 64)
+        results = self._run(ingest)
+        assert not results.fails and not results.warns and not results.passes
+
+    def test_snapshot_disagreeing_with_checksum_warns_without_failing(self, tmp_path):
+        ingest = self._ingest(tmp_path, "absent text", snapshot="other bytes", sha="1" * 64)
+        results = self._run(ingest)
+        assert not results.fails
+        assert any("does not match snapshot_sha256" in w for w in results.warns)

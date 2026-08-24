@@ -18,6 +18,7 @@ from commonplace.lib.full_pass import (
     resolution_section,
     verify_capture,
 )
+from commonplace.lib.hashing import content_sha256_for_text
 from commonplace.lib.index_generated import (
     CollectionTagIndex,
     collect_collection_tag_index,
@@ -31,7 +32,7 @@ from commonplace.lib.project_paths import (
     iter_validation_markdown_files,
     kb_root,
 )
-from commonplace.lib.quote_verification import verify_content
+from commonplace.lib.quote_verification import normalize_text, verify_content
 from commonplace.lib.type_resolver import (
     TypeProfile,
     canonical_type_identity,
@@ -524,6 +525,75 @@ def validate_verbatim_quotes(
         )
 
 
+CLAIMS_EXTRACT_RE = re.compile(
+    r"^\s*-\s*\*\*Source extract \(verbatim\):\*\*\s*(?P<text>.+?)\s*$",
+    re.MULTILINE,
+)
+
+
+def validate_claims_extracts(
+    results: CheckResults,
+    content: str,
+    path: Path,
+) -> None:
+    """Resolve an ingest's `Claims` extracts against its name-paired snapshot.
+
+    A `Source extract (verbatim)` asserts the span occurs in the observation the
+    ingest's `snapshot_sha256` names. That is mechanically decidable whenever the
+    snapshot is present, so leaving it hand-trusted is the state the derived-copy
+    rule forbids — and a measured sweep found five false extracts that the
+    grounding instruction, the ingest skill's append path, and ADR 073 all
+    require to be checked while no code checked any of them.
+
+    The check is *conditional* on retention, because `kb/sources/.snapshots/` is
+    ignored: a fresh clone has the ingest and the checksum but not the bytes.
+    Absent snapshot is silence, not a finding. A checksum that disagrees warns
+    rather than fails, because the local file is then not the recorded
+    observation and the extracts cannot be judged against it either way.
+    ADR 023 settled this split for code-grounded quotes; this is the
+    `kb/sources/` half it named and deferred.
+    """
+    extracts = [m.group("text") for m in CLAIMS_EXTRACT_RE.finditer(content)]
+    if not extracts:
+        return
+
+    recorded = re.search(r"^snapshot_sha256:\s*([0-9a-f]{64})\s*$", content, re.MULTILINE)
+    if recorded is None:
+        results.warns.append(
+            f"claims extracts: {len(extracts)} present but the ingest records no snapshot_sha256"
+        )
+        return
+
+    slug = path.name[: -len(".ingest.md")] if path.name.endswith(".ingest.md") else path.stem
+    snapshot = path.parent / ".snapshots" / f"{slug}.md"
+    if not snapshot.is_file():
+        return
+
+    try:
+        snapshot_text = snapshot.read_text(encoding="utf-8")
+    except OSError as error:
+        results.warns.append(f"claims extracts: snapshot unreadable ({error})")
+        return
+
+    if content_sha256_for_text(snapshot_text) != recorded.group(1):
+        results.warns.append(
+            "claims extracts: local snapshot does not match snapshot_sha256; "
+            "extracts not checked against a different observation"
+        )
+        return
+
+    haystack = normalize_text(snapshot_text)
+    missing = [e for e in extracts if normalize_text(e) not in haystack]
+    for extract in missing:
+        results.fails.append(
+            f"claims extract: not found in the checksum-verified snapshot: {extract!r}"
+        )
+    if not missing:
+        results.passes.append(
+            f"claims extracts: {len(extracts)} resolve against the pinned snapshot"
+        )
+
+
 def _linked_md_targets(parsed: ParsedNote) -> set[Path]:
     """Resolve the note's local markdown links to absolute paths."""
     targets: set[Path] = set()
@@ -836,6 +906,7 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
         parsed.path,
         load_source=lambda path: run.load_document(path).content,
     )
+    validate_claims_extracts(base, parsed.content, parsed.path)
     _merge_labelled(results, base, "base")
 
     type_identity = canonical_type_identity(parsed.profile)
