@@ -1,5 +1,5 @@
 ---
-description: "Accepted decision that notes bind particular system choices in transferable claims while reference records Commonplace selections and resulting state"
+description: "Accepted decision that notes scope named system choices in substantive design-space claims while reference records Commonplace selections and resulting state"
 type: ../types/adr.md
 tags: []
 status: accepted
@@ -53,28 +53,32 @@ sources, work, external-system analyses, articles, or other collections. Apply
 those rules first when an artifact's operative, fidelity, lifecycle,
 subject-system, or publication role decides its home.
 
-`kb/notes/` holds beliefs about the design space, with particular system
-choices bound. `kb/reference/` holds the choices Commonplace made and faithfully
-describes the current or historical state those choices produced.
+`kb/notes/` holds beliefs about the design space, with every named system choice
+scoped for the artifact's intended consumers. `kb/reference/` holds the choices
+Commonplace made and faithfully describes the current or historical state
+those choices produced.
 
 Apply the placement test to an artifact's intended contribution, stated by its
-title, description, and opening: **after every particular system choice it
-names is bound, does a substantive claim about the design space remain?** Bind
-a choice universally, through equivalent generic or conditional grammar, or
-existentially when the particular is a witness for feasibility, mechanism, or
-a bounded consequence. If binding leaves only “Commonplace selected X” or
-“Commonplace currently does Y,” the artifact records this system and belongs
-in reference.
+title, description, and opening: **after every named system choice is
+recoverably scoped, does a substantive claim about the design space remain?**
+Scope is proposition-relative. A fixed choice needs stable reidentification at
+every distinction that could change truth or licensed inference. A ranged
+choice needs a recoverable range and valuation rule. A substantive witness
+needs the proposition the instance supports. If scoping leaves only
+“Commonplace selected X” or “Commonplace currently does Y,” the artifact records
+this system and belongs in reference.
 
 This replaces the proposed counterfactual test. Asking whether a proposition
 would remain true had Commonplace chosen differently cannot distinguish an
 observation from a choice record: both may vary with the choice. Binding tests
-whether the particular is a parameter or witness in a theoretical contribution,
-or whether the local assignment and its resulting state are the contribution.
+whether the particular is a fixed subject, ranged value, or witness in a
+theoretical contribution, or whether the local assignment and its resulting
+state are the contribution.
 
 Subject matter does not decide placement. A note may discuss machinery at
-length when its claim ranges over any system built the same way. A reference
-artifact may contain supporting belief propositions without becoming a note.
+length when it explains one fixed design across inputs or interventions, or
+when its claim ranges over systems built the same way. A reference artifact may
+contain supporting belief propositions without becoming a note.
 
 `kb/notes/evidence/` is not a staging exception. A bounded dataset, experiment,
 trace, or casebook belongs there once the artifact states what it establishes
@@ -84,18 +88,19 @@ unresolved remains in `kb/work/`; a first occurrence or pure pattern record
 without explanation belongs in `kb/log.md`. A current or historical system
 description retained for fidelity remains in reference.
 
-The binding rule sharpens `kb/notes/`'s existing formulation constraint rather
-than adding a new obligation: “statable in general terms” is the requirement,
-and binding is how a claim naming a system choice meets it. The clarification
-does not make previously conforming notes non-conforming. Old body residue that
-already violated the general-form requirement remains targeted cleanup, not
-migration debt created by this decision.
+The original binding formulation treated “statable in general terms” as the
+requirement and quantifier-like grammar as its main repair. The
+proposition-relative rule is sharper: an artifact must preserve a reference
+rule or range plus the named choice's role, while literal quantification is
+neither necessary nor sufficient. A fixed subject can therefore support theory
+without being replaced by a general variable. Old body residue that leaves
+scope outside the intended consumption boundary remains targeted cleanup.
 
-The test has two dispositions. If a substantive proposition remains with the
-selection as a parameter, bind it and keep the theory in notes. If the whole
-contribution is the selected value or the state it produced, reference preserves
-the local record. Existential grammar alone does not turn that record into
-theory.
+The test has two dispositions. If a substantive proposition remains after each
+selection is scoped as a fixed subject, ranged value, or witness, keep the
+theory in notes. If the whole contribution is the selected value or the state
+it produced, reference preserves the local record. Existential grammar alone
+does not turn that record into theory.
 
 The nearest `COLLECTION.md` is the complete authoring authority for its subtree.
 Agents writing or reviewing artifacts load that contract through repository
@@ -207,6 +212,6 @@ decision does not define a universal mixed-artifact threshold.
 Relevant Notes:
 
 - [Superseded choices are retained; superseded beliefs are not](../../notes/superseded-choices-are-retained-superseded-beliefs-are-not.md) — rests-on: explains the different maintenance consequences of beliefs and choices
-- [A theory may name a choice only as a bound variable](../../notes/a-theory-may-name-a-choice-only-as-a-bound-variable.md) — rests-on: supplies the formulation and disposition rule applied by the two collection contracts
+- [An artifact must preserve the scope of each named system choice](../../notes/artifacts-must-preserve-named-choice-scope.md) — rests-on: supplies the proposition-relative scoping and disposition rule applied by the two collection contracts
 - [Artifact classification separates content kind, lineage, and authority](../../notes/artifact-classification-separates-content-kind-lineage-and-authority.md) — rests-on: supplies the belief/residual-choice distinction without making region-level content kind a whole-file classifier
 - [ADR 069: Collection contract bundles become one-time prototypes](./069-collection-contract-bundles-become-one-time-prototypes.md) — see-also: removed the profile labels whose absence exposed the missing criterion

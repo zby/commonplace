@@ -132,17 +132,23 @@ marked for relocation has reached its new home.
    the consumer would know before reading either path; do not assume it already
    knows the source's symbol names.
 
-   Compare the smallest units the consumer must select, not the total sizes of
-   the document and source. Include search, loading, transformation,
-   verification, and failure recovery.
+   First determine whether the question maps to one known, discriminating unit
+   on each path. In that matched case, compare the addressed units rather than
+   total artifact sizes, including search, loading, transformation,
+   verification, and failure recovery. If either path fans out across units or
+   supplies a key the consumer did not know, compare the aggregate paths instead
+   of forcing the one-unit grain test.
 
    - If the documentation does not close the named question and the source must
      still be read for the same answer, mark the documentation **additive** and
      omit it. Reclassify a genuinely separate routing question in its own row.
-   - If the source is at least as finely addressable and is authoritative, omit
-     the prose copy and read the source live.
-   - If the documentation is more finely addressable and closes the question,
-     continue to the value test.
+   - In a matched one-unit comparison, if the source retrieval floor is no
+     larger and the prose supplies no separate transformation or reliability
+     value, omit the prose copy and read the source live.
+   - If the documentation has a lower matched retrieval floor and closes the
+     question, continue to the value test.
+   - If fan-out, discovery, or synthesis prevents a matched one-unit comparison,
+     carry its aggregate path cost into the value test explicitly.
    - If neither path reliably finds the answer, repair naming or routing before
      adding explanatory volume.
 
@@ -204,6 +210,6 @@ marked for relocation has reached its new home.
 Relevant notes:
 
 - [For its load-bearing part, documentation generates the system rather than describing it](../../notes/documentation-generates-the-system-rather-than-describing-it.md) — rests-on: supplies the claim-level recovery test and the distinction between recoverable cache and unique content
-- [Addressability grain, not compression ratio, decides whether a summary layer helps](../../notes/addressability-grain-not-compression-ratio-decides-whether-a.md) — rests-on: supplies the selective-reading comparison in step 6
-- [Opposed recompute factors do not decide documentation segmentation](../../notes/human-recompute-is-dear-and-rare-agent-recompute-is-cheap-and-constant.md) — rests-on: supplies the cache-value and audience-specialization tests
+- [Addressability grain, not compression ratio, sets a matched selective-read floor](../../notes/addressability-grain-sets-a-matched-selective-read-floor.md) — rests-on: supplies the matched one-unit retrieval-floor comparison and its fan-out boundary in step 6
+- [Opposed recompute factors do not decide documentation segmentation](../../notes/opposed-recompute-factors-do-not-decide-documentation-segmentation.md) — rests-on: supplies the cache-value and audience-specialization tests
 - [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: supplies the deterministic cache maintenance rule

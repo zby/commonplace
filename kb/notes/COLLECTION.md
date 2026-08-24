@@ -2,9 +2,21 @@
 
 ## Text contract and explanatory-reach
 
-This collection retains **beliefs about the design space** — transferable truth-apt claims about how systems of this kind can work. A claim may be grounded in a particular system, including Commonplace, when the particular is bound as a substantive witness for feasibility, mechanism, or a bounded consequence. Truth-aptness of a local observation alone does not place it here.
+This collection retains **beliefs about the design space** — truth-apt claims
+that explain how systems of this kind can work, including bounded claims about
+one fixed design. A claim may be grounded in or bounded to a particular system,
+including Commonplace, when it preserves the particular's proposition-relative
+scope and contributes more than the selected value or resulting state.
+Truth-aptness of a local observation alone does not place it here.
 
-Apply the placement test to the artifact's intended contribution: **after every particular system choice it names is bound, does a substantive claim about the design space remain?** Bind a choice universally, through equivalent generic or conditional grammar, or existentially as a witness. If binding leaves only what Commonplace selected or the current or historical state that selection produced, the artifact belongs in `kb/reference/`.
+Apply the placement test to the artifact's intended contribution: **after every
+named system choice is recoverably scoped, does a substantive claim about the
+design space remain?** A fixed choice needs stable reidentification at every
+distinction that could change truth or licensed inference. A ranged choice
+needs a recoverable range and valuation rule. A substantive witness needs the
+proposition the instance supports. If scoping leaves only what Commonplace
+selected or the current or historical state that selection produced, the
+artifact belongs in `kb/reference/`.
 
 Quality goal is **explanatory-reach** — the most general formulation the argument supports, with boundaries mapped. A note with explanatory-reach compresses many situations into one explanation.
 
@@ -26,7 +38,21 @@ Apply explanatory-reach to claim formulation:
 
 **Admit real gaps instead of hedging around them.** Precision means an agent can't misread the claim — it does not mean stacking qualifications against every conceivable pushback. When the argument has an actual gap — an assumption you can't yet defend, a case you haven't worked through — name it plainly in `## Scope` or `## Open Questions` as an opening for later investigation. A named gap is more useful than one padded shut with defensive language, and it's what review and later notes are for.
 
-**Formulation constraint — bind the choices you name.** The title, description, and opening argument must be statable in general terms, even when derived from a specific system. Where one of those surfaces names a choice some system made, bind it universally, existentially as a substantive witness, or through equivalent generic or conditional grammar. A system-specific term is not a free occurrence when replacing it with its general description leaves the claim's truth conditions unchanged. Existential grammar is not enough when the sentence merely restates the selected value. If no substantive claim remains after binding, move the artifact to `kb/reference/` because its intended contribution is what Commonplace selected or the state that selection produced. Claims offered as theory later in the body obey the same binding rule; explicitly scoped local reports and examples may support the theory without becoming the artifact's intended contribution.
+**Formulation constraint — scope the choices you name.** For every named system
+choice, the title, description, and opening argument must preserve the
+proposition-relative reference rule or range and the role that choice plays.
+Those can come from the surface itself or from context the intended consumer is
+guaranteed to receive. A fixed opaque design may use stable reidentification
+when hidden identity distinctions cannot change truth or licensed inference. A
+ranged variable needs a recoverable range and valuation rule. A substantive
+witness must state what proposition the instance supports. Literal quantifier
+syntax is neither necessary nor sufficient. Substitution can expose dependence
+on a local term, but the consumption boundary decides whether its scope is
+missing. If no substantive claim remains after each choice is scoped, move the
+artifact to `kb/reference/` because its intended contribution is what
+Commonplace selected or the state that selection produced. Claims later in the
+body obey the same scoping rule; explicitly scoped local reports and examples
+may support the theory without becoming the artifact's intended contribution.
 
 **Theory-independence constraint.** The claim must stand if any single cited description is removed — otherwise it's still a description.
 

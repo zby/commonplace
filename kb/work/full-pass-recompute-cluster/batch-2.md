@@ -8,16 +8,19 @@ once per note, one note at a time, **in the order listed**. Read the
 reframe follow-up it triggers. Every note here cites batch 1, so a batch-1
 reframe moves these notes' premises before their own pass would read them.
 
-Status: blocked on batch 1.
+Status: complete. The initial passes were invalidated at batch level because
+Batch 1 edited cited notes concurrently. After Batch 1 was committed, all four
+notes were rerun in binding order against that settled result. Every required
+reframe follow-up is complete.
 
 ## Notes
 
 | # | Path | Status |
 |---|---|---|
-| 5 | `kb/notes/human-recompute-is-dear-and-rare-agent-recompute-is-cheap-and-constant.md` | blocked |
-| 6 | `kb/notes/a-theory-may-name-a-choice-only-as-a-bound-variable.md` | blocked |
-| 7 | `kb/notes/addressability-grain-not-compression-ratio-decides-whether-a.md` | blocked |
-| 8 | `kb/notes/an-insufficient-summary-precedes-the-source-rather-than-replacing.md` | blocked |
+| 5 | `kb/notes/opposed-recompute-factors-do-not-decide-documentation-segmentation.md` | rerun complete — keep; prior reframe follow-up complete |
+| 6 | `kb/notes/artifacts-must-preserve-named-choice-scope.md` | rerun complete — keep (reframe); follow-up complete |
+| 7 | `kb/notes/addressability-grain-sets-a-matched-selective-read-floor.md` | rerun complete — keep |
+| 8 | `kb/notes/an-insufficient-summary-precedes-the-source-rather-than-replacing.md` | rerun complete — keep |
 
 Order is binding. Two dependency edges fall inside this batch rather than
 across the boundary: 7 cites 5, and 8 cites 7. Note 8 is last because nothing
@@ -25,9 +28,9 @@ cites it — it was written after the batches were first drawn and is a leaf.
 
 ## Inbound dependencies on batch 1
 
-- 5 `human-recompute` **contrasts** batch 1's note 1.
-- 6 `a-theory-may-name` **contrasts** batch 1's note 2 and cites batch 1's note
-  3 `evidenced-by`.
+- 5 `opposed-recompute-factors` **contrasts** batch 1's note 1.
+- 6 `artifacts-must-preserve-named-choice-scope` **contrasts** batch 1's note 2
+  and cites batch 1's note 3 `evidenced-by`.
 - 7 `addressability-grain` **grounds** on batch 1's note 1, **extends** batch 1's
   note 4, and **contrasts** note 5 in this batch.
 - 8 `an-insufficient-summary-precedes-the-source` **extends** batch 1's note 1,
@@ -38,17 +41,17 @@ sentence here may state a claim its target no longer makes.
 
 ## Per-note context
 
-**5. `human-recompute-is-dear-and-rare`** — retitled on 2026-08-23 from
+**5. `opposed-recompute-factors-do-not-decide-documentation-segmentation`** — retitled on 2026-08-23 from
 "audience segmentation cannot be decided from one reader property", with a
 redirect in `properdocs.yml`. Carries four consecutive "Consequence:" sections;
 one of them, segmentation strips the drift detector from the low-traffic layer,
 is a maintenance claim on an economics note and more general than its host.
 Split candidate — deciding it before the pass would be legitimate, but deciding
 it *during* is what the pass is for. Cites Commonplace as an existential
-witness, so the collection-fit check is a live test of the bound-variable
+witness, so the collection-fit check is a live test of the choice-scoping
 requirement here.
 
-**6. `a-theory-may-name-a-choice-only-as-a-bound-variable`** — two authors. The
+**6. `artifacts-must-preserve-named-choice-scope`** — two authors. The
 initial write was revised by a second agent, which replaced a section and
 dropped a ranking of the two repairs in favour of a selection rule. Its
 empirical section restates sweep evidence rather than citing it, because the

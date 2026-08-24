@@ -2,7 +2,14 @@
 
 ## Text contract and fidelity
 
-This collection holds the **choices** Commonplace made and faithfully describes the **current or historical state** they produced — architecture, type system, operator surface, and decision history. Content belongs here when its intended contribution is the selected value, adopted contract, implemented interface, exposed behavior, or prior system state rather than a substantive claim about the design space that remains after those choices are bound. Aim at faithful representation of the system as built, not transferable theory.
+This collection holds the **choices** Commonplace made and faithfully describes
+the **current or historical state** they produced — architecture, type system,
+operator surface, and decision history. Content belongs here when its intended
+contribution is the selected value, adopted contract, implemented interface,
+exposed behavior, or prior system state rather than a substantive claim about
+the design space that remains after each named choice is recoverably scoped for
+its intended consumers. Aim at faithful representation of the system as built,
+not transferable theory.
 
 A reference artifact may contain supporting belief propositions without becoming a note. What decides placement is the artifact's intended contribution, stated by its title, description, and opening.
 

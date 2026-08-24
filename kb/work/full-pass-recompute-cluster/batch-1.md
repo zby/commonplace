@@ -10,10 +10,10 @@ Status: complete.
 
 | # | Path | Status |
 |---|---|---|
-| 1 | `kb/notes/llm-recompute-cost-inverts-the-store-vs-recompute-default.md` | complete — keep (reframe); follow-up open |
-| 2 | `kb/notes/superseded-choices-are-retained-superseded-beliefs-are-not.md` | complete — keep (reframe); follow-up open |
+| 1 | `kb/notes/llm-recompute-cost-inverts-the-store-vs-recompute-default.md` | complete — keep (reframe); follow-up complete |
+| 2 | `kb/notes/superseded-choices-are-retained-superseded-beliefs-are-not.md` | complete — keep (reframe); follow-up complete |
 | 3 | `kb/notes/areas-exist-because-useful-operations-require-reading-notes-together.md` | complete — keep |
-| 4 | `kb/notes/documentation-generates-the-system-rather-than-describing-it.md` | complete — keep (reframe); follow-up open |
+| 4 | `kb/notes/documentation-generates-the-system-rather-than-describing-it.md` | complete — keep (reframe); follow-up complete |
 
 Order is binding. The seven notes are topologically sorted across both batches
 so every note runs after the notes it cites, and a reframe therefore lands
@@ -33,13 +33,14 @@ condition.
 **2. `superseded-choices-are-retained`** — scoped against
 `artifact-classification`, which assigns the maintenance *operation*; this note
 claims only what happens to *displaced content*. Watch that the distinction
-survives a pass, since it is narrow. Cited by `a-theory-may-name` in batch 2.
+survives a pass, since it is narrow. Cited by
+`artifacts-must-preserve-named-choice-scope` in batch 2.
 
 **3. `areas-exist-because-useful-operations-require-reading-notes-together`** —
 the note here most likely to come back `delete` or `rehome` rather than `keep`,
 and the one whose disposition has consequences outside this cluster.
 
-The bound-variable sweep flagged choice-dependent propositions after its
+The earlier choice-scoping sweep flagged choice-dependent propositions after its
 opening: a ~40-note split threshold presented as generally determined, a
 single-area membership default, and assertions about the `areas:` field, Topics
 footers, and `areas.md`. That machinery is retired —
@@ -54,7 +55,8 @@ that before assuming the sweep's findings still stand. And the opening mechanism
 sets — survives the removal test independently of the retired machinery, which
 makes retire-versus-repair a real question rather than a formality.
 
-**Consequences of a non-`keep` disposition.** `a-theory-may-name` in batch 2
+**Consequences of a non-`keep` disposition.**
+`artifacts-must-preserve-named-choice-scope` in batch 2
 cites this note `evidenced-by` as the worked hard case for its removal test; a
 delete would take that evidence with it. Two citers outside the cluster,
 `execution-shaping-determines-directory-placement` and

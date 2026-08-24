@@ -43,11 +43,13 @@ once-and-done, and a disposition should record the date and the basis it was
 decided on rather than reading as permanent.
 
 **Recoverable does not mean deletable, and the reader decides.** The value of a
-description is per-read recompute cost times recomputes avoided, minus
-maintenance, and [human and agent readers invert on both terms](../../notes/human-recompute-is-dear-and-rare-agent-recompute-is-cheap-and-constant.md)
-— dear and rare against cheap and constant. That model is the workshop's basis;
-the local work is supplying Commonplace's magnitudes and reading the disposition
-off them. Relatedly, [in-context recompute is dear next to a CPU's](../../notes/llm-recompute-cost-inverts-the-store-vs-recompute-default.md),
+description is per-read recompute savings times recomputes avoided, minus
+maintenance. [Opposed factor directions do not order that cache
+value](../../notes/opposed-recompute-factors-do-not-decide-documentation-segmentation.md),
+and cache value alone does not decide whether a second audience-specific content
+layer pays. The local work must therefore supply Commonplace's magnitudes and
+specialization tradeoff rather than infer a disposition from reader identity.
+Relatedly, [in-context recompute is dear next to a CPU's](../../notes/llm-recompute-cost-inverts-the-store-vs-recompute-default.md),
 which is why materializing can pay at all — a different comparison class, not a
 competing claim.
 

@@ -4,12 +4,15 @@
 
 Run [run-full-improvement-pass-on-note.md](../../instructions/run-full-improvement-pass-on-note.md)
 over the seven notes this cluster produced or altered on 2026-08-22/23, plus one
-older note the work implicated — eight in all. Not yet started.
+older note the work implicated — eight in all. Both batches now have retained,
+completed passes. Batch 2's first pass overlapped Batch 1's edits, so all four
+Batch 2 notes were rerun in binding order against Batch 1's committed result.
+Every Batch 2 reframe follow-up is complete.
 
 The notes were written fast, in one conversation, several of them revised or
-retitled hours after landing. None has been through a full pass. They validate
-clean and are densely linked, which is exactly the state where an unexamined
-claim survives on structural plausibility.
+retitled hours after landing. At workshop start, none had been through a full
+pass. They validated clean and were densely linked, which is exactly the state
+where an unexamined claim survives on structural plausibility.
 
 ## Batches
 
@@ -18,18 +21,20 @@ can reframe a note's title and thesis, which invalidates citers — so the
 most-depended-on notes go first, and the second batch runs against a settled
 first batch.
 
-- [Batch 1](./batch-1.md) — four notes, ready to run.
-- [Batch 2](./batch-2.md) — four notes, blocked on batch 1.
+- [Batch 1](./batch-1.md) — complete and committed.
+- [Batch 2](./batch-2.md) — complete after an ordered rerun against the
+  committed upstream notes.
 
 Batch 2 depends on batch 1 six ways: `addressability-grain` extends
-`documentation-generates` and grounds on `llm-recompute`; `a-theory-may-name`
+`documentation-generates` and grounds on `llm-recompute`;
+`artifacts-must-preserve-named-choice-scope`
 contrasts `superseded-choices` and cites `areas-exist` as evidence;
 `an-insufficient-summary` extends `llm-recompute` and contrasts
 `documentation-generates`. If batch 1 reframes any of those, batch 2's premises
 move before its own pass reads them.
 
 Two further edges fall inside batch 2 — `addressability-grain` contrasts
-`human-recompute`, and `an-insufficient-summary` contrasts
+`opposed-recompute-factors`, and `an-insufficient-summary` contrasts
 `addressability-grain` — which is why order is binding within a batch and not
 only across the boundary.
 
@@ -43,7 +48,7 @@ Recorded so a later session does not mistake a known weakness for a surprise,
 and does not pre-empt the pass's own judgment either. These are expectations,
 not instructions to the pass.
 
-- **`human-recompute` carries a claim that may not be its own.** Four
+- **`opposed-recompute-factors` carried a claim that might not have been its own.** Four
   consecutive "Consequence:" sections, one of which — segmentation strips the
   drift detector from the low-traffic layer — is a maintenance claim on an
   economics note, and more general than its host. A split candidate. Deciding
@@ -51,12 +56,13 @@ not instructions to the pass.
   pass is for.
 - **Two notes cite Commonplace as an existential witness.** The collection-fit
   check should confirm that reads as witness rather than subject. Both were
-  written under the bound-variable requirement, so this is a live test of
+  written under the earlier choice-scoping requirement, so this is a live test of
   whether the requirement was met, not a formality.
 - **`llm-recompute` received a scope paragraph on 2026-08-23** naming the
   volume condition under which its default flips back. It is the oldest note
   here and the least examined against its new neighbours.
-- **`a-theory-may-name` was revised by a second agent** after its initial write,
+- **`artifacts-must-preserve-named-choice-scope` was revised by a second agent**
+  after its initial write,
   including a replaced section. Two authors, one pass.
 
 ## Operating constraints

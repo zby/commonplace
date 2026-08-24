@@ -1,9 +1,9 @@
 # What these descriptions spare here
 
-Local application. The general model — that human recompute is dear and rare
-while agent recompute is cheap and constant, so audience segmentation turns on
-magnitudes rather than principle — lives in
-[the note](../../notes/human-recompute-is-dear-and-rare-agent-recompute-is-cheap-and-constant.md).
+Local application. The general model — that crossed directions in audiences'
+reconstruction savings and recurrence do not order cache value, and that cache
+value alone does not decide audience segmentation — lives in [the
+note](../../notes/opposed-recompute-factors-do-not-decide-documentation-segmentation.md).
 This file supplies Commonplace's magnitudes and the disposition that follows
 from them. It does not re-derive the model.
 
@@ -18,8 +18,10 @@ from them. It does not re-derive the model.
 
 Whole package: about 460 KB across 85 modules, averaging roughly 5 KB. Reader
 turnover on the human side is close to zero — one long-tenured maintainer, plus
-infrequent outside readers. On the agent side it is unbounded: every session is
-a new reader.
+infrequent outside readers. A fresh agent session that needs this material must
+reacquire it, but statelessness does not determine how many relevant sessions
+the repository will receive. The local comparison therefore needs measured
+workload volume rather than an unbounded-recurrence assumption.
 
 ## Correcting an earlier argument in this workshop
 
@@ -64,21 +66,24 @@ reader can select exactly the function it needs. Prose is addressable only at
 heading granularity, so the smallest selectable unit is a section covering a
 whole module.
 
-The source therefore supports finer selection than the document does, and the
-advantage grows as the question gets more specific. This is why the compression
-ratios above are misleading: they compare whole artifacts, but neither reader
-consumes whole artifacts, and the two are not selectable at the same grain.
+For this matched symbol-level question, the source supports a finer addressed
+unit than the document, and a more specific query can keep narrowing the source
+after the document has reached its section floor. The whole-artifact compression
+ratios do not decide that retrieval floor because neither path consumes its
+artifact in full.
 
 ### What follows
 
-A summary earns its place exactly where **the content has no locus in the
-source that a search could find**. An invariant spanning four modules has no
-symbol. A layering rule has no symbol. A protocol ordering has no symbol. That
-is the sharper reason such content is irrecoverable — not merely that it spans
-files, but that nothing in the files is the thing to look for.
+A summary can earn its place where **the content has no locus in the source
+that a search could find**. An invariant spanning four modules has no symbol. A
+layering rule has no symbol. A protocol ordering has no symbol. Such content is
+not recoverable cache, so its case rests on preserving unique knowledge rather
+than beating the source's matched retrieval floor.
 
-The operational test is one question: *what would I grep for?* If there is an
-answer, read the source. If there is not, that is the content worth authoring.
+The question *what would I grep for?* is therefore a routing test, not a complete
+disposition rule. A known discriminating source key supports a matched
+addressability comparison. No such key may indicate unique content, unknown
+vocabulary, or distributed recovery; those cases need their own tests.
 
 ## What the products come to here
 
@@ -119,20 +124,21 @@ The disposition depends on those magnitudes and does not transfer. A project
 with large modules, or with reader turnover on the human side, would land
 differently under the same model.
 
-## Promotion candidates
+## Promoted claims
 
-Two claims here look general rather than local, and neither is in the note:
+The general claims extracted from this local analysis now live in library
+notes; this file retains their Commonplace-specific evidence and application:
 
-- **Addressability sets the granularity of selective reading, and source is
-  finer-grained than prose about it.** A symbol is a search key; a prose
-  section is the smallest unit a document offers. So selective source reading
-  beats selective doc reading on cost and on correctness, and the margin grows
-  with question specificity. This looks like the strongest candidate here.
-- A summary earns its place exactly where the content has no locus in the
-  source a search could find — the operational test being "what would I grep
-  for?"
-- A summary substitutes for source only on questions where approximate
-  knowledge suffices; for accuracy-requiring questions it is additive cost.
+- [Addressability grain, not compression ratio, sets a matched selective-read
+  floor](../../notes/addressability-grain-sets-a-matched-selective-read-floor.md)
+  carries the scoped retrieval-floor claim and the opposite Commonplace cases.
+- [An insufficient summary precedes the source rather than replacing
+  it](../../notes/an-insufficient-summary-precedes-the-source-rather-than-replacing.md)
+  carries the task-relative substitution claim.
+- The recovery test in [For its load-bearing part, documentation generates the
+  system rather than describing
+  it](../../notes/documentation-generates-the-system-rather-than-describing-it.md)
+  separates unique content from recoverable cache.
 - Relations split into mechanically recoverable structure and irrecoverable
   invariants, and only the second is worth authoring.
 
