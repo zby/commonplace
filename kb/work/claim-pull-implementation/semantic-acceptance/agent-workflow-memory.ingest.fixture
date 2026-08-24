@@ -1,0 +1,135 @@
+---
+description: AWM paper showing web agents can learn reusable prompt workflows from successful trajectories, with online induction helping most as train-test domain gaps widen.
+source: https://arxiv.org/html/2409.07429v1
+captured: "2026-05-08"
+capture: web-fetch
+genre: scientific-paper
+snapshot_sha256: 470b8ee461cb933d48a4eab1f53643baeb247e8b909c50c9d26a9cc6e4cbe0bd
+ingested: "2026-05-08"
+type: kb/sources/types/ingest-report.md
+domains: [agent-memory, trace-learning, deploy-time-learning, web-agents]
+---
+
+# Ingest: Agent Workflow Memory
+
+## Classification
+
+ArXiv preprint with a defined method, experimental setup, ablations, benchmark comparisons, and citations.
+Author: Zora Zhiruo Wang, Jiayuan Mao, Daniel Fried, and Graham Neubig are CMU/MIT researchers working on LLM agents, web interaction, and tool use; the source is worth attention as a primary paper from the AWM authors.
+
+## Summary
+
+The paper introduces Agent Workflow Memory (AWM), a web-agent method that distills annotated or successful action trajectories into reusable workflows and injects those workflows into later prompts. AWM supports both offline induction from training examples and online induction from successful test-time trajectories. On WebArena, AWM reports 35.5% success rate versus 23.5% for BrowserGym and fewer average steps than BrowserGymax-tree; on Mind2Web, it improves step success over MindAct/Synapse baselines and generalizes best in cross-domain online settings. The main contribution is not a general memory store, but a concrete trace-to-procedure learning loop: task traces become abstract subroutines, those subroutines alter future action, and benchmark task success supplies the selection signal.
+
+## Claims
+
+- **Claim (paraphrase):** AWM's LM-based path induces reusable sub-routines from past agent experiences, integrates them as auxiliary memory for later actions, and can operate offline on canonical examples or online on evaluator-accepted test trajectories.
+  - **Source extract (verbatim):** At the core of AWM is an induction module I that induces a set of workflows \mathcal{W} from one or more past agent experiences \mathcal{E}=\{e_{i}\}_{i=1}^{m}.
+  - **Source location:** Section 2.3, Inducing and Using Workflows.
+  - **Source extract (verbatim):** To produce workflows that more accurately capture reusable trajectories across tasks, we propose an LM-based module I that prompts the agent to extract common sub-routines from one or more input experiences.
+  - **Source location:** Section 2.3, LM-based Workflow Induction.
+  - **Source extract (verbatim):** After the workflows \mathcal{W} are induced, they are then integrated into the agent as auxiliary memory, M+\mathcal{W}\rightarrow M_{w}, where M stands for the original agent memory, and M_{w} stands for the agent memory augmented with induced workflows.
+  - **Source location:** Section 2.3, after Figure 3.
+  - **Source extract (verbatim):** If e^{t} is predicted as success, i.e., 1, we then transform it into workflow(s) I(e^{t})\rightarrow\{w^{t}\} and add \{w^{t}\} into the agent memory M^{t}+\{w^{t}\}\rightarrow M^{t+1}, which serves as the agent memory to process the t+1-th instruction.
+  - **Source location:** Section 2.3, Online Scenario.
+  - **Scope:** AWM as specified for the paper's web-navigation agents; offline induction uses canonical examples, while online induction uses streamed test experiences accepted by an LM evaluator.
+  - **Confidence:** Direct method description.
+  - **Limitation:** The paper description does not by itself verify implementation fidelity, workflow truth, or transfer outside the evaluated web-navigation setups; the online success oracle may misclassify trajectories.
+
+- **Claim (paraphrase):** On Mind2Web cross-domain evaluation with GPT-4, Table 4 reports 35.5 step success for AWMonline and 32.6 for AWMoffline.
+  - **Source extract (verbatim):** Figure: Table 4: Success rate on Mind2Web cross-task, cross-website, and cross-domain generalization test, using gpt-4 model. EA is short for element accuracy and AF1 is short for action F1.
+  - **Source location:** Section 3.2.2, Table 4 caption.
+  - **Source extract (verbatim):** 32.6 |
+  - **Source location:** Table 4, AWMoffline row, Cross-Domain Step SR column.
+  - **Source extract (verbatim):** 35.5 |
+  - **Source location:** Table 4, AWMonline row, Cross-Domain Step SR column.
+  - **Scope:** Mind2Web cross-domain split, GPT-4, the paper's reported Step SR metric and AWM configurations.
+  - **Confidence:** Direct table transcription.
+  - **Limitation:** These are reported step-level benchmark results, not task-level success, a statistical significance result, or evidence that the ordering generalizes to other models, benchmarks, or deployment settings.
+
+- **Claim (paraphrase):** On WebArena with GPT-4, Table 5 reports rule-based AWM at 35.6 total success and 6.3 steps versus LM-based AWM at 35.5 total success and 5.9 steps.
+  - **Source extract (verbatim):** Figure: Table 5: AWM success rate on WebArena using gpt-4, with rule- and lm-based induction.
+  - **Source location:** Section 4.1, Table 5 caption.
+  - **Source extract (verbatim):** 35.6 |
+  - **Source location:** Table 5, AWMrule row, Total SR column.
+  - **Source extract (verbatim):** 6.3 |
+  - **Source location:** Table 5, AWMrule row, number-of-steps column.
+  - **Source extract (verbatim):** 35.5 |
+  - **Source location:** Table 5, AWMlm row, Total SR column.
+  - **Source extract (verbatim):** 5.9 |
+  - **Source location:** Table 5, AWMlm row, number-of-steps column.
+  - **Source extract (verbatim):** As shown in Table 5, using rule- and LM-based workflow induction performs comparably, with a small 0.1 gap in success rate; the LM-based method appears more efficient and uses 0.4 fewer steps.
+  - **Source location:** Section 4.1, WebArena Results, immediately after Table 5.
+  - **Scope:** WebArena with GPT-4 under the paper's rule-based and LM-based AWM configurations.
+  - **Confidence:** Direct table transcription and author summary.
+  - **Limitation:** The near-equality applies to this aggregate WebArena run and does not show the methods are equivalent on Mind2Web, per task, or under other models.
+
+- **Claim (paraphrase):** On Mind2Web cross-task with GPT-4, Table 7 reports text workflows at 45.4 step success versus 45.1 for code workflows, while full task success is 3.6 for text versus 4.8 for code.
+  - **Source extract (verbatim):** Figure: Table 7: Mind2Web cross-task results with AWM using code and text workflows.
+  - **Source location:** Section 4.2, Table 7 caption.
+  - **Source extract (verbatim):** 45.1 |
+  - **Source location:** Table 7, AWM code-workflow row, Step SR column.
+  - **Source extract (verbatim):** 4.8 |
+  - **Source location:** Table 7, AWM code-workflow row, SR column.
+  - **Source extract (verbatim):** 45.4 |
+  - **Source location:** Table 7, AWMtext row, Step SR column.
+  - **Source extract (verbatim):** 3.6 |
+  - **Source location:** Table 7, AWMtext row, SR column.
+  - **Source extract (verbatim):** From the results in Table 7, AWMtext achieves slightly higher element selection accuracy and step success rate, by 0.6 and 0.3 points, respectively, yet degrades 1.2 in task success rate. Overall, we do not find substantial performance variance between workflows represented in text and code formats, indicating that both forms can bring effective augmentations to agent memory.
+  - **Source location:** Section 4.2, paragraph immediately after Table 7.
+  - **Scope:** Mind2Web cross-task, GPT-4, the paper's AWM and AWMtext configurations; SR is full task success.
+  - **Confidence:** Direct table transcription, consistent with the adjacent author summary.
+  - **Limitation:** Step success and full task success move in opposite directions, the differences are small, and the table supplies no significance analysis or evidence outside this setup.
+
+- **Claim (paraphrase):** On Mind2Web with GPT-4, Table 9 reports AWM at 45.1 step success and 4.8 full task success versus AWMAS at 46.4 and 3.6; the adjacent prose instead says both have 3.2 full task success, so the source is internally inconsistent on that equality.
+  - **Source extract (verbatim):** Figure: Table 9: Mind2Web results with AWMAS variant that alters the action space besides memory augmentation. All methods use gpt-4.
+  - **Source location:** Section 5, Table 9 caption.
+  - **Source extract (verbatim):** 45.1 |
+  - **Source location:** Table 9, AWM row, Step SR column.
+  - **Source extract (verbatim):** 4.8 |
+  - **Source location:** Table 9, AWM row, SR column.
+  - **Source extract (verbatim):** 46.4 |
+  - **Source location:** Table 9, AWMAS row, Step SR column.
+  - **Source extract (verbatim):** 3.6 |
+  - **Source location:** Table 9, AWMAS row, SR column.
+  - **Source extract (verbatim):** In Table 9, expanding the agent action space with workflows (AWMAS) slightly improves the step success rate by 1.3 points, and gets the same overall success rate, 3.2, of the base memory-augmented AWM.
+  - **Source location:** Section 5, paragraph immediately after Table 9.
+  - **Scope:** Mind2Web with GPT-4, comparing memory-augmented AWM with the AWMAS workflow-action variant; AWMAS is the source's action-space treatment.
+  - **Confidence:** High confidence in the displayed table values; reduced confidence in any equality claim because the adjacent prose conflicts with both table rows.
+  - **Limitation:** Do not claim that AWM and AWMAS have the same 3.2 full task success. The table reports 4.8 versus 3.6, while the prose reports an incompatible 3.2 equality, and the source does not resolve which is intended.
+
+## Connections Found
+
+The connect report (`kb/reports/connect/sources/agent-workflow-memory.connect.md`) found seven genuine candidate connections. The strongest is [Agent Workflow Memory](../agent-memory-systems/reviews/agent-workflow-memory.md): the existing KB review is code-grounded and covers implementation/lifecycle caveats, while this source supplies the paper's empirical evidence and ablation framing. The source also supports [Trace-learning techniques in related systems](../agent-memory-systems/trace-learning-techniques-in-related-systems.md) as a benchmarked readable-artifact learner, [Retained system-definition artifacts enable persistent deployment-time adaptation](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) because online AWM updates durable workflow artifacts without weight changes, [Abstract an experience only when you can state the boundary](../notes/abstract-an-experience-only-when-you-can-state-the-boundary.md) because concrete trajectories become abstract variable-bearing procedures, [Claw learning loops must improve action capacity not just retrieval](../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) because the memory is evaluated by future action success, and [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md) because AWM's automation works where task boundaries and success oracles are unusually crisp.
+
+## Extractable Value
+
+1. **Abstract workflows beat concrete exemplars on Mind2Web** -- AWM improves over Synapse by +5.0 element accuracy and +4.0 step success, supporting the high-reach claim that trace distillation can improve transfer by changing shape, not merely shortening history. [just-a-reference]
+
+2. **Online induction is strongest when train-test distribution gaps widen** -- AWMonline beats AWMoffline on Mind2Web cross-domain step success (35.5 vs 32.6), giving concrete evidence for deploy-time learning: current-environment traces can be more valuable than stale training workflows when the environment shifts. [just-a-reference]
+
+3. **The simpler account is surprisingly strong** -- rule-based induction on WebArena matches LM induction on success rate (35.6 vs 35.5) and only costs 0.4 more steps, suggesting much of AWM's gain may come from deduplication, invalid-action filtering, and reusable action skeletons rather than sophisticated semantic workflow induction. [experiment]
+
+4. **Workflow representation does not need executable syntax to help** -- text workflows slightly improve Mind2Web step success over code-style workflows (45.4 vs 45.1) but lower full task success, implying that the behavior-changing unit is guidance in context, not necessarily a callable program. [just-a-reference]
+
+5. **More environment detail can hurt** -- replacing natural-language state descriptions with filtered HTML lowers step success, and combining both is worse; the paper attributes this to context length and irrelevant filtered elements, a compact empirical example for context economy and noise-sensitive agent prompting. [quick-win]
+
+6. **Workflow-as-action exposes a flexibility boundary** -- AWMAS adds workflow actions and improves step success, but agents call those actions in only 18.5% of tasks and fixed action sequences fail when dynamic intermediate state matters, showing why procedure memory may need runtime state access before becoming executable skill. [deep-dive]
+
+7. **Offline-plus-online is not additive** -- combining offline and online workflows underperforms the better single source across Mind2Web splits, suggesting that accumulated prompt memories can interfere when they come from mismatched distributions or incompatible induction regimes. [experiment]
+
+## Limitations (our opinion)
+
+The evidence is strongest for web-navigation benchmarks with clear task boundaries and measurable success. That is exactly why AWM is useful for [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md): it is a positive case on the easy-oracle side, not proof that open-ended knowledge-work learning is solved. The online setting also learns from test-stream experience; that is valid for deployed streaming agents, but it should not be read as ordinary train/test generalization.
+
+The paper evaluates end-task success more than workflow artifact quality. It reports whether workflows improve action outcomes, but not whether individual workflows have stable identities, provenance, confidence, retirement paths, or contradiction handling. The existing [Agent Workflow Memory](../agent-memory-systems/reviews/agent-workflow-memory.md) review shows this is also true in the repository: workflow files are useful prompt payloads, but weak durable memory objects.
+
+Several claims may be over-attributed to LM-based abstraction. The rule-based ablation is almost as good on WebArena, and the paper's own results show text/code representation differences are small. A simpler mechanism -- reusable action skeletons plus environment-scoped prompt guidance -- explains much of the performance without needing a strong theory of semantic workflow induction.
+
+The web-agent domain limits reach. WebArena and Mind2Web have repeated site operations, element-selection structure, and evaluators that make trajectory reuse unusually clean. Domains with sparse recurrence, ambiguous success, multi-party preferences, or slow feedback may not support the same loop.
+
+Finally, the benchmark stack is dated: experiments use GPT-4-0613 and gpt-3.5-turbo. The qualitative pattern is still valuable, but headline margins should be treated as historical evidence about the method under those models and benchmarks, not as current performance claims.
+
+## Recommended Next Action
+
+Update [Trace-learning techniques in related systems](../agent-memory-systems/trace-learning-techniques-in-related-systems.md): in the AWM section, add a short paragraph from this paper's ablations saying that abstract workflows beat concrete exemplars on Mind2Web, rule induction nearly matches LM induction on WebArena, online induction helps most under domain shift, and offline-plus-online workflows interfere rather than compose cleanly. This would strengthen the survey's maintenance/oracle argument without duplicating the existing code review.
