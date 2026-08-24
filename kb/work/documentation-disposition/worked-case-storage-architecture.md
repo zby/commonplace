@@ -76,6 +76,7 @@ and executable schema ownership.
 
 ## Next
 
-`architecture.md` is next. Its installed-tree inventory may retain discovery
-value like the command catalogue, but exact copying and installation mechanics
-must be compared with the scaffold source and `commonplace-init --help`.
+[The `architecture.md` worked case](./worked-case-architecture.md) retained the
+installed topology as approximate orientation, but removed its duplicate role
+table and installer manual. Exact scaffold membership now routes to
+`commonplace.scaffold_manifest`.

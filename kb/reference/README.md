@@ -179,7 +179,7 @@ From an installed project, `commonplace-source` locates the package that
 supplies the running commands. The documents below retain architecture,
 invariants, and orientation that the implementation does not cheaply recover.
 
-- [architecture.md](./architecture.md) — installed project layout (library under `kb/commonplace/`, user collections at top level), packaged runtime, promoted skills, and path invariance across source and ship
+- [architecture.md](./architecture.md) — installed topology and the library/user, command-runtime, skill-projection, and path-invariance boundaries
 - [scenario-architecture.md](./scenario-architecture.md) — scenario-derived architecture: the library/user split under `kb/commonplace/`, package-provided commands, and measurable scenario decomposition
 - [storage-architecture.md](./storage-architecture.md) — authority and lifecycle boundaries among authored files, local copies, derived artifacts, and operational state
 - [documentation-site.md](./documentation-site.md) — how the ProperDocs site renders `kb/`: the README-vs-index rule, the nav-generation hook, and the full inventory of reader landing pages

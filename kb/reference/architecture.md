@@ -1,5 +1,5 @@
 ---
-description: Shipped Commonplace architecture — installed project layout, packaged runtime, scaffolded library under kb/commonplace/, starter user collections, promoted skills, and the library/user boundary
+description: "Architecture boundaries of an installed Commonplace project: user KB, shipped library, command runtime, skill projections, and path invariance"
 type: kb/types/note.md
 traits: []
 tags: []
@@ -7,122 +7,109 @@ tags: []
 
 # Commonplace architecture
 
-This note describes the architecture Commonplace ships into projects: the installed `kb/` tree, the package-provided command surface, and the runtime skill-discovery layer.
+An installed Commonplace project puts the user's KB and a read-only shipped
+library in one project tree, while the Python command runtime remains a
+user-level tool. This page records the boundaries among those surfaces. The
+live `commonplace.scaffold_manifest` is the exact installed inventory, and
+`commonplace.cli.init_project` owns materialization behavior; locate both from
+an installed project with `commonplace-source`.
 
-## Installed project layout
+## Installed topology
 
 ```text
 project/
-    kb/
-      commonplace/                 ← shipped library (read-only by convention)
-        notes/                     ← methodology theory
-          types/
-          *.md
-        reference/                 ← shipped-system documentation + ADRs
-          adr/
-          types/
-          *.md
-        instructions/              ← methodology procedures + cp-skill-* skills
-          review-gates/
-          cp-skill-write/
-          *.md
-      types/                       ← shared global types (`text`, `note`, `instruction`, ...)
-      notes/                       ← user's own notes; starts with COLLECTION.md and README.md
-        types/
-      reference/                   ← user's own reference; starts with COLLECTION.md and README.md
-        types/
-      instructions/                ← user's own instructions; starts with COLLECTION.md and README.md
-      sources/                     ← user's tracked source records
-        .gitignore                 ← keeps .snapshots/ local
-        .snapshots/                ← local source reading copies
-        types/
-      tasks/                       ← user's task lifecycle
-        backlog/
-        active/
-        completed/
-      work/                        ← user's workshop / in-flight material
-      reports/                     ← user's generated operational artifacts
-        connect/
-        types/
-      log.md                       ← user's operational log
-    .claude/skills/cp-skill-*/     ← known runtime skill projection
-    .agents/skills/cp-skill-*/     ← known runtime skill projection
-    AGENTS.md                      ← project control-plane file (from AGENTS.md.template)
+  AGENTS.md.template                 practitioner integrates into the runtime control plane
+  kb/
+    commonplace/
+      notes/                         shipped methodology
+      reference/                     shipped system reference and ADRs
+      instructions/                  shipped procedures and canonical cp-skill-* skills
+    types/                           shared global contracts
+    notes/ reference/ instructions/  user-owned collections
+    sources/ tasks/ work/ reports/   user-owned operating surfaces
+    log.md                           user-owned operational log
+  .agents/skills/ .claude/skills/    copied projections of selected shipped skills
+
+user-level uv tool                   commonplace-* command runtime for every project
 ```
 
-The shipped library sits under `kb/commonplace/` as a single boundary the user treats as read-only. The user's own collections (`kb/notes/`, `kb/reference/`, `kb/instructions/`) are peers to the library at the top level of `kb/`. They start without user-authored artifacts but with a minimal `COLLECTION.md` contract and a curated `README.md` landing. Shared global types stay at top-level `kb/types/` so both the library and the user's own types can reference them with invariant absolute paths.
+This is an orientation map, not a file manifest. `commonplace-init` output and
+`commonplace.scaffold_manifest` own the exact directories, scaffold files, and
+promoted-skill set. The operator decides whether to rename the generated
+control-plane template to `AGENTS.md` or `CLAUDE.md`, merge it into an existing
+file, or import it through another runtime mechanism.
 
-The framework implementation itself is not vendored into the project. It is installed once per OS user as an isolated uv tool and exposed through `commonplace-*` commands in uv's user-level executable directory. Projects do not need a Commonplace-specific venv, activation step, or `.envrc`. One tool installation supplies the active command version to all projects for that user.
+## Ownership boundaries
 
-The Python package carries the scaffold inputs as packaged data in built wheels. In the source checkout, the same inputs are read directly from the canonical repo paths rather than through duplicate scaffold files or source-tree symlinks.
+The structural boundary is `kb/commonplace/`:
 
-## Surface by role
+- `kb/commonplace/{notes,reference,instructions}/` is the framework library.
+  The project reads it as a dependency and treats it as read-only by
+  convention.
+- Top-level `kb/notes/`, `kb/reference/`, and `kb/instructions/` are the
+  project's own collections. Sources, tasks, workshop material, reports, and
+  the log are also project-owned.
+- `kb/types/` is shared ground. Commonplace installs the global contracts there
+  and the project may extend them, so both library and user artifacts can keep
+  the same absolute type identities.
 
-| Area | Role |
-|------|------|
-| `kb/commonplace/notes/` | Shipped transferable methodology theory |
-| `kb/commonplace/reference/` | Shipped-system documentation plus ADR history |
-| `kb/commonplace/instructions/` | Shipped methodology procedures and cp-skill-* skills |
-| `kb/types/` | Shared global type contracts — library and user both use and extend |
-| `kb/notes/`, `kb/reference/`, `kb/instructions/` | User's own collections, each with a starter `COLLECTION.md` contract and `README.md` landing |
-| `kb/*/types/` | Collection-local structural contracts for specialised documents |
-| `kb/sources/` | Tracked ingests/source reviews plus ignored local captures under `.snapshots/` |
-| `kb/tasks/` | User's task lifecycle artifacts |
-| `kb/work/` | User's temporal workshop material |
-| `kb/reports/` | User's generated operational artifacts |
-| `.claude/skills/`, `.agents/skills/` | Known runtime skill projections — copies of the `kb/commonplace/instructions/` skill directories; other runtimes may need their own projection |
+The Python implementation is not vendored into the project. A user-level uv
+tool installation supplies the active `commonplace-*` commands to every
+project for that OS user. Project environments remain free to carry their own
+application and development dependencies. [ADR 064](./adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md)
+owns that runtime choice; [commands](./commands.md) routes into the live command
+surface.
 
-## How the shipped surface is produced
+## Materialization and skill projection
 
-`commonplace-init` is the install step that materialises the KB surface inside a project. It does four things:
+`commonplace-init` materializes the project-facing surfaces from one scaffold
+manifest. Built distributions carry the canonical KB trees as package data;
+an editable source checkout resolves the repository's canonical files instead
+of maintaining a second authored scaffold copy. Existing project files are
+preserved rather than synchronized automatically. Exact creation,
+classification, and package-source behavior belongs to the live manifest and
+init implementation.
 
-1. Creates the directory shell under `kb/` — the user's collections, the user-space directories, and the `kb/commonplace/` hierarchy.
-2. Copies shipped library trees into `kb/commonplace/{notes,reference,instructions}/`. Shared `kb/types/` and user-space type scaffolds (`kb/sources/types/`, `kb/reports/types/`) land at their conventional top-level locations. A nested `kb/sources/.gitignore` keeps `.snapshots/` local without changing a project's root ignore file.
-3. Scaffolds a minimal `COLLECTION.md` contract and curated `README.md` landing into each empty user collection, giving write skills a conventions stub and readers a stable entry point.
-4. Promotes selected skills into known `.claude/skills/cp-skill-*/` and `.agents/skills/cp-skill-*/` runtime surfaces as real copied directories of `kb/commonplace/instructions/<name>/`, and resolves the project-specific `AGENTS.md.template`. The canonical skill directories stay installed under `kb/commonplace/instructions/`; agent runtimes with a different discovery surface may need to copy, register, or import those directories themselves.
+Canonical skill definitions remain under
+`kb/commonplace/instructions/cp-skill-*/`. Init copies the selected promoted
+skills into the two known runtime discovery layouts. Those projections are not
+another authoring authority. A runtime with a different discovery convention
+must expose the same canonical directories through its own copy, registration,
+or import mechanism.
 
-Command installation precedes this scaffold step. `uv tool install --python ">=3.11" llm-commonplace` installs a published release; contributors use `uv tool install --python ">=3.11" --editable .` from the source checkout. `uv tool update-shell` persists uv's executable-directory addition, and newly launched shells, IDEs, and agent processes then resolve the commands by bare name. Development-only executables such as `pytest` and `ruff` stay in the source project's dependency environment and run through `uv run`.
+This separation keeps the agent's normal read and write path inside the
+project, while executable behavior still comes from the installed package.
+The scaffold does not create a Commonplace-specific project environment.
 
-The result is that the agent's hot path stays inside the project tree. It reads `AGENTS.md`, the target collection's `COLLECTION.md`, and the relevant type files directly from the installed KB rather than jumping out to a separate framework checkout.
+## Path invariance across source and install
 
-The scaffold input side has two modes. Built wheels include canonical KB trees under `commonplace/_data/` via explicit Hatch `force-include` mappings. Editable source checkouts fall back to the repository's canonical `kb/` paths and root templates, so contributors do not maintain duplicate scaffold copies.
+Commonplace authors its library at top-level collection paths in this source
+repository, then installs those collections together under `kb/commonplace/`.
+Three rules let the same artifacts work in both positions:
 
-## Boundary between library and user content
+- sibling-relative Markdown links remain valid because the library collections
+  move under one common wrapper;
+- shared global type pointers remain absolute `kb/types/...` paths because
+  that directory stays at top level; and
+- collection-local type pointers remain file-relative, preserving the
+  file-to-contract relationship after wrapping.
 
-The shipped system draws a structural boundary at `kb/commonplace/`:
+These are the stable architecture rules. Exact resolver branches and scaffold
+path pairs belong to the implementation. [ADR 021](./adr/021-ship-library-content-under-kb-commonplace.md)
+records why the namespace boundary and these path forms were selected.
 
-- **Library-provided content** — everything under `kb/commonplace/`. Read-only by convention; `commonplace-init` can re-sync it on upgrade.
-- **User content** — everything else under `kb/`, including the user's own `notes/`, `reference/`, `instructions/`, sources, tasks, workshops, reports, and log. The project owns this tree outright.
-- **Shared ground** — `kb/types/` is the one top-level collection both library and user extend. Both sides reference types via absolute `kb/types/...` paths, which stay invariant across our repo and a user's install.
+## Maintenance scope
 
-A user who wants to extend a shipped type copies it from `kb/commonplace/<collection>/types/` into their own collection's `types/` directory. A user who wants to cite a shipped note from their own notes links across the boundary with a relative path like `../commonplace/notes/...` — the link structure works, but most users won't do this because their KBs are about different domains.
+Review this page when library/user ownership, command-runtime placement,
+canonical skill ownership, projection semantics, or the path-invariance rules
+change. A new scaffold directory, template, promoted skill, package-data
+mapping, installer step, or command does not by itself require an edit; its
+live owner remains the manifest, source, package metadata, or command help.
 
-Re-running `commonplace-init` is safe: shipped files matching the scaffold are preserved; user-authored files are never overwritten.
+## See also
 
-## Path invariance across source and ship
-
-Our repo works with `kb/notes/`, `kb/reference/`, `kb/instructions/` at the top level — the same position the user will work from in their own empty collections. Shipped content appears at `kb/commonplace/<collection>/` in a user's install. ADR-021 documents how references survive this remapping:
-
-- **Sibling-relative markdown links** (`../notes/foo.md` from an instruction, `../reference/adr/010.md` from a note) are invariant because `kb/commonplace/` wraps siblings together.
-- **Frontmatter type pointers** split: shared global types use absolute `kb/types/...` paths (invariant because shared types stay at top level), and collection-local types use file-relative paths like `./types/structured-claim.md` or `../types/adr.md` (invariant because the file-to-types relationship inside a collection is preserved under wrapping).
-- **Generic natural-language references** (e.g. "a collection such as `kb/notes/`") are semantic labels that resolve to whatever `kb/notes/` means in the reader's context — our library in our repo, the user's collection in an install.
-
-The type resolver in `src/commonplace/lib/type_resolver.py` accepts both absolute and file-relative `type:` values, so the same frontmatter strings work in both trees.
-
-## Why `kb/commonplace/reference/` is part of the shipped surface
-
-The installed system needs reference documentation about how its own architecture works, and that documentation must live where the agent already searches. Shipping `kb/commonplace/reference/` keeps the explanatory layer adjacent to the rest of the library: architecture notes, ADRs, and operator guidance all resolve through the same collection.
-
-Project-authored reference material lives in the user's own `kb/reference/` collection next to the library copy. The two coexist as peers.
-
----
-
-Relevant Notes:
-
-- [Reference](./README.md) — overview of the shipped reference collection and operator guide
-- [021-Ship library content under kb/commonplace](./adr/021-ship-library-content-under-kb-commonplace.md) — decision: the library/user boundary and path invariance rules this architecture implements
-- [027-Package scaffold assets without source-tree symlinks](./adr/027-package-scaffold-assets-without-source-tree-symlinks.md) — decision: package scaffold assets through explicit wheel includes plus source-checkout fallback
-- [064-Install Commonplace commands as a user-level uv tool](./adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) — decision: the command-installation authority and project-environment removal
-- [014-scripts-as-python-package-one-tree-model](./adr/014-scripts-as-python-package-one-tree-model.md) — decision: package-and-init model that ADR-021 refines with the `kb/commonplace/` namespace
-- [013-skills-first-delivery-with-core-local-type-split](./adr/013-skills-first-delivery-with-core-local-type-split.md) — decision: the skills-first model and the core/local type split
-- [collections and types](./collections-and-types.md) — how shipped type definitions are located and resolved, including file-relative pointers to collection-local types
+- [Instruction generation](./instruction-generation.md) — current scaffold and template flow
+- [Storage](./storage-architecture.md) — authority and lifecycle after artifacts are installed
+- [Scenario architecture](./scenario-architecture.md) — the common agent path through the installed surfaces
+- [ADR 027](./adr/027-package-scaffold-assets-without-source-tree-symlinks.md) — package-data and editable-source boundary
+- [Collections and types](./collections-and-types.md) — exact type identity and resolution contract
