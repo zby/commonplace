@@ -1,5 +1,5 @@
 ---
-description: Interpreter failure is output the spec's public meaning rules out — constraint violations, hallucination, bookkeeping slips, framing bias; the fault attaches to the interpreter's role, not the spec, so the remedy is detection and correction rather than spec narrowing
+description: Interpreter failure is output that a spec's public meaning rules out; the fault attaches to the interpreter's role, so repair uses detection and correction rather than narrowing an already sufficient spec
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [llm-reliability]
@@ -17,7 +17,7 @@ Examples:
 - **Bookkeeping failure**: tracking compositional depth (fully specified, one correct answer) → [F1 collapses from 1.0 to 0.2](https://arxiv.org/html/2602.01075v2) at depth 100 despite short context
 - **Content bias**: reasoning accuracy varies with semantic content rather than logical structure, producing errors on valid syllogisms with unfamiliar premises
 - **Emotional prompt sensitivity**: [Ma et al.](https://arxiv.org/pdf/2509.13680) show that semantically equivalent prompts with different emotional framing produce systematic performance degradation — bias, not noise, since the functional spec is unchanged
-- **Judgment instability under reordering**: the [Mazur position-bias benchmark](../sources/position-bias.ingest.md) shows 27 LLM judges flip their pairwise winner in 44.8% of decisive cases when candidate display order is swapped — identical content in both views, interpretation driven by an ordering cue the spec does not mention
+- **Judgment instability under reordering**: in the pinned [Mazur position-bias benchmark](../sources/position-bias.ingest.md), 27 judge models evaluated 193 sibling-edit story pairs in both display orders, and the median model changed its canonical winner in 44.8% of decisive swapped-order pairs — the same candidate pair appears in both views, so this note diagnoses the changed interpretation as sensitivity to an ordering cue the spec does not mention
 
 In each case, a conforming interpreter given the same spec would not make the error. The spec is sufficient; the interpreter is not.
 
@@ -41,4 +41,4 @@ Relevant Notes:
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — remedy: the general theory of error correction applicable to interpreter failures
 - [scheduler-llm-separation-exploits-an-error-correction-asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — architectural remedy: moving error-prone bookkeeping to a reliable substrate
 - [Ma et al. (Sep 2025) — Prompt Stability in Code LLMs](https://arxiv.org/pdf/2509.13680) — evidenced-by: emotional prompt variation produces systematic performance degradation (bias) on functionally identical tasks
-- [Mazur position-bias benchmark](../sources/position-bias.ingest.md) — **evidence**: judge-layer interpreter failure — 27 LLMs flip their pairwise winner in 44.8% of decisive cases under display-order swap alone; parallel peg to Ma et al. at the LLM-as-judge layer (preprint-tier, sibling-edit surface)
+- [Mazur position-bias benchmark](../sources/position-bias.ingest.md) — **evidence**: judge-layer interpreter failure — the median of 27 judge models changed its canonical winner in 44.8% of decisive swapped-order pairs; this note treats that bounded result as a parallel to Ma et al. at the LLM-as-judge layer (repository snapshot; decisive-pair statistic; sibling-edit surface)

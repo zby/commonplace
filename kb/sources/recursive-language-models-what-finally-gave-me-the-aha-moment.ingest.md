@@ -27,7 +27,22 @@ The thread walks through a progressively more capable set of agent architectures
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** This practitioner walkthrough describes RLM as an external programmable REPL in which the model writes prompt transformations, can recursively invoke sub-agents whose responses remain symbolic variables outside the parent context, and can return a constructed Python variable as its answer; variables persist across REPL execution calls within the described run.
+  - **Source extract (verbatim):** A language model interacts with arbitrarily long prompts through an external programmable environment or an REPL. Printed outputs are truncated at the scaffold layer.
+  - **Source location:** “Recursive Language Models,” first mechanism point
+  - **Source extract (verbatim):** The LLM can write code to programmatically explore, and create new transformations of the prompt
+  - **Source location:** “Recursive Language Models,” second mechanism point
+  - **Source extract (verbatim):** It can recursively invoke sub-agents to complete smaller subtasks - basically zoom in on specific strategic regions of the prompt and call separate LLMs to work on them
+  - **Source location:** “Recursive Language Models,” third mechanism point
+  - **Source extract (verbatim):** The subagent responses do not get automatically loaded into the parent agent's context, it gets returned as symbols or variables inside the parent's REPL
+  - **Source location:** “Recursive Language Models,” fourth mechanism point
+  - **Source extract (verbatim):** RLM agents can return responses in two ways - (a) auto-regressively generated answers like normal LLMs, and (b) construct answers into a python variable and return the variable instead.
+  - **Source location:** “Recursive Language Models,” fifth mechanism point
+  - **Source extract (verbatim):** Remember, python variables persist across different REPL execution calls. I keep coming back to the Jupyter Notebook example coz it is absolutely essential that you make this connection. Each time the LLM writes a block of code and executes is equivalent to us humans writing a block of code and executing a cell!
+  - **Source location:** “The REPL,” programmatic-exploration explanation
+  - **Scope:** A practitioner explanation based on the author's implementation work and tutorial, describing state and data flow inside an RLM run rather than a standardized interface shared by every RLM implementation.
+  - **Confidence:** High that the walkthrough makes these mechanism claims; moderate for implementation-general conclusions because it is a practitioner account rather than the primary RLM specification.
+  - **Limitation:** Persistence here means across REPL execution calls inside the described run. The source does not state what happens to REPL state after the answer returns, establish that generated orchestrators are discarded per task, or name a `recursive_llm()` API.
 
 ## Connections Found
 

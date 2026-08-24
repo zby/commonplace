@@ -27,7 +27,14 @@ The source argues that frontier language models may already contain much of the 
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** The Mismanaged Geniuses Hypothesis proposes first defining the space of decompositions available to a language model and then allocating training effort to models that choose correct decompositions within a scaffold.
+  - **Source extract (verbatim):** In particular, we believe that existing systems that let LMs decompose tasks are the limiting bottleneck, and the first step would be to define the space of decompositions the LM has access to. Upon figuring out this space of decompositions, the “bitter-lesson”-pilled allocation of compute would go towards training models to perform the correct decompositions
+  - **Source location:** Opening statement of the Mismanaged Geniuses Hypothesis, fourth paragraph
+  - **Source extract (verbatim):** Training and scaling the ability to compose. LMs need to be trained to correctly decompose tasks under any scaffold, but the correct decompositions are likely already within the distribution of what LMs can generate.
+  - **Source location:** Research and engineering directions, “Training and scaling the ability to compose” paragraph
+  - **Scope:** A conceptual research hypothesis about frontier language-model scaffolds and learned task decomposition, conditional on the authors' claim that model-call management is the limiting bottleneck.
+  - **Confidence:** High that this is the design direction proposed by the thread; the source presents a hypothesis and examples, not a demonstrated general result.
+  - **Limitation:** The source does not specify that the decomposition space must be a codified symbolic language, identify the trained policy's storage as distributed-parametric, or describe a codify-then-relax migration. Those are target-side interpretations of defining a space and training models within a scaffold.
 
 ## Connections Found
 
