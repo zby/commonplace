@@ -49,6 +49,10 @@ allOf:
           snapshot_sha256:
             type: string
             pattern: "^[0-9a-f]{64}$"
+          original_snapshot_sha256:
+            type: string
+            pattern: "^[0-9a-f]{64}$"
+          original_snapshot: false
           source_snapshot: false
           ingested:
             type: string

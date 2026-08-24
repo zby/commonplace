@@ -1554,7 +1554,7 @@ def test_source_snapshot_cache_warns_when_no_ingest_records_the_bytes(
     write(sources / "COLLECTION.md", "# Sources\n")
     orphan = write(sources / ".snapshots" / "orphan.md", "uncatalogued bytes\n")
 
-    warnings = validation.validate_unowned_source_snapshots(
+    warnings = validation.validate_source_snapshot_cache(
         sources, repo_root=tmp_path
     )
 
@@ -1563,7 +1563,7 @@ def test_source_snapshot_cache_warns_when_no_ingest_records_the_bytes(
             orphan,
             (
                 "unpaired local snapshot: no same-stem ingest and no ingest "
-                "records its checksum"
+                "matches its source URL or checksum"
             ),
         )
     ]
@@ -1583,7 +1583,7 @@ def test_source_snapshot_cache_warns_about_redundant_alternate_copy(
         f"---\nsnapshot_sha256: {snapshot_sha256(expected)}\n---\n",
     )
 
-    warnings = validation.validate_unowned_source_snapshots(
+    warnings = validation.validate_source_snapshot_cache(
         sources, repo_root=tmp_path
     )
 
@@ -1617,5 +1617,95 @@ def test_source_collection_validation_prints_local_snapshot_warning(
     assert "Collection warnings: 1" in output
     assert (
         "kb/sources/.snapshots/orphan.md: unpaired local snapshot: no same-stem "
-        "ingest and no ingest records its checksum"
+        "ingest and no ingest matches its source URL or checksum"
     ) in output
+
+
+def test_source_snapshot_cache_reports_same_url_as_related_observation(
+    tmp_path: Path,
+) -> None:
+    sources = tmp_path / "kb" / "sources"
+    write(sources / "COLLECTION.md", "# Sources\n")
+    related = write(
+        sources / ".snapshots" / "older-name.md",
+        "---\nsource: https://example.com/article\n---\n\nOlder bytes.\n",
+    )
+    write(
+        sources / "current.ingest.md",
+        "---\nsource: https://example.com/article\n"
+        f"snapshot_sha256: {'1' * 64}\n---\n",
+    )
+
+    warnings = validation.validate_source_snapshot_cache(
+        sources, repo_root=tmp_path
+    )
+
+    assert warnings == [
+        (
+            related,
+            (
+                "unpaired local snapshot: no same-stem ingest; its source URL "
+                "matches kb/sources/current.ingest.md, but no matching ingest "
+                "records these exact bytes"
+            ),
+        )
+    ]
+
+
+def test_source_snapshot_cache_recognizes_checksumless_legacy_ingest_by_url(
+    tmp_path: Path,
+) -> None:
+    sources = tmp_path / "kb" / "sources"
+    write(sources / "COLLECTION.md", "# Sources\n")
+    related = write(
+        sources / ".snapshots" / "capture-name.md",
+        "---\nsource: https://example.com/legacy\n---\n\nLegacy bytes.\n",
+    )
+    write(
+        sources / "legacy.ingest.md",
+        "---\nsource: https://example.com/legacy\n---\n",
+    )
+
+    warnings = validation.validate_source_snapshot_cache(
+        sources, repo_root=tmp_path
+    )
+
+    assert warnings == [
+        (
+            related,
+            (
+                "unpaired local snapshot: no same-stem ingest; its source URL "
+                "matches legacy ingest kb/sources/legacy.ingest.md, which records "
+                "no snapshot_sha256"
+            ),
+        )
+    ]
+
+
+def test_source_snapshot_cache_recognizes_derived_original_by_checksum(
+    tmp_path: Path,
+) -> None:
+    from commonplace.lib.snapshot import snapshot_sha256
+
+    sources = tmp_path / "kb" / "sources"
+    write(sources / "COLLECTION.md", "# Sources\n")
+    original = write(
+        sources / ".snapshots" / "article.md",
+        "---\nsource: https://example.com/article\n---\n\nOriginal bytes.\n",
+    )
+    translated = write(
+        sources / ".snapshots" / "article.en.md",
+        "---\nsource: https://example.com/article\n---\n\nTranslated bytes.\n",
+    )
+    write(
+        sources / "article.en.ingest.md",
+        "---\nsource: https://example.com/article\n"
+        f"snapshot_sha256: {snapshot_sha256(translated)}\n"
+        f"original_snapshot_sha256: {snapshot_sha256(original)}\n---\n",
+    )
+
+    warnings = validation.validate_source_snapshot_cache(
+        sources, repo_root=tmp_path
+    )
+
+    assert warnings == []

@@ -5,7 +5,7 @@ captured: "2026-06-22"
 capture: translation-from-snapshot
 genre: conceptual-essay
 snapshot_sha256: b26570cbb50a1af195246dc3c8e87f301605bd2c5510d034b52e019786990766
-original_snapshot: kb/sources/shi-agenti-chotiri-navichki-vazhlivishi-za-dobriy-prompt.md
+original_snapshot_sha256: a6026af373b7abeabbc1317cfa7790a225a8a5833d944c26dda938dd6b26f240
 original_language: uk
 language: en
 translator: Codex

@@ -412,6 +412,102 @@ class TestClaimsExtractValidation:
 
         assert not results.warns
 
+    def test_matching_checksum_with_different_source_url_warns(self, tmp_path):
+        from commonplace.lib.hashing import content_sha256_for_text
+
+        sources = tmp_path / "kb" / "sources"
+        (sources / ".snapshots").mkdir(parents=True)
+        snapshot = "---\nsource: https://example.com/capture\n---\n\nBytes.\n"
+        (sources / ".snapshots" / "src.md").write_text(snapshot, encoding="utf-8")
+        ingest = sources / "src.ingest.md"
+        ingest.write_text(
+            "---\nsource: https://example.com/other\n"
+            f"snapshot_sha256: {content_sha256_for_text(snapshot)}\n---\n",
+            encoding="utf-8",
+        )
+
+        results = self._run_pairing(ingest)
+
+        assert results.warns == [
+            (
+                "snapshot pairing: .snapshots/src.md matches snapshot_sha256 "
+                "but its source URL differs from the ingest"
+            )
+        ]
+
+    def test_missing_expected_snapshot_reports_same_url_as_different_bytes(
+        self, tmp_path
+    ):
+        sources = tmp_path / "kb" / "sources"
+        (sources / ".snapshots").mkdir(parents=True)
+        (sources / ".snapshots" / "capture-name.md").write_text(
+            "---\nsource: https://example.com/article\n---\n\nNew bytes.\n",
+            encoding="utf-8",
+        )
+        ingest = sources / "src.ingest.md"
+        ingest.write_text(
+            "---\nsource: https://example.com/article\n"
+            f"snapshot_sha256: {'1' * 64}\n---\n",
+            encoding="utf-8",
+        )
+
+        results = self._run_pairing(ingest)
+
+        assert results.warns == [
+            (
+                "snapshot pairing: expected .snapshots/src.md is absent; its "
+                "source URL matches .snapshots/capture-name.md, but "
+                "snapshot_sha256 identifies different bytes"
+            )
+        ]
+
+    def test_checksumless_ingest_warns_for_name_paired_snapshot(self, tmp_path):
+        sources = tmp_path / "kb" / "sources"
+        (sources / ".snapshots").mkdir(parents=True)
+        (sources / ".snapshots" / "src.md").write_text(
+            "---\nsource: https://example.com/legacy\n---\n\nLegacy bytes.\n",
+            encoding="utf-8",
+        )
+        ingest = sources / "src.ingest.md"
+        ingest.write_text(
+            "---\nsource: https://example.com/legacy\n---\n",
+            encoding="utf-8",
+        )
+
+        results = self._run_pairing(ingest)
+
+        assert results.warns == [
+            (
+                "snapshot pairing: ingest records no snapshot_sha256; "
+                ".snapshots/src.md is present; the source URLs match, but "
+                "exact-byte identity is unrecorded"
+            )
+        ]
+
+    def test_checksumless_ingest_locates_snapshot_by_source_url(self, tmp_path):
+        sources = tmp_path / "kb" / "sources"
+        (sources / ".snapshots").mkdir(parents=True)
+        (sources / ".snapshots" / "capture-name.md").write_text(
+            "---\nsource: https://example.com/legacy\n---\n\nLegacy bytes.\n",
+            encoding="utf-8",
+        )
+        ingest = sources / "src.ingest.md"
+        ingest.write_text(
+            "---\nsource: https://example.com/legacy\n---\n\n"
+            "## Claims\n\nNo claims have been grounded yet.\n",
+            encoding="utf-8",
+        )
+
+        results = self._run_pairing(ingest)
+
+        assert results.warns == [
+            (
+                "snapshot pairing: ingest records no snapshot_sha256 and expected "
+                ".snapshots/src.md is absent; its source URL matches "
+                ".snapshots/capture-name.md, but exact-byte identity is unrecorded"
+            )
+        ]
+
     def test_instruction_showing_the_template_is_not_checked(self, tmp_path):
         """Only a tracked ingest asserts an extract; docs merely display one."""
         from commonplace.lib.validation import CheckResults, validate_claims_extracts

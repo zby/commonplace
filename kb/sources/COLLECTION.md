@@ -47,11 +47,16 @@ ordinary web pages.
 
 `commonplace-validate kb/sources` keeps hidden captures outside ordinary
 artifact and schema validation, but it audits retained Markdown snapshots
-against the tracked ingests. It warns when an ingest's checksum locates its
-exact bytes only under a different filename, when a snapshot has neither a
-same-stem ingest nor a checksum owner, and when an alternate file redundantly
-duplicates an already valid pair. A tracked ingest whose ignored snapshot is
-simply absent does not warn.
+against the tracked ingests. It indexes exact `source` URL values independently
+of checksums, so a legacy checksum-less ingest or a changed observation is
+reported as related rather than unrelated. A derived ingest can account for
+exact precursor bytes with `original_snapshot_sha256`, as when an English
+translation is the primary observation and the retained source-language capture
+is its input. The sweep warns when an ingest's checksum locates its exact bytes
+only under a
+different filename, when an alternate file redundantly duplicates an already
+valid pair, and when no ingest matches either the URL or checksum. A tracked
+ingest whose ignored snapshot is simply absent does not warn.
 
 ## Claims in ingest reports
 

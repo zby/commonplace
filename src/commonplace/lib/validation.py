@@ -306,7 +306,7 @@ class ValidationRun:
             else []
         )
         collection_warnings = (
-            validate_unowned_source_snapshots(
+            validate_source_snapshot_cache(
                 self.collection, repo_root=self.repo_root
             )
             if self.collection is not None
@@ -546,6 +546,10 @@ SNAPSHOT_SHA256_RE = re.compile(
     r"^snapshot_sha256:\s*(?P<checksum>[0-9a-f]{64})\s*$",
     re.MULTILINE,
 )
+ORIGINAL_SNAPSHOT_SHA256_RE = re.compile(
+    r"^original_snapshot_sha256:\s*(?P<checksum>[0-9a-f]{64})\s*$",
+    re.MULTILINE,
+)
 
 
 def _name_paired_snapshot(path: Path) -> Path:
@@ -555,7 +559,7 @@ def _name_paired_snapshot(path: Path) -> Path:
 
 def _display_snapshot_path(path: Path, sources_dir: Path) -> str:
     try:
-        return str(path.relative_to(sources_dir))
+        return str(path.resolve().relative_to(sources_dir.resolve()))
     except ValueError:
         return str(path)
 
@@ -566,6 +570,30 @@ def _exact_snapshot_matches(snapshot_dir: Path, checksum: str) -> tuple[Path, ..
     except DuplicateSnapshotError as error:
         return error.paths
     return (match,) if match is not None else ()
+
+
+def _http_source_from_content(content: str) -> str | None:
+    document, error = parse_document(content)
+    if error is not None or document is None or document.frontmatter is None:
+        return None
+    source = document.frontmatter.get("source")
+    if not isinstance(source, str) or not source.startswith(("http://", "https://")):
+        return None
+    return source
+
+
+def _snapshot_source_matches(snapshot_dir: Path, source: str) -> tuple[Path, ...]:
+    matches: list[Path] = []
+    for snapshot in sorted(snapshot_dir.glob("*.md")):
+        if not snapshot.is_file():
+            continue
+        try:
+            content = snapshot.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        if _http_source_from_content(content) == source:
+            matches.append(snapshot.resolve())
+    return tuple(matches)
 
 
 def validate_ingest_snapshot_pairing(
@@ -583,13 +611,49 @@ def validate_ingest_snapshot_pairing(
     if not path.name.endswith(".ingest.md"):
         return
 
+    ingest_source = _http_source_from_content(content)
     recorded = SNAPSHOT_SHA256_RE.search(content)
+    expected = _name_paired_snapshot(path)
+    expected_display = _display_snapshot_path(expected, path.parent)
+
     if recorded is None:
+        if expected.is_file():
+            try:
+                snapshot_content = expected.read_text(encoding="utf-8")
+            except OSError as error:
+                results.warns.append(
+                    f"snapshot pairing: {expected_display} is unreadable ({error})"
+                )
+                return
+            snapshot_source = _http_source_from_content(snapshot_content)
+            source_detail = ""
+            if ingest_source is not None and snapshot_source == ingest_source:
+                source_detail = "; the source URLs match"
+            elif ingest_source is not None and snapshot_source is not None:
+                source_detail = "; the source URLs differ"
+            results.warns.append(
+                "snapshot pairing: ingest records no snapshot_sha256; "
+                f"{expected_display} is present{source_detail}, but exact-byte "
+                "identity is unrecorded"
+            )
+            return
+
+        if ingest_source is None:
+            return
+        url_matches = _snapshot_source_matches(expected.parent, ingest_source)
+        if not url_matches:
+            return
+        located = ", ".join(
+            _display_snapshot_path(match, path.parent) for match in url_matches
+        )
+        results.warns.append(
+            "snapshot pairing: ingest records no snapshot_sha256 and expected "
+            f"{expected_display} is absent; its source URL matches {located}, "
+            "but exact-byte identity is unrecorded"
+        )
         return
 
     checksum = recorded.group("checksum")
-    expected = _name_paired_snapshot(path)
-    expected_display = _display_snapshot_path(expected, path.parent)
     if expected.is_file():
         try:
             actual = snapshot_sha256(expected)
@@ -599,6 +663,17 @@ def validate_ingest_snapshot_pairing(
             )
             return
         if actual == checksum:
+            if ingest_source is not None:
+                try:
+                    snapshot_content = expected.read_text(encoding="utf-8")
+                except OSError:
+                    return
+                snapshot_source = _http_source_from_content(snapshot_content)
+                if snapshot_source is not None and snapshot_source != ingest_source:
+                    results.warns.append(
+                        f"snapshot pairing: {expected_display} matches "
+                        "snapshot_sha256 but its source URL differs from the ingest"
+                    )
             return
 
         matches = tuple(
@@ -615,14 +690,41 @@ def validate_ingest_snapshot_pairing(
                 f"snapshot_sha256; the exact recorded bytes are at {located}"
             )
         else:
+            url_matches = (
+                _snapshot_source_matches(expected.parent, ingest_source)
+                if ingest_source is not None
+                else ()
+            )
+            source_detail = ""
+            if url_matches:
+                located = ", ".join(
+                    _display_snapshot_path(match, path.parent)
+                    for match in url_matches
+                )
+                source_detail = f"; the source URL matches {located}"
             results.warns.append(
                 f"snapshot pairing: {expected_display} does not match "
                 "snapshot_sha256 and no exact local match was found"
+                f"{source_detail}"
             )
         return
 
     matches = _exact_snapshot_matches(expected.parent, checksum)
     if not matches:
+        url_matches = (
+            _snapshot_source_matches(expected.parent, ingest_source)
+            if ingest_source is not None
+            else ()
+        )
+        if url_matches:
+            located = ", ".join(
+                _display_snapshot_path(match, path.parent) for match in url_matches
+            )
+            results.warns.append(
+                f"snapshot pairing: expected {expected_display} is absent; its "
+                f"source URL matches {located}, but snapshot_sha256 identifies "
+                "different bytes"
+            )
         return
 
     located = ", ".join(
@@ -1068,15 +1170,16 @@ def validate_collection_structure(
     return failures
 
 
-def validate_unowned_source_snapshots(
+def validate_source_snapshot_cache(
     collection: Path, *, repo_root: Path
 ) -> list[tuple[Path, str]]:
     """Warn about retained cache files that no ingest-pair check can own.
 
     A checksum-matching snapshot at the wrong path is reported on the ingest by
-    ``validate_ingest_snapshot_pairing``. This collection check covers the two
-    remaining cases: bytes no ingest records, and a redundant alternate copy
-    whose checksum owner already has a valid name-paired snapshot.
+    ``validate_ingest_snapshot_pairing``. This collection check uses source URL
+    independently of checksum so a legacy ingest or changed observation is not
+    mislabeled as unrelated. It also reports redundant alternate copies whose
+    checksum owner already has a valid name-paired snapshot.
     """
     collection = collection.resolve()
     repo_root = repo_root.resolve()
@@ -1088,13 +1191,25 @@ def validate_unowned_source_snapshots(
         return []
 
     checksum_owners: dict[str, list[Path]] = {}
+    original_checksums: set[str] = set()
+    source_owners: dict[str, list[Path]] = {}
+    ingest_checksums: dict[Path, str | None] = {}
     valid_pairs: set[Path] = set()
     for ingest in sorted(collection.glob("*.ingest.md")):
         try:
             content = ingest.read_text(encoding="utf-8")
         except OSError:
             continue
+        source = _http_source_from_content(content)
+        if source is not None:
+            source_owners.setdefault(source, []).append(ingest)
         recorded = SNAPSHOT_SHA256_RE.search(content)
+        ingest_checksums[ingest] = (
+            recorded.group("checksum") if recorded is not None else None
+        )
+        original_recorded = ORIGINAL_SNAPSHOT_SHA256_RE.search(content)
+        if original_recorded is not None:
+            original_checksums.add(original_recorded.group("checksum"))
         if recorded is None:
             continue
         checksum = recorded.group("checksum")
@@ -1120,10 +1235,19 @@ def validate_unowned_source_snapshots(
             continue
         try:
             checksum = snapshot_sha256(snapshot)
+            snapshot_content = snapshot.read_text(encoding="utf-8")
         except OSError as error:
             warnings.append(
                 (snapshot, f"unpaired local snapshot: unreadable ({error})")
             )
+            continue
+        snapshot_source = _http_source_from_content(snapshot_content)
+
+        # A derived observation such as a translation can own both its primary
+        # snapshot and the exact precursor bytes from which it was produced.
+        # The precursor has no name-paired ingest of its own, but it is not an
+        # unaccounted cache file once the derivation records its checksum.
+        if checksum in original_checksums:
             continue
 
         owners = checksum_owners.get(checksum, [])
@@ -1143,10 +1267,27 @@ def validate_unowned_source_snapshots(
                 "unpaired local snapshot: no same-stem ingest; its checksum "
                 f"duplicates the valid name-paired snapshot for {owner_names}"
             )
+        elif snapshot_source is not None and source_owners.get(snapshot_source):
+            url_owners = source_owners[snapshot_source]
+            owner_names = ", ".join(
+                str(owner.relative_to(repo_root)) for owner in url_owners
+            )
+            if all(ingest_checksums[owner] is None for owner in url_owners):
+                warning = (
+                    "unpaired local snapshot: no same-stem ingest; its source URL "
+                    f"matches legacy ingest {owner_names}, which records no "
+                    "snapshot_sha256"
+                )
+            else:
+                warning = (
+                    "unpaired local snapshot: no same-stem ingest; its source URL "
+                    f"matches {owner_names}, but no matching ingest records these "
+                    "exact bytes"
+                )
         else:
             warning = (
                 "unpaired local snapshot: no same-stem ingest and no ingest "
-                "records its checksum"
+                "matches its source URL or checksum"
             )
         warnings.append((snapshot, warning))
 

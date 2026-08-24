@@ -31,6 +31,10 @@ Assess fit relative to the installed KB's goals, local collection contracts, and
 - Set `snapshot_sha256` to the lowercase SHA-256 of the exact bytes of the
   primary Markdown snapshot. The hash includes frontmatter, line endings, and
   the presence or absence of a final newline. It excludes companion files.
+- When the primary snapshot was mechanically derived from another retained
+  snapshot, set `original_snapshot_sha256` to the lowercase SHA-256 of those
+  exact precursor bytes. This gives the derivation input durable identity
+  without treating a cache path as provenance or as a second primary source.
 - Use `type: kb/sources/types/ingest-report.md` for the artifact type.
 - Use `domains` for two to four topic tags that make the report searchable.
 - Copy capture-adapter metadata such as `status_id`, `conversation_id`,
@@ -41,7 +45,8 @@ Assess fit relative to the installed KB's goals, local collection contracts, and
   inspected implementation repository. Each item has
   `role: implementation` and a GitHub commit URL containing the full
   40-character SHA. Do not record machine-local checkout paths.
-- Do not use the removed `source_snapshot` or `code_revisions` fields.
+- Do not use the removed `original_snapshot`, `source_snapshot`, or
+  `code_revisions` path fields.
 - Link to durable KB artifacts and external sources in the report body. Never
   link to the local `.snapshots/` cache or generated connect reports.
 

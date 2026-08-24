@@ -63,16 +63,21 @@ Every note **with frontmatter** is checked for the following, whatever its type.
 - **Link health** — every local relative link resolves to an existing target. *Warns.*
 - **Proposal archive boundary** — no library artifact links to a file under `kb/reference/proposals/archive/`. The archive README is a permitted target and may link to archived files itself; workshop files under `kb/work/` may also link in. Violations **fail**.
 - **Verbatim quotes** — every `verbatim`-marked quotation resolves against the source it links ([ADR 046](./adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)). A quote absent from its cited source **fails**; an unpairable verbatim citation warns, but only in notes that demonstrably use the convention.
-- **Ingest snapshot pairing** — when an ignored local snapshot is retained, its name-paired path and exact-byte checksum must agree with the tracked ingest. A mismatch warns; when the recorded bytes exist under another filename, the warning locates them without treating that path as mutation authority. Complete cache absence is silent.
+- **Ingest snapshot pairing** — when an ignored local snapshot is retained, its name-paired path, source URL, and exact-byte checksum must agree with the tracked ingest. A mismatch warns; when the recorded bytes exist under another filename, the warning locates them without treating that path as mutation authority. For a legacy ingest without a checksum, the source URL may locate a related capture but cannot establish exact-byte identity. Complete cache absence is silent.
 - **Claims extracts** — every `Source extract (verbatim)` in a tracked ingest occurs in its checksum-verified name-paired snapshot. A false extract **fails**. The check is conditional on local retention; an absent or mismatched observation is not used to judge the extract.
 
 **Bare text opts out of structural checks.** A file with no frontmatter is typed `text` and gets no title, slug, link-health, quote, type, or schema requirements — deliberate, because `text` keeps capture friction at zero and may hold imported material whose relative links are broken by construction. The proposal archive boundary is the one repository-level exception: bare library READMEs can otherwise make archived designs load-bearing just as readily as typed notes. Non-library outputs such as `kb/reports/` remain outside that rule.
 
 A `kb/sources` collection sweep also audits the retained local snapshot cache.
-It warns about a Markdown snapshot that has no same-stem ingest and whose
-checksum no ingest records, and about redundant alternate copies of an already
-valid pair. A checksum-owned alternate that reveals path drift is reported on
-the affected ingest instead, so one condition produces one warning.
+It indexes exact ingest `source` URL values independently of checksums so legacy
+checksum-less ingests and changed observations remain visibly related. A
+derived ingest may also own exact precursor bytes through
+`original_snapshot_sha256`; this accounts for a retained translation input
+without pretending it is the ingest's primary observation. The sweep warns
+about a Markdown snapshot that has no same-stem ingest and no URL or checksum
+match, and about redundant alternate copies of an already valid pair. A
+checksum-owned alternate that reveals path drift is reported on the affected
+ingest instead, so one condition produces one warning.
 
 ### Why the two referential checks have different severities
 
