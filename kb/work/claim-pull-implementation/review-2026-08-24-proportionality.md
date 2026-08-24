@@ -342,3 +342,71 @@ Write catches absence, cheaply, at the moment the author can still act. Review
 catches over-attribution, blind, asynchronously, where rigor is affordable. The
 write-time worker sits in the one position that is expensive *and* structurally
 unable to do the harder job.
+
+---
+
+## Addendum 4: the citation implies the read
+
+Two operator points, 2026-08-24.
+
+### Both claim versions — already satisfied
+
+The requirement is that an ingest carry *both* the verbatim quote from the
+snapshot and the extracted claim, with the extracted claim itself supported by a
+quote. The current
+[Claims grammar](./mutation-and-dispatch-contract.md) already does this, and the
+nesting expresses the support relation correctly:
+
+```markdown
+- **Claim (paraphrase):** <bounded claim>
+  - **Source extract (verbatim):** <supporting extract>
+  - **Source location:** <stable locator within the primary source>
+```
+
+The normalized proposition is the parent; its verbatim support and locator are
+its children, one set per claim. This also closes the open question the
+[Pirolli worked case](./pirolli-claims-worked-case.md) flagged — "several exact
+excerpts and several passage locations without pairing each excerpt to one
+location." The current shape pairs them by nesting. Nothing to change.
+
+The two versions do different jobs and both are needed: the verbatim extract is
+the only thing in the repository that carries the source's actual words once the
+snapshot is gitignored, and it is what ADR 046 can mechanically check. The
+extracted claim is what downstream notes cite as a premise, in the KB's own
+terms. Neither substitutes for the other.
+
+### The citation implies the read — which corrects Addendum 3
+
+A writing agent that cites a source has normally read the snapshot, or at least
+the ingest. **Otherwise nothing would have prompted the citation, and it is a
+hallucination.**
+
+That corrects the cost model above. Addendum 3 priced the write-side check as
+"one `rg` and one section read." For a legitimate citation, that read has
+*already happened* — the check inspects what the agent is holding rather than
+fetching anything. The guard is nearly free, not merely cheap.
+
+Three consequences.
+
+**The refusal is a hallucination guard, which is a better justification than
+grounding hygiene.** Split the cases at the moment the trigger fires:
+
+- the agent read the ingest and the claim is there → cite and save;
+- the agent read the snapshot, the claim is real but ungrounded → this is the
+  pull, and the grounding route is the right answer;
+- the agent read **neither** and is citing from recall → the ingest cannot carry
+  the claim and the agent cannot produce a verbatim extract, so the refusal
+  fires. This is a fabricated citation being caught.
+
+**It narrows the blind spot named in Addendum 1.** The trigger still cannot
+detect an *unattributed* restatement of an established tradition. But it does
+catch an *attributed* one produced from training data — and that is the more
+dangerous of the two, because a fabricated citation looks checked while a missing
+one merely looks uncited.
+
+**It further weakens the case for the write-path dispatch.** The dispatch's
+stated purpose is that "full source and ingest text stay out of the writer's
+context." For any non-hallucinated citation, at least one of them is already in
+that context, necessarily. The boundary is defending against a state a legitimate
+citation cannot be in. What the dispatch still saves is the *grounding work*
+itself — and that work belongs to `cp-skill-ingest` regardless, per Addendum 1.
