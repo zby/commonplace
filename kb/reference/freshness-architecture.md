@@ -62,6 +62,13 @@ Review adapters in `commonplace.review` call into `freshness` for compare/persis
 | observation ack | `commonplace-freshness-ack`, `commonplace-ack-review` | yes | preserved on review-pair |
 | retirement | `commonplace-freshness-retire` | — | cascade delete bridge |
 
+An observation acknowledgement always compares the caller's expected baseline
+revision with the current one. When the caller selects particular inputs from
+a status observation, it also re-resolves their live files and requires the
+observed hashes to match before advancing the baseline. Omitting that selection
+instead observes both registered inputs at execution time. Either form
+preserves the review evidence attached to a `review-pair` target.
+
 Queued review jobs record `review_pairs.expected_baseline_revision` at pair create. Capture finalization CASes that revision; a moved baseline after queue yields `stale-baseline-revision` (or `stale-queued-capture` at migration).
 
 ## Selection and status
