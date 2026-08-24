@@ -10,6 +10,62 @@ well.
 **Finding: the claim model is proportionate; the mutation protocol is not, and
 it leaks into the writing skill.**
 
+## Consolidated recommendation
+
+Written last, from the whole review including its four addenda. **Read this
+instead of the "Recommendation" section below**, which was written before the
+addenda and is superseded where they differ. The sections after it are the
+evidence and the reasoning, kept in the order they were found.
+
+1. **Grounding is a precondition of writing, not a step of it.** `cp-skill-write`
+   mentions an ingest once today, passively, as a link candidate, and has no
+   `Task` tool. Treating grounding as a step changes the skill's kind rather than
+   extending it. Mutation stays in `cp-skill-ingest`, which already owns it.
+   *(Addendum 1)*
+2. **The write-side check is a bounded guard in the existing Step 5 idiom.** One
+   `rg` to resolve the ingest by `source:` URL, one read of its `## Claims`
+   section, then cite or stop. And that read has normally already happened — an
+   agent citing a source it has not read is hallucinating — so the guard inspects
+   what the agent holds rather than fetching anything. *(Addenda 3, 4)*
+3. **The refusal is best understood as a hallucination guard.** Its sharpest case
+   is an agent citing from training data: the ingest cannot carry the claim and
+   the agent cannot produce a verbatim extract. This catches *attributed*
+   restatement from recall, which is more dangerous than the unattributed kind
+   the trigger admits it misses, because a fabricated citation looks checked.
+   *(Addendum 4)*
+4. **Delete the write-path dispatch, not just shrink it.** With grounding as a
+   precondition, the `Task` tool, the six-field packet, the `NARROW` redispatch
+   round-trip, the lock-conflict branch, and the legacy-recovery routing all go.
+   The writer's delta becomes one check and one refusal. *(Addendum 1)*
+5. **The dispatch does not buy the rigor it appears to.** It hands the worker the
+   exact candidate wording *and* has it read the source — one reader holding
+   both, the configuration that produced the over-attribution this workshop
+   already corrected. The Pirolli experiment that validated the design separated
+   those contexts and was stricter for it. *(Addendum 3)*
+6. **Put the blind check in a review pair instead.** `(note, ingest)` is the
+   `source-as-gate` case in
+   [factored dependency pairs](../../reference/proposals/factored-dependency-pairs-for-review-freshness.md)
+   — a live proposal whose stated adoption criterion this work satisfies, costing
+   "a gate source plus a wrapper, no storage change." The experiment's separation
+   then falls out for free: grounding reads the source without the candidate,
+   review reads the note and `Claims` without the source. *(Addenda 2, 3)*
+7. **Do not build locking; the guarded window is not the one that matters.** The
+   mutation side is optimistic locking whose commit is not atomic. Both it and a
+   lock guard milliseconds, while the real exposure is the ingest changing weeks
+   after a note cites it — a staleness problem, answered by (6). Keep best-effort
+   OCC: recheck the digest before writing, and re-run on failure. *(Addendum 2)*
+8. **Keep the round-trip content check**, which is what actually prevents data
+   loss: `cp-skill-ingest` passes the existing `Claims` block to the drafting
+   worker as required content and verifies it returns byte-for-byte.
+9. **Unchanged from the first pass:** keep the required `## Claims` section, both
+   claim versions with their current nesting, the two verification hops, the
+   trigger boundary and its stated blind spot, primary-source-only scope, and
+   worked-case-first ordering. Migration is fine — mechanical, paid once, barred
+   from semantic backfill.
+
+Net effect on the operator's constraint: the writing skill gains a trigger, a
+bounded lookup, and a refusal. Nothing else.
+
 ## Measurements
 
 | Artifact | Size |
@@ -67,7 +123,7 @@ That is roughly ten new behaviors in a 117-line skill, several of them evaluated
 on writes that never trigger grounding. The skill stops being a writing
 procedure with a gate and becomes a protocol client.
 
-## Recommendation
+## Recommendation (superseded — see Consolidated recommendation above)
 
 **Cut, in order of value:**
 
