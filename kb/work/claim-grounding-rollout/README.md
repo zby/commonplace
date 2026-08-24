@@ -31,9 +31,11 @@ disposition is the seam.
 cited by nobody and **are not a queue**. Claims are pulled on demand, so an
 uncited ingest needs none.
 
-Cohorts 01–07 cover 29 notes. The remainder sits in one connected component of
-36 notes and 62 ingests that cannot be parallelized on both conflict axes — see
-Concurrency.
+Cohort 01 covers two notes; cohorts 02–07 cover another 29. After excluding
+those assigned targets and recomputing the graph, 37 notes remain in four
+components: 18 notes / 36 ingests, 15 / 20, 2 / 1, and 2 / 1. Cohort 08 combines
+the two disconnected two-note components; cohorts 09 and 10 own the 15- and
+18-note components respectively.
 
 ## Concurrency
 
@@ -42,14 +44,17 @@ ingest's `Claims` section — V1 ships no locking, deliberately — and must not
 the same note during repair. So the safe unit is a connected component of the
 note-to-ingest graph.
 
-Cohorts 02–07 are mutually disjoint on both axes by construction. Six agents can
-run with no coordination scheme. Do not hand-assemble a cohort without rechecking
+Cohorts 02–07 were mutually disjoint on both axes by construction. Cohorts
+08–10 are likewise mutually disjoint on both axes and can run concurrently with
+one mutation owner per cohort. Do not hand-assemble a cohort without rechecking
 disjointness against every cohort running at the same time.
 
-The 36-note giant component is the open scaling problem. Splitting it needs
-either serialized repair or a scheme separating grounding from repair so only the
-ingest axis binds. **Do not build that scheme until the procedure has been
-exercised on cohorts that do not need one.**
+The original 36-note component is no longer the execution unit. Three of its
+notes were worked in cohort 02; removing already assigned targets fractures the
+residual graph. The new cohorts preserve connected-component ownership instead
+of adding locks, claim IDs, or concurrent ingest mutation. Each large-cohort
+prompt imposes a complete source-blind inventory barrier before grounding and a
+grounding barrier before target repair.
 
 ## Snapshot-pair repair — 2026-08-24
 
@@ -69,8 +74,8 @@ claim uses left by cohort 06 or any claims in the unworked corpus.
 
 1. Every cohort has a completion record where each claim use carries a terminal
    disposition or a named blocker.
-2. The giant component is either worked or has a recorded decision not to work
-   it, with the reason.
+2. Cohorts 08–10 are worked or have a recorded decision not to work them, with
+   the reason.
 3. The design evidence is reported: whether whole-section reading held without
    claim IDs, whether duplicate or disputed entries accumulated, and whether any
    cohort produced pressure for reconciliation. ADR 073 shipped no identity
@@ -89,6 +94,12 @@ claim uses left by cohort 06 or any claims in the unworked corpus.
 - Cohorts [02](./cohort-02.md) · [03](./cohort-03.md) · [04](./cohort-04.md) ·
   [05](./cohort-05.md) · [06](./cohort-06.md) · [07](./cohort-07.md) — frozen
   manifests, with a dispatch prompt beside each
+- [Cohort 08](./cohort-08.md) ([prompt](./cohort-08-prompt.md)) — four notes
+  across the two smallest residual components; two already-populated ingests
+- [Cohort 09](./cohort-09.md) ([prompt](./cohort-09-prompt.md)) — the 15-note,
+  20-ingest residual component
+- [Cohort 10](./cohort-10.md) ([prompt](./cohort-10-prompt.md)) — the 18-note,
+  36-ingest residual component
 - [Cohort 02 prediction](./cohort-02-prediction.md) — **sealed**; open when
   judging that run, never while executing it
 
