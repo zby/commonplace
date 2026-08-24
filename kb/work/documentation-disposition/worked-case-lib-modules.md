@@ -1,13 +1,14 @@
 # Worked case: `lib-modules.md`
 
-Executed 2026-08-23. The first artifact taken through the full disposition.
+Executed 2026-08-23; disposition completed 2026-08-24. The first artifact
+taken through the full procedure and retired.
 
 ## Result
 
-**Every passage is recoverable. Nothing in the file needs to be authored prose.**
-But the file is not free to delete, because for 37 functions it holds the only
-prose description in the repository. The disposition is *dissolve*, and
-dissolving it is real work.
+**Retired. Every passage was recoverable, and the live source supplied the
+better routing surface.** One change-loop warning and one caller-context
+distinction reached their code sites before deletion. Closer inspection rejected
+the other proposed docstring relocations as source paraphrase.
 
 ## Recovery by search, all candidates
 
@@ -97,20 +98,35 @@ Relocating it wholesale would have imported 24 restatements into the code and
 called it a saving. The measurement that made it look valuable, 37 functions
 without docstrings, counted absence rather than content.
 
-## Next actions
+## Routing experiment and retirement
 
-1. Decide the routing map: generated-and-checked from module docstrings, or
-   dropped in favour of a `rg` over docstrings.
-2. Then delete `lib-modules.md`, with a `properdocs.yml` redirect.
-3. Separately, and not part of this disposition: the 13 functions lacking both
-   a docstring and doc prose. Whether they need one is the same question asked
-   of the code alone, with no prose to salvage.
+After the user-level editable tool was reinstalled, `commonplace-source`
+resolved to the package supplying the running commands. Searches began with
+task vocabulary rather than known module names:
 
-The code change this worked case implied is done: one docstring, not 37.
+| Question terms | Live-source result | Reference result |
+|---|---|---|
+| promotion candidate, incoming links | `promotion.py` at its module docstring | no hit |
+| full-pass, capture verification, transition guarding | `full_pass.py` at its module docstring | no hit |
+| quotation, verbatim, quote | `quote_verification.py`, plus its call sites | incidental validation prose, not the owning module |
+| collection discovery, visible walks, visibility | `project_paths.py` | the expected map entry |
+
+Every top-level module in `commonplace.lib` has a module docstring. The authored
+map listed nine of the fifteen modules. Live search therefore matched its one
+covered routing case and reached three owners the map omitted. The map was
+dropped rather than generated: no demonstrated question needed another
+materialized layer once task vocabulary selected the source directly.
+
+The file was deleted on 2026-08-24. Current routes now direct exact internal API
+questions to `src/commonplace/lib/`, and the published URL redirects to the
+reference landing. The code change this case implied remains one docstring, not
+37.
+
+Separately, and not part of this disposition, 13 functions lack both a
+docstring and former reference prose. Whether they need a docstring is the same
+question asked of the code alone, with no prose to salvage.
 
 ## Open
 
 - Is the same staging-area pattern present in the other six artifacts, or is
   `lib-modules.md` unusual in holding prose the code lacks?
-- Does the routing map survive as a generated artifact, or does `rg` over
-  docstrings make even that redundant?

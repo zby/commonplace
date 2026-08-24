@@ -63,4 +63,3 @@ Risks:
 
 - [032-review-freshness-uses-db-snapshots-not-git](./032-review-freshness-uses-db-snapshots-not-git.md) — extends: removes the remaining git dependencies from the non-review commands after review correctness left git
 - [025-complete-generated-indexes-are-build-time-only](./025-complete-generated-indexes-are-build-time-only.md) — see-also: generated directory indexes do not normally exist in the working tree
-- [lib-modules](../lib-modules.md) — implemented-by: `project_paths` and `relocation` sections describe the visibility walker and plain-rename move

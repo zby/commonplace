@@ -40,4 +40,3 @@ The root `README.md` (tool face) and `kb/index.md` (content face) are kept as se
 
 - [storage-architecture.md](./storage-architecture.md) — the build-time derived indexes and the ProperDocs site as a derived surface over authored markdown
 - [navigation.md](./navigation.md) — how agents (not human site readers) move through the KB via `rg`, indexes, and links
-- [lib-modules.md](./lib-modules.md) — internal API of `commonplace.lib`; the nav/index hooks live in `commonplace.docs.properdocs_hooks`

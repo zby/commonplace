@@ -112,4 +112,4 @@ needs to know when it was made and against what.
 ## Current draft
 
 - [Decide What Documentation an LLM Needs](./decide-what-documentation-an-llm-needs.md) — turns the workshop's recovery, addressability, value, placement, and maintenance findings into an executable disposition procedure. **Deliberately not promoted to `kb/instructions/`**: its write-time half is folded into [`kb/reference/COLLECTION.md`](../../reference/COLLECTION.md)'s economy tests, and its audit half fires only on a corpus sweep, which is one-off migration work. Promotion condition and reasoning are recorded on the draft itself.
-- [Worked case: `lib-modules.md`](./worked-case-lib-modules.md) — the first artifact through the full procedure; one survivor in six rule-shaped candidates, and a docstring relocation that shrank from 37 functions to one on inspection
+- [Worked case: `lib-modules.md`](./worked-case-lib-modules.md) — the first artifact through the full procedure, completed 2026-08-24 by retiring the reference after task-vocabulary searches reached a more complete live-source surface

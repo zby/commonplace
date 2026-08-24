@@ -174,6 +174,11 @@ Look up how the shipped system is put together: its architecture, type system, a
 
 ### Architecture and packaging
 
+For exact implementation behavior, inspect `src/commonplace/` in this checkout.
+From an installed project, `commonplace-source` locates the package that
+supplies the running commands. The documents below retain architecture,
+invariants, and orientation that the implementation does not cheaply recover.
+
 - [architecture.md](./architecture.md) — installed project layout (library under `kb/commonplace/`, user collections at top level), packaged runtime, promoted skills, and path invariance across source and ship
 - [scenario-architecture.md](./scenario-architecture.md) — scenario-derived architecture: the library/user split under `kb/commonplace/`, package-provided commands, and measurable scenario decomposition
 - [storage-architecture.md](./storage-architecture.md) — markdown as source of truth, derived indexes, and SQLite as a scoped exception for review state
@@ -182,7 +187,6 @@ Look up how the shipped system is put together: its architecture, type system, a
 - [control-plane-goals.md](./control-plane-goals.md) — how Commonplace ships KB goals in always-loaded context via `AGENTS.md`
 - [instruction-generation.md](./instruction-generation.md) — build-time instruction generation flow and `commonplace-init`
 - [review-architecture.md](./review-architecture.md) — how the review subsystem is built: package layout, storage schema, canonical-state-vs-derived-output, freshness mechanism, module map, and invariants (the build-side companion to [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md))
-- [lib-modules.md](./lib-modules.md) — internal API reference for `commonplace.lib` modules
 - [freshness-architecture.md](./freshness-architecture.md) — the general freshness substrate: commonplace store, file-text versioning, target baselines, transitions, global status, and the review adapter
 - [freshness-schemas.md](./freshness-schemas.md) — canonical JSON shapes for `commonplace-freshness-status`, `ack`, and `retire`
 
