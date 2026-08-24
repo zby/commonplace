@@ -132,7 +132,7 @@ Check the contract before proposing the shape, and if the shape is right and the
 contract forbids it, that is a contract question to hand off, not a shape to
 abandon quietly.
 
-## Horizon: the retrospective cleanup successor
+## Horizon: the implementation and cleanup successor
 
 The destination is an operation the KB can re-run — a sweep that asks of the
 corpus, not of one note, "which claims here rest on established results the KB
@@ -141,11 +141,11 @@ extraction contract only a careful human reader can apply is not on the path,
 and a finding phrased as "these twelve notes" is worth less than one phrased as
 a rule a sweep could apply.
 
-That retrospective work is now framed in the
-[source-grounding-cleanup](../source-grounding-cleanup/README.md) successor. It
-is not what this workshop builds, and the first move must not be the command.
-This workshop must still settle the claim-level ingest shape that cleanup will
-consume.
+The [claim-pull implementation](../claim-pull-implementation/README.md)
+workshop now owns making the prospective rule operative and running retrospective
+cleanup as one rollout workstream. The results feed back into this workshop's
+ingest-extraction and intermediate-node conclusions. The first move must still
+not be a new sweep command.
 
 Two reasons to expect the destination is smaller than a new command, both worth
 checking before proposing one:
@@ -248,6 +248,9 @@ re-proposes them.
   — the first claim taken through the whole chain by hand, 2026-08-24. Falsified
   this README's "no slot for any of the four" and found the gap the pipeline
   cannot close: it detects overlap but not contradiction
+- [Three channels](../literature-disposition/three-channels.md) — channel 3 is
+  this workshop's machinery backlog: the claim ledger, quote retention, the
+  missing write-time check, and the corpus-scoping rule
 - [Candidate procedure: pull the claim through the ingest before using it](./candidate-procedure-claim-pull.md)
   — operator proposal, 2026-08-24: read the source, extract the claim, add it to
   the ingest if missing, then use it. Under evaluation; the strongest candidate

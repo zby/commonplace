@@ -236,6 +236,9 @@ workshop which claims the corpus has to adjudicate.
 
 ## Files
 
+- [Three channels: migration, claims, machinery](./three-channels.md) — every
+  finding sorted by kind of change, with verification status per row and a
+  sequencing argument against migrating first
 - [Claim inventory for the cohort](./claim-inventory.md) — per-note load-bearing
   claims with recalled tradition placements as reading assignments, not verdicts;
   the cross-cutting finding is that attribution defects and outright errors
