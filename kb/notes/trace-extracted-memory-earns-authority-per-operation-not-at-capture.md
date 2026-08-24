@@ -1,7 +1,7 @@
 ---
 description: "Trace memories begin as records; verification, abstraction, and consultation earn authority under progressively harder oracles, while unverified stores accumulate guesses presented as knowledge"
 type: kb/types/note.md
-traits: [title-as-claim]
+traits: [title-as-claim, has-external-sources]
 tags: [agent-memory, learning-theory, context-engineering]
 ---
 
@@ -26,6 +26,14 @@ The rung boundaries are free choices — investigate and verify could merge, abs
 The ladder is not one process with intermediate save points; each rung is a different kind of work against a different oracle. Documenting a failure needs only a signal that something went wrong. Investigation needs reasoning over the trace. Verification needs an oracle that can discriminate a correct diagnosis from a plausible-but-wrong one. Abstraction needs judgment about which features of the case generalize. Consultation needs routing machinery that delivers the rule at the moment it applies.
 
 Because the oracles differ in strength, the rungs differ in tractability. The fail rung is cheap and its signal quality is well understood: [trace extraction must respect signal quality](./agent-memory-requirements/use-trace-extraction-as-meta-learning.md), and the candidate-status, confidence, and source-pointer fields it prescribes are exactly the markers that keep a rung-1 artifact from being read as a rung-4 rule. Verify and abstract are where oracles get hard — the same place [automating KB learning stalls](./automating-kb-learning-is-an-open-problem.md): generation is easy, evaluation is the bottleneck.
+
+## Attribution can route verification but cannot complete it
+
+The investigate rung can itself be staged. Trace evidence can nominate where to look without proving that the nominated source is wrong. [TRACE](../sources/trace-trajectory-attribution-for-automated-context-engineering.ingest.md) supplies a bounded example: a user correction defines the discrepancy, a root-cause agent works backward through the execution trace to nominate a fault source, and a recommender treats that attribution as a hypothesis. The recommender then reads the implicated context artifact, checks authoritative sources, and may confirm, refine, or override the diagnosis before proposing a file operation for human review.
+
+Those stages consume different evidence. The execution trace supports a candidate causal story. Source inspection tests whether the relevant content exists, was accessible, is correct, and is consistent with its authorities. Neither establishes that the proposed change repairs behavior. TRACE's reported “fix effectiveness” is agreement between a recommended operation and path and synthetic labels; the system does not apply the change or rerun the task. On this ladder, the experiment evaluates investigation through proposal, not the verify rung.
+
+The reusable design is therefore the evidence transition, not TRACE's exact three-agent topology or its reliance on chain-of-thought. A Commonplace-style loop can start from explicit corrections, tool calls, artifact reads, and diffs; use attribution to create a low-authority maintenance candidate; inspect the authoritative artifact in a separate pass; and reserve stronger authority for an accepted edit plus outcome evidence. This preserves the paper's useful separation even when hidden reasoning is unavailable or cannot serve as faithful process evidence.
 
 ## Stalling early accumulates guesses that masquerade as knowledge
 
