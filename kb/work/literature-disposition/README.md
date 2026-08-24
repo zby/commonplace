@@ -12,6 +12,26 @@ extract, and whether the graph needs a thin claim node at all — belongs to
 [source-grounding](../source-grounding/README.md). This workshop owns what
 happens to the notes.
 
+## Current status — 2026-08-24
+
+**Open.** The starting cohort has twelve candidates. The first was inventoried
+and checked against an actual source in the worked case; the other eleven have
+claim inventories and candidate reading assignments. No candidate yet has a
+final dated disposition.
+
+| Closure condition | State | What remains |
+|---|---|---|
+| Source-grounded disposition for every settled cohort member | Open | Settle cohort membership, capture the claim-selected corpus, and adjudicate the eleven unworked candidates. The worked candidate's final artifact disposition is also open. |
+| One disposition executed end to end | Open | The first case produced and executed a claim correction, not a final keep, merge, thin, or retire decision. |
+| General disposition rule | Open | The evidence supports claim-level, source-grounded judgment, but no rule or no-general-rule finding has been promoted. |
+| Write-time check decision | Partial | ADR 073 guards explicit new or changed source dependencies. It cannot discover unattributed prior art, which is the check this closure condition still needs decided. |
+
+The claim-side repair and source-grounding machinery no longer block progress.
+The next unblocked work is to correct the internally decidable claims in
+[Channel 2](./three-channels.md#channel-2--claims-to-change), beginning with the
+operative `index-curation` claim and then re-checking `stale-indexes`. Most
+final dispositions still wait on the wider source corpus.
+
 ## The parallel worth exploiting, and where it breaks
 
 [The seven-case documentation disposition
@@ -48,27 +68,31 @@ thing most likely to be lost by a disposition that only counts overlap.
 
 ## What is already settled
 
-**The literature was not ingested.** Measured 2026-08-24: no source ingest in
+**The literature was not ingested at workshop opening.** Measured 2026-08-24:
+no source ingest in
 `kb/sources/` covered information foraging, scent, berrypicking, exploratory
 search, orienteering, faceted classification, or generated navigation, so the
 cluster's claims were written from recalled background. One ingest has since
 landed (`pirolli-proximal-information-scent-distal-content`); the rest of the
-gap stands, and the [claim inventory](./claim-inventory.md) found that the
-corpus needed is wider than this list.
+gap stands. The [claim inventory](./claim-inventory.md) found that the corpus
+needed is wider than this list, and the sibling workshop has not yet decided it.
 [`links-README.md`](../../notes/links-README.md) says so in its own words:
 "**TODO:** This survey is from the agent's training data, not systematic."
 
-**No write-time check anywhere asks whether the literature already settles a
-claim.** Every novelty and economy test in the corpus is KB-internal. The
-novelty battery in
+**Prospective source grounding is operative; prior-art discovery is not.**
+[ADR 073](../../reference/adr/073-untracked-source-snapshots-require-ingest-grounding.md)
+adds immutable Claims entries to tracked ingests, a guard in the two promoted
+writing skills for explicit new or materially changed source dependencies, and
+source review pairs over artifact-to-ingest uses. That machinery starts only
+when the candidate already names the dependency. It does not ask whether an
+uncited claim is established elsewhere. Every novelty and economy test remains
+KB-internal. The novelty battery in
 [`evaluate-log-entry-for-note-creation.md`](../../instructions/evaluate-log-entry-for-note-creation.md)
 compares a candidate against existing *Commonplace* notes. `cp-skill-write`'s
 duplicate guard is a targeted `rg` in the target collection. The attribution
-gates (`grounding-alignment`, `concept-attribution`, `conceptual-role-conflation`,
-`unidentified-references`) all audit attribution to *already-cited* targets;
-none requires that a source exist. `explication-quality` asks a definition to
-name its explicandum, but is type-gated to definitions. So the gap the critique
-names in its step 8 is real and measured, not conjectured.
+gates audit already-cited targets; none searches for a missing source. The gap
+the critique names in its step 8 therefore remains, but it is now narrower than
+"no write-time check."
 
 **Retirement is a defined nine-step procedure with a human stop.**
 [`retire-artifact.md`](../../instructions/retire-artifact.md) requires: extract
@@ -163,26 +187,32 @@ against a captured, read source (Pirolli on proximal information scent) on
 workshop closes and is deleted while this one still needs the result.
 
 **The critique's diagnosis was half right, and the half it missed matters more.**
-Three claims overlap the source — the follow/skip unit, the probabilistic
-judgment under uncertainty, and the proximal cue that lets a reader judge
-without loading the target — and are cited to nobody. **A stricter blind re-run
-found that overlap is not subsumption**: of those three, the source does not
-establish the "fundamental unit" wording, does not compose its two separate
-results into a pointer-level tradeoff, and supports only the proximal/distal
-core of the third. All three need narrowing rather than deletion, which moves
-the note further from retirement. See the correction in the
-[worked case](../source-grounding/worked-case-agents-navigate.md). But a
-fourth claim, "the more context a pointer carries, the cheaper the navigation
-decision," is **not** in the source and is wrong by the source's own lights: it
-merges estimate quality with interaction cost where the source separates them,
-and the source's nearest test fixes cue size rather than varying it. Three
-further claims are local and absent from the source.
+At first examination, three uncited claims overlapped the source — the
+follow/skip unit, the probabilistic judgment under uncertainty, and the proximal
+cue that lets a reader judge without loading the target. **A stricter blind
+re-run found that overlap is not subsumption**: the source does not establish
+the "fundamental unit" wording, does not compose its two separate results into a
+pointer-level tradeoff, and supports only the proximal/distal core of the third.
+All three needed narrowing rather than deletion. A fourth claim, "the more
+context a pointer carries, the cheaper the navigation decision," was **not** in
+the source and was wrong by the source's own lights: it merged estimate quality
+with interaction cost where the source separates them, and the source's nearest
+test fixed cue size rather than varying it. Three further claims were local and
+absent from the source. See the [worked
+case](../source-grounding/worked-case-agents-navigate.md).
 
 So the note is **not** the clean rediscovery case the critique proposed. A note
 whose central design claim is wrong is not obviously a retirement candidate — it
 may be a correction candidate, and retiring it would delete the error without
-correcting anything that inherited it. Disposition is still open; what changed is
-that it is now open on evidence rather than on resemblance.
+correcting anything that inherited it.
+
+**The correction landed later on 2026-08-24.** The note now links the Pirolli
+ingest, narrows the source-side claims, states the human-to-LLM transfer boundary,
+and replaces the monotone with uncertainty reduction per unit of context.
+`linking-theory` received the same source route and correction. Source review
+pairs passed for both artifacts with no stale pair. This executes the claim
+repair and its one known propagation edge; it does **not** settle whether the
+first note should ultimately survive, merge, thin, or retire.
 
 **The critique's per-note table was contradicted where it was checked.** Connect
 rejected three cohort notes as belonging to this tradition, with reasons:

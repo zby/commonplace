@@ -82,12 +82,13 @@ consumption. That is a gap in that note, not a contradiction of this one.
 
 The [input critique](./chatgpt-critique.md) proposed "retire or reduce to a thin
 claim adapter," on the theory that the note is information scent in local
-vocabulary. Three claims are indeed that. But the disposition the evidence points
-at is different in kind:
+vocabulary. Three claims overlap that literature, but the later strict re-run
+found that none is wholly subsumed as written. The disposition the evidence
+points at is different in kind:
 
-- retiring the note would remove the three subsumed claims **and leave the
-  monotone standing in `linking-theory.md`**, which is where the only real damage
-  is;
+- retiring the note at sweep time would have removed claims that needed
+  narrowing rather than deletion **and left the monotone standing in
+  `linking-theory.md`**, which is where the only propagation damage was;
 - the corrected claim does not need inventing. `linking-theory.md` already states
   the per-token half in its own thesis, and
   [`two-context-boundaries-govern-collection-operations`](../../notes/two-context-boundaries-govern-collection-operations.md)
@@ -103,7 +104,20 @@ independently recommended it as the update target, noting that "prediction 4
 (link density has diminishing returns) is the patch model under another name."
 
 Still open, and genuinely: whether `agents-navigate-...` survives the correction
-at all. Stripped of C4 it is three subsumed claims plus a local pointer-type
-ordering (C5) that nothing has tested. That may be a thin claim node, a merge
-into `linking-theory.md`, or a retirement — but it is a decision to take after
-the correction, not instead of it.
+at all. After correction it contains three narrowed source-adjacent claims, an
+explicit human-to-LLM transfer argument, and local pointer-mode design
+implications. Whether those warrant a separate note, a merge into
+`linking-theory.md`, a thinner node, or retirement remains an artifact-level
+decision.
+
+## Execution update — 2026-08-24
+
+The correction has now been executed. `agents-navigate-...` narrows the three
+source-adjacent claims, states the human-to-LLM transfer boundary, and replaces
+C4 with uncertainty reduction per unit of context consumed. `linking-theory.md`
+received the same source route and no longer carries the monotone. Source review
+pairs passed for both artifacts with no stale pair.
+
+The artifact-level disposition remains open. The correction removed the known
+error and its only propagation edge; it did not decide whether the first note
+should survive, merge into `linking-theory.md`, become thinner, or retire.

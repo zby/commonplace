@@ -277,9 +277,14 @@ than asserting it.
 
 ## Running tally
 
-Across all eleven notes inventoried, the count stands at **three operative
-defects** — the unscoped "generation cannot produce" under ADRs 025/026, the
-possibly-analytic `stale-indexes` C1 under ADR 026, and the pointer-context
-monotone (prose-only, already swept) — against **zero clean rediscoveries that a
-retirement would tidily remove**. The method keeps returning errors where it was
-pointed at redundancy.
+Across all eleven notes inventoried, the count stands at **three defects** — two
+operative ones, the unscoped "generation cannot produce" under ADRs 025/026 and
+the possibly-analytic `stale-indexes` C1 under ADR 026; plus the prose-only
+pointer-context monotone — against **zero clean rediscoveries that a retirement
+would tidily remove**. The method keeps returning errors where it was pointed at
+redundancy.
+
+**Execution update, 2026-08-24.** The pointer-context monotone was subsequently
+removed from `agents-navigate-by-deciding-what-to-read-next` and its sole
+inheritor, `linking-theory`, during the claim-pull rollout. The first two defects
+above remain open; the zero-clean-rediscoveries finding is unchanged.

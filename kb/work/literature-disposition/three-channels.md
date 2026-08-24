@@ -16,29 +16,30 @@ corpus cleanup stall.
 **Verification status is marked on every row.** `[v]` = confirmed directly
 against the file. `[r]` = reported by a sweep and not independently re-checked;
 re-check before acting. Acting on an `[r]` row as if it were `[v]` is the same
-error this workshop exists to catch, one level up.
+error this workshop exists to catch, one level up. `Done` and `Open` separately
+record execution state; `[v]` does not mean the change has landed.
 
 ---
 
 ## Channel 1 — Migration
 
 The defect here is almost never that a claim is wrong. It is that **nothing
-routes a reader from the claim to what would settle it.** Four of the first six
-notes cite nothing external for claims placed in an outside tradition; the
-remaining two name traditions with zero works.
+routes a reader from the claim to what would settle it.** The first Pirolli
+migration is complete. The remaining rows still lack an adjudicating source
+route.
 
 ### 1a. Route existing claims to sources
 
-| Artifact | What is missing | Status |
+| Artifact | Finding or remaining work | Status |
 |---|---|---|
-| `agents-navigate-by-deciding-what-to-read-next` | C1–C3 are information scent, cited to nobody. Ingest now exists | [v] |
-| `linking-theory` | Same tradition, no citation; the Pirolli ingest's own recommended action names this artifact | [v] |
-| `index-curation-adds-orientation...` | LIS pathfinders / annotated bibliographies / PKM MOC. **Attribution already exists one hop away** in `an-enforced-tag-readme`, which links back here — may be a move, not an invention | [v] |
-| `an-enforced-tag-readme...` | "Luhmann" and "Nick Milo's LYT" named with no dated work, no URL, no ingest | [v] |
-| `knowledge-storage-does-not-imply-contextual-activation` | Five LLM-side ingests cited; **nothing** for the cognitive-psychology tradition establishing C1/C2 | [r] |
-| `stale-indexes-reduce-discovery...` | Zero external references and no `Relevant Notes` tail at all | [r] |
-| `addressability-grain...` | Zero external references | [r] |
-| `pointer-design-tradeoffs...`, `link-following-and-search...`, `design-for-the-first-time-human...`, `charting-...-beyond-rag` | Zero external citations for claims placed in outside traditions | [r] |
+| `agents-navigate-by-deciding-what-to-read-next` | Pirolli Claims linked; inherited claims narrowed; transfer boundary stated | Done 2026-08-24 [v] |
+| `linking-theory` | Same Pirolli route added; unsupported pointer-context monotone removed | Done 2026-08-24 [v] |
+| `index-curation-adds-orientation...` | Needs LIS pathfinders / annotated bibliographies / PKM MOC. **Attribution already exists one hop away** in `an-enforced-tag-readme`, which links back here — may be a move, not an invention | Open [v] |
+| `an-enforced-tag-readme...` | "Luhmann" and "Nick Milo's LYT" named with no dated work, no URL, no ingest | Open [v] |
+| `knowledge-storage-does-not-imply-contextual-activation` | Five LLM-side ingests cited; **nothing** for the cognitive-psychology tradition establishing C1/C2 | Open [r] |
+| `stale-indexes-reduce-discovery...` | Zero external references and no `Relevant Notes` tail at all | Open [r] |
+| `addressability-grain...` | Zero external references | Open [r] |
+| `pointer-design-tradeoffs...`, `link-following-and-search...`, `design-for-the-first-time-human...`, `charting-...-beyond-rag` | Zero external citations for claims placed in outside traditions | Open [r] |
 
 ### 1b. The standing-TODO batch
 
@@ -46,23 +47,23 @@ Three artifacts carry explicit "survey is from training data, not systematic"
 TODOs inside these traditions: `links-README.md`,
 `title-as-claim-enables-traversal-as-reasoning.md`,
 `information-value-is-observer-relative.md`. **One batch, not three.** [v] for
-the first, [r] for the others.
+the first, [r] for the others. **Open.**
 
 ### 1c. Repair a false provenance signal
 
-`a-knowledge-base-should-support-fluid-resolution-switching` declares
+**Open [v].** `a-knowledge-base-should-support-fluid-resolution-switching` declares
 `traits: [has-external-sources]` on the strength of "a social media post on 'The
-Art of Good Thinking: Moving Between Levels'" — no author, no URL. [v] Either
+Art of Good Thinking: Moving Between Levels'" — no author, no URL. Either
 identify the source or drop the trait; a provenance signal pointing at nothing is
 worse than none.
 
 ### 1d. Blocked on a corpus decision
 
-Most of 1a cannot be executed until the sibling workshop decides which sources to
-capture — and that decision was **reopened** by the scoping finding. The needed
-corpus is not the navigation corpus originally proposed; see
-[claim-inventory](./claim-inventory.md). Only the two rows with a live ingest are
-executable today.
+The open rows in 1a cannot be executed until the sibling workshop decides which
+sources to capture. The needed corpus is not the navigation corpus originally
+proposed; see [claim-inventory](./claim-inventory.md). The two rows supported by
+the live Pirolli ingest are complete and establish that the V1 grounding path
+works.
 
 ---
 
@@ -90,13 +91,13 @@ restatement that can fail.
 
 ### Prose-only — no shipped artifact depends on it
 
-**2c. The pointer-context monotone.** [v] "The more context a pointer carries,
-the cheaper the navigation decision" merges estimate quality with interaction
-cost. Two sites: `agents-navigate-...` and its verbatim copy at
-`linking-theory.md:17`. Fully swept — [one inheritor, zero operative
-reach](./c4-propagation-sweep.md), and `linking-theory` already states the
-corrected form in its own thesis, description, and prediction 4. **The repair is
-delete-and-promote, not rewrite.**
+**2c. The pointer-context monotone. Done 2026-08-24 [v].** "The more context a
+pointer carries, the cheaper the navigation decision" merged estimate quality
+with interaction cost. The [propagation sweep](./c4-propagation-sweep.md) found
+one inheritor and zero operative reach. The claim-pull rollout removed the
+monotone from `agents-navigate-...` and `linking-theory`, promoted uncertainty
+reduction per unit of context, added the Pirolli source route, and passed both
+source review pairs. The first note's artifact-level disposition remains open.
 
 **2d. `pointer-design-tradeoffs...` conflates availability with accuracy.** [r]
 Table 1 scores fixed pointers "Highest — always present, deterministic"; Table 2
@@ -130,72 +131,82 @@ row was never retracted.
 
 ### What is notable about this channel
 
-**Six of the nine need no source at all.** 2a, 2b, 2d, 2e, 2f, 2i are internal —
-scope errors, category errors, and self-contradictions findable by reading the
-note against itself and its dependents. So **Channel 2 is only partly blocked on
-Channel 1**, and the operative items 2a and 2b are among the unblocked.
+**Six of the eight open findings need no source at all.** 2a, 2b, 2d, 2e, 2f,
+2i are internal — scope errors, category errors, and self-contradictions
+findable by reading the note against itself and its dependents. So **Channel 2
+is only partly blocked on Channel 1**, and the operative items 2a and 2b are
+among the unblocked.
 
 That is the running result of this workshop restated: pointed at redundancy, the
-method returned **three operative defects and zero clean rediscoveries a
-retirement would tidily remove.**
+method returned **three defects and zero clean rediscoveries a retirement would
+tidily remove.** One defect is repaired; the two operative items remain open.
 
 ---
 
 ## Channel 3 — Machinery
 
-### In flight
+### Landed
 
-**3a. The claim-pull procedure.** Read the source, extract the claim, add it to
-the ingest if missing, then use it. Two arguments and four open decisions in
-[the candidate](../source-grounding/candidate-procedure-claim-pull.md).
-Being implemented separately.
+**3a. Claim-pull and source review. Done 2026-08-24 [v].**
+[ADR 073](../../reference/adr/073-untracked-source-snapshots-require-ingest-grounding.md)
+made the prospective rule operative. The two promoted writing skills stop on an
+explicit new or materially changed source dependency whose ingest lacks the
+needed claim. The grounding procedure appends one bounded Claims entry, and a
+retry can then use it. Link-derived source review pairs compare each artifact use
+against the complete tracked ingest.
 
-### Needs a proposal
+**3b. Claim-level retention under ignored snapshots. V1 decided 2026-08-24
+[v].** The earlier measurement returned 0 match, 0 mismatch, and 12 unresolved
+quote candidates over 1257 tracked files because primary snapshot bodies are
+ignored. ADR 073 does not pretend to make those bodies present. It instead
+requires grounding against the name-paired, checksum-verified local snapshot and
+retains the bounded claim, extracts, locations, scope, confidence, and limitation
+in the tracked ingest. Later source review checks the target against that record.
+This removes the V1 blocker on Channel 1, while leaving a weaker guarantee than
+standing re-verification of the ingest against primary bytes in a fresh clone.
 
-**3b. Verbatim-quote retention under ignored snapshots.** [v]
-`commonplace-verify-quotes` returns **0 match, 0 mismatch, 12 unresolved** over
-1257 tracked files, and all twelve candidates cite internal notes rather than
-sources. ADR 046 requires "the source snapshot is a checked-in file present at
-validation time"; `kb/sources/` declares snapshots non-authority, ignores them,
-and forbids linking to them. Four options, none selected. **This is the direct
-blocker on Channel 1 being checkable rather than merely present.**
+**3c. Claims ledger. Done 2026-08-24 [v].** `## Claims` is now required by the
+ingest contract and schema. The rollout added the section structurally to the
+existing corpus. Populating honest entries remains demand-driven semantic work;
+transfer stays in the target because it is specific to that use.
 
-**3c. The ingest needs a claim ledger.** [v] Three of four needed extractions
-land, but only scope conditions are actually *asked for*; the transfer argument
-arrives voluntarily and the overlap arrives against a contract that says to "drop
-weak, speculative, or duplicate edges" and defines value as "what is new." A
-premise a note leans on is often the least novel thing the source contains.
+### Still open
 
-**3d. No write-time check asks whether the literature already settles a claim.**
-[v] Every novelty and economy test in the corpus is intra-KB — the log-entry
-novelty battery, `cp-skill-write`'s duplicate guard, and all four attribution
-gates, which audit attribution to *already-cited* targets and never require that
-a source exist.
+**3d. Prior-art discovery at write time. Partial [v].** ADR 073 guards a source
+dependency once the candidate names it. It deliberately cannot detect an
+uncited claim that external literature already establishes. The log-entry
+novelty battery and duplicate search remain intra-KB. The workshop still must
+decide whether model recall should emit non-authoritative reading assignments,
+whether a deterministic provenance report covers enough of the gap, or whether
+no broader write-time arm is warranted.
 
-**3e. Nothing checks that a provenance trait points at something identifiable.**
-[v] `has-external-sources` can be asserted against an unnamed social-media post
-(1c). This looks like a deterministic check — a declared external-source trait
-implies at least one resolvable external reference.
+**3e. Identifiable provenance. Open [v].** Nothing checks that
+`has-external-sources` resolves to an identifiable external reference. The
+unnamed social-media post in 1c still passes the trait contract. This remains a
+candidate deterministic check.
 
 ### Bugs
 
-**3f. `commonplace-verify-quotes` scans ignored files.** [v] It walks into
+**3f. `commonplace-verify-quotes` scans ignored files. Open [v].** It walks into
 `.snapshots/` and tries to resolve a mangled URL as a file path
-(`kb/sources/.snapshots/http:/memory.md`).
+(`kb/sources/.snapshots/http:/memory.md`). This does not block the ADR 073
+grounding path, but the command's corpus walk remains wrong.
 
-**3g. `cp-skill-snapshot-web` cleanup blocks on equation-heavy PDFs.** [v] The
-mandatory model-mediated Markdown conversion re-emits the whole document and hit
-a content filter. A fix is in flight in another session.
+**3g. Equation-heavy PDF capture. Done 2026-08-24 [v].**
+`cp-skill-snapshot-web` no longer makes model-mediated cleanup a condition of
+capture. It copies the extracted body locally, permits bounded cleanup only when
+explicitly requested, and retains raw extraction as fallback.
 
 ### Rules, not code
 
-**3h. Decide the corpus from the claims, not the cluster's name.** [v] The cohort
-was scoped to foraging/LIS from note titles; its claims actually place across
-cognitive psychology of memory and transfer, human-factors automation bias,
-materialized-view maintenance, single-source publishing, and storage read
-amplification. The failure mode is not missing a source — it is reading
-*rejection from the scoped tradition* as *no external tradition*, which nearly
-happened to `addressability-grain`.
+**3h. Decide the corpus from the claims, not the cluster's name. Adopted as a
+working rule [v].** The cohort was scoped to foraging/LIS from note titles; its
+claims actually place across cognitive psychology of memory and transfer,
+human-factors automation bias, materialized-view maintenance, single-source
+publishing, and storage read amplification. The failure mode is not missing a
+source — it is reading *rejection from the scoped tradition* as *no external
+tradition*, which nearly happened to `addressability-grain`. The wider corpus
+itself remains undecided in the sibling workshop.
 
 **3i. A link label is missing.** [v] Connect found no label for "this source
 states the established version of a local claim written from recall" and used
@@ -212,13 +223,17 @@ form without the eighth move propagates the problem in more convincing packaging
 
 ## Sequencing
 
-1. **Channel 2's unblocked six** need nothing and include both operative items.
-   Cheapest real repair available.
-2. **Channel 3b** gates whether Channel 1 produces checkable citations or merely
-   present ones. Worth settling before bulk migration.
-3. **Channel 1** waits on the corpus decision, which waits on 3h.
-4. **Channel 2's remaining three** wait on the sources that adjudicate them.
+1. **Repair Channel 2's unblocked six.** Start with 2a because two ADRs rest on
+   it, then re-check 2b before changing it. These need no source-corpus decision.
+2. **Select the wider corpus from the claim inventory.** Source-grounding owns
+   the selection; the V1 Claims and review path is ready to carry each result.
+3. **Run the remaining migrations and source-dependent claim judgments** in
+   small source-coherent batches.
+4. **Record dated artifact dispositions and execute one end to end.** A claim
+   correction does not substitute for the first keep, merge, thin, or retire
+   decision with all required rewiring.
+5. **Close the two general questions.** Promote a disposition rule or record
+   that judgment remains per-note, and decide the unresolved prior-art check.
 
-The tempting order — migrate first, because it looks mechanical — is the worst
-one: it would write uncheckable citations at scale against a corpus chosen from
-the wrong shelf.
+Bulk migration still should not precede source selection. The machinery is no
+longer the blocker; choosing evidence from the wrong tradition is.
