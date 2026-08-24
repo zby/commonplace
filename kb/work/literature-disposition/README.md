@@ -272,6 +272,12 @@ workshop which claims the corpus has to adjudicate.
 
 ## Files
 
+- [Grounding cleanup procedure](./cleanup-procedure.md) — restored after the
+  claim-pull workshop deleted it on closure with 66 of 68 citing notes still
+  ungrounded; carries the corpus state at freeze
+- [Cleanup cohort 02](./cleanup-cohort-02.md) — first cohort under the restored
+  procedure: five targets, 16 pairs, frozen at `6cdb3c10`, with a predicted
+  disposition distribution to judge the run against
 - [Three channels: migration, claims, machinery](./three-channels.md) — every
   finding sorted by kind of change, with verification status per row and a
   sequencing argument against migrating first
