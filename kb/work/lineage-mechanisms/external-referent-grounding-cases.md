@@ -8,11 +8,37 @@ The direction does not add a new problem to the lineage model. It supplies candi
 
 Normalized shape: `(doc, depends-on, code-file-or-region@revision)`.
 
-- **Topology and churn.** Many-to-many: one doc cites many code files; one file backs many docs. Code churns far faster than any KB text. This is the strongest current candidate for a second churning mesh under the storage predicate in [many-to-many-edge-state-is-where-files-yield-to-a-database](../../notes/many-to-many-edge-state-is-where-files-yield-to-a-database.md).
-- **Nearest existing profile row.** External Git-backed review: L1 stable verification handle plus L2 on-demand upstream query. Documentation escalates past that row because its consumer repeatedly asks a swept-selector question — "which docs are stale against the current code?" — rather than an occasional per-artifact check.
+- **Hypothesized topology and churn.** If retained documents each make exact claims about several code regions, the relation is many-to-many and code changes faster than KB text. That topology made this the strongest candidate for a second churning mesh under the storage predicate in [many-to-many-edge-state-is-where-files-yield-to-a-database](../../notes/many-to-many-edge-state-is-where-files-yield-to-a-database.md). The disposition result below shows that topology cannot be assumed from the product direction alone.
+- **Nearest existing profile row if exact docs survive.** External Git-backed review: L1 stable verification handle plus L2 on-demand upstream query. Documentation escalates past that row only if its consumer repeatedly asks a swept-selector question — "which retained exact docs are stale against the current code?" — rather than reading the implementation live or checking one artifact on demand.
 - **Ladder assignment is per-edge, not per-class.** A reference doc whose warrant *is* accuracy-to-code carries L3-watched edges. An explanation doc whose claims survive most code churn stays at L1/L2. The graduated ladder in [verification-locus-and-provenance-theory](./verification-locus-and-provenance-theory.md) already supports this; the case confirms the assignment must be made where the edge is authored, not uniformly by collection.
-- **Mechanism already sketched.** This is the factored-pair escalation named in the verification-locus gaps section ("radius-1 assay results have unhashed inputs" → factored `(note, cited-target)` pairs), with the cited target outside `kb/`. A doc-vs-code pair reuses the two-input review relation the way ADR 038 put the type spec on the criterion side: the referent supplies one hashed input, and the criterion text ("still accurate to this referent") supplies the other.
+- **Mechanism available but not earned.** The verification-locus gaps section sketches a factored `(note, cited-target)` pair for radius-1 assay results with unhashed inputs. A doc-vs-code pair could reuse the two-input review relation the way ADR 038 put the type spec on the criterion side: the referent supplies one hashed input, and the criterion text ("still accurate to this referent") supplies the other. No current consumer requires that escalation.
 - **New sub-questions the case forces.** (a) Input identity for an external referent: `repository@revision + path`, or a content hash of a named region — region-level identity avoids staling every doc on every commit. (b) Where the pinned handle is recorded, since the referent cannot carry a footer (see draft rule below). (c) Whether referent snapshots enter the Commonplace store or stay as pinned handles resolved against the repo.
+
+### Observed disposition result (2026-08-24)
+
+[Seven Commonplace documentation cases](../../notes/evidence/seven-documentation-cases-left-routing-and-synthesis.md)
+tested the hypothesized mesh after agents gained a guaranteed route to the
+executing source. Two reference artifacts were retired and five were reduced.
+Exact fields, arguments, schemas, module inventories, and local behavior moved
+to source or command help. The surviving documents carry command discovery,
+approximate topology, authority and lifecycle maps, and cross-component
+transition or concurrency boundaries. None now declares a complete set of
+code-file or region dependencies whose every change implies staleness.
+
+Before the sweep, the seven pages lagged their code by only 0–3 commits, so
+co-maintenance was occurring. The audit still found an incorrect claim,
+incomplete inventory, or broken live-read prerequisite in every case. The
+effective repair was to remove the exact-copy obligation rather than register
+granular freshness edges. No recurring "which docs are stale against code?"
+consumer was observed after that reduction.
+
+This disconfirms Case A as a current activation witness; it does not make the
+normalized dependency impossible. A consuming project may deliberately retain
+an exact code summary after showing that it substitutes for source work. That
+project must then demonstrate the retained edges, their churn, and a repeated
+selector before L3 factored pairs or a generic edge store are warranted. Until
+then, any external code dependency that remains uses the L1/L2 carrier rule
+below, and exact implementation questions read the pinned source live.
 
 ## Case B: scientific claims grounded on literature
 
@@ -37,14 +63,14 @@ Consequences worth stating when this is extracted:
 
 ## What this direction does not activate yet
 
-- The generic lineage SQLite schema and shared event ledger stay deferred; case A is a *candidate* second mesh, and activation still requires a real consuming project (a repo actually documenting itself through Commonplace), not the direction statement alone.
-- No external-referent pair implementation before the design proposal; per YAGNI the gap becomes a proposal in `kb/reference/proposals/` first.
+- The generic lineage SQLite schema and shared event ledger stay deferred. The Commonplace audit failed to produce a second mesh; activation requires a real consuming project that retains exact code-dependent documentation for demonstrated read-path value and repeatedly selects those edges for refresh.
+- The external-referent review-pair proposal is deferred with its implementation. The derivative-side carrier decision can land without speculating about region identity, snapshot storage, or watched-pair transitions before a consumer earns them.
 - Bibliographic export and profile work for the segments (scholarly, pedagogical) are downstream and outside this workshop.
 
 ## Proposed extraction path
 
-1. Resolve matrix decisions 1–3 with these two cases plus the existing article/snapshot witnesses; extract as an ADR plus edits to `kb/reference/link-vocabulary.md` and the affected `COLLECTION.md`/skill surfaces.
-2. Write the external-referent review-pair design proposal in `kb/reference/proposals/`: referent identity (revision pin vs region hash), pinned-handle carrier per the rule above, staleness semantics on referent change, storage weight per the ladder rung.
+1. Resolve matrix decisions 1–3 with these two cases plus the existing article/snapshot witnesses; extract the normalized direction and contract-selected carrier rule as an ADR plus edits to `kb/reference/link-vocabulary.md` and the affected `COLLECTION.md`/skill surfaces.
+2. Do not write the external-referent review-pair proposal until a real consumer demonstrates the watched-edge requirement. At activation, the proposal must decide referent identity (revision pin vs region hash), staleness semantics on referent change, and storage weight per the observed selector.
 3. Segment-specific work (scholarly profile from the ASIS&S paper case, pedagogical profile, bibliographic types) proceeds in its own workshops once 1–2 land.
 
 ---
@@ -57,3 +83,4 @@ Relevant Notes:
 - [many-to-many-edge-state-is-where-files-yield-to-a-database](../../notes/many-to-many-edge-state-is-where-files-yield-to-a-database.md) — rests-on: the storage predicate case A is measured against
 - [README-REVIEW-SYSTEM](../../reference/README-REVIEW-SYSTEM.md) — draws-on: the two-input review relation the external-referent pair would generalize
 - [articles COLLECTION](../../articles/COLLECTION.md) — is-evidence-for: the existing derivative-side lineage carrier the draft rule generalizes
+- [Seven documentation cases left routing and synthesis](../../notes/evidence/seven-documentation-cases-left-routing-and-synthesis.md) — tests: disconfirms docs-on-code as a current churning-mesh witness while preserving the conditional external-carrier case
