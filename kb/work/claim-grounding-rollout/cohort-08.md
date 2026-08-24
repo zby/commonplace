@@ -1,6 +1,6 @@
 # Cleanup cohort 08 — frozen 2026-08-24
 
-**Status: ready.** Frozen at repository `a91ed377`.
+**Status: complete.** Frozen at repository `a91ed377`; executed 2026-08-24.
 
 This cohort combines the two smallest residual connected components. Its four
 notes and two ingests are disjoint from cohorts 09 and 10 on both mutation
@@ -36,17 +36,80 @@ restates a body use remains in the same row.
 
 ## Grounding record
 
-Pending. Record which incumbent Claims entry was reused or which new entry was
-appended for every source-side need, plus checksum and validation results.
+No incumbent entry fully answered a complete frozen source-side need. Four
+entries were appended through the Claims-owned mutation route:
+
+- **FDS-1 — added:** “In a first-person account of Fintool's S3-first
+  architecture, the author says user data including watchlists, portfolios,
+  preferences, memories, and skills is stored as YAML files in S3 as the source
+  of truth; Lambda functions synchronize changes to PostgreSQL, list queries
+  use the database, and writes and single-item reads use S3.”
+- **FPR-1 — added:** “In the captured SuperARC report, LLM performance improved
+  dramatically when integer sequences rather than binary sequences were
+  tested; the authors attribute the improvement to memorization of common
+  mathematical sequences in training data and use it to argue that binary
+  sequences are needed for an unbiased evaluation.”
+- **LDP-1 — added:** “In a first-person account of Fintool, the author says some
+  simple tasks that previously needed detailed step-by-step skills can now
+  often be requested with a short instruction as models improve; separately,
+  the system maintains fiscal calendars for more than 10,000 companies,
+  normalizes period references to absolute date ranges, and has more than 200
+  period-extraction tests.”
+- **RC-1 — added:** “In SuperARC's reported code-generation results, most
+  programs classified as correct printed the target sequences directly;
+  print-statement solutions dominated correct outputs across programming
+  languages, and temperature variations produced nearly identical
+  no-compression percentages. The SuperARC-seq framework classifies direct
+  prints separately as Type 3 and weights non-trivial solutions more heavily.”
+
+The exact name-paired financial-services snapshot matched canonical source
+`https://x.com/nicbstme/status/2015174818497437834` and SHA-256
+`5d31480668eb9fedea35957fd66e72133d066c3e9300c80df68d1c3ee57cdebf`.
+Its ingest passed cleanly after each append; the final validation resolved all
+seven verbatim extracts.
+
+The exact name-paired SuperARC snapshot matched canonical source
+`https://arxiv.org/html/2503.16743v5` and SHA-256
+`8ad7f503f89df5ffa942fa83dda845f3d6d772049043f22619d65e2e512026fe`.
+Its ingest passed cleanly after each append; the final validation resolved all
+eight verbatim extracts.
 
 ## Completion record
 
-Pending. Record one row per claim use:
+All four notes and both changed ingests pass `commonplace-validate` cleanly.
+Source conformance ran in the `codex` model partition through the local-review
+fallback required by this cohort's no-delegation rule. Every requested pair
+returned PASS, and its follow-up selector returned `targets: []`. There were no
+literature handoffs, unavailable sources, or blockers.
 
-`ID | disposition | target change | validation and source-review result`
+| ID | disposition | target change | validation and source-review result |
+|---|---|---|---|
+| FDS-1 | grounded | None. The frozen text already presents the architecture as one self-reported, AWS- and access-pattern-specific existence witness, not a universal storage prescription. | Note and ingest PASS clean; source pair PASS in review job 8020; follow-up selector empty. |
+| FPR-1 | retained local delta | Reworded the footer to the reported integer-over-binary direction and source attribution. Cue sensitivity and explanatory-reach are now explicitly target-side analysis and remain non-load-bearing. | Note and ingest PASS clean; source pair PASS in review job 8017; follow-up selector empty. |
+| LDP-1 | narrowed | Replaced “model-absorbed” scaffolding and normalization that “remained explicit” with the reported simple-task instruction reduction and separately retained fiscal normalization and tests. The footer states that the source does not locate normalization in the model's consumption path and labels the durable-payload transfer as local analysis. | Note and ingest PASS clean; source pair PASS in review job 8018; follow-up selector empty. |
+| RC-1 | narrowed | Replaced the hard-oracle and “more than a sampling accident” claims with the source's correct-output classification, Type 3 treatment, and qualitative language/temperature results. The note now preserves the missing settings, counts, uncertainty, and beyond-run sampling limit and labels reverse-compression as local analysis. The footer was aligned to the same use. | Note and ingest PASS clean; source pair PASS in review job 8019; follow-up selector empty. |
+
+## Disposition distribution
+
+One grounded, two narrowed, one retained local delta, and zero false positives,
+unavailable, contradicted/repaired, or literature handoff dispositions.
 
 ## Identity and accumulation observation
 
-Pending. Record reuse, similar-entry accumulation, ambiguous selection,
-disputed entries, or pressure for claim IDs or reconciliation. “None observed”
-is a finding when bounded to this cohort.
+Both incumbent entries exerted **scope pressure**, but neither created ambiguity
+about which entry applied. The financial-services incumbent covered fiscal
+normalization but not its contrast with reduced skill detail. The SuperARC
+incumbent covered binary-task scores and print-only prevalence but not the
+integer comparison or the cross-language and temperature result. Under the
+one-need/one-entry and append-only rules, neither could be reused unchanged for
+the complete frozen need.
+
+Each ingest therefore accumulated two new entries alongside one incumbent.
+LDP-1 repeats the fiscal-normalization premise already retained by the
+financial-services incumbent, and RC-1 overlaps the SuperARC incumbent's
+print-only premise while adding the missing robustness dimensions. The exact
+new entries remain uniquely selectable for the frozen uses, and no entry was
+disputed. This is modest pressure for later reconciliation of shared premises,
+not observed pressure for claim IDs or an intermediate claim node: exact
+paraphrase plus Scope and Limitation still disambiguated every selection in this
+four-use cohort.

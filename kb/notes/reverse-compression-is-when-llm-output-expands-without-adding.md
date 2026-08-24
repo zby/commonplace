@@ -27,7 +27,7 @@ But this resistance requires that links are [load-bearing](./linking-theory.md) 
 
 ## The same failure appears in code generation
 
-SuperARC gives a hard-oracle instance outside KB writing. In its recursive-compression benchmark, many LLM-generated "correct" programs reproduce target sequences by directly printing them. The program passes the output check, but it has not compressed the sequence into a generative rule; it expands the target into code that carries no additional algorithmic structure. The ingest reports that print-statement solutions dominate across programming languages and temperature changes, which makes the failure more than a sampling accident. This is reverse-compression in a formal setting: a longer artifact that looks like a solution, satisfies a shallow correctness oracle, and still adds zero extractable structure for the capability actually being tested.
+SuperARC gives a mechanically classified instance outside KB writing. In its sequence-reproduction code tasks, the report says most programs classified as correct directly printed target sequences. The framework labels direct prints Type 3 and weights non-trivial solutions more heavily, so a correct output need not encode a generative rule. The report also says print-statement solutions dominated correct outputs across programming languages and that temperature variations produced nearly identical no-compression percentages. Those results make the finding robust to the reported language and temperature variations; because the capture omits the named languages, settings, counts, and uncertainty, they do not rule out sampling effects beyond those runs. Calling this reverse-compression is local analysis: the emitted code reproduces the requested output while adding no reusable generative rule for the capability the benchmark scores.
 
 ## Toward a validation gate
 
@@ -42,6 +42,6 @@ Relevant Notes:
 - [vibe-noting](./vibe-noting.md) — context: the inflation failure mode this note names and analyzes
 - [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: epiplexity formalizes what "adds information for a bounded observer" means
 - [Epiplexity paper](https://arxiv.org/html/2601.03220v1) — source: the formal measure of extractable structure for bounded observers
-- [SuperARC AIT benchmark](../sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md) — evidenced-by: print-statement-only programs formally instantiate reverse-compression in code generation
+- [SuperARC AIT benchmark](../sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md) — evidenced-by: reports direct-print programs classified as correct and their dominance under the paper's language and temperature variations; classifying this as reverse-compression is local analysis
 - [linking-theory](./linking-theory.md) — enables: the load-bearing vs decorative distinction is a core question for linking theory
 - [skills derive from methodology](./skills-derive-from-methodology.md) — contrasts: skill derivation is the productive inverse — compressing while preserving; reverse-compression is the failure mode — expanding while adding nothing

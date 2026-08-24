@@ -38,6 +38,24 @@ A comprehensive practitioner report covering 11 architectural lessons from build
   - **Confidence:** High that the source reports these system practices and quantities; they are explicit first-person statements from the builder.
   - **Limitation:** This practitioner report provides no independent audit of the implementation, test coverage, or resulting accuracy. It does not establish that every fiscal-period interpretation is deterministic or constitutive, nor that passing period-extraction tests validates downstream financial analysis.
 
+- **Claim (paraphrase):** In a first-person account of Fintool's S3-first architecture, the author says user data including watchlists, portfolios, preferences, memories, and skills is stored as YAML files in S3 as the source of truth; Lambda functions synchronize changes to PostgreSQL, list queries use the database, and writes and single-item reads use S3.
+  - **Source extract (verbatim):** We store user data (watchlists, portfolio, preferences, memories, skills) in S3 as YAML files. S3 is the source of truth. A Lambda function syncs changes to PostgreSQL for fast queries.
+  - **Source location:** “The S3-First Architecture,” opening description of the storage pattern.
+  - **Source extract (verbatim):** The pattern: - Writes go to S3 directly - List queries hit the database (fast) - Single-item reads go to S3 (freshest data)
+  - **Source location:** “The S3-First Architecture,” access-pattern list immediately before the sync architecture.
+  - **Scope:** The author's account of Fintool's user-data storage, synchronization, and query paths in one production financial-agent system using AWS S3, Lambda, and PostgreSQL.
+  - **Confidence:** High that the source explicitly assigns source-of-truth status and the listed read and write paths; these are direct first-person architecture statements.
+  - **Limitation:** The report is not independently audited and does not establish that PostgreSQL is derived for every Fintool state class, that database availability is unimportant, or that S3-first storage is preferable outside the reported workloads and AWS setting.
+
+- **Claim (paraphrase):** In a first-person account of Fintool, the author says some simple tasks that previously needed detailed step-by-step skills can now often be requested with a short instruction as models improve; separately, the system maintains fiscal calendars for more than 10,000 companies, normalizes period references to absolute date ranges, and has more than 200 period-extraction tests.
+  - **Source extract (verbatim):** Models are getting better. Fast. Every few months, there’s a new model that makes half your code obsolete. The elaborate scaffolding you built to handle edge cases? The model just... handles them now. When we started, we needed detailed skills with step-by-step instructions for some simple tasks. “First do X, then do Y, then check Z.” Now? We can often just say for simple task “do an earnings preview” and the model figures it out (kinda of!)
+  - **Source location:** “The Model Will Eat Your Scaffolding,” opening account of changing skill detail for simple tasks.
+  - **Source extract (verbatim):** We maintain fiscal calendars for 10,000+ companies. Every period reference gets normalized to absolute date ranges. We have 200+ test cases just for period extraction.
+  - **Source location:** “The Evaluation Suite,” fiscal-period discussion.
+  - **Scope:** Two practices reported for Fintool: reduced skill detail for some unspecified simple tasks as unspecified models improved, and company-specific fiscal-period normalization and testing in the same financial-agent system.
+  - **Confidence:** High that the source explicitly reports both practices; moderate on their relationship because the source discusses them in separate sections and supplies no controlled comparison.
+  - **Limitation:** The report does not show that models learned or absorbed the removed instructions, quantify the reduction, or say that fiscal normalization remains inline in a prompt, skill, or other model consumption path. It therefore does not itself establish the target's durable-payload interpretation.
+
 ## Connections Found
 
 Discovery via `/connect` identified 8 strong and 5 moderate connections.
