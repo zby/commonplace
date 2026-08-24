@@ -18,7 +18,6 @@ from commonplace.lib.full_pass import (
     resolution_section,
     verify_capture,
 )
-from commonplace.lib.hashing import content_sha256_for_text
 from commonplace.lib.index_generated import (
     CollectionTagIndex,
     collect_collection_tag_index,
@@ -33,6 +32,11 @@ from commonplace.lib.project_paths import (
     kb_root,
 )
 from commonplace.lib.quote_verification import normalize_text, verify_content
+from commonplace.lib.snapshot import (
+    DuplicateSnapshotError,
+    find_snapshot_by_sha256,
+    snapshot_sha256,
+)
 from commonplace.lib.type_resolver import (
     TypeProfile,
     canonical_type_identity,
@@ -108,6 +112,7 @@ class ValidationRunResults:
     paths: tuple[Path, ...]
     results: dict[Path, CheckResults]
     collection_structure: list[tuple[Path, str]]
+    collection_warnings: list[tuple[Path, str]]
 
 
 @dataclass
@@ -300,10 +305,18 @@ class ValidationRun:
             if self.collection is not None
             else []
         )
+        collection_warnings = (
+            validate_unowned_source_snapshots(
+                self.collection, repo_root=self.repo_root
+            )
+            if self.collection is not None
+            else []
+        )
         return ValidationRunResults(
             paths=paths,
             results=results,
             collection_structure=structure,
+            collection_warnings=collection_warnings,
         )
 
 
@@ -529,6 +542,102 @@ CLAIMS_EXTRACT_RE = re.compile(
     r"^\s*-\s*\*\*Source extract \(verbatim\):\*\*\s*(?P<text>.+?)\s*$",
     re.MULTILINE,
 )
+SNAPSHOT_SHA256_RE = re.compile(
+    r"^snapshot_sha256:\s*(?P<checksum>[0-9a-f]{64})\s*$",
+    re.MULTILINE,
+)
+
+
+def _name_paired_snapshot(path: Path) -> Path:
+    slug = path.name[: -len(".ingest.md")]
+    return path.parent / ".snapshots" / f"{slug}.md"
+
+
+def _display_snapshot_path(path: Path, sources_dir: Path) -> str:
+    try:
+        return str(path.relative_to(sources_dir))
+    except ValueError:
+        return str(path)
+
+
+def _exact_snapshot_matches(snapshot_dir: Path, checksum: str) -> tuple[Path, ...]:
+    try:
+        match = find_snapshot_by_sha256(snapshot_dir, checksum)
+    except DuplicateSnapshotError as error:
+        return error.paths
+    return (match,) if match is not None else ()
+
+
+def validate_ingest_snapshot_pairing(
+    results: CheckResults,
+    content: str,
+    path: Path,
+) -> None:
+    """Diagnose retained snapshot bytes that are not name-paired to an ingest.
+
+    Snapshot absence remains valid because the cache is ignored. When local
+    bytes are present, however, the ingest's durable checksum can distinguish a
+    missing cache entry from filename drift without authorizing the alternate
+    path for grounding or mutation.
+    """
+    if not path.name.endswith(".ingest.md"):
+        return
+
+    recorded = SNAPSHOT_SHA256_RE.search(content)
+    if recorded is None:
+        return
+
+    checksum = recorded.group("checksum")
+    expected = _name_paired_snapshot(path)
+    expected_display = _display_snapshot_path(expected, path.parent)
+    if expected.is_file():
+        try:
+            actual = snapshot_sha256(expected)
+        except OSError as error:
+            results.warns.append(
+                f"snapshot pairing: {expected_display} is unreadable ({error})"
+            )
+            return
+        if actual == checksum:
+            return
+
+        matches = tuple(
+            match
+            for match in _exact_snapshot_matches(expected.parent, checksum)
+            if match != expected.resolve()
+        )
+        if matches:
+            located = ", ".join(
+                _display_snapshot_path(match, path.parent) for match in matches
+            )
+            results.warns.append(
+                f"snapshot pairing: {expected_display} does not match "
+                f"snapshot_sha256; the exact recorded bytes are at {located}"
+            )
+        else:
+            results.warns.append(
+                f"snapshot pairing: {expected_display} does not match "
+                "snapshot_sha256 and no exact local match was found"
+            )
+        return
+
+    matches = _exact_snapshot_matches(expected.parent, checksum)
+    if not matches:
+        return
+
+    located = ", ".join(
+        _display_snapshot_path(match, path.parent) for match in matches
+    )
+    if len(matches) == 1:
+        results.warns.append(
+            f"snapshot pairing: expected {expected_display} is absent; "
+            f"snapshot_sha256 locates the exact recorded bytes at {located}"
+        )
+    else:
+        results.warns.append(
+            f"snapshot pairing: expected {expected_display} is absent; "
+            f"snapshot_sha256 matches multiple local files ({located})"
+        )
 
 
 def validate_claims_extracts(
@@ -563,29 +672,26 @@ def validate_claims_extracts(
     if not extracts:
         return
 
-    recorded = re.search(r"^snapshot_sha256:\s*([0-9a-f]{64})\s*$", content, re.MULTILINE)
+    recorded = SNAPSHOT_SHA256_RE.search(content)
     if recorded is None:
         results.warns.append(
             f"claims extracts: {len(extracts)} present but the ingest records no snapshot_sha256"
         )
         return
 
-    slug = path.name[: -len(".ingest.md")] if path.name.endswith(".ingest.md") else path.stem
-    snapshot = path.parent / ".snapshots" / f"{slug}.md"
+    snapshot = _name_paired_snapshot(path)
     if not snapshot.is_file():
         return
 
     try:
         snapshot_text = snapshot.read_text(encoding="utf-8")
-    except OSError as error:
-        results.warns.append(f"claims extracts: snapshot unreadable ({error})")
+        actual_checksum = snapshot_sha256(snapshot)
+    except OSError:
+        # The pairing check owns cache diagnostics independently of whether
+        # Claims happens to be populated.
         return
 
-    if content_sha256_for_text(snapshot_text) != recorded.group(1):
-        results.warns.append(
-            "claims extracts: local snapshot does not match snapshot_sha256; "
-            "extracts not checked against a different observation"
-        )
+    if actual_checksum != recorded.group("checksum"):
         return
 
     haystack = normalize_text(snapshot_text)
@@ -912,6 +1018,7 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
         parsed.path,
         load_source=lambda path: run.load_document(path).content,
     )
+    validate_ingest_snapshot_pairing(base, parsed.content, parsed.path)
     validate_claims_extracts(base, parsed.content, parsed.path)
     _merge_labelled(results, base, "base")
 
@@ -959,6 +1066,91 @@ def validate_collection_structure(
             )
         )
     return failures
+
+
+def validate_unowned_source_snapshots(
+    collection: Path, *, repo_root: Path
+) -> list[tuple[Path, str]]:
+    """Warn about retained cache files that no ingest-pair check can own.
+
+    A checksum-matching snapshot at the wrong path is reported on the ingest by
+    ``validate_ingest_snapshot_pairing``. This collection check covers the two
+    remaining cases: bytes no ingest records, and a redundant alternate copy
+    whose checksum owner already has a valid name-paired snapshot.
+    """
+    collection = collection.resolve()
+    repo_root = repo_root.resolve()
+    if collection != (kb_root(repo_root) / "sources").resolve():
+        return []
+
+    snapshot_dir = collection / ".snapshots"
+    if not snapshot_dir.is_dir():
+        return []
+
+    checksum_owners: dict[str, list[Path]] = {}
+    valid_pairs: set[Path] = set()
+    for ingest in sorted(collection.glob("*.ingest.md")):
+        try:
+            content = ingest.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        recorded = SNAPSHOT_SHA256_RE.search(content)
+        if recorded is None:
+            continue
+        checksum = recorded.group("checksum")
+        checksum_owners.setdefault(checksum, []).append(ingest)
+
+        expected = _name_paired_snapshot(ingest)
+        if not expected.is_file():
+            continue
+        try:
+            if snapshot_sha256(expected) == checksum:
+                valid_pairs.add(ingest.resolve())
+        except OSError:
+            continue
+
+    warnings: list[tuple[Path, str]] = []
+    for snapshot in sorted(snapshot_dir.glob("*.md")):
+        if not snapshot.is_file():
+            continue
+        same_stem_ingest = collection / f"{snapshot.stem}.ingest.md"
+        if same_stem_ingest.is_file():
+            # Its ingest-level pairing check owns missing, unreadable, and
+            # checksum-mismatch diagnostics at the expected path.
+            continue
+        try:
+            checksum = snapshot_sha256(snapshot)
+        except OSError as error:
+            warnings.append(
+                (snapshot, f"unpaired local snapshot: unreadable ({error})")
+            )
+            continue
+
+        owners = checksum_owners.get(checksum, [])
+        unresolved_owners = [
+            owner for owner in owners if owner.resolve() not in valid_pairs
+        ]
+        if unresolved_owners:
+            # Each owner locates this exact file in its artifact-level warning;
+            # do not report the same path drift twice in a collection sweep.
+            continue
+
+        if owners:
+            owner_names = ", ".join(
+                str(owner.relative_to(repo_root)) for owner in owners
+            )
+            warning = (
+                "unpaired local snapshot: no same-stem ingest; its checksum "
+                f"duplicates the valid name-paired snapshot for {owner_names}"
+            )
+        else:
+            warning = (
+                "unpaired local snapshot: no same-stem ingest and no ingest "
+                "records its checksum"
+            )
+        warnings.append((snapshot, warning))
+
+    return warnings
 
 
 def validate_collection_landings(*, repo_root: Path) -> CheckResults:

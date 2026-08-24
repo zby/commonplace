@@ -206,6 +206,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if scope is not None:
         structure_failures = outcome.collection_structure
+        collection_warnings = outcome.collection_warnings
+        warning_items.extend(collection_warnings)
         if structure_failures:
             had_failures = True
 
@@ -213,6 +215,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Files analysed: {len(paths)}")
         print(f"Text files: {text_count}")
         print(f"Notes with warnings: {warning_count}")
+        print(f"Collection warnings: {len(collection_warnings)}")
         print(f"Failing notes: {failure_count}")
         print("\nValidation-excluded subtrees:")
         if target.ignored_dirs:

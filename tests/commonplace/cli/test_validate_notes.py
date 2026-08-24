@@ -1545,3 +1545,77 @@ def test_validate_collection_structure_allows_namespace_collections(
     )
 
     assert failures == []
+
+
+def test_source_snapshot_cache_warns_when_no_ingest_records_the_bytes(
+    tmp_path: Path,
+) -> None:
+    sources = tmp_path / "kb" / "sources"
+    write(sources / "COLLECTION.md", "# Sources\n")
+    orphan = write(sources / ".snapshots" / "orphan.md", "uncatalogued bytes\n")
+
+    warnings = validation.validate_unowned_source_snapshots(
+        sources, repo_root=tmp_path
+    )
+
+    assert warnings == [
+        (
+            orphan,
+            (
+                "unpaired local snapshot: no same-stem ingest and no ingest "
+                "records its checksum"
+            ),
+        )
+    ]
+
+
+def test_source_snapshot_cache_warns_about_redundant_alternate_copy(
+    tmp_path: Path,
+) -> None:
+    from commonplace.lib.snapshot import snapshot_sha256
+
+    sources = tmp_path / "kb" / "sources"
+    write(sources / "COLLECTION.md", "# Sources\n")
+    expected = write(sources / ".snapshots" / "source.md", "same bytes\n")
+    duplicate = write(sources / ".snapshots" / "adapter-name.md", "same bytes\n")
+    write(
+        sources / "source.ingest.md",
+        f"---\nsnapshot_sha256: {snapshot_sha256(expected)}\n---\n",
+    )
+
+    warnings = validation.validate_unowned_source_snapshots(
+        sources, repo_root=tmp_path
+    )
+
+    assert warnings == [
+        (
+            duplicate,
+            (
+                "unpaired local snapshot: no same-stem ingest; its checksum "
+                "duplicates the valid name-paired snapshot for "
+                "kb/sources/source.ingest.md"
+            ),
+        )
+    ]
+
+
+def test_source_collection_validation_prints_local_snapshot_warning(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    sources = tmp_path / "kb" / "sources"
+    write(sources / "COLLECTION.md", "# Sources\n")
+    write(sources / "scratch.md", "Visible source work.\n")
+    write(sources / ".snapshots" / "orphan.md", "uncatalogued bytes\n")
+    monkeypatch.chdir(tmp_path)
+
+    exit_code = validate_notes.main(["sources"])
+    output = capsys.readouterr().out
+
+    assert exit_code == 0
+    assert "Collection warnings: 1" in output
+    assert (
+        "kb/sources/.snapshots/orphan.md: unpaired local snapshot: no same-stem "
+        "ingest and no ingest records its checksum"
+    ) in output

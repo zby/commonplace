@@ -303,7 +303,14 @@ class TestClaimsExtractValidation:
     """
 
     @staticmethod
-    def _ingest(tmp_path, extract: str, *, snapshot: str | None, sha: str | None = None):
+    def _ingest(
+        tmp_path,
+        extract: str | None,
+        *,
+        snapshot: str | None,
+        sha: str | None = None,
+        snapshot_name: str = "src.md",
+    ):
         from commonplace.lib.hashing import content_sha256_for_text
 
         sources = tmp_path / "kb" / "sources"
@@ -311,12 +318,21 @@ class TestClaimsExtractValidation:
         body = snapshot if snapshot is not None else ""
         digest = sha if sha is not None else content_sha256_for_text(body)
         if snapshot is not None:
-            (sources / ".snapshots" / "src.md").write_text(body, encoding="utf-8")
+            (sources / ".snapshots" / snapshot_name).write_text(
+                body, encoding="utf-8"
+            )
+        claims = (
+            "No claims have been grounded yet.\n"
+            if extract is None
+            else (
+                "- **Claim (paraphrase):** a claim.\n"
+                f"  - **Source extract (verbatim):** {extract}\n"
+            )
+        )
         ingest = sources / "src.ingest.md"
         ingest.write_text(
             f"---\nsnapshot_sha256: {digest}\n---\n\n"
-            f"## Claims\n\n- **Claim (paraphrase):** a claim.\n"
-            f"  - **Source extract (verbatim):** {extract}\n",
+            f"## Claims\n\n{claims}",
             encoding="utf-8",
         )
         return ingest
@@ -326,6 +342,18 @@ class TestClaimsExtractValidation:
 
         results = CheckResults(note_type="ingest-report")
         validate_claims_extracts(results, ingest.read_text(encoding="utf-8"), ingest)
+        return results
+
+    def _run_pairing(self, ingest):
+        from commonplace.lib.validation import (
+            CheckResults,
+            validate_ingest_snapshot_pairing,
+        )
+
+        results = CheckResults(note_type="ingest-report")
+        validate_ingest_snapshot_pairing(
+            results, ingest.read_text(encoding="utf-8"), ingest
+        )
         return results
 
     def test_extract_present_in_snapshot_passes(self, tmp_path):
@@ -352,9 +380,37 @@ class TestClaimsExtractValidation:
 
     def test_snapshot_disagreeing_with_checksum_warns_without_failing(self, tmp_path):
         ingest = self._ingest(tmp_path, "absent text", snapshot="other bytes", sha="1" * 64)
-        results = self._run(ingest)
+        results = self._run_pairing(ingest)
         assert not results.fails
         assert any("does not match snapshot_sha256" in w for w in results.warns)
+
+    def test_checksum_locates_differently_named_snapshot_with_empty_claims(
+        self, tmp_path
+    ):
+        ingest = self._ingest(
+            tmp_path,
+            None,
+            snapshot="the exact retained bytes",
+            snapshot_name="adapter-derived-name.md",
+        )
+
+        results = self._run_pairing(ingest)
+
+        assert not results.fails
+        assert results.warns == [
+            (
+                "snapshot pairing: expected .snapshots/src.md is absent; "
+                "snapshot_sha256 locates the exact recorded bytes at "
+                ".snapshots/adapter-derived-name.md"
+            )
+        ]
+
+    def test_absent_snapshot_without_exact_local_match_remains_silent(self, tmp_path):
+        ingest = self._ingest(tmp_path, None, snapshot=None, sha="2" * 64)
+
+        results = self._run_pairing(ingest)
+
+        assert not results.warns
 
     def test_instruction_showing_the_template_is_not_checked(self, tmp_path):
         """Only a tracked ingest asserts an extract; docs merely display one."""

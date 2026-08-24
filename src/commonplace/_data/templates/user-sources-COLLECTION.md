@@ -30,6 +30,14 @@ the source says separate from project-relative analysis.
   rather than editing the old capture.
 - Never author a durable link into `.snapshots/`.
 
+`commonplace-validate kb/sources` keeps hidden captures outside ordinary
+artifact and schema validation, but it audits retained Markdown snapshots
+against the tracked ingests. It warns when an ingest's checksum locates its
+exact bytes only under a different filename, when a snapshot has neither a
+same-stem ingest nor a checksum owner, and when an alternate file redundantly
+duplicates an already valid pair. A tracked ingest whose ignored snapshot is
+simply absent does not warn.
+
 ## Outbound links
 
 Use links only when they help a reader understand or apply the source analysis.
