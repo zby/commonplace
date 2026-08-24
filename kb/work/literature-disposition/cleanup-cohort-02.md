@@ -22,41 +22,13 @@ Not alphabetical and not "most ingests." Three criteria, in order:
 Five targets, 16 note-to-ingest pairs. Small enough to finish; wide enough to
 test the procedure's disposition vocabulary.
 
-## Executing this cohort
-
-Enough to hand to an agent cold. Follow
-[the procedure](./cleanup-procedure.md); these are its literal routes.
-
-**Your first task is step 1**, which this file deliberately does not do for you:
-inventory each target's load-bearing claims **from the note itself, before
-reading any source**, and record them here as a table of `ID | target | claim as
-frozen | source-side need` — the shape [cohort 01](./cleanup-cohort-01.md) used.
-Reading the source first lets its vocabulary decide what counts as a claim, which
-is how the first pass over-attributed two claims it later had to retract.
+## Cohort-specific note
 
 **One target is contaminated.** [claim-inventory.md](./claim-inventory.md)
 already publishes recalled claims and tradition placements for
 `knowledge-storage-does-not-imply-contextual-activation`. Inventory that note
 from the note itself first; then treat those placements as reading assignments,
 never as findings. They were recalled, not read.
-
-**To ground a claim:**
-
-```
-Read and execute kb/instructions/ground-source-dependent-claims.md
-with Target: <exact ingest path or canonical source URL>
-and Claim needed: <source-side proposition or question>.
-```
-
-**When the named snapshot is missing** (the blocked items below):
-
-```
-Read and execute kb/instructions/re-ingest.md with Target: <exact ingest path>.
-```
-
-Do not ground a claim by reading the ingest's existing analysis prose — only the
-checksum-verified snapshot establishes a source claim. A verbatim extract may
-span wrapped lines; matching normalizes whitespace.
 
 ## Targets
 

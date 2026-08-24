@@ -78,6 +78,36 @@ discarded the premises notes actually lean on. The rollout ratio is the argument
 two demand-driven entries in the Pirolli ingest grounded, narrowed, or repaired
 **eight** frozen uses across two notes.
 
+## Executing a cohort
+
+Enough to hand to an agent cold. Follow
+[the procedure](./cleanup-procedure.md); these are its literal routes.
+
+**Your first task is step 1**, which a cohort manifest deliberately does not do for you:
+inventory each target's load-bearing claims **from the note itself, before
+reading any source**, and record them here as a table of `ID | target | claim as
+frozen | source-side need` — the shape [cohort 01](./cleanup-cohort-01.md) used.
+Reading the source first lets its vocabulary decide what counts as a claim, which
+is how the first pass over-attributed two claims it later had to retract.
+
+**To ground a claim:**
+
+```
+Read and execute kb/instructions/ground-source-dependent-claims.md
+with Target: <exact ingest path or canonical source URL>
+and Claim needed: <source-side proposition or question>.
+```
+
+**When the named snapshot is missing** (the blocked items below):
+
+```
+Read and execute kb/instructions/re-ingest.md with Target: <exact ingest path>.
+```
+
+Do not ground a claim by reading the ingest's existing analysis prose — only the
+checksum-verified snapshot establishes a source claim. A verbatim extract may
+span wrapped lines; matching normalizes whitespace.
+
 ## Cohort 01 baseline, carried from the closed source-grounding workshop
 
 The claim-pull rollout's own run is the baseline against which "pressure for

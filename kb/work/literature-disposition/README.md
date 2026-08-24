@@ -280,6 +280,9 @@ workshop which claims the corpus has to adjudicate.
   rollout's own run, rebuilt from diffs after being deleted with all eight
   completion rows still `pending`: six narrowed, two contradicted, zero grounded
   as written
+- [Cleanup cohorts 03–07](./cleanup-cohort-03.md) — 24 notes in five manifests,
+  mutually disjoint from each other and from cohort 02 on both notes and ingests,
+  so all six run in parallel without coordination
 - [Cleanup cohort 02](./cleanup-cohort-02.md) — first cohort under the restored
   procedure: five targets, 16 pairs, frozen at `6cdb3c10`, with a predicted
   disposition distribution to judge the run against
