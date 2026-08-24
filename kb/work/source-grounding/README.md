@@ -58,29 +58,35 @@ An amendment to it is an ADR, not a workshop conclusion.
 the general adoption test rather than growing a second link theory" — so a
 second general adoption test is the thing not to build here.
 
-**The current ingest contract has no slot for any of the four extractions the
-question needs.** `.ingest.md` files are `kb/sources/types/ingest-report.md`,
-schema-enforced to `## Classification`, `## Summary`, `## Connections Found`,
-`## Extractable Value`, `## Limitations (our opinion)`, and
-`## Recommended Next Action`. Measured against what a subsumption judgment
-needs:
+**The current ingest contract has no *named field* for the four extractions the
+question needs, but three of them land anyway.** `.ingest.md` files are
+`kb/sources/types/ingest-report.md`, schema-enforced to `## Classification`,
+`## Summary`, `## Connections Found`, `## Extractable Value`,
+`## Limitations (our opinion)`, and `## Recommended Next Action`. The
+[first worked case](./worked-case-agents-navigate.md) ran the real pipeline and
+measured what actually arrives:
 
-| Needed | Present today |
+| Needed | What the contract does |
 |---|---|
-| Exact claims the source establishes | No slot. `## Summary` is a read/skip decision aid; `## Extractable Value` is defined *relative to the installed KB*, not as what the source itself establishes |
-| Population studied, costs modelled, scope conditions | No slot. `## Limitations (our opinion)` is the nearest, but it is a negative editorial framing, not a positive record |
-| What transfers to LLM agents and what does not | No slot anywhere in the ingest type |
-| Which existing notes the source subsumes | Weak. `## Connections Found` records fit and is instructed to *drop* duplicate edges; retirement is reachable only as one advisory sentence in `## Recommended Next Action` |
+| Exact claims the source establishes | **Gap.** Summary and Extractable Value carry claim-level content, but there is no enumerable ledger a later reader can cite an entry from |
+| Population, costs, scope conditions | **Lands, and is asked for.** The `scientific-paper` Limitations lens pulls it out |
+| What transfers to LLM agents | **Lands, but voluntarily.** No field requires it; the worked case's worker wrote it into Limitations by choice |
+| Which notes the source subsumes | **Lands, but against the current.** `Connections Found` is instructed to "drop weak, speculative, or duplicate edges" and `Extractable Value` is defined as "what is new relative to the connection context" — a novelty polarity pointing away from recording that a claim is already held locally |
 
-**There is a hard constraint on adding the subsumption field.** The ingest
-drafting worker in [`draft-ingest-report.md`](../../instructions/draft-ingest-report.md)
-runs in a clean isolated context and is forbidden from browsing the web,
-rerunning connect, or running broad KB searches — its only view of the KB is the
-connect report plus the artifacts that report names. A field asking "which notes
-does this subsume?" requires corpus-wide comparison, which that worker
-contractually cannot do. So the field either moves to a different stage, or the
-isolation contract changes, or subsumption is recorded from the note side
-instead. Do not design a field that quietly assumes the worker can search.
+So the problem is **reliability, not capability**. An earlier version of this
+section asserted "no slot for any of the four," and the worked case falsified it.
+Design for making the three that land dependable, and for adding the one that
+does not — not for four new fields.
+
+**The subsumption signal reaches the drafting worker, contrary to an earlier
+reading of the isolation rule.** The worker in
+[`draft-ingest-report.md`](../../instructions/draft-ingest-report.md) runs in a
+clean isolated context and cannot browse or run broad KB searches. But
+`cp-skill-connect` runs in the **parent**, and can. In the worked case connect
+surfaced the overlapping note as its top edge unprompted, named the defect ("cites
+nobody"), and deferred the verdict to the sibling workshop by name. The binding
+question is therefore not whether the worker can find overlap; it is whether
+connect's output and the ingest's sections preserve it.
 
 **One local note already has the target shape.**
 [an enforced tag-README is a MOC with a machine-checked contract](../../notes/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md)
@@ -221,6 +227,17 @@ the KB claims at a time, and the claims move.
 
 Record rejected sources, not just ingested ones — otherwise a later session
 re-proposes them.
+
+## Files
+
+- [Worked case: `agents-navigate-by-deciding-what-to-read-next`](./worked-case-agents-navigate.md)
+  — the first claim taken through the whole chain by hand, 2026-08-24. Falsified
+  this README's "no slot for any of the four" and found the gap the pipeline
+  cannot close: it detects overlap but not contradiction
+- [Candidate procedure: pull the claim through the ingest before using it](./candidate-procedure-claim-pull.md)
+  — operator proposal, 2026-08-24: read the source, extract the claim, add it to
+  the ingest if missing, then use it. Under evaluation; the strongest candidate
+  answer so far to the intermediate-node question
 
 ## Input
 
