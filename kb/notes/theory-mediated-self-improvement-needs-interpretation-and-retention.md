@@ -31,6 +31,8 @@ This is why the substrate matters rather than the architecture diagram. [Purely 
 
 An LLM operating over retained text supplies both, and does so by division of labor: the weights are the semantic interpreter, competent over natural-language theories including natural-language about the system's own behavior; the retained artifact is the persistent, separately revisable object. Neither half is sufficient. A capable model with no retained artifact re-derives its theory each session — [and a theory nothing surfaces at the moment of need contributes nothing](./a-retrieval-miss-is-a-local-reflective-path-failure.md). A retained artifact with no interpreter is a table of rules that reasons about nothing.
 
+This shifts the boundary in Naur's theory-building account rather than rejecting its central claim. Naur's program boundary excludes the theory held by human developers; a software-plus-developers boundary already contains it. An LLM-based system can bring part of that theory inside its technical boundary: retained artifacts preserve addressable claims and the model interprets them. The retention is partial because retrieval and context must still activate the claims, and behavior must show that interpretation supports coherent modification.
+
 So the conjecture reaches reflective self-improvement on LLM-plus-artifact substrates specifically, not on reflective systems in general. That is a claim about what is currently available, not about what is possible: any substrate that supplied semantic competence over its own unformalized self-descriptions and retained them addressably would qualify equally.
 
 ## The retention half is what scale might absorb

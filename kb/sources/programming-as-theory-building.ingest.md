@@ -44,3 +44,9 @@ The central construct is also difficult to vary: the theory is recognized throug
 ## Recommended Next Action
 
 Revise [Use tests a decomposition locally; retained rationale is what makes transfer testable](../notes/use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md) to distinguish durable, independently testable rationale from guided theory acquisition through work with a current theory-holder, preserving the note's documentary claim while no longer treating writing as the only way understanding can cross between people.
+
+---
+
+Abstracted into:
+
+- [Theory-mediated self-improvement needs both interpretation and retention from one substrate](../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md) — shifts Naur's human theory-holder into an LLM-plus-artifact system boundary while preserving the theory-building claim
