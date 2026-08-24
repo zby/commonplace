@@ -141,6 +141,7 @@ plugins:
         'notes/storing-llm-outputs-is-constraining.md': 'notes/selecting-an-llm-output-fixes-a-result-not-its-interpretation.md'
         'notes/structure-activates-higher-quality-training-distributions.md': 'notes/structured-prompt-gains-do-not-establish-distribution-selection.md'
         'notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md': 'notes/rule-based-context-selection-needs-a-pre-existing-signal.md'
+        'notes/tags-are-semantic-membership-predicates-with-canonical-routing-heads.md': 'reference/proposals/semantic-contract-for-tags-and-tag-heads.md'
         'notes/tags-index.md': 'notes/tags-README.md'
         'notes/targeted-context-selection-is-bounded-by-discriminator-availability.md': 'notes/rule-based-context-selection-needs-a-pre-existing-signal.md'
         'notes/task-fitted-structure-costs-cross-task-reuse.md': 'notes/current-task-fit-alone-does-not-warrant-costly-entrenchment.md'
