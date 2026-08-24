@@ -1,5 +1,5 @@
 ---
-description: "Proposal: admit new review dependencies as factored (note, dependency) pairs with the dependency as the gate — source-as-gate and a cohort-scoped ack remain; COLLECTION.md-as-gate adopted (ADR 041)"
+description: "Proposal: admit review dependencies as factored (note, dependency) pairs with the dependency as the gate; type, collection, and source pairs are shipped while cohort ack and an N-ary fallback remain"
 type: ../types/design-proposal.md
 tags: [kb-maintenance, observability]
 ---
@@ -8,10 +8,11 @@ tags: [kb-maintenance, observability]
 
 An accepted review is a build product and its inputs are prerequisites — [make-like staleness detection](../../notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md). Review freshness realizes this for exactly two inputs per pair: note text and criterion text. Type-conformance pairs ([ADR 038](../adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)) showed the cheap way to admit a new dependency: do not widen one pair's input set to N — factor each dependency into its own two-input pair where the dependency document is the gate side. This proposal holds the not-yet-adopted remainder of that direction.
 
-## Current state (as of 2026-07-08)
+## Current state (as of 2026-08-24)
 
 - Type-conformance pairs are shipped ([ADR 038](../adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)): the selector derives `(note, type_spec)` pairs from note frontmatter, the type spec is the gate snapshot, and a type edit stales its cohort via the existing `criterion-changed` reason.
-- `COLLECTION.md`-as-gate is shipped ([ADR 041](../adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)): the selector derives `(note, collection_md)` pairs from note location under the `collection`/`collection/{path}` lens, again with no storage change. The factoring pattern is proven twice; this proposal now holds only the remainder — source-as-gate, the cohort-scoped ack, and the N-ary fallback.
+- `COLLECTION.md`-as-gate is shipped ([ADR 041](../adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)): the selector derives `(note, collection_md)` pairs from note location under the `collection`/`collection/{path}` lens, again with no storage change.
+- Source-as-gate is shipped: `source` derives one pair for every resolved direct ingest link in the selected artifact scope, while `source/<slug>` filters one ingest. The complete raw ingest is the criterion snapshot and `kb/sources/<slug>.ingest.md` is the persisted criterion path. The wrapper compares the artifact's source-dependent uses with the ingest's Claims entries. The factoring pattern is now proven for three dependency kinds; this proposal retains only cohort-scoped acknowledgement and the N-ary fallback.
 - Freshness compares two hashes per pair against `accepted_note_hash` / `accepted_criterion_hash` ([ADR 032](../adr/032-review-freshness-uses-db-snapshots-not-git.md)). The snapshot table is role-neutral — keyed by path and content hash — so any repo document can sit on the criterion side.
 - Acknowledgement (`commonplace-ack-review`) re-pins the current note and gate snapshots while carrying forward completed review evidence. It is per-note: acking a cohort of N notes after one shared-gate edit takes N invocations (one per note, batching only across gates).
 - The selector emits JSON consumed by job creation; there is no cohort-scoped ack surface fed from selector output.
@@ -23,7 +24,7 @@ An accepted review is a build product and its inputs are prerequisites — [make
 Each new review dependency becomes its own `(note_path, dependency_path)` pair with the dependency document as the gate:
 
 - **`COLLECTION.md`-as-gate** — *adopted by [ADR 041](../adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)*: a note's conformance to its collection's text contract. One pair per note, criterion side the collection's `COLLECTION.md`.
-- **Source-as-gate** — a derived note's consistency with the source snapshot from which it was worked out. This is the multi-source invalidation case: one pair per `(note, source)` edge, so each source invalidates independently with its own diff.
+- **Source-as-gate** — *adopted*: an artifact's use of a directly linked source ingest. This is the multi-source invalidation case: one pair per `(artifact, ingest)` edge, so each ingest invalidates independently. The ingest, rather than an ignored snapshot, carries the bounded Claims entries that make the judgment self-contained.
 
 Each factored pair reuses the entire freshness/ack/warn stack unchanged, exactly as type-conformance pairs do. Like the type spec, neither `COLLECTION.md` nor a source snapshot is written as a Failure mode / Test procedure, so each needs a mechanical wrapper (or an authored review section in the dependency document, which the hash then sees).
 
@@ -33,21 +34,20 @@ The N-ary input-set design — freshness baseline pinning a variable set of `(in
 
 The force that factored pairs sharpen: cohort blast radius. A `COLLECTION.md` edit stales a whole collection; a type edit stales a whole type cohort — same shape as a wide gate edit. The answer is a cohort-scoped ack surface — an improvement to the existing ack command (by type, by gate, or fed from selector JSON) rather than new freshness semantics. The operator judges one gate-side diff and acknowledges the cohort in one decision instead of N per-note invocations.
 
-## Forces that keep this at planning
+## Forces that keep the remainder at planning
 
-- **Review cost.** Every factored dependency adds a pair per note; the corpus-times-dependencies product is real. Type-conformance stayed opt-in for the same reason; factored pairs should expect the same discipline.
-- **No demand signal yet.** No type edit has yet staled more pairs than per-note acking comfortably clears, and no note has needed source-consistency review badly enough to pay its pair cost.
+- **Review cost.** Every factored dependency adds a pair per note; the corpus-times-dependencies product is real. Applicability-derived source pairs bound this cost to artifacts that actually link an ingest.
+- **No cohort-ack demand signal yet.** No type, collection, or source edit has yet staled more pairs than per-note acking comfortably clears.
 
 ## Free choices
 
-- **Gate id scheme per dependency kind.** Type pairs use a virtual `type/{name}` lens; `collection/{path}` and `source/{name}` lenses would keep the CLI uniform, but source snapshots may not have stable short names.
 - **Wrapper prompt vs authored review section.** Same trade as for type specs, and the freshness boundary weighs the same way: criteria in the dependency document are hashed, wrapper text is not.
 - **Cohort-ack input.** By gate path, by type, or by piping selector JSON into the ack command; selector JSON is the most general and adds no new selection logic.
 
 ## Adoption criteria
 
 - Adopt cohort-scoped ack when the first real type or collection edit stales more pairs than per-note acking comfortably clears. `COLLECTION.md`-as-gate raises the odds: one contract edit stales a whole collection.
-- Adopt source-as-gate when a note's consistency with its source is first wanted as a reviewable judgment — a gate source plus a wrapper, no storage change. (`COLLECTION.md`-as-gate met its criterion and is adopted; see ADR 041.)
+- Source-as-gate met its adoption criterion through the claim-pull implementation: tracked ingest Claims now provide the reviewable source-side propositions, and link-derived pairs add no storage change.
 - Adopt the N-ary input-set model only if a judgment appears that genuinely needs a third text in one prompt; the default answer to a new dependency is a new factored pair, not a wider input set.
 
 ---

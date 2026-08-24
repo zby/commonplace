@@ -196,6 +196,38 @@ Promote only when:
 - every audit finding is resolved;
 - any required acceptance review passes.
 
+Before promotion, inspect `candidate.md` for every addition or material change
+that depends on a named external source, regardless of the target collection.
+This includes a source, URL, or ingest supplied as support; an added or changed
+attribution, quotation, empirical result, or borrowed mechanism tied to a named
+source; and a review finding that asks for exact claim/source grounding. A
+passing mention or adjacent example not used as support is not a dependency.
+In edit mode, compare against `original.md` and do not retrigger the guard for
+unchanged source-dependent wording.
+
+For each guarded dependency, resolve exactly one direct tracked
+`kb/sources/<slug>.ingest.md` from the supplied ingest, canonical source URL, or
+unambiguous source identity, then read its complete Claims section.
+
+- If an entry supports the dependency within its Scope and Limitation, prefer
+  its exact `Claim (paraphrase)` wording, link the ingest, and keep
+  target-specific transfer reasoning in the target. If applying that wording
+  or link materially changes the audited candidate, return to Step 9 and renew
+  any affected audit or acceptance work before promotion.
+- If no entry does, add a blocker to the workshop `README.md` with the exact
+  dependency and retain `candidate.md` and the workshop without changing the
+  live target or any source file. Fill in the exact ingest path or canonical
+  source URL and the source-side proposition or question, then report one of
+  these literal routes as appropriate:
+  - source checkout: `Read and execute kb/instructions/ground-source-dependent-claims.md with Target: <target> and Claim needed: <claim-needed>.`
+  - installed project: `Read and execute kb/commonplace/instructions/ground-source-dependent-claims.md with Target: <target> and Claim needed: <claim-needed>.`
+
+If neither an exact ingest nor a canonical URL can be resolved, record that
+source-identity blocker and ask for the missing identity. This writer never
+invokes the grounding instruction, reads a source snapshot, edits an ingest, or
+introduces a result protocol. Do not begin any promotion write while a
+source-dependency blocker remains.
+
 Identify each focused local source whose collection authorizes a source-to-target lineage footer. Validate it in its current state, and preserve a workshop copy of every source that will change. If a source is already invalid, stop before promotion.
 
 Before writing, verify the candidate's frontmatter when applicable, required sections, and relative links as they will resolve from the target directory. Write `candidate.md` to the resolved target path. Preserve valid incumbent metadata and links unless the revision requires changing them. For a new artifact, derive a lowercase hyphenated filename of at most 70 characters from its title unless the user supplied a path. Never grant `user-verified` implicitly.

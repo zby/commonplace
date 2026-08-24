@@ -29,6 +29,12 @@ path, criterion path, and model partition. Its two inputs are the `note` and
 target identity: evidence under one partition does not make another partition
 fresh.
 
+The criterion role is path-generic. Besides catalog gates, type specs,
+collection contracts, and the critique instruction, a directly linked source
+ingest can occupy it. A source-conformance pair still has exactly two inputs:
+the selected artifact and the complete raw ingest. No synthetic criterion or
+third dependency is registered.
+
 Each review baseline points to the completed pair whose evidence it makes
 current. Acknowledgement can advance the baseline while preserving that pair;
 a new review replaces it. The store records which evidence still applies, not

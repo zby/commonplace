@@ -11,6 +11,12 @@ status: accepted
 
 **Date:** 2026-08-23
 
+The authority, local-cache, and checksum decisions remain accepted. [ADR
+073](./073-untracked-source-snapshots-require-ingest-grounding.md) partially
+supersedes checksum-first resolution for grounding and mutation-bearing ingest
+paths: those require the exact name-paired snapshot and use the checksum to
+verify it. Generic cache recovery remains checksum-first.
+
 ## Context
 
 Tracked source snapshots split one source record across two authorities. The
@@ -122,11 +128,12 @@ fields, no directory primary, and no broader ingest-body rewrite.
 The operativity path is direct. The ingest and snapshot schemas enforce the
 field shapes; the ingest, snapshot, paper-with-code, and re-ingest instructions
 govern agent writes; the GitHub and X commands materialize ignored captures;
-`commonplace.lib.snapshot` performs checksum-first resolution; source URL
-extraction reads the ingest's top-level `source`; and scaffold, package, and
-documentation surfaces distribute those contracts. These consumers make the
-ADR binding on subsequent source work rather than leaving it as descriptive
-history.
+`commonplace.lib.snapshot` performs checksum-first generic cache resolution;
+grounding and mutation-bearing ingest instructions require name-paired
+resolution; source URL extraction reads the ingest's top-level `source`; and
+scaffold, package, and documentation surfaces distribute those contracts.
+These consumers make the ADR binding on subsequent source work rather than
+leaving it as descriptive history.
 
 A fresh checkout can identify every primary observation without its local
 file and can attempt reconstruction. Exact bytes remain usable regardless of
@@ -157,6 +164,7 @@ same source differently without changing the captured evidence.
 
 Relevant Notes:
 
+- [ADR 073: Untracked source snapshots require ingest grounding](./073-untracked-source-snapshots-require-ingest-grounding.md) — superseded-by: replaces checksum-first lookup for grounding and mutation-bearing ingest paths while retaining this decision's source-authority and cache boundary
 - [ADR 045: source genre is a single open field on the snapshot](./045-source-genre-is-a-single-open-field-on-the-snapshot.md) — supersedes: replaces snapshot genre authority and its mutation exception while retaining the open vocabulary
 - [Ingest-report type](../../sources/types/ingest-report.md) — implemented-by: durable primary, capture, genre, checksum, and secondary-source contract
 - [Snapshot type](../../sources/types/snapshot.md) — implemented-by: ignored local reading-copy boundary and provisional capture metadata

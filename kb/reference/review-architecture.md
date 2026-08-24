@@ -77,17 +77,20 @@ reconstructable from completed state.
 
 A review baseline pins exactly two source files: the note and the persisted
 criterion. The criterion may be a catalog gate, type spec, collection contract,
-or critique instruction. Selector applicability and `missing-baseline`
+linked source ingest, or critique instruction. Selector applicability and `missing-baseline`
 discovery remain review-specific; registered-target status belongs to
 [freshness architecture](./freshness-architecture.md).
 
 Prompt scaffolding is deliberately outside the freshness hash. This includes
 the worker instructions, output protocol, reading scope, prompt assembly, and
-the mechanical wrappers that present type specs or collection contracts as
-criteria. Therefore judgment-bearing requirements must live in the hashed note
-or criterion files. A wrapper may say how to apply a dependency document, never
-what a good note should contain; sharpen conformance in the dependency
-document's authored `## Review` section. A scaffolding change that shifts
+the mechanical wrappers that present type specs, collection contracts, or
+source ingests as criteria. Source criteria retain the complete raw ingest as
+the captured criterion text; other criteria continue to omit frontmatter in the
+rendered prompt. Therefore judgment-bearing particulars must live in the hashed
+note or criterion files. A wrapper may say how to apply a dependency document,
+never supply the case-specific judgment itself. For source pairs, those
+particulars are the artifact's use and the ingest's Claim, Scope, Confidence,
+and Limitation fields. A scaffolding change that shifts
 judgments is a system upgrade requiring deliberate corpus-wide re-review or
 acknowledgement rather than ordinary file-triggered staleness.
 
@@ -96,7 +99,8 @@ The live comments in
 [`protocol/prompt.py`](../../src/commonplace/review/protocol/prompt.py) place
 this rule in both change loops. [ADRs 038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)
 and [041](./adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)
-apply it to the two conformance criterion sources.
+apply it to type and collection criteria; source conformance uses the same
+two-file boundary with the linked ingest on the criterion side.
 
 ## Maintenance scope
 

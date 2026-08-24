@@ -148,17 +148,21 @@ findings.
 
 Auto-acknowledge `note-changed` verdict pairs when none of the criterion's
 watched note parts changed. Invoking it is explicit human authorization for
-the qualifying trivial-change workflow.
+the qualifying trivial-change workflow. Type, collection, and source
+conformance pairs have no `watches:` declaration and never qualify.
 
 ### commonplace-resolve-criteria
 
-Resolve gate, bundle, concrete conformance, or critique requests into their
-criterion definitions.
+Resolve gate, bundle, concrete conformance, source-ingest, or critique requests
+into their criterion definitions. A concrete `source/<slug>` emits the complete
+raw ingest; bare `source` requires selector artifact scope and cannot resolve to
+one file here.
 
 ### commonplace-review-target-selector
 
 Select applicable assay pairs either by current staleness or by an explicit
-requested-mode scope, for inspection or piping into job creation.
+requested-mode scope, for inspection or piping into job creation. The virtual
+`source` lens derives criterion paths from resolved ingest links in that scope.
 
 ### commonplace-warn-selector
 

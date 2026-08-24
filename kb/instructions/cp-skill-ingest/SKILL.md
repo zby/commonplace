@@ -1,12 +1,12 @@
 ---
 name: cp-skill-ingest
-description: Use when asked to ingest one URL or local snapshot, or to execute a bounded re-ingest request, into a tracked .ingest.md source analysis.
+description: Use when asked to ingest one URL or local snapshot, execute a bounded re-ingest request, or mechanically append one verified Claims entry to a tracked .ingest.md source analysis.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill, Task
 context: fork
 model: opus
-argument-hint: "[url-or-file] — URL (https://...) or path to .md file in kb/sources/.snapshots/. No argument lists recent snapshots."
+argument-hint: "[url-or-file | re_ingest_request | claim_append_request] — URL, snapshot path, or structured bounded-mutation request. No argument lists recent snapshots."
 ---
 
 # Ingest source
@@ -61,6 +61,77 @@ re_ingest_request:
   snapshot_path: <name-paired snapshot path>
   allow_checksum_change: false | true
 ```
+
+A grounding caller supplies this structured request instead of an ordinary
+target or a re-ingest request:
+
+```yaml
+claim_append_request:
+  ingest_path: <exact ingest path>
+  snapshot_path: <name-paired, checksum-matching path>
+  entry: |-
+    <complete Markdown entry>
+```
+
+## Claim append path
+
+When the target is a `claim_append_request`, execute only this section and then
+report the result. Do not run connection discovery, dispatch a drafting worker,
+rewrite an analysis section, or continue into the ordinary ingest steps.
+
+1. Require exactly the three request fields shown above. Require
+   `ingest_path` to name one tracked direct child
+   `kb/sources/<slug>.ingest.md`, and require `snapshot_path` to equal its
+   name-paired `kb/sources/.snapshots/<slug>.md`. Both files must exist. Do not
+   search for another path or checksum match.
+2. Read both files as exact bytes. Require exactly one `## Claims` section in
+   the ingest. Require the snapshot frontmatter's canonical `source` to equal
+   the ingest's `source`, compute lowercase SHA-256 from the snapshot's exact
+   bytes, and require it to equal the ingest's `snapshot_sha256`.
+3. Require `entry` to be exactly one complete Claims entry in this shape:
+
+   ```markdown
+   - **Claim (paraphrase):** <bounded source-side proposition>
+     - **Source extract (verbatim):** <exact supporting content>
+     - **Source location:** <human-resolvable locator for that extract>
+     - **Scope:** <population, conditions, and exclusions>
+     - **Confidence:** <scoped prose>
+     - **Limitation:** <boundary needed to prevent overstatement>
+   ```
+
+   Require one non-empty Claim, Scope, Confidence, and Limitation field and at
+   least one non-empty adjacent Source extract/Source location pair. Permit
+   additional extract/location pairs only in that same adjacent order. Reject
+   headings, a second top-level entry, any other field, or text before or after
+   the entry. Require every verbatim extract value to occur exactly in the
+   snapshot; a locator alone is not verification.
+4. Retain the ingest's complete incumbent bytes. Construct a candidate by
+   splicing only within the Claims section and by using the incumbent file's
+   newline convention:
+   - when the section body is exactly `No claims have been grounded yet.`,
+     replace only that sentence with `entry`;
+   - otherwise insert `entry` after all incumbent entries and before the next
+     level-two heading, adding only the separator newlines needed for a valid
+     adjacent entry.
+
+   Preserve every incumbent entry byte-for-byte and every byte outside the
+   Claims section. Do not merge, deduplicate, reorder, renumber, or otherwise
+   interpret similar, broader, narrower, or disputed entries.
+5. Before writing, recheck the paired paths, source identity, checksum, entry
+   shape, and extracts against the current bytes. Write the constructed
+   candidate once, then run:
+
+   ```bash
+   commonplace-validate kb/sources/<slug>.ingest.md
+   ```
+
+   Re-read the result and require the intended splice plus exact preservation
+   of all other bytes. If a post-write check or validation fails, restore the
+   retained incumbent bytes exactly, verify that restoration, and report
+   failure rather than leaving an invalid or partial append.
+6. Report the ingest path, `added`, and the exact `Claim (paraphrase)` wording.
+   This branch never launches a worker and never changes a source snapshot or
+   another artifact.
 
 ## Steps
 

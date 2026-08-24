@@ -29,6 +29,10 @@ from commonplace.review.review_db import (
     prepare_review_db,
 )
 from commonplace.review.review_model import normalize_model_partition
+from commonplace.review.source_conformance import (
+    is_source_ingest_criterion_path,
+    note_source_ingest_paths,
+)
 from commonplace.review.type_conformance import (
     is_type_spec_criterion_path,
     note_type_spec_path,
@@ -179,10 +183,12 @@ def _filter_applicable_pairs(
             for pair in note_pairs
             if not is_type_spec_criterion_path(pair.criterion_path)
             and not is_collection_md_criterion_path(pair.criterion_path)
+            and not is_source_ingest_criterion_path(pair.criterion_path)
             and not is_critique_criterion_path(pair.criterion_path)
         ]
         has_type_pairs = any(is_type_spec_criterion_path(pair.criterion_path) for pair in note_pairs)
         has_collection_pairs = any(is_collection_md_criterion_path(pair.criterion_path) for pair in note_pairs)
+        has_source_pairs = any(is_source_ingest_criterion_path(pair.criterion_path) for pair in note_pairs)
         applicable_criterion_ids = set(
             applicable_criterion_ids_for_note(
                 note_abs,
@@ -192,11 +198,14 @@ def _filter_applicable_pairs(
         )
         note_type_path = note_type_spec_path(repo_root, note_abs) if has_type_pairs else None
         note_collection_path = note_collection_md_path(repo_root, note_abs) if has_collection_pairs else None
+        note_source_paths = set(note_source_ingest_paths(repo_root, note_abs)) if has_source_pairs else set()
         for pair in note_pairs:
             if is_type_spec_criterion_path(pair.criterion_path):
                 pair_applies = pair.criterion_path == note_type_path
             elif is_collection_md_criterion_path(pair.criterion_path):
                 pair_applies = pair.criterion_path == note_collection_path
+            elif is_source_ingest_criterion_path(pair.criterion_path):
+                pair_applies = pair.criterion_path in note_source_paths
             elif is_critique_criterion_path(pair.criterion_path):
                 pair_applies = True
             else:

@@ -20,7 +20,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=(
             "Acknowledge note-changed stale verdict pairs when the criterion's watched "
-            "note parts did not change. Conformance pairs never qualify because their "
+            "note parts did not change. Type, collection, and source conformance pairs never qualify because their "
             "criterion documents declare no watches. Invoking this command is explicit "
             "human authorization to preserve any committed user verification across the "
             "qualifying trivial change."
@@ -32,13 +32,13 @@ def build_parser() -> argparse.ArgumentParser:
         nargs="*",
         help=(
             "Gate IDs (e.g. prose/source-residue), bundle names (e.g. prose), "
-            "and/or conformance requests (type/type-name, collection/path)."
+            "and/or conformance requests (type/type-name, collection/path, source/ingest-slug)."
         ),
     )
     parser.add_argument(
         "--all-gates",
         action="store_true",
-        help="Check all verdict criteria: catalog gates plus type- and collection-conformance pairs.",
+        help="Check all verdict criteria: catalog gates plus type-, collection-, and source-conformance pairs.",
     )
     parser.add_argument("--note", nargs="+", dest="note_paths", help="Filter to specific note paths or directories.")
     parser.add_argument(

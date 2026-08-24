@@ -12,6 +12,10 @@ from commonplace.review.collection_conformance import (
 )
 from commonplace.review.critique import is_critique_request
 from commonplace.review.paths import reject_unsafe_relative
+from commonplace.review.source_conformance import (
+    SOURCE_CONFORMANCE_LENS,
+    is_source_conformance_request,
+)
 from commonplace.review.type_conformance import (
     TYPE_CONFORMANCE_LENS,
     is_type_conformance_request,
@@ -34,19 +38,23 @@ def resolve_criterion_requests(requests: list[str], gates_dir: Path) -> list[str
 
     Catalog gate ids and bundle names expand against the gate catalog; virtual
     conformance requests (`type`, `type/{name}`, `collection`,
-    `collection/{path}`) and the report-kind `critique` assay pass through for
-    the selector's derived criterion sources.
+    `collection/{path}`, `source`, `source/{slug}`) and the report-kind
+    `critique` assay pass through for the selector's derived criterion sources.
     """
     passthrough_requests = [
         arg
         for arg in requests
-        if is_type_conformance_request(arg) or is_collection_conformance_request(arg) or is_critique_request(arg)
+        if is_type_conformance_request(arg)
+        or is_collection_conformance_request(arg)
+        or is_source_conformance_request(arg)
+        or is_critique_request(arg)
     ]
     catalog_requests = [
         arg
         for arg in requests
         if not is_type_conformance_request(arg)
         and not is_collection_conformance_request(arg)
+        and not is_source_conformance_request(arg)
         and not is_critique_request(arg)
     ]
     criterion_ids = resolve_to_criterion_ids(catalog_requests, gates_dir) if catalog_requests else []
@@ -56,7 +64,7 @@ def resolve_criterion_requests(requests: list[str], gates_dir: Path) -> list[str
 
 def all_gate_requests(gates_dir: Path) -> list[str]:
     """Every applicable review criterion: all catalog bundles plus the virtual
-    `type` and `collection` lenses.
+    `type`, `collection`, and `source` lenses.
 
     The single definition of `--all-gates` for every review command, so the
     flag means the same thing everywhere. Commands whose mechanism cannot act
@@ -66,7 +74,11 @@ def all_gate_requests(gates_dir: Path) -> list[str]:
     """
     bundles = sorted(d.name for d in gates_dir.iterdir() if d.is_dir())
     # The heavyweight report-kind critique assay is intentionally opt-in.
-    return resolve_to_criterion_ids(bundles, gates_dir) + [TYPE_CONFORMANCE_LENS, COLLECTION_CONFORMANCE_LENS]
+    return resolve_to_criterion_ids(bundles, gates_dir) + [
+        TYPE_CONFORMANCE_LENS,
+        COLLECTION_CONFORMANCE_LENS,
+        SOURCE_CONFORMANCE_LENS,
+    ]
 
 
 def resolve_to_criterion_ids(args: list[str], gates_dir: Path) -> list[str]:

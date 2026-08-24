@@ -30,15 +30,17 @@ A freshness baseline is the current snapshot-pinned applicability boundary for c
 
 **Assay.** Any snapshot-anchored LLM evaluation executed through selector → job → worker → finalizer. Question shape and result kind are separate axes: a closed-ended assay asks a fixed question, while an open-ended assay samples a space of possible findings; independently, the persisted result contract is `verdict` or `report`. Shipped gates are closed-ended and verdict-kind. Critique is open-ended and report-kind.
 
-**Gate.** A closed-ended, verdict-kind assay criterion. Catalog gates are markdown files at `kb/instructions/review-gates/{lens}/{name}.md` in a source checkout, or under the installed framework gate catalog in generated projects. The `{lens}/{name}` shorthand is the gate id used at the CLI boundary (for example `prose/source-residue`). Type- and collection-conformance pairs are virtual gates whose criterion files are the type spec and `COLLECTION.md`.
+**Gate.** A closed-ended, verdict-kind assay criterion. Catalog gates are markdown files at `kb/instructions/review-gates/{lens}/{name}.md` in a source checkout, or under the installed framework gate catalog in generated projects. The `{lens}/{name}` shorthand is the gate id used at the CLI boundary (for example `prose/source-residue`). Type-, collection-, and source-conformance pairs are virtual gates whose criterion files are the type spec, `COLLECTION.md`, and linked source ingest respectively.
 
-**Criterion.** The instruction text applied to the note. It occupies the `criterion_path` side of every pair, including report assays.
+**Criterion.** The criterion-side text applied to the note, sometimes through a mechanical wrapper. It occupies the `criterion_path` side of every pair, including report assays.
 
 **Bundle.** A directory of gates sharing a lens. `semantic` means all gate files under `kb/instructions/review-gates/semantic/`.
 
 **Type-conformance pair.** A review of a note against the type spec named by its frontmatter `type:` — the type spec *is* the gate ([ADR 038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)). Request it with the virtual `type` lens: `type` derives one pair per typed note in scope, `type/definition` narrows to one type's cohort. The criterion id is `type/{name}`; the persisted criterion identity is the type-spec path (for example `kb/types/definition.md`). Because the type spec sits on the criterion side, editing it stales exactly the notes of that type as `criterion-changed`, and a trivial type edit is acknowledged like any other gate edit. `--all-gates` includes type-conformance pairs alongside the catalog; request them alone via the `type` lens. The rendered prompt carries a fixed conformance instruction followed by the type-spec snapshot captured at job creation; if a type spec carries an authored `## Review` section, reviewers treat it as the operative test.
 
 **Collection-conformance pair.** A review of a note against the `COLLECTION.md` contract of the collection it lives in — the contract *is* the gate ([ADR 041](./adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)). Request it with the virtual `collection` lens: `collection` derives one pair per in-collection note in scope, `collection/notes` narrows to one collection's cohort (the path segment is the collection directory relative to `kb/`, so a collection under a namespace directory reads `collection/commonplace/notes`). The persisted criterion identity is the COLLECTION.md path (for example `kb/notes/COLLECTION.md`). Editing a collection contract stales exactly that collection's notes as `criterion-changed`; `--all-gates` includes collection-conformance pairs. The prompt mechanics mirror the type pair — the captured contract snapshot follows a fixed conformance instruction, an authored `## Review` section in the COLLECTION.md is the operative test, and the reviewer judges only what the collection contract asks beyond the type contract, so the two conformance pairs do not double-flag.
+
+**Source-conformance pair.** A review of one selected artifact's use of one directly linked tracked ingest. Request `source` to derive one pair for every resolved Markdown link to a direct `kb/sources/<slug>.ingest.md`, or `source/<slug>` to keep only that ingest. Fragments do not affect identity, repeated links deduplicate, and a selected artifact with no ingest link produces no source pair. The persisted criterion identity is the exact ingest path; the prompt embeds the complete raw ingest after a fixed wrapper. It compares every articulated use with the complete Claims section and returns the worst outcome: `pass` when every use is supported within its bounds or the link is purely adjacent, `warn` when the claim, qualifier, or transfer is too unclear to verify, and `fail` when support is absent or exceeds Scope or Limitation. `--all-gates` includes source pairs, but only inside the artifact scope already chosen by `--note` or `--user-verified`.
 
 **Review job.** One review invocation: one rendered prompt, one output artifact directory, and one job-level status. A job is `queued` until finalization marks it `completed` or `failed`.
 
@@ -77,6 +79,11 @@ The selector reports each requested `(note, criterion)` pair as fresh or, if not
 
 For `note-changed` pairs, the selector can show the diff against the baseline note text, so you can judge whether the change invalidates that assay's evidence.
 
+Source applicability is current-link-derived. Job creation rechecks that the
+artifact still resolves a link to the requested ingest and skips a pair whose
+link disappeared after selection. An ingest edit changes the criterion hash;
+an artifact edit changes the note hash.
+
 Repository-wide status over **registered** targets is separate from applicable-pair discovery. `commonplace-freshness-status` reports every migrated `review-pair` baseline, with `--json`, `--diff`, `--all`, and partition filters. It does not emit `missing-baseline` for pairs that were never reviewed. See [freshness architecture](./freshness-architecture.md).
 
 ## Running a review batch
@@ -111,6 +118,11 @@ commonplace-ack-review --model-partition {model-partition} {note_path} {criterio
 
 Ack fails when there is no freshness baseline for the same `(note_path, criterion_path, model_partition)`. Output lines have the form `acked: <note_path> <criterion_id>`.
 
+`commonplace-ack-trivial-note-changes` may select source-conformance pairs, but
+never auto-acks them. Source ingests declare no `watches:`, so the command
+treats the entire artifact as watched, as it does for type and collection
+conformance.
+
 ## Building a warn/fix queue
 
 `commonplace-warn-selector` builds a fixing queue from the current review state — the actionable findings from reviews whose outcome is `warn`. It is the entry point to the [fix system](../instructions/FIX-SYSTEM.md), which turns these findings into applied corrections and fix reports.
@@ -132,8 +144,8 @@ Open-ended methods therefore remain report-shaped rather than being forced into 
 
 **Selector** — `commonplace-review-target-selector`:
 
-- positional gate ids, bundle names, conformance requests, and/or `critique` (e.g. `prose`, `semantic/grounding-alignment`, `type`, `collection/notes`, `critique`)
-- `--all-gates` selects every applicable verdict criterion in place of naming ids/bundles (mutually exclusive with them): all catalog gates plus each note's type-conformance and collection-conformance pairs. It intentionally excludes report assays. Like every selector flag it only *chooses* pairs — the selected pairs still run through create-jobs → worker → finalize; it is not a one-shot "run all gates" command
+- positional gate ids, bundle names, conformance requests, and/or `critique` (e.g. `prose`, `semantic/grounding-alignment`, `type`, `collection/notes`, `source`, `source/agent-workflow-memory`, `critique`)
+- `--all-gates` selects every applicable verdict criterion in place of naming ids/bundles (mutually exclusive with them): all catalog gates plus each note's type-, collection-, and link-derived source-conformance pairs. It intentionally excludes report assays. Like every selector flag it only *chooses* pairs — the selected pairs still run through create-jobs → worker → finalize; it is not a one-shot "run all gates" command
 - `--note` to filter to specific note paths or directories
 - `--user-verified` to filter exactly to notes with committed `user-verified: true`
 - `--model-partition {model-partition}` selects the review model partition to inspect or write; omit it only for model-agnostic missing-baseline coverage

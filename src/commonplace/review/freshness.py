@@ -2,7 +2,7 @@
 
 Freshness hashes exactly the two evaluated inputs: note text and criterion
 text. The persisted `criterion_path` side may be a catalog gate, a type spec, a
-COLLECTION.md contract, or the critique instruction; the same two hashes
+COLLECTION.md contract, linked source ingest, or the critique instruction; the same two hashes
 decide staleness. The prompt scaffolding around them (protocol/prompt.py,
 including the conformance wrappers) and
 the assembling code itself are deliberately outside the hash — changing them
@@ -22,6 +22,7 @@ from pathlib import Path
 
 from commonplace.lib import frontmatter
 from commonplace.review.review_db import ReviewPairRequest, snapshot_file
+from commonplace.review.source_conformance import is_source_ingest_criterion_path
 
 
 @dataclass(frozen=True)
@@ -67,7 +68,11 @@ def capture_review_inputs(
             for note_path, snapshot in note_snapshots.items()
         },
         criterion_texts={
-            criterion_path: frontmatter.strip(snapshot.content_text).lstrip("\n")
+            criterion_path: (
+                snapshot.content_text
+                if is_source_ingest_criterion_path(criterion_path)
+                else frontmatter.strip(snapshot.content_text).lstrip("\n")
+            )
             for criterion_path, snapshot in criterion_snapshots.items()
         },
     )

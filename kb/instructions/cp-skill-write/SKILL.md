@@ -72,7 +72,7 @@ In edit mode, also run a backlinks lookup on the target note — one query, no b
 
 All discovery beyond this — collection-wide description scans, cross-destination prospecting, body search, tag traversal, link-following, reverse-edge reasoning — belongs to `cp-skill-connect`, not here. Write stays focused on authoring one note.
 
-### Step 6 - Draft And Save
+### Step 6 - Draft The Candidate
 
 Follow the type-spec doc and collection conventions. Derive a lowercase-hyphenated filename from `# Title` unless editing an existing file. For typed artifacts, set `type:` to the exact repo-relative type-spec path, not the type name.
 
@@ -80,9 +80,55 @@ Set traits only when clearly warranted. The available traits and their meanings 
 
 Preserve existing frontmatter and links during edits unless the requested change requires changing them.
 
-Before saving a substantive edit, remove `user-verified` if present. Verification attests to the prior substantive contents and must be granted again explicitly by a human. Preserve it only when the user has explicitly authorized a mechanical trivial-change workflow.
+For a substantive edit, remove `user-verified` from the candidate. Verification
+attests to the prior substantive contents and must be granted again explicitly
+by a human. Preserve it only when the user has explicitly authorized a
+mechanical trivial-change workflow.
 
-### Step 7 - Validate
+Draft the complete candidate in working context without creating or changing
+the target file. The source-dependency guard in Step 7 must finish before the
+first durable target write.
+
+### Step 7 - Guard Named Source Dependencies
+
+Inspect the candidate for every addition or material change that depends on a
+named external source, regardless of the target collection. The guard applies
+when, for example:
+
+- the user or brief names a source, URL, or ingest as support;
+- the candidate adds or materially changes an attribution, quotation,
+  empirical result, or borrowed mechanism tied to a named source; or
+- a review finding asks for exact claim/source grounding.
+
+A passing mention or adjacent example that the candidate does not use as
+support is not a source dependency. In edit mode, compare against the incumbent
+and do not retrigger the guard for unchanged source-dependent wording.
+
+For each guarded dependency, resolve exactly one direct tracked
+`kb/sources/<slug>.ingest.md` from the supplied ingest, canonical source URL, or
+unambiguous source identity. Read its complete Claims section.
+
+- If an entry supports the dependency within its Scope and Limitation, prefer
+  the exact `Claim (paraphrase)` wording in the candidate, link the ingest, and
+  keep any target-specific transfer reasoning in the target rather than the
+  Claims entry.
+- If no entry does, stop before saving. Fill in the exact ingest path or
+  canonical source URL and the source-side proposition or question, then
+  report one of these literal routes as appropriate:
+  - source checkout: `Read and execute kb/instructions/ground-source-dependent-claims.md with Target: <target> and Claim needed: <claim-needed>.`
+  - installed project: `Read and execute kb/commonplace/instructions/ground-source-dependent-claims.md with Target: <target> and Claim needed: <claim-needed>.`
+
+If neither an exact ingest nor a canonical URL can be resolved, stop and ask
+for that source identity rather than inventing an input. This writer never
+invokes the grounding instruction, reads a source snapshot, edits an ingest, or
+introduces a result protocol.
+
+### Step 8 - Save
+
+Only after Step 7 passes, write the complete candidate to the resolved target
+path. This is the first durable target write.
+
+### Step 9 - Validate
 
 Validate the note you wrote or edited:
 

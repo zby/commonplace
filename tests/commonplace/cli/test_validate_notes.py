@@ -342,6 +342,10 @@ Scientific paper.
 
 Summary.
 {headings}
+## Claims
+
+No claims have been grounded yet.
+
 ## Connections Found
 
 Connections.
