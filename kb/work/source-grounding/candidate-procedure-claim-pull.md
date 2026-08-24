@@ -13,7 +13,7 @@ When a note needs to use a claim from a source:
 3. look in the ingest for that claim, and **add it there if missing**;
 4. only then use the claim in the target note.
 
-## Why the worked case supports it
+## Argument 1: it fixes a polarity the contract has backwards
 
 The run found that the ingest contract carries three of four needed extractions
 **voluntarily** — nothing requires them, and the contract's stated polarity points
@@ -29,20 +29,78 @@ a claim ledger driven by what notes actually cite, so coverage follows demand an
 nothing has to be anticipated. It also makes ingest cost incremental rather than
 a full mining pass up front, which matters when the corpus is dozens of papers.
 
-## What it inherits for free
+## Argument 2: the ingest is the only tracked link in the chain
 
-The fidelity half is already built. [ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)
-resolves every `verbatim`-marked quotation against the source it links, failing a
-false verbatim claim, and `commonplace-verify-quotes` audits them across files. A
-ledger entry carrying a verbatim quote is therefore **machine-checked with no new
-machinery** — which is most of the deterministic half of the maintenance sweep
-the [README](./README.md) anticipates.
+This is the stronger argument, and it does not depend on the polarity point at
+all.
 
-One measured obstacle: the ingest run reported that this `pdftotext` capture
-garbles the figure regions and Bayesian equations, so verbatim quotation from
-those spans will fail ADR 046 resolution, while numeric results in running prose
-captured cleanly. Claim extraction that depends on quote resolution therefore
-depends on capture quality in a way nothing currently checks.
+`kb/sources/.snapshots/` is ignored (`kb/sources/.gitignore:1`), and
+[`kb/sources/COLLECTION.md`](../../sources/COLLECTION.md) says why: snapshots are
+"local materializations, not tracked authority." Nothing durable may link to
+them, and "a citation of what the source says points to the external `source`
+URL." So the evidence behind every source claim in this KB currently lives in a
+directory a fresh clone does not have.
+
+Measured 2026-08-24 with `commonplace-verify-quotes` over `kb/sources`,
+`kb/notes`, `kb/reference`, and `kb/agent-memory-systems`:
+
+```
+Checked 1257 Markdown files: 0 match, 0 mismatch, 12 unresolved.
+```
+
+Not one verbatim quote resolves, and all twelve candidates cite an **internal KB
+note** rather than a source. No source quotation in the tracked corpus is
+verifiable, because none exists in a checkable form.
+
+That reframes what the procedure is for. Step 3 — add the claim to the ingest if
+missing — is not bookkeeping that makes premises easier to cite. It is **the
+mechanism that moves source evidence from ignored local state into tracked
+state**, one claim at a time, at the moment someone actually needs it. Without
+something playing that role, the KB's source grounding is unbacked by
+construction, not merely awkward to navigate.
+
+Doing it per-claim is also what makes it affordable. Tracking whole snapshots
+would mean carrying entire papers in a public repository, with the weight and the
+licensing exposure that implies; short quotations are the retention form a public
+repo can actually carry. So the incremental, demand-driven shape is not a
+concession — it is the only version of this that is cheap enough and clean enough
+to run.
+
+## What already exists, and what does not
+
+The convention exists; the enforcement does not reach sources.
+[ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)
+resolves `verbatim`-marked quotations against "the markdown source it links" and
+fails a false claim, with `commonplace-verify-quotes` giving the corpus view. But
+its third precondition is that "the source snapshot is a checked-in file present
+at validation time," and in Commonplace that is false. The mechanism is not
+broken — prototyped on the sibling `epistack-casebooks` corpus, where sources
+*are* checked in, it found 63 match / 18 mismatch / 6 unresolved over 87
+candidates. Its precondition simply does not hold here.
+
+So a ledger entry would **not** be machine-checked today, and the wiring cannot
+exist under current rules: the resolver dereferences file paths, and the only
+file that holds the source text is one authors are forbidden to link.
+
+Two consequences for the design.
+
+**The guarantee available is weaker than enforce-or-omit, and should be stated as
+such.** Once the quote is in the ingest and the snapshot is gone, nothing
+re-derives it from the repo alone. What is achievable is *attested once, with a
+recomputation path*: `snapshot_sha256` names exactly which bytes the attestation
+was made against, so verification is recoverable by re-fetching or from any local
+snapshot matching that checksum. That is not standing enforcement, and
+[enforce-or-omit](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md)'s
+own precondition 3 is precisely source-present-at-validation-time. It extends a
+claim the KB already holds —
+[a citation cannot assert more fidelity than its capture preserved](../../notes/a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md)
+— with a retention wrinkle: a citation cannot assert more *verifiability* than
+its retention preserves.
+
+**Capture quality becomes load-bearing.** The ingest run reported that this
+`pdftotext` capture garbles figure regions and the Bayesian equations, so
+verbatim quotation from those spans would fail resolution, while numeric results
+in running prose captured cleanly. Nothing currently checks that.
 
 ## What it does not do
 
@@ -81,75 +139,20 @@ in them asks whether a claim the note already makes survives contact.
   is a conclusion for [linking-foundations](../linking-foundations/README.md);
   surfacing the need is this workshop's part.
 
-## The retention gap this exposes — and a correction
+## Options for the enforcement question, none selected
 
-An earlier claim in this file's "inherits for free" section was **wrong**: a
-ledger entry carrying a verbatim quote is *not* machine-checked today, and the
-wiring cannot exist under the current rules.
+Track snapshots for the sources claims are drawn from; resolve opportunistically
+against a checksum-matched local snapshot when one is present; extend ADR 046 to
+resolve through `source` plus checksum rather than a body link; or accept
+attestation and say so plainly. Each trades repository weight, licensing
+exposure, and enforcement strength differently. Laying out those forces is what a
+proposal owes before an ADR, so the option space belongs in
+[`kb/reference/proposals/`](../../reference/proposals/README.md) once it is
+understood — not settled as a workshop conclusion.
 
-Measured 2026-08-24 with `commonplace-verify-quotes` over `kb/sources`,
-`kb/notes`, `kb/reference`, and `kb/agent-memory-systems`:
-
-```
-Checked 1257 Markdown files: 0 match, 0 mismatch, 12 unresolved.
-```
-
-Not one verbatim quote resolves anywhere in this repo, and all twelve candidates
-cite an **internal KB note**, not a source. No source quotation in the tracked
-corpus is verifiable, because none exists in a checkable form.
-
-The cause is structural, and two artifacts state the opposing halves:
-
-- [ADR 046](../../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)
-  resolves a quote "against the markdown source it links," and lists as its
-  third precondition that "the source snapshot is a checked-in file present at
-  validation time."
-- [`kb/sources/COLLECTION.md`](../../sources/COLLECTION.md) makes that false here:
-  snapshots are "local materializations, not tracked authority," `.snapshots/` is
-  ignored (`kb/sources/.gitignore:1`), authors must "never author a durable link
-  to `.snapshots/`," and "a citation of what the source says points to the
-  external `source` URL" — which the resolver cannot dereference, since it
-  resolves file paths.
-
-The mechanism is not broken. ADR 046 was prototyped on the sibling
-`epistack-casebooks` corpus, where sources *are* checked in, and found 63 match /
-18 mismatch / 6 unresolved over 87 candidates. Its precondition simply does not
-hold in Commonplace.
-
-**This makes carrying the quote in the ingest necessary, not merely tidy.** The
-ingest is the only tracked artifact in the chain. Under a contract that declares
-the snapshot non-authority and forbids linking to it, the quoted span has nowhere
-else durable to live. A ledger that pointed at the snapshot would be pointing at
-something a fresh clone does not have.
-
-It is plausibly also the licensing-compatible retention form — a public repo can
-carry short quotations where it cannot carry whole papers, which would explain
-why `.snapshots/` is ignored in the first place. Recorded as a likely reason; the
-motivation has not been verified against a decision record.
-
-**The honest cost.** Once the quote lives in the ingest and the snapshot is gone,
-nothing can re-derive it from the repo alone. The guarantee drops from
-continuously checked to **attested once, with a recomputation path**:
-`snapshot_sha256` names exactly which bytes the attestation was made against, so
-verification is recoverable by re-fetching or by any local snapshot matching that
-checksum — but it is not standing enforcement. That is weaker than
-[enforce-or-omit](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md),
-whose precondition 3 is precisely source-present-at-validation-time. The
-weakening should be stated in whatever ships, not glossed.
-
-It also extends a claim the KB already holds:
-[a citation cannot assert more fidelity than its capture preserved](../../notes/a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md).
-The wrinkle here is retention rather than capture — a citation cannot assert more
-*verifiability* than its retention preserves.
-
-**Options, none selected.** Track snapshots for sources that claims are drawn
-from; resolve opportunistically against a checksum-matched local snapshot when
-one is present; extend ADR 046 to resolve through `source` plus checksum rather
-than a body link; or accept attestation and say so. Each trades repo weight,
-licensing exposure, and enforcement strength differently, and the option space is
-what a proposal owes before an ADR — this belongs in
-[`kb/reference/proposals/`](../../reference/proposals/README.md) once the forces
-are laid out, not in a workshop conclusion.
+Note that this question is *downstream* of the procedure, not a precondition for
+it. Argument 2 holds whatever the enforcement answer turns out to be: the quoted
+span has to reach a tracked artifact before there is anything to enforce against.
 
 **One incidental defect found on the way.** `commonplace-verify-quotes` walks
 into the ignored `.snapshots/` directory and tries to resolve a mangled URL as a
