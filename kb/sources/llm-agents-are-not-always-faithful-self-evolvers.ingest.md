@@ -23,7 +23,18 @@ The paper asks whether self-evolving LLM agents actually depend on the experienc
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** Across four self-evolving-agent frameworks, thirteen LLM backbones, and nine environments, causal perturbations changed behavior more consistently for raw trajectory experience than for condensed summaries or heuristics; weak dependence on condensed experience persisted when it was the only experience supplied.
+  - **Source extract (verbatim):** Using controlled causal interventions on both raw and condensed forms of experience, we comprehensively evaluate four representative frameworks across 13 LLM backbones and 9 environments.
+  - **Source location:** Abstract.
+  - **Source extract (verbatim):** Our analysis uncovers a striking asymmetry: while agents consistently depend on raw experience, they often disregard or misinterpret condensed experience, even when it is the only experience provided.
+  - **Source location:** Abstract.
+  - **Source extract (verbatim):** We first show that agents are consistently more faithful to raw experiences than to condensed ones when both are present, exhibiting substantial behavioral changes under raw experience perturbations but not under condensed ones (§[4.1](https://arxiv.org/html/2601.22436v2#S4.SS1 "4.1 Faithfulness under Joint Raw & Condensed Access ‣ 4 Evaluation of Experience Faithfulness ‣ Large Language Model Agents Are Not Always Faithful Self-Evolvers")).
+  - **Source location:** Introduction, summary of RQ1 findings.
+  - **Source extract (verbatim):** We further demonstrate that this lack of faithfulness to condensed inputs persists even when raw experience is entirely absent, indicating that the problem is not due to competition or overshadowing (§[4.2](https://arxiv.org/html/2601.22436v2#S4.SS2 "4.2 Faithfulness under Condensed-Only Input ‣ 4 Evaluation of Experience Faithfulness ‣ Large Language Model Agents Are Not Always Faithful Self-Evolvers")).
+  - **Source location:** Introduction, summary of RQ1 findings.
+  - **Scope:** Four offline or online single- and multi-agent frameworks with frozen backbones, thirteen evaluated LLMs, and nine reasoning, QA, embodied-action, and web-interaction environments; faithfulness is operationalized as behavioral sensitivity to controlled experience perturbations.
+  - **Confidence:** High for the reported raw-versus-condensed intervention asymmetry within the evaluated systems; it recurs across access conditions, frameworks, environments, and model scales.
+  - **Limitation:** Behavioral insensitivity to a perturbation is the paper's operational measure of unfaithfulness, not proof that the model failed to read the text. The result does not show that every condensation preserved the raw trace's semantics or that condensed experience always reduces task performance.
 
 ## Connections Found
 

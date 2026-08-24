@@ -1,15 +1,15 @@
 ---
-description: For quality-sensitive agent work whose required evidence fits within the provider window, silent degradation across volume, complexity, and relevance/interference often constrains usable context before the hard cap
+description: For quality-sensitive agent work whose required evidence fits within the provider window, volume, complexity, and interference can silently constrain usable context before the hard cap
 type: kb/types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, foundations, deploy-time-learning]
 ---
 
-# Soft degradation often binds before the hard cap when required evidence fits
+# Soft degradation can bind before the hard cap even when required evidence fits
 
 A useful model of agent context has two boundaries. The **hard token limit** is the maximum input the model accepts; crossing it returns an API error. The **soft degradation boundary** is the point at which task performance drops through missed instructions, shallow reasoning, or unused context even though the output remains fluent and well-formed.
 
-For quality-sensitive agent work whose required evidence still fits inside the provider window, the soft boundary often binds first. This is a statistical claim, not an absolute one. It would be false if representative workloads usually stayed reliable until the cap, or if the first constraint were usually the inability to fit the necessary evidence at all. Some tasks really are hard-cap-bound.
+For quality-sensitive agent work whose required evidence still fits inside the provider window, the soft boundary can bind first. The evidence here establishes that possibility across several task shapes, not how frequently it is the first constraint in representative workloads. Some tasks really are hard-cap-bound, and no prevalence estimate in the cited studies licenses “often.”
 
 ## Dimensions of the soft bound
 
@@ -17,21 +17,21 @@ At least three distinguishable pressures can reduce usable context before the ha
 
 ### Volume
 
-More tokens can make it harder for the model to recover and use the right material. The “lost in the middle” result ([Liu et al., 2023](https://arxiv.org/abs/2307.03172)) shows primacy and recency bias in long-context retrieval: models underuse information in the middle of a sequence. Agent prompts inherit that risk whenever they require recovery from long, weakly scoped input. Paulsen's Maximum Effective Context Window work likewise suggests that usable context can sit far below the advertised window and varies by task ([local ingest](../sources/paulsen-maximum-effective-context-window-mecw.ingest.md)).
+More tokens can make it harder for the model to recover and use the right material. The “lost in the middle” result ([Liu et al., 2023](https://arxiv.org/abs/2307.03172)) shows primacy and recency bias in long-context retrieval: models underuse information in the middle of a sequence. Agent prompts inherit that risk whenever they require recovery from long, weakly scoped input. Across eleven tested models and four synthetic retrieval, aggregation, and sorting question types, [Paulsen reports](../sources/paulsen-maximum-effective-context-window-mecw.ingest.md) that measured Maximum Effective Context Windows fell well below providers' maximum accepted windows and shifted with question type, with some measured gaps exceeding 99%. The study's simple generated records do not represent ordinary agent workloads.
 
 ### Relevance/interference
 
-Not all tokens cost the same. Irrelevant context can do more than add volume; it can actively interfere with task execution. GSM-DC, a math-reasoning benchmark with synthetic distractors, shows power-law error growth as distractors increase. The effect strengthens with reasoning depth and harms both path selection and arithmetic execution ([local ingest](../sources/gsm-dc-llm-reasoning-distracted-irrelevant-context.ingest.md)).
+Not all tokens cost the same. Irrelevant context can do more than add volume; it can actively interfere with task execution. In [GSM-DC's controlled synthetic math problems](../sources/gsm-dc-llm-reasoning-distracted-irrelevant-context.ingest.md), increasing injected irrelevant context reduced reasoning accuracy across six tested instruction models; error grew roughly as a power law in distractor count with a steeper exponent at greater reasoning depth, and the disruption affected both correct path selection and arithmetic execution. The measured rate is bounded to the benchmark's templated problems, distractor range, depths, and models.
 
-The same pattern appears in agent workflows. Injecting irrelevant task sequences into a web-agent benchmark drops success from 40–50% to under 10%; agents loop, lose the objective, and treat stale history as live state ([local ingest](../sources/llm-webagents-long-context-reasoning-benchmark.ingest.md)). Retrieval added after loading gives only modest improvement in that setup. This does not prove that retrieval is generally weak, but it does show that interference can survive a retrieval layer.
+The same pattern appears in an agent benchmark. Inserting irrelevant task sequences between dependent subtasks to create 25,000–150,000-token web-agent histories [reduced four tested models' success](../sources/llm-webagents-long-context-reasoning-benchmark.ingest.md) from roughly 40–50% in baseline conditions to below 10% in long-context conditions. Loops and loss of the original objective were prominent, while task-relevant summary retrieval produced only modest improvement. Because the benchmark changes history length and intervening task content together, it does not isolate volume from interference or show that agents treated stale history as live state.
 
 ### Complexity
 
-Some context becomes expensive not because it is long, but because it is hard to interpret or compose. A reference that the model must resolve adds [interpretation work](./model-resolved-indirection-adds-interpretation-work-to-llm-execution.md), and deeper compositional structure may impose a similar burden. ConvexBench, a benchmark on compositional symbolic reasoning, shows collapse at low token counts: F1 falls from 1.0 at depth 2 to about 0.2 at depth 100, even though the depth-100 prompt contains only 5,331 tokens ([local ingest](../sources/convexbench-can-llms-recognize-convex-functions.ingest.md)). Token count alone therefore does not predict usable capacity. What remains open is whether this failure is specifically a context-management limit, a missing reasoning procedure, or some mixture of both.
+Some context becomes expensive not because it is long, but because it is hard to interpret or compose. A reference that the model must resolve adds [interpretation work](./model-resolved-indirection-adds-interpretation-work-to-llm-execution.md), and deeper compositional structure may impose a similar burden. On [ConvexBench's deeply composed symbolic-function tasks](../sources/convexbench-can-llms-recognize-convex-functions.ingest.md), one-shot reasoning fell from F1 1.0 at depth 2 to about 0.2 at depth 100 even though the depth-100 input was 5,331 tokens; agentic reasoning with focused context reached F1 1.0 across the evaluated depths. Token count alone therefore does not predict usable capacity on this benchmark. What remains open is whether its one-shot failure is specifically a context-management limit, a missing reasoning procedure, or some mixture of both.
 
 ### Open questions
 
-The main unresolved question is interaction. GSM-DC shows that distractor count and reasoning depth interact in synthetic math problems. The web-agent benchmark shows an agent-level analogue under long, multi-session histories. We still do not know how stable that interaction is across natural-language tasks, partially relevant material, or model families.
+The main unresolved question is interaction. GSM-DC shows that distractor count and reasoning depth interact in synthetic math problems. The web-agent benchmark instead shows agent-level degradation in long, dependent multi-session histories where length and intervening task content vary together; it does not isolate their interaction. We still do not know how stable the GSM-DC interaction is across natural-language tasks, partially relevant material, or model families.
 
 ## Candidate mechanism: workspace saturation and displacement
 

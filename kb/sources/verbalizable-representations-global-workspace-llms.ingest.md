@@ -23,7 +23,31 @@ The paper introduces the Jacobian lens, a method for reading token-aligned, verb
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** In controlled language-identification and character-counting tasks, the same underlying information could support automatic computation without causally routing through the measured J-space, while explicit report and flexible inference depended on J-space representations; task demands could surface otherwise absent information into that space.
+  - **Source extract (verbatim):** Taken together, the two experiments show that many computations, which we might call “automatic,” do not causally route through the J-space.
+  - **Source location:** “The J-space selectively mediates flexible but not automatic cognition.”
+  - **Source extract (verbatim):** In some cases, the information relevant to the automatic computation is present in the J-space but unused for the task; in others, it is not present at all.
+  - **Source location:** “The J-space selectively mediates flexible but not automatic cognition.”
+  - **Source extract (verbatim):** By contrast, explicit report and flexible computation tasks depend on the J-space, and in tasks where the relevant information is not by default present in the J-space, that information can be surfaced to the J-space on demand (similar to the effect seen in ??).
+  - **Source location:** “The J-space selectively mediates flexible but not automatic cognition.”
+  - **Source extract (verbatim):** Notably, in all cases—automatic tasks, report, and flexible computation—the same underlying information is available to the model and used for task computations.
+  - **Source location:** “The J-space selectively mediates flexible but not automatic cognition.”
+  - **Scope:** Controlled passage-continuation, anomaly-detection, explicit-report, and flexible-inference tasks using J-lens readouts and coordinate-swap interventions in the evaluated Claude production models.
+  - **Confidence:** High for the reported task-specific causal contrast: the same stimuli are paired with different questions, and targeted interventions affect explicit and flexible outputs while leaving the automatic outputs largely unchanged.
+  - **Limitation:** J-space is an approximate, partially observed representational subspace, not the model's entire active context. The experiments do not establish that arbitrary context-visible information is consciously “read,” predict when it will affect an agent action, or show that every flexible computation uses this route.
+
+- **Claim (paraphrase):** In the paper's Sonnet 4.5 experiments, J-space ablation selectively impaired multi-hop and context-dependent flexible generation while leaving many shallow classification, extraction, and ordinary next-token predictions largely intact; the measured J-space carried a small share of activation variance and its contents were preferentially relayed across layers and token positions.
+  - **Source extract (verbatim):** We find that at most positions, J-space ablation perturbs the model's next-token prediction substantially less than in the multihop case (Figure ??).
+  - **Source location:** “J-space ablation leaves most capabilities intact while impairing internal reasoning.”
+  - **Source extract (verbatim):** Tasks that can be solved by shallow classifications, comparisons, or factual recall—MMLU multiple choice , odd-one-out, SQuAD extractive QA , sentiment classification, CoLA acceptability —are essentially unaffected even under heavy ablation, with scores remaining at or near the unablated Sonnet 4.5 baseline.
+  - **Source location:** “J-space ablation leaves most capabilities intact while impairing internal reasoning.”
+  - **Source extract (verbatim):** The excess variance explained is modest, never exceeding 10%, indicating that the model's activations are dominated by information outside the J-space.
+  - **Source location:** “Capacity of the J-space.”
+  - **Source extract (verbatim):** Taken together, our results suggest that the model’s weights are configured to broadcast J-space content disproportionately strongly, along both the depth and sequence axes.
+  - **Source location:** “The J-space is a broadcast hub.”
+  - **Scope:** J-lens-based interventions and ablations in Sonnet 4.5 and related evaluated Claude models, including a fourteen-task battery, controlled multi-hop prompts, pretraining-like text, sparse-decomposition capacity estimates, and weight-based broadcast analyses.
+  - **Confidence:** Moderate to high for selective causal involvement and preferential broadcast within the paper's operationalization; several intervention types and matched controls converge on the same bounded pattern.
+  - **Limitation:** The study does not vary long-context volume, irrelevant-context load, or dependency depth against J-space occupancy. Its lens captures only a small, single-token-oriented part of representation, and the authors cannot predict which arbitrary tasks will engage it, so it does not establish J-space competition as the general mechanism of long-context degradation.
 
 ## Connections Found
 

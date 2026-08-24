@@ -23,7 +23,16 @@ The authors define **machine studying** as any pre-task change an agent makes to
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** In StudyBench's literature-review analysis, when evaluation was restricted to must-cite papers that both GPT-5.1 and GPT-5.5 had encountered, GPT-5.1 retained markedly fewer papers from 2023 onward—including only 65.6% of reached 2025 must-cites versus 89.3% for GPT-5.5—so the later gap occurred after retrieval.
+  - **Source extract (verbatim):** We keep only the must-cite papers that *both* models actually encountered, then ask what fraction each one keeps, so both now judge an identical pile.
+  - **Source location:** Section 8, discussion of Figure 8.
+  - **Source extract (verbatim):** From 2023 on, GPT-5.1 falls behind by around twenty points, on papers it had already found and read.
+  - **Source location:** Section 8, discussion of Figure 8.
+  - **Source extract (verbatim):** By year (≤2020 … 2025). GPT-5.1: 88.1, 87.0, 83.8, 68.9, 72.5, 65.6. GPT-5.5: 95.2, 95.7, 89.2, 91.9, 88.7, 89.3 (percent). Gap in points: +7, +9, +5, +23, +16, +24.
+  - **Source location:** Figure 8, “Retrieval-Controlled Selection Rate by Year.”
+  - **Scope:** Preliminary StudyBench literature-review runs comparing GPT-5.1 with GPT-5.5 on the intersection of ICLR-2026 must-cite papers that both models encountered through BM25 search, measured by the share each retained in its final 100-paper selection.
+  - **Confidence:** Moderate for the observed post-retrieval selection gap: the source controls the compared paper set and reports year-stratified rates, but describes early project results from two closed models.
+  - **Limitation:** Encounter and retention are trace-level proxies, not direct evidence that each paper's content entered or failed to affect the model's active computation. The comparison does not isolate training cutoff from model differences or establish a general context-to-action failure rate.
 
 ## Connections Found
 

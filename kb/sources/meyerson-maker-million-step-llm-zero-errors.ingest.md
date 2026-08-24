@@ -24,7 +24,16 @@ MAKER introduces "massively decomposed agentic processes" (MDAPs), a framework t
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** In a 20-disk Towers of Hanoi demonstration, MAKER completed more than one million LLM-generated steps with zero observed errors by decomposing execution into one-move microagent calls and applying first-to-ahead-by-three voting plus format- and length-based red-flagging.
+  - **Source extract (verbatim):** This paper describes MAKER, the first system that successfully solves a task with over one million LLM steps with zero errors, and, in principle, scales far beyond this level.
+  - **Source location:** Abstract.
+  - **Source extract (verbatim):** The approach relies on an extreme decomposition of a task into subtasks, each of which can be tackled by focused microagents.
+  - **Source location:** Abstract.
+  - **Source extract (verbatim):** Since k_min = 3, at least three responses were generated in parallel for each step.
+  - **Source location:** Section 4.4, “Solving the 20-disk problem.”
+  - **Scope:** One formally specified 20-disk Towers of Hanoi execution using gpt-4.1-mini microagents, one move per subtask, a vote margin of three, and output red-flagging.
+  - **Confidence:** High for the reported demonstration and system ingredients; the source states the completed horizon, observed error count, decomposition, and voting configuration directly.
+  - **Limitation:** The task is a deterministic puzzle with tiny repeated actions, and the result depends on stochastic voting and red-flagging rather than a hard semantic oracle for each step. It does not show that hard per-step checks caused the reliability or that the method transfers to judgment-heavy composition.
 
 ## Connections Found
 

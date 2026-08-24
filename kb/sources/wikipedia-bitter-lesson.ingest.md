@@ -23,7 +23,14 @@ The bitter lesson is Sutton's observation that across AI history, general-purpos
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** Wikipedia summarizes the bitter lesson as the long-run tendency for approaches that scale with computation—such as search and statistical learning—to outperform approaches based on domain-specific understanding, and says Sutton recommends simple scalable methods over increasingly elaborate human insight.
+  - **Source extract (verbatim):** The bitter lesson is the observation in artificial intelligence that, in the long run, approaches that scale with available computational power (such as brute-force search or statistical learning from large datasets) tend to outperform ones based on domain-specific understanding because they are better at taking advantage of Moore's law.
+  - **Source location:** Opening paragraph.
+  - **Source extract (verbatim):** Sutton concludes that time is better invested in finding simple scalable solutions that can take advantage of Moore's law, rather than introducing ever-more-complex human insights, and calls this the "bitter lesson".
+  - **Source location:** “The Essay.”
+  - **Scope:** Wikipedia's secondary summary of Richard Sutton's 2019 essay and its examples in game playing, speech recognition, and computer vision.
+  - **Confidence:** High for what the captured Wikipedia article says; it directly states this contrast and recommendation.
+  - **Limitation:** This is a secondary source, not Sutton's original text. It does not identify untested or “unearned” reach as the property selected against, claim that every kind of explicit structure loses, or establish the target note's earned-reach reinterpretation.
 
 ## Connections Found
 
@@ -58,3 +65,9 @@ Since the original ingestion (2026-02-23), the KB has developed substantial infr
 ## Recommended Next Action
 
 Write a note titled "Reach predicts resistance to bitter-lessoning" connecting to `first-principles-reasoning-selects-for-explanatory-reach-over.md`, `fixed-artifacts-split-into-exact-specs-and-proxy-theories.md`, and `oracle-strength-spectrum.md`. The note would argue that Deutsch's reach concept explains WHY the bitter lesson has a boundary: high-reach knowledge (explanatory, captures deep structure) resists being outperformed by scaling because it IS the kind of knowledge that general methods eventually discover. Low-reach knowledge (adaptive, context-fitted) is exactly what scaling replaces. This resolves the open question in oracle-strength-spectrum.md ("does oracle strength predict bitter-lessoning?") by connecting oracle strength to reach: hard oracles correspond to fully captured structure (high reach, won't be bitter-lessoned), while soft oracles correspond to theories about structure (lower reach, will be superseded).
+
+---
+
+Relevant Notes:
+
+- [Unsupported proxy scope may explain a structured method's loss under scaling](../notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md) — is-evidence-for: supplies the secondary computation-scalable/domain-specific contrast while bounding the note's unsupported-scope mechanism as a local conjecture rather than an attribution to Sutton

@@ -24,7 +24,16 @@ The paper introduces ConvexBench, a benchmark testing whether LLMs can determine
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** On ConvexBench's deeply composed symbolic-function tasks, one-shot reasoning fell from F1 1.0 at depth 2 to about 0.2 at depth 100 even though the depth-100 input was 5,331 tokens; agentic reasoning with focused context reached F1 1.0 across the evaluated depths.
+  - **Source extract (verbatim):** Experiments reveal a sharp compositional reasoning gap: performance drops from F1=1.0 at depth 2 to approximately 0.2 at depth 100.
+  - **Source location:** Abstract.
+  - **Source extract (verbatim):** A critical finding: even with token counts (5,331 at depth 100) far below LLM context limits (128k+), models degrade substantially.
+  - **Source location:** “Context and Long-Horizon Reasoning.”
+  - **Source extract (verbatim):** Agentic framework with focused context achieves F1=1.0 across all depths
+  - **Source location:** “Experimental Results.”
+  - **Scope:** ConvexBench convexity classification over generated, mechanically verified compositions, evaluated on GPT-5, Gemini-2.5-Pro, and Qwen3-8B/30B from shallow through depth-100 expressions.
+  - **Confidence:** High for the benchmark measurements as reported in the captured paper; labels are mechanically verified and the source states the depth, token count, and F1 contrasts directly.
+  - **Limitation:** The result establishes a compositional reasoning failure well below advertised token limits on this symbolic benchmark. It does not by itself identify context management as the cause or show that soft degradation usually binds first in representative agent workloads.
 
 ## Connections Found
 

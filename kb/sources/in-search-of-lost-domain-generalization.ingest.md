@@ -23,7 +23,20 @@ The paper argues that a domain-generalization algorithm without a stated model-s
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** DomainBed evaluates nine baseline domain-generalization algorithms on seven multi-domain datasets under three explicit model-selection criteria, and reports that carefully implemented empirical risk minimization achieves state-of-the-art performance across the tested datasets.
+  - **Source extract (verbatim):** They introduce **DomainBed**, a unified testbed featuring:
+  - **Source location:** “Abstract,” immediately before the dataset, algorithm, and selection-criterion counts.
+  - **Source extract (verbatim):** Seven multi-domain datasets
+  - **Source location:** “Abstract,” DomainBed feature list.
+  - **Source extract (verbatim):** Nine baseline algorithms
+  - **Source location:** “Abstract,” DomainBed feature list.
+  - **Source extract (verbatim):** Three model selection criteria
+  - **Source location:** “Abstract,” DomainBed feature list.
+  - **Source extract (verbatim):** Through extensive experiments, the researchers found that empirical risk minimization (ERM), when properly implemented, achieves state-of-the-art performance across all tested datasets—challenging the superiority of more complex domain generalization methods.
+  - **Source location:** “Key Findings.”
+  - **Scope:** The DomainBed testbed's seven datasets, nine baseline algorithms, and three model-selection criteria under the experimental implementations summarized in the captured paper.
+  - **Confidence:** High for the paper's reported benchmark design and qualitative ERM result as represented in the captured source.
+  - **Limitation:** The source does not characterize every algorithm as making an explicit “reach claim,” nor show that declaring a selection procedure by itself dissolved a previously measured advantage. Those are target-side interpretations, and the benchmark result does not establish a general law about structure and scale.
 
 ## Connections Found
 
@@ -59,6 +72,7 @@ Write the note claim (A) supports — that an algorithm without a declared model
 
 Relevant Notes:
 
+- [Unsupported proxy scope may explain a structured method's loss under scaling](../notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md) — is-evidence-for: the bounded ERM comparison supplies a compatible outcome while showing that a comparative loss alone does not identify the note's conjectured mechanism
 - [Theory-mediated learning may improve sample efficiency under structured shifts](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — is-evidence-for: this paper is the shift-difficulty caveat that paragraph already rests on
 - [Formal symbolic systems assess explanatory-reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md) — is-evidence-for: the measured instance of that note's uncited "formalization boundary" warning
 - [Codification and relaxing navigate the bitter lesson boundary](../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — is-evidence-for: nine codification bets that lost to the general method under a fair protocol

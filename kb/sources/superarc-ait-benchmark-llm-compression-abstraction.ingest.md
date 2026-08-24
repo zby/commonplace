@@ -24,7 +24,18 @@ SuperARC is an open-ended benchmark grounded in Algorithmic Information Theory t
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** On SuperARC-seq's 100 binary-sequence compression tasks, the benchmark's AIXI/BDM/CTM baseline scored φ = 1.000, while the best listed frontier LLM scored 0.042 and most scored about 0.007–0.008, largely by printing target sequences rather than compressing them.
+  - **Source extract (verbatim):** AIXI/BDM/CTM: φ = 1.000 (perfect score)
+  - **Source location:** Section 2.4.1, “SuperARC-seq Results.”
+  - **Source extract (verbatim):** ChatGPT-4.5: φ = 0.042 (only ordinal mappings)
+  - **Source location:** Section 2.4.1, “SuperARC-seq Results.”
+  - **Source extract (verbatim):** Most other LLMs: φ ≈ 0.007–0.008
+  - **Source location:** Section 2.4.1, “SuperARC-seq Results.”
+  - **Source extract (verbatim):** Most frontier LLMs produced print-only responses (ρ₃ ≈ 1.0), indicating zero compression and no pattern abstraction.
+  - **Source location:** Section 2.4.1, “SuperARC-seq Results.”
+  - **Scope:** SuperARC-seq's author-defined φ metric over 100 binary sequence-generation tasks, comparing named frontier LLMs with the paper's AIXI/BDM/CTM algorithmic baseline.
+  - **Confidence:** High for the numerical comparison as reported in the captured paper; the benchmark specifies its output classes and compression-weighted score.
+  - **Limitation:** This is a bounded comparison under a novel, author-chosen metric and a purpose-built algorithmic baseline. It does not establish that the benchmark objective is the right proxy for general abstraction, nor that symbolic machinery generally outperforms LLMs outside these sequence tasks.
 
 ## Connections Found
 

@@ -23,7 +23,14 @@ The paper gives the first formal analysis of the invariant risk minimization obj
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** For non-linear featurizers in the paper's Gaussian latent-variable model, Rosenfeld, Ravikumar, and Risteski construct a predictor that is near-optimal for the penalized IRM objective and near-identical to the invariant predictor on the training distribution, yet uses the ERM solution on most test points when the test environment's mean is sufficiently far from the training means.
+  - **Source extract (verbatim):** For non-linear featurizers the authors construct a predictor that is near-optimal under the penalized IRM objective and near-identical to the optimal invariant predictor on the training distribution, yet reduces to the ERM solution on most test points once the test environment's mean is sufficiently far from the training means.
+  - **Source location:** “Non-linear regime.”
+  - **Source extract (verbatim):** The IRM penalty incurred scales with the squared probability mass of the rare region and is exponentially small in `d_e`, so the objective sees the construction as an attractive solution.
+  - **Source location:** “Non-linear regime.”
+  - **Scope:** The paper's non-linear-featurizer construction for a Gaussian latent-variable structural equation model, with training environments concentrated in one environmental-feature region and a sufficiently shifted test mean.
+  - **Confidence:** High for the formal counterexample as summarized in the captured source; its objective value, training-distribution behavior, and shifted-test behavior are stated directly.
+  - **Limitation:** The construction is near-optimal and near-identical, not an exact discharge of the IRM objective or exact indistinguishability on every training point. Its ERM behavior requires the specified non-linear setting and sufficiently distant test environment; it does not show that every formal invariance constraint recovers the wrong predictor.
 
 ## Connections Found
 
@@ -46,3 +53,9 @@ Editorial judgment. The results live inside one Gaussian structural equation mod
 ## Recommended Next Action
 
 Revise the "formalization boundary" section of [Formal symbolic systems assess explanatory-reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md) to state when the causal route is worth taking — plentiful genuine environments and a restricted model class — instead of only warning that translation can fail, and add this ingest as that section's first `evidenced-by` edge, which would also correct the one-sided source footer that currently carries five sources all arguing for the causal and proof routes.
+
+---
+
+Relevant Notes:
+
+- [Unsupported proxy scope may explain a structured method's loss under scaling](../notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md) — is-evidence-for: the qualified non-linear construction witnesses local objective fit outrunning warranted scope but does not establish selection by scaling

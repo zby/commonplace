@@ -24,7 +24,18 @@ Chung et al. introduce a benchmark for evaluating LLM-based web agents on long-c
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** In a web-agent benchmark that inserted irrelevant task sequences between dependent subtasks to create 25,000–150,000-token histories, four tested models' success fell from roughly 40–50% in baseline conditions to below 10% in long-context conditions; loops and loss of the original objective were prominent, and task-relevant summary retrieval produced only modest improvement.
+  - **Source extract (verbatim):** The team developed an evaluation framework simulating multi-session user interactions by injecting irrelevant task sequences between dependent subtasks, creating contexts from 25,000 to 150,000 tokens.
+  - **Source location:** Abstract.
+  - **Source extract (verbatim):** Success rates drop from 40-50% in baseline conditions to less than 10% in long context scenarios.
+  - **Source location:** Abstract.
+  - **Source extract (verbatim):** The analysis identified primary failure modes: agents became trapped in loops and lost sight of original objectives.
+  - **Source location:** Abstract.
+  - **Source extract (verbatim):** The researchers tested an implicit RAG approach generating task-relevant summaries, which provided modest improvements but did not resolve fundamental limitations.
+  - **Source location:** Abstract.
+  - **Scope:** Four LLM-based web agents—Claude-3.7, GPT-4.1, Llama 4, and o4-mini—performing dependent subtasks across synthetic multi-session histories of 25k–150k tokens with injected intervening task sequences.
+  - **Confidence:** Moderate to high for the reported benchmark contrast and qualitative failure modes; the captured paper summary states them directly, though it does not provide per-model success values for every context condition.
+  - **Limitation:** This benchmark combines increasing length with injected intervening task sequences, so it does not isolate token volume from interference or task dependency. “Modest” retrieval improvement is qualitative here, and the source does not establish that agents treated stale history as live state.
 
 ## Connections Found
 
