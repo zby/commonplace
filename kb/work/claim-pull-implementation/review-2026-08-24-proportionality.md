@@ -177,3 +177,73 @@ friction the operator's original sequencing already implied. It is also
 recoverable in a way permanent machinery is not — if the round trip proves
 annoying in practice, the dispatch can be added later against evidence, which is
 the reverse of the current order.
+
+---
+
+## Addendum 2: which part is optimistic locking, and which window actually matters
+
+Operator question, 2026-08-24: does the write-time refusal fire when the ingest
+was rewritten in the meantime — is it optimistic locking?
+
+**No, and the distinction matters.** The two sides of the design are different
+mechanisms and only one of them is concurrency control.
+
+**The write-side refusal is a precondition check, not a lock.** It fires on
+"this ingest does not carry the claim," which is the *common* case — nobody has
+grounded it yet — not a race. It compares content against a requirement, not a
+version against a version. Closer to "the file does not exist" than to "the
+version changed under me."
+
+**The ingest-mutation side is optimistic locking.** Capture the preimage digest,
+stage the change, recheck the digest, promote. That is textbook optimistic
+concurrency control, and the
+[readiness critique](./readiness-critique-2026-08-24.md) A1 correctly found the
+verify-and-commit is not atomic — so it is *broken* OCC, not something other than
+OCC. The plan's remedy was to add pessimistic locking underneath it. The cheaper
+remedy is to keep the OCC and accept it as best effort, which is the critique's
+own option 3.
+
+### The window that is being protected is not the window that matters
+
+Both mechanisms address a gap measured in milliseconds. But there is a longer
+gap neither touches:
+
+> `cp-skill-write` reads the ingest, sees the claim, saves the note. A week
+> later a re-ingest or a revised grounding changes that claim. The note now
+> cites something the ingest no longer says.
+
+A lock closes a sub-second window while leaving a months-long one wide open. The
+consequence is identical either way — the note's citation needs rechecking — so
+the lock is not buying correctness against the failure that will actually occur.
+**This is a staleness problem wearing a concurrency problem's clothes.**
+
+### Commonplace already has the right shape for it, and it is nearly free
+
+[Factored dependency pairs for review freshness](../../reference/proposals/factored-dependency-pairs-for-review-freshness.md)
+holds exactly this case. Its `source-as-gate` remainder is "a derived note's
+consistency with the source snapshot from which it was worked out … one pair per
+`(note, source)` edge, so each source invalidates independently with its own
+diff." Its stated adoption criterion is "when a note's consistency with its
+source is first wanted as a reviewable judgment" — which is precisely what this
+workshop is building. The proposal records the cost as "a gate source plus a
+wrapper, **no storage change**," and the factoring pattern is already proven
+twice, with `COLLECTION.md`-as-gate shipped in
+[ADR 041](../../reference/adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md).
+
+So the durable note-to-ingest relationship has an existing, cheap, twice-proven
+mechanism waiting for a trigger, and this work is that trigger.
+
+### Revised recommendation
+
+Do not build locking. Instead:
+
+1. keep best-effort OCC on ingest mutation — digest recheck immediately before
+   write, failure means re-run;
+2. keep the write-side precondition check as a content check;
+3. carry the durable relationship with a factored `(note, ingest)` freshness
+   pair rather than a write-time guarantee.
+
+That is strictly cheaper than the current plan **and** it covers the failure the
+locking subsystem does not reach. Adopting source-as-gate is also a decision this
+workshop can hand to an existing proposal rather than invent, which is the
+difference between one ADR and a subsystem.
