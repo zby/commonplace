@@ -192,7 +192,13 @@ Permanent routes:
 6. Implement and document the source review lens.
 7. Run tests and the retained semantic cases in
    [claims-shape-evidence.md](./claims-shape-evidence.md).
-8. Promote the ADR, then begin the cleanup cohort.
+8. Promote the ADR, then freeze and complete the first cohort under
+   [cleanup-plan.md](./cleanup-plan.md).
+9. Record the rollout findings. Hand the ingest-extraction and
+   intermediate-node evidence to
+   [source-grounding](../source-grounding/README.md), and hand cases dispositioned
+   as `literature handoff` to
+   [literature-disposition](../literature-disposition/README.md).
 
 ## Acceptance
 
@@ -222,3 +228,39 @@ Permanent routes:
   a semantic wrapper change is documented as a system-wide re-review event.
 - Fresh installs receive the coherent files. Initialization may add absent
   files but does not upgrade differing old copies.
+- The first cleanup cohort is frozen by target path, revision, and claim. Every
+  item has a terminal disposition or named blocker, and its validation and
+  source-review result are recorded.
+- Cleanup records unavailable sources, repairs, and similar-entry accumulation
+  as rollout evidence. It does not add reconciliation, identity, concurrency,
+  or recovery machinery merely because the plan anticipated those pressures.
+
+## Completion and handoff
+
+The prospective implementation is complete after steps 1–7. This workshop is
+complete only after steps 8–9 and every acceptance condition above. In
+particular, starting the cleanup cohort does not satisfy completion.
+
+The first cleanup cohort validates this rollout; it is not the authoritative
+source-corpus decision. Its results supply two conclusions back to
+`source-grounding`: whether the promoted Claims contract answers the extraction
+question in practice, and whether whole-ingest links remain sufficient without
+an intermediate claim node. `source-grounding` stays open until it separately
+decides its source corpus, ingests accepted sources, and records rejected ones.
+
+The cleanup cohort owns its bounded claim-level grounding, narrowing, repair,
+and retained-local-delta dispositions. A case that requires an artifact-level
+merge, retirement, inbound rewiring, or a broader cohort judgment receives the
+`literature handoff` disposition. This plan records and hands off that case; it
+does not silently absorb `literature-disposition`'s remaining cohort.
+
+The broader search for unnamed external dependencies is also a successor, not
+part of this rollout. The source lens checks resolved ingest links and must not
+be described as a prior-art detector. Any later corpus sweep should preserve
+the source-grounding boundary: model recall may nominate reading, but only a
+captured and read source can settle a claim.
+
+After the durable ADR and instructions are promoted, the first cohort is
+complete, and these handoffs are recorded, close this workshop under the
+`kb/work/` collection contract rather than retaining it as permanent
+documentation.
