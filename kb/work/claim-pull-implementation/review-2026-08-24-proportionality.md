@@ -247,3 +247,98 @@ That is strictly cheaper than the current plan **and** it covers the failure the
 locking subsystem does not reach. Adopting source-as-gate is also a decision this
 workshop can hand to an existing proposal rather than invent, which is the
 difference between one ADR and a subsystem.
+
+---
+
+## Addendum 3: what the write-side refusal actually does
+
+Operator question, 2026-08-24: how does the refusal happen?
+
+### The mechanism fits an idiom the skill already has
+
+Step 5 is already "a cheap duplicate guard" — a targeted `rg` with an explicit
+prohibition on enumerating the collection. The source check is the same shape,
+added as one more bounded guard, firing only when the trigger fires.
+
+**Step 5, additional guard.** When the candidate leans on a named external
+source, resolve its ingest:
+
+```bash
+rg -l "^source: <exact-url>" kb/sources/*.ingest.md
+```
+
+- **No hit** — the source has no ingest. Refuse, naming the route
+  (`cp-skill-ingest <url>`).
+- **Hit** — read only that ingest's `## Claims` section. One section, not the
+  ingest, and never the source.
+  - The section carries the claim → cite the ingest, state which claim is used
+    and why it transfers, save.
+  - It does not → refuse, naming the grounding route.
+
+**Step 6.** The refusal is a stop, not a branch: report the missing claim and the
+literal next action. Write does not perform it.
+
+Cost on an untriggered write: no I/O. On a triggered write: one `rg` and one
+section read. No `Task`, no packet, no transaction, no second skill in the loop.
+
+### The honest objection, and why it does not restore the dispatch
+
+A writer judging whether a `Claims` section supports its own candidate is
+**exactly the over-attribution configuration this workshop already documented**.
+The [first worked case](../source-grounding/worked-case-agents-navigate.md)
+called C1 and C3 subsumed; a blind pass tightened both to needs-narrowing. One
+reader holding candidate and evidence together reads thematic overlap as support.
+
+So the self-check is biased toward "yes." But note *which* error it is biased
+toward, because the two failures are not symmetric:
+
+- **Absence** — no ingest, or a `Claims` section that plainly does not mention
+  this — is what the write-time check catches, and bias does not help a writer
+  hallucinate a section that is not there. This is also the common case.
+- **Over-attribution** — thematic overlap read as support — is what the
+  write-time check misses, and no amount of care by the writer fixes it, because
+  the bias is structural.
+
+### The dispatch does not fix the failure it appears to fix
+
+`draft-ground-source-dependent-claims.md` gives the worker `claims` containing
+"the exact candidate wording" **and** has it read the source. One reader,
+candidate and source together — the same configuration.
+
+The Pirolli experiment that validated this design was **stricter than the design
+it validated**. It separated the two: worker 1 saw the checksum-pinned source and
+no candidate, and produced the reconstruction; worker 2 saw the candidates and
+the `Claims` block and no source, and produced the verdicts. That separation is
+why its verifier caught what the earlier single-reader pass missed.
+
+The production worker collapses that separation back into one context. So the
+expensive write-path dispatch buys the appearance of independent verification
+without its mechanism.
+
+### Where the blind check belongs instead
+
+It does not have to run at write time, and it is better if it does not.
+
+Once the note ships citing the ingest, `(note, ingest)` is a review pair — the
+`source-as-gate` case from
+[factored dependency pairs](../../reference/proposals/factored-dependency-pairs-for-review-freshness.md).
+A blind verification is then an ordinary closed-ended verdict assay in the
+existing review pipeline.
+
+And the separation the experiment needed falls out of the architecture for free,
+spread across time rather than across two dispatches:
+
+- the **grounding** pass reads the source and writes `Claims` entries, with no
+  target candidate in view;
+- the **review** pass reads the note and the `Claims` section, with no source in
+  view.
+
+That is the experiment's design, obtained from mechanisms that already exist,
+with nothing on the write path.
+
+### Net
+
+Write catches absence, cheaply, at the moment the author can still act. Review
+catches over-attribution, blind, asynchronously, where rigor is affordable. The
+write-time worker sits in the one position that is expensive *and* structurally
+unable to do the harder job.
