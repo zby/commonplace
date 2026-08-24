@@ -20,6 +20,10 @@ Assess fit relative to the installed KB's goals, local collection contracts, and
 
 ## Metadata
 
+- Keep the H1 title text, including the `Ingest:` prefix, to at most 100
+  characters.
+- Write `description` as a one-line retrieval filter between 50 and 250
+  characters.
 - Set `source` to the canonical external URL of the primary source.
 - Set `captured` to the date or datetime of the observation used for the
   analysis, and `capture` to its capture mechanism.
