@@ -23,7 +23,16 @@ DreamCoder learns to solve inductive programming tasks by growing its own domain
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** DreamCoder's wake-sleep system iteratively extends a domain-specific programming language with reusable symbolic abstractions while training neural search guidance, producing compositional structures that build on previously learned concepts.
+  - **Source extract (verbatim):** The paper presents DreamCoder, a system that learns to solve problems through program writing. The system builds expertise by developing programming languages that express domain-specific concepts alongside neural networks that direct the search for programs within those languages.
+  - **Source location:** Abstract capture, first paragraph.
+  - **Source extract (verbatim):** The approach employs a "wake-sleep" learning algorithm that iteratively extends the language with new symbolic abstractions and trains neural networks on both imagined and replayed problems.
+  - **Source location:** Abstract capture, second paragraph.
+  - **Source extract (verbatim):** The resulting knowledge representations are compositional, building hierarchically from previously learned concepts. This approach yields interpretable and transferable multi-layered symbolic structures that scale flexibly with accumulated experience.
+  - **Source location:** Abstract capture, final paragraph.
+  - **Scope:** The high-level DreamCoder architecture and claimed representation properties retained in this abstract-only snapshot.
+  - **Confidence:** High for the architecture as summarized in the capture; the snapshot does not contain objective equations, ablations, or task-level quantitative results.
+  - **Limitation:** This observation does not state that an abstraction is retained exactly when it reduces description length or expose a discrete mechanical retention gate. That criterion requires a fuller primary observation before it can ground a target claim.
 
 ## Connections Found
 

@@ -32,9 +32,9 @@ This differs from the content-class defense that [a commitment's record resists 
 
 Current engineering reports illustrate both movements, without establishing a cross-generation trend:
 
-- At fixed difficulty, [a stronger model let one team delete checklists, compliance scripts, and synchronization layers](../sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md).
+- In one author's Fable-oriented rebuild, [principle-level instruction following made checklists, compliance scripts, and synchronization layers unnecessary](../sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md). The report does not hold task difficulty, model generation, or deployment conditions fixed.
 - At a harder-task frontier, [a financial-services team reports that better models obsolete detailed skills for simpler work but prompt new skills for multi-step valuations, backtesting, and monitoring](https://x.com/nicbstme/status/2015174818497437834).
-- Separately, [a stronger coding model still needed explicit work state, decomposition, and end-to-end verification on longer-horizon assignments](../sources/effective-harnesses-for-long-running-agents.ingest.md).
+- Separately, an [Opus 4.5 agent loop with compaction and only a high-level web-app prompt fell short](../sources/effective-harnesses-for-long-running-agents.ingest.md); the reported harness added persistent progress and git state, a structured feature list, incremental work, and explicit browser-based end-to-end testing. This is one deployment configuration, not a stronger-model comparison or a necessity result.
 
 These cases make recurrence a live hypothesis, not a measured trend. Settling it requires tracking the volume, function, and marginal contribution of external structure in comparable frontier deployments across model generations, rather than comparing fixed benchmarks.
 

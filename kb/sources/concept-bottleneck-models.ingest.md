@@ -23,7 +23,25 @@ The paper builds a predictor as `f(g(x))`, where `g` maps the raw input to a vec
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** Concept bottleneck models predict supervised human-interpretable concepts before the task label, so a test-time intervention can replace selected predicted concept values and propagate the correction through the downstream predictor.
+  - **Source extract (verbatim):** We revisit the classic idea of first predicting concepts that are provided at training time, and then using these concepts to predict the label. By construction, we can intervene on these concept bottleneck models by editing their predicted concept values and propagating these changes to the final prediction.
+  - **Source location:** Abstract.
+  - **Source extract (verbatim):** Interventions replace predicted concept values `ĉ_j` with ground-truth `c_j` and propagate through `f`.
+  - **Source location:** “Test-time intervention.”
+  - **Scope:** The paper's independent, sequential, and joint concept-bottleneck architectures on OAI x-ray grading and CUB bird identification, using supervised concept labels.
+  - **Confidence:** High for the architecture and intervention operation; reported task/intervention results vary by dataset and bottleneck variant.
+  - **Limitation:** The intervention changes an intermediate prediction for the evaluated input. The paper does not present it as a persistent revision to a retained theory, record an applicability boundary, or show that the correction carries into later inferences without another intervention.
+
+- **Claim (paraphrase):** In the paper's joint concept-bottleneck experiments, a concept layer could remain accurate and readable while being causally misaligned: with too little concept-loss weight, intervening on it increased error, and task/concept accuracy alone did not predict intervention effectiveness.
+  - **Source extract (verbatim):** The paper reports that bottleneck models achieve both competitive task accuracy and high concept accuracy, with no apparent fundamental tradeoff on these two tasks.
+  - **Source location:** “Accuracy.”
+  - **Source extract (verbatim):** Linear `c → y` maps handled interventions notably worse than nonlinear ones even when pre-intervention task and concept accuracies were similar. - When `λ` is too small, joint models learn misaligned concept representations and intervention *increases* error.
+  - **Source location:** “Stated caveats”; list whitespace normalized.
+  - **Source extract (verbatim):** Conclusion drawn by the authors: task and concept accuracy alone are insufficient to predict how effective test-time intervention will be.
+  - **Source location:** “Stated caveats,” concluding bullet.
+  - **Scope:** The paper's OAI and CUB concept-bottleneck settings and its reported low-`λ`/mapping-class intervention failures.
+  - **Confidence:** High that the capture records the intervention failure and the authors' accuracy-insufficiency conclusion; the exact magnitude and regime depend on the paper's architectures and datasets.
+  - **Limitation:** The concept layer is a typed supervised intermediate, not a natural-language rationale or a transcript of the model's reasoning. Calling it a rationale and transferring the intervention result to selective revision of retained theories are target-side analogies.
 
 ## Connections Found
 

@@ -24,7 +24,16 @@ DiscoverPhysics builds 22 simulated worlds whose laws of motion deliberately dev
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** DiscoverPhysics evaluates agents in 22 simulated worlds with nonstandard laws by having them iteratively propose experiments, observe trajectory data, and submit both a natural-language explanation and Python law; its captured findings state that predictive accuracy and conceptual-explanation quality can diverge.
+  - **Source extract (verbatim):** This paper introduces DiscoverPhysics, an interactive benchmark designed to assess whether large language models can genuinely reason scientifically or merely recall established knowledge. The benchmark tasks LLM agents with discovering the laws of motion in simulated worlds that deliberately deviate from our universe's physics.
+  - **Source location:** Abstract.
+  - **Source extract (verbatim):** Agents must "propose several rounds of experiments, observe raw trajectory data" and submit both natural language explanations and Python implementations of the inferred physical laws.
+  - **Source location:** “Key Features.”
+  - **Source extract (verbatim):** Strong predictive accuracy doesn't guarantee quality conceptual explanations
+  - **Source location:** “Findings,” fourth bullet.
+  - **Scope:** The abstract-level capture of a 22-world benchmark evaluated across eleven frontier models; the worlds are constructed variants of physical-law discovery tasks.
+  - **Confidence:** High for the benchmark protocol and the capture's qualitative dissociation claim; low for its size, scoring mechanics, and statistical strength because the capture does not include full-paper methods or result tables.
+  - **Limitation:** This snapshot does not establish how explanation quality was judged, quantify the prediction/explanation dissociation, or test reuse of a retained theory across a later controlled shift. It separates two outputs within the benchmark, not theory search from reach-assessment in general.
 
 ## Connections Found
 

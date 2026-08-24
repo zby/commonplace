@@ -25,7 +25,16 @@ A Gödel machine is a universal problem solver whose entire initial software `p(
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** In Schmidhuber's Gödel-machine proposal, `switchprog` executes only after a target theorem proves that switching has higher value under the current axiomatized utility function than continuing the current program's search for later alternatives; the rewrite may include the proof searcher itself.
+  - **Source extract (verbatim):** it finds a proof of a target theorem which essentially states: ‘the immediate rewrite of p through current program switchprog on the given machine implies higher utility than leaving p as is’. Then it executes switchprog, which may completely rewrite p, including the proof searcher.
+  - **Source location:** Section 2.2, architecture overview.
+  - **Source extract (verbatim):** A target theorem states that given the current axiomatized utility function u (Item 1f), the utility of a switch from p to the current switchprog would be higher than the utility of continuing the execution of p (which would keep searching for alternative switchprogs).
+  - **Source location:** Section 3.2, definition of `check()` and the target theorem.
+  - **Source extract (verbatim):** Theorem 4.1 Given any formalizable utility function u (Item 1f), and assuming consistency of the underlying formal system A, any self-change of p obtained through execution of some program switchprog identified through the proof of a target theorem (2) is globally optimal in the following sense: the utility of starting the execution of the present switchprog is higher than the utility of waiting for the proof searcher to produce an alternative switchprog later.
+  - **Source location:** Theorem 4.1.
+  - **Scope:** The paper's formal machine relative to its encoded axioms, utility function, hardware/resource model, and proof-search strategy; this is a theoretical construction without an empirical implementation result.
+  - **Confidence:** High for the architecture and theorem as stated, conditional on formal-system consistency and the target theorem actually being provable.
+  - **Limitation:** The proof gate cannot license improvements whose usefulness is true but unprovable in the system or cannot be proved within resource limits. It supplies an acceptance rule relative to the axiomatization, not evidence that the axioms or utility represent an external natural-language objective correctly.
 
 ## Connections Found
 

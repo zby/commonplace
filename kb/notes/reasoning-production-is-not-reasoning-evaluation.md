@@ -9,7 +9,7 @@ tags: [evaluation, llm-reliability]
 
 A model that can produce a good answer is not thereby a good evaluator of the reasoning that led to an answer. Production asks "can I get there?" Evaluation asks "does this path get there validly?" Those are different capabilities, and a review system that collapses them risks accepting fluent but invalid reasoning whenever the conclusion looks right.
 
-The VAIR paper makes the failure concrete: large reasoning models often evaluate a submitted math solution by independently solving the problem, confirming that the final answer matches, and then overlooking or rationalizing invalid steps in the submitted reasoning. The important abstraction is not "models are bad at grading math." It is that answer agreement can act like a misleading soft oracle: cheap, tempting, and high-performing on ordinary controls, but non-discriminating when answer validity and reasoning validity are deliberately separated.
+The VAIR paper makes the failure concrete in a six-model math-grading benchmark. In the models' verbalized evaluations, an annotation scheme frequently identified independent solving followed by overlooking, blindly endorsing, or rationalizing invalid submitted steps once the final answer matched. The authors describe this pattern as answer-confirmation bias, but the verbalized workflow is suggestive rather than conclusive causal evidence about the evaluation process. The important abstraction is not "models are bad at grading math." It is that answer agreement can act like a misleading soft oracle: cheap, tempting, and high-performing on ordinary controls, but non-discriminating when answer validity and reasoning validity are deliberately separated.
 
 This directly affects review and critique systems. If a semantic review gate asks an agent whether a note's argument works, the agent may reconstruct a plausible argument for the same conclusion rather than check whether the note's stated evidence actually entails that conclusion. If a critique pass asks for weaknesses, the agent may judge the destination claim instead of the route. If a fix review asks whether a revision preserved meaning, the agent may compare reconstructed gist rather than trace commitments, caveats, and evidence.
 
@@ -39,7 +39,7 @@ The existing [composition friction gate](../instructions/composition-friction-ga
 
 Relevant Notes:
 
-- [An Enigma of Artificial Reason ingest](../sources/an-enigma-of-artificial-reason-production-evaluation-gap-lrms.ingest.md) — derived-from: source report for the VAIR paper and answer-confirmation-bias mechanism
+- [An Enigma of Artificial Reason ingest](../sources/an-enigma-of-artificial-reason-production-evaluation-gap-lrms.ingest.md) — derived-from: source report for the VAIR paper and its reported answer-confirmation-bias pattern in verbalized evaluations
 - [The augmentation-automation boundary is discrimination not accuracy](./the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — grounds: explains why high apparent correctness is insufficient when the verifier lacks per-instance discrimination
 - [Process structure and output structure are independent levers](./process-structure-and-output-structure-are-independent-levers.md) — grounds: separates checking the result from checking the reasoning path
 - [Semantic review catches content errors that structural validation cannot](./semantic-review-catches-content-errors-that-structural-validation.md) — applies: semantic review must inspect entailment, not only plausible conclusion agreement

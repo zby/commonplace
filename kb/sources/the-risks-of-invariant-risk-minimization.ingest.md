@@ -32,6 +32,24 @@ The paper gives the first formal analysis of the invariant risk minimization obj
   - **Confidence:** High for the formal counterexample as summarized in the captured source; its objective value, training-distribution behavior, and shifted-test behavior are stated directly.
   - **Limitation:** The construction is near-optimal and near-identical, not an exact discharge of the IRM objective or exact indistinguishability on every training point. Its ERM behavior requires the specified non-linear setting and sufficiently distant test environment; it does not show that every formal invariance constraint recovers the wrong predictor.
 
+- **Claim (paraphrase):** In the paper's linear Gaussian latent-variable model, IRM feasibility forces every linear featurizer to discard environmental features only when the number of training environments `E` exceeds their dimension `d_e`; when `E ≤ d_e`, an environmental-only feasible predictor can have lower risk than the invariant predictor.
+  - **Source extract (verbatim):** `E` denotes the number of training environments and `d_e` the dimension of the environmental feature space.
+  - **Source location:** “Setup.”
+  - **Source extract (verbatim):** The paper establishes a threshold in the number of training environments. When `E > d_e`, any IRM-feasible linear featurizer paired with an invariant classifier must place zero weight on the environmental features, so the invariant predictor is recovered. When `E ≤ d_e`, there exists a feasible linear predictor that uses only environmental features and attains lower risk than the optimal invariant predictor — so the IRM objective does not prefer the invariant solution.
+  - **Source location:** “Linear regime.”
+  - **Source extract (verbatim):** Generalization in the `E ≤ d_e` case requires an additional assumption that the ERM-optimal classifier over the non-invariant features is reasonably aligned with its optimum across all training environments; where the environmental correlation with the label reverses at test time, the learned predictor reaches near-zero accuracy.
+  - **Source location:** “Linear regime,” qualification and failure case.
+  - **Scope:** Linear featurizers in the paper's Gaussian latent-variable structural equation model, where invariant feature parameters stay fixed and environmental feature parameters vary by environment.
+  - **Confidence:** High for the threshold and feasibility results as captured from the paper's formal analysis.
+  - **Limitation:** The theorem does not say that any arbitrary collection of environments or any invariance-based causal method has this threshold. It analyzes IRM's linear feasibility objective under a specific model and requires additional alignment assumptions for generalization in the underdetermined regime.
+
+- **Claim (paraphrase):** The paper reports synthetic experiments sampled from its own model in which fitting a predictor with the IRM objective confirmed the theoretical predictions.
+  - **Source extract (verbatim):** Synthetic experiments sample from the paper's model and fit a predictor with the IRM objective, confirming the theoretical predictions (Appendix C.2).
+  - **Source location:** “Experiments and conclusion.”
+  - **Scope:** Synthetic data sampled from the Gaussian latent-variable model analyzed in the paper and fit with the IRM objective.
+  - **Confidence:** High that the captured paper reports this within-model empirical confirmation; the snapshot does not preserve run counts or detailed optimization frequencies.
+  - **Limitation:** The experiments do not establish how often practical optimization reaches the nonlinear failure outside the paper's synthetic data model, nor do they provide a real-data benchmark for the construction.
+
 ## Connections Found
 
 This source is the **counterweight** in an argument the KB already carries only one side of. The explanatory-reach cluster treats cross-environment invariance as the worked formal route to [reach-assessment](../notes/definitions/reach-assessment.md), and [Formal symbolic systems assess explanatory-reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md) grounds that route on five evidence sources that all argue for it. That note's "formalization boundary" section already asserts, without a source, that an invariant relation selected from narrow environments can look stable while tracking a sampling artifact; this paper is the formal demonstration of exactly that, and would be the section's first supporting source. [Theory-mediated learning may improve sample efficiency under structured shifts](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) now cites this ingest for that bound, distinguishing it from invariance-as-hypothesis-test rather than lumping the two.

@@ -23,7 +23,16 @@ FALSIFYBENCH adapts the Wason 2-4-6 rule-discovery game into an interactive benc
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** In the abstract-level FALSIFYBENCH report, 12 LLMs play iterative Wason-2-4-6-style hidden-rule games, and models that use negative tests to try to falsify hypotheses outperform models that seek confirmation.
+  - **Source extract (verbatim):** This paper introduces FALSIFYBENCH, an evaluation framework designed to assess hypothesis-driven reasoning in large language models. The framework draws inspiration from the classic Wason 2-4-6 task, where agents discover hidden properties by proposing examples and receiving iterative feedback.
+  - **Source location:** Abstract.
+  - **Source extract (verbatim):** Key findings from evaluating 12 LLMs include:
+  - **Source location:** Abstract, result-population lead-in.
+  - **Source extract (verbatim):** "The primary driver of success is the capacity for negative testing" — models actively seeking to falsify hypotheses outperform those seeking confirmation
+  - **Source location:** Abstract, second findings bullet.
+  - **Scope:** Twelve LLMs on the paper's iterative rule-discovery benchmark, as retained in an abstract-only capture.
+  - **Confidence:** High that the abstract reports this association and model count; lower for effect size, causal interpretation, and classification reliability because the full methods and results are absent.
+  - **Limitation:** The capture does not show how negative and confirmatory tests were coded or whether negative testing is separable from choosing more informative probes in this task. It does not test retained-theory reuse across a distribution shift.
 
 ## Connections Found
 

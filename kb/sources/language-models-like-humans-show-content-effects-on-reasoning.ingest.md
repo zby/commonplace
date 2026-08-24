@@ -22,7 +22,16 @@ Lampinen et al. systematically test whether large language models exhibit the sa
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** Across generated natural-language-inference, syllogism, and Wason tasks, the tested language models were generally more accurate when semantic content supported the logically correct inference and less accurate when content conflicted with it, although effect size and human-model agreement varied by task.
+  - **Source extract (verbatim):** We explored this question across three logical reasoning tasks: natural language inference, judging the logical validity of syllogisms, and the Wason selection task. We evaluate state of the art LMs, as well as humans, and find that the LMs reflect many of the same qualitative human patterns on these tasks—like humans, models answer more accurately when the semantic content of a task supports the logical inferences. These parallels are reflected in accuracy patterns, and in some lower-level features like the relationship between LM confidence over possible answers and human response times. However, in some cases the humans and models behave differently—particularly on the Wason task, where humans perform much worse than large models, and exhibit a distinct error pattern.
+  - **Source location:** Abstract.
+  - **Source extract (verbatim):** In each task, humans and models show similar levels of accuracy across conditions. In keeping with our hypothesis, humans and models show similar content effects on each task, which we measure as the advantage when reasoning about logical situations that are consistent with real-world relationships or rules. - In the simplest NLI task, humans and all models show high accuracy and relatively minor effects of content. - When judging the validity of syllogisms, both humans and models show more moderate accuracy, and significant advantages when content supports the logical inference. - On the Wason selection task, humans and models show even lower accuracy, and again substantial content effects.
+  - **Source location:** “Content effects in humans and language models,” primary-results summary; list whitespace normalized.
+  - **Source extract (verbatim):** For each task, the model is presented with brief instructions approximating the human instructions, then the question ending with "Answer:", and model scoring uses the DC-PMI correction (change in likelihood of each answer relative to a baseline context) to reduce sensitivity to answer phrasing.
+  - **Source location:** Methods summary, “Models & evaluation.”
+  - **Scope:** The paper's generated variants of three logic-task families, tested on the listed base, instruction-tuned, GPT-3.5, and later Gemini models plus human comparison groups.
+  - **Confidence:** High for the directionally similar content effects reported on syllogism and Wason accuracy; the NLI accuracy effect was small and not statistically significant, and human/model error patterns diverged in places.
+  - **Limitation:** The study measures task-answer sensitivity to semantic content. It does not test an agent detecting, rejecting, or being instructed to ignore contaminating content, and it does not establish a general architecture-level mechanism for every form of context influence.
 
 ## Connections Found
 

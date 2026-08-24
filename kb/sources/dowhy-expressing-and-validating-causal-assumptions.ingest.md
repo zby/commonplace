@@ -23,7 +23,22 @@ The paper argues that causal-effect estimation depends on assumptions about the 
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** DoWhy makes causal assumptions explicit in a user-supplied graph, then separates modeling, identification, estimation, and validation; graph-based criteria and do-calculus identify effects relative to that graph, while the validation path cannot fully verify its causal assumptions.
+  - **Source extract (verbatim):** four steps: model, identify, estimate, and validate.
+  - **Source location:** Introduction, “DoWhy: Expressing and validating assumptions”; short fragment required by the two-column PDF capture.
+  - **Source extract (verbatim):** Before starting any causal analysis, DoWhy stipulates that
+  - **Source location:** Section 3.1, first half of the user-graph requirement; two-column capture.
+  - **Source extract (verbatim):** the user provide a causal graph over the observed variables.
+  - **Source location:** Section 3.1, second half of the user-graph requirement; next captured line.
+  - **Source extract (verbatim):** DoWhy uses graph-based criteria and do-calculus to find
+  - **Source location:** Section 3.1, first half of the identification statement; two-column capture.
+  - **Source extract (verbatim):** expressions that can identify the causal effect.
+  - **Source location:** Section 3.1, second half of the identification statement; next captured line.
+  - **Source extract (verbatim):** It is important to note here that causal assumptions cannot be fully verified. Rather, the intent is to validate some
+  - **Source location:** Section 3.2, validation boundary; the right PDF column is contiguous across these two captured lines.
+  - **Scope:** DoWhy's four-stage causal-effect workflow and the validation/refutation methods described in the 2021 paper; the user or another process supplies the graph and domain assumptions.
+  - **Confidence:** High for the framework architecture and the authors' explicit full-verification limitation.
+  - **Limitation:** Do-calculus identifies an effect under a supplied graph; it does not establish that the graph's variables or arrows are causally correct. Refutation tests can expose some failures but are not a global validator analogous to predictive cross-validation.
 
 ## Connections Found
 

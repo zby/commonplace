@@ -23,7 +23,16 @@ The paper presents `causal-learn`, a Python library for causal discovery. Its re
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** Causal-learn is a Python library spanning constraint-based, score-based, functional-causal-model, and latent-variable causal-discovery methods; these methods infer structure from observational data only under algorithm-specific assumptions and often identify an equivalence class rather than a unique graph.
+  - **Source extract (verbatim):** Causal discovery aims at revealing causal relations from observational data, which is a fun- damental task in science and engineering. We describe causal-learn, an open-source Python library for causal discovery. This library focuses on bringing a comprehensive collection of causal discovery methods to both practitioners and researchers.
+  - **Source location:** Abstract.
+  - **Source extract (verbatim):** Current strategies for causal discovery can be broadly classified into constraint-based, score-based, functional causal models-based, and methods that recover latent variables. Constraint-based and score-based methods have been employed for causal discovery since the 1990s, using conditional independence relationships in data to uncover information about the underlying causal structure. Algorithms such as Peter-Clark (PC) (Spirtes et al., 2000) and Fast Causal Inference (FCI) (Spirtes et al., 1995) are popular, with PC assuming causal sufficiency and FCI handling latent confounders.
+  - **Source location:** Section 1, method-family overview.
+  - **Source extract (verbatim):** PC is a classical and widely-used algorithm with consistency guarantee under independent and identically distributed (i.i.d.) sampling assuming no latent confounders, the faithfulness assumption, and the causal Markov condition, which has been extensively applied in many fields.
+  - **Source location:** Section 2.1, constraint-based methods.
+  - **Scope:** The library and method families documented in the 2023 software paper; the concrete assumptions quoted are for PC, while other included algorithms have different conditions.
+  - **Confidence:** High for the library coverage and the paper's stated assumptions and output boundaries.
+  - **Limitation:** Providing implementations does not validate the causal truth of a discovered graph. Observational discovery remains assumption-relative, and several methods return only a Markov equivalence class or possible latent-confounder structure.
 
 ## Connections Found
 

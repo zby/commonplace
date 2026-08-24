@@ -23,7 +23,18 @@ The paper asks what distinguishes causal prediction from non-causal prediction u
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** Peters, Bühlmann, and Meinshausen infer conservative causal predictors by testing candidate predictor sets for an invariant conditional relation across observed environments, intersecting the non-rejected sets, and deriving confidence guarantees under an assumption that interventions do not change the target mechanism.
+  - **Source extract (verbatim):** Here, we propose to exploit this invariance of a prediction under a causal model for causal inference: given different experimental settings (for example various interventions) we collect all models that do show invariance in their predictive accuracy across settings and interventions. The causal model will be a member of this set of models with high probability. This approach yields valid confidence intervals for the causal relationships in quite general scenarios. We examine the example of structural equation models in more detail and provide sufficient assumptions under which the set of causal predictors becomes identifiable.
+  - **Source location:** Abstract.
+  - **Source extract (verbatim):** Another main advantage of our methodology is that we do not need to know how the experimental conditions arise or which type of interventions they induce. We only assume that the intervention does not change the conditional distribution of the target given the causal predictors (no intervention on the target or a hidden confounder): it is simply a device exploiting the grouping of data into blocks, where every block corresponds to an experimental condition e ∈ E.
+  - **Source location:** Section 1.2, “New contribution.”
+  - **Source extract (verbatim):** Generic method for invariant prediction 1) For each set S ⊆ {1, . . . , p}, test whether H0,S (E) holds at level α (we will discuss later concrete examples).
+  - **Source location:** Section 3, first step of the generic method; the following displayed equation defines the intersection estimator.
+  - **Source extract (verbatim):** The confidence sets thus have the correct (conservative) coverage. The estimator of the causal predictors will, with probability at least 1 − α, not erroneously include non-causal predictors. Note that the statement is true for any set of experimental or intervention settings. In the worst case, the set Ŝ(E) might be empty but the error control is valid nonetheless.
+  - **Source location:** Section 3, explanation following Theorem 1.
+  - **Scope:** The paper's invariant-prediction procedure, with main guarantees developed for linear models under Assumption 1 and valid setwise tests; richer intervention and robustness settings are treated separately.
+  - **Confidence:** High for the stated hypothesis-testing construction and its conservative error control under the paper's assumptions.
+  - **Limitation:** Invariance can leave the selected set empty or only partially identify causes. This procedure tests candidate conditional models; it is not the IRM representation-learning objective and does not by itself validate the variables, environments, or a natural-language theory's explanatory reach.
 
 ## Connections Found
 

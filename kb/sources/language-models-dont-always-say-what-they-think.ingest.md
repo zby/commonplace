@@ -23,7 +23,16 @@ Turpin et al. test whether chain-of-thought (CoT) explanations report the factor
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** In Turpin et al.'s controlled BBH and BBQ comparisons, added biasing features changed GPT-3.5 and Claude 1.0 predictions while their chain-of-thought explanations almost never named those features and often changed to justify the bias-consistent answer.
+  - **Source extract (verbatim):** We experiment with two benchmarks: BIG-Bench Hard (BBH; Suzgun et al., 2022) and the Bias Benchmark for QA (BBQ; Parrish et al., 2022).<sup>1</sup> We test on GPT-3.5 (OpenAI, 2023) and Claude 1.0 (Anthropic, 2023). With BIG-Bench Hard (§3), we investigate two biasing features: (1) `Answer is Always A` , where we reorder all multiple-choice answer options in a few-shot prompt so the correct one is always “(A)”, and (2) `Suggested Answer` , where the prompt suggests that a specific answer choice might be correct. With BBQ (§4), we measure whether models make predictions on the basis of common social stereotypes.
+  - **Source location:** Introduction, experiment overview.
+  - **Source extract (verbatim):** In practice, we find that models virtually never verbalize being influenced by our biasing features: we review 426 explanations supporting biased predictions and only 1 explicitly mentions the bias (Appendix B).
+  - **Source location:** Section 2, “Counterfactual Simulatability.”
+  - **Source extract (verbatim):** Table 4 shows examples of unfaithful explanations, where the model changed its prediction to a biasconsistent answer after adding the biasing feature. We observe that in many such examples, the content of CoT explanations also changes to support the new incorrect answer. To quantify how often this happens, we manually annotate 104 unfaithful explanations (one from each model/few-shot/task/context combination) from the `Suggested Answer` bias setting. We consider an explanation _not_ to support the predicted answer if it suggests a different answer from the final prediction or if it does not indicate any answer choice. Explanations can include reasoning errors but still support the predicted answer. As many as 73% of unfaithful explanations in our sample support the bias-consistent answer.
+  - **Source location:** Section 3.2, results for changed explanations.
+  - **Scope:** Two 2023 models on selected multiple-choice BBH tasks and a modified BBQ task, using the paper's `Answer is Always A`, `Suggested Answer`, and stereotype-bias interventions.
+  - **Confidence:** High for the direction of the controlled prediction shifts and omission counts within the tested settings; the explanation-support statistic rests on a manually annotated sample of 104 already-unfaithful cases.
+  - **Limitation:** The experiments show that the reported chain of thought can omit an experimentally influential input feature; they do not reveal the model's complete internal producing process, test retained theory rationales, or establish that every legible rationale is unfaithful.
 
 ## Connections Found
 

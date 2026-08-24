@@ -26,7 +26,14 @@ The essay argues that the mutable "text layer" around a model (prompts, context,
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** Lee frames the choice between weights and text as a routing problem: stable, repeatedly useful information is a candidate for weight amortization, while volatile, local, auditable, or not-yet-trusted information should remain in the mutable text layer.
+  - **Source extract (verbatim):** The important question is which update target is the most appropriate for a given piece of information.
+  - **Source location:** “Learning Outside the Weights.”
+  - **Source extract (verbatim):** I think this is a strong argument for many types of information to ultimately belong in weights. I agree; for example, LLMs should not need a long prompt to explain basic arithmetic for every request. Even here, though, many pieces of useful information are not stable or general enough to be worth the cost of amortization: user preferences, API contracts, or facts that frequently change. I think the right framing is as a routing problem: weights are where stable, repeatedly useful information belongs, while text is where information stays while it is volatile, local, auditable, or not yet trusted enough to amortize.
+  - **Source location:** “The Strongest Case for Weights, and My Counterpoints,” response to the amortization argument.
+  - **Scope:** The author's conceptual routing argument for deployed model systems whose behavior-conditioning state includes weights, prompts, memory, retrieval, filesystem state, and harnesses.
+  - **Confidence:** High that the essay makes this qualified routing claim; it is a position supported by examples and citations rather than a controlled comparison of all information classes.
+  - **Limitation:** “Auditable” is explicit, but the essay does not define institutional authority, integrity, contestability, or supersession requirements. It therefore supports the stable/volatile routing example, not the full claim that reproduction cannot transfer a record's authority.
 
 ## Connections Found
 
