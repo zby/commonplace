@@ -102,6 +102,7 @@ plugins:
         'notes/framework-rule-is-a-first-principle-without-boundary-preserving-rival.md': 'notes/a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md'
         'notes/human-recompute-is-dear-and-rare-agent-recompute-is-cheap-and-constant.md': 'notes/opposed-recompute-factors-do-not-decide-documentation-segmentation.md'
         'notes/improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md': 'notes/moving-the-interpretation-enforcement-boundary-requires-coverage.md'
+        'notes/index-curation-adds-orientation-that-generation-cannot-produce.md': 'notes/index-completeness-does-not-determine-editorial-orientation.md'
         'notes/indirection-is-costly-in-llm-instructions.md': 'notes/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md'
         'notes/inductive-bias-splits-into-generic-and-specific-levels.md': 'notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md'
         'notes/interpretation-errors-are-failures-of-the-interpreter.md': 'notes/out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md'

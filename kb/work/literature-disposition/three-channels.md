@@ -34,7 +34,7 @@ route.
 |---|---|---|
 | `agents-navigate-by-deciding-what-to-read-next` | Pirolli Claims linked; inherited claims narrowed; transfer boundary stated | Done 2026-08-24 [v] |
 | `linking-theory` | Same Pirolli route added; unsupported pointer-context monotone removed | Done 2026-08-24 [v] |
-| `index-curation-adds-orientation...` | Needs LIS pathfinders / annotated bibliographies / PKM MOC. **Attribution already exists one hop away** in `an-enforced-tag-readme`, which links back here — may be a move, not an invention | Open [v] |
+| `index-completeness-does-not-determine-editorial-orientation` | Needs LIS pathfinders / annotated bibliographies / PKM MOC. **Attribution already exists one hop away** in `an-enforced-tag-readme`, which links back here — may be a move, not an invention | Open [v] |
 | `an-enforced-tag-readme...` | "Luhmann" and "Nick Milo's LYT" named with no dated work, no URL, no ingest | Open [v] |
 | `knowledge-storage-does-not-imply-contextual-activation` | Five LLM-side ingests cited; **nothing** for the cognitive-psychology tradition establishing C1/C2 | Open [r] |
 | `stale-indexes-reduce-discovery...` | Zero external references and no `Relevant Notes` tail at all | Open [r] |
@@ -73,13 +73,13 @@ Ordered by whether a shipped artifact depends on the claim.
 
 ### Operative — an ADR or type spec rests on it
 
-**2a. `index-curation-adds-orientation-that-generation-cannot-produce` is
-unscoped.** [v] An LLM can generate groupings and role annotations; what
-*deterministic build-time* generation cannot do is produce them **verifiably**.
-The note's only evidence concerns bottom-up auto-aggregation. ADR 025:69 and ADR
-026:69 both `rests-on` it. **Scoping it does not destabilize either** — both
-concern build-time generation, so the scoped claim is all they need. The note
-overclaims past its own dependents. Title change implied.
+**2a. `index-completeness-does-not-determine-editorial-orientation`. Done
+2026-08-24 [v].** The former title claimed that generation could not produce
+orientation. The revised note instead distinguishes mechanically verifiable
+membership from purpose-relative editorial judgment, explicitly allows people,
+models, and graph algorithms to draft orientation, and explains how encoded
+judgments can be regenerated. ADR 025, ADR 026, and the dependent MOC note now
+use the scoped claim; neither ADR was destabilized.
 
 **2b. `stale-indexes...` C1 may be analytic, not empirical.** [r] It stipulates
 the stopping behaviour into the comparison, so the conclusion holds by
@@ -131,15 +131,15 @@ row was never retracted.
 
 ### What is notable about this channel
 
-**Six of the eight open findings need no source at all.** 2a, 2b, 2d, 2e, 2f,
+**Five of the seven open findings need no source at all.** 2b, 2d, 2e, 2f, and
 2i are internal — scope errors, category errors, and self-contradictions
 findable by reading the note against itself and its dependents. So **Channel 2
-is only partly blocked on Channel 1**, and the operative items 2a and 2b are
+is only partly blocked on Channel 1**, and the remaining operative item 2b is
 among the unblocked.
 
 That is the running result of this workshop restated: pointed at redundancy, the
 method returned **three defects and zero clean rediscoveries a retirement would
-tidily remove.** One defect is repaired; the two operative items remain open.
+tidily remove.** Two defects are repaired; the remaining operative item is 2b.
 
 ---
 
@@ -223,8 +223,9 @@ form without the eighth move propagates the problem in more convincing packaging
 
 ## Sequencing
 
-1. **Repair Channel 2's unblocked six.** Start with 2a because two ADRs rest on
-   it, then re-check 2b before changing it. These need no source-corpus decision.
+1. **Continue with Channel 2's unblocked five.** Re-check 2b before changing it
+   because ADR 026 rests on it, then repair 2d, 2e, 2f, and 2i. These need no
+   source-corpus decision.
 2. **Select the wider corpus from the claim inventory.** Source-grounding owns
    the selection; the V1 Claims and review path is ready to carry each result.
 3. **Run the remaining migrations and source-dependent claim judgments** in

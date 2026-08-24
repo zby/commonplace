@@ -27,10 +27,11 @@ final dated disposition.
 | Write-time check decision | Partial | ADR 073 guards explicit new or changed source dependencies. It cannot discover unattributed prior art, which is the check this closure condition still needs decided. |
 
 The claim-side repair and source-grounding machinery no longer block progress.
-The next unblocked work is to correct the internally decidable claims in
-[Channel 2](./three-channels.md#channel-2--claims-to-change), beginning with the
-operative `index-curation` claim and then re-checking `stale-indexes`. Most
-final dispositions still wait on the wider source corpus.
+The operative `index-curation` claim has been scoped without destabilizing its
+dependent ADRs. The next unblocked work in
+[Channel 2](./three-channels.md#channel-2--claims-to-change) is to re-check
+`stale-indexes` before deciding whether to change it. Most final dispositions
+still wait on the wider source corpus.
 
 ## The parallel worth exploiting, and where it breaks
 

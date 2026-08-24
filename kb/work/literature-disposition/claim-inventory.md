@@ -42,7 +42,9 @@ author, no URL. A trait is asserted against an unidentifiable reference.
 **Error found:** the title says KB quality "should be measured by" fluidity while
 the body defers all measurement to open questions.
 
-### index-curation-adds-orientation-that-generation-cannot-produce
+### index-completeness-does-not-determine-editorial-orientation
+
+Formerly `index-curation-adds-orientation-that-generation-cannot-produce`.
 
 | # | Claim | Class | Candidate tradition | Conf |
 |---|---|---|---|---|
@@ -286,5 +288,8 @@ redundancy.
 
 **Execution update, 2026-08-24.** The pointer-context monotone was subsequently
 removed from `agents-navigate-by-deciding-what-to-read-next` and its sole
-inheritor, `linking-theory`, during the claim-pull rollout. The first two defects
-above remain open; the zero-clean-rediscoveries finding is unchanged.
+inheritor, `linking-theory`, during the claim-pull rollout. The categorical
+`index-curation` claim was renamed and scoped to distinguish complete membership
+from editorial orientation; the revised claim was propagated through ADR 025,
+ADR 026, and its dependent MOC note. The possibly-analytic `stale-indexes` defect
+remains open; the zero-clean-rediscoveries finding is unchanged.

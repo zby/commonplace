@@ -41,7 +41,7 @@ Behavior localization also makes the cost of [a retrieval miss breaking local re
 4. **Store synchronization state as part of the compiled view** -- program graph, skeleton, mappings, source fingerprints/hashes, caches, and configuration make partial regeneration and conservative invalidation possible. [experiment]
 5. **Use diffs, not planned declarations, to drive invalidation** -- declarations audit whether execution followed the plan; the actual repository diff determines what derived behavior knowledge may be stale. [quick-win]
 6. **Evaluate localization with both overlap and complete-miss rates** -- recall/precision/F1 reveal coverage and focus, while the zero-overlap `Wrong` rate isolates catastrophic retrieval failure. [experiment]
-7. **Treat generated behavioral orientation as a live tension for the KB** -- the reported gains suggest LLM-assisted generation can add useful stage and behavior orientation, qualifying the categorical claim that [index curation adds orientation that generation cannot produce](../notes/index-curation-adds-orientation-that-generation-cannot-produce.md). [deep-dive]
+7. **Treat generated behavioral orientation as a live tension for the KB** -- the reported gains suggest LLM-assisted generation can add useful stage and behavior orientation. This qualified the former categorical claim, now scoped as [index completeness does not determine editorial orientation](../notes/index-completeness-does-not-determine-editorial-orientation.md). [deep-dive]
 
 ## Limitations (our opinion)
 
