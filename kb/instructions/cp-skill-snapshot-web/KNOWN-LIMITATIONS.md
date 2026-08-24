@@ -17,3 +17,12 @@ Poppler's `pdftotext` extracts text embedded in a PDF. A scanned or image-only
 PDF may produce an empty file even when every page is visually readable. The
 snapshot workflow has no OCR prerequisite or fallback; provide an OCR-produced
 text copy or paste the content manually.
+
+## PDF snapshots preserve extraction artifacts
+
+The PDF pathway copies `pdftotext` output into the snapshot without requiring
+the model to re-emit the document. The `-nopgbrk` option removes page-break
+characters, but repeated page headers, line-break hyphenation, flattened
+tables, and degraded equation glyphs may remain. This is a faithful,
+completion-safe capture rather than polished Markdown. Cleanup is a separate
+bounded transformation so a blocked model write cannot prevent capture.

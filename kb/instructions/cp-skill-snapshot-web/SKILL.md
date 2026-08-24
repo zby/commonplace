@@ -100,12 +100,16 @@ pdftotext -enc UTF-8 -eol unix -nopgbrk \
   "$snapshot_tmp/source.pdf" "$snapshot_tmp/extracted.txt"
 ```
 
-Use Read to inspect `pdfinfo.txt`, then read `extracted.txt` in chunks until
-EOF. Treat `pdfinfo` fields as metadata leads, not as authority: confirm the
-title and authors against the document text when available. If
-`extracted.txt` is empty or contains no substantive text, go to **Step 3**.
+Use Read to inspect `pdfinfo.txt` and a bounded beginning of `extracted.txt`.
+Treat `pdfinfo` fields as metadata leads, not as authority: confirm the title
+and authors against the document text when available. Use Grep plus bounded
+Read ranges to locate an abstract, executive summary, or introduction if the
+beginning does not supply enough metadata. Do not read the whole extracted
+file merely to copy it. If `extracted.txt` is empty or contains no substantive
+text, go to **Step 3**.
 
-Set `capture_method` to `pdftotext` and go to **Step 4**.
+Set `capture_method` to `pdftotext`, set `body_file` to
+`{snapshot_tmp}/extracted.txt`, and go to **Step 4**.
 
 ### Step 2d: Fetch Web Page
 
@@ -130,12 +134,24 @@ trafilatura -u "{source_url}" \
   > "$snapshot_tmp/extracted.md"
 ```
 
-Use Read to inspect `extracted.md`. Its leading YAML block, when present, is
-Trafilatura metadata: retain it as input to Step 4 but do not copy that block
-into the snapshot body. If the file is empty or contains no substantive main
-content, go to **Step 3**.
+Use Read to inspect only the leading metadata and a bounded beginning of
+`extracted.md`. Its leading YAML block, when present, is Trafilatura metadata:
+retain it as input to Step 4 but do not copy that block into the snapshot body.
+Strip that block locally without re-emitting the document:
 
-Set `capture_method` to `trafilatura` and go to **Step 4**.
+```bash
+awk '
+NR == 1 && $0 == "---" { in_metadata = 1; next }
+in_metadata && $0 == "---" { in_metadata = 0; next }
+!in_metadata { print }
+' "{snapshot_tmp}/extracted.md" > "{snapshot_tmp}/body.md"
+```
+
+If `body.md` is empty or contains no substantive main content, go to
+**Step 3**.
+
+Set `capture_method` to `trafilatura`, set `body_file` to
+`{snapshot_tmp}/body.md`, and go to **Step 4**.
 
 ## Step 3: Handle Failures
 
@@ -160,7 +176,7 @@ empty Trafilatura result, or PDF with no embedded text):
 
 This workflow supplies `kb/sources/types/snapshot.md` as the type. Open that path and verify from its own frontmatter that it is a type spec before determining metadata. Stop if it is missing or invalid.
 
-From the extracted content, extractor metadata, and `source_url`, determine:
+From the bounded excerpts, extractor metadata, and `source_url`, determine:
 
 - **title**: The article/post title. Use the first H1 if present, otherwise derive from content.
 - **author**: If identifiable from the content or URL (e.g. simonwillison.net → Simon Willison)
@@ -171,9 +187,13 @@ From the extracted content, extractor metadata, and `source_url`, determine:
 For academic papers: prefer the title and complete author list printed in the
 paper over `pdfinfo` or Trafilatura metadata.
 
-## Step 5: Write the Snapshot
+## Step 5: Materialize the Snapshot
 
-Save to `kb/sources/.snapshots/{slug}.md` with this format:
+The extracted body must move from `body_file` to the snapshot through local
+byte copying. Never place the whole source body in a Write or Edit call.
+
+Use Write to create `{snapshot_tmp}/header.md` with this content and no source
+body. End the file with the blank line after `Date`:
 
 ```markdown
 ---
@@ -191,13 +211,28 @@ Author: {author}
 Source: {source_url}
 Date: {publication date if known}
 
-{extracted content}
 ```
 
-For PDFs: convert the extracted text to clean Markdown. Preserve section
-structure, tables, and lists. Drop page numbers, repeated headers/footers, and
-layout artifacts. For web pages: use Trafilatura's Markdown as the body after
-removing its metadata block and any residual boilerplate; do not summarize it.
+Trafilatura has already produced the web body as Markdown. A PDF body remains
+the complete plain text emitted by `pdftotext`; plain text is valid Markdown.
+Do not make model-mediated PDF cleanup a condition of capture. If the user
+explicitly requested cleanup, transform bounded chunks into a candidate body,
+never send the whole document through one Write, and retain the raw
+`extracted.txt` as fallback. Set `body_file` to the candidate only after every
+source chunk is present and in order; otherwise keep the raw body.
+
+Assemble the snapshot without sending the extracted bytes through model output:
+
+```bash
+set -e
+snapshot_path="kb/sources/.snapshots/{slug}.md"
+cp "{snapshot_tmp}/header.md" "$snapshot_path"
+cat "{body_file}" >> "$snapshot_path"
+header_bytes=$(wc -c < "{snapshot_tmp}/header.md")
+body_bytes=$(wc -c < "{body_file}")
+snapshot_bytes=$(wc -c < "$snapshot_path")
+test "$snapshot_bytes" -eq "$((header_bytes + body_bytes))"
+```
 
 Compute SHA-256 after the file is complete. Hash the exact `.md` bytes,
 including frontmatter, line endings, and the presence or absence of a final
@@ -210,12 +245,13 @@ two-line preview.
 **Never:**
 - Fabricate or hallucinate content not on the page
 - Add analysis or commentary — this is capture, not ingestion
-- Modify the extracted content beyond cleaning HTML/PDF artifacts
+- Re-emit a complete extracted body through Write or Edit
+- Make model-mediated cleanup a prerequisite for saving a snapshot
 - Save to any directory other than `kb/sources/.snapshots/`
 - Install software — if a required tool is missing, bail with an error telling the user what to install
 
 **Always:**
-- Preserve the author's structure (headings, quotes, lists)
+- Copy every `body_file` byte in order on the default capture path
 - Include the source URL in frontmatter
 - Use today's date for `captured`
 - Check for duplicates before fetching
