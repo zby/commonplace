@@ -82,11 +82,11 @@ workshop bypasses that procedure.
 
 **That the cluster is rediscovery.** The [input critique](./chatgpt-critique.md)
 asserts that several of these notes are information-foraging theory in local
-vocabulary. That is plausible — `agents-navigate-by-deciding-what-to-read-next`
-states the scent mechanism almost in its canonical form and cites nobody for it
-— but plausible is not established, and establishing it means reading the
-sources. Treating the diagnosis as settled background is the exact error the
-documentation disposition sweep already paid for once.
+vocabulary. Establishing that means reading the sources; treating the diagnosis
+as settled background is the exact error the documentation disposition sweep
+already paid for once. **One note has now been checked and the diagnosis came
+back only half right** — see the received findings below. Extrapolating from it
+to the other eleven would repeat the error at one remove.
 
 **That the four dispositions are a menu to allocate across.** Retire / thin
 node / rewrite around the delta / leave operative documentation alone are
@@ -140,6 +140,44 @@ README.
 Membership is a finding to re-test, not a fixed list. The cohort was assembled
 by an outside reader from note titles; notes elsewhere in the KB may have the
 same problem, and some of these may not have it at all.
+
+## Received: the first source-grounding case
+
+`agents-navigate-by-deciding-what-to-read-next` was taken through the full chain
+against a captured, read source (Pirolli on proximal information scent) on
+2026-08-24. Recorded here rather than only in the sibling workshop, because that
+workshop closes and is deleted while this one still needs the result.
+
+**The critique's diagnosis was half right, and the half it missed matters more.**
+Three claims are subsumed — the follow/skip unit, the probabilistic judgment
+under uncertainty, and the proximal cue that lets a reader judge without loading
+the target. Those are information scent, near-paraphrase, cited to nobody. But a
+fourth claim, "the more context a pointer carries, the cheaper the navigation
+decision," is **not** in the source and is wrong by the source's own lights: it
+merges estimate quality with interaction cost where the source separates them,
+and the source's nearest test fixes cue size rather than varying it. Three
+further claims are local and absent from the source.
+
+So the note is **not** the clean rediscovery case the critique proposed. A note
+whose central design claim is wrong is not obviously a retirement candidate — it
+may be a correction candidate, and retiring it would delete the error without
+correcting anything that inherited it. Disposition is still open; what changed is
+that it is now open on evidence rather than on resemblance.
+
+**The critique's per-note table was contradicted where it was checked.** Connect
+rejected three cohort notes as belonging to this tradition, with reasons:
+`index-curation` ("nothing that discriminates *curated* from *generated*
+listings, which is the note's entire claim"), `addressability-grain` ("the source
+assumes the target is unknown, which is the premise the note discharges"), and
+`a-knowledge-base-should-support-fluid-resolution-switching` ("the source's
+switching is lateral, not vertical"). The critique had proposed retiring or
+partly retiring two of those three into the literature route.
+
+**One batch found in passing.** Three artifacts carry standing "survey is from
+training data" TODOs inside this tradition — `links-README.md`,
+`title-as-claim-enables-traversal-as-reasoning.md`, and
+`information-value-is-observer-relative.md`. They are one batch, not three, and
+only the first is in the current cohort.
 
 ## Boundaries
 
