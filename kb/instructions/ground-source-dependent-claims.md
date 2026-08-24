@@ -47,7 +47,10 @@ existing Claims entry.
    contiguous span rather than one fragment per line — a `pdftotext` snapshot
    wraps mid-sentence, and fragmenting on those breaks makes the entry unreadable
    for the `source` review lens without making it any more verifiable.
-   Verify every extract against the snapshot.
+   Verify every extract against the snapshot. `commonplace-validate` performs
+   this check when the ingest skill appends your entry, so a wrong extract
+   fails there rather than landing; quote the snapshot's bytes as they are
+   instead of repairing capture artifacts as you copy.
 7. Invoke `cp-skill-ingest` with:
 
    ```yaml

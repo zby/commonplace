@@ -105,6 +105,17 @@ rewrite an analysis section, or continue into the ordinary ingest steps.
    headings, a second top-level entry, any other field, or text before or after
    the entry. Require every verbatim extract value to occur exactly in the
    snapshot; a locator alone is not verification.
+
+   That requirement is now checked deterministically: `commonplace-validate`
+   resolves each `Source extract (verbatim)` against the name-paired snapshot
+   whenever the snapshot is present, and fails on one that does not occur. Do
+   not treat your own reading as the check — an agent verifying text it just
+   transcribed confirms its own copy. A sweep of the first grounded cohorts
+   found five false extracts written under this instruction, four of them
+   silent repairs of capture artifacts (line-break hyphenation, an inline
+   footnote marker, a LaTeX arrow) that a reader does not notice removing.
+   Quote the snapshot's bytes as they are; whitespace normalization already
+   lets an extract span wrapped lines.
 4. Retain the ingest's complete incumbent bytes. Construct a candidate by
    splicing only within the Claims section and by using the incumbent file's
    newline convention:
@@ -128,7 +139,9 @@ rewrite an analysis section, or continue into the ordinary ingest steps.
    Re-read the result and require the intended splice plus exact preservation
    of all other bytes. If a post-write check or validation fails, restore the
    retained incumbent bytes exactly, verify that restoration, and report
-   failure rather than leaving an invalid or partial append.
+   failure rather than leaving an invalid or partial append. A `claims extract`
+   failure is authoritative about the entry, not the splice: repair the extract
+   against the snapshot rather than rewriting the file.
 6. Report the ingest path, `added`, and the exact `Claim (paraphrase)` wording.
    This branch never launches a worker and never changes a source snapshot or
    another artifact.

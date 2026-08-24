@@ -553,6 +553,12 @@ def validate_claims_extracts(
     ADR 023 settled this split for code-grounded quotes; this is the
     `kb/sources/` half it named and deferred.
     """
+    if not path.name.endswith(".ingest.md"):
+        # Instructions and type specs display the entry template; only a tracked
+        # ingest report asserts one. Warning on the others is the cries-wolf
+        # failure ADR 046 names, and it teaches authors to ignore the check.
+        return
+
     extracts = [m.group("text") for m in CLAIMS_EXTRACT_RE.finditer(content)]
     if not extracts:
         return

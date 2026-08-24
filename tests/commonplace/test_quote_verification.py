@@ -355,3 +355,16 @@ class TestClaimsExtractValidation:
         results = self._run(ingest)
         assert not results.fails
         assert any("does not match snapshot_sha256" in w for w in results.warns)
+
+    def test_instruction_showing_the_template_is_not_checked(self, tmp_path):
+        """Only a tracked ingest asserts an extract; docs merely display one."""
+        from commonplace.lib.validation import CheckResults, validate_claims_extracts
+
+        doc = tmp_path / "ground-source-dependent-claims.md"
+        doc.write_text(
+            "## Claims\n\n- **Source extract (verbatim):** <exact supporting content>\n",
+            encoding="utf-8",
+        )
+        results = CheckResults(note_type="instruction")
+        validate_claims_extracts(results, doc.read_text(encoding="utf-8"), doc)
+        assert not results.fails and not results.warns and not results.passes
