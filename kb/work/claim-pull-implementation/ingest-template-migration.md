@@ -19,7 +19,8 @@ already has an experimental Claims representation.
 ## Order
 
 1. Validate the frozen corpus and separate pre-existing failures.
-2. Make same-checksum re-ingest preserve Claims.
+2. Make same-checksum re-ingest preserve Claims and restore the exact incumbent
+   bytes after a handled final failure.
 3. Update the template and drafting instruction.
 4. Insert the section using each file's newline convention.
 5. Update the type and require exactly one Claims heading in the existing

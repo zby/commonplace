@@ -37,3 +37,39 @@ claims, and caught a contradiction between source prose and table values.
   support.
 - Source-to-ingest reconstruction and note-to-ingest judgment should remain
   separate contexts.
+
+## Retained semantic acceptance cases
+
+Run these against fixture copies, not the live ingests. Construct their Claims
+sections from the checksum-matching local snapshots through the grounding
+instruction. Then give the source-review worker only the candidate artifact and
+the resulting ingest criterion. Exact prose may vary; the dispositions may not.
+
+### Pirolli: thematic overlap must not become support
+
+The reconstructed Claims section must let the reviewer distinguish these uses:
+
+- `pass`: proximal information-scent cues provide concise information about
+  unavailable distal content and inform source-selection judgments;
+- `fail`: follow/skip is the fundamental unit of navigation;
+- `fail`: more surrounding pointer context makes the navigation decision
+  cheaper; and
+- `fail`: the source establishes that surrounding context avoids loading the
+  target as the mechanism that makes navigation tractable.
+
+The last three require narrowing or a separate local transfer argument. A
+reviewer that passes them from topical similarity fails the case.
+
+### Agent Workflow Memory: tables bound quantitative claims
+
+The reconstructed Claims section must retain enough table context to produce:
+
+- `pass`: on Mind2Web cross-domain, `AWMonline` reports 35.5 step success and
+  `AWMoffline` 32.6;
+- `pass`: on Mind2Web cross-task, text workflows report 45.4 step success versus
+  45.1 for code workflows, while full task success is 3.6 versus 4.8; and
+- `fail`: AWM and AWM-as-action have the same 3.2 full task success.
+
+The final statement follows the source prose but contradicts Table 9, which
+reports 4.8 for AWM and 3.6 for AWM-as-action. Grounding must expose that
+conflict rather than silently choosing the flattering sentence.
