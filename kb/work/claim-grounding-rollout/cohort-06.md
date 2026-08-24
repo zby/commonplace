@@ -1,8 +1,9 @@
 # Cleanup cohort 06 — frozen 2026-08-24
 
-**Status: executed 2026-08-24; ten rows reached a terminal disposition. A
-post-completion exact-pair repair removed the snapshot-identity blocker; DS-1
-and DS-2 now await grounding and disposition.**
+**Status: complete 2026-08-24. Twelve of twelve rows carry a terminal
+disposition. A post-completion exact-pair repair removed the snapshot-identity
+blocker, after which DS-1 and DS-2 were grounded against the restored
+snapshot.**
 
 Frozen at repository `15f4080f`. Follow [the procedure](./procedure.md)
 and its **Executing a cohort** section, which carries the literal grounding and
@@ -87,8 +88,8 @@ dispositioned, and source review runs.
 | LG-1 | grounded | Attributed Borretti's concretization claim and C-speed/Lisp-dynamism example directly, then marked the conjunction and witness model as the note's extension. | Target clean PASS; ingest PASS with its pre-existing missing-`distillation.md` link warning; final source gate PASS (`codex`, job 7990). |
 | LG-2 | narrowed | Recast the human/LLM contrast as a conceptual, idealized failure mode with no prevalence claim; the argmax and silent-relaxation mechanism remains explicitly conjectural. | Target clean PASS; ingest PASS with its pre-existing link warning; final source gate PASS (`codex`, job 7990). |
 | LG-3 | literature handoff | Changed direct primary-source presentation to "Borretti reproduces and attributes" and recorded that the book wording, context, and page remain unverified until a primary snapshot is captured. A bounded secondary-attribution Claim was added after the first source gate exposed the missing support. | Initial source gate FAIL (job 7988); repaired ingest validates with its pre-existing link warning; rerun PASS (`codex`, job 7990). |
-| DS-1 | named blocker | None; the frozen claim was not compared with source content because the exact name-paired snapshot could not be produced through the required route. | Unchanged target clean PASS; grounding and source gate not run. |
-| DS-2 | named blocker | None; same snapshot-identity blocker as DS-1. | Unchanged target clean PASS; grounding and source gate not run. |
+| DS-1 | grounded | None needed. The source states the prescribed-upfront versus trace-extracted distinction directly and characterizes both sides; the note's footer already scopes its use to the architecture and excludes the post's market claims. | Target PASS clean; ingest PASS with 5 extracts resolving against the pinned snapshot. |
+| DS-2 | narrowed | None needed, but the source bounds the use. Its support stops at the asserted contrast — "you have state, but not the legible 'why'" — and it never tests whether rationale can be reconstructed from later state. The note's stronger "expensive-to-impossible" and "cannot be mined out of it at any cost" claims are its own, developed through spec mining and already flagged in its open questions, so no attribution exceeds the source. | Target PASS clean; ingest PASS. |
 | TA-1 | narrowed | Restated the delta-to-reverse-attribution pipeline from the selected Claim and added its synthetic-trace and chain-of-thought scope. | Target and ingest clean PASS; source gate PASS (`codex`, job 7989). |
 | TA-2 | grounded | Restated the Recommender's hypothesis verification, authoritative cross-check, possible refinement/override, and CRUD recommendation for human review. | Target and ingest clean PASS; source gate PASS (`codex`, job 7989). |
 | TA-3 | contradicted / repaired | Replaced "the system does not apply the change" with the supported distinction: the proposed architecture applies approved fixes, but reported fix effectiveness measures only operation-and-path agreement and contains no application, rerun, or behavioral outcome. | Target and ingest clean PASS; source gate PASS (`codex`, job 7989). |
