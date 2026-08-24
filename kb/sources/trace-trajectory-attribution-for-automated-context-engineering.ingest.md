@@ -22,7 +22,38 @@ TRACE turns complete agent trajectories into context-maintenance recommendations
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** TRACE turns the discrepancy between a user's correction and the agent's response into a loss signal, then has the Root Cause agent read the execution trace in reverse to nominate candidate fault sources while deferring inspection of the underlying context files to the Recommender.
+  - **Source extract (verbatim):** The delta—the discrepancy between what the user expected and what the agent produced—serves as the “loss signal” that guides attribution.
+  - **Source location:** Section 5.2, "Delta-Guided Holistic Attribution"
+  - **Source extract (verbatim):** The Root Cause reads only the agent’s execution trace—chain-of-thought, tool calls, and tool outputs—and does not separately inspect raw context files; the chain-of-thought is the key diagnostic signal, since the agent’s own reasoning names the sources that shaped each decision (e.g., “According to the KB …” or “Following the SOP for …”), letting the Root Cause identify candidate root-cause sources by reading the trace alone. Verification of those candidate files is deferred to the Recommender stage.
+  - **Source location:** Section 5.2, "Delta-Guided Holistic Attribution"
+  - **Source extract (verbatim):** The LLM is instructed to reason over the trace in reverse temporal order—gradient-descent style: starting from the final response (where the loss is observed), it walks backward (response → tool outputs → thinking → inputs) to locate the earliest node whose content is inconsistent with the delta.
+  - **Source location:** Section 5.2, "Delta-Guided Holistic Attribution"
+  - **Scope:** The paper's primary holistic-attribution design for structured traces that include chain-of-thought, tool calls, and tool outputs.
+  - **Confidence:** High for the stated pipeline design; its attribution accuracy is evaluated on the paper's synthetic benchmark.
+  - **Limitation:** Root Cause attribution nominates a candidate source rather than verifying the implicated file, and the method assumes access to chain-of-thought that may be unavailable or unfaithful in other systems.
+
+- **Claim (paraphrase):** TRACE's Recommender treats the Root Cause output as a hypothesis, reads and cross-checks implicated context against authoritative sources, may confirm, refine, expand, or override the attribution, and emits a CRUD recommendation for human review.
+  - **Source extract (verbatim):** A fundamental design principle of Trace is that the Recommender treats the Root Cause’s root cause analysis as a hypothesis to verify, not a conclusion to accept.
+  - **Source location:** Section 6.1, "Independent Exploration: Hypothesis Verification, Not Passive Acceptance"
+  - **Source extract (verbatim):** Upon receiving a RootCauseAnalysis, the Recommender executes a multi-phase exploration—read the implicated component, search authoritative sources, cross-reference to validate, and explore related components (full procedure in Appendix C). This exploration may confirm the Root Cause’s attribution, refine it with additional context, expand it to include related issues, or in some cases override it when exploration reveals the true root cause lies elsewhere.
+  - **Source location:** Section 6.1, "Independent Exploration: Hypothesis Verification, Not Passive Acceptance"
+  - **Source extract (verbatim):** The system consists of three specialized agents: Detector identifies dissatisfaction signals from agent trajectories, Root Cause performs holistic attribution to identify root causes, and Recommender generates CRUD recommendations for human review.
+  - **Source location:** Section 3, "System Architecture," Figure 1 caption
+  - **Scope:** The paper's Recommender stage and the human-review boundary of its proposed architecture.
+  - **Confidence:** High for the described architecture and prompt protocol.
+  - **Limitation:** Source inspection tests the recommendation against available context authorities; it does not establish that the attributed causal story is complete or that an accepted edit improves later agent behavior.
+
+- **Claim (paraphrase):** In TRACE's synthetic evaluation, "fix effectiveness" is the fraction of traces whose recommendation matches both the ground-truth CRUD operation and target path; the metric evaluates recommendation correctness rather than observed behavior after applying a change.
+  - **Source extract (verbatim):** We evaluate Trace on a synthetic dataset of agent conversation traces designed to simulate realistic failure modes encountered in enterprise AI agent deployments.
+  - **Source location:** Section 7, "Evaluation Setup"
+  - **Source extract (verbatim):** End-to-End Evaluation: We report component-level accuracies and compute fix effectiveness as the fraction of traces where the full pipeline produces a correct, actionable recommendation (correct operation AND correct target path).
+  - **Source location:** Section 7.3, "Evaluation Protocol"
+  - **Source extract (verbatim):** Fix Effectiveness measures correct CRUD operation AND target path.
+  - **Source location:** Section 8.4, Table 3 caption
+  - **Scope:** The reported end-to-end metric on 60 synthetic dissatisfaction traces with annotated operations and paths.
+  - **Confidence:** High; the evaluation section and table define the metric directly.
+  - **Limitation:** The proposed architecture says approved fixes are applied, but this reported metric contains no application, task rerun, or post-change behavioral outcome. It therefore does not measure whether a recommendation repairs behavior.
 
 ## Connections Found
 

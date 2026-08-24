@@ -26,7 +26,27 @@ The article presents “recursive auto-improvement” as a coding agent improvin
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** The described auto-improvement loop derives probes from a target agent's specification and usage sessions, runs them against the live agent, and responds to failures by editing the target's instructions, tools, parameters, or code, restarting it, and rerunning failed probes.
+  - **Source extract (verbatim):** Here, one AI improves another. A coding agent edits a target agent's instructions, tools, and parameters.
+  - **Source location:** "Not RSI" paragraph beginning "Recursive self-improvement (RSI)"
+  - **Source extract (verbatim):** The coding agent reads Radar's instructions and mines the sessions to build a set of probes: golden path, edge cases, tool selection, adversarial. For each probe it writes a one-line expected behavior, drawn from the spec. Then it runs them against the live agent, reads the tool calls, errors, and debug messages from the container logs, and judges every response.
+  - **Source location:** "Here's how it works" paragraph beginning "The coding agent reads Radar's instructions"
+  - **Source extract (verbatim):** For every failure it picks one lever to change: tighten a rule, add a rule, swap a tool. It edits the agent code in agents/radar.py, restarts, and re-runs only what failed. Most fixes are one sentence or one parameter change.
+  - **Source location:** "Here's how it works" paragraph beginning "For every failure"
+  - **Scope:** One practitioner walkthrough of a coding agent improving the Radar target agent against probes derived from its specification and observed sessions.
+  - **Confidence:** High for the workflow the post explicitly describes.
+  - **Limitation:** The post reports a worked procedure, not controlled outcome evidence, and does not show that the loop revises its own probe derivation, judging method, platform, or stopping condition.
+
+- **Claim (paraphrase):** In the walkthrough, the target agent's specification supplies the convergence point, the coding agent derives and judges probes, and the loop runs until every probe passes; the post reports target-side edits but no revisions to that surrounding method or platform.
+  - **Source extract (verbatim):** Recursive auto-improvement (RAI) is a convergent process: it pulls the agent toward a fixed point, i.e. its own spec.
+  - **Source location:** "Not RSI" paragraph beginning "Recursive self-improvement (RSI)"
+  - **Source extract (verbatim):** Today I'm going to show you how to recursively improve your agents. We'll build an agent that starts at 7/10, then run a recursive auto-improvement loop until every probe passes.
+  - **Source location:** Opening paragraph
+  - **Source extract (verbatim):** The coding agent reads Radar's instructions and mines the sessions to build a set of probes: golden path, edge cases, tool selection, adversarial. For each probe it writes a one-line expected behavior, drawn from the spec. Then it runs them against the live agent, reads the tool calls, errors, and debug messages from the container logs, and judges every response.
+  - **Source location:** "Here's how it works" paragraph beginning "The coding agent reads Radar's instructions"
+  - **Scope:** The roles and termination condition named in the Radar walkthrough, contrasted with the target-side artifacts the post says are edited.
+  - **Confidence:** High that the described run treats these elements as supplied; moderate that the omission of edits reflects the method's boundary rather than abbreviated reporting.
+  - **Limitation:** The source does not declare the outer method immutable or exhaustively enumerate its update surface. It therefore supports "not revised in this account," not "incapable of revision."
 
 ## Connections Found
 
