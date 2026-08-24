@@ -1,126 +1,113 @@
 ---
-description: "Code architecture of the Commonplace review subsystem: package layout, storage schema, canonical state vs derived output, freshness mechanism, module map, and finalization invariants"
+description: "Architecture boundaries of the Commonplace review subsystem: parent-owned dispatch, canonical state, derived artifacts, atomic finalization, and freshness hashing"
 type: kb/types/note.md
 tags: []
 ---
 
 # Review system architecture (`commonplace.review` + `commonplace.cli.review`)
 
-The review subsystem stores assay state in SQLite, renders canonical prompt artifacts for `(note, criterion)` pairs, and finalizes worker-written output. The persisted criterion field remains named `criterion_path`. It does not launch reviewer models itself: the parent agent or harness owns worker dispatch, while Commonplace owns deterministic selection, job creation, finalization, freshness, and maintenance.
+The review subsystem is deterministic coordination around externally dispatched
+judgment. Commonplace selects `(note, criterion)` pairs, snapshots their inputs,
+creates jobs and prompts, validates worker output, and persists completion and
+freshness. The parent agent or harness launches workers; Commonplace does not
+launch reviewer models. The persisted generic assay field remains named
+`criterion_path`.
 
-This document describes how the subsystem is built. For how to operate it, see [review system](./README-REVIEW-SYSTEM.md) and [run review batches](../instructions/run-review-batches.md).
+For operation, see [the review-system guide](./README-REVIEW-SYSTEM.md) and
+[run review batches](../instructions/run-review-batches.md). Exact behavior
+belongs to the executing `commonplace.review` and `commonplace.cli.review`
+source.
 
-## Package layout
-
-- `commonplace.review` — library modules: SQLite access, freshness, gate resolution, prompt preparation, output parsing/finalization, artifact writing, acknowledgement, warning selection, and maintenance helpers.
-- `commonplace.cli.review` — thin command wrappers. Each command parses arguments, resolves the repo root and review DB, then calls one library operation.
-
-## Execution flow
+## Execution and ownership
 
 ```
-review_target_selector  -> selector JSON
-create_review_jobs      -> queued review_jobs + review_pairs + prompt artifacts
-worker/sub-agent        -> writes derived job_output_path
-finalize_review_job     -> validate provenance, parse output, record completion, upsert freshness baseline
+target selector  -> selector JSON
+job creation     -> queued job + pair rows + captured prompt
+external worker  -> job-owned output file
+finalization     -> parsed results + completion + freshness baselines
 ```
 
-The persisted unit is a `review_pairs` row inside one `review_jobs` row. A job's `grouping` is either `note` or `criterion`; grouping controls prompt sharing and result filenames. Every job is result-kind homogeneous.
+Selector JSON is the only job-creation input. A job groups pairs by note or by
+criterion for prompt sharing, but every pair remains an independent unit of
+output and freshness, and every job uses one persisted result kind.
 
-## Data model
+The parent owns dispatch and concurrency. Each review worker starts without the
+parent's task conversation, reads one generated prompt path, and writes only the
+job-owned output named there. It does not mutate notes, criteria, manifests, or
+the store. [ADR 067](./adr/067-review-workers-read-one-prompt-and-write-one-output.md)
+owns that worker boundary; the generated prompt is its executable instance.
 
-SQLite operational store, default `kb/reports/commonplace-store.sqlite`; override with `COMMONPLACE_STORE` or a command-specific `--db`. `commonplace.store` owns schema setup and whole-store integrity; `review_schema.py` delegates to it. The retained `kb/reports/review-store.sqlite` is the schema-v7 backup; migrate with `scripts/migrate-review-db-v7-to-commonplace-store.py` before switching the default.
+## Canonical state and artifacts
 
-| Table | Contents |
-|---|---|
-| `artifact_snapshots` | Path-keyed `file-text` snapshots: exact UTF-8 text and SHA-256 for prompt rendering, diffing, and accepted inputs |
-| `freshness_baselines` | Current accepted baseline per `(target_kind, target_key_json)` with monotonic `revision` |
-| `freshness_inputs` | Accepted input roles for a target, each pointing at an `artifact_snapshots` row |
-| `review_freshness_evidence` | Review-only bridge: completed evidence pair retained by a `review-pair` target |
-| `review_jobs` | One review invocation: model partition, nullable runner/model/effort provenance, status, grouping (`note`/`criterion`), `created_at`, nullable `completed_at`, telemetry, failure context |
-| `review_pairs` | One requested `(note_path, criterion_path)` pair inside a job: persisted `result_kind` (`verdict`/`report`), nullable outcome, reviewed snapshot IDs, nullable `expected_baseline_revision` for queued-job CAS |
+SQLite is canonical for job and pair protocol state, execution provenance, and
+freshness. [Storage architecture](./storage-architecture.md) owns the physical
+tables and store location; live schema and query behavior remain in
+`commonplace.store` and `commonplace.review.review_db`.
 
-Artifact paths — prompt, job output, manifest, and per-pair result files — are **derived**, not stored columns. Each per-pair result filename (`pair-{ordinal}-{stem}.md`) is a pure function of that pair's own row (`pair_ordinal` plus the grouping-varying path stem), never of sibling pairs, so inline pruning of superseded sibling pairs cannot change a surviving pair's path.
+Review artifacts have narrower roles:
 
-The `current_review_freshness_baselines` view projects review-shaped rows over generic freshness tables plus `review_freshness_evidence`. A baseline is valid only when its evidence pair, parent job, paths, model partition, snapshots, and per-kind completion agree. Store initialization checks those invariants, and baseline query helpers repeat the check rather than hiding malformed rows as stale state.
+- the prompt is generated job input carrying the captured review task;
+- `job-output.md` is the worker-to-finalizer transport;
+- per-pair result files retain the review body, which is evidence not stored in
+  SQLite; and
+- `MANIFEST.json` is a reconstructable inspection surface.
 
-### Canonical state vs derived output
+Artifact paths are derived from store state rather than persisted as another
+authority. `MANIFEST.json` is never pipeline state. A worker's optional
+self-reported model remains a labelled artifact claim; it does not become
+harness provenance or freshness identity. Review identity is
+`(note_path, criterion_path, model_partition)`; missing runner telemetry is
+normal.
 
-The DB is the source of truth; human-readable markdown is derived.
+## Finalization boundary
 
-- `review_pairs.result_kind` is `verdict` or `report`. Verdict outcomes use the lowercase enum `pass`, `warn`, `fail`; report pairs keep `outcome` null. `review_jobs.status` is `queued`, `completed`, or `failed`.
-- `created_at` is when the job row and prompt inputs were prepared. Runner provenance is optional and recorded during finalization.
-- The review **body** is not in the DB. The finalizer writes it to the derived per-pair result file from parsed `job-output.md`. An optional top-level `self-reported-model` claim is likewise artifact-only: finalization returns it and copies it into result frontmatter without populating `review_jobs.runner_model`. The DB stores protocol state (`result_kind`, nullable `outcome`, `completed_at`), not review text or worker self-report. `MANIFEST.json` is reconstructed from DB rows and holds neither.
-- Verdict output ends with one parseable `## Result: PASS|WARN|FAIL`; report output ends with `## Result: REPORT`. `ERROR` is an execution-failure signal: finalization fails the whole job without completing pairs or advancing baselines.
+Finalization accepts only queued jobs and is all-or-nothing across every pair in
+the job. It validates provenance, output structure, pair coverage, and each
+pair's persisted result contract before advancing state. Success completes all
+pairs, creates or replaces their freshness baselines, and prunes superseded
+evidence. Failure completes none and advances no baseline. [ADR 035](./adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md)
+owns this transaction boundary.
 
-### Freshness mechanism
+The artifact failure policy follows the state boundary. A per-pair result-file
+write failure prevents DB completion because that file carries review evidence.
+A later manifest refresh failure is only a warning because the manifest is
+reconstructable from completed state.
 
-The selector computes SHA-256 over the current note and criterion text and compares it against baseline snapshot hashes from `current_review_freshness_baselines`, reconstructing note diffs from baseline snapshot text. No row produces `missing-baseline`; a present row with missing or inconsistent data raises a store integrity error. Global status over registered targets lives in `commonplace-freshness-status` ([freshness architecture](./freshness-architecture.md)). There is no separate catalog-bundle manifest hash; if bundle-level manifests ever become freshness-relevant, this should widen to an effective review-contract hash rather than a leaf criterion-file hash.
+## Freshness hash boundary
 
-The hash boundary is deliberate and narrower than the full assay contract: the prompt scaffolding (`protocol/prompt.py` — runner system prompt, reading scope, output contract, the conformance wrappers) and the prompt-assembling code are outside it, so editing them invalidates no freshness baselines. The compensating rule is that judgment-bearing criteria live only in hashed note/criterion files, and the scaffolding stays mechanical; a scaffolding change that shifts judgments is a system upgrade calling for a deliberate corpus-wide re-review or ack outcome. Both modules carry comments marking this boundary. For conformance pairs specifically, a wrapper may say how to apply a type spec or COLLECTION.md as a criterion, never what a good note of the type or collection looks like — conformance criteria that need sharpening go into an authored `## Review` section of the dependency document, where the hash sees them.
+A review baseline pins exactly two source files: the note and the persisted
+criterion. The criterion may be a catalog gate, type spec, collection contract,
+or critique instruction. Selector applicability and `missing-baseline`
+discovery remain review-specific; registered-target status belongs to
+[freshness architecture](./freshness-architecture.md).
 
-Conformance prompts embed the dependency document snapshot — the type spec or the collection's COLLECTION.md — captured at job creation. A short mechanical wrapper distinguishes the document as criteria the reviewer applies rather than prompt text addressed to it. The evaluated text and the snapshot pinned by the freshness baseline are therefore identical.
+Prompt scaffolding is deliberately outside the freshness hash. This includes
+the worker instructions, output protocol, reading scope, prompt assembly, and
+the mechanical wrappers that present type specs or collection contracts as
+criteria. Therefore judgment-bearing requirements must live in the hashed note
+or criterion files. A wrapper may say how to apply a dependency document, never
+what a good note should contain; sharpen conformance in the dependency
+document's authored `## Review` section. A scaffolding change that shifts
+judgments is a system upgrade requiring deliberate corpus-wide re-review or
+acknowledgement rather than ordinary file-triggered staleness.
 
-The two-input shape is also the growth path: the default answer to a new review dependency is a new factored `(note, dependency)` pair with the dependency document on the criterion side — as type-conformance pairs do with type specs ([ADR 038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)) and collection-conformance pairs do with COLLECTION.md contracts ([ADR 041](./adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)) — not a wider per-pair input set.
+The live comments in
+[`freshness.py`](../../src/commonplace/review/freshness.py) and
+[`protocol/prompt.py`](../../src/commonplace/review/protocol/prompt.py) place
+this rule in both change loops. [ADRs 038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)
+and [041](./adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)
+apply it to the two conformance criterion sources.
 
-## Core modules
+## Maintenance scope
 
-### Selection and criteria
+Review this page when execution ownership, canonical-state roles, the
+finalization transaction, or the two-file freshness boundary changes. Module
+additions, function signatures, table columns, command arguments, and protocol
+fields do not by themselves require an edit; their live owners remain source,
+schema, or command help.
 
-- `review_target_selector.py` lists stale or requested applicable `(note, criterion)` pairs. Read-only; its public records use `criterion_*` names.
-- `resolve_criteria.py` expands requests into criterion ids and filters catalog gates by note type and traits. It owns the single definition of `--all-gates`: all catalog gates plus virtual `type` and `collection`; the heavyweight report-kind `critique` assay remains opt-in.
-- `paths.py` resolves the active gate catalog and translates between criterion ids and repo-relative criterion paths, including virtual type, collection, and critique identities.
-- `type_conformance.py` owns the type-conformance criterion source ([ADR 038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)): the type spec named by the note's `type:` frontmatter. Pairs derive from note frontmatter, not from catalog listing plus `requires_type` filtering; the persisted criterion identity is the type-spec repo path, and everything downstream of pair derivation is unchanged.
-- `collection_conformance.py` owns the collection-conformance criterion source ([ADR 041](./adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)): the `COLLECTION.md` of the nearest collection containing the note. Pairs derive from note location; the persisted criterion identity is the COLLECTION.md repo path, and everything downstream is unchanged.
+## See also
 
-### Job creation
-
-- `batch.py` creates queued jobs from normalized pair lists. It snapshots note/criterion files, inserts job and pair rows, renders prompts, writes `MANIFEST.json`, and returns derived prompt/output/result paths.
-- `freshness.py` captures snapshot-backed assay inputs for prompt generation.
-- `job_prompt.py` prepares `NoteReviewTarget` objects, including resolved and unresolved local markdown links.
-- `artifacts.py` owns artifact directory selection, result-file naming, result frontmatter, per-pair result writes, and manifest writing.
-
-### Protocol and finalization
-
-- `protocol/format.py` defines pair sentinels and render-time reserved-text checks.
-- `protocol/prompt.py` renders the complete worker contract from captured text; conformance gates add a mechanical wrapper explaining how to apply the embedded type spec or COLLECTION.md snapshot. The prompt instructs a worker to write exactly the job's derived `job_output_path` and no other file. Dispatch supplies only this prompt's path.
-- `protocol/parser.py` parses sentinel-bracketed pair output plus the optional pre-pair `self-reported-model` field. Structural anomalies, missing expected pairs, duplicates, malformed model fields, and malformed result footers fail the whole job.
-- `protocol/outcomes.py` strictly accepts the one final result marker allowed by the persisted pair kind: a verdict outcome or `REPORT`; `ERROR` raises a job-failing parse error.
-- `finalization.py` is the public library operation behind `commonplace-finalize-review-job`. It loads derived job output, validates optional runner/model/effort provenance, parses the job output, and — only after all parse and coverage preflight passes — writes result files, completes pair rows, creates or replaces freshness baselines, prunes superseded review rows/snapshots, and marks the job completed. Result-file write failures roll back and fail the job in a separate transaction; artifact-dir cleanup and `MANIFEST.json` refresh run after DB completion, with failures reported as non-fatal warnings.
-
-### State and maintenance
-
-- `review_db.py` owns review rows, finalization state transitions, review adapter queries over generic freshness tables, inline superseded-review pruning, and query helpers.
-- `review_model.py` normalizes model partitions and optional reasoning-effort labels.
-- `acknowledgement.py` advances existing baselines for trivial changes while preserving their evidence-pair identity.
-- `ack_trivial_note_changes.py` finds stale pairs whose watched note portions did not change.
-- `warn_selector.py` extracts actionable warn findings from current baseline evidence.
-- `review_schema.py` delegates store setup and integrity to `commonplace.store`.
-- Superseded-review pruning runs inline on successful freshness baseline writes; there is no standalone prune command.
-
-## Command surface
-
-Execution path:
-
-- `commonplace-review-target-selector`
-- `commonplace-create-review-jobs`
-- `commonplace-finalize-review-job`
-
-State and inspection:
-
-- `commonplace-review-job-list`
-- `commonplace-ack-review`
-- `commonplace-ack-trivial-note-changes`
-- `commonplace-warn-selector`
-- `commonplace-resolve-criteria`
-
-## Invariants
-
-- Job creation always consumes selector JSON. There is no direct note/pair creation mode.
-- Worker agents start without inherited parent conversation turns, receive only the generated prompt path as their job-specific task, and write only its named job output file; they do not mutate notes, criteria, indexes, manifests, or review DB state. Ambient system, developer, and repository governance still applies. Their conversational response is not a pipeline input. An optional `self-reported-model` file field is preserved as a labelled claim, not promoted to harness provenance or freshness identity.
-- `MANIFEST.json` is inspectable output, not pipeline state.
-- Finalization accepts only `queued` jobs and moves them atomically to `completed` or `failed`.
-- Failed jobs write no freshness baseline rows and reset pair completion state (`outcome` and `completed_at` null).
-- `current_review_freshness_baselines` requires a completed parent job and per-kind pair completion: outcome-bearing verdict or decisionless report.
-- A successful freshness baseline supersedes the prior row for the same `(note_path, criterion_path, model_partition)` key and prunes obsolete review evidence inline.
-- Freshness baseline state is path-keyed; relocating notes or criteria requires a fresh assay under the new path.
-- Missing telemetry is normal. Review identity is `(note_path, criterion_path, model_partition)`, not worker-provided execution metadata.
+- [ADR 030](./adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) — parent-owned orchestration around deterministic endpoints
+- [ADR 043](./adr/043-review-state-separates-completion-outcomes-and-freshness-baselines.md) — completion, outcome, and freshness are separate state dimensions
+- [ADR 052](./adr/052-general-freshness-store-review-first-migration.md) — generic freshness store and review adapter boundary

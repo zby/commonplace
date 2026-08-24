@@ -89,6 +89,7 @@ unrelated missing baselines were left untouched.
 
 ## Next
 
-`review-architecture.md` is the next forcing case. Its module inventory and
-exact schema descriptions should face the same recovery test, while
-cross-module invariants and canonical-state boundaries may survive.
+[The `review-architecture.md` worked case](./worked-case-review-architecture.md)
+confirmed the predicted split: its module inventory and exact schema
+descriptions were removed, while cross-module invariants and canonical-state
+boundaries survived.

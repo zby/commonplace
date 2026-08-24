@@ -85,13 +85,15 @@ not a claim that every unit inside them is unique.
 
 The four dispositions are candidates, not a menu to allocate across. A fifth
 may fit better, and one artifact may need different dispositions for different
-regions. The first three worked cases showed why appearance is not a
+regions. The first four worked cases showed why appearance is not a
 disposition: `lib-modules.md` was retired after live source proved the better
 routing surface; `commands.md` retained a small checked catalogue because
 command-local help cannot discover an unknown command; and
 `freshness-schemas.md` was retired because its exact field inventory duplicated
 live serializers and parsers while its semantic residue belonged in freshness
-architecture.
+architecture. `review-architecture.md` then retained only the cross-component
+boundaries that require synthesis, dropping its module, schema, and command
+catalogues.
 
 ## Dependency worth exploiting
 
@@ -119,3 +121,4 @@ needs to know when it was made and against what.
 - [Worked case: `lib-modules.md`](./worked-case-lib-modules.md) — the first artifact through the full procedure, completed 2026-08-24 by retiring the reference after task-vocabulary searches reached a more complete live-source surface
 - [Worked case: `commands.md`](./worked-case-commands.md) — the second artifact through the procedure; retained the complete 22-name catalogue as checked routing, removed repeated manuals, and made side-effect-free live help a tested command-wide contract
 - [Worked case: `freshness-schemas.md`](./worked-case-freshness-schemas.md) — the third artifact through the procedure; retired an unchecked exact-field copy after moving its one missing cross-command invariant into freshness architecture
+- [Worked case: `review-architecture.md`](./worked-case-review-architecture.md) — the fourth artifact through the procedure; removed source-recoverable inventories and retained execution ownership, canonical-state, finalization, and freshness boundaries

@@ -66,5 +66,5 @@ The stronger invariants cost stricter writes: every baseline snapshot is non-nul
 Relevant Notes:
 
 - [Review system](../README-REVIEW-SYSTEM.md) — implemented-by: operator vocabulary and protocol
-- [Review system architecture](../review-architecture.md) — implemented-by: schema, modules, and integrity boundary
+- [Review system architecture](../review-architecture.md) — implemented-by: canonical-state, finalization, and freshness boundaries
 - [Storage architecture](../storage-architecture.md) — part-of: current SQLite storage boundary

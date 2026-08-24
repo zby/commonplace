@@ -186,7 +186,7 @@ invariants, and orientation that the implementation does not cheaply recover.
 - [navigation.md](./navigation.md) — how agents move through the KB using control-plane pointers, `rg`, titles/descriptions, indexes, links, connect reports, and future search layers
 - [control-plane-goals.md](./control-plane-goals.md) — how Commonplace ships KB goals in always-loaded context via `AGENTS.md`
 - [instruction-generation.md](./instruction-generation.md) — build-time instruction generation flow and `commonplace-init`
-- [review-architecture.md](./review-architecture.md) — how the review subsystem is built: package layout, storage schema, canonical-state-vs-derived-output, freshness mechanism, module map, and invariants (the build-side companion to [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md))
+- [review-architecture.md](./review-architecture.md) — review dispatch ownership, canonical state versus derived artifacts, all-or-nothing finalization, and the freshness hash boundary (the build-side companion to [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md))
 - [freshness-architecture.md](./freshness-architecture.md) — the general freshness substrate: commonplace store, file-text versioning, target baselines, transitions, global status, and the review adapter
 
 ### Type system and collection model
