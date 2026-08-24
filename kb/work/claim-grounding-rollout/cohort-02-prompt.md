@@ -1,25 +1,25 @@
-# Agent prompt — cleanup cohort 03
+# Agent prompt — cleanup cohort 02
 
 Self-contained. Point one agent at this file; it needs nothing else from this
 conversation. Cohorts are disjoint on both notes and ingests, so all six run in
 parallel with no coordination.
 
-**Scope:** 5 targets, 2 ingests, 0.13 MB of snapshot. The lightest cohort — 2 ingests across 5 targets. Good first dispatch to shake out the procedure.
+**Scope:** 5 targets, 16 ingests, 1 blocked. Hardest of the six and the one that stresses the procedure: a likely literature handoff, a multi-source composition test, and a deliberately blocked ingest.
 
 ---
 
-Work cleanup cohort 03 in the Commonplace repository at
+Work cleanup cohort 02 in the Commonplace repository at
 `/home/zby/llm/commonplace`.
 
-Read `kb/work/literature-disposition/cleanup-cohort-03.md` for your frozen
-targets, then `kb/work/literature-disposition/cleanup-procedure.md` — follow its
+Read `kb/work/claim-grounding-rollout/cohort-02.md` for your frozen
+targets, then `kb/work/claim-grounding-rollout/procedure.md` — follow its
 six steps and its **Executing a cohort** section, which carries the literal
 grounding and re-ingest invocations.
 
 **Do step 1 first and do it properly.** Inventory each target's load-bearing
 claims *from the note itself, before opening any source*, and write them into the
 manifest as `ID | target | claim as frozen | source-side need`. Use
-`kb/work/literature-disposition/cleanup-cohort-01.md` as the shape. This ordering
+`kb/work/literature-disposition/cohort-01.md` as the shape. This ordering
 is not bureaucracy: reading the source first lets its vocabulary decide what
 counts as a claim, which is how an earlier pass over-attributed two claims it
 later had to retract.
@@ -46,6 +46,18 @@ not listed in it — other agents own those concurrently, and the disjointness i
 what makes parallel work safe. If a target needs a source outside its listed
 ingests, record a `literature handoff` and move on; do not capture it yourself.
 
+**Cohort-specific: one target is contaminated.** `claim-inventory.md` already
+publishes *recalled* tradition placements for
+`knowledge-storage-does-not-imply-contextual-activation`. Inventory that note from
+the note itself first, then treat those placements as reading assignments, never
+as findings — they were recalled, not read.
+
+Expect at least one target to need a source that is not in the corpus. Record it
+as a `literature handoff`. That is a real result, not a failure, and it is one of
+the things this cohort exists to surface.
+
+**Do not open `cohort-02-prediction.md`.** It records a predicted
+distribution, and an executor who knows the prediction tends to produce it.
 
 Finish by filling the manifest's completion record: one row per claim use, with
 disposition, target change, and validation result. The run is done when every row

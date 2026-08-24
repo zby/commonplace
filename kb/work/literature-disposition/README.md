@@ -273,24 +273,9 @@ workshop which claims the corpus has to adjudicate.
 
 ## Files
 
-- [Grounding cleanup procedure](./cleanup-procedure.md) — restored after the
-  claim-pull workshop deleted it on closure with 66 of 68 citing notes still
-  ungrounded; carries the corpus state at freeze
-- [Cleanup cohort 01 — reconstructed](./cleanup-cohort-01.md) — the claim-pull
-  rollout's own run, rebuilt from diffs after being deleted with all eight
-  completion rows still `pending`: six narrowed, two contradicted, zero grounded
-  as written
-- **Dispatch prompts** — [02](./cleanup-cohort-02-prompt.md) ·
-  [03](./cleanup-cohort-03-prompt.md) · [04](./cleanup-cohort-04-prompt.md) ·
-  [05](./cleanup-cohort-05-prompt.md) · [06](./cleanup-cohort-06-prompt.md) ·
-  [07](./cleanup-cohort-07-prompt.md) — one self-contained prompt per cohort;
-  point an agent at the file and nothing else
-- [Cleanup cohorts 03–07](./cleanup-cohort-03.md) — 24 notes in five manifests,
-  mutually disjoint from each other and from cohort 02 on both notes and ingests,
-  so all six run in parallel without coordination
-- [Cleanup cohort 02](./cleanup-cohort-02.md) — first cohort under the restored
-  procedure: five targets, 16 pairs, frozen at `6cdb3c10`, with a predicted
-  disposition distribution to judge the run against
+- [Claim-grounding rollout](../claim-grounding-rollout/README.md) — the
+  retrospective ADR 073 application. Grounds the claims notes already make; feeds
+  Channel 1 and hands artifact-level calls back here
 - [Three channels: migration, claims, machinery](./three-channels.md) — every
   finding sorted by kind of change, with verification status per row and a
   sequencing argument against migrating first

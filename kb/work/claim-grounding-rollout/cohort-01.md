@@ -62,7 +62,7 @@ source, and none needed an artifact-level disposition handoff.
 ## What this cohort does and does not license
 
 It **does** support the shape findings recorded in ADR 073 and carried in
-[the cleanup procedure](./cleanup-procedure.md): whole-section reading selected
+[the cleanup procedure](./procedure.md): whole-section reading selected
 the right entry without claim IDs, two entries served eight uses, and no
 similar-entry accumulation or identity ambiguity appeared.
 
@@ -71,7 +71,7 @@ source, two targets, eight uses, one model partition. "No identity pressure
 observed" in a two-entry section is close to a tautology. The paths that would
 stress the design — several sources per target, an unavailable observation, a
 disputed entry, a literature handoff — were all untouched here, which is why
-[cohort 02](./cleanup-cohort-02.md) selects for them deliberately.
+[cohort 02](./cohort-02.md) selects for them deliberately.
 
 ## Open items this cohort left
 

@@ -1,6 +1,6 @@
 # Cleanup cohort 07 — frozen 2026-08-24
 
-Frozen at repository `15f4080f`. Follow [the procedure](./cleanup-procedure.md)
+Frozen at repository `15f4080f`. Follow [the procedure](./procedure.md)
 and its **Executing a cohort** section, which carries the literal grounding and
 re-ingest routes and explains why the claim inventory must precede source reading.
 
@@ -23,7 +23,7 @@ Snapshot volume: 0.53 MB across 9 ingests.
 
 Inventory each target's load-bearing claims **from the note itself, before
 reading any source**, as a table of `ID | target | claim as frozen | source-side
-need`. [Cohort 01](./cleanup-cohort-01.md) is the shape. Then ground, disposition,
+need`. [Cohort 01](./cohort-01.md) is the shape. Then ground, disposition,
 repair, and record — one row per claim use, not per note.
 
 ## Completion record

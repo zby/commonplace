@@ -1,25 +1,25 @@
-# Agent prompt — cleanup cohort 05
+# Agent prompt — cleanup cohort 03
 
 Self-contained. Point one agent at this file; it needs nothing else from this
 conversation. Cohorts are disjoint on both notes and ingests, so all six run in
 parallel with no coordination.
 
-**Scope:** 5 targets, 5 ingests, 0.31 MB of snapshot. Five targets over five ingests.
+**Scope:** 5 targets, 2 ingests, 0.13 MB of snapshot. The lightest cohort — 2 ingests across 5 targets. Good first dispatch to shake out the procedure.
 
 ---
 
-Work cleanup cohort 05 in the Commonplace repository at
+Work cleanup cohort 03 in the Commonplace repository at
 `/home/zby/llm/commonplace`.
 
-Read `kb/work/literature-disposition/cleanup-cohort-05.md` for your frozen
-targets, then `kb/work/literature-disposition/cleanup-procedure.md` — follow its
+Read `kb/work/claim-grounding-rollout/cohort-03.md` for your frozen
+targets, then `kb/work/claim-grounding-rollout/procedure.md` — follow its
 six steps and its **Executing a cohort** section, which carries the literal
 grounding and re-ingest invocations.
 
 **Do step 1 first and do it properly.** Inventory each target's load-bearing
 claims *from the note itself, before opening any source*, and write them into the
 manifest as `ID | target | claim as frozen | source-side need`. Use
-`kb/work/literature-disposition/cleanup-cohort-01.md` as the shape. This ordering
+`kb/work/literature-disposition/cohort-01.md` as the shape. This ordering
 is not bureaucracy: reading the source first lets its vocabulary decide what
 counts as a claim, which is how an earlier pass over-attributed two claims it
 later had to retract.

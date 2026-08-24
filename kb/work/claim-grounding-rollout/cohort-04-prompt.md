@@ -11,15 +11,15 @@ parallel with no coordination.
 Work cleanup cohort 04 in the Commonplace repository at
 `/home/zby/llm/commonplace`.
 
-Read `kb/work/literature-disposition/cleanup-cohort-04.md` for your frozen
-targets, then `kb/work/literature-disposition/cleanup-procedure.md` — follow its
+Read `kb/work/claim-grounding-rollout/cohort-04.md` for your frozen
+targets, then `kb/work/claim-grounding-rollout/procedure.md` — follow its
 six steps and its **Executing a cohort** section, which carries the literal
 grounding and re-ingest invocations.
 
 **Do step 1 first and do it properly.** Inventory each target's load-bearing
 claims *from the note itself, before opening any source*, and write them into the
 manifest as `ID | target | claim as frozen | source-side need`. Use
-`kb/work/literature-disposition/cleanup-cohort-01.md` as the shape. This ordering
+`kb/work/literature-disposition/cohort-01.md` as the shape. This ordering
 is not bureaucracy: reading the source first lets its vocabulary decide what
 counts as a claim, which is how an earlier pass over-attributed two claims it
 later had to retract.

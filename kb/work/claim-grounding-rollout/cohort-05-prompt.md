@@ -1,25 +1,25 @@
-# Agent prompt — cleanup cohort 06
+# Agent prompt — cleanup cohort 05
 
 Self-contained. Point one agent at this file; it needs nothing else from this
 conversation. Cohorts are disjoint on both notes and ingests, so all six run in
 parallel with no coordination.
 
-**Scope:** 5 targets, 5 ingests, 0.12 MB of snapshot, 1 blocked. Five targets over five ingests, one of which has no local snapshot.
+**Scope:** 5 targets, 5 ingests, 0.31 MB of snapshot. Five targets over five ingests.
 
 ---
 
-Work cleanup cohort 06 in the Commonplace repository at
+Work cleanup cohort 05 in the Commonplace repository at
 `/home/zby/llm/commonplace`.
 
-Read `kb/work/literature-disposition/cleanup-cohort-06.md` for your frozen
-targets, then `kb/work/literature-disposition/cleanup-procedure.md` — follow its
+Read `kb/work/claim-grounding-rollout/cohort-05.md` for your frozen
+targets, then `kb/work/claim-grounding-rollout/procedure.md` — follow its
 six steps and its **Executing a cohort** section, which carries the literal
 grounding and re-ingest invocations.
 
 **Do step 1 first and do it properly.** Inventory each target's load-bearing
 claims *from the note itself, before opening any source*, and write them into the
 manifest as `ID | target | claim as frozen | source-side need`. Use
-`kb/work/literature-disposition/cleanup-cohort-01.md` as the shape. This ordering
+`kb/work/literature-disposition/cohort-01.md` as the shape. This ordering
 is not bureaucracy: reading the source first lets its vocabulary decide what
 counts as a claim, which is how an earlier pass over-attributed two claims it
 later had to retract.
@@ -46,10 +46,6 @@ not listed in it — other agents own those concurrently, and the disjointness i
 what makes parallel work safe. If a target needs a source outside its listed
 ingests, record a `literature handoff` and move on; do not capture it yourself.
 
-**One ingest is blocked.** Your manifest marks it. Run the re-ingest route from
-the procedure before grounding anything against it; if recapture fails, record
-`unavailable` for the affected claim uses and continue with the rest of the
-cohort rather than stopping.
 
 Finish by filling the manifest's completion record: one row per claim use, with
 disposition, target change, and validation result. The run is done when every row

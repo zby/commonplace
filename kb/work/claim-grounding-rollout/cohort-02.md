@@ -2,7 +2,7 @@
 
 Frozen at repository `6cdb3c10`. Cohort 01 was the claim-pull rollout's own run
 (`agents-navigate-by-deciding-what-to-read-next`, `linking-theory`); this is the
-first cohort under [the restored procedure](./cleanup-procedure.md).
+first cohort under [the restored procedure](./procedure.md).
 
 Blob revisions are recorded so a later session can tell whether a target moved
 under it. Verify with `git rev-parse --short HEAD:<path>`.
@@ -24,7 +24,7 @@ test the procedure's disposition vocabulary.
 
 ## Cohort-specific note
 
-**One target is contaminated.** [claim-inventory.md](./claim-inventory.md)
+**One target is contaminated.** [claim-inventory.md](../literature-disposition/claim-inventory.md)
 already publishes recalled claims and tradition placements for
 `knowledge-storage-does-not-imply-contextual-activation`. Inventory that note
 from the note itself first; then treat those placements as reading assignments,
@@ -44,7 +44,7 @@ groundable, one blocked.
 - `verbalizable-representations-global-workspace-llms`
 
 **Expected to be the hardest item, and chosen for it.** The
-[claim inventory](./claim-inventory.md) found its two halves disjoint: the famous
+[claim inventory](../literature-disposition/claim-inventory.md) found its two halves disjoint: the famous
 claim — knowledge present without affecting the next action — is recalled as
 Tulving's availability/accessibility distinction and cited to nobody, while the
 half 158 reviews and a type spec actually consume is the wholly local `read-back`
@@ -128,7 +128,7 @@ Record candidate precision and unavailable sources; make no corpus-recall claim.
 ## Expected distribution
 
 Recorded before the run, and **sealed** in
-[cohort-02-prediction.md](./cleanup-cohort-02-prediction.md). Do not open that
+[cohort-02-prediction.md](./cohort-02-prediction.md). Do not open that
 file while executing this cohort: a stated distribution is an anchor, and an
 executor who knows the prediction will tend to produce it — the same charitable
 bias this procedure exists to defeat, in a new costume. Open it when judging the

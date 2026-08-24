@@ -6,7 +6,7 @@ it to this form and then deleted it on closure after running only cohort 01
 plus [`ground-source-dependent-claims.md`](../../instructions/ground-source-dependent-claims.md)
 — but the retrospective half was left without a home while 66 of the 68
 ingest-citing notes remain ungrounded. This is Channel 1 of
-[three-channels](./three-channels.md), and this workshop owns it.
+[three-channels](../literature-disposition/three-channels.md), and this workshop owns it.
 
 Deliberately **not** promoted to `kb/instructions/`. It fires only on a corpus
 sweep, which is one-off migration work — the same call
@@ -81,12 +81,12 @@ two demand-driven entries in the Pirolli ingest grounded, narrowed, or repaired
 ## Executing a cohort
 
 Enough to hand to an agent cold. Follow
-[the procedure](./cleanup-procedure.md); these are its literal routes.
+[the procedure](./procedure.md); these are its literal routes.
 
 **Your first task is step 1**, which a cohort manifest deliberately does not do for you:
 inventory each target's load-bearing claims **from the note itself, before
 reading any source**, and record them here as a table of `ID | target | claim as
-frozen | source-side need` — the shape [cohort 01](./cleanup-cohort-01.md) used.
+frozen | source-side need` — the shape [cohort 01](./cohort-01.md) used.
 Reading the source first lets its vocabulary decide what counts as a claim, which
 is how the first pass over-attributed two claims it later had to retract.
 
