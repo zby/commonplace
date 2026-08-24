@@ -44,6 +44,33 @@ over-attribution that has now occurred twice: the first worked case called C1 an
 C3 subsumed, and a blind pass tightened both to needs-narrowing. A reader holding
 target and source together reads thematic overlap as support.
 
+**Record the scope of a negative, not just the verdict.** A "no external source"
+result is only ever "not found in what was searched." Written without its bound,
+it reads as "checked," which is a stronger claim than the evidence supports and
+suppresses the later widening that would find the source — the mechanism in
+[stale indexes reduce discovery when they suppress fallback search](../../notes/stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md),
+whose scope already covers "any artifact a consumer treats as exhaustive."
+
+The near-miss: connect correctly rejected `addressability-grain` from Pirolli —
+"the source assumes the target is unknown, which is the premise the note
+discharges" — while its actual nearest literature is storage read amplification,
+never searched because the cohort was scoped by the label "navigation." Of five
+notes later inventoried per-claim, one fell inside that label.
+
+**This is not an argument against broad sweeps.** Two searches do different jobs
+and neither replaces the other. A targeted search derived from the claim's own
+mechanism is cheap and precise when you can already name the mechanism — asking
+*who else studies cost granularity?* reaches storage systems in one step. A broad
+sweep is expensive and imprecise but finds the tradition you could not have named,
+which is exactly the case that produced this near-miss. Run both; prefer the
+targeted one first because it is cheap, and treat the broad one as the check on
+what the targeting assumed.
+
+The rule binds harder on the broad sweep, not softer. A wide search produces the
+strongest illusion of exhaustiveness — "we looked everywhere and found nothing"
+is the most suppressive negative available — so a broad sweep must record its
+angles, and its findings are reading assignments rather than verdicts.
+
 **Do not bulk-populate.** 192 of 286 ingests are cited by no note, and claims are
 pulled because demand identifies which proposition matters and in whose terms. A
 sweep over every ingest reverts to the push model whose novelty polarity
