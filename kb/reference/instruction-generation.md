@@ -51,6 +51,8 @@ Substitution is a flat string replace in `_write_template`. Templates that don't
 **Scaffold files** — individual files copied into the user's collections:
 
 - `kb/sources/.gitignore` — ignores the local `.snapshots/` materialization directory
+- `kb/sources/COLLECTION.md` — generic tracked-source and local-capture contract
+- `kb/sources/README.md` — curated empty-state landing
 - `kb/notes/COLLECTION.md` — minimal theoretical/descriptive/prescriptive template
 - `kb/notes/README.md` — curated empty-state landing
 - `kb/reference/COLLECTION.md` — minimal template
@@ -58,7 +60,7 @@ Substitution is a flat string replace in `_write_template`. Templates that don't
 - `kb/instructions/COLLECTION.md` — minimal template
 - `kb/instructions/README.md` — curated empty-state landing
 
-Each `COLLECTION.md` template invites the practitioner to state the collection's purpose, intended contribution, quality goal, and outbound link rules, with pointers to the shipped `kb/commonplace/<collection>/COLLECTION.md` as a worked example. Each `README.md` supplies the collection's stable reader landing, points authors to that contract, and states that the collection has no artifacts yet.
+The notes, reference, and instructions `COLLECTION.md` templates invite the practitioner to state the collection's purpose, intended contribution, quality goal, and outbound link rules, with pointers to the corresponding shipped `kb/commonplace/<collection>/COLLECTION.md` as worked examples. The sources contract instead supplies generic rules for tracked source analyses and ignored immutable captures; the shipped Commonplace library has no sources collection to use as a worked example. Each `README.md` supplies the collection's stable reader landing, points authors to its local contract, and states that the collection has no artifacts yet.
 
 **Resolved templates** — read, substituted, written:
 

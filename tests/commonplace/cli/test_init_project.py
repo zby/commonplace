@@ -17,6 +17,7 @@ from commonplace.cli.init_project import (
     installation_warnings,
     main,
 )
+from commonplace.lib.project_paths import is_collection_dir
 from commonplace.lib.validation import validate_collection_landings
 
 
@@ -77,6 +78,8 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
     assert (tmp_path / "kb" / "reference" / "README.md").is_file()
     assert (tmp_path / "kb" / "instructions" / "COLLECTION.md").is_file()
     assert (tmp_path / "kb" / "instructions" / "README.md").is_file()
+    assert (tmp_path / "kb" / "sources" / "COLLECTION.md").is_file()
+    assert (tmp_path / "kb" / "sources" / "README.md").is_file()
 
     # Shared global types stay at top-level kb/types/ (ADR-021: B1 paths are
     # invariant when the global types dir is shared, not nested under commonplace).
@@ -104,9 +107,31 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
 def test_init_project_satisfies_collection_landing_invariant(tmp_path: Path) -> None:
     init_project(tmp_path)
 
+    assert is_collection_dir(tmp_path / "kb" / "sources")
+
     results = validate_collection_landings(repo_root=tmp_path)
 
     assert results.fails == []
+    assert (
+        "[repository] collection landings: all 5 top-level collections have README.md"
+        in results.passes
+    )
+
+
+def test_init_project_preserves_source_collection_heads(tmp_path: Path) -> None:
+    init_project(tmp_path)
+    collection = tmp_path / "kb" / "sources" / "COLLECTION.md"
+    landing = tmp_path / "kb" / "sources" / "README.md"
+    collection.write_text("project source contract\n", encoding="utf-8")
+    landing.write_text("project source landing\n", encoding="utf-8")
+
+    rerun = init_project(tmp_path)
+
+    assert rerun.created == []
+    assert Path("kb/sources/COLLECTION.md") in rerun.preserved_different
+    assert Path("kb/sources/README.md") in rerun.preserved_different
+    assert collection.read_text(encoding="utf-8") == "project source contract\n"
+    assert landing.read_text(encoding="utf-8") == "project source landing\n"
 
 
 def test_init_project_installs_skills_as_copies(tmp_path: Path) -> None:

@@ -64,6 +64,8 @@ MANIFEST = ScaffoldManifest(
     # landing templates seed empty collections with authoring and routing heads.
     files=(
         ("kb/sources/.gitignore", "kb/sources/.gitignore"),
+        ("templates/user-sources-COLLECTION.md", "kb/sources/COLLECTION.md"),
+        ("templates/user-sources-README.md", "kb/sources/README.md"),
         ("templates/user-notes-COLLECTION.md", "kb/notes/COLLECTION.md"),
         ("templates/user-notes-README.md", "kb/notes/README.md"),
         ("templates/user-reference-COLLECTION.md", "kb/reference/COLLECTION.md"),
