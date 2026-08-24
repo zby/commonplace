@@ -23,10 +23,16 @@ not evidence of adequacy.
 
 ## Source-blind claim inventory
 
-Pending. Before opening either ingest or snapshot, replace this paragraph with
-one table row per load-bearing source-dependent use:
+Recorded from the four blob-verified target notes before opening either listed
+ingest or snapshot. Each row is one source-dependent use. Footer wording that
+restates a body use remains in the same row.
 
-`ID | target | claim as frozen | source-side need`
+| ID | target | claim as frozen | source-side need |
+|---|---|---|---|
+| FDS-1 | `files-defer-centralized-schema-commitment-until-invariants-stabilize` | One self-reported production system writes canonical objects to S3 while using PostgreSQL as a derived index for important list queries. The case is specific to that system's AWS setting and access patterns, and serves as an existence witness that serving dependence can coexist with canonical state elsewhere. | `lessons-from-building-ai-agents-for-financial-services`: whether the report identifies S3 objects as the canonical or source-of-truth state and PostgreSQL as a derived index, which queries depend on that index, and the system and workload limits on the example. Keep the target's lineage inference separate from the report's own claims. |
+| FPR-1 | `first-principles-reasoning-selects-for-explanatory-reach-over` | SuperARC's integer-versus-binary sequence performance is suggestive evidence for cue sensitivity and algorithmic-compression explanatory-reach, but is not load-bearing for the note. | `superarc-ait-benchmark-llm-compression-abstraction`: whether the benchmark reports a performance difference between integer and binary sequence representations, the evaluated conditions and magnitude or direction of that difference, and what—if anything—the source attributes to cue sensitivity or algorithmic compression. Keep the explanatory-reach transfer as target-side analysis. |
+| LDP-1 | `linked-note-durable-payload-is-what-consumption-path-cannot-supply` | A bounded practitioner case reports that model-absorbed procedural scaffolding shrank while exact fiscal-calendar normalization remained explicit. | `lessons-from-building-ai-agents-for-financial-services`: whether the practitioner report removed or reduced procedural prompt material because the model already supplied it while retaining an exact fiscal-calendar normalization rule, including what changed, why, and the case boundary. Keep the durable-payload generalization as target-side analysis. |
+| RC-1 | `reverse-compression-is-when-llm-output-expands-without-adding` | In SuperARC's recursive-compression benchmark, many LLM-generated programs that pass the output check directly print the target sequence instead of encoding a generative rule. Print-statement solutions dominate across programming languages and temperature changes, so the target treats the result as a formal instance of reverse-compression rather than a sampling accident. The footer repeats this use. | `superarc-ait-benchmark-llm-compression-abstraction`: the benchmark task and correctness oracle, how direct-print programs are treated by its compression measure, the reported prevalence across languages and temperatures, and the limits on inferring absence of algorithmic structure or robustness beyond the evaluated runs. Keep the reverse-compression label and transfer to KB writing as target-side analysis. |
 
 ## Grounding record
 

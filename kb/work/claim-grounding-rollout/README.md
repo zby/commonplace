@@ -96,10 +96,14 @@ claim uses left by cohort 06 or any claims in the unworked corpus.
   manifests, with a dispatch prompt beside each
 - [Cohort 08](./cohort-08.md) ([prompt](./cohort-08-prompt.md)) — four notes
   across the two smallest residual components; two already-populated ingests
-- [Cohort 09](./cohort-09.md) ([prompt](./cohort-09-prompt.md)) — the 15-note,
-  20-ingest residual component
-- [Cohort 10](./cohort-10.md) ([prompt](./cohort-10-prompt.md)) — the 18-note,
-  36-ingest residual component
+- Cohort 09, the 15-note residual component, split into a sequential pair:
+  [09a](./cohort-09a.md) ([prompt](./cohort-09a-prompt.md)), 7 targets / 0.96 MB,
+  and [09b](./cohort-09b.md) ([prompt](./cohort-09b-prompt.md)), 8 targets /
+  0.30 MB. Two bridge ingests
+- Cohort 10, the 18-note residual component, likewise:
+  [10a](./cohort-10a.md) ([prompt](./cohort-10a-prompt.md)), 9 targets / 0.80 MB,
+  and [10b](./cohort-10b.md) ([prompt](./cohort-10b-prompt.md)), 9 targets /
+  1.41 MB. Two bridge ingests
 - [Cohort 02 prediction](./cohort-02-prediction.md) — **sealed**; open when
   judging that run, never while executing it
 
@@ -113,3 +117,13 @@ to confirm citations will confirm them.
 **That the cohorts are a sweep.** They ground claims notes already make. They do
 not search for prior art a note failed to cite — that blind spot is stated in ADR
 073 and belongs to a write-time literature check that does not exist.
+
+### Sequential pairs
+
+Cohorts 09 and 10 were each a single connected component: every target shared an
+ingest with another, so neither admitted a parallel split. Each was cut into a
+sequential pair — `09a`/`09b` and `10a`/`10b` — bounding one agent's context
+while keeping the halves off each other. **A pair's halves must not run
+concurrently**; the cut leaves 2 bridge ingests each, and V1 ships no locking, so
+a concurrent append could lose an entry. Either pair may run alongside any other
+cohort.

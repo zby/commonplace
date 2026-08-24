@@ -1,4 +1,4 @@
-# Agent prompt — cleanup cohort 09
+# Agent prompt — cleanup cohort 09a
 
 Self-contained. Point one agent at this file; it needs nothing from the
 conversation that created it.
@@ -10,17 +10,17 @@ if the cohorts are executed serially.
 
 ---
 
-Work cleanup cohort 09 in the Commonplace repository at
+Work cleanup cohort 09a in the Commonplace repository at
 `/home/zby/llm/commonplace`.
 
-Read `kb/work/claim-grounding-rollout/cohort-09.md`, then
+Read `kb/work/claim-grounding-rollout/cohort-09a.md`, then
 `kb/work/claim-grounding-rollout/procedure.md`. Follow the procedure's six steps
 and literal grounding route, subject to the stricter phase barriers below. The
 manifest is the only authority for which notes and ingests you may mutate.
 
 ## Ownership and concurrency
 
-You own every note and ingest listed in cohort 09 and no others. Cohorts 08, 09,
+You own every note and ingest listed in cohort 09a and no others. Cohorts 08, 09,
 and 10 are disjoint on both notes and ingests and may run concurrently. Do not
 edit the rollout README, another cohort file, or an artifact outside your
 manifest. Do not delegate or spawn writers inside this cohort; its connectivity
