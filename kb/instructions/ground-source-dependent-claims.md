@@ -42,6 +42,11 @@ existing Claims entry.
    ```
 
    Repeat the adjacent extract/location pair when support is non-contiguous.
+   Line wrapping is not non-contiguity: verbatim matching normalizes
+   whitespace, so one extract may span wrapped lines. Quote the whole
+   contiguous span rather than one fragment per line — a `pdftotext` snapshot
+   wraps mid-sentence, and fragmenting on those breaks makes the entry unreadable
+   for the `source` review lens without making it any more verifiable.
    Verify every extract against the snapshot.
 7. Invoke `cp-skill-ingest` with:
 
