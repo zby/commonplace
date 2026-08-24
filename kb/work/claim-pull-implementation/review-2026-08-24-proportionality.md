@@ -113,3 +113,67 @@ Proposed budget, offered as a target rather than a rule: `cp-skill-write` gains 
 trigger, a dispatch, and a binary gate; everything else lives in the worker or
 the ingest skill. Any proposal that pushes a third concept into the writing skill
 should have to say what it removes.
+
+---
+
+## Addendum: the write skill does not use ingests at all
+
+Operator observation, 2026-08-24, and it is sharper than the proportionality
+argument above. Checked against the current skill:
+
+`cp-skill-write/SKILL.md` mentions an ingest **once**, at line 68, and only
+passively — "Notes, sources, and ingests pulled into the session for this write
+are first-class link candidates. If it was worth reading, it is worth considering
+as a link." It never opens an ingest as authority, never mutates one, and its
+`allowed-tools` are `Read, Write, Grep, Glob, Bash, Skill`. No `Task`.
+
+So the plan does not extend what this skill does. **It changes its kind** — from
+a skill that drafts and saves prose into one that dispatches a worker which
+mutates a second collection's artifact under a lock, and then interprets that
+mutation's transaction outcomes. That is why the complexity feels
+disproportionate: it is not being added to a skill that was already doing
+something adjacent.
+
+### The design drifted from the operator's own statement
+
+The originating instruction was: read the source, extract the claim, add it to
+the ingest if missing, "**only after these preparations** it should use the claim
+in the target note."
+
+Preparations *before* the write. The implementation turned a **sequencing
+discipline** into an **inline subroutine** of the write skill. Those have
+different costs: the first is an author-visible ordering rule, the second is
+permanent machinery on the most-used path in the repository.
+
+### What follows
+
+Grounding is a **precondition** of writing, not a step of it. The write skill's
+whole job becomes: notice that the candidate leans on a named source, check
+whether that source's ingest already carries the claim, and if not, **stop and
+say so**, naming the route. It never dispatches, never mutates, never sees a
+transaction.
+
+Mutation stays entirely in `cp-skill-ingest`, which already owns ingest mutation
+and is the natural home for it.
+
+This deletes, rather than shrinks:
+
+- `Task` in the write skill's allowed tools;
+- the fresh-worker dispatch and its six-field packet;
+- the `NARROW` redispatch loop and its second sequential round-trip;
+- the lock-conflict branch;
+- the `BLOCKED: legacy recovery required` routing;
+- every transaction concept reachable from the write path.
+
+The write skill's remaining delta is one check and one refusal message. That fits
+the budget proposed above with room to spare, and it does not require settling
+the mutation-protocol question first — with `cp-skill-ingest` the only mutator,
+invoked one at a time, the concurrency pressure that motivated the locking
+subsystem largely evaporates.
+
+**The cost, stated honestly.** An author who has not pre-grounded pays a round
+trip: write, refused, ground, write again. That is real friction, and it is the
+friction the operator's original sequencing already implied. It is also
+recoverable in a way permanent machinery is not — if the round trip proves
+annoying in practice, the dispatch can be added later against evidence, which is
+the reverse of the current order.
