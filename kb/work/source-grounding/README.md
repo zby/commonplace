@@ -102,6 +102,16 @@ normalized-claim node between ingest and delta note. It may turn out to be an
 ordinary note written to the existing `note` contract, a section in a tag
 README, a field on the ingest, or unnecessary. All four are legitimate findings.
 
+**That the corpus is a navigation corpus.** The critique proposed a
+foraging/LIS reading list, and the first ingest fit it. But the sibling
+workshop's [claim inventory](../literature-disposition/claim-inventory.md)
+placed eleven cohort notes' claims across cognitive psychology of memory and
+transfer, human-factors automation bias, materialized-view maintenance,
+single-source publishing, and storage read amplification — with foraging
+covering a minority. **Decide the corpus from the claims, not from the cluster's
+name.** A corpus chosen for the wrong tradition does not merely miss the source;
+it makes a claim look local because the wrong shelf was searched.
+
 **That the proposed corpus is the corpus.** The critique's list — Bates,
 Pirolli and Card, Marchionini, Teevan, Ranganathan, Broughton, Hearst/Yee,
 Scatter/Gather, adaptive hypermedia — is a candidate, generated without reading
@@ -122,7 +132,7 @@ Check the contract before proposing the shape, and if the shape is right and the
 contract forbids it, that is a contract question to hand off, not a shape to
 abandon quietly.
 
-## Horizon: eventually a maintenance sweep
+## Horizon: the retrospective cleanup successor
 
 The destination is an operation the KB can re-run — a sweep that asks of the
 corpus, not of one note, "which claims here rest on established results the KB
@@ -131,7 +141,11 @@ extraction contract only a careful human reader can apply is not on the path,
 and a finding phrased as "these twelve notes" is worth less than one phrased as
 a rule a sweep could apply.
 
-It is not what this workshop builds, and the first move must not be the command.
+That retrospective work is now framed in the
+[source-grounding-cleanup](../source-grounding-cleanup/README.md) successor. It
+is not what this workshop builds, and the first move must not be the command.
+This workshop must still settle the claim-level ingest shape that cleanup will
+consume.
 
 Two reasons to expect the destination is smaller than a new command, both worth
 checking before proposing one:

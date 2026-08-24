@@ -48,10 +48,13 @@ thing most likely to be lost by a disposition that only counts overlap.
 
 ## What is already settled
 
-**The literature is not ingested.** Measured 2026-08-24: no source ingest in
-`kb/sources/` covers information foraging, scent, berrypicking, exploratory
-search, orienteering, faceted classification, or generated navigation. So the
-cluster's claims were written from recalled background.
+**The literature was not ingested.** Measured 2026-08-24: no source ingest in
+`kb/sources/` covered information foraging, scent, berrypicking, exploratory
+search, orienteering, faceted classification, or generated navigation, so the
+cluster's claims were written from recalled background. One ingest has since
+landed (`pirolli-proximal-information-scent-distal-content`); the rest of the
+gap stands, and the [claim inventory](./claim-inventory.md) found that the
+corpus needed is wider than this list.
 [`links-README.md`](../../notes/links-README.md) says so in its own words:
 "**TODO:** This survey is from the agent's training data, not systematic."
 
@@ -140,6 +143,17 @@ README.
 Membership is a finding to re-test, not a fixed list. The cohort was assembled
 by an outside reader from note titles; notes elsewhere in the KB may have the
 same problem, and some of these may not have it at all.
+
+**Re-tested 2026-08-24, and the framing was wrong in a way that matters.** This
+is not one cluster with one literature. The [claim inventory](./claim-inventory.md)
+placed the cohort's claims into cognitive psychology of memory and transfer,
+human-factors automation bias, materialized-view maintenance, single-source
+publishing, storage read amplification, and PKM — with information foraging
+covering only part of it. "Navigation cluster" was a reading of the titles, not
+of the claims. Any disposition scoped to a foraging corpus would fail to
+adjudicate most of these notes, and — the sharper risk — would read *rejection
+from foraging* as *no external tradition*, producing false confidence that a
+claim is local.
 
 ## Received: the first source-grounding case
 

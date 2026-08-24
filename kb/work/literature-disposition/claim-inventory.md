@@ -150,3 +150,136 @@ These keep landing. Across the cohort so far, **the defects found are worth more
 than the rediscoveries** — which is a finding about the method, not just about
 these notes: reading a note against a source surfaces errors that neither
 in-corpus review nor the source ingest alone would reach.
+
+## Part 2: the remaining five
+
+### The scoping finding, which outranks the per-note results
+
+Of these five notes, **only one falls in the information-foraging / LIS cluster
+both workshops scoped.** The traditions the claims actually place into:
+
+| Note | Nearest tradition | In scope? |
+|---|---|---|
+| `knowledge-storage-does-not-imply-contextual-activation` | cognitive psychology of memory and transfer — Tulving & Pearlstone 1966 availability vs accessibility; Gick & Holyoak spontaneous-transfer failure | no |
+| `an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract` | PKM / Zettelkasten — Luhmann hub notes, Milo LYT | **yes** |
+| `stale-indexes-reduce-discovery-when-they-suppress-fallback-search` | human-factors automation bias, omission errors — Skitka, Mosier & Burdick 1999; Parasuraman & Riley 1997; plus materialized-view maintenance | adjacent |
+| `design-for-the-first-time-human-except-on-access-cost` | single-source publishing (DITA, docs-as-code); materialized views | no |
+| `addressability-grain-sets-a-matched-selective-read-floor` | storage-systems **read amplification** and the DB **access path** (Selinger et al. 1979); IR passage retrieval | no |
+
+**This falsifies a shared premise.** Both workshops were framed around a
+"navigation cluster" needing a foraging/LIS corpus. The cohort was assembled from
+note titles by an outside reader, and the titles misled: the actual literature
+these claims need is wider and mostly elsewhere. A sibling workshop briefed only
+on foraging, scent, berrypicking, exploratory search, and faceted classification
+**could not adjudicate four of these five notes.**
+
+Note the shape of the miss on `addressability-grain`. Connect rejected it from
+the Pirolli tradition, correctly — "the source assumes the target is unknown,
+which is the premise the note discharges." But rejection from the scoped
+tradition read as *no external tradition*, when its mechanism is read
+amplification: you pay for the smallest addressable unit regardless of record
+size, in the same byte currency. Scoping a disposition to the wrong cluster does
+not merely fail to find the source; it produces false confidence that the claim
+is local.
+
+### knowledge-storage-does-not-imply-contextual-activation — the 217 inbound edges, resolved
+
+Measured, not estimated: **158 of 158** reviews in `kb/agent-memory-systems/`
+cite it — 100%. All 158 citations sit in the `Relevant Notes:` tail; **zero**
+appear in review body prose. All 158 reviews carry the required `## Read-back`
+section. Dominant annotation labels: `distinguishes` (88), `applies` (17),
+`contrasts` (8).
+
+So the inbound count overstates the coupling in one direction and understates it
+in another.
+
+**Cheap to rewire.** The 158 are uniform, tail-position, mechanically greppable,
+and carry no argument — no review argues *from* the note, quotes it, or disagrees
+with it. A retarget is a scripted edit.
+
+**But the real dependency is three files, not 163.**
+`kb/agent-memory-systems/types/agent-memory-system-review.md:134` states:
+"**Read-back is defined in [knowledge storage does not imply contextual
+activation]** — including what does and does not count as it (retained memory
+that accumulates from use, not shipped baseline documentation), and how it
+differs from activation." The type spec delegates a *definition*; break it and
+every review's required section loses its contract. `README.md` and
+`review-framework-design.md` are the other two.
+
+**The decisive structural fact: the established half and the depended-on half are
+disjoint.** C1 and C2 — knowledge can be present without affecting the next
+action — are recalled as Tulving's availability/accessibility distinction and the
+inert-knowledge literature, uncited. C3, the operational definition of
+**read-back**, is wholly local and is what 158 reviews and a type spec consume.
+No external source supplies C3.
+
+Therefore **thinning this note toward a pointer because its famous half restates
+Tulving would destroy the half the system actually runs on.** If anything is
+retired here it is the first two sections, and the read-back paragraph would need
+promoting — most plausibly into `kb/notes/definitions/`, where the collection can
+cite it directly.
+
+### an-enforced-tag-readme — the advertised model, assessed
+
+The critique called this the model of the right structure. **The form deserves
+the praise; the evidence does not.**
+
+The form is genuinely the best in the cohort — "A tag-README is a Map of Content
+wearing a validator," an explicit novelty disclaimer heading the inherited
+section, the delta stated as "old plus new," and a closing boundary saying which
+sub-claim the machinery covers and what "stays editorial, un-contracted, and
+inherited wholesale."
+
+**But its attribution is named-but-unrouted**: "Luhmann" and "Nick Milo's LYT"
+with no dated work, no URL, no `kb/sources/` ingest. That is exactly the recalled
+background this workshop distrusts, dressed in citation clothing — which makes it
+a *more* dangerous model than an openly uncited note, because copying the form
+without fixing the evidence propagates the problem in a more convincing package.
+Its pivotal claim is also an unsurveyed universal negative: "no Zettelkasten or
+LYT practitioner writes 'this map lists every note on the topic' as an enforced
+promise." The whole "the silence was not an oversight" move rests on it.
+
+**The pattern, stated for reuse** — seven moves, in order:
+
+1. Name the inherited artifact in the tradition's own vocabulary in the first
+   sentence — an identification ("X *is* a Y wearing a Z"), not a gesture at a
+   related tradition.
+2. State the delta as an "old plus new" formula in the opening paragraph, so a
+   reader who stops there already has the disposition answer.
+3. Give the inherited half its own section that opens by disclaiming novelty.
+4. Explain why the tradition lacked the added part **in terms of the tradition's
+   own operating conditions**, as a correct choice under those conditions. This
+   is the load-bearing move: it converts "we noticed what they missed" into
+   "their conditions differed" — a claim about mechanism rather than about credit.
+5. Flip those same named conditions one-to-one for the new consumer, same count
+   and same order, so the correspondence is checkable.
+6. Argue joint necessity: show what each condition alone would produce.
+7. Draw the contract boundary explicitly — which sub-claim the machinery covers,
+   and what remains inherited and uncontracted.
+
+Plus an eighth this note does not do: **route the tradition claim to a dated
+source**, and supply evidence for any negative claim about the tradition rather
+than asserting it.
+
+### Further errors found
+
+- **`stale-indexes` C1 may be analytic rather than empirical.** It stipulates the
+  stopping behaviour into the comparison — the consumer "would search current
+  content if no index existed but accepts the index's result and stops when one
+  does" — so the conclusion holds by construction and the claim cannot fail. But
+  [ADR 026](../../reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md)
+  treats it as a finding, calling it "the problem in [this note] in its sharpest
+  form." The empirical claim the ADR needs — that agents in fact stop on an
+  apparently complete head — is assumed, not argued anywhere in the note.
+- `design-for-the-first-time-human` C4 restates single-source publishing without
+  saying so; its real delta is C3, that the divider is access *mode* rather than
+  consumer identity.
+
+## Running tally
+
+Across all eleven notes inventoried, the count stands at **three operative
+defects** — the unscoped "generation cannot produce" under ADRs 025/026, the
+possibly-analytic `stale-indexes` C1 under ADR 026, and the pointer-context
+monotone (prose-only, already swept) — against **zero clean rediscoveries that a
+retirement would tidily remove**. The method keeps returning errors where it was
+pointed at redundancy.
