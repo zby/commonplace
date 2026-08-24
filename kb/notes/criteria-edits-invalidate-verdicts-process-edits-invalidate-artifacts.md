@@ -1,5 +1,5 @@
 ---
-description: "Editing an artifact's quality criteria invalidates verdicts (re-judge); editing its production process invalidates artifacts (regenerate) — a verdict is a cache keyed exactly on criteria"
+description: "Editing quality criteria invalidates verdicts; editing production processes calls for artifact regeneration — verdict freshness includes the artifact and criteria but excludes its production process"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [kb-maintenance]
@@ -13,7 +13,9 @@ Getting this wrong in the process direction is not merely wasteful but misleadin
 
 ## The formal frame
 
-An accepted verdict is a cached judgment keyed on its inputs. In build-systems terms it is a *verifying trace* (Build Systems à la Carte, Mokhov/Mitchell/Peyton Jones 2018): store hashes of the inputs, compare later to decide freshness. Cache-key design then predicts the two failure modes on either side of the correct boundary. A key too coarse — process text hashed alongside criteria — makes every process wording tweak spuriously stale a whole cohort of verdicts. A key too fine — a criteria-bearing document left out of the hash — leaves verdicts falsely fresh when the real contract changes. The key must contain exactly the criteria: nothing more, nothing less. (Concretely, a review acceptance pins note and gate hashes; the gate is the criteria, and the process that wrote the note is deliberately absent from the key.)
+[Build Systems à la Carte](../sources/build-systems-a-la-carte.ingest.md) supplies a bounded analogy, not the criteria/process distinction itself. In the paper's framework, a rebuilder decides whether a key needs rebuilding. Shake is classified as a verifying-traces system: it persists the prior dependency graph with file-content hashes and rebuilds a target when a recorded dependency changes. The paper separately calls Excel *self-tracking* because a changed formula causes recomputation; many software build systems instead require a manually initiated full rebuild after a task changes.
+
+Applied to review, an accepted verdict is a cached judgment keyed on the evaluated artifact and its criteria-bearing inputs. Cache-key design then predicts two local failure modes. Including process text makes a process wording edit spuriously stale the verdict. Omitting a criteria-bearing document leaves the verdict falsely fresh after its contract changes. The review key must therefore include the artifact and all criteria-bearing inputs while excluding its production process. Concretely, a review acceptance pins note and gate hashes; the gate supplies the criterion, while the process that wrote the note is deliberately absent. This exact key boundary and the conclusion that process edits call for artifact regeneration are Commonplace's transfer from the build-system model; the paper does not state them.
 
 ## An institutional witness
 
@@ -27,4 +29,4 @@ Relevant Notes:
 
 - [History has one chance to become checkable](./history-has-one-chance-to-become-checkable.md) — grounds: the state/history asymmetry this corollary rides on — why process deficiencies are invisible to review-time criteria
 - [Link graph plus timestamps enables make-like staleness detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — extends: the make-like staleness model, refined by distinguishing which kind of edit invalidates which kind of product
-- [Build Systems à la Carte](../sources/build-systems-a-la-carte.ingest.md) — evidenced-by: verifying traces and rebuilder design as the formal home of verdict invalidation
+- [Build Systems à la Carte](../sources/build-systems-a-la-carte.ingest.md) — evidenced-by: separates rebuild decisions from scheduling, classifies Shake by dependency-and-hash verifying traces, and distinguishes input tracking from self-tracking task changes; the verdict mapping is local
