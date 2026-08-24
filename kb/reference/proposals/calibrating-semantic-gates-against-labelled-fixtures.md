@@ -2,6 +2,7 @@
 description: "Proposal: require non-leaking known-case regression before a semantic gate can advance, and reserve live detection-rate claims for separately sampled field calibration"
 type: ../types/design-proposal.md
 tags: [kb-maintenance]
+traits: [has-external-sources]
 ---
 
 # Calibrating semantic gates against labelled fixtures
@@ -48,6 +49,10 @@ Four sources, in rough order of cost:
 3. **Accepted-edit before/after pairs.** These are fixture candidates, not labels. Before inclusion, an independent judgment must establish that the pre-edit snapshot instantiates the named failure mode and the post-edit snapshot does not. This is the same capture format that [gate learning from accepted edits](./gate-learning-from-accepted-edits.md) mines. However, [an accepted edit verifies the change, not the rule](../../notes/an-accepted-edit-verifies-the-change-not-the-rule.md): acceptance alone establishes neither gate attribution nor post-edit cleanliness.
 4. **Hand-authored adversarial cases.** Deliberately constructed near-misses that probe the gate's boundary — the note that is one clause away from the failure mode. A useful positive must be *locally defensible*: it ships with the same alibi a real violation would (a nearby citation, a plausible framing, a hedging parenthetical). A crude positive that any reviewer catches inflates measured detection without testing the case that matters — in the precedent incident, the violation that slipped through was precisely the one whose excuse was true.
 
+[Netflix's production LLM-judge lifecycle](../../sources/lifecycle-llm-judge-recommendation-explanations.ingest.md) provides an external analogue for assembling this regression corpus. Its launch benchmark held roughly 900 rationale-labelled examples near class balance (about 54% fail), including expert-authored failures and LLM-synthesized boundary cases. Weekly additions were subsampled to preserve that balance. The balance makes both classes visible to regression, while the boundary cases probe failures that ordinary production sampling rarely surfaces. The authors explicitly do not treat the resulting agreement metrics as live defect rates.
+
+A Commonplace fixture corpus should therefore report the positive and negative counts for each gate and identify which fixtures probe a known boundary. It need not copy Netflix's class ratio. It must show that neither class nor the hard cases disappeared behind production prevalence.
+
 ## What known-case regression measures
 
 Run the gate against the labelled set and score its known-case hit rate, `P(flag | known positive)`, and known-case false-alarm rate, `P(flag | known negative)`. WARN and FAIL both count as a flag. Aggregate accuracy is not useful: with mostly clean fixtures, an always-PASS gate scores high and detects nothing. The minimum bar is separation on the known set, with the gate flagging positives materially more often than negatives.
@@ -60,6 +65,10 @@ Field calibration defines a deployment population and independently samples note
 
 This is the stronger "judge calibration before automation" step that [evaluation automation is phase-gated by comprehension](../../notes/evaluation-automation-is-phase-gated-by-comprehension.md) places ahead of trusting an automated evaluator. Its sampling frame, labelling protocol, minimum positive and negative counts, interval method, and stopping rule remain design choices; without them, the result remains known-case regression rather than field calibration.
 
+The Netflix analogue uses a separate weekly sample of about 300 production explanations. It holds the proportions of three judge outcomes fixed from week to week, gives extra weight to new catalog items, and sends every item to at least three human raters. The majority label is the reference. Each judge metric must remain at least as high as the mean individual-rater metric minus two standard deviations across raters, both on the full sample and on new titles alone. This pattern adds three candidate safeguards: stable outcome strata for time comparison, a shift-sensitive slice, and an alert band relative to measured human disagreement.
+
+Those safeguards are shapes, not portable constants. Fixed strata support comparable weekly measurements but do not reproduce deployment prevalence; a Commonplace study must say whether it estimates a stratified monitoring cohort or reweights results to the deployment population. The sample count, strata, high-drift slice, and human-relative band all need local warrant. In Netflix's system, crossing the band would trigger rubric re-tuning, followed by manual promotion with the previous rubric retained for rollback. That branch has never fired in production. The paper therefore evidences a live monitoring loop, not successful recovery from detected drift.
+
 ## Judging-configuration dependence
 
 A regression or calibration result belongs to the judging configuration that produced it. At minimum, that configuration includes the gate snapshot, fixture or field-sample snapshot, model partition, rendered prompt and system instructions, sampling settings, and repetition protocol. A result under one model partition does not transfer to another, just as a review under one partition does not satisfy freshness for another.
@@ -70,8 +79,10 @@ Editing the gate or changing partitions must rerun the known-case suite; changes
 
 - **Fixture storage.** Options: a `## Fixtures` section inside the gate file; a sibling `{name}.fixtures/` directory; or a fixture store outside the gate file entirely. The first option keeps the labelled set hashed into the criterion text, so editing it fires `criterion-changed` like any gate edit. It also couples fixtures to the freshness mechanism for free. However, render-time stripping is then mandatory, not polish: any fixture the reviewer can see in the criterion prompt is spent as a test (see the inline-example confound above), in addition to bloating the prompt.
 - **Regression threshold.** Must the gate flag 100% of known positives and pass 100% of known negatives, or clear a rate bar across repeated runs? A hard rule is simple but brittle; a rate bar needs a cutoff and uncertainty treatment.
-- **Field threshold.** What sample sizes, interval bounds, and relative costs of false negatives and false positives justify a trust decision? This cannot be reduced to the regression threshold.
+- **Field sampling.** Should a monitoring sample follow deployment prevalence, hold gate-outcome strata fixed for comparability, or deliberately weight a shift-sensitive slice? A stratified sample must state whether its metrics describe that monitoring cohort or are reweighted to the deployment population.
+- **Field threshold.** What sample sizes, interval bounds, and relative costs of false negatives and false positives justify a trust decision? A human-disagreement-relative alert band is one option, but its formula and rater count need local validation. This cannot be reduced to the regression threshold.
 - **Blocking vs advisory.** Does known-case failure prevent a gate from writing trusted freshness baselines, or only annotate them? Passing remains necessary but not sufficient; activation may require field evidence or an explicit human risk decision. Either route demands the `candidate → active` distinction that [gate learning from accepted edits](./gate-learning-from-accepted-edits.md) also needs.
+- **Recovery and rollback.** If regression or field monitoring triggers a gate rewrite, what must pass before the replacement can become active? The candidate path is to rerun non-leaking regression, stage the replacement for human promotion, and retain the previous judging configuration for rollback. The operator, rollback trigger, and retention period remain open.
 - **Corpus scope.** One fixture set per gate, or a shared cross-gate corpus each gate is scored against? Per-gate is simpler; a shared corpus surfaces gates that fire on each other's positives (double-flagging).
 - **Repetition budget.** How many runs per fixture, and at what partition, are needed before the rate is trusted? This is a cost knob traded against confidence in the measured gap.
 - **Virtual criteria.** Type- and collection-conformance assays use a spec or `COLLECTION.md` as their criterion side rather than an authored gate file; their applicability and fixture scope may require a different substrate.
@@ -81,6 +92,8 @@ Editing the gate or changing partitions must rerun the known-case suite; changes
 Adopt the known-case layer when a worked case shows the loop paying off: at least one independently labelled, non-leaking fixture exposes a real false negative or false alarm that author review and inline examples missed, and the chosen storage does not leak fixture content into the live review prompt. Treat passing known cases as a regression precondition, not evidence of live accuracy.
 
 Adopt field calibration as a trust signal only after a worked case defines a deployment sample, labels it independently, reports uncertainty, and demonstrates that the result changes a gate lifecycle decision. Without such a case, this stays a proposal: the point is evidence that changes whether a gate is operated, not a testing ritual.
+
+Treat a recovery branch as demonstrated only after a deliberate rehearsal or live alert exercises re-evaluation, manual promotion, and rollback. A deployed monitor that has never crossed its threshold shows that observation is operating; it does not show that the response path works.
 
 ## Risks
 
@@ -102,5 +115,6 @@ Relevant Notes:
 - [oracle strength spectrum](../../notes/oracle-strength-spectrum.md) — rests-on: calibration is a hardening step for a soft LLM oracle
 - [gate learning from accepted edits](./gate-learning-from-accepted-edits.md) — see-also: this proposal supplies the detection-rate measurement that proposal's lifecycle assumes
 - [trajectory-aware evaluation of transforming agent workflows](./trajectory-aware-evaluation-of-transforming-agent-workflows.md) — see-also: a sibling labelled and repeated evaluator design at workflow-trajectory scope
+- [The Lifecycle of LLM-as-a-Judge for Large-Scale Recommendation Explanations](../../sources/lifecycle-llm-judge-recommendation-explanations.ingest.md) — evidenced-by: production analogue for class-balanced boundary fixtures, fixed-stratum field monitoring, human-relative alerts, and a manual recovery path whose drift trigger remains unexercised
 - [Improving AI Skills with autoresearch & evals-skills](../../sources/improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md) — evidenced-by: practitioner use of a hand-scored mini set to check a judge before automated optimization
 - [review system](../README-REVIEW-SYSTEM.md) — part-of: the assay/gate model and model-partition rule this design extends
