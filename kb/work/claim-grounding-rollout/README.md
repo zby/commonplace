@@ -51,6 +51,20 @@ either serialized repair or a scheme separating grounding from repair so only th
 ingest axis binds. **Do not build that scheme until the procedure has been
 exercised on cohorts that do not need one.**
 
+## Snapshot-pair repair — 2026-08-24
+
+All seven cited ingests that lacked an exact name-paired snapshot at the corpus
+freeze now have one in the working snapshot cache. Cohort 02 repaired the first
+two pairs. The remaining five expected byte streams were already present under
+adapter-derived names; each matched its ingest's recorded SHA-256 and canonical
+source. They were moved to the ingest-derived Markdown path without changing
+their bytes, and the two X capture companions were moved with them. All five
+affected ingests validate; two retain only their pre-existing missing-
+`distillation.md` link warnings.
+
+This removes the snapshot-identity blocker. It does not ground the two Palantir
+claim uses left by cohort 06 or any claims in the unworked corpus.
+
 ## What closes this workshop
 
 1. Every cohort has a completion record where each claim use carries a terminal

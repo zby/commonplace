@@ -1,7 +1,8 @@
 # Cleanup cohort 06 — frozen 2026-08-24
 
-**Status: executed 2026-08-24; ten rows reached a terminal disposition and two
-remain under one named snapshot-identity blocker.**
+**Status: executed 2026-08-24; ten rows reached a terminal disposition. A
+post-completion exact-pair repair removed the snapshot-identity blocker; DS-1
+and DS-2 now await grounding and disposition.**
 
 Frozen at repository `15f4080f`. Follow [the procedure](./procedure.md)
 and its **Executing a cohort** section, which carries the literal grounding and
@@ -50,7 +51,7 @@ snapshot.
 | TA-2 | `trace-extracted-memory-earns-authority-per-operation-not-at-capture` | The recommender reads the implicated context artifact, checks authoritative sources, may confirm, refine, or override the diagnosis, and proposes a file operation for human review. | Does the paper separate attribution from source-grounded recommendation in this way, including human review of the proposed operation? |
 | TA-3 | `trace-extracted-memory-earns-authority-per-operation-not-at-capture` | TRACE's reported "fix effectiveness" measures agreement between a recommended operation/path and synthetic labels; it does not apply the change or rerun the task. | What exactly is the fix-effectiveness metric, and does the evaluation apply proposed changes or test repaired task behavior? |
 
-## Blocked
+## Original blocker
 
 - `palantir-ontology-vs-decision-traces` — the required name-paired snapshot
   `kb/sources/.snapshots/palantir-ontology-vs-decision-traces.md` is absent.
@@ -58,6 +59,22 @@ snapshot.
   `kb/sources/.snapshots/palantir-competed-with-snowflake-before-llms.md` with
   the incumbent checksum `b98dc7e5…b6e`; the re-ingest contract forbids using a
   differently named checksum match, so grounding and source review did not run.
+
+## Post-completion exact-pair repair — 2026-08-24
+
+The incumbent bytes were already present at
+`kb/sources/.snapshots/palantir-competed-with-snowflake-before-llms.md`. Their
+SHA-256 matched the ingest's recorded
+`b98dc7e5e9919a865f861d85586c1af18bc49286c90aaa02acd7db77eced6b6e`, and the
+snapshot and ingest carried the same canonical source. The Markdown snapshot
+was moved without byte changes to the required
+`kb/sources/.snapshots/palantir-ontology-vs-decision-traces.md` path; its X
+capture companion was moved to the same stem. The paired ingest then passed
+`commonplace-validate` cleanly.
+
+This repairs path identity only. DS-1 and DS-2 retain their original completion
+record below until the now-available snapshot is grounded, the target is
+dispositioned, and source review runs.
 
 ## Completion record
 
