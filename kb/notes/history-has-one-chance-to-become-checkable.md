@@ -9,7 +9,7 @@ tags: [context-engineering]
 
 An artifact's history — how it was produced, what was consulted, who or what made it — can be converted into later-checkable form only at production time. There are two conversion routes:
 
-1. **Records / attestation.** Capture the facts while they are still available: provenance fields, citations, quote anchors. W3C PROV and in-toto attestations are the systems exemplars; science's methods sections and pre-registration are the institutional ones.
+1. **Records / attestation.** Capture the facts while they are still available: provenance fields, citations, quote anchors. [W3C PROV](../sources/prov-overview.ingest.md) standardizes representation and interchange of information about the entities, activities, and people involved in producing a thing; it is an exemplar of carried provenance, not evidence for when recording must occur. [in-toto](../sources/in-toto-farm-to-table-guarantees.ingest.md) implements the stronger attested route for software supply chains: a signed layout declares the chain, each executed step emits signed metadata for its command and hashed inputs and outputs, and a client verifies the collected records against that layout. Science's methods sections and pre-registration are institutional examples of the records route.
 2. **Re-derivability.** Pin the inputs and fix a deterministic process, so history can be re-checked from state at any later time. Reproducible builds do this. It is usually unavailable for nondeterministic LLM production, where the same prompt need not yield the same output.
 
 After production, the option is gone. A later reviewer sees only the artifact's *state* — its text plus whatever witnesses it carries or names — and cannot recover unrecorded history.
@@ -36,5 +36,5 @@ Relevant Notes:
 
 - [The verifiability gradient](./verifiability-gradient.md) — contrasts: an orthogonal axis — how *cheaply* something can be checked, versus whether and when it can be checked at all
 - [A derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — extends: the recomputable special case; provenance records are the non-recomputable complement, trusted precisely because they cannot be recomputed
-- [W3C PROV overview](../sources/prov-overview.ingest.md) — evidenced-by: the canonical records/attestation exemplar for capturing provenance at production time
-- [in-toto farm-to-table guarantees](../sources/in-toto-farm-to-table-guarantees.ingest.md) — evidenced-by: cryptographic whole-chain attestation as the systems exemplar for the records route
+- [W3C PROV overview](../sources/prov-overview.ingest.md) — evidenced-by: standardizes a carried representation for production-related provenance without prescribing when it was captured
+- [in-toto farm-to-table guarantees](../sources/in-toto-farm-to-table-guarantees.ingest.md) — evidenced-by: records and verifies declared software-supply-chain steps under signed-layout, link-metadata, artifact-rule, and key-trust bounds

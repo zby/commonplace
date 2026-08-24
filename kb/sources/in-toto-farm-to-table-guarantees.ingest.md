@@ -23,7 +23,16 @@ in-toto is a framework that cryptographically verifies the integrity of an entir
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** In in-toto, a project owner signs a layout declaring supply-chain steps and authorized functionaries, each executed step emits signed link metadata for its command and hashed inputs and outputs, and a client verifies the collected links against the layout to check the declared chain and artifact flow without rerunning the pipeline.
+  - **Source extract (verbatim):** **Roles.** *Project owner* — defines the supply chain *layout* (which steps, by whom, in what order) and signs it with their private key. *Functionaries* — the parties that perform steps and produce signed *link metadata* recording what they did; can be human or automated (e.g., a build farm). *Client* (end user) — inspects and uses the *delivered product*, using the layout plus the collected links to verify it.
+  - **Source location:** Condensed snapshot, §2, “System model and threat model,” Roles
+  - **Source extract (verbatim):** Each executed step produces a *link*: `_type: "link"`, `name` (matches the step definition), `command` run, `materials` and `products` (paths with cryptographic hashes), `byproducts` (stdout/stderr/return-value), and a `signature` from the functionary's key. Links are the chain's actual evidence: they tie each step's real inputs/outputs together and let a verifier reconstruct what happened and confirm it matches the layout's requirements.
+  - **Source location:** Condensed snapshot, §3.2, “Link metadata”
+  - **Source extract (verbatim):** This is the mechanism giving the end user assurance that the delivered artifact's *history* — not just its present bytes — met every declared requirement, without the user re-executing the pipeline.
+  - **Source location:** Condensed snapshot, §3.4, “Verification (`VERIFY_FINAL_PRODUCT`)”
+  - **Scope:** The guarantee is relative to the signed layout, collected link metadata, artifact rules, and the paper's trust assumptions for project-owner and functionary keys.
+  - **Confidence:** High for the architecture described by the local capture; moderate for quotation-level fidelity because the snapshot explicitly says it condenses and paraphrases the full paper.
+  - **Limitation:** in-toto checks declared software-supply-chain steps and artifacts, not arbitrary production history. Its guarantees can fail or weaken under missing records, insufficient layout rules, or key compromise, and this source does not prove the target note's universal “one chance” claim.
 
 ## Connections Found
 

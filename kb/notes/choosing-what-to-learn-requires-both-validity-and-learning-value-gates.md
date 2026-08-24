@@ -15,7 +15,7 @@ A **learning-value gate** asks whether promoting the candidate would improve the
 
 ## The self-training case
 
-[Self-Training-LLM](../agent-memory-systems/reviews/Self-Training-LLM.md) makes the split concrete. Its pipeline constructs factual QA examples from Wikipedia-grounded traces, then filters them before SFT (supervised fine-tuning) or DPO (preference optimization) training. The corresponding paper, [Self-training Large Language Models through Knowledge Detection](../sources/self-training-large-language-models-through-knowledge-detection.ingest.md), calls the two filters consistency filtering and knowledge filtering: one rejects low-confidence reference answers; the other keeps cases where the model's unconditioned answers contradict the source-grounded answer.
+[Self-Training-LLM](../agent-memory-systems/reviews/Self-Training-LLM.md) makes the split concrete. The corresponding paper, [Self-training Large Language Models through Knowledge Detection](../sources/self-training-large-language-models-through-knowledge-detection.ingest.md), uses the sequence instruction generation → SFT (supervised fine-tuning) → preference labeling → knowledge filtering. It filters the preference data before DPO (preference optimization) in two stages: consistency filtering removes low-confidence document-conditioned reference responses, and knowledge filtering removes samples on which the SFT model is considered knowledgeable. In this factual-QA pipeline, the first is a proxy for validity and the second is a proxy for model-relative learning value. The source does not establish the broader gates; the contamination and clutter arguments above do that work.
 
 ## The KB case
 
@@ -32,4 +32,4 @@ Relevant Notes:
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — parallels: learned curation policies work only when the promotion signal is well defined
 - [Self-Training-LLM](../agent-memory-systems/reviews/Self-Training-LLM.md) — evidenced-by: code-grounded review of the separate question-filtering and unknown-filtering pattern
 - [Self-training Large Language Models through Knowledge Detection](../sources/self-training-large-language-models-through-knowledge-detection.ingest.md) — evidenced-by: paper-level account of consistency filtering and knowledge filtering as separate stages
-- [Into the Unknown: Self-Learning Large Language Models](../sources/into-the-unknown-self-learning-large-language-models.ingest.md) — evidenced-by: frames the upstream problem as deciding what previously unknown knowledge to absorb
+- [Into the Unknown: Self-Learning Large Language Models](../sources/into-the-unknown-self-learning-large-language-models.ingest.md) — evidenced-by: treats “what to learn” as the main problem for its loop, but operationalizes value only as selecting hallucination-defined unknown factual knowledge

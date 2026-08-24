@@ -24,7 +24,16 @@ Ma et al. introduce PromptSE, a framework for measuring how sensitive code gener
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** PromptSE evaluates code-model sensitivity across prompt variants intended to preserve semantics and interfaces while changing emotion and personality framing; under a uniform temperature it draws 16 samples per prompt, and across 14 models the reported Pass@1–AUC-E rank correlation is ρ = −0.433 with p = 0.122 and a confidence interval spanning zero.
+  - **Source extract (verbatim):** Our approach generates semantically equivalent prompt variants through emotion and personality templates, then evaluates model sensitivity using probability-aware continuous scoring (PromptSE) or binary evaluation (PromptSELight) depending on model accessibility. The framework operates under strict semantic and interface invariance constraints, ensuring that all variants preserve computational requirements (e.g., preserving input-output constraints, and complexity bounds) and functional specifications.
+  - **Source location:** §2, “PromptSE: Proposed Prompt Sensitivity Evaluation Framework”
+  - **Source extract (verbatim):** We apply a uniform decoding policy with temperature 0.2 and draw 16 independent samples per prompt at each distance level.
+  - **Source location:** §3.2, “Models and Decoding Settings”
+  - **Source extract (verbatim):** We compute model-level rank correlation, obtaining Spearman ρ = −0.433 (p = 0.122; 95% CI [−0.875, 0.249]), which does not reach statistical significance in the current sample, suggesting no unified negative correlation trend.
+  - **Source location:** §4.1, “RQ1: Joint Structure of Performance and Prompt Stability”
+  - **Scope:** The design covers Python HumanEval prompts, 14 models from three families, three generated perturbation distances, and the paper's AUC-E stability measure. Semantic equivalence is an intended and structurally constrained property of generated variants.
+  - **Confidence:** High for the reported protocol and statistic. Confidence that every generated variant preserves public meaning is lower because the cited passage states the constraint but does not establish an independent semantic audit.
+  - **Limitation:** The study estimates prompt sensitivity with repeated samples but does not separately estimate within-prompt sampling dispersion as its own causal component. The nonsignificant correlation does not by itself demonstrate that performance and stability are independent or “decoupled,” and the experiment does not test whether the underlying task specification is underspecified.
 
 ## Connections Found
 

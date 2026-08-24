@@ -23,7 +23,14 @@ The paper proposes a self-learning LLM loop organized around "Points in the Unkn
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** The paper treats “what to learn” as the main problem for its self-learning LLM and proposes a loop that identifies knowledge the model is judged not to know, gathers relevant data, and trains on it; its Point in the Unknown mechanism uses self-assessed hallucination to select that knowledge.
+  - **Source extract (verbatim):** We address the main problem of self-learning LLM: the question of what to learn. We propose a self-learning LLM framework that enables an LLM to independently learn previously unknown knowledge through self-assessment of their own hallucinations. We introduce a concept called Point in the Unknown (PiU) to identify atomic knowledge unknown to a model, along with four methods for automatic PiUs identification, facilitating the creation of a self-learning loop that focuses exclusively on the absorption of currently unknown knowledge into the model.
+  - **Source location:** Abstract
+  - **Source extract (verbatim):** It is the persistent acquisition of new knowledge by the model without data provision, taking advantage of three fundamental mechanisms that are integrated in a continuous loop: (1) identification of what knowledge to learn, (2) gathering new relevant data, and (3) continuous model training.
+  - **Source location:** §I, “Introduction”
+  - **Scope:** The proposition describes the paper's proposed LLM self-learning framework for acquiring factual knowledge classified as unknown through its PiU and hallucination-scoring method.
+  - **Confidence:** High for the authors' problem framing and stated loop; whether hallucination reliably identifies missing knowledge is a separate empirical question.
+  - **Limitation:** “Unknown” is the paper's model-relative, hallucination-based category. The source neither ranks unknown facts by broader usefulness nor supplies a separate validity gate, so it does not establish that every learning loop requires the target note's two gates.
 
 ## Connections Found
 

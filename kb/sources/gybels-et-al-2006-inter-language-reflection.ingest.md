@@ -23,7 +23,16 @@ Gybels et al. define **inter-language reflection** as traditional reflection in 
 
 ## Claims
 
-No claims have been grounded yet.
+- **Claim (paraphrase):** Gybels et al.'s linguistic-symbiosis model separates a base-level data mapping, which makes each language's data appear native in the other and entails translating invoked operations, from a meta-level protocol mapping, which passes the data's meta-representations between interpreters and makes the receiving interpreter's meta-operations applicable to them.
+  - **Source extract (verbatim):** Two languages are in linguistic symbiosis when they can transparently invoke each other’s behaviour and exchange data. Linguistic symbiosis enables the representation of data of one language in the other, as well as the activation of behavior described in one language from the other.
+  - **Source location:** §3, “Linguistic symbiosis model overview” (printed pp. 111–112; PDF pp. 3–4)
+  - **Source extract (verbatim):** Data mapping: To achieve a tight integration at the syntactic level when passing data between the programs in the different languages, the data should “appear” in each language as seemingly native data. This means that it should be possible for programs in B to apply operations on data of A as though it was native data of B, and vice versa. Therefore, operations invoked in B on data of A somehow need to be translated to operations of A, and vice versa.
+  - **Source location:** §3, “Linguistic symbiosis model overview” (printed p. 112; PDF p. 4)
+  - **Source extract (verbatim):** Protocol mapping: The key point in linguistic symbiosis is that the data mapping at the syntactic level comes down to a protocol mapping at the language implementation level: making the data of one language “appear” in the other is achieved on the language implementation level by ensuring that the meta representations of that data can be passed between the interpreters. To do so the protocols of the representations of both languages must be explicitly considered: to allow a meta representation to be passed to another interpreter requires making the meta operations of that interpreter applicable to that meta representation as well.
+  - **Source location:** §3, “Linguistic symbiosis model overview” (printed p. 112; PDF p. 4)
+  - **Scope:** This is a conceptual model instantiated for Agora/Java and SOUL/Smalltalk; the paper assumes interpreters with explicit meta-representations of language operations.
+  - **Confidence:** High: the source defines both mappings and their relationship directly.
+  - **Limitation:** Data mapping is not merely value transport, and protocol mapping is the implementation-level mechanism that realizes the data's native appearance and cross-language behavior. The source does not establish the target note's broader graded-coverage taxonomy.
 
 ## Connections Found
 
