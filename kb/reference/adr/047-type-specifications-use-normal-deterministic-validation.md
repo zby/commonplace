@@ -12,9 +12,9 @@ status: accepted
 
 ## Context
 
-[ADR 018](./018-types-are-path-references-to-instruction-docs.md) made each type definition a Markdown note whose own `type:` is `kb/types/type-spec.md`. The deterministic validator nevertheless excluded `types/` directories from collection targets and compensated with `validate_type_specs`, a workspace-wide batch pass.
+[ADR 018](./018-types-are-path-references-to-instruction-docs.md) made each type definition a Markdown note whose own `type:` is `kb/types/type-spec.md`. The deterministic validator nevertheless excluded `types/` directories from collection targets and compensated with a workspace-wide batch pass.
 
-That pass did not validate a candidate as a type-spec note. It parsed each file and resolved the artifact type named by its `type:` field; for a normal candidate, this repeatedly resolved the root `type-spec` definition. It did not apply `type-spec.schema.yaml` to the candidate or resolve the candidate's own `schema:` declaration. Used types received stronger incidental checking when an instance resolved them, while unused types could remain malformed.
+That pass did not validate a candidate as a type-spec note: it resolved the type named by the candidate's `type:` field, without applying the type-spec schema to the candidate or resolving the candidate's own `schema:` declaration. Used types received stronger incidental checking when an instance resolved them, while unused types could remain malformed.
 
 The split contradicted the type system's own representation. A type specification already has an ordinary schema for its intra-document shape. Its one additional requirement — a non-null `schema:` path must resolve to a loadable schema — is a type-owned referential check of the same kind as other imperative type rules.
 
@@ -22,13 +22,12 @@ The split contradicted the type system's own representation. A type specificatio
 
 Type-spec documents use the normal deterministic validation pipeline.
 
-- Collection validation includes every visible `.md` artifact under the collection's `types/` directories. The retired `.template.md` and `.instructions.md` suffixes carry no validation semantics. `text.md` remains absent only from the dedicated `types` target because its lack of frontmatter defines the implicit root rather than a type-spec artifact.
-- The `type-spec` type registers an imperative rule that resolves the validated document itself as a type definition. This checks its `name`, `description`, and `schema` declaration and loads the declared schema when non-null. `type-spec.schema.yaml` remains responsible for intra-document structure; the imperative rule owns dereferencing.
-- `validate_type_specs` and its special batch-report section are removed.
+- Collection validation includes every visible `.md` artifact under the collection's `types/` directories; filename suffixes carry no validation semantics. The root `text.md` is the one exclusion from the dedicated `types` target, because its lack of frontmatter defines the implicit root rather than a type-spec artifact.
+- The `type-spec` type registers an imperative rule that resolves the validated document itself as a type definition, checking its declared fields and loading the declared schema when non-null. The type-spec schema remains responsible for intra-document structure; the imperative rule owns dereferencing.
 - `commonplace-validate types` validates the complete global and collection-local type-spec inventory through the same per-artifact result pipeline. Validating a collection also validates its local type specs.
 - The authored-link orphan signal remains a content-note check. Type use is expressed by frontmatter rather than a narrated Markdown edge, so lack of an inbound prose link is not evidence that a type spec is unused.
 
-This amends [ADR 039](./039-tool-visibility-is-package-owned-and-git-is-never-invoked.md): `types/` is not categorically invisible collection content. Individual consumers may still omit type definitions when their domain excludes contracts — generated content indexes and review target selection do — but validation does not.
+Amends [ADR 039](./039-tool-visibility-is-package-owned-and-git-is-never-invoked.md): `types/` is not categorically invisible collection content; consumers whose domain excludes contracts (generated content indexes, review target selection) state that exclusion themselves.
 
 ## Consequences
 

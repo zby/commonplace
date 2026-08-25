@@ -12,7 +12,7 @@ status: accepted
 
 ## Context
 
-Commonplace type identity is path-valued: `kb/types/tag-readme.md` and `kb/notes/types/tag-readme.md` are different types even if both specifications declare `name: tag-readme`. The imperative `_TYPE_RULES` registry instead keyed registrations and dispatch on that bare name. A same-named collection-local type could therefore inherit framework behavior it did not declare.
+Commonplace type identity is path-valued: `kb/types/tag-readme.md` and `kb/notes/types/tag-readme.md` are different types even if both specifications declare `name: tag-readme`. The imperative type-rule registry instead keyed registrations and dispatch on that bare name. A same-named collection-local type could therefore inherit framework behavior it did not declare.
 
 Installed Commonplace content adds one wrinkle. A framework type shipped at `kb/types/x.md` lives at `kb/commonplace/types/x.md` in a reader project, but schemas already treat those paths as the same portable framework identity.
 
@@ -21,8 +21,8 @@ Installed Commonplace content adds one wrinkle. A framework type shipped at `kb/
 Imperative type rules register and dispatch by canonical path-valued type identity.
 
 - Registrations name complete source identities such as `kb/types/tag-readme.md`.
-- Dispatch uses the resolved `TypeProfile`, not its display `name`.
-- `canonical_type_identity` is the shared normalization: an installed `kb/commonplace/...` framework path maps to its source `kb/...` identity; ordinary collection-local paths remain unchanged.
+- Dispatch uses the resolved type profile, not its display `name`.
+- One shared normalization maps an installed `kb/commonplace/...` framework path to its source `kb/...` identity; ordinary collection-local paths remain unchanged.
 - Finding labels continue to show the concise type name. Reporting vocabulary is not identity.
 
 ## Consequences

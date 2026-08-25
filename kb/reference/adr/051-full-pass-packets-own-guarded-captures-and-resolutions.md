@@ -24,8 +24,8 @@ Each full-pass packet owns immutable UTF-8 `.txt` captures of the artifacts its 
 - Logical repository paths remain method inputs and state keys. Packet-relative capture paths are used only for hash verification and capture-to-current diffs.
 - `full-pass-report.md` uses `kb/reports/types/full-pass-report.md`. Its frontmatter is canonical for disposition and resolution; its rendered `Resolution` section is a validated projection.
 - `keep` reports begin `not-required`; delete and merge reports begin `pending`. Explicit user authority may accept, reject, or apply an alternative. A readable changed input may deterministically supersede a report. Missing inputs and corrupted captures require reconciliation.
-- `commonplace-guard-full-pass-report` verifies every capture, compares every current logical artifact, emits machine-readable per-input results and diffs, and exits successfully only when all inputs match. It never mutates reports or live artifacts.
-- Capture paths are normalized, packet-relative `.txt` paths confined to regular non-symlink files inside the packet. Type-owned validation re-verifies capture hashes and the rendered resolution projection.
+- `commonplace-guard-full-pass-report` verifies every capture against the current logical artifacts, emits per-input results and diffs, exits successfully only when all inputs match, and never mutates reports or live artifacts.
+- Capture paths are confined to regular files inside the packet. Type-owned validation re-verifies capture hashes and the rendered resolution projection.
 - Resolution remains instruction-driven while report volume is small. Every packet-driven keep, delete, merge, rejection, or alternative operation runs the deterministic guard immediately before its first mutation or decision record.
 - Reports and captures are one retention unit. Pending packets are never pruned; resolution-aware cleanup may remove the unit only after its state is no longer load-bearing.
 

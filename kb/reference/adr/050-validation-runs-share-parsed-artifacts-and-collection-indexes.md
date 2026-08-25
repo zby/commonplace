@@ -12,21 +12,19 @@ status: accepted
 
 ## Context
 
-Deterministic validation had one per-note pipeline in `lib.validation`, but the CLI separately expanded impacted tag-READMEs, built the collection inbound-link graph, merged orphan findings, and checked collection structure. A collection sweep consequently parsed target artifacts during impact selection, again during orphan calculation, and again during per-note validation. Each marked tag-README also rescanned its collection independently.
-
-The broader design proposal separated an artifact's check anchor, its evaluation inputs, and its invalidation dependencies. The immediate simplification did not require encoding those dependencies or replacing the readable base → imperative type rules → schema sequence.
+Deterministic validation had one per-note pipeline in the library, but the CLI separately expanded impacted tag-READMEs, built the collection inbound-link graph, merged orphan findings, and checked collection structure. A collection sweep consequently parsed target artifacts three times — during impact selection, orphan calculation, and per-note validation — and each marked tag-README rescanned its collection independently.
 
 ## Decision
 
-Evaluate each resolved target through one library-owned `ValidationRun`.
+Evaluate each resolved target through one library-owned validation run.
 
-- The run caches loaded `ParsedDocument` and resolved `ParsedNote` values by path. Target expansion, collection indexes, orphan calculation, and per-note validation consume those cached values.
-- One lazy `CollectionTagIndex` scan supplies both tag membership and tag-index entries. The collector remains shared with generated-index construction; validation injects its cached document loader rather than defining a second membership algorithm.
+- The run parses each artifact once and caches it by path. Target expansion, collection indexes, orphan calculation, and per-note validation consume those cached values.
+- One lazy collection scan supplies both tag membership and tag-index entries. The collector remains shared with generated-index construction; validation injects its cached document loader rather than defining a second membership algorithm.
 - Marked tag-README impact selection remains an explicit invalidation selector. No generic dependency keys, inverse graph, old/new-state model, or KB-authored imperative mechanism is introduced.
-- The authored-link inbound graph is built once for a collection-scoped run and its orphan information is attached to each applicable artifact's `CheckResults` in the library.
+- The authored-link inbound graph is built once for a collection-scoped run and its orphan information is attached to each applicable artifact's results in the library.
 - Collection-structure failures move to the library and carry the offending `COLLECTION.md` path as their anchor while retaining the existing batch presentation.
-- `run_validation` returns expanded paths, per-artifact results, and anchored collection-structure findings. The CLI retains target resolution and presentation only.
-- Per-artifact dispatch remains base checks, canonical-path imperative type rules, then schema validation. Individual `validate_note` calls use a one-path run.
+- The run returns expanded paths, per-artifact results, and anchored collection-structure findings. The CLI retains target resolution and presentation only.
+- Per-artifact dispatch remains base checks, canonical-path imperative type rules, then schema validation. Single-note validation uses a one-path run.
 
 ## Consequences
 
@@ -34,12 +32,12 @@ Easier:
 
 - Target artifacts are read and parsed once per validation run, including when tag membership and orphan checks need them.
 - Multiple marked tag-READMEs share one collection scan rather than rescanning independently.
-- Wide checks no longer require a new hand-merged branch in `validate_notes.main`; their findings enter through the run result.
+- Wide checks no longer require a new hand-merged branch in the CLI; their findings enter through the run result.
 - CLI target semantics and validation execution have a narrow, explicit boundary.
 
 Harder:
 
-- Imperative type rules now receive the current `ValidationRun` rather than only `repo_root` so referential checks can use shared inputs.
+- Imperative type rules now receive the current run rather than only the repository root so referential checks can use shared inputs.
 - The validation library owns run orchestration as well as individual check functions.
 
 Not included:

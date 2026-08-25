@@ -12,9 +12,9 @@ status: accepted
 
 ## Context
 
-`AGENTS.md`'s Development section named two tiers of code: `python3` for stdlib-only throwaway tooling, and the installed `commonplace` package for shipped `commonplace-*` commands. A third tier already existed in practice and had existed since the repository's first commit — the git-tracked `scripts/` directory, holding ad hoc tooling that is committed (not thrown away) but hasn't earned a `commonplace-*` entry point. [ADR-014](./014-scripts-as-python-package-one-tree-model.md) documents the one precedent for a promotion out of `scripts/`, at subsystem scale, but nothing named the tier itself, its lifecycle, or when an individual script should graduate.
+`AGENTS.md` named two tiers of code — throwaway `python3` heredocs and the installed `commonplace` package — while a third tier had existed in practice since the repository's first commit: the git-tracked `scripts/` directory, holding ad hoc tooling that is committed (not thrown away) but hasn't earned a `commonplace-*` entry point. [ADR-014](./014-scripts-as-python-package-one-tree-model.md) documents the one precedent for a promotion out of `scripts/`, at subsystem scale, but nothing named the tier itself, its lifecycle, or when an individual script should graduate.
 
-The gap showed up concretely: `scripts/move-reviews-to-subdir.py`, self-described as "one-off" and last touched in April, sat unused and undeleted for months — the only genuine evidence of drift, but real.
+The gap showed up concretely: one script self-described as "one-off" sat unused and undeleted for months — the only genuine evidence of drift, but real.
 
 ## Decision
 
