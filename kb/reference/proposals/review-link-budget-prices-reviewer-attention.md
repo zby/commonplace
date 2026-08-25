@@ -139,6 +139,48 @@ resource is attention.
 **D. Keep the count, fix only the counting rule.** Cheapest; leaves the number
 unexamined and heterogeneity unpriced.
 
+## What must be decided before implementation
+
+Three blocking decisions; the rest an implementer determines.
+
+**1. Where sizes surface.** `review/protocol/prompt.py` already emits a
+code-generated `resolved_links` table into every review prompt. A size column
+there means the reviewer plans against costs it already holds and makes no tool
+call — [frontloading](../../notes/frontloading-spares-execution-context.md)
+applied exactly. A standalone command works outside the review pipeline but must
+be remembered and spends a turn. Likely both, over one sizing library, but the
+gate's wording depends on which is primary: "read the sizes in your link table"
+and "run this command" are different instructions.
+
+**2. What exceeding the budget means.** Today a reviewer over budget passes while
+disclosing what it left unopened — job 8051 did exactly that. Under a computed
+budget, is that still a PASS, or does exceeding become FAIL? This decides whether
+the budget is guidance with an honesty requirement or an enforced limit, and the
+two produce different verdicts on the same corpus.
+
+**3. Whether V1 enforces anything at all.** The adoption criterion says derive α,
+β, and the budget from measured reviews rather than choose them. Taken seriously,
+V1 ships **measurement only**: sizing lands, reviews record what they cost, and
+the gate is untouched. The gate edit and its 775-pair sweep then happen once,
+against real numbers. The alternative is to ship a chosen budget now and correct
+it later, which is the inherited-number failure this proposal exists to retire.
+Recommended: measure first. It also means V1 changes no review behavior, which
+should be said out loud rather than discovered.
+
+Three smaller questions, cheap to settle but ambiguous if left:
+
+- Does the target note and the criterion itself count against the budget, or only
+  linked material? (Only linked material is the assumption throughout, unstated.)
+- Is the budget per pair or per job? `--grouping note` puts several criteria over
+  one note into one job, and each currently applies the cap independently.
+- How is an unavailable target priced — a missing file, or a `(snapshot
+  required)` link whose snapshot is absent? Sizing should report rather than
+  error, since ADR 073 already makes the missing snapshot a gate FAIL.
+
+An implementer determines the rest: command name and flags, output shape, whether
+sizing lives in its own module, and the table's column layout. None of those
+changes a decision made above.
+
 ## Adoption criteria
 
 Adopt when α, β, and the budget can be derived from measured reviews rather than
