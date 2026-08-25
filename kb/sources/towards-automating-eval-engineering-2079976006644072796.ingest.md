@@ -26,7 +26,14 @@ The announcement describes a skill that reads an agent repository and optional p
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** Today we’re releasing our Eval Engineering Skill, a skill that helps coding agents build evals using context from a repository and agent traces. The skill inspects how an agent is structured, mines patterns from traces if available, and proposes abilities to test. The skill is designed to interview the user who can give feedback on proposals and iteratively approve each eval.
+  - **Source location:** Opening description.
+- **Source extract (verbatim):** Users can also point the agent to traces which can be retrieved using tools like the langsmith-cli.  Traces show how tools behave in practice such as their arguments, results, and errors. These observed contracts help the skill reproduce relevant production behavior in a controlled environment.
+  - **Source location:** Building the Environment & Task.
+- **Source extract (verbatim):** We found that interviewing the user, leads to much better eval acceptance than one-shot generation.  The user chooses from the proposed eval directions, and gives guidance on questions such as which tools & dependencies should run live or need to be simulated.
+  - **Source location:** Building the Environment & Task.
+- **Source extract (verbatim):** For example, we found that when building verifiers, the first verifier was rarely the final one. A useful way to improve it was to run the eval and inspect both sides of the result: the agent trajectory, including its messages, tool calls, and actions. the verifier trajectory, evidence, reasoning, and final score.
+  - **Source location:** Eval Design is iterative.
 
 ## Connections Found
 

@@ -23,7 +23,18 @@ The paper introduces epiplexity, or epistemic complexity, as a measure of struct
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** This paper introduces **epiplexity** (epistemic complexity), a new information measure designed to quantify structural information extractable by computationally constrained observers.
+  - **Source location:** Overview.
+- **Source extract (verbatim):** Epiplexity separates random from structural information by finding the program minimizing time-bounded MDL (Minimum Description Length):
+  - **Source location:** Key Contributions, Epiplexity Definition.
+- **Source extract (verbatim):** **Prequential Coding:** Estimates model description length as area under loss curves above final loss — simple but heuristic.
+  - **Source location:** Key Contributions, Measurement Approaches.
+- **Source extract (verbatim):** **Theorem 9:** CSPRNGs exhibit maximum time-bounded entropy but negligible epiplexity — matching intuition that pseudorandom sequences are structurally empty despite appearing random.
+  - **Source location:** Theoretical Results.
+- **Source extract (verbatim):** **Paradox 2:** Information is factorization-independent (yet left-to-right text ordering outperforms reverse)
+  - **Source location:** Key Contributions, Three Apparent Paradoxes.
+- **Source extract (verbatim):** **Observer-dependent randomness:** The same object may appear structured or random depending on computational budget
+  - **Source location:** Key Insights.
 
 ## Connections Found
 

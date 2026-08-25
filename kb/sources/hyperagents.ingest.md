@@ -23,7 +23,32 @@ HyperAgents extends the Darwin Gödel Machine by joining a task agent and the me
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** A hyperagent is a self-referential agent that integrates a task agent and a meta agent within a single editable program, enabling it to modify not only how it performs tasks but also how it generates future self-modifications. Unlike hierarchical systems with fixed meta-levels, in hyperagents the meta agent is part of the same editable program and can rewrite itself.
+  - **Source location:** Section 3, Hyperagents.
+- **Source extract (verbatim):** Given access to the entire archive of previous agents and evaluations, a meta agent proposes changes intended to improve future performance (including potentially many generations later). Importantly, these changes may target not only task-solving logic but also the meta agent itself, enabling improvements to the procedures by which future modifications are generated.
+  - **Source location:** Section 3, Agents.
+- **Source extract (verbatim):** In principle, a fully self-referential algorithm should allow modification of every part of itself (including the parent selection and evaluation mechanisms). While we present preliminary results exploring the possibility of automatically improving the parent selection mechanism in Section˜12.5, the experiments in the main text use a handcrafted parent selection mechanism that is not subject to modification in order to isolate the effects of hyperagent self-modification.
+  - **Source location:** Section 3, Darwin Gödel Machine with Hyperagents.
+- **Source extract (verbatim):** Second, components of the open-ended exploration loop (e.g., parent selection, evaluation protocols) remain fixed. Although hyperagents can modify their self-improvement mechanisms, they cannot alter the outer process that determines which agents are selected or how they are evaluated.
+  - **Source location:** Section 7, Limitations and Conclusion.
+- **Source extract (verbatim):** On test tasks, DGM-H with random parent selection improves average performance on paper review and robotics reward design from 0.030 (the initial agent) to 0.428 (CI: 0.407 – 0.432). Allowing the DGM-H to modify the parent selection mechanism further improves performance to 0.491 (CI: 0.387 – 0.512). The handcrafted score-child-prop parent selection achieves the highest performance, improving from 0.030 to 0.532 (CI: 0.384–0.586). While these differences are not statistically significant (p > 0.05), they reveal a consistent qualitative trend: enabling meta-level modification of parent selection yields improvements over random selection, but does not yet surpass a carefully engineered mechanism (Figures˜11 and 12).
+  - **Source location:** Appendix 12.5, Modifying Parent Selection.
+- **Source extract (verbatim):** This process maintains an archive of generated hyperagents, initialized with a single hyperagent and expanded over time by continuously accumulating generated variants. The process alternates between two phases: metacognitive self-modification and evaluation. During the metacognitive self-modification phase, selected parent hyperagents from the archive generate modified versions of themselves.
+  - **Source location:** Section 3, Darwin Gödel Machine with Hyperagents.
+- **Source extract (verbatim):** DGM-H without open-ended exploration (DGM-H w/o open-ended exploration) removes the archive of previously generated hyperagents. Instead of retaining previous variants as stepping stones for future exploration, each newly generated hyperagent replaces its predecessor.
+  - **Source location:** Section 4.1, baselines.
+- **Source extract (verbatim):** // Add compiled child agent
+  - **Source location:** Section 8.3, DGM-H pseudocode, successful `IsValid` branch.
+- **Source extract (verbatim):** From prior DGM-H runs on paper review and robotics reward design (Section˜5.1), we select one transfer hyperagent per run using the same lineage-discounted criterion described above (Section˜11.4). The transfer hyperagents (one from each of 5 repeated runs) achieve an initial test-set score of 0.0 (CI: 0.0 – 0.0), reflecting the domain shift.
+  - **Source location:** Section 5.2, Improving the Ability to Improve.
+- **Source extract (verbatim):** After 50 iterations of DGM-H w/o self-improve starting from the transfer hyperagents, the best generated agents (selected based on validation score) achieve a test-set score of 0.630 (CI: 0.540 – 0.630). This corresponds to a imp@50 of 0.630 (CI: 0.540 – 0.630) (Figure˜3).
+  - **Source location:** Section 5.2, Improving the Ability to Improve.
+- **Source extract (verbatim):** When using DGM-H w/o self-improve as the agent-generation algorithm, imp@50 for the transfer agents is significantly higher than imp@50 for the initial agent (p < 0.05).
+  - **Source location:** Section 5.2, Improving the Ability to Improve.
+- **Source extract (verbatim):** After 200 iterations of DGM-H starting from these transfer agents (DGM-H + transfer), the best generated agents (selected based on validation score) achieve a test-set score of 0.640 (CI: 0.550 – 0.720).
+  - **Source location:** Section 5.3, Compounding Self-Improvement.
+- **Source extract (verbatim):** Under the same experimental setup, DGM-H starting from the initial agent achieves a best test-set score of 0.610 (CI: 0.510 – 0.680). Although the difference between DGM-H + transfer and DGM-H is not statistically significant (p > 0.05), DGM-H + transfer achieves a higher median performance and higher confidence intervals than DGM-H starting from the initial agent (Figure˜4).
+  - **Source location:** Section 5.3, Compounding Self-Improvement.
 
 ## Connections Found
 

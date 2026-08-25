@@ -23,7 +23,18 @@ The paper separates an evolver's ability to produce useful persistent harness ch
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** We analyze two harness self-evolution capabilities: (i) *harness-updating*, the capability to produce useful persistent harness updates from execution evidence; (ii) *harness-benefit*, the capability to benefit from updated harnesses during task solving.
+  - **Source location:** Abstract.
+- **Source extract (verbatim):** The evolver produces the updated harness $H_{t}$ from $H_{t-1}$ and $\mathcal{D}_{t}$ as in Eq. [2](https://arxiv.org/html/2605.30621#S3.E2), yielding the next agent $A_{t}=(f,H_{t})$. This loop repeats for $T$ steps, producing the final harness $H_{T}$.
+  - **Source location:** Section 3.2, Evolution Protocol.
+- **Source extract (verbatim):** To quantify this on SkillsBench, we report each agent’s *skill-load rate (SLR)*, the fraction of its trajectories in which it actively loads at least one skill into its context.
+  - **Source location:** Section 4.3, Agent-side Analysis.
+- **Source extract (verbatim):** Tab. [2](https://arxiv.org/html/2605.30621#S4.T2) reports HFR together with two complementary metrics: *SLR*, which measures harness activation, and *pass-when-loaded (LPR)*, which measures the pass rate among that model’s skill-loaded trajectories.
+  - **Source location:** Section 4.3, Agent-side Analysis.
+- **Source extract (verbatim):** We use an LLM judge to measure whether an agent follows a loaded harness artifact during task solving. All judged trajectories are blinded by replacing model identifiers with the placeholder <MODEL>. Claude Sonnet 4.6 is used as the judge model.
+  - **Source location:** Appendix D.3, Judge Details for Harness-Following Rate.
+- **Source extract (verbatim):** For each SkillsBench trajectory in which at least one skill is loaded, the judge receives the loaded skill body and the agent trajectory. The judge first converts the skill body into a locked rubric of atomic procedural instructions, and then checks whether the trajectory follows that rubric.
+  - **Source location:** Appendix D.3, Judge Details for Harness-Following Rate.
 
 ## Connections Found
 

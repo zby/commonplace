@@ -1,6 +1,6 @@
 # Cleanup cohort 10b — frozen 2026-08-24
 
-**Status: in progress.** Frozen at repository `a91ed377`. Split from cohort 10
+**Status: complete (2026-08-25).** Frozen at repository `a91ed377`. Split from cohort 10
 on 2026-08-24 to bound one agent's context; the original manifest's scope was
 18 targets over 36 ingests.
 
@@ -109,11 +109,11 @@ snapshot supply source support.
 | Ingest | Inventory IDs | Route and result | Snapshot identity | Validation |
 |---|---|---|---|---|
 | `goedel-machines-schmidhuber` | PS-1, GM-1–GM-5 | PS-1: `quotes sufficient` from the three incumbent passages. GM-1–GM-5: `snapshot required`; the combined use spans axiomatization, proof machinery, provability limits, later rewrites, and the paper's theoretical status, so a bounded retained set would omit material context. | `d70201102d8f00e7e65cf36a8a89733256d8f163b6b6439941662c47c51fc1f7` verified. | Direct snapshot judgment completed; target marker required for GM-1–GM-5. |
-| `autogenesis-a-self-evolving-agent-protocol` | OF-5–OF-6 | `quotes added`: recovered 5 exact pairs for both uses. | `631aa4f497520508eed673a06de7d7bc4bd001e92f6823a633bbbac2b835e613` verified. | PASS; 5 quotes resolve. |
-| `continual-harness-online-adaptation-foundation-agents` | OF-3–OF-4 | `quotes added`: recovered 7 exact pairs for both uses. | `a4730b3e25827c12c1ac3cb1734d9095669c2fabb1d51a62047e5b1bbbe38b07` verified. | PASS; 7 quotes resolve. |
+| `autogenesis-a-self-evolving-agent-protocol` | OF-5–OF-6 | OF-5: `quotes added`; the 5 recovered passages cover the typed operators, reject-capable Evaluate step, learnability mask, commit gate, lineage, and rollback. OF-6: `snapshot required`; distinguishing rollback from a distinct criterion-driven retirement mechanism requires checking the protocol as a whole. | `631aa4f497520508eed673a06de7d7bc4bd001e92f6823a633bbbac2b835e613` verified. | PASS; 5 quotes resolve OF-5; target marker required for OF-6. |
+| `continual-harness-online-adaptation-foundation-agents` | OF-3–OF-4 | OF-3: `quotes added`; the 7 recovered passages cover the Refiner, editable surfaces, direct next-step installation, and component operations. OF-4: `snapshot required`; the system-wide negative about retirement and uneven use across artifact types depends on the full reported lifecycle. | `a4730b3e25827c12c1ac3cb1734d9095669c2fabb1d51a62047e5b1bbbe38b07` verified. | PASS; 7 quotes resolve OF-3 and the positive parts of OF-4; target marker required for OF-4. |
 | `darwin-godel-machine-open-ended-evolution-self-improving-agents` | OF-10–OF-13, GM-6 | `quotes added`: recovered 12 exact pairs for all five uses. | `9ce2d857b213c66107e0b81be2f281bf691f6812d5146c89a83542e8041aa086` verified. | PASS; 12 quotes resolve. |
-| `hyperagents` | OF-14–OF-16, OF-18, CP-1–CP-2 | `quotes added`: recovered 13 exact pairs for all six uses. | `bfb5c4f6723cfeed3410392c7fdd2c390fa29406efd390fc4af61b0ead5d5c25` verified. | PASS; 13 quotes resolve. |
-| `self-harness-harnesses-that-improve-themselves` | OF-1–OF-2 | `quotes added`: recovered 6 exact pairs for both uses. | `28b4792629559f4ffd2bb587a64ee281d5f13a561cc0b49b1d36358cc1d63b11` verified. | PASS; 6 quotes resolve. |
+| `hyperagents` | OF-14–OF-16, OF-18, CP-1–CP-2 | OF-14–OF-15, OF-18, and CP-1: `quotes added`; 13 recovered passages cover the unified editable program, fixed and appendix-modified parent selection, archive behavior, transfer protocol, and reported results. OF-16: `snapshot required` for the system-wide negative about semantic retirement. CP-2: `snapshot required` because the bundled transfer and the absence of a significant sustained-compounding result depend on the experiment-level comparison. | `bfb5c4f6723cfeed3410392c7fdd2c390fa29406efd390fc4af61b0ead5d5c25` verified. | PASS; 13 quotes resolve four uses; target markers required for OF-16 and CP-2. |
+| `self-harness-harnesses-that-improve-themselves` | OF-1–OF-2 | OF-1: `quotes added`; the 6 recovered passages cover candidate generation, the two-split admission rule, accepted-edit merging, and later evaluation. OF-2: `snapshot required`; the protocol-wide absence of criterion-driven retirement cannot be established from a bounded positive extract set. | `28b4792629559f4ffd2bb587a64ee281d5f13a561cc0b49b1d36358cc1d63b11` verified. | PASS; 6 quotes resolve OF-1 and the positive part of OF-2; target marker required for OF-2. |
 | `self-improving-ai-coding-agents-through-accumulated-rules` | OF-7–OF-9 | `quotes added`: recovered 8 exact pairs for all three uses. | `485cd1c053eef5f1717c2c6309d109500b0dfa1564efb9d8b347a438923684ff` verified. | PASS; 8 quotes resolve. |
 | `huxley-godel-machine-human-level-coding-agent-development` | OF-17, MO-1, GM-7 | `snapshot required` for all three uses after the recovery request failed. The snapshot establishes empirical clade-metaproductivity, DGM/HGM correlation results, and HGM's estimated-CMP expansion policy. | `bd3815e8d12e57a57c26c0976ba6f778fea3da45fe3f9edc4f56cfd38eb9482a` verified. | Direct snapshot judgment completed; target markers required; ingest remains clean. |
 | `agentic-code-reasoning` | MO-3, SP-1, VS-5 | `quotes added`: 6 bounded passages cover the semi-formal intervention, execution-free setup, task gains, residual error, exact Sonnet comparison, and inspectable template. | `acd2639d1e6041491cf9130a7d308cd5d69b8b735011991594f9d5f7d0a1a7ad` verified. | PASS; 6 quotes resolve. |
@@ -122,7 +122,7 @@ snapshot supply source support.
 | `agent-optimizers-compound-terminal-bench` | CP-3–CP-4 | CP-3: `quotes added`, with 4 passages covering the two-phase test, budgets, task expansion, and exact results. CP-4: `snapshot required`; the absence of a fresh combined-task start and of a measured reinvestment path is a protocol-wide negative claim. | `08b1a1e55d05498fd3e71b2407df86bec90dce73ca7b6ce244c325f3854a0847` verified. | PASS; 4 quotes resolve; target marker required for CP-4. |
 | `harness-updating-is-not-harness-benefit` | CP-5–CP-6 | CP-5: `quotes added`, with 6 passages separating persistent update, next-step reuse, skill loading, rubric-judged adherence, and pass-when-loaded. CP-6: `snapshot required`; its controlled-boundary and missing matched-withholding claims depend on the experiment and appendices together. | `453897c0e4c13dd6cb076cb2d33fc83fcd3d8bd4348633f4f0d554beb0dbe4cd` verified. | PASS; 6 quotes resolve; target marker required for CP-6. |
 | `poetiq-perspective-on-recursive-self-improvement` | CP-7, CR-1 | `snapshot required` for both uses. CP-7 combines a vendor's sequential-result narrative with a protocol-wide negative-control check; CR-1 scopes “zero human intervention” against human-selected problems, datasets, objectives, and the surrounding process. Neither is soundly judgeable from a few excerpts. | `25a04abaa343d73ba6f395caf537472ede25f923bbd0b3754479e2722317970d` verified. | Direct snapshot judgment completed; target markers required. |
-| `from-entropy-to-epiplexity-rethinking-information-computational` | EP-1–EP-6, SP-3 | `quotes added`: 6 passages cover the computationally bounded observer, time-bounded MDL, the prequential area heuristic, CSPRNG result, ordering effect, and observer dependence. The snapshot does not contain the target's AB, AES, textbook, compressed-file, or chess examples; those may remain only as explicit local worked examples, not source-supplied cases. SP-3's prompt transfer is likewise local analysis. | `26b4a18ec4bb6d004541946818245bd10a588d9e006c80356ea7171d0cc4c7e2` verified. | PASS; 6 quotes resolve; target attribution must be repaired. |
+| `from-entropy-to-epiplexity-rethinking-information-computational` | EP-1–EP-6, SP-3 | `quotes added`: 6 passages cover the computationally bounded observer, time-bounded MDL, the prequential area heuristic, CSPRNG result, ordering effect, and observer dependence. The snapshot does not contain the target's AB, AES, textbook, compressed-file, or chess examples; those may remain only as explicit local worked examples, not source-supplied cases. SP-3's prompt transfer is likewise local analysis. | `26b4a18ec4bb6d004541946818245bd10a588d9e006c80356ea7171d0cc4c7e2` verified. | PASS with two pre-existing missing-link warnings for `../notes/definitions/distillation.md`; 6 quotes resolve; target attribution must be repaired. |
 | `language-models-like-humans-show-content-effects-on-reasoning` | SP-2 | `quotes added`: 3 passages supplement the 3 incumbent quotes with the Wason chain-of-thought improvement, its bounded “can, in some cases” interpretation, and persistence across model size/tuning. The snapshot does not establish the frozen no-degradation clause, which must be removed. | `cfd34d847c87ad80812295940b4ea41c8a5c49f1b09ba25c1edaf69ce09e9faa` verified. | PASS; all 6 quotes resolve; target narrowing required. |
 | `beyond-not-novel-enough-llm-assisted-scholarly-critique` | VS-4 | `snapshot required`. One 6-pair append request failed atomically because its final extract joined the separately bulleted Reasoning Alignment and Decision Alignment items; the incumbent was restored and no repair append was attempted. The verified snapshot contains the complete pipeline and evaluation context. | `8cea8bd658eba13a6a21e20e260bc91a1013ce7dfc911cd563254e870143288c` verified. | Restored ingest PASS (clean); target marker required. |
 | `towards-automating-scientific-review-google-paper-assistant` | VS-1–VS-3 | `snapshot required`. One 6-pair append request failed atomically because the Pass@k extract capitalized source-internal lowercase “while”; the incumbent was restored and no repair append was attempted. The verified snapshot contains the full pipeline, SPOT construction, and repeated-call result. | `f59fc1c24f3f7bbd5b8aa8683a2e94872a6d41c4c844714ddce054449f0a5cb0` verified. | Restored ingest PASS (clean); target marker required. |
@@ -148,12 +148,129 @@ Self-Improvement review).
 
 ## Completion record
 
-Pending. Record one row per claim use:
+Each frozen use now has a terminal target disposition. Deterministic validation
+and the fresh operational review are recorded below rather than repeated in
+every row.
 
-`ID | disposition | target change | validation and source-review result`
+| ID | Disposition | Source route | Target repair |
+|---|---|---|---|
+| PS-1 | grounded | quotes sufficient | Retained the Gödel-machine limit case and its ordinary ingest link. |
+| PS-2 | literature handoff | linked local source review; primary source outside manifest | Attributed the mechanism to the local Ashby review and marked the loop classification as this note's analysis. |
+| PS-3 | literature handoff | linked local source review; primary source outside manifest | Retained the variation–selection–retention reading explicitly as an analyst's reconstruction. |
+| PS-4 | literature handoff | Zinkevich source outside manifest | Removed the online-gradient-descent and GIGA source claim. |
+| PS-5 | literature handoff | Kephart/Chess and Weyns sources outside manifest | Removed the MAPE-K field-characterization claim. |
+| PS-6 | literature handoff | Petrovska et al. source outside manifest | Removed the systematic-review claim while retaining the note's locally scoped conclusion. |
+| OF-1 | grounded | quotes added | Retained the Self-Harness proposal and two-split gate reading with an ordinary ingest link. |
+| OF-2 | grounded | snapshot required | Added a marked Self-Harness lifecycle link for later use and the protocol-wide retirement negative. |
+| OF-3 | grounded | quotes added | Retained the Continual Harness direct-update classification with an ordinary ingest link. |
+| OF-4 | grounded | snapshot required | Added a marked Continual Harness lifecycle link for uneven use and system-wide retirement scope. |
+| OF-5 | grounded | quotes added | Retained the Autogenesis operators, rejection, and frozen protocol fields with an ordinary link. |
+| OF-6 | grounded | snapshot required | Added a marked Autogenesis lifecycle link to distinguish rollback from retirement. |
+| OF-7 | grounded | quotes added | Retained the engineer-mediated rule proposal and acceptance reading. |
+| OF-8 | grounded | quotes added | Retained the two loading interfaces, 74-exposure result, and missing-control qualification. |
+| OF-9 | grounded | quotes added | Retained the refinement and inconsistent-removal reading. |
+| OF-10 | grounded | quotes added | Retained the DGM proposer, archive-parent, and benchmark-score roles. |
+| OF-11 | grounded | quotes added | Retained the compile-and-edit viability filter and score-regression qualification. |
+| OF-12 | grounded | quotes added | Retained monotonic archive behavior, stepping-stone rationale, and greedy scores. |
+| OF-13 | grounded | quotes added | Retained the distinct protective and affordable freeze rationales. |
+| OF-14 | grounded | quotes added | Retained the HyperAgents editable-program and descendant-generation reading. |
+| OF-15 | grounded | quotes added | Retained the main/appendix edit-boundary comparison and selector results. |
+| OF-16 | grounded | snapshot required | Added a marked HyperAgents lifecycle link for archive behavior and the retirement negative. |
+| OF-17 | grounded | snapshot required | Marked the Huxley ingest link used for empirical utility substitution and lineage-productivity evidence. |
+| OF-18 | grounded | quotes added | Retained the bounded cross-domain contribution and no-sustained-compounding qualification. |
+| MO-1 | grounded | snapshot required | Marked the Huxley link supporting immediate-score and lineage-productivity mis-ranking. |
+| MO-2 | literature handoff | Why Software Factories Fail Part II outside manifest | Removed the source attribution and retained the decision surfaces as this note's proposal. |
+| MO-3 | grounded | quotes added | Retained the semi-formal, execution-free verification result and residual-error qualification. |
+| MO-4 | grounded | quotes added | Retained the SlopCodeBench protocol, small-run result, and oracle-scope limit. |
+| MO-5 | grounded | quotes added | Retained the trace-mining, verifier-inspection, and user-specification workflow. |
+| CP-1 | grounded | quotes added | Retained the HyperAgents transfer protocol, five-run scope, and Improvement@50 result. |
+| CP-2 | grounded | snapshot required | Added a marked experiment link for bundled transfer and the nonsignificant continued-evolution comparison. |
+| CP-3 | grounded | quotes added | Retained the Agent Optimizers two-phase protocol, budgets, and RELAI-VCL results. |
+| CP-4 | grounded | snapshot required | Added a marked protocol link for the missing fresh-start control and reinvestment trace. |
+| CP-5 | grounded | quotes added | Retained the Harness Updating measurement ladder and missing feedback edge. |
+| CP-6 | grounded | snapshot required | Added a marked experiment link for cross-pairing, rubric judgment, controls, and fixed boundaries. |
+| CP-7 | grounded | snapshot required | Marked the Poetiq source link for its broad sequential-compounding and missing-control use. |
+| CR-1 | grounded | snapshot required | Marked the Poetiq source link for the bounded zero-human-intervention scope. |
+| EP-1 | contradicted/repaired | quotes added | Corrected the definition from the prequential area heuristic to time-bounded MDL and labeled the area method as heuristic. |
+| EP-2 | retained local delta | quotes added for the framework | Labeled the `AB` calculation and 2.6-bit value as a toy proxy, not a paper result. |
+| EP-3 | retained local delta | quotes added for observer dependence | Labeled the AES/key example as this note's worked extrapolation under a stipulated toolkit. |
+| EP-4 | retained local delta | quotes added for ordering dependence | Labeled the textbook example as a local extrapolation rather than a source-supplied case. |
+| EP-5 | narrowed | quotes added | Kept the source's negligible-CSPRNG result, narrowed its wording, and identified the compressed-file contrast as local. |
+| EP-6 | retained local delta | quotes added for observer dependence | Labeled the expertise-graded chess example as a local extrapolation. |
+| GM-1 | grounded | snapshot required | Marked the Schmidhuber links covering the rewritable surface, target theorem, and axiomatization. |
+| GM-2 | grounded | snapshot required | Used the same marked source route for proof search, checker authority, invocation, and retention. |
+| GM-3 | grounded | snapshot required | Used the marked source route for the Global Optimality Theorem and later rewrites. |
+| GM-4 | grounded | snapshot required | Marked the source citation for unprovable improvements and formalization assumptions. |
+| GM-5 | grounded | snapshot required | Used the marked source route for the paper's theoretical, non-empirical status. |
+| GM-6 | grounded | quotes added | Retained the DGM viability-admission and benchmark-reproduction distinction with an ordinary link. |
+| GM-7 | grounded | snapshot required | Marked the Huxley link for estimated future lineage value. |
+| GM-8 | literature handoff | linked local system review; underlying source outside manifest | Narrowed attribution to what the local Incremental Self-Improvement review describes. |
+| SP-1 | grounded | quotes added | Retained the 5–12-point range and exact Claude Sonnet comparison. |
+| SP-2 | narrowed | quotes added | Removed the unsupported no-degradation clause and bounded the chain-of-thought effect to some tested conditions. |
+| SP-3 | retained local delta | quotes added for the ordering result | Retained the prompt connection explicitly as analogy and local transfer, not source identification. |
+| VS-1 | grounded | snapshot required | Marked the PAT link for decomposition, specialized agents, grounding, deduplication, and synthesis. |
+| VS-2 | grounded | snapshot required | Used the marked PAT route for the filtered SPOT construction and technical-error scope. |
+| VS-3 | grounded | snapshot required | Added a marked PAT experiment link for the repeated-call recall/precision tradeoff. |
+| VS-4 | grounded | snapshot required | Marked the Beyond Not Novel Enough link for the full novelty-review pipeline and evaluation split. |
+| VS-5 | grounded | quotes added | Retained the Agentic Code Reasoning process-template use with an ordinary ingest link. |
+
+Disposition totals: 44 `grounded`, 7 `literature handoff`, 5 `retained local
+delta`, 2 `narrowed`, and 1 `contradicted/repaired`. Route totals across the 59
+uses: 1 `quotes sufficient`, 30 `quotes added`, 21 `snapshot required`, and 7
+outside-manifest literature handoffs.
+
+### Operational semantic review
+
+The selected model partition was `codex`. Each isolated worker was launched as
+the concrete harness model `gpt-5.4`; finalization recorded that model and the
+worker runner, with no invented effort value.
+
+| Job | Scope | Runner | Initial result |
+|---|---|---|---|
+| 8052 | `verifiable-subroles-before-reviewer-identity` | `review_8052` | PASS. |
+| 8053 | Five targets from proposal selection through computational reallocation | `review_8053` | Four PASS; `an-omitted-loop-function-and-a-frozen-one-need-different-repairs` WARN. |
+| 8054 | Epiplexity, Gödel machines, and structured prompts | `review_8054` | Three PASS. |
+| 8055 | Requested rerun of the warned omitted/frozen note | `review_8055` | PASS after the target made its six row-level premises and cohort-wide negative inference explicit. |
+
+All jobs finalized successfully with matching `gpt-5.4`/`codex` provenance.
+There were no FAIL or ERROR results. The ordinary post-finalization selector
+for all nine target/gate pairs under `codex` returned `"targets": []`.
+
+### Validation and cleanup
+
+- All nine changed targets validate cleanly.
+- Twelve changed ingests validate cleanly. The changed epiplexity ingest passes
+  with its two pre-existing missing-link warnings for
+  `../notes/definitions/distillation.md`; quote resolution itself passes for all
+  6 retained passages.
+- `commonplace-validate kb/notes` passes cleanly across 359 files.
+- `commonplace-validate kb/sources` passes across 307 files with no failures;
+  it reports pre-existing warnings in 20 source artifacts, including the two
+  epiplexity warnings above.
+- `git diff --check` passes. The operational-leftover scan across this record
+  and every changed note and ingest finds no retired-workflow residue.
+- Recovery commits `0e5df2c7eba7f6ae111119125607ad3870d92e7b` and
+  `95561752b9c859de25f61baf8e222f2c40b9d637` remain readable commit objects.
 
 ## Identity and accumulation observation
 
-Pending. Record exact-pair reuse, similar-quote accumulation, ambiguous route
-association, disputed passages, or pressure for identifiers or reconciliation.
-Distinguish target scope pressure from quote-pool identity pressure.
+The seven recovery ingests had no incumbent exact pairs. Six atomic requests
+appended 51 distinct exact pairs. The Huxley request appended none: its first
+two pairs matched but the atomic request failed because the third recovered
+extract collapsed the snapshot bytes `SWE-Verified-\n60` into
+`SWE-Verified-60`. That is a byte-identity failure, not a semantic dispute.
+
+Similar passages remain side by side where they preserve different local
+context, especially in the DGM and HyperAgents quote pools. No accepted pair
+needed an identifier, reconciliation, or semantic deduplication. The mixed
+quote/snapshot cases instead exposed route-association pressure: a bounded
+positive mechanism was quote-judgeable while a protocol-wide absence claim
+needed the snapshot. Placing marked links at those target uses resolved the
+ambiguity without changing quote identity.
+
+The rejected Beyond Not Novel Enough and PAT append attempts were also exact
+text-boundary failures, not disputes about source meaning; both ingests were
+restored unchanged and routed to their verified snapshots. The epiplexity
+repair exposed target-scope pressure rather than quote-pool pressure: the
+retained passages support the framework, but the note's worked examples are
+local extrapolations and are now labeled that way.

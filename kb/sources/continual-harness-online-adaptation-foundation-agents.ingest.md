@@ -23,7 +23,20 @@ Continual Harness turns an embodied agent's prompt, sub-agents, skill library, a
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** Starting from only a minimal environment interface, the agent alternates between acting and refining its own prompt, sub-agents, skills, and memory, drawing on any past trajectory data. Prompt-optimization methods require episode resets; Continual Harness adapts online within a single run.
+  - **Source location:** Abstract.
+- **Source extract (verbatim):** steps, a Refiner reads the recent trajectory window for failure signatures and emits per-component edits
+  - **Source location:** Section 3.1, Overview and Two-Loop Architecture, immediately after the refinement interval.
+- **Source extract (verbatim):** enters the agent’s context on the next step
+  - **Source location:** Section 3.1, description of the updated harness.
+- **Source extract (verbatim):** receiving CRUD-style operations (create, read, update, delete).
+  - **Source location:** Section 3.1, operations on sub-agents, skills, and memory.
+- **Source extract (verbatim):** conditioned on the identified failures and the trajectory window; (ii) it creates sub-agent entries for repeated multi-step patterns, edits existing entries to address detected failures, and deletes entries that have not been invoked productively; (iii) it codifies skills from successful sequences and repairs executable code that raised exceptions; (iv) it adds memory entries to fill gaps, updates stale entries, and demotes importance for areas the agent has moved past.
+  - **Source location:** Section 3.2, component-specific refinement passes.
+- **Source extract (verbatim):** The right panel is the create-and-forget funnel: most authored skills are never invoked, a small working set absorbs the bulk of calls, and even fewer see success. The refinement loop therefore triages: it repairs the skills the agent depends on, tolerates regressions on unused ones, and accepts a long create-and-forget tail.
+  - **Source location:** Appendix C.1.2, Skill debugging.
+- **Source extract (verbatim):** Memory is leveraged once the library is both mature and inherited (Figure˜18): bootstrap runs, which load a from-scratch memory store at the start, consult it actively inside the gym and cave segments, while from-scratch runs write many entries and rarely reach back for them. The reference rate remains low in absolute terms, which we report honestly; most authored entries sit unused.
+  - **Source location:** Appendix C.1.4, Memory reuse.
 
 ## Connections Found
 

@@ -21,7 +21,7 @@ A discriminating test would hold task information and token budget constant whil
 
 Ugare and Chandra report gains of 5–12 percentage points from semi-formal reasoning templates on code-verification tasks. Yet the same study reports no improvement for the Claude Sonnet model on code QA: 84.8% with the template versus 85.3% without it. These mixed results show that template effects vary across the tested task and model conditions. They establish neither a general performance tendency nor training-distribution selection as the cause of the favorable results.
 
-Lampinen et al. report that chain-of-thought prompting partly reduces content bias in abstract or unfamiliar reasoning conditions without degrading performance in familiar ones. This result shows that a structural intervention can change reasoning behavior, but it does not directly observe activation of a higher-quality training subset or rule out the rival mechanisms. Likewise, the persistence of content effects shows only that scaling and tuning did not eliminate the effect in the tested conditions; it does not establish that structural prompting is permanently necessary.
+Lampinen et al. report that chain-of-thought prompting can partly reduce content bias in some abstract or unfamiliar reasoning conditions. This result shows that a structural intervention can change reasoning behavior, but it does not directly observe activation of a higher-quality training subset or rule out the rival mechanisms. Likewise, the persistence of content effects shows only that scaling and tuning did not eliminate the effect in the tested conditions; it does not establish that structural prompting is permanently necessary.
 
 ## Epiplexity supplies an analogy, not a causal identification
 

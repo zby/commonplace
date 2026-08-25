@@ -56,7 +56,7 @@ Those mechanisms improve coverage, but coverage is not discrimination. An oracle
 
 ### Oracle strength versus target alignment
 
-A check can be reliable and still measure the wrong target. The [Huxley-Gödel Machine](../sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md) finds that immediate benchmark performance can mis-rank an agent's long-run lineage productivity. A maintainability oracle can fail the same way: an exact complexity threshold may be a hard oracle for its metric while remaining a weak oracle for future change cost. Every proposed signal therefore needs two tests:
+A check can be reliable and still measure the wrong target. The [Huxley-Gödel Machine (snapshot required)](../sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md) finds that immediate benchmark performance can mis-rank an agent's long-run lineage productivity. A maintainability oracle can fail the same way: an exact complexity threshold may be a hard oracle for its metric while remaining a weak oracle for future change cost. Every proposed signal therefore needs two tests:
 
 - Does it discriminate its stated observable reliably?
 - Does that observable predict the maintainability target and time horizon we care about?
@@ -125,7 +125,7 @@ This is oracle construction at task scale: the team decides what maintainability
 - Run perspective probes: maintainer, operator, migration author, security reviewer, future feature author.
 - Preserve rejected alternatives and reasons so implementation review can test whether the chosen mechanism survived.
 
-Part II of [Why Software Factories Fail](https://x.com/dexhorthy/status/2081058573556306030) places human judgment at these surfaces. The possible extension is to treat the artifacts as oracle inputs whose predictive value can later be measured, rather than as planning ceremony.
+These surfaces are this note's design proposal. The artifacts can then become oracle inputs whose predictive value is measured later, rather than planning ceremony.
 
 ### During implementation: shorten and instrument the span
 

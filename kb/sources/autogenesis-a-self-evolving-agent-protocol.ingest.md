@@ -23,7 +23,16 @@ Autogenesis Protocol (AGP) separates a Resource Substrate Protocol Layer from a 
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** A binary learnability mask specifies which variables may be modified, allowing the optimizer to target only authorized components while keeping non-learnable resources fixed.
+  - **Source location:** Appendix E.3.4, Evolvable Variables.
+- **Source extract (verbatim):** The specific operator sequence instantiated by each method determines the behavior of the loop. The reflection optimizer instantiates this loop with five operators: Reflect maps execution traces and current state to causal failure hypotheses, Select identifies target evolvable entities and generates concrete modification proposals, Improve applies proposals via RSPL interfaces to yield a candidate state, Evaluate scores the candidate against the objective and safety invariants, and Commit conditionally accepts or rolls back the transition.
+  - **Source location:** Appendix E.3, evolutionary loop overview.
+- **Source extract (verbatim):** Finally, the commit operator $\kappa$ gates the transition by accepting only candidates that satisfy the predefined criteria, recording each accepted change as a versioned resource update with auditable lineage and enabling rollback when necessary.
+  - **Source location:** Appendix E.3.4, The Evolutionary Loop.
+- **Source extract (verbatim):** A version manager maintains immutable snapshots and version lineage, enabling rollback, branching, and auditability at every state transition.
+  - **Source location:** Section 3.1.1, Infrastructure Services.
+- **Source extract (verbatim):** The loop applies a sequence of SEPL operators to reflect, select, improve, evaluate, and commit resource modifications as versioned RSPL transitions with auditable lineage and rollback. As an example instantiation, the reflection optimizer (Algorithm [ 1](https://arxiv.org/html/2604.15034v5#alg1)) reflects on execution traces to derive causal failure hypotheses, generates modification proposals (e.g., prompt text, tool source code, MCP configurations, or skill definitions), and commits accepted updates only after evaluating candidates against the task objective. Successful updates are immediately available to all sub-agents in subsequent bus rounds, ensuring that evolution remains traceable throughout the agent lifetime.
+  - **Source location:** Section 4.1, Self-Evolution.
 
 ## Connections Found
 

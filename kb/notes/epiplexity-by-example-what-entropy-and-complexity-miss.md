@@ -11,6 +11,8 @@ tags: [learning-theory, discovery]
 
 Think of a locked box. Entropy and complexity describe the contents as an object. Epiplexity asks: can *this* observer open the box, and if they can, how much pattern can they recover from what is inside? "Observer" means the full toolkit — intelligence, side information, prior knowledge, keys, decompressors, domain expertise, and time.
 
+The cited paper supplies the bounded-observer definition, a time-bounded minimum-description-length formulation, a prequential-coding heuristic, an ordering effect, and the CSPRNG result. The `AB` calculation and the AES, textbook, compressed-file, and chess cases below are this note's worked extrapolations from that framework. They are not examples or quantitative results reported by Finzi et al.; their conclusions hold only under the toy learners and tool budgets stated here.
+
 ## Four measures
 
 | Measure | How you calculate it | What you must fix first | Depends on practical observer? |
@@ -18,7 +20,7 @@ Think of a locked box. Entropy and complexity describe the contents as an object
 | **Information content** | `−log₂ P(message)` | A probability model over messages | No — once the model is fixed |
 | **Shannon entropy** | Average of `−log₂ P(symbol)` over the source | A probability distribution for the source | No — once the source model is fixed |
 | **Kolmogorov complexity** | Length of the shortest program that outputs the string | A universal programming model / machine | No — once the machine is fixed |
-| **Epiplexity** | Area under a bounded learner's loss curve above final loss | A learner, its tools, and a compute budget | **Yes** |
+| **Epiplexity** | Minimize time-bounded description length; one heuristic estimates it from the area under a bounded learner's loss curve above final loss | A learner, its tools, and a compute budget | **Yes** |
 
 The first three do **not** depend on what Bob or Eve can practically do, once you fix their formal setup (model, source, machine). Epiplexity does. It is a property of the data-observer pair. A message may contain structure in principle but have low epiplexity for an observer who cannot get to it.
 
@@ -41,7 +43,7 @@ Entropy can treat the same sequence as high-entropy or low-entropy depending on 
 
 **Kolmogorov complexity** — the length of the shortest exact generator. Something like `for i in range(8): print("AB")` — call it ~30 bytes of code for a 16-byte string. Scale up to "AB" × 10,000 (20,000 bytes): the program barely grows while the string grows linearly. K captures compressibility — but assumes unlimited search for the shortest program.
 
-**Epiplexity** (via prequential coding — Finzi et al.'s measurement method): fix a bounded learner, feed symbols one at a time, and track prediction loss:
+**A stylized prequential estimate** (using Finzi et al.'s heuristic): fix a bounded learner, feed symbols one at a time, and track prediction loss:
 
 | Symbol | What the learner sees | Prediction loss |
 |---|---|---|
@@ -51,7 +53,7 @@ Entropy can treat the same sequence as high-entropy or low-entropy depending on 
 | 4: B | "ABA" — pattern confirmed | ≈ 0.1 bits |
 | 5–16 | Pattern locked in | ≈ 0 bits each |
 
-Final loss: ≈ 0 bits/symbol. **Epiplexity = area under the loss curve, above the final loss**. In this example that is ≈ `(1-0) + (1-0) + (0.5-0) + (0.1-0) + ... ≈ 2.6 bits`, so **the 2.6 bits is the epiplexity**. That area is the learnable structure this learner extracted by processing the sequence.
+Final loss: ≈ 0 bits/symbol. The heuristic uses the area under the loss curve above the final loss. In this worked example that is ≈ `(1-0) + (1-0) + (0.5-0) + (0.1-0) + ... ≈ 2.6 bits`. The 2.6-bit figure is this note's toy proxy value, not a paper-reported epiplexity result. It represents the structure this stipulated learner extracted while processing the sequence.
 
 The important contrast is a truly random binary sequence. There the loss curve stays flat at about `1, 1, 1, 1, ...` because the learner never gets better. But the **final** loss is also about `1`, so the area above final loss is `(1-1) + (1-1) + ... = 0`. Random data is hard, but not learnable. Epiplexity measures the *drop* in loss from learning structure, not the raw loss itself.
 
@@ -89,7 +91,7 @@ The prequential coding calculation shows this as loss curves:
 
 - **Eve's learner** on the ciphertext: loss stays flat at ~8 bits/byte. Area above final loss ≈ 0. Epiplexity ≈ 0.
 - **Bob's learner**: decrypt first, then predict plaintext. Loss drops from 1 bit to 0 after a few symbols — same curve as the warm-up. Epiplexity ≈ 2.6 bits.
-- **Eve-later's learner**: same bytes, but the learner now includes the key. Same 2.6 bits.
+- **Eve-later's learner**: same bytes, but the learner now includes the key. Under this toy setup, the same 2.6-bit proxy applies.
 
 Neither entropy nor complexity can express "Bob can read it but Eve cannot." Epiplexity can, because the loss curve shape depends on what the observer can compute.
 
@@ -116,10 +118,10 @@ A cryptographically secure pseudorandom number generator (CSPRNG) produces a 1 M
 |---|---|---|
 | Shannon entropy | ~8 bits/byte (maximum) | ~8 bits/byte (maximum) |
 | Kolmogorov complexity | Low if a short seed plus generator specifies it | Lower than the 50 MB source because compression found a shorter description |
-| Epiplexity without tools | **Near zero** — provably no useful structure to extract | **Low** — looks like noise without the decompressor |
+| Epiplexity without tools | **Near zero** under the stated bounded model | **Low** — looks like noise without the decompressor |
 | Epiplexity with seed/decompressor | **Still near zero** — regenerating the bytes does not reveal hidden meaning | **High** — decompression reveals 50 MB of structured data |
 
-Both files look random to statistical tests. The difference: the compressed file rewards the right tool with rich structure; the CSPRNG output has nothing to unpack. Finzi et al. use CSPRNGs as the canonical example of zero-epiplexity data.
+Both files look random to statistical tests. The worked contrast is that the compressed file rewards the right tool with rich structure, whereas regenerating the CSPRNG bytes does not expose an underlying payload. Finzi et al. report negligible epiplexity for CSPRNG output under their bounded-observer result; the compressed-file comparison is local to this note.
 
 ## Example 4: Chess game notation
 
@@ -141,7 +143,7 @@ Same string. Same entropy. Same Kolmogorov complexity. Four levels of extractabl
 | Information content | Surprise of this message under a model | Which model is appropriate; whether the observer can compute it |
 | Shannon entropy | Average surprise per symbol | Structure beyond the assumed model order |
 | Kolmogorov complexity | Best possible compression | Whether anyone can *find* that best program in finite time |
-| Epiplexity | Structure this observer actually extracts | Nothing — observer-dependence is the point |
+| Epiplexity | Structure this observer extracts under the fixed computational setup | Task utility and anything outside the chosen observer and budget |
 
 Entropy measures randomness. Complexity measures shortest description. Neither tells you what a particular observer can *do* with the data. Epiplexity fills that gap: structure that is both present in the data and accessible to the observer within their budget.
 
@@ -152,6 +154,6 @@ This is why the same note in a KB can have different value for different readers
 Relevant Notes:
 
 - [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: epiplexity formalizes the observer-dependence of information value; this note provides concrete examples for that formalization
-- [Epiplexity paper](../sources/from-entropy-to-epiplexity-rethinking-information-computational.ingest.md) — source: Finzi et al. define epiplexity and prove CSPRNGs have zero epiplexity for bounded observers
+- [Epiplexity paper](../sources/from-entropy-to-epiplexity-rethinking-information-computational.ingest.md) — source: supplies the bounded-observer definition, time-bounded formulation, prequential heuristic, ordering effect, and negligible-CSPRNG result used above; the worked examples are local extrapolations
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — extends: identical tokens can differ in usable structure depending on observer and arrangement
 - [reverse-compression](./reverse-compression-is-when-llm-output-expands-without-adding.md) — extends: output that grows without raising extractable structure

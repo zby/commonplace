@@ -23,7 +23,18 @@ Self-Harness asks whether the model being improved can also propose changes to i
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** Self-Harness studies a middle ground in which a fixed model iteratively improves the harness around itself through an explicit self-improvement loop driven by execution evidence. In each iteration, the evaluation system runs the current harness and mines recurring failure patterns from clustered execution traces to produce structured evidence. Given this evidence, the same model is invoked in a proposer role to generate a set of diverse yet minimal candidate harness modifications, each targeting a specific failure mechanism without replacing the overall control architecture. Candidate edits are then validated through regression testing on held-out tasks, and an explicit acceptance rule promotes only those edits that improve performance without introducing unacceptable regressions.
+  - **Source location:** Section 3, opening description of the Self-Harness loop.
+- **Source extract (verbatim):** Self-Harness uses parallel proposal generation to explore several candidate improvements from the same evidence.
+  - **Source location:** Section 3.3, Harness Proposal.
+- **Source extract (verbatim):** A candidate is accepted only if it improves at least one split without degrading the other:
+  - **Source location:** Section 3.4, Proposal Validation.
+- **Source extract (verbatim):** We fix the evaluated task set and partition it into a held-in split and a held-out split before running Self-Harness. The held-in split supplies the trajectories, verifier outcomes, and failure evidence exposed to the proposer, while the held-out split is never shown to the proposer and is used only by the automatic promotion gate. A candidate harness is promoted with the acceptance rule defined in Section 3.4. Task split assignments are fixed across harness variants, and each task starts from a fresh benchmark environment.
+  - **Source location:** Section 4.1, Splits and protocol.
+- **Source extract (verbatim):** If multiple compatible candidates satisfy the rule in the same round, their edits are merged into the next harness; rejected candidates remain logged but do not change the active harness.
+  - **Source location:** Section 3.4, Proposal Validation.
+- **Source extract (verbatim):** Figures 5 and 6 summarize both the evolution trajectory and the retained code-level edits for MiniMax M2.5 and Qwen3.5, with the corresponding GLM-5 run shown in Appendix Figure 10. In each figure, the evolution plot distinguishes accepted candidates from rejected proposals, while the code diff records the harness interfaces retained in the final promoted variant. Across models, Self-Harness reaches the final harness through a small number of validation-gated edits rather than through a smooth sequence of uniformly successful proposals.
+  - **Source location:** Section 4.3, Harness evolution and retained edits.
 
 ## Connections Found
 

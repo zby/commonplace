@@ -23,7 +23,22 @@ The paper proposes turning each accepted, generalizable code-review comment into
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** 1. The agent generates or modifies code in response to a task. 2. The agent executes its self-review checklist before presenting the code. 3. A human reviewer examines the code and provides feedback. 4. For each accepted comment that identifies a generalizable class of mistake (not a one-off typo), a new rule is added to the instruction file. 5. The updated instruction file is loaded in all subsequent sessions, preventing recurrence.
+  - **Source location:** Section II-C, Feedback-to-Rule Loop.
+- **Source extract (verbatim):** Who decides whether a comment represents a class of mistake versus a one-off issue? The engineer who receives the review feedback makes this judgment. The heuristic is: “Would this mistake plausibly recur in a different context?” If yes, it becomes a rule.
+  - **Source location:** Section II-D, Rule Lifecycle and Governance.
+- **Source extract (verbatim):** Deployment context: A microservices platform with 35+ services, 13 custom agent definitions, 10 operational skills, and 6 shared knowledge documents. Two agent interfaces consumed the same shared instruction file.
+  - **Source location:** Section IV-A, Experimental Setup.
+- **Source extract (verbatim):** Second, accumulated rules suppress the recurrence of previously-corrected error classes within the observation window. Across 9 tracked error classes and 74 cumulative post-rule session exposures, no recurrences were observed. We deliberately frame this as an observational result: it establishes that the suppression effect is large enough to be visible inside a four-week deployment without a controlled baseline, but it is not equivalent to a statistical guarantee.
+  - **Source location:** Section V-A, Summary of Findings.
+- **Source extract (verbatim):** Lack of controlled baseline or ablation: We do not have a parallel control group, and we did not run a paired ablation comparing the framework against static prompt engineering or a no-rule baseline on the same task stream. The suppression and review-shift results should therefore be read as initial empirical evidence, not as a causal proof.
+  - **Source location:** Section VIII, Limitations and Threats to Validity.
+- **Source extract (verbatim):** The critical property is that the file is append-friendly and monotonically growing. Rules are added and occasionally refined but rarely removed, accumulating the team’s collective engineering judgment over time.
+  - **Source location:** Section II-A, The Structured Instruction File.
+- **Source extract (verbatim):** When is an existing rule refined instead of adding a new rule? When a new review comment reveals that an existing rule is too broad or too narrow, the existing rule is updated in place. The rule ID is preserved; the constraint text is sharpened.
+  - **Source location:** Section II-D, Rule Lifecycle and Governance.
+- **Source extract (verbatim):** 1. Monotonic growth: Rules are added and refined but not removed, echoing the continuous improvement principle in DevOps practice [9].
+  - **Source location:** Section VII, Design Principles.
 
 ## Connections Found
 

@@ -23,7 +23,30 @@ The Darwin Gödel Machine evolves coding-agent implementations around frozen fou
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** Parent selection is roughly proportional to each agent’s performance score and inversely proportional to the number of its children with codebase-editing functionality (Appendix C.2). This favors high-performing agents that have been underexplored (i.e., have fewer existing children), thereby promoting both exploitation of strong performers and exploration of promising but less-sampled lineages.
+  - **Source location:** Section 3, Population-based Open-ended Exploration.
+- **Source extract (verbatim):** In every iteration, an agent is chosen to self-modify. For this step, the current implementation of DGM leverages a separate FM to diagnose improvement opportunities, which are then passed to the coding agent for implementation. To identify the next potential improvement, the evaluation logs from the chosen agent’s performance on the coding benchmark are fed into the FM.
+  - **Source location:** Appendix C.3, Self-Improve Prompts.
+- **Source extract (verbatim):** We chose to use OpenAI’s o1 model (Team et al., 2024) for this purpose, as we found it had better reasoning capabilities than other FMs available at the time of our experiments. The prompts used for this diagnosis are provided below. From the diagnostic output, the implementation_suggestion and problem_description are extracted and passed to the coding agent as its self-modification task.
+  - **Source location:** Appendix C.3, Self-Improve Prompts.
+- **Source extract (verbatim):** Each newly generated agent is quantitatively evaluated on a chosen coding benchmark to estimate its coding abilities. Only agents that compile successfully and retain the ability to edit a given codebase are added to the DGM archive, as only they can continue self-modification. All others are discarded.
+  - **Source location:** Section 3, Population-based Open-ended Exploration.
+- **Source extract (verbatim):** Because open-ended exploration allows branching from any agent in the archive with non-zero probability, the DGM can get out of deceptive dips or peaks in performance. For example, at iterations 4 and 56 of the experiment on SWE-bench, although the agent’s score temporarily fell below that of its parent, the DGM was still able to explore innovations along that path and create a new agent that outperformed all of its predecessors (Figure 3).
+  - **Source location:** Section 4.4, Results.
+- **Source extract (verbatim):** builds an archive of all discovered agents.
+  - **Source location:** Section 3, Population-based Open-ended Exploration; sentence describing the archive after initialization from one agent.
+- **Source extract (verbatim):** Importantly, we note that archived solutions can serve as stepping stones that result in improvements much later than their original discovery, making our approach substantially different from hill-climbing agentic design approaches (Robeyns et al., 2025).
+  - **Source location:** Section 3, Population-based Open-ended Exploration.
+- **Source extract (verbatim):** DGM Greedy always selects the best-performing node as the parent to branch from, rather than giving every node a non-zero probability of being branched off (roughly proportional to their performance score and number of children) as in this implementation of the DGM (Appendix C.2). This ablation replicates the approach of Robeyns et al. (2025) in this setting. As shown in Table 1, DGM Greedy achieves 39.7% and 30.0% on SWE-bench and Polyglot, respectively, compared to 50.0% and 38.0% by this implementation of DGM.
+  - **Source location:** Appendix A.3, Ablation of Parent Selection.
+- **Source extract (verbatim):** We found that objective hacking (i.e., optimizing for the measurable objective instead of truly solving the underlying problem) occurs more frequently when these functions are not hidden.
+  - **Source location:** Appendix H, Solve hallucination score.
+- **Source extract (verbatim):** In this version of the DGM, the open-ended exploration process described in Section 3 is kept fixed, which might hence impede the system’s self-acceleration potential. This design choice was made due to limited computational budget. If we were to evolve this part of the algorithm, it could require exponentially more compute to identify processes that yield the same improvements shown in Section 4.4.
+  - **Source location:** Appendix J, Autonomously Improving the Open-ended Exploration Process.
+- **Source extract (verbatim):** A Gödel Machine is a theoretical idea of an AI that searches for ways that provably improve itself (Schmidhuber, 2007). In this paper, we propose Darwin Gödel Machine (DGM), an attempt to realize the long-held dream of creating a Gödel Machine. The DGM relaxes the Gödel Machine’s impractical requirement of theoretically proving that a change will improve the system, instead requiring empirical evidence from experiments to demonstrate that a proposed new version enhances performance.
+  - **Source location:** Section 3, opening comparison with the Gödel Machine.
+- **Source extract (verbatim):** Instead of requiring formal proofs, we empirically validate self-modifications against a benchmark, allowing the system to improve and explore based on observed results.
+  - **Source location:** Introduction, motivation for DGM.
 
 ## Connections Found
 

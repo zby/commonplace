@@ -28,6 +28,12 @@ Lampinen et al. systematically test whether large language models exhibit the sa
   - **Source location:** “Content effects in humans and language models,” primary-results summary; list whitespace normalized.
 - **Source extract (verbatim):** For each task, the model is presented with brief instructions approximating the human instructions, then the question ending with "Answer:", and model scoring uses the DC-PMI correction (change in likelihood of each answer relative to a baseline context) to reduce sensitivity to answer phrasing.
   - **Source location:** Methods summary, “Models & evaluation.”
+- **Source extract (verbatim):** We also find that chain-of-thought techniques (loosely giving the models time to "think") can improve the performance of strong models on the Arbitrary and Nonsense conditions of the Wason task.
+  - **Source location:** Results, The Wason selection task.
+- **Source extract (verbatim):** Chain-of-thought prompting can, in some cases, push large models to rely more on logical strategies, thereby reducing content effects through improving performance on less familiar or conflicting situations—particularly if those examples demonstrate precisely the type of reasoning that's required.
+  - **Source location:** Results, Chain-of-thought can sometimes push large models to rely more on logic.
+- **Source extract (verbatim):** We generally find similar content effects across the various models we evaluate. Larger models tend to be more accurate overall. Instruction-tuned models (Flan-PaLM 2 and GPT-3.5) do not show consistent differences in overall accuracy or content effects compared to base language models. We also tested several newer Gemini models and observed similar effects, showing that these phenomena still hold with more recent models.
+  - **Source location:** Results, Variability across different language models.
 
 ## Connections Found
 

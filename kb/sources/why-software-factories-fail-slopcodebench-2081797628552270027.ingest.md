@@ -26,7 +26,18 @@ Horthy evaluates Opus 5, Opus 4.8, and Sonnet 5 on three SlopCodeBench problems 
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** However, each challenge in SlopCodeBench has multiple "checkpoints" - the model doesn't know the whole problem up front, it has to evolve the codebase over time as new requirements are divulged.
+  - **Source location:** Opening discussion of SlopCodeBench.
+- **Source extract (verbatim):** i had claude pick out 3 problems from the repo, 17 checkpoints total, a mix of easy/medium/hard labeled problems: circuit_eval — easy (8 checkpoints) database_migration — medium (5 checkpoints) dynamic_config_service_api — hard (4 checkpoints)
+  - **Source location:** The benchmark subset.
+- **Source extract (verbatim):** and then I ran them across all three models, in parallel, with a fresh context window per checkpoint. All models got the same prompts and ran in the claude code harness.
+  - **Source location:** The benchmark subset.
+- **Source extract (verbatim):** the metric I decided I care about is the strict pass: everything new is green including every regression test that was inherited from previous checkpoints. A model fails a checkpoint if the solution has a defect - defects are detected by taking the models output, a CLI to run or in some cases e.g. an api server to poke at, and running a set of held-out black-box tests against the produced entrypoint.
+  - **Source location:** The benchmark subset.
+- **Source extract (verbatim):** For all 9 test runs, none of the models made it to the end of any challenge with everything passing, even on the problem marked as "easy" difficulty.
+  - **Source location:** The benchmark subset, run result.
+- **Source extract (verbatim):** I like that these measures are repeatable and don't use a model for judgement. But the link between any one of them and "is this codebase easy to change and evolve" is not yet established.
+  - **Source location:** The slop meter.
 
 ## Connections Found
 

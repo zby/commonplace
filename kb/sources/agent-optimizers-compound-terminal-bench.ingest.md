@@ -23,7 +23,14 @@ The paper asks whether a harness optimizer can preserve first-round gains, trans
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** We refer to this as the compounding question: after an agent has been optimized once by a given method, can that method be applied again, on a task stream that has since expanded to include new tasks, without unwinding the gains the first round of optimization produced? An optimizer that compounds should (i) produce updates from the first round that generalize at least somewhat to tasks it did not see during search, and (ii) continue to make progress in a second round of optimization without regressing on tasks it had already solved.
+  - **Source location:** Section 1.2, The Compounding Question.
+- **Source extract (verbatim):** In Phase 1, each optimizer is given a fixed rollout budget to optimize a common baseline agent on an initial task set $\mathcal{T}_{1}$. We then evaluate the Phase-1-optimized agent both on $\mathcal{T}_{1}$ (the conventional static setting) and, without any further optimization, on an expanded task union $\mathcal{T}_{1}\cup\mathcal{T}_{2}$ that includes a newly introduced task set $\mathcal{T}_{2}$ (a transfer setting). In Phase 2, each method receives an additional rollout budget, starting from its own Phase-1-optimized agent, to optimize on the combined task set $\mathcal{T}_{1}\cup\mathcal{T}_{2}$, and we evaluate the resulting agent on the full union.
+  - **Source location:** Section 1.3, Preview of Protocol and Findings.
+- **Source extract (verbatim):** Agent Phase 1 Phase 2 Lifelong Avg. Transfer Re-opt. Baseline 62.5% 56.8% 56.8% 58.7% GEPA 70.8% 54.5% 72.7% 66.0% Meta Harness 66.6% 68.2% 59.1% 64.6% RELAI-VCL 79.2% 72.7% 77.3% 76.4% Table 1: RELAI-VCL leads at every stage of the phased evaluation: the strongest static Phase 1 result, the only positive transfer to unseen tasks, continued gains after Phase 2 re-optimization, and the highest lifelong average pass rate. GEPA transfers below baseline (overfitting to Phase 1) and Meta Harness stalls under re-optimization.
+  - **Source location:** Table 1, phased evaluation summary.
+- **Source extract (verbatim):** In Phase 1, each optimizer receives 200 rollouts to optimize the agent harness against the 12 Phase 1 tasks. In Phase 2, each method receives another 200 rollouts starting from its Phase 1-optimized agent and optimizing on the combined Phase 1 and Phase 2 task set. The budget is identical across methods to keep the comparison controlled.
+  - **Source location:** Section 5.2, Optimization Budget.
 
 ## Connections Found
 
