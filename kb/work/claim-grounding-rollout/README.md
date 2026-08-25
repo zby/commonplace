@@ -203,6 +203,13 @@ permanent second review system.
 
 ## Files
 
+- [The grounding-alignment link budget miscounts](./grounding-alignment-link-budget.md)
+  — found running the first `(snapshot required)` review: the gate caps link
+  *occurrences* where it means distinct artifacts loaded, 76% of linked notes
+  repeat a target, and the cap's number and ingest applicability are both
+  unexamined. Not fixed; batched because the edit stales 775 pairs
+
+
 - [Historical procedure](./procedure.md) — source-blind freeze rationale and
   the superseded Claims-era execution record; not the authority for current
   grounding mechanics
