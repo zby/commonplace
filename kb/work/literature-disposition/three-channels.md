@@ -5,6 +5,11 @@ is** rather than by which note it came from. The three channels have different
 owners, different risk, and different blockers, and mixing them is what makes a
 corpus cleanup stall.
 
+**Refreshed 2026-08-25.** Rows describing the original sweep remain historical.
+The operative grounding machinery below now follows ADR 073's direct
+Quotes/snapshot protocol, and the rollout's literature handoffs have been added
+as intake rather than counted as artifact dispositions.
+
 - **Migration** — make the route from a claim to its source navigable and its
   wording checkable. Additive, low risk, batchable. Owner: this workshop.
 - **Claims** — content discovered to be untrue, unscoped, or unsupported.
@@ -32,11 +37,11 @@ route.
 
 | Artifact | Finding or remaining work | Status |
 |---|---|---|
-| `agents-navigate-by-deciding-what-to-read-next` | Pirolli Claims linked; inherited claims narrowed; transfer boundary stated | Done 2026-08-24 [v] |
-| `linking-theory` | Same Pirolli route added; unsupported pointer-context monotone removed | Done 2026-08-24 [v] |
+| `agents-navigate-by-deciding-what-to-read-next` | Pirolli source route linked; inherited claims narrowed; transfer boundary stated. The original grounding ran under the retired normalized-Claims protocol | Done 2026-08-24 [v] |
+| `linking-theory` | Same Pirolli route added; unsupported pointer-context monotone removed. The original grounding ran under the retired normalized-Claims protocol | Done 2026-08-24 [v] |
 | `index-completeness-does-not-determine-editorial-orientation` | Needs LIS pathfinders / annotated bibliographies / PKM MOC. **Attribution already exists one hop away** in `an-enforced-tag-readme`, which links back here — may be a move, not an invention | Open [v] |
 | `an-enforced-tag-readme...` | "Luhmann" and "Nick Milo's LYT" named with no dated work, no URL, no ingest | Open [v] |
-| `knowledge-storage-does-not-imply-contextual-activation` | Five LLM-side ingests cited; **nothing** for the cognitive-psychology tradition establishing C1/C2 | Open [r] |
+| `knowledge-storage-does-not-imply-contextual-activation` | Six tracked LLM-side ingests cited. Gao and Chen add bounded evidence about explicit documentation consultation versus behavioral uptake, but no primary cognitive source for C1/C2; the 2026-08-25 edit requires current grounding freshness to be checked | Open [v] |
 | `stale-indexes-reduce-discovery...` | Zero external references and no `Relevant Notes` tail at all | Open [r] |
 | `addressability-grain...` | Zero external references | Open [r] |
 | `pointer-design-tradeoffs...`, `link-following-and-search...`, `design-for-the-first-time-human...`, `charting-...-beyond-rag` | Zero external citations for claims placed in outside traditions | Open [r] |
@@ -64,6 +69,19 @@ sources to capture. The needed corpus is not the navigation corpus originally
 proposed; see [claim-inventory](./claim-inventory.md). The two rows supported by
 the live Pirolli ingest are complete and establish that the V1 grounding path
 works.
+
+### 1e. Rollout literature-handoff intake
+
+**Open [v].** The completed claim-grounding rollout handed off sixteen claim
+uses across ten notes. Seven uses now have a matching tracked ingest, while nine
+still lack a direct source route or stable evidence artifact. Only
+`knowledge-storage-does-not-imply-contextual-activation` belongs to this
+workshop's starting cohort. The other nine notes need an explicit
+cohort-membership decision before they become disposition work. Source
+acquisition, route migration, target re-evaluation, and final artifact
+disposition remain separate steps; none of the sixteen handoffs is itself a
+keep, merge, thin, or retire decision. The detailed triage is in the [workshop
+README](./README.md#received-claim-grounding-rollout-handoffs).
 
 ---
 
@@ -97,7 +115,8 @@ with interaction cost. The [propagation sweep](./c4-propagation-sweep.md) found
 one inheritor and zero operative reach. The claim-pull rollout removed the
 monotone from `agents-navigate-...` and `linking-theory`, promoted uncertainty
 reduction per unit of context, added the Pirolli source route, and passed both
-source review pairs. The first note's artifact-level disposition remains open.
+then-operative source review pairs. The first note's artifact-level disposition
+remains open.
 
 **2d. `pointer-design-tradeoffs...` conflates availability with accuracy.** [r]
 Table 1 scores fixed pointers "Highest — always present, deterministic"; Table 2
@@ -147,28 +166,38 @@ tidily remove.** Two defects are repaired; the remaining operative item is 2b.
 
 ### Landed
 
-**3a. Claim-pull and source review. Done 2026-08-24 [v].**
+**3a. Direct source grounding and standard review. Done 2026-08-25 [v].**
 [ADR 073](../../reference/adr/073-untracked-source-snapshots-require-ingest-grounding.md)
-made the prospective rule operative. The two promoted writing skills stop on an
-explicit new or materially changed source dependency whose ingest lacks the
-needed claim. The grounding procedure appends one bounded Claims entry, and a
-retry can then use it. Link-derived source review pairs compare each artifact use
-against the complete tracked ingest.
+requires the promoted writing skills to identify the exact target claim or
+paragraph for every explicit new or materially changed source dependency. The
+writer then applies the standard `semantic/grounding-alignment` gate directly
+against one of the two routes below. Insufficient direct support is a stop, not
+a new source-specific review-pair type.
 
-**3b. Claim-level retention under ignored snapshots. V1 decided 2026-08-24
-[v].** The earlier measurement returned 0 match, 0 mismatch, and 12 unresolved
-quote candidates over 1257 tracked files because primary snapshot bodies are
-ignored. ADR 073 does not pretend to make those bodies present. It instead
-requires grounding against the name-paired, checksum-verified local snapshot and
-retains the bounded claim, extracts, locations, scope, confidence, and limitation
-in the tracked ingest. Later source review checks the target against that record.
-This removes the V1 blocker on Channel 1, while leaving a weaker guarantee than
-standing re-verification of the ingest against primary bytes in a fresh clone.
+**3b. Two explicit source routes under ignored snapshots. V1 decided 2026-08-25
+[v].** A normal ingest link declares that its tracked `## Quotes` section is
+sufficient for the cited use. A link marked `(snapshot required)` declares that
+sound checking needs the exact name-paired local snapshot; the writer verifies
+its canonical source and exact-byte SHA-256 before using it. A missing or
+mismatched required snapshot fails closed. This removes the machinery blocker on
+Channel 1 without pretending that ignored primary bodies are present in a fresh
+clone.
 
-**3c. Claims ledger. Done 2026-08-24 [v].** `## Claims` is now required by the
-ingest contract and schema. The rollout added the section structurally to the
-existing corpus. Populating honest entries remains demand-driven semantic work;
-transfer stays in the target because it is specific to that use.
+**3c. No normalized claim or quote identity in V1. Decided 2026-08-25 [v].**
+The old `## Claims` ledger, virtual source lens, link-derived artifact-to-ingest
+pairs, and source-specific freshness behavior are retired. The rollout recorded
+205 uses under that historical protocol and 59 under the direct Quotes/snapshot
+protocol. It found no semantic reconciliation or reuse pressure that earned
+stable identifiers for normalized claims or retained quotes. Quotes remain
+append-only exact passages; target-specific transfer reasoning remains in the
+target.
+
+**Freshness note, 2026-08-25 [v].** At its certification freeze, the rollout had
+a fresh standard grounding result for all 68 target notes: 34 PASS, 10 WARN, and
+24 FAIL. That is a dated coverage result, not standing assurance. Later edits,
+including the activation-note revision, require current freshness checks and
+may require new reviews. Neither a fresh result nor its outcome settles an
+artifact disposition.
 
 ### Still open
 
@@ -226,14 +255,17 @@ form without the eighth move propagates the problem in more convincing packaging
 1. **Continue with Channel 2's unblocked five.** Re-check 2b before changing it
    because ADR 026 rests on it, then repair 2d, 2e, 2f, and 2i. These need no
    source-corpus decision.
-2. **Select the wider corpus from the claim inventory.** Source-grounding owns
-   the selection; the V1 Claims and review path is ready to carry each result.
-3. **Run the remaining migrations and source-dependent claim judgments** in
+2. **Triage the received literature handoffs.** Separate the seven uses that now
+   have matching tracked ingests from the nine that still lack a direct route,
+   and decide whether the nine out-of-cohort notes belong here.
+3. **Select the wider corpus from the claim inventory.** Source-grounding owns
+   the selection; the V1 Quotes/snapshot path is ready to carry each result.
+4. **Run the remaining migrations and source-dependent claim judgments** in
    small source-coherent batches.
-4. **Record dated artifact dispositions and execute one end to end.** A claim
+5. **Record dated artifact dispositions and execute one end to end.** A claim
    correction does not substitute for the first keep, merge, thin, or retire
    decision with all required rewiring.
-5. **Close the two general questions.** Promote a disposition rule or record
+6. **Close the two general questions.** Promote a disposition rule or record
    that judgment remains per-note, and decide the unresolved prior-art check.
 
 Bulk migration still should not precede source selection. The machinery is no

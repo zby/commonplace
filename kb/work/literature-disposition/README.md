@@ -10,28 +10,39 @@ there a general rule, or only per-note judgments?
 The upstream half — which sources are authoritative, what an ingest must
 extract, and whether the graph needs a thin claim node at all — belongs to
 [source-grounding](../source-grounding/README.md). This workshop owns what
-happens to the notes.
+happens to the notes. The sibling workshop still owns corpus selection, but its
+machinery account predates the current direct Quotes/snapshot protocol; use
+[ADR 073](../../reference/adr/073-untracked-source-snapshots-require-ingest-grounding.md)
+for the operative grounding path.
 
-## Current status — 2026-08-24
+## Current status — 2026-08-25
 
 **Open.** The starting cohort has twelve candidates. The first was inventoried
 and checked against an actual source in the worked case; the other eleven have
 claim inventories and candidate reading assignments. No candidate yet has a
-final dated disposition.
+final dated artifact disposition. The claim-grounding rollout has since produced
+264 terminal claim-use dispositions and sixteen `literature handoff`s across ten
+notes. Those handoffs are intake for source acquisition or target re-evaluation;
+they are not keep, merge, thin, or retire decisions, and only one of their notes
+belongs to the starting cohort.
 
 | Closure condition | State | What remains |
 |---|---|---|
-| Source-grounded disposition for every settled cohort member | Open | Settle cohort membership, capture the claim-selected corpus, and adjudicate the eleven unworked candidates. The worked candidate's final artifact disposition is also open. |
+| Source-grounded disposition for every settled cohort member | Open | Settle cohort membership, triage the sixteen rollout handoffs, capture the remaining claim-selected sources, and adjudicate the eleven unworked candidates. The worked candidate's final artifact disposition is also open. |
 | One disposition executed end to end | Open | The first case produced and executed a claim correction, not a final keep, merge, thin, or retire decision. |
 | General disposition rule | Open | The evidence supports claim-level, source-grounded judgment, but no rule or no-general-rule finding has been promoted. |
 | Write-time check decision | Partial | ADR 073 guards explicit new or changed source dependencies. It cannot discover unattributed prior art, which is the check this closure condition still needs decided. |
 
-The claim-side repair and source-grounding machinery no longer block progress.
-The operative `index-curation` claim has been scoped without destabilizing its
-dependent ADRs. The next unblocked work in
+The direct source-grounding machinery no longer blocks progress. Evidence
+selection and artifact judgment do. The operative `index-curation` claim has
+been scoped without destabilizing its dependent ADRs. The next unblocked work in
 [Channel 2](./three-channels.md#channel-2--claims-to-change) is to re-check
 `stale-indexes` before deciding whether to change it. Most final dispositions
-still wait on the wider source corpus.
+still wait on the wider source corpus. The rollout's all-68-fresh statement is a
+dated certification result, not standing assurance: post-certification note
+edits, including the 2026-08-25 activation-note revision, require current
+freshness checks and sometimes new reviews. Neither freshness nor a gate outcome
+is an artifact disposition.
 
 ## The parallel worth exploiting, and where it breaks
 
@@ -70,24 +81,30 @@ thing most likely to be lost by a disposition that only counts overlap.
 ## What is already settled
 
 **The literature was not ingested at workshop opening.** Measured 2026-08-24:
-no source ingest in
-`kb/sources/` covered information foraging, scent, berrypicking, exploratory
-search, orienteering, faceted classification, or generated navigation, so the
-cluster's claims were written from recalled background. One ingest has since
-landed (`pirolli-proximal-information-scent-distal-content`); the rest of the
-gap stands. The [claim inventory](./claim-inventory.md) found that the corpus
-needed is wider than this list, and the sibling workshop has not yet decided it.
+no source ingest in `kb/sources/` covered information foraging, scent,
+berrypicking, exploratory search, orienteering, faceted classification, or
+generated navigation, so the cluster's claims were written from recalled
+background. Pirolli has since supplied the first worked source route. The
+broader corpus now contains tracked ingests matching several traditions surfaced
+by the rollout handoffs, but coverage is uneven and the claim-selected corpus
+remains undecided. In particular, no primary capture currently supplies the
+availability/accessibility or spontaneous-transfer literature assigned to the
+activation note. The [claim inventory](./claim-inventory.md) found that the
+corpus needed is wider than the opening navigation list.
 [`links-README.md`](../../notes/links-README.md) says so in its own words:
 "**TODO:** This survey is from the agent's training data, not systematic."
 
 **Prospective source grounding is operative; prior-art discovery is not.**
 [ADR 073](../../reference/adr/073-untracked-source-snapshots-require-ingest-grounding.md)
-adds immutable Claims entries to tracked ingests, a guard in the two promoted
-writing skills for explicit new or materially changed source dependencies, and
-source review pairs over artifact-to-ingest uses. That machinery starts only
-when the candidate already names the dependency. It does not ask whether an
-uncited claim is established elsewhere. Every novelty and economy test remains
-KB-internal. The novelty battery in
+retains bounded exact source passages in an ingest's `## Quotes` section and
+marks a source link `(snapshot required)` when sound checking needs the full
+name-paired, checksum-verified snapshot. The promoted writers apply the standard
+`semantic/grounding-alignment` gate directly to one of those two routes for every
+explicit new or materially changed source dependency. The retired normalized
+`## Claims` ledger, source-specific review lens, and artifact-to-ingest pair type
+are historical only. This machinery starts only when the candidate already
+names the dependency; it does not ask whether an uncited claim is established
+elsewhere. Every novelty and economy test remains KB-internal. The novelty battery in
 [`evaluate-log-entry-for-note-creation.md`](../../instructions/evaluate-log-entry-for-note-creation.md)
 compares a candidate against existing *Commonplace* notes. `cp-skill-write`'s
 duplicate guard is a targeted `rg` in the target collection. The attribution
@@ -139,31 +156,31 @@ pure pointer. Both cut against reflexive thinning.
 
 ## Starting cohort
 
-The notes the critique names, with library inbound-reference counts measured
-2026-08-24 by `rg -l "<slug>.md"` across `notes reference instructions types
+The notes the critique names, with library inbound-reference counts re-measured
+2026-08-25 by `rg -l "<slug>.md"` across `notes reference instructions types
 agent-memory-systems agentic-systems articles sources`. Counts are a rewiring
 cost estimate, not a disposition signal.
 
 | Note | Tags | Inbound |
 |---|---|---|
-| `agents-navigate-by-deciding-what-to-read-next` | links | 19 |
+| `agents-navigate-by-deciding-what-to-read-next` | links | 20 |
 | `stale-indexes-reduce-discovery-when-they-suppress-fallback-search` | kb-maintenance | 26 |
-| `human-llm-differences-are-load-bearing-for-knowledge-system-design` | document-system | 13 |
+| `human-llm-differences-are-load-bearing-for-knowledge-system-design` | document-system | 15 |
 | `design-for-the-first-time-human-except-on-access-cost` | document-system, context-engineering | 10 |
-| `link-following-and-search-impose-different-metadata-requirements` | links | 7 |
-| `a-knowledge-base-should-support-fluid-resolution-switching` | foundations | 7 |
-| `pointer-design-tradeoffs-in-progressive-disclosure` | links, computational-model | 7 |
-| `index-curation-adds-orientation-that-generation-cannot-produce` | kb-maintenance | 6 |
-| `charting-the-knowledge-access-problem-beyond-rag` | foundations | 5 |
-| `addressability-grain-sets-a-matched-selective-read-floor` | document-system, context-engineering | 4 |
+| `link-following-and-search-impose-different-metadata-requirements` | links | 8 |
+| `a-knowledge-base-should-support-fluid-resolution-switching` | foundations | 8 |
+| `pointer-design-tradeoffs-in-progressive-disclosure` | links, computational-model | 8 |
+| `index-completeness-does-not-determine-editorial-orientation` | kb-maintenance | 6 |
+| `charting-the-knowledge-access-problem-beyond-rag` | foundations | 6 |
+| `addressability-grain-sets-a-matched-selective-read-floor` | document-system, context-engineering | 5 |
 | `an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract` | kb-maintenance, document-system | 3 |
-| `knowledge-storage-does-not-imply-contextual-activation` | llm-reliability, failure-modes, evaluation | 217 |
+| `knowledge-storage-does-not-imply-contextual-activation` | llm-reliability, failure-modes, evaluation | 218 |
 
-Two things the table already shows. The last row is 163 citations from
-`kb/agent-memory-systems/` reviews alone — that note is infrastructure for a
-whole collection, and any disposition touching it is a different scale of
-change. And the cohort spans five tags, so a tag-README restructure is not one
-README.
+Two things the table already shows. The last row includes 158 citations from
+`kb/agent-memory-systems/reviews/` and five more from that collection's other
+artifacts — the note is infrastructure for a whole collection, and any
+disposition touching it is a different scale of change. And the cohort spans
+five tags, so a tag-README restructure is not one README.
 
 Membership is a finding to re-test, not a fixed list. The cohort was assembled
 by an outside reader from note titles; notes elsewhere in the KB may have the
@@ -230,6 +247,58 @@ training data" TODOs inside this tradition — `links-README.md`,
 `information-value-is-observer-relative.md`. They are one batch, not three, and
 only the first is in the current cohort.
 
+## Received: bounded agent-documentation evidence
+
+Gao and Chen's [coding-agent documentation trace
+study](../../sources/from-agent-behaviour-to-agent-friendly-documentation.ingest.md)
+now appears in
+[`knowledge-storage-does-not-imply-contextual-activation`](../../notes/knowledge-storage-does-not-imply-contextual-activation.md).
+It supplies a bounded ordinary-workflow case where explicit consultation cannot
+stand in for behavioral uptake: immediate testing and building were less
+frequent, code-edit coupling remained unresolved across analyses, and the short
+event horizon cannot exclude longer influence. The note uses that result as an
+exposure/uptake distinction, not as a causal activation-failure rate.
+
+The paper also motivates self-contained locally retrievable documentation and
+executable forms such as runnable examples, doctests, and schema contracts. It
+explicitly presents the executable-documentation proposal as an intervention
+hypothesis, not a tested technique. This adds no new disposition rule and does
+not discharge the starting cohort's KSA-1 handoff to the primary cognitive
+literature on availability/accessibility and spontaneous transfer. Its
+agent-facing-documentation result is also a bounded empirical anchor for the
+dual-audience discussion in `human-llm-differences`; it does not move that note
+back into the information-foraging cohort or settle its artifact disposition.
+
+## Received: claim-grounding rollout handoffs
+
+The retrospective rollout recorded 264 terminal claim-use dispositions: 205
+under the retired normalized-Claims protocol and 59 under the current
+Quotes/snapshot protocol. Sixteen uses across ten notes ended as `literature
+handoff`. A handoff says the owned source set could not settle that use; it does
+not by itself add the note to this workshop's settled cohort or choose an
+artifact disposition.
+
+Current triage distinguishes missing sources from matching ingests available
+outside the handoff's original owned source set:
+
+| Target | Uses | Current source state | Literature-disposition implication |
+|---|---:|---|---|
+| `knowledge-storage-does-not-imply-contextual-activation` | 1 | Primary Tulving/Pearlstone and Gick/Holyoak captures remain absent; Gao–Chen does not answer that source-side question | Starting-cohort handoff remains open |
+| `rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence` | 1 | Owned sources establish within-execution state but not post-return disposal | Find an implementation-specific lifecycle source before reconsidering the removed claim |
+| `llm-generation-relaxes-goals-where-human-writing-stalls` | 1 | Borretti reproduces and attributes the passage; the primary Weizenbaum text is not captured | Preserve secondary attribution until the primary is checked |
+| `context-contamination-operates-below-an-agents-compliance-reasoning` | 1 | The controlled experiment remains in a sibling repository's workshop layer, not a tracked source route here | Decide whether to import a stable evidence artifact before treating the result as durable grounding |
+| `scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier` | 1 | The exact financial-services practitioner report has a tracked ingest with relevant Quotes; the target still uses the bare URL | A tracked source route is available; target grounding and route migration remain |
+| `selective-revision-needs-a-faithful-rationale-not-just-a-legible-one` | 1 | The self-evolver paper has a tracked ingest with intervention Quotes; the target still uses the bare arXiv URL | A tracked source route is available; target grounding and route migration remain |
+| `theory-mediated-learning-may-improve-sample-efficiency-under-shifts` | 3 | Yosinski transfer, MAML, and Bengio fast-adaptation sources remain bare URLs with no tracked ingests | Three source acquisitions remain before re-evaluation |
+| `a-proposal-selection-loop-requires-search-evaluation-and-retention` | 5 | Ashby has a local source review but no direct ingest; Zinkevich, Kephart/Chess, Weyns, and Petrovska now have tracked ingests, mostly without retained Quotes for these uses | Two Ashby uses still need a direct route; three removed claims can now be reconsidered through grounding |
+| `brainstorming-maintainability-oracles-for-agentic-development` | 1 | *Why Software Factories Fail Part II* now has a tracked ingest but no retained Quotes | Ground the source-side claim before deciding whether to restore the attribution |
+| `goedel-machines-are-a-proof-governed-case-of-self-modification` | 1 | The Incremental Self-Improvement primary report now has a tracked ingest but no retained Quotes for the use | Ground the retention/rollback rule before replacing the local-review handoff |
+
+Seven of the sixteen uses therefore have a matching tracked ingest now; source
+acquisition alone does not complete their target-side judgment. Only KSA-1 is a
+member of the starting cohort. The other fifteen uses are a wider intake queue
+whose cohort membership must be decided rather than inherited from the rollout.
+
 ## Boundaries
 
 In scope:
@@ -274,8 +343,9 @@ workshop which claims the corpus has to adjudicate.
 ## Files
 
 - [Claim-grounding rollout](../claim-grounding-rollout/README.md) — the
-  retrospective ADR 073 application. Grounds the claims notes already make; feeds
-  Channel 1 and hands artifact-level calls back here
+  retrospective ADR 073 application. Its 264 terminal claim-use dispositions
+  include sixteen literature handoffs; those feed source and target triage here
+  without substituting for artifact-level dispositions
 - [Three channels: migration, claims, machinery](./three-channels.md) — every
   finding sorted by kind of change, with verification status per row and a
   sequencing argument against migrating first

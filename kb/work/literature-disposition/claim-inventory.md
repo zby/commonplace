@@ -10,6 +10,30 @@ workshop exists to distrust, so each row is a hypothesis with a named target for
 the sibling workshop to adjudicate, and confidence is recorded honestly including
 where it is low. A row is a reading assignment, not a verdict.
 
+## Post-inventory update — 2026-08-25
+
+The tables below remain the source-blind 2026-08-24 inventory. They are retained
+as evidence of what the notes and model recall suggested before source reading;
+later evidence should adjudicate those assignments, not be written backward
+into them.
+
+The claim-grounding rollout subsequently produced sixteen `literature handoff`
+uses across ten notes. Only KSA-1, in
+`knowledge-storage-does-not-imply-contextual-activation`, belongs to this
+inventory's starting cohort. Its handoff remains open: Gao and Chen now provide
+a bounded agent-documentation case that separates explicit consultation from
+behavioral uptake, but they do not supply the primary
+availability/accessibility or spontaneous-transfer evidence assigned here. The
+other fifteen uses are new intake whose cohort membership must be decided; their
+current source states are recorded in the [workshop
+README](./README.md#received-claim-grounding-rollout-handoffs).
+
+The operative source route has also changed since this inventory was built.
+Current work grounds a use directly in retained exact `## Quotes` or in an exact
+name-paired snapshot through a `(snapshot required)` link and the standard
+`semantic/grounding-alignment` gate. References below to the rollout's former
+normalized-Claims machinery are historical.
+
 ## Part 1: the navigation and pointer notes
 
 ### link-following-and-search-impose-different-metadata-requirements
@@ -184,7 +208,7 @@ size, in the same byte currency. Scoping a disposition to the wrong cluster does
 not merely fail to find the source; it produces false confidence that the claim
 is local.
 
-### knowledge-storage-does-not-imply-contextual-activation — the 217 inbound edges, resolved
+### knowledge-storage-does-not-imply-contextual-activation — the 218 inbound edges, resolved
 
 Measured, not estimated: **158 of 158** reviews in `kb/agent-memory-systems/`
 cite it — 100%. All 158 citations sit in the `Relevant Notes:` tail; **zero**
@@ -293,3 +317,9 @@ inheritor, `linking-theory`, during the claim-pull rollout. The categorical
 from editorial orientation; the revised claim was propagated through ADR 025,
 ADR 026, and its dependent MOC note. The possibly-analytic `stale-indexes` defect
 remains open; the zero-clean-rediscoveries finding is unchanged.
+
+**Intake update, 2026-08-25.** Neither the Gao–Chen source nor the sixteen
+rollout handoffs changes that tally or supplies a final artifact disposition.
+They add bounded evidence and a triaged source/target queue. The first
+keep, merge, thin, or retire decision remains to be made and executed end to
+end.
