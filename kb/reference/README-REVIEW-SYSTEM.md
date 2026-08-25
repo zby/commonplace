@@ -54,6 +54,22 @@ A freshness baseline is the current snapshot-pinned applicability boundary for c
 
 Human-readable review output — the per-pair result files and each job's `MANIFEST.json` — is for inspection. SQLite `result_kind`, `outcome`, `completed_at`, freshness baseline, and job status are canonical state; see [review architecture](./review-architecture.md) for storage details.
 
+**Criterion-derived local paths.** A reviewer normally reads only the note, the
+criterion, and links that appear in the note. One exception is generic and worth
+knowing when authoring a gate: **an active criterion may instruct the reviewer to
+derive exactly one local path from a link in the target and read it.** The
+allowance lives in the shared prompt scaffolding, not in any one gate, so any
+criterion can use it — and a gate author who assumes reviewers can reach only
+linked material will design around a restriction that no longer holds.
+
+The criterion owns the derivation rule and its failure behavior; the scaffolding
+only permits the dereference. `semantic/grounding-alignment` is the first user:
+an ingest link marked `(snapshot required)` sends the reviewer to
+`kb/sources/.snapshots/<slug>.md`, which is deliberately not linkable from a note
+([ADR 073](./adr/073-untracked-source-snapshots-require-ingest-grounding.md)).
+Note what this does *not* loosen — one path, derived from a link that is already
+in the note, named by the criterion. It is not a licence to search the corpus.
+
 ### Semantic boundaries
 
 | Do not conflate | Distinction |
