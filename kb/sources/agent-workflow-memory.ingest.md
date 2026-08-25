@@ -21,9 +21,9 @@ Author: Zora Zhiruo Wang, Jiayuan Mao, Daniel Fried, and Graham Neubig are CMU/M
 
 The paper introduces Agent Workflow Memory (AWM), a web-agent method that distills annotated or successful action trajectories into reusable workflows and injects those workflows into later prompts. AWM supports both offline induction from training examples and online induction from successful test-time trajectories. On WebArena, AWM reports 35.5% success rate versus 23.5% for BrowserGym and fewer average steps than BrowserGymax-tree; on Mind2Web, it improves step success over MindAct/Synapse baselines and generalizes best in cross-domain online settings. The main contribution is not a general memory store, but a concrete trace-to-procedure learning loop: task traces become abstract subroutines, those subroutines alter future action, and benchmark task success supplies the selection signal.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

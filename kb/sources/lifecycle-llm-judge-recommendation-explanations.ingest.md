@@ -21,9 +21,9 @@ Author: The author team is predominantly Netflix engineers and researchers with 
 
 The paper treats an LLM judge as a maintained production component with four phases: experts first create rationale-annotated, difficulty-enriched benchmarks; a reflector then revises criterion rubrics from label errors and right-label/wrong-reason cases; the selected judge both blocks bad explanations and supplies bounded-retry revision feedback; and weekly human review monitors drift, augments the benchmark, and can trigger re-tuning behind manual review and rollback. Its label-only ablation supports the narrower claim that rationale mismatch feedback can improve held-out specificity and reasoning agreement when the default rubric leaves headroom. Its five-week mobile A/B test supports the value of the entire judge-aligned explanation pipeline relative to no explanations, not any lifecycle component in isolation.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

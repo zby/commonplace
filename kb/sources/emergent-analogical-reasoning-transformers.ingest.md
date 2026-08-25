@@ -21,9 +21,9 @@ Author: Gouki Minegishi, Jingyuan Feng, Hiroki Furuta, Takeshi Kojima, Yusuke Iw
 
 The paper studies analogical reasoning in Transformers by constructing a synthetic task where entities, relations, compositional facts, and cross-category analogical facts can be controlled. Its central claim is that analogical reasoning emerges later than memorization and compositional reasoning, and depends on representational alignment across relational roles plus a functor-like transformation inside the model. The authors quantify alignment with Dirichlet energy, analyze attention and vector parallelism, and report similar layerwise signatures in prompted Gemma models. For this KB, the paper is valuable less as a general theory of LLM cognition and more as a concrete test case where a human cognitive term, "analogy," is operationalized into task structure, representation geometry, and boundary conditions.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

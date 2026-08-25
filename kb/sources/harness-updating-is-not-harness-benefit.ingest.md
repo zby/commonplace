@@ -21,9 +21,9 @@ Author: Minhua Lin and a multi-institution research team from Penn State, UC San
 
 The paper separates an evolver's ability to produce useful persistent harness changes from a task-solving agent's ability to benefit from them. It pairs seven model backbones as evolvers and six as agents across SWE-bench Verified, MCP-Atlas, and SkillsBench while holding the solve-evolve loop, prompts, task stream, budget, and writable harness surfaces fixed. Harness-updating gain varies by at most 3.1 percentage points between evolvers on each benchmark, and the smallest evolver can match frontier-model update gains in one case. Harness-benefit is non-monotonic: middle-tier agents often gain most, strong agents have less headroom, and weak agents gain little. On SkillsBench, weak agents also show lower skill loading and lower judge-rated procedural match after loading.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

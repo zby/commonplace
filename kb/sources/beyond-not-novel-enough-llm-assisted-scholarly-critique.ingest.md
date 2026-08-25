@@ -21,9 +21,9 @@ Author: Osama Mohammed Afzal, Preslav Nakov, Tom Hope, and Iryna Gurevych, affil
 
 Afzal, Nakov, Hope, and Gurevych introduce a human-informed pipeline for automated novelty assessment in peer review. The system analyzes ICLR 2025 novelty-review comments, derives reviewer patterns such as independent verification and gap identification, then evaluates submissions through document processing, related-work discovery, structured extraction, landscape analysis, novelty-delta comparison, and final novelty-assessment generation. On 182 annotated ICLR 2025 submissions, the paper reports 86.5% alignment with human reasoning and 75.3% agreement on novelty conclusions, outperforming adapted LLM review baselines. For this KB, the important contribution is not "AI can replace reviewers"; it is the evaluator-construction pattern for a soft, knowledge-intensive task.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

@@ -21,31 +21,23 @@ Author: Xiaochuan Li, Ryan Ming, Meng Chu, Shuai Shao, Rong Jin, and Chenyan Xio
 
 ACM turns context management into two agent actions: `manage_context` summarizes earlier turns while saving the raw messages under an identifier, and `query_memory` lets the agent retrieve from those messages later. The agent chooses when to invoke them rather than waiting for a fixed context threshold. A teacher-guided post-training pipeline supplies both positive examples (replace looping or redundant search with compression) and negative examples (replace premature compression with deeper search or an answer), then uses on-policy distillation and filtering to train Qwen3.5-9B. Against ReAct, adding the ACM framework raises pass@1 from 0.570 to 0.635 on BrowseComp-Plus, 0.367 to 0.405 on DeepSearchQA, and 0.489 to 0.508 on SWE-Bench Verified; post-training raises them further to 0.727, 0.425, and 0.530. Peak active context generally falls and exploration grows, but tool calls often rise, and a 4B model that terminates after roughly two turns never reaches the regime where the memory tools can help.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** ACM supplies two context-management tools—`manage_context` summarizes all messages up to the previous summary boundary while archiving their raw text under an identifier, and `query_memory` retrieves from the identified archive—and its post-training objective teaches when to invoke or refrain from those tools.
-  - **Source extract (verbatim):** We introduce only two context management tools to enable the agent to mimic the human memory mechanism: manage_context, which compresses previous turns into a concise summary and offloads the raw messages to an external file on disk; and query_memory, which allows the agent to query the stored raw messages to retrieve information precisely.
+- **Source extract (verbatim):** We introduce only two context management tools to enable the agent to mimic the human memory mechanism: manage_context, which compresses previous turns into a concise summary and offloads the raw messages to an external file on disk; and query_memory, which allows the agent to query the stored raw messages to retrieve information precisely.
   - **Source location:** Section 3.2, “ACM Agent”
-  - **Source extract (verbatim):** When the agent decides to manage its context, it invokes manage_context (action a_{2},a_{6} in Figure 1) to compress all messages up to the previous summary boundary using a summarizer LLM. Crucially, the original messages are not discarded but saved to the agent’s external workspace. Each summary is assigned a unique identifier that maps the summary to the corresponding raw messages in external memory.
+- **Source extract (verbatim):** When the agent decides to manage its context, it invokes manage_context (action a_{2},a_{6} in Figure 1) to compress all messages up to the previous summary boundary using a summarizer LLM. Crucially, the original messages are not discarded but saved to the agent’s external workspace. Each summary is assigned a unique identifier that maps the summary to the corresponding raw messages in external memory.
   - **Source location:** Section 3.2, mechanism description
-  - **Source extract (verbatim):** Under this objective, the student jointly learns when to invoke context management and when to refrain from doing so because a search, retrieval, or commit-to-answer action is more appropriate.
+- **Source extract (verbatim):** Under this objective, the student jointly learns when to invoke context management and when to refrain from doing so because a search, retrieval, or commit-to-answer action is more appropriate.
   - **Source location:** Section 4.1, on-policy distillation objective
-  - **Source extract (verbatim):** We compare ACM against three agent frameworks: (1) ReAct (Yao et al., 2022), the standard reasoning-and-acting agent without any context management; (2) Summary Agent (Wu et al., 2025; Kang et al., 2025), which triggers summarization when context usage exceeds a fixed threshold; and (3)  Memory Agent (Zhang et al., 2026), which accumulates experiences from previous rollouts but does not dynamically manage its intra-trajectory context.
+- **Source extract (verbatim):** We compare ACM against three agent frameworks: (1) ReAct (Yao et al., 2022), the standard reasoning-and-acting agent without any context management; (2) Summary Agent (Wu et al., 2025; Kang et al., 2025), which triggers summarization when context usage exceeds a fixed threshold; and (3)  Memory Agent (Zhang et al., 2026), which accumulates experiences from previous rollouts but does not dynamically manage its intra-trajectory context.
   - **Source location:** Section 5.1, “Baselines”
-  - **Scope:** ACM's Qwen3.5-9B context-management action space, teacher–student post-training objective, and system-level baseline comparison on long-horizon search and coding benchmarks.
-  - **Confidence:** High for the supplied tools, archive mapping, and learned invocation/abstention policy because the methods state them directly.
-  - **Limitation:** The experiments compare ACM with system-level baselines but do not expose ACM's two-tool action basis itself to search or train matched policies over rival dynamic state representations; success therefore does not establish that this supplied decomposition is preferable to untested alternatives.
 
-- **Claim (paraphrase):** In the Qwen3.5-9B training ablation, adding ACM training data raised Pass@1 from 0.635 to 0.727 on BrowseComp-Plus, from 0.405 to 0.425 on DeepSearchQA, and from 0.508 to 0.530 on SWE-Bench Verified.
-  - **Source extract (verbatim):** Qwen3.5-9B 0.635 30.8 59k 0.405 88.7 42K 0.508 77.6 46K
+- **Source extract (verbatim):** Qwen3.5-9B 0.635 30.8 59k 0.405 88.7 42K 0.508 77.6 46K
   - **Source location:** Table 3, Qwen3.5-9B baseline row
-  - **Source extract (verbatim):** + ACM 0.727 46.2 54k 0.425 58.8 41K 0.530 79.3 50K
+- **Source extract (verbatim):** + ACM 0.727 46.2 54k 0.425 58.8 41K 0.530 79.3 50K
   - **Source location:** Table 3, ACM-training row
-  - **Source extract (verbatim):** Table 3: Ablation of distillation and ACM training on Qwen3.5-9B. Pass@1 reports accuracy. Tools is the average number of tool calls per episode. Peak Tok. is the average peak token count across episodes.
+- **Source extract (verbatim):** Table 3: Ablation of distillation and ACM training on Qwen3.5-9B. Pass@1 reports accuracy. Tools is the average number of tool calls per episode. Peak Tok. is the average peak token count across episodes.
   - **Source location:** Table 3 caption
-  - **Scope:** The paper's Qwen3.5-9B ablation on BrowseComp-Plus, DeepSearchQA, and SWE-Bench Verified under its fixed ACM tools, data pipeline, harness, and evaluation setup.
-  - **Confidence:** High for the reported point values because the ablation table states them directly.
-  - **Limitation:** The comparison tests the complete supplied ACM training treatment inside a fixed context-management decomposition; it does not isolate which part caused the gains or compare matched learned policies over rival state representations or action bases.
 
 ## Connections Found
 

@@ -21,9 +21,9 @@ Author: Xinming Tu; the page is a dated technical blog essay with a broad append
 
 The essay proposes a 3×3 map of self-evolving agents: three update substrates (external files, the agent harness, and model weights) crossed with three persistence horizons (single session, across sessions, and across users). It then reframes those horizons around the agent as intra-task, inter-task, and inter-agent evolution, and describes a possible consolidation path from task-local artifacts to reusable harness logic to future model weights. The useful contribution is vocabulary and boundary-setting: files can become harness logic when runtime discovery and routing make them operative; deployment becomes part of the training loop; and recursive self-improvement is the same experience → state → behaviour loop aimed at AI development. The appendix adds mechanisms and caveats for memory, dynamic orchestration, test-time adaptation, skills, workflow optimization, shared commons, platform flywheels, and checkpoint bootstrapping.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

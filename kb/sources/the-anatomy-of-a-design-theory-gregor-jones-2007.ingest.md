@@ -21,9 +21,9 @@ Authors: Shirley Gregor and David Jones. Gregor originated the five-type taxonom
 
 Gregor and Jones distinguish eight possible components of an information-systems design theory. Six are core: purpose and scope, constructs, principles of form and function, artifact mutability, testable propositions, and justificatory knowledge. Two are additional: principles of implementation and an expository instantiation. The first six suffice to specify the idea of an artifact that could be constructed; implementation guidance and a physical example may follow and can strengthen communication or credibility. The paper also distinguishes abstract theory, material instantiation, and human understanding, and locates IS artifacts in human-machine systems. Agents and actions enter explicitly in the implementation process, but a present, capable operator is not a core component of the theory itself.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

@@ -21,9 +21,9 @@ Author: Johannes von Oswald, Eyvind Niklasson, Ettore Randazzo, Joao Sacramento,
 
 The paper argues that Transformer in-context learning can, at least in controlled regression settings, be understood as gradient-based learning executed inside the model's forward pass. The authors give an explicit construction where a single linear self-attention layer induces the same data transformation as one gradient descent step on a squared-error regression loss, then show that trained self-attention-only Transformers often recover or closely match that construction. Deeper models can outperform plain gradient descent by learning a curvature-correction variant (GD++), MLPs let the mechanism operate over learned representations for nonlinear regression, and a copying/induction-head-like first layer can assemble the input-target token structure needed for the gradient-descent layer. The contribution is strongest as a mechanistic proof-of-possibility and empirical toy-domain result, not as a general explanation of all language-model in-context learning.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

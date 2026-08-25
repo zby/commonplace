@@ -24,16 +24,12 @@ Author: @intuitiveml is unknown from local KB context; the credibility signal is
 
 The source argues that for AI agent products, evaluation and QA should be the same loop. Instead of treating model evaluation as an offline dashboard and QA as a separate engineering function, CREAO grades sampled live agent responses with a category-conditioned tri-judge panel, turns low scores into clustered production bugs, routes urgent clusters into investigation and draft PRs, verifies fixes with telemetry, re-grades closed clusters, and uses live grader scores to gate grey rollouts. The main contribution is not "LLM-as-judge" by itself; it is the operational coupling: a bad agent response becomes a product bug signal, an engineering ticket, a candidate fix, a regression check, and a release gate.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** In the reported CREAO harness, graders evaluate final responses rather than trajectories; low outcome scores then trigger separate engineering investigation that can work backward to integration, infrastructure, tool-contract, context, or deployment failures.
-  - **Source extract (verbatim):** Grade the outcome, not the trajectory. Agents often take paths that look inefficient or strange to humans, but still produce the right answer.
+- **Source extract (verbatim):** Grade the outcome, not the trajectory. Agents often take paths that look inefficient or strange to humans, but still produce the right answer.
   - **Source location:** Opening “two lessons” list.
-  - **Source extract (verbatim):** We don’t need to know the root cause at scoring time, we just need to catch the failure fast. Then our triage system can pick it up and work backward from the signal.
+- **Source extract (verbatim):** We don’t need to know the root cause at scoring time, we just need to catch the failure fast. Then our triage system can pick it up and work backward from the signal.
   - **Source location:** “The Thesis: Evaluation and QA Are the Same Loop,” after the failure-cause list.
-  - **Scope:** Low-scoring live responses in the practitioner's described production harness. Root-cause investigation follows outcome grading and may inspect infrastructure and execution evidence.
-  - **Confidence:** High that the source describes this division of labor; operational effectiveness is a first-party report without independent validation.
-  - **Limitation:** The source does not advocate monitoring successful trajectories or show that successful outcomes can hide path failures; its engineering pipeline is triggered by low outcome scores. It therefore does not directly support an inference from final success to intended-path health.
 
 ## Connections Found
 

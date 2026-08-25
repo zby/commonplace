@@ -21,25 +21,17 @@ Author: Bystroński, Han, Chawla, Kajdanowicz (Wrocław University of Science an
 
 The paper argues that LLM "semantic knowledge" is organised on clustered manifolds, and that prompt-level and agent-level diversification methods are variance-bounded because they condition on finite contexts within that geometry. The authors propose a plug-in framework that instead conditions generation on continuous latent vectors in semantic embedding space: anchor generations are embedded, new vectors are sampled by interpolation and perturbation of those anchors, and an xRAG-style multimodal projection injects the vectors into the LLM's token-embedding stream without touching weights. They rule out VAE-based latent models on the topological argument that Gaussian priors misalign with clustered LLM geometry. Empirically the method reports 16.65 distinct outputs at k=30 on NoveltyBench (vs 13.60 for G2 guidance) and AUT Top-1 originality of 4.99 (vs 4.93 for G2, 4.58 for multi-agent discussion). The method is presented as substrate-shifting: move variation out of the prompt and into the embedding layer.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** The paper's plug-in method embeds diverse initial outputs as semantic-space anchors, samples new vectors by interpolating and perturbing those anchors, and reports higher NoveltyBench diversity and AUT originality than the compared baselines.
-  - **Source extract (verbatim):** Rather than VAEs (which require fine-tuning and face topological misalignment), the method uses anchor-based exploration. Initial diverse outputs are embedded into semantic space, forming discrete anchors. New vectors are sampled through interpolation and perturbation of these anchors, creating a continuous latent region supporting geometric search.
+- **Source extract (verbatim):** Rather than VAEs (which require fine-tuning and face topological misalignment), the method uses anchor-based exploration. Initial diverse outputs are embedded into semantic space, forming discrete anchors. New vectors are sampled through interpolation and perturbation of these anchors, creating a continuous latent region supporting geometric search.
   - **Source location:** "Method Overview," "Exploration Strategy"
-  - **Source extract (verbatim):** NoveltyBench: The method consistently outperforms baselines across generation budgets (10–30 samples), uncovering new semantic classes while maintaining high utility scores. At k=30, the approach achieves 16.65 distinct outputs versus 13.60 for G2 guidance.
+- **Source extract (verbatim):** NoveltyBench: The method consistently outperforms baselines across generation budgets (10–30 samples), uncovering new semantic classes while maintaining high utility scores. At k=30, the approach achieves 16.65 distinct outputs versus 13.60 for G2 guidance.
   - **Source location:** "Experimental Results," "NoveltyBench"
-  - **Source extract (verbatim):** AUT (Divergent Thinking): Latent-space exploration reaches Top-1 originality of 4.99 — approaching the practical upper bound of 5 — compared to 4.93 for G2 and 4.58 for multi-agent discussion.
+- **Source extract (verbatim):** AUT (Divergent Thinking): Latent-space exploration reaches Top-1 originality of 4.99 — approaching the practical upper bound of 5 — compared to 4.93 for G2 and 4.58 for multi-agent discussion.
   - **Source location:** "Experimental Results," "AUT (Divergent Thinking)"
-  - **Scope:** The paper's latent-conditioning setup and its reported NoveltyBench and Alternative Uses Test comparisons at generation budgets of 10–30 samples.
-  - **Confidence:** High for the described mechanism and reported benchmark values; the claim does not independently reproduce them.
-  - **Limitation:** These benchmarks measure distinct outputs, utility scores, and originality in the tested setup; they do not establish that the method improves synthesis quality for natural-language knowledge bases.
 
-- **Claim (paraphrase):** The method lacks explicit detection of low-quality or out-of-distribution generations beyond heuristic realignment.
-  - **Source extract (verbatim):** Lacks explicit low-quality or out-of-distribution generation detection beyond heuristic realignment
+- **Source extract (verbatim):** Lacks explicit low-quality or out-of-distribution generation detection beyond heuristic realignment
   - **Source location:** "Limitations," first item
-  - **Scope:** Output screening in the paper's proposed latent-conditioning method.
-  - **Confidence:** High; the limitation is stated directly.
-  - **Limitation:** Missing explicit detection bounds the method's filtering capability, but does not by itself show that its outputs are useless or that its reported NoveltyBench utility and AUT originality scores measure only reachability.
 
 ## Connections Found
 

@@ -21,9 +21,9 @@ Author: John D. Martin, Fraser Mince, Esra'a Saleh, and Amy Pajak; affiliations 
 
 The paper formalizes a situated-cognition claim inside reinforcement learning: environment-side observations can function as memory when they reveal information about an agent's past. It defines artifacts as observations that imply prior observations, proves an artifact-reduction theorem showing such histories can be represented with fewer observations, and defines externalized memory by comparing performance and capacity between artifactual and artifactless environments. Gridworld experiments with Q-learning and DQN agents show spatial paths and landmarks can reduce the capacity needed to achieve comparable reward, sometimes unintentionally through the ordinary sensory stream rather than an explicit memory API.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

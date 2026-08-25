@@ -24,9 +24,9 @@ Author: @prukalpa writes from direct experience building the system inside her c
 
 The source argues that agent configurations are becoming cheap and replaceable while the organizational context that makes them useful--definitions, playbooks, exceptions, diagnostic sequences, permissions, and norms--is expensive to recreate and should survive agent-stack churn. It reports two internal eras: many job-specific agents with siloed memories, then a shared “company brain” of roughly 300 skills serving 40 heterogeneous agents. The shared layer improved reuse but exposed a second-order governance wall: copied context drifted without declared dependencies, ownership was unclear, production traces could not safely promote themselves, and executable skills crossed secret and supply-chain trust boundaries. The proposed response is not a repository replacement but an operating layer around durable context: ownership and provenance, local-versus-shared scope, semantic impact review, controlled trace-to-improvement loops, native quality/security controls, and portable delivery across agent interfaces.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

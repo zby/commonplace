@@ -21,9 +21,9 @@ Author: David Ungar and Randall B. Smith designed Self and compare it directly w
 
 Ungar and Smith present Self as a deliberately classless object-oriented paradigm. Where class-based systems relate objects through both “instance of” and “subclass of” and create objects by interpreting a class plan, Self uses one “inherits from” relation and creates objects by cloning concrete prototypes. Any object can carry unique state or behavior, while parent objects retain shared behavior and allow one change to affect a family. The authors argue that classes cost conceptual machinery, plan interpretation, awkward one-of-a-kind objects, format restrictions, and metaclass regress. They also state the counter-price: removing language-level distinctions makes system organization less manifest, may cause programmers to recreate class-like objects, and requires better navigation and description. Self is therefore strong evidence that the class commitment is real design content—an object-oriented rival was organized around removing it—not evidence that classes are simply a mistake.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

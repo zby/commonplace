@@ -21,9 +21,9 @@ Author: Hangfan Zhang, Shao Zhang, Kangcong Li, Chen Zhang, Yang Chen, Yiqun Zha
 
 Self-Harness asks whether the model being improved can also propose changes to its own operating harness, without a stronger external proposer. The loop mines failed held-in execution traces into verifier-grounded signatures, gives the same fixed model a bounded set of editable harness surfaces and structured failure evidence, generates several minimal candidate edits, and promotes only candidates that improve at least one of two task splits without reducing pass count on the other. On a filtered 64-task Terminal-Bench-2.0 set, the authors report held-out pass-rate changes from 40.5% to 61.9% for MiniMax M2.5, 23.8% to 38.1% for Qwen3.5-35B-A3B, and 42.9% to 57.1% for GLM-5. Retained edits differed by model but converged on artifact reliability, bounded tool use, recovery from repeated failures, persistent environment changes, and earlier movement from exploration to implementation and verification.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

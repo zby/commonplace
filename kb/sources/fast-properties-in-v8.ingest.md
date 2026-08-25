@@ -23,18 +23,14 @@ Author: Camillo Bruni authors the 2017 V8 blog post; the companion V8 documentat
 
 V8 turns a JavaScript object's named-property layout into a runtime identity: every object points first to a HiddenClass, called a `Map` in the companion, whose descriptors record property names and locations. Objects that acquire the same properties in the same order converge on the same Map through a transition tree. Inline caches and TurboFan can then specialize property access on that Map and compile a known field offset—or, when a field has remained constant, the value itself. The optimized path depends on stable assumptions. A named-property addition normally moves an object to another Map; divergent addition order branches the transition tree and duplicates structure; extensive property addition and deletion can move an object to dictionary (“slow”) properties where inline caches do not work; and changing property or element types can create a different HiddenClass and pollute the type feedback that optimal code needs. The companion shows the sharpest charge directly: changing a field that TurboFan compiled as constant marks dependent optimized code for deoptimization, after which reoptimized code performs a Map-based backing-store load instead of returning an embedded constant.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** V8 uses dynamically updated HiddenClasses to identify object shapes; its optimizing compiler can inline property access when a HiddenClass ensures a compatible structure, while shape or property-type changes create different HiddenClasses and can prevent generation of optimal code through type pollution.
-  - **Source extract (verbatim):** Hence, in this case V8, HiddenClasses are created on the fly and updated dynamically as objects change. HiddenClasses serve as an identifier for the shape of an object and as such a very important ingredient for V8's optimizing compiler and inline caches. The optimizing compiler for instance can directly inline property accesses if it can ensure a compatible objects structure through the HiddenClass.
+- **Source extract (verbatim):** Hence, in this case V8, HiddenClasses are created on the fly and updated dynamically as objects change. HiddenClasses serve as an identifier for the shape of an object and as such a very important ingredient for V8's optimizing compiler and inline caches. The optimizing compiler for instance can directly inline property accesses if it can ensure a compatible objects structure through the HiddenClass.
   - **Source location:** “HiddenClasses and DescriptorArrays,” opening explanation
-  - **Source extract (verbatim):** Every time a new property is added, the object's HiddenClass is changed. In the background V8 creates a transition tree that links the HiddenClasses together.
+- **Source extract (verbatim):** Every time a new property is added, the object's HiddenClass is changed. In the background V8 creates a transition tree that links the HiddenClasses together.
   - **Source location:** “HiddenClasses and DescriptorArrays,” transition-tree explanation
-  - **Source extract (verbatim):** Changing the property or element type typically causes V8 to create a different HiddenClass which can lead to type pollution which [prevents V8 from generating optimal code](http://mrale.ph/blog/2015/01/11/whats-up-with-monomorphism.html).
+- **Source extract (verbatim):** Changing the property or element type typically causes V8 to create a different HiddenClass which can lead to type pollution which [prevents V8 from generating optimal code](http://mrale.ph/blog/2015/01/11/whats-up-with-monomorphism.html).
   - **Source location:** Closing paragraph
-  - **Scope:** V8's documented internal representation and optimization of JavaScript object properties through HiddenClasses, descriptor arrays, and inline caches.
-  - **Confidence:** High for the shape-sensitive optimization mechanism because the V8 documentation states it directly.
-  - **Limitation:** This snapshot does not describe invalidation or deoptimization of already optimized code when a layout assumption stops holding; it supports only shape-sensitive inlining and prevention of optimal-code generation through type pollution.
 
 ## Connections Found
 

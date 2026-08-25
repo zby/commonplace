@@ -24,9 +24,9 @@ Author: Aparna Dhinakaran -- co-founder of Arize AI (LLM observability/evals pla
 
 Dhinakaran responds to public confusion about what an "agent harness" is by drawing a sharp line: harnesses are not frameworks. Frameworks (LangChain, LangGraph) are top-down configuration surfaces for humans assembling agents from abstractions; a harness is a working agent that ships out of the box, born bottom-up from coding-agent products (Cursor, Claude Code, Windsurf, Codex) that independently converged on the same architecture. She enumerates nine components of "Harness 1.0" -- outer iteration loop, context management/compression, skills/tools management, sub-agent management, built-in pre-packaged skills, session persistence, system-prompt assembly, life-cycle hooks, and a permission/safety layer. The closing thesis is that the maturation pattern in winning harnesses is to "push decisions to the model": early harnesses hardcoded truncation limits, permission rules, and context budgets; current harnesses defer those decisions to the LLM via runtime feedback. The harness is the feedback scaffolding that turns a one-shot generator into a closed-loop agent.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

@@ -21,9 +21,9 @@ Author: Nir Ailon, Bernard Chazelle, Kenneth L. Clarkson, Ding Liu, Wolfgang Mul
 
 The paper studies algorithms that improve expected running time by learning an unknown product distribution over fixed-length inputs. During a training phase, the algorithm gathers distributional information and builds data structures; in a stationary phase, those structures are held fixed and used to process later inputs. For comparison sorting, the limiting expected complexity is O(n + H(π(I))), where H(π(I)) is the entropy of the input's induced rank permutation, with worst-case O(n log n) time; a parallel result gives O(n + H(T(I))) for planar Delaunay triangulation. The paper also proves storage lower bounds and shows that unrestricted distribution classes force large space, making the restriction to product distributions and the time/space trade-off substantive parts of the design.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

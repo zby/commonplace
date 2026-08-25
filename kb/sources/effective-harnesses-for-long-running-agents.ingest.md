@@ -21,20 +21,16 @@ Author: Justin Young, writing with acknowledgements to Anthropic's code RL and C
 
 Anthropic reports that repeatedly running a frontier coding model with compaction is insufficient for production-scale work across context windows: sessions either attempt too much and leave half-finished undocumented state, or inspect partial progress and declare the project complete. Its remedy separates initial environment construction from incremental execution. An initializer creates a comprehensive feature ledger, a progress file, an `init.sh`, and initial git state; later sessions read those artifacts and recent commits, verify the application still works, implement one feature, test it end to end, and leave a clean committed handoff. The report's main value is not another compaction technique but an architectural distinction: continuing context and continuing work are different problems, and the latter needs persistent task state plus externally checkable completion criteria.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** In Anthropic's long-running web-app experiment, an Opus 4.5 agent loop with compaction and only a high-level prompt fell short; the reported harness added persistent progress/git state, a structured feature list, incremental one-feature work, and explicit browser-based end-to-end testing.
-  - **Source extract (verbatim):** However, compaction isn’t sufficient. Out of the box, even a frontier coding model like Opus 4.5 running on the Claude Agent SDK in a loop across multiple context windows will fall short of building a production-quality web app if it’s only given a high-level prompt, such as “build a clone of claude.ai.”
+- **Source extract (verbatim):** However, compaction isn’t sufficient. Out of the box, even a frontier coding model like Opus 4.5 running on the Claude Agent SDK in a loop across multiple context windows will fall short of building a production-quality web app if it’s only given a high-level prompt, such as “build a clone of claude.ai.”
   - **Source location:** “The long-running agent problem.”
-  - **Source extract (verbatim):** We developed a two-fold solution to enable the Claude Agent SDK to work effectively across many context windows: an initializer agent that sets up the environment on the first run, and a coding agent that is tasked with making incremental progress in every session, while leaving clear artifacts for the next session.
+- **Source extract (verbatim):** We developed a two-fold solution to enable the Claude Agent SDK to work effectively across many context windows: an initializer agent that sets up the environment on the first run, and a coding agent that is tasked with making incremental progress in every session, while leaving clear artifacts for the next session.
   - **Source location:** Introduction.
-  - **Source extract (verbatim):** To address the problem of the agent one-shotting an app or prematurely considering the project complete, we prompted the initializer agent to write a comprehensive file of feature requirements expanding on the user’s initial prompt.
+- **Source extract (verbatim):** To address the problem of the agent one-shotting an app or prematurely considering the project complete, we prompted the initializer agent to write a comprehensive file of feature requirements expanding on the user’s initial prompt.
   - **Source location:** “Feature list.”
-  - **Source extract (verbatim):** In the case of building a web app, Claude mostly did well at verifying features end-to-end once explicitly prompted to use browser automation tools and do all testing as a human user would.
+- **Source extract (verbatim):** In the case of building a web app, Claude mostly did well at verifying features end-to-end once explicitly prompted to use browser automation tools and do all testing as a human user would.
   - **Source location:** “Testing.”
-  - **Scope:** Anthropic's internal Claude Agent SDK demonstration for a multi-context-window claude.ai clone using Opus 4.5 and the described initializer/coding-agent harness.
-  - **Confidence:** High for the reported setup, observed failure modes, and implemented harness components; moderate for their marginal effect because the article supplies no run counts, controlled ablation, or quantitative baseline.
-  - **Limitation:** The report does not compare model generations or hold task difficulty fixed, and it does not show that these exact artifacts remain necessary for every stronger model or non-web domain. It is evidence for one longer-horizon deployment configuration, not a longitudinal frontier trend.
 
 ## Connections Found
 

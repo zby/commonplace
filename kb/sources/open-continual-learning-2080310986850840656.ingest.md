@@ -24,9 +24,9 @@ Author: @Vtrivedy10; a public practitioner statement, with no captured implement
 
 The post argues that organization-specific continual learning should start from knowledge distributed across company data and expert minds. Its proposed loop is to interview experts, convert what matters into evaluations and environments, fit agents on those tasks, and collect more traces for another cycle. It treats observability and continual learning as one coupled process of data collection, curation, and integration into agent behavior, and presents open skills as an accessible way to begin. The post does not specify how accepted changes become durable, how evaluations reject bad changes, or how trace quality is controlled.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

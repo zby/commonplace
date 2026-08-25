@@ -21,9 +21,9 @@ Author: Brian Cantwell Smith is the foundational source in this lineage; the pap
 
 Smith argues that self-reference is not enough for reflection. A reflective system needs an embedded account or theory of itself, a systematic two-way causal relationship between that theory and the system, and a vantage point combining enough detachment to represent the system with enough connection to affect it. The paper deliberately narrows its technical target to **procedural reflection** in serial programming languages and builds 3-Lisp as a causally connected reflective tower. It also makes reflection theory-relative: the chosen self-theory determines which processor aspects are explicit, while other aspects are “absorbed”; even 3-Lisp leaves its animating agency implicit (printed pp. 23–25, 31–35; PDF pp. 1–3, 9–13).
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

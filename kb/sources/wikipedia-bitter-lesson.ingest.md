@@ -21,16 +21,12 @@ Author: Richard S. Sutton — one of the founders of modern reinforcement learni
 
 The bitter lesson is Sutton's observation that across AI history, general-purpose methods that scale with computation (search, learning) have consistently outperformed approaches that bake in domain-specific human knowledge. Examples span chess (Deep Blue's brute-force search over grandmaster knowledge), Go (AlphaGo Zero's self-play over human expertise), speech recognition (HMMs over hand-crafted rules), and computer vision (CNNs over engineered feature detectors). The lesson is "bitter" because it is anthropocentric-unfriendly: researchers want their insights to matter, but compute scaling keeps winning. Sutton identifies two general-purpose techniques that scale effectively: search and learning. The Wikipedia article documents the essay's broad uptake and validation across new domains including LLMs, reinforcement learning, and brain-computer interfaces through 2025, and captures important caveats (Sinz et al.'s observation that without the right implicit assumptions, generalisation is impossible).
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** Wikipedia summarizes the bitter lesson as the long-run tendency for approaches that scale with computation—such as search and statistical learning—to outperform approaches based on domain-specific understanding, and says Sutton recommends simple scalable methods over increasingly elaborate human insight.
-  - **Source extract (verbatim):** The bitter lesson is the observation in artificial intelligence that, in the long run, approaches that scale with available computational power (such as brute-force search or statistical learning from large datasets) tend to outperform ones based on domain-specific understanding because they are better at taking advantage of Moore's law.
+- **Source extract (verbatim):** The bitter lesson is the observation in artificial intelligence that, in the long run, approaches that scale with available computational power (such as brute-force search or statistical learning from large datasets) tend to outperform ones based on domain-specific understanding because they are better at taking advantage of Moore's law.
   - **Source location:** Opening paragraph.
-  - **Source extract (verbatim):** Sutton concludes that time is better invested in finding simple scalable solutions that can take advantage of Moore's law, rather than introducing ever-more-complex human insights, and calls this the "bitter lesson".
+- **Source extract (verbatim):** Sutton concludes that time is better invested in finding simple scalable solutions that can take advantage of Moore's law, rather than introducing ever-more-complex human insights, and calls this the "bitter lesson".
   - **Source location:** “The Essay.”
-  - **Scope:** Wikipedia's secondary summary of Richard Sutton's 2019 essay and its examples in game playing, speech recognition, and computer vision.
-  - **Confidence:** High for what the captured Wikipedia article says; it directly states this contrast and recommendation.
-  - **Limitation:** This is a secondary source, not Sutton's original text. It does not identify untested or “unearned” reach as the property selected against, claim that every kind of explicit structure loses, or establish the target note's earned-reach reinterpretation.
 
 ## Connections Found
 

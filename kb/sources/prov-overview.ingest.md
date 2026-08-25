@@ -21,14 +21,10 @@ Author: Strong. Editors Paul Groth (VU Amsterdam) and Luc Moreau (Southampton), 
 
 PROV is the W3C's standardized model for representing and interchanging provenance — "information about entities, activities, and people involved in producing a piece of data or thing" — across heterogeneous web systems. It grew out of eight Provenance Incubator Group requirements: identifying and attributing objects, accessing and retrieving provenance, representing provenance-of-provenance, enabling reproducibility, supporting versioning, representing procedures, and modeling derivation. The family spans 12 documents split by audience: PROV-PRIMER for learners; PROV-O (OWL ontology), PROV-XML, PROV-AQ (access/query), PROV-DC, PROV-DICTIONARY for developers; and PROV-DM (conceptual model), PROV-N (notation), PROV-CONSTRAINTS (validation), PROV-SEM (first-order-logic semantics), PROV-LINKS for advanced use. This overview is a navigation map, not a specification — it tells a reader which document to open, not how the model works.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** The PROV family standardizes representation and interchange of provenance—information about the entities, activities, and people involved in producing data or another thing—across heterogeneous web environments.
-  - **Source extract (verbatim):** Provenance describes "information about entities, activities, and people involved in producing a piece of data or thing" and can assess quality, reliability, and trustworthiness. The PROV Family of Documents enables interoperable provenance interchange across heterogeneous web environments through standardized models and serializations.
+- **Source extract (verbatim):** Provenance describes "information about entities, activities, and people involved in producing a piece of data or thing" and can assess quality, reliability, and trustworthiness. The PROV Family of Documents enables interoperable provenance interchange across heterogeneous web environments through standardized models and serializations.
   - **Source location:** Abstract
-  - **Scope:** This is a roadmap-level description of the W3C PROV family and the provenance information its models and serializations can carry and exchange.
-  - **Confidence:** High for PROV's representational purpose and stated requirement areas; the overview does not itself specify an acquisition workflow.
-  - **Limitation:** PROV represents provenance supplied to it but does not say that the information must be recorded at production time, prove that omitted history is unrecoverable, or provide cryptographic attestation. Those timing and trust claims need separate argument or evidence.
 
 ## Connections Found
 

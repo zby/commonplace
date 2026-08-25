@@ -24,9 +24,9 @@ Author: @Vtrivedy10 and the LangChain team; first-party product/workflow descrip
 
 The announcement describes a skill that reads an agent repository and optional production traces, maps the agent's prompts, models, tools, skills, hooks, data, and services, and proposes abilities worth testing. It interviews the user to refine and approve eval directions, packages each task as a Harbor instruction/environment/verifier bundle, and iterates by inspecting both agent and verifier trajectories. The source highlights reward-hacking failures—irrelevant citations, false claims of completed actions, exposed answers, and proxy satisfaction—and presents a loop of mining traces, identifying failures, building evals, improving the agent, and rerunning against a stable environment. It frames continual learning as production data mining that turns recurring failures into fixed targets for harness or model changes.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

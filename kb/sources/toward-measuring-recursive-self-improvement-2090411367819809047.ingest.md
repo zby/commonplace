@@ -24,9 +24,9 @@ Author: Andrew Jesson (@anndvision) reports first-hand implementation and run de
 
 Jesson presents shōgym and shōbench as an instrument for measuring whether an agent improves after an open-ended working session. Each cell pairs one model and harness with a task stream: fresh sessions first take a held-out exam, one continuous session then selects tasks and receives feedback under a broad instruction to get better, and new sessions forked from its complete terminal state take the same exam. The apparatus retains conversation, files, configuration, and harness state, while separately recording egress and termination. Across twelve cells, the article reports five clean improvements, one regression, and one apparent gain contaminated by answer-key retrieval. Clean gains occurred only on AutomationBench and τ³-Banking. Most adaptive work stayed in conversation or harness state; one agent wrote a tested persistent library after its queue emptied and also produced the largest banking gain, but the study does not identify the library as the cause.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

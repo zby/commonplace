@@ -22,9 +22,9 @@ Author: Muratcan Koylan (`@koylanai`) is already a known voice in this KB throug
 ## Summary
 Koylan argues that open-ended LLM evaluation breaks when it asks a judge for absolute scores, especially where no verifiable ground truth exists. His proposed alternative is to generate multiple candidate outputs, compare them pairwise, and aggregate the binary wins into a normalized win-rate ranking. The immediate example comes from an RL paper using round-robin comparisons and GRPO, but the claimed contribution is broader: pairwise comparison is a reusable evaluation primitive for context engineering because "A vs B" is easier and more stable than "rate this 1-5."
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 The strongest connection set sits in the KB's evaluation and oracle-design cluster. The source **extends** [oracle-strength-spectrum](../notes/oracle-strength-spectrum.md) by turning its placeholder notion of `preference pairs` into a concrete aggregation mechanism: round-robin pairwise judging yields a scalar signal without needing an absolute scale. It also **extends** [error-correction-works-above-chance-oracles-with-decorrelated-checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) by suggesting a practical way to improve judge discrimination before any amplification step. It **exemplifies** [the-boundary-of-automation-is-the-boundary-of-verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md): progress comes from redesigning the verifier, not just the generator. The source also **grounds** the evaluation-methodology section of [Agent Skills for Context Engineering](../agent-memory-systems/reviews/agent-skills-for-context-engineering.md), which already recommends pairwise comparison and position-bias mitigation, and it **extends** [Autocontext](../agent-memory-systems/reviews/autocontext.md) by suggesting a softer-oracle analogue to its hard-oracle tournament path.

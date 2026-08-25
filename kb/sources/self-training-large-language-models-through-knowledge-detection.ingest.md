@@ -22,22 +22,18 @@ Author: Wei Jie Yeo, Teddy Ferdinan, Przemyslaw Kazienko, Ranjan Satapathy, and 
 
 The paper proposes a self-training pipeline where an LLM generates or receives Wikipedia-grounded instructions, self-annotates answers, learns a context-grounded reading-comprehension behavior through SFT, then constructs a DPO preference dataset by comparing answers generated with the source document against answers generated without it. Its key move is selective training: examples pass through a consistency filter to reject low-confidence reference answers and a knowledge filter to keep cases where the model appears unknown, measured by contradiction scores over sampled generations. Experiments on TinyLlama-1.1B, Llama2-7B, and Llama2-13B report improved truthfulness on held-out Wikipedia questions and less OOD degradation than unfiltered DPO. The paper is best read as an unknown-selection and preference-data-construction paper, not as general autonomous self-learning.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** The paper's self-training framework uses the sequence instruction generation → SFT → preference labeling → knowledge filtering; its preference data are filtered before DPO in two stages, where consistency filtering removes low-confidence document-conditioned reference responses and knowledge filtering removes samples on which the SFT model is considered knowledgeable.
-  - **Source extract (verbatim):** This section introduces the details of our selftraining framework, broken down into four sequential steps: Instruction Generation, SFT stage, Preference Labeling and Knowledge Filtering. As a start, we assume access to a knowledge source as the main source of material to perform both training and truthfulness evaluation.
+- **Source extract (verbatim):** This section introduces the details of our selftraining framework, broken down into four sequential steps: Instruction Generation, SFT stage, Preference Labeling and Knowledge Filtering. As a start, we assume access to a knowledge source as the main source of material to perform both training and truthfulness evaluation.
   - **Source location:** §3, “Self-training” (printed p. 3)
-  - **Source extract (verbatim):** We utilize Wikipedia2 as the foundation of our knowledge source given its widespread acceptance and reliability.
+- **Source extract (verbatim):** We utilize Wikipedia2 as the foundation of our knowledge source given its widespread acceptance and reliability.
   - **Source location:** §3.1, “Instruction generation” (printed p. 3)
-  - **Source extract (verbatim):** This filtering procedure is implemented across each sample in DDPO and involves two stages: (1) consistency filtering and (2) knowledge filtering.
+- **Source extract (verbatim):** This filtering procedure is implemented across each sample in DDPO and involves two stages: (1) consistency filtering and (2) knowledge filtering.
   - **Source location:** §3.4, “Knowledge Filtering” (printed p. 4)
-  - **Source extract (verbatim):** In the first stage, DDPO from step three undergoes a consistency filtering to filter out lowconfidence responses.
+- **Source extract (verbatim):** In the first stage, DDPO from step three undergoes a consistency filtering to filter out lowconfidence responses.
   - **Source location:** §3.4, “Knowledge Filtering” (printed p. 4)
-  - **Source extract (verbatim):** The second stage, knowledge filtering, removes samples where the model is considered knowledgeable.
+- **Source extract (verbatim):** The second stage, knowledge filtering, removes samples where the model is considered knowledgeable.
   - **Source location:** §3.4, “Knowledge Filtering” (printed p. 4)
-  - **Scope:** The sequence and filter roles apply to the paper's Wikipedia-based factual QA pipeline. SFT is performed before preference labeling and the two filters; the filtered preference dataset is then used for DPO.
-  - **Confidence:** High for the stated stage order and filter mechanics. Both filters use contradiction-score proxies, so their labels should not be read as direct ground truth.
-  - **Limitation:** The source does not filter examples before SFT, does not call consistency filtering a general validity gate, and equates learning relevance with model-relative lack of knowledge rather than a general maintenance- or task-value judgment.
 
 ## Connections Found
 

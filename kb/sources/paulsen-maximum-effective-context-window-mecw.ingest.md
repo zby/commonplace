@@ -22,18 +22,14 @@ Author: Norman Paulsen, Denver, Colorado. No institutional affiliation listed; a
 
 Paulsen defines the Maximum Effective Context Window (MECW) as the longest span of token input, for a given problem type, before model performance degrades measurably — distinguishing it from the advertised Maximum Context Window (MCW). Testing 11 frontier LLMs (GPT-5, Claude 3.5, Gemini 2.5, DeepSeek r1, Llama 3.3, etc.) across four task types (single-needle retrieval, multi-needle retrieval, summarization, find-and-sort), the study finds that MECW falls short of MCW by up to >99%, that most models show severe accuracy degradation by 1,000-2,000 tokens for complex tasks, that MECW varies substantially by problem type (and model rankings shift across tasks), and that exceeding MECW drives hallucination rates toward 100%. The paper argues that context window size — not temperature, top_p, or other settings — is the dominant factor determining model accuracy, and that RAG systems improve performance only when operating under the MECW threshold.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** Across eleven tested models and four synthetic retrieval, aggregation, and sorting question types, Paulsen reports that measured Maximum Effective Context Windows fell well below providers' maximum accepted windows and shifted with question type, with some measured gaps exceeding 99%.
-  - **Source extract (verbatim):** All models fell far short of their Maximum Context Window by as much as >99%.
+- **Source extract (verbatim):** All models fell far short of their Maximum Context Window by as much as >99%.
   - **Source location:** Abstract.
-  - **Source extract (verbatim):** Our findings show that the MECW is, not only, drastically different from the MCW but also shifts based on the problem type.
+- **Source extract (verbatim):** Our findings show that the MECW is, not only, drastically different from the MCW but also shifts based on the problem type.
   - **Source location:** Abstract.
-  - **Source extract (verbatim):** Models perform vastly differently to the type of question asked.
+- **Source extract (verbatim):** Models perform vastly differently to the type of question asked.
   - **Source location:** Section 5, “Findings for Q2.”
-  - **Scope:** Eleven open- and closed-weight models evaluated on randomized synthetic records using single-needle retrieval, multi-needle aggregation, total summarization, and find-and-sort tasks over increasing token counts.
-  - **Confidence:** Moderate for the reported within-study pattern: the paper directly reports large MCW–MECW gaps and task-dependent model rankings, based on more than 66,000 recorded model/question/context observations.
-  - **Limitation:** The tasks use simple generated records rather than representative agent workloads, and the paper's MECW definition and thresholds are study-specific. The results do not establish one generally usable context limit or show that soft degradation usually binds first across production tasks.
 
 ## Connections Found
 

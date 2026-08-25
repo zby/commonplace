@@ -21,9 +21,9 @@ Author: Richard Heimann synthesizes mathematical texts, experiments, and popular
 
 The chapter argues that prediction and compression reveal latent structure. A coffee automaton separates monotonic microscopic entropy from non-monotonic apparent complexity measured after coarse-graining; Kolmogorov complexity and MDL formalize short descriptions; Hinton and van Camp regularize weights through description length; grokking appears as a transition from memorization to a compressible rule; and double descent suggests that overparameterized models may find simpler interpolating functions beyond a brittle threshold. It ends by reframing the “blurry JPEG of the web” from a defective archive into a lossy, generative interface. Across these cases, however, compression changes meaning—from objective, to proxy measurement, to explanatory metaphor, to product interface.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

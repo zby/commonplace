@@ -21,9 +21,9 @@ Author: Huawei Noah's Ark Lab (Wu, Liang, Zhang, et al.). Industrial research la
 
 The survey maps human memory onto LLM-driven AI memory and proposes a 3D-8Q taxonomy: three orthogonal dimensions — object (personal vs system), form (parametric vs non-parametric), time (short- vs long-term) — crossed into eight quadrants, each tagged with a human-memory analogue (sensory, working, episodic, semantic, procedural). It walks the human side (Multi-Store Model, encoding/storage/retrieval, consolidation, reconsolidation, reflection, forgetting), then catalogues AI systems by quadrant: multi-turn dialogue and memory-RAG (mem0, MemoryBank, A-MEM, HippoRAG) for personal non-parametric memory; prompt/KV caching and PEFT/knowledge-editing (Character-LLM, WISE, MemoryLLM) for parametric memory; ReAct/Reflexion/Voyager/ExpeL/Agent Workflow Memory for system reflection-and-refinement; vLLM/ChunkKV for KV management. It closes with six future directions (multimodal, stream, comprehensive, shared memory, collective privacy, automated evolution). Read it for a broad, well-organized field map and a shared vocabulary, not for novel mechanisms or evidence.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

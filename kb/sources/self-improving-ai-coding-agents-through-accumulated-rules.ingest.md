@@ -21,9 +21,9 @@ Author: Aditya Aggarwal and Nahid Farhady Ghalaty report first-hand results from
 
 The paper proposes turning each accepted, generalizable code-review comment into a persistent behavioral rule in a version-controlled instruction file, then loading that file across coding-agent interfaces and running a self-review checklist before submission. In one four-week microservices deployment, the authors report growth from 5 to 18 behavioral rules plus 15+ code standards and a 15-item checklist, zero recurrences across nine tracked error classes and 74 post-rule session-exposures, and cross-repository or cross-tool transfer in 9 of 15 documented learning events. The architecture is a concrete readable-artifact learning loop, but the study has no no-rule or static-instruction control, and its evidence does not separately test immediate rule promotion, uniform always-loading, or monotonic accumulation.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

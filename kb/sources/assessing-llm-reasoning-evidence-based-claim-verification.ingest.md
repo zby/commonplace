@@ -21,9 +21,9 @@ Author: John Dougrez-Lewis, Mahmud Elahi Akhter, Federico Ruggeri, Sebastian Lö
 
 Dougrez-Lewis et al. introduce the RECV framework, which distinguishes deductive, abductive, inductive, and analogical inference, then operationalize only deduction and abduction in a 1,500-item claim-verification benchmark drawn equally from VitaminC, CLIMATE-FEVER, and PHEMEPlus. They evaluate Claude 3 Sonnet, GPT-4, and GPT-4o under zero-shot and manual chain-of-thought prompts, with and without generated rationales. Across the tested configurations, items annotated as abductive have much higher error rates than items annotated as deductive: 32% versus 10.31% on VitaminC, 48.58% versus 15.58% on CLIMATE-FEVER, and 44.68% versus 20.06% on PHEMEPlus. Rationale generation and chain-of-thought have heterogeneous effects, sometimes helping on VitaminC and often hurting on the more complex datasets or abductive subsets. Generated rationales can remain similar to selected human explanations even when verdicts are wrong. The paper therefore establishes a substantial within-RECV performance gap and useful prompt sensitivity results, but it does not identify inference type as the cause of that gap or show that the generated rationales faithfully report the models' decision process.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

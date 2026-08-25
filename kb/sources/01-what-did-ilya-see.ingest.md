@@ -21,9 +21,9 @@ Author: Richard Heimann is a technical author synthesizing published papers, int
 
 The opening chapter frames Sutskever's secret reading list as a map of the commitments behind his career: confidence in deep learning, preference for empirically successful engineering, belief in scale and compression, and concern about increasingly capable systems. It moves from AlexNet and OpenAI through GPT-2's staged release and the 2023 OpenAI board crisis, then argues that omissions—especially symbolic AI, classical planning, and reinforcement learning—are also informative. Its main value is not a new account of any one event but a hypothesis about how a curated canon reveals the design space its curator treats as important.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

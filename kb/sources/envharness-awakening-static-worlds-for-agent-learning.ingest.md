@@ -21,9 +21,9 @@ Author: Chengsong Huang and a research team from Washington University in St. Lo
 
 EnvHarness wraps an existing environment at its standard interface rather than generating a replacement. A Stage replays actions to change the initial state, a Contract rewrites permitted actions, transitions, or observations, and a Chain composes base environments, while the original task verifiers remain the scoring authority. EnvRigger observes successful and failed policy rollouts, diagnoses weaknesses, writes candidate wrappers, and accepts or revises them using fresh rollouts. Skills distilled from its environments outperform skills distilled from original environments on ALFWorld, WebArena, SWE-bench Verified, OfficeQA, and SpreadsheetBench; the paper also reports stronger GRPO-trained policies, gains across four policy backbones, and continued held-out improvement when later environment batches target a policy carrying earlier skills. The useful contribution is a reusable environment-side learning surface with preserved base verifiers, not evidence that its three wrapper types or surrounding learning decomposition are generally optimal.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

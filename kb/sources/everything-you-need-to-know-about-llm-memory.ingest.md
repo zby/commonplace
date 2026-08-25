@@ -21,9 +21,9 @@ Author: Unknown; the source appears on Rosebud Journal and includes Rosebud V1 i
 
 The source argues that conversational LLM memory remains unsolved because every system must trade off raw preservation against derived interpretation under context, cost, drift, evaluation, and forgetting constraints. Its strongest contribution is a practical design map: memory systems can be compared by what they store, when they derive, what triggers writes, where memory lives, how retrieval works, when retrieval runs, who curates, and how forgetting propagates. It applies that map to OpenClaw, ChatGPT memory, Rosebud V1, graph systems, QMD/OpenClaw, Lossless Claw, Claude Code, and MemPalace, then lists common failure modes such as derivation drift, retrieval misfire, stale context dominance, compaction loss, confidence without provenance, and memory-induced bias.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

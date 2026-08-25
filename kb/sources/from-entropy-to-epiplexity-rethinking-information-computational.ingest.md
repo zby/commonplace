@@ -21,9 +21,9 @@ Author: Marc Finzi, Shikai Qiu, Yiding Jiang, Pavel Izmailov, J. Zico Kolter, an
 
 The paper introduces epiplexity, or epistemic complexity, as a measure of structural information extractable by a computationally bounded observer. Its motivating claim is that Shannon entropy and Kolmogorov complexity miss phenomena that matter in learning systems: deterministic generators can improve model capabilities, ordering can change what models learn, and observers can extract structure not obvious from the data-generating process alone. Epiplexity separates time-bounded entropy, which remains unpredictable under a computation budget, from learnable structure, which becomes accessible to a bounded learner. The paper's main value for this KB is not a new agent architecture, but a formal vocabulary for why the same tokens, source, or artifact can have different value depending on the reader's computational budget, prior knowledge, tools, and framing.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

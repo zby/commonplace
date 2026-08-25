@@ -22,18 +22,14 @@ Author: Meyerson et al. at Cognizant AI Lab; Risto Miikkulainen (UT Austin & Cog
 
 MAKER introduces "massively decomposed agentic processes" (MDAPs), a framework that decomposes LLM tasks to the finest possible granularity (one step per agent call), then applies first-to-ahead-by-k voting across independent samples to correct errors at each micro-step. The key theoretical result is that cost scales as O(s ln s) under maximal decomposition (m=1), compared to exponentially without it. A red-flagging mechanism discards responses whose structure signals unreliability (excessive length, format violations), reducing correlated errors that would defeat independent voting. Applied to the 20-disk Towers of Hanoi (1,048,575 steps), MAKER achieves zero errors using gpt-4.1-mini at approximately $3,500. The paper's most provocative claim is that small non-reasoning models suffice when decomposition is maximal — architectural error correction substitutes for model intelligence. The authors distinguish "insights" (creative, open-ended) from "execution" (plan-following) and acknowledge their framework currently addresses only execution, where per-step oracles are hard.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** In a 20-disk Towers of Hanoi demonstration, MAKER completed more than one million LLM-generated steps with zero observed errors by decomposing execution into one-move microagent calls and applying first-to-ahead-by-three voting plus format- and length-based red-flagging.
-  - **Source extract (verbatim):** This paper describes MAKER, the first system that successfully solves a task with over one million LLM steps with zero errors, and, in principle, scales far beyond this level.
+- **Source extract (verbatim):** This paper describes MAKER, the first system that successfully solves a task with over one million LLM steps with zero errors, and, in principle, scales far beyond this level.
   - **Source location:** Abstract.
-  - **Source extract (verbatim):** The approach relies on an extreme decomposition of a task into subtasks, each of which can be tackled by focused microagents.
+- **Source extract (verbatim):** The approach relies on an extreme decomposition of a task into subtasks, each of which can be tackled by focused microagents.
   - **Source location:** Abstract.
-  - **Source extract (verbatim):** Since k_min = 3, at least three responses were generated in parallel for each step.
+- **Source extract (verbatim):** Since k_min = 3, at least three responses were generated in parallel for each step.
   - **Source location:** Section 4.4, “Solving the 20-disk problem.”
-  - **Scope:** One formally specified 20-disk Towers of Hanoi execution using gpt-4.1-mini microagents, one move per subtask, a vote margin of three, and output red-flagging.
-  - **Confidence:** High for the reported demonstration and system ingredients; the source states the completed horizon, observed error count, decomposition, and voting configuration directly.
-  - **Limitation:** The task is a deterministic puzzle with tiny repeated actions, and the result depends on stochastic voting and red-flagging rather than a hard semantic oracle for each step. It does not show that hard per-step checks caused the reliability or that the method transfers to judgment-heavy composition.
 
 ## Connections Found
 

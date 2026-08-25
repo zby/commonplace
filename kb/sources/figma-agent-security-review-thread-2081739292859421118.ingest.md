@@ -24,9 +24,9 @@ Author: @frgx reports the Figma security team's experience, but the thread suppl
 
 Figma began with a noisy agent security reviewer—only 4 of 27 first-week findings were real—and withheld it from developers until precision improved. Writing 68 generic precedents exposed the team's threat model and produced an artifact that now powers pull-request review, repo-wide auditing, and secure code generation. The team reports 100+ latent vulnerabilities found in an initial full-repo audit, including two critical issues, and emphasizes that bug-bounty data supplied 46 of 66 evaluation bugs. The operational thesis is that policy-writing, evaluation data, and repeated testing give security engineers leverage while preserving human judgment.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

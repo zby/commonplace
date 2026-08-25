@@ -24,9 +24,9 @@ Author: The snapshot identifies only the X account `@marfinxx`. It provides no a
 
 The post proposes a dual-loop agent architecture. A latency-sensitive inner loop assembles a stable prompt prefix, retrieves a small memory and repository slice through lexical, vector, and graph channels, removes redundancy with MMR, and runs inference and tools. An asynchronous outer loop turns execution traces into atomic memories, updates relations, applies decay and eviction, and consolidates long-term state. The proposal packages this with a four-tier memory hierarchy, an `ADD`/`UPDATE`/`DELETE`/`NOOP` mutation policy, AST-derived code maps, and a three-layer prompt layout. It is useful as a compact architecture checklist and as a public statement of a popular context-as-RAM/memory-as-SSD framing. It does not provide evidence that the bundle works, that its fixed choices are preferable, or that the ecosystem has converged on it.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

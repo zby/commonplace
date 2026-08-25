@@ -21,9 +21,9 @@ Author: Kim et al. are researchers from Google Research, Google DeepMind, and MI
 
 This paper derives quantitative scaling principles for agent systems by comparing single-agent and four multi-agent coordination topologies across three LLM families and four agentic benchmarks. Its main contribution is not that multi-agent systems win or lose in general, but that coordination benefit is task-contingent: centralized or decentralized coordination helps decomposable analysis and web-navigation tasks, while every tested multi-agent variant degrades sequential planning. The paper identifies three mechanisms: tool-heavy tasks pay a coordination tax, multi-agent gains fade once a single-agent baseline is already above roughly 45%, and topology changes error amplification, with independent synthesis amplifying errors far more than centralized verification. For this KB, the paper is strongest as empirical evidence for context-efficiency, decomposition, and coordination-guarantee claims.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

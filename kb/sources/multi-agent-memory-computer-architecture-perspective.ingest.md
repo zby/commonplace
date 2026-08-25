@@ -22,9 +22,9 @@ Author: Zhongming Yu et al. (UC San Diego, Georgia Tech) — systems architectur
 
 This position paper argues that multi-agent memory management should be understood through the lens of computer architecture rather than ad hoc system design. It proposes two fundamental paradigms (shared memory, where all agents access a common pool requiring coherence support, vs. distributed memory, where each agent maintains local memory with selective synchronization), introduces a three-layer hierarchy (I/O for ingestion/emission, cache for fast limited-capacity reasoning, memory for large persistent storage), and identifies two critical protocol gaps (no standardized cache sharing, no standardized memory access permissions). The paper's central claim is that multi-agent memory consistency — analogous to hardware cache coherence — is the most urgent unresolved challenge for scalable agent systems, made harder than classical settings because agent artifacts are heterogeneous and conflicts carry semantic rather than bitwise weight.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

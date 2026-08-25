@@ -21,9 +21,9 @@ Author: Lisanne Bainbridge, Department of Psychology, University College London 
 
 Bainbridge argues that automating an industrial process expands rather than eliminates problems with the human operator, through a series of ironies. The designer who distrusts the operator still leaves the operator whatever tasks could not be automated — an arbitrary, unsupported residue. The operator is then asked to (a) take over manual control when something is already wrong, precisely when skills atrophied by disuse are least available; (b) monitor for rare abnormalities, which humans cannot sustain past about half an hour; and (c) monitor a computer installed *because it outperforms the human*, an "impossible task" since the human cannot check its decisions in real time. A closing irony: the most successful, rarely-failing automated systems need the *greatest* investment in operator training. Bainbridge closes by arguing the Fitts-list "assign each task to who does it best" approach is insufficient and that human–computer collaboration (covert aiding) should be developed instead. For anyone deciding whether to read the full source: it is short, dense, and every paragraph is a reusable observation about the residue and oversight burden that automation leaves behind.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

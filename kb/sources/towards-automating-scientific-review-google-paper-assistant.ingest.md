@@ -21,9 +21,9 @@ Author: Rajesh Jayaram, Drew Tyler, David Woodruff, Corinna Cortes, Yossi Matias
 
 Jayaram et al. describe Google's Paper Assistant Tool (PAT), an agentic scientific-review pipeline that segments a manuscript, assigns adaptive compute budgets to logical sections, runs specialized deep-review agents, and synthesizes critiques with grounding and deduplication. The paper reports that PAT improves over a zero-shot Gemini baseline on a filtered SPOT subset of math/CS equation/proof errors, and that STOC/ICML author pilots produced positive survey feedback, including reports of substantive theory gaps and new experiments. Its most valuable contribution for this KB is not a claim that AI can replace reviewers, but a concrete design and policy pattern: automate verifiable review subroles first, and preserve human accountability where methodological judgment, hallucination risk, and publication authority remain unresolved.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

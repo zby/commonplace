@@ -21,9 +21,9 @@ Author: Kevin Murphy, Department of Computer Science, University of British Colu
 
 The paper presents the Model Discovery Agent (MDA), which assigns open-ended mechanism proposal to an LLM while using sequential Monte Carlo to maintain parameter and structure posteriors, predictive checks to trigger new proposals, and Bayesian value of information to select experiments that discriminate between candidate models. It evaluates this split on FORCEBENCH physics, CHEMBENCH enzyme kinetics, and a new deterministic and stochastic NEURONBENCH. MDA generally reaches accurate held-out interventional forecasts and interpretable mechanisms with fewer experiments than free-form LLM agents or prior systems. The most informative results are more qualified than the headline: explicit model-based forecasting consistently helps, while value-of-information acquisition is not always better than LLM or random acquisition; stronger base models narrow the advantage; and stochastic neuron experiments show that a wrong likelihood can confidently select the wrong mechanism even when the candidate pool contains the truth.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

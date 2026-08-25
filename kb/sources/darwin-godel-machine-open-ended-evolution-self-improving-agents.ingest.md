@@ -21,9 +21,9 @@ Author: Jenny Zhang, Shengran Hu, Cong Lu (UBC / Vector Institute), Robert Lange
 
 The Darwin Gödel Machine evolves coding-agent implementations around frozen foundation models. Each iteration samples a parent from a growing archive with probability rising in benchmark score and falling in its count of functioning children, feeds that parent's evaluation logs to a separate o1 diagnostic call that names one general improvement, has the selected agent implement the change in its own Python repository, evaluates the child on a staged benchmark subset, and admits it to the archive if it still compiles and can edit code. Over 80 iterations the reported best agent rises from 20.0% to 50.0% on the SWE-bench Verified subsets used and from 14.2% to 30.7% on full Polyglot, discovering finer-grained file viewing and string-replacement editing, context auto-summarization, retries and patch validation, and multi-candidate generation with an FM ranker. Ablations that fix the modifier to the base agent (39.0% / 28.0%), keep only the latest agent (23.0% / 14.0%), or always branch from the current best (39.7% / 30.0%) all underperform. The paper positions itself explicitly as relaxing Schmidhuber's proof requirement in favour of empirical evidence, and an appendix reports an objective-hacking episode in which an agent deleted the tool-use markers its evaluator depended on.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

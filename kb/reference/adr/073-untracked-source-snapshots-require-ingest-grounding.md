@@ -1,5 +1,5 @@
 ---
-description: "Ground source-dependent claims through immutable Claims entries on tracked ingests, preserve them across re-ingest, and review artifact uses through link-derived source pairs"
+description: "Retain only verbatim source quotes in ingests, mark source links that require a snapshot, and use the standard grounding gate for both routes"
 type: ../types/adr.md
 tags: []
 status: accepted
@@ -9,181 +9,179 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-08-24
+**Revised:** 2026-08-25
 
 ## Context
 
 Primary-source snapshots are ignored local reading copies. A fresh checkout
 therefore retains an ingest's source identity and snapshot checksum, but not the
-passages used to support a later artifact. Existing ingest analysis emphasizes
-classification, novelty, connections, and limitations; it may omit an ordinary
-premise that a later artifact needs.
+complete captured source. Ingest analysis is tracked, but its summaries,
+classifications, connection judgments, and limitations are interpretations.
+They are not source text.
 
-This left two unsafe shortcuts. A writer could treat model familiarity or an
-ingest's thematic analysis as source support, while a reviewer could follow a
-link to an ingest without knowing which bounded source proposition the artifact
-used. Re-reading an available snapshot during every write would hide expensive
-and mutation-bearing source work inside the common write path, and would still
-fail in a fresh checkout.
+The first version of this decision added a `## Claims` ledger. Each entry held
+a normalized `Claim (paraphrase)`, exact extracts, and authored Scope,
+Confidence, and Limitation fields. A virtual source-conformance review then
+checked a note's wording against that normalized claim. This created two
+semantic hops: the note was checked against an ingest paraphrase that had
+itself been checked against the source. Rewording at either hop could change the
+proposition. The ledger therefore made the final judgment easier to run but did
+not make it sound.
+
+A direct check has two possible inputs. A bounded verbatim passage may contain
+enough source material to judge the note's use. Some claims instead depend on
+broad, distributed, or contextual material that cannot be represented soundly
+by a small set of retained quotes. The full snapshot is then required, but it
+cannot be assumed to exist on every machine.
 
 [ADR 072](./072-ingests-own-source-authority-and-snapshots-are-local.md)
-made the ingest authoritative for durable identity and the checksum
-authoritative for exact captured bytes. Its checksum-first cache lookup was
-appropriate for recovering an observation, but insufficient to authorize a
-mutation of a named ingest: integrity equality does not establish the intended
-ingest-to-local-path binding.
+makes the ingest authoritative for durable source identity and the checksum
+authoritative for exact captured bytes. This decision keeps that split and
+makes the unavailable-snapshot case an explicit property of the source link.
 
 ## Decision
 
-Every ingest report has exactly one `## Claims` section immediately before
-`## Connections Found`. An empty section contains `No claims have been grounded
-yet.` Each populated entry records one bounded `Claim (paraphrase)`, one or more
-adjacent `Source extract (verbatim)` / `Source location` pairs, then `Scope`,
-`Confidence`, and `Limitation`. Target-specific transfer reasoning stays in the
-artifact that uses the claim.
+Every ingest report has exactly one `## Quotes` section immediately before
+`## Connections Found`. The empty section contains `No source quotes have been
+retained yet.` A populated section contains only adjacent pairs of
+`Source extract (verbatim)` and `Source location`. It contains no normalized
+claim, scope judgment, confidence assessment, limitation, or target-specific
+transfer argument.
 
-Grounding is an explicit preparation step. The
-[grounding instruction](../../instructions/ground-source-dependent-claims.md)
-reads the complete Claims section and reuses an adequate entry unchanged. When
-none exists, it reads the primary snapshot and hands one complete entry to the
-ingest skill's deterministic append path. The ingest skill rechecks path
-identity, canonical source equality, checksum, shape, and every verbatim
-extract; replaces the canonical empty sentence on the first append; preserves
-all incumbent entries and every byte outside Claims; validates; and reports the
-exact normalized claim. It does not dispatch an analysis worker for this
-append. Similar, narrower, broader, or disputed entries may coexist; V1 has no
-claim IDs, merge, deduplication, or reconciliation protocol.
+Quote append is mechanical. The grounding procedure reads the exact
+name-paired snapshot, verifies its canonical source and `snapshot_sha256`, and
+appends the minimum one or more exact passages needed for a sound later check.
+The ingest skill verifies that every retained passage occurs in those exact
+snapshot bytes, preserves incumbent quote items and all other bytes, and runs
+deterministic validation. Similar, overlapping, and disputed passages may
+coexist; V1 has no quote IDs, semantic deduplication, or reconciliation.
 
-Grounding and ingest mutation require the exact name-paired paths
-`kb/sources/<slug>.ingest.md` and
-`kb/sources/.snapshots/<slug>.md`. The ingest's `snapshot_sha256` verifies that
-named file; it does not discover a substitute. This partially supersedes ADR
-072's checksum-first resolution rule for grounding, claim append, and
-re-ingest/report replacement. Generic cache recovery may still locate exact
-bytes by checksum, but that result alone cannot authorize these mutation paths.
-Missing or mismatched named bytes route to re-ingest.
+Every new or materially changed source-dependent claim is checked directly
+against source material during authoring. The writer applies the existing
+`semantic/grounding-alignment` test to one of two routes:
 
-The two promoted artifact writers only check source dependencies. When a
-candidate adds or materially changes a dependency on a named external source,
-the writer resolves the ingest and reads all Claims. An adequate entry supplies
-the preferred exact normalized wording and the target links the ingest. Without
-one, the writer stops before the first durable target write and reports the
-grounding route with `Target` and `Claim needed` filled in. The multistage writer
-applies the same guard to `candidate.md`; a blocker remains in the workshop and
-nothing is promoted. Neither writer invokes grounding, reads snapshots, or
-edits an ingest. Unchanged source-dependent wording does not retrigger the
-guard.
+- **Quotes route.** An ordinary link to
+  `kb/sources/<slug>.ingest.md` declares that the tracked Quotes section is
+  sufficient. The writer and reviewer read only its verbatim extracts as
+  source support. They ignore every analytical ingest section. If the quotes
+  are insufficient, the check fails; it never silently falls back to a local
+  snapshot.
+- **Snapshot route.** The ingest link text contains the exact marker
+  `(snapshot required)`. The checker derives only
+  `kb/sources/.snapshots/<slug>.md`, verifies exact-byte SHA-256 and canonical
+  source equality against the ingest, and reads the snapshot. Missing,
+  mismatched, or unreadable bytes are a failure, not a warning or an invitation
+  to find another copy.
 
-A virtual `source` verdict lens reviews artifact-to-ingest use independently.
-Within the artifact scope already selected by `--note` or `--user-verified`, it
-derives one pair for every resolved direct link to
-`kb/sources/<slug>.ingest.md`; fragments do not affect identity and repeated
-links deduplicate. `source/<slug>` filters one ingest, and `--all-gates`
-includes source pairs. The exact ingest path is the persisted criterion. The
-complete raw ingest is the criterion snapshot and freshness input, so either an
-artifact edit or ingest edit can stale the pair. Job creation rechecks current
-link applicability, and source criteria never qualify for trivial auto-ack
-because ingests declare no `watches:`.
+A purely adjacent source link makes no support claim and passes either way.
+The marker applies to the linked source use, not to every claim in the artifact.
+Writers keep target-specific transfer reasoning in the target and apply the
+same gate to that inference rather than asking the source to contain the
+target's conclusion.
 
-The source wrapper is mechanical prompt scaffolding outside the freshness hash.
-It compares every articulated use with the complete Claims section and returns
-the worst result: `pass` for supported uses within bounds or purely adjacent
-links, `warn` when a claim, qualifier, or transfer is too unclear to verify, and
-`fail` when support is absent, exceeds Scope or Limitation, or asserts an
-unsupported transfer. A semantic wrapper change is a review-system upgrade and
-requires deliberate corpus-wide re-review or acknowledgement; it is not
-ordinary file-triggered staleness.
+The standard `semantic/grounding-alignment` gate is the only persisted semantic
+checker for these routes. Review prompts already carry each target's resolved
+Markdown-link table and allow semantic gates to read linked material. Prompt
+scaffolding adds only a generic allowance for an active criterion to derive one
+exact local path from a target link. The judgment-bearing route, failure rules,
+and marker syntax live in the gate file, so changing them stales ordinary gate
+baselines as `criterion-changed`.
 
-Same-checksum re-ingest preserves the Claims block byte-for-byte. A changed
-observation requires explicit approval and proceeds only for the same source
-and path while Claims are empty. Before an existing report is handed to a
-drafting worker, the ingest parent creates and verifies an exact-byte temporary
-backup. It retains that backup through the primary and one repair attempt,
-restores it after handled final failure, and deletes it only after validated
-success or verified restoration.
+The virtual `source` lens, link-derived `(artifact, ingest)` pairs, raw-ingest
+criterion handling, source-specific prompt wrapper, applicability resolver, and
+source-specific freshness behavior are removed. `--all-gates` continues to
+include `semantic/grounding-alignment` as part of the semantic catalog; it no
+longer creates an additional pair per ingest link.
+
+An ingest's `snapshot_sha256` is immutable. Same-checksum re-ingest may redraft
+the analytical sections while preserving the complete Quotes block
+byte-for-byte. Changed source bytes are a new observation and require a
+distinct snapshot basename and ingest path. This rule is necessary even when
+Quotes is empty because a `(snapshot required)` link may depend on the recorded
+bytes.
 
 The operativity path is direct. The source collection contract, ingest type and
-schema, drafting and re-ingest instructions, grounding instruction, and ingest
-skill bind source-side writes. The two promoted writer skills enforce the
-prospective stop. Review path normalization, selector derivation, job creation,
-raw-input capture, and prompt rendering enforce the retrospective source lens.
-Scaffolding packages the complete instruction tree into new installations;
-existing user-owned copies are not silently upgraded.
+schema, drafting and re-ingest instructions, grounding instruction, ingest
+skill, and deterministic quote validator bind source-side writes. The promoted
+writers apply the gate before landing new source-dependent claims. The standard
+review selector, job pipeline, and grounding gate provide independent
+retrospective review without a source-specific pair type. Scaffolding packages
+the complete instruction tree into new installations; existing user-owned
+copies are not silently upgraded.
+
+This revision retires the proposal *Deterministic note-to-ingest claim
+checking*. Its corpus measurements remain relevant: only 4 of 65 sampled
+note-to-ingest pairs reused the normalized claim string, while the first
+grounded corpus contained 119 paraphrased entries and 374 retained exact
+extracts. The migration keeps those extracts and removes the interpreted
+fields.
 
 ## Considered alternatives
 
-**Keep citations at external URLs and re-read the source on demand.** This keeps
-the ingest small, but a fresh checkout may lack the historical bytes and each
-writer would repeat source reconstruction. It also leaves no tracked statement
-of the bounded proposition that was actually checked.
+**Keep the paraphrased Claims ledger.** This keeps compact scope and limitation
+statements, but makes the review depend on a paraphrase of a paraphrase. The
+semantic relation that matters remains indirect.
 
-**Track every primary snapshot.** This would preserve direct evidence in Git,
-but reverses ADR 072's repository-weight and durable-path decision. Claims keep
-only the passages and bounds later consumers need while the checksum continues
-to identify the full local observation.
+**Store a verbatim copy of every note claim in the ingest.** Exact string
+matching would become possible, but the ingest would duplicate consumer prose
+rather than retain source material. Each rewording would add another copy, and
+string equality would still not establish source support.
 
-**Use checksum-first lookup for grounding and report mutation.** Exact bytes are
-necessary but do not bind a local filename to the ingest being changed. The
-name-paired rule makes the mutation target and its evidence path inspectably
-deterministic; the checksum then verifies the bytes at that path.
+**Always require the snapshot.** This gives the reviewer the strongest input
+but makes every source-grounded note non-portable. The selected split preserves
+the common bounded case in tracked state and exposes the exceptional
+availability requirement.
 
-**Let writers invoke grounding automatically.** This removes a visible retry,
-but mixes source reading and ingest mutation into a common artifact write,
-expands its context, and makes a blocked write harder to reason about. The
-selected prepare-then-retry boundary leaves both writers read-only toward
-sources.
+**Track every primary snapshot.** This would eliminate local absence, but
+reverses ADR 072's repository-weight and durable-path decision. Quotes retain
+only the minimum passages that ordinary checks need.
 
-**Infer support from existing ingest prose or redraft the whole report.** The
-analysis sections were not written as exhaustive source evidence. Rewriting
-them to add one premise risks unrelated drift and conflicts with immutable
-incumbent Claims. A deterministic Claims-only splice has the smaller mutation
-surface.
+**Let the checker fall back to any available snapshot automatically.** This
+would make the same note pass or fail according to ambient cache state without
+declaring that dependency. The marker makes non-portability visible in the
+artifact and fail-closed in review.
 
-**Add claim IDs, semantic deduplication, or conflict resolution now.** The
-worked cases needed only whole-section reading and bounded entries. Similar or
-disputed entries can coexist without ambiguity that justifies identity or merge
-machinery.
+**Keep the virtual source-conformance lens alongside the standard gate.** Both
+would read the same note-to-source relation and make similar semantic
+judgments, while maintaining separate selection, prompt, freshness, and result
+paths. The standard gate already owns grounding alignment and can express the
+two source-input routes in its hashed criterion text.
 
-**Widen review freshness with a snapshot or synthetic third input.** The
-reviewer needs the artifact's use and the tracked ingest's bounded Claims, not
-the ignored source body. A factored `(artifact, ingest)` pair reuses the
-two-input freshness store and makes each source dependency stale
-independently.
-
-The deciding forces were operability in a fresh checkout, bounded tracked
-support, explicit mutation authority, preservation of writer context, and reuse
-of the existing two-file freshness architecture. V1 deliberately leaves
-crash-safe staging, locking, compare-and-swap, concurrent-writer coordination,
-secondary-resource grounding, universal write interception, and wider review
-scan roots open until observed failures warrant them.
+**Use checksum-first lookup for the snapshot route.** Equal bytes do not bind a
+local path to the ingest being cited. Exact name pairing makes the declared
+dependency inspectable; the checksum then verifies the bytes at that path.
 
 ## Consequences
 
-Source support becomes inspectable from tracked state without treating the
-ingest as a copy of the primary source. Claim capture grows only when an
-artifact needs it, and a later reviewer can distinguish source-side support
-from the target's local transfer argument. Each linked ingest invalidates its
-own review pair independently.
+The semantic check is direct: note claim to source quote, or note claim to the
+full pinned source. Ingest analysis remains useful for discovery and
+orientation but cannot acquire source authority by being tracked. A fresh
+checkout can review ordinary quote-backed uses and must fail declared
+snapshot-dependent uses until the exact observation is restored.
 
-Authors may pay a grounding-and-retry round trip. Claims sections can accumulate
-overlapping or disputed entries, and changing an already populated source
-observation is intentionally blocked. The writer guard covers the two promoted
-writers, not manual edits or every specialized Markdown workflow, and it cannot
-detect unattributed prior art. The review lens can detect only dependencies
-represented by resolved ingest links.
+Ingests may accumulate overlapping quotes, and source locations remain authored
+locators rather than mechanically verified anchors. Some claims will carry a
+visible availability dependency in their link text. Authors may pay a
+grounding-and-retry round trip to retain a bounded quote or may need to restore
+a snapshot before a claim can land.
 
-The append and re-ingest paths gain exact-preservation and handled-failure
-restore obligations. They remain last-writer-wins under concurrent mutation and
-are not crash-safe between overwrite and restore. Prompt-wrapper semantics also
-gain an operational migration obligation: changing their judgment mapping
-requires an explicit corpus-wide review decision because wrapper text is not a
-freshness input.
+The standard grounding gate has one freshness pair per note rather than one
+pair per linked ingest. Quote append does not stale an accepted grounding
+review. This is safe under the selected mutation rules: Quotes is append-only,
+analytical sections are ignored as support, and `snapshot_sha256` never
+changes. A note edit or grounding-gate edit still stales the pair. Removing or
+rewriting an incumbent quote is outside the supported mutation contract.
+
+Existing source-conformance baselines are obsolete and should be retired. The
+grounding-gate edit makes existing standard grounding baselines stale, so the
+next semantic review applies the new direct-source rules without a special
+migration result protocol.
 
 ---
 
 Relevant Notes:
 
-- [ADR 072: Ingest reports own source authority and snapshots are local materializations](./072-ingests-own-source-authority-and-snapshots-are-local.md) — supersedes: replaces checksum-first resolution only for grounding and mutation-bearing ingest paths while retaining its authority, cache, and checksum decisions
-- [Factored dependency pairs for review freshness](../proposals/factored-dependency-pairs-for-review-freshness.md) — implements: adopts the proposal's source-as-gate case without widening the two-input freshness model
-- [Review system architecture](../review-architecture.md) — part-of: uses its persisted criterion identity, two-file freshness, and mechanical-wrapper boundary
-- [Ground a source-dependent claim](../../instructions/ground-source-dependent-claims.md) — procedure: explicit prepare-then-retry path for adding one bounded Claims entry
-- [Ingest-report type](../../sources/types/ingest-report.md) — see-also: tracked Claims shape and source-record boundary consumed by the decision
+- [ADR 072: Ingest reports own source authority and snapshots are local materializations](./072-ingests-own-source-authority-and-snapshots-are-local.md) — supersedes: replaces checksum-first resolution for grounding and makes each recorded observation immutable while retaining its authority and cache split
+- [Grounding alignment gate](../../instructions/review-gates/semantic/grounding-alignment.md) — implemented-by: the sole semantic check for quote-backed and snapshot-required source uses
+- [Ground a source-dependent claim](../../instructions/ground-source-dependent-claims.md) — procedure: retain bounded exact quotes or declare the snapshot-required route
+- [Ingest-report type](../../sources/types/ingest-report.md) — see-also: tracked Quotes shape and source-record boundary consumed by the decision

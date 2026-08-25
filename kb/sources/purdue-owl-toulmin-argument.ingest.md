@@ -22,9 +22,9 @@ Author: Purdue OWL (Online Writing Lab) — widely used academic writing referen
 
 Stephen Toulmin's argumentation method decomposes any argument into six components: the **claim** (assertion to be proved), **grounds** (evidence supporting it), **warrant** (assumption connecting grounds to claim), **backing** (support for the warrant itself), **qualifier** (words acknowledging the claim's limits), and **rebuttal** (recognition of alternative viewpoints). The first three are fundamental to every argument; the latter three strengthen it by making assumptions explicit, acknowledging uncertainty, and engaging with counterarguments. The Purdue OWL treatment is pedagogical — it teaches the framework through basic and academic examples rather than extending or critiquing it.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

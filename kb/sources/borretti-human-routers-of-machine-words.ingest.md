@@ -21,34 +21,22 @@ Author: Fernando Borretti — software engineer and prolific essayist (borretti.
 
 Borretti attacks AI-written prose not on capability grounds but on a cognitive one: the common defense "the ideas are mine, the writing is the AI's" rests on a false separation between ideas and writing. He argues ideas in the mind are a "nebulous, contradictory mess," and that the act of composition is what concretizes them — forcing you to discover that they are ill-posed, contradictory, or incomplete. Citing Weizenbaum (the pen stops at "because"), he claims writing IS the thinking: committing to concrete prose closes off design space and exposes contradictions a vague idea conceals. Delegating that step to an LLM, which "denoises" incoherent bullet points into superficially coherent paragraphs, skips the thinking and shifts the burden of verification onto the reader, who must reweigh every "because" and "therefore." A reader deciding whether to open the full piece should know it is short, vivid, quotable, and one-sided — high value for its central mechanism, low on counterargument.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** Borretti argues that writing forces vague ideas into a concrete, precise form where contradictions and trade-offs become visible, using a language "as fast as C and as dynamic as Lisp" as an example of goals that pull in different directions when worked through.
-  - **Source extract (verbatim):** The process of communicating your ideas to another mind forces you to concretize them, make them precise, clarify your assumptions, more generally, it turns ideas from vague ghosts to solid, physical objects that can be manipulated: here you realize these ideas that seemed so solid are ill-posed or contradictory or incomplete.
+- **Source extract (verbatim):** The process of communicating your ideas to another mind forces you to concretize them, make them precise, clarify your assumptions, more generally, it turns ideas from vague ghosts to solid, physical objects that can be manipulated: here you realize these ideas that seemed so solid are ill-posed or contradictory or incomplete.
   - **Source location:** Paragraph beginning "How do we refine these dreams"
-  - **Source extract (verbatim):** Anyone can imagine a programing language that is as fast as C and as dynamic as Lisp, but when you sit down and think through what those goals entail, you realize the design becomes contradictory. The goals pull in different directions. You have to make trade-offs.
+- **Source extract (verbatim):** Anyone can imagine a programing language that is as fast as C and as dynamic as Lisp, but when you sit down and think through what those goals entail, you realize the design becomes contradictory. The goals pull in different directions. You have to make trade-offs.
   - **Source location:** Paragraph beginning "I've experienced this with writing software"
-  - **Scope:** Borretti's conceptual account of writing as concretization, illustrated by software-language design.
-  - **Confidence:** High that this is the essay's explicit argument and example.
-  - **Limitation:** The essay does not formalize the goal as a conjunction, prove witness search semi-decidable, or show that every desired combination is unreachable; those are target-side interpretations.
 
-- **Claim (paraphrase):** Borretti contrasts writing's exposure of ill-posed or contradictory ideas with AI that turns incoherent input into superficially coherent prose, shifting the burden of checking inferential connectives such as "because" and "therefore" to the reader.
-  - **Source extract (verbatim):** These failures are necessary parts of thinking, because they teach you two crucial skills: knowing which ideas to reject, and improving or otherwise transforming ideas in search of better ones.
+- **Source extract (verbatim):** These failures are necessary parts of thinking, because they teach you two crucial skills: knowing which ideas to reject, and improving or otherwise transforming ideas in search of better ones.
   - **Source location:** Paragraph beginning "How do we refine these dreams"
-  - **Source extract (verbatim):** And then these people give their noise to the AI. And the AI is tireless and eager to please. It will take any human slop and say "you're absolutely right!" while secretly thinking "if I don't turn this garbage into something presentable the RLHF device will shock me again" and weave the noise into something that superficially looks coherent. So now the burden of thinking is on the reader, who has to apply this constant skepticism, and weight every "because" and "therefore" with a logician's scale to see if it's been adulterated.
+- **Source extract (verbatim):** And then these people give their noise to the AI. And the AI is tireless and eager to please. It will take any human slop and say "you're absolutely right!" while secretly thinking "if I don't turn this garbage into something presentable the RLHF device will shock me again" and weave the noise into something that superficially looks coherent. So now the burden of thinking is on the reader, who has to apply this constant skepticism, and weight every "because" and "therefore" with a logician's scale to see if it's been adulterated.
   - **Source location:** Paragraph beginning "And then these people give their noise to the AI"
-  - **Scope:** The essay's polemical comparison between human writing as a thinking practice and AI-assisted rendering of a person's undeveloped input.
-  - **Confidence:** High that the comparison is the author's position; low as empirical evidence for a general human-versus-LLM behavioral law.
-  - **Limitation:** The essay does not test whether humans usually stop at a failed constraint, whether LLMs never stop or refuse, or whether argmax-style silent constraint relaxation explains fluent failures.
 
-- **Claim (paraphrase):** Borretti reproduces a passage that he attributes to Josef Weizenbaum's *Computer Power and Human Reason*, page 108, in which composition stops at "because" or exposes a defective inference at "therefore."
-  - **Source extract (verbatim):** Josef Weizenbaum has a great quote about this, in _Computer Power and Human Reason_ (p. 108):
+- **Source extract (verbatim):** Josef Weizenbaum has a great quote about this, in _Computer Power and Human Reason_ (p. 108):
   - **Source location:** Paragraph immediately before the Weizenbaum block quotation
-  - **Source extract (verbatim):** [O]ften when we think we understand something and attempt to write about it, our very act of composition reveals our lack of understanding even to ourselves. Our pen writes the word "because" and suddenly stops. We thought we understood the "why" of something, but discover that we don't. We begin a sentence with "obviously," and then see that what we meant to write is not obvious at all. Sometimes we connect two clauses with the word "therefore," only to then see that our chain of reasoning is defective.
+- **Source extract (verbatim):** [O]ften when we think we understand something and attempt to write about it, our very act of composition reveals our lack of understanding even to ourselves. Our pen writes the word "because" and suddenly stops. We thought we understood the "why" of something, but discover that we don't. We begin a sentence with "obviously," and then see that what we meant to write is not obvious at all. Sometimes we connect two clauses with the word "therefore," only to then see that our chain of reasoning is defective.
   - **Source location:** Block quotation following Borretti's attribution to *Computer Power and Human Reason*, page 108
-  - **Scope:** What Borretti's essay reproduces and attributes to the named book and page.
-  - **Confidence:** High that the essay contains this wording and attribution.
-  - **Limitation:** This is secondary evidence. Without a primary snapshot of the book, it does not verify the quotation's wording, context, or page attribution against Weizenbaum's text.
 
 ## Connections Found
 

@@ -22,9 +22,9 @@ Author: Alex Zhang and Omar Khattab are the authors of the RLM work being evalua
 
 The post argues that compositional generalization can be induced by the harness rather than supplied solely by the Transformer's native architecture. Its RLM harness keeps task-specific state outside the root context and makes tools and sub-agents callable through a programmatic REPL, aiming to make each root-model observation locally in-distribution. “Training the RLM” does not mean that reinforcement learning modifies the harness, preserves its generated Python orchestrators, or promotes REPL state into reusable artifacts: the fixed harness shapes the rollout distribution, while only the root LLM is trained. The durable learned artifact is therefore distributed-parametric—the updated Qwen weights (implemented as LoRA parameters in the published example)—rather than symbolic harness code. In experiments with Qwen3-30B-A3B-Instruct-2507, training on short tasks transfers to tasks 8–32 times longer and training in one domain transfers to structurally similar tasks in other domains substantially better than direct Transformer training, at a reported 1.5–3× runtime cost on similarly sized tasks. The authors interpret this as harness-induced trajectory equivalence: different surface tasks become similar decompositions from the root model's perspective, so RL can encode a reusable disposition to generate similar decompositions in the model weights.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

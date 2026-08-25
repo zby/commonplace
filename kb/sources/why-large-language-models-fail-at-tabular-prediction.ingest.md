@@ -21,9 +21,9 @@ Author: Marta Garnelo of Fundamental Technologies and Wojciech M. Czarnecki of V
 
 The paper studies Claude Opus 4.6 as a bare in-context classifier: one user message contains the full training and test tables, and one generation returns all labels, with no system prompt, tools, retrieval, multi-turn loop, or fine-tuning. Controlled experiments reject four proposed causes of failure within this regime: class overlap, inability to read linearized CSV columns, numeric precision, and the number of test labels requested per call. Accuracy instead falls as feature count rises under random projections and synthetic two-dimensional upscaling, while eight classical baselines remain flat or improve. In two dimensions, the model's predictions resemble local distance-based methods; in higher dimensions, none of 252 configured classical models reproduces them closely. A separate contamination probe finds prior recall of several standard datasets, and an explanation experiment finds that the model's stated rules often fail to match its prediction task.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

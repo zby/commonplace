@@ -21,9 +21,9 @@ Author: Henrik Karlsson -- an independent essayist writing from sustained person
 
 Karlsson argues that writing improves thought only when it makes an idea vulnerable to failure. His sequence is to turn a diffuse impression into a definite positive conjecture, expand the conjecture into explicit premises and reasoning, and then test those parts against research or concrete counterexamples. A local counterexample defeats part of the explanation while leaving the conclusion standing; a global counterexample propagates to the conclusion and forces a replacement. The essay also warns that a scaffold optimized for discovery may obstruct beauty, speed, and publication.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

@@ -22,9 +22,9 @@ Author: Yi Yu, Liuyi Yao, Yuexiang Xie et al. (Alibaba Group, Wuhan University).
 
 AgeMem proposes unifying long-term memory (LTM) and short-term memory (STM) management as learnable tool-based actions within an LLM agent's policy, trained through reinforcement learning. Instead of treating memory as an external service or relying on in-context instructions, the system exposes six memory operations (Add, Update, Delete for LTM; Retrieve, Summary, Filter for STM) and trains the agent to use them through a three-stage progressive RL strategy: first learning LTM storage, then STM context management, then coordinating both. A step-wise GRPO mechanism addresses sparse rewards from memory operations. Results show 23-49% improvement over no-memory baselines, 3-5% token reduction in context, and meaningful RL contribution (8-9 percentage points) beyond the base model's capability.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

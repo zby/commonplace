@@ -21,9 +21,9 @@ Author: Angelo Romasanta, Llewellyn D.W. Thomas, and Natalia Levina are business
 
 Romasanta, Thomas, and Levina argue that LLMs are risky strategic advisors because they tend to recommend fashionable, high-valence management options rather than context-specific strategic trade-offs. They report simulations across seven binary strategy tensions and several leading models, finding strong defaults toward options such as differentiation, augmentation, collaboration, decentralization, and long-termism. Prompt manipulations and richer organizational contexts shifted some results but did not remove the bias; option order itself produced large movement, suggesting sensitivity rather than deeper reasoning. The article names this failure mode "strategy trendslop" and recommends using LLMs for option expansion, counterargument generation, and risk surfacing while keeping final strategic choice with humans.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

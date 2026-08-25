@@ -21,16 +21,12 @@ Author: Simon Willison is a high-signal developer-tools and AI commentator; Andr
 
 Karpathy frames "Claws" as a new layer above LLM agents: systems that add orchestration, scheduling, persistent context, tool calls, and local/personal execution to agent workflows. He points to OpenClaw with caution, and to NanoClaw's small auditable core and container-by-default execution as attractive implementation traits. Willison argues that "Claw" is becoming the generic term for OpenClaw-like systems: AI agents that usually run on personal hardware, communicate through messaging protocols, respond to direct instructions, and schedule tasks. The source's main contribution is vocabulary and category boundary-setting, not technical evidence.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** In Simon Willison's account, quoting Andrej Karpathy, Claws are a layer above LLM agents that advances orchestration, scheduling, context, tool calls, and persistence; Willison describes the category as OpenClaw-like agents generally running on personal hardware, communicating through messaging protocols, and acting on direct instructions or scheduled tasks.
-  - **Source extract (verbatim):** But I do love the concept and I think that just like LLM agents were a new layer on top of LLMs, Claws are now a new layer on top of LLM agents, taking the orchestration, scheduling, context, tool calls and a kind of persistence to a next level.
+- **Source extract (verbatim):** But I do love the concept and I think that just like LLM agents were a new layer on top of LLMs, Claws are now a new layer on top of LLM agents, taking the orchestration, scheduling, context, tool calls and a kind of persistence to a next level.
   - **Source location:** Quoted Andrej Karpathy mini-essay, first blockquote paragraph
-  - **Source extract (verbatim):** "Claw" is becoming a term of art for the entire category of OpenClaw-like agent systems - AI agents that generally run on personal hardware, communicate via messaging protocols and can both act on direct instructions and schedule tasks.
+- **Source extract (verbatim):** "Claw" is becoming a term of art for the entire category of OpenClaw-like agent systems - AI agents that generally run on personal hardware, communicate via messaging protocols and can both act on direct instructions and schedule tasks.
   - **Source location:** Simon Willison's paragraph following the Karpathy quotation
-  - **Scope:** A short conceptual blog post reporting Karpathy's proposed category and Willison's own descriptive gloss, not a systematic survey or operational definition.
-  - **Confidence:** High for the two authors' stated characterizations because both appear directly in the captured post.
-  - **Limitation:** The post mentions context and persistence but does not specify that a Claw accumulates retained knowledge about a domain, user, or project, and “direct instructions” and scheduled tasks do not by themselves establish the broader phrase “acts on a user's behalf.”
 
 ## Connections Found
 

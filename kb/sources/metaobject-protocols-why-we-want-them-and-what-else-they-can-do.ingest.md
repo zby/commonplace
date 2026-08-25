@@ -21,18 +21,14 @@ Author: Gregor Kiczales, J. Michael Ashley, Luis Rodriguez, Amin Vahdat, and Dan
 
 Kiczales et al. present a metaobject protocol (MOP) as a documented interface that “opens up” selected parts of a language's semantics and implementation without exposing arbitrary implementation details. Ordinary programs keep the base language's syntax and default behavior; programmer-supplied meta-code changes selected definition machinery through protocol generic functions, and a base definition explicitly opts into the alternate behavior through a mark such as CLOS's `:metaclass`. The separation answers two design pressures at once: keep the base language small and its implementation abstract, while giving exceptional programs a sanctioned way to revise implementation tradeoffs or language semantics. The paper's locality principles make the fence more precise: extensions should target one feature, object, strategy, and marked textual region, and should be incremental deviations from a good default rather than replacements for the whole implementation.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** The CLOS metaobject protocol opens selected language semantics and implementation strategies to programmer control through explicit generic-function entry points on metaobjects, while base programs opt particular classes into an alternative metaobject class.
-  - **Source extract (verbatim):** The CLOS MOP on the other hand, “opens up” the CLOS abstraction, and its implementation to the programmer. The programmer can, for example, adjust aspects of the implementation strategy such as instance representation, or aspects of the language semantics such as multiple inheritance behavior. The design of the CLOS MOP is such that this opening up does not expose the programmer to arbitrary details of the implementation, nor does it tie the implementor’s hand unecessarily—only the essential structure of the implementation is exposed.
+- **Source extract (verbatim):** The CLOS MOP on the other hand, “opens up” the CLOS abstraction, and its implementation to the programmer. The programmer can, for example, adjust aspects of the implementation strategy such as instance representation, or aspects of the language semantics such as multiple inheritance behavior. The design of the CLOS MOP is such that this opening up does not expose the programmer to arbitrary details of the implementation, nor does it tie the implementor’s hand unecessarily—only the essential structure of the implementation is exposed.
   - **Source location:** Introduction, CLOS MOP motivation
-  - **Source extract (verbatim):** Three generic functions in the protocol suffice: `allocate-instance`, `get-value` and `set-value`.[^2] We require that the runtime, whenever it needs to create an instance or access a slot, do so by calling these generic functions.
+- **Source extract (verbatim):** Three generic functions in the protocol suffice: `allocate-instance`, `get-value` and `set-value`.[^2] We require that the runtime, whenever it needs to create an instance or access a slot, do so by calling these generic functions.
   - **Source location:** “Simple Metaobject Protocols,” instance-representation protocol
-  - **Source extract (verbatim):** Then, in their base program, programmers can request that the metaobject for specific classes they define be instances of `hash-table-class` rather than `standard-class`. This is done by marking the definition of those classes using the `:metaclass` option.
+- **Source extract (verbatim):** Then, in their base program, programmers can request that the metaobject for specific classes they define be instances of `hash-table-class` rather than `standard-class`. This is done by marking the definition of those classes using the `:metaclass` option.
   - **Source location:** “Simple Metaobject Protocols,” application of `hash-table-class`
-  - **Scope:** The chapter's simplified CLOS protocol example, used to illustrate a broader metaobject-protocol framework for selected language semantics and implementation choices.
-  - **Confidence:** High for the exposed protocol and base-program opt-in because the chapter documents both directly.
-  - **Limitation:** The chapter demonstrates a controlled meta-level interface, not that ordinary instance creation changes shared definitions, that such change is evidence-responsive learning, or that every MOP enforces the same base/meta boundary.
 
 ## Connections Found
 

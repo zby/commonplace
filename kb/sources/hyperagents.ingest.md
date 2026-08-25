@@ -21,9 +21,9 @@ Author: Jenny Zhang, Bingchen Zhao, Wannan Yang, Jakob Foerster, Jeff Clune, Min
 
 HyperAgents extends the Darwin Gödel Machine by joining a task agent and the meta agent that modifies agents into one editable Python program. DGM-H branches and evaluates these programs in an archive, letting descendants revise both task behavior and parts of the future-improvement procedure. Across coding, paper-review classification, robotics reward design, and Olympiad-math grading, the paper reports held-out task gains; in the joint paper-review and robotics runs, performance drops sharply when either meta-agent self-improvement or archive-based exploration is removed. Its strongest methodological result transfers whole hyperagent implementations from those joint runs into unseen math grading, freezes their meta-agent components, and measures how well they generate task agents: Improvement@50 reaches 0.630, significantly above the initial hyperagent. The paper attributes this transfer qualitatively to evolved performance tracking, persistent memory, and strategic planning. Main-run task distributions, evaluation protocols, and parent selection remain fixed, while the architecture also keeps resource budgets and the outer archive controller outside the editable hyperagent. The transferred-versus-fresh continuation comparison offered as evidence of compounding is not statistically significant.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

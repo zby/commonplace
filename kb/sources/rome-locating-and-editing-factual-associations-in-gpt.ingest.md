@@ -21,16 +21,12 @@ Author: David Bau's group with Yonatan Belinkov — a central and heavily replic
 
 ROME asks where an autoregressive transformer stores a factual association such as "the Space Needle is in Seattle," and whether that store can be written to directly. The localization half uses *causal tracing*: corrupt the subject-token embeddings, then restore individual hidden states one at a time and measure which restorations recover the correct prediction. The decisive states cluster in mid-layer feed-forward (MLP) modules at the last subject token, which the authors read as a linear associative key-value store. The editing half, Rank-One Model Editing, exploits that reading: it solves for a rank-one update to a single MLP projection matrix that maps the subject key to a chosen value, requiring no gradient fine-tuning run. On zero-shot relation extraction ROME is comparable to prior editors; on CounterFact, a new dataset of counterfactual assertions the authors introduce, ROME is the only method that holds both *generalization* (paraphrases of the edited fact also change) and *specificity* (neighbouring unedited facts do not), where fine-tuning-style baselines buy one by sacrificing the other. Evaluated on GPT-2 XL and GPT-J. The paper's own conclusion is deliberately narrow — "direct manipulation of computational mechanisms may be a feasible approach for model editing" — and worth preferring over the broader "knowledge is localized" reading it is often given.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** ROME uses a rank-one update to feed-forward weights to change a selected factual association, with the captured paper summary reporting both counterfactual generalization and specificity tests.
-  - **Source extract (verbatim):** This research examines how transformer language models store and retrieve factual information, demonstrating that "factual associations correspond to localized, directly-editable computations."
+- **Source extract (verbatim):** This research examines how transformer language models store and retrieve factual information, demonstrating that "factual associations correspond to localized, directly-editable computations."
   - **Source location:** “Overview.”
-  - **Source extract (verbatim):** The team introduced **Rank-One Model Editing (ROME)**, a technique that modifies feed-forward weights to update specific factual associations. Testing on a zero-shot relation extraction task showed ROME performed comparably to existing methods while offering advantages in maintaining both specificity and generalization on counterfactual assertions.
+- **Source extract (verbatim):** The team introduced **Rank-One Model Editing (ROME)**, a technique that modifies feed-forward weights to update specific factual associations. Testing on a zero-shot relation extraction task showed ROME performed comparably to existing methods while offering advantages in maintaining both specificity and generalization on counterfactual assertions.
   - **Source location:** “Methodology.”
-  - **Scope:** The ROME method and evaluations summarized in this capture for editing factual associations in GPT-family transformer models.
-  - **Confidence:** Moderate to high for the method shape and evaluated edit properties; this compact capture does not retain the paper's quantitative tables or all benchmark conditions.
-  - **Limitation:** A targeted weight update provides a handle for changing factual content, but the captured source does not attach a natural-language applicability boundary, criticizable rationale, source lineage, invalidation procedure, or governed revision identity to that edit. Those are target-side comparisons, not ROME's claimed outputs.
 
 ## Connections Found
 

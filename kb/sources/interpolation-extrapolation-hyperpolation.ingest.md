@@ -21,9 +21,9 @@ Author: Toby Ord is an academic philosopher best known for work on ethics and ex
 
 Ord introduces **hyperpolation** as a third kind of function generalisation alongside interpolation and extrapolation: estimating values at points outside the affine hull of the known data, not merely between or beyond known points along the same subspace. The paper gives a formal convex-hull / affine-hull definition, then argues that hyperpolation is possible when a lower-dimensional slice is better explained as part of a simpler higher-dimensional structure. It extends the idea to creativity: scientific and artistic novelty often requires moving outside the subspace of existing examples, and generative AI's apparent lack of "fundamental creativity" may reflect limited ability to find high-quality off-manifold points. The paper closes by comparing AI with evolution, where genotype mutation supplies an easy way to specify new phenotype directions while environmental selection supplies the quality test.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

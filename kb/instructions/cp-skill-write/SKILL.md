@@ -106,22 +106,31 @@ and do not retrigger the guard for unchanged source-dependent wording.
 
 For each guarded dependency, resolve exactly one direct tracked
 `kb/sources/<slug>.ingest.md` from the supplied ingest, canonical source URL, or
-unambiguous source identity. Read its complete Claims section.
+unambiguous source identity. Read its complete Quotes section and the
+`semantic/grounding-alignment` gate from the installed framework gate catalog.
 
-- If an entry supports the dependency within its Scope and Limitation, prefer
-  the exact `Claim (paraphrase)` wording in the candidate, link the ingest, and
-  keep any target-specific transfer reasoning in the target rather than the
-  Claims entry.
-- If no entry does, stop before saving. Fill in the exact ingest path or
-  canonical source URL and the source-side proposition or question, then
+- When the retained verbatim quotes contain enough source material for the
+  gate to judge the candidate's use, apply the gate directly to that use. Link
+  the ingest without a snapshot marker and keep target-specific transfer
+  reasoning in the target. Ignore every ingest section outside Quotes as source
+  support.
+- Use the snapshot route only when an earlier grounding run returned `snapshot
+  required`. Put the exact marker `(snapshot required)` in the ingest link
+  text. Derive the exact name-paired snapshot, require its exact-byte SHA-256
+  and canonical source to match the ingest, read it, and apply the same gate to
+  the candidate's use. Stop if the snapshot is absent, mismatched, or does not
+  support the use.
+- Otherwise, if Quotes is insufficient, stop before saving. Fill in the exact
+  ingest path or canonical source URL and the source-side proposition or question, then
   report one of these literal routes as appropriate:
   - source checkout: `Read and execute kb/instructions/ground-source-dependent-claims.md with Target: <target> and Claim needed: <claim-needed>.`
   - installed project: `Read and execute kb/commonplace/instructions/ground-source-dependent-claims.md with Target: <target> and Claim needed: <claim-needed>.`
 
 If neither an exact ingest nor a canonical URL can be resolved, stop and ask
 for that source identity rather than inventing an input. This writer never
-invokes the grounding instruction, reads a source snapshot, edits an ingest, or
-introduces a result protocol.
+invokes the grounding instruction, edits an ingest, or introduces a separate
+result protocol. It reads a source snapshot only for a declared `snapshot
+required` dependency.
 
 ### Step 8 - Save
 

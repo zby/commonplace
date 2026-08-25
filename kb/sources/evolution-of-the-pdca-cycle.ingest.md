@@ -21,9 +21,9 @@ Author: Ronald Moen and Clifford Norman, Associates in Process Improvement (API)
 
 The paper traces the plan-do-check-act (PDCA) and plan-do-study-act (PDSA) improvement cycles back to the scientific method and the philosophy of science, running from Galileo and Bacon through American pragmatism (Peirce, James, Dewey, C.I. Lewis) to Shewhart's cycle (1939), Deming's "wheel" (1950-51), the Japanese PDCA (1951), Deming's PDSA (1986-93), and finally the API Model for Improvement (1994-2009). Its load-bearing move is Shewhart's own mapping of specification-production-inspection onto hypothesis-experiment-test, from which the authors argue that industrial improvement cycles are the quality-engineering descendants of the scientific method's conjecture-test loop. Read it if you want the dated provenance of PDCA/PDSA, the "check vs study" correction Deming insisted on, or a primary-source anchor connecting improvement cycles to the theory-of-knowledge tradition.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

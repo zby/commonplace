@@ -21,34 +21,22 @@ Author: Elan Rosenfeld, Pradeep Ravikumar, Andrej Risteski (CMU); ICLR 2021. Hig
 
 The paper gives the first formal analysis of the invariant risk minimization objective and its close relatives, working inside a Gaussian structural equation model where a label generates invariant features `z_c` and environment-varying features `z_e`, both passed through an injective mixing function. In the linear regime it establishes a sharp threshold in the number of training environments `E` against the environmental feature dimension `d_e`: above it, any IRM-feasible linear featurizer must discard the environmental features and the invariant predictor is recovered; at or below it, a predictor using *only* environmental features is feasible and attains lower risk, so the objective does not prefer the invariant solution. In the non-linear regime the authors construct a predictor that is near-optimal under the penalized objective and near-identical to the invariant predictor on training data, yet behaves like plain ERM once the test environment's mean drifts far enough — the penalty it pays is exponentially small in `d_e` because it only misbehaves where training data is rare. Their conclusion is that IRM fails unless the test data are sufficiently similar to the training data, which is the problem it was introduced to solve, and that it offers no advantage over ERM outside the linear, environment-rich regime.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** For non-linear featurizers in the paper's Gaussian latent-variable model, Rosenfeld, Ravikumar, and Risteski construct a predictor that is near-optimal for the penalized IRM objective and near-identical to the invariant predictor on the training distribution, yet uses the ERM solution on most test points when the test environment's mean is sufficiently far from the training means.
-  - **Source extract (verbatim):** For non-linear featurizers the authors construct a predictor that is near-optimal under the penalized IRM objective and near-identical to the optimal invariant predictor on the training distribution, yet reduces to the ERM solution on most test points once the test environment's mean is sufficiently far from the training means.
+- **Source extract (verbatim):** For non-linear featurizers the authors construct a predictor that is near-optimal under the penalized IRM objective and near-identical to the optimal invariant predictor on the training distribution, yet reduces to the ERM solution on most test points once the test environment's mean is sufficiently far from the training means.
   - **Source location:** “Non-linear regime.”
-  - **Source extract (verbatim):** The IRM penalty incurred scales with the squared probability mass of the rare region and is exponentially small in `d_e`, so the objective sees the construction as an attractive solution.
+- **Source extract (verbatim):** The IRM penalty incurred scales with the squared probability mass of the rare region and is exponentially small in `d_e`, so the objective sees the construction as an attractive solution.
   - **Source location:** “Non-linear regime.”
-  - **Scope:** The paper's non-linear-featurizer construction for a Gaussian latent-variable structural equation model, with training environments concentrated in one environmental-feature region and a sufficiently shifted test mean.
-  - **Confidence:** High for the formal counterexample as summarized in the captured source; its objective value, training-distribution behavior, and shifted-test behavior are stated directly.
-  - **Limitation:** The construction is near-optimal and near-identical, not an exact discharge of the IRM objective or exact indistinguishability on every training point. Its ERM behavior requires the specified non-linear setting and sufficiently distant test environment; it does not show that every formal invariance constraint recovers the wrong predictor.
 
-- **Claim (paraphrase):** In the paper's linear Gaussian latent-variable model, IRM feasibility forces every linear featurizer to discard environmental features only when the number of training environments `E` exceeds their dimension `d_e`; when `E ≤ d_e`, an environmental-only feasible predictor can have lower risk than the invariant predictor.
-  - **Source extract (verbatim):** `E` denotes the number of training environments and `d_e` the dimension of the environmental feature space.
+- **Source extract (verbatim):** `E` denotes the number of training environments and `d_e` the dimension of the environmental feature space.
   - **Source location:** “Setup.”
-  - **Source extract (verbatim):** The paper establishes a threshold in the number of training environments. When `E > d_e`, any IRM-feasible linear featurizer paired with an invariant classifier must place zero weight on the environmental features, so the invariant predictor is recovered. When `E ≤ d_e`, there exists a feasible linear predictor that uses only environmental features and attains lower risk than the optimal invariant predictor — so the IRM objective does not prefer the invariant solution.
+- **Source extract (verbatim):** The paper establishes a threshold in the number of training environments. When `E > d_e`, any IRM-feasible linear featurizer paired with an invariant classifier must place zero weight on the environmental features, so the invariant predictor is recovered. When `E ≤ d_e`, there exists a feasible linear predictor that uses only environmental features and attains lower risk than the optimal invariant predictor — so the IRM objective does not prefer the invariant solution.
   - **Source location:** “Linear regime.”
-  - **Source extract (verbatim):** Generalization in the `E ≤ d_e` case requires an additional assumption that the ERM-optimal classifier over the non-invariant features is reasonably aligned with its optimum across all training environments; where the environmental correlation with the label reverses at test time, the learned predictor reaches near-zero accuracy.
+- **Source extract (verbatim):** Generalization in the `E ≤ d_e` case requires an additional assumption that the ERM-optimal classifier over the non-invariant features is reasonably aligned with its optimum across all training environments; where the environmental correlation with the label reverses at test time, the learned predictor reaches near-zero accuracy.
   - **Source location:** “Linear regime,” qualification and failure case.
-  - **Scope:** Linear featurizers in the paper's Gaussian latent-variable structural equation model, where invariant feature parameters stay fixed and environmental feature parameters vary by environment.
-  - **Confidence:** High for the threshold and feasibility results as captured from the paper's formal analysis.
-  - **Limitation:** The theorem does not say that any arbitrary collection of environments or any invariance-based causal method has this threshold. It analyzes IRM's linear feasibility objective under a specific model and requires additional alignment assumptions for generalization in the underdetermined regime.
 
-- **Claim (paraphrase):** The paper reports synthetic experiments sampled from its own model in which fitting a predictor with the IRM objective confirmed the theoretical predictions.
-  - **Source extract (verbatim):** Synthetic experiments sample from the paper's model and fit a predictor with the IRM objective, confirming the theoretical predictions (Appendix C.2).
+- **Source extract (verbatim):** Synthetic experiments sample from the paper's model and fit a predictor with the IRM objective, confirming the theoretical predictions (Appendix C.2).
   - **Source location:** “Experiments and conclusion.”
-  - **Scope:** Synthetic data sampled from the Gaussian latent-variable model analyzed in the paper and fit with the IRM objective.
-  - **Confidence:** High that the captured paper reports this within-model empirical confirmation; the snapshot does not preserve run counts or detailed optimization frequencies.
-  - **Limitation:** The experiments do not establish how often practical optimization reaches the nonlinear failure outside the paper's synthetic data model, nor do they provide a real-data benchmark for the construction.
 
 ## Connections Found
 

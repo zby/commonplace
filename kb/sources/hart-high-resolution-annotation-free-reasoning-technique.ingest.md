@@ -21,9 +21,9 @@ Author: Eight Nanjing University researchers. The paper gives concrete prompts, 
 
 HART trains a large multimodal model to select question-relevant regions from a downsampled image without bounding-box supervision. Its key intervention crops the predicted high-resolution regions, withholds the full image, and asks the model to answer from the crops alone. This makes answer correctness more informative about whether the selected regions contain sufficient evidence. AP-GRPO then gives larger policy updates and smaller KL penalties to correct crop-only answers, followed by supervised fine-tuning with the full image visible. The paper reports that correct answers paired with incorrect grounding fall from 36.5% to 21.5% for Qwen2.5-VL-7B and from 63.8% to 55.9% for InternVL3-8B in its pilot. Its trained Qwen2.5-VL-7B system reaches 62.4% on MME-RealWorld-Lite versus 42.3% for the base model and 43.7% on TreeBench versus 37.0%, while AP-GRPO improves measured grounding by 25.2 and 11.7 percentage points over the base model on TreeBench and Visual CoT.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

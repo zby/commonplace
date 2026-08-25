@@ -22,9 +22,9 @@ Author: Jingyang Qiao, Weicheng Meng, Yu Cheng, Zhihang Lin, Zhizhong Zhang, Xin
 
 MIA proposes a Manager-Planner-Executor architecture for deep research agents. The Memory Manager stores compressed historical search trajectories as explicit workflow memory; the Planner uses retrieved workflows to generate search plans and is updated through RL; the frozen Executor carries out tool-using research under the plan. The distinctive mechanism is a bidirectional loop between non-parametric and parametric memory during test-time learning: multiple plan rollouts produce tool/reasoning trajectories, an LLM Judger or unsupervised reviewer/area-chair process labels them, successful and failed trajectories are compressed into workflow memory, and the Planner parameters are updated from the same reward signal. The paper argues this avoids long-context memory bloat and improves planning, with ablations suggesting that memory-as-planning-prior and test-time learning matter more than simply feeding memory to the Executor.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

@@ -24,9 +24,9 @@ Author: Dex Horthy writes as a long-time coding-agent practitioner and HumanLaye
 
 Horthy argues that lights-off software factories fail on long-lived, complex codebases because current coding models optimize against fast outcome checks that reward task completion without pricing the delayed cost of degraded design. His team replaced human code reading with agents in July 2025, later encountered repeated production failures and accumulated code that was difficult to repair, and ultimately restored substantial human steering. The proposed mechanism is an oracle gap: tests and short-task benchmarks can quickly score functional correctness, while maintainability becomes visible only across later changes, so reinforcement learning and automated review raise the quality floor without reliably moving its ceiling. Part I ends after surveying early attempts at longer-horizon and richer coding evaluations.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

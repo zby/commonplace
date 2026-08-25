@@ -21,22 +21,18 @@ Author: Ishaan Gulrajani and David Lopez-Paz (Facebook AI Research); Lopez-Paz i
 
 The paper argues that a domain-generalization algorithm without a stated model-selection strategy is incomplete: which validation signal picks hyperparameters and checkpoints silently determines which method appears to win, and the published literature left that choice undeclared and inconsistent. To make comparison possible the authors build DomainBed — seven multi-domain image datasets, nine algorithms, three model-selection criteria — and run every combination under the same budget. Carefully implemented empirical risk minimization matches or beats every specialized method across all tested datasets. The paper therefore delivers two separable claims: a methodological one about evaluation protocol, and an empirical one about the payoff of the specialized inductive biases. Read it if you want to know how much of a reported generalization advantage can be an artifact of the selection procedure rather than of the algorithm.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** DomainBed evaluates nine baseline domain-generalization algorithms on seven multi-domain datasets under three explicit model-selection criteria, and reports that carefully implemented empirical risk minimization achieves state-of-the-art performance across the tested datasets.
-  - **Source extract (verbatim):** They introduce **DomainBed**, a unified testbed featuring:
+- **Source extract (verbatim):** They introduce **DomainBed**, a unified testbed featuring:
   - **Source location:** “Abstract,” immediately before the dataset, algorithm, and selection-criterion counts.
-  - **Source extract (verbatim):** Seven multi-domain datasets
+- **Source extract (verbatim):** Seven multi-domain datasets
   - **Source location:** “Abstract,” DomainBed feature list.
-  - **Source extract (verbatim):** Nine baseline algorithms
+- **Source extract (verbatim):** Nine baseline algorithms
   - **Source location:** “Abstract,” DomainBed feature list.
-  - **Source extract (verbatim):** Three model selection criteria
+- **Source extract (verbatim):** Three model selection criteria
   - **Source location:** “Abstract,” DomainBed feature list.
-  - **Source extract (verbatim):** Through extensive experiments, the researchers found that empirical risk minimization (ERM), when properly implemented, achieves state-of-the-art performance across all tested datasets—challenging the superiority of more complex domain generalization methods.
+- **Source extract (verbatim):** Through extensive experiments, the researchers found that empirical risk minimization (ERM), when properly implemented, achieves state-of-the-art performance across all tested datasets—challenging the superiority of more complex domain generalization methods.
   - **Source location:** “Key Findings.”
-  - **Scope:** The DomainBed testbed's seven datasets, nine baseline algorithms, and three model-selection criteria under the experimental implementations summarized in the captured paper.
-  - **Confidence:** High for the paper's reported benchmark design and qualitative ERM result as represented in the captured source.
-  - **Limitation:** The source does not characterize every algorithm as making an explicit “reach claim,” nor show that declaring a selection procedure by itself dissolved a previously measured advantage. Those are target-side interpretations, and the benchmark result does not establish a general law about structure and scale.
 
 ## Connections Found
 

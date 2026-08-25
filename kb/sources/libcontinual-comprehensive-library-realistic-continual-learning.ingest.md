@@ -21,9 +21,9 @@ Author: Wenbin Li, Shangge Liu, Borui Kang, Yiyang Chen, KaXuan Lew, Yang Chen, 
 
 LibContinual is a modular PyTorch framework that reimplements 19 image-classification continual-learning methods across regularization, replay, optimization, representation, and architecture families. Its more important contribution for Commonplace is evaluative: it argues that mainstream results inherit three often-hidden privileges -- multi-epoch access to each task's data, incomparable amounts and forms of retained state, and semantically coherent task groupings. The paper introduces a single-pass protocol, a unified additional-memory budget over images, features, model copies, parameters, and prompts, and a category-randomized five-dataset setting. Method rankings and absolute results change substantially under these protocols, showing that a continual learner's apparent stability and plasticity are conditional on its access, resource, and stream construction.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

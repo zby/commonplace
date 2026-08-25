@@ -24,9 +24,9 @@ Author: @jerryjliu0, Jerry Liu of LlamaIndex/LlamaParse. High signal on document
 
 The source argues that generic model gateways and task-specific routers solve different problems. Generic gateways such as OpenRouter Fusion handle provider-level availability, price, and broad ensembling for hard open-ended questions. Task-specific routing asks a narrower question: for this input, task, quality bar, and cost/latency budget, what is the cheapest path that still clears the bar? Liu gives coding-agent, legal, support, and document-parsing examples, then uses LlamaParse as the worked case: route each page between cheap direct extraction, specialized parsers/VLMs, and frontier models using a document-complexity model and agentic judge. The durable claim is that routing alpha comes from a workflow-specific input taxonomy plus private evals, not from a generic provider router.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

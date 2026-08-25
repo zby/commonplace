@@ -21,9 +21,9 @@ Author: Heinz von Foerster is the originator of the first-order/second-order for
 
 Von Foerster begins from Maturana's claim that anything said is said by an observer and adds that it is said to an observer. Language connects observers, and those observers thereby form the elementary nucleus of a society (PDF p. 1). Against objectivity's exclusion of observer properties, he asks observers to observe their own observing. He then calls the cybernetics of observed systems first-order and the cybernetics of observing systems second-order; in Pask's parallel formulation, the first-order observer stipulates the system's purpose, while the second-order observer also stipulates the observer's own purpose (PDF p. 2). The human observer is therefore inside the relevant social-system boundary as an autonomous, responsible participant (PDF p. 3).
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

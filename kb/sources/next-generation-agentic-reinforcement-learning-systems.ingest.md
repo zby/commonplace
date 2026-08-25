@@ -21,9 +21,9 @@ Author: Ran Yan and 21 coauthors from Ant Group, HKUST, and Tsinghua University;
 
 The paper argues that enterprise self-evolving agents are blocked less by reinforcement-learning algorithms than by missing systems infrastructure. It proposes three co-designed pillars: an Agent Trajectory Data Protocol (ATDP) that records decision-level observations, relevant state, actions, outcomes, delayed learning signals, and governance metadata; a data proxy that captures and redacts heterogeneous production interactions while preserving replayability; and an evolution control plane that chooses among memory insertion, skill or harness edits, tool-schema changes, policy-weight updates, rollback, and no-op. AReaL2.0 instantiates only the policy-weight branch by exposing rollout and training workers behind an agent-service gateway, router, proxy, and compute-worker layer. The full multi-surface controller, complete protocol, and governed replay loop remain a research agenda.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

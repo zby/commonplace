@@ -20,18 +20,14 @@ This scientific preprint reports an observational trace study over two public da
 
 Across 557 coding-agent sessions with 3,033 classified documentation interactions and 33,097 agentic pull requests, the paper finds that agent instruction files and agent working notes dominate observed repository-local documentation activity, while API references and troubleshooting guides are rare. Explicit consultation most often leads to more reading or reasoning; its association with code editing changes between unadjusted and stage-adjusted models, testing and building are less frequent in the next three events, and no event matches the paper's explicit documentation-based validation pattern. Agents also produce documentation at 0.87 times the consultation rate, and code precedes documentation much more often than the reverse when commit order is observable. The paper is useful as behavior-side evidence for what agents explicitly touch and when, but not as causal evidence that prioritizing a documentation genre or making prose more executable improves task outcomes.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** In Gao and Chen's observational coding-agent traces, explicit documentation consultation was not consistently coupled to immediate implementation and verification: the code-edit association depended on statistical adjustment, while test and build actions were less frequent within the next three events in both unadjusted and adjusted analyses.
-  - **Source extract (verbatim):** Two verification actions are less frequent within the next three events and both survive adjustment: running a test (lift 0.23, cluster CI 0.08–0.45; adjusted OR 0.39 [0.25, 0.60]) and building (0.15, CI 0.02–0.33; OR 0.25 [0.14, 0.44]).
+- **Source extract (verbatim):** Two verification actions are less frequent within the next three events and both survive adjustment: running a test (lift 0.23, cluster CI 0.08–0.45; adjusted OR 0.39 [0.25, 0.60]) and building (0.15, CI 0.02–0.33; OR 0.25 [0.14, 0.44]).
   - **Source location:** Section 4.2.2, "Actions following consultation," and Table 3.
-  - **Source extract (verbatim):** We therefore treat the lower frequency of test and build activity as the finding, and any consultation-to-authoring or consultation-to-code coupling as unresolved by these data.
+- **Source extract (verbatim):** We therefore treat the lower frequency of test and build activity as the finding, and any consultation-to-authoring or consultation-to-code coupling as unresolved by these data.
   - **Source location:** Section 4.2.2, interpretation of Table 3.
-  - **Source extract (verbatim):** Transition probabilities are first-order. A near-zero adjacent transition from documentation read to code edit does not preclude longer-range influence.
+- **Source extract (verbatim):** Transition probabilities are first-order. A near-zero adjacent transition from documentation read to code edit does not preclude longer-range influence.
   - **Source location:** Section 7.2, "Internal validity."
-  - **Scope:** Explicit Read, Search, or Discover documentation consultations in the sampled SWE-chat coding-agent sessions, evaluated for code, test, and build actions within a three-event horizon; the adjusted analysis controls for development stage, within-session position, session length, and agent family.
-  - **Confidence:** The lower test and build frequencies are reported as robust across the unadjusted and adjusted analyses; the source explicitly classifies the consultation-to-code association as unresolved.
-  - **Limitation:** This is observational, short-horizon trace evidence. It does not capture automatically injected documentation, browser use, latent reasoning, or longer-range influence, and it does not establish that visible documentation failed to affect every later action or that consultation causally suppresses testing or building.
 
 ## Connections Found
 

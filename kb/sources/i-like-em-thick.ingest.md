@@ -38,9 +38,9 @@ when further traversal reveals non-redundant relationships that constrain the
 whole. That graph-level interpretation is ours; the essay is not evidence that
 AI-assisted workflows cannot produce substantive writing.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

@@ -21,9 +21,9 @@ Author: Qianyu Meng et al. The source has academic form and a broad literature s
 
 The paper defines an LLM agent harness as a six-component runtime governance layer: execution loop, tool registry, context manager, state store, lifecycle hooks, and evaluation interface. Its central claim is that deployed agent reliability is determined by the model-plus-harness system, not the model alone, because the harness controls tool access, context assembly, state persistence, policy enforcement, observability, and evaluation feedback. The survey traces harness concepts from software testing and reinforcement learning environments into LLM agents, classifies representative systems by stack position and domain scope, and organizes open problems around sandboxing, evaluation, protocols, context management, tool governance, memory, planning, multi-agent coordination, and compute economics. Its strongest contribution for this KB is not the component list by itself, but the way it elevates lifecycle hooks and evaluation interfaces into the formal harness definition.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

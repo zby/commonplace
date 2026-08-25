@@ -26,9 +26,9 @@ The source argues that production agent loops should be understood as three laye
 
 The article's "agent loop" is not the same unit as the KB's [tool loop](../notes/tool-loop-README.md), even though both terms are often collapsed under "agentic loop" in public discourse. The tool loop is the inner model/tool dispatch cycle: call the LLM, execute a requested tool, feed the result back, and repeat until the model stops. The article's loop is the outer production loop around that cycle: a scheduled or triggered decision process that invokes skills, survives restarts, checkpoints step results, controls concurrency, and records history. The source makes this distinction most clearly when it says "LLMs and tools are inside the loops"; its contribution is therefore a runtime-layer reframing, not a replacement definition for the tool loop.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

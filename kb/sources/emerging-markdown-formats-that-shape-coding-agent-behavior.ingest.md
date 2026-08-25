@@ -21,9 +21,9 @@ Author: Bilgin Ibryam. The essay cites first-party specifications and product do
 
 The essay argues that an agent-ready repository should hold not only implementation but also the project knowledge an agent needs to change that implementation correctly. It separates five roles: standing repository rules in `AGENTS.md` and vendor-native equivalents; repeatable procedures in `SKILL.md`; reviewable requirements, plans, and tasks in versioned planning files; specialized domain context in files such as `ARCHITECTURE.md`, `DESIGN.md`, `AUTH.md`, and `REVIEW.md`; and agent-written, machine-local memory that should be promoted into shared artifacts only after human review. It recommends the smallest reliably discoverable set, one canonical source with thin vendor-specific bridges, and scoped, reviewed, current files. Its broad conclusion is that this Markdown “metacode” lets an agent compile human intent into source code.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

@@ -22,9 +22,9 @@ Author: Wujiang Xu and collaborators at Rutgers University and AIOS Foundation. 
 
 A-MEM proposes an agentic memory system for LLM agents that applies Zettelkasten principles — atomic notes, dynamic linking, and memory evolution — to create self-organizing knowledge networks. Each memory note uses a fixed seven-field schema (content, timestamp, keywords, tags, contextual description, embedding, linked memory IDs). When new memories arrive, the system constructs structured notes via LLM, finds candidate connections via cosine similarity over top-k nearest neighbors, then uses an LLM to evaluate which connections are genuine and whether existing memories should evolve their context and tags. Links are untyped "connected to" associations, not typed relationships with articulated reasons. Evaluated on the LoCoMo and DialSim long-term conversational QA benchmarks across six foundation models (including small local models), A-MEM outperforms MemGPT, MemoryBank, and ReadAgent baselines while using 85-93% fewer tokens per memory operation (~1,200 tokens vs ~16,900). The ablation study shows both link generation and memory evolution contribute meaningfully, with memory evolution providing the larger marginal gain on multi-hop reasoning tasks.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

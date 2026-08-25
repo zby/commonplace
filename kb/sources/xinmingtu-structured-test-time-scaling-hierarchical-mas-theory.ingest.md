@@ -22,9 +22,9 @@ Author: Xinming Tu, University of Washington. Academic affiliation provides some
 
 Tu argues that structured test-time scaling — hierarchical multi-agent systems, recursive architectures, and coding agents — succeeds because three structural mechanisms bypass the exponential error accumulation that defeats linear chain-of-thought. Sequential reasoning with per-step error ε over W steps yields success probability e^(-εW), a hard ceiling ("linear collapse"). Three mechanisms break this: (1) topology compression reduces sequential span from Θ(W) to Õ(log W) through hierarchical decomposition; (2) scope isolation decouples persistent state from ephemeral context so errors in one sub-computation don't contaminate others; (3) verification filters residual errors through decoupled validation gates. The key theoretical contribution is that these form a causal dependency chain — topology creates decomposition boundaries, isolation manufactures verifiable atomic units, verification then exploits this structure — rather than being independent design choices.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

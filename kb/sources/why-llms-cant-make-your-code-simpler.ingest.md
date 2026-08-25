@@ -21,9 +21,9 @@ Author: Alvarez Vecino writes as a participant in the reported design exploratio
 
 Alvarez Vecino adapts Peter Naur's “Programming as Theory Building” to argue that the complexity worth reducing is the team's situated understanding of a program, not a property recoverable from lines of code, cyclomatic complexity, duplication, or the Maintainability Index alone. He therefore doubts that adding those metrics as penalties to reinforcement learning can solve LLM-generated complexity. An invented provider-client example shows how the metrics can favor an abstraction even when an expected provider removal makes separated code easier to change. The article then reports Answer.AI replacing a subscription-and-credits billing design with a roughly 300-line credits-only system whose manual and automatic top-ups share one path. Launch exposed that Indian cards could not use its off-session auto-top-up flow; although Stripe subscriptions handled that case and an LLM recommended restoring them, the team accepted manual top-ups for those users to preserve its preferred simplicity. The case makes code structure depend on future changes, operational constraints, and product priorities that may not appear in the code.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

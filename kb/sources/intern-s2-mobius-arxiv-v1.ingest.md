@@ -34,18 +34,14 @@ The association is direct: its [README](https://github.com/internlm/intern-s2-mo
 
 **Paper-only.** The checkout does not demonstrate that shared experts contain semantically identifiable knowledge, that selected experts causally mediate correct answers, or that parameter sharing implements a backward residual connection in the stronger semantic sense. The released forward method traverses the configured decoder layers once; no explicit adaptive latent-iteration loop or dynamic per-token iteration budget appears in this checkout. The claimed data efficiency, shorter reasoning, throughput, benchmark quality, catastrophic-forgetting advantage, and future self-evolution properties remain paper claims. No model code was executed: the repository supplies no cheap test environment, and running inference would require downloading a 35B checkpoint and dependencies, which this ingest deliberately did not do.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** The Mobius-v0 paper proposes a globally shared feed-forward “Memory” queried by multiple self-attention “Reasoners” through hidden states, and at larger scales partitions the shared FFN into sparsely activated MoE-like blocks.
-  - **Source extract (verbatim):** We introduce Mobius-v0, an architecture that comprises a globally shared Memory (FFN) that stores knowledge vectors and multiple Reasoners (Self-Attn) that iteratively achieve compositional reasoning.
+- **Source extract (verbatim):** We introduce Mobius-v0, an architecture that comprises a globally shared Memory (FFN) that stores knowledge vectors and multiple Reasoners (Self-Attn) that iteratively achieve compositional reasoning.
   - **Source location:** Abstract.
-  - **Source extract (verbatim):** Using hidden states as cache and carrier, reasoners repeatedly query memory for required knowledge-vectors, while the knowledge is transmitted back to reasoning operators.
+- **Source extract (verbatim):** Using hidden states as cache and carrier, reasoners repeatedly query memory for required knowledge-vectors, while the knowledge is transmitted back to reasoning operators.
   - **Source location:** Abstract.
-  - **Source extract (verbatim):** Therefore, at larger parameter scales, we employ a block-wise partitioning technique analogous to MoE [63] to partition the FFN, with sparse activation during forward propagation.
+- **Source extract (verbatim):** Therefore, at larger parameter scales, we employ a block-wise partitioning technique analogous to MoE [63] to partition the FFN, with sparse activation during forward propagation.
   - **Source location:** Section 2.3, “Disentangling Knowledge Vectors and Reasoning Operators.”
-  - **Scope:** The architecture proposed in arXiv v1: shared or block-partitioned FFN parameters, self-attention or linear-attention reasoning stages, hidden-state transport, and sparse forward activation at larger scales.
-  - **Confidence:** High that the paper assigns these components the named roles and describes shared sparse FFN access; these are explicit architectural statements.
-  - **Limitation:** The paper's “Memory” and “Reasoners” labels do not establish that experts store semantically identifiable knowledge, that routing faithfully activates needed knowledge, or that the parts differ in representational form. Exact released-code defaults and layer-to-block routing are secondary implementation evidence and are not established by this primary paper snapshot.
 
 ## Connections Found
 

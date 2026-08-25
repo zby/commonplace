@@ -21,9 +21,9 @@ Author: Richard Heimann is a secondary technical narrator; the cited papers prov
 
 The chapter explains the Transformer by reconstructing the problems it relaxed: a fixed thought vector compressing an entire sequence, recurrence creating long information and gradient paths, arbitrary ordering burdening set tasks, and sequential execution limiting parallel scale. Bahdanau attention lets a decoder query encoder states; pointer networks turn attention into an output mechanism; Neural Turing Machines add differentiable addressing; order experiments expose serialization as a hidden design choice; and self-attention removes recurrence while retaining positional, residual, normalization, masking, and feed-forward structure. The historical reversal trick provides a particularly clear example of temporary scaffolding whose benefit vanished as architecture changed.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

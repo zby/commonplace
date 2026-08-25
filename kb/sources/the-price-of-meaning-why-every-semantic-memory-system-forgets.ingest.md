@@ -21,9 +21,9 @@ Author: Sambartha Ray Barman, Andrey Starenky, Sofia Bodnar, Nikhil Narasimhan, 
 
 The paper argues that semantically organized memory systems face a structural tradeoff: the same geometry that supports retrieval by meaning also creates competitor mass, interference-driven forgetting, and false recall under finite effective dimensionality. Its formal claim applies to semantically continuous kernel-threshold memories satisfying five axioms, not to every possible memory system. The authors test related predictions across vector retrieval, graph memory, attention/context-window retrieval, BM25-based filesystem retrieval, and parametric memory. Pure semantic systems express the vulnerability directly; reasoning overlays can override some symptoms but create cliffs; BM25/exact systems escape interference by sacrificing semantic generalization; hybrid systems route along the tradeoff frontier rather than eliminating it.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

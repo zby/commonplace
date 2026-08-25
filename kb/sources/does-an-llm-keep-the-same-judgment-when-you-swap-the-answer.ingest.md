@@ -24,9 +24,9 @@ Author: Lech Mazur is already represented in this KB through the deeper [positio
 
 Mazur announces a new position-bias benchmark for LLM judges: show the same pair of lightly edited stories twice with the display order swapped, then measure how often the model's underlying preference flips. The thread compresses the main findings into a few public-facing numbers: the average judge picks the first-shown answer 63% of the time, the median decisive-case flip rate is high enough to make order sensitivity a dominant failure mode, and GPT-5.4 (high) is singled out as especially position-sensitive. Relative to the repo snapshot already in the KB, the thread's distinct contribution is not methodology depth but a compact launch surface, the author's operational motivation ("this kept happening in regular-use comparison prompts"), and reply links pointing toward human order-effect literature.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

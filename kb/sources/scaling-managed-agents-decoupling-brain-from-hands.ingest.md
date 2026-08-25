@@ -21,9 +21,9 @@ Author: Lance Martin, Gabe Cemaj, and Michael Cohen are Anthropic engineers writ
 
 The source argues that long-horizon agent harnesses should expose stable interfaces for sessions, harnesses/brains, and sandboxes/hands rather than tightly coupling them into one container. Anthropic says the original single-container design created pet infrastructure: failures lost sessions, debugging was hard, credentials and generated code shared a risky boundary, and customer infrastructure required awkward network coupling. Managed Agents separates the durable session log, stateless harness, and executable hands behind small interfaces such as `getEvents()`, `wake(sessionId)`, `emitEvent(id, event)`, and `execute(name, input) -> string`, so harness internals and sandbox implementations can change as model behavior changes.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

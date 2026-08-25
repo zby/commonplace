@@ -22,9 +22,9 @@ Author: This is the KB owner's own paper. For Commonplace, its authority is line
 
 The paper argues that retained behavior-shaping artifacts in agentic systems should be classified by storage substrate, representational form, lineage, and behavioral authority, at the level of operative parts and consumption paths rather than stored objects. The June 23 revision keeps the same vocabulary but adds Section 8, applying the record to a 141-system agent-memory/context-engineering corpus reviewed from source code. Its strongest new point is empirical-descriptive: even among the 98 systems that store retained state in files or repositories, other fields still separate behavior sharply -- 53 include enforcement, 37 include distributed-parametric parts, 39 are pull-only, and 70 have trace-extracted lineage. The paper therefore upgrades the old storage-first critique from a pure construction argument to a corpus-backed claim that substrate alone cannot predict form, authority, activation, or lineage.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

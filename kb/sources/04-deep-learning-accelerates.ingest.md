@@ -21,9 +21,9 @@ Author: Richard Heimann is a secondary synthesizer. Karpathy's and Olah's essays
 
 The chapter follows recurrent neural networks from character-level demonstrations and visual LSTM explanations through selective recurrent dropout and Deep Speech 2. Its technical through-line is controlled information flow: LSTM gates preserve useful state, selective dropout regularizes without corrupting recurrent memory, and end-to-end speech learning replaces phonetic dictionaries and modular pipelines while relying on convolution, recurrent stacks, normalization, CTC, decoding, language models, and distributed training. It also argues that exposition and open code expanded participation, and it carefully limits Deep Speech 2's “human-level” claim to the subsets on which it actually won.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

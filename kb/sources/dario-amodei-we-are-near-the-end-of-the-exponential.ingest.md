@@ -22,9 +22,9 @@ Author: Dario Amodei, CEO of Anthropic. One of the people with the most direct v
 
 Amodei argues that AI development is near the end of an exponential growth curve, predicting a "country of geniuses in a data center" within 1-3 years (90% confidence by 2035). He defends his 2017 "Big Blob of Compute Hypothesis" — that seven factors (raw compute, data quantity/quality, training duration, scalable objectives, numerical stability) are what matter, and that RL scaling follows pre-training scaling patterns. On adoption, he pushes back on dismissing slow diffusion as cope, noting real enterprise constraints while claiming AI diffusion runs 3-5x faster than historical technology adoption. Most consequentially for this KB, he draws an explicit confidence split: near-certainty on verifiable domains (coding, math) and acknowledged uncertainty on unverifiable ones (novel writing, scientific discovery). He also argues continual learning may be unnecessary given pre-training generalization, RL generalization, and million-token in-context learning.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

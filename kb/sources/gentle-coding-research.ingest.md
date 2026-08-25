@@ -20,9 +20,9 @@ This repository document is an annotated bibliography organized as project resea
 
 The catalog groups links about emotional prompting, model stress, sycophancy, and human interaction into sub-network, inference, and multi-agent layers. It is most useful as a discovery map for selecting primary sources and designing comparisons across interaction and evaluation boundaries. Readers should not rely on its confident one-line summaries as evidence: the document reports no search protocol, source-verification procedure, experiments, or synthesis method.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

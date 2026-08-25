@@ -21,9 +21,9 @@ Author: Otto Renner is the repository maintainer and identifies the framework as
 
 The README proposes three elements for human-LLM task framing: a low-stress collaborative "Gentle Mindset," a "Defined Winning Condition" that makes completion and exclusions explicit, and a "Safety-Token" that makes an uncertain or non-success response valid. It argues that this combination can reduce self-policing, loops, forced answers, token use, and latency, then gives exploratory and fixed-output prompt examples. A community-results table reports improvements for some model/settings but neutral N=100 results for Sonnet 4.6, Opus 4.6, and GPT-5.5. For this KB, the README is useful as a prompt-contract proposal and a map to evidence that must be assessed in its own primary sources, not as a controlled demonstration of the proposed mechanisms.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

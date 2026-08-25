@@ -20,9 +20,9 @@ This is an official competition brief: it states the sponsor's problem framing, 
 
 The brief asks for AI-assisted workflows, tools, protocols, comparisons, or critiques that improve difficult epistemic investigations across three deliberately different cases. It decomposes the work into ingestion, structure, and assessment; requires provenance, claim and argument relationships, uncertainty and crux handling, missing-perspective detection, and change over time; and judges whether outputs help users reason, generalize, scale, interoperate without losing nuance, and support later work. For Commonplace, its main value is an external requirements and stress-test profile rather than evidence that this decomposition is complete or effective.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 ## Connections Found
 
 The brief is an external requirements anchor for evaluating Commonplace as an instrument across contested, closed, and open-ended investigations. Its ingestion requirements rest on the transformation described in [Raw accumulation does not create usable memory](../notes/raw-accumulation-does-not-create-usable-memory.md), while its assessment layer depends on keeping reasoning production distinct from [reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) and tracking warrant only at the granularity evidence licenses. Its interoperability requirement also sharpens the distinction between shared exchange authority and a universal content taxonomy in [A universal knowledge framework demotes content taxonomies to defaults](../notes/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md). The brief's use of “compounding” is best treated as an agenda claim: [Improvements can accumulate without compounding](../notes/improvements-can-accumulate-without-compounding.md) requires separate evidence for reuse, transfer, and a causal improvement to later improvement episodes.

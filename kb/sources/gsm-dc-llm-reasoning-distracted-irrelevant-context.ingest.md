@@ -22,16 +22,12 @@ Author: Yang, Huang, Zhang, Surdeanu, Wang, Pan (UC Santa Barbara, University of
 
 GSM-DC (Grade School Math with Distracting Context) is a synthetic benchmark that represents math word problems as directed acyclic graphs (DAGs), enabling precise injection of irrelevant context (IC) while preserving a unique correct solution path. The key contribution is methodological control: unlike prior work that used ad hoc distractors, GSM-DC independently varies distractor count and reasoning depth, then evaluates with stepwise metrics (step accuracy SAcc, path accuracy PAcc, extraction accuracy EAcc) rather than just final-answer correctness. Six findings: (1) accuracy degrades with distractor count following a power law whose exponent grows with reasoning depth; (2) IC degrades both reasoning path selection and arithmetic execution independently; (3) continued pretraining outperforms LoRA for robustness; (4) training on IC-injected data yields the strongest robustness; (5) hard-IC training generalizes best to out-of-distribution settings; and (6) PRM-guided tree search preserves in-distribution accuracy while boosting OOD robustness by up to 6.29%.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** In GSM-DC's controlled synthetic math problems, increasing injected irrelevant context reduced reasoning accuracy across six tested instruction models; error grew roughly as a power law in distractor count with a steeper exponent at greater reasoning depth, and the disruption affected both correct path selection and arithmetic execution.
-  - **Source extract (verbatim):** We find it roughly follows a power-law trend: E(m; rs) ∝ m^δ(rs), where δ(rs) reflects a model's IC sensitivity. Error increases with m, and the degradation steepens with deeper reasoning.
+- **Source extract (verbatim):** We find it roughly follows a power-law trend: E(m; rs) ∝ m^δ(rs), where δ(rs) reflects a model's IC sensitivity. Error increases with m, and the degradation steepens with deeper reasoning.
   - **Source location:** Section 4.1, Finding II.
-  - **Source extract (verbatim):** The model trained on Clean data consistently shows a higher Δ, suggesting that IC affects not only reasoning path selection, but also arithmetic execution.
+- **Source extract (verbatim):** The model trained on Clean data consistently shows a higher Δ, suggesting that IC affects not only reasoning path selection, but also arithmetic execution.
   - **Source location:** Section 4.3, Finding IV.
-  - **Scope:** GSM-DC problems with one to fifteen injected distractor nodes, reasoning depths 2–5, 100 instances per condition, and six instruction models; path, step, and answer accuracy are evaluated against synthetic dependency graphs.
-  - **Confidence:** High for the direction and reported functional form within the controlled benchmark; the source directly reports degradation for all six models and a depth-dependent power-law approximation.
-  - **Limitation:** GSM-DC uses templated grade-school-math problems and controlled symbolic distractors, with tested reasoning depths and models narrower than natural agent workloads. The result does not establish the same rate or mechanism for partially relevant context, arbitrary prose, or production agents.
 
 ## Connections Found
 

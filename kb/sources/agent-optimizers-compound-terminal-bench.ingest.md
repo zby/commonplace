@@ -21,9 +21,9 @@ Author: Wenxiao Wang, Priyatham Kattakinda, and Soheil Feizi of RELAI.ai. They r
 
 The paper asks whether a harness optimizer can preserve first-round gains, transfer them to newly introduced tasks, and continue improving after those tasks enter the objective. It gives GEPA, Meta Harness, and RELAI-VCL 200 rollouts on 12 hard Terminal-Bench 2.0 tasks, evaluates transfer on a 22-task union, then gives each surviving method another 200-rollout optimization phase on that union. All three beat the baseline in Phase 1. GEPA then falls below baseline on transfer before recovering under Phase-2 optimization; Meta Harness transfers well but falls under re-optimization; RELAI-VCL leads at every stage, with pass rates of 79.2% in Phase 1, 72.7% on transfer, and 77.3% after Phase 2. The authors attribute this pattern to RELAI-VCL's in-loop rule that rejects candidates which lose previously solved tasks.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

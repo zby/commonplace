@@ -21,9 +21,9 @@ Author signal: multi-author research paper with benchmark tables and ablation/tr
 
 SkillOpt treats an agent skill document as trainable external state. A separate optimizer model inspects scored rollouts and proposes bounded add/delete/replace edits to a single skill, while a held-out validation split accepts only strict improvements. The loop keeps rejected edits as negative evidence, uses a textual learning-rate budget plus slow/meta updates to preserve useful strategy, and deploys only a compact `best_skill.md` artifact at inference. Across six benchmarks, seven target models, and direct-chat/Codex/Claude Code harnesses, the paper reports consistent gains over no-skill, human-written, one-shot, Trace2Skill, TextGrad, GEPA, and EvoSkill baselines, with transfer across models, harnesses, and some benchmark pairs. The key boundary is evaluator quality: SkillOpt is strongest where scored trajectories and held-out validation are available.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

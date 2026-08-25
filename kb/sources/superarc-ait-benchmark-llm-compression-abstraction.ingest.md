@@ -22,38 +22,26 @@ Author: Hernández-Espinosa, Ozelim, Abrahão, and Zenil (Oxford Immune Algorith
 
 SuperARC is an open-ended benchmark grounded in Algorithmic Information Theory that tests AI models' capacity for recursive compression and abstraction on binary sequences of increasing algorithmic complexity. The central finding is stark: frontier LLMs (GPT-4.5, Claude 3.5, Gemini, etc.) score phi = 0.007–0.042 while a neuro-symbolic AIXI/BDM/CTM baseline scores 1.000 (perfect). Most LLM-generated "correct" programs are bare print statements that reproduce sequences without any compression — zero abstraction. Newer model versions often regress on this benchmark despite improving on standard human-centric benchmarks. LLMs perform dramatically better on integer sequences, which the authors attribute to memorization of common mathematical sequences from training data — confirming that binary sequences strip away statistical shortcuts. The paper argues that recursive compression and optimal prediction are mathematically equivalent (proved via Martingale theory), and that current LLM architectures are fundamentally limited to the statistical subspace of their training distribution.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** On SuperARC-seq's 100 binary-sequence compression tasks, the benchmark's AIXI/BDM/CTM baseline scored φ = 1.000, while the best listed frontier LLM scored 0.042 and most scored about 0.007–0.008, largely by printing target sequences rather than compressing them.
-  - **Source extract (verbatim):** AIXI/BDM/CTM: φ = 1.000 (perfect score)
+- **Source extract (verbatim):** AIXI/BDM/CTM: φ = 1.000 (perfect score)
   - **Source location:** Section 2.4.1, “SuperARC-seq Results.”
-  - **Source extract (verbatim):** ChatGPT-4.5: φ = 0.042 (only ordinal mappings)
+- **Source extract (verbatim):** ChatGPT-4.5: φ = 0.042 (only ordinal mappings)
   - **Source location:** Section 2.4.1, “SuperARC-seq Results.”
-  - **Source extract (verbatim):** Most other LLMs: φ ≈ 0.007–0.008
+- **Source extract (verbatim):** Most other LLMs: φ ≈ 0.007–0.008
   - **Source location:** Section 2.4.1, “SuperARC-seq Results.”
-  - **Source extract (verbatim):** Most frontier LLMs produced print-only responses (ρ₃ ≈ 1.0), indicating zero compression and no pattern abstraction.
+- **Source extract (verbatim):** Most frontier LLMs produced print-only responses (ρ₃ ≈ 1.0), indicating zero compression and no pattern abstraction.
   - **Source location:** Section 2.4.1, “SuperARC-seq Results.”
-  - **Scope:** SuperARC-seq's author-defined φ metric over 100 binary sequence-generation tasks, comparing named frontier LLMs with the paper's AIXI/BDM/CTM algorithmic baseline.
-  - **Confidence:** High for the numerical comparison as reported in the captured paper; the benchmark specifies its output classes and compression-weighted score.
-  - **Limitation:** This is a bounded comparison under a novel, author-chosen metric and a purpose-built algorithmic baseline. It does not establish that the benchmark objective is the right proxy for general abstraction, nor that symbolic machinery generally outperforms LLMs outside these sequence tasks.
 
-- **Claim (paraphrase):** In the captured SuperARC report, LLM performance improved dramatically when integer sequences rather than binary sequences were tested; the authors attribute the improvement to memorization of common mathematical sequences in training data and use it to argue that binary sequences are needed for an unbiased evaluation.
-  - **Source extract (verbatim):** When integer sequences were tested, LLM performance improved dramatically—attributed to memorization of common mathematical sequences in training data. This finding established that binary sequences are essential for unbiased evaluation.
+- **Source extract (verbatim):** When integer sequences were tested, LLM performance improved dramatically—attributed to memorization of common mathematical sequences in training data. This finding established that binary sequences are essential for unbiased evaluation.
   - **Source location:** Section 2.4.1, “SuperARC-seq Results,” immediately after the binary-sequence scores.
-  - **Scope:** The integer-versus-binary comparison as reported for SuperARC-seq and the paper authors' interpretation of that comparison.
-  - **Confidence:** High that the captured report states the direction of the difference and the authors' attribution; low on its magnitude and causal basis because the capture supplies neither integer scores nor a paired-design analysis.
-  - **Limitation:** The captured report does not identify the integer-test models, exact performance change, whether integer and binary tasks encoded matched underlying sequences, or independent evidence of training-set memorization. It does not itself test cue sensitivity as a general mechanism or explanatory-reach as a KB quality property.
 
-- **Claim (paraphrase):** In SuperARC's reported code-generation results, most programs classified as correct printed the target sequences directly; print-statement solutions dominated correct outputs across programming languages, and temperature variations produced nearly identical no-compression percentages. The SuperARC-seq framework classifies direct prints separately as Type 3 and weights non-trivial solutions more heavily.
-  - **Source extract (verbatim):** The majority of "correct" generated programs simply printed target sequences directly—"correct programs are more common at the lowest levels of complexity," indicating solutions without compression or genuine understanding. Higher complexity led to increased reliance on trivial strategies. Across programming languages, print-statement solutions dominated correct outputs. Temperature parameter variations produced nearly identical no-compression percentages, suggesting the effect wasn't temperature-dependent but reflected fundamental model limitations.
+- **Source extract (verbatim):** The majority of "correct" generated programs simply printed target sequences directly—"correct programs are more common at the lowest levels of complexity," indicating solutions without compression or genuine understanding. Higher complexity led to increased reliance on trivial strategies. Across programming languages, print-statement solutions dominated correct outputs. Temperature parameter variations produced nearly identical no-compression percentages, suggesting the effect wasn't temperature-dependent but reflected fundamental model limitations.
   - **Source location:** Section 2.3, “Code Generation Tasks.”
-  - **Source extract (verbatim):** Type 3: Correct solutions as direct prints
+- **Source extract (verbatim):** Type 3: Correct solutions as direct prints
   - **Source location:** Section 2.4, “SuperARC-seq Framework,” output classification.
-  - **Source extract (verbatim):** This weighting deliberately privileges non-trivial solutions.
+- **Source extract (verbatim):** This weighting deliberately privileges non-trivial solutions.
   - **Source location:** Section 2.4, immediately after the φ formula.
-  - **Scope:** The qualitative cross-language and temperature findings and output taxonomy reported for SuperARC's sequence-reproduction code tasks.
-  - **Confidence:** High for the qualitative findings and taxonomy as stated in the captured report; limited for prevalence and robustness because the capture omits the named languages, temperature settings, model-level counts, and uncertainty estimates.
-  - **Limitation:** Classification as correct establishes only the benchmark's reported output criterion, not a full semantic oracle. Nearly identical percentages under the reported temperature variations do not rule out sampling effects beyond those runs. Calling the result reverse-compression or transferring it to prose generation remains target-side analysis.
 
 ## Connections Found
 

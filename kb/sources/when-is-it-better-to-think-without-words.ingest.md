@@ -21,9 +21,9 @@ Author: Henrik Karlsson is an independent essayist reflecting on sustained writi
 
 Karlsson presents this essay as a complement to [How to think in writing](https://www.henrikkarlsson.xyz/p/writing-to-think). Drawing on Hadamard's reports of mathematicians who worked without clear words, images, or equations, he proposes that expert wordless thought can search a rich conceptual space faster and more broadly than sequential language, but with more unnoticed error. Writing then performs different functions: it forces intuition through explicit logic, stabilizes results enough to test them, and creates “relay results” that can be offloaded from working memory and reused in longer reasoning chains. Precision can also arrive too early, however, filling genuine uncertainty with plausible guesses and making them look settled. The resulting account is an alternation between exploratory vagueness and textual stabilization, not a claim that either words or wordlessness should dominate all thought.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

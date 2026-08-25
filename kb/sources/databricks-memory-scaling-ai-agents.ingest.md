@@ -22,9 +22,9 @@ Author: Databricks AI Research Team, including Wenhao Zhan, Veronica Lyu, Jialu 
 
 Databricks argues for "memory scaling" as a third agent-improvement axis alongside stronger model weights and more inference-time reasoning: agents should improve as they accumulate useful interaction history, feedback, trajectories, and organizational context in external memory. The post reports MemAlign experiments on Genie Spaces where adding labeled examples or filtered unlabeled user logs improved both accuracy and reasoning-step count, plus an organizational knowledge-store experiment that improved benchmark accuracy for schema, join, and vocabulary-bridging questions. Its strongest contribution is not the phrase "memory scaling" itself, but the systems claim underneath it: external memory helps only when the system can distill traces into reusable semantic memory, retrieve the right items instead of stuffing long context, keep memory current, and enforce identity-aware governance across personal and organizational scopes.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

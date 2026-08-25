@@ -21,18 +21,14 @@ Author: Alon Jacovi and Yoav Goldberg; the paper is published in ACL 2020 and th
 
 Jacovi and Goldberg argue that explanation quality must separate **plausibility** (how convincing an interpretation is to people) from **faithfulness** (how accurately it reflects the model's actual reasoning process). They organize existing faithfulness tests around three assumptions--model, prediction, and linearity--and show how each yields counterexamples or stress tests. Their guidelines reject human utility or user-performance measures as faithfulness tests, reject unverified claims of inherent interpretability, and warn that gold-label evaluation pushes judgments toward what humans think the model should do. Because exact faithfulness is an unrealistically high global bar for approximate explanations, they recommend graded criteria across models/tasks and across regions of input space. This is the conceptual source for the target note's condition that an oversight-saving rationale must be faithful, not merely readable or persuasive.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** Jacovi and Goldberg define plausibility as how convincing an interpretation is to people and faithfulness as how accurately it reflects the model's actual reasoning process; either can occur without the other, so human readability or persuasion does not establish faithfulness.
-  - **Source extract (verbatim):** Our main focus is the _evaluation of the faithfulness_ of an explanation: a faithful interpretation is one that accurately represents the reasoning process behind the model’s prediction.
+- **Source extract (verbatim):** Our main focus is the _evaluation of the faithfulness_ of an explanation: a faithful interpretation is one that accurately represents the reasoning process behind the model’s prediction.
   - **Source location:** Introduction.
-  - **Source extract (verbatim):** Two particularly notable criteria, each useful for a different purposes, are _plausibility_ and _faithfulness_ . “Plausibility” refers to how convincing the interpretation is to humans, while “faithfulness” refers to how accurately it reflects the true reasoning process of the model (Herman, 2017; Wiegreffe and Pinter, 2019). Naturally, it is possible to satisfy one of these properties without the other.
+- **Source extract (verbatim):** Two particularly notable criteria, each useful for a different purposes, are _plausibility_ and _faithfulness_ . “Plausibility” refers to how convincing the interpretation is to humans, while “faithfulness” refers to how accurately it reflects the true reasoning process of the model (Herman, 2017; Wiegreffe and Pinter, 2019). Naturally, it is possible to satisfy one of these properties without the other.
   - **Source location:** Section 2, “Faithfulness vs. Plausibility.”
-  - **Source extract (verbatim):** Faithfulness evaluation should not involve human-judgement on the quality of interpretation. We note that: (1) humans cannot judge if an interpretation is faithful or not: if they understood the model, interpretation would be unnecessary; (2) for similar reasons, we cannot obtain supervision for this problem, either. Therefore, human judgement should not be involved in evaluation for faithfulness, as human judgement measures plausability.
+- **Source extract (verbatim):** Faithfulness evaluation should not involve human-judgement on the quality of interpretation. We note that: (1) humans cannot judge if an interpretation is faithful or not: if they understood the model, interpretation would be unnecessary; (2) for similar reasons, we cannot obtain supervision for this problem, either. Therefore, human judgement should not be involved in evaluation for faithfulness, as human judgement measures plausability.
   - **Source location:** Section 5, evaluation guidelines; source spelling preserved.
-  - **Scope:** The paper's vocabulary and prescriptive evaluation argument for NLP model interpretations; it is an ACL opinion/survey paper, not a new causal experiment.
-  - **Confidence:** High for the definitions and the authors' warning against conflation; the proposed evaluation framework remains graded and assumption-dependent.
-  - **Limitation:** The paper defines faithfulness relative to a model's prediction process. Applying the distinction to a retained theory's historical rationale, revision surface, or formation record is a target-side extension.
 
 ## Connections Found
 

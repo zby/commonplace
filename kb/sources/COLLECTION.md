@@ -14,7 +14,8 @@ Two roles, two shapes — don't blur capture and analysis in the same file:
   metadata. They are local materializations, not tracked authority.
 - **Ingest reports** under `kb/sources/` own durable source identity, capture
   provenance, genre, the exact primary-snapshot checksum, and the analysis.
-  They are named `<name>.ingest.md`.
+  They are named `<name>.ingest.md`. Their `snapshot_sha256` is immutable;
+  changed source bytes are a new observation with a distinct basename.
 
 ## Title and description conventions
 
@@ -58,36 +59,42 @@ different filename, when an alternate file redundantly duplicates an already
 valid pair, and when no ingest matches either the URL or checksum. A tracked
 ingest whose ignored snapshot is simply absent does not warn.
 
-## Claims in ingest reports
+## Quotes in ingest reports
 
-Every ingest report has exactly one `## Claims` section immediately before
-`## Connections Found`. Claims retain bounded source-side propositions and
-their primary-source support. This lets a tracked ingest support later checks
-when its local snapshot is unavailable. Keep target-specific transfer reasoning
-in the artifact that uses the claim, not in the ingest.
+Every ingest report has exactly one `## Quotes` section immediately before
+`## Connections Found`. It retains only exact source wording and a
+human-resolvable locator. Paraphrases, scope judgments, confidence,
+limitations, and target-specific transfer reasoning belong to the artifact
+that uses the source or to the ingest's explicitly analytical sections; they
+are not durable source support.
 
 The empty section is exactly:
 
 ```markdown
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 ```
 
-A populated entry has this shape:
+A populated quote item has this shape:
 
 ```markdown
-- **Claim (paraphrase):** <bounded source-side proposition>
-  - **Source extract (verbatim):** <exact supporting content>
+- **Source extract (verbatim):** <exact supporting content>
   - **Source location:** <human-resolvable locator for that extract>
-  - **Scope:** <population, conditions, and exclusions>
-  - **Confidence:** <scoped prose>
-  - **Limitation:** <boundary needed to prevent overstatement>
 ```
 
-Use one or more adjacent `Source extract (verbatim)` / `Source location` pairs.
-Repeat both fields when support is non-contiguous. Scope, confidence, and
-limitation apply to the complete entry.
+Repeat the adjacent `Source extract (verbatim)` / `Source location` pair when
+support is non-contiguous. The section is an append-only quote pool: an
+append may add quotes but must not rewrite or delete incumbent items.
+
+## Declaring how a source use is checked
+
+A durable source-dependent claim links the tracked ingest, never the local
+snapshot. An ordinary ingest link declares that its Quotes section is enough
+for semantic checking. When checking requires the full observation, include
+the exact marker `(snapshot required)` in the ingest link text. The grounding
+gate then derives and verifies the name-paired snapshot and fails if it is not
+present. It never falls back from an unmarked link to ambient snapshot state.
 
 ## Outbound links
 

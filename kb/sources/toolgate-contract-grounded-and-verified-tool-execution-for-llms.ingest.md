@@ -21,9 +21,9 @@ Author: An eight-author Zhejiang University/Southeast University/MIT team; the a
 
 ToolGate places a typed key-value “trusted state” between LLM reasoning and external tools. Semantic retrieval and reranking propose tools, a Hoare-style precondition removes candidates whose required state is absent or invalid, and a postcondition checks result structure, typing, semantic constraints, and state consistency before the runtime commits the result. Failed outputs leave state unchanged and can send execution to another candidate. Across ToolBench and three MCP-Universe task groups, the paper reports higher success/win rates and shorter tool trajectories than ReAct, search, chain, and planner baselines; ablations attribute most gains to pre/postcondition enforcement, with postconditions especially important for preventing superficially successful but empty or inconsistent results from propagating.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

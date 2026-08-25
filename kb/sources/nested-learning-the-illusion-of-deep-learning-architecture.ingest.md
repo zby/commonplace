@@ -21,9 +21,9 @@ Author: Ali Behrouz, Meisam Razaviyayn, Peilin Zhong, and Vahab Mirrokni, with G
 
 Nested Learning (NL) represents a trained model not as an architecture plus a separate optimizer, but as an interconnected system of optimization problems, each with its own context flow and update frequency. On this account, neural layers, recurrent states, momentum, backpropagation, and preconditioning are all associative memories that compress tokens, gradients, or local error signals at different levels; in-context learning is adaptation within any such context, and pre-training is simply the slowest, largest-context instance. The paper derives Delta Gradient Descent and more expressive momentum variants, then combines a self-referential Titans module with a Continuum Memory System (CMS) to produce Hope, whose MLP memories update at different frequencies. Hope is evaluated across continual classification and translation, long-context retrieval, language modeling, common-sense reasoning, recall, formal languages, and component ablations; a multi-timescale M3 optimizer is also tested on vision and language-model training. The strongest KB contribution is the coupled-system view: architecture generates the gradient context that the optimizer compresses, while update cadence determines persistence inside distributed-parametric state. The results support Hope as one compound design, but do not establish NL's universal decomposition or make its retained memories inspectable commitments.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

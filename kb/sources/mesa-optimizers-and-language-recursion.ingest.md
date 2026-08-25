@@ -21,9 +21,9 @@ Author: Peixian is a senior production engineer at WhatsApp writing an independe
 
 Peixian argues that language recursion and mesa optimizers share a common structural property: both compress many possible cases into a smaller generative rule system. Human language, on this view, does not memorize all sentences but re-derives them from recursive grammar rules; likewise, a sufficiently optimized model may stop memorizing case-by-case behavior and discover a reusable search or planning procedure such as tree pruning or path finding. The essay's main contribution is not evidence that mesa optimizers exist, but a framing for why they might emerge suddenly rather than gradually: if recursion is a compression mechanism that unlocks qualitatively broader competence in language, then mesa optimization might appear as an analogous phase change once models cross a scale threshold.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

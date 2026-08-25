@@ -24,9 +24,9 @@ Author: high credibility on the *what* (insider, ships the system), but vendor-p
 
 Anthropic shipped "dynamic workflows" in Claude Code: instead of planning and executing in a single context window, Claude writes a custom JavaScript harness on the fly with special functions to spawn and coordinate sub-agents, choosing each agent's model and whether it runs in an isolated worktree, and resuming from interruption. The article motivates this by three failure modes that grow with single-context length -- agentic laziness (declaring partial work done), self-preferential bias (preferring one's own output when judging), and goal drift (lossy compaction dropping "don't do X" constraints) -- and argues separate Claudes with isolated, focused goals combat all three. It catalogues six composable patterns (classify-and-act, fan-out-and-synthesize, adversarial verification, generate-and-filter, tournament, loop-until-done), a long list of use cases (migrations, deep research, deep verification, qualitative sorting, rule adherence, root-cause investigation, scaled triage, evals, model routing), and operational tips: token budgets, pairing with /goal and /loop, a "quarantine" privilege-separation pattern for untrusted content, and a save/share path (press "s", check into `~/.claude/workflows`, distribute via a skill as a template). It contrasts dynamic with static (SDK / `claude -p`) workflows: static must cover all edge cases so it stays generic; a sufficiently capable model can instead author a tailor-made harness per task.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

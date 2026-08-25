@@ -22,9 +22,9 @@ Author: Linyue Pan, Lexiao Zou, Shuo Guo, Jingchen Ni, Hai-Tao Zheng (Tsinghua U
 
 The paper introduces Natural-Language Agent Harnesses (NLAHs) — a framework for externalizing agent control logic (contracts, roles, stage structure, failure taxonomy, state semantics) as portable, inspectable natural-language artifacts rather than burying them in controller code. The companion Intelligent Harness Runtime (IHR) interprets these artifacts at execution time, separating a shared runtime charter from task-specific logic, with file-backed state for durability under context truncation. Evaluated on SWE-bench Verified and OSWorld, the key finding is that "more explicit structure does not automatically improve end-task performance" — modules help most when they tighten alignment between intermediate behavior and evaluator acceptance criteria, with concentrated effects on frontier cases rather than uniform improvement. The paper positions harness engineering as a first-class research object amenable to systematic study through ablation.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

@@ -21,18 +21,14 @@ Author: Kevin Ellis, Catherine Wong, Maxwell Nye, Mathias Sable-Meyer, Luc Cary,
 
 DreamCoder learns to solve inductive programming tasks by growing its own domain-specific language. A wake phase searches for programs solving training tasks, guided by a neural recognition model; an abstraction sleep phase refactors the discovered programs into semantically equivalent forms and adds new library primitives that minimize a Bayesian description-length objective over the corpus; a dreaming sleep phase retrains the recognition model on a mix of replayed real solutions and fantasies sampled from the current library. The refactoring search is the hard engineering: the space runs to roughly 10^14 rewrites under a three-step lambda-evaluation bound, made tractable by a version-space-algebra plus equivalence-graph structure with dynamic programming. Across eight domains -- list processing, text editing, LOGO graphics, tower building, probabilistic regexes, symbolic regression, physics identities, and recursive functional programming -- the system goes from near-zero to strong performance (SyGuS text editing 3.7% to 79.6% at 40s per task, matching CVC4 at an hour), and library depth correlates with performance at r=0.79. The headline claim is that the resulting knowledge is compositional and interpretable: from generic sequence and arithmetic primitives the system builds vector operations, then an inverse-square schema, then Newton's law of gravitation and Coulomb's law, solving 93% of 60 physics identities after eight cycles.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** DreamCoder's wake-sleep system iteratively extends a domain-specific programming language with reusable symbolic abstractions while training neural search guidance, producing compositional structures that build on previously learned concepts.
-  - **Source extract (verbatim):** The paper presents DreamCoder, a system that learns to solve problems through program writing. The system builds expertise by developing programming languages that express domain-specific concepts alongside neural networks that direct the search for programs within those languages.
+- **Source extract (verbatim):** The paper presents DreamCoder, a system that learns to solve problems through program writing. The system builds expertise by developing programming languages that express domain-specific concepts alongside neural networks that direct the search for programs within those languages.
   - **Source location:** Abstract capture, first paragraph.
-  - **Source extract (verbatim):** The approach employs a "wake-sleep" learning algorithm that iteratively extends the language with new symbolic abstractions and trains neural networks on both imagined and replayed problems.
+- **Source extract (verbatim):** The approach employs a "wake-sleep" learning algorithm that iteratively extends the language with new symbolic abstractions and trains neural networks on both imagined and replayed problems.
   - **Source location:** Abstract capture, second paragraph.
-  - **Source extract (verbatim):** The resulting knowledge representations are compositional, building hierarchically from previously learned concepts. This approach yields interpretable and transferable multi-layered symbolic structures that scale flexibly with accumulated experience.
+- **Source extract (verbatim):** The resulting knowledge representations are compositional, building hierarchically from previously learned concepts. This approach yields interpretable and transferable multi-layered symbolic structures that scale flexibly with accumulated experience.
   - **Source location:** Abstract capture, final paragraph.
-  - **Scope:** The high-level DreamCoder architecture and claimed representation properties retained in this abstract-only snapshot.
-  - **Confidence:** High for the architecture as summarized in the capture; the snapshot does not contain objective equations, ablations, or task-level quantitative results.
-  - **Limitation:** This observation does not state that an abstraction is retained exactly when it reduces description length or expose a discrete mechanical retention gate. That criterion requires a fuller primary observation before it can ground a target claim.
 
 ## Connections Found
 

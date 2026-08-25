@@ -21,9 +21,9 @@ Author: Bruce Nielson, writing for Mindfire Technology as an ML/AI specialist. C
 
 Nielson explains the No Free Lunch theorem by enumerating all possible two-path distance assignments in a small pathfinding problem: if every possible problem is counted, always choosing path 1 and always choosing path 2 have equal total performance. Real algorithms work because real problems are not uniformly drawn from all possible functions; they contain structure that a strategy's inductive bias can exploit. A-star is effective when geometric distance predicts travel distance, but its same heuristic fails in a constructed "hopper" world where that relationship breaks. The essay applies the same logic to neural networks: smooth interpolation helps on smooth functions and hurts on anti-smooth ones. The Popperian conclusion is that learning and discovery require assumptions, and the useful question is whether those assumptions match the world being acted in.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

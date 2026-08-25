@@ -24,9 +24,9 @@ Author: Official Cerebras post with named authors @hi_im_isaac_, @learnwdaniel, 
 
 Cerebras describes Cerebras Knowledge, an internal knowledge base used by employees, automations, and agents. The system rejects a single-platform "source of truth" migration and instead ingests information where it already lives: Slack, docs, code repositories, Jira-like metadata, and custom team databases. It stores embeddings, summaries, and metadata in a common Postgres-backed interface, uses specialized ingestion for Slack threads and code repositories, combines lexical, vector, IDF, recency, RRF, reranking, and context expansion at retrieval time, exposes low-level MCP retrieval tools to agents, and runs a fuller planner/executor/synthesizer path in the web UI. Projects and default scopes keep search relevant for teams and new employees.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

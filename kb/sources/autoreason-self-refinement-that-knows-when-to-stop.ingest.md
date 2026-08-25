@@ -21,9 +21,9 @@ Author: SHL0MS / Hermes Agent; the author signal is less important than the sour
 
 Autoreason proposes an iterative self-refinement architecture where each pass compares the unchanged incumbent (A), an adversarial revision (B), and a synthesis (AB), then uses blind fresh-agent judges with Borda aggregation and incumbent-favoring ties to decide whether to change the output. The central thesis is that self-refinement fails because critique prompts create prompt bias, repeated revision causes drift or bloat, and models rarely decline to edit; making "do nothing" a first-class option prevents degradation. Across writing tasks, CodeContests problems, model-tier comparisons, and ablations, the method helps most when a model can generate useful alternatives but cannot reliably choose among them. The paper frames this as a generation-evaluation gap: too-weak models lack candidate diversity, stronger models can self-evaluate well enough that external structure adds little, and mid-tier/cost-conscious models gain most.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

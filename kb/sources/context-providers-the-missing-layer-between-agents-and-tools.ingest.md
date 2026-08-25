@@ -24,22 +24,18 @@ Author: Ashpreet Bedi; local authority is mostly practitioner evidence from buil
 
 The source argues that agents with many tools hit three walls: context pollution from tool schemas and instructions, ambiguous overlapping tool scopes, and main-agent prompts bloated with source-specific usage rules. The proposed ContextProvider layer wraps each external source, such as Slack, Drive, GitHub, or a filesystem, behind a small natural-language read/write surface: `query_<source>(question)` and `update_<source>(instruction)`. Behind that surface, a source-specific sub-agent owns the raw tools, quirks, pagination, lookup-before-write rules, and optional skills. The result is a main agent with a linear, source-level tool surface and source-scoped sub-agents that absorb operational detail.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** In Bedi's reported ContextProvider pattern, each provider wraps one source behind two natural-language query/update tools; a source-scoped sub-agent owns the underlying tools and source-specific operating details and may load a source skill.
-  - **Source extract (verbatim):** Each ContextProvider wraps one source (e.g. Slack, FileSystem, Drive)
+- **Source extract (verbatim):** Each ContextProvider wraps one source (e.g. Slack, FileSystem, Drive)
   - **Source location:** “The missing layer” section.
-  - **Source extract (verbatim):** To the calling agent, it exposes exactly two tools: query_<source>(question) for natural-language reads update_<source>(instruction) for natural-language writes
+- **Source extract (verbatim):** To the calling agent, it exposes exactly two tools: query_<source>(question) for natural-language reads update_<source>(instruction) for natural-language writes
   - **Source location:** “The missing layer” section, immediately after the one-source description.
-  - **Source extract (verbatim):** Behind each tool is a sub-agent scoped to that one source. The sub-agent owns the source's tools, the source's quirks, the lookup-before-write patterns, the pagination weirdness.
+- **Source extract (verbatim):** Behind each tool is a sub-agent scoped to that one source. The sub-agent owns the source's tools, the source's quirks, the lookup-before-write patterns, the pagination weirdness.
   - **Source location:** “The missing layer” section, provider implementation paragraph.
-  - **Source extract (verbatim):** A Slack ContextProvider's sub-agent can itself load a Slack skill
+- **Source extract (verbatim):** A Slack ContextProvider's sub-agent can itself load a Slack skill
   - **Source location:** “What about Skills?” section.
-  - **Source extract (verbatim):** On Scout's workload, total tokens are roughly flat at low source counts and improve as the source count grows. Wall-clock latency drops at every source count I've measured.
+- **Source extract (verbatim):** On Scout's workload, total tokens are roughly flat at low source counts and improve as the source count grows. Wall-clock latency drops at every source count I've measured.
   - **Source location:** “Surprises and open questions” section.
-  - **Scope:** A practitioner-reported protocol and its examples. The two-tool interface is per provider; optional skills and permission isolation are provider- or example-specific.
-  - **Confidence:** High that the snapshot states this interface and ownership split; low-to-moderate for efficacy because the evidence is the author's report.
-  - **Limitation:** The source gives rough Scout token and latency trends but no measurement table, workload definition, raw data, or pinned implementation revision, so it illustrates the decomposition without supplying reproducible efficacy evidence. Permission isolation appears in specific database and GitHub examples, not as a universal property of every provider.
 
 ## Connections Found
 

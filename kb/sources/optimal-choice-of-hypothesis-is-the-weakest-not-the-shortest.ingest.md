@@ -21,9 +21,9 @@ Author: Michael Timothy Bennett (Australian National University). The paper prov
 
 Bennett defines a finite implementable language whose statements denote sets of possible decisions, then calls a hypothesis's extension cardinality its **weakness**: a weaker statement excludes fewer possibilities. Assuming a uniform distribution over tasks in that language and induction from a child task to an unknown parent, the paper argues that choosing the valid hypothesis with the largest extension is necessary and sufficient to maximize generalisation probability, while minimum description length (MDL) is neither. In toy 8-bit addition and multiplication tasks, weakest-hypothesis selection attains 1.1–5 times the exact-generalisation rate of MDL and 1.03–1.56 times its average extent, depending on training-set size. The paper reads this as a challenge to compression-as-intelligence and as a possible explanation for the Apperception Engine's generalisation.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

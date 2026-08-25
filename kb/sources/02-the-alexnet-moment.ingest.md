@@ -21,9 +21,9 @@ Author: Richard Heimann is a secondary technical interpreter; the primary experi
 
 This chapter presents AlexNet as the empirical defeat of a computer-vision pipeline in which handcrafted SIFT/HOG-style features were fixed before a learned classifier. ImageNet, GPUs, convolution, ReLUs, dropout, augmentation, and careful optimization jointly produced the result; individual ablations help locate some of their contribution. The chapter's strongest mechanism is that end-to-end training did more than fit a better classifier: it let task error revise the representation itself, while still retaining substantial architectural assumptions and a fixed benchmark objective.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

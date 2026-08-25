@@ -21,9 +21,9 @@ Author: a large named author group; the record identifies no conference, reports
 
 The abstract proposes Mobius-v0, which assigns knowledge storage to a globally shared feed-forward network and compositional reasoning to multiple self-attention “Reasoners.” Hidden states carry and cache intermediate state while reasoners repeatedly query the shared memory for knowledge vectors. The authors report that a 7B model trained from scratch matches a 7B Transformer baseline's downstream score with 62.6% of its training data, and that a model continually pretrained from Qwen3.5-35B matches downstream score with nearly four times end-to-end inference speed. The API record also points to an official GitHub repository and Hugging Face project page, but contains no methods, tables, ablations, metric values, or execution details needed to evaluate those claims.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

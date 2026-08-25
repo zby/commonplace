@@ -21,9 +21,9 @@ Author: multi-institution research team from UNC-Chapel Hill, University of Chic
 
 SkillRL proposes a recursive skill-augmented RL loop for LLM agents. It collects successful and failed trajectories, uses a teacher model to distill them into a hierarchical skill bank of general and task-specific natural-language skills, cold-start fine-tunes a base model to retrieve and apply those skills, and then runs GRPO while periodically adding or refining skills from validation failures. On ALFWorld, WebShop, and search-augmented QA benchmarks, the paper reports better success rates than prompt-based memory, vanilla RL, and memory-augmented RL baselines, plus lower prompt length than raw trajectory memory. The central contribution for this KB is the hybrid learning shape: trace-extracted readable skills and policy weights co-evolve instead of treating memory as either passive retrieval context or opaque learned policy alone.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

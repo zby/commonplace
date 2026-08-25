@@ -24,9 +24,9 @@ Author: Dex Horthy writes as a HumanLayer cofounder and coding-agent practitione
 
 Horthy evaluates Opus 5, Opus 4.8, and Sonnet 5 on three SlopCodeBench problems whose requirements arrive checkpoint by checkpoint and whose held-out black-box tests accumulate across the trajectory. Opus 5 achieves four of 17 strict passes, versus one each for the other models, but no model completes any problem without a defect; all models also increase complexity or other slop indicators over time. Horthy treats this as an early signal that current models cannot maintain real-shaped codebases lights-off, while arguing that deterministic structural metrics are useful diagnostics but not yet a complete maintainability oracle. He proposes larger runs, quality-feedback variants, and a cross-model handoff test in which a smaller model must extend a stronger model's codebase.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

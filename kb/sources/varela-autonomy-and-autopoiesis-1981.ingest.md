@@ -21,9 +21,9 @@ Author: Francisco J. Varela co-originated the autopoiesis framework and here exp
 
 Varela separates **autopoiesis**, the self-production organization of living systems in physical space, from **autonomy**, a more general phenomenon that can occur in other interaction spaces (printed p. 14 / PDF p. 1). Autopoiesis is by definition restricted to component-production relations and topological boundaries, so calling animal societies or human institutions autopoietic is a category mistake; such systems may instead be autonomous (printed p. 15 / PDF p. 2). Varela defines organizational closure as a recursively regenerating network of component interactions that constitutes a unity and its boundary (printed pp. 15-16 / PDF pp. 2-3), then offers the **closure thesis**—every autonomous system is organizationally closed—as a heuristic grounded in evidence, not a proved theorem (printed p. 17 / PDF p. 4).
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

@@ -21,9 +21,9 @@ Author: Richard Heimann provides a secondary synthesis of Kaplan, Chinchilla, GP
 
 This chapter explains how language-model loss follows power laws in model size, data, and compute, and how those relations turned progress into a resource-allocation problem. It emphasizes that the laws hold within a fixed regime, that smooth loss can coexist with jagged or measurement-induced capability thresholds, and that later Chinchilla work revised the preferred parameter/data balance. The second half reconstructs the hidden infrastructure—data, tensor, pipeline, and memory sharding; micro-batches; checkpointing; precision; communication; and fault tolerance—that made the curves physically realizable. Its closing judgment is deliberately bounded: scale reliably improved models but did not by itself produce dependable planning or multistep reasoning.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

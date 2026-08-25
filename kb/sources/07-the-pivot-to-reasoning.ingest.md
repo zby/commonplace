@@ -21,9 +21,9 @@ Author: Richard Heimann is a secondary synthesizer. The chapter is strongest whe
 
 The chapter groups VLAE, relation networks, message-passing neural networks, and relational recurrent memory as attempts to organize information and computation so that global structure, object relations, graph interactions, or memory-to-memory comparison become easier to learn. It then turns to modern language-model brittleness: perturbed planning scripts, the reversal curse, and prompts that improve familiar reasoning forms without guaranteeing recomputation under new constraints. Search, verification, explicit states, and test-time compute are presented as attempts to stabilize reasoning. The final “paper doubts versus living doubts” section argues that skepticism earns force when it changes benchmarks or experiments, using ARC benchmark succession to show that a leaderboard win can be local rather than general.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

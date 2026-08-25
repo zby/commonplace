@@ -207,15 +207,22 @@ unchanged source-dependent wording.
 
 For each guarded dependency, resolve exactly one direct tracked
 `kb/sources/<slug>.ingest.md` from the supplied ingest, canonical source URL, or
-unambiguous source identity, then read its complete Claims section.
+unambiguous source identity. Read its complete Quotes section and the
+`semantic/grounding-alignment` gate from the installed framework gate catalog.
 
-- If an entry supports the dependency within its Scope and Limitation, prefer
-  its exact `Claim (paraphrase)` wording, link the ingest, and keep
-  target-specific transfer reasoning in the target. If applying that wording
-  or link materially changes the audited candidate, return to Step 9 and renew
-  any affected audit or acceptance work before promotion.
-- If no entry does, add a blocker to the workshop `README.md` with the exact
-  dependency and retain `candidate.md` and the workshop without changing the
+- When the retained verbatim quotes contain enough source material for the
+  gate to judge the candidate's use, apply the gate directly to that use. Link
+  the ingest without a snapshot marker, ignore every ingest section outside
+  Quotes as source support, and keep target-specific transfer reasoning in the
+  target.
+- Use the snapshot route only when an earlier grounding run returned `snapshot
+  required`. Put the exact marker `(snapshot required)` in the ingest link
+  text. Derive the exact name-paired snapshot, require its exact-byte SHA-256
+  and canonical source to match the ingest, read it, and apply the same gate to
+  the candidate's use. Stop if the snapshot is absent, mismatched, or does not
+  support the use.
+- Otherwise, if Quotes is insufficient, add a blocker to the workshop
+  `README.md` with the exact dependency and retain `candidate.md` and the workshop without changing the
   live target or any source file. Fill in the exact ingest path or canonical
   source URL and the source-side proposition or question, then report one of
   these literal routes as appropriate:
@@ -224,9 +231,12 @@ unambiguous source identity, then read its complete Claims section.
 
 If neither an exact ingest nor a canonical URL can be resolved, record that
 source-identity blocker and ask for the missing identity. This writer never
-invokes the grounding instruction, reads a source snapshot, edits an ingest, or
-introduces a result protocol. Do not begin any promotion write while a
-source-dependency blocker remains.
+invokes the grounding instruction, edits an ingest, or introduces a separate
+result protocol. It reads a source snapshot only for a declared `snapshot
+required` dependency. Do not begin any promotion write while a
+source-dependency blocker remains. If applying the source gate or changing the
+link materially changes the audited candidate, return to Step 9 and renew any
+affected audit or acceptance work before promotion.
 
 Identify each focused local source whose collection authorizes a source-to-target lineage footer. Validate it in its current state, and preserve a workshop copy of every source that will change. If a source is already invalid, stop before promotion.
 

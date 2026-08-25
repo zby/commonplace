@@ -22,9 +22,9 @@ Author: Adam Mastroianni is a psychologist and essayist at Experimental History.
 
 Mastroianni argues that recent AI progress has increased his confidence, not his fear, because the systems keep getting better at what he calls objective intelligence while still lacking subjective intelligence. Objective intelligence covers tasks with clear boundaries, reinforcement signals, and validation; subjective intelligence covers writing, idea selection, taste, judgment, and the ability to tell whether something is interesting rather than merely correct. His strongest examples come from writing and research: AI is useful as an infinite statistician, coder, and literature assistant, but it cannot tell whether a project is boring, whether a sentence is alive, or whether a direction is worth pursuing. The core thesis is that no amount of more-of-the-same benchmarkable competence guarantees the missing judgment layer.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

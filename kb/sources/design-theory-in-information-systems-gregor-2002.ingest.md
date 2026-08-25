@@ -21,9 +21,9 @@ Author: Shirley Gregor, then at the Australian National University, is the origi
 
 Gregor classifies information-systems theory by primary purpose into analysis/description, understanding, prediction, explanation-and-prediction, and design-and-action. Type V concerns both development methods/tools and design principles intended to be manifested in an artifact, method, process, or system; its principles must be articulable, general enough to cover a class rather than one consulting case, and stated as normative guidance for practice. In the paper's strongest formulation, design theory is a purpose-distinguished special case of explanatory-and-predictive theory: it retains constructs, explanations, predictions, and testability, then adds prescriptions about how something should be done. The paper locates information systems within human-machine systems, but it does not make the presence of a capable operator part of the theory-type definition.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

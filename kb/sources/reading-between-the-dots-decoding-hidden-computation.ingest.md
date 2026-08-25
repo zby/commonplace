@@ -21,9 +21,9 @@ Author: Academic mechanistic-interpretability researchers releasing code and dat
 
 Brauer, Mayrink Verdun, and Marks show that DeepSeek V3 and Kimi K2 can use content-free filler tokens as additional computation positions: filler improves accuracy across retrieval, composition, letter-position, and synthetic equation tasks; attention forms a question-to-filler-to-answer relay; intermediate values appear at ordered filler positions in residual-stream readouts; and transplanting filler-only KV caches causally moves answers toward a donor computation. They then aggregate residual logit-lens scores and use an LLM judge to recover discrete hidden intermediates without training labels, generally reaching 80-95% accuracy on correct examples. The important result is bounded: surface-token opacity does not imply total unauditability when white-box hidden states expose vocabulary-aligned, nameable intermediates.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

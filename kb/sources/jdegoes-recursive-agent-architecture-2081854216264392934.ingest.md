@@ -24,9 +24,9 @@ Author: John A. De Goes is an experienced programming-languages and Scala practi
 
 The article argues that the familiar model/tool loop is only the surface of capable agents. Its proposed replacement is a recursive structure in which code invokes inference, inference writes code, and generated programs invoke further scoped inference to perform decomposition, iteration, aggregation, retries, and verification. Plans should be reified as programs that can be typed, tested, simulated, reviewed, and only then executed; natural-language rules should be compiled into deterministic middleware and per-task capability boundaries; and a durable runtime should supply suspension, exactly-once effects, failure recovery, and capability-bounded execution. The essay supports this with Claude Code dynamic workflows, large software-porting examples, and a contrast between small reversible filesystem work and large or irreversible tasks.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

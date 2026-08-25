@@ -21,21 +21,13 @@ Author: a 14-author team; the captured page identifies the National Laboratory o
 
 The authors argue that evaluating autonomous “AI Scientists” in isolation misses the social system that produces scientific work. They propose the human-agent pair as the unit of analysis, identify reduced inquiry diversity as a near-term risk, and call for models of collaboration benefit and coordination cost. This is a useful scientific-team application of human-inclusive evaluation, but the current KB already states the broader system-boundary and actor-allocation claims. The captured Hugging Face page contains the abstract and community descriptions, not the paper's full methods, evidence, or proposed framework.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** The position paper argues that scientific AI agents should be studied as human-agent systems whose unit of analysis is the human-agent pair, rather than only through agents' autonomous capabilities.
-  - **Source extract (verbatim):** Large language model-based agents are increasingly deployed as collaborators in scientific discovery yet most current work focuses on the autonomous capabilities of "AI Scientists". We argue that this overlooks the social aspects of scientific teamwork, and that studying AI Scientists as human-agent systems (HAS)--where the unit of analysis is the human-agent pair--is both underexplored and undervalued.
+- **Source extract (verbatim):** Large language model-based agents are increasingly deployed as collaborators in scientific discovery yet most current work focuses on the autonomous capabilities of "AI Scientists". We argue that this overlooks the social aspects of scientific teamwork, and that studying AI Scientists as human-agent systems (HAS)--where the unit of analysis is the human-agent pair--is both underexplored and undervalued.
   - **Source location:** Authors' abstract
-  - **Scope:** The authors' position about evaluation and study boundaries for LLM-based agents collaborating in scientific discovery.
-  - **Confidence:** High for the advocated unit of analysis because it is stated directly in the authors' abstract.
-  - **Limitation:** This is a position claim, not evidence that the pair is sufficient for every scientific deployment or that model-, organization-, and institution-level effects can be excluded.
 
-- **Claim (paraphrase):** The position paper calls for new research using a human-agent-systems lens to develop mathematical frameworks for understanding and fostering human–AI synergy in scientific discovery.
-  - **Source extract (verbatim):** We call for new research that adopts the HAS lens to develop mathematical frameworks for understanding and fostering human-AI synergy in scientific discovery.
+- **Source extract (verbatim):** We call for new research that adopts the HAS lens to develop mathematical frameworks for understanding and fostering human-AI synergy in scientific discovery.
   - **Source location:** Authors' abstract, closing sentence
-  - **Scope:** The future-work call stated in the captured abstract page for scientific human–AI collaboration.
-  - **Confidence:** High for the existence and direction of the research call because the abstract states it directly.
-  - **Limitation:** The captured authors' abstract does not specify a commensurable function decomposition, a scalar contribution-attribution method, or the proposed frameworks' equations. This bounds only the abstract-page capture and does not establish what the uncaptured full paper contains.
 
 ## Connections Found
 

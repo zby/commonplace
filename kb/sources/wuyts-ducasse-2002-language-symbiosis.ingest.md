@@ -21,9 +21,9 @@ Author: Roel Wuyts and Stéphane Ducasse present the same SOUL/Smalltalk researc
 
 This 2002 version defines **symbiotic reflection** as reflection between two languages in which both play base- and meta-language roles, represent/reason about/act on one another, and can modify one another at runtime. It restates causal connection, reflection, introspection, intercession, reification, symbiotic introspection/intercession, and the automatic up/down entity-transfer schema. Relative to the 2001 paper, the core mechanism and examples are substantially the same; it should therefore be treated as a related presentation of one contribution rather than a second theoretical foundation.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

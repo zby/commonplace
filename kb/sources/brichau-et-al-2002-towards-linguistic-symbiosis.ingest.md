@@ -21,9 +21,9 @@ Author: Johan Brichau, Kris Gybels, and Roel Wuyts report directly on the SOUL s
 
 Brichau et al. start from a SOUL/Smalltalk system already described as symbiotically reflective and ask how to make the two languages transparently usable from one another. They call that integration **linguistic symbiosis** and show why it is difficult across paradigms: object-oriented messages and logic predicates disagree about argument binding, number of results, failure, control flow, and dispatch. Their implementation maps modules to classes and messages to queries, later separating the mapping's language-specific syntactic “look” from its paradigm-specific semantic “feel.” The paper is evidence about the mechanisms and unresolved costs of cross-representational interoperability, not an independent foundation for the definition of reflection.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

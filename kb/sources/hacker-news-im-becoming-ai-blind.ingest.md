@@ -20,9 +20,9 @@ This is a conversation thread: its evidence comes from many participants' report
 
 The thread is useful as a broad failure-mode and boundary-case inventory for AI-assisted knowledge writing. Participants repeatedly describe small informational payloads expanded into polished prose, missing mechanisms hidden by fluent presentation, generic comparison structures, invented terminology, loss of author voice, poor recall, reader fatigue, automatic rejection, and review work shifted from sender to recipient. Other participants report effective technical use, better results from explicit style constraints or iterative dialogue, false positives in AI detection, and survivorship bias toward conspicuously bad outputs. Read it to generate and discriminate hypotheses about document quality and review burden, not to estimate how common the effects are or establish what causes them.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

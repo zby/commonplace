@@ -21,9 +21,9 @@ Author: Ronald Moen (Associates in Process Improvement). High access, high inter
 
 The paper traces the ancestry of W. Edwards Deming's Plan-Do-Study-Act (PDSA) cycle from Galileo and Bacon through American pragmatism (Peirce, James, Dewey, C.I. Lewis) to Shewhart's 1939 specification-production-inspection circle, Deming's 1950 "Deming Wheel," the Japanese recasting into Plan-Do-Check-Act (PDCA) around 1951, and Deming's own PDSA formulations of 1986 and 1993. Its through-line argument is that PDSA formalizes the scientific method as an iterative learn-and-improve loop, and that PDCA and PDSA are related only through that shared method — Deming himself, in cited letters and transcripts, rejected PDCA as a "corruption" and disowned its authorship. The load-bearing addition for this KB is the 1991 Moen/Nolan/Provost move: the Plan step must state a prediction and its associated theory, and the Study step compares observed data against that prediction, supplying "the deductive/inductive interplay necessary for learning."
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

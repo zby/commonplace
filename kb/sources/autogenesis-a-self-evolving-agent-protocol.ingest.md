@@ -21,9 +21,9 @@ Author: A seven-author team from Nanyang Technological University, Stanford Univ
 
 Autogenesis Protocol (AGP) separates a Resource Substrate Protocol Layer from a Self-Evolution Protocol Layer. The substrate registers prompts, agents, tools, environments, and memory as typed, versioned resources with lifecycle, retrieval, execution, serialization, and rollback operations; the evolution layer lifts selected resources into a trainable subspace and composes operators that observe traces, infer failures, propose changes, evaluate candidates, and commit or reject them. Its concrete Autogenesis System coordinates a planning agent and specialist sub-agents over a message bus and applies reflection-driven edits during execution. Across GPQA, AIME, GAIA, HLE, and a 100-problem multilingual LeetCode set, the paper reports improvements from prompt, solution, joint prompt-solution, or agent evolution, but the comparisons primarily show that additional bounded refinement can improve the tested configurations; they do not isolate the resource ontology, operator protocol, versioning layer, or safety machinery as causes.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

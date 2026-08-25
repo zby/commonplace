@@ -31,6 +31,8 @@ Assess fit relative to the installed KB's goals, local collection contracts, and
 - Set `snapshot_sha256` to the lowercase SHA-256 of the exact bytes of the
   primary Markdown snapshot. The hash includes frontmatter, line endings, and
   the presence or absence of a final newline. It excludes companion files.
+- Never change `snapshot_sha256` on an existing ingest. Changed source bytes are
+  a distinct observation with a distinct snapshot basename and ingest path.
 - When the primary snapshot was mechanically derived from another retained
   snapshot, set `original_snapshot_sha256` to the lowercase SHA-256 of those
   exact precursor bytes. This gives the derivation input durable identity
@@ -69,39 +71,36 @@ adopted; a collection-local snapshot type does not extend this contract.
   reviewed revisions and pinned source files; distinguish mechanisms confirmed
   by inspection, experiment support artifacts that were present but not run,
   and claims that remain paper-only. State what code, if any, was executed.
-- `Claims` appears exactly once, immediately before `Connections Found`. It
-  retains bounded source-side propositions with exact primary-source support so
-  later readers can judge a use without relying on the local snapshot.
+- `Quotes` appears exactly once, immediately before `Connections Found`. It
+  retains exact primary-source wording and human-resolvable locations so a
+  later reviewer can judge ordinary source uses without the local snapshot.
 - `Connections Found` summarizes the connection discovery findings and explains how the source fits the current KB, as compact prose naming the source's role (for example: anchor, technical basis, counterpoint, legal disposition, public statement, limitation) rather than a transcribed candidate list. Drop weak, speculative, or duplicate edges; keep only settled, durable judgments. If no casebook notes exist yet, say so plainly instead of substituting a full map of relationships to other already-captured sources, or framing the section as prospective connections for notes that do not exist yet. The generated connect report is working context only; do not cite it, link to it, or name its path in the ingest report.
 - `Extractable Value` lists three to seven items, ordered by reach and novelty relative to the installed KB's goals and existing KB connections.
 - `Limitations (our opinion)` states where the source should not be trusted or over-generalized.
 - `Recommended Next Action` chooses one specific advisory next action. The ingest report recommends; it does not perform promotion.
 
-## Claims Shape
+## Quotes Shape
 
-Use this exact section when no claims have been grounded:
+Use this exact section when no source quotes have been retained:
 
 ```markdown
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 ```
 
-Use this shape for every populated entry:
+Use this shape for every populated item:
 
 ```markdown
-- **Claim (paraphrase):** <bounded source-side proposition>
-  - **Source extract (verbatim):** <exact supporting content>
+- **Source extract (verbatim):** <exact supporting content>
   - **Source location:** <human-resolvable locator for that extract>
-  - **Scope:** <population, conditions, and exclusions>
-  - **Confidence:** <scoped prose>
-  - **Limitation:** <boundary needed to prevent overstatement>
 ```
 
-Normalize the claim as a source-side proposition. Do not put a target-specific
-transfer argument in the entry. Use one or more adjacent `Source extract
-(verbatim)` / `Source location` pairs, repeating both when support is
-non-contiguous. Scope, confidence, and limitation bound the complete entry.
+Use one or more adjacent `Source extract (verbatim)` / `Source location` pairs,
+repeating both when support is non-contiguous. Copy exact snapshot text;
+whitespace normalization lets one extract span wrapped lines. Do not put a
+paraphrase, scope judgment, confidence assessment, limitation, or
+target-specific transfer argument in this section.
 
 ## Extraction Standards
 
@@ -156,9 +155,9 @@ Author: {credibility signal}
 
 {One paragraph}
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

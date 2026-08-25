@@ -22,20 +22,16 @@ Author: M. Reza Ebrahimi, Defferrard, Panchal, Memisevic at Qualcomm AI Research
 
 The paper conducts a large-scale empirical study comparing transformers and recurrent neural networks (LSTMs, Dense-SSMs) on state-tracking tasks (modular addition, permutation composition), focusing on in-distribution data efficiency rather than the usual OOD length-generalization framing. The central finding is that transformers require dramatically more training data than RNNs for state tracking -- sometimes by orders of magnitude -- because they lack what the authors call "induction bias": the structural constraint that forces step-by-step state updates. The paper introduces a sharing factor (kappa) that quantifies whether a model reuses learned mechanisms across different sequence lengths. Transformers show kappa near or below 1 (learning length-specific solutions in isolation, with destructive interference under CoT), while RNNs show kappa >> 1 (amortized learning via shared transition operators). The paper further shows that in-distribution data efficiency and cross-length weight sharing are highly correlated with OOD length-generalization ability, connecting the in-distribution and OOD failures as manifestations of the same underlying architectural limitation.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** In more than 190,000 training runs on synthetic modular-addition state tracking, small recurrent models learned higher-modulus and longer-sequence configurations with orders of magnitude fewer samples than small transformers in the outcome-supervision regime, while the compared architectures favored different intermediate-supervision formats.
-  - **Source extract (verbatim):** This amounts to over 190,000 training runs for the results reported in this paper, excluding development runs.
+- **Source extract (verbatim):** This amounts to over 190,000 training runs for the results reported in this paper, excluding development runs.
   - **Source location:** Section 2, “Methodology,” Experimental Setup.
-  - **Source extract (verbatim):** We observe that recurrent models significantly outperform transformers in this regime. While transformers fail to converge for all but the most trivial configurations (very small m and n), the recurrent architectures successfully learn the task for higher moduli and extended sequence lengths, achieving convergence with orders of magnitude fewer training samples.
+- **Source extract (verbatim):** We observe that recurrent models significantly outperform transformers in this regime. While transformers fail to converge for all but the most trivial configurations (very small m and n), the recurrent architectures successfully learn the task for higher moduli and extended sequence lengths, achieving convergence with orders of magnitude fewer training samples.
   - **Source location:** Section 3, Observation 3.3, outcome supervision.
-  - **Source extract (verbatim):** We observe a clear preference for CoT over the Aligned CoT format for transformers.
+- **Source extract (verbatim):** We observe a clear preference for CoT over the Aligned CoT format for transformers.
   - **Source location:** Section 3, Observation 3.1.
-  - **Source extract (verbatim):** Conversely, recurrent models (LSTMs and Dense-SSMs) demonstrate superior sample efficiency when trained with the Aligned CoT (ACoT) format, which provides supervision aligned with the evolution of the hidden state.
+- **Source extract (verbatim):** Conversely, recurrent models (LSTMs and Dense-SSMs) demonstrate superior sample efficiency when trained with the Aligned CoT (ACoT) format, which provides supervision aligned with the evolution of the hidden state.
   - **Source location:** Section 3, Observation 3.2.
-  - **Scope:** Synthetic modular-addition state tracking across sequence lengths up to 30 and moduli up to 100, comparing 6-layer/256-dimensional and 2-layer transformers with single-layer LSTM and Dense-SSM recurrent models under outcome, CoT, and aligned-CoT supervision.
-  - **Confidence:** High for the reported experimental comparisons within the enumerated grid; the source gives the search procedure, model sizes, run count, and qualitative sample-efficiency results.
-  - **Limitation:** These are small sequence models on algebraic synthetic tasks, not frontier LLMs or production agents. The experiments do not close whether the advantage persists with scale, different architectures, natural data, or broader objectives.
 
 ## Connections Found
 

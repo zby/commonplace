@@ -21,9 +21,9 @@ Author: Borui Kang, Jinrui Gu, Junhan Lv, Wenbin Li, Lei Wang, and Yang Gao, aff
 
 Harness Continual Learning (HCL) treats a frozen-model agent's Task Interface, Experience Memory, Capability Map, and Adaptive Router as one persistent, jointly versioned learning state. A Continual Optimizer uses post-execution evidence to propose isolated component changes; a Continual Evaluator commits the resulting candidate only if it improves current validation performance, stays within a historical-anchor loss budget, and passes validity checks. Across ALFWorld, Minecraft, four textual-reasoning tasks, and four multimodal tasks, the authors report capability gains together with measurable regressions on earlier behavior. A textual sweep makes the stability–plasticity control concrete: average forgetting rises from 0.39 at historical-loss tolerance b = 0 to 3.45 at b = infinity, while final average performance peaks at the intermediate b = 1 rather than under unrestricted updates.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

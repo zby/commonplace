@@ -38,12 +38,6 @@ from commonplace.review.review_db import (
     resolve_db_path,
 )
 from commonplace.review.review_model import normalize_model_partition
-from commonplace.review.source_conformance import (
-    SOURCE_CONFORMANCE_LENS,
-    is_source_conformance_request,
-    note_source_ingest_paths,
-    resolve_source_criterion_id,
-)
 from commonplace.review.type_conformance import (
     TYPE_CONFORMANCE_LENS,
     is_type_conformance_request,
@@ -227,34 +221,19 @@ def _applicable_collection_md_path(
     return None
 
 
-def _normalize_source_requests(repo_root: Path, requests: list[str]) -> tuple[bool, set[str]]:
-    """Split ``source``/``source/{slug}`` into match-all and ingest paths."""
-    match_all = False
-    requested_paths: set[str] = set()
-    for raw in requests:
-        raw = raw.strip()
-        if raw == SOURCE_CONFORMANCE_LENS:
-            match_all = True
-        else:
-            requested_paths.add(resolve_source_criterion_id(repo_root, raw))
-    return match_all, requested_paths
-
-
 def _partition_criterion_requests(
     criterion_ids: list[str],
-) -> tuple[list[str], list[str], list[str], list[str], bool]:
+) -> tuple[list[str], list[str], list[str], bool]:
     type_requests = [criterion_id for criterion_id in criterion_ids if is_type_conformance_request(criterion_id)]
     collection_requests = [criterion_id for criterion_id in criterion_ids if is_collection_conformance_request(criterion_id)]
-    source_requests = [criterion_id for criterion_id in criterion_ids if is_source_conformance_request(criterion_id)]
     catalog_requests = [
         criterion_id
         for criterion_id in criterion_ids
         if not is_type_conformance_request(criterion_id)
         and not is_collection_conformance_request(criterion_id)
-        and not is_source_conformance_request(criterion_id)
         and not is_critique_request(criterion_id)
     ]
-    return catalog_requests, type_requests, collection_requests, source_requests, any(
+    return catalog_requests, type_requests, collection_requests, any(
         is_critique_request(criterion_id) for criterion_id in criterion_ids
     )
 
@@ -277,13 +256,12 @@ def _criterion_paths_for_notes(
     criterion_ids: list[str],
     notes: list[Path],
 ) -> list[tuple[Path, str, list[str]]]:
-    catalog_requests, type_requests, collection_requests, source_requests, critique_requested = (
+    catalog_requests, type_requests, collection_requests, critique_requested = (
         _partition_criterion_requests(criterion_ids)
     )
     gates_dir, criterion_path_by_id, requested_criterion_ids = _normalize_requested_criterion_ids(repo_root, catalog_requests)
     match_all_types, requested_type_paths = _normalize_type_requests(repo_root, type_requests)
     match_all_collections, requested_collection_paths = _normalize_collection_requests(repo_root, collection_requests)
-    match_all_sources, requested_source_paths = _normalize_source_requests(repo_root, source_requests)
     selected: list[tuple[Path, str, list[str]]] = []
     for note_abs in notes:
         note_path = note_abs.relative_to(repo_root).as_posix()
@@ -305,12 +283,6 @@ def _criterion_paths_for_notes(
         )
         if collection_md_path is not None:
             paths.append(collection_md_path)
-        if match_all_sources or requested_source_paths:
-            paths.extend(
-                source_path
-                for source_path in note_source_ingest_paths(repo_root, note_abs)
-                if match_all_sources or source_path in requested_source_paths
-            )
         if critique_requested:
             paths.append(critique_criterion_path(repo_root))
         for criterion_path in paths:

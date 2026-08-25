@@ -21,9 +21,9 @@ Author: Uwe Dulleck and Rudolf Kerschbamer, academic economists (University of V
 
 A credence good is one whose consumer cannot judge, even after the fact, whether the quality he received was the quality he needed — a car repair, a medical treatment, a computer spec. Only the expert seller knows, and can exploit that asymmetry by overtreating, undertreating, or overcharging. The literature had produced a confusing spread of contradictory results; this paper collapses them into one simple binary model. Its central result: market institutions eliminate expert fraud at zero cost if and only if three conditions hold — (i) large economies of scope between diagnosis and treatment, (ii) either the treatment type is *verifiable* or a *liability* rule protects the consumer (or both), and (iii) homogeneous consumers. Relaxing any single condition reproduces essentially every known inefficiency in the literature: violate (ii) with neither verifiability nor liability and the market breaks down entirely, a hidden-action Akerlof lemons case. The paper is a canonical microeconomic formalization of the exact variable this KB treats as structural: whether the consumer of an output can verify its quality — and it adds that a liability rule can substitute for verifiability to reach the same efficient outcome.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

@@ -21,9 +21,9 @@ Author: Junlin Yang and 23 coauthors from Horizon Research/Frontis.AI, Tsinghua 
 
 Frontis-MA1 is the trained model inside OpenMLE, a full-stack machine-learning-engineering system whose training and inference paths share four program-evolution operators: Draft, Improve, Debug, and Crossover. OpenMLE-Gym supplies 5,758 executable tasks with sandboxed evaluators; OpenMLE-ERL turns verified trajectories into supervised data and reinforcement-learning rewards; OpenMLE-Evo composes the same operators over long search horizons using parent selection, deterministic experience records, and lazily synthesized operator-specific memory. Under the paper's 12-hour, single-RTX-4090 MLE-Bench Lite protocol, Frontis-MA1-35B with the standard harness reaches a 60.61% medal rate versus 39.39% for its Qwen3.6-35B base, and Evo-Max reaches 71.21%. The durable contribution is the shared operator interface linking execution-grounded post-training to inference-time program search; the system improves external ML programs, while the operator decomposition and evolutionary controller remain fixed.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

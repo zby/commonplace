@@ -21,9 +21,9 @@ Author: Luan Zhang, Ruochen Zhou, Dandan Song, and collaborators from Beijing In
 
 HarnessCompass evolves a fixed-model coding-agent harness through three controls: a generalization gate that rejects task-specific edits and separates executable capability changes from natural-language guidance; blind and hindsight first-person feedback that is reconciled and checked against trajectories; and parallel structural/guidance optimization followed by Revision, Recombination, and Refinement (R3). Starting from a bash-only GPT-5.4 harness on 50 SWE-bench Verified evolution tasks, it reports 66.0% Pass@1 after five iterations, versus 63.0% for Agentic Harness Engineering after twenty. On 450 disjoint tasks it scores 60.4% versus 54.7%, and the frozen harness raises Claude-Sonnet-4.6's full-benchmark score from 70.0% to 73.8%. The progressive ablation is more informative than the headline: the gate alone reaches 58.4% held-out, adding self-feedback raises the evolution score but lowers held-out performance to 55.8%, and adding R3 restores it to 60.4%.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

@@ -21,36 +21,24 @@ Author: Andrey Mokhov (Newcastle), Neil Mitchell (Digital Asset / Shake author),
 
 The paper unifies Make, Excel, Shake, Bazel, CloudBuild, Buck, and Nix as points in a single design space rather than isolated systems. Its central move is to separate two choices that are normally wired deep into any build system: the **scheduler** (which tasks run and in what order — topological, restarting, or suspending) and the **rebuilder** (whether a key needs rebuilding — dirty bit, verifying traces, constructive traces, or deep constructive traces). These axes are orthogonal, so any scheduler composes with any rebuilder to yield a correct build system, tabulated as a 3×4 grid where 8 of 12 cells are occupied by existing systems and the empty cells are buildable (notably "suspending constructive traces" = a monadic cloud build system the authors call Cloud Shake). Along the way it gives crisp definitions of **minimality** (rebuild only what transitively depends on changed inputs, at most once), **early cutoff** (stop when a recomputed result is unchanged), and dynamic vs static dependencies, and shows (§7.3) that minimal build systems are a strict generalization of memoization.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** In the paper's framework, a rebuilder decides whether a key needs rebuilding; Shake is classified as a verifying-traces system and persists its prior dependency graph with file-content hashes so it rebuilds a target when a recorded dependency changes.
-  - **Source extract (verbatim):** The scheduler (which decides which tasks to execute and in what order) can be cleanly separated from the rebuilder (which decides whether a key needs to be rebuilt).
+- **Source extract (verbatim):** The scheduler (which decides which tasks to execute and in what order) can be cleanly separated from the rebuilder (which decides whether a key needs to be rebuilt).
   - **Source location:** §4, “Build Systems à la Carte,” opening paragraph
-  - **Source extract (verbatim):** Shake stores the dependency graph discovered in the previous build, annotated with file content hashes for efficient checking of file changes.
+- **Source extract (verbatim):** Shake stores the dependency graph discovered in the previous build, annotated with file content hashes for efficient checking of file changes.
   - **Source location:** §2.5, “Summary,” persistent-build-information list
-  - **Source extract (verbatim):** Crucially, the archive will only be rebuilt if one of the dependencies (static or dynamic) has changed.
+- **Source extract (verbatim):** Crucially, the archive will only be rebuilt if one of the dependencies (static or dynamic) has changed.
   - **Source location:** §2.3, “Shake: Dynamic Dependencies with No Remorse,” release-archive example
-  - **Scope:** The paper's Shake example and scheduler–rebuilder model, covering recorded static and dynamic file dependencies and content-hash change checks.
-  - **Confidence:** High for the paper's classification and the described Shake mechanism; the snapshot states both directly.
-  - **Limitation:** The paper does not discuss review verdicts or quality criteria, and it does not say that a verdict cache should hash exactly the criteria; that is a target-side analogy. It treats task-description changes separately as self-tracking.
 
-- **Claim (paraphrase):** The paper factors build-system design into orthogonal scheduler and rebuilder choices; their 3×4 cross-product places eight existing systems and yields four formally workable combinations, including the unoccupied suspending-constructive-traces design called Cloud Shake.
-  - **Source extract (verbatim):** We identify two key design choices that are typically deeply wired into any build system: *the order in which tasks are built* (§4.1) and *whether or not a task is (re-)built* (§4.2). These choices turn out to be orthogonal, which leads us to a new classification of the design space (§4.4).
+- **Source extract (verbatim):** We identify two key design choices that are typically deeply wired into any build system: *the order in which tasks are built* (§4.1) and *whether or not a task is (re-)built* (§4.2). These choices turn out to be orthogonal, which leads us to a new classification of the design space (§4.4).
   - **Source location:** §1, “Introduction,” contribution list
-  - **Source extract (verbatim):** With this classification, the paper tabulates 12 possible build systems (scheduler × rebuilder), 8 of which are inhabited by existing build systems. Of the remaining 4 spots, all result in workable build systems.
+- **Source extract (verbatim):** With this classification, the paper tabulates 12 possible build systems (scheduler × rebuilder), 8 of which are inhabited by existing build systems. Of the remaining 4 spots, all result in workable build systems.
   - **Source location:** §4, Table 2 discussion
-  - **Source extract (verbatim):** These two abstractions are the key to modularity: *we can combine any scheduler with any rebuilder, and obtain a correct build system.*
+- **Source extract (verbatim):** These two abstractions are the key to modularity: *we can combine any scheduler with any rebuilder, and obtain a correct build system.*
   - **Source location:** §5, “Build Systems, Concretely,” scheduler and rebuilder composition
-  - **Scope:** The paper's executable abstraction and the twelve scheduler–rebuilder combinations in Table 2; “workable” means constructible as a correct system in that model.
-  - **Confidence:** High for the factorization, grid occupancy, and formal composability; each is stated directly and backed by the paper's Haskell abstractions.
-  - **Limitation:** The empty cells are designs within the framework, not evidence of deployed systems. In particular, the source describes Cloud Shake as a blueprint the authors hoped to implement later.
 
-- **Claim (paraphrase):** The paper separates tracking changes in inputs and intermediate results from self-tracking changes in task descriptions: Excel recomputes and propagates a changed formula, while many software build systems require a manually initiated full rebuild after a task changes.
-  - **Source extract (verbatim):** Most build systems only track changes of inputs and intermediate results, but Excel also tracks changes in the tasks themselves — if a formula is modified, Excel will recompute it and propagate the changes. Self-tracking is uncommon in software build systems, where one often needs to manually initiate a full rebuild even if just a single task has changed.
+- **Source extract (verbatim):** Most build systems only track changes of inputs and intermediate results, but Excel also tracks changes in the tasks themselves — if a formula is modified, Excel will recompute it and propagate the changes. Self-tracking is uncommon in software build systems, where one often needs to manually initiate a full rebuild even if just a single task has changed.
   - **Source location:** §2.2, “Excel: Dynamic Dependencies at the Cost of Minimality,” self-tracking discussion
-  - **Scope:** The paper's comparison of Excel with the software build systems it surveys, specifically whether task-description changes are tracked as rebuild dependencies.
-  - **Confidence:** High for the stated distinction and examples; the source presents them directly.
-  - **Limitation:** A build task description is a production recipe, not a quality criterion. The source does not claim that an old verification verdict remains valid after a process edit or prescribe regeneration instead of review; those are target-side conclusions.
 
 ## Connections Found
 

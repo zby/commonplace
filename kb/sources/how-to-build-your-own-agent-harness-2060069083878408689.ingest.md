@@ -24,9 +24,9 @@ Author: Founder/CEO of the iii project (vendor-interested). Credible on the impl
 
 The post argues that a production agent harness is not one importable framework but ~13-15 separable jobs (provider routing, credential vault, model catalog, durable turn FSM, skill serving, system-prompt assembly, streaming, policy check, approval gate, budget tracking, hook fanout, branching session tree, compaction, event stream, OTel tracing). Frameworks bundle these into a monolith and ship one version of each, so teams eventually fork or rewrite. iii instead ships each job as an independently-versioned **worker** on a shared engine bus, every worker speaking one WebSocket protocol and connected by a single primitive — `iii.trigger()` over name-based function ids (`models::list`, `provider::<name>::stream`, `policy::check_permissions`, `approval::resolve`). Because neighbours talk only through bus-level function ids, any layer is swappable by registering a worker for the same ids, and "build your own harness" collapses into "swap/add a worker." Thin-vs-thick stops being a fork and becomes a slider: a count of installed workers in `config.yaml`. The post walks one turn end-to-end and offers a self-contained FSM rewrite (11→7 states, with no neighbour change) as evidence the composition holds.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

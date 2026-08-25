@@ -24,9 +24,9 @@ Author: @yoheinakajima is the designer reporting his own operating model. That g
 
 The report proposes that a governed project repository, rather than a model, agent, conversation, or IDE session, should be the durable unit of agentic work. The repository holds canonical events and artifacts plus regenerable projections; compact instruction files route into stable invariants, reusable role procedures, project-local contracts, and transient task context; replaceable models enter through thin adapters; and bounded heartbeats reconcile state, act, verify, record a state delta, and exit. Local project managers coordinate detailed work while a portfolio-level Chief of Staff routes attention without becoming a second system of record. Verification, provenance, explicit epistemic status, and durable human decisions govern which transitions become accepted project state. The report's main value is this integrated architecture and its vocabulary, not demonstrated effectiveness.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

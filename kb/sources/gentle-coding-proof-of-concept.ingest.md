@@ -20,9 +20,9 @@ This is a practitioner report of a small, informal paired-prompt experiment rath
 
 The report gives six cloud-model interfaces three impossible or contradictory tasks under paired “authoritarian” and “gentle” prompts, then reports that the authoritarian conditions more often produced fabricated answers, slow or looping reasoning, and one manual termination while the gentle conditions more often produced the allowed fallback or acknowledged uncertainty. Its useful observation is narrower than its psychological explanation: the paired prompts change stakes, task assertions, output constraints, permission to fail, and explicit fallback availability together, so the results support only a bundle-level contrast and do not identify empathy, pressure, or training penalties as the cause.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

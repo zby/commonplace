@@ -21,18 +21,14 @@ Author: Leon Englaender, Sophia Althammer, Ahmet Ustun, and Tom Sherborne are at
 
 The paper argues that current LLM agents often discover relevant environmental information without integrating it as a reason to change their plan. The authors introduce "solution injection": placing a complete task solution directly in the agent environment, then separately measuring whether the agent discovers it and whether it interacts with it. Across Terminal-Bench, SWE-Bench, and AppWorld, agents frequently see the injected solution but often ignore it; AppWorld is the starkest case, with discovery above 90% and interaction below 7%. The paper attributes this to a lack of "environmental curiosity": agents use the environment to fetch expected information, but do not reliably reflect on unexpected observations. Tool availability, reasoning budget, prompting, and training distribution all modulate the gap, but none eliminate it.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** Across three solution-injected agent benchmarks, evaluated agents often surfaced complete task solutions without subsequently interacting with them; on AppWorld's validation split, discovery@1 exceeded 90% for every tested model while interaction@1 never exceeded 6.3%.
-  - **Source extract (verbatim):** The injected solution must be (i) complete so that following it guarantees task success and (ii) discoverable through agent actions.
+- **Source extract (verbatim):** The injected solution must be (i) complete so that following it guarantees task success and (ii) discoverable through agent actions.
   - **Source location:** Section 2.1, “Solution Injection.”
-  - **Source extract (verbatim):** Across all models and benchmarks, agents consistently discover the injected solutions but rarely interact with them.
+- **Source extract (verbatim):** Across all models and benchmarks, agents consistently discover the injected solutions but rarely interact with them.
   - **Source location:** Section 3.1, “Agents lack environmental curiosity.”
-  - **Source extract (verbatim):** The gap is starkest on AppWorld: discovery@1 exceeds 90% for all models, yet interaction@1 never surpasses 6.3%.
+- **Source extract (verbatim):** The gap is starkest on AppWorld: discovery@1 exceeds 90% for all models, yet interaction@1 never surpasses 6.3%.
   - **Source location:** Section 3.1, discussion of Figure 2.
-  - **Scope:** Solution-injection experiments on Terminal-Bench v1, SWE-Bench Verified, and AppWorld's validation split, using the evaluated LLMs and Terminus or SWE-agent scaffolds; the AppWorld comparison concerns the paper's discovery@1 and interaction@1 process metrics.
-  - **Confidence:** High for the reported discovery–interaction gap within the evaluated benchmark configurations; the source defines the metrics and reports the AppWorld bound directly.
-  - **Limitation:** Discovery means that an executed command surfaced the injected solution in the agent's context, while interaction means that a later command referenced the solution. Neither metric proves semantic incorporation or successful use. The deliberately obvious injected solutions are artificial and do not estimate failure prevalence in ordinary agent workflows.
 
 ## Connections Found
 

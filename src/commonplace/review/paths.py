@@ -16,12 +16,6 @@ from commonplace.review.critique import (
     is_critique_criterion_path,
     is_critique_request,
 )
-from commonplace.review.source_conformance import (
-    is_source_conformance_request,
-    is_source_ingest_criterion_path,
-    resolve_source_criterion_id,
-    source_criterion_id_for_path,
-)
 from commonplace.review.type_conformance import (
     is_type_conformance_request,
     is_type_spec_criterion_path,
@@ -70,8 +64,6 @@ def criterion_path_for_id(repo_root: Path, criterion_id: str) -> str:
         return resolve_type_criterion_id(repo_root, normalized)
     if is_collection_conformance_request(normalized):
         return resolve_collection_criterion_id(repo_root, normalized)
-    if is_source_conformance_request(normalized):
-        return resolve_source_criterion_id(repo_root, normalized)
     if is_critique_request(normalized):
         return critique_criterion_path(repo_root)
     gates_dir = review_gates_dir(repo_root)
@@ -95,10 +87,6 @@ def criterion_id_for_path(repo_root: Path, criterion_path: str) -> str:
         if not (repo_root / criterion_path).is_file():
             raise FileNotFoundError(f"criterion not found: {criterion_path}")
         return collection_criterion_id_for_path(criterion_path)
-    if is_source_ingest_criterion_path(Path(criterion_path).as_posix()):
-        if not (repo_root / criterion_path).is_file():
-            raise FileNotFoundError(f"criterion not found: {criterion_path}")
-        return source_criterion_id_for_path(criterion_path)
     if is_critique_criterion_path(criterion_path):
         if not (repo_root / criterion_path).is_file():
             raise FileNotFoundError(f"criterion not found: {criterion_path}")
@@ -118,8 +106,6 @@ def criterion_id_from_stored_path(criterion_path: str) -> str:
         return type_criterion_id_for_path(criterion_path)
     if is_collection_md_criterion_path(Path(criterion_path).as_posix()):
         return collection_criterion_id_for_path(criterion_path)
-    if is_source_ingest_criterion_path(Path(criterion_path).as_posix()):
-        return source_criterion_id_for_path(criterion_path)
     if is_critique_criterion_path(criterion_path):
         return CRITIQUE_LENS
     normalized = Path(criterion_path).with_suffix("").as_posix()
@@ -147,7 +133,6 @@ def normalize_criterion_path(repo_root: Path, criterion: str) -> str:
     if (
         is_type_spec_criterion_path(candidate.as_posix())
         or is_collection_md_criterion_path(candidate.as_posix())
-        or is_source_ingest_criterion_path(candidate.as_posix())
         or is_critique_criterion_path(candidate.as_posix())
     ):
         if not criterion_abs.is_file():

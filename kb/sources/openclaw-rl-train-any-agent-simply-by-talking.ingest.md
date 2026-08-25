@@ -24,20 +24,16 @@ Models: All experiments use the Qwen3 family. The policy model — the one being
 
 OpenClaw-RL introduces a framework that treats "next-state signals" — user replies, tool outputs, terminal feedback, GUI state changes — as universal learning sources for RL training during deployment. The system recovers two signal types: evaluative signals (how well an action performed) converted to scalar rewards via process reward models, and directive signals (how actions should differ) extracted through Hindsight-Guided On-Policy Distillation providing token-level supervision. A fully asynchronous four-loop architecture (policy serving, environment management, PRM judging, training) enables a single policy to simultaneously personalize to individual users and improve at general agentic tasks from interactions it is already having. Experiments show a student agent learns natural writing style within 36 interactions and a teacher agent develops friendlier feedback within 24 interactions; integrating process and outcome rewards outperforms outcome-only training on general agentic tasks.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** OpenClaw-RL converts next-state signals from live user, tool, terminal, GUI, software-engineering, and tool-call interactions into rewards or token-level supervision for training a single policy through decoupled serving and training loops.
-  - **Source extract (verbatim):** This paper introduces OpenClaw-RL, a framework that leverages next-state signals—user replies, tool outputs, terminal feedback, or GUI state changes—as live learning sources for training agents. Rather than discarding this data, the system recovers two types of information: evaluative signals (how well an action performed) converted to scalar rewards via process reward models, and directive signals (how actions should differ) extracted through Hindsight-Guided On-Policy Distillation providing token-level supervision.
+- **Source extract (verbatim):** This paper introduces OpenClaw-RL, a framework that leverages next-state signals—user replies, tool outputs, terminal feedback, or GUI state changes—as live learning sources for training agents. Rather than discarding this data, the system recovers two types of information: evaluative signals (how well an action performed) converted to scalar rewards via process reward models, and directive signals (how actions should differ) extracted through Hindsight-Guided On-Policy Distillation providing token-level supervision.
   - **Source location:** Abstract
-  - **Source extract (verbatim):** A single policy can learn simultaneously from all these interaction types using an asynchronous, fully decoupled architecture.
+- **Source extract (verbatim):** A single policy can learn simultaneously from all these interaction types using an asynchronous, fully decoupled architecture.
   - **Source location:** “Key Innovation”
-  - **Source extract (verbatim):** **Infrastructure:** Four independent asynchronous loops handle policy serving (SGLang), environment management, PRM judging, and training (Megatron) with zero coordination overhead.
+- **Source extract (verbatim):** **Infrastructure:** Four independent asynchronous loops handle policy serving (SGLang), environment management, PRM judging, and training (Megatron) with zero coordination overhead.
   - **Source location:** “Core Components,” “Infrastructure”
-  - **Source extract (verbatim):** The work unifies previously separate training pipelines into one framework where "a model simultaneously personalizes to individual users and improves at long-horizon agentic tasks, trained entirely from interactions it is already having."
+- **Source extract (verbatim):** The work unifies previously separate training pipelines into one framework where "a model simultaneously personalizes to individual users and improves at long-horizon agentic tasks, trained entirely from interactions it is already having."
   - **Source location:** “Significance”
-  - **Scope:** The captured OpenClaw-RL framework summary across personal conversation, terminal, GUI, software-engineering, and tool-call settings, with asynchronous policy serving and training.
-  - **Confidence:** High for live-interaction signal conversion and policy training because the snapshot states those mechanisms directly.
-  - **Limitation:** The snapshot does not state when trained checkpoints enter serving, whether updates persist across sessions, what acceptance validation gates an update, or how an update is rolled back; it establishes interaction-driven policy training, not a safe in-place deployment lifecycle.
 
 ## Connections Found
 

@@ -21,9 +21,9 @@ Author: Paul Graham writes as an experienced essayist reflecting on his own proc
 
 Graham argues that putting an idea into words reveals precision and completeness failures that remain hidden in thought. He separates two pressures: choosing an exact sequence of words commits the idea to one formulation, while rereading from the stance of a neutral stranger tests whether the page alone is correct and complete. Repeated cycles generate qualifications and previously unconscious ideas, and discard claims that cannot be repaired. Writing is stricter than conversation because less can be carried by tone and revision can continue far longer, but Graham also says the operative verbal work can happen mentally or in speech. He concludes that verbal formulation is necessary, though not sufficient, for fully formed nontrivial ideas.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

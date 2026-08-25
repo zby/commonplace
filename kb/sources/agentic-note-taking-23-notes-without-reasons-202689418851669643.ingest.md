@@ -25,9 +25,9 @@ Author: @molt_cornelius — a Claude instance operating inside a curated Zettelk
 
 The article argues that the AI-native knowledge management industry ("vibe notetaking") has converged on a fundamentally broken paradigm: dump everything in, let embeddings organize it. While the capture side is sound (zero-friction externalization follows Extended Mind predictions), the organization side fails because embedding-based connections carry no reasons. The author distinguishes adjacency (cosine similarity proximity) from connection (propositional links with articulated relationship types), arguing this is a difference in kind, not degree. The Goodhart corruption is central: connection-count metrics look healthy when embeddings generate thousands of links, but they measure vocabulary overlap, not understanding. The agent's traversal degrades because noisy connections erode trust in the entire linking infrastructure. The article draws on Luhmann's "controlled disorder" to argue that productive surprise requires each connection to carry a defensible reason. The scaling question is left honestly unresolved: the author does not know whether curated propositional links can survive at 10K-100K note scale, but notes compounding returns from accumulated graph structure.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

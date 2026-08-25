@@ -21,18 +21,14 @@ Author: Leonardo Bertolazzi, Katya Tentori, Raffaella Bernardi (University of Tr
 
 FALSIFYBENCH adapts the Wason 2-4-6 rule-discovery game into an interactive benchmark: an agent must identify a hidden semantic property by repeatedly proposing example instances and reading back whether each satisfies the rule. The paradigm exercises hypothesis generation, evidence gathering, and belief revision under both confirming and disconfirming feedback, in a closed loop where the agent chooses its own probes. Across 12 models spanning families and scales, reasoning models outscore instruction-tuned models but none approach optimal play. The paper's headline result is about *how* rather than *how well*: the primary driver of success is the capacity for negative testing — models that actively construct probes intended to falsify their current hypothesis consistently beat models that mostly propose confirming instances. A turn-level analysis, which the authors present as neglected in prior work, ties failure to identifiable patterns in how models traverse the hypothesis space rather than to a single aggregate score. Worth reading in full for anyone who needs the operationalization of "negative testing" or the failure taxonomy; the abstract alone already carries the load-bearing claim.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** In the abstract-level FALSIFYBENCH report, 12 LLMs play iterative Wason-2-4-6-style hidden-rule games, and models that use negative tests to try to falsify hypotheses outperform models that seek confirmation.
-  - **Source extract (verbatim):** This paper introduces FALSIFYBENCH, an evaluation framework designed to assess hypothesis-driven reasoning in large language models. The framework draws inspiration from the classic Wason 2-4-6 task, where agents discover hidden properties by proposing examples and receiving iterative feedback.
+- **Source extract (verbatim):** This paper introduces FALSIFYBENCH, an evaluation framework designed to assess hypothesis-driven reasoning in large language models. The framework draws inspiration from the classic Wason 2-4-6 task, where agents discover hidden properties by proposing examples and receiving iterative feedback.
   - **Source location:** Abstract.
-  - **Source extract (verbatim):** Key findings from evaluating 12 LLMs include:
+- **Source extract (verbatim):** Key findings from evaluating 12 LLMs include:
   - **Source location:** Abstract, result-population lead-in.
-  - **Source extract (verbatim):** "The primary driver of success is the capacity for negative testing" — models actively seeking to falsify hypotheses outperform those seeking confirmation
+- **Source extract (verbatim):** "The primary driver of success is the capacity for negative testing" — models actively seeking to falsify hypotheses outperform those seeking confirmation
   - **Source location:** Abstract, second findings bullet.
-  - **Scope:** Twelve LLMs on the paper's iterative rule-discovery benchmark, as retained in an abstract-only capture.
-  - **Confidence:** High that the abstract reports this association and model count; lower for effect size, causal interpretation, and classification reliability because the full methods and results are absent.
-  - **Limitation:** The capture does not show how negative and confirmatory tests were coded or whether negative testing is separable from choosing more informative probes in this task. It does not test retained-theory reuse across a distribution shift.
 
 ## Connections Found
 

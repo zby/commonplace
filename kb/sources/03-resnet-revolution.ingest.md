@@ -21,9 +21,9 @@ Author: Richard Heimann provides technically detailed secondary synthesis; the c
 
 The chapter traces the move from AlexNet through VGG and GoogLeNet to ResNet, whose identity shortcuts made very deep networks trainable by letting layers learn residual functions and preserving signal and gradient paths. It follows residual learning into preactivation and dense prediction, then asks what scale actually acts on: compute and data compound only when architecture turns them into usable representations. Its most KB-relevant critique is that crossing a top-5 ImageNet threshold was marketed as “human-level” despite narrow annotator comparisons, a fixed label taxonomy, distributional brittleness, and failures outside the benchmark.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

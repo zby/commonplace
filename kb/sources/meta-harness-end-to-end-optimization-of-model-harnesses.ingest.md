@@ -22,31 +22,23 @@ Author: Yoonho Lee (Stanford, Chelsea Finn's group), with collaborators from MIT
 
 Meta-Harness is an outer-loop system that searches over LLM harness code by giving a coding agent (Claude Code with Opus-4.6) full filesystem access to prior harness source code, evaluation scores, and raw execution traces. The key finding is that access to rich diagnostic information — 10 million tokens per iteration, three orders of magnitude beyond prior text optimizers — enables the proposer to do causal reasoning about why harnesses fail, not just that they fail. On three benchmarks (online text classification, IMO-level math retrieval, TerminalBench-2 agentic coding), Meta-Harness outperforms both hand-engineered baselines and prior program-search methods. The critical ablation shows that summaries do not recover the signal lost by compressing raw traces, and may even hurt — scores-only and scores+summary variants both trail the full-trace version by 15+ points on median accuracy.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** In Meta-Harness's online text-classification ablation, all proposer arms could inspect scores and code; Scores Only reached 34.6% median and 41.3% best accuracy, Scores + Summary reached 34.9% median and 38.7% best without traces, and the full arm reached 50.0% median and 56.7% best with traces. The experiment shows that the fixed summary-only feedback arm did not recover the full trace-access arm's performance in this setup.
-  - **Source extract (verbatim):** It uses an agentic proposer that accesses the source code, scores, and execution traces of all prior candidates through a filesystem.
+- **Source extract (verbatim):** It uses an agentic proposer that accesses the source code, scores, and execution traces of all prior candidates through a filesystem.
   - **Source location:** Abstract
-  - **Source extract (verbatim):** | Scores Only | ✓ | ✓ | ✗ | ✗ | 34.6 | 41.3 | 26 |
+- **Source extract (verbatim):** | Scores Only | ✓ | ✓ | ✗ | ✗ | 34.6 | 41.3 | 26 |
   - **Source location:** Section 4.1, "Ablation: information available to the proposer" table
-  - **Source extract (verbatim):** | Scores + Summary | ✓ | ✓ | ✓ | ✗ | 34.9 | 38.7 | 23 |
+- **Source extract (verbatim):** | Scores + Summary | ✓ | ✓ | ✓ | ✗ | 34.9 | 38.7 | 23 |
   - **Source location:** Section 4.1, "Ablation: information available to the proposer" table
-  - **Source extract (verbatim):** | **Meta-Harness** (full) | ✓ | ✓ | - | ✓ | 50.0 | 56.7 | 39 |
+- **Source extract (verbatim):** | **Meta-Harness** (full) | ✓ | ✓ | - | ✓ | 50.0 | 56.7 | 39 |
   - **Source location:** Section 4.1, "Ablation: information available to the proposer" table
-  - **Source extract (verbatim):** Summaries do not recover the missing signal, and may even hurt by compressing away diagnostically useful details.
+- **Source extract (verbatim):** Summaries do not recover the missing signal, and may even hurt by compressing away diagnostically useful details.
   - **Source location:** Section 4.1, paragraph following the ablation table
-  - **Scope:** The reported point values are for the paper's online text-classification harness search, whose proposer is a coding agent and whose arms differ in access to prior scores, code, generated summaries, and execution traces.
-  - **Confidence:** High for the arm contents and reported median and best accuracies because the ablation table states them directly.
-  - **Limitation:** The paper reports point summaries rather than a statistical-significance estimate for these arm differences. The contrast tests one trace-removing summary treatment, not summaries or abstraction in general, and it does not test a summary that retains trace access, query-conditioned derived views, or joint optimization of the representation.
 
-- **Claim (paraphrase):** Meta-Harness searches over task-specific executable harnesses that modify prompting, retrieval, memory, and orchestration while keeping the domain's base language model frozen.
-  - **Source extract (verbatim):** Meta-Harness is an outer-loop procedure for searching over task-specific harnesses.
+- **Source extract (verbatim):** Meta-Harness is an outer-loop procedure for searching over task-specific harnesses.
   - **Source location:** Section 3, opening paragraph
-  - **Source extract (verbatim):** Each harness is a single-file Python program that modifies task-specific prompting, retrieval, memory, and orchestration logic. The proposer is Claude Code with Opus-4.6, guided by a minimal domain-specific skill that describes where to write new harnesses, how to inspect previous harnesses and their execution traces, and what files it can and cannot modify. The base model M varies by domain and is always frozen.
+- **Source extract (verbatim):** Each harness is a single-file Python program that modifies task-specific prompting, retrieval, memory, and orchestration logic. The proposer is Claude Code with Opus-4.6, guided by a minimal domain-specific skill that describes where to write new harnesses, how to inspect previous harnesses and their execution traces, and what files it can and cannot modify. The base model M varies by domain and is always frozen.
   - **Source location:** Section 3, “Practical implementation”
-  - **Scope:** The claim covers the three evaluated domains and the task-specific single-file Python harness surface exposed in the paper's implementation.
-  - **Confidence:** High because the method and implementation sections state both the mutable harness surface and frozen-model condition directly.
-  - **Limitation:** “End-to-end” is bounded by the exposed harness program and fixed task objective; it does not mean that model weights, the proposer, evaluation function, or every surrounding system choice are optimized.
 
 ## Connections Found
 

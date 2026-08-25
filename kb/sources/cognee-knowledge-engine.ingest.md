@@ -22,9 +22,9 @@ Author: Topoteretes team. Funded startup ($7.5M seed) with companion research pa
 
 Cognee is a knowledge engine that transforms raw data into persistent AI memory through a three-phase pipeline: add (ingest documents from 30+ sources), cognify (extract structure via LLM — classification, chunking, entity-relationship extraction into knowledge graph triplets, summarization, embedding), and memify (enrich the knowledge graph via rule associations and edge reweighting). Its distinctive architectural bet is pipeline-first composability — everything runs through `run_pipeline(tasks)` with sequential task execution, custom Pydantic schemas for domain-specific entity extraction, and a poly-store design where graph databases (Neo4j, FalkorDB, KuzuDB) and vector stores (Qdrant, Weaviate, LanceDB, pgvector) are co-equal first-class citizens. The memify phase is notably undersized relative to its described ambitions — current defaults handle rule associations rather than the full pruning/reweighting/strengthening capabilities described in documentation.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

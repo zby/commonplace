@@ -22,9 +22,9 @@ Author: spacedriveapp, the team behind Spacedrive. Their Rust product background
 
 Spacebot is a Rust AI agent framework for multi-user environments such as Discord, Slack, Telegram, Twitch, and webchat. Its central design move is splitting one agent into concurrent process types: channels handle user-facing conversation, branches fork channel context for independent thinking, workers execute specialized tasks, a compactor manages context overflow, and a cortex supervises process health, memory, and synthesis. The source also describes typed memory categories with graph edges, hybrid recall via vector and full-text search, message coalescing for rapid multi-user input, model routing across providers, MCP and skills.sh extensibility, and scheduled jobs. The main contribution for this KB is not a new memory algorithm; it is a concrete runtime shape where responsiveness, context isolation, task execution, and memory activation are assigned to different process roles.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

@@ -21,9 +21,9 @@ Author: Roger C. Conant and W. Ross Ashby are primary cybernetics sources; the t
 
 Conant and Ashby formalize regulation using possible outcomes Z, acceptable outcomes G, regulator events R, reguland events S, and disturbances D (journal pp. 90-91; PDF pp. 2-3). They define successful regulation as minimizing outcome entropy H(Z). Given a fixed distribution over S, a regulator behavior p(R|S), a unique optimal outcome distribution, and the stated mapping assumptions, the **simplest optimal regulator** produces events related to S by a mapping h:S→R (pp. 94-96; PDF pp. 6-8). Hence the best simple regulator is a model in the specific sense that its actions are mapped versions of the reguland's actions—not necessarily a detailed internal simulation.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

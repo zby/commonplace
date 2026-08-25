@@ -21,9 +21,9 @@ Author: Wenyi Wang, Piotr Piekos, Li Nanbo, Firas Laakom, Yimeng Chen, Mateusz O
 
 The paper studies self-improving coding agents as tree search over agent self-modifications. Its central claim is that immediate coding benchmark performance is a poor proxy for an agent's future self-improvement potential: a high-scoring node can have unproductive descendants, while a lower-scoring node can seed a better lineage. The authors call this the Metaproductivity-Performance Mismatch and propose clade-metaproductivity (CMP), a lineage-level metric aggregating descendant outcomes. HGM estimates CMP from partial evaluations, uses Thompson sampling to choose expansion/evaluation, and decouples expansion from evaluation for asynchronous execution. On SWE-bench Verified, Polyglot, SWE-bench Lite, and SWE-bench-Live-style evaluations, the paper reports stronger final agents and lower allocated CPU-hours than DGM/SICA-style greedy benchmark-score selection.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

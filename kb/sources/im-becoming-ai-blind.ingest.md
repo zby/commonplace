@@ -21,9 +21,9 @@ Author: Rafal Cymerys writes from first-person workplace experience with design,
 
 Cymerys reports that he sometimes fails to process workplace documents, later asks questions those documents already answered, and has come to associate the episodes with low-effort AI-marked prose. His examples combine four complaints: simple material expanded at length, exploratory model reasoning left in a final document, irrelevant technical detail mixed into another discipline's artifact, and routine features presented as breakthroughs. He hypothesizes that repeated exposure to low-meaning AI text taught him to suppress familiar cues automatically, like banner blindness. The claim is scoped to low-effort output, not all AI-assisted writing; its distinctive consequence is that a tool meant to save author time can create reader and coordination costs even when a document contains useful material.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

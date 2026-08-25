@@ -24,9 +24,9 @@ Author: David Cramer (@zeeg), co-founder and CTO of Sentry. Long track record bu
 
 Cramer describes discovering IDOR (Insecure Direct Object Reference) vulnerabilities in Sentry and building an automated detector called Warden using Claude Code's skill system. The core technique — which he calls "skill synthesis" — feeds trustworthy domain-specific source material (OWASP cheat sheets, Sentry's own security patches, internal documentation, commit history) into Claude Code to produce a specialized security-scanning skill. After two refinement iterations to reduce false positives, Warden found 17 potential vulnerabilities, 8 of which were validated as real — some undetected for years despite professional penetration testing and code review. Cramer has packaged the workflow into a reusable skill-writer (`npx skills add getsentry/skills --skill skill-writer`) and describes it as "working really well for materializing knowledge as skills."
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

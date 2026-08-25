@@ -21,9 +21,9 @@ Author: Nishant Aggarwal et al., affiliated with the University of Wisconsin-Mad
 
 Aggarwal et al. evaluate Gauntlet, a paper-analysis pipeline in which five isolated Claude Opus 4.5 reviewers read the same computer-architecture paper from different expert perspectives, then a synthesizer produces a reading guide while preserving disagreements. Ten graduate researchers analyzed two papers each and judged analyses of papers other than their own; Gauntlet was preferred in 15 of 20 comparisons, with its largest advantage in Critical Rigor and no significant advantage in Calibration. A separate Gemini-judged ablation over 98 papers ranks the full pipeline above a rich single-persona prompt on 94 papers and a bare directive on 97. The most informative results are the boundaries: human analyses win when Gauntlet makes one confident technical error, explains a mechanism without teaching it, or presents broad criticism without prioritization; pipeline gains also narrow on papers organized around one simple contribution.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

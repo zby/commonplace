@@ -21,60 +21,40 @@ Author: Jacob Xiaochen Li and Omar Khattab are MIT CSAIL researchers, and Rick B
 
 The authors define **machine studying** as any pre-task change an agent makes to its model or harness from a corpus alone, before the downstream task distribution or reward is known. They define domain **expertise** as weighted performance across inference-compute budgets and propose a second, nested curve over study compute as “studying intelligence.” StudyBench instantiates the idea with current and post-cutoff coding corpora plus a large literature corpus. Preliminary results suggest that search access does not erase model-knowledge differences, continual pre-training and synthetic fine-tuning do not reliably improve Qwen3.5-9B as a tool-using agent, a generated cheatsheet helps mainly at cheap DSPy budgets, and two frontier models can retrieve similar recent papers yet differ substantially in which retrieved papers they retain for a review.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** In StudyBench's literature-review analysis, when evaluation was restricted to must-cite papers that both GPT-5.1 and GPT-5.5 had encountered, GPT-5.1 retained markedly fewer papers from 2023 onward—including only 65.6% of reached 2025 must-cites versus 89.3% for GPT-5.5—so the later gap occurred after retrieval.
-  - **Source extract (verbatim):** We keep only the must-cite papers that *both* models actually encountered, then ask what fraction each one keeps, so both now judge an identical pile.
+- **Source extract (verbatim):** We keep only the must-cite papers that *both* models actually encountered, then ask what fraction each one keeps, so both now judge an identical pile.
   - **Source location:** Section 8, discussion of Figure 8.
-  - **Source extract (verbatim):** From 2023 on, GPT-5.1 falls behind by around twenty points, on papers it had already found and read.
+- **Source extract (verbatim):** From 2023 on, GPT-5.1 falls behind by around twenty points, on papers it had already found and read.
   - **Source location:** Section 8, discussion of Figure 8.
-  - **Source extract (verbatim):** By year (≤2020 … 2025). GPT-5.1: 88.1, 87.0, 83.8, 68.9, 72.5, 65.6. GPT-5.5: 95.2, 95.7, 89.2, 91.9, 88.7, 89.3 (percent). Gap in points: +7, +9, +5, +23, +16, +24.
+- **Source extract (verbatim):** By year (≤2020 … 2025). GPT-5.1: 88.1, 87.0, 83.8, 68.9, 72.5, 65.6. GPT-5.5: 95.2, 95.7, 89.2, 91.9, 88.7, 89.3 (percent). Gap in points: +7, +9, +5, +23, +16, +24.
   - **Source location:** Figure 8, “Retrieval-Controlled Selection Rate by Year.”
-  - **Scope:** Preliminary StudyBench literature-review runs comparing GPT-5.1 with GPT-5.5 on the intersection of ICLR-2026 must-cite papers that both models encountered through BM25 search, measured by the share each retained in its final 100-paper selection.
-  - **Confidence:** Moderate for the observed post-retrieval selection gap: the source controls the compared paper set and reports year-stratified rates, but describes early project results from two closed models.
-  - **Limitation:** Encounter and retention are trace-level proxies, not direct evidence that each paper's content entered or failed to affect the model's active computation. The comparison does not isolate training cutoff from model differences or establish a general context-to-action failure rate.
 
-- **Claim (paraphrase):** Machine Studying defines studying as an agent changing itself from a corpus before information about downstream evaluation, task distribution, or reward is known.
-  - **Source extract (verbatim):** We call this problem **Machine Studying**. Given nothing but a corpus $\mathbf{D} = (d_1, \ldots, d_n)$, can AI systems autonomously develop *expertise* in the underlying domain? A studying algorithm is **whatever the agent does *to itself* using $\mathbf{D}$ before anything is known about downstream evaluation**. Studying may update the agent’s weights or anything in its harness.
+- **Source extract (verbatim):** We call this problem **Machine Studying**. Given nothing but a corpus $\mathbf{D} = (d_1, \ldots, d_n)$, can AI systems autonomously develop *expertise* in the underlying domain? A studying algorithm is **whatever the agent does *to itself* using $\mathbf{D}$ before anything is known about downstream evaluation**. Studying may update the agent’s weights or anything in its harness.
   - **Source location:** Introduction, definition of Machine Studying
-  - **Source extract (verbatim):** **Machine Studying asks what an agent should do when it’s given a declarative corpus and no downstream task.** Of course, this requires pre-trained agents that have accurate priors about the world. The agent may pose its own questions and rubrics while it studies, much like a student quizzing themselves, but it can’t assume that we’ll tell it much about the task distribution or the reward that will eventually score it.
+- **Source extract (verbatim):** **Machine Studying asks what an agent should do when it’s given a declarative corpus and no downstream task.** Of course, this requires pre-trained agents that have accurate priors about the world. The agent may pose its own questions and rubrics while it studies, much like a student quizzing themselves, but it can’t assume that we’ll tell it much about the task distribution or the reward that will eventually score it.
   - **Source location:** Section 1, closing paragraph
-  - **Scope:** The source's problem definition and StudyBench framing, in which studying precedes disclosure of the downstream evaluation and may include self-generated questions or rubrics derived from the corpus.
-  - **Confidence:** High for the declared timing boundary because the source states it repeatedly as part of the definition.
-  - **Limitation:** The definition excludes supplied downstream-task and reward information but permits the agent's own corpus-derived questions and rubrics; it does not separately audit every incidental setup signal or explicitly enumerate demonstrations and execution traces.
 
-- **Claim (paraphrase):** Machine Studying defines an agent as a model–harness pair and allows a studying algorithm to change model weights, prompts, tools, and environment-maintained indexes or notes.
-  - **Source extract (verbatim):** An agent here is just a model and a harness, $\Sigma = (\mathbf{M}, \mathbf{H})$, and a studying algorithm may change the weights or the agent’s prompts, tools, or the indexes and notes it maintains in the environment.
+- **Source extract (verbatim):** An agent here is just a model and a harness, $\Sigma = (\mathbf{M}, \mathbf{H})$, and a studying algorithm may change the weights or the agent’s prompts, tools, or the indexes and notes it maintains in the environment.
   - **Source location:** Section 1, definition of the agent and studying surface
-  - **Scope:** The source's conceptual agent boundary and allowed studying surface for corpus-driven preparation before a downstream task.
-  - **Confidence:** High because the source states the pair and each named mutable surface directly.
-  - **Limitation:** This is a definition of what studying may change, not evidence that the reported experiments jointly optimized all named surfaces or that this boundary is exhaustive for deployed agents.
 
-- **Claim (paraphrase):** In the preliminary Qwen3.5-9B Studying-DSPy experiment, a pre-inference study pass explored the repository and wrote a note that was prepended to later questions; its gains concentrated at low inference budgets, while forced 20-iteration search let the unmodified agent catch up. The source reports no corresponding effect on Studying-OpenClaw.
-  - **Source extract (verbatim):** In this initial blog, we report on the simplest instantiation of this bet, i.e., **writing a cheatsheet**, in which the agent explores the repository with the same three tools for dozens of steps and writes itself a note, which is then prepended to every future question. This is a very simple approach that won’t change the weights, but it’s an essential baseline to compare against approaches that do.
+- **Source extract (verbatim):** In this initial blog, we report on the simplest instantiation of this bet, i.e., **writing a cheatsheet**, in which the agent explores the repository with the same three tools for dozens of steps and writes itself a note, which is then prepended to every future question. This is a very simple approach that won’t change the weights, but it’s an essential baseline to compare against approaches that do.
   - **Source location:** Section 6, “Amortized context management”
-  - **Source extract (verbatim):** Figure 6 below shows the cheatsheet runs. On Studying-DSPy, the gains from the cheatsheet are concentrated at the low inference budgets. That’s arguably where a studying algorithm should help first: the cheatsheet note hands the agent a map of the repository that it would otherwise rebuild from scratch on every question. At the forced 20-iteration budget, the unmodified agent catches up, since enough search eventually recovers what the note knew (studying by cramming together a cheatsheet is *still* a very shallow mechanism, after all!). We do not believe a cheatsheet is the final form of studying, and indeed we don’t see the same effects on Studying-OpenClaw.
+- **Source extract (verbatim):** Figure 6 below shows the cheatsheet runs. On Studying-DSPy, the gains from the cheatsheet are concentrated at the low inference budgets. That’s arguably where a studying algorithm should help first: the cheatsheet note hands the agent a map of the repository that it would otherwise rebuild from scratch on every question. At the forced 20-iteration budget, the unmodified agent catches up, since enough search eventually recovers what the note knew (studying by cramming together a cheatsheet is *still* a very shallow mechanism, after all!). We do not believe a cheatsheet is the final form of studying, and indeed we don’t see the same effects on Studying-OpenClaw.
   - **Source location:** Section 7, discussion of Figure 6
-  - **Scope:** Preliminary Qwen3.5-9B runs on the Studying-DSPy and Studying-OpenClaw coding domains, with the cheatsheet prepended to each evaluation question and performance measured across inference budgets.
-  - **Confidence:** Moderate because the procedure and qualitative budget pattern are explicit and the appendix reports per-budget values, but the source presents early small-scale results.
-  - **Limitation:** The experiment does not isolate whether the gain comes from saved search, the note's particular content, or another prompt effect; the low-budget pattern appears on DSPy and did not repeat on OpenClaw.
 
-- **Claim (paraphrase):** In preliminary Qwen3.5-9B runs, the cheatsheet produced 9.65 lenient-WAUC expertise on Studying-DSPy versus 6.49 for the base agent, 3.29 for synthetic SFT plus on-policy distillation, and 3.71 or 3.92 for continual-pre-training variants; the source calls it the only tested procedure to develop noticeable expertise in one of the two domains.
-  - **Source extract (verbatim):** | Qwen3.5-9B (base) | 6.49 | 7.64 |
+- **Source extract (verbatim):** | Qwen3.5-9B (base) | 6.49 | 7.64 |
   - **Source location:** Section 7, “Expertise (lenient WAUC)” table, Studying-DSPy and Studying-OpenClaw columns
-  - **Source extract (verbatim):** | SFT + OPSD | 3.29 | — |
+- **Source extract (verbatim):** | SFT + OPSD | 3.29 | — |
   - **Source location:** Section 7, “Expertise (lenient WAUC)” table
-  - **Source extract (verbatim):** | CPT(code) | 3.71 | 7.82 |
+- **Source extract (verbatim):** | CPT(code) | 3.71 | 7.82 |
   - **Source location:** Section 7, “Expertise (lenient WAUC)” table
-  - **Source extract (verbatim):** | CPT(doc) | 3.92 | — |
+- **Source extract (verbatim):** | CPT(doc) | 3.92 | — |
   - **Source location:** Section 7, “Expertise (lenient WAUC)” table
-  - **Source extract (verbatim):** | + cheatsheet | **9.65** | **8.18** |
+- **Source extract (verbatim):** | + cheatsheet | **9.65** | **8.18** |
   - **Source location:** Section 7, “Expertise (lenient WAUC)” table
-  - **Source extract (verbatim):** In our preliminary runs here, the cheatsheet is the only procedure that ends up developing noticeable expertise in one of the the two domains.
+- **Source extract (verbatim):** In our preliminary runs here, the cheatsheet is the only procedure that ends up developing noticeable expertise in one of the the two domains.
   - **Source location:** Section 7, sentence following the expertise table
-  - **Scope:** The paper's preliminary Qwen3.5-9B comparisons under its lenient weighted-area-under-the-performance-curve expertise metric; the clear improvement is on Studying-DSPy.
-  - **Confidence:** Moderate for the reported point values and the authors' characterization because both are explicit, but the runs are preliminary and small-scale.
-  - **Limitation:** No uncertainty or significance estimate is reported. On Studying-OpenClaw the cheatsheet and CPT(code) point values are both slightly above the base, while the source says the DSPy effect did not repeat there; the evidence does not support a general superiority claim for notes over weight updates.
 
 ## Connections Found
 

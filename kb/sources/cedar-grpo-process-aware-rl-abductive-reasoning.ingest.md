@@ -21,24 +21,20 @@ Author: A nine-author academic team from Sharif University of Technology and the
 
 CEDAR-GRPO post-trains four open-weight 4--8B models on 1,920 training examples from seven datasets grouped as hypothesis generation or hypothesis selection. Its GRPO reward equally combines task-specific final-answer correctness with two gpt-oss-120b judgments over the emitted reasoning trace: coverage of observation details and evidence-to-explanation directionality. Across 3,800 examples from 11 held-out tasks, the paper reports that every CEDAR-GRPO checkpoint beats its base and correctness-only GRPO counterparts, averaging gains of 7.4 and 2.7 percentage points respectively. On one backbone, a separate Gemini 3 Flash evaluation also finds higher average coverage, directionality, branchiness, backtracking, differential elimination, prior invocation, and uncertainty marking. Reward, curriculum, SFT, and generic-reasoning comparisons support the compound training design, but do not establish every component or the paper's fixed definition of abduction independently.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** CEDAR-GRPO and its correctness-only Cor-GRPO comparator generate the same structured reasoning-and-answer form, while CEDAR averages 2.7 points higher than Cor-GRPO across four 4B–8B backbones and eleven held-out tasks by adding evidence-coverage and evidence-to-explanation-directionality rewards. For DeepSeek-R1-Distill-Qwen-7B, Cor-GRPO's mean process metrics are lower than base for branchiness (1.16 versus 1.22), prior invocation (0.53 versus 0.59), and directionality (0.16 versus 0.21).
-  - **Source extract (verbatim):** Models generate structured outputs of the form ⟨think⟩ β ⟨/think⟩⟨answer⟩ α ⟨/answer⟩, where β is the reasoning trace and α is the final answer. Task correctness is computed from α, whereas the process rewards are computed from the user prompt and β.
+- **Source extract (verbatim):** Models generate structured outputs of the form ⟨think⟩ β ⟨/think⟩⟨answer⟩ α ⟨/answer⟩, where β is the reasoning trace and α is the final answer. Task correctness is computed from α, whereas the process rewards are computed from the user prompt and β.
   - **Source location:** Section 4.2, "Structured CoT Prompting"
-  - **Source extract (verbatim):** We compare the original base model, the correctness-only GRPO checkpoint (denoted Cor- GRPO), and our main composite-reward check- point, CEDAR-GRPO.
+- **Source extract (verbatim):** We compare the original base model, the correctness-only GRPO checkpoint (denoted Cor- GRPO), and our main composite-reward check- point, CEDAR-GRPO.
   - **Source location:** Section 5.1, opening comparison; capture retains line-break hyphenation
-  - **Source extract (verbatim):** No additional transformation is applied before GRPO. Cor-GRPO uses only rcor.
+- **Source extract (verbatim):** No additional transformation is applied before GRPO. Cor-GRPO uses only rcor.
   - **Source location:** Appendix D.1, "Composite Objective"
-  - **Source extract (verbatim):** and 2.7 points over Cor-GRPO
+- **Source extract (verbatim):** and 2.7 points over Cor-GRPO
   - **Source location:** Introduction, reported average improvement over the correctness-only comparator
-  - **Source extract (verbatim):** Baseline 0.69 1.22 0.79 0.59 0.87 33.1% 0.21
+- **Source extract (verbatim):** Baseline 0.69 1.22 0.79 0.59 0.87 33.1% 0.21
   - **Source location:** Table 3, DeepSeek-R1-Distill-Qwen-7B mean process metrics; columns are Backtracking, Branchiness, Differential Elimination, Prior, Uncertainty, Coverage, and Directionality
-  - **Source extract (verbatim):** Cor-GRPO 0.93 1.16 0.97 0.53 0.92 39.1% 0.16
+- **Source extract (verbatim):** Cor-GRPO 0.93 1.16 0.97 0.53 0.92 39.1% 0.16
   - **Source location:** Table 3, DeepSeek-R1-Distill-Qwen-7B mean process metrics; same columns
-  - **Scope:** Four open-weight 4B–8B backbones post-trained on the paper's 2,400-instance abductive mixture and evaluated on eleven held-out benchmark tasks; the process-metric comparison is only for DeepSeek-R1-Distill-Qwen-7B and is averaged over ten held-out datasets.
-  - **Confidence:** High for the output form, reward difference, reported aggregate task result, and tabulated process-metric values.
-  - **Limitation:** The experiment does not ablate output shape independently of reward, so it shows behavioral differences under a shared shape rather than estimating a pure process-structure effect. The trace metrics are LLM-as-judge measurements, with potential circularity for the two rewarded metrics, and do not establish that emitted traces faithfully reveal internal reasoning or validate directionality as a construct.
 
 ## Connections Found
 

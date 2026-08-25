@@ -21,9 +21,9 @@ Author: Lilian Weng; the article is a detailed, cited technical synthesis by an 
 
 Weng defines a harness as the deployment machinery around a base model that controls workflow, tools, context, persistent state, sub-agents, permissions, and evaluation. She argues that practical near-term recursive self-improvement is more likely to optimize this machinery than to begin with direct weight rewriting. The article traces an optimization surface from prompts through structured context, workflows, harness code, and optimizer code. It surveys context and workflow optimization, self-editing harnesses, evolutionary program search, and joint harness-weight updates. It closes with limits around weak evaluators, memory lifecycle, negative-result retention, diversity collapse, reward hacking, long-term objectives, and the continuing role of human oversight.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

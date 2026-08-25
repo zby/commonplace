@@ -21,9 +21,9 @@ Author: Holden Karnofsky writes as a practitioner explaining the method behind h
 
 Karnofsky organizes learning around a repeatedly rewritten bottom-line view rather than around comprehensive reading. After a small initial survey, he states and strongly defends a deliberately premature hypothesis, lists its weakest points, reads or consults others on the subquestion most likely to change it, and revises or reverses the claim as soon as his view moves. He repeats this cycle until his own criticism is exhausted, then brings in outside feedback as another source of weaknesses. The central mechanism is not merely that prose exposes confusion: an explicit current claim determines which evidence is decision-relevant, prevents endless undirected reading, and preserves the reasoning behind successive views.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

@@ -24,9 +24,9 @@ Author: @nurijanian presents as a PM practitioner and PM OS vendor; the source h
 
 The post describes `problem-first`, a product-management skill that treats a proposed solution as a compressed signal of an unarticulated problem, then expands it into underlying problem statements, assumption challenges, alternative framings, validation tests, and a stakeholder message. The author argues that this works better than telling a team to stop and restart discovery because existing roadmaps carry political momentum. The same skill can run in reverse for idea triage: feed an idea in, extract the problem it is supposed to solve, and discard ideas with no evidence status. For Commonplace, the useful part is not PM doctrine itself but the example of a lightweight AI skill whose value comes from forcing skipped reasoning moves under time pressure.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

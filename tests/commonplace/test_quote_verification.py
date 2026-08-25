@@ -295,7 +295,7 @@ def test_line_numbers_survive_a_preceding_code_fence(tmp_path: Path):
     assert results[0].line == 8
 
 
-class TestClaimsExtractValidation:
+class TestIngestQuoteValidation:
     """`Source extract (verbatim)` resolves against the ingest's pinned snapshot.
 
     Conditional on retention: `kb/sources/.snapshots/` is gitignored, so a fresh
@@ -321,27 +321,24 @@ class TestClaimsExtractValidation:
             (sources / ".snapshots" / snapshot_name).write_text(
                 body, encoding="utf-8"
             )
-        claims = (
-            "No claims have been grounded yet.\n"
+        quotes = (
+            "No source quotes have been retained yet.\n"
             if extract is None
-            else (
-                "- **Claim (paraphrase):** a claim.\n"
-                f"  - **Source extract (verbatim):** {extract}\n"
-            )
+            else f"- **Source extract (verbatim):** {extract}\n"
         )
         ingest = sources / "src.ingest.md"
         ingest.write_text(
             f"---\nsnapshot_sha256: {digest}\n---\n\n"
-            f"## Claims\n\n{claims}",
+            f"## Quotes\n\n{quotes}",
             encoding="utf-8",
         )
         return ingest
 
     def _run(self, ingest):
-        from commonplace.lib.validation import CheckResults, validate_claims_extracts
+        from commonplace.lib.validation import CheckResults, validate_ingest_quotes
 
         results = CheckResults(note_type="ingest-report")
-        validate_claims_extracts(results, ingest.read_text(encoding="utf-8"), ingest)
+        validate_ingest_quotes(results, ingest.read_text(encoding="utf-8"), ingest)
         return results
 
     def _run_pairing(self, ingest):
@@ -384,7 +381,7 @@ class TestClaimsExtractValidation:
         assert not results.fails
         assert any("does not match snapshot_sha256" in w for w in results.warns)
 
-    def test_checksum_locates_differently_named_snapshot_with_empty_claims(
+    def test_checksum_locates_differently_named_snapshot_with_empty_quotes(
         self, tmp_path
     ):
         ingest = self._ingest(
@@ -494,7 +491,7 @@ class TestClaimsExtractValidation:
         ingest = sources / "src.ingest.md"
         ingest.write_text(
             "---\nsource: https://example.com/legacy\n---\n\n"
-            "## Claims\n\nNo claims have been grounded yet.\n",
+            "## Quotes\n\nNo source quotes have been retained yet.\n",
             encoding="utf-8",
         )
 
@@ -510,13 +507,13 @@ class TestClaimsExtractValidation:
 
     def test_instruction_showing_the_template_is_not_checked(self, tmp_path):
         """Only a tracked ingest asserts an extract; docs merely display one."""
-        from commonplace.lib.validation import CheckResults, validate_claims_extracts
+        from commonplace.lib.validation import CheckResults, validate_ingest_quotes
 
         doc = tmp_path / "ground-source-dependent-claims.md"
         doc.write_text(
-            "## Claims\n\n- **Source extract (verbatim):** <exact supporting content>\n",
+            "## Quotes\n\n- **Source extract (verbatim):** <exact supporting content>\n",
             encoding="utf-8",
         )
         results = CheckResults(note_type="instruction")
-        validate_claims_extracts(results, doc.read_text(encoding="utf-8"), doc)
+        validate_ingest_quotes(results, doc.read_text(encoding="utf-8"), doc)
         assert not results.fails and not results.warns and not results.passes

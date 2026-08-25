@@ -21,9 +21,9 @@ Author: Ronald D. Moen (ASQ Deming Medal, 2002; assisted Deming at 70 of his fou
 
 Moen and Norman trace the plan-do-study-act (PDSA) cycle as a lineage of the scientific method reaching industry: Galilean designed experiment and Baconian induction, then Peirce/James/Dewey/Lewis pragmatism, then Shewhart's specification-production-inspection cycle (1939), Deming's four-step "wheel" presented in Japan in 1950, its Japanese recasting into PDCA (1951, later extended by Ishikawa), and Deming's own return to and renaming of the cycle as the Shewhart Cycle for Learning and Improvement — PDSA (1986, 1993). Their central corrective claims: Deming did not create PDCA and disowned it ("Be sure to call it PDSA, not the corruption PDCA"); PDCA and PDSA "seem related only through the scientific method"; and the 1991 Moen/Nolan/Provost addition made the cycle require prediction and associated theory, so that the "study" step supplies the deductive-inductive interplay learning demands. Read it to get the primary-source history and the argued distinction between a management/learning loop (PDSA) and a local problem-solving loop (PDCA).
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

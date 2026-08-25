@@ -21,9 +21,9 @@ Author: Markus J. Buehler is an established MIT materials-science / mechanics re
 
 The paper develops a category-theoretic account of agentic scientific discovery in which a system's state is a copresheaf mapping artifact types to their current populations, and provenance is captured as the category of elements over that copresheaf. Its central move is a typology that separates three operations usually conflated: retrieval (fetch existing artifacts), search (explore within a fixed schema of admissible types and operations), and discovery (a *verified regime transition* that changes the admissible types themselves, transporting prior evidence into the new schema via a Kan extension). Commitment to a transition is decided by explicit gates — Minimum Description Length, AIC, peer review. Two systems instantiate the framework: Builder/Breaker, which discovers a new protein-mechanics interaction type ("mode-conditioned compliance") under MDL gates, and CategoryScienceClaw, a self-revising typed knowledge-computation graph where schemas, skills, gates, and discourse are themselves typed objects and morphisms updated across runs. Worth reading for anyone formalizing how an automated system can extend its own representational vocabulary rather than just answer within a fixed one.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

@@ -21,9 +21,9 @@ Author: Pattie Maes presents an early publication from her computational-reflect
 
 Maes defines computational reflection as the behavior of a computational system that is about itself in a causally connected way, then makes that definition architectural: an interpreter exposes data representing system aspects and guarantees that changes to those data affect system status and computation. The paper contrasts procedural and declarative reflection before presenting 3-KRS, where each object has a meta-object representing its implementation and interpretation; the interpreter uses those meta-objects, so changing them changes runtime behavior. The case demonstrates local control of reflective granularity, modular attachment of reflective behavior, and the ability to vary interpreters within the language (printed pp. 147–150, 153–154; PDF pp. 1–4, 7–8).
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

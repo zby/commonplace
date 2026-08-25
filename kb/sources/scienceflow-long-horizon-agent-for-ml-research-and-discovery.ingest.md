@@ -36,9 +36,9 @@ This monorepo revision postdates arXiv v1 by four days, so it is a durable inspe
 
 **Execution status.** No project code or tests were run. The checkout had no prepared virtual environment and lacked declared dependencies such as Pydantic and OmegaConf. The code-grounded ingest procedure excludes dependency installation, data or weight downloads, and full evaluations. The evidence here is static inspection, not reproduction.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

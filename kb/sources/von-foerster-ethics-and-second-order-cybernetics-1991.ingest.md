@@ -21,9 +21,9 @@ Author: Heinz von Foerster restates and extends his own second-order-cybernetics
 
 Von Foerster develops observer inclusion and circular human relations early in the address (PDF p. 2), then contrasts the independent observer who watches the world with the participant actor and gives the concise definition: first-order cybernetics is the cybernetics of observed systems, second-order cybernetics the cybernetics of observing systems (PDF p. 11). Allowing the observer into descriptions changes questions of management, therapy, education, and ethics because actions and descriptions participate in the world they address. The ethical maxim to increase choices (PDF p. 12) is a normative consequence of this stance, not a technical definition of second-order cybernetics.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

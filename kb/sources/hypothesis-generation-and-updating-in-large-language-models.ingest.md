@@ -21,9 +21,9 @@ Author: Huadong Xiong, School of Psychological and Brain Sciences at Georgia Tec
 
 Xiong studies how pretrained LLMs infer a numerical concept from up to four positive examples. The paper reads the resulting hypothesis state three ways: forced Yes/No predictions for each integer, confidence over a supplied candidate list, and free generation of ten hypotheses. Within the original `1..100` domain, a two-parameter Bayesian family often fits model behavior reasonably well: one parameter represents prior reliance and the other the strong-sampling size principle that favors smaller compatible hypotheses. That fit is not stable evidence of one posterior. Sampling-story prompts and thinking mode shift it; candidate evaluation selects hypotheses that cover the examples more often, while free generation favors narrower rule forms; and the three probes project to different fitted posteriors. When the query domain expands to `1..200` while examples stay in `1..100`, most models also fail to extend rule-consistent mass cleanly or preserve the original in-domain shape. The paper's useful conclusion is therefore diagnostic rather than Bayesian: plausible hypothesis-shaped behavior under one elicitation surface does not establish a stable hypothesis that survives another probe or domain.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

@@ -24,9 +24,9 @@ Author: @BrainsAndTennis, reporting as a builder of Shortcut's spreadsheet agent
 
 The source argues that a strong vertical agent is "a compression of its task distribution": with the base model fixed, performance comes from deciding what context the model sees, when it sees it, and how compressed that context is for the tasks users actually bring. It frames the system prompt, tools, skills, curated docs, and raw references as one context hierarchy. Common spreadsheet operations belong in L1 as always-resident, heavily engineered wrappers that compress reads and writes while reporting consequences. Less common capabilities belong in L2 as curated, gotcha-aware English specs fetched on demand. Rare long-tail capabilities belong in L3 as complete raw references plus a skill that teaches the agent how to search them. The worked example is spreadsheet automation, but the claimed design rule is domain-general: allocate context tiers by frequency and discovery cost.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

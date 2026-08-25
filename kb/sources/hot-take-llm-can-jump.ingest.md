@@ -22,9 +22,9 @@ Author: Yong Zheng-Xin presents this as a provisional “hot take” and explici
 
 Zheng-Xin replies to [Tom Zahavy's argument](llms-cant-jump.ingest.md) that text-only LLMs lack the sensory-grounded abduction Einstein used to formulate general relativity. The response does not claim that an LLM could reproduce Einstein's route from Einstein-era knowledge. Instead, it cites a Feynman-style route in which later knowledge -- special relativity, quantum field theory, and empirical properties of gravity -- constrains a massless spin-2 theory toward general relativity. It generalizes this into an interconnected-knowledge account of discovery: cross-domain facts constrain and suggest hypotheses, while code, formal proof, simulations, and experiments check them. The essay then argues that harmful facts removed from training may be reconstructed from retained indirect information and predicts that broader model knowledge will make both weight updates and non-parametric use of new information easier. Its strongest contribution is the narrower distinction between original invention and later deductive reconstruction; the safety and continual-learning extensions are plausible conjectures with much thinner support.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

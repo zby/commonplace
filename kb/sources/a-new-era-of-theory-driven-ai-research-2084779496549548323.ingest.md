@@ -24,9 +24,9 @@ Author: Aaron Defazio writes as a researcher with long-running AI-theory problem
 
 Defazio argues that frontier coding agents have made mathematical theory development fast enough to lead AI experimentation instead of rationalizing results after the fact. Predictive theory, in his account, should forecast training quantities, select hyperparameters, and eventually guide algorithms, architectures, and losses; this becomes more valuable as agent thinking gets cheaper relative to running training experiments. He says researchers should therefore spend more effort selecting problems, setting quantifiable goals, and moving rapidly between ideas and evidence, while agents automate technical derivation. The article's strongest support is a personal report that an unspecified coding agent made “major progress” within an hour on each of several theory problems he had considered for years.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

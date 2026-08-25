@@ -1,12 +1,12 @@
 ---
 name: cp-skill-ingest
-description: Use when asked to ingest one URL or local snapshot, execute a bounded re-ingest request, or mechanically append one verified Claims entry to a tracked .ingest.md source analysis.
+description: Use when asked to ingest one URL or local snapshot, execute a bounded re-ingest request, or mechanically append verified verbatim quotes to a tracked .ingest.md source analysis.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill, Task
 context: fork
 model: opus
-argument-hint: "[url-or-file | re_ingest_request | claim_append_request] — URL, snapshot path, or structured bounded-mutation request. No argument lists recent snapshots."
+argument-hint: "[url-or-file | re_ingest_request | quote_append_request] — URL, snapshot path, or structured bounded-mutation request. No argument lists recent snapshots."
 ---
 
 # Ingest source
@@ -42,13 +42,13 @@ The drafting worker executes the standalone `draft-ingest-report.md`
 instruction. That instruction owns report analysis, writing, and worker-side
 verification; this skill owns only the surrounding orchestration.
 
-The canonical empty Claims block is the following complete Markdown section,
+The canonical empty Quotes block is the following complete Markdown section,
 including the blank line after its sentence:
 
 ```markdown
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ```
 
@@ -59,23 +59,22 @@ URL-or-file target:
 re_ingest_request:
   ingest_path: <exact ingest path>
   snapshot_path: <name-paired snapshot path>
-  allow_checksum_change: false | true
 ```
 
 A grounding caller supplies this structured request instead of an ordinary
 target or a re-ingest request:
 
 ```yaml
-claim_append_request:
+quote_append_request:
   ingest_path: <exact ingest path>
   snapshot_path: <name-paired, checksum-matching path>
-  entry: |-
-    <complete Markdown entry>
+  quotes: |-
+    <one or more complete quote items>
 ```
 
-## Claim append path
+## Quote append path
 
-When the target is a `claim_append_request`, execute only this section and then
+When the target is a `quote_append_request`, execute only this section and then
 report the result. Do not run connection discovery, dispatch a drafting worker,
 rewrite an analysis section, or continue into the ordinary ingest steps.
 
@@ -84,26 +83,21 @@ rewrite an analysis section, or continue into the ordinary ingest steps.
    `kb/sources/<slug>.ingest.md`, and require `snapshot_path` to equal its
    name-paired `kb/sources/.snapshots/<slug>.md`. Both files must exist. Do not
    search for another path or checksum match.
-2. Read both files as exact bytes. Require exactly one `## Claims` section in
+2. Read both files as exact bytes. Require exactly one `## Quotes` section in
    the ingest. Require the snapshot frontmatter's canonical `source` to equal
    the ingest's `source`, compute lowercase SHA-256 from the snapshot's exact
    bytes, and require it to equal the ingest's `snapshot_sha256`.
-3. Require `entry` to be exactly one complete Claims entry in this shape:
+3. Require `quotes` to contain one or more complete items in this shape:
 
    ```markdown
-   - **Claim (paraphrase):** <bounded source-side proposition>
-     - **Source extract (verbatim):** <exact supporting content>
+   - **Source extract (verbatim):** <exact supporting content>
      - **Source location:** <human-resolvable locator for that extract>
-     - **Scope:** <population, conditions, and exclusions>
-     - **Confidence:** <scoped prose>
-     - **Limitation:** <boundary needed to prevent overstatement>
    ```
 
-   Require one non-empty Claim, Scope, Confidence, and Limitation field and at
-   least one non-empty adjacent Source extract/Source location pair. Permit
-   additional extract/location pairs only in that same adjacent order. Reject
-   headings, a second top-level entry, any other field, or text before or after
-   the entry. Require every verbatim extract value to occur exactly in the
+   Require at least one non-empty adjacent Source extract/Source location pair.
+   Permit additional pairs only in that same adjacent order. Reject headings,
+   any other field, or text before or after the items. Require every verbatim
+   extract value to occur exactly in the
    snapshot; a locator alone is not verification.
 
    That requirement is now checked deterministically: `commonplace-validate`
@@ -117,18 +111,18 @@ rewrite an analysis section, or continue into the ordinary ingest steps.
    Quote the snapshot's bytes as they are; whitespace normalization already
    lets an extract span wrapped lines.
 4. Retain the ingest's complete incumbent bytes. Construct a candidate by
-   splicing only within the Claims section and by using the incumbent file's
+   splicing only within the Quotes section and by using the incumbent file's
    newline convention:
-   - when the section body is exactly `No claims have been grounded yet.`,
-     replace only that sentence with `entry`;
-   - otherwise insert `entry` after all incumbent entries and before the next
-     level-two heading, adding only the separator newlines needed for a valid
-     adjacent entry.
+   - when the section body is exactly `No source quotes have been retained yet.`,
+     replace only that sentence with `quotes`;
+   - otherwise insert `quotes` after all incumbent items and before the next
+     level-two heading, adding only the separator newlines needed for valid
+     adjacent items.
 
-   Preserve every incumbent entry byte-for-byte and every byte outside the
-   Claims section. Do not merge, deduplicate, reorder, renumber, or otherwise
-   interpret similar, broader, narrower, or disputed entries.
-5. Before writing, recheck the paired paths, source identity, checksum, entry
+   Preserve every incumbent item byte-for-byte and every byte outside the
+   Quotes section. Do not merge, deduplicate, reorder, or interpret similar,
+   overlapping, or disputed passages.
+5. Before writing, recheck the paired paths, source identity, checksum, quote
    shape, and extracts against the current bytes. Write the constructed
    candidate once, then run:
 
@@ -139,10 +133,10 @@ rewrite an analysis section, or continue into the ordinary ingest steps.
    Re-read the result and require the intended splice plus exact preservation
    of all other bytes. If a post-write check or validation fails, restore the
    retained incumbent bytes exactly, verify that restoration, and report
-   failure rather than leaving an invalid or partial append. A `claims extract`
-   failure is authoritative about the entry, not the splice: repair the extract
+   failure rather than leaving an invalid or partial append. A `source quote`
+   failure is authoritative about the item, not the splice: repair the extract
    against the snapshot rather than rewriting the file.
-6. Report the ingest path, `added`, and the exact `Claim (paraphrase)` wording.
+6. Report the ingest path, `added`, and the exact quote texts.
    This branch never launches a worker and never changes a source snapshot or
    another artifact.
 
@@ -157,26 +151,23 @@ rewrite an analysis section, or continue into the ordinary ingest steps.
      `code_revisions` fields, and require the snapshot's frontmatter `source`
      to equal the ingest's canonical `source`. Compute lowercase SHA-256 from
      the exact snapshot bytes.
-     - Require zero or one incumbent Claims block; stop before mutation if more
-       than one exists. The block starts at the exact `## Claims` heading and
+     - Require zero or one incumbent Quotes block; stop before mutation if more
+       than one exists. The block starts at the exact `## Quotes` heading and
        includes every byte through the byte immediately before the next
        level-two heading. If the section is absent, use the canonical empty
-       Claims block; do not infer claims from any other section. Treat Claims as
+       Quotes block; do not infer quotes from any other section. Treat Quotes as
        empty only when the section is absent or is exactly the canonical empty
-       block. Any other present Claims block is populated.
+       block. Any other present Quotes block is populated.
      - If the snapshot checksum equals the incumbent `snapshot_sha256`, set
-       `retained_claims` to the extracted block and continue. Do not rewrite,
+       `retained_quotes` to the extracted block and continue. Do not rewrite,
        normalize, or reformat it.
-     - If the checksums differ and `allow_checksum_change` is `false`, stop
-       before connection discovery, backup creation, worker dispatch, or output
-       mutation. Report both checksums, both paired paths, and the canonical
-       source, and state whether empty Claims make an approved retry eligible.
-     - If the checksums differ and `allow_checksum_change` is `true`, continue
-       only when the exact source match and name pairing above still hold and
-       Claims are empty. Populated Claims always stop without mutation. Set
-       `snapshot_sha256` to the new checksum and `retained_claims` to the
-       canonical empty block; the changed observation never carries forward an
-       incumbent Claims block.
+     - If the checksums differ, stop before connection discovery, backup
+       creation, worker dispatch, or output mutation. Report both checksums,
+       both paired paths, and the canonical source. An ingest's
+       `snapshot_sha256` is immutable because a note marked `(snapshot
+       required)` may depend on those exact bytes even when Quotes is empty. A
+       changed observation requires a distinct snapshot basename and ingest;
+       re-ingest never changes the incumbent observation.
      - Set `output_path` to the supplied `ingest_path`, retain whether it existed
        at the start of the run, and skip the remaining Step 1 bullets.
    - If `$ARGUMENTS` is empty, list recent
@@ -194,7 +185,7 @@ rewrite an analysis section, or continue into the ordinary ingest steps.
      Commonplace source checkout use `kb/instructions/ingest-paper-with-code.md`.
      Use the paper snapshot and code-grounding context it returns. Skip the next
      two target-input bullets, then resume with the snapshot-frontmatter bullet
-     so the common output, Claims, and checksum guards still run.
+     so the common output, Quotes, and checksum guards still run.
    - If no snapshot has been resolved and the target starts with `http://` or
      `https://`, invoke
      `cp-skill-snapshot-web` on the URL. Parse the `Snapshot saved:` or
@@ -214,9 +205,9 @@ rewrite an analysis section, or continue into the ordinary ingest steps.
      frontmatter `source` equality, and require its `snapshot_sha256` to equal
      the snapshot checksum. On a mismatch, stop and report the permanent
      `re-ingest.md` route; an ordinary target never authorizes a changed
-     observation. Extract `retained_claims` exactly as defined above, using the
+     observation. Extract `retained_quotes` exactly as defined above, using the
      canonical empty block when the incumbent section is absent. For a new
-     output, set `retained_claims` to the canonical empty block.
+     output, set `retained_quotes` to the canonical empty block.
 
      On an ordinary-target checksum mismatch, report one permanent route with
      the exact ingest path filled in: in the source checkout, `Read and execute
@@ -241,7 +232,7 @@ rewrite an analysis section, or continue into the ordinary ingest steps.
    - `connect_report_path`: the generated report from Step 2
    - `output_path`: `kb/sources/<snapshot-slug>.ingest.md`
    - `snapshot_sha256`: the checksum already computed from `snapshot_path`
-   - `retained_claims`: the complete Claims block resolved in Step 1
+   - `retained_quotes`: the complete Quotes block resolved in Step 1
    - `code_grounding_context`: only when returned by the paper-with-code branch;
      include its secondary-source commit URLs, claim classifications, pinned
      citations, evidence boundaries, and execution status; retain paper version,
@@ -250,7 +241,7 @@ rewrite an analysis section, or continue into the ordinary ingest steps.
    Require the instruction, snapshot, and connect report to exist and be
    non-empty. Recompute the snapshot checksum immediately before dispatch and
    require it to equal `snapshot_sha256`. Do not pass the parent conversation,
-   any part of an existing ingest other than `retained_claims`, the backup path,
+   any part of an existing ingest other than `retained_quotes`, the backup path,
    or the parent's interpretations to the worker.
 
    If `output_path` existed when Step 1 began, create a unique backup in the
@@ -272,7 +263,7 @@ rewrite an analysis section, or continue into the ordinary ingest steps.
 
    Give the worker this dispatch with every placeholder filled in. The warning
    against orchestration skills is load-bearing: skill discovery can re-fire in
-   a worker context and would otherwise recurse. Substitute `retained_claims`
+   a worker context and would otherwise recurse. Substitute `retained_quotes`
    as an unquoted, unindented multiline value without changing any of its bytes.
 
    ```text
@@ -288,7 +279,7 @@ rewrite an analysis section, or continue into the ordinary ingest steps.
    - connect_report_path: {connect_report_path}
    - output_path: {output_path}
    - snapshot_sha256: {snapshot_sha256}
-   - retained_claims: {retained_claims_exact_multiline_value}
+   - retained_quotes: {retained_quotes_exact_multiline_value}
    - code_grounding_context: {code_grounding_context_or_none}
    - validation_failures: none
    ```
@@ -298,8 +289,8 @@ rewrite an analysis section, or continue into the ordinary ingest steps.
    terminate, or release it before continuing. Require `output_path` to exist
    and be non-empty. Recompute the snapshot checksum and require it still to
    equal both the pre-dispatch checksum and the ingest's `snapshot_sha256`.
-   Require exactly one Claims block, immediately before `## Connections Found`,
-   whose bytes equal `retained_claims`. Verify that the ingest retained the
+   Require exactly one Quotes block, immediately before `## Connections Found`,
+   whose bytes equal `retained_quotes`. Verify that the ingest retained the
    snapshot's capture metadata, contains no `source_snapshot` or
    `code_revisions`, and does not link to `.snapshots/`, cite a
    `related-systems/` checkout, or name the generated connect report. For a
@@ -311,18 +302,18 @@ rewrite an analysis section, or continue into the ordinary ingest steps.
    ```
 
    If this run created the source snapshot, validate that snapshot explicitly.
-   A candidate is clean only when the checksum check, exact Claims comparison,
+   A candidate is clean only when the checksum check, exact Quotes comparison,
    every other handoff check, and full validation all pass.
 
    If the primary worker did not produce a clean report, launch at most one new
    fresh replacement worker with the same clean-context boundary. Dispatch the
    same standalone instruction and fixed inputs, including the identical
-   `retained_claims`, but set `mode: repair` and supply the exact handoff or
+   `retained_quotes`, but set `mode: repair` and supply the exact handoff or
    validation failures in `validation_failures`. Leave the failed primary
    candidate at `output_path` for that repair worker. Do not add parent
    interpretations or a rewritten analysis brief. Wait for the replacement,
    collect its response, close, terminate, or release it, then repeat every
-   checksum, Claims, handoff, and full-validation check. Do not retain either
+   checksum, Quotes, handoff, and full-validation check. Do not retain either
    single-use worker for another task.
 
 6. **Accept or restore.**
@@ -368,7 +359,7 @@ rewrite an analysis section, or continue into the ordinary ingest steps.
 - Accept exactly one URL-backed primary source; reject directory primaries.
 - Pair an ingest only with its name-derived snapshot. A checksum verifies that
   named file; it never discovers a substitute.
-- Never update an existing ingest's `snapshot_sha256` for changed bytes outside
-  an eligible `re_ingest_request` with `allow_checksum_change: true`.
+- Never update an existing ingest's `snapshot_sha256`. Changed source bytes are
+  a new observation with a distinct snapshot basename and ingest path.
 - Do not add staging, atomic rename, locks, compare-and-swap, crash recovery, or
   concurrent-writer coordination. This procedure covers handled failures only.

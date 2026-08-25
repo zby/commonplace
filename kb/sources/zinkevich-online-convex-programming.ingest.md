@@ -21,9 +21,9 @@ Author: Martin Zinkevich, Carnegie Mellon University; CMU-CS-03-110 (February 20
 
 The paper defines online convex programming as choosing each feasible point before seeing that round's convex cost function. Its Greedy Projection update takes a gradient step on the revealed cost and projects back into the feasible set; with a square-root-decaying learning rate, average regret against the best fixed feasible point tends to zero under boundedness, differentiability, bounded gradients, gradient access, and projection access. It also gives dynamic-regret and lazy-projection bounds, then shows that repeated games are online linear programs and that generalized infinitesimal gradient ascent (GIGA) is universally consistent. The important Commonplace-facing result is architectural: the gradient/error signal directly determines an adopted update, without a separately represented candidate or reject-capable gate.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

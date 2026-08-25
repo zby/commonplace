@@ -22,9 +22,9 @@ Author: Letta AI (formerly MemGPT project). The MemGPT paper has academic credib
 
 Letta builds stateful AI agents with self-managed memory, founded on an OS analogy: the context window is RAM, and the agent gets tools to manage a three-tier memory hierarchy (core memory always in context, recall memory as searchable conversation history, archival memory as persistent long-term storage). The distinctive design bet is that the agent itself decides what to remember, forget, and swap — memory management is part of reasoning, not a developer-managed external service. Core memory uses labeled text blocks with explicit character limits rendered as XML in the system prompt. The system is evolving from PostgreSQL-backed blocks toward git-backed memory where blocks become version-controlled files. It has grown from a research prototype into a full platform with REST API, SDKs, multi-agent support, and commercial hosting.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

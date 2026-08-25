@@ -24,27 +24,19 @@ Author: @JayaGup10 — Jaya Gupta, investor at Foundation Capital and co-author 
 
 The post argues that pre-LLM enterprise data platforms optimized different surfaces: Snowflake and Databricks around SQL/query throughput, Palantir around an ontology or world model of objects, relationships, properties, and interactions. LLMs make the latter look attractive because models need structured, language-shaped context they can traverse and linearize, not just raw rows. The author then reframes "decision traces" as a workflow-first alternative to Palantir-style platform-first ontology: capture inputs, policies, exception paths, approvals, actions, and outcomes at decision surfaces, then infer the minimal entities and relations from those trajectories over time. The important claim for this KB is that bottom-up decision traces are still an ontology strategy; the ontology is inferred from use rather than prescribed upfront.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** The author frames two architectural routes to a shared world model: prescribing a unified ontology upfront, or inferring one bottom-up from captured decision traces.
-  - **Source extract (verbatim):** Platform-first (example: Palantir): prescribe the unified world model upfront.
+- **Source extract (verbatim):** Platform-first (example: Palantir): prescribe the unified world model upfront.
   - **Source location:** Post 1, the "multiple architectural solutions" list, first item.
-  - **Source extract (verbatim):** Workflow-first (decision traces): don’t start by rebuilding the world. Instrument the moments where the world changes.
+- **Source extract (verbatim):** Workflow-first (decision traces): don’t start by rebuilding the world. Instrument the moments where the world changes.
   - **Source location:** Post 1, the same list, second item.
-  - **Source extract (verbatim):** Palantir prescribes the ontology first. Our take is that startups can learn it bottom-up from traces.
+- **Source extract (verbatim):** Palantir prescribes the ontology first. Our take is that startups can learn it bottom-up from traces.
   - **Source location:** Post 1, the "this is still an ontology approach" paragraph.
-  - **Scope:** One conceptual X post by @JayaGup10 arguing for the author's own decision-trace approach. The distinction is stated as an architectural framing, not derived from a study, a benchmark, or a comparison of deployed systems.
-  - **Confidence:** High that the source states the distinction and characterizes both sides; the characterization is the author's own, and the workflow-first side is the position being advocated.
-  - **Limitation:** The source establishes neither route empirically. It does not show that bottom-up inference from traces yields a usable world model, and it dates the payoff vaguely ("over time (not day 1)"). Its surrounding market claims about Palantir, Snowflake, and Databricks are outside what this entry supports.
 
-- **Claim (paraphrase):** The author claims that without decision traces a system retains state without the legible rationale behind it, and proposes capturing decision receipts at the commit surface with named contents.
-  - **Source extract (verbatim):** The missing piece is decision traces: without them, you have state, but not the legible “why”!!
+- **Source extract (verbatim):** The missing piece is decision traces: without them, you have state, but not the legible “why”!!
   - **Source location:** Post 1, closing sentence.
-  - **Source extract (verbatim):** Capture decision receipts at commit surfaces: inputs referenced, policy/constraints, exception path, approvals, action taken, outcome.
+- **Source extract (verbatim):** Capture decision receipts at commit surfaces: inputs referenced, policy/constraints, exception path, approvals, action taken, outcome.
   - **Source location:** Post 1, the "multiple architectural solutions" list, second item.
-  - **Scope:** The same single conceptual post. "State" here means the data a platform retains after the fact; the contrast is asserted about that setting, not measured against any recovery attempt.
-  - **Confidence:** High that both halves are stated. The state-versus-why contrast is asserted flatly rather than argued, and the receipt contents are a proposed list, not a validated schema.
-  - **Limitation:** The source does not test whether rationale can be reconstructed from later state, so it supports the claim that capture-time receipts carry rationale, not a demonstrated bound on what post-hoc recovery could achieve.
 
 ## Connections Found
 

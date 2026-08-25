@@ -22,18 +22,14 @@ Author: Yepeng Liu, Yu Huang, Yu-Xiang Wang, Yingbin Liang, Yuheng Bu — academ
 
 The paper introduces ConvexBench, a benchmark testing whether LLMs can determine convexity of deeply composed symbolic functions. The key contribution is demonstrating a sharp "compositional reasoning gap": one-shot LLM performance collapses from perfect (F1=1.0) at depth 2 to near-failure (F1~0.2) at depth 100, even though the total token count (5,331 at depth 100) is far below context window limits. This proves that reasoning degradation is an attention-distribution and reasoning-horizon problem, not a token-capacity problem. The authors then show that agentic frameworks using divide-and-conquer with focused context (pruning irrelevant history at each recursive step) fully recover performance to F1=1.0 at all depths, because each sub-step gets a clean reasoning frame with only the information it needs.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** On ConvexBench's deeply composed symbolic-function tasks, one-shot reasoning fell from F1 1.0 at depth 2 to about 0.2 at depth 100 even though the depth-100 input was 5,331 tokens; agentic reasoning with focused context reached F1 1.0 across the evaluated depths.
-  - **Source extract (verbatim):** Experiments reveal a sharp compositional reasoning gap: performance drops from F1=1.0 at depth 2 to approximately 0.2 at depth 100.
+- **Source extract (verbatim):** Experiments reveal a sharp compositional reasoning gap: performance drops from F1=1.0 at depth 2 to approximately 0.2 at depth 100.
   - **Source location:** Abstract.
-  - **Source extract (verbatim):** A critical finding: even with token counts (5,331 at depth 100) far below LLM context limits (128k+), models degrade substantially.
+- **Source extract (verbatim):** A critical finding: even with token counts (5,331 at depth 100) far below LLM context limits (128k+), models degrade substantially.
   - **Source location:** “Context and Long-Horizon Reasoning.”
-  - **Source extract (verbatim):** Agentic framework with focused context achieves F1=1.0 across all depths
+- **Source extract (verbatim):** Agentic framework with focused context achieves F1=1.0 across all depths
   - **Source location:** “Experimental Results.”
-  - **Scope:** ConvexBench convexity classification over generated, mechanically verified compositions, evaluated on GPT-5, Gemini-2.5-Pro, and Qwen3-8B/30B from shallow through depth-100 expressions.
-  - **Confidence:** High for the benchmark measurements as reported in the captured paper; labels are mechanically verified and the source states the depth, token count, and F1 contrasts directly.
-  - **Limitation:** The result establishes a compositional reasoning failure well below advertised token limits on this symbolic benchmark. It does not by itself identify context management as the cause or show that soft degradation usually binds first in representative agent workloads.
 
 ## Connections Found
 

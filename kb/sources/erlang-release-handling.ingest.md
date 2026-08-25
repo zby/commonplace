@@ -21,20 +21,16 @@ Author: Ericsson AB maintains the Erlang/OTP documentation; it is authoritative 
 
 OTP turns its runtime code-replacement capability into a versioned release procedure. Modified applications receive `.appup` files that map explicit prior versions to upgrade and downgrade instruction lists; `systools` compiles these into an ordered release-wide `relup`; and `release_handler` unpacks and installs the package on the running system. Simple functional-module changes may load directly, while state-format changes use synchronized replacement: find affected supervised processes, suspend them, invoke `code_change/3` through the system protocol to transform state and switch code, remove the old version, and resume. Installation is reversible and staged: failure can reboot into the old release, success still requires a separate `make_permanent` step before the new version becomes the reboot default. A runtime famous for hot swapping therefore treats nontrivial definition change as governed deployment, not as an ordinary execution step.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** Erlang/OTP release handling uses versioned application and release plans for live upgrades and downgrades; advanced module updates can transform process state, failed installation reboots into the old release, and an installed release can be explicitly downgraded.
-  - **Source extract (verbatim):** This file describes how to upgrade and/or downgrade between the old and new version of the entire release.
+- **Source extract (verbatim):** This file describes how to upgrade and/or downgrade between the old and new version of the entire release.
   - **Source location:** “Release Handling Workflow,” Step 6 description of `relup`
-  - **Source extract (verbatim):** If a more complex change has been made, for example, a change to the format of the internal state of a `m:gen_server`, simple code replacement is not sufficient. Instead, it is necessary to: - Suspend the processes using the module (to avoid that they try to handle any requests before the code replacement is completed). - Ask them to transform the internal state format and switch to the new version of the module. - Remove the old version. - Resume the processes.
+- **Source extract (verbatim):** If a more complex change has been made, for example, a change to the format of the internal state of a `m:gen_server`, simple code replacement is not sufficient. Instead, it is necessary to: - Suspend the processes using the module (to avoid that they try to handle any requests before the code replacement is completed). - Ask them to transform the internal state format and switch to the new version of the module. - Remove the old version. - Resume the processes.
   - **Source location:** “Release Handling Instructions,” `update`
-  - **Source extract (verbatim):** If an error occurs during the installation, the system is rebooted using the old version of the release. If installation succeeds, the system is afterwards using the new version of the release, but if anything happens and the system is rebooted, it starts using the previous version again.
+- **Source extract (verbatim):** If an error occurs during the installation, the system is rebooted using the old version of the release. If installation succeeds, the system is afterwards using the new version of the release, but if anything happens and the system is rebooted, it starts using the previous version again.
   - **Source location:** “Installing a Release,” post-install behavior
-  - **Source extract (verbatim):** To downgrade from `Vsn` to `FromVsn`, `install_release` must be called again:
+- **Source extract (verbatim):** To downgrade from `Vsn` to `FromVsn`, `install_release` must be called again:
   - **Source location:** “Installing a Release,” downgrade procedure
-  - **Scope:** Erlang/OTP 29.0.5 runtime release handling through `.appup`, `relup`, and the SASL release handler, including OTP-behaviour state conversion.
-  - **Confidence:** High because the official runtime documentation states the upgrade, downgrade, state-transition, and failure behavior directly.
-  - **Limitation:** The documentation supplies deployment mechanisms rather than evidence about how a change is selected or learned; “rollback” here is bounded to reboot fallback or an explicit downgrade, not a general transactional guarantee.
 
 ## Connections Found
 

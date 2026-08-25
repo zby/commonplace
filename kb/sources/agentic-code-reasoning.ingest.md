@@ -20,9 +20,9 @@ Author: Shubham Ugare and Satish Chandra (Meta). Industry researchers reporting 
 
 The paper introduces "semi-formal reasoning" — structured prompting templates that require LLM agents to construct explicit premises, trace execution paths, and derive formal conclusions when analysing code without executing it. The templates are task-specific but share a common principle: force the agent to document verifiable evidence before reaching a conclusion. Across three tasks (patch equivalence verification, fault localization on Defects4J, code question answering on RubberDuckBench), semi-formal reasoning consistently improves accuracy over unstructured baselines by 5-12 percentage points. The headline result is 93% verification accuracy on real-world agent-generated patches using Opus-4.5, approaching the reliability needed for execution-free RL reward signals. The paper's motivating application is replacing test execution with LLM-based verification in training pipelines, though the cost argument for this substitution is asserted rather than demonstrated.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

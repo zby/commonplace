@@ -24,9 +24,9 @@ Author: Henry Dowling is identified by name and X handle, but the capture suppli
 
 Dowling organizes agent-memory design around three choices. For retrieval, he recommends combining filesystem grep, embedding search, an agent-maintained document wiki, and subagent summarization while rejecting knowledge graphs. For read-back, he prefers agent-initiated pull but argues that action-relevant lessons sometimes must be pushed before an agent would know to ask; a lighter variant pushes only memory titles and lets the agent pull the body. For retention, he recommends organization-specific knowledge rather than public facts, secrets, or user-specific preferences. The essay is most useful as a compact practitioner taxonomy and statement of the selective-push problem. It does not supply the activation path needed to turn that problem statement into a design, while its universal anti-graph conclusion and benchmark-derived confidence are weaker still.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

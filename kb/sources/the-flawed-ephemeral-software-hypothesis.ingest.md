@@ -20,9 +20,9 @@ Author: Andreas Kirsch is an ML researcher/practitioner writing from inside the 
 
 Kirsch argues that AI coding tools make software easier to generate and modify, but do not make important software disposable. His core thesis is that code generation has never been the dominant bottleneck in mature systems; the hard part is discovering correct behavior under real-world ambiguity, edge cases, state migrations, integration quirks, interface expectations, and audit requirements. On this view, the future is not "ephemeral software" regenerated from prompts with high trust, but "malleable software": code and surrounding artifacts become cheaper to update together, while durable stacks of code, tests, specs, logs, schemas, and operational memory grow rather than disappear.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

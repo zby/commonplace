@@ -24,9 +24,9 @@ Author: @monokern claims direct knowledge of a ZS Associates analytics redesign,
 
 The source argues that a pharma-analytics pipeline failed because it copied four human workflow stages into four reasoning agents: local conclusions survived, but their quantitative nuance and causal meaning decayed across handoffs, so final actions no longer matched upstream diagnosis. Its replacement moves anomaly detection into deterministic SQL/Python, gives one main agent end-to-end diagnostic authority, restricts dynamic sub-agents to narrow data processing, and uses a domain knowledge graph as a hypothesis grammar. The main agent begins from a thresholded signal, is instructed to traverse only declared graph edges, queries data to support or reject each path, prunes weak branches, and retains the whole investigation state through final synthesis. The post claims this reduced weeks of analyst iteration to 20–30 minutes, but supplies no evaluation record behind that number.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

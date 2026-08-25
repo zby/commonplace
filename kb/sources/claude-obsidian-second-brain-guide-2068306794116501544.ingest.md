@@ -24,9 +24,9 @@ Author: `@undefinedKi` is presenting a practical how-to rather than an inspectab
 
 The source packages the Karpathy-style LLM wiki pattern for beginners: Obsidian is the local plain-text storage layer, Claude is the file-reading and file-writing agent layer, MCP connects the two, `CLAUDE.md` carries personal and project context, project-scoped vaults reduce context contamination, skills encode repeated workflows, calendar/email/Slack/Notion bridges add live inputs, and scheduled tasks maintain the vault. The workflow sounds convenient because it compresses capture, filing, retrieval, repeated procedures, and routine maintenance into one loop, reducing the need to rebuild context from scratch. Its practical emphasis is onboarding sequence and user-facing mental model, not a new retrieval algorithm or governance model. The most durable line is the security rule "keys, not prompts": permission scope should enforce what the agent can do, which makes live email/calendar connectors the risk boundary rather than the local vault itself.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

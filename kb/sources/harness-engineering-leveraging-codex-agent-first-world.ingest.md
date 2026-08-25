@@ -20,18 +20,14 @@ Author: Ryan Lopopolo, Member of Technical Staff at OpenAI, on the Codex team th
 
 Lopopolo reports on OpenAI's Codex team shipping an internal beta product with over one million lines of agent-generated code across five months, with zero manually written lines. The core thesis is that the engineer's role shifts from writing code to designing "harnesses" — systems that constrain, inform, verify, and correct agent behavior. The article identifies three pillars: context engineering (short AGENTS.md as a map with pointers, plus dynamic observability), architectural constraints (enforced dependency graphs, structural tests, linters whose error messages teach the agent the fix), and entropy management (background cleanup agents that scan for drift and open small refactoring PRs, treated as "garbage collection for code quality"). The compounding effect is the central insight: each constraint makes future agent work more reliable, and each cleanup agent reduces the maintenance burden, so the system improves as it grows.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** In the Codex team's reported codebase, recurring manual AI-slop cleanup was replaced by repository-encoded standards and automated cleanup, alongside structural tests and custom linters that enforce architecture and other rules.
-  - **Source extract (verbatim):** Early on, the team spent roughly 20% of their time (Fridays) manually cleaning "AI slop" — low-quality generated artifacts accumulating in the codebase. This did not scale. The solution: encode standards directly into the repository and automate cleanup.
+- **Source extract (verbatim):** Early on, the team spent roughly 20% of their time (Fridays) manually cleaning "AI slop" — low-quality generated artifacts accumulating in the codebase. This did not scale. The solution: encode standards directly into the repository and automate cleanup.
   - **Source location:** “Entropy Management” section.
-  - **Source extract (verbatim):** Structural tests validate compliance and prevent layer violations before merge. Custom linters enforce naming conventions, module boundaries, and semantic correctness.
+- **Source extract (verbatim):** Structural tests validate compliance and prevent layer violations before merge. Custom linters enforce naming conventions, module boundaries, and semantic correctness.
   - **Source location:** “Architectural Constraints” section.
-  - **Source extract (verbatim):** When agents struggled, engineers asked: what capability is missing? What constraint is unenforced? They then built the tool, wrote the linter, or added the structural test to make the failure category impossible.
+- **Source extract (verbatim):** When agents struggled, engineers asked: what capability is missing? What constraint is unenforced? They then built the tool, wrote the linter, or added the structural test to make the failure category impossible.
   - **Source location:** “What humans started doing” section.
-  - **Scope:** A first-party report about one internal beta codebase built over five months by a team that grew from three to seven engineers.
-  - **Confidence:** High that the source reports these practices and their sequence; their effectiveness and recurrence prevention are not independently evaluated in the snapshot.
-  - **Limitation:** The report does not trace each check to a specific repeated failure, measure discrimination on later failures, or establish net benefit after execution, triage, and maintenance costs. “Make the failure category impossible” is the source's practitioner framing, not demonstrated universal prevention.
 
 ## Connections Found
 

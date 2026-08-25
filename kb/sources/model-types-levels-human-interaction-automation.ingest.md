@@ -21,9 +21,9 @@ Author: Raja Parasuraman, Thomas B. Sheridan, and Christopher D. Wickens are est
 
 The paper argues that automation changes human work and coordination rather than simply replacing it. It decomposes automation into four stages—information acquisition, information analysis, decision/action selection, and action implementation—and lets each stage take a different level from fully manual to fully automatic. Designers choose candidate levels, evaluate workload, situation awareness, complacency, error, performance, reliability, consequences, cost, and liability, then iterate. The framework is deliberately non-prescriptive: high technical capability does not by itself justify high automation, and full automation can still leave a human role. The result is a multidimensional allocation profile, not a scalar autonomy ladder.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

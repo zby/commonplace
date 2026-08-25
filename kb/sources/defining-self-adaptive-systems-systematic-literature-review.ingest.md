@@ -21,9 +21,9 @@ Author: Ana Petrovska, Guan Erjiage, and Stefan Kugele provide a recent multi-au
 
 The review searches 1,493 papers, selects 314 relevant papers, and finds only nine primary studies whose objective is to define self-adaptive systems formally. Only one formally defines adaptation itself; two specify adaptive behaviour implicitly; two specify MAPE behaviour while assuming adaptation follows. Context and system state are common formal dimensions, but none of the nine studies includes uncertainty, even though uncertainty motivates the field. Four studies include adaptation goals and only one distinguishes domain goals from adaptation goals. The authors conclude that MAPE-K is an engineering reference model lacking sufficient semantics for membership, and propose that future definitions distinguish adaptation from ordinary function, model uncertainty, and remain independent of collaboration/decentralisation.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

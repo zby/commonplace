@@ -21,20 +21,16 @@ Author: Wikipedia contributors synthesize community and secondary sources. This 
 
 The article defines monkey patching as modifying a dynamic language's runtime code rather than its source, including adding or replacing methods, classes, attributes, and functions in memory. In Ruby, Python, and some other languages, it narrows the term to runtime modification of a class or module to work around an undesired bug or feature in third-party code. The proposed etymology traces *monkey patch* to *guerrilla patch*: a sneaky runtime change that may be incompatible with other patches, later renamed to sound less forceful. Its pitfalls make the warning content concrete: upgrades may break a patch; multiple patches of one method overwrite one another; runtime behavior can diverge from the source developers inspect; and malicious patches can attack programs or other patches, producing an escalating conflict that calls for platform intervention. The article also limits the inference: monkey patching has sometimes been an official extension mechanism, and comparable runtime class changes may be called *hot fixes* in other communities.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** Wikipedia defines monkey patching as dynamically modifying runtime code in a dynamic language and records risks including incompatibility after upstream releases, last-writer overwrite of competing patches, and confusion between source code and actual behavior.
-  - **Source extract (verbatim):** **Monkey patch** is the act of dynamically modifying the runtime code (not the [source code](https://en.wikipedia.org/wiki/Source_code)) of a [dynamic programming language](https://en.wikipedia.org/wiki/Dynamic_programming_language), and it is the information (data/code) used to modify the runtime code. Monkey patching adds or replaces programming aspects like [methods](https://en.wikipedia.org/wiki/Method_(computer_science)), [classes](https://en.wikipedia.org/wiki/Class_(programming)), [attributes](https://en.wikipedia.org/wiki/Attribute_(computing)), and [functions](https://en.wikipedia.org/wiki/Subroutine) in [memory](https://en.wikipedia.org/wiki/Computer_memory).
+- **Source extract (verbatim):** **Monkey patch** is the act of dynamically modifying the runtime code (not the [source code](https://en.wikipedia.org/wiki/Source_code)) of a [dynamic programming language](https://en.wikipedia.org/wiki/Dynamic_programming_language), and it is the information (data/code) used to modify the runtime code. Monkey patching adds or replaces programming aspects like [methods](https://en.wikipedia.org/wiki/Method_(computer_science)), [classes](https://en.wikipedia.org/wiki/Class_(programming)), [attributes](https://en.wikipedia.org/wiki/Attribute_(computing)), and [functions](https://en.wikipedia.org/wiki/Subroutine) in [memory](https://en.wikipedia.org/wiki/Computer_memory).
   - **Source location:** Opening definition
-  - **Source extract (verbatim):** A new release of the patched software may break the patch. For this reason, a monkey patch may be conditional and thus only applied if appropriate.[^5]
+- **Source extract (verbatim):** A new release of the patched software may break the patch. For this reason, a monkey patch may be conditional and thus only applied if appropriate.[^5]
   - **Source location:** “Pitfalls,” “Incompatibility”
-  - **Source extract (verbatim):** If the same [method](https://en.wikipedia.org/wiki/Method_(computer_science)) is patched multiple times, then only the last one is used; the other patches have no effect, unless monkey patches are written with a pattern like *alias_method_chain*.[^6]
+- **Source extract (verbatim):** If the same [method](https://en.wikipedia.org/wiki/Method_(computer_science)) is patched multiple times, then only the last one is used; the other patches have no effect, unless monkey patches are written with a pattern like *alias_method_chain*.[^6]
   - **Source location:** “Pitfalls,” “Overwriting”
-  - **Source extract (verbatim):** A monkey patch creates a discrepancy between the source code and actual behavior that can confuse developers.
+- **Source extract (verbatim):** A monkey patch creates a discrepancy between the source code and actual behavior that can confuse developers.
   - **Source location:** “Pitfalls,” “Confusion”
-  - **Scope:** Wikipedia's cross-language summary of runtime modification and three named coordination and maintenance pitfalls.
-  - **Confidence:** Moderate because the snapshot states the definition and pitfalls directly but is a secondary, collaboratively edited summary.
-  - **Limitation:** The term varies by language and can sometimes name an official extension method; the source does not establish that every runtime modification is unsafe, durable across restarts, or outside a governed deployment path.
 
 ## Connections Found
 

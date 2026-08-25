@@ -22,9 +22,9 @@ Author: Mohsenimofidi, Galster, Treude, Baltes — mixed SE/MSR team. Treude and
 
 This paper presents the first systematic empirical study of AI context files (AGENTS.md, CLAUDE.md, copilot-instructions.md, GEMINI.md) across 466 open-source projects drawn from a curated sample of 10,000 GitHub repositories. Adoption is still early (5% of sampled repos). The authors find no established content structure, but recurring categories emerge: conventions (50 repos), contribution guidelines (48), architecture/structure (47), and build commands (40) are most common. They identify five writing styles — descriptive, prescriptive, prohibitive, explanatory, and conditional — reflecting experimentation with how to communicate expectations to AI agents. Commit-level analysis of the 10 most actively maintained AGENTS.md files (169 commits) shows evolution dominated by adding and modifying instructions, with rare section removal. Fifty percent of all AGENTS.md files were never changed after creation. The paper argues that AI context files are "maintained software artifacts" and that OSS repositories are natural laboratories for studying real-world context engineering.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

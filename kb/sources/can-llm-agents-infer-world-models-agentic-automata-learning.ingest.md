@@ -21,9 +21,9 @@ Author: Reef Menaged, Gili Lior, Shauli Ravfogel, Roee Aharoni, and Gabriel Stan
 
 The paper introduces **agentic automata learning**, a controlled benchmark for whether tool-calling LLM agents can infer a hidden deterministic finite automaton through interaction. Agents can ask membership queries about strings and equivalence queries about hypothesized DFAs; the oracle either accepts the hypothesis or returns a counterexample. This gives the benchmark exact success checks, controllable complexity through DFA state count, and direct comparison with classical active automata-learning algorithms such as L* and TTT. The experiments find that current LLM agents can solve small cases but degrade sharply as DFA size increases: no tested model exceeds 25% success on 8-9 state automata, while classical algorithms solve all instances. Error analysis separates planning failures from reasoning failures and shows growing rates of non-informative queries as interactions lengthen, suggesting failures in query planning, evidence integration, and use of accumulated observations.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

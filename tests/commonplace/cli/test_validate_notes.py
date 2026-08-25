@@ -342,9 +342,9 @@ Scientific paper.
 
 Summary.
 {headings}
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

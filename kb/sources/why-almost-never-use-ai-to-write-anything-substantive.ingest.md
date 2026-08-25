@@ -21,9 +21,9 @@ Author: Erich Grunewald is a [Senior Researcher on the Institute for AI Policy a
 
 Grunewald argues that current AI models should almost never draft substantive prose, even from detailed notes and even when a human edits the result. His case has three parts: composition is part of forming and testing the thought rather than merely transcribing it; fluent AI prose contains dense, hard-to-notice vagueness and error that an expert must re-derive the subject matter to catch; and presenting such prose without disclosure violates an implicit reader-writer contract that the text represents the named author's considered thought. A detailed audit of an AI-generated paragraph on chip smuggling illustrates the second claim. He exempts logistics text, brainstorming, feedback, deliberately accepted line edits, and sometimes translation, and he limits the argument to current and near-term models.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

@@ -21,9 +21,9 @@ Author: Iusztin is an experienced AI engineer describing his own systems, which 
 
 The article argues that the durable asset in an agent system should be an owned context layer rather than a model or harness. It divides that layer into unified memory, a serving and business-logic layer exposed through MCP or filesystem skills, and a deliberately replaceable harness. It presents two memory implementations: a graph/vector/text database with six higher-level search and write tools, and a lighter Markdown/YAML LLM wiki. Its most useful contribution is the portability framing and its unresolved boundary: files or an MCP endpoint may move across harnesses, but skills that embed harness-specific workflows, agents, permissions, or execution policy may not.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

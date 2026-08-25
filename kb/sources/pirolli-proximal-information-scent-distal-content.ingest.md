@@ -22,39 +22,31 @@ Author: Peter Pirolli, PARC — originator of Information Foraging Theory with S
 
 Pirolli frames Web navigation as a Brunswikian lens-model judgment problem: the forager never observes the distal content, only proximal cues (link summaries, search-result snippets, node labels, thumbnails), and must predict the one from the other in a probabilistically textured environment. He argues the cues have real ecological validity — Davison's elaborated anchor text correlates with the page it links to at r = .16 against roughly 0 for a random page, and page-to-page similarity falls sharply with link distance, so the Web has topical patches. He then derives the forager's prediction problem as Bayesian log-odds, maps it onto ACT-R spreading activation (`Ai = Bi + Σj Wj Sji`, with association strengths estimated from corpus co-occurrence and shown equal to PMI), and closes it with a Random Utility Model choice rule (multinomial logit) so that choice is stochastic rather than always-take-the-best. The resulting SNIF-ACT simulation is checked against 189 coded actions from four participants on two of six representative-design tasks: higher-scent links are the ones followed, and model-computed scent declines across a run of pages before the user abandons the site, with a high-scent start page predicting a longer run. Read it if you want the canonical mechanism account of judging an unseen target from its pointer, plus a stopping rule derived from the same quantity; skip the SNIF-ACT architecture sections if you only need the framing and the cue-validity measurements.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** In Pirolli's Web-navigation account, information-scent cues such as links and citations give users concise information about content that is not immediately available, and users assess proximal cues to choose actions leading toward distal information sources.
-  - **Source extract (verbatim):** scent refers to the cues used by information foragers to make judgments related
+- **Source extract (verbatim):** scent refers to the cues used by information foragers to make judgments related
   - **Source location:** Introduction, PDF page 3.
-  - **Source extract (verbatim):** to the selection of information sources to pursue and consume. These cues
+- **Source extract (verbatim):** to the selection of information sources to pursue and consume. These cues
   - **Source location:** Introduction, PDF page 3.
-  - **Source extract (verbatim):** concise information about content that is not immediately available. The
+- **Source extract (verbatim):** concise information about content that is not immediately available. The
   - **Source location:** Introduction, PDF page 3.
-  - **Source extract (verbatim):** assessments of proximal information scent cues in order to make action choices
+- **Source extract (verbatim):** assessments of proximal information scent cues in order to make action choices
   - **Source location:** Introduction, PDF page 4.
-  - **Source extract (verbatim):** that lead to distal information sources. This view is a variant of Brunswik’s Lens
+- **Source extract (verbatim):** that lead to distal information sources. This view is a variant of Brunswik’s Lens
   - **Source location:** Introduction, PDF page 4.
-  - **Scope:** Human information foragers navigating Web environments, with proximal-cue examples including links and bibliographic citations.
-  - **Confidence:** Directly stated as the chapter's information-scent framing and navigation model.
-  - **Limitation:** The chapter does not call follow/skip the fundamental unit of navigation, establish that surrounding prose prevents target loading or thereby makes navigation tractable, or test transfer to LLM agents.
 
-- **Claim (paraphrase):** Pirolli treats cue validity and predictive strength separately from a general value-to-interaction-cost tendency; in the cited anchor-text analysis, elaborated cues averaged 11.02 terms and correlated .16 with linked pages versus approximately zero with random pages.
-  - **Source extract (verbatim):** Human-information interaction systems will tend to maximize the
+- **Source extract (verbatim):** Human-information interaction systems will tend to maximize the
   - **Source location:** Adaptation framework and Equation 1, PDF page 5.
-  - **Source extract (verbatim):** value of external knowledge gained relative to the cost of
+- **Source extract (verbatim):** value of external knowledge gained relative to the cost of
   - **Source location:** Adaptation framework and Equation 1, PDF page 5.
-  - **Source extract (verbatim):** (the anchor plus additional surrounding text, having a mean of 11.02 terms) to a
+- **Source extract (verbatim):** (the anchor plus additional surrounding text, having a mean of 11.02 terms) to a
   - **Source location:** Topical Patches and Diminishing Returns, PDF page 10.
-  - **Source extract (verbatim):** Linked r = .16 and Random r ≈ 0. Davison’s analysis of the correlation of
+- **Source extract (verbatim):** Linked r = .16 and Random r ≈ 0. Davison’s analysis of the correlation of
   - **Source location:** Topical Patches and Diminishing Returns, PDF page 10.
-  - **Source extract (verbatim):** proximal cues to distal content confirms our intuition that the cues have
+- **Source extract (verbatim):** proximal cues to distal content confirms our intuition that the cues have
   - **Source location:** Topical Patches and Diminishing Returns, PDF page 10.
-  - **Source extract (verbatim):** The stronger the associations (reflecting greater predictive strength)
+- **Source extract (verbatim):** The stronger the associations (reflecting greater predictive strength)
   - **Source location:** Mapping the Bayesian Rational Analysis to Spreading Activation, PDF page 14.
-  - **Scope:** The chapter's human information-foraging theory and one cited analysis of elaborated anchor text from a 1998 Web corpus.
-  - **Confidence:** The efficiency tendency and correlation are stated directly; the distinction follows from the chapter's separate cost and cue-prediction treatments.
-  - **Limitation:** The cited analysis holds one mean cue construction rather than varying cue length. The chapter does not price cue-reading context, establish that more context always improves a cue, or show a monotonic reduction in navigation-decision cost.
 
 ## Connections Found
 

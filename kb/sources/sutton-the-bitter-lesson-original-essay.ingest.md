@@ -20,9 +20,9 @@ This is a conceptual essay that generalizes a historical pattern across chess, G
 
 Sutton argues that AI methods built around general search and learning eventually outperform approaches that encode researchers' domain knowledge because increasing computation continues to improve the former while the latter plateau and can obstruct scaling. His historical examples motivate a design preference for meta-methods that discover useful structure over systems that directly contain human discoveries. Read the essay for its original argumentative boundary and examples, but use the KB's interpretation notes for claims about representational form, warranted structure, or reflective machinery that the essay itself does not establish.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

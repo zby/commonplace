@@ -4,7 +4,7 @@ One renderer for every grouping shape: the prompt carries N note targets and
 M assay criteria and requests one output block per persisted (note, criterion_path)
 pair. Notes and criteria are embedded once from the snapshots captured at job
 creation. Conformance criteria retain a short mechanical wrapper explaining
-how to apply the embedded type spec, COLLECTION.md contract, or source ingest.
+how to apply the embedded type spec or COLLECTION.md contract.
 
 Freshness boundary: the freshness baseline hashes only the note and criterion
 texts. Everything this module renders around them — the runner system prompt,
@@ -36,7 +36,6 @@ from commonplace.review.protocol.format import (
     RESULT_LINE_TEMPLATE,
     SELF_REPORTED_MODEL_FIELD,
 )
-from commonplace.review.source_conformance import is_source_ingest_criterion_path
 from commonplace.review.type_conformance import is_type_spec_criterion_path
 
 
@@ -80,24 +79,6 @@ def _collection_conformance_wrapper_lines() -> tuple[str, ...]:
         "- FAIL: the note does not follow the collection's conventions: wrong placement, or its conventions are systematically unmet.",
         "Structural checks (frontmatter fields, schema conformance) are the deterministic validator's job; do not re-check them here.",
         "The note's conformance to its type spec is the type-conformance pair's job; judge only what the collection contract asks beyond the type contract.",
-    )
-
-
-def _source_conformance_wrapper_lines() -> tuple[str, ...]:
-    """Mechanical gate instructions for a linked ingest criterion."""
-    return (
-        "This is a source-conformance gate. The criterion is the complete raw ingest",
-        "linked from the target artifact, including its complete Claims section.",
-        "Judge every articulated use of this ingest in the target artifact against a",
-        "supporting Claims entry and that entry's Scope, Confidence, and Limitation.",
-        "Keep target-specific transfer reasoning on the artifact side; the ingest needs",
-        "to establish the source-side proposition on which that transfer depends.",
-        "A purely adjacent link makes no support claim and passes this pair.",
-        "Return the worst outcome across all uses of this ingest in the artifact:",
-        "- PASS: every use is supported within a selected entry's bounds, or every link is purely adjacent.",
-        "- WARN: support is plausible, but the selected claim, retained qualifier, or transfer is not articulated clearly enough to verify.",
-        "- FAIL: any use lacks a supporting entry, exceeds its scope or limitation, or asserts an unsupported transfer.",
-        "Do not substitute another ingest, follow snapshot or secondary-source links, or infer support from sections outside Claims.",
     )
 
 
@@ -203,7 +184,7 @@ def render_pairs_prompt(
         "- All target note contents and review criteria are included below. Do not read them from disk.",
     ]
     lines += [
-        "- For semantic grounding or consistency checks, follow only links that appear in a target note.",
+        "- For semantic grounding or consistency checks, follow only links that appear in a target note, except for one exact local path that an active criterion explicitly tells you to derive from such a link.",
         "- When following a markdown link from a target note, use that note's pre-resolved path table below instead of searching for targets by name.",
         "- Ignore review backups, workshop copies, and historical artifacts unless a target note links to them explicitly.",
     ]
@@ -291,8 +272,6 @@ def render_pairs_prompt(
             lines.extend(_type_conformance_wrapper_lines())
         elif is_collection_md_criterion_path(criterion_path):
             lines.extend(_collection_conformance_wrapper_lines())
-        elif is_source_ingest_criterion_path(criterion_path):
-            lines.extend(_source_conformance_wrapper_lines())
         lines.extend([criterion_texts[criterion_path].rstrip(), ""])
 
     lines.extend(

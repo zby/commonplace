@@ -25,36 +25,24 @@ Author: @nicbstme, founder/builder of Fintool — an AI agent for financial serv
 
 A comprehensive practitioner report covering 11 architectural lessons from building Fintool, an AI agent for professional investors. The central thesis is that "the model is not the product — the experience around the model is the product." Key architectural bets include: mandatory sandboxing for code execution, filesystem-first data architecture (S3 as source of truth with PostgreSQL as derived index), markdown-based skills as the primary product surface, and a conviction that models will eventually absorb basic scaffolding (the "model will eat your scaffolding" thesis). The author explicitly adopted Claude Code's filesystem-first approach, retired their RAG pipeline in favor of agentic search, and built a skill system with copy-on-write shadowing (private > shared > public priority). The report also covers Temporal for long-running task reliability, real-time streaming with delta updates, and domain-specific evaluation with ~2,000 test cases where PRs are blocked if eval score drops >5%.
 
-## Claims
+## Quotes
 
-- **Claim (paraphrase):** In a first-person report about Fintool, the author says the system maintains fiscal calendars for more than 10,000 companies, normalizes period references to absolute date ranges, and has more than 200 tests for period extraction because labels such as “Q1 2024” map to different calendar ranges across companies.
-  - **Source extract (verbatim):** Fiscal period normalization is critical. “Q1 2024” is ambiguous:
+- **Source extract (verbatim):** Fiscal period normalization is critical. “Q1 2024” is ambiguous:
   - **Source location:** “The Parsing Problem,” fiscal-period-normalization discussion.
-  - **Source extract (verbatim):** We maintain a fiscal calendar database for 10,000+ companies. Every date reference gets normalized to absolute date ranges. When the agent retrieves “Apple Q1 2024 revenue,” it knows to look for data from October-December 2023.
+- **Source extract (verbatim):** We maintain a fiscal calendar database for 10,000+ companies. Every date reference gets normalized to absolute date ranges. When the agent retrieves “Apple Q1 2024 revenue,” it knows to look for data from October-December 2023.
   - **Source location:** “The Parsing Problem,” immediately after the company-specific examples.
-  - **Source extract (verbatim):** We maintain fiscal calendars for 10,000+ companies. Every period reference gets normalized to absolute date ranges. We have 200+ test cases just for period extraction.
+- **Source extract (verbatim):** We maintain fiscal calendars for 10,000+ companies. Every period reference gets normalized to absolute date ranges. We have 200+ test cases just for period extraction.
   - **Source location:** “The Evaluation Suite,” fiscal-period discussion.
-  - **Scope:** The author's account of Fintool's company-calendar normalization and period-extraction evaluation in one production financial-agent system.
-  - **Confidence:** High that the source reports these system practices and quantities; they are explicit first-person statements from the builder.
-  - **Limitation:** This practitioner report provides no independent audit of the implementation, test coverage, or resulting accuracy. It does not establish that every fiscal-period interpretation is deterministic or constitutive, nor that passing period-extraction tests validates downstream financial analysis.
 
-- **Claim (paraphrase):** In a first-person account of Fintool's S3-first architecture, the author says user data including watchlists, portfolios, preferences, memories, and skills is stored as YAML files in S3 as the source of truth; Lambda functions synchronize changes to PostgreSQL, list queries use the database, and writes and single-item reads use S3.
-  - **Source extract (verbatim):** We store user data (watchlists, portfolio, preferences, memories, skills) in S3 as YAML files. S3 is the source of truth. A Lambda function syncs changes to PostgreSQL for fast queries.
+- **Source extract (verbatim):** We store user data (watchlists, portfolio, preferences, memories, skills) in S3 as YAML files. S3 is the source of truth. A Lambda function syncs changes to PostgreSQL for fast queries.
   - **Source location:** “The S3-First Architecture,” opening description of the storage pattern.
-  - **Source extract (verbatim):** The pattern: - Writes go to S3 directly - List queries hit the database (fast) - Single-item reads go to S3 (freshest data)
+- **Source extract (verbatim):** The pattern: - Writes go to S3 directly - List queries hit the database (fast) - Single-item reads go to S3 (freshest data)
   - **Source location:** “The S3-First Architecture,” access-pattern list immediately before the sync architecture.
-  - **Scope:** The author's account of Fintool's user-data storage, synchronization, and query paths in one production financial-agent system using AWS S3, Lambda, and PostgreSQL.
-  - **Confidence:** High that the source explicitly assigns source-of-truth status and the listed read and write paths; these are direct first-person architecture statements.
-  - **Limitation:** The report is not independently audited and does not establish that PostgreSQL is derived for every Fintool state class, that database availability is unimportant, or that S3-first storage is preferable outside the reported workloads and AWS setting.
 
-- **Claim (paraphrase):** In a first-person account of Fintool, the author says some simple tasks that previously needed detailed step-by-step skills can now often be requested with a short instruction as models improve; separately, the system maintains fiscal calendars for more than 10,000 companies, normalizes period references to absolute date ranges, and has more than 200 period-extraction tests.
-  - **Source extract (verbatim):** Models are getting better. Fast. Every few months, there’s a new model that makes half your code obsolete. The elaborate scaffolding you built to handle edge cases? The model just... handles them now. When we started, we needed detailed skills with step-by-step instructions for some simple tasks. “First do X, then do Y, then check Z.” Now? We can often just say for simple task “do an earnings preview” and the model figures it out (kinda of!)
+- **Source extract (verbatim):** Models are getting better. Fast. Every few months, there’s a new model that makes half your code obsolete. The elaborate scaffolding you built to handle edge cases? The model just... handles them now. When we started, we needed detailed skills with step-by-step instructions for some simple tasks. “First do X, then do Y, then check Z.” Now? We can often just say for simple task “do an earnings preview” and the model figures it out (kinda of!)
   - **Source location:** “The Model Will Eat Your Scaffolding,” opening account of changing skill detail for simple tasks.
-  - **Source extract (verbatim):** We maintain fiscal calendars for 10,000+ companies. Every period reference gets normalized to absolute date ranges. We have 200+ test cases just for period extraction.
+- **Source extract (verbatim):** We maintain fiscal calendars for 10,000+ companies. Every period reference gets normalized to absolute date ranges. We have 200+ test cases just for period extraction.
   - **Source location:** “The Evaluation Suite,” fiscal-period discussion.
-  - **Scope:** Two practices reported for Fintool: reduced skill detail for some unspecified simple tasks as unspecified models improved, and company-specific fiscal-period normalization and testing in the same financial-agent system.
-  - **Confidence:** High that the source explicitly reports both practices; moderate on their relationship because the source discusses them in separate sections and supplies no controlled comparison.
-  - **Limitation:** The report does not show that models learned or absorbed the removed instructions, quantify the reduction, or say that fiscal normalization remains inline in a prompt, skill, or other model consumption path. It therefore does not itself establish the target's durable-payload interpretation.
 
 ## Connections Found
 

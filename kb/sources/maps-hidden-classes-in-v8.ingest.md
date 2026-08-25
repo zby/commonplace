@@ -21,9 +21,9 @@ Author: The V8 project publishes the page without naming an individual author. I
 
 V8 represents an object's property layout with a `Map`, whose descriptors record property names and locations and whose transitions encode the result of adding properties. Objects built in the same property order can share Maps and descriptor arrays, while divergent additions branch the transition structure and duplicate layout metadata. The walkthrough then shows TurboFan specializing a global field read: while the field remains constant, optimized code embeds its value; mutating that field produces a `field-const` trace that marks dependent optimized code for deoptimization; and subsequent optimization falls back to a Map-dependent backing-store load. Read this source for the concrete data structures and invalidation trace behind claims about runtime pricing, not for measurements of how frequent or costly these events are in production.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

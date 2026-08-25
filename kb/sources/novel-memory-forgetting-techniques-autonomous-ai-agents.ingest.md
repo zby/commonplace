@@ -21,9 +21,9 @@ Author: Payal Fofadiya, Sunil Tiwari — not previously encountered in this KB; 
 
 The paper introduces an adaptive budgeted forgetting framework for long-horizon conversational agents. Rather than accumulating memory without bound or training a policy to manage it (as AgeMem does), the framework uses an explicit, inspectable relevance-scoring formula combining recency, usage frequency, and semantic alignment with current queries. Memory selection is formulated as a constrained optimization problem: retain the highest-importance elements under a fixed budget while pruning the rest. Exponential decay prevents abrupt forgetting. Evaluated on three benchmarks (LOCOMO for 600+ turn dialogues, LOCCO for long-term persistence, MultiWOZ 2.4 for task-oriented dialogue), the framework achieves improved F1 scores and reduced false memory rates without increasing context usage, demonstrating "performance stability under bounded memory growth."
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

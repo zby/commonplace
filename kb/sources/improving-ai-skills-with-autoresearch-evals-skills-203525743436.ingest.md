@@ -22,9 +22,9 @@ Author: Nurijanian is reporting direct hands-on iteration with Auto Research and
 ## Summary
 The source argues that automated skill optimization only works after manual comprehension and specification work are done. Across three iterations, the author found that letting tooling auto-generate inputs and judges produced superficially higher scores but worse real behavior, because the objective was ungrounded in observed failure. Improvement came only after manually reading outputs, building a failure taxonomy (open coding -> axial coding), writing judges from that taxonomy, and calibrating judges on a small hand-scored set before rerunning optimization. The "Three Gulfs" framing (comprehension, specification, generalization) is the core contribution: the optimization loop addresses generalization, but only after human work closes comprehension and specification.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 `/connect` found strong links to [spec-mining-as-codification](../notes/spec-mining-as-codification.md) (**exemplifies**), [specification-strategy-should-follow-where-understanding-lives](../notes/specification-strategy-should-follow-where-understanding-lives.md) (**exemplifies**), and [the-boundary-of-automation-is-the-boundary-of-verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md) (**exemplifies**). It also connects to [oracle-strength-spectrum](../notes/oracle-strength-spectrum.md) (**extends**) and [error-correction-works-above-chance-oracles-with-decorrelated-checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) (**exemplifies**) through the judge-calibration step. The key fit is that this source adds practitioner evidence for a phase-gated view of automation: objective construction remains human-gated before loop automation becomes useful.

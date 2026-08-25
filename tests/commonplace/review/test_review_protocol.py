@@ -36,6 +36,7 @@ def test_render_pairs_prompt_multi_note_shares_gate_and_lists_pairs() -> None:
 
     assert "Evaluate each note independently." in prompt
     assert "Do not read them from disk" in prompt
+    assert "one exact local path that an active criterion explicitly tells you to derive" in prompt
     assert f"- kb/notes/first.md :: {GATE}" in prompt
     assert f"- kb/notes/second.md :: {GATE}" in prompt
     assert "review job id" not in prompt

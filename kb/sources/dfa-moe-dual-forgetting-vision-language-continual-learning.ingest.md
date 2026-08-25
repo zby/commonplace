@@ -21,9 +21,9 @@ Author: RL-MIND publishes the repository for the ICML 2026 paper by Borui Kang, 
 
 The repository frames vision-language continual learning as two retention problems: Incremental Knowledge Forgetting harms classes learned during the task sequence, while Pre-trained Knowledge Forgetting erodes the original model's zero-shot capability. Its README declares three corresponding contributions: the DFA-CIL evaluation protocol, a Similarity-Calibrated Retention metric intended to separate foundational retention from positive transfer, and DFA-MoE, which places task-agnostic alignment preservation and task-specific adaptation in separate expert pathways joined by hierarchical routers. It also provides Hydra configuration examples and a three-step evaluation workflow that records the original CLIP zero-shot baseline, generates a frozen-CLIP task-to-upstream similarity matrix, and computes SCR. The README contains no quantitative result table, and the accompanying paper was not available for this ingest.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

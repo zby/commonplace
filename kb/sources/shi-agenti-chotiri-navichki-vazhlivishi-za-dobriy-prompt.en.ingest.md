@@ -26,9 +26,9 @@ Author: Kyrylo Balalin, writing for Mezha. The source is a practitioner-facing e
 
 The article argues that prompt engineering is only one slice of competent AI-agent use. It presents AI Fluency as four simultaneous operator skills: Delegation (choosing what to hand to the model), Description (describing product, process, and behavior), Discernment (checking product, process, and behavior), and Diligence (responsibility, ethics, transparency, and accountability). It distinguishes automation, augmentation, and agency as interaction modes that load those skills differently, with agency putting the heaviest burden on diligence and continuous monitoring. The most KB-relevant move is the shift from "good prompt" to a broader operator loop: choose the right task, describe it through the right durable surfaces, inspect both output and process, and accept responsibility for the result. For this KB, Delegation also needs a second reading: in an orchestrated system, delegation is a scheduling and frontloading strategy, not only a user's decision to assign work to an agent.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

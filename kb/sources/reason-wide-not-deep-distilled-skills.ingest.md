@@ -21,9 +21,9 @@ Author: Six Microsoft researchers; the paper supplies primary experimental evide
 
 The paper presents passive skill distillation: a coding agent analyzes 35–50 existing training trajectories for one model/domain pair, computes failure and action patterns, and writes a 40–130-line Markdown skill that is appended to a non-reasoning model's system prompt. On four held-out agent benchmarks, the GPT-5.4-mini skills recover 55%–100%+ of the measured no-think-to-think performance gap, exceed the reasoning mode on ALFWorld and retail, and use 2.9–4.5 times fewer output tokens than that model's reasoning condition. A second model improves on three of four benchmarks but regresses on retail. Skills distilled from no-think trajectories remain competitive with skills given paired think/no-think traces, and on two customer-service domains the method beats GEPA at lower reported production cost. The authors interpret this as replacing repeated within-episode reasoning about domain-invariant procedure with one corpus-wide analysis pass, while reserving reasoning for instance-specific work.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

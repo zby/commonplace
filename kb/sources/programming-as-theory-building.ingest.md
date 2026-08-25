@@ -21,9 +21,9 @@ Author: Peter Naur writes from Copenhagen University's computing institute and d
 
 Naur argues that programming primarily builds a theory held by programmers: a situated capacity to map between real-world affairs and program structure, justify why the program is designed as it is, and respond constructively to novel modification demands. Code, specifications, and documentation are secondary products that cannot by themselves convey the similarity judgments this capacity requires. On this account, a program remains alive while a theory-bearing team controls its changes; transfer requires guided work with people who possess the theory; and reconstructing the original theory from artifacts alone is strictly impossible and may cost more than rewriting. Prescribed methods can supply examples, techniques, and educational prompts, but cannot mechanically determine the right actions or their order. The essay is a primary conceptual source for design-knowledge transfer and future-change-relative maintainability, though its strongest impossibility claims go beyond its anecdotal evidence.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

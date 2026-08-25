@@ -21,9 +21,9 @@ Author: High. Jeffrey Kephart and David Chess, IBM T.J. Watson Research Center, 
 
 Kephart and Chess argue that rising software complexity is outstripping human capacity to install, configure, tune, and maintain systems, and that the only remaining option is autonomic computing -- systems that manage themselves given high-level policies from administrators. They organize self-management into four aspects (self-configuration, self-optimization, self-healing, self-protection) and propose an architecture of interacting autonomic elements, each a managed element coupled with an autonomic manager that monitors, analyzes, plans, and executes over shared knowledge (the MAPE-K loop, drawn in Figure 2 without yet being named as such). Autonomic elements are framed as goal-directed agents that negotiate service relationships with a full life cycle (specification, location, negotiation, provision, operation, termination), making an autonomic system a multiagent system on a service-oriented infrastructure. The paper closes with engineering challenges (element and relationship life cycles, security, goal specification) and scientific challenges (behavioral abstractions, robustness theory, multiagent learning and optimization, negotiation theory), stressing that emergent global behavior is hard to derive from local rules and that multiagent adaptation breaks single-agent learning guarantees.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

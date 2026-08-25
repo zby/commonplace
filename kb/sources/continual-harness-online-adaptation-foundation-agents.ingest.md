@@ -21,9 +21,9 @@ Author: Seth Karten, Joel Zhang, Tersoo Upaa Jr, Ruirong Feng, Wenzhe Li, Chengs
 
 Continual Harness turns an embodied agent's prompt, sub-agents, skill library, and memory into mutable runtime state. During one continuous Pokémon episode, an LLM Refiner periodically reads recent trajectory failures and applies component-specific edits; a second loop runs an open-source model inside that changing harness, uses a process reward model and frontier teacher to relabel weak windows, and updates the model with soft SFT while preserving emulator state. Across Red and Emerald, the authors report that the refining harness recovers much of the button-efficiency gap between a minimalist and expert harness for Gemini Pro, produces mixed gains for Flash, and harms Flash-Lite; separate measurements show navigation skills approaching a pathfinding oracle, sparse reuse of stored memory, and sustained but bursty milestone progress in selected Gemma training runs.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

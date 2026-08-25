@@ -21,9 +21,9 @@ Author: Pengcheng Jiang, Jiacheng Lin, Zhiyi Shi, Zifeng Wang, Luxi He, Yichen W
 
 The paper surveys adaptation in agentic AI under a four-paradigm taxonomy: A1 adapts the agent from tool-execution feedback, A2 adapts the agent from final-output or holistic rewards, T1 trains agent-agnostic tools, and T2 adapts tools under supervision from a fixed agent. Its most relevant contribution for this KB is not any one method but the organizing frame: post-training, memory, skill libraries, retrievers, planners, subagents, and tool ecosystems are all adaptation surfaces. The survey also argues that evaluation must be paradigm-aware, component-counterfactual, and dynamics-aware, because endpoint success rates hide data efficiency, forgetting, co-adaptation instability, safety regression, and tool-vs-agent attribution.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

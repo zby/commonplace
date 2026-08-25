@@ -32,9 +32,9 @@ SPADE trains one language model in two roles: an Environment Designer writes com
 
 **Paper-only outcomes and execution status.** The reported training curves, benchmark scores, diversity measurements, scaling behavior, and qualitative trajectory shift remain paper-only. Appendix C.3 says evaluation outputs and every figure script ship with the code, but no result artifact or figure/plot script was tracked at the reviewed commit. Five cheap existing test modules were executed without installing dependencies or downloading data: `50 passed in 0.32s` for environment reward assignment, learning potential, game utilities, delayed environment rewards, and optional imports. No training, model inference, benchmark evaluation, dataset or weight download, or submodule initialization was performed. Passing these unit tests is not a reproduction of any paper result.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

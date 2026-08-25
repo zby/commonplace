@@ -27,9 +27,9 @@ Brown argues that a recursive language model (RLM) can perform “true recursion
 
 Follow-up replies describe a related agent runtime. A parent receives a child handle immediately, the child receives a parent handle, and both can send messages into each other's context queues. These claims add an asynchronous coordination mechanism, but they are distinct from the pseudocode's narrower point: recursive control flow does not require recursively capable model calls.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

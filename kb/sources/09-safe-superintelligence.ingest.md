@@ -21,9 +21,9 @@ Author: Richard Heimann is a secondary interpreter of Legg, Hutter, Good, Vinge,
 
 The final chapter starts with Shane Legg's performance-based definition of intelligence, universal intelligence measure, and AIXI, an idealized reward-maximizing agent over computable environments. It then traces the safety canon from intelligence explosion and singularity through superintelligence and “foom,” before criticizing definitions that masquerade as explanations and metrics that quietly inherit behaviorist or functionalist commitments. Its proposed alternative is procedural: name the game, state public criteria and limits, keep philosophical possibility separate from claims used for engineering or policy, and preserve oversight where objectives, reward channels, environments, or robustness remain uncertain.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

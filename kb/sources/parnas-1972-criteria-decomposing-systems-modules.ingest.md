@@ -20,9 +20,9 @@ This is a peer-reviewed software-design paper that develops a decomposition crit
 
 Parnas argues that dividing a system by its processing steps produces interfaces that expose shared representations and other design decisions, so later changes spread across modules. His alternative treats a module as a responsibility assignment: identify difficult or likely-to-change decisions, assign each to a module, and expose an interface that reveals as little of that decision as practical. The paired KWIC designs matter because both can execute identically while differing in independent development, change localization, comprehension, and reuse; runtime success therefore cannot decide whether the decomposition is good. For KB design, the paper is most useful as a primary anchor for choosing retained boundaries around change-bearing decisions, not as proof that any such boundary automatically limits every downstream validation cost.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 ## Connections Found
 
 The paper is a primary technical anchor for [Use tests a decomposition locally; retained rationale is what makes transfer testable](../notes/use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md): the two working KWIC decompositions show that execution can establish local adequacy without revealing which seam preserves the reason for transfer. It is also inherited evidence for [Localized retention pays when sparse changes have bounded impact in a matching decomposition](../notes/localized-retention-pays-where-change-is-sparse-in-a-matching.md), specifically for matching boundaries to anticipated change, while not establishing that dependency closure or regression validation will remain bounded. The rival decompositions provide a concrete basis for [First-principles analysis maps a design space before selecting within it](../notes/first-principles-analysis-maps-design-space-before-selection.md), because comparison exposes design axes and consequences that the conventional flow-oriented decomposition alone does not reveal.

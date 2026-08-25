@@ -15,7 +15,7 @@ Use this procedure for either:
 Inputs:
 
 - `{model-partition}` — review model partition, for example `claude-sonnet-5` or `codex`. Required: Commonplace designates no default review model or partition, so choose one that maps to a model the current harness can actually run.
-- which criteria to select — gate ids, bundle names, conformance requests (`type`, `collection`, `source`, or a narrowed virtual id), or `critique`. `--all-gates` selects the applicable verdict-kind catalog and conformance gates; report assays remain explicit opt-ins
+- which criteria to select — gate ids, bundle names, conformance requests (`type`, `collection`, or a narrowed virtual id), or `critique`. `--all-gates` selects the applicable verdict-kind catalog and conformance gates; report assays remain explicit opt-ins
 - note scope — `--note {note-or-dir}...` or `--user-verified`
 - selector mode — `requested` for explicit execution, or default stale selection
 - grouping — `note` or `criterion`
@@ -80,12 +80,6 @@ The selector emits applicable pairs with their persisted result kinds. The creat
 - derived `prompt_path`
 - derived `job_output_path`
 - each pair's `criterion_id` and `criterion_path`
-
-For `source`, selection derives one pair per resolved direct link to
-`kb/sources/<slug>.ingest.md` inside the chosen artifact scope;
-`source/<slug>` filters that set. Job creation rechecks the link before queuing
-the pair. The generated prompt includes the complete raw ingest as criterion
-text, and the persisted criterion path is that ingest path.
 
 Each returned job is one review batch for this procedure. Do not invent, merge, split, or reorder jobs. Use exactly the job grouping and pair list the creator returns.
 

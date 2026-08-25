@@ -21,9 +21,9 @@ Author: Poetiq is the system's builder and has privileged access to its operatio
 
 Poetiq defines recursive self-improvement (RSI) as a loop in which a system improves itself and then uses the improved capability to drive the next improvement. It contrasts slow, weight-training-centered RSI with its “self-optimizing optimizer,” which reportedly edits task harnesses and its own code while treating LLMs as interchangeable components. The company says earlier reasoning, retrieval, and coding benchmarks taught reusable strategies that later let the Metasystem build state-of-the-art harnesses for six unseen benchmarks without human intervention. It argues that task selection, task-specific delivery, and inspectable code and prompts make this route more controllable than weight-level RSI, then proposes a roadmap from harness optimization to post-training and eventually full model training.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

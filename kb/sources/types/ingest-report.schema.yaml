@@ -91,7 +91,7 @@ allOf:
           - contains:
               const: "## Summary"
           - contains:
-              const: "## Claims"
+              const: "## Quotes"
             minContains: 1
             maxContains: 1
           - contains:

@@ -538,7 +538,7 @@ def validate_verbatim_quotes(
         )
 
 
-CLAIMS_EXTRACT_RE = re.compile(
+INGEST_QUOTE_RE = re.compile(
     r"^\s*-\s*\*\*Source extract \(verbatim\):\*\*\s*(?P<text>.+?)\s*$",
     re.MULTILINE,
 )
@@ -742,12 +742,12 @@ def validate_ingest_snapshot_pairing(
         )
 
 
-def validate_claims_extracts(
+def validate_ingest_quotes(
     results: CheckResults,
     content: str,
     path: Path,
 ) -> None:
-    """Resolve an ingest's `Claims` extracts against its name-paired snapshot.
+    """Resolve an ingest's retained quotes against its name-paired snapshot.
 
     A `Source extract (verbatim)` asserts the span occurs in the observation the
     ingest's `snapshot_sha256` names. That is mechanically decidable whenever the
@@ -765,19 +765,19 @@ def validate_claims_extracts(
     `kb/sources/` half it named and deferred.
     """
     if not path.name.endswith(".ingest.md"):
-        # Instructions and type specs display the entry template; only a tracked
+        # Instructions and type specs display the quote template; only a tracked
         # ingest report asserts one. Warning on the others is the cries-wolf
         # failure ADR 046 names, and it teaches authors to ignore the check.
         return
 
-    extracts = [m.group("text") for m in CLAIMS_EXTRACT_RE.finditer(content)]
+    extracts = [m.group("text") for m in INGEST_QUOTE_RE.finditer(content)]
     if not extracts:
         return
 
     recorded = SNAPSHOT_SHA256_RE.search(content)
     if recorded is None:
         results.warns.append(
-            f"claims extracts: {len(extracts)} present but the ingest records no snapshot_sha256"
+            f"source quotes: {len(extracts)} present but the ingest records no snapshot_sha256"
         )
         return
 
@@ -790,7 +790,7 @@ def validate_claims_extracts(
         actual_checksum = snapshot_sha256(snapshot)
     except OSError:
         # The pairing check owns cache diagnostics independently of whether
-        # Claims happens to be populated.
+        # Quotes happens to be populated.
         return
 
     if actual_checksum != recorded.group("checksum"):
@@ -800,11 +800,11 @@ def validate_claims_extracts(
     missing = [e for e in extracts if normalize_text(e) not in haystack]
     for extract in missing:
         results.fails.append(
-            f"claims extract: not found in the checksum-verified snapshot: {extract!r}"
+            f"source quote: not found in the checksum-verified snapshot: {extract!r}"
         )
     if not missing:
         results.passes.append(
-            f"claims extracts: {len(extracts)} resolve against the pinned snapshot"
+            f"source quotes: {len(extracts)} resolve against the pinned snapshot"
         )
 
 
@@ -1121,7 +1121,7 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
         load_source=lambda path: run.load_document(path).content,
     )
     validate_ingest_snapshot_pairing(base, parsed.content, parsed.path)
-    validate_claims_extracts(base, parsed.content, parsed.path)
+    validate_ingest_quotes(base, parsed.content, parsed.path)
     _merge_labelled(results, base, "base")
 
     type_identity = canonical_type_identity(parsed.profile)

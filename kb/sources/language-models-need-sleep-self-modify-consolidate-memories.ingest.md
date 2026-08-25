@@ -23,9 +23,9 @@ The paper replaces the usual train/test division with a lifecycle of active or �
 
 The experiments report gains over in-context learning and continual-learning baselines on class-incremental classification, unseen-language translation, long-context tasks, mathematical reasoning, SQuAD knowledge incorporation, and a filtered few-shot ARC setting. The most useful result for this KB is architectural rather than biological: transient experience is periodically transferred into slower distributed-parametric state, while consolidation and capability improvement are treated as separate processes. The retained result is durable and cumulative but remains encoded in weights, so the “memory blocks” are not inspectable records or addressable commitments.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

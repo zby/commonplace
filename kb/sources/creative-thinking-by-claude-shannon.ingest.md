@@ -20,9 +20,9 @@ Author: Claude Shannon is the father of information theory and a foundational fi
 
 Shannon's lecture lays out a two-tier model of creative research. The first tier is three prerequisites: domain training, sufficient intelligence, and motivation (curiosity plus constructive dissatisfaction). The second tier — and the lecture's main contribution — is six explicit operators that can be consciously applied to stuck problems: (1) simplification (strip to essentials, solve the reduced form, add refinements back), (2) analogy (find a similar solved problem P', map its solution S' back to the original), (3) restatement (change words, viewpoint, angle to escape mental ruts), (4) generalization (ask whether the specific solution extends to a broader class), (5) structural analysis (decompose a big inferential jump into subsidiary steps), and (6) inversion (swap given and required, solve backward, then reverse the path). Shannon claims good researchers apply these unconsciously, and that making them conscious would accelerate problem-solving.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

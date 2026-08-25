@@ -21,9 +21,9 @@ Author: Isham Kalappurackal Mansoor and Pratip Rana are affiliated with Old Domi
 
 The paper separates a tool's response channel from its effect on world state: a timeout, stale read, or incomplete response may coexist with an already-applied action. It wraps a ReAct-style Gemini Flash-Lite agent with task-specific postcondition checks, three-valued verification (`true`, `false`, or `unknown`), verify-before-retry control, and idempotency keys. In 300 main-comparison runs over two simulated workflows and three injected-fault levels, the wrapper sharply lowers duplicate messages and writes while keeping or improving final task success. The strongest result is execution safety rather than retry itself: in a separate one-task ablation, verify-only outperforms the full verify-before-retry method, so another retry can add faults even after verification.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 

@@ -24,9 +24,9 @@ Author: Dex Horthy writes as a coding-agent practitioner and HumanLayer cofounde
 
 Part II responds to the maintainability-oracle gap diagnosed in [Part I](https://x.com/dexhorthy/status/2080697380379427275) by restoring humans at high-leverage decision surfaces rather than waiting to review a large generated diff. Horthy divides substantial work into product requirements, system architecture, program design, and vertical slices. Models draft product documents, mockups, diagrams, call-stack trees, file-tree diffs, types, and signatures; humans argue with and approve those artifacts before implementation. Agents then deliver one to three end-to-end slices at a time so functionality can be exercised and 100–200 lines can be reviewed before an error propagates through thousands. The process is risk-tiered: small tasks remain one-shot, medium tasks combine phases, and large or consequential work receives the full treatment. The claimed result is safer 2–3x leverage rather than lights-off 10–100x throughput.
 
-## Claims
+## Quotes
 
-No claims have been grounded yet.
+No source quotes have been retained yet.
 
 ## Connections Found
 
