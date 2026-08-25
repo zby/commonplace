@@ -119,6 +119,14 @@ name-in-body convention is enough for `git log --grep`, and formalizing before
 the read path is exercised would be premature. The model-provenance question
 in `kb/work/lineage-mechanisms/` stays open and may later motivate a trailer.
 
+**Archive superseded ADRs.** ADR 056 left open when ADRs themselves should
+archive, one tier up from proposals. Resolved here: a superseded ADR is reduced
+in place to its recurring force, its decision, and a one-line supersession
+pointer, and stays in the frontier. The successor ADR already carries the
+current option space, so nothing a decision audit needs is left in the
+superseded record once the narrative of what the successor did is cut; an ADR
+archive would add a second sink for content the change history already holds.
+
 **Derive reference contents from an operations catalogue now.** An enumerated
 list of self-modification operations, each with the premises it needs, would
 let both sides be audited: every reference artifact traces to an operation,
