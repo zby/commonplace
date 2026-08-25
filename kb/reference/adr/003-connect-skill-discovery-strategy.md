@@ -53,7 +53,7 @@ The index-first approach works while index.md is small enough to scan in one rea
 - No dependency on qmd availability for the primary discovery path
 
 **Harder:**
-- Requires index.md to be kept up to date (agents must add entries when creating notes; `scripts/generate_notes_index.py` as fallback)
+- Requires index.md to be kept up to date (agents must add entries when creating notes; a generator script as fallback)
 - Description quality becomes load-bearing — a bad description hides a note from the primary discovery mechanism
 - Main collection size becomes a design constraint — can't just dump everything in `kb/notes/`
 

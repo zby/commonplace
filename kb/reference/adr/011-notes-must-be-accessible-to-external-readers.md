@@ -22,7 +22,7 @@ The [undefined-terms review gate](../../instructions/review-gates/accessibility/
 
 Notes must be written so that an external reader can follow the argument without leaving the page. Specifically:
 
-1. **KB vocabulary terms require an inline gloss and a definition pointer on first mention.** The gloss orients the reader enough to keep reading; the pointer provides depth. Example: `constraining (narrowing the space of valid interpretations an artifact admits)`. (The original example used `distillation (directed context compression)`; that term was retired by [ADR 053](./053-retire-distillation-without-a-successor-term.md), but the rule is unchanged.)
+1. **KB vocabulary terms require an inline gloss and a definition pointer on first mention.** The gloss orients the reader enough to keep reading; the pointer provides depth. Example: `constraining (narrowing the space of valid interpretations an artifact admits)`.
 2. **The undefined-terms gate no longer exempts KB vocabulary.** These terms are now subject to the same first-mention test as any other technical term.
 3. **The WRITING.md checklist includes a KB vocabulary item** reminding authors that external readers lack CLAUDE.md context.
 

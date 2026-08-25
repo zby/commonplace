@@ -14,17 +14,7 @@ status: accepted
 
 The original review system was file-shaped for good reasons. Review artifacts were markdown, inspectable in any editor, and fit the repo's broader files-first storage bias.
 
-That changed in two steps.
-
-First, per-gate review artifacts were removed from git because they produced too much churn. Once reviews stopped being versioned alongside notes and gates, the main file advantage weakened. The review files were still markdown, but they were no longer participating in the repo's normal diff and history workflow.
-
-Second, the files stopped being "just prose". To preserve selector and ack behavior outside git, each review file had to carry operational metadata:
-
-- accepted note sha
-- accepted gate fingerprint
-- last full review provenance
-- acceptance timestamps and acceptance kind
-- model partition identity
+Two forces undermined that. Per-gate review artifacts were removed from git because they produced too much churn; once reviews stopped being versioned alongside notes and gates, the main file advantage weakened. And the files stopped being "just prose": to preserve selector and ack behavior outside git, each review file had to carry operational metadata — accepted note sha, accepted gate fingerprint, last full review provenance, acceptance timestamps and kind, model partition identity.
 
 At that point the system was no longer primarily reading documents. It was querying current state keyed by `(note_path, gate_id, model_id)`, comparing current SHAs against accepted SHAs, and mutating acceptance state when a trivial change was acked. `ack` had become a metadata rewrite over an operational record rather than a normal document edit.
 
@@ -34,18 +24,9 @@ This created an awkward intermediate form: flat files holding append-like state,
 
 Store review state in local SQLite once reviews are out of git and have accumulated operational metadata.
 
-The current concrete schema is:
+Each review invocation is recorded as a job with its requested note/gate pairs; current acceptance is one row per `(note, gate, model partition)` pointing at completed review-pair evidence. The selector reads current note and gate text from files but accepted baselines from SQLite; `ack` upserts the acceptance row instead of rewriting review artifacts; execution records a queued job first, workers write only job-owned output, and finalization advances acceptance only after pair output parses. Markdown review files are rendered inspection views, not the canonical store.
 
-- `review_jobs` stores one prompt/output invocation
-- `review_pairs` stores each requested `(note_path, gate_path)` pair inside a job
-- `acceptance` stores the current accepted baseline per `(note_path, gate_path, model_partition)` and points at completed review-pair evidence
-- current acceptance is exposed directly through `current_gate_acceptances`
-- selector reads current note and gate text from files, but reads accepted baselines from SQLite snapshots
-- `ack` upserts the current acceptance row instead of rewriting review artifacts
-- review execution creates a queued job first, workers write only job-owned output files, and finalization advances acceptance after parsing pair output
-- markdown review files are rendered inspection views, not the canonical store
-
-ADR 031 and ADR 034 refine the concrete schema, and ADR 036 replaces this ADR's append-only acceptance-history sketch with a current-state acceptance row. The SQLite storage boundary from this decision remains current.
+Refined by ADR 031 and ADR 034 (concrete schema) and ADR 036 (current-state acceptance row replaces the append-only history sketch). The SQLite storage boundary from this decision remains current.
 
 This is a scoped exception to the repo's files-first architecture, not a reversal of it. Notes, gates, instructions, and source material remain file-backed. The database is justified here because the review subsystem stopped being authored library content and became local operational state.
 
@@ -62,7 +43,7 @@ This is a scoped exception to the repo's files-first architecture, not a reversa
 
 ### Harder
 
-- **Review state now has a schema.** We need schema management, import paths for old artifacts, and tests that preserve selector parity.
+- **Review state now has a schema.** We need schema management and tests that preserve selector parity.
 - **Execution and acceptance must be separated.** A failed or partial job should remain visible in history without advancing freshness state for missing pairs, which means finalization needs explicit correctness checks.
 - **The write path is DB-first.** Markdown review files are rendered outputs rather than the canonical live path.
 - **The repo now has a justified exception to files-first.** We need to explain clearly why review state crossed the threshold while notes and other KB artifacts did not.

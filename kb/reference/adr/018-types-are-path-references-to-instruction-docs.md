@@ -9,32 +9,13 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-04-19
-**Supersedes (in part):** [ADR 016 — custom types use template/instruction pairs](./016-custom-types-use-template-instruction-pairs.md). Affects [ADR 002 — inline global types in writing guide](./002-inline-global-types-in-writing-guide.md) at the `note` migration step.
-**Superseded (in part) by:** [ADR 068](./068-collection-contracts-stop-enumerating-available-types.md), which retains filesystem discovery but removes per-collection type listings and makes collection eligibility a validator rule.
+**Supersedes (in part):** [ADR 016 — custom types use template/instruction pairs](./016-custom-types-use-template-instruction-pairs.md); retires the `note` inlining from [ADR 002](./002-inline-global-types-in-writing-guide.md).
+**Superseded (in part) by:** [ADR 068](./068-collection-contracts-stop-enumerating-available-types.md) (removes per-collection type listings; collection eligibility becomes a validator rule).
 **Related:** [ADR 009](./009-link-relationship-semantics.md).
 
 ## Context
 
-### Current type system
-
-`commonplace-validate` and `cp-skill-write` treat `type:` as an enum. A note carries:
-
-```yaml
-type: adr
-```
-
-The name is resolved by probing the filesystem:
-
-- `kb/<collection>/types/{type}.template.md` (collection-local)
-- `kb/types/{type}.template.md` (global fallback)
-
-Per [ADR 016](./016-custom-types-use-template-instruction-pairs.md), each type is expressed as a triple of sidecars:
-
-- `{type}.template.md` — the body skeleton agents fill in
-- `{type}.instructions.md` — authoring prose
-- `{type}.schema.yaml` — validator schema
-
-The validator has a Python resolver (`src/commonplace/lib/type_resolver.py`). The write skill does not call the resolver; it mirrors the same discovery logic in natural-language instructions so the agent can probe the filesystem. Special cases live in those instructions: `instruction` → `kb/instructions/`, `note` inlined in [ADR 002](./002-inline-global-types-in-writing-guide.md) style.
+`type:` was an enum name (`type: adr`) resolved by probing the filesystem — collection-local `types/` first, then the global `kb/types/` fallback — and each type was a triple of sidecars per [ADR 016](./016-custom-types-use-template-instruction-pairs.md): a template (body skeleton), an instructions file (authoring prose), and a schema. The validator resolved types in Python; the write skill did not call that resolver but mirrored the same discovery logic as natural-language instructions, with special cases (`instruction` → `kb/instructions/`, `note` inlined in [ADR 002](./002-inline-global-types-in-writing-guide.md) style) living in the skill prose.
 
 ### Pain points
 
@@ -88,7 +69,7 @@ The pointed-at file is self-contained:
 
 - **Frontmatter** — `type:` (self-referential or pointing at a root spec), `name:`, `description:`.
 - **Body** — authoring prose: when to use the type, what each section is for, what the artifact is for.
-- **Template** — inlined fenced block (use `~~~markdown` or a longer backtick run so the template's own fences nest cleanly). Template sidecars are not preserved as an alternate authoring mechanism.
+- **Template** — inlined fenced block. Template sidecars are not preserved as an alternate authoring mechanism.
 
 ### What moves where
 
@@ -104,14 +85,7 @@ The write skill reads the path named by `type:` (for edits) or the path named in
 
 This deliberately keeps the authoring surface file-native. The software may still validate paths, support complete type migrations, and eventually provide a type-move command, but the agent-facing instruction remains "read this file and follow it." That shape works with editor file caches, tool affordances, and the way coding agents preserve context across a task. The system pays a small amount of path-management complexity so the LLM does not have to execute a resolution protocol before it can start writing.
 
-## How this resolves the pain points
-
-1. **Filesystem discovery gone.** The path is lexical; the write skill opens it directly. No natural-language rules to keep in sync with validator Python.
-2. **Ambiguity gone.** A path names exactly one doc. The `review`-in-two-collections case becomes a normal disambiguation: the author writes the specific path.
-3. **Special-case routing gone.** Destination collection comes from user intent or `COLLECTION.md`, not from a hardcoded table in the skill.
-4. **Three-file drift gone.** Template and authoring prose share a file. Schema is orthogonal (validator concern, not writer concern) and stays separate for that reason.
-5. **Adding a new type is one markdown file.** No skill edit, no tooling change. Global types go to `kb/types/`; collection-local types go to `kb/<collection>/types/`.
-6. **Agent instructions get shorter.** The write skill no longer teaches a lookup algorithm or JSON interpretation protocol. It tells the agent which canonical files to read.
+The decision landed as a whole-KB migration rather than an `adr` pilot or per-type rollout, with no enum-to-path compatibility period: carrying two type mechanisms was rejected in favour of reverting the bundle if the migrated state failed.
 
 ## Consequences
 
@@ -125,22 +99,10 @@ This deliberately keeps the authoring surface file-native. The software may stil
 ### Harder
 
 - `type:` values are longer strings (`kb/reference/types/adr.md` vs. `adr`). Minor authoring friction for humans; no meaningful cost for LLM authors.
-- Paths are load-bearing. Renaming a type doc moves every binding. Needs `commonplace-mv-type` tooling when the first rename happens; cheap to build, not needed for the initial migration.
+- Paths are load-bearing. Renaming a type doc moves every binding. Needs a type-move tool when the first rename happens; cheap to build.
 - Agents must correctly compose three inputs at every write. The skill has to name all three explicitly; that discipline is the enforcement point.
 - Discoverability of available types is a filesystem glob over `kb/**/types/*.md` or a per-collection `COLLECTION.md` listing, rather than a compiled index. Acceptable at the current type count.
 - No build-time check that (for example) a template is consistent with its schema. Consistency becomes runtime (validator) or manual.
-
-### Scope
-
-- Does **not** change `cp-skill-compile-collections` (the cross-register topology compile skill at the time this ADR was authored — later retired by ADR 019, which moved the connect/write skills to live per-destination reads of `COLLECTION.md`).
-- Does **not** fully redesign schema storage or validator behavior. The migration requires every type-spec doc to declare its schema explicitly in frontmatter (`schema: <path>` or `schema: null`); broader schema wiring remains a future validator workshop.
-- Retires the `note` inlining from [ADR 002](./002-inline-global-types-in-writing-guide.md) as part of the whole-KB migration.
-
-### Migration
-
-This decision landed as a whole-KB migration, not an `adr` pilot and not a per-type rollout.
-
-The implementation creates/fuses all type instruction docs, rewrites all explicit frontmatter `type:` values to paths, updates `cp-skill-write`, updates validation, and validates the corpus in one migration bundle. There is no enum-to-path redirect period and no compatibility table. If the migrated state fails, revert the bundle from git instead of carrying two type mechanisms.
 
 ### Trigger conditions for revisiting
 

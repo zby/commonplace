@@ -36,17 +36,7 @@ Two trees at the project root:
 
 The boundary principle: **copy what the agent reads on the hot path; reference what it consults as fallback.**
 
-The install step **copies operational artifacts** into `kb/`:
-- Type definitions (`types/`, `kb/*/types/`)
-- Writing guide (`kb/instructions/WRITING.md`)
-
-It also creates the directory structure (empty dirs for notes, sources, tasks, work).
-
-Everything else **stays in `commonplace/`** and is consulted on demand:
-- Methodology notes
-- Source snapshots
-- Skills (symlinked into runtime discovery directories, not copied)
-- Scripts
+The install step copies the operational artifacts (type definitions and the writing guide) into `kb/` and creates the directory structure. Methodology notes, source snapshots, skills (symlinked into runtime discovery directories, not copied), and scripts stay in `commonplace/` and are consulted on demand.
 
 This keeps the common-case write path entirely within `kb/` (route from always-loaded control plane, read types, read WRITING.md, write file — all one tree) while keeping methodology one explicit search hop away. The benefit is simpler instructions, not fewer hops — hop count is the same whether artifacts are copied or read cross-tree.
 
@@ -65,7 +55,7 @@ This keeps the common-case write path entirely within `kb/` (route from always-l
 
 The naming choice `kb/` over `memory/` avoids collision with Claude Code's per-user auto-memory directory at `~/.claude/projects/<project>/memory/`. The two serve different purposes (shared project knowledge vs personal preferences), and using the same name would create ambiguity.
 
-The historical installation procedure lived outside the shipped KB surface. This ADR is retained as superseded design history, not current setup guidance.
+This ADR is retained as superseded design history, not current setup guidance.
 
 ---
 

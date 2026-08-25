@@ -12,10 +12,7 @@ status: superseded
 
 ## Context
 
-When writing a note, the agent needs two things: the type template (what sections and frontmatter fields to include) and the writing conventions (title-as-claim, description quality, composability). These lived in separate files:
-
-- Type templates in `kb/types/note.template.md` and `kb/notes/types/structured-claim.template.md`
-- Writing conventions in `kb/instructions/WRITING.md`
+When writing a note, the agent needs two things: the type template (what sections and frontmatter fields to include) and the writing conventions (title-as-claim, description quality, composability). These lived in separate files: the type templates and the writing guide.
 
 The agent's workflow was: read WRITING.md for conventions (1 hop), then read the type template for structure (1 hop). Because instruction specificity should match loading frequency, WRITING.md handled writing guidance — but then pointed elsewhere for the actual templates. Two hops for every write.
 
@@ -33,7 +30,6 @@ Directory-local types (`adr`, `index`, `related-system`, `source-review`, task t
 
 **Easier:**
 - The common write path drops from 2 hops to 1 at the "know the structure" step. The agent reads WRITING.md and has both conventions and the template for `note` or `structured-claim`.
-- Scenario cost evaluation confirms: step 4 (know the structure) and step 5 (know how to write well) now reference the same file with 0 additional hops.
 
 **Harder:**
 - Two sources of truth for the global type templates. If the template changes in `kb/types/note.md`, it must also change in `kb/instructions/WRITING.md`. This is a maintenance burden, but the templates are stable — they change rarely.
@@ -41,7 +37,6 @@ Directory-local types (`adr`, `index`, `related-system`, `source-review`, task t
 
 **Unchanged:**
 - Directory-local types still require an additional hop when needed. This adds 1 hop for ~20% of writes (adr, index, related-system creation). Acceptable because these types are less common and the alternative (inlining everything) would make WRITING.md too large.
-- `/validate` still reads from `kb/notes/types/` — it validates against the canonical type files, not WRITING.md.
 
 ---
 

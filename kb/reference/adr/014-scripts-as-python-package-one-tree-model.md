@@ -9,6 +9,8 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-04-08
+**Supersedes:** [ADR-006 (two-tree installation layout)](./006-two-tree-installation-layout.md) — the `commonplace/` subtree no longer exists in consuming projects.
+**Refines:** [ADR-008 (stdlib-only core scripts)](./008-stdlib-only-core-scripts.md) — scripts are invoked as installed commands rather than by path; "no venv needed" becomes "standard pip install". [ADR-013 (skills-first delivery)](./013-skills-first-delivery-with-core-local-type-split.md) — skills-first remains; only the backend packaging changes.
 
 ## Context
 
@@ -33,23 +35,11 @@ Beyond the two-tree problems, the plugin-based skill delivery model ([ADR-013](.
 
 ### 1. Scripts become a Python package
 
-All operational Python code moves into an installable package (`llm-commonplace` on PyPI, `import commonplace` in Python). The package uses src layout (`src/commonplace/`) with subpackages:
-
-- `cli/` — user-facing commands (validate, snapshot, index generation, init)
-- `review/` — review system (DB, metadata, runners, gates, sweeps)
-- `lib/` — shared libraries (frontmatter parser, type resolver)
-- `scaffold/` — seed assets for project initialization
-- `migrations/` — one-off migration scripts
-
-Each command gets a `main()` entry point and a `[project.scripts]` entry, producing stable `commonplace-*` CLI commands.
+All operational Python code moves into an installable package (`llm-commonplace` on PyPI, `import commonplace` in Python), with each command exposed as a stable `commonplace-*` entry point.
 
 ### 2. One-tree model replaces two-tree
 
-Consuming projects no longer need a `commonplace/` framework subtree. After `pip install llm-commonplace`, the user runs `commonplace-init --name <project>` to create the local project structure. The init command:
-
-- copies seed files (instructions, review gates, type definitions) from the installed package
-- installs skills directly into `.claude/skills/` and `.agents/skills/` with a `commonplace-` prefix (e.g., `commonplace-write`, `commonplace-validate`)
-- resolves templates with the project name: `.envrc`, `AGENTS.md.template`, `qmd-collections.yml`
+Consuming projects no longer need a `commonplace/` framework subtree. After `pip install llm-commonplace`, the user runs `commonplace-init` to create the local project structure: it seeds instructions, review gates, and type definitions from the installed package, installs skills directly into the runtime skill directories (`.claude/skills/`, `.agents/skills/`) under a `commonplace-` prefix, and resolves templates with the project name.
 
 No separate plugin installation is needed. Skills are project-local files, not plugin-delivered. This eliminates the per-runtime plugin installation divergence — the same init command works regardless of whether the consumer uses Claude Code, Codex, or another runtime that reads skills from a directory.
 
@@ -61,22 +51,9 @@ The user's repo contains only their own content. Framework code lives in the ins
 
 An earlier design proposed a `scaffold/` directory containing copies of instruction files and type definitions. This was rejected because it creates a maintenance burden — every change to an instruction file must be mirrored in scaffold. Symlinks eliminate the duplication: the scaffold directory is just a view over the repo's live files.
 
-The `src/commonplace/scaffold/` directory contains symlinks to the repo's canonical files:
-
-- `kb/instructions` -> `../../../../kb/instructions`
-- `kb/reference` -> `../../../../kb/reference`
-- `kb/reports` -> `../../../../kb/reports`
-- `kb/types` -> `../../../../kb/types`
-- `kb/work` -> `../../../../kb/work`
-- `AGENTS.md.template` -> `../../../AGENTS.md.template`
-- `.envrc.template` -> `../../../.envrc.template`
-
-During development, `importlib.resources` follows the symlinks — edits to instruction files are immediately available without a sync step. During wheel builds, hatchling dereferences the symlinks and embeds the actual file contents. The wheel is self-contained.
+`src/commonplace/scaffold/` holds symlinks to the repo's canonical files. During development, `importlib.resources` follows the symlinks — edits to instruction files are immediately available without a sync step. During wheel builds, hatchling dereferences the symlinks and embeds the actual file contents. The wheel is self-contained.
 
 ### 4. Skills invoke commands, not paths
-
-Before: `python3 commonplace/scripts/validate_notes.py "$ARGUMENTS"`
-After: `commonplace-validate "$ARGUMENTS"`
 
 Skills depend on command names, not filesystem layout. Missing commands are setup errors, not path-resolution failures.
 
@@ -87,23 +64,15 @@ Agent runtimes (Claude Code, Codex) spawn shell processes that don't inherit a m
 - **`uv run` prefix** — forces every skill and instruction to invoke commands as `uv run commonplace-validate` instead of `commonplace-validate`. Couples the skill layer to a specific Python packaging tool.
 - **direnv + `.envrc`** — automatically sets PATH, environment variables, and venv activation when entering the project directory from a shell with the direnv hook installed. Agent runtimes inherit the environment when launched from that hooked, loaded shell; non-interactive launchers need an explicit `direnv exec` wrapper. Skills invoke commands by name. Project-scoped — deactivates when you leave the directory.
 
-direnv is the recommended approach. Init generates a ready-to-use `.envrc`; the user needs the shell hook installed and then runs `direnv allow` in the project.
+direnv is the recommended approach; init generates a ready-to-use `.envrc`.
 
 ### 6. Init resolves templates
 
-Templates with manual placeholders are a common source of setup errors — users forget to edit them, or edit them inconsistently across files. The init command resolves all placeholders from a single `--name` argument.
-
-`commonplace-init --name <project>` fills in project-specific placeholders:
-
-- `.envrc` — PATH (adds `.venv/bin` for venv-free command access), UV_CACHE_DIR (avoids permission issues in sandboxed runtimes like Codex), COMMONPLACE_QMD_INDEX (lets skills find the project's qmd index without hardcoding)
-- `AGENTS.md.template` — project name in heading
-- `qmd-collections.yml` — project name and absolute paths to KB directories
-
-The `--name` flag defaults to the directory name if omitted.
+Templates with manual placeholders are a common source of setup errors — users forget to edit them, or edit them inconsistently across files. The init command resolves all placeholders (environment file, agents template heading, qmd collection paths) from a single project name, defaulting to the directory name.
 
 ### 7. Init is idempotent and non-destructive
 
-`commonplace-init` creates directories, copies scaffold files, resolves templates, and installs skills. It never overwrites existing files. Rerunning after a package upgrade picks up new scaffold files without disturbing user modifications.
+`commonplace-init` never overwrites existing files. Rerunning after a package upgrade picks up new scaffold files without disturbing user modifications.
 
 ## Consequences
 
@@ -121,12 +90,6 @@ The `--name` flag defaults to the directory name if omitted.
 - Scaffold files are snapshots at init time. After seeding, the user's copies diverge from the package. There is no automatic sync mechanism — rerunning init only adds new files, it does not update existing ones.
 - Skills are copied at init time, not symlinked. Editing a skill in the framework repo requires rerunning init in consuming projects to pick up changes.
 - Contributors must remember that scaffold symlinks point to live repo files. Adding a new instruction file requires no scaffold update, but removing or renaming one does.
-
-**Supersedes:** [ADR-006 (two-tree installation layout)](./006-two-tree-installation-layout.md). The two-tree model is replaced by one-tree-plus-package. ADR-006's `commonplace/` subtree no longer exists in consuming projects.
-
-**Refines:** [ADR-008 (stdlib-only core scripts)](./008-stdlib-only-core-scripts.md). The stdlib-only constraint remains for core operations, but scripts are now invoked as installed commands rather than by direct path. The "no venv needed" benefit is replaced by "standard pip install".
-
-**Refines:** [ADR-013 (skills-first delivery)](./013-skills-first-delivery-with-core-local-type-split.md). Skills-first delivery remains the model. The change is in how the operational backend is packaged — installed Python package rather than scripts in a framework checkout.
 
 ---
 

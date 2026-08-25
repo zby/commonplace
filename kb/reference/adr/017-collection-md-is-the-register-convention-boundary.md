@@ -9,8 +9,8 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-04-13
-
-> **Current terminology:** [ADR 069](./069-collection-contract-bundles-become-one-time-prototypes.md) retires the register/profile vocabulary. This ADR's operative boundary remains accepted: the nearest `COLLECTION.md` is the complete local authoring contract.
+**Terminology:** [ADR 069](./069-collection-contract-bundles-become-one-time-prototypes.md) retires the register/profile vocabulary; the operative boundary — the nearest `COLLECTION.md` is the complete local authoring contract — remains accepted.
+**Supersedes:** [ADR-002](./002-inline-global-types-in-writing-guide.md)'s global writing guide (`WRITING.md` is removed) and [ADR-016](./016-custom-types-use-template-instruction-pairs.md)'s assumption that `WRITING.md` is the always-loaded guide; ADR-016's template/instructions pair remains accepted.
 
 ## Context
 
@@ -37,21 +37,12 @@ Every writable collection must provide a root-level `COLLECTION.md` that tells a
 
 A collection may be mixed-register. When it is, its `COLLECTION.md` must say so explicitly and describe the local rules. For example, a primarily descriptive collection can allow claim-shaped root-level analyses while keeping individual reviews descriptive.
 
-The write workflow is:
-
-1. Resolve the target collection.
-2. Read `kb/<collection>/COLLECTION.md` for collection/register conventions.
-3. Resolve the artifact type for structural scaffolding.
-4. Apply universal mechanics from the write skill.
-
-This keeps responsibilities separate:
+The write workflow reads the target collection's `COLLECTION.md` first, then resolves the artifact type for structural scaffolding, then applies the write skill's universal mechanics. This keeps responsibilities separate:
 
 - **Collections** own register conventions and placement rules.
 - **Types** own structural contracts: templates, type instructions, and schemas.
 - **Skills** own universal mechanics and the default write flow.
 - **Indexes and reports** use the collection boundary for scoped discovery.
-
-`WRITING.md` is removed. ADR-002's global-writing-guide optimization is superseded. ADR-016's template/instructions pair for specialized types remains accepted, but its assumption that `WRITING.md` is the generic always-loaded guide is superseded by this decision.
 
 ## Consequences
 
@@ -66,7 +57,7 @@ This keeps responsibilities separate:
 - Directory placement now has semantic weight. Moving a file between collections can change its expected writing conventions even if its `type:` does not change.
 - Every writable collection needs a good `COLLECTION.md`; a missing or vague one is an operational defect.
 - Mixed-register collections need careful natural-language rules because the model no longer assumes purity at the directory boundary.
-- Register correctness is not a deterministic validation check. It remains a writing/review concern unless future review gates are added. (Amended 2026-07-08: [ADR-041](./041-collection-conformance-reviews-use-collection-md-as-the-gate.md) adds that check — a note is reviewable against its `COLLECTION.md` as a collection-conformance pair; correctness stays a review judgment, not a validator check.)
+- Register correctness is not a deterministic validation check. It is a review judgment: [ADR-041](./041-collection-conformance-reviews-use-collection-md-as-the-gate.md) makes a note reviewable against its `COLLECTION.md` as a collection-conformance pair.
 - Global searches by register are less direct than a frontmatter field would be; the collection topology, not each note's frontmatter, is the register map.
 
 ---

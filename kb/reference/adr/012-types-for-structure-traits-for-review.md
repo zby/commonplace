@@ -10,7 +10,7 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-04-08
 
-The structural core of this ADR remains current: validation is deterministic and structural, frontmatter `type` is authoritative for artifact identity, and traits route trait-scoped review gates. Its boundary claim — that semantic review expectations attach *only* to traits, so "types are structural" full stop — was amended by [ADR-038](./038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) and [ADR-041](./041-collection-conformance-reviews-use-collection-md-as-the-gate.md): a type spec's authoring instructions are now semantically enforced through a type-conformance review pair, and a collection's `COLLECTION.md` contract through a collection-conformance pair. Types carry semantic value alongside structure; traits remain an additional, opt-in semantic axis rather than the only one. Read the boundary test below ("does it change structure? → type; does it change review expectations? → trait") in that light: it still decides where a *new distinction* lives, but no longer implies that types have no reviewed semantics.
+Amended by [ADR-038](./038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) and [ADR-041](./041-collection-conformance-reviews-use-collection-md-as-the-gate.md): type specs and `COLLECTION.md` contracts are also semantically reviewed through conformance pairs, so types carry semantic value alongside structure and traits are an additional opt-in semantic axis rather than the only one. The boundary test below still decides where a *new distinction* lives.
 
 ## Context
 
@@ -28,13 +28,13 @@ That made it unclear whether moving a file between directories changed its type 
 
 **Types are structural.** A type defines required sections, fields, and templates. The validator checks these deterministically. A distinction is a type only if it changes required structure beyond `note`.
 
-**Traits route semantic review.** A trait declares which review gates apply. The gate frontmatter gains `requires_trait`; review tooling filters gates by checking the note's explicit frontmatter `traits:` field. Current trait-gated gates: `claim-strength`, `title-composability`, `explanatory-reach` (all require `title-as-claim`). One new gate: `frontmatter/title-as-claim`. All other gates are universal. Type-specific review gates can also declare `requires-type` when a gate only applies to one artifact type, such as a definition-only or related-system-only gate.
+**Traits route semantic review.** A trait declares which review gates apply. A gate declares the trait it requires, and review tooling filters gates by the note's explicit frontmatter `traits:` field; a gate may likewise declare a required type when it applies to one artifact type only. All other gates are universal.
 
 **Validation is purely structural.** No semantic checks in the validator. Description quality, composability, and other judgment calls live in review gates.
 
 **Frontmatter `type` is authoritative for library artifact identity.** Directory-local `types/` directories remain load-bearing, but they scope definition lookup rather than replacing the type system. Path and collection placement stay separate from type identity.
 
-**Type definitions are two files.** Each type has `{type}.template.md` (natural-language template for agents) plus `{type}.instructions.md` (how to fill it in), and a machine-readable schema in its `types/` directory. ADR-015 later standardized that schema as JSON Schema in YAML syntax. The schema replaces the validator's hard-coded `TYPE_HEADINGS` map.
+**Type definitions are two files.** Each type has `{type}.template.md` (natural-language template for agents) plus `{type}.instructions.md` (how to fill it in), and a machine-readable schema in its `types/` directory (form standardized by ADR-015). The schema replaces the validator's hard-coded heading map.
 
 **Bare type names.** Qualified canonical ids (e.g. `notes.related-system`) deferred — bare names are unambiguous today, and qualification would add readability cost before it solves a real collision.
 
@@ -52,7 +52,6 @@ That made it unclear whether moving a file between directories changed its type 
 **Harder:**
 - Every type needs a companion machine-readable schema written alongside the natural-language template.
 - Authors must declare traits explicitly in frontmatter (implied traits from types deferred).
-- Existing `structured-claim` notes and existing plain notes with claim-shaped titles need `title-as-claim` added to their `traits:` field.
 
 ---
 

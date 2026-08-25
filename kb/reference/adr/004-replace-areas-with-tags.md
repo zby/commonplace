@@ -37,29 +37,6 @@ Each tag that accumulates enough notes gets an index page. An index page has two
 
 **Generated section** (automatic, rebuilt by script): Complete listing of all notes carrying that tag. Rebuilt idempotently — everything below a marker is replaced, everything above is preserved.
 
-```markdown
-# constraining
-
-Brief orientation prose...
-
-## Notes
-### Foundations
-- [constraining](./constraining.md) — defines the concept
-- [codification](./codification.md) — the far end of constraining
-...
-
-### Tensions
-...
-
-## Related Indexes
-- [learning-theory](./learning-theory-index.md)
-
-## All notes  <!-- generated -->
-- [changing-requirements-conflate...](./changing-requirements-conflate....md)
-- [codification](./codification.md)
-- ...
-```
-
 For tags without curation, the page is just the generated section. Adding curation means writing prose above the marker. No sub-type field needed — the presence of curated content is the distinction.
 
 ### 3. No size constraint on tags, editorial constraint on curated sections
@@ -68,12 +45,7 @@ Tags have no size limit — a tag with 100 notes is fine; the generated section 
 
 ### 4. Remove Topics footer from notes
 
-The `Topics:` footer section at the bottom of each note is removed. It was a markdown-level navigation aid linking to area indexes, but it duplicates information already available in two other places:
-
-- **Frontmatter** `tags:` field — the source of truth, visible to anyone reading the raw markdown.
-- **ProperDocs hook** — renders clickable tag links in the HTML output.
-
-Removing Topics eliminates `sync_topic_links.py`, the areas-topics consistency check in the validate skill, and a source of staleness. This supersedes the earlier generated Topics-footer approach entirely rather than adapting it to `tags:`.
+The `Topics:` footer section at the bottom of each note is removed. It was a markdown-level navigation aid linking to area indexes, but it duplicates the frontmatter `tags:` field (the source of truth) and the rendered tag links in the HTML output. Removing it eliminates a sync script, a consistency check, and a source of staleness. This supersedes the earlier generated Topics-footer approach entirely rather than adapting it to `tags:`.
 
 ### 5. Index pages use `-index` filename suffix
 
@@ -97,7 +69,6 @@ A note tagged `[constraining, learning-theory]` is findable from both index page
 
 - **Tag consistency** — freeform tags can diverge (`deploy-time` vs `deploy-time-learning` vs `deployment`). Will need lightweight normalization, possibly a known-tags registry or script.
 - **Curated index completeness** — slight redundancy between curated and generated sections. A note appears in both if it's editorially selected. This is acceptable — same pattern as a book with a narrative introduction and a full table of contents.
-- **Migration** — every note's `areas:` field needs renaming to `tags:`, Topics footers stripped, index files renamed. Scripts (`properdocs_hooks.py`), validation, WRITING.md, and CLAUDE.md all reference `areas`.
 - **Comparative reading** — when this operation is eventually codified, it will need its own scoping mechanism rather than piggybacking on tags. This is a feature, not a bug — the scoping can be purpose-built rather than constrained by navigation concerns.
 
 ---
