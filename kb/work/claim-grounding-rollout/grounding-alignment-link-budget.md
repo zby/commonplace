@@ -56,7 +56,7 @@ cap global.** A ranking rule buys a better default ordering at the cost of one
 more classification an author and a reviewer must both apply consistently.
 
 The direction taken instead is
-[Review link budget measured in bytes](../../reference/proposals/review-link-budget-measured-in-bytes.md),
+[Review link budget prices reviewer attention](../../reference/proposals/review-link-budget-prices-reviewer-attention.md),
 which dissolves all three defects above rather than patching them: material
 already loaded costs no further bytes, heterogeneous sizes get priced, and a
 reviewer holding a byte budget spends it well without being told how to rank.
