@@ -1,12 +1,12 @@
 ---
 name: cp-skill-ingest
-description: Use when asked to ingest one URL or local snapshot, or to execute a bounded re-ingest request. Also the mechanical callee for a quote_append_request from cp-skill-ground; to choose which quotes a claim needs, invoke cp-skill-ground instead.
+description: Use when asked to ingest one URL or local snapshot into a tracked .ingest.md source analysis, or to execute a bounded re-ingest request. Retaining quotes in an existing ingest is cp-skill-ground's job, not this skill's.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill, Task
 context: fork
 model: opus
-argument-hint: "[url-or-file | re_ingest_request | quote_append_request] — URL, snapshot path, or structured bounded-mutation request. No argument lists recent snapshots."
+argument-hint: "[url-or-file | re_ingest_request] — URL, snapshot path, or structured re-ingest request. No argument lists recent snapshots."
 ---
 
 # Ingest source
@@ -60,85 +60,6 @@ re_ingest_request:
   ingest_path: <exact ingest path>
   snapshot_path: <name-paired snapshot path>
 ```
-
-`cp-skill-ground` supplies this structured request instead of an ordinary
-target or a re-ingest request:
-
-```yaml
-quote_append_request:
-  ingest_path: <exact ingest path>
-  snapshot_path: <name-paired, checksum-matching path>
-  quotes: |-
-    <one or more complete quote items>
-```
-
-## Quote append path
-
-When the target is a `quote_append_request`, execute only this section and then
-report the result. Do not run connection discovery, dispatch a drafting worker,
-rewrite an analysis section, or continue into the ordinary ingest steps.
-
-1. Require exactly the three request fields shown above. Require
-   `ingest_path` to name one tracked direct child
-   `kb/sources/<slug>.ingest.md`, and require `snapshot_path` to equal its
-   name-paired `kb/sources/.snapshots/<slug>.md`. Both files must exist. Do not
-   search for another path or checksum match.
-2. Read both files as exact bytes. Require exactly one `## Quotes` section in
-   the ingest. Require the snapshot frontmatter's canonical `source` to equal
-   the ingest's `source`, compute lowercase SHA-256 from the snapshot's exact
-   bytes, and require it to equal the ingest's `snapshot_sha256`.
-3. Require `quotes` to contain one or more complete items in this shape:
-
-   ```markdown
-   - **Source extract (verbatim):** <exact supporting content>
-     - **Source location:** <human-resolvable locator for that extract>
-   ```
-
-   Require at least one non-empty adjacent Source extract/Source location pair.
-   Permit additional pairs only in that same adjacent order. Reject headings,
-   any other field, or text before or after the items. Require every verbatim
-   extract value to occur exactly in the
-   snapshot; a locator alone is not verification.
-
-   That requirement is now checked deterministically: `commonplace-validate`
-   resolves each `Source extract (verbatim)` against the name-paired snapshot
-   whenever the snapshot is present, and fails on one that does not occur. Do
-   not treat your own reading as the check — an agent verifying text it just
-   transcribed confirms its own copy. A sweep of the first grounded cohorts
-   found five false extracts written under this instruction, four of them
-   silent repairs of capture artifacts (line-break hyphenation, an inline
-   footnote marker, a LaTeX arrow) that a reader does not notice removing.
-   Quote the snapshot's bytes as they are; whitespace normalization already
-   lets an extract span wrapped lines.
-4. Retain the ingest's complete incumbent bytes. Construct a candidate by
-   splicing only within the Quotes section and by using the incumbent file's
-   newline convention:
-   - when the section body is exactly `No source quotes have been retained yet.`,
-     replace only that sentence with `quotes`;
-   - otherwise insert `quotes` after all incumbent items and before the next
-     level-two heading, adding only the separator newlines needed for valid
-     adjacent items.
-
-   Preserve every incumbent item byte-for-byte and every byte outside the
-   Quotes section. Do not merge, deduplicate, reorder, or interpret similar,
-   overlapping, or disputed passages.
-5. Before writing, recheck the paired paths, source identity, checksum, quote
-   shape, and extracts against the current bytes. Write the constructed
-   candidate once, then run:
-
-   ```bash
-   commonplace-validate kb/sources/<slug>.ingest.md
-   ```
-
-   Re-read the result and require the intended splice plus exact preservation
-   of all other bytes. If a post-write check or validation fails, restore the
-   retained incumbent bytes exactly, verify that restoration, and report
-   failure rather than leaving an invalid or partial append. A `source quote`
-   failure is authoritative about the item, not the splice: repair the extract
-   against the snapshot rather than rewriting the file.
-6. Report the ingest path, `added`, and the exact quote texts.
-   This branch never launches a worker and never changes a source snapshot or
-   another artifact.
 
 ## Steps
 

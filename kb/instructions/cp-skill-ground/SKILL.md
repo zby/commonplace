@@ -3,7 +3,7 @@ name: cp-skill-ground
 description: Ground one source-side claim by retaining the minimum verbatim quotes in its ingest, or declare that the pinned snapshot is required. Use when a note needs source support or when asked to retain quotes; never call cp-skill-ingest for that.
 type: kb/types/instruction.md
 user-invocable: true
-allowed-tools: Read, Grep, Glob, Bash, Skill
+allowed-tools: Read, Edit, Write, Grep, Glob, Bash, Skill
 context: fork
 model: opus
 argument-hint: "Target: <ingest path or canonical source URL>; Claim needed: <source-side proposition or question>"
@@ -18,9 +18,10 @@ argument-hint: "Target: <ingest path or canonical source URL>; Claim needed: <so
 **Claim needed:** source-side proposition or question. Do not include target
 prose or a target-specific transfer argument.
 
-This skill may reuse or append verbatim quotes. It never edits the
-target artifact or interprets a paraphrase stored in an ingest as source
-support.
+This skill may reuse or append verbatim quotes and is the only procedure
+that writes an ingest's Quotes section. It never edits the target artifact,
+never changes any other part of an ingest, and never interprets a paraphrase
+stored in an ingest as source support.
 
 ## Procedure
 
@@ -66,21 +67,30 @@ support.
      the writer to include the exact marker `(snapshot required)` in the ingest
      link text. The source claim must pass `semantic/grounding-alignment` while
      the verified snapshot is present.
-7. For the bounded-quotes route, invoke `cp-skill-ingest` with:
-
-   ```yaml
-   quote_append_request:
-     ingest_path: <exact ingest path>
-     snapshot_path: <name-paired, checksum-matching snapshot path>
-     quotes: |-
-       <one or more complete quote items>
-   ```
-
-   The ingest skill rechecks identity and checksum, verifies every verbatim
-   quote, replaces the canonical empty sentence on a first append, and
-   mechanically appends without changing incumbent quotes or other sections.
-   It then validates. Do not write the ingest directly or repair a failed
-   append outside that skill.
+7. For the bounded-quotes route, append the items yourself:
+   - Retain the ingest's complete incumbent bytes. Construct a candidate by
+     splicing only within the `## Quotes` section, using the incumbent file's
+     newline convention: when the section body is exactly
+     `No source quotes have been retained yet.`, replace only that sentence;
+     otherwise insert the new items after all incumbent items and before the
+     next level-two heading, adding only the separator newlines valid adjacent
+     items need. Preserve every incumbent item and every byte outside the
+     section. Do not merge, deduplicate, reorder, or reword anything.
+   - Recheck the paired paths, source identity, and checksum against the
+     current bytes, write the candidate once, then run
+     `commonplace-validate kb/sources/<slug>.ingest.md`. The validator resolves
+     each `Source extract (verbatim)` against the name-paired snapshot and
+     fails on one that does not occur; that check, not your own reading, is
+     the verification — an agent checking text it just transcribed confirms
+     its own copy. Earlier grounding runs produced false extracts by silently
+     repairing capture artifacts (line-break hyphenation, an inline footnote
+     marker, a LaTeX arrow); quote the snapshot's bytes as they are.
+   - Re-read the result and require the intended splice plus exact
+     preservation of all other bytes. If any post-write check or validation
+     fails, restore the retained incumbent bytes exactly, verify that
+     restoration, and report failure rather than leaving an invalid or partial
+     append. A `source quote` failure is about the item, not the splice: fix
+     the extract against the snapshot, never rewrite the file around it.
 8. Return the ingest path and exactly one route: `quotes sufficient`, `quotes
    added`, or `snapshot required`. For `quotes added`, also return the appended
    quote texts. For `snapshot required`, repeat the exact link-text marker and

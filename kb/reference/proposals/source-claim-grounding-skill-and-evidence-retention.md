@@ -10,11 +10,10 @@ Commonplace has a promoted grounding skill, but promoted writers do not invoke
 it and continue. They stop and hand the operator a skill call. Letting writers
 invoke it in-run would compose grounding into a single write.
 
-The grounding skill may also request quotations appended to an ingest.
-Automatic invocation would therefore make a request to write one artifact
-capable of mutating another. Whether writers should invoke grounding
-automatically and where its evidence should persist are separate design
-choices.
+The grounding skill may also append quotations to an ingest itself. Automatic
+invocation would therefore make a request to write one artifact capable of
+mutating another. Whether writers should invoke grounding automatically and
+where its evidence should persist are separate design choices.
 
 ## Current state (as of 2026-08-25)
 
@@ -32,9 +31,15 @@ choices.
   an ordinary ingest link declares its Quotes sufficient. A link marked
   `(snapshot required)` declares that semantic checking needs the exact local
   snapshot.
-- [`cp-skill-ingest`](../../instructions/cp-skill-ingest/SKILL.md) both creates
-  missing source records and owns the mechanical quote-append path. Those are
-  distinct uses of the same skill.
+- [`cp-skill-ingest`](../../instructions/cp-skill-ingest/SKILL.md) creates and
+  re-ingests source records only; it has no quote-append path.
+  `cp-skill-ground` performs the append itself and is the sole writer of an
+  ingest's `## Quotes` section, under name-paired snapshot, source-identity,
+  checksum, splice-scope, byte-preservation, and restore-on-failure guards.
+- Exact-quote verification is deterministic in `commonplace-validate`: it
+  resolves every `Source extract (verbatim)` against the name-paired snapshot
+  and fails on one that does not occur. No agent verifies its own
+  transcription.
 - In the direct Quotes/snapshot rollout, 44 of 59 source-dependent uses were
   grounded as written. The remainder needed narrowing, repair, retained local
   reasoning, or literature handoff. Evidence preparation is reusable; target
@@ -64,7 +69,7 @@ whether the grounding run may persist evidence.
 **In the ingest Quotes pool (current design).** Exact passages are shared across
 uses and available in a fresh checkout. The cost is a shared, demand-grown
 mutation surface inside an artifact that also owns source identity and analysis.
-The source contract, ingest type, `cp-skill-ingest`, validator, and grounding
+The source contract, ingest type, `cp-skill-ground`, validator, and grounding
 gate already make this route operative.
 
 **In a separate grounding artifact.** A companion could separate source
@@ -87,19 +92,25 @@ An ephemeral skill result is not durable grounding. If no bounded evidence is
 retained, the target must declare its snapshot dependency so a later reviewer
 can fail closed rather than trust a prior agent's conclusion.
 
-## The `cp-skill-ingest` question
+## Where the append role lives
 
-`cp-skill-ingest` is downstream of the retention choice. If Quotes remain in
-the ingest, keeping one mechanical mutation owner preserves the existing
-exactness, preservation, validation, and rollback boundary. Letting the
-grounding skill edit the ingest directly would not remove ingest mutation; it
-would only merge evidence selection with persistence and duplicate those rules.
+The case for a separate mechanical append owner is closed. `cp-skill-ground`
+now selects the passages and writes them, and the independent check that the
+split used to supply comes from `commonplace-validate` instead: a skill that
+merges selection with persistence no longer certifies its own transcription,
+because no agent's reading is the verification.
 
-If evidence moves elsewhere, the quote-append role should move with it rather
-than turning `cp-skill-ingest` into a generic file writer. Its separate role in
-creating a missing ingest may still remain. Whether automatic grounding may
-create that source record is another mutation-authority choice, not a reason to
-keep evidence in the ingest.
+What remains open is downstream of the retention choice. The append role
+belongs wherever the evidence lands. If evidence moves out of the ingest,
+`cp-skill-ground` keeps the role and retargets it — writing the new evidence
+artifact under the same exactness, preservation, and rollback guards, with the
+validator resolving extracts against the pinned source — and the ingest stops
+being a mutation target at all.
+
+`cp-skill-ingest` retains only its separate role of creating a missing source
+record. Whether an automatic grounding run may invoke it to create one is a
+distinct mutation-authority choice: it decides whether an automatic write may
+add a source artifact, not where evidence lives.
 
 ## Forces
 
@@ -117,9 +128,10 @@ keep evidence in the ingest.
 - **Mechanical verification versus semantic warrant.** Exact-byte checking can
   verify transcription. It cannot establish that a source supports the target
   claim or its transfer.
-- **Current implementation versus artifact fit.** Existing quote-append
-  machinery lowers the cost of keeping the current design but does not settle
-  whether the ingest is the right evidence owner.
+- **Current implementation versus artifact fit.** The append machinery inside
+  `cp-skill-ground`, together with the validator's exact-quote resolution
+  against the name-paired snapshot, lowers the cost of keeping the current
+  design but does not settle whether the ingest is the right evidence owner.
 
 ## Candidate direction
 
@@ -150,7 +162,10 @@ often a supposedly grounding run instead changes the target claim.
   new source-authority layer.
 - Exact retained passages are checked independently against the pinned source;
   the grounding skill does not certify its own transcription or semantic
-  conclusion.
+  conclusion. For the current ingest route the transcription half is already
+  met by `commonplace-validate`; the semantic half remains with
+  `semantic/grounding-alignment`. A non-ingest retention route must carry both
+  halves over.
 - The chosen retention route gives the grounding gate direct source text,
   declares fresh-checkout behavior, and has one visible mutation owner.
 - Automatic composition removes the current retry without silently absorbing

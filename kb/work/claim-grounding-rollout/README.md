@@ -45,8 +45,8 @@ Use these current contracts for unfinished work:
   — route semantics and architectural decision
 - [Ground a source-dependent claim](../../instructions/cp-skill-ground/SKILL.md)
   — choose Quotes or snapshot-required support
-- [Ingest skill](../../instructions/cp-skill-ingest/SKILL.md) — the only
-  supported mechanical quote-append path
+- [Ingest skill](../../instructions/cp-skill-ingest/SKILL.md) — creates or
+  re-ingests a source record; it no longer appends quotes
 - [Grounding alignment gate](../../instructions/review-gates/semantic/grounding-alignment.md)
   — the sole persisted semantic check
 - [Review system](../../reference/README-REVIEW-SYSTEM.md) — selection, jobs,
