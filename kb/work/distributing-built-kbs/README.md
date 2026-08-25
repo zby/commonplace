@@ -95,7 +95,7 @@ If distributed KBs grow past the size where `rg` + indexes stay scannable, [navi
 ## Grounding
 
 - [ADR-021: ship library content under kb/commonplace/](../../reference/adr/021-ship-library-content-under-kb-commonplace.md) — grounds: the read-only-namespace mechanism Part 2 item C would generalize.
-- [ADR 021 shipped-content namespacing design space](../../reference/adr/021-shipping-model-design-space.md) — derived-from: the upstream option inventory behind the namespace, marker, drift-check, and source-link decisions reused here.
+- [ADR 021: ship library content under kb/commonplace](../../reference/adr/021-ship-library-content-under-kb-commonplace.md) — derived-from: the upstream option inventory behind the namespace, marker, drift-check, and source-link decisions reused here.
 - [Navigation](../../reference/navigation.md) — grounds: the consumer only needs control-plane + rg + indexes + descriptions + links; also the source for the item-E search-layer roadmap.
 - [Storage architecture](../../reference/storage-architecture.md) — grounds: authored markdown is the source of truth; indexes are rebuildable, so the bundle can ship them pre-built.
 - [Agent memory needs discoverable, composable, trusted knowledge under bounded context](../../notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) — rationale: why a clean consumer boundary preserves trust in the shipped knowledge.

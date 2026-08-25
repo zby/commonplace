@@ -35,7 +35,7 @@ Both options isolate the shipped content from user content. The deciding questio
 
 ### Translation-cost finding
 
-A [path audit](./021-shipping-model-path-audit-option-e.md) of the 1013 path-bearing sites in shipped content found: about half are generic prose references that resolve correctly to the user's own collection in either option; frontmatter `type:` pointers to shared `kb/types/` need no translation if `kb/types/` stays top-level; pointers to collection-local types (28 sites) need either ship-time translation or file-relative paths under either option; sibling-relative markdown links (`../notes/...`) are invariant under E because `kb/commonplace/<collection>/` preserves the sibling relationship, but would all need rewriting under D. **Net result: Option E has strictly lower translation cost than Option D.**
+A path audit of the 1013 path-bearing sites in shipped content found: about half are generic prose references that resolve correctly to the user's own collection in either option; frontmatter `type:` pointers to shared `kb/types/` need no translation if `kb/types/` stays top-level; pointers to collection-local types (28 sites) need either ship-time translation or file-relative paths under either option; sibling-relative markdown links (`../notes/...`) are invariant under E because `kb/commonplace/<collection>/` preserves the sibling relationship, but would all need rewriting under D. **Net result: Option E has strictly lower translation cost than Option D.**
 
 ### Type-resolver feasibility
 
@@ -118,5 +118,3 @@ This principle is worth extracting as a library note in its own right (citation 
 Relevant Notes:
 
 - [kb/notes/directory-scoped-types-are-cheaper-than-global-types.md](../../notes/directory-scoped-types-are-cheaper-than-global-types.md) — grounds the B2d rejection
-- [ADR 021 shipped-content namespacing design space](./021-shipping-model-design-space.md) — option inventory behind the decision
-- [ADR 021 Option E path audit](./021-shipping-model-path-audit-option-e.md) — path-compatibility audit behind the Option E choice

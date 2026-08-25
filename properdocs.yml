@@ -158,6 +158,8 @@ plugins:
         'notes/underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md': 'notes/underspecification-and-indeterminism-complicate-programming-for.md'
         'notes/vocabulary-collisions-are-prevented-at-write-time-not-resolved-at-read-time.md': 'notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md'
         'notes/world-models-assess-reach-through-action-conditioned-prediction.md': 'notes/world-models-assess-explanatory-reach-through-action-conditioned.md'
+        'reference/adr/021-shipping-model-design-space.md': 'reference/adr/021-ship-library-content-under-kb-commonplace.md'
+        'reference/adr/021-shipping-model-path-audit-option-e.md': 'reference/adr/021-ship-library-content-under-kb-commonplace.md'
         'reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-are-reclassified.md': 'reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md'
         'reference/available-types.md': 'reference/collections-and-types.md'
         'reference/commonplace-as-a-reflective-system.md': 'notes/evidence/commonplace-as-a-reflective-system.md'
