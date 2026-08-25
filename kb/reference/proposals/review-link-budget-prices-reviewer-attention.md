@@ -143,6 +143,24 @@ unexamined and heterogeneity unpriced.
 
 Three blocking decisions; the rest an implementer determines.
 
+**Settled by operator direction, 2026-08-25.** Decisions 1 and 3 below are
+resolved; decision 2 is deferred to its own proposal. Both resolutions turn on
+reuse: the measurement path needs no new storage and no new review semantics.
+
+- **Sizes ride the existing link table.** `resolved_links` is already
+  code-generated into every prompt; add a size column there rather than asking a
+  reviewer to call anything. A standalone command may follow over the same
+  sizing library, but the table is primary.
+- **Measurement is recorded through existing telemetry.** `review_jobs` already
+  carries `telemetry_json` for "opaque harness telemetry without making it review
+  identity" — the right channel for what a review actually opened, with no
+  schema change.
+- **V1 measures and enforces nothing.** The gate is untouched, no pairs stale,
+  and review behavior does not change. α, β, and the budget get derived from the
+  recorded numbers before any cap moves.
+- **Verdict semantics are unchanged for now** — see
+  [Review budget enforcement is a separable decision](./review-budget-enforcement-is-separable.md).
+
 **1. Where sizes surface.** `review/protocol/prompt.py` already emits a
 code-generated `resolved_links` table into every review prompt. A size column
 there means the reviewer plans against costs it already holds and makes no tool
