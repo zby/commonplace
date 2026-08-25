@@ -19,8 +19,10 @@ returned PASS having opened five of nine links and naming the four it left
 unopened. So today's behavior is **advisory with an honesty requirement**,
 established by convention rather than by the gate.
 
-Sizing is being added as measurement only, changing no verdict. That leaves the
-enforcement question open without blocking anything.
+Available cost and reviewer-reported consumption now land as measurement-only
+telemetry, changing no verdict. The post-instrumentation sample has not yet been
+analysed, so the enforcement question remains open without blocking review
+completion.
 
 ## The question
 

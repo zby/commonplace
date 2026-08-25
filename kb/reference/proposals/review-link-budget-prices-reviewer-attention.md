@@ -155,14 +155,15 @@ reuse: the measurement path needs no new storage and no new review semantics.
   carries `telemetry_json` for "opaque harness telemetry without making it review
   identity" — the right channel for what a review actually opened, with no
   schema change.
-- **V1 measures and enforces nothing.** The gate is untouched, no pairs stale,
-  and review behavior does not change. α, β, and the budget get derived from the
-  recorded numbers before any cap moves.
-- **Measurement B is authorized (2026-08-25).** Available cost shipped as A;
-  consumed cost is being built under
-  [its handoff](../../work/measure-review-consumed-cost.md), reusing the
-  self-reported-model field pattern so a reviewer's report never enters the
-  verdict path.
+- **V1 records cost and enforces nothing.** The gate is untouched, no pairs stale,
+  and review judgment and link-following policy do not change. α, β, and the
+  budget get derived from the recorded numbers before any cap moves.
+- **Measurement B shipped (2026-08-25).** Every pair is now asked to report the
+  distinct pre-resolved artifacts it opened and whether budget or sufficiency
+  stopped inspection. Finalization derives whole-file bytes, records complete
+  and imperfect reports beside A in job telemetry, and removes the bookkeeping
+  from retained review text. The first post-instrumentation sample has not yet
+  been analysed, so α/β and the budget remain open.
 - **Verdict semantics are unchanged for now** — see
   [Review budget enforcement is a separable decision](./review-budget-enforcement-is-separable.md).
 

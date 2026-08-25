@@ -9,12 +9,17 @@ whole-job failure.
 
 from __future__ import annotations
 
+import json
 from collections.abc import Sequence
 from dataclasses import dataclass
 
 from commonplace.review.protocol.format import (
     PAIR_END_RE,
     PAIR_START_RE,
+    REVIEW_CONSUMPTION_FIELD,
+    REVIEW_CONSUMPTION_OPENED_PATHS_KEY,
+    REVIEW_CONSUMPTION_STOP_REASON_KEY,
+    REVIEW_CONSUMPTION_STOP_REASONS,
     SELF_REPORTED_MODEL_FIELD,
 )
 from commonplace.review.protocol.outcomes import (
@@ -35,11 +40,21 @@ class ParsedPairResult:
 
 
 @dataclass(frozen=True)
+class ParsedReviewConsumption:
+    report_status: str
+    opened_paths: tuple[str, ...] | None
+    stop_reason: str | None
+    missing_fields: tuple[str, ...]
+    malformed_fields: tuple[str, ...]
+
+
+@dataclass(frozen=True)
 class ParsedJobOutput:
     reviews: dict[PairKey, ParsedPairResult]
     canonical_texts: dict[PairKey, str]
     missing: list[PairKey]
     self_reported_model: str | None
+    review_consumption: dict[PairKey, ParsedReviewConsumption]
 
 
 def _parse_self_reported_model(job_output_markdown: str) -> str | None:
@@ -60,6 +75,108 @@ def _parse_self_reported_model(job_output_markdown: str) -> str | None:
     if len(values) > 1:
         raise ValueError(f"duplicate {SELF_REPORTED_MODEL_FIELD} field")
     return values[0] if values else None
+
+
+def _ordered_unique(values: Sequence[str]) -> tuple[str, ...]:
+    return tuple(dict.fromkeys(values))
+
+
+def _without_review_consumption(
+    review_text: str,
+) -> tuple[str, ParsedReviewConsumption]:
+    """Extract soft measurement metadata without changing result validity."""
+    prefix = f"{REVIEW_CONSUMPTION_FIELD}:"
+    report_values: list[str] = []
+    review_lines: list[str] = []
+    for raw_line in review_text.splitlines():
+        line = raw_line.strip()
+        if line.startswith(prefix):
+            report_values.append(line.removeprefix(prefix).strip())
+        else:
+            review_lines.append(raw_line)
+
+    cleaned_text = "\n".join(review_lines).strip() + "\n"
+    field_names = (
+        REVIEW_CONSUMPTION_OPENED_PATHS_KEY,
+        REVIEW_CONSUMPTION_STOP_REASON_KEY,
+    )
+    if not report_values:
+        return cleaned_text, ParsedReviewConsumption(
+            report_status="missing",
+            opened_paths=None,
+            stop_reason=None,
+            missing_fields=field_names,
+            malformed_fields=(),
+        )
+
+    missing_fields: list[str] = []
+    malformed_fields: list[str] = []
+    opened_paths: tuple[str, ...] | None = None
+    stop_reason: str | None = None
+
+    if len(report_values) > 1:
+        malformed_fields.append(REVIEW_CONSUMPTION_FIELD)
+
+    try:
+        report = json.loads(report_values[0])
+    except (json.JSONDecodeError, TypeError):
+        report = None
+        malformed_fields.append(REVIEW_CONSUMPTION_FIELD)
+
+    if not isinstance(report, dict):
+        if REVIEW_CONSUMPTION_FIELD not in malformed_fields:
+            malformed_fields.append(REVIEW_CONSUMPTION_FIELD)
+        missing_fields.extend(field_names)
+    else:
+        unknown_fields = sorted(set(report) - set(field_names))
+        malformed_fields.extend(f"unknown:{field}" for field in unknown_fields)
+
+        if REVIEW_CONSUMPTION_OPENED_PATHS_KEY not in report:
+            missing_fields.append(REVIEW_CONSUMPTION_OPENED_PATHS_KEY)
+        else:
+            raw_paths = report[REVIEW_CONSUMPTION_OPENED_PATHS_KEY]
+            if not isinstance(raw_paths, list):
+                malformed_fields.append(REVIEW_CONSUMPTION_OPENED_PATHS_KEY)
+            else:
+                valid_paths: list[str] = []
+                invalid_path = False
+                for raw_path in raw_paths:
+                    if not isinstance(raw_path, str) or not raw_path.strip():
+                        invalid_path = True
+                        continue
+                    valid_paths.append(raw_path.strip())
+                if invalid_path:
+                    malformed_fields.append(REVIEW_CONSUMPTION_OPENED_PATHS_KEY)
+                opened_paths = _ordered_unique(valid_paths)
+
+        if REVIEW_CONSUMPTION_STOP_REASON_KEY not in report:
+            missing_fields.append(REVIEW_CONSUMPTION_STOP_REASON_KEY)
+        else:
+            raw_stop_reason = report[REVIEW_CONSUMPTION_STOP_REASON_KEY]
+            if not isinstance(raw_stop_reason, str):
+                malformed_fields.append(REVIEW_CONSUMPTION_STOP_REASON_KEY)
+            else:
+                candidate = raw_stop_reason.strip()
+                if candidate not in REVIEW_CONSUMPTION_STOP_REASONS:
+                    malformed_fields.append(REVIEW_CONSUMPTION_STOP_REASON_KEY)
+                else:
+                    stop_reason = candidate
+
+    missing = _ordered_unique(missing_fields)
+    malformed = _ordered_unique(malformed_fields)
+    if malformed:
+        report_status = "malformed"
+    elif missing:
+        report_status = "partial"
+    else:
+        report_status = "complete"
+    return cleaned_text, ParsedReviewConsumption(
+        report_status=report_status,
+        opened_paths=opened_paths,
+        stop_reason=stop_reason,
+        missing_fields=missing,
+        malformed_fields=malformed,
+    )
 
 
 def extract_pair_results(
@@ -140,7 +257,9 @@ def parse_job_output(
     extracted = extract_pair_results(job_output_markdown, expected_pairs=expected_pairs)
     canonical_texts: dict[PairKey, str] = {}
     reviews: dict[PairKey, ParsedPairResult] = {}
+    review_consumption: dict[PairKey, ParsedReviewConsumption] = {}
     for pair, review_text in extracted.items():
+        review_text, consumption = _without_review_consumption(review_text)
         result_kind = result_kinds[pair]
         if result_kind == "verdict":
             outcome = parse_review_outcome(review_text)
@@ -157,6 +276,7 @@ def parse_job_output(
             outcome=outcome,
             result_kind=result_kind,
         )
+        review_consumption[pair] = consumption
 
     missing = [pair for pair in expected_pairs if pair not in extracted]
     return ParsedJobOutput(
@@ -164,4 +284,5 @@ def parse_job_output(
         canonical_texts=canonical_texts,
         missing=missing,
         self_reported_model=self_reported_model,
+        review_consumption=review_consumption,
     )

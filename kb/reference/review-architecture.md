@@ -59,6 +59,13 @@ harness provenance or freshness identity. Review identity is
 `(note_path, criterion_path, model_partition)`; missing runner telemetry is
 normal.
 
+The output transport also carries one soft, per-pair report of which pre-resolved
+linked artifacts the worker opened and whether budget or evidential sufficiency
+stopped inspection. Finalization removes that bookkeeping from the retained
+review body and joins it with code-generated available cost in job telemetry.
+Missing, partial, malformed, or unpriced bookkeeping remains measurement state;
+it cannot change a result, completion, freshness, or review identity.
+
 ## Finalization boundary
 
 Finalization accepts only queued jobs and is all-or-nothing across every pair in

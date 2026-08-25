@@ -219,8 +219,8 @@ That outcome completes the nonpass repair, but not the exhaustive-link clause
 of closure condition 3. Under the literal global occurrence reading used by the
 certification sweep, every one of the 25 final PASS prompts offered more than
 five resolved link occurrences, and 22 offered more than five distinct
-artifacts. The current result protocol does not record enough consumed-link
-data to reconstruct which uses every reviewer inspected. These PASS verdicts
+artifacts. These results predate the consumed-link fields, so they do not record
+enough data to reconstruct which uses every reviewer inspected. The PASS verdicts
 therefore certify the reviewed sample, not every ordinary support link. The
 [link-budget work](./grounding-alignment-link-budget.md) remains the blocker to
 closing this workshop; changing the gate before its measurement decisions are

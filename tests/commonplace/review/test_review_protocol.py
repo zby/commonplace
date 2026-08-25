@@ -119,6 +119,14 @@ def test_render_pairs_prompt_names_destination() -> None:
     assert "Do not write or edit any other file." in prompt
     assert "`self-reported-model: <model-id>`" in prompt
     assert "The model line is optional." in prompt
+    assert "`review-consumption:` JSON object" in prompt
+    assert "`opened_paths` lists each distinct repo-relative path you actually opened" in prompt
+    assert "`stop_reason` is exactly `budget`" in prompt
+    assert "This bookkeeping never changes the result." in prompt
+    assert (
+        'review-consumption: {"opened_paths": [<JSON strings for each distinct opened path>], '
+        '"stop_reason": "<budget|sufficiency>"}'
+    ) in prompt
 
 
 def test_render_pairs_prompt_rejects_sentinel_in_note_text() -> None:
@@ -246,6 +254,87 @@ def test_parse_job_output_parses_outcomes_and_reports_missing() -> None:
     assert parsed.reviews[("kb/notes/second.md", GATE)].outcome == "pass"
     assert parsed.missing == [("kb/notes/third.md", GATE)]
     assert parsed.self_reported_model is None
+    assert parsed.review_consumption[("kb/notes/first.md", GATE)].report_status == "missing"
+    assert parsed.review_consumption[("kb/notes/second.md", GATE)].report_status == "missing"
+
+
+def test_parse_job_output_extracts_complete_review_consumption_and_strips_it_from_result() -> None:
+    bundle = bundle_two_pairs().replace(
+        "Needs one definition.\n\n## Result: WARN",
+        (
+            "Needs one definition.\n\n"
+            'review-consumption: {"opened_paths": ['
+            '"kb/notes/shared.md", "kb/notes/shared.md", "kb/sources/source.ingest.md"], '
+            '"stop_reason": "sufficiency"}\n\n'
+            "## Result: WARN"
+        ),
+    )
+    pairs = [("kb/notes/first.md", GATE), ("kb/notes/second.md", GATE)]
+
+    parsed = parse_job_output(
+        bundle,
+        expected_pairs=pairs,
+        result_kinds={pair: "verdict" for pair in pairs},
+    )
+
+    report = parsed.review_consumption[("kb/notes/first.md", GATE)]
+    assert report.report_status == "complete"
+    assert report.opened_paths == (
+        "kb/notes/shared.md",
+        "kb/sources/source.ingest.md",
+    )
+    assert report.stop_reason == "sufficiency"
+    assert report.missing_fields == ()
+    assert report.malformed_fields == ()
+    assert "review-consumption" not in parsed.canonical_texts[("kb/notes/first.md", GATE)]
+
+
+@pytest.mark.parametrize(
+    ("report_line", "status", "opened_paths", "stop_reason"),
+    [
+        (
+            'review-consumption: {"opened_paths": ["kb/notes/shared.md"]}',
+            "partial",
+            ("kb/notes/shared.md",),
+            None,
+        ),
+        ("review-consumption: {not json}", "malformed", None, None),
+        (
+            'review-consumption: {"opened_paths": ["kb/notes/shared.md", 7], "stop_reason": "finished"}',
+            "malformed",
+            ("kb/notes/shared.md",),
+            None,
+        ),
+    ],
+)
+def test_parse_job_output_keeps_partial_or_malformed_consumption_soft(
+    report_line: str,
+    status: str,
+    opened_paths: tuple[str, ...] | None,
+    stop_reason: str | None,
+) -> None:
+    pair = ("kb/notes/first.md", GATE)
+    bundle = f"""=== PAIR REVIEW START: {pair[0]} :: {pair[1]} ===
+Looks good.
+
+{report_line}
+
+## Result: PASS
+=== PAIR REVIEW END: {pair[0]} :: {pair[1]} ===
+"""
+
+    parsed = parse_job_output(
+        bundle,
+        expected_pairs=[pair],
+        result_kinds={pair: "verdict"},
+    )
+
+    report = parsed.review_consumption[pair]
+    assert report.report_status == status
+    assert report.opened_paths == opened_paths
+    assert report.stop_reason == stop_reason
+    assert parsed.reviews[pair].outcome == "pass"
+    assert "review-consumption" not in parsed.canonical_texts[pair]
 
 
 def test_parse_job_output_reads_optional_self_reported_model() -> None:

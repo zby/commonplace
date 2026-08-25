@@ -34,6 +34,7 @@ from commonplace.review.protocol.format import (
     REPORT_LINE_TEMPLATE,
     RESERVED_SENTINEL_RE,
     RESULT_LINE_TEMPLATE,
+    REVIEW_CONSUMPTION_FIELD,
     SELF_REPORTED_MODEL_FIELD,
 )
 from commonplace.review.type_conformance import is_type_spec_criterion_path
@@ -189,6 +190,23 @@ def render_pairs_prompt(
             f"before the first pair block: `{SELF_REPORTED_MODEL_FIELD}: <model-id>`."
         ),
         "- The model line is optional. Omit it when the model ID is unavailable; do not guess or infer it.",
+        (
+            "- Inside every pair block, before the result line, include exactly one "
+            f"`{REVIEW_CONSUMPTION_FIELD}:` JSON object with `opened_paths` and `stop_reason`."
+        ),
+        (
+            "- `opened_paths` lists each distinct repo-relative path you actually opened from that "
+            "target note's pre-resolved link table. Use `[]` if you opened no linked artifact. "
+            "Do not include the target note or criterion."
+        ),
+        (
+            "- For a `(snapshot required)` route, report the linked ingest path from the table, "
+            "which is the V1 path charged by the measurement."
+        ),
+        (
+            "- `stop_reason` is exactly `budget` if a reading limit prevented further inspection, "
+            "or `sufficiency` if you had enough evidence. This bookkeeping never changes the result."
+        ),
     ]
 
     if result_kind not in {"verdict", "report"}:
@@ -349,6 +367,12 @@ def render_pairs_prompt(
                 block.append("<the complete report shape required by the assay criterion>")
             block.extend(
                 [
+                    "",
+                    (
+                        f'{REVIEW_CONSUMPTION_FIELD}: '
+                        '{"opened_paths": [<JSON strings for each distinct opened path>], '
+                        '"stop_reason": "<budget|sufficiency>"}'
+                    ),
                     "",
                     result_template,
                     PAIR_END_TEMPLATE.format(note_path=note.note_path, criterion_path=criterion_path),

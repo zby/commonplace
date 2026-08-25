@@ -22,7 +22,7 @@ A full review runs as a short pipeline, from a stale-pair query to a durable fre
 1. **Select** — the selector lists `(note, criterion)` pairs that are stale or unreviewed for a given model partition, and says why. Persisted and JSON identities are `(note_path, criterion_path)`.
 2. **Create jobs** — selected pairs are grouped into one or more queued *review jobs*, each with its own rendered prompt.
 3. **Review** — a worker (typically a sub-agent) reads a job's prompt and writes a single sentinel-delimited `job-output.md`.
-4. **Finalize** — the parent parses that output against each pair's persisted result contract and, only if every expected pair is present and well-formed, records completion and creates or replaces freshness baselines.
+4. **Finalize** — the parent parses that output against each pair's persisted result contract and, only if every expected pair is present and well-formed, records completion and creates or replaces freshness baselines. Soft consumption metadata is recorded separately and cannot change this decision.
 
 A freshness baseline is the current snapshot-pinned applicability boundary for completed evidence. It is not a universal endorsement: a verdict baseline retains a closed-ended gate outcome, while a report baseline records that the retained report matches the pinned inputs. When a change does not invalidate that evidence, acknowledgement (*ack*) advances the existing baseline without changing its evidence pair.
 
@@ -111,9 +111,9 @@ The full procedure is in [run review batches](../instructions/run-review-batches
 
 3. Finalize each completed output with `commonplace-finalize-review-job` (signature under [Command reference](#command-reference)).
 
-**Finalization is all-or-nothing.** If any expected pair is missing, duplicated, unexpected, malformed, or lacks a valid result line, the job fails and writes no freshness baseline rows — a failed job accepts nothing. On success, every pair records per-kind completion and the current freshness baseline row for each pair is upserted.
+**Finalization is all-or-nothing.** If any expected pair is missing, duplicated, unexpected, malformed, or lacks a valid result line, the job fails and writes no freshness baseline rows — a failed job accepts nothing. On success, every pair records per-kind completion and the current freshness baseline row for each pair is upserted. The `review-consumption` measurement is the exception to structural strictness: missing, partial, or malformed measurement metadata is recorded as such and never fails the job.
 
-**Finalization-time provenance is optional.** When supplied, `--model` (with optional `--effort`) is validated against the job's model partition before any state changes, and the runner/model/effort are recorded. `--effort` requires `--model`. `--telemetry-json` stores opaque harness telemetry without making it review identity.
+**Finalization-time provenance is optional.** When supplied, `--model` (with optional `--effort`) is validated against the job's model partition before any state changes, and the runner/model/effort are recorded. `--effort` requires `--model`. `--telemetry-json` stores opaque harness telemetry without making it review identity. Commonplace's code-generated availability and reviewer-reported consumption measurements occupy versioned keys beside that opaque value in the same `review_jobs.telemetry_json` column.
 
 ## Acknowledging trivial changes
 
@@ -186,6 +186,16 @@ A worker writes one sentinel-delimited `job-output.md` covering every pair in th
 ```
 
 Before the first pair block, a worker whose environment states its exact model may include one optional `self-reported-model: <model-id>` line. Omit it when unavailable; never guess. Finalization returns it as `self_reported_model` and copies it into finalized result frontmatter under the original name. It does not populate `runner_model`, validate the job's partition, or affect freshness.
+
+Inside every pair block, the worker reports linked-material consumption before the result line:
+
+```text
+review-consumption: {"opened_paths": ["kb/notes/example.md"], "stop_reason": "sufficiency"}
+```
+
+`opened_paths` contains each distinct repo-relative path actually opened from that target note's pre-resolved link table; it excludes the target note and criterion. An empty list means no linked artifact was opened. V1 charges the linked ingest path for a `(snapshot required)` route, matching the availability measurement's accepted whole-file approximation. `stop_reason` is `budget` when a reading limit prevented further inspection and `sufficiency` when the reviewer had enough evidence.
+
+Finalization strips this line from the per-pair result artifact and records it under `commonplace.review_link_consumption` beside `commonplace.review_link_availability` in job telemetry. Each consumption row carries `report_status`; missing, partial, malformed, or unpriced reports retain diagnostics but never affect the pair's result, job completion, or freshness. Only a `complete` row with no unpriced paths supplies a comparable consumed byte total.
 
 `REPORT` is a completion marker, not an outcome. `ERROR` reports inability to produce the contracted result: finalization fails the whole job, completes no pairs, and advances no baselines. `INFO` may label a non-actionable finding inside verdict text but is not a valid final outcome. Aliases such as `Verdict`, `Outcome`, `OK`, and `UNKNOWN` are invalid. The generated prompt is the complete job-specific worker contract: dispatch starts a fresh context without the parent conversation and supplies only the prompt path. The worker writes only the output file named there. It does not touch notes, criteria, indexes, or the review database; its conversational response is not a pipeline input.
 

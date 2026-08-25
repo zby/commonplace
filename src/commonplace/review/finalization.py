@@ -19,7 +19,10 @@ from commonplace.review.clock import iso_now
 from commonplace.review.protocol.parser import ParsedJobOutput, parse_job_output
 from commonplace.review.review_db import ReviewPairCompletion, ReviewPairRow
 from commonplace.review.review_model import build_model_partition
-from commonplace.review.telemetry import with_harness_telemetry
+from commonplace.review.telemetry import (
+    with_harness_telemetry,
+    with_review_link_consumption,
+)
 
 ACTIVE_REVIEW_JOB_STATUSES = frozenset({"queued"})
 
@@ -216,6 +219,15 @@ def finalize_review_job_from_owned_output(
                 job_output_markdown,
                 expected_pairs=expected_pairs,
                 result_kinds=result_kinds,
+            )
+            telemetry_json = with_review_link_consumption(
+                plan.telemetry_json,
+                parsed.review_consumption,
+            )
+            review_db.set_job_telemetry(
+                conn,
+                review_job_id=review_job_id,
+                telemetry_json=telemetry_json,
             )
             review_pairs = _review_pair_completions(expected_pairs=expected_pairs, parsed=parsed)
             finalized = record_and_finalize_job(

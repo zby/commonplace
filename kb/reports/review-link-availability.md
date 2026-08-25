@@ -38,8 +38,8 @@ budget would have to cover and confirms that occurrence count commonly
 overstates artifact count. It does not show what reviewers opened, why they
 stopped, or whether switching cost or byte volume better predicts a stopping
 point. Therefore it cannot identify the α/β ratio in
-`attention ≈ α · artifacts + β · bytes`. That requires the separately deferred
-actual-opens measurement and its reviewer behavior change.
+`attention ≈ α · artifacts + β · bytes`. Later review jobs record actual opens
+separately; this availability baseline alone cannot supply the ratio.
 
 Whole-file sizing also retains the accepted V1 mispricing: it overprices an
 ingest's Quotes route and prices a `(snapshot required)` link by the resolved

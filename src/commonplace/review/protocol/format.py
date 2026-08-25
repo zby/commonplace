@@ -11,6 +11,10 @@ import re
 
 PAIR_KEY_SEPARATOR = " :: "
 SELF_REPORTED_MODEL_FIELD = "self-reported-model"
+REVIEW_CONSUMPTION_FIELD = "review-consumption"
+REVIEW_CONSUMPTION_OPENED_PATHS_KEY = "opened_paths"
+REVIEW_CONSUMPTION_STOP_REASON_KEY = "stop_reason"
+REVIEW_CONSUMPTION_STOP_REASONS = frozenset({"budget", "sufficiency"})
 
 PAIR_START_RE = re.compile(r"^=== PAIR REVIEW START: (?P<note_path>.+?) :: (?P<criterion_path>.+?) ===$")
 PAIR_END_RE = re.compile(r"^=== PAIR REVIEW END: (?P<note_path>.+?) :: (?P<criterion_path>.+?) ===$")

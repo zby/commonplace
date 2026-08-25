@@ -28,7 +28,9 @@ number of passes varies.
   distinct artifacts and 67 KB, p90 is 16 and 148 KB, max is 35 and 355 KB. **The
   current cap of five sits below the median offered cost**, so sampling is the
   normal case, not the exception.
-- Consumed-cost measurement is authorized and not yet built.
+- Consumed-cost capture now ships as soft per-pair telemetry. A sufficient
+  post-instrumentation sample has not yet been analysed, so actual stopping
+  behavior remains unknown.
 
 ## What splitting requires
 

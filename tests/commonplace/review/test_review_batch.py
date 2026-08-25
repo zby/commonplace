@@ -240,7 +240,7 @@ def test_review_job_records_deduplicated_available_link_cost_and_preserves_harne
     assert telemetry == {
         "commonplace": {
             "review_link_availability": {
-                "version": 1,
+                "version": 2,
                 "pairs": [
                     {
                         "note_path": "kb/notes/first.md",
@@ -248,6 +248,12 @@ def test_review_job_records_deduplicated_available_link_cost_and_preserves_harne
                         "resolved_link_count": 2,
                         "distinct_artifact_count": 1,
                         "total_bytes": shared.stat().st_size,
+                        "artifacts": [
+                            {
+                                "path": "kb/notes/shared.md",
+                                "size_bytes": shared.stat().st_size,
+                            }
+                        ],
                         "unavailable_targets": [
                             {
                                 "link_text": "missing",
@@ -264,7 +270,16 @@ def test_review_job_records_deduplicated_available_link_cost_and_preserves_harne
 
     write(
         repo / job["job_output_path"],
-        pair_block("kb/notes/first.md", GATE_PATH, "All terms defined.", "PASS"),
+        pair_block(
+            "kb/notes/first.md",
+            GATE_PATH,
+            (
+                "All terms defined.\n\n"
+                'review-consumption: {"opened_paths": ["kb/notes/shared.md"], '
+                '"stop_reason": "sufficiency"}'
+            ),
+            "PASS",
+        ),
     )
     harness_telemetry = '{"input_tokens": 42}'
     finalized = run_cli(
@@ -283,8 +298,72 @@ def test_review_job_records_deduplicated_available_link_cost_and_preserves_harne
     assert completed is not None
     assert completed.telemetry_json is not None
     completed_telemetry = json.loads(completed.telemetry_json)
-    assert completed_telemetry["commonplace"] == telemetry["commonplace"]
+    assert (
+        completed_telemetry["commonplace"]["review_link_availability"]
+        == telemetry["commonplace"]["review_link_availability"]
+    )
+    assert completed_telemetry["commonplace"]["review_link_consumption"] == {
+        "version": 1,
+        "pairs": [
+            {
+                "note_path": "kb/notes/first.md",
+                "criterion_path": GATE_PATH,
+                "report_status": "complete",
+                "opened_paths": ["kb/notes/shared.md"],
+                "distinct_artifact_count": 1,
+                "total_bytes": shared.stat().st_size,
+                "stop_reason": "sufficiency",
+                "missing_fields": [],
+                "malformed_fields": [],
+                "unpriced_paths": [],
+            }
+        ],
+    }
     assert completed_telemetry["harness_telemetry_json"] == harness_telemetry
+
+    result_text = (repo / job["pairs"][0]["result_path"]).read_text(encoding="utf-8")
+    assert "review-consumption" not in result_text
+
+
+def test_finalize_review_job_treats_malformed_consumption_as_soft_telemetry(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    prepared = json.loads(
+        create_gate_jobs(
+            repo,
+            db_path,
+            [target("kb/notes/first.md", GATE_PATH, GATE)],
+        ).stdout
+    )
+    job = prepared["jobs"][0]
+    review_job_id = job["review_job_id"]
+    write(
+        repo / job["job_output_path"],
+        pair_block(
+            "kb/notes/first.md",
+            GATE_PATH,
+            "All terms defined.\n\nreview-consumption: {not json}",
+            "PASS",
+        ),
+    )
+
+    finalized = run_cli(
+        "finalize_review_job",
+        "--review-job-id",
+        str(review_job_id),
+        cwd=repo,
+        db_path=db_path,
+    )
+
+    assert finalized.returncode == 0
+    assert json.loads(finalized.stdout)["completed"] is True
+    with review_db.connect(db_path) as conn:
+        completed = review_db.load_review_job(conn, review_job_id=review_job_id)
+    assert completed is not None
+    assert completed.telemetry_json is not None
+    record = json.loads(completed.telemetry_json)["commonplace"]["review_link_consumption"]["pairs"][0]
+    assert record["report_status"] == "malformed"
+    assert record["missing_fields"] == ["opened_paths", "stop_reason"]
+    assert record["malformed_fields"] == ["review-consumption"]
 
 
 def test_finalize_review_job_finalizes_all_criterion_packed_pairs(tmp_path: Path) -> None:
