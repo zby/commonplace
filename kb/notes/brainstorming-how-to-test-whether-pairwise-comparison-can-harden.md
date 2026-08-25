@@ -7,7 +7,7 @@ tags: [evaluation, llm-reliability, context-engineering]
 
 # Brainstorming: how to test whether pairwise comparison can harden soft oracles
 
-The [Koylan source on pairwise comparison](https://x.com/koylanai/status/2035982137539559616) suggests a plausible mechanism: in open-ended tasks, asking a judge "which of these two outputs is better?" may be easier and more stable than asking "score this output 1-5." That is an interesting hypothesis, but still only a hypothesis. Before promoting it into a stronger claim, we need a test design that can distinguish genuine oracle hardening from mere prompt reformulation.
+This note starts from a plausible conjecture: in open-ended tasks, asking a judge "which of these two outputs is better?" may be easier and more stable than asking "score this output 1-5." Before promoting that conjecture into a stronger claim, we need a test design that can distinguish genuine oracle hardening from mere prompt reformulation.
 
 The core question is not whether pairwise comparison *sounds* more natural. It is whether it improves the properties that actually matter for a soft oracle: discrimination, stability, calibration, and usefulness inside an optimization loop.
 
@@ -45,7 +45,7 @@ Setup:
 
 Then compare two judging schemes on the same examples:
 - **Scalar judge** — score each output independently on a 1-5 or 1-10 scale
-- **Pairwise judge** — compare outputs in pairs, optionally with position-swapping as recommended in [Agent Skills for Context Engineering](../agent-memory-systems/reviews/agent-skills-for-context-engineering.md)
+- **Pairwise judge** — compare outputs in pairs and repeat each comparison with the display order swapped to measure position sensitivity
 
 Measures:
 - Agreement with human pairwise labels
@@ -166,8 +166,6 @@ Relevant Notes:
 
 - [oracle-strength-spectrum](./oracle-strength-spectrum.md) — **extends**: turns that note's abstract oracle-hardening question into a concrete experimental program
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — **qualifies**: asks whether pairwise comparison improves the base signal before amplification, rather than replacing amplification
-- [Agent Skills for Context Engineering](../agent-memory-systems/reviews/agent-skills-for-context-engineering.md) — **grounds**: supplies the concrete pairwise-comparison and position-bias-mitigation practices this note would test
 - [Autocontext](../agent-memory-systems/reviews/autocontext.md) — **example**: offers a live evaluation loop where pairwise ranking could be compared against scalar LLM judging
 - [quality-signals-for-kb-evaluation](./quality-signals-for-kb-evaluation.md) — **parallel**: another brainstorming note about manufacturing better soft oracles, but at KB-wide rather than candidate-ranking scope
-- [Koylan pairwise-comparison source](https://x.com/koylanai/status/2035982137539559616) — **source**: origin of the specific hypothesis this note turns into a test plan
 - [Mazur position-bias benchmark](../sources/position-bias.ingest.md) — **evidence**: concrete empirical baseline for the Test 1 “position bias rate” measure — in the pinned repository snapshot, 27 judge models evaluated 193 sibling-edit story pairs in both display orders, and the median model changed its canonical winner in 44.8% of decisive swapped-order pairs (repository snapshot; decisive-pair statistic; sibling-edit surface only)

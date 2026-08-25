@@ -33,8 +33,7 @@ This differs from the content-class defense that [a commitment's record resists 
 Current engineering reports illustrate both movements, without establishing a cross-generation trend:
 
 - In one author's Fable-oriented rebuild, [principle-level instruction following made checklists, compliance scripts, and synchronization layers unnecessary](../sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md). The report does not hold task difficulty, model generation, or deployment conditions fixed.
-- At a harder-task frontier, [a financial-services team reports that better models obsolete detailed skills for simpler work but prompt new skills for multi-step valuations, backtesting, and monitoring](https://x.com/nicbstme/status/2015174818497437834).
-- Separately, an [Opus 4.5 agent loop with compaction and only a high-level web-app prompt fell short](../sources/effective-harnesses-for-long-running-agents.ingest.md); the reported harness added persistent progress and git state, a structured feature list, incremental work, and explicit browser-based end-to-end testing. This is one deployment configuration, not a stronger-model comparison or a necessity result.
+- Separately, an [Opus 4.5 agent loop with compaction and only a high-level web-app prompt fell short](../sources/effective-harnesses-for-long-running-agents.ingest.md); the reported harness added persistent progress artifacts, a structured feature list, incremental work, and explicit browser-based end-to-end testing. This is one deployment configuration, not a stronger-model comparison or a necessity result.
 
 These cases make recurrence a live hypothesis, not a measured trend. Settling it requires tracking the volume, function, and marginal contribution of external structure in comparable frontier deployments across model generations, rather than comparing fixed benchmarks.
 
@@ -47,6 +46,6 @@ These cases make recurrence a live hypothesis, not a measured trend. Settling it
 
 Relevant Notes:
 
-- [The bitter lesson selects against unearned reach, not against structure](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md) — grounds: scaling removes unearned scope claims at fixed difficulty, so absorption of yesterday’s scaffolding does not settle the frontier question
+- [The bitter lesson selects against unearned reach, not against structure](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md) — contrasts: offers a case-level conjecture about unsupported requirement-to-objective proxies; it does not establish scaffolding absorption or the fixed-difficulty/frontier distinction argued here
 - [The bitter lesson selects production methods, not representational forms](./the-bitter-lesson-selects-production-methods-not-representational.md) — extends: carries the moving-frontier argument into the production-method versus representational-form distinction
 - [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — extends: the frontier continues to generate deployment-pace change, which retained-artifact adaptation addresses

@@ -1,5 +1,5 @@
 ---
-description: Adapts Deutsch's adaptive-vs-explanatory distinction to KB design — first-principles reasoning selects explanations with explanatory-reach, accountable to observed fit and rival-practice tests
+description: First-principles reasoning selects explanations with explanatory-reach, accountable to observed fit, premise variation, and rival-practice tests
 type: kb/types/note.md
 traits: [has-external-sources]
 tags: [learning-theory, discovery]
@@ -7,7 +7,7 @@ tags: [learning-theory, discovery]
 
 # First-principles reasoning selects for explanatory-reach over adaptive fit
 
-Commonplace's first-principles methodology is valuable because it selects for explanations with **explanatory-reach**: claims that keep working outside the case that produced them because they capture why a pattern works, not just that it worked. This note adapts David Deutsch's adaptive-vs-explanatory distinction (his term is bare "reach") for KB design, treating adaptive fit and explanatory-reach as a polarity rather than a hard binary.
+Commonplace's first-principles methodology is valuable because it selects for explanations with **explanatory-reach**: claims that keep working outside the case that produced them because they capture why a pattern works, not just that it worked. This note treats adaptive fit and explanatory-reach as a local polarity rather than a hard binary.
 
 **Adaptive information** helps a system cope with the world. A genome, a neural network's weights, or a local rule of thumb can encode something useful without explaining why it works or where it stops working.
 
@@ -42,7 +42,7 @@ Explanatory-reach is the quality goal for theoretical notes, not the only kind o
 
 - Where in the KB are notes that are well-formed but merely adaptive? Those are candidates for deepening.
 - Which first-principles derivations currently rule out a rival practice, and which only explain an already-preferred practice after the fact?
-- Should this note keep a direct Deutsch source, or is the adapted distinction enough if the KB-specific test stands on its own?
+- Which observed transfers would distinguish the four-part test from a persuasive post-hoc story?
 
 ---
 

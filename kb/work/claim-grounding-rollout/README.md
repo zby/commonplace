@@ -115,9 +115,10 @@ population had 34 PASS, 10 WARN, and 24 FAIL outcomes.
 The sweep completed the freshness-coverage part of closure condition 3. It did
 not establish that every ordinary support link was adequately quote-backed or
 that every broader use passed: the nonpass outcomes showed otherwise. The
-sweep itself did not repair notes, ingests, the gate, or route markers. The
-first residue-repair round is recorded below; other nonpass outcomes keep this
-workshop open.
+sweep itself did not repair notes, ingests, the gate, or route markers. The two
+repair rounds below have now resolved every nonpass outcome. The workshop
+remains open because the gate's link budget still prevents the PASS population
+from establishing exhaustive ordinary-support-link coverage.
 
 ## Certification sweep — 2026-08-25
 
@@ -188,6 +189,42 @@ outcome is still PASS. Final fresh `codex` grounding results are PASS for every
 residue note: jobs 8114, 8117, 8121–8125, 8127, and 8129. Intermediate FAIL and
 WARN results remain recorded in jobs 8115, 8116, 8118–8120, 8126, and 8128.
 No already-fresh Sonnet partition was rerun.
+
+## Remaining nonpass repair — 2026-08-25
+
+The certification sweep's remaining 10 WARN and 15 FAIL notes were repaired
+through the current `ground-source-dependent-claims` route. Most repairs
+narrowed a target to what its retained evidence established, distinguished a
+target-side inference from a source claim, or corrected an overbroad link gloss.
+No note needed a `(snapshot required)` route.
+
+Three ingests needed additional retained evidence. The ingest quote path added
+seven verified verbatim items in total: four for the comprehension →
+specification → automation sequence, one for the model-dependent emotional-
+prompt result, and two table-header items that restore the benchmark mapping for
+the ACM numeric rows. All 25 notes and all three changed ingests pass
+deterministic validation.
+
+Initial fresh `codex` reviews were jobs 8130–8154, one note per isolated
+reviewer context. They returned 15 PASS, 4 WARN, and 6 FAIL outcomes. The
+findings led to bounded follow-up repairs rather than reopening already-fresh
+notes. Intermediate nonpass results remain recorded in jobs 8158, 8160–8162,
+and 8165. Final PASS baselines for the 25 notes are jobs 8131, 8133, 8137–8140,
+8142, 8144–8148, 8150–8151, 8153, 8155–8157, 8159, 8163–8164, 8166–8168, and
+8170. The stale selector now returns no targets for this 25-note set. Together
+with the 43 unchanged fresh PASS results, the accepted certification population
+is 68/68 PASS. No already-fresh Sonnet partition was rerun.
+
+That outcome completes the nonpass repair, but not the exhaustive-link clause
+of closure condition 3. Under the literal global occurrence reading used by the
+certification sweep, every one of the 25 final PASS prompts offered more than
+five resolved link occurrences, and 22 offered more than five distinct
+artifacts. The current result protocol does not record enough consumed-link
+data to reconstruct which uses every reviewer inspected. These PASS verdicts
+therefore certify the reviewed sample, not every ordinary support link. The
+[link-budget work](./grounding-alignment-link-budget.md) remains the blocker to
+closing this workshop; changing the gate before its measurement decisions are
+settled would unnecessarily trigger the known 775-pair re-review.
 
 ## Current execution path
 

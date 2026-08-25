@@ -15,7 +15,7 @@ Every pointer asks the same question: **should I follow this?** The decision is 
 
 [Pirolli's Web-navigation account](../sources/pirolli-proximal-information-scent-distal-content.ingest.md) provides a narrower human source-side analogue: information-scent cues such as links and citations give users concise information about content that is not immediately available, and users assess proximal cues to choose actions leading toward distal information sources. The transfer rests on the shared information structure: both a human Web user and an LLM agent choose among distal sources from proximal cues. The resource and mechanism do not transfer automatically; Pirolli studies human judgment and interaction cost, while an LLM agent pays context tokens and tool calls.
 
-For an LLM agent, diagnostic context can make the decision tractable by reducing uncertainty before the target is loaded. A cue that does not discriminate among candidates leaves the agent needing another information-bearing step, often target loading. Explanatory prose can defer that step when its added information justifies its own context cost. As [linking theory](./linking-theory.md) formalizes, the useful quantity is navigation-uncertainty reduction per unit of context consumed. More context is not automatically better.
+For an LLM agent, diagnostic context can make the decision tractable by reducing uncertainty before the target is loaded. A cue that does not discriminate among candidates leaves the agent needing another information-bearing step, often target loading. Explanatory prose can defer that step when its added information justifies its own context cost. As [linking theory](./linking-theory.md) proposes, the useful quantity is navigation-uncertainty reduction per unit of context consumed. More context is not automatically better.
 
 ## Context varies by navigation mode
 
@@ -23,7 +23,7 @@ Different pointer types expose different kinds and typical amounts of context. I
 
 ## Design implication
 
-If navigation is deciding what to read, the knowledge system should make that decision as cheap as possible. [Title as claim](./title-as-claim-enables-traversal-as-reasoning.md) is the shortcut that works across all pointer types. When the title carries the argument, the pointer itself becomes the hint — every link text, every search result, every index entry does navigation work for free.
+If navigation is deciding what to read, the knowledge system should make that decision as cheap as possible. [Title as claim](./title-as-claim-enables-traversal-as-reasoning.md) is a shortcut across links, search results, and indexes. When the title carries the argument, the pointer itself becomes the hint — link text, search results, and index entries can do navigation work before the target is opened.
 
 ---
 

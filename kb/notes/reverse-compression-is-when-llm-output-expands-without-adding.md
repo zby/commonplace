@@ -1,5 +1,5 @@
 ---
-description: "LLMs can inflate compact seeds into verbose artifacts without adding extractable structure; a KB resists this only when links add epiplexity"
+description: "LLMs can inflate compact seeds into verbose artifacts without adding extractable structure; a KB resists this only when links make additional structure accessible"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, discovery]
@@ -9,7 +9,7 @@ tags: [learning-theory, discovery]
 
 Compression removes redundancy to preserve information. Reverse-compression is the inverse: expanding a compact signal into verbose prose without adding extractable structure. This is the common failure mode of [vibe-noting](./vibe-noting.md) — a human offers a one-sentence insight, the agent builds a whole article grounded in its training knowledge, and the result reads like depth but teaches the reader nothing beyond the seed.
 
-## Why epiplexity is the right measure
+## Epiplexity motivates one part of the measure
 
 What counts as "adding information" depends on who you measure against. Three candidate tests, each more precise than the last:
 
@@ -17,11 +17,11 @@ What counts as "adding information" depends on who you measure against. Three ca
 2. **Does the body contain information not derivable from the title combined with the LLM's training knowledge?** Well-defined but wrong — it measures novelty relative to the model, not usefulness to the reader.
 3. **Does the body make structure accessible to the *reader* that wasn't before?** The right question — usefulness is relative to the audience, not the source.
 
-[Epiplexity](https://arxiv.org/html/2601.03220v1) — [epistemic complexity extractable by a bounded observer](./information-value-is-observer-relative.md) — formalizes test 3. Connecting to common knowledge *can* raise epiplexity — when the connection is surprising to the reader, when the reader lacks that specific piece, or when the juxtaposition makes a pattern visible that the reader wouldn't have extracted on their own. But when the connections are obvious to the audience, the elaboration adds tokens without adding epiplexity. A reverse-compressed article is one where the structure was already accessible to its readers without the article.
+[Epiplexity](https://arxiv.org/html/2601.03220v1) formalizes one component of this test: structural information extractable from data by a computationally bounded model under a runtime constraint. It is task-agnostic and does not by itself formalize relevance, surprise, or usefulness relative to an individual reader. Test 3 is this note's operational extension: compare what structure an intended reader can access with and without the artifact, given that reader's prior knowledge and goals. A connection to common knowledge can pass that test when it makes a surprising or previously unavailable pattern accessible. When the connection is already obvious to the audience, the elaboration adds tokens without changing what that reader can extract. A reverse-compressed article is one where the relevant structure was already accessible to its intended readers without the article.
 
 ## How a linked KB resists reverse-compression
 
-In a linked KB, each link can carry the reader to a node with its own epiplexity — a practitioner report with quantified results, a formal framework, a prior argument with independent evidence. The network is where epistemic complexity accumulates, not the prose of any single note.
+In a linked KB, each link can carry the reader to a node with independently extractable structure — a practitioner report with quantified results, a formal framework, or a prior argument with its own evidence. The network is where accessible epistemic complexity accumulates, not the prose of any single note.
 
 But this resistance requires that links are [load-bearing](./linking-theory.md) — the linked notes must actually contribute to the argument. A note full of "see also" links to tangentially related material is still reverse-compressed; the links are decorative, not structural. The test: remove the links — does the argument collapse, or does it read identically?
 
@@ -40,7 +40,7 @@ For the intended reader (an agent or human with access to this KB and general tr
 Relevant Notes:
 
 - [vibe-noting](./vibe-noting.md) — context: the inflation failure mode this note names and analyzes
-- [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: epiplexity formalizes what "adds information for a bounded observer" means
+- [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: separates compute-bounded structural extraction from this note's reader-relative relevance test
 - [Epiplexity paper](https://arxiv.org/html/2601.03220v1) — source: the formal measure of extractable structure for bounded observers
 - [SuperARC AIT benchmark](../sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md) — evidenced-by: reports direct-print programs classified as correct and their dominance under the paper's language and temperature variations; classifying this as reverse-compression is local analysis
 - [linking-theory](./linking-theory.md) — enables: the load-bearing vs decorative distinction is a core question for linking theory

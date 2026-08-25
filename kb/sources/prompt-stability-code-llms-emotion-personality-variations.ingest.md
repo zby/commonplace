@@ -38,6 +38,8 @@ Ma et al. introduce PromptSE, a framework for measuring how sensitive code gener
 
 - **Source extract (verbatim):** We adopt model-level Pass@1 as the performance indicator and quantify prompt stability through AUC-E.
   - **Source location:** §4.1, “RQ1: Joint Structure of Performance and Prompt Stability”
+- **Source extract (verbatim):** Under valence×arousal conditions, performance–sensitivity coupling and confidence patterns show cross-model differences. For some models, emotional prompting mildly reshapes correctness and calibration, but effects vary by model and family. Probability-layer diagnostics (ECE, bias, and elasticity) complement discrete indicators, helping make "calibration-aware" model selections. High-arousal negative-valence prompts inducing confidence miscalibration in certain models (particularly the Qwen family) suggest that emotional coloring can serve as a practical probe for model brittleness. Model × emotion ECE ranges from approximately 0.055 (Qwen-1.5B) to 0.622 (DS-Coder-6.7B).
+  - **Source location:** §4.4, “RQ4: Effects of Valence×Arousal on Correctness and Calibration”
 
 ## Connections Found
 

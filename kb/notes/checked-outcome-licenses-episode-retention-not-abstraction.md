@@ -7,7 +7,7 @@ tags: [learning-theory, agent-memory]
 
 # A checked outcome licenses retaining an episode, not abstracting its explanation
 
-[Trace-extracted memory](./trace-extracted-memory-earns-authority-per-operation-not-at-capture.md) turns successful or failed episodes into reusable memory. Its verify rung checks a recorded episode before a lesson is abstracted from it. The checker at that rung is an oracle. What the oracle checks determines what the episode can support.
+[Trace-extracted memory](./trace-extracted-memory-earns-authority-per-operation-not-at-capture.md) turns trace records into progressively more authoritative memory by testing a diagnosis or causal story against evidence before promoting it. This note extends that ladder to result-checked successful as well as failed episodes. The checker at the verify rung is an oracle. What the oracle checks determines what the episode can support.
 
 Two targets matter. An **outcome check** asks whether the final result met its target. A **process check** asks whether the claimed route was valid and faithfully represented what produced the result. The two checks support different claims.
 

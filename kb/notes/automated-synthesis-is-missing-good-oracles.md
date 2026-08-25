@@ -21,15 +21,12 @@ This is an instance of [the boundary of automation is the boundary of verificati
 
 ## Current attempts
 
-The [comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) found a recurring pattern: systems automate extraction far more readily than synthesis. The few attempts:
+The [comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) reports that automatic capture is common while complete lifecycle curation is rare. It does not directly compare extraction and synthesis. The stronger contrast in this note is a working diagnosis informed by narrower cases:
 
-- **Tip consolidation** ([trajectory-informed-memory paper](https://arxiv.org/html/2603.10600v1)) — clusters semantically similar tips and LLM-merges them. Works because task completion provides an oracle: consolidated tips either improve performance or don't. The oracle is narrow but real.
-- **A-MEM memory evolution** — neighboring notes update their context when new notes arrive. This is enrichment (adding context to existing items), not synthesis (producing something new from combination). No oracle needed because the operation is conservative.
-- **Cognee memify** — promises synthesis-like operations but ships simpler extraction. The gap between ambition and shipping is itself evidence of the difficulty.
-- **This KB's `/connect` skill** — surfaces synthesis opportunities by finding cross-note patterns. Human-triggered and human-evaluated. The human is the oracle.
+- **Tip consolidation** ([Trajectory-Informed Memory Generation](../agent-memory-systems/lightweight/trajectory-informed-memory-generation.md)) — clusters semantically similar tips and LLM-merges redundant guidance inside a task-completion evaluation loop. The local source coverage does not separately isolate consolidation quality, so this is a bounded synthesis mechanism rather than evidence that its oracle validates every merged tip.
 - **Latent-space diversity conditioning** ([Bystroński et al., 2025](../sources/geometry-of-knowledge-extending-diversity-boundaries-llms.ingest.md)) — embeds diverse initial outputs as semantic-space anchors, samples new vectors by interpolating and perturbing those anchors, and reports higher NoveltyBench diversity and AUT originality than the compared baselines. The method lacks explicit detection of low-quality or out-of-distribution generations beyond heuristic realignment. That leaves output screening unresolved, but does not erase the reported utility and originality measurements or establish synthesis quality for natural-language KBs.
 
-The pattern: synthesis works when there's an oracle (tip consolidation has task completion; `/connect` has a human reviewer). It stalls when there isn't one.
+These cases show that candidate generation and bounded consolidation can run, while their evaluation remains task-specific or incomplete. They motivate the oracle-gap diagnosis; they do not establish a survey-wide law that synthesis always stalls without a hard oracle.
 
 ## Why the oracle is hard to build
 
@@ -58,7 +55,7 @@ Relevant Notes:
 - [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: synthesis is an instance of the general principle; generation outpaces verification, so automation stalls
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — narrows: that note lists seven mutations; this note develops why one of them (synthesis) has a specific bottleneck distinct from the others
 - [memory management policy is learnable but oracle-dependent](./memory-management-policy-is-learnable-but-oracle-dependent.md) — parallels: same oracle-dependency pattern in a different domain (memory management vs synthesis), same conclusion that the bottleneck is the oracle not the mechanism
-- [agentic memory systems comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) — evidenced-by: the "extraction is easier to automate than synthesis" convergence finding across the comparison matrix
+- [agentic memory systems comparative review](../agent-memory-systems/agentic-memory-systems-comparative-review.md) — evidenced-by: automatic capture is common while complete lifecycle curation is rare; the extraction-versus-synthesis contrast remains this note's working diagnosis
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — potential solution: composite oracle from weak signals, untested for synthesis evaluation specifically
 - [oracle strength spectrum](./oracle-strength-spectrum.md) — extends: synthesis evaluation sits in the weak-oracle zone; the spectrum predicts that engineering effort should go to oracle construction, not generation improvement
 - [synthesis is not error correction](./synthesis-is-not-error-correction.md) — shared structure: multi-agent output synthesis and knowledge synthesis both fail for the same reason — combining inputs without an oracle to evaluate the combination; error amplification (Kim et al.) is the within-task manifestation, spurious connections are the across-KB manifestation

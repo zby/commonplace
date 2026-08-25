@@ -46,7 +46,7 @@ A batch with more than one member represents parallel calls. It contains the ind
 
 LLM-assisted planning also fits. A planning call returns a result in `R`; `transition` records the plan in `K`; and a later `select` consumes it. Hierarchical decomposition repeats the same loop rather than introducing a different mechanism.
 
-Bedi reports a ContextProvider pattern in which each provider wraps one source behind two natural-language query/update tools; a source-scoped sub-agent owns the underlying tools and source-specific operating details and may load a source skill. In this note's terms, that is a source-scoped singleton-batch instance: the parent-facing query or update is `call(C)`, while `select(K)` chooses the source boundary and frames the request. The reported database and GitHub examples can also isolate read/write permissions inside providers; the source does not make that a universal property. It reports rough Scout token and latency trends but no measurement table, workload definition, raw data, or pinned implementation revision, so it illustrates the decomposition without supplying reproducible efficacy evidence.
+Bedi reports a ContextProvider pattern in which each provider wraps one source behind two natural-language query/update tools; a source-scoped sub-agent owns the underlying tools and source-specific operating details and may load a source skill. A provider call can be represented as a source-scoped singleton batch only when an implementation also keeps transition-relevant state explicit, schedules inter-call work symbolically, and contains effects behind the batch barrier. The retained source extracts establish the provider boundary and delegated calls, not those additional normal-form conditions. The pattern therefore illustrates a possible decomposition without establishing that every ContextProvider implementation belongs inside this form.
 
 ## Boundary
 
@@ -80,7 +80,7 @@ Sources:
 - Liu et al. (2026). [ConvexBench: Can LLMs recognize convex functions?](https://arxiv.org/html/2602.01075v2) — scoped recursion with focused context as an implementation for compositional reasoning.
 - Meyerson et al. (2025). [MAKER: Solving a million-step LLM task with zero errors](https://arxiv.org/abs/2511.09030) — maximal one-question decomposition as an extreme singleton-batch instance with near-linearithmic cost scaling in the reported setting.
 - @Vtrivedy10 (2026). [The Anatomy of an Agent Harness](https://x.com/Vtrivedy10/status/2031408954517971368) — the Ralph Loop is a concrete prompt-execute-observe-decide instance; its runtime components map to scheduler infrastructure.
-- Ashpreet Bedi (2026). [Context providers: the missing layer between agents and tools](../sources/context-providers-the-missing-layer-between-agents-and-tools.ingest.md) — source-scoped provider sub-agents instantiate select/call by hiding raw tool surfaces behind bounded query or update calls.
+- Ashpreet Bedi (2026). [Context providers: the missing layer between agents and tools](../sources/context-providers-the-missing-layer-between-agents-and-tools.ingest.md) — source-scoped provider sub-agents illustrate a possible decomposition behind bounded query/update interfaces; the retained extracts do not establish the additional state, scheduling, and barrier conditions required by this form.
 
 Relevant Notes:
 

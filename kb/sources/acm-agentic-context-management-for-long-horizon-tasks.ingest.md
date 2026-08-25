@@ -32,6 +32,10 @@ ACM turns context management into two agent actions: `manage_context` summarizes
 - **Source extract (verbatim):** We compare ACM against three agent frameworks: (1) ReAct (Yao et al., 2022), the standard reasoning-and-acting agent without any context management; (2) Summary Agent (Wu et al., 2025; Kang et al., 2025), which triggers summarization when context usage exceeds a fixed threshold; and (3)  Memory Agent (Zhang et al., 2026), which accumulates experiences from previous rollouts but does not dynamically manage its intra-trajectory context.
   - **Source location:** Section 5.1, “Baselines”
 
+- **Source extract (verbatim):** BrowseComp-Plus          DeepSearchQA       SWE-Bench Verified
+  - **Source location:** Table 3, benchmark column groups
+- **Source extract (verbatim):** Method        Pass@1 Tools Peak Tok. Pass@1 Tools Peak Tok. Pass@1 Tools Peak Tok.
+  - **Source location:** Table 3, metric header row
 - **Source extract (verbatim):** Qwen3.5-9B 0.635 30.8 59k 0.405 88.7 42K 0.508 77.6 46K
   - **Source location:** Table 3, Qwen3.5-9B baseline row
 - **Source extract (verbatim):** + ACM 0.727 46.2 54k 0.425 58.8 41K 0.530 79.3 50K
