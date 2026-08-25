@@ -17,6 +17,16 @@ Quality goal is **fidelity + economy** — say what the system actually does in 
 
 **For exact implementation facts, live implementation is the default read path.** In the Commonplace source checkout, inspect `src/commonplace/`. In an installed project, `commonplace-source` prints the source directory of the same installed package that supplies the `commonplace-*` commands; use a command's `--help` for its live CLI contract. Reference prose earns a separate place when it supplies orientation, architecture boundaries, cross-component invariants, rationale, or other information the implementation does not cheaply recover. Do not create a prose copy merely to make installed code inspectable.
 
+**For change history, git is the default read path.** What changed, when, in
+what order, and the transition performed belong to commits, not to this
+collection ([ADR 074](./adr/074-git-is-the-change-history-layer.md)). A
+reference passage earns its place by naming the operation of changing the
+system that must read it before acting — adding a collection, altering a type,
+revising a contract, retiring an artifact — and by supplying something that
+operation cannot cheaply recover from the implementation or from `git log`.
+Git holds only what a source-checkout operator needs; anything a reader,
+installed project, or shallow clone must know stays in tracked artifacts.
+
 This Commonplace default rests on [a seven-artifact disposition
 sweep](../notes/evidence/seven-documentation-cases-left-routing-and-synthesis.md),
 which bounds the result to a source-readable Python CLI repository.
@@ -35,6 +45,9 @@ given that the system it describes is available for inspection:
   not for exactness ("what does this function return"). Compare the smallest
   units a reader must select, not whole artifacts: a symbol is a search key, a
   prose section is not.
+- **Is this a premise of a change operation, or a record of a change already
+  made?** A migration step, a before-state described as a diff, or a list of
+  files touched is history; it is already in git and is cut here.
 - Could this section be cut without losing information the reader needs to act?
 - Would a table or list say this more compactly than prose?
 

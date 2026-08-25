@@ -107,6 +107,7 @@ The source checkout's `.agents/skills/` and `.claude/skills/` projections are co
 - **Prefer atomic stage+commit** — combine staging and committing in one command (`git add <files> && git commit -m "..."`). Leaving files staged without committing risks another agent's commit sweeping in unrelated changes.
 - **If sandboxing blocks `git add` or `git commit`, retry the whole atomic command with escalation** — do not fall back to separate `git add` followed by a later `git commit`. Use explicit file paths in the atomic command, for example `git add path/one.md path/two.md && git commit -m "..."`.
 - **Prefer atomic artifact commits over temporary navigation consistency** — do not partially stage shared README/index/navigation files just to make a new artifact immediately discoverable. Generated indexes and curated navigation can lag and be refreshed in a separate commit unless that navigation file is the primary target or can be staged wholly without sweeping unrelated work.
+- **Commit messages carry the change narrative** — git is the change-history layer of this checkout (ADR 074). Subject: imperative summary. Body: when the commit implements or revises an ADR, proposal, or workshop, name it (`ADR 074`, `kb/work/<name>`) so `git log --grep` finds it. Do not restate migration steps or files-touched lists in ADRs or reference docs.
 - **Check `git diff` before committing.**
 - **Never `git reset --hard` or force-push** without explicit permission. Prefer safe alternatives: `git revert`, new commits, temporary branches.
 

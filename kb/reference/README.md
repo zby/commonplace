@@ -229,6 +229,7 @@ Commonplace runs on its own methodology, so this collection also documents *this
 - [ADR-021: ship library content under kb/commonplace](./adr/021-ship-library-content-under-kb-commonplace.md) — the library/user boundary, path invariance rules, and scaffold layout behind the current installed surface
 - [ADR-027: package scaffold assets without source-tree symlinks](./adr/027-package-scaffold-assets-without-source-tree-symlinks.md) — the current packaging mechanism for scaffold assets in source checkouts, sdists, and wheels
 - [ADR-037: promote skills into runtime surfaces by copying](./adr/037-promote-skills-into-runtime-surfaces-by-copying.md) — why `commonplace-init` copies skill directories instead of symlinking or junctioning them
+- [ADR-074: git is the change-history layer](./adr/074-git-is-the-change-history-layer.md) — change narrative lives in commits; reference and ADRs retain only premises a named change operation must read; instructions declare the git read paths
 - [ADR-039: tool visibility is package-owned and git is never invoked](./adr/039-tool-visibility-is-package-owned-and-git-is-never-invoked.md) — the name-based visibility contract that replaced gitignore filtering and `git mv`
 - [ADR-014: scripts as python package, one-tree model](./adr/014-scripts-as-python-package-one-tree-model.md) — the packaging and install decision ADR-021 refines
 - [ADR-012: types for structure, traits for review](./adr/012-types-for-structure-traits-for-review.md) — why structural types and semantic-review traits are separate axes
