@@ -47,13 +47,19 @@ do and counted them. That reading should be made explicit rather than left to
 inference — it is exactly the kind of arbitrary, non-inferable detail an
 instruction should carry.
 
-## A refinement the reviewer supplied unprompted
+## Superseded direction: do not add evidence classes
 
-Given a budget it could not spend everywhere, it opened the four source-bearing
-ingests and one internal note, skipping four internal note links. **Prioritising
-source links over internal ones is a better rule than "the first five"**, and a
-careful reviewer reached it without being told. Worth considering as the explicit
-priority order if a cap survives.
+An earlier version of this file proposed prioritising source links over internal
+ones, on the strength of the reviewer choosing that order unprompted. **Operator
+decision 2026-08-25: do not add rules splitting evidence into classes; keep the
+cap global.** A ranking rule buys a better default ordering at the cost of one
+more classification an author and a reviewer must both apply consistently.
+
+The direction taken instead is
+[Review link budget measured in bytes](../../reference/proposals/review-link-budget-measured-in-bytes.md),
+which dissolves all three defects above rather than patching them: material
+already loaded costs no further bytes, heterogeneous sizes get priced, and a
+reviewer holding a byte budget spends it well without being told how to rank.
 
 ## Cost of the fix, and why to batch
 
