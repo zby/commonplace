@@ -51,6 +51,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [pi-agent-zerostack-comparison](./pi-agent-zerostack-comparison/README.md) — preparing a code-grounded comparison instruction for the two Rust coding-agent CLIs cloned under `related-systems/`
 - [vocabulary-governance](./vocabulary-governance/README.md) — deciding how global, collection-local, and type-specific vocabularies should be declared and used by shipped KBs
 - [aris-full-trial](./aris-full-trial/README.md) — running a private full-ARIS paper-production trial while keeping only framing and lessons learned in the public KB
+- [review-attention-price](./review-attention-price/README.md) — deriving α, β, and the budget in the review attention price, and the mechanism a criterion spends it through, so the per-gate reading caps stop being inherited constants; a cost track (usage regression) and a degradation track (paired packaging assay on pre-repair fixtures)
 - [review-bundle-packing](./review-bundle-packing/README.md) — measuring and deciding whether review prompts must stay bundle-local or may pack multiple bundles into one run
 - [validation](./validation/README.md) — making validation a reliable part of the workflow: when, what, and how to validate (hooks, skill upgrades, periodic revalidation)
 - [obsidian-affordances](./obsidian-affordances/README.md) — deciding which Obsidian-facing affordances are useful compatibility layers versus representation drift for a repo-native KB
