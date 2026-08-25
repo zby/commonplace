@@ -27,7 +27,7 @@ The model key also needed correction. The system currently stores and queries a 
 
 Review freshness is owned by the review database, not by Git.
 
-The database stores content snapshots for reviewed KB files. A new snapshot records the repo-relative path, the exact UTF-8 markdown text read from disk, and a SHA-256 over those stored bytes. The snapshot table is shared by note files and gate files; the note/gate distinction is the role of the foreign-key column that points to a snapshot. Review pairs reference the note and gate snapshots used for prompt rendering. Current acceptance rows reference the snapshots that were accepted. Superseded snapshots are deleted only after no current acceptance row and no remaining review pair references them.
+The database stores content snapshots for reviewed KB files: the repo-relative path, the exact text read from disk, and a hash over those stored bytes. One snapshot table serves note and gate files; the note/gate distinction is the role of the reference that points to a snapshot. Review pairs reference the snapshots used for prompt rendering, current acceptance rows reference the snapshots that were accepted, and superseded snapshots are deleted only after nothing references them.
 
 Freshness compares the current filesystem text of the note and gate against the accepted snapshot hashes. Git commits, Git blob hashes, and committed-gate preconditions are not part of review correctness. Diffs, when shown, are a review UX over stored snapshot text and current file text; they are not a state dependency.
 
@@ -44,7 +44,7 @@ The review identity remains:
 note_path x gate_path x model_partition
 ```
 
-`gate_path` is the repo-relative path of the gate markdown file. Existing `gate_id` storage is migrated to `gate_path`; a CLI or report may still display a shorthand such as `prose/source-residue`, but that shorthand is derived from the path and is not the freshness key. The gate note path is the gate identifier for freshness state.
+`gate_path` is the repo-relative path of the gate markdown file. A CLI or report may still display a shorthand such as `prose/source-residue`, but that shorthand is derived from the path and is not the freshness key. The gate note path is the gate identifier for freshness state.
 
 `model_partition` replaces `model_id` as the architectural concept. It is a declared, frozen model-side freshness partition chosen at run creation. It may be exact when the caller knows the concrete model, or coarse when the caller only knows the harness/session class, such as `codex` or `claude-code`. It may later encode model-side parameters such as reasoning effort or temperature if the operator wants those to split freshness.
 
@@ -73,7 +73,7 @@ Harder / accepted costs:
 - The review database stores duplicated note and gate text for accepted baselines, so it grows with review history. This is accepted because review state already crossed the SQLite boundary, and the stored text is what makes Git independence possible.
 - Exact historical diffs are available only when the accepted snapshot text is retained. If old snapshot bodies are garbage-collected, freshness can still compare hashes but diff text may be unavailable.
 - `model_partition` is less precise than `model_id` by name. That imprecision is deliberate: the value is a freshness partition, not necessarily a literal observed model.
-- Schema migrations remain exceptional. Old stores whose accepted baselines cannot be represented as DB-owned snapshots must be recreated because they do not provide valid freshness baselines. Populated schema-v4 stores already have valid snapshot-backed verdict evidence and may use the recorded v4→v5 migration added on 2026-07-11.
+- Schema migrations remain exceptional. Old stores whose accepted baselines cannot be represented as DB-owned snapshots must be recreated because they do not provide valid freshness baselines.
 - Review remains a scoped SQLite exception while authored notes, gates, instructions, and source material remain markdown files. The database stores operational review state and accepted baselines, not primary KB content.
 
 ---

@@ -12,58 +12,33 @@ status: accepted
 
 ## Context
 
-[ADR 034](./034-queued-review-jobs-and-execution-provenance.md) established queued review jobs, selector-JSON creation, parent-dispatched workers, and execution provenance separate from freshness identity. Its first implementation still carried extra state and workflow surface:
-
-- `commonplace-claim-review-job` moved jobs from `queued` to `running` before worker dispatch.
-- `review_jobs` stored artifact paths that were derivable from the job id.
-- `review_pairs` stored `pair_status`, so failed multi-pair jobs could retain completed pairs.
-- Live parsing accepted several free-text aliases and inference fallbacks.
+[ADR 034](./034-queued-review-jobs-and-execution-provenance.md) established queued review jobs, selector-JSON creation, parent-dispatched workers, and execution provenance separate from freshness identity. Its first implementation still carried extra state and workflow surface: a claim step that moved jobs to `running` before worker dispatch, persisted artifact paths derivable from the job id, per-pair status that let failed multi-pair jobs retain completed pairs, and live parsing that accepted free-text aliases and inference fallbacks.
 
 Those features added maintenance surface without enough current operational value. There is no scheduler with leases or heartbeats, so `running` did not enforce ownership. Persisted artifact paths duplicated deterministic naming rules. Partial salvage made acceptance reasoning harder because a failed job could still advance freshness for a subset of pairs. Permissive parsing made model drift look like successful review output.
 
 ## Decision
 
-Review jobs now have exactly three statuses: `queued`, `completed`, and `failed`. Job creation prepares queued work and prompt artifacts. Worker dispatch remains parent-owned and does not mutate the review DB. `commonplace-finalize-review-job` records optional provenance at finalization time:
+Review jobs now have exactly three statuses: `queued`, `completed`, and `failed`. Job creation prepares queued work and prompt artifacts. Worker dispatch remains parent-owned and does not mutate the review DB. `commonplace-finalize-review-job` records optional provenance at finalization time: the execution medium or worker label, and the concrete worker model and effort, validated against the job's `model_partition`.
 
-- `--runner` records the execution medium or worker label.
-- `--model` records the concrete worker model and validates `build_model_partition(--model, --effort)` against the job's `model_partition`.
-- `--effort` requires `--model`.
-
-Artifact paths are derived, not persisted. The job directory is `kb/reports/bundle-reviews/review-job-{review_job_id}/`; prompt, bundle output, manifest, and per-pair result paths are pure functions of the job id, packing, and complete pair set.
+Artifact paths are derived, not persisted: the job directory, prompt, bundle output, manifest, and per-pair result paths are pure functions of the job id, packing, and complete pair set.
 
 Finalization is all-or-nothing. The finalizer validates parse coverage before mutating acceptance state, and result-file write failures roll back the DB completion. Missing, duplicate, unexpected, malformed, or result-less pair blocks fail the whole job. Failed jobs reset pair completion state (`decision` and `reviewed_at` remain null) and write no acceptance rows.
 
-Live parsing is strict: each pair block must end with exactly one final result line:
+Live parsing is strict: each pair block must end with exactly one final result line, parsed against the pair's persisted `result_kind`. Verdict pairs accept only `PASS`, `WARN`, `FAIL`, or `ERROR`; report pairs accept only `REPORT`, which is a completion marker rather than a decision. Aliases and inferred decisions are invalid in live finalization.
 
-```text
-## Result: PASS
-## Result: WARN
-## Result: FAIL
-## Result: ERROR
-## Result: REPORT
-```
-
-Aliases and inferred decisions are invalid in live finalization. Since the schema-v5 amendment below, parsing is against the pair's persisted `result_kind`: verdict pairs accept only `PASS`, `WARN`, `FAIL`, or `ERROR`; report pairs accept only `REPORT`, which is a completion marker rather than a decision.
-
-Acceptance evidence is guarded at the SQL boundary. `current_gate_acceptances` joins `acceptance` through `review_pairs` and `review_jobs`, and only exposes rows whose parent job is `completed` and whose pair satisfies per-kind completion: `reviewed_at` plus a decision for verdict pairs, or `reviewed_at` plus a null decision for report pairs. This makes the freshness selector robust even if an accidental acceptance row is inserted.
+Acceptance evidence is guarded at the SQL boundary. The current-acceptance view joins acceptance through pairs and jobs, and only exposes rows whose parent job is `completed` and whose pair satisfies per-kind completion: `reviewed_at` plus a decision for verdict pairs, or `reviewed_at` plus a null decision for report pairs. This makes the freshness selector robust even if an accidental acceptance row is inserted.
 
 Result files are evidence and remain fatal: a result-file write failure prevents DB completion and then marks the job failed in a separate failure transaction. `MANIFEST.json` is display/debug output, so a manifest refresh failure after DB completion does not fail the job; finalization reports it as a warning.
 
-ADR 036 later changed successful acceptance from append-only events to a current-state upsert and moved superseded-review pruning inline with that success transaction.
+Schema migration remains exceptional rather than a general compatibility promise. Stores whose historical evidence cannot be represented by the current schema must be recreated; a narrow in-place migration is admissible only when paid-for evidence is exactly representable in the new schema. Commonplace has no external consumers that justify a general compatibility layer.
 
-Schema migration remains exceptional rather than a general compatibility promise. Stores whose historical evidence cannot be represented by the current schema must be recreated. The schema-v5 amendment below adds one recorded exception for populated v4 stores whose verdict evidence can be preserved exactly.
-
-### Amendment: result kinds and the v4→v5 migration (2026-07-11)
+### Result kinds
 
 Review pairs persist `result_kind = verdict | report`, separating protocol completion from a decision. Jobs are result-kind homogeneous, finalization parses against the persisted kind, and `REPORT` completes a report pair with `reviewed_at` while leaving `decision` null. This extends the all-or-nothing rule without weakening it: every expected pair must still complete under its own contract before the job advances acceptance.
 
-Because populated v4 stores contained paid-for verdict evidence already representable in v5, the v4→v5 migration upgraded them in place while preserving review-pair IDs and acceptance references. This was a narrow evidence-preservation migration, not restoration of the general migration substrate removed by this ADR.
+### Criterion-axis naming
 
-### Amendment: criterion-axis naming and schema v6 (2026-07-11)
-
-The generic assay axis now uses `criterion` throughout the schema, Python API, JSON and artifact fields, protocol labels, stale reason, and CLI: `criterion_path`, `criterion_id`, `current_criterion_acceptances`, `criterion-changed`, `--grouping criterion`, `commonplace-ack-review`, and `commonplace-resolve-criteria`. `Gate` remains only for the closed-ended, verdict-kind criterion type, its authored `gate_id`, its catalog, and `--all-gates`.
-
-This is schema v6. Existing stores are rejected and must be recreated. The narrow v4→v5 migration script remains available for one final evidence-preservation use, but normal initialization does not migrate old stores and v5 is not accepted as a v6 store. Commonplace has no external consumers that justify a general compatibility layer, and the cleaner invariant is that the concept and every generic identifier share one name.
+The generic assay axis uses `criterion` throughout the schema, Python API, JSON and artifact fields, protocol labels, stale reason, and CLI. `Gate` remains only for the closed-ended, verdict-kind criterion type, its authored `gate_id`, its catalog, and `--all-gates`. The invariant is that the concept and every generic identifier share one name.
 
 Deferred:
 

@@ -24,8 +24,8 @@ Complete generated listings are build-time-only; the agent read path is curated 
 1. Retire complete generated listings from git and the agent read path — both the per-collection `dir-index.md` and the per-tag `## Other tagged notes` tail.
 2. Regenerate them at ProperDocs build time for human readers, where browser scroll and find restore sublinear access. One source of truth (note frontmatter), two materializations.
 3. Keep curated heads committed at every scope: directory `README.md` / `COLLECTION.md`, and the editorial body of each tag index. The tag index is the tag's README; its generated tail is the detachable part.
-4. Agents discover via curated heads plus scoped `rg`; add no new query command, because scoped rg recovers the operative part of the retired index. Documented recipes: by tag, `rg -l '^tags:.*\bTAG\b' kb/notes/ --glob '*.md' | xargs -r rg -N --no-heading '^description:\s*' -r ''` (the `xargs -r` guard prevents an empty match from falling back to a whole-repo search); by keyword, `rg '^description:' <scoped path>`. Codifying these into a `commonplace-*` command is deferred until a recurring failure justifies it.
-5. Colocation is conditional on weight: a small tag keeps its short generated list colocated under the curated head; a popular tag detaches it, because a curated index is an agent read surface and must stay context-feasible. *(Refined by [ADR 026](./026-tag-readme-type-with-completeness-and-coverage-marks.md): nothing generated is committed at any size — weight became the type contract on the committed curated head instead of a colocation dial.)*
+4. Agents discover via curated heads plus scoped `rg` (by tag, listing the matching files' descriptions; by keyword, over a scoped path); add no new query command, because scoped rg recovers the operative part of the retired index. Codifying the recipes into a `commonplace-*` command is deferred until a recurring failure justifies it.
+5. Colocation is conditional on weight: a small tag keeps its short generated list colocated under the curated head; a popular tag detaches it, because a curated index is an agent read surface and must stay context-feasible. *(Refined by [ADR 026](./026-tag-readme-type-with-completeness-and-coverage-marks.md): nothing generated is committed at any size.)*
 
 This supersedes ADR 003's primary-discovery decision (read `dir-index.md` first). 003's surviving element — curated focused indexes as a discovery surface — is retained as the curated-heads path; complete-index reads are removed from standard connect discovery.
 
@@ -33,7 +33,7 @@ This supersedes ADR 003's primary-discovery decision (read `dir-index.md` first)
 
 The shared description warning band is 50–250 characters, raising the former upper warning from 200. The ceiling is an allowance, not a target: authors should still use the shortest description that changes a read/skip decision, and descriptions above 250 warn rather than fail.
 
-The inherited 200-character ceiling had been justified partly by the cost of complete description listings, but this ADR removed those listings from the agent path. A 2026-07-27 controlled retrieval assay then compared independently written variants under 120, 160, 200, 250, and 300-character allowances. In 44 trials per allowance, 250 was the shortest allowance with no false skips or irrelevant opens; 300 added no retrieval benefit and exceeded the assay's declared 8,000-token estimate at an 80-result slice, while 250 remained within it. The only observed benefit over shorter variants came from distinguishing a same-title source snapshot from its ingest analysis, so the evidence warrants a soft global warning—not a hard maximum or a recommendation that ordinary descriptions approach 250.
+The inherited 200-character ceiling had been justified partly by the cost of complete description listings, but this ADR removed those listings from the agent path. A controlled retrieval assay compared independently written variants under allowances from 120 to 300 characters (44 trials per allowance): 250 was the shortest allowance with no false skips or irrelevant opens; 300 added no retrieval benefit and exceeded the assay's token budget at an 80-result slice. The only observed benefit over shorter variants came from distinguishing a same-title source snapshot from its ingest analysis, so the evidence warrants a soft global warning—not a hard maximum or a recommendation that ordinary descriptions approach 250.
 
 The operativity path has two parts. The shared note schema is consumed by `commonplace-validate`, which warns outside the band; writing instructions teach the same allowance before drafting. Agents then consume the resulting descriptions through the scoped path-plus-description searches established by this ADR. Whether explicit artifact-role display can resolve same-title and same-lineage collisions more cheaply than description headroom remains open.
 
@@ -43,14 +43,12 @@ Easier:
 - Per-fork load scales with the task, not the collection: write, connect, and ingest stop paying tens of KB of denormalized index on every fork.
 - Adding a note no longer requires keeping a heavy committed index current for agents (003's maintenance burden); the human site regenerates from source.
 
-Harder / migration:
-- `git rm` plus gitignore the ~50 committed `dir-index.md` files; strip the committed generated tail from tag indexes.
-- `cp-skill-connect` standard discovery is rewritten to drop complete-index reads (curated heads plus scoped rg; broad scans reserved for deep mode).
-- Reference sweep: `navigation.md`, `CLAUDE.md` Key Indexes, and any README or curated index that links to a `dir-index.md`.
+Harder:
+- `cp-skill-connect` standard discovery drops complete-index reads (curated heads plus scoped rg; broad scans reserved for deep mode).
 - The ProperDocs build becomes responsible for human-facing inventories.
 
 Risks / watch:
-- Scoped rg has a footgun: a tag that matches zero files makes `xargs` run rg with no path argument, which searches the whole repo. Mitigated by `xargs -r`; recurring trips would be the signal to codify a command.
+- Scoped rg has a footgun: a tag that matches zero files can make the piped search fall back to the whole repo. The documented recipe guards against it; recurring trips would be the signal to codify a command.
 - rg yields `path + description`, not the human H1 title; the path stands in for the title in triage. If title-in-output proves necessary, that is the case a command would justify.
 - Description quality stays load-bearing (inherited from 003).
 - Raising the soft ceiling permits up to 50 more characters per pointer. The assay bounded that cost at its observed p95 and 80-result conditions, but the largest current tag slice still needs candidate-set control rather than longer per-item compression.

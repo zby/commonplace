@@ -13,7 +13,7 @@ status: accepted
 
 ## Context
 
-Commonplace needs a small vocabulary that agents and maintainers can treat as having KB-specific meanings. The current `AGENTS.md` Vocabulary section already carries that list and says that first mentions in notes should be glossed and linked. That placement is useful because the rule is near the terms it governs, but it blurs two responsibilities:
+Commonplace needs a small vocabulary that agents and maintainers can treat as having KB-specific meanings. Placing the first-mention rule in the `AGENTS.md` Vocabulary section beside the term list keeps the rule near the terms it governs, but blurs two responsibilities:
 
 - `AGENTS.md` declares always-loaded project context.
 - `cp-skill-write` owns authoring behavior when writing or materially editing KB artifacts.
@@ -59,9 +59,7 @@ ADR-011's accessibility requirement still stands: authored notes should be reada
 **Harder:**
 
 - The term list and the authoring behavior are no longer colocated, so the write skill must explicitly name and load `AGENTS.md` active vocabulary.
-- Existing notes may still reflect the old placement until touched; migration should be opportunistic rather than a bulk rewrite.
 - Collection authors may expect vocabulary to live beside link rules in `COLLECTION.md`; v1 intentionally declines that extra policy surface.
-- Review gates that mention first-mention behavior may need wording updates so they refer to active vocabulary and the write path rather than a generic KB-vocabulary exemption.
 
 **Not changing:**
 
@@ -69,16 +67,6 @@ ADR-011's accessibility requirement still stands: authored notes should be reada
 - Definition notes remain normal typed KB artifacts, not a separate vocabulary database.
 - `cp-skill-write` still reads the target collection's `COLLECTION.md` and selected type spec before writing.
 - Reader accessibility remains the reason for first-mention glosses and definition links.
-
-## Implementation Plan
-
-1. Update `AGENTS.md` Vocabulary intro to say it declares the active vocabulary: terms with specific meanings throughout this KB.
-2. Update `AGENTS.md.template` so installed projects get an empty active-vocabulary section for user-owned terms.
-3. Remove the operative first-mention sentence from `AGENTS.md`.
-4. Add a `Vocabulary` mechanic to `kb/instructions/cp-skill-write/SKILL.md` under universal mechanics: load active vocabulary from `AGENTS.md`, and gloss/link active terms on first meaningful mention when writing or materially editing prose.
-5. Update review gate or instruction references that still say "KB vocabulary" where "active vocabulary" is now the intended technical term.
-6. Leave `COLLECTION.md` files unchanged for v1 except where their prose falsely implies that collections declare active vocabulary.
-7. Defer collection-local and type-specific vocabulary until a concrete collection or type needs it.
 
 ---
 

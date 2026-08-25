@@ -10,7 +10,7 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-06-01
 **Extends:** [ADR-011](./011-notes-must-be-accessible-to-external-readers.md)
-**Amended by:** [ADR-059](./059-external-is-a-reserved-outbound-destination.md) — the collection authorizes external targets while this ADR's type contract owns citation shape
+**Amended by:** [ADR-059](./059-external-is-a-reserved-outbound-destination.md) (external authorization is collection-owned)
 
 ## Context
 
@@ -35,7 +35,7 @@ A load-bearing claim may be anchored by quoting the verbatim supporting text as 
 
 ### Optional and additive
 
-Used on the claims that carry a review, not on every sentence. Existing citations and outbound links are untouched; validation fires only where the convention is actually used. No migration.
+Used on the claims that carry a review, not on every sentence. Existing citations and outbound links are untouched; validation fires only where the convention is actually used.
 
 ### Verification splits by where the source lives
 

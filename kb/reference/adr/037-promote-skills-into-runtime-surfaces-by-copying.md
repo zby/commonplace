@@ -12,7 +12,7 @@ status: accepted
 
 ## Context
 
-Since ADR 006, `commonplace-init` promoted shipped skills into the known runtime discovery surfaces (`.claude/skills/`, `.agents/skills/`) as symlinks into the canonical `kb/commonplace/instructions/<name>/` directories, keeping one authoritative copy of each skill. On Windows, where real symlinks require admin rights or Developer Mode, the installer fell back to directory junctions created through the stdlib `_winapi.CreateJunction`.
+Since ADR 006, `commonplace-init` promoted shipped skills into the known runtime discovery surfaces (`.claude/skills/`, `.agents/skills/`) as symlinks into the canonical `kb/commonplace/instructions/<name>/` directories, keeping one authoritative copy of each skill. On Windows, where real symlinks require admin rights or Developer Mode, the installer fell back to directory junctions.
 
 The link-based projection kept producing Windows problems. Symlink creation fails without elevated privileges; junctions require an absolute target on a local volume, so they break when a project moves and are skipped entirely on network volumes and sandboxed filesystems; and tools vary in how they treat reparse points, so a projection that exists on disk still may not resolve for a given runtime. The projection step was the one part of install that could partially fail, which forced a skip-and-report path in the installer, extra Windows warnings, and manual recovery instructions in INSTALL.md.
 
@@ -20,9 +20,9 @@ ADR 027 already removed symlinks from the packaging side for the same reason: Un
 
 ## Decision
 
-`commonplace-init` copies each promoted skill directory from `kb/commonplace/instructions/<name>/` into every runtime skills directory as regular files. Projected files go through the same per-file `_record_existing` classification as the rest of the scaffold: missing files are created, identical files are preserved silently, and differing files are preserved and reported.
+`commonplace-init` copies each promoted skill directory from `kb/commonplace/instructions/<name>/` into every runtime skills directory as regular files. Projected files go through the same per-file classification as the rest of the scaffold: missing files are created, identical files are preserved silently, and differing files are preserved and reported.
 
-The junction fallback and skipped-projection reporting are deleted; copying works on every platform, so there is no partial-failure path in new projection creation. The initial implementation also converted link projections left by earlier installs. That temporary migration branch was removed after relevant installations had migrated. Current init applies the ordinary per-file preservation rules to anything already present at a projection destination.
+The junction fallback and skipped-projection reporting are deleted; copying works on every platform, so there is no partial-failure path in projection creation. Init applies the ordinary per-file preservation rules to anything already present at a projection destination.
 
 The canonical contract stays the source directory under `kb/commonplace/instructions/`. The Commonplace source repo keeps its committed relative symlinks under `.claude/skills/` and `.agents/skills/` — those are repo-local development conveniences on platforms that support them, not installer output.
 

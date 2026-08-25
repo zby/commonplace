@@ -20,18 +20,9 @@ The symlink farm became the wrong boundary once Windows installation mattered. I
 
 Remove the tracked scaffold symlinks from `src/commonplace/_data/`.
 
-Package built distributions with explicit Hatch include mappings. The sdist includes the canonical scaffold inputs, including promoted `cp-skill-*` directories. The wheel maps those canonical paths into `commonplace/_data/...` with `force-include`:
+Package built distributions with explicit Hatch include mappings. The sdist includes the canonical scaffold inputs, including promoted `cp-skill-*` directories. The wheel maps those canonical paths (the shipped `kb/` trees, shared and user-space type directories, and root templates) into `commonplace/_data/...` with `force-include`.
 
-- `kb/notes` -> `commonplace/_data/kb/notes`
-- `kb/reference` -> `commonplace/_data/kb/reference`
-- `kb/instructions` -> `commonplace/_data/kb/instructions`
-- shared type and user-space type directories under their matching `_data/kb/...` targets
-- root templates (`AGENTS.md.template`, `.envrc.template`) under `_data/`
-
-Teach `commonplace-init` to resolve scaffold inputs in two steps:
-
-1. Prefer packaged data under `commonplace/_data/` when it exists (the wheel/install case).
-2. Fall back to the canonical repository path when running from an editable source checkout.
+`commonplace-init` resolves scaffold inputs by preferring packaged data under `commonplace/_data/` when it exists (the wheel/install case) and falling back to the canonical repository path when running from an editable source checkout.
 
 Keep the small user-collection `COLLECTION.md` templates as real files under `src/commonplace/_data/templates/`, because those files are scaffold-only assets rather than canonical KB library artifacts.
 

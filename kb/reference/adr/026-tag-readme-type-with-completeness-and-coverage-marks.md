@@ -14,7 +14,7 @@ status: accepted
 
 ADR 025 moved complete generated listings (`dir-index.md` pages and per-tag `## Other tagged notes` tails) to build-time-only, keeping curated heads committed for agents. That left the `index` type doing two jobs at once: being an *index* (complete enumeration) and being an *introduction to a tag* (the retired "area" role from ADR 004). The bundle worked at small scale; collection growth forces the general design move of separating the two contracts.
 
-ADR 025 deferred two mechanism decisions this ADR settles: curated-index weight thresholds, and whether curated indexes must declare focused-routing vs archival. ADR 025's decision point 5 — colocation is conditional on weight (a small tag keeps its short generated list colocated, a popular tag detaches it) — is also now obsolete: under 025 *nothing generated is committed at any size*, so there is no colocation dial left to turn. Weight must become a contract on the curated head itself, not a placement decision about a generated tail.
+ADR 025 deferred two mechanism decisions this ADR settles: curated-index weight thresholds, and whether curated indexes must declare focused-routing vs archival. Its colocation-by-weight point (decision point 5) is also obsolete: under 025 *nothing generated is committed at any size*, so weight must become a contract on the curated head itself, not a placement decision about a generated tail.
 
 Three further pressures shape the design:
 - A `complete` enumeration claim is worthless unless machine-enforced — a careful agent would re-run the by-tag `rg` sweep anyway, so an unenforced claim saves no work. This is the problem in [stale indexes reduce discovery when they suppress fallback search](../../notes/stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) in its sharpest form: a marked-but-incomplete head tells exhaustive consumers to stop looking while members are missing.
@@ -37,9 +37,7 @@ Split the `index` type into a committed `tag-readme` type plus two declared, val
 
 6. **Knowledge split: meaning → AGENTS.md, mechanics → validator, maintenance → type spec.** The type spec is the authoritative home for the whole contract (gates, checks, exits, when to declare or drop a mark) and is **maintenance-path only**: a `tag-readme` is understood standalone (self-describing field names, ordinary curated body), so readers never load the spec — only maintenance work does, routed there by the validator message. The marks' read-side *meaning* is frontloaded into AGENTS.md in two sentences (`complete: true` → the README is the membership surface, the rg sweep is skippable; `covered_by: [children]` → the typed routing is trustworthy; both validator-enforced), because that operative consequence is not fully inferable from the field names. This constrains future field naming: a mark whose name needs the spec to decode would put the spec back on every reader's path.
 
-7. **Directory READMEs stay free form, and the hub becomes `tags-README.md`.** Directory READMEs serve heterogeneous jobs (operator guide, survey landing, project framing) and `COLLECTION.md` already carries each collection's enforceable contract — unification with tags happens at the *name* level, not the type level. The navigation hub (`tags-index.md`) becomes `tags-README.md` under the `tag-readme` type, complete-marked over the set of tag-READMEs and enforced the same way (the schema must cover the hub's binding alongside the per-tag binding). The `index` type shrinks to the build-time virtual pages.
-
-This **extends ADR 025** (the build-time-only direction is unchanged) and **refines its decision point 5**: colocation-by-weight is replaced — nothing generated is committed at any size, so weight is a contract on the committed curated head instead.
+7. **Directory READMEs stay free form, and the hub is `tags-README.md`.** Directory READMEs serve heterogeneous jobs (operator guide, survey landing, project framing) and `COLLECTION.md` already carries each collection's enforceable contract — unification with tags happens at the *name* level, not the type level. The navigation hub is `tags-README.md` under the `tag-readme` type, complete-marked over the set of tag-READMEs and enforced the same way (the schema must cover the hub's binding alongside the per-tag binding). The `index` type shrinks to the build-time virtual pages.
 
 ## Consequences
 
@@ -48,11 +46,9 @@ Easier:
 - Completeness and coverage become checkable properties rather than trust: the validator queues the gap, so curation debt becomes a validator-visible, self-routing maintenance queue without touching the write path.
 - `covered_by` makes the parent/child tag structure machine-readable and enforced, fixing arscontexta's invisible-hierarchy failure while keeping the growth tripwire.
 
-Harder / migration:
-- Define the `tag-readme` type spec + schema (binding field for the tag key; optional `complete` and `covered_by`), with three new validator checks: weight gates on every instance, membership check when `complete: true`, coverage check + fan-out warn when `covered_by`.
-- Migrate the 16 tag indexes + hub: re-type, rename `<tag>-index.md` → `<tag>-README.md` and `tags-index.md` → `tags-README.md` via `commonplace-relocate-note` (backlink rewrites + ProperDocs redirects), behind a rename-list review gate.
-- Update instruction surfaces: `cp-skill-connect` (skip rg on `complete`, optionally recurse `covered_by`), AGENTS.md (mark meanings + Key Indexes renames), `kb/notes/COLLECTION.md` (types table), `navigation.md`, `maintain-curated-indexes.md` (lifecycle procedure), FIX-SYSTEM/validation docs (three new warning classes). `cp-skill-write` and `kb/types/note.md` are deliberately unchanged.
-- `learning-theory-index` must trim to selective or split before it can migrate cleanly; the hard fail lands only after it is under the gate (ADR 024 blast-radius / audit-before-flipping).
+Harder:
+- Operative through the `tag-readme` type spec and schema and the validator's weight, membership, and coverage checks, whose messages route to `maintain-curated-indexes`; `cp-skill-connect` and AGENTS.md consume the marks. `cp-skill-write` and `kb/types/note.md` are deliberately unchanged.
+- The hard fail lands only after every existing tag head is under the gate (ADR 024 blast-radius / audit-before-flipping); an oversized head must trim to selective or split first.
 
 Risks / watch:
 - A `complete` README inevitably grows into the gate and must drop the mark; the design makes the drop *cheap* (default exit: drop to selective, fall back to rg) rather than preventing it. Splitting is an editorial act justified by real substructure, never a completeness rescue.

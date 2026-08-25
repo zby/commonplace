@@ -11,7 +11,7 @@ status: accepted
 **Date:** 2026-04-19
 **Extends:** [ADR-009](./009-link-relationship-semantics.md)
 **Depends on:** [ADR-019](./019-collection-owned-link-vocabulary.md)
-**Amended by:** [ADR-058](./058-directional-identifiers-use-source-as-subject.md) — directional identifiers now use the source as grammatical subject; the old `evidence` identifier is retired; [ADR-060](./060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md) — `rationale` becomes `rests-on` while canonical `grounds` remains deferred
+**Amended by:** [ADR-058](./058-directional-identifiers-use-source-as-subject.md) (source-as-subject identifiers), [ADR-060](./060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md) (`rationale` becomes `rests-on`)
 
 **Scope.** This ADR's additions land in the theoretical-register default template (recorded in the catalogue at [`link-vocabulary.md`](../link-vocabulary.md)) and are adopted by collections whose `COLLECTION.md` includes them in its authorised sets. Cross-register labels (`rests-on`, `evidenced-by`, `is-evidence-for`, `procedure`, `operates-on`, `defined-in`) are a separate concern handled by the catalogue and selected per destination in each `COLLECTION.md`; this ADR does not speak to them.
 
@@ -19,19 +19,19 @@ status: accepted
 
 ADR 009 adopted a five-label vocabulary (`extends`, `grounds`/`foundation`, `contradicts`, `enables`, `exemplifies`/`example`) and committed to slow, evidence-driven expansion.
 
-A one-off audit extracted every `- [title](path) — label:` footer annotation across `kb/**/*.md` (3420 matches, 32 source/target register pairs, 236 distinct labels). The extraction was done with a throwaway Python script that walked the KB and classified labels by source/target collection; the script has since been retired, with the snapshot it produced preserved at [`kb/reports/link-vocabulary.md`](../../reports/link-vocabulary.md) as evidence. Most off-vocabulary labels fold into existing ADR 009 aliases — `sharpens`/`refines`/`clarifies` collapse into `extends`'s "refines" sense; `applies`/`instance` into `exemplifies`; `motivates` into `grounds`; `tension` into `contradicts`. Two candidates survive with genuine semantic daylight.
+An audit of every footer annotation across `kb/**/*.md` (3420 matches, 236 distinct labels) found that most off-vocabulary labels fold into existing ADR 009 aliases (the folds are listed under the decision). Two candidates survive with genuine semantic daylight.
 
 ### `contrasts` occupies a slot no ADR 009 label covers
 
 Authors use `contrasts` (~150 occurrences) to name a difference between peers *without claiming either is wrong*: "ACE performs bullet-level operations with helpful/harmful counters on an addressable playbook; Dynamic Cheatsheet performs whole-document rewrite on an unaddressable blob." Neither is incorrect — they sit on different points of a named axis. `contradicts` is too strong (implies conflict forcing resolution); `exemplifies` and `extends` are directional when the relationship is peer-level.
 
-The `agent-memory-systems/` reviews rely on `contrasts` to map the landscape of similar-but-different systems (descriptive → descriptive: 47, descriptive → theoretical: 77). Folding it into `contradicts` would mislead readers arriving expecting resolution and getting parallel design choices instead.
+The `agent-memory-systems/` reviews rely on `contrasts` to map the landscape of similar-but-different systems (124 of the occurrences have a descriptive source). Folding it into `contradicts` would mislead readers arriving expecting resolution and getting parallel design choices instead.
 
 ### `mechanism` is distinct from `grounds`
 
 `grounds` answers *"on what premises?"* — the target is the theoretical or evidential base. `mechanism` answers *"by what operation?"* — the target is the operational principle or machinery that makes the source's claim work.
 
-Register usage reinforces the split. `grounds` is a cross-register upward move: ~71% of its occurrences terminate in a theoretical note, with sources in every register (descriptive → theoretical: 18, source → theoretical: 23, managed → theoretical: 7, workshop → theoretical: 3, theoretical → theoretical: 80, etc.). `mechanism` stays within the theoretical layer: 31 theoretical→theoretical, 18 workshop→workshop, 4 workshop→theoretical, zero uses with descriptive, source, or managed as the *source*.
+Register usage reinforces the split. `grounds` is a cross-register upward move: ~71% of its occurrences terminate in a theoretical note, with sources in every register. `mechanism` stays within the theoretical and workshop layers, with zero uses whose source is descriptive, source, or managed.
 
 Decision-cost argument from [`linking-theory.md`](../../notes/linking-theory.md): a reader following `grounds` wants to verify the claim's justification; a reader following `mechanism` wants to understand how the claim operates. Different reader needs, different follow/skip choices.
 
@@ -52,24 +52,11 @@ Add two labels to the theoretical-register default template. Collections adoptin
 
 The vocabulary splits into two classes by directional shape. New label proposals must fit one of these shapes.
 
-**Asymmetric labels (forward-authored, backward-derived; 1:many fan-out):**
-
-| label | forward semantics |
-|---|---|
-| `extends` | source builds on target |
-| `grounds` (also `foundation`) | target is source's theoretical / evidential base |
-| `enables` | target is source's operational prerequisite |
-| `exemplifies` (also `example`) | source is a concrete instance of target |
-| `mechanism` | target is source's operational engine |
+**Asymmetric labels (forward-authored, backward-derived; 1:many fan-out):** `extends`, `grounds`, `enables`, `exemplifies`, `mechanism`. Per-label semantics are in the [catalogue](../link-vocabulary.md).
 
 Each label points *upstream* (toward more fundamental, more general, or more foundational content). Each upstream note typically accumulates many incoming links, so it should not be required to maintain forward links back to all of them. The authored edge from the downstream side is sufficient to derive the upstream note's inbound view ([inbound and outbound links serve asymmetric reader needs](../../notes/inbound-and-outbound-links-serve-asymmetric-reader-needs.md)). An upstream note may still author a reciprocal link when that direction independently helps its readers.
 
-**Symmetric labels (self-dual; either end may author):**
-
-| label | forward semantics |
-|---|---|
-| `contradicts` | A conflicts with B ⟺ B conflicts with A |
-| `contrasts` | A and B differ on axis X ⟺ same from B's vantage |
+**Symmetric labels (self-dual; either end may author):** `contradicts`, `contrasts`.
 
 These are pair-level relationships with low fan-out. Both ends may legitimately mark them from their own vantage without creating clutter.
 
@@ -87,7 +74,7 @@ The audit surfaced off-vocabulary labels that fold cleanly into existing theoret
 - `complements`, `consequence`, `sibling` → `extends` or `see-also` for pure navigation
 - `tension`, `challenges` → `contradicts`
 
-Not folded: the relation then named `rationale` (later migrated to `rests-on` by ADR 060) and `justification` are **kept distinct** from `grounds`: cross-register design/rule dependency answers *"why does this design/rule exist?"*, while `grounds` is intra-theoretical premise verification.
+Not folded: `rationale` (now `rests-on`) and `justification` are **kept distinct** from `grounds`: cross-register design/rule dependency answers *"why does this design/rule exist?"*, while `grounds` is intra-theoretical premise verification.
 
 ## Consequences
 
@@ -107,11 +94,10 @@ Not folded: the relation then named `rationale` (later migrated to `rests-on` by
 
 - ADR 009's decisions for the theoretical default remain in force; this ADR extends rather than supersedes.
 - Inbound views remain derived on demand from authored links; upstream notes are not required to carry forward links back to their users.
-- Per-destination outbound blocks in each `COLLECTION.md` are updated separately to list the new labels on edges where they fire.
 
 ### Update discipline
 
-The operational distillation of this vocabulary lives in the [`link-vocabulary.md`](../link-vocabulary.md) catalogue, which `COLLECTION.md` authors consult when authoring outbound rules. Authoritative per-source rules live in each `COLLECTION.md`'s outbound-linking section. Note writers and the connect skill read only the collection's `COLLECTION.md` — they do not read the catalogue. Any future change to ADR 009 or ADR 020 that touches the theoretical default **must** re-sync the catalogue *and* any `COLLECTION.md` files whose authorised labels reflect the change, in the same edit.
+The vocabulary is operative through the [`link-vocabulary.md`](../link-vocabulary.md) catalogue, which `COLLECTION.md` authors consult, and through each `COLLECTION.md`'s outbound-linking section, which note writers and the connect skill read. Any future change to ADR 009 or ADR 020 that touches the theoretical default **must** re-sync the catalogue *and* any `COLLECTION.md` files whose authorised labels reflect the change, in the same edit.
 
 ---
 

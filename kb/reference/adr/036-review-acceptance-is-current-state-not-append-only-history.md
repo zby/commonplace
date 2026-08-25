@@ -12,10 +12,10 @@ status: accepted
 
 ## Context
 
-The review store originally modeled accepted baselines as an append-only ledger.
-`acceptance` rows accumulated over time, and `current_gate_acceptances` selected
-the latest event per `(note_path, gate_path, model_partition)`. A separate prune
-command later deleted superseded rows and whole obsolete job artifacts.
+The review store originally modeled accepted baselines as an append-only ledger:
+acceptance rows accumulated, a view selected the latest event per
+`(note_path, gate_path, model_partition)`, and a separate prune command deleted
+superseded rows and obsolete job artifacts.
 
 That kept historical acceptance transitions explicit, but no current code
 consumed that history. The only runtime readers needed the current accepted
@@ -37,9 +37,7 @@ Failed reviews never update acceptance and never trigger superseding cleanup, so
 the prior last-known-good baseline remains available until a replacement review
 successfully finalizes.
 
-This ADR supersedes the append-only acceptance framing in ADR 010, ADR 032, ADR
-034, and ADR 035. Those ADRs still stand for the SQLite boundary, DB-owned
-snapshots, queued jobs, execution provenance, and all-or-nothing finalization.
+Supersedes the append-only acceptance framing in ADR 010, 032, 034, and 035; those ADRs stand otherwise.
 
 ## Consequences
 
