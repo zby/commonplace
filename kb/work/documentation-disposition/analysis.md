@@ -82,6 +82,42 @@ subject, scope, status. Second, the instructions contract's rule to cut the
 per-step rationale is regenerable from the goal plus the step; the goal is
 not regenerable from the steps.
 
+### The limit of intents
+
+Leverage is a property of the intent–interpreter pair, not of intents alone.
+The stronger the interpreter, the more of the theory it regenerates from
+artifact plus intent, so the retained residue shrinks toward intents. The
+current concentration on intentions is a bet on interpreter strength — the
+bitter-lesson direction applied to documentation — and under that bet it is
+the right thing to retain first.
+
+Some of the residue is not regenerable at any interpreter strength, because it
+is contingent fact rather than inference:
+
+- **The actual choice and its rejected alternatives** (rows 4–5). Many designs
+  serve one intent. Given intent and implementation, an interpreter can say
+  why each part exists; it cannot say why *this* design rather than an
+  equally intent-serving other. Naur's qualities are relative to "program
+  texts that might have been written," and reversal by accident happens
+  exactly here.
+- **World-side forces particular to this project** (row 3). The intent "a
+  simple credits-only billing system" does not contain "Indian cards cannot
+  complete off-session top-ups"
+  ([why LLMs can't make your code simpler](../../sources/why-llms-cant-make-your-code-simpler.ingest.md));
+  that is a fact about the world that had to be learned and kept.
+- **Applicability scope** (row 6). An intent says what ought to become true,
+  not where the design stops working. Modification competence — is the new
+  demand similar to what the design already handles? — is judged against
+  limits, and an intent carries none.
+- **Arbitrary conventions** (row 8). A choice made only because one had to be
+  made is regenerable from nothing.
+
+So the full picture is: intents are the highest-yield *inference seed*, and
+the other kinds are *facts the seed cannot produce*. An intent-only retention
+strategy fails where a change reverses a decision, meets an unrecorded world
+constraint, or extends past an unrecorded limit — the failure modes Naur's two
+cases describe.
+
 ## 3. Consumer and force decide the destination among retained kinds
 
 Retention is necessary but not sufficient for a destination. ADR 074's
@@ -195,17 +231,22 @@ passage redundant. Small wording change; channel: that contract.
 own criterion (a premise of every write operation). Candidate home:
 `kb/reference/design-rationale-management.md`, merged with its lifecycle
 table, or a new `kb/reference/content-routing.md` linked from `AGENTS.md`
-Collection Routing. The theory in sections 1–2 is a note (row 7):
-"Retain the parts of a design theory the interpreter cannot regenerate;
-intents have the highest regeneration yield."
+Collection Routing. The theory in sections 1–2 is a note (row 7)
+holding both halves: retain intents as the highest-yield inference seed, and
+retain the facts the seed cannot regenerate — the choice among alternatives,
+project-particular world forces, applicability limits, arbitrary conventions.
 
 ## 6. What this pass does not settle
 
-- **Whether the intent-leverage claim holds empirically.** It predicts that an
-  agent given an artifact plus its intent reconstructs justifications and
-  scope better than one given the artifact plus the same tokens of per-part
-  rationale. The `explanatory-theories-deployment-time-learning` workshop's
-  experimental frame fits; not run here.
+- **Whether the intent-leverage claim holds empirically, and where it stops.**
+  The prediction has two halves: an agent given an artifact plus its intent
+  reconstructs per-part *justifications* better than one given the artifact
+  plus the same tokens of per-part rationale; and it does *worse* at avoiding
+  reversal of a recorded decision, recovering a world-side constraint, and
+  respecting an unrecorded limit — the non-intent rows. Losing the second
+  half is the evidence those rows need. The
+  `explanatory-theories-deployment-time-learning` workshop's experimental
+  frame fits; not run here.
 - **Grain.** Rows 1 and 6 say "the artifact"; for a collection or the KB the
   intent lives one level up. The rule "at the smallest artifact whose purpose
   it is" is the intended reading and needs a worked case.
