@@ -19,7 +19,7 @@ where its evidence should persist are separate design choices.
 
 - [`cp-skill-ground`](../../instructions/cp-skill-ground/SKILL.md) is a
   promoted, user-invocable skill since
-  [ADR 075](../adr/075-source-claim-grounding-is-a-promoted-skill.md), adopted
+  [ADR 076](../adr/076-source-claim-grounding-is-a-promoted-skill.md), adopted
   2026-08-25 from this proposal's "promote for explicit use" option. It takes
   one source identity and one source-side need, reads exact retained Quotes or
   the checksum-matched snapshot, and does not edit the target.
@@ -191,5 +191,5 @@ Relevant Notes:
 - [An author should fix what the executor cannot determine, not what it will](../../notes/fix-what-the-executor-cant-determine-not-what-it-will.md) — rests-on: this proposal selects architecture boundaries rather than prewriting the eventual skill
 - [The boundary of automation is the boundary of verification](../../notes/the-boundary-of-automation-is-the-boundary-of-verification.md) — rests-on: exact-byte verification licenses mechanical persistence but not semantic support
 - [ADR 073: Untracked source snapshots require ingest grounding](../adr/073-untracked-source-snapshots-require-ingest-grounding.md) — compares-with: the current ingest-Quotes and snapshot-marker design whose retention boundary remains open here
-- [ADR 075: Source-claim grounding is a promoted skill](../adr/075-source-claim-grounding-is-a-promoted-skill.md) — compares-with: the explicit-use promotion already adopted from this proposal, leaving automatic invocation open
+- [ADR 076: Source-claim grounding is a promoted skill](../adr/076-source-claim-grounding-is-a-promoted-skill.md) — compares-with: the explicit-use promotion already adopted from this proposal, leaving automatic invocation open
 - [`cp-skill-ground`](../../instructions/cp-skill-ground/SKILL.md) — procedure: the promoted operation whose automatic invocation this proposal argues for

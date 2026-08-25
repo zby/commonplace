@@ -5,7 +5,7 @@ tags: []
 status: accepted
 ---
 
-# 075-Source-claim grounding is a promoted skill
+# 076-Source-claim grounding is a promoted skill
 
 **Status:** accepted
 **Date:** 2026-08-25
