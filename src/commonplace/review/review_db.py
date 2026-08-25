@@ -438,6 +438,20 @@ def create_job_with_pairs(
     return review_job_id
 
 
+def set_job_telemetry(
+    conn: sqlite3.Connection,
+    *,
+    review_job_id: int,
+    telemetry_json: str,
+) -> None:
+    cursor = conn.execute(
+        "UPDATE review_jobs SET telemetry_json = ? WHERE review_job_id = ?",
+        (telemetry_json, review_job_id),
+    )
+    if cursor.rowcount != 1:
+        raise ValueError(f"review job not found: {review_job_id}")
+
+
 def load_review_job(conn: sqlite3.Connection, *, review_job_id: int) -> ReviewJobRow | None:
     row = conn.execute(
         """

@@ -94,12 +94,40 @@ REVIEW_RUNNER_SYSTEM_PROMPT = (
 
 
 @dataclass(frozen=True)
+class ResolvedMarkdownLink:
+    link_text: str
+    raw_target: str
+    repo_path: str
+    size_bytes: int
+
+
+@dataclass(frozen=True)
+class UnavailableMarkdownTarget:
+    link_text: str
+    raw_target: str
+    target_path: str
+    reason: str
+
+
+@dataclass(frozen=True)
 class NoteReviewTarget:
     note_path: str
     criterion_paths: tuple[str, ...]
     note_text: str
-    resolved_links: Sequence[tuple[str, str, str]] = ()
-    unresolved_links: Sequence[tuple[str, str]] = ()
+    resolved_links: Sequence[ResolvedMarkdownLink] = ()
+    unavailable_targets: Sequence[UnavailableMarkdownTarget] = ()
+
+
+def available_link_cost(note: NoteReviewTarget) -> tuple[int, int, int]:
+    """Return resolved occurrences, distinct artifacts, and whole-file bytes."""
+    sizes_by_path: dict[str, int] = {}
+    for link in note.resolved_links:
+        sizes_by_path.setdefault(link.repo_path, link.size_bytes)
+    return len(note.resolved_links), len(sizes_by_path), sum(sizes_by_path.values())
+
+
+def _markdown_table_cell(value: str) -> str:
+    return value.replace("|", r"\|").replace("\n", " ")
 
 
 def _validate_embedded_text(label: str, text: str) -> None:
@@ -229,21 +257,42 @@ def render_pairs_prompt(
             ]
         )
         if note.resolved_links:
-            for link_text, raw_target, repo_rel in note.resolved_links:
-                lines.append(f"- [{link_text}]({raw_target}) -> {repo_rel}")
+            resolved_link_count, distinct_artifact_count, total_bytes = available_link_cost(note)
+            lines.extend(
+                [
+                    (
+                        f"Available cost: {resolved_link_count} resolved link(s), "
+                        f"{distinct_artifact_count} distinct artifact(s), {total_bytes} bytes total. "
+                        "The total charges each artifact once."
+                    ),
+                    "",
+                    "| Link | Resolved local target | Whole-file size |",
+                    "| --- | --- | ---: |",
+                ]
+            )
+            for link in note.resolved_links:
+                link_text = _markdown_table_cell(link.link_text)
+                raw_target = _markdown_table_cell(link.raw_target)
+                repo_path = _markdown_table_cell(link.repo_path)
+                lines.append(
+                    f"| [{link_text}]({raw_target}) | `{repo_path}` | {link.size_bytes} bytes |"
+                )
         else:
             lines.append("- none")
 
-        if note.unresolved_links:
+        if note.unavailable_targets:
             lines.extend(
                 [
                     "",
-                    "Unresolved markdown links:",
-                    "- Treat these as broken links if they become relevant; do not search for alternate targets.",
+                    "Unavailable local targets:",
+                    "- These targets are unavailable; do not search for substitutes.",
                 ]
             )
-            for link_text, raw_target in note.unresolved_links:
-                lines.append(f"- [{link_text}]({raw_target})")
+            for target in note.unavailable_targets:
+                lines.append(
+                    f"- [{target.link_text}]({target.raw_target}) -> "
+                    f"`{target.target_path}` ({target.reason})"
+                )
 
     lines.extend(
         [

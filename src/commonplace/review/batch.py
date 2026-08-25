@@ -28,7 +28,9 @@ from commonplace.review.review_db import (
     connect,
     create_job_with_pairs,
     load_review_pairs_for_job,
+    set_job_telemetry,
 )
+from commonplace.review.telemetry import link_availability_telemetry_json
 
 
 @dataclass(frozen=True)
@@ -137,6 +139,14 @@ def prepare_grouped_review_job(
             pairs=pairs,
             note_texts=captured_inputs.note_texts,
         )
+        telemetry_json = link_availability_telemetry_json(targets)
+        with connect(db_path) as conn:
+            set_job_telemetry(
+                conn,
+                review_job_id=review_job_id,
+                telemetry_json=telemetry_json,
+            )
+            conn.commit()
         prompt = render_pairs_prompt(
             notes=targets,
             criterion_texts=captured_inputs.criterion_texts,

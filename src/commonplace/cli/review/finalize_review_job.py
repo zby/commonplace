@@ -29,7 +29,10 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser.add_argument("--effort", choices=REASONING_EFFORT_VALUES, help="Concrete worker reasoning effort.")
     parser.add_argument(
         "--telemetry-json",
-        help="Opaque per-harness execution telemetry blob, stored verbatim and never interpreted.",
+        help=(
+            "Opaque per-harness execution telemetry text, kept verbatim beside "
+            "code-generated job measurements."
+        ),
     )
     parser.add_argument("--db", help="Override COMMONPLACE_STORE.")
     args = parser.parse_args(argv)

@@ -3,7 +3,12 @@ from __future__ import annotations
 import pytest
 
 from commonplace.review.protocol.parser import extract_pair_results, parse_job_output
-from commonplace.review.protocol.prompt import NoteReviewTarget, render_pairs_prompt
+from commonplace.review.protocol.prompt import (
+    NoteReviewTarget,
+    ResolvedMarkdownLink,
+    UnavailableMarkdownTarget,
+    render_pairs_prompt,
+)
 
 GATE = "accessibility/undefined-terms"
 GATE_TEXT = "## Check\n\nFlag terms that are used before they are defined."
@@ -24,8 +29,22 @@ def test_render_pairs_prompt_multi_note_shares_gate_and_lists_pairs() -> None:
             make_target(
                 "kb/notes/first.md",
                 note_text="# First note\n\nSome content about a [concept](./concept.md).",
-                resolved_links=[("concept", "./concept.md", "kb/notes/concept.md")],
-                unresolved_links=[("missing", "./missing.md")],
+                resolved_links=[
+                    ResolvedMarkdownLink(
+                        "concept",
+                        "./concept.md",
+                        "kb/notes/concept.md",
+                        1234,
+                    )
+                ],
+                unavailable_targets=[
+                    UnavailableMarkdownTarget(
+                        "missing",
+                        "./missing.md",
+                        "kb/notes/missing.md",
+                        "missing file",
+                    )
+                ],
             ),
             make_target("kb/notes/second.md", note_text="# Second note\n\nAnother note with no links."),
         ],
@@ -40,8 +59,9 @@ def test_render_pairs_prompt_multi_note_shares_gate_and_lists_pairs() -> None:
     assert f"- kb/notes/first.md :: {GATE}" in prompt
     assert f"- kb/notes/second.md :: {GATE}" in prompt
     assert "review job id" not in prompt
-    assert "- [concept](./concept.md) -> kb/notes/concept.md" in prompt
-    assert "- [missing](./missing.md)" in prompt
+    assert "Available cost: 1 resolved link(s), 1 distinct artifact(s), 1234 bytes total." in prompt
+    assert "| [concept](./concept.md) | `kb/notes/concept.md` | 1234 bytes |" in prompt
+    assert "- [missing](./missing.md) -> `kb/notes/missing.md` (missing file)" in prompt
     # Note contents are frontloaded
     assert "=== note: kb/notes/first.md ===" in prompt
     assert "Some content about a [concept](./concept.md)." in prompt
@@ -65,6 +85,27 @@ def test_render_pairs_prompt_single_note_shares_note_across_gates() -> None:
     assert prompt.count("=== note: kb/notes/only.md ===") == 1
     assert "=== PAIR REVIEW START: kb/notes/only.md :: lens/alpha ===" in prompt
     assert "=== PAIR REVIEW START: kb/notes/only.md :: lens/beta ===" in prompt
+
+
+def test_render_pairs_prompt_charges_repeated_target_once() -> None:
+    prompt = render_pairs_prompt(
+        notes=[
+            make_target(
+                "kb/notes/only.md",
+                resolved_links=[
+                    ResolvedMarkdownLink("first", "./shared.md", "kb/notes/shared.md", 800),
+                    ResolvedMarkdownLink("again", "./shared.md#part", "kb/notes/shared.md", 800),
+                    ResolvedMarkdownLink("other", "./other.md", "kb/notes/other.md", 300),
+                ],
+            )
+        ],
+        criterion_texts={GATE: GATE_TEXT},
+        result_kind="verdict",
+        job_output_path="job-output.md",
+    )
+
+    assert "3 resolved link(s), 2 distinct artifact(s), 1100 bytes total" in prompt
+    assert prompt.count("`kb/notes/shared.md`") == 2
 
 
 def test_render_pairs_prompt_names_destination() -> None:

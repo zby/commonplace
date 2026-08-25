@@ -210,6 +210,83 @@ def test_create_review_jobs_selector_creates_one_criterion_packed_job_and_prompt
         assert "result_path" not in pair_columns
 
 
+def test_review_job_records_deduplicated_available_link_cost_and_preserves_harness_telemetry(
+    tmp_path: Path,
+) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    shared = write(repo / "kb/notes/shared.md", "shared artifact\n")
+    first = repo / "kb/notes/first.md"
+    first.write_text(
+        first.read_text(encoding="utf-8")
+        + "\n[first](./shared.md)\n[again](./shared.md#section)\n[missing](./missing.md)\n",
+        encoding="utf-8",
+    )
+
+    prepared = json.loads(
+        create_gate_jobs(
+            repo,
+            db_path,
+            [target("kb/notes/first.md", GATE_PATH, GATE)],
+        ).stdout
+    )
+    job = prepared["jobs"][0]
+    review_job_id = job["review_job_id"]
+
+    with review_db.connect(db_path) as conn:
+        stored = review_db.load_review_job(conn, review_job_id=review_job_id)
+    assert stored is not None
+    assert stored.telemetry_json is not None
+    telemetry = json.loads(stored.telemetry_json)
+    assert telemetry == {
+        "commonplace": {
+            "review_link_availability": {
+                "version": 1,
+                "pairs": [
+                    {
+                        "note_path": "kb/notes/first.md",
+                        "criterion_path": GATE_PATH,
+                        "resolved_link_count": 2,
+                        "distinct_artifact_count": 1,
+                        "total_bytes": shared.stat().st_size,
+                        "unavailable_targets": [
+                            {
+                                "link_text": "missing",
+                                "raw_target": "./missing.md",
+                                "target_path": "kb/notes/missing.md",
+                                "reason": "missing file",
+                            }
+                        ],
+                    }
+                ],
+            }
+        }
+    }
+
+    write(
+        repo / job["job_output_path"],
+        pair_block("kb/notes/first.md", GATE_PATH, "All terms defined.", "PASS"),
+    )
+    harness_telemetry = '{"input_tokens": 42}'
+    finalized = run_cli(
+        "finalize_review_job",
+        "--review-job-id",
+        str(review_job_id),
+        "--telemetry-json",
+        harness_telemetry,
+        cwd=repo,
+        db_path=db_path,
+    )
+    assert finalized.returncode == 0
+
+    with review_db.connect(db_path) as conn:
+        completed = review_db.load_review_job(conn, review_job_id=review_job_id)
+    assert completed is not None
+    assert completed.telemetry_json is not None
+    completed_telemetry = json.loads(completed.telemetry_json)
+    assert completed_telemetry["commonplace"] == telemetry["commonplace"]
+    assert completed_telemetry["harness_telemetry_json"] == harness_telemetry
+
+
 def test_finalize_review_job_finalizes_all_criterion_packed_pairs(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     prepared = json.loads(

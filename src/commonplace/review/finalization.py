@@ -19,6 +19,7 @@ from commonplace.review.clock import iso_now
 from commonplace.review.protocol.parser import ParsedJobOutput, parse_job_output
 from commonplace.review.review_db import ReviewPairCompletion, ReviewPairRow
 from commonplace.review.review_model import build_model_partition
+from commonplace.review.telemetry import with_harness_telemetry
 
 ACTIVE_REVIEW_JOB_STATUSES = frozenset({"queued"})
 
@@ -57,10 +58,10 @@ class ExecutionMetadata:
     """Optional, per-harness execution provenance recorded at finalize time.
 
     This is the single seam for harness-provided execution metadata. The core
-    stores these fields uninterpreted — ``telemetry_json`` in particular is an
-    opaque blob the review system never parses. Harnesses that cannot produce
-    provenance leave the fields ``None``; provenance is never required for a
-    review's identity, which is ``(note_path, criterion_path, model_partition)``.
+    keeps ``telemetry_json`` uninterpreted and stores its exact text beside
+    code-generated job measurements. Harnesses that cannot produce provenance
+    leave the fields ``None``; provenance is never required for a review's
+    identity, which is ``(note_path, criterion_path, model_partition)``.
     """
 
     runner: str | None = None
@@ -191,13 +192,16 @@ def finalize_review_job_from_owned_output(
         # here so it persists whether the job later completes or fails, and so the
         # finalization pipeline itself carries no execution-metadata plumbing.
         if not execution.is_empty:
+            telemetry_json = execution.telemetry_json
+            if telemetry_json is not None:
+                telemetry_json = with_harness_telemetry(plan.telemetry_json, telemetry_json)
             review_db.attach_execution_data(
                 conn,
                 review_job_id=review_job_id,
                 runner=execution.runner,
                 runner_model=execution.runner_model,
                 runner_effort=execution.runner_effort,
-                telemetry_json=execution.telemetry_json,
+                telemetry_json=telemetry_json,
             )
             conn.commit()
             refreshed_plan = review_db.load_review_job_plan(conn, review_job_id=review_job_id)
