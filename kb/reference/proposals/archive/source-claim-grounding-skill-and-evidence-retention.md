@@ -17,21 +17,21 @@ where its evidence should persist are separate design choices.
 
 ## Current state (as of 2026-08-25)
 
-- [`cp-skill-ground`](../../instructions/cp-skill-ground/SKILL.md) is a
+- [`cp-skill-ground`](../../../instructions/cp-skill-ground/SKILL.md) is a
   promoted, user-invocable skill since
-  [ADR 076](../adr/076-source-claim-grounding-is-a-promoted-skill.md), adopted
+  [ADR 076](../../adr/076-source-claim-grounding-is-a-promoted-skill.md), adopted
   2026-08-25 from this proposal's "promote for explicit use" option. It takes
   one source identity and one source-side need, reads exact retained Quotes or
   the checksum-matched snapshot, and does not edit the target.
-- [`cp-skill-write`](../../instructions/cp-skill-write/SKILL.md) and
-  [`cp-skill-write-multistage`](../../instructions/cp-skill-write-multistage/SKILL.md)
+- [`cp-skill-write`](../../../instructions/cp-skill-write/SKILL.md) and
+  [`cp-skill-write-multistage`](../../../instructions/cp-skill-write-multistage/SKILL.md)
   detect insufficient source evidence but stop and report the skill invocation
   instead of running it.
-- Under [ADR 073](../adr/073-untracked-source-snapshots-require-ingest-grounding.md),
+- Under [ADR 073](../../adr/073-untracked-source-snapshots-require-ingest-grounding.md),
   an ordinary ingest link declares its Quotes sufficient. A link marked
   `(snapshot required)` declares that semantic checking needs the exact local
   snapshot.
-- [`cp-skill-ingest`](../../instructions/cp-skill-ingest/SKILL.md) creates and
+- [`cp-skill-ingest`](../../../instructions/cp-skill-ingest/SKILL.md) creates and
   re-ingests source records only; it has no quote-append path.
   `cp-skill-ground` performs the append itself and is the sole writer of an
   ingest's `## Quotes` section, under name-paired snapshot, source-identity,
@@ -57,7 +57,7 @@ The writer instruction remains the operative routing surface.
 becomes the trigger. The grounding result controls whether the caller can
 continue, while target repair remains with the writer and semantic assurance
 remains with
-[`semantic/grounding-alignment`](../../instructions/review-gates/semantic/grounding-alignment.md).
+[`semantic/grounding-alignment`](../../../instructions/review-gates/semantic/grounding-alignment.md).
 The promoted writers and the skill invocation channel together make the change
 operative.
 
@@ -187,9 +187,9 @@ often a supposedly grounding run instead changes the target claim.
 
 Relevant Notes:
 
-- [Skills are instructions plus routing and execution policy](../../notes/skills-are-instructions-plus-routing-and-execution-policy.md) — rests-on: promotion adds a structured invocation channel a caller can compose against
-- [An author should fix what the executor cannot determine, not what it will](../../notes/fix-what-the-executor-cant-determine-not-what-it-will.md) — rests-on: this proposal selects architecture boundaries rather than prewriting the eventual skill
-- [The boundary of automation is the boundary of verification](../../notes/the-boundary-of-automation-is-the-boundary-of-verification.md) — rests-on: exact-byte verification licenses mechanical persistence but not semantic support
-- [ADR 073: Untracked source snapshots require ingest grounding](../adr/073-untracked-source-snapshots-require-ingest-grounding.md) — compares-with: the current ingest-Quotes and snapshot-marker design whose retention boundary remains open here
-- [ADR 076: Source-claim grounding is a promoted skill](../adr/076-source-claim-grounding-is-a-promoted-skill.md) — compares-with: the explicit-use promotion already adopted from this proposal, leaving automatic invocation open
-- [`cp-skill-ground`](../../instructions/cp-skill-ground/SKILL.md) — procedure: the promoted operation whose automatic invocation this proposal argues for
+- [Skills are instructions plus routing and execution policy](../../../notes/skills-are-instructions-plus-routing-and-execution-policy.md) — rests-on: promotion adds a structured invocation channel a caller can compose against
+- [An author should fix what the executor cannot determine, not what it will](../../../notes/fix-what-the-executor-cant-determine-not-what-it-will.md) — rests-on: this proposal selects architecture boundaries rather than prewriting the eventual skill
+- [The boundary of automation is the boundary of verification](../../../notes/the-boundary-of-automation-is-the-boundary-of-verification.md) — rests-on: exact-byte verification licenses mechanical persistence but not semantic support
+- [ADR 073: Untracked source snapshots require ingest grounding](../../adr/073-untracked-source-snapshots-require-ingest-grounding.md) — compares-with: the current ingest-Quotes and snapshot-marker design whose retention boundary remains open here
+- [ADR 076: Source-claim grounding is a promoted skill](../../adr/076-source-claim-grounding-is-a-promoted-skill.md) — compares-with: the explicit-use promotion already adopted from this proposal, leaving automatic invocation open
+- [`cp-skill-ground`](../../../instructions/cp-skill-ground/SKILL.md) — procedure: the promoted operation whose automatic invocation this proposal argues for
