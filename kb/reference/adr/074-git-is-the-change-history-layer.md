@@ -9,6 +9,7 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-08-25
+**Amended by:** [ADR 075](./075-commit-messages-carry-read-path-trailers.md) — the deferred trailer becomes the convention
 
 ## Context
 
