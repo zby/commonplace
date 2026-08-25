@@ -27,7 +27,7 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
 
    Do not archive on the grounds that the artifact holds deliberation. Options weighed, deciding forces, and free choices belong in the superseding ADR's `## Considered alternatives`, which is required precisely so the frontier keeps them ([adr type spec](../reference/types/adr.md)). An artifact whose only residue is deliberation has an incomplete extraction, not an archiving case.
 
-   **Deletion is unrecoverable in practice** — a shallow clone cannot see deleted content, so git history is not the archive and the step 4 extraction gate is the only thing standing between delete and permanent loss.
+   **Deletion is unrecoverable for consumers without history** — a reader install, an installed project, or a shallow clone cannot see deleted content, so for anything a durable artifact cites the step 4 extraction gate is the only thing standing between delete and permanent loss. Dated measurements that only a decision audit consults are the exception: the ADR keeps the compressed warrant and the full record stays in the implementing commits ([ADR 074](../reference/adr/074-git-is-the-change-history-layer.md)).
 
 2. **Extract first, one piece per commit.** If the artifact holds content worth keeping, move each piece to its new home, retarget that piece's own inbound references, and commit before starting the next. Do not bundle extraction into the retirement — a retirement commit that also moves content cannot be reviewed for either.
 

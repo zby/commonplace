@@ -9,6 +9,7 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-07-25
+**Amended by:** [ADR 074](./074-git-is-the-change-history-layer.md) — narrows the git-history argument to consumers without history; decision-audit measurements may live in git
 
 ## Context
 

@@ -43,7 +43,10 @@ Commonplace commands do not invoke Git ([ADR 039](./adr/039-tool-visibility-is-p
 and freshness compares current filesystem content with database-owned snapshots
 rather than repository history ([ADR 032](./adr/032-review-freshness-uses-db-snapshots-not-git.md)).
 Commits, branches, and merges therefore carry no framework-wide semantic
-meaning. Plain-directory and archive installs remain valid.
+meaning. Plain-directory and archive installs remain valid. The Commonplace
+source checkout is the one exception: there git is the declared change-history
+layer, read through instruction-named paths when a decision is revised
+([ADR 074](./adr/074-git-is-the-change-history-layer.md)).
 
 ## Reconstructable source copies
 

@@ -72,10 +72,24 @@ The subject remains an imperative summary of the change.
 
 **Boundary.** Git holds only what an operator of this source checkout needs.
 Anything a reader install, vendored copy, installed project, or shallow clone
-must know stays in tracked artifacts. ADR 056 stands: deleted content that a
-durable artifact cites is retained in-repo, not left to history. ADR 039
-stands: `commonplace-*` commands still never invoke git. This decision adds an
-instruction-level read path, not a tool dependency.
+must know stays in tracked artifacts. ADR 039 stands: `commonplace-*` commands
+still never invoke git. This decision adds an instruction-level read path, not
+a tool dependency.
+
+**Amendment to ADR 056.** ADR 056 rejected deletion because git history fails
+at shallow clone depth, and it named dated corpus measurements — the
+evidentiary warrant behind a live decision — as the residue that justifies
+in-repo retention. This decision narrows that argument. Content a durable
+artifact cites, or that any consumer without history needs, still stays
+in-repo; the proposal archive is unchanged. Measurements that only a decision
+audit consults are different: the ADR carries the compressed warrant (the
+numbers as reasons), and the full measurement is read from the implementing
+commits. The one actor who performs that audit is the operator revising a
+Commonplace decision, and that operator works in this checkout. A shallow
+clone is therefore not a reason to keep the measurement in-repo but an
+operator precondition: unshallow before revising. ADR 056 itself was drafted
+in a shallow clone, which shows the precondition is real, not that history is
+unavailable.
 
 ## Considered alternatives
 
@@ -127,12 +141,12 @@ records that are half migration narrative.
 
 Change history becomes invisible to consumers without git, by design. The
 boundary rule bounds the exposure: only source-checkout operators depend on
-history, and only through declared instruction paths.
+history, and only through declared instruction paths. Those operators need a
+full-history clone; the ADR type spec says to unshallow before revising.
 
 The commit-message convention is unenforced and will drift. `git log --grep`
 degrades gracefully: a commit that fails to name its ADR is harder to find, not
 lost. If drift is observed, the trailer alternative is the fix.
 
 `storage-architecture.md` remains accurate at the framework level — commits
-carry no *portable* semantics — but the source checkout now assigns them a
-declared role; that document should say so when next revised.
+carry no *portable* semantics — and records the source-checkout exception.
