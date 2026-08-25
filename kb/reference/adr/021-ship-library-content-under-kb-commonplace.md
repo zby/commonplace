@@ -26,7 +26,7 @@ The design question: how to ship library content in a way that isolates it from 
 
 ### Options considered
 
-See [the shipped-content namespacing design space](./021-shipping-model-design-space.md) for the full enumeration. Six namespacing shapes were considered, of which two were serious candidates:
+Six namespacing shapes were considered: no change (shared paths, user/library collision); a `.commonplace` marker at each shipped root with the same paths (provenance without isolation); a file-level `cp-` prefix (rewrites every link, isolates neither `COLLECTION.md` nor types); a directory prefix per collection; a single namespace directory; and a separate vault beside `kb/` (strongest isolation, most skill and config rework). Two were serious candidates:
 
 - **Option D** — `cp-` directory prefix: `kb/cp-notes/`, `kb/cp-reference/`, `kb/cp-instructions/`.
 - **Option E** — single namespace directory: `kb/commonplace/{notes,reference,instructions,agent-memory-systems}/`.
