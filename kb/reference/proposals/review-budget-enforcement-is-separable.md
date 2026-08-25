@@ -68,6 +68,18 @@ review store would then need to record, or the corpus becomes uninterpretable.
 budget, failure past a larger limit. Two numbers instead of one, both needing
 derivation.
 
+## Largely superseded, 2026-08-25
+
+[Exceeding a review budget splits the task](./exceeding-a-review-budget-splits-the-task.md)
+proposes a third answer that dissolves this question: exceeding the budget
+triggers decomposition into covering passes, so a verdict is neither sampled nor
+failed. What survives here is the disclosure requirement — a pass should still
+record what it covered — but as provenance rather than as the mechanism keeping a
+sampled verdict honest.
+
+Retain this proposal until splitting is adopted or rejected; if splitting is
+rejected, the options below are live again.
+
 ## Adoption criteria
 
 Decide after the measurement in the sibling proposal reports what reviews
