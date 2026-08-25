@@ -120,16 +120,23 @@ unambiguous source identity. Read its complete Quotes section and the
   and canonical source to match the ingest, read it, and apply the same gate to
   the candidate's use. Stop if the snapshot is absent, mismatched, or does not
   support the use.
-- Otherwise, if Quotes is insufficient, stop before saving. Fill in the exact
-  ingest path or canonical source URL and the source-side proposition or question, then
-  report this literal route:
-  `Invoke cp-skill-ground with Target: <target> and Claim needed: <claim-needed>.`
+- Otherwise, if Quotes is insufficient and the ingest exists, invoke
+  `cp-skill-ground` with `Target: <ingest path>` and `Claim needed: <the
+  source-side proposition or question>`, then act on its route: `quotes
+  sufficient` or `quotes added` — re-read the Quotes section and apply the gate
+  as in the first bullet; `snapshot required` — take the snapshot route above;
+  a blocker — stop before saving and report it. Record every `quotes added`
+  result, with the ingest path, in this skill's final report so the append is
+  never a silent side effect of a write.
+- If the dependency names a URL with no tracked ingest, stop before saving and
+  report the exact URL for a separate `cp-skill-ingest` run; this writer does
+  not create source records.
 
 If neither an exact ingest nor a canonical URL can be resolved, stop and ask
-for that source identity rather than inventing an input. This writer never
-invokes the grounding skill, edits an ingest, or introduces a separate
-result protocol. It reads a source snapshot only for a declared `snapshot
-required` dependency.
+for that source identity rather than inventing an input. This writer invokes
+the grounding skill but never edits an ingest itself, never creates one, and
+introduces no separate result protocol. It reads a source snapshot only for a
+declared `snapshot required` dependency.
 
 ### Step 8 - Save
 

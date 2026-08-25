@@ -221,17 +221,25 @@ unambiguous source identity. Read its complete Quotes section and the
   and canonical source to match the ingest, read it, and apply the same gate to
   the candidate's use. Stop if the snapshot is absent, mismatched, or does not
   support the use.
-- Otherwise, if Quotes is insufficient, add a blocker to the workshop
-  `README.md` with the exact dependency and retain `candidate.md` and the workshop without changing the
-  live target or any source file. Fill in the exact ingest path or canonical
-  source URL and the source-side proposition or question, then report this literal
-  route: `Invoke cp-skill-ground with Target: <target> and Claim needed: <claim-needed>.`
+- Otherwise, if Quotes is insufficient and the ingest exists, invoke
+  `cp-skill-ground` with `Target: <ingest path>` and `Claim needed: <the
+  source-side proposition or question>`, then act on its route: `quotes
+  sufficient` or `quotes added` — re-read the Quotes section and apply the gate
+  as in the first bullet; `snapshot required` — take the snapshot route above;
+  a blocker — add it to the workshop `README.md` with the exact dependency and
+  retain `candidate.md` and the workshop without changing the live target.
+  Record every `quotes added` result, with the ingest path, in the workshop
+  `README.md` and the final report so the append is never a silent side effect
+  of a write.
+- If the dependency names a URL with no tracked ingest, add a blocker naming
+  the exact URL for a separate `cp-skill-ingest` run; this writer does not
+  create source records.
 
 If neither an exact ingest nor a canonical URL can be resolved, record that
-source-identity blocker and ask for the missing identity. This writer never
-invokes the grounding skill, edits an ingest, or introduces a separate
-result protocol. It reads a source snapshot only for a declared `snapshot
-required` dependency. Do not begin any promotion write while a
+source-identity blocker and ask for the missing identity. This writer invokes
+the grounding skill but never edits an ingest itself, never creates one, and
+introduces no separate result protocol. It reads a source snapshot only for a
+declared `snapshot required` dependency. Do not begin any promotion write while a
 source-dependency blocker remains. If applying the source gate or changing the
 link materially changes the audited candidate, return to Step 9 and renew any
 affected audit or acceptance work before promotion.

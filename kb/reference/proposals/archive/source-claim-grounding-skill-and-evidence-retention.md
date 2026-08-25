@@ -1,6 +1,6 @@
 ---
-description: "Proposal: let writers invoke the grounding skill automatically while deciding whether retained evidence belongs in an ingest, beside it, in the target, or only in the pinned snapshot"
-type: ../types/design-proposal.md
+description: "Proposal (adopted by ADR 076 and ADR 078): let writers invoke the grounding skill automatically while deciding whether retained evidence belongs in an ingest, beside it, in the target, or only in the pinned snapshot"
+type: ../../types/design-proposal.md
 tags: []
 ---
 
