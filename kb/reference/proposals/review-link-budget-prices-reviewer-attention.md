@@ -56,7 +56,10 @@ plus a marginal cost per byte read:
 The shape is not invented for this purpose. It is the switching-plus-scanning
 structure of a patch model: a between-artifact cost paid on each move and a
 within-artifact cost proportional to what is consumed. The ratio α/β is the whole
-design question, and it is what a worked corpus must supply.
+design question. A worked corpus can supply the inputs, but count-and-byte stop
+points alone cannot identify the ratio: they need either an independent
+attention outcome or a controlled comparison that varies packaging while
+holding the evidence task constant.
 
 Both defects the first draft fixed survive this change, because they were
 consequences of counting links rather than of the measure chosen. Repeated links
@@ -156,14 +159,21 @@ reuse: the measurement path needs no new storage and no new review semantics.
   identity" — the right channel for what a review actually opened, with no
   schema change.
 - **V1 records cost and enforces nothing.** The gate is untouched, no pairs stale,
-  and review judgment and link-following policy do not change. α, β, and the
-  budget get derived from the recorded numbers before any cap moves.
+  and review judgment and link-following policy do not change. The records are
+  calibration inputs, but the cap does not move until an identifying assay can
+  derive α, β, and the budget.
 - **Measurement B shipped (2026-08-25).** Every pair is now asked to report the
   distinct pre-resolved artifacts it opened and whether budget or sufficiency
   stopped inspection. Finalization derives whole-file bytes, records complete
   and imperfect reports beside A in job telemetry, and removes the bookkeeping
-  from retained review text. The first post-instrumentation sample has not yet
-  been analysed, so α/β and the budget remain open.
+  from retained review text.
+- **The first 12-pair pilot did not identify `α / β` (2026-08-25).** All 12
+  reports were complete, but nine opened exactly five artifacts. Eleven
+  reviewers reported sufficiency, one reported budget at five, and one
+  sufficiency report exceeded the cap at seven. A sufficiency point varies with
+  the note's evidence needs; a budget point under the current gate is fixed by
+  artifact count. Neither is an independent observation of attention cost.
+  More capped reviews would repeat that confounding, so the budget remains open.
 - **Verdict semantics are unchanged for now** — see
   [Review budget enforcement is a separable decision](./review-budget-enforcement-is-separable.md).
 
@@ -207,8 +217,12 @@ changes a decision made above.
 
 ## Adoption criteria
 
-Adopt when α, β, and the budget can be derived from measured reviews rather than
-chosen — the same move [ADR 025](../adr/025-complete-generated-indexes-are-build-time-only.md)
+Adopt when α, β, and the budget can be derived from a measurement that actually
+identifies their relative contribution — for example independent usage or
+active-time telemetry, or a paired assay that keeps the evidence task fixed
+while varying artifact count and bytes — rather than chosen from raw stop
+points. This is the same move
+[ADR 025](../adr/025-complete-generated-indexes-are-build-time-only.md)
 made for description length, replacing a ceiling that had "inherited an earlier
 full-index cost concern" with an allowance set by a retrieval assay.
 
