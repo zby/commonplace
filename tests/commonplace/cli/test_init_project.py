@@ -180,6 +180,7 @@ def test_init_project_installs_skills_as_copies(tmp_path: Path) -> None:
             "cp-skill-connect",
             "cp-skill-health-check",
             "cp-skill-write-multistage",
+            "cp-skill-ground",
         ):
             dest = skills_dir / skill_name
             assert dest.is_dir()

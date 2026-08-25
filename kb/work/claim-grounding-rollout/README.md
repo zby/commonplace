@@ -43,7 +43,7 @@ Use these current contracts for unfinished work:
 
 - [ADR 073](../../reference/adr/073-untracked-source-snapshots-require-ingest-grounding.md)
   — route semantics and architectural decision
-- [Ground a source-dependent claim](../../instructions/ground-source-dependent-claims.md)
+- [Ground a source-dependent claim](../../instructions/cp-skill-ground/SKILL.md)
   — choose Quotes or snapshot-required support
 - [Ingest skill](../../instructions/cp-skill-ingest/SKILL.md) — the only
   supported mechanical quote-append path

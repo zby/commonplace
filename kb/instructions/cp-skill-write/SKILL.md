@@ -122,13 +122,12 @@ unambiguous source identity. Read its complete Quotes section and the
   support the use.
 - Otherwise, if Quotes is insufficient, stop before saving. Fill in the exact
   ingest path or canonical source URL and the source-side proposition or question, then
-  report one of these literal routes as appropriate:
-  - source checkout: `Read and execute kb/instructions/ground-source-dependent-claims.md with Target: <target> and Claim needed: <claim-needed>.`
-  - installed project: `Read and execute kb/commonplace/instructions/ground-source-dependent-claims.md with Target: <target> and Claim needed: <claim-needed>.`
+  report this literal route:
+  `Invoke cp-skill-ground with Target: <target> and Claim needed: <claim-needed>.`
 
 If neither an exact ingest nor a canonical URL can be resolved, stop and ask
 for that source identity rather than inventing an input. This writer never
-invokes the grounding instruction, edits an ingest, or introduces a separate
+invokes the grounding skill, edits an ingest, or introduces a separate
 result protocol. It reads a source snapshot only for a declared `snapshot
 required` dependency.
 

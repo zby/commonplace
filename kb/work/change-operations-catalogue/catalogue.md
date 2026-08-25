@@ -174,7 +174,7 @@ test).
 - Must know: ingest owns source authority; snapshots are local; quotes are
   verbatim-only; the two grounding routes.
 - Current home: `kb/sources/COLLECTION.md`, the ingest-report type,
-  `cp-skill-ingest`, `ground-source-dependent-claims.md`.
+  `cp-skill-ingest`, `cp-skill-ground`.
 - Gap: none obvious.
 
 ### 18. Adopt a borrowed idea into the framework

@@ -83,6 +83,7 @@ A further family of commands drives the review system — selecting targets, que
 | `cp-skill-convert` | Convert raw text captures into structured notes |
 | `cp-skill-ingest` | Ingest an external source: local snapshot → connect → classify → tracked analysis |
 | `cp-skill-snapshot-web` | Capture a URL into ignored `kb/sources/.snapshots/` |
+| `cp-skill-ground` | Retain the minimum verbatim quotes that ground one source claim, or flag that the snapshot is required |
 | `cp-skill-health-check` | Diagnose a broken Commonplace install |
 | `cp-skill-revise-autoreason` | Revise a note with AutoReason-style incumbent/revision/synthesis judging |
 

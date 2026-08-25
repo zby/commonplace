@@ -3,7 +3,7 @@
 Restored 2026-08-24 from the claim-pull implementation workshop, which trimmed
 it to this form and then deleted it on closure after running only cohort 01
 (two notes). The prospective rule now ships — [ADR 073](../../reference/adr/073-untracked-source-snapshots-require-ingest-grounding.md)
-plus [`ground-source-dependent-claims.md`](../../instructions/ground-source-dependent-claims.md)
+plus [`cp-skill-ground`](../../instructions/cp-skill-ground/SKILL.md)
 — but the retrospective half was left without a home while 66 of the 68
 ingest-citing notes remain ungrounded. This is Channel 1 of
 [three-channels](../literature-disposition/three-channels.md), and this workshop owns it.
@@ -93,7 +93,7 @@ is how the first pass over-attributed two claims it later had to retract.
 **To ground a claim:**
 
 ```
-Read and execute kb/instructions/ground-source-dependent-claims.md
+Invoke cp-skill-ground
 with Target: <exact ingest path or canonical source URL>
 and Claim needed: <source-side proposition or question>.
 ```

@@ -1,16 +1,24 @@
 ---
-description: Retain the minimum verbatim source quotes needed for one source-dependent claim, or declare that checking requires the pinned snapshot
+name: cp-skill-ground
+description: Ground one source-side claim by retaining the minimum verbatim quotes in its ingest, or declare that the pinned snapshot is required. Use when a note needs source support or when asked to retain quotes; never call cp-skill-ingest for that.
 type: kb/types/instruction.md
+user-invocable: true
+allowed-tools: Read, Grep, Glob, Bash, Skill
+context: fork
+model: opus
+argument-hint: "Target: <ingest path or canonical source URL>; Claim needed: <source-side proposition or question>"
 ---
 
 # Ground a source-dependent claim
+
+`$ARGUMENTS` supplies both inputs. Stop and ask if either is missing.
 
 **Target:** exact repo-relative ingest path or canonical source URL.
 
 **Claim needed:** source-side proposition or question. Do not include target
 prose or a target-specific transfer argument.
 
-This instruction may reuse or append verbatim quotes. It never edits the
+This skill may reuse or append verbatim quotes. It never edits the
 target artifact or interprets a paraphrase stored in an ingest as source
 support.
 

@@ -93,5 +93,6 @@ MANIFEST = ScaffoldManifest(
         "cp-skill-snapshot-web",
         "cp-skill-revise-autoreason",
         "cp-skill-write-multistage",
+        "cp-skill-ground",
     ),
 )

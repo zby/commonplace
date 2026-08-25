@@ -1,6 +1,6 @@
 ---
 name: cp-skill-ingest
-description: Use when asked to ingest one URL or local snapshot, execute a bounded re-ingest request, or mechanically append verified verbatim quotes to a tracked .ingest.md source analysis.
+description: Use when asked to ingest one URL or local snapshot, or to execute a bounded re-ingest request. Also the mechanical callee for a quote_append_request from cp-skill-ground; to choose which quotes a claim needs, invoke cp-skill-ground instead.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill, Task
@@ -61,7 +61,7 @@ re_ingest_request:
   snapshot_path: <name-paired snapshot path>
 ```
 
-A grounding caller supplies this structured request instead of an ordinary
+`cp-skill-ground` supplies this structured request instead of an ordinary
 target or a re-ingest request:
 
 ```yaml

@@ -224,14 +224,12 @@ unambiguous source identity. Read its complete Quotes section and the
 - Otherwise, if Quotes is insufficient, add a blocker to the workshop
   `README.md` with the exact dependency and retain `candidate.md` and the workshop without changing the
   live target or any source file. Fill in the exact ingest path or canonical
-  source URL and the source-side proposition or question, then report one of
-  these literal routes as appropriate:
-  - source checkout: `Read and execute kb/instructions/ground-source-dependent-claims.md with Target: <target> and Claim needed: <claim-needed>.`
-  - installed project: `Read and execute kb/commonplace/instructions/ground-source-dependent-claims.md with Target: <target> and Claim needed: <claim-needed>.`
+  source URL and the source-side proposition or question, then report this literal
+  route: `Invoke cp-skill-ground with Target: <target> and Claim needed: <claim-needed>.`
 
 If neither an exact ingest nor a canonical URL can be resolved, record that
 source-identity blocker and ask for the missing identity. This writer never
-invokes the grounding instruction, edits an ingest, or introduces a separate
+invokes the grounding skill, edits an ingest, or introduces a separate
 result protocol. It reads a source snapshot only for a declared `snapshot
 required` dependency. Do not begin any promotion write while a
 source-dependency blocker remains. If applying the source gate or changing the

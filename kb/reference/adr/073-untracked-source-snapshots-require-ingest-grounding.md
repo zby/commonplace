@@ -175,6 +175,6 @@ Relevant Notes:
 
 - [ADR 072: Ingest reports own source authority and snapshots are local materializations](./072-ingests-own-source-authority-and-snapshots-are-local.md) — supersedes: replaces checksum-first resolution for grounding and makes each recorded observation immutable while retaining its authority and cache split
 - [Grounding alignment gate](../../instructions/review-gates/semantic/grounding-alignment.md) — implemented-by: the sole semantic check for quote-backed and snapshot-required source uses
-- [Ground a source-dependent claim](../../instructions/ground-source-dependent-claims.md) — procedure: retain bounded exact quotes or declare the snapshot-required route
+- [Ground a source-dependent claim](../../instructions/cp-skill-ground/SKILL.md) — procedure: retain bounded exact quotes or declare the snapshot-required route
 - [Ingest-report type](../../sources/types/ingest-report.md) — see-also: tracked Quotes shape and source-record boundary consumed by the decision
 - [A quotes-route rollout grounded more claim uses without earning claim identifiers](../../notes/evidence/quotes-route-rollout-grounded-more-uses-without-earning-claim-ids.md) — see-also: the bounded cohort record behind the V1 decision to omit claim identifiers, deduplication, and reconciliation
