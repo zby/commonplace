@@ -45,9 +45,15 @@ given that the system it describes is available for inspection:
   not for exactness ("what does this function return"). Compare the smallest
   units a reader must select, not whole artifacts: a symbol is a search key, a
   prose section is not.
-- **Is this a premise of a change operation, or a record of a change already
-  made?** A migration step, a before-state described as a diff, or a list of
-  files touched is history; it is already in git and is cut here.
+- **Is this a premise of a change operation, or something the reader
+  regenerates from what is already there?** Three sources are already there:
+  the implementation, for exact facts; git, for what changed, when, and in
+  what order — a migration step, a before-state described as a diff, or a
+  list of files touched is history and is cut here; and the reader's own
+  general knowledge, for ordinary reasoning. What none of the three yields —
+  an intent, the choice among alternatives, a project-particular constraint,
+  a limit of applicability — is what a passage may keep
+  ([content routing](./content-routing.md)).
 - Could this section be cut without losing information the reader needs to act?
 - Would a table or list say this more compactly than prose?
 

@@ -29,6 +29,10 @@ Naur argues that programming primarily builds a theory held by programmers: a si
   - **Source location:** Section 4, “The theory to be built by the programmer”, capability 1 (mapping between world affairs and program text)
 - **Source extract (verbatim):** The design of how a modification is best incorporated into an established program depends on the perception of the similarity of the new demand with the operational facilities already built into the program. The kind of similarity that has to be perceived is one between aspects of the world. It only makes sense to the agent who has knowledge of the world, that is to the programmer, and cannot be reduced to any limited set of criteria or rules
   - **Source location:** Section 4, “The theory to be built by the programmer”, capability 3
+- **Source extract (verbatim):** The programmer having the theory of the program can explain why each part of the program is what it is, in other words is able to support the actual program text with a justification of some sort.
+  - **Source location:** Section 4, “The theory to be built by the programmer”, capability 2 (justification of each part of the program)
+- **Source extract (verbatim):** Indeed, the very notion of qualities such as simplicity and good structure can only be understood in terms of the theory of the program, since they characterize the actual program text in relation to such program texts that might have been written to achieve the same execution behaviour, but which exist only as possibilities in the programmer’s understanding.
+  - **Source location:** Section 5, “Problems and costs of program modifications”, final sentence
 
 ## Connections Found
 
@@ -59,3 +63,5 @@ Revise [Use tests a decomposition locally; retained rationale is what makes tran
 Abstracted into:
 
 - [Theory-mediated self-improvement needs both interpretation and retention from one substrate](../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md) — shifts Naur's human theory-holder into an LLM-plus-artifact system boundary while preserving the theory-building claim
+- [Design rationale must preserve decision premises its interpreter cannot regenerate](../notes/design-rationale-must-preserve-unregenerable-decision-premises.md) — turns the three theory-holder capabilities into a one-way retention test: preserve the decision premises a fresh interpreter cannot faithfully recover from implementation, history, and general knowledge
+- [A specific intent may out-yield local rationales, but contingent facts stay separate](../notes/specific-intent-may-out-yield-local-rationales-facts-stay-separate.md) — uses the justification capability and the counterfactual-design-space passage to conjecture an intent's per-token yield and to bound it with contingent fact

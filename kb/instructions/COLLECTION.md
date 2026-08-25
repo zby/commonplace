@@ -14,7 +14,7 @@ Tests for precision:
 
 **Frontloading.** Self-contained enough for an agent with no prior context. Define terms inline; don't assume the reader has loaded other KB documents.
 
-**Reasoning constraint.** Cut explanations of *why* each step exists from the instruction body. If worth preserving, record in a theory note and link via `rests-on` (for meta-readers only). Keep only enough reasoning for edge cases and decisions.
+**Reasoning constraint.** Keep the procedure's goal — one sentence at the top saying what it exists to make true — and cut explanations of *why* each step exists from the body. The goal is not regenerable from the steps; the per-step reasons are regenerable from the goal plus the step, and if worth preserving they go in a theory note linked via `rests-on` (for meta-readers only). Keep only enough further reasoning for edge cases and decisions.
 
 **Instruction duality.** These docs are both content and working system — changing an instruction changes agent behaviour immediately. Treat edits as deployments, not documentation updates: before changing one, name what consumes it and through which channel (the type spec's Operativity section states the test); the edit is live for the next agent that loads the text, with no separate release step. The same duality means an instruction nothing loads is inert — it deploys to no one, and nothing will report that (rationale: [operative change](../notes/definitions/operative-change.md)).
 

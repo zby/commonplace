@@ -48,6 +48,7 @@ Traits route semantic review. They do not change structural validation.
 - Put the main claim or mechanism near the top.
 - Link to adjacent notes where the relationship helps traversal.
 - Keep design rationale in notes; keep imperative procedure in instructions.
+- State the claim's limits under their own heading (`## Scope`): assumptions, applicability conditions, known failure cases. A limit with its own section can be narrowed by a rescoping edit without rewriting the claim, and the review gates that test scope look for it. Omit the section when no limit is known. `structured-claim` notes use `## Caveats` for the same role.
 
 ## Template
 
@@ -62,6 +63,10 @@ tags: []
 # {prose-as-title — a proposition, not a topic label}
 
 {Your analysis, reasoning, or exploration. Freeform.}
+
+## Scope
+
+- {Assumptions, applicability conditions, known failure cases — omit section if none}
 
 ## Open Questions
 

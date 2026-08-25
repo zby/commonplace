@@ -20,6 +20,7 @@ Use `instruction` for prescriptive content: procedures, skill bodies, wrapper pr
 ## Structure
 
 - Title imperatively or as an action.
+- State the goal first: one sentence saying what the procedure exists to make true. It is the only rationale the body keeps; an executor holding the goal can re-route around a blocked step instead of failing on it.
 - Keep the body executable on first reading.
 - State prerequisites, scope boundaries, decision points, and verification checks where they matter.
 - Fix only what the executor can't determine at run time: the goal, constraints, what *done* means, privileged facts, and arbitrary choices (paths, names, templates, which valid interpretation to follow). Leave anything the executor can determine from the live system to the executor — a fixed detail is an authoring-time snapshot and goes stale.
@@ -41,6 +42,8 @@ type: kb/types/instruction.md
 ---
 
 # {Imperative title}
+
+{Goal: one sentence on what this procedure exists to make true.}
 
 {What this instruction does and when to use it. Body sections follow the
 shape that fits the work.}

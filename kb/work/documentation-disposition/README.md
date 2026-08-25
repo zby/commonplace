@@ -1,6 +1,6 @@
 # Documentation disposition: what a reflective system retains, and where
 
-Reopened 2026-08-25. The earlier workshop of this name closed on 2026-08-24
+Reopened 2026-08-25 at the operator's direction. The earlier workshop of this name closed on 2026-08-24
 after deciding the *maintenance form* of reference documentation and yielding
 [ADR 074](../../reference/adr/074-git-is-the-change-history-layer.md). This
 reopening asks the placement question that ADR 074 answered only for change

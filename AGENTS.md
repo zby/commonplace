@@ -107,7 +107,7 @@ The source checkout's `.agents/skills/` and `.claude/skills/` projections are co
 - **Prefer atomic stage+commit** — combine staging and committing in one command (`git add <files> && git commit -m "..."`). Leaving files staged without committing risks another agent's commit sweeping in unrelated changes.
 - **If sandboxing blocks `git add` or `git commit`, retry the whole atomic command with escalation** — do not fall back to separate `git add` followed by a later `git commit`. Use explicit file paths in the atomic command, for example `git add path/one.md path/two.md && git commit -m "..."`.
 - **Prefer atomic artifact commits over temporary navigation consistency** — do not partially stage shared README/index/navigation files just to make a new artifact immediately discoverable. Generated indexes and curated navigation can lag and be refreshed in a separate commit unless that navigation file is the primary target or can be staged wholly without sweeping unrelated work.
-- **Commit messages** (ADR 074, ADR 075) — git is the change-history layer of this checkout. Subject: one imperative sentence under ~72 characters saying what changed; no `feat:`-style prefixes. Body: a commit that performs a sweep, migration, retirement, or relocation states what moved, how many, and what was kept, cut, or deferred — that narrative lives here, not in ADRs or reference docs. Trailers, each only when it applies: `Decision: ADR 0NN` when the commit implements, amends, or revises that ADR; `Workshop: kb/work/<name>` when it advances a workshop; `Model: <model id>` when an agent made the commit.
+- **Commit messages** (ADR 074, ADR 075) — git is the change-history layer of this checkout. Subject: one imperative sentence under ~72 characters saying what changed; no `feat:`-style prefixes. Body: open with what the change is meant to make true when the subject and the diff do not show it — the diff records what changed, not what for, and the commit is the cheapest place to capture that. A commit that performs a sweep, migration, retirement, or relocation states what moved, how many, and what was kept, cut, or deferred — that narrative lives here, not in ADRs or reference docs. Trailers, each only when it applies: `Decision: ADR 0NN` when the commit implements, amends, or revises that ADR; `Workshop: kb/work/<name>` when it advances a workshop; `Model: <model id>` when an agent made the commit.
 - **Relocation commits are pure** — commit a `commonplace-relocate-*` result alone, with no content edits, so `git log --follow` survives the rename.
 - **Check `git diff` before committing.**
 - **Never `git reset --hard` or force-push** without explicit permission. Prefer safe alternatives: `git revert`, new commits, temporary branches.
@@ -118,7 +118,7 @@ The knowledge base lives in `kb/`. Search it when working on methodology, design
 
 ### Collection Routing
 
-Read the target collection's `COLLECTION.md` before writing or connecting artifacts there.
+Read the target collection's `COLLECTION.md` before writing or connecting artifacts there. When the question is which *kind* of content goes where — an intent, a force, a rejected alternative, a limit, a change narrative — read [content-routing.md](./kb/reference/content-routing.md).
 
 | Path | Use when |
 |---|---|

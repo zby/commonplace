@@ -165,7 +165,7 @@ that consumes it; the destination; and the shape it takes there.
 | 14 | **Identified gap not being done now** | justify (deferred) | nothing | the adoption decision | `kb/reference/proposals/` (system gap) or `kb/notes/` (insight) — the YAGNI rule | problem, option space, forces, free choices; no implementation detail |
 | 15 | **In-flight reasoning, drafts, traces** | any, unfinished | nothing, but consumed once | the work producing it | `kb/work/`; deleted at close after extraction | free form |
 | 16 | **Source-side claim and its evidence** | map (external world) | the pinned snapshot | grounding gate; any note citing the source | ingest `## Quotes` via `cp-skill-ground`; snapshot when bounded quotes cannot carry it | verbatim extract plus locator |
-| 17 | **Self-directed theory** — a claim about the system's own operation ("this step surfaces the wrong artifact when …") | modify (applied to itself) | nothing | reflective improvement; the instruction it would change | `kb/notes/` with scope separable (row 6), plus the instruction or validator change it licenses, linked | claim, scope, and the change it produced, each addressable |
+| 17 | **Self-directed theory** — a claim about the system's own operation, such as a retrieval step surfacing the wrong artifact for one kind of query | modify (applied to itself) | nothing | reflective improvement; the instruction it would change | `kb/notes/` with scope separable (row 6), plus the instruction or validator change it licenses, linked | claim, scope, and the change it produced, each addressable |
 
 Reconciliation with the existing table in
 `kb/reference/design-rationale-management.md` (`Rationale state → surface`):
@@ -178,8 +178,12 @@ observations, sources.
 
 ## 5. Candidate changes the table implies
 
-Each names the consumer and channel that would make it operative. None is
-adopted here.
+Each names the consumer and channel that would make it operative. Status as
+of 2026-08-25: C1, C2, C3, C6, C7 and the source clause of C5 are drafted in
+the working tree and recorded in ADR 077; C4 is a proposal, "Decisions bind their consumers through site
+back-pointers", whose retrofit worklist the change-operations catalogue would
+supply; C5 is closed without a status field — an intent's currency is read
+from its container's lifecycle position.
 
 **C1. Instructions carry their goal.** Row 1 versus the instructions
 contract's "cut the why". Proposal: the instruction type requires one
