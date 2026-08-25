@@ -7,11 +7,9 @@ import pytest
 
 from commonplace.lib.snapshot import (
     DuplicateSnapshotError,
-    SnapshotUnavailableError,
     dedup_existing_snapshot,
     find_snapshot_by_sha256,
     ingest_metadata_from_snapshot,
-    resolve_ingest_snapshot,
     snapshot_sha256,
 )
 
@@ -20,19 +18,6 @@ def write(path: Path, content: str) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8")
     return path
-
-
-def write_ingest(path: Path, checksum: str) -> Path:
-    return write(
-        path,
-        f"""---
-source: https://example.com/source
-snapshot_sha256: "{checksum}"
----
-
-# Ingest
-""",
-    )
 
 
 def test_snapshot_sha256_hashes_exact_file_bytes(tmp_path: Path) -> None:
@@ -115,109 +100,6 @@ domains: [unexpected]
 
     with pytest.raises(ValueError, match="collides with ingest fields: domains"):
         ingest_metadata_from_snapshot(snapshot)
-
-
-def test_resolve_ingest_snapshot_uses_exact_local_match_first(tmp_path: Path) -> None:
-    snapshot_dir = tmp_path / ".snapshots"
-    snapshot = write(snapshot_dir / "source.md", "grounding bytes\n")
-    ingest = write_ingest(tmp_path / "source.ingest.md", snapshot_sha256(snapshot))
-
-    def recapture(_source: str) -> Path:
-        raise AssertionError("exact cache hit must not recapture")
-
-    result = resolve_ingest_snapshot(ingest, snapshot_dir, recapture=recapture)
-
-    assert result.status == "exact"
-    assert result.path == snapshot.resolve()
-    assert result.actual_sha256 == result.expected_sha256
-
-
-def test_resolve_ingest_snapshot_stops_on_duplicate_exact_copies(
-    tmp_path: Path,
-) -> None:
-    snapshot_dir = tmp_path / ".snapshots"
-    first = write(snapshot_dir / "first.md", "grounding bytes\n")
-    write(snapshot_dir / "second.md", "grounding bytes\n")
-    ingest = write_ingest(tmp_path / "source.ingest.md", snapshot_sha256(first))
-
-    with pytest.raises(DuplicateSnapshotError):
-        resolve_ingest_snapshot(
-            ingest,
-            snapshot_dir,
-            recapture=lambda _source: (_ for _ in ()).throw(
-                AssertionError("duplicates must stop before recapture")
-            ),
-        )
-
-
-def test_resolve_ingest_snapshot_installs_exact_recapture(tmp_path: Path) -> None:
-    snapshot_dir = tmp_path / ".snapshots"
-    candidate = write(tmp_path / "download" / "source.md", "reconstructed\n")
-    ingest = write_ingest(tmp_path / "source.ingest.md", snapshot_sha256(candidate))
-
-    result = resolve_ingest_snapshot(
-        ingest,
-        snapshot_dir,
-        recapture=lambda source: candidate
-        if source == "https://example.com/source"
-        else None,
-    )
-
-    assert result.status == "exact"
-    assert result.path == (snapshot_dir / "source.md").resolve()
-    assert result.path.read_bytes() == candidate.read_bytes()
-
-
-def test_resolve_ingest_snapshot_exposes_mismatch_without_editing_ingest(
-    tmp_path: Path,
-) -> None:
-    snapshot_dir = tmp_path / ".snapshots"
-    expected_file = write(tmp_path / "expected.md", "original bytes\n")
-    candidate = write(snapshot_dir / "source.md", "current bytes\n")
-    ingest = write_ingest(
-        tmp_path / "source.ingest.md", snapshot_sha256(expected_file)
-    )
-    ingest_before = ingest.read_bytes()
-
-    result = resolve_ingest_snapshot(
-        ingest,
-        snapshot_dir,
-        recapture=lambda _source: candidate,
-    )
-
-    assert result.status == "mismatch"
-    assert result.actual_sha256 == snapshot_sha256(candidate)
-    assert result.actual_sha256 != result.expected_sha256
-    assert ingest.read_bytes() == ingest_before
-
-
-def test_resolve_ingest_snapshot_reports_unavailable_without_adapter(
-    tmp_path: Path,
-) -> None:
-    ingest = write_ingest(tmp_path / "source.ingest.md", "0" * 64)
-
-    result = resolve_ingest_snapshot(ingest, tmp_path / ".snapshots")
-
-    assert result.status == "unavailable"
-    assert "no recapture adapter" in (result.detail or "")
-
-
-def test_resolve_ingest_snapshot_preserves_adapter_unavailable_detail(
-    tmp_path: Path,
-) -> None:
-    ingest = write_ingest(tmp_path / "source.ingest.md", "0" * 64)
-
-    def unavailable(_source: str) -> Path:
-        raise SnapshotUnavailableError("upstream returned 404")
-
-    result = resolve_ingest_snapshot(
-        ingest,
-        tmp_path / ".snapshots",
-        recapture=unavailable,
-    )
-
-    assert result.status == "unavailable"
-    assert result.detail == "upstream returned 404"
 
 
 def test_dedup_existing_snapshot_returns_matching_markdown_snapshot(tmp_path: Path) -> None:

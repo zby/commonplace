@@ -23,7 +23,7 @@ from commonplace.review.type_conformance import (
     type_criterion_id_for_path,
 )
 
-SOURCE_GATES_ROOT = Path("kb/instructions/review-gates")
+CHECKOUT_GATES_ROOT = Path("kb/instructions/review-gates")
 INSTALLED_GATES_ROOT = Path("kb/commonplace/instructions/review-gates")
 
 
@@ -53,7 +53,7 @@ def review_gates_dir(repo_root: Path) -> Path:
     installed = repo_root / INSTALLED_GATES_ROOT
     if installed.is_dir():
         return installed
-    return repo_root / SOURCE_GATES_ROOT
+    return repo_root / CHECKOUT_GATES_ROOT
 
 
 def criterion_path_for_id(repo_root: Path, criterion_id: str) -> str:
@@ -110,7 +110,7 @@ def criterion_id_from_stored_path(criterion_path: str) -> str:
         return CRITIQUE_LENS
     normalized = Path(criterion_path).with_suffix("").as_posix()
     prefixes = (
-        SOURCE_GATES_ROOT.as_posix() + "/",
+        CHECKOUT_GATES_ROOT.as_posix() + "/",
         INSTALLED_GATES_ROOT.as_posix() + "/",
     )
     for prefix in prefixes:

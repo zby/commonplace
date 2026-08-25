@@ -141,11 +141,12 @@ would make the same note pass or fail according to ambient cache state without
 declaring that dependency. The marker makes non-portability visible in the
 artifact and fail-closed in review.
 
-**Keep the virtual source-conformance lens alongside the standard gate.** Both
-would read the same note-to-source relation and make similar semantic
-judgments, while maintaining separate selection, prompt, freshness, and result
-paths. The standard gate already owns grounding alignment and can express the
-two source-input routes in its hashed criterion text.
+**Keep the virtual source-conformance lens alongside the standard gate.** This
+would duplicate an already operational semantic-review path. The standard gate
+already owns grounding alignment, participates in the existing catalog and
+review pipeline, and can express both source-input routes in its hashed
+criterion text. A lens would read the same note-to-source relation while
+maintaining separate selection, prompt, freshness, and result paths.
 
 **Use checksum-first lookup for the snapshot route.** Equal bytes do not bind a
 local path to the ingest being cited. Exact name pairing makes the declared

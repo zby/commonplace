@@ -10,9 +10,10 @@ needs a narrower source policy.
 ## Purpose and scope
 
 This collection contains tracked analyses and durable records of external
-sources. Tracked ingest reports are collection content. Local captures under
-the ignored `.snapshots/` directory are immutable inputs, not collection
-artifacts or durable link targets.
+sources. Tracked ingest reports are collection content and own durable source
+identity, an immutable snapshot checksum, and project-relative analysis. Local
+captures under the ignored `.snapshots/` directory are immutable inputs, not
+collection artifacts or durable link targets.
 
 ## Quality goal
 
@@ -26,8 +27,10 @@ the source says separate from project-relative analysis.
 - Write a retrieval-oriented description that says what the source establishes
   and why it matters to this project.
 - Treat every capture under `.snapshots/` as immutable. Create a new capture
-  when the observed source changes, and update the tracked record's provenance
-  rather than editing the old capture.
+  under a distinct basename when the observed source changes rather than
+  editing the old capture.
+- Never change an existing ingest's `snapshot_sha256`. Changed source bytes are
+  a new observation with a distinct snapshot basename and ingest path.
 - Never author a durable link into `.snapshots/`.
 
 `commonplace-validate kb/sources` keeps hidden captures outside ordinary
@@ -42,6 +45,42 @@ only under a
 different filename, when an alternate file redundantly duplicates an already
 valid pair, and when no ingest matches either the URL or checksum. A tracked
 ingest whose ignored snapshot is simply absent does not warn.
+
+## Quotes in ingest reports
+
+Every ingest report has exactly one `## Quotes` section immediately before
+`## Connections Found`. It retains only exact source wording and a
+human-resolvable locator. Do not put paraphrases, scope judgments, confidence
+assessments, limitations, or target-specific transfer reasoning in this
+section.
+
+The empty section is exactly:
+
+```markdown
+## Quotes
+
+No source quotes have been retained yet.
+```
+
+A populated item has this shape:
+
+```markdown
+- **Source extract (verbatim):** <exact supporting content>
+  - **Source location:** <human-resolvable locator for that extract>
+```
+
+Repeat the complete pair when support is non-contiguous. Quotes are
+append-only: append new items without rewriting or deleting incumbent ones.
+
+## Declaring source-checking requirements
+
+A source-dependent claim links the tracked ingest, never the local snapshot.
+An ordinary ingest link declares that its Quotes section is sufficient for
+semantic checking. When checking requires the full observation, include the
+exact marker `(snapshot required)` in the ingest link text. The semantic
+grounding gate then derives and verifies the name-paired snapshot and fails if
+it is unavailable or invalid. It never silently falls back from an unmarked
+link to ambient snapshot state.
 
 ## Outbound links
 

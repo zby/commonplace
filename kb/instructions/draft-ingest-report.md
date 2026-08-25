@@ -28,8 +28,7 @@ Require the caller to supply these values in the task:
 - `validation_failures`: `none` in `create` mode; a non-empty list of exact
   failures in `repair` mode
 
-For a fresh output or an approved changed observation, the caller supplies this
-exact `retained_quotes` value:
+For a fresh output, the caller supplies this exact `retained_quotes` value:
 
 ```markdown
 ## Quotes

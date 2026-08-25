@@ -6,10 +6,10 @@ from hashlib import sha256
 from commonplace.review import review_db
 
 
-def source_criterion_path(gate: str) -> str:
-    normalized = gate.strip().removesuffix(".md")
+def criterion_path_for_test(criterion: str) -> str:
+    normalized = criterion.strip().removesuffix(".md")
     if normalized.startswith("kb/"):
-        return gate.strip()
+        return criterion.strip()
     return f"kb/instructions/review-gates/{normalized}.md"
 
 
@@ -25,7 +25,7 @@ def insert_completed_pair(
     reviewed_note_snapshot_id: int | None = None,
     reviewed_criterion_snapshot_id: int | None = None,
 ) -> int:
-    criterion_path = source_criterion_path(criterion_id)
+    criterion_path = criterion_path_for_test(criterion_id)
     review_job_id = review_db.create_job_with_pairs(
         conn,
         model_partition=model_partition,
@@ -67,7 +67,7 @@ def accept_pair(
     baseline_note_snapshot_id: int | None = None,
     baseline_criterion_snapshot_id: int | None = None,
 ) -> review_db.SupersededFreshnessBaseline | None:
-    criterion_path = source_criterion_path(criterion_id)
+    criterion_path = criterion_path_for_test(criterion_id)
     if baseline_note_snapshot_id is None:
         baseline_note_snapshot_id = _synthetic_snapshot(
             conn,

@@ -134,6 +134,21 @@ def test_init_project_satisfies_collection_landing_invariant(tmp_path: Path) -> 
     )
 
 
+def test_init_project_seeds_quote_or_snapshot_source_contract(tmp_path: Path) -> None:
+    init_project(tmp_path)
+
+    contract = (tmp_path / "kb" / "sources" / "COLLECTION.md").read_text(
+        encoding="utf-8"
+    )
+    normalized_contract = " ".join(contract.split())
+
+    assert "## Quotes in ingest reports" in contract
+    assert "No source quotes have been retained yet." in contract
+    assert "Never change an existing ingest's `snapshot_sha256`." in contract
+    assert "exact marker `(snapshot required)`" in contract
+    assert "never silently falls back from an unmarked link" in normalized_contract
+
+
 def test_init_project_preserves_source_collection_heads(tmp_path: Path) -> None:
     init_project(tmp_path)
     collection = tmp_path / "kb" / "sources" / "COLLECTION.md"
