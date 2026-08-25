@@ -23,7 +23,12 @@ Naur argues that programming primarily builds a theory held by programmers: a si
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** In terms of Ryle’s notion of theory, what has to be built by the programmer is a theory of how certain affairs of the world will be handled by, or supported by, a computer program.
+  - **Source location:** Section 4, “The theory to be built by the programmer”, opening sentence
+- **Source extract (verbatim):** By far the largest part of the world aspects and activities will of course lie outside the scope of the program text, being irrelevant in the context. However, the decision that a part of the world is relevant can only be made by someone who understands the whole world. This understanding must be contributed by the programmer.
+  - **Source location:** Section 4, “The theory to be built by the programmer”, capability 1 (mapping between world affairs and program text)
+- **Source extract (verbatim):** The design of how a modification is best incorporated into an established program depends on the perception of the similarity of the new demand with the operational facilities already built into the program. The kind of similarity that has to be perceived is one between aspects of the world. It only makes sense to the agent who has knowledge of the world, that is to the programmer, and cannot be reduced to any limited set of criteria or rules
+  - **Source location:** Section 4, “The theory to be built by the programmer”, capability 3
 
 ## Connections Found
 
