@@ -33,6 +33,13 @@ The paper conducts a large-scale empirical study comparing transformers and recu
 - **Source extract (verbatim):** Conversely, recurrent models (LSTMs and Dense-SSMs) demonstrate superior sample efficiency when trained with the Aligned CoT (ACoT) format, which provides supervision aligned with the evolution of the hidden state.
   - **Source location:** Section 3, Observation 3.2.
 
+- **Source extract (verbatim):** We consider the task of modular addition, where a model is provided a sequence of n integers x = (x_1, x_2, ..., x_n) with each x_i drawn uniformly at random from Z_m = {0, 1, ..., m-1}.
+  - **Source location:** Section 2, “Methodology,” Task
+- **Source extract (verbatim):** The transformer model used is based on the GPT-2 architecture (Radford et al., 2019) with 6 layers and a model (embedding/hidden) dimension of 256. Both the LSTM and Dense-SSM models use a single-layer recurrent cell followed by a linear classification head. We use an input and hidden dimension of 768 for the LSTM and 256 for the Dense-SSM. We also experiment with a 2-layer transformer and a LSTM with hidden dimension of 256.
+  - **Source location:** Section 2, “Methodology,” Experimental Setup
+- **Source extract (verbatim):** We study performance across a limited, albeit representative, number of models and task types.
+  - **Source location:** Section 5, “Conclusions”
+
 ## Connections Found
 
 The `/connect` discovery found 4 strong and 4 moderate connections. Because this is an ML-architecture paper and the KB focuses on knowledge-system methodology, the connections are analogical -- cross-domain mappings between architectural constraints in neural networks and structural constraints in knowledge systems.

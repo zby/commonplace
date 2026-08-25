@@ -33,6 +33,9 @@ Chung et al. introduce a benchmark for evaluating LLM-based web agents on long-c
 - **Source extract (verbatim):** The researchers tested an implicit RAG approach generating task-relevant summaries, which provided modest improvements but did not resolve fundamental limitations.
   - **Source location:** Abstract.
 
+- **Source extract (verbatim):** Testing four models — Claude-3.7, GPT-4.1, Llama 4, and o4-mini — revealed significant performance decline with increased context.
+  - **Source location:** Abstract
+
 ## Connections Found
 
 The `/connect` discovery identified strong connections to 7 KB notes and 4 other sources, with the soft-degradation note as the primary hub.

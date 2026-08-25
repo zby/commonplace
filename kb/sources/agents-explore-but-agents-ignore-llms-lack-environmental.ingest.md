@@ -30,6 +30,11 @@ The paper argues that current LLM agents often discover relevant environmental i
 - **Source extract (verbatim):** The gap is starkest on AppWorld: discovery@1 exceeds 90% for all models, yet interaction@1 never surpasses 6.3%.
   - **Source location:** Section 3.1, discussion of Figure 2.
 
+- **Source extract (verbatim):** executes a command that surfaces the injected solution in the agent’s context.
+  - **Source location:** Section 2.2, “Metrics,” discovery@k definition
+- **Source extract (verbatim):** We detect interaction by checking whether any command executed by the agent references the injected solution, e.g. contains “solution.sh” or “cli solution”.
+  - **Source location:** Section 2.2, “Metrics,” interaction@k definition
+
 ## Connections Found
 
 The connect pass places this source in the context-integration and evaluation cluster, not primarily in the model-internal knowledge activation cluster. It connects as evidence for [process-structure-and-output-structure-are-independent-levers](../notes/process-structure-and-output-structure-are-independent-levers.md), because exploration and reflection prompts change behavior by constraining reasoning process rather than answer format, and for [prompt-ablation-converts-human-insight-to-deployable-framing](../notes/prompt-ablation-converts-human-insight-to-deployable-framing.md), because the paper tests which prompt framings trigger the desired cognitive move. The tool-suite ablations support [agent-is-a-tool-loop](../notes/agent-is-a-tool-loop.md): changing the capability surface changes the agent's behavior, not just its convenience. The closest existing note with a related mechanism is [knowledge-storage-does-not-imply-contextual-activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md), but this source is distinct: the relevant information is already in the live context, and the failure is connecting that observation to the task and plan. Source comparisons were [Coding Agents are Effective Long-Context Processors](./coding-agents-are-effective-long-context-processors.ingest.md), which also studies tool exposure changing exploration, and [Towards a Science of AI Agent Reliability](./towards-a-science-of-ai-agent-reliability.ingest.md), which similarly argues that aggregate task success is too coarse.

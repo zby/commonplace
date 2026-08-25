@@ -43,6 +43,9 @@ SuperARC is an open-ended benchmark grounded in Algorithmic Information Theory t
 - **Source extract (verbatim):** This weighting deliberately privileges non-trivial solutions.
   - **Source location:** Section 2.4, immediately after the φ formula.
 
+- **Source extract (verbatim):** Testing on 100 binary sequences revealed stark performance differences:
+  - **Source location:** Section 2.4.1, “SuperARC-seq Results”
+
 ## Connections Found
 
 The `/connect` discovery identified 8 genuine connections and rejected 7 candidates (including distillation, structure-activates, and discovery — all surface-vocabulary matches without mechanistic overlap).

@@ -105,17 +105,89 @@ cohorts 02–07. Removing those targets left four connected components: 18 notes
 / 36 ingests, 15 / 20, 2 / 1, and 2 / 1. Cohort 08 combined the two smallest
 components; cohorts 09 and 10 owned the 15- and 18-note components.
 
-The structural migration is complete. The retrospective evidential migration
-is not:
+The structural and cohort migrations are complete. Cohort 01 has a
+reconstructed completion record, and cohorts 02–10b have terminal completion
+records. At certification time, a mixed-partition sweep gave all 68 frozen
+targets a fresh post-revision `semantic/grounding-alignment` result: one
+existing `claude-sonnet-5` result and 67 `codex` results. The pre-repair
+population had 34 PASS, 10 WARN, and 24 FAIL outcomes.
 
-- cohort 01 has a reconstructed completion record;
-- cohorts 02–10a have populated terminal completion records;
-- cohort 10b is the remaining unfinished cohort;
-- targets completed under the retired source lens still need a fresh standard
-  `semantic/grounding-alignment` judgment against Quotes or a declared
-  snapshot. The grounding-gate revision stales ordinary prior baselines by
-  criterion change; deleted source-lens pairs must not be recreated or
-  acknowledged as a substitute.
+The sweep completed the freshness-coverage part of closure condition 3. It did
+not establish that every ordinary support link was adequately quote-backed or
+that every broader use passed: the nonpass outcomes showed otherwise. The
+sweep itself did not repair notes, ingests, the gate, or route markers. The
+first residue-repair round is recorded below; other nonpass outcomes keep this
+workshop open.
+
+## Certification sweep — 2026-08-25
+
+The operator accepted either existing model partition as certifying and chose
+not to rerun the ten fresh results. Review jobs 8056–8113 covered the remaining
+58 notes under `codex`, one note per fresh reviewer context, with serial
+finalization. Those jobs returned 24 PASS, 10 WARN, and 24 FAIL outcomes. The
+ten retained fresh results were all PASS. A final store check found every
+frozen target fresh in at least one accepted partition and no uncovered note.
+
+The frozen population's offered-cost median was seven distinct artifacts
+against the gate's five-link cap. In the 58-job remainder, 53 prompts offered
+more than five distinct artifacts. Four results explicitly said that inspection
+stopped at the cap (jobs 8082, 8101, 8108, and 8109). Job 8106 inspected five
+sources but found a sufficient FAIL. The other 48 over-cap outputs did not
+record how many artifacts they consumed or why they stopped. The measurable
+budget-stop rate is therefore only a lower bound, 4/58 (6.9%); the exact rate
+cannot be recovered from the current output contract.
+
+The sweep also exposed clear residue from the retired paraphrase model. In
+these cases, target wording retained source scope or method details previously
+carried by normalized Claim, Scope, or Limitation fields, while current Quotes
+did not preserve enough source text to judge them:
+
+- `a-retrieval-miss-is-a-local-reflective-path-failure` — missing uncertainty,
+  sample-count, and intervention-design details;
+- `diagnostic-richness-constrains-outer-loop-learning-quality` — numeric rows
+  without the table header that identifies median accuracy;
+- `exact-implementation-does-not-validate-a-requirement` — MAKER, SuperARC,
+  and induction-bias protocol and scope details;
+- `first-principles-analysis-maps-design-space-before-selection` — Cloud
+  Shake's implementation status;
+- `knowledge-storage-does-not-imply-contextual-activation` — Second Brain,
+  solution-injection, and adjusted-result details;
+- `linking-theory` — Pirolli cue examples and the unvaried-cue-length limit;
+- `llm-output-deviation-requires-three-way-diagnosis` — sampling-dispersion and
+  within-cell protocol details;
+- `process-structure-and-output-structure-are-independent-levers` — CEDAR
+  mixture, evaluation scope, reward definitions, and metric provenance; and
+- `soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits` — model,
+  task, and benchmark-scope enumerations.
+
+These were sweep findings rather than repairs. Their finalized review results
+remain in the Commonplace store and per-job reports; later repair reviews add
+new baselines without erasing that history.
+
+## Paraphrase-residue repair — 2026-08-25
+
+The nine cases above were repaired through the current
+`ground-source-dependent-claims` route. All remained ordinary ingest links;
+none needed the broader `(snapshot required)` route. The repair appended 39
+verified quote items across 15 ingests. Commit `3de582ed` had independently
+landed two more verified items for the agent-friendly-documentation case, for
+41 new quote items across 16 ingests in the complete residue set.
+
+Where a bounded extract could not establish a paper-wide absence or causal
+interpretation, the target was narrowed instead. Fresh whole-note reviews also
+found and repaired several adjacent route defects: an ablation attributed to a
+system review rather than its ingest, title-layer reasoning attributed as a
+direct rather than transferred claim, a contamination claim that ruled out
+cross-class steering, and emitted reasoning fields treated as proof of internal
+reasoning.
+
+All 16 affected ingests and all nine target notes pass deterministic
+validation. The Paulsen ingest retains one unrelated pre-existing link-health
+warning for the absent `definitions/distillation.md` target; its validation
+outcome is still PASS. Final fresh `codex` grounding results are PASS for every
+residue note: jobs 8114, 8117, 8121–8125, 8127, and 8129. Intermediate FAIL and
+WARN results remain recorded in jobs 8115, 8116, 8118–8120, 8126, and 8128.
+No already-fresh Sonnet partition was rerun.
 
 ## Current execution path
 
@@ -187,8 +259,8 @@ material rather than durable tracked evidence.
    vocabulary, but no live execution step treats a normalized ingest claim as
    evidence.
 3. Every one of the 68 target notes has a fresh standard
-   `semantic/grounding-alignment` result under the chosen operational model
-   partition after the gate revision. Every ordinary support link is adequately
+   `semantic/grounding-alignment` result under the chosen certification policy
+   after the gate revision. Every ordinary support link is adequately
    quote-backed; every broader use carries the exact snapshot marker and passes
    while the verified snapshot is present.
 4. Every changed ingest and target validates. Missing, mismatched, secondary,
@@ -224,9 +296,9 @@ permanent second review system.
   [09a](./cohort-09a.md) ([prompt](./cohort-09a-prompt.md)) and
   [09b](./cohort-09b.md) ([prompt](./cohort-09b-prompt.md))
 - Cohort 10 — [10a](./cohort-10a.md)
-  ([historical prompt](./cohort-10a-prompt.md)) is complete;
-  [10b](./cohort-10b.md) has a
-  [current quote-grounding prompt](./cohort-10b-prompt.md) and is in progress
+  ([historical prompt](./cohort-10a-prompt.md)) and
+  [10b](./cohort-10b.md)
+  ([quote-grounding prompt](./cohort-10b-prompt.md)) are complete
 - [Cohort 02 prediction](./cohort-02-prediction.md) — sealed; open when judging
   that historical run, never while executing it
 

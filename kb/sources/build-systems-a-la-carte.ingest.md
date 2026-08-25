@@ -40,6 +40,9 @@ The paper unifies Make, Excel, Shake, Bazel, CloudBuild, Buck, and Nix as points
 - **Source extract (verbatim):** Most build systems only track changes of inputs and intermediate results, but Excel also tracks changes in the tasks themselves — if a formula is modified, Excel will recompute it and propagate the changes. Self-tracking is uncommon in software build systems, where one often needs to manually initiate a full rebuild even if just a single task has changed.
   - **Source location:** §2.2, “Excel: Dynamic Dependencies at the Cost of Minimality,” self-tracking discussion
 
+- **Source extract (verbatim):** The authors have investigated multiple build systems, showing how their properties are consequences of two implementation choices: what order you build in and how you decide whether to rebuild. By first decomposing the pieces, they show how to recompose the pieces to find new points in the design space. In particular, a simple recombination leads to a design for a monadic suspending cloud build system. Armed with that blueprint they hope to actually implement such a system as future work.
+  - **Source location:** §8, “Conclusions”
+
 ## Connections Found
 
 The paper has **no lexical footprint** in the KB — none of its vocabulary (à la carte, early cutoff, content-addressable, verifying trace) appears anywhere. Every connection is conceptual, and all connections are **reverse edges**: the snapshot is immutable and authors no outbound links, so the value is which library artifacts should cite this paper as `evidenced-by`. Discovery surfaced one tight neighborhood — the KB's "derived-artifact freshness" cluster — plus a review-freshness cluster in reference:

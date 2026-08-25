@@ -29,6 +29,20 @@ GSM-DC (Grade School Math with Distracting Context) is a synthetic benchmark tha
 - **Source extract (verbatim):** The model trained on Clean data consistently shows a higher Δ, suggesting that IC affects not only reasoning path selection, but also arithmetic execution.
   - **Source location:** Section 4.3, Finding IV.
 
+- **Source extract (verbatim):** Each node is mapped to an entity (e.g., "Arts Campus's T&T Supermarket") from the hierarchical entity vocabulary of the GSM8K dataset, and each edge is rendered using a templated relational statement (e.g., "the number of Zion Markets is 1 more than the number of T&T Supermarkets"). These templates capture the underlying dependencies while maintaining simple, readable language.
+  - **Source location:** Section 3.3, “Natural Language Realization”
+- **Source extract (verbatim):** To systematically analyze how irrelevant context (IC) affects LLM reasoning, we conduct controlled experiments by injecting varying numbers of irrelevant context (m = 1–15) into math word problems M drawn from *GSM-DC*. We evaluate performance across four levels of reasoning steps, denoted rs ∈ {2, 3, 4, 5}, and sample 100 instances per condition to ensure statistical stability.
+  - **Source location:** Section 4.1, “Impact of Irrelevant Context”
+- **Source extract (verbatim):** We benchmark six instruct models: Grok-3-Beta, GPT-4.1, GPT-4o-mini, LLaMA-3.3-70B, LLaMA-3.1-8B and LLaMA-3.2-1B.
+  - **Source location:** Section 4.1, “Impact of Irrelevant Context”
+
+- **Source extract (verbatim):** Step Accuracy (SAcc): Our symbolic parser reads the model's chain-of-thought and executes every intermediate equation in topological order. SAcc = 1 iff *all* equations are arithmetically correct *and* each step references only symbols that have already been defined.
+  - **Source location:** Section 3.4, “Stepwise Solution Evaluator”
+- **Source extract (verbatim):** Path Accuracy (PAcc): To quantify *distraction robustness* we check whether the model confines its reasoning to the augmented dependency graph G' after injecting irrelevant context. PAcc = 1 iff (i) every required dependency on P is present, and (ii) no irrelevant node is used in the computation of any step on P.
+  - **Source location:** Section 3.4, “Stepwise Solution Evaluator”
+- **Source extract (verbatim):** A lower ratio indicates a larger gap — arithmetic errors occurring even when the reasoning path is correct.
+  - **Source location:** Section 4.3, Finding IV
+
 ## Connections Found
 
 The `/connect` discovery identified 8 note connections and 5 source connections, with substantial integration into existing KB theory.

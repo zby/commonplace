@@ -31,6 +31,14 @@ Ma et al. introduce PromptSE, a framework for measuring how sensitive code gener
 - **Source extract (verbatim):** We compute model-level rank correlation, obtaining Spearman ρ = −0.433 (p = 0.122; 95% CI [−0.875, 0.249]), which does not reach statistical significance in the current sample, suggesting no unified negative correlation trend.
   - **Source location:** §4.1, “RQ1: Joint Structure of Performance and Prompt Stability”
 
+- **Source extract (verbatim):** We evaluate 14 models across three architecture families (Llama, Qwen, DeepSeek) using HumanEval with semantically equivalent variants (14,760 in total). Each variant prompt generates 16 samples under uniform decoding, with statistical analysis employing robust methods including correlation tests, confidence intervals (CI), and false discovery rate (FDR) correction.
+  - **Source location:** §1, “Introduction”
+- **Source extract (verbatim):** For each prompt p and distance d, compute individual elasticity using the formulations from Equations 4 and 5. For PromptSE mode, average across all prompts to obtain the elasticity curve E(d). Second, average across all prompts for PromptSELight mode.
+  - **Source location:** §2.3, “AUC-E: Area Under Curve of Elasticity,” Elasticity Curve Construction
+
+- **Source extract (verbatim):** We adopt model-level Pass@1 as the performance indicator and quantify prompt stability through AUC-E.
+  - **Source location:** §4.1, “RQ1: Joint Structure of Performance and Prompt Stability”
+
 ## Connections Found
 
 The `/connect` discovery identified 11 connections (4 strong, 7 moderate), mapping cleanly into the KB's three-phenomena taxonomy, reliability/oracle framework, and bitter lesson boundary.

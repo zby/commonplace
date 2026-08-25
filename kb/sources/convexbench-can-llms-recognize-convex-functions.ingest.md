@@ -31,6 +31,11 @@ The paper introduces ConvexBench, a benchmark testing whether LLMs can determine
 - **Source extract (verbatim):** Agentic framework with focused context achieves F1=1.0 across all depths
   - **Source location:** “Experimental Results.”
 
+- **Source extract (verbatim):** This paper introduces ConvexBench, a mechanically verifiable benchmark for evaluating whether large language models can identify convexity in deeply composed symbolic functions.
+  - **Source location:** Abstract
+- **Source extract (verbatim):** Testing on frontier models (GPT-5, Gemini-2.5-Pro, Qwen3-8B/30B):
+  - **Source location:** “Experimental Results”
+
 ## Connections Found
 
 The `/connect` discovery run (2026-03-09) found **10 genuine connections** to KB notes and **3 source-to-source connections**, substantially expanding the original 5-note analysis.

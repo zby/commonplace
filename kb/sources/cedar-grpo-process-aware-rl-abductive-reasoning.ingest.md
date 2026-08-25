@@ -36,6 +36,17 @@ CEDAR-GRPO post-trains four open-weight 4--8B models on 1,920 training examples 
 - **Source extract (verbatim):** Cor-GRPO 0.93 1.16 0.97 0.53 0.92 39.1% 0.16
   - **Source location:** Table 3, DeepSeek-R1-Distill-Qwen-7B mean process metrics; same columns
 
+- **Source extract (verbatim):** CEDAR-GRPO, a process-aware framework that combines final-answer correctness with abductive rewards for evidence coverage and evidence-to-explanation directionality.
+  - **Source location:** Abstract
+- **Source extract (verbatim):** Our experiments use four open-weight backbones:
+  - **Source location:** Section 4.1, “Model Families”
+- **Source extract (verbatim):** We evaluate them on 11 unseen tasks
+  - **Source location:** Abstract
+- **Source extract (verbatim):** to a total number of 2400 samples, consisting of 1920 training and 480 validation samples.
+  - **Source location:** Appendix A, Table 5 caption
+- **Source extract (verbatim):** Each reasoning trace is passed to Gemini 3 Flash together with a structured system prompt specific to the metric and a short dataset-specific contextual framing.
+  - **Source location:** Appendix E.1, “Evaluation Framework”
+
 ## Connections Found
 
 The source is a bounded empirical anchor for [process structure and output structure as independent levers](../notes/process-structure-and-output-structure-are-independent-levers.md): correctness-only and CEDAR training retain the same `<think>/<answer>` contract, while trace-directed rewards change held-out final-answer performance. Reading that result rests on both the [fixed-decomposition boundary](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) and the rule that [an experiment identifies only its observed contrast](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md), because the taxonomy, prompts, judges, model update class, and benchmark interpretations remain supplied, while several ablations vary bundles or reweight retained rewards. As a process-evaluation source, it is also a useful counterpoint to [intervention evidence that emitted reasoning can be unfaithful](./language-models-dont-always-say-what-they-think.ingest.md) and to [FALSIFYBENCH's externally enacted hypothesis tests](./falsifybench-inductive-reasoning-rule-discovery-games.ingest.md): CEDAR measures useful verbal trace properties, not the causal faithfulness of those traces or agent-chosen operations in an environment.

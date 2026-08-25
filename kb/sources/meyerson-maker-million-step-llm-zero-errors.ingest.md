@@ -31,6 +31,15 @@ MAKER introduces "massively decomposed agentic processes" (MDAPs), a framework t
 - **Source extract (verbatim):** Since k_min = 3, at least three responses were generated in parallel for each step.
   - **Source location:** Section 4.4, “Solving the 20-disk problem.”
 
+- **Source extract (verbatim):** This paper provides a first implementation of the MDAP framework: MAKER (for Maximal Agentic decomposition, first-to-ahead-by-K Error correction, and Red-flagging), evaluated on the Towers of Hanoi domain. MAKER is a system of *agents* in which each agent is assigned a single subtask to solve.
+  - **Source location:** Section 1, “Introduction”
+- **Source extract (verbatim):** Maximal agentic decomposition (MAD), i.e., m = 1
+  - **Source location:** Section 3.1, “Maximal Agentic Decomposition,” extreme-cases list
+- **Source extract (verbatim):** Solving the 20-disk problem: Over one million steps with zero errors
+  - **Source location:** Section 4.4 heading
+- **Source extract (verbatim):** With `gpt-4.1-mini` as the base model, the maximum output token threshold was set to 750, and a red-flagging output parser was used to enforce the basic formatting requirements. Since k_min = 3, at least three responses were generated in parallel for each step.
+  - **Source location:** Section 4.4, experiment configuration
+
 ## Connections Found
 
 `/connect` identified 11 connections total — 2 already linked from KB notes, 9 new.
