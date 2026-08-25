@@ -19,8 +19,15 @@ For each material claim or conclusion that the note presents as grounded by a
 link, extract the route the note gives: the claim, the cited material, and the
 stated or implied inference from that material to the claim.
 
-For linked notes and ordinary linked sources, read the linked material and
-follow at most five links in total. For a direct link to a tracked
+Across linked notes, ordinary linked sources, and tracked ingests, inspect at
+most sixteen distinct linked artifacts in total. Repeated links to the same
+resolved target consume one slot. A tracked ingest consumes one slot whether
+the link uses its Quotes route or its declared snapshot route below; the target
+note and criterion do not consume this budget.
+
+Reaching the limit is not itself a WARN or FAIL. If it leaves a material
+support route unchecked, name that route in the findings and scope the verdict
+to the material inspected. For a direct link to a tracked
 `kb/sources/<slug>.ingest.md`, use one of these two routes:
 
 - When the ingest link text does not contain the exact marker `(snapshot

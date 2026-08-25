@@ -320,12 +320,13 @@ Out of scope as artifacts:
 
 ## Dependency
 
-Dispositioning depends on the sibling workshop's ingests: you cannot find that a
-note restates a source you have not read. But the left-hand side of the
-subsumption record — which claims each note actually makes, and which downstream
-artifacts depend on each claim — is independent of any ingest and can start now.
-Doing that first also makes the ingests better, because it tells the sibling
-workshop which claims the corpus has to adjudicate.
+Dispositioning depends on grounded ingests: you cannot find that a note restates
+a source you have not read. The completed claim-grounding rollout supplied the
+handoff inventory retained below. But the left-hand side of the subsumption
+record — which claims each note actually makes, and which downstream artifacts
+depend on each claim — is independent of any ingest and can start now. Doing
+that first also improves later source work because it says which claims the
+corpus has to adjudicate.
 
 ## What closes this workshop
 
@@ -342,10 +343,10 @@ workshop which claims the corpus has to adjudicate.
 
 ## Files
 
-- [Claim-grounding rollout](../claim-grounding-rollout/README.md) — the
-  retrospective ADR 073 application. Its 264 terminal claim-use dispositions
-  include sixteen literature handoffs; those feed source and target triage here
-  without substituting for artifact-level dispositions
+- [Received claim-grounding rollout handoffs](#received-claim-grounding-rollout-handoffs)
+  — retained intake from the completed retrospective ADR 073 application; its
+  sixteen literature handoffs feed source and target triage here without
+  substituting for artifact-level dispositions
 - [Three channels: migration, claims, machinery](./three-channels.md) — every
   finding sorted by kind of change, with verification status per row and a
   sequencing argument against migrating first

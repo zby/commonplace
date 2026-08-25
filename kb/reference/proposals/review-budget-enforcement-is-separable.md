@@ -13,16 +13,23 @@ measurement supports either answer.
 
 ## Current state (as of 2026-08-25)
 
-`semantic/grounding-alignment` caps link-following at five and says nothing about
-exceeding it. In practice reviewers pass while disclosing — review job 8051
-returned PASS having opened five of nine links and naming the four it left
-unopened. So today's behavior is **advisory with an honesty requirement**,
-established by convention rather than by the gate.
+ADR 079 selected option A for `semantic/grounding-alignment`. The gate now
+budgets sixteen distinct linked artifacts, makes reaching the limit
+non-verdict-bearing, and requires any unchecked material route to be named while
+the verdict is scoped to inspected material. Available and consumed cost remain
+telemetry rather than review identity.
 
-Available cost and reviewer-reported consumption now land as measurement-only
-telemetry, changing no verdict. The post-instrumentation sample has not yet been
-analysed, so the enforcement question remains open without blocking review
-completion.
+The paired assay behind that decision found four mechanism-aligned findings that
+the five-link instruction missed, all within sixteen artifacts. Failing on
+exceedance would not have recovered them; raising the reading ceiling did.
+
+## Disposition (2026-08-25)
+
+Resolved for the current grounding criterion. Advisory disclosure is selected;
+enforced failure, per-run selection, and a second hard ceiling are rejected for
+now. [The bounded evidence](../../notes/evidence/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md)
+records the outcome and the trigger for revisiting it. This proposal is ready
+for archival after its inbound references are retired.
 
 ## The question
 
@@ -70,7 +77,7 @@ review store would then need to record, or the corpus becomes uninterpretable.
 budget, failure past a larger limit. Two numbers instead of one, both needing
 derivation.
 
-## Largely superseded, 2026-08-25
+## Earlier supersession candidate
 
 [Exceeding a review budget splits the task](./exceeding-a-review-budget-splits-the-task.md)
 proposes a third answer that dissolves this question: exceeding the budget
@@ -79,17 +86,11 @@ failed. What survives here is the disclosure requirement — a pass should still
 record what it covered — but as provenance rather than as the mechanism keeping a
 sampled verdict honest.
 
-Retain this proposal until splitting is adopted or rejected; if splitting is
-rejected, the options below are live again.
+The cap-lift assay rejected splitting for now, so the options became live and
+option A was selected.
 
 ## Adoption criteria
 
-Decide after the measurement in the sibling proposal reports what reviews
-actually cost and how often a reviewer would exceed a derived budget. If
-exceedance is rare, A is sufficient and the rest is machinery for a case that
-does not arise. If it is common, the choice between B, C, and D matters and the
-data will say which.
-
-Do not adopt C without also deciding where the run's setting is recorded. A
-verdict whose meaning depends on an unrecorded flag is worse than either fixed
-answer.
+Reopen only if sampled reviews at the sixteen-artifact ceiling produce material
+tail divergences or disclosure proves insufficient to interpret their verdicts.
+Do not adopt per-run selection without recording the setting in review identity.

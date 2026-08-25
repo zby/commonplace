@@ -7,38 +7,31 @@ tags: []
 # Review link budget prices reviewer attention
 
 `semantic/grounding-alignment` limits how much linked material a reviewer may
-open. It expresses that limit as a count of links. The resource it protects is
-the material actually loaded, and links are a poor proxy for it: they vary by
-two orders of magnitude in size, and the same artifact linked twice costs
-nothing the second time.
+open. It now expresses that limit as a count of distinct resolved artifacts.
+The resource it protects is reviewer attention, and artifact count remains an
+incomplete proxy: linked material varies by two orders of magnitude in size.
 
 ## Current state (as of 2026-08-25)
 
-The gate says:
+ADR 079 selected an interim ceiling of sixteen distinct linked artifacts per
+pair. Repeated links to one resolved target consume one slot; linked notes,
+ordinary linked sources, and tracked ingests share the budget; and reaching it
+does not itself change the verdict. The fixed target note and criterion do not
+count. Offered and consumed cost already ride the prompt's resolved-link table
+and `review_jobs.telemetry_json` without a schema change.
 
-> For linked notes and ordinary linked sources, read the linked material and
-> follow at most five links in total. For a direct link to a tracked
-> `kb/sources/<slug>.ingest.md`, use one of these two routes: …
+The ceiling is evidence-based but not an attention price. Across 337 measured
+targets, p50 offered cost is 7 distinct artifacts and 67 KB, p90 is 16 and
+148 KB, and the maximum is 35 and 355 KB. A paired twelve-note assay found four
+mechanism-aligned findings that the five-link instruction missed, all reached by
+6–16 artifacts; its 21–23-artifact tail passed under the uncapped criterion.
+That justified the interim count while leaving the size term unresolved.
 
-Three defects follow from counting links, all observed rather than predicted:
-
-- **Occurrences are counted, not artifacts.** 239 of 314 linked notes (76%)
-  repeat a link target, and 45 carry more than five occurrences across five or
-  fewer distinct targets — the worst at 11 occurrences over 5 targets. A
-  reviewer exhausts its budget for no saving.
-- **The number is unexamined.** Five appears inherited rather than derived.
-  Measured: the `(snapshot required)` route in review job 8051 loaded a 128 KB
-  snapshot ≈ 32k tokens inside an 88k-token job covering the gate, the note, and
-  all five links. Corpus snapshots run 23 KB median, 112 KB p90, 456 KB max.
-  Following links is not the expensive operation the cap appears to assume.
-- **Scope is ambiguous.** The cap is stated for "linked notes and ordinary
-  linked sources"; ingests are then introduced as a separate category without
-  saying whether they draw on the same budget. Job 8051's reviewer assumed they
-  do. On the note it reviewed — 4 ingest links and 5 internal — that assumption
-  cost exactly four unchecked internal links, where the other reading would have
-  covered the whole note.
-
-Editing the gate stales 775 review pairs as `criterion-changed`.
+Two earlier defects are now closed. The former instruction counted link
+occurrences even though 239 of 314 linked notes repeated a target, and it left
+ingest applicability ambiguous. The live gate now deduplicates resolved targets
+and states one global scope. What remains is heterogeneous attention cost: a
+3 KB post and a 456 KB paper each consume one slot.
 
 ## The proposal
 
@@ -61,12 +54,11 @@ points alone cannot identify the ratio: they need either an independent
 attention outcome or a controlled comparison that varies packaging while
 holding the evidence task constant.
 
-Both defects the first draft fixed survive this change, because they were
-consequences of counting links rather than of the measure chosen. Repeated links
-still cost nothing extra — they resolve to one artifact. Heterogeneous sizes are
-still priced, through β. And no evidence-class ranking is needed: a reviewer
-holding a two-term budget spends it where it informs, without a rule ordering
-source links above internal ones.
+The interim rule already makes repeated links cost nothing extra because they
+resolve to one artifact. The proposed successor adds the missing size term
+through β. No evidence-class ranking is needed: a reviewer holding a two-term
+budget spends it where it informs, without a rule ordering source links above
+internal ones.
 
 ## Sizing belongs in code, not in the reviewer's head
 
@@ -139,81 +131,29 @@ unreadable instead of expensive.
 **C. Byte total alone.** The first draft. Simplest, and mispriced now that the
 resource is attention.
 
-**D. Keep the count, fix only the counting rule.** Cheapest; leaves the number
-unexamined and heterogeneity unpriced.
+**D. Keep the current count.** Cheapest. ADR 079 supplied a measured number and
+fixed deduplication and scope, but heterogeneous artifacts remain unpriced.
 
 ## What must be decided before implementation
 
-Three blocking decisions; the rest an implementer determines.
+The measurement and enforcement plumbing is settled. Whole-file sizes appear in
+the code-generated `resolved_links` table, and each pair reports distinct opened
+paths plus a budget-or-sufficiency stop reason. Finalization prices those paths
+and records the report in existing job telemetry. ADR 079 also fixed verdict
+semantics: budget exhaustion alone is not failure, and unchecked material routes
+are disclosed.
 
-**Settled by operator direction, 2026-08-25.** Decisions 1 and 3 below are
-resolved; decision 2 is deferred to its own proposal. Both resolutions turn on
-reuse: the measurement path needs no new storage and no new review semantics.
+The blocking decision is now the proposal's substantive one: identify α/β and
+the total budget from an independent attention outcome or a paired packaging
+assay. The first capped pilot and the uncapped comparison do not do that. A
+sufficiency stop varies with the note's evidence needs, while a count-budget stop
+is fixed by policy; neither observation supplies the exchange rate.
 
-- **Sizes ride the existing link table.** `resolved_links` is already
-  code-generated into every prompt; add a size column there rather than asking a
-  reviewer to call anything. A standalone command may follow over the same
-  sizing library, but the table is primary.
-- **Measurement is recorded through existing telemetry.** `review_jobs` already
-  carries `telemetry_json` for "opaque harness telemetry without making it review
-  identity" — the right channel for what a review actually opened, with no
-  schema change.
-- **V1 records cost and enforces nothing.** The gate is untouched, no pairs stale,
-  and review judgment and link-following policy do not change. The records are
-  calibration inputs, but the cap does not move until an identifying assay can
-  derive α, β, and the budget.
-- **Measurement B shipped (2026-08-25).** Every pair is now asked to report the
-  distinct pre-resolved artifacts it opened and whether budget or sufficiency
-  stopped inspection. Finalization derives whole-file bytes, records complete
-  and imperfect reports beside A in job telemetry, and removes the bookkeeping
-  from retained review text.
-- **The first 12-pair pilot did not identify `α / β` (2026-08-25).** All 12
-  reports were complete, but nine opened exactly five artifacts. Eleven
-  reviewers reported sufficiency, one reported budget at five, and one
-  sufficiency report exceeded the cap at seven. A sufficiency point varies with
-  the note's evidence needs; a budget point under the current gate is fixed by
-  artifact count. Neither is an independent observation of attention cost.
-  More capped reviews would repeat that confounding, so the budget remains open.
-- **Verdict semantics are unchanged for now** — see
-  [Review budget enforcement is a separable decision](./review-budget-enforcement-is-separable.md).
-
-**1. Where sizes surface.** `review/protocol/prompt.py` already emits a
-code-generated `resolved_links` table into every review prompt. A size column
-there means the reviewer plans against costs it already holds and makes no tool
-call — [frontloading](../../notes/frontloading-spares-execution-context.md)
-applied exactly. A standalone command works outside the review pipeline but must
-be remembered and spends a turn. Likely both, over one sizing library, but the
-gate's wording depends on which is primary: "read the sizes in your link table"
-and "run this command" are different instructions.
-
-**2. What exceeding the budget means.** Today a reviewer over budget passes while
-disclosing what it left unopened — job 8051 did exactly that. Under a computed
-budget, is that still a PASS, or does exceeding become FAIL? This decides whether
-the budget is guidance with an honesty requirement or an enforced limit, and the
-two produce different verdicts on the same corpus.
-
-**3. Whether V1 enforces anything at all.** The adoption criterion says derive α,
-β, and the budget from measured reviews rather than choose them. Taken seriously,
-V1 ships **measurement only**: sizing lands, reviews record what they cost, and
-the gate is untouched. The gate edit and its 775-pair sweep then happen once,
-against real numbers. The alternative is to ship a chosen budget now and correct
-it later, which is the inherited-number failure this proposal exists to retire.
-Recommended: measure first. It also means V1 changes no review behavior, which
-should be said out loud rather than discovered.
-
-Three smaller questions, cheap to settle but ambiguous if left:
-
-- Does the target note and the criterion itself count against the budget, or only
-  linked material? (Only linked material is the assumption throughout, unstated.)
-- Is the budget per pair or per job? `--grouping note` puts several criteria over
-  one note into one job, and each currently applies the cap independently.
-- How is an unavailable target priced — a missing file, or a `(snapshot
-  required)` link whose snapshot is absent? Sizing should report rather than
-  error, since ADR 073 already makes the missing snapshot a gate FAIL.
-
-An implementer determines the rest: command name and flags, output shape, whether
-sizing lives in its own module, and the table's column layout. None of those
-changes a decision made above.
+Route-aware charging remains an implementation choice that may affect the
+estimate. V1 whole-file pricing overcharges an ingest's Quotes route and
+undercharges a snapshot route by pricing the linked ingest rather than the
+derived snapshot. An identifying assay must either preserve that approximation
+explicitly or measure the portions actually read.
 
 ## Adoption criteria
 
@@ -226,5 +166,5 @@ points. This is the same move
 made for description length, replacing a ceiling that had "inherited an earlier
 full-index cost concern" with an allowance set by a retrieval assay.
 
-Whatever ships, land the counting rule, the number, and the scope question in one
-edit. They are three changes to one file, and each pass stales 775 pairs.
+If this proposal later replaces the interim count, land the price and its
+criterion wording in one edit so review baselines stale once.

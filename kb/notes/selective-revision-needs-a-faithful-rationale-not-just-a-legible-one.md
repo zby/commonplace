@@ -7,7 +7,7 @@ tags: [learning-theory, discovery, evaluation]
 
 # Selective revision needs a faithful rationale, not just a legible one
 
-A retained theory is worth more than an equivalent pile of cases because [one theory-level revision can change many downstream conclusions at once](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md). That operation needs something the theory's claim does not contain. To narrow "skip integration tests when only documentation files changed" at the premise that actually broke, rather than deleting it, the system must have on hand *why* it held the theory: which observations supported it, which assumptions it rested on, where it was expected to stop. That record is the theory's **rationale**.
+Under structured shifts, a retained theory with genuine explanatory reach can be worth more than an equivalent pile of cases because [one theory-level revision can change many downstream conclusions at once](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md). That operation needs something the theory's claim does not contain. To narrow "skip integration tests when only documentation files changed" at the premise that actually broke, rather than deleting it, the system must have on hand *why* it held the theory: which observations supported it, which assumptions it rested on, where it was expected to stop. That record is the theory's **rationale**.
 
 So the rationale is not commentary attached to a theory. It is the surface revision operates on. A theory without one can be deleted and re-derived; it cannot be repaired.
 

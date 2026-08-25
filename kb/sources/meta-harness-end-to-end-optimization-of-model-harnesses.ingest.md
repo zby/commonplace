@@ -26,6 +26,8 @@ Meta-Harness is an outer-loop system that searches over LLM harness code by givi
 
 - **Source extract (verbatim):** It uses an agentic proposer that accesses the source code, scores, and execution traces of all prior candidates through a filesystem.
   - **Source location:** Abstract
+- **Source extract (verbatim):** | Method | Scores | Code | Summaries | Traces | Median | Best Acc | >ZS |
+  - **Source location:** Section 4.1, “Ablation: information available to the proposer,” table header
 - **Source extract (verbatim):** | Scores Only | ✓ | ✓ | ✗ | ✗ | 34.6 | 41.3 | 26 |
   - **Source location:** Section 4.1, "Ablation: information available to the proposer" table
 - **Source extract (verbatim):** | Scores + Summary | ✓ | ✓ | ✓ | ✗ | 34.9 | 38.7 | 23 |
@@ -39,9 +41,6 @@ Meta-Harness is an outer-loop system that searches over LLM harness code by givi
   - **Source location:** Section 3, opening paragraph
 - **Source extract (verbatim):** Each harness is a single-file Python program that modifies task-specific prompting, retrieval, memory, and orchestration logic. The proposer is Claude Code with Opus-4.6, guided by a minimal domain-specific skill that describes where to write new harnesses, how to inspect previous harnesses and their execution traces, and what files it can and cannot modify. The base model M varies by domain and is always frozen.
   - **Source location:** Section 3, “Practical implementation”
-
-- **Source extract (verbatim):** | Method | Scores | Code | Summaries | Traces | Median | Best Acc | >ZS |
-  - **Source location:** Section 4.1, “Ablation: information available to the proposer,” table header
 
 ## Connections Found
 

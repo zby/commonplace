@@ -42,6 +42,8 @@ The paper unifies Make, Excel, Shake, Bazel, CloudBuild, Buck, and Nix as points
 
 - **Source extract (verbatim):** The authors have investigated multiple build systems, showing how their properties are consequences of two implementation choices: what order you build in and how you decide whether to rebuild. By first decomposing the pieces, they show how to recompose the pieces to find new points in the design space. In particular, a simple recombination leads to a design for a monadic suspending cloud build system. Armed with that blueprint they hope to actually implement such a system as future work.
   - **Source location:** §8, “Conclusions”
+- **Source extract (verbatim):** | Verifying traces | Ninja | – | Shake |
+  - **Source location:** §4, Table 2, “Build systems à la carte”
 
 ## Connections Found
 

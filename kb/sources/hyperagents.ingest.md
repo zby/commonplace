@@ -49,6 +49,8 @@ HyperAgents extends the Darwin Gödel Machine by joining a task agent and the me
   - **Source location:** Section 5.3, Compounding Self-Improvement.
 - **Source extract (verbatim):** Under the same experimental setup, DGM-H starting from the initial agent achieves a best test-set score of 0.610 (CI: 0.510 – 0.680). Although the difference between DGM-H + transfer and DGM-H is not statistically significant (p > 0.05), DGM-H + transfer achieves a higher median performance and higher confidence intervals than DGM-H starting from the initial agent (Figure˜4).
   - **Source location:** Section 5.3, Compounding Self-Improvement.
+- **Source extract (verbatim):** DGM-H without self-improving meta agents (DGM-H w/o self-improve) fixes the meta agent modifying other hyperagents to the initial meta agent for the entire run. While the system can still generate and evaluate new hyperagents, the procedures used to propose and apply modifications are not themselves modifiable.
+  - **Source location:** Section 4.1, Baselines.
 
 ## Connections Found
 

@@ -53,7 +53,7 @@ The same artifact fields can produce different memory behavior. Two systems migh
 
 Artifact fields do not fully determine operational policies, and specifying one subset of those policies need not determine another. Specifying capture and derivation can still leave activation open: [knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md). Activation still has to settle whether memory arrives by lookup or unsolicited injection, what triggers it, when it arrives, its scope, and its force at consumption.
 
-The [Rosebud LLM-memory essay](https://rosebudjournal.notion.site/Everything-you-need-to-know-about-LLM-memory-33b328e8e3f780858d3df3acb06d23b9) provides a practitioner instance of this choice path: after deciding what gets stored, a system still has to choose how material is derived, written, retrieved, processed, curated, and forgotten. These policies cross component boundaries. Storage belongs to the execution substrate, activation belongs to the context engine, and learning and lifecycle decisions cut across both.
+For comparison, the [Rosebud LLM-memory essay](https://rosebudjournal.notion.site/Everything-you-need-to-know-about-LLM-memory-33b328e8e3f780858d3df3acb06d23b9) groups practitioner choices around what gets stored and how material is derived, written, retrieved, processed, curated, and forgotten. That taxonomy is an adjacent example, not evidence for the operational-axis decomposition here. In this note's decomposition, these policies cross component boundaries: storage belongs to the execution substrate, activation belongs to the context engine, and learning and lifecycle decisions cut across both.
 
 ## Detailed notes
 

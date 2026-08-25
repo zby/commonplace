@@ -29,7 +29,7 @@ Gao and Chen's [coding-agent documentation traces](../sources/from-agent-behavio
 
 Both failures produce the same practical result: a lesson that could have changed the outcome does not enter the active computation.
 
-The form of the loaded knowledge matters too. Across four self-evolving-agent frameworks, thirteen LLM backbones, and nine environments, [causal perturbations changed behavior more consistently for raw trajectory experience than for condensed summaries or heuristics](../sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md); weak dependence on condensed experience persisted when it was the only experience supplied. The intervention result does not establish that the model read a semantically faithful condensation or that condensation always reduces task performance. It does show that reshaping experience can preserve its presence while weakening measured behavioral dependence on it.
+The form of the loaded knowledge matters too. Across four self-evolving-agent frameworks, thirteen LLM backbones, and nine environments, [causal perturbations changed behavior more consistently for raw trajectory experience than for condensed experience](../sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md); weak dependence on condensed experience persisted when it was the only experience supplied. The intervention result does not establish that the model read a semantically faithful condensation or that condensation always reduces task performance. It does show that reshaping experience can preserve its presence while weakening measured behavioral dependence on it.
 
 ## The Expert-Witness Pattern
 
@@ -45,7 +45,7 @@ Different interventions target different transitions.
 
 Storage-to-context failures need routing: indexes, search, retrieval filters, skill triggers, maintained summaries, and explicit loading rules.
 
-Context-to-action failures need integration pressure: reflection prompts, "revise the plan in light of observations" steps, mandatory investigation of surprising evidence, salience checks, and process structures that make the agent ask whether visible information should change the current plan. This is one reason [process structure and output structure are independent levers](./process-structure-and-output-structure-are-independent-levers.md): changing the reasoning process can activate knowledge without changing the final answer format.
+Context-to-action failures need integration pressure: reflection prompts, "revise the plan in light of observations" steps, mandatory investigation of surprising evidence, salience checks, and process structures that make the agent ask whether visible information should change the current plan. [Process structure and output structure are independent levers](./process-structure-and-output-structure-are-independent-levers.md): changing the reasoning process can change behavior without changing the final answer format. Treating such a change as an activation intervention is this note's hypothesis, not a result established by that linked note.
 
 Both transitions are affected by context scarcity. More context can help by making knowledge present, but it can also hurt by diluting cues or increasing competition. [soft degradation often binds before the hard cap when required evidence fits](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) is the broader mechanism: well-formed output can hide the fact that important material in the context was ignored.
 

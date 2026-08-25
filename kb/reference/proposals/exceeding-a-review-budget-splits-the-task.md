@@ -21,16 +21,25 @@ number of passes varies.
 - A review pair is atomic. `review_pairs` records one outcome per
   `(note_path, criterion_path)` per review, and nothing in `finalization.py` or
   `batch.py` expresses partial coverage, subsets, or combination.
-- `semantic/grounding-alignment` caps link-following at five and says nothing
-  about exceeding it. In practice reviewers sample and disclose — review job 8051
-  returned PASS having opened five of nine links and named the four it skipped.
+- `semantic/grounding-alignment` now budgets sixteen distinct linked artifacts
+  globally and treats reaching the limit as disclosure rather than failure.
 - Available-cost measurement shipped (`adbc1cc0`). Over 337 artifacts: p50 is 7
   distinct artifacts and 67 KB, p90 is 16 and 148 KB, max is 35 and 355 KB. **The
-  current cap of five sits below the median offered cost**, so sampling is the
-  normal case, not the exception.
-- Consumed-cost capture now ships as soft per-pair telemetry. A sufficient
-  post-instrumentation sample has not yet been analysed, so actual stopping
-  behavior remains unknown.
+  selected ceiling covers the measured p90 offer**.
+- Consumed-cost capture ships as soft per-pair telemetry. In a twelve-note
+  capped-versus-uncapped assay, four mechanism-aligned findings appeared only
+  after fuller reading reached 6–16 artifacts. The three uncapped tail cases
+  offering 21–23 artifacts all passed.
+
+## Disposition (2026-08-25)
+
+Rejected for now by ADR 079. Raising the ceiling covers every divergent case in
+the assay without adding partial-coverage, combination, or freshness semantics.
+The assay supplies no divergent tail fixture above sixteen. It also cannot
+validate or refute the severed-support hazard below because every capped
+baseline was PASS. [The bounded evidence](../../notes/evidence/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md)
+records the result. This proposal is ready for archival after its inbound
+references are retired.
 
 ## What splitting requires
 
@@ -99,9 +108,9 @@ and consumed cost is what says how large a pass can usefully be.
 
 ## Adoption criteria
 
-Adopt when consumed-cost data shows how often a review genuinely exceeds one
-pass. If reviewers stop for sufficiency rather than budget, splitting is
-machinery for a rare case and the cheaper answer is to raise the cap.
+Reopen when reviews at the sixteen-artifact ceiling produce material outcome
+divergence in the tail, so a raised single pass no longer covers the observed
+failure range.
 
 Do not adopt any option before deciding how outcomes combine and how a pair's
 freshness pins its passes. A split verdict whose provenance is unrecorded is
