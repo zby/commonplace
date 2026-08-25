@@ -42,6 +42,30 @@ Run reviewers in **separate fresh contexts**, one job at a time. A single agent
 carrying 67 notes' worth of sources will grow more charitable as it fills, and
 charitable grounding is the exact defect this gate exists to catch.
 
+## Parallelism: review wide, finalize narrow
+
+**Reviewing is embarrassingly parallel here, unlike the grounding cohorts.** Those
+mutated notes and ingests, so cohorts had to be disjoint on both axes. A review
+mutates nothing: it reads the note, the criterion, and linked material, and writes
+only its own `job_output_path`. Two reviewers on two notes cannot collide, so no
+disjointness analysis is needed and any number can run at once.
+
+**Finalization is the exception, and the store is not configured for it.**
+`kb/reports/commonplace-store.sqlite` runs `journal_mode=delete`, not WAL, with a
+5-second busy timeout and no retry logic in the code. Concurrent
+`commonplace-finalize-review-job` calls contend for an exclusive write lock and
+can fail with `database is locked`.
+
+So: **fan out the reviewers, funnel the finalizations.** Finalizing is a handful
+of fast writes, so a single serial queue costs almost nothing and removes the
+contention entirely. If a finalize does fail on a lock, it is safe to retry — the
+job output is already written and finalization is what records it.
+
+Rough scale, from the one measured run: review job 8051 took about three minutes
+for a single pair while reading a 128 KB snapshot, which is the heavy end; median
+offered cost is 67 KB. Sequential, 67 notes is a few hours. Fanned out, it is
+bounded by however many reviewers you are willing to run.
+
 ## Expect sampling, and say so
 
 The gate caps link-following at five. Measured available cost puts the median
