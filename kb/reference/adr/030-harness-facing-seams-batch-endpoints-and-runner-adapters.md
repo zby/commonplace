@@ -7,34 +7,20 @@ status: superseded
 
 # 030-Harness-facing seams: batch prepare/ingest endpoints and runner adapters
 
-**Status:** superseded by [034-Queued review jobs and execution provenance](./034-queued-review-jobs-and-execution-provenance.md) and the current parent-dispatched workflow
+**Status:** superseded by [034-Queued review jobs and execution provenance](./034-queued-review-jobs-and-execution-provenance.md)
 **Date:** 2026-06-12
 
 ## Context
 
-Review execution needed a seam where deterministic Python prepared review work and an external agent or harness supplied semantic judgment. This ADR recorded an intermediate design after [ADR 029](./029-review-execution-unified-on-note-gate-pairs.md):
-
-1. batch-granular prepare/ingest endpoints for external executors;
-2. adapter objects for subprocess harness CLIs.
-
-The current system keeps the useful seam but removes the subprocess dispatch layer. `commonplace-create-review-jobs` creates queued jobs from selector JSON, workers write only the job-owned output file, and `commonplace-finalize-review-job` records optional provenance, parses, and finalizes that output. The parent agent or harness owns fan-out and model calls.
+Review execution needs a seam where deterministic Python prepares review work and an external agent or harness supplies semantic judgment. After [ADR 029](./029-review-execution-unified-on-note-gate-pairs.md) fixed the pair protocol, the open question was what shape that seam should take for external executors.
 
 ## Decision
 
-1. **Deterministic endpoints remain.** Job creation and finalization are stable command boundaries around prompt artifacts and database state.
-2. **Subprocess execution is removed.** Commonplace no longer owns model invocation, vendor CLI command construction, stream decoding, or telemetry scraping. Those belong to the parent harness if needed.
-3. **The review protocol remains shared.** The pair grammar, parser, and result artifacts from ADR 029 are still the boundary between workers and finalization. ADR 035 later made live finalization all-or-nothing.
+Expose batch-granular prepare and ingest endpoints as stable command boundaries around prompt artifacts and database state, and add adapter objects that dispatch subprocess harness CLIs. The pair grammar, parser, and result artifacts from ADR 029 remain the shared boundary between executors and ingestion.
 
 ## Consequences
 
-Easier:
-- Harness-orchestrated review composes from existing endpoints: selector JSON -> queued jobs -> worker output -> finalize. Parallelism, budgets, and retries belong to the orchestrator.
-- Vendor CLI churn no longer touches Commonplace review code.
-- The command surface is smaller and has one execution story.
-
-Harder / accepted costs:
-- Job creation still supports only note or gate packing until a mixed-packing caller needs a stronger manifest and naming contract.
-- Commonplace cannot enforce worker-level retries or concurrency; the parent harness owns them.
+Harness-orchestrated review composes from deterministic endpoints, with parallelism, budgets, and retries owned by the orchestrator. Owning subprocess dispatch tied Commonplace to vendor CLI command construction, stream decoding, and telemetry scraping; ADR 034 kept the endpoint seam and removed the adapter layer, so Commonplace does not own model invocation and the parent harness does.
 
 ---
 

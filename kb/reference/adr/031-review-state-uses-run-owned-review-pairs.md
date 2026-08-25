@@ -12,39 +12,15 @@ status: superseded
 
 ## Context
 
-[ADR 010](./010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) moved review state into SQLite once reviews stopped being authored git artifacts and became operational state. Its first implementation still carried a note-scoped execution shape into the schema while the prompt protocol, selector, warning picker, and acceptance state were already reasoning in `(note, gate)` pairs.
-
-[ADR 029](./029-review-execution-unified-on-note-gate-pairs.md) made the execution protocol explicit: the unit of review work is one `(note_path, gate_id)` pair, while note-packed and gate-packed calls are only packing strategies over that same pair protocol.
-
-The storage model needed to match the protocol's real invariant: one prompt invocation owns the requested `(note, gate)` pairs.
+[ADR 010](./010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) moved review state into SQLite, but the first schema still carried a note-scoped execution shape while the prompt protocol, selector, warning picker, and acceptance state already reasoned in `(note, gate)` pairs, which [ADR 029](./029-review-execution-unified-on-note-gate-pairs.md) made the explicit unit of review work. Storage must key on the same unit the protocol, selector, and acceptance reason in: one prompt invocation owns its requested `(note, gate)` pairs.
 
 ## Decision
 
-Store review execution state as invocation-owned review pairs.
-
-The durable part of this decision is current:
-
-- `review_pairs` stores every requested `(note_path, gate_path)` pair inside one review job.
-- Missing output was originally represented at the pair level; ADR 035 later removed persisted pair status.
-- Completed pairs were originally salvageable from a failed containing job; ADR 035 later made live finalization all-or-nothing.
-- Acceptance points at a concrete completed pair, so warnings and stale-state checks can recover the exact reviewed text and provenance.
-
-ADR 034 later simplified the parent row into `review_jobs`, removed pair-level model duplication, required selector JSON as the creation input, and required every acceptance row to carry completed review evidence. ADR 035 later removed claim/running state, pair status, and partial salvage. ADR 036 later collapsed acceptance to one current row per key.
+Store review execution state as invocation-owned review pairs: every requested `(note, gate)` pair is a row inside the one review invocation that produced it, packing (note-packed or gate-packed) is provenance on the parent rather than a different data model, and acceptance points at a concrete completed pair so warnings and stale-state checks can recover the exact reviewed text and provenance. Missing output is represented at the pair level, and completed pairs are salvageable from a failed containing invocation.
 
 ## Consequences
 
-Easier:
-
-- The database, prompt protocol, parser, selectors, and warning surfaces share the same unit of work.
-- Packing becomes provenance on the parent job, not a different data model.
-- Finalization is simpler: requested rows already exist and parsed output completes matching rows. ADR 035 later made absent output fail the whole job without pair-level missing state.
-- Batch artifacts have one stable job id, manifest, prompt, and bundle output for the invocation that produced them.
-- Cleanup and repair tools can reason over obsolete review pairs without deleting a whole shared job directory unless every pair in that job is obsolete.
-
-Harder / accepted costs:
-
-- A parent job no longer means "one note". Consumers must inspect `packing` and child pairs instead of inferring shape from the id.
-- The original partial-success design created two layers of state. ADR 035 removes that live behavior: failed jobs do not accept a completed subset.
+The database, prompt protocol, parser, selectors, and warning surfaces share one unit of work, and each invocation has one stable id, manifest, prompt, and bundle output. A parent row no longer means "one note", so consumers must inspect packing and child pairs instead of inferring shape from the id. Pair-level status and partial salvage created two layers of state; ADR 034 and ADR 035 kept invocation-owned pairs and removed those.
 
 ---
 

@@ -12,34 +12,15 @@ status: superseded
 
 ## Context
 
-[ADR 031](./031-review-state-uses-run-owned-review-pairs.md) made the persistent unit of review work a `(note, gate)` pair owned by one review invocation, and [ADR 032](./032-review-freshness-uses-db-snapshots-not-git.md) moved freshness onto DB-owned snapshots keyed by `model_partition`.
-
-The previous store shape misrepresented prepared prompts as already in progress: prompt creation wrote a non-null start time and a running status before any reviewer had consumed the prompt. It also made schema evolution hard, because SQLite's `CREATE TABLE IF NOT EXISTS` could not alter existing checks or nullability.
-
-This ADR introduced two ideas:
-
-1. an explicit state machine with `queued`, `running`, `completed`, and `failed`;
-2. an in-place schema migration substrate.
+With review work stored as invocation-owned pairs ([ADR 031](./031-review-state-uses-run-owned-review-pairs.md)) and freshness on DB-owned snapshots ([ADR 032](./032-review-freshness-uses-db-snapshots-not-git.md)), the store shape misrepresented prepared prompts as already in progress: prompt creation wrote a start time and a running status before any reviewer had consumed the prompt. Schema evolution was also hard, because `CREATE TABLE IF NOT EXISTS` could not alter existing checks or nullability.
 
 ## Decision
 
-The queued state survived, but `running` did not. The current state machine from ADR 035 is `queued`, `completed`, and `failed`; parent dispatch progress is no longer persisted in the review DB.
-
-The general migration substrate did not survive the simplification. At the time ADR 035 superseded this decision, a missing DB was created from the packaged schema and every mismatched store was rejected. A later schema-v5 amendment added one recorded v4→v5 migration to preserve existing verdict evidence; it did not restore a general migration framework.
+Represent review invocation state as an explicit state machine (`queued`, `running`, `completed`, `failed`) in which a prepared prompt is `queued` until a reviewer starts on it, and gate the store on a schema version, moving mismatched stores forward through an explicit in-place migration substrate rather than transforming table shapes implicitly.
 
 ## Consequences
 
-Kept:
-
-- Prepared prompts are represented honestly as `queued`.
-- Schema-version gating survived: unsupported stores are rejected rather than transformed implicitly. The later v4→v5 script is an explicit, version-specific exception.
-
-Removed:
-
-- A general in-place migration framework.
-- Implicit historical table-shape transforms.
-- Any promise that arbitrary old local operational review stores can be opened by the current package.
-- `running` state and `started_at`.
+Prepared prompts are no longer reported as in progress, and stores at an unsupported version are rejected rather than silently reshaped. A general migration substrate is a standing maintenance commitment for every schema change; ADR 034 and ADR 035 kept queued state and version gating, dropped `running` and the migration framework, and a later schema version added one explicit version-specific migration as the exception.
 
 ---
 
