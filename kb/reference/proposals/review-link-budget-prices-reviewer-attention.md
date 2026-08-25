@@ -158,6 +158,11 @@ reuse: the measurement path needs no new storage and no new review semantics.
 - **V1 measures and enforces nothing.** The gate is untouched, no pairs stale,
   and review behavior does not change. α, β, and the budget get derived from the
   recorded numbers before any cap moves.
+- **Measurement B is authorized (2026-08-25).** Available cost shipped as A;
+  consumed cost is being built under
+  [its handoff](../../work/measure-review-consumed-cost.md), reusing the
+  self-reported-model field pattern so a reviewer's report never enters the
+  verdict path.
 - **Verdict semantics are unchanged for now** — see
   [Review budget enforcement is a separable decision](./review-budget-enforcement-is-separable.md).
 
