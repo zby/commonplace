@@ -10,7 +10,7 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-07-28
 **Amends:** [ADR 020](./020-theoretical-default-contrasts-mechanism.md)
-**Amended by:** [ADR 060](./060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md) — `rationale` becomes `rests-on`; off-pattern `grounds` edges are reclassified while the canonical cohort remains deferred
+**Amended by:** [ADR 060](./060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md) — `rationale` becomes `rests-on`
 
 ## Context
 
@@ -29,7 +29,7 @@ The ambiguous `evidence` identifier is retired and replaced by an inverse pair:
 
 Both relationships are asymmetric. Either direction is authored only when its own reader journey is useful. One edge never creates an obligation to author, preserve, or remove its inverse.
 
-The shared catalogue, every affected `COLLECTION.md`, current authoring guidance, and all mutable active old-label footers change together. Source→destination authorizations follow actual honest uses, including evidence-bearing theoretical notes, shipped type/reference artifacts, and external sources; collection placement alone does not decide whether a target can bear evidence.
+Source→destination authorizations follow actual honest uses, including evidence-bearing theoretical notes, shipped type/reference artifacts, and external sources; collection placement alone does not decide whether a target can bear evidence.
 
 Operativity path: `cp-skill-write` and `cp-skill-connect` load each source collection's `COLLECTION.md` with binding force; collection authors consult the shared catalogue; current examples teach the same pair; and the migrated footer corpus makes readers encounter the new grammar in use.
 

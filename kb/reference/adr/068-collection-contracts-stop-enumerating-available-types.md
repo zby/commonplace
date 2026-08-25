@@ -12,26 +12,17 @@ status: accepted
 
 ## Context
 
-Each type spec declares its own `name:` and `description:`. That is the ground truth, and 20 specs carried it when this workshop opened. Four further layers restated it by hand:
-
-- `kb/reference/available-types.md` — a catalogue of all types
-- `kb/types/README.md` — a catalogue of the global types
-- a `## Types` table in 8 of the 10 `COLLECTION.md` files
-- a `## Types` section in the three scaffold templates under `src/commonplace/_data/templates/`, which seeds the same table into every installed KB
-
-Two of these had drifted by 2026-08-22. `available-types.md` omitted `article`, which three primary article artifacts used. `kb/reference/COLLECTION.md` omitted `type-spec`, which its two local type specs carried. The `user-instructions-COLLECTION.md` template offered `kb/types/skill.md`, a path that had not existed in this tree.
-
-The exposition prerequisite retired `available-types.md` rather than repairing it. [`collections-and-types.md`](../collections-and-types.md) is now the single general current-state exposition: it explains how types are used, gives common examples, and points to the global and collection-local type directories without claiming an exhaustive list. It absorbed the path-resolution mechanics from the former `type-loading.md`. `kb/types/README.md` remains curated navigation for global contracts only.
+Each type spec declares its own `name:` and `description:`; that is the ground truth. Four further layers restated it by hand: a catalogue of all types, a catalogue of the global types, a `## Types` table in most `COLLECTION.md` files, and the same table seeded by the scaffold templates into every installed KB. These copies drifted: the catalogue omitted `article` while article artifacts used it, a collection contract omitted `type-spec` while its own local type specs carried it, and a scaffold template offered a `skill` type path that did not exist.
 
 Drift here was not cosmetic, because one copy was load-bearing for a procedure. `kb/instructions/cp-skill-write/SKILL.md` directed the writer to pick a type path listed in the target collection's `## Types` section and to stop if the requested shorthand was absent. `cp-skill-write-multistage` and `cp-skill-snapshot-web` read the same menu. So a stale table refused legitimate shorthand writes: asking `cp-skill-write` for a `type-spec` under `kb/reference/` was declined, though two such artifacts already sat there. Supplying the explicit type path bypassed the table.
 
-Nothing in the runtime under `src/commonplace/` parsed these tables. One documentation parity test checked the sources menu's snapshot pointer, but there was no general enforcement of menu contents. Most of the menu was therefore an unchecked constraint that agents obeyed — the configuration [a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) rules out, producing the failure [stale indexes reduce discovery when they suppress fallback search](../../notes/stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) names.
+Nothing in the runtime parsed these tables and nothing enforced their contents. The menu was therefore an unchecked constraint that agents obeyed — the configuration [a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) rules out, producing the failure [stale indexes reduce discovery when they suppress fallback search](../../notes/stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) names.
 
 Type resolution itself does not depend on the tables. [`collections-and-types.md`](../collections-and-types.md) records that explicit resolution follows the stored path directly. Validation rejects missing type files, bare enum values, absolute paths, URLs, paths escaping `kb/`, and targets that are not type specs. The menu was not what prevented an invented type.
 
-`kb/work/` exposes a legitimate case that an ordinary collection does not. It is a lifecycle staging layer for work aimed at any durable collection and for experiments on the contracts themselves. The agent-complexity workshop applied the real `kb/notes/types/structured-claim.md` contract to theorem sketches; the trial later demoted two sketches whose theorem/proof form did not fit the type while retaining two that did. This ADR's workshop draft likewise used the real reference ADR contract before promotion. Copying either type into `kb/work/types/` would not preserve the test: path-valued identity would make the copy a second type with an independently drifting contract.
+`kb/work/` exposes a legitimate case that an ordinary collection does not. It is a lifecycle staging layer for work aimed at any durable collection and for experiments on the contracts themselves, and a workshop draft is usefully validated against its real target contract before promotion (a structured-claim trial and this ADR's own draft did so). Copying the target type into `kb/work/types/` would not preserve the test: path-valued identity would make the copy a second type with an independently drifting contract.
 
-Before this decision, the validator checked only referential validity. `validate_type_path()` required the pointer to resolve to a Markdown path under `kb/`, and `resolve_type_definition()` verified that the target was a type spec and loaded its schema. Neither checked whether the referenced collection-local type belonged to the artifact's collection. The menu therefore acted as an incomplete agent-side substitute for an eligibility invariant that is deterministic from the two resolved paths.
+The validator checked only referential validity — that the pointer resolves to a type spec under `kb/` — not whether a collection-local type belonged to the artifact's collection. The menu therefore acted as an incomplete agent-side substitute for an eligibility invariant that is deterministic from the two resolved paths.
 
 ## Decision
 
@@ -41,17 +32,9 @@ The whole `kb/work/` subtree is the lifecycle-overlay exception: validation perm
 
 Agents resolve types uniformly. Existing artifacts point directly to their type definitions. For a new write, a user or workflow may supply the exact type path; a shorthand requires one exact `name:` match in type-spec frontmatter; and a general write with no supplied type defaults to `kb/types/note.md`. A workflow that requires another type supplies its exact path. The writer opens the chosen specification, writes the artifact, and runs validation. The validator—not an agent-side menu or a `kb/work/` branch in the skill—is authoritative for whether the resolved type may be used at that artifact path.
 
-`kb/types/COLLECTION.md` already has the target shape and is unchanged by this ADR: it states that every artifact in the collection other than three named files is a type spec, rather than listing them.
+Current-state type exposition has one general surface. `collections-and-types.md` explains usage, resolution, enforcement, common examples, and discovery through the live `types/` directories. It does not enumerate the shipped inventory. `kb/types/README.md` remains a curated landing for the global directory and explicitly does not claim completeness. This narrows [ADR 018](./018-types-are-path-references-to-instruction-docs.md)'s earlier allowance for per-collection discovery lists and supersedes the type-offerings placeholder in [ADR 021](./021-ship-library-content-under-kb-commonplace.md)'s collection scaffolds.
 
-Current-state type exposition has one general surface. `collections-and-types.md` explains usage, resolution, enforcement, common examples, and discovery through the live `types/` directories. It does not enumerate the shipped inventory. `kb/types/README.md` remains a curated landing for the global directory and explicitly does not claim completeness. The former `available-types.md` catalogue and separate `type-loading.md` page remain retired. This narrows [ADR 018](./018-types-are-path-references-to-instruction-docs.md)'s earlier allowance for per-collection discovery lists and supersedes the type-offerings placeholder in [ADR 021](./021-ship-library-content-under-kb-commonplace.md)'s collection scaffolds.
-
-The implementation follows:
-
-1. The `## Types` enumeration is removed from the remaining `COLLECTION.md` files and from the scaffold templates. Ordinary collections state the global-plus-owned-local eligibility rule; `kb/work/` states its any-valid-type exception.
-2. Every row is audited before deletion. Type-wide restrictions remain owned by their type specs; collection-local placement policy remains ordinary collection prose. This audit required no type-spec migration and preserved two local clauses: definitions live under `kb/notes/definitions/`, and raw source captures may remain frontmatter-free while awaiting classification.
-3. `cp-skill-write` and `cp-skill-write-multistage` stop treating a collection menu as authorization. They follow an existing pointer, accept an explicit user or workflow path, resolve a unique shorthand, or use the default note path. `cp-skill-snapshot-web` supplies its snapshot type path directly. All three validate after writing, and none has a workshop-specific branch.
-4. Deterministic validation rejects a resolved peer-local type outside `kb/work/`, while preserving global types, owned-local types, and any valid type pointer under `kb/work/`.
-5. Documentation and navigation point to the general exposition or directly to the relevant live type directory, never to a hand-maintained complete inventory.
+Type-wide restrictions remain owned by their type specs; collection-local placement policy remains ordinary collection prose.
 
 **Reopening clause.** This ADR removes a *hand-maintained* enumeration. It does not settle that a collection may never carry one. An enumeration may return if it is built the way the marks on `tag-readme` are built — recomputable from the type specs, validated by code, and therefore **enforced-or-omitted** rather than trusted (`kb/types/tag-readme.md`, ADR 026). A generated or validator-checked list is a different artifact from the prose table this ADR removes, and it is admissible on that basis. What is ruled out is the middle state: a copy that consumers treat as authoritative and nothing recomputes.
 
@@ -75,7 +58,7 @@ Free choice left open: whether the derivation rule is stated per collection or s
 
 ## Consequences
 
-**Operativity path.** The validator is the binding consumer: after existing type resolution confirms a real spec, it compares the artifact path, owning collection root, and resolved type path; it rejects peer-local use except beneath `kb/work/`. The three writing skills consume only the simpler uniform lookup procedure and run validation after writing. Collection authors consume the rule through `COLLECTION.md` prose, with contract force under the collection-conformance pair (ADR 041). New installations receive the same rule through the scaffold templates that `commonplace-init` copies; this is also the channel that stops the phantom `skill` type from propagating further.
+**Operativity path.** The validator is the binding consumer: after existing type resolution confirms a real spec, it compares the artifact path, owning collection root, and resolved type path; it rejects peer-local use except beneath `kb/work/`. The three writing skills consume only the simpler uniform lookup procedure and run validation after writing. Collection authors consume the rule through `COLLECTION.md` prose, with contract force under the collection-conformance pair (ADR 041). New installations receive the same rule through the scaffold templates that `commonplace-init` copies.
 
 **Easier:**
 
@@ -91,8 +74,6 @@ Free choice left open: whether the derivation rule is stated per collection or s
 - An agent given only a shorthand type name runs a search instead of reading a table. Explicit paths, workflow-supplied paths, and the default note path avoid that search.
 - A previously accepted cross-collection local type outside `kb/work/` will begin failing validation and must move, change type, or establish that its containing directory should be a collection of its own.
 - Readers no longer get one exhaustive prose table of shipped types. They get common examples in the general exposition, curated global navigation in `kb/types/README.md`, and the live global or collection-local directories when they need the complete answer.
-- Any collection-specific restriction that lived only in a table row must be spotted and migrated during execution; missing one silently drops a constraint.
-- The validator, three skills, three templates, and collection contracts change together, so the change lands as a coordinated edit rather than a single-file one, and the ordering matters — validator and consumers before menus.
 
 ---
 

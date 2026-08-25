@@ -15,7 +15,7 @@ status: accepted
 
 [ADR 058](./058-directional-identifiers-use-source-as-subject.md) requires every directional identifier to complete `source <label> target`. `rationale` instead names the target's role: its intended assertion is that a descriptive or prescriptive source rests on a theoretical target. `grounds` has the same grammatical defect, but its intended note→note premise-verification journey is distinct.
 
-A corpus review classified all 134 active `rationale` edges: 114 are genuine design/rule dependencies, 2 are source-side evidence, and 18 are evidence or architecture/history relations. A separate adjudication classified all 38 `grounds` edges outside the canonical note→note cohort. During implementation, four new canonical note→note edges landed concurrently; the live baseline is therefore 314 active `grounds` edges, of which 276 remain in the deferred canonical cohort and 38 require reclassification.
+A corpus review classified all 134 active `rationale` edges: 114 are genuine design/rule dependencies, 2 are source-side evidence, and 18 are evidence or architecture/history relations. A separate adjudication classified the 38 `grounds` edges outside the canonical note→note cohort.
 
 The review also exposed three authorization gaps: agentic-system analysis→note evidence, source analysis→agent-memory evidence, and three theoretical dependencies authored under `kb/types/`, which had no source collection contract.
 
@@ -29,16 +29,9 @@ Retire the directional identifier `rationale` and adopt:
 
 Keep the canonical note→note `grounds` cohort semantically distinct and unchanged in this migration. Its reader follows a theoretical assertion to assess its premise; its own source-as-subject identifier requires a later scoped review.
 
-Migrate the active boundary exactly as adjudicated:
+Every `rationale` edge and every off-pattern `grounds` edge is reclassified to the relation its assertion actually makes — `rests-on`, `evidenced-by`, `is-evidence-for`, `implements`, or `compares-with` — as individually adjudicated; none are removed.
 
-- 114 `rationale` edges and 8 off-pattern `grounds` edges become `rests-on`;
-- 35 boundary edges become `evidenced-by`;
-- 12 become `is-evidence-for`;
-- 2 become `implements`;
-- 1 becomes `compares-with`;
-- none are removed.
-
-Collection contracts replace `rationale` authorization with `rests-on`, rather than retaining synonyms. `kb/agentic-systems/ → kb/notes/` and `kb/sources/ → kb/agent-memory-systems/` gain `is-evidence-for` only for the observed source-side evidence journey. No collection is widened to authorize off-pattern `grounds`.
+Collection contracts replace `rationale` authorization with `rests-on` rather than retaining synonyms, gain `is-evidence-for` only where the source-side evidence journey was observed, and are not widened to authorize off-pattern `grounds`.
 
 `kb/types/` becomes a collection by gaining a minimal `COLLECTION.md`. It remains the global type layer; the collection contract governs text-level authoring and outbound links, while each type spec and schema continue to own type semantics. This removes the missing-source-contract exception instead of making the self-referential root type authorize its own links.
 
@@ -60,11 +53,9 @@ Deciding forces were direct source-as-subject grammar, tuple conservation, stabl
 
 ## Consequences
 
-Readers can interpret `rests-on` without silently reversing endpoints, and maintainers can distinguish design reconsideration from premise verification and evidence inspection. The active corpus has 122 `rests-on` edges after migration. The 276 canonical `grounds` edges remain visible migration debt rather than being silently reinterpreted.
+Readers can interpret `rests-on` without silently reversing endpoints, and maintainers can distinguish design reconsideration from premise verification and evidence inspection. The canonical `grounds` cohort remains visible migration debt rather than being silently reinterpreted.
 
 The global type layer now participates in collection routing and collection-conformance review. Adding or changing a global type must compose `kb/types/COLLECTION.md` with the type-spec contract, just as other authored artifacts compose collection and type contracts.
-
-This is the second completed directional-label migration. Its retrospective decides whether the stable inventory, exclusion, authorization, tuple-conservation, and guidance-reconciliation procedure is ready for extraction into a reusable instruction before the `grounds` run.
 
 ---
 

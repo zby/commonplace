@@ -11,21 +11,16 @@ status: accepted
 
 **Date:** 2026-08-23
 
-The authority, local-cache, and checksum decisions remain accepted. [ADR
-073](./073-untracked-source-snapshots-require-ingest-grounding.md) partially
-supersedes checksum-first resolution for grounding and mutation-bearing ingest
-paths: those require the exact name-paired snapshot and use the checksum to
-verify it. Generic cache recovery remains checksum-first.
+**Superseded in part by** [ADR 073](./073-untracked-source-snapshots-require-ingest-grounding.md) — grounding and mutation-bearing ingest paths require the exact name-paired snapshot; generic cache recovery remains checksum-first.
 
 ## Context
 
-Tracked source snapshots split one source record across two authorities. The
+Tracked source snapshots split one source record across two authorities: the
 snapshot held the canonical URL, capture provenance, and genre, while the
-ingest held the analysis and pointed back through `source_snapshot`. A fresh
-checkout therefore carried source bodies but could not identify an ingest
-without a repository-relative path. Code-grounded ingests added a second
-special representation, `code_revisions`, without saying why those resources
-belonged to the primary source.
+ingest held the analysis and pointed back at the snapshot by repository-relative
+path, so an ingest could not be identified without that path. Code-grounded
+ingests needed a second special representation for implementation
+repositories, with no stated relation to the primary source.
 
 [ADR 045](./045-source-genre-is-a-single-open-field-on-the-snapshot.md) also
 made the snapshot's `genre` authoritative and allowed ingestion to correct that
@@ -35,10 +30,8 @@ ignored local cache: a local file that may be absent cannot be durable
 authority, and editing any of its bytes changes the checksum of the observation
 the ingest used.
 
-The adopted proposal was “Ingest source units and supporting material.” It
-established the option space and the primary-versus-supporting distinction. The
-implementation workshop then fixed the smallest version that could migrate the
-existing corpus without redesigning ingest prose.
+Adopted from the proposal “Ingest source units and supporting material,”
+which established the primary-versus-supporting distinction.
 
 ## Decision
 
@@ -75,14 +68,6 @@ does not edit the snapshot. This decision supersedes ADR 045's field placement
 and mutation exception while retaining its open-vocabulary warning behavior,
 fixed value meanings, removal of `source_type`, and return of snapshot `tags`
 to optional topical use.
-
-The migration applied these rules to 275 existing ingest units. A 942-row
-recovery ledger completed 275 unit transformations, 338 local-asset
-dispositions, and 329 durable-library link dispositions. It retired 325
-tracked source bodies or companions only after preserving their local copies,
-converted all three code-grounded ingests to implementation secondaries, and
-left the five analytical sections unchanged except for links and lines that
-only duplicated moved metadata. Directory primaries were not admitted.
 
 ## Considered alternatives
 
@@ -125,14 +110,11 @@ fields, no directory primary, and no broader ingest-body rewrite.
 
 ## Consequences
 
-The operativity path is direct. The ingest and snapshot schemas enforce the
-field shapes; the ingest, snapshot, paper-with-code, and re-ingest instructions
-govern agent writes; the GitHub and X commands materialize ignored captures;
-`commonplace.lib.snapshot` performs checksum-first generic cache resolution;
-grounding and mutation-bearing ingest instructions require name-paired
-resolution; source URL extraction reads the ingest's top-level `source`; and
-scaffold, package, and documentation surfaces distribute those contracts.
-These consumers make the ADR binding on subsequent source work rather than
+The operativity path is direct: the ingest and snapshot schemas enforce the
+field shapes; the ingest instructions govern agent writes; the capture commands
+materialize ignored captures and the snapshot library resolves the cache
+checksum-first; and the scaffold and package surfaces distribute those
+contracts. These consumers make the ADR binding on subsequent source work rather than
 leaving it as descriptive history.
 
 A fresh checkout can identify every primary observation without its local

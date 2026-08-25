@@ -62,12 +62,10 @@ collection-creation consumer does not justify a prototype.
 
 The prototype definition lives at the start of its catalogue rather than in a
 separate definition artifact. Creation-only vocabulary does not belong in the
-always-loaded root glossary. `AGENTS.md` keeps the text-contract gloss, drops
-its profile half, and removes the routing table's `Role` column. Live collection
-contracts state their purpose and quality goal directly. The profile material
-was removed from the then-current theory-side text-contract definition in
-place, leaving that term for a separate placement decision. [ADR 071](./071-text-contract-is-part-of-the-collection-definition.md)
-later folded the surviving vocabulary into the collection definition.
+always-loaded root glossary, so `AGENTS.md` carries no profile vocabulary and
+its routing table has no `Role` column. Live collection contracts state their
+purpose and quality goal directly. [ADR 071](./071-text-contract-is-part-of-the-collection-definition.md)
+later folded the surviving text-contract vocabulary into the collection definition.
 
 This decision partially supersedes [ADR 042](./042-register-becomes-a-default-profile-under-open-ended-text-contracts.md):
 the closed register taxonomy remains retired, but its open set of adopted
@@ -128,9 +126,8 @@ needs to compare them must inspect their local contracts. That was already the
 only reliable comparison.
 
 Historical ADR titles and archived deliberation keep the term “profile” where
-it records the vocabulary in use at the time. Supersession notes prevent those
-records from being mistaken for current guidance. Ordinary uses of “profile”
-for unrelated concepts, such as execution or system profiles, are unaffected.
+it records the vocabulary in use at the time; ordinary uses of “profile” for
+unrelated concepts are unaffected.
 
 ---
 

@@ -12,7 +12,7 @@ status: accepted
 
 ## Context
 
-[ADR 057](./057-articles-use-an-editorial-profile-and-excluded-drafts.md) gave `kb/articles/` one public state. Publication relocates a draft to the collection root, dates it, and freezes the substantive body; later corrections use a dated annotation, a successor article, or withdrawal. That decision left "whether a later living-page article mode deserves freshness registration" as an explicit free choice, so a revisable public state was anticipated but not designed.
+[ADR 057](./057-articles-use-an-editorial-profile-and-excluded-drafts.md) gave `kb/articles/` one public state: publication freezes the substantive body, and later corrections use a dated annotation, a successor article, or withdrawal. That decision left "whether a later living-page article mode deserves freshness registration" as an explicit free choice, so a revisable public state was anticipated but not designed.
 
 The first article is now ready to circulate, and its value depends on what comes back. It ends by asking readers to apply a diagnostic test to their own systems and to contest boundary cases — an invitation that only pays off if the answers can reach the text. Under freeze semantics the smallest unit of correction is a whole successor article, so an incoming counterexample either waits for one or goes unrecorded, and the frozen label tells readers their criticism has nowhere to land.
 
@@ -24,7 +24,7 @@ The remaining state does not fit either. `draft` is excluded from the site by pl
 
 **Freeze semantics narrow to `published`, and the two states differ only in whether the body may change.** Both are equally public and both require explicit approval naming the target state. A working paper may remain one indefinitely or freeze into a published article at the same path, keeping its original `published` date and dropping `version` and `revised`. Freezing is one-way: a published body cannot reopen without withdrawing what readers were told they could cite.
 
-**No schema and no rendering change.** `status` stays an editorial-convention field, and `version` and `revised` join it under [COLLECTION.md](../../articles/COLLECTION.md) rather than the type spec, under ADR 057's rule that the article schema gains constraints only from a demonstrated mechanical failure. The ProperDocs hook already prints whatever `status` value it finds, so the new state renders without code.
+**No schema and no rendering change.** `status` stays an editorial-convention field, and `version` and `revised` join it under [COLLECTION.md](../../articles/COLLECTION.md) rather than the type spec, under ADR 057's rule that the article schema gains constraints only from a demonstrated mechanical failure.
 
 Operativity path: `kb/articles/COLLECTION.md` binds authoring and collection-conformance review with the lifecycle clause and the working-paper review test; the prescriptive [publication procedure](../../instructions/publish-an-article.md) executes the draft→working-paper, revision, and working-paper→published transitions; `kb/articles/README.md` carries the public listing that separates the two states for readers; and the ProperDocs metadata line renders the status on the page.
 

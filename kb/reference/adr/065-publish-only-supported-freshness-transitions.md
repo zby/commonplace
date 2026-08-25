@@ -19,9 +19,8 @@ admitted only `review-pair` targets, whose baselines can be created or replaced
 only by finalizing completed review evidence.
 
 The package nevertheless published `commonplace-freshness-accept` for
-non-review targets. The transition rejected `review-pair`, then checked an
-empty set of accepted non-review target kinds. Every legal invocation therefore
-failed before the snapshot and baseline code could run. The entry point,
+non-review targets while no non-review target kind was accepted, so every legal
+invocation failed before any snapshot or baseline code ran. The entry point,
 schema, implementation, and rejection-only tests proved presence, not a usable
 capability.
 
@@ -39,10 +38,9 @@ version kinds, producer, initial and refresh semantics, JSON or other operator
 contract, and end-to-end tests. A disabled placeholder is not part of the
 interim interface.
 
-This amendment is operative through `[project.scripts]`, the
-`commonplace.cli` and `commonplace.freshness.transitions` modules, the command
-and freshness reference pages, and the test that requires exact parity between
-published command names and command-reference headings.
+This amendment is operative through the package's published entry points, the
+command and freshness reference pages, and the test that requires exact parity
+between published command names and command-reference headings.
 
 ## Considered alternatives
 
@@ -72,8 +70,6 @@ complete dependency set and acknowledging a displayed change.
   retirement, capture finalization, evidence retention, and revision CAS.
 - Future non-review freshness work must introduce its usable registration path
   deliberately rather than activating dormant scaffolding.
-- Existing editable uv-tool installations must be reinstalled after this
-  entry-point change so their generated launcher set matches package metadata.
 
 ---
 

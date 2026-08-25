@@ -10,17 +10,17 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-07-26
 
-The local article contract and published-body lifecycle remain accepted. [ADR 069](./069-collection-contract-bundles-become-one-time-prototypes.md) supersedes the editorial-profile and shared-catalogue part of this decision; [ADR 063](./063-all-article-drafts-circulate-behind-a-banner.md) supersedes its excluded-draft placement.
+**Superseded in part:** [ADR 069](./069-collection-contract-bundles-become-one-time-prototypes.md) (editorial profile and shared catalogue) and [ADR 063](./063-all-article-drafts-circulate-behind-a-banner.md) (excluded-draft placement); the local article contract and published-body lifecycle remain accepted.
 
 ## Context
 
 Commonplace had no durable home for outward-facing writing. Its library collections are optimized for agents that can traverse the graph, while a technical reader arriving from outside needs a self-standing body and a deliberate onward path into the KB. The public ProperDocs site already renders every ordinary file under `kb/`, so a committed draft in a rendered path is public before an editorial publication decision exists.
 
-The worked case established the missing shape. `kb/articles/` now has an editorial collection contract, a deliberately minimal local type, and a near-complete first article distilled from the self-improving-systems cluster. The proposal **External articles collection** left draft placement, publication, profile promotion, and lifecycle presentation open until that case existed.
+A worked case — an editorial collection contract, a deliberately minimal local type, and a first article — established the missing shape. The proposal **External articles collection** left draft placement, publication, profile promotion, and lifecycle presentation open until that case existed.
 
 ## Decision
 
-**`kb/articles/` adopts the editorial/expository profile.** Its audience is a highly technical reader with no project context. Bodies are reader-only prose: headlines rather than claim-titles, no agent-facing footer grammar, and in-prose links that deliberately lead into the KB. Articles carry a byline, lifecycle status, and source-note lineage. The exercised profile is promoted to the shared profile catalogue then located at `kb/reference/text-contract-profiles.md`.
+**`kb/articles/` adopts the editorial/expository profile.** Its audience is a highly technical reader with no project context. Bodies are reader-only prose: headlines rather than claim-titles, no agent-facing footer grammar, and in-prose links that deliberately lead into the KB. Articles carry a byline, lifecycle status, and source-note lineage. The exercised profile is promoted to the shared profile catalogue.
 
 **Drafts live under `kb/articles/drafts/`.** This subtree remains inside the article collection, so the collection contract, article type, write path, validation, and conformance review apply from the first commit. ProperDocs excludes `articles/drafts/**`, keeping drafts out of the published site and search index. Publication relocates the article to the collection root, sets `status: published` and a `published` date, and lists it in `kb/articles/README.md`.
 
@@ -30,7 +30,7 @@ The worked case established the missing shape. `kb/articles/` now has an editori
 
 **Lineage remains searchable, not freshness-registered.** A dated article tolerates later divergence from its source notes; a source change prompts the editorial question “follow up or leave as history,” not an automatic rewrite obligation. Living landing pages and off-site publication remain outside this decision.
 
-Operativity path: `cp-skill-write` and collection-conformance review consume `kb/articles/COLLECTION.md` with binding force; that contract routes an approved draft into the prescriptive [publication procedure](../../instructions/publish-an-article.md); `properdocs.yml` removes the draft subtree from site generation; the collection README controls published navigation; and the ProperDocs hook renders lifecycle status to readers. The pre-decision worked draft, “Reflective self-improvement,” remains in the collection root through its imminent first publication; later drafts start in the excluded subtree.
+Operativity path: `cp-skill-write` and collection-conformance review consume `kb/articles/COLLECTION.md` with binding force; that contract routes an approved draft into the prescriptive [publication procedure](../../instructions/publish-an-article.md); `properdocs.yml` removes the draft subtree from site generation; the collection README controls published navigation; and the ProperDocs hook renders lifecycle status to readers.
 
 ## Considered alternatives
 

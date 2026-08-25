@@ -12,13 +12,11 @@ status: accepted
 
 ## Context
 
-[ADR 057](./057-articles-use-an-editorial-profile-and-excluded-drafts.md) put unfinished articles in a site-excluded `kb/articles/drafts/` subtree. [ADR 062](./062-drafts-may-circulate-at-the-root-behind-a-draft-banner.md) then added a second kind of draft at the collection root for comments. That distinction made authors decide placement, visibility, approval, and discovery path before writing or circulating a draft, and made publication relocate the file and repair its links.
-
-The distinction has no useful case. Article drafts are meant to circulate for comments; the banner already tells readers that claims, structure, and thesis may change without notice. The excluded subtree therefore adds ceremony without strengthening the reader contract.
+[ADR 057](./057-articles-use-an-editorial-profile-and-excluded-drafts.md) put unfinished articles in a site-excluded subtree; [ADR 062](./062-drafts-may-circulate-at-the-root-behind-a-draft-banner.md) added a second kind of draft at the collection root for comments. The distinction made authors decide placement, visibility, approval, and discovery path before writing or circulating, and made publication relocate the file and repair its links, yet it has no useful case: article drafts are meant to circulate for comments, and the banner already tells readers that claims, structure, and thesis may change without notice. The excluded subtree adds ceremony without strengthening the reader contract.
 
 ## Decision
 
-**Every article draft circulates from the collection root.** Drafts live at `kb/articles/{slug}.md`, render through ProperDocs, and use `status: draft`. The `kb/articles/drafts/` subtree and its `properdocs.yml` exclusion are removed.
+**Every article draft circulates from the collection root.** Drafts live at `kb/articles/{slug}.md`, render through ProperDocs, and use `status: draft`. There is no site-excluded draft subtree.
 
 **The authored draft banner is the only draft-specific circulation requirement.** It appears at the start of every draft body, says that everything may still change, and tells readers where to comment. Drafts need no version handle, revision date, separate circulation approval, or mandatory collection-README entry. Listing remains optional navigation.
 

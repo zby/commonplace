@@ -13,9 +13,8 @@ status: accepted
 ## Context
 
 The two main library collections described what they held through different
-criteria. `kb/notes/` retained "transferable claims about what is true —
-mechanisms, principles, and arguments that should hold across systems."
-`kb/reference/` accounted for "what exists in the shipped Commonplace system."
+criteria: `kb/notes/` by transferable claims that should hold across systems,
+`kb/reference/` by what exists in the shipped Commonplace system.
 
 Those clauses left one case underspecified: a theoretical claim may be derived
 from or evidenced by a particular system without becoming a system record. The
@@ -24,15 +23,13 @@ be statable in general terms, but the collection boundary did not explain how
 a particular case could meet that requirement or when it instead belonged in
 reference.
 
-`kb/notes/evidence/` holds seven artifacts, five grounded in observations of
-this repository. Their titles and openings state what a bounded experiment,
-trace, audit, or casebook establishes and delimit the inference, so the
-particular serves as a witness. Meanwhile `kb/reference/` holds three
-superficially similar artifacts: `tag-readme-trace-observed-causal-connection.md`,
-`harness-sub-agent-model-selection-regression.md`, and
-`commonplace-as-a-reflective-system.md`. Some may make the same witness move;
-others may principally record a local incident or current state. Truth-aptness
-or a particular subject does not distinguish them.
+`kb/notes/evidence/` holds artifacts grounded in observations of this
+repository whose titles and openings state what a bounded experiment, trace,
+audit, or casebook establishes and delimit the inference, so the particular
+serves as a witness. `kb/reference/` holds superficially similar artifacts, some
+of which may make the same witness move while others principally record a local
+incident or current state. Truth-aptness or a particular subject does not
+distinguish them.
 
 Subject matter creates a second failure. It admits any artifact whose topic is
 methodology, including vocabulary true only because Commonplace stipulated it.
@@ -41,9 +38,8 @@ collection machinery from inside the theoretical collection, and its stable
 meaning disguised the placement error.
 
 [ADR 069](./069-collection-contract-bundles-become-one-time-prototypes.md)
-removed the profile labels and made each collection state its purpose directly.
-That exposed the problem rather than causing it: without the shared labels, the
-two contracts visibly lacked one placement criterion.
+removed the profile labels, exposing that the two contracts lacked one placement
+criterion.
 
 ## Decision
 
@@ -93,8 +89,7 @@ requirement and quantifier-like grammar as its main repair. The
 proposition-relative rule is sharper: an artifact must preserve a reference
 rule or range plus the named choice's role, while literal quantification is
 neither necessary nor sufficient. A fixed subject can therefore support theory
-without being replaced by a general variable. Old body residue that leaves
-scope outside the intended consumption boundary remains targeted cleanup.
+without being replaced by a general variable.
 
 The test has two dispositions. If a substantive proposition remains after each
 selection is scoped as a fixed subject, ranged value, or witness, keep the
@@ -152,52 +147,18 @@ bounded observation enters `kb/notes/evidence/` when it states what it
 establishes and what it does not. A later theory may cite it, but promotion does
 not wait for that larger synthesis.
 
-Three reference artifacts become reassessment candidates, not authorized moves:
-the two traces and the reflective-system application named above. Move one only
-if its intended contribution already uses Commonplace as a substantive witness
-for a claim about the design space. The harness regression is primarily an
-operational incident about an external tool and may remain reference or move
-with its external-system evidence.
-
-**Follow-up, 2026-08-23.** The causal-connection trace and reflective-system
-classification now live in `kb/notes/evidence/`: each states the bounded
-design-space inference the Commonplace case supports and what the case does not
-establish. The harness model-selection regression remains in reference because
-its intended contribution is the dated operational incident and its effect on
-Commonplace review provenance.
-
-The definition audit applied the same rule. `answerability` moved to
-`kb/reference/definitions/` because its intended force is Commonplace's
-stipulated admission boundary. The standalone `directed reading` term was
-retired because context-engineering language and the claim-routed-reading note
-carry its useful distinctions without another canonical name. `discovery
-lifecycle` remains theory as an explicitly bounded ideal-type model; its local
-adoption remains a framework choice recorded by ADR 053 and operative
-instructions. `actionable methodology` remains theoretical, while the rule
-that technical uses of *actionable* link the definition moved to the operative
-root vocabulary. `reach-assessment` remains a definition after its developed
-route arguments were compressed into links to ordinary theory notes.
-
-The provisional artifact-analysis definitions also remain in theory.
-`operative part`, `retained artifact`, and `storage substrate` separate
-part-level behavior, persistence eligibility, and operational location across
-systems. `knowledge artifact` and `system-definition artifact` remain cheap,
-path-relative behavioral-authority shorthands rather than intrinsic artifact
-classes. `coordination value` remains a distinct warrant source. The global
-`definition` type now says explicitly that type does not decide collection;
-the intended contribution does.
+The global `definition` type states that type does not decide collection; the
+intended contribution does.
 
 Requirements usually decompose rather than forming a third kind. A requirement
 typically pairs a belief that supports it with a commitment that adopts it,
 joined by `rests-on`. Externally imposed constraints—a platform limit or
 inherited interface nobody here selected—remain an open placement case.
 
-Current-state descriptions belong in reference. `architecture.md`,
-`commands.md`, `storage-architecture.md`, and the code-architecture portions of
-`review-architecture.md` and `freshness-architecture.md` faithfully represent
-the state Commonplace's choices produced. Whether each should be generated,
-registered for staleness, partly authored, or minimized is a maintenance
-decision that does not change its collection.
+Current-state descriptions of architecture, commands, and storage belong in
+reference. Whether each should be generated, registered for staleness, partly
+authored, or minimized is a maintenance decision that does not change its
+collection.
 
 Content kind still attaches to a proposition or operative region, while a
 collection boundary is file-level. Placement therefore follows the artifact's

@@ -18,24 +18,17 @@ The `commonplace-*` entry points are framework operator commands, not project de
 
 ## Decision
 
-Install published commands with:
-
-```text
-uv tool install --python ">=3.11" llm-commonplace
-uv tool update-shell
-```
-
-Install a source checkout with `uv tool install --python ">=3.11" --editable .`. Ordinary source changes flow through the editable install; dependency, entry-point, build-metadata, and packaged-scaffold changes require `uv tool install --reinstall --python ">=3.11" --editable .` so uv refreshes the existing environment.
+Install Commonplace commands once per OS user as a uv tool (`uv tool install`, then `uv tool update-shell`); a source checkout installs as an editable tool. Ordinary source changes flow through the editable install; dependency, entry-point, build-metadata, and packaged-scaffold changes require a reinstall. Exact commands live in `INSTALL.md` and `AGENTS.md`.
 
 The uv tool executable directory is the command authority. `commonplace-*` commands are invoked by bare name in every project. `uv tool update-shell` makes the user-environment change durable, but already-running shells, IDEs, desktop agents, and services must be restarted. One installed Commonplace command version per OS user is an accepted invariant; an editable install therefore changes the commands used by every project for that user.
 
 Project environments retain project and development dependencies. `pytest`, `ruff`, and documentation builders run through `uv run`; `pytest` is no longer a runtime dependency of `llm-commonplace`. Optional command dependencies remain uv-tool extras selected during installation.
 
-`commonplace-init` creates no Commonplace-specific venv or `.envrc`. Its generated control-plane template gives one unconditional bare-name rule. Init diagnostics warn about missing declared entry points, commands resolving outside uv's tool directory, the exact legacy generated `.envrc`, and edited `.envrc` files that may shadow the tool. They never delete residue. The health-check skill distinguishes package absence, missing tool-directory `PATH`, executable shadowing, incomplete installation, legacy residue, and runtime-specific environment propagation.
+`commonplace-init` creates no Commonplace-specific venv or `.envrc`. Its generated control-plane template gives one unconditional bare-name rule. Init diagnostics warn about missing entry points, commands resolving outside uv's tool directory, and legacy or shadowing `.envrc` residue; they never delete it. The health-check skill distinguishes the resulting failure classes.
 
-GitHub Actions uses the same primitive. Jobs configure a job-local uv tool executable directory, append it to `$GITHUB_PATH`, install either the editable checkout or built wheel with `uv tool install`, and verify commands in later steps. Wheel smoke tests enumerate every declared entry point and initialize and validate a temporary project on native Windows and POSIX runners.
+CI uses the same primitive: jobs install the editable checkout or built wheel with `uv tool install` and verify bare-name commands on native Windows and POSIX runners.
 
-These choices are operative through package metadata, the scaffold manifest and init command, generated `AGENTS.md.template`, contributor and install instructions, the promoted health-check skill, and GitHub workflow jobs. Package installation and `commonplace-init` deploy the behavior to consumers; source agents load the root instructions directly; CI enforces the release path on each run.
+These choices are operative through package metadata, the scaffold manifest and `commonplace-init`, the generated `AGENTS.md.template`, install instructions, the promoted health-check skill, and CI workflow jobs.
 
 ## Considered alternatives
 
@@ -57,7 +50,7 @@ The proposal's free choices were resolved as follows: explicit Python `>=3.11`; 
 - A project `.venv` is no longer evidence about Commonplace command health. It may still be required by the project and cannot be removed automatically.
 - uv reports executable conflicts instead of silently choosing an owner. Recovery inspects and removes the shadowing authority rather than defaulting to `--force`.
 - CI, release smoke tests, local source development, and published installs exercise the same installation primitive.
-- ADR 014's project-venv and direnv command-discovery choice is superseded. ADR 027's explicit package-data model remains, with `.envrc.template` removed from its included root templates.
+- Supersedes ADR 014's project-venv and direnv command discovery; ADR 027's package-data model remains.
 
 ---
 

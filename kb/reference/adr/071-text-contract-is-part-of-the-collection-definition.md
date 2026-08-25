@@ -14,9 +14,8 @@ status: accepted
 ## Context
 
 ADR 042 introduced **text contract** as the name for the binding local
-declaration in a collection's `COLLECTION.md`. ADR 069 later removed the
-neighbouring profile model: reusable contract bundles are now one-time-copy
-collection prototypes, while only the destination's local contract binds.
+declaration in a collection's `COLLECTION.md`; after ADR 069 retired the
+profile model, only the destination's local contract binds.
 
 The remaining text-contract definition lived in `kb/notes/definitions/`, but
 its intended contribution was Commonplace's selected collection machinery. It
@@ -41,11 +40,9 @@ collection, so the collection definition is its canonical reference owner.
 local readability, and `AGENTS.md` may keep its short operational gloss, but
 both point to the collection definition.
 
-Retire the duplicate theory definition. Redirect both its published path and
-the earlier `register` definition path directly to the collection definition;
-redirect chains are not used. Historical ADRs continue to record that ADR 042
-first created the theory-side definition, but point readers to this decision
-and the current owner.
+Retire the duplicate theory definition; its published path and the earlier
+`register` definition path redirect directly to the collection definition,
+without redirect chains.
 
 Reference definitions are valid `defined-in` targets. The notes and reference
 collection contracts therefore authorize `defined-in` links to both
@@ -82,8 +79,7 @@ contract force. No authoring or runtime consumer reads the retired theory path.
 The reference definition tells maintainers what that consumed surface means,
 while each collection remains complete without it.
 
-The retirement preserves public links through direct redirects. Future edits
-to text-contract semantics change the collection definition and any affected
+Future edits to text-contract semantics change the collection definition and any affected
 live `COLLECTION.md` contracts; they do not require synchronizing a standalone
 glossary artifact.
 

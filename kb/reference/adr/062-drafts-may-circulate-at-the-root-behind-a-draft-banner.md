@@ -12,7 +12,7 @@ status: superseded
 
 ## Context
 
-[ADR 057](./057-articles-use-an-editorial-profile-and-excluded-drafts.md) made placement the exclusion mechanism — `articles/drafts/**` is site-excluded, and relocating to the collection root is publication. [ADR 061](./061-articles-may-circulate-as-revisable-working-papers.md) added the working paper as the state for circulating an article whose claims are open, and rejected circulating a `draft` because the status would then describe neither the article's visibility nor its revisability.
+[ADR 057](./057-articles-use-an-editorial-profile-and-excluded-drafts.md) made placement the exclusion mechanism: relocating a draft to the collection root is publication. [ADR 061](./061-articles-may-circulate-as-revisable-working-papers.md) added the working paper for circulating an article whose claims are open, and rejected circulating a `draft` because the status would then describe neither visibility nor revisability.
 
 Operating the first two articles surfaced a need neither state serves. The operator wants outside comments while an article's central thesis is still moving — the reflective self-improvement article changed its thesis several times within days. The working-paper contract is wrong for that text twice over: its `version`/`revised` handles advertise a stability the text does not have, and its framing invites reference to claims the collection is not yet willing to stand behind. What was missing is a public state that promises nothing: visible, commentable, and free to pivot silently.
 
@@ -22,11 +22,11 @@ Operating the first two articles surfaced a need neither state serves. The opera
 
 **Every root-placed draft opens with an authored draft banner.** A short blockquote before the body states that everything may still change and where to send comments. It must not promise stability: no version handles, no revision log, no language that invites treating the text as a fixed reference. The banner is authored rather than generated, keeping ADR 057's no-custom-rendering stance; a status-driven generated banner can return if a forgotten banner ever ships (the worked-failure rule).
 
-**Each root-placed draft has a deliberate discovery path.** A draft intended as a collection entry point is listed in `kb/articles/README.md` under "In draft". A supporting draft may instead remain unlisted when a listed root article links to it deliberately. This revises ADR 057's rejected alternative "draft in the collection root, rendered but unlisted": an authored incoming link makes the placement deliberate rather than an accident discoverable only through site search.
+**Each root-placed draft has a deliberate discovery path.** A draft intended as a collection entry point is listed in `kb/articles/README.md` under "In draft". A supporting draft may instead remain unlisted when a listed root article links to it deliberately. This revises ADR 057's rejected "rendered but unlisted" alternative: an authored incoming link makes the placement deliberate.
 
 **The lifecycle gains one forward step.** Excluded draft → root draft (request for comments) → working paper (claims stable enough for version handles) → published (frozen). Each transition needs explicit approval naming the target state. This answers ADR 061's objection to circulated drafts: status describes revisability and maturity, placement describes visibility, and the banner makes the combination legible on the page itself.
 
-Operativity path: `kb/articles/COLLECTION.md` binds authoring and collection-conformance review with the banner, discovery-path, and no-stability-promise clauses; `kb/articles/README.md` lists the main reflective-self-improvement draft, which links to the unlisted human-inclusive self-revision companion; the ProperDocs metadata line continues to render status, and the site's page-bottom comments system receives the feedback each banner invites.
+Operativity path: `kb/articles/COLLECTION.md` binds authoring and collection-conformance review with the banner, discovery-path, and no-stability-promise clauses; `kb/articles/README.md` carries the "In draft" listing; the ProperDocs metadata line continues to render status, and the site's page-bottom comments system receives the feedback each banner invites.
 
 ## Considered alternatives
 
