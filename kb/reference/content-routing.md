@@ -67,5 +67,6 @@ Row 6 lands in a section the artifact's type names for it: `## Scope` (or
 `## Caveats`) in a note, its own paragraph of `## Consequences` in an ADR,
 stated preconditions in an instruction. Row 4 names a consumer the system
 does not yet route reliably: most change operations do not consult the ADRs
-that bind them (`kb/work/adr-routing/`). That is a recorded gap, not a
-placement rule.
+that bind them. The design object for closing it is the proposal
+[decisions bind their consumers through site back-pointers](./proposals/decisions-bind-their-consumers-through-site-back-pointers.md);
+until it is adopted this is a recorded gap, not a placement rule.

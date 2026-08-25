@@ -146,9 +146,10 @@ exists, not mandated everywhere.
 
 **One further change the derivation implied is handed off, not rejected.**
 Giving decisions a declared consumer — the force gap behind ADRs being
-"consulted by luck" — is owned by `kb/work/adr-routing/` and the
-change-operations catalogue, and stays a recorded gap in the table rather than
-being settled here.
+"consulted by luck" — is the proposal *Decisions bind their consumers through
+site back-pointers*, whose retrofit worklist the change-operations catalogue
+would supply; it stays a recorded gap in the table rather than being settled
+here.
 
 **The retained-intent record ships only its source clause.** A workshop framing
 now fixes who posed the question and in what role. The `status` field — whether
