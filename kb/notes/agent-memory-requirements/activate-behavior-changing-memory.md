@@ -21,6 +21,12 @@ The system must not merely answer "what do we know?" It must sometimes answer an
 
 Typed cue indexes provide the on-situation loading form of this family. A cue can carry a trigger condition, lesson, source pointer, behavioral authority, consequence weight, and placement target. Matching can use rules, embeddings, action classifiers, or LLM relevance judgments. The choice depends on consequence, false-positive tolerance, and cost.
 
+## Documentation-specific candidates remain hypotheses
+
+System documentation that arrives with the system rather than accumulating from its use is not read-back under this KB's [memory boundary](../knowledge-storage-does-not-imply-contextual-activation.md), but documentation intended to change agent behavior faces the same delivery and uptake gates. Gao and Chen's [coding-agent trace study](../../sources/from-agent-behaviour-to-agent-friendly-documentation.ingest.md) motivates two candidates. Self-contained documents with locally retrievable structure may reduce dependence on cross-document navigation. Runnable examples, doctests, and schema contracts may turn a prose expectation into an executable specification or check.
+
+Neither candidate is a demonstrated activation technique. The first targets delivery: the study observed repeated reading but no `Follow-reference` event under its trace definition. The second targets verification and measurement: the authors explicitly present executable documentation as a hypothesis for intervention studies after observing no explicit documentation-based validation sequence. Both still require a comparison showing that the implemented documentation-and-delivery package changes behavior in the intended direction.
+
 ## Behavioral Faithfulness
 
 A cue that fires and enters context has not succeeded unless it changes downstream action in the intended direction. High-authority behavior-shaping material needs evidence that it earns its context budget: WITH/WITHOUT comparisons, perturbation tests, post-action trace audits, or other checks against behavior. [Large Language Model Agents are not Always Faithful Self-Evolvers](https://arxiv.org/html/2601.22436v3) is the cautionary example: written or compressed memories can improve measured behavior without being used in the way their designers assume.

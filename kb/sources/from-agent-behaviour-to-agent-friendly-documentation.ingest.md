@@ -28,6 +28,10 @@ Across 557 coding-agent sessions with 3,033 classified documentation interaction
   - **Source location:** Section 4.2.2, interpretation of Table 3.
 - **Source extract (verbatim):** Transition probabilities are first-order. A near-zero adjacent transition from documentation read to code edit does not preclude longer-range influence.
   - **Source location:** Section 7.2, "Internal validity."
+- **Source extract (verbatim):** Local retrievability warrants particular attention. Documentation reads are frequently followed by further reads (transition probability 0.270), whereas Follow-reference is entirely unattested. This pattern motivates studying self-contained documents with locally retrievable structure, rather than assuming that agents navigate richly cross-linked documentation. It does not, however, establish that link hygiene has no behavioural consequences.
+  - **Source location:** Section 6.1, "Supported implications."
+- **Source extract (verbatim):** Executable documentation offers a testable route to specification. No explicit documentation-based validation sequence was observed, and consultation is associated with less immediate testing (lift 0.23, cluster CI 0.08–0.45). Making such a check observable plausibly requires artefacts an agent can execute — runnable examples, doctests, schema contracts — rather than prose that an agent must be trusted to honour. This proposal is a hypothesis for intervention studies, not a finding of the present study.
+  - **Source location:** Section 6.1, "Supported implications."
 
 ## Connections Found
 
