@@ -16,7 +16,7 @@ The prose claims that a concept in this note IS a concept from a linked note, bu
 
 For each sentence that identifies this note's concept with a concept from another note — phrases like "this is the X problem from [note]," "this is X in architectural form," "the same mechanism as [note]'s Y" — read the target note's treatment of that concept. Does the target's version match the identity claim?
 
-Check up to 5 such identity claims. Report all mismatches.
+Read at most 5 distinct target notes per review; check every identity claim that points at a target you have read. Report all mismatches. If the limit leaves identity claims unchecked, name them in the findings.
 
 An attribution is valid if the linked note's core concept supports the claim being made, even if the exact phrasing differs. Only flag when the linked note's treatment of the concept is substantively different — not merely when the vocabulary doesn't match verbatim.
 

@@ -16,7 +16,7 @@ The text of a markdown link implies a concept, but the linked note discusses som
 
 For each markdown link, read the link text and the sentence it appears in. What does the reader expect to find at the target? Then read the target note's title and opening paragraph. Does the target match the expectation?
 
-Follow at most 5 links per review.
+Read at most 5 distinct target notes per review. Repeated links to the same target count once; check every link that points at a target you have read. If the limit leaves links unchecked, name them in the findings.
 
 ## Example (fail)
 

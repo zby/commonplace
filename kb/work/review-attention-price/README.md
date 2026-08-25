@@ -11,7 +11,7 @@ ADR 079 moved `semantic/grounding-alignment` from five links to sixteen distinct
 - Nothing in the modern pipeline records an independent resource outcome. Of 2,609 telemetry rows, none carries `harness_telemetry_json`; legacy codex rows (jobs 9–2302) did carry token usage at top level, so the runner can supply it.
 - The uncapped arm read the corpus maximum (22 artifacts, 322 KB) in one pass with no quality loss observed in that range. Whatever the budget protects, it is not one-pass capacity at current sizes.
 
-The other link-following criteria still carry inherited constants: `sentence/misleading-link-text` follows "at most 5 links" (occurrences, the defect the pricing proposal named first), `sentence/concept-attribution` checks "up to 5" identity claims, and `critique-note` states no limit. Five now looks low by an order of magnitude for reads that cost a title and a paragraph each. A priced mechanism replaces these constants with one budget and per-gate reading patterns; that is the mechanism half of the question.
+The other link-following criteria still carry inherited constants: `sentence/misleading-link-text` and `sentence/concept-attribution` read at most 5 distinct target notes (an interim wording change on 2026-08-25 applied ADR 079's distinct-target counting to both, replacing a count of link occurrences and of identity claims; the number itself is still inherited), and `critique-note` states no limit. Five now looks low by an order of magnitude for reads that cost a title and a paragraph each. A priced mechanism replaces these constants with one budget and per-gate reading patterns; that is the mechanism half of the question.
 
 ## The fork this workshop must resolve first
 
