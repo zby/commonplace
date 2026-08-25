@@ -19,14 +19,10 @@ complete captured source. Ingest analysis is tracked, but its summaries,
 classifications, connection judgments, and limitations are interpretations.
 They are not source text.
 
-The first version of this decision added a `## Claims` ledger. Each entry held
-a normalized `Claim (paraphrase)`, exact extracts, and authored Scope,
-Confidence, and Limitation fields. A virtual source-conformance review then
-checked a note's wording against that normalized claim. This created two
-semantic hops: the note was checked against an ingest paraphrase that had
-itself been checked against the source. Rewording at either hop could change the
-proposition. The ledger therefore made the final judgment easier to run but did
-not make it sound.
+A ledger of paraphrased claims in the ingest does not solve this. Checking a
+note against an ingest paraphrase that was itself checked against the source
+creates two semantic hops, and rewording at either hop can change the
+proposition; the ledger makes the judgment easier to run but not sound.
 
 A direct check has two possible inputs. A bounded verbatim passage may contain
 enough source material to judge the note's use. Some claims instead depend on
@@ -173,64 +169,6 @@ analytical sections are ignored as support, and `snapshot_sha256` never
 changes. A note edit or grounding-gate edit still stales the pair. Removing or
 rewriting an incumbent quote is outside the supported mutation contract.
 
-Existing source-conformance baselines are obsolete and should be retired. The
-grounding-gate edit makes existing standard grounding baselines stale, so the
-next semantic review applies the new direct-source rules without a special
-migration result protocol.
-
-### Retrospective rollout evidence
-
-The rollout provides a retrospective comparison at the level of a claim use:
-one source-dependent target claim use, not a note, ingest, stored entry, quote
-pair, or link. Cohorts 01--10a used the retired normalized-Claims/source-lens
-model; cohort 10b used the direct Quotes/snapshot model. Their recorded terminal
-tables give the following distributions. Cohort 01's completion table was
-reconstructed after its original workshop closed from committed artifacts and
-review state.
-
-| Historical population | Claim uses | Grounded, n (%) | Narrowed | Contradicted/repaired | Retained local delta | Literature handoff | False positive | Unavailable |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| Normalized Claims, cohorts 01--10a | 205 | 62 (30.2%) | 93 | 15 | 24 | 9 | 1 | 1 |
-| Quotes/snapshot, cohort 10b | 59 | 44 (74.6%) | 2 | 1 | 5 | 7 | 0 | 0 |
-
-Both rows are terminal migration dispositions. The cohorts were successive and
-non-random, differed in content and execution phase, and used non-equivalent
-review protocols. The difference between 30.2% and 74.6% is therefore
-descriptive, not a causal estimate of the representation's effect. The retired
-row is also not current direct-source assurance. These rates do not test
-semantic identity.
-
-The normalized-Claims records show reuse and denser sections, but report no
-accepted duplicate, disputed identity, ambiguous selector, or need for a
-stable claim ID. Cohort 08 was the nearest counter-signal: partly overlapping
-premises created modest possible later-reconciliation pressure, while exact
-paraphrase, Scope, and Limitation still selected every use. In cohort 10b,
-six successful atomic recoveries appended 51 distinct exact source/location
-pairs. Similar passages
-with different local contexts coexisted, and no accepted pair required a quote
-ID, semantic deduplication, or reconciliation.
-
-Pairing an ingest name with exact snapshot bytes, enforcing exact-byte quote
-boundaries, and associating a use with either Quotes or a snapshot were distinct
-from disputed semantic-unit identity. The `(snapshot required)` marker on the
-target link handled the observed route association without quote IDs. Together
-with the selection record above, these distinct repair paths support a bounded
-conclusion: for the observed corpus size, shape, and recorded cases, the
-rollout did not earn stable IDs for normalized claims or retained quotes,
-semantic deduplication, or reconciliation for V1. The evidence supplies no
-threshold for a larger, more repetitive, contested, or multi-writer corpus and
-does not show that such a corpus would never need this machinery.
-
-A deterministic scan of 68 frozen target notes on 2026-08-25 found 19 link
-occurrences bearing the exact `(snapshot required)` marker across seven notes:
-one seed and 18 cohort 10b additions. On that date, every occurrence had its
-exact ingest-name-paired snapshot, with matching exact-byte SHA-256 and
-canonical source. This repeated, mechanically resolvable uptake shows that the
-snapshot route became operative rather than remaining unused. The result is
-dated and mechanical, not a semantic verdict for every marked use or all 68
-notes. Ignored local snapshots can later be absent; the gate must still fail
-closed on missing or mismatched bytes and judge the target use semantically.
-
 ---
 
 Relevant Notes:
@@ -239,3 +177,4 @@ Relevant Notes:
 - [Grounding alignment gate](../../instructions/review-gates/semantic/grounding-alignment.md) — implemented-by: the sole semantic check for quote-backed and snapshot-required source uses
 - [Ground a source-dependent claim](../../instructions/ground-source-dependent-claims.md) — procedure: retain bounded exact quotes or declare the snapshot-required route
 - [Ingest-report type](../../sources/types/ingest-report.md) — see-also: tracked Quotes shape and source-record boundary consumed by the decision
+- [A quotes-route rollout grounded more claim uses without earning claim identifiers](../../notes/evidence/quotes-route-rollout-grounded-more-uses-without-earning-claim-ids.md) — see-also: the bounded cohort record behind the V1 decision to omit claim identifiers, deduplication, and reconciliation
