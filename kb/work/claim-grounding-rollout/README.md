@@ -118,9 +118,9 @@ that every broader use passed: the nonpass outcomes showed otherwise. The
 sweep itself did not repair notes, ingests, the gate, or route markers. The two
 repair rounds below resolved every nonpass outcome at that point. A later
 consumed-cost pilot put 12 notes through fresh requested reviews and returned
-five new WARN outcomes. The workshop remains open for those repairs and because
-the gate's link budget still prevents the PASS population from establishing
-exhaustive ordinary-support-link coverage.
+five new WARN outcomes; the target-only repair below resolved all five. The
+workshop remains open because the gate's link budget still prevents the PASS
+population from establishing exhaustive ordinary-support-link coverage.
 
 ## Certification sweep — 2026-08-25
 
@@ -232,10 +232,13 @@ settled would unnecessarily trigger the known 775-pair re-review.
 
 The [12-note pilot](./consumed-cost-pilot.md) exercised the consumption-report
 contract in jobs 8202–8213. Every job produced complete path-level telemetry.
-The results were 7 PASS and 5 WARN; the WARN results are now the current `codex`
-baselines for those notes, so the frozen population currently has 63 accepted
-PASS and 5 WARN outcomes across the accepted `codex` and `claude-sonnet-5`
-partitions.
+The results were 7 PASS and 5 WARN. A bounded target-only pass repaired the
+findings against existing retained Quotes; no ingest or snapshot changed. Fresh
+PASS results are jobs 8214, 8216–8218, and 8219. Job 8215 was an intermediate
+WARN that exposed one adjacent cross-setting transfer before job 8219 passed
+the revised target. The stale selector returns no target among the five, and
+the frozen population is again 68/68 accepted PASS across the `codex` and
+`claude-sonnet-5` partitions.
 
 The pilot did not identify the proposed artifact-versus-byte attention price.
 Nine reports opened exactly five artifacts, including eight that called the
@@ -243,8 +246,8 @@ stop sufficient; one explicitly stopped on budget at five, and one exceeded
 the gate by opening seven. These observations validate telemetry capture but
 show that more capped reviews would mostly measure the current policy. They
 also show that stop points alone lack an independent attention-cost outcome.
-The five grounding findings need a bounded repair pass. Attention-price
-calibration needs a redesigned assay rather than a larger run of this one.
+Attention-price calibration needs a redesigned assay rather than a larger run
+of this one.
 
 ## Current execution path
 
@@ -339,7 +342,8 @@ permanent second review system.
   unexamined. Not fixed; batched because the edit stales 775 pairs
 - [Consumed-cost calibration pilot](./consumed-cost-pilot.md) — 12 complete
   consumption reports validate the telemetry path but fail to identify an
-  artifact-versus-byte price; five fresh WARN outcomes await repair
+  artifact-versus-byte price; its five fresh WARN outcomes were repaired and
+  rerun to PASS
 - [Historical procedure](./procedure.md) — source-blind freeze rationale and
   the superseded Claims-era execution record; not the authority for current
   grounding mechanics

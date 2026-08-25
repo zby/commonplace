@@ -103,10 +103,9 @@ compresses the count variation. Calling eight of those exact-five stops
 `sufficiency` does not establish that the salient cap had no effect.
 
 The 7 PASS / 5 WARN outcomes are useful review results but not attention-price
-observations. The WARN results also replace five of the frozen population's
-current `codex` PASS baselines, leaving the accepted `codex` or
-`claude-sonnet-5` population at 63 PASS / 5 WARN until those findings are
-repaired.
+observations. The WARN results temporarily replaced five of the frozen
+population's current `codex` PASS baselines, leaving the accepted `codex` or
+`claude-sonnet-5` population at 63 PASS / 5 WARN before the repair below.
 
 ## Grounding findings to repair
 
@@ -128,6 +127,20 @@ repaired.
   mainstream work subsuming prompts, tools, and evals without marking the step
   as synthesis or citing direct support.
 
+## Repair completion
+
+All five findings were repaired in the targets. No ingest or snapshot changed:
+the retained Quotes in the Fintool, DiscoverPhysics, KCSI, and Bitter Lesson
+ingests were sufficient once unsupported detail was removed and target-side
+synthesis was named explicitly.
+
+Fresh isolated `codex` reviews passed in jobs 8214, 8216–8218, and 8219. Job
+8215 first returned an adjacent WARN because the file/schema note transferred a
+progressive-constraining pattern from LLM runs to schema timing without naming
+that cross-setting inference. The target now states the transfer directly, and
+job 8219 passed it. The stale selector returns no target among the five, and the
+accepted frozen population is back to 68/68 PASS.
+
 ## Decision
 
 Do not expand the same capped protocol. It would add rows without resolving the
@@ -140,6 +153,6 @@ example model usage or elapsed active review time) or a controlled paired assay
 that holds the claim and evidence constant while varying how the evidence is
 divided among artifacts and how many bytes must be scanned.
 
-Repair the five WARN findings as a separate pass, then rerun only those five
-pairs. Keep the complete telemetry from this pilot as evidence about reporting,
-cap adherence, and the observed demand distribution.
+The five WARN findings were repaired in a separate pass and only those pairs
+were rerun. Keep the complete telemetry from this pilot as evidence about
+reporting, cap adherence, and the observed demand distribution.
