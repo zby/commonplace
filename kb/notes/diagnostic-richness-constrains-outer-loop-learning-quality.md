@@ -1,7 +1,7 @@
 ---
 description: "Outer-loop learning depends on inspectable failure evidence, not only on the oracle used to select winning candidates"
 type: kb/types/note.md
-traits: [title-as-claim]
+traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, deploy-time-learning]
 ---
 
@@ -15,6 +15,8 @@ That makes diagnostic richness orthogonal to [oracle strength](./oracle-strength
 
 [Meta-Harness](../sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md), a framework for optimizing task-specific model harnesses, makes the gradient concrete through its online text-classification ablation. Every proposer arm could inspect prior scores and code. The Scores Only arm reached 34.6% median accuracy, the Scores + Summary arm reached 34.9% without traces, and the full arm reached 50.0% with traces. The fixed summary treatment therefore did not recover the trace-access arm in this setup. These are point summaries without a reported statistical-significance estimate, and the experiment tests one trace-removing summary treatment rather than summaries or abstraction in general. The bounded result supports this note's claim that a proposer cannot exploit diagnostic information it does not receive; it does not license the stronger instruction to "load everything."
 
+AutoSaddler supplies a second bounded contrast. In its GAIA2 test, removing in-depth diagnosis reduced reported Pass@1 from 62.0% to 57.8%. The ablation replaced a diagnosis stage that could inspect execution traces and harness source code with one LLM call given an execution trace and evaluation results; its inferred failure reason then returned to CA-SDK for patch generation ([AutoSaddler](../sources/autosaddler-automatic-harness-optimization-with-durable-updates.ingest.md)). The experiment therefore tests one code-and-trace-access treatment against one shallow-call treatment within a fixed optimizer and harness update space. It supports the narrower claim that diagnostic access can affect this loop's results, but it does not isolate which additional signal or investigation operation caused the gain or show that more diagnostic context is always better.
+
 Richness still needs staging. Agentic Harness Engineering, an observability-driven coding-agent harness evolution loop, keeps raw traces available but normally feeds root-cause reports first to the evolve agent, the component that proposes harness changes. HALO, a trace-analysis engine for agent harnesses, indexes byte offsets, exposes bounded trace tools, returns summaries for oversized traces, and preserves drill-down paths to raw evidence. These systems treat summaries and indexes as navigation surfaces, not as replacements for evidence.
 
 For KB and harness-learning loops, the design implication is direct: keep selection signals and diagnostic surfaces separate. A frontier file, score table, or review decision can tell the next agent what won; it cannot by itself tell the agent what to try next. Durable learning loops need enough retained evidence for later proposers to form causal hypotheses, plus enough progressive disclosure from summaries to raw evidence to keep that evidence affordable inside a bounded context.
@@ -26,6 +28,7 @@ Relevant Notes:
 - [oracle strength spectrum](./oracle-strength-spectrum.md) — contrasts: oracle strength names candidate selection quality, while diagnostic richness names proposal evidence quality
 - [Trace-learning techniques in related systems](../agent-memory-systems/trace-learning-techniques-in-related-systems.md) — evidenced-by: survey paragraph and Meta-Harness ablation ground the diagnostic-richness axis
 - [Ingest: Meta-Harness: End-to-End Optimization of Model Harnesses](../sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md) — evidenced-by: local digest of the paper and its diagnostic-richness synthesis opportunity
+- [Ingest: AutoSaddler: Automatic Harness Optimization with Durable Updates](../sources/autosaddler-automatic-harness-optimization-with-durable-updates.ingest.md) — evidenced-by: its GAIA2 diagnosis ablation bounds the claim to one code-and-trace-access treatment against one shallow-call treatment
 - [Meta-Harness](../agent-memory-systems/reviews/meta-harness.md) — exemplifies: its proposer reads prior results and traces from retained run files when forming and implementing candidate changes
 - [Agentic Harness Engineering](../agent-memory-systems/reviews/agentic-harness-engineering.md) — exemplifies: root-cause reports compress traces while keeping raw evidence available for audit
 - [HALO](../agent-memory-systems/reviews/halo.md) — exemplifies: bounded trace tools preserve drill-down from summaries and indexes to raw spans
