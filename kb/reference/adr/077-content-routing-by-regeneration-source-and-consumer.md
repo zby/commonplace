@@ -50,8 +50,9 @@ relevance decisions. That comparison is unmeasured, so it ranks no rows here.
 Independent of it, the choice among equally intent-serving designs, a
 world-side constraint particular to this project, a limit of applicability, and
 an arbitrary convention are contingent facts, not inferences: no interpreter
-strength derives them from an intent alone. The derivation is in
-`kb/work/documentation-disposition/`.
+strength derives them from an intent alone. The derivation was
+worked out in the documentation-disposition workshop, now closed; its retained
+form is the two notes in the footer.
 
 ## Decision
 
