@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [change-operations-catalogue](./change-operations-catalogue/README.md) — a working list of the operations by which Commonplace gets changed, each admitted by an observed instance, with the premises it must read and where they live; used to audit `kb/reference/` in both directions under ADR 074. Carries no completeness claim
 - [full-pass-recompute-cluster](./full-pass-recompute-cluster/README.md) — queued full improvement passes over the six recoverability/economics notes written 2026-08-22/23, in two dependency-ordered batches so a reframe in the first lands before the second reads its premises
 - [adr-routing](./adr-routing/README.md) — 71 ADRs, no index, and no instruction that routes a self-improvement run into them; the change loop is the only loop without an instruction, so the decisions that bind a change are consulted by luck. Shape is open: index, instruction, subsystem-keyed routing, or none of these
 - [source-grounding](./source-grounding/README.md) — what a source ingest must extract for subsumption and transfer to be determinable, which external sources are authoritative for claims this KB actually makes, and whether the graph needs a thin normalized-claim node between an ingest and a local delta note; starts from one hand-worked claim rather than the corpus, with a re-runnable grounding sweep recorded as a successor
