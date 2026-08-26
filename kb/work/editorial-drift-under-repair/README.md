@@ -15,7 +15,18 @@
 | v0 | 13:48 | `versions/v0-first-draft-cp-skill-write-13-48.md` | *Irreducibility to rules bounds text alone, not text plus an interpreter* — plus "Naur's thesis has an argued half and an assumed half", "in 1985 the candidate set was empty" | `cp-skill-write`, given the motivation below; wrote against the ingest's **five** retained quotes and judged them "sufficient" |
 | v1 | 14:36 (committed 14:41, `def1280a`) | `versions/v1-full-pass-reframe-def1280a.md` | *Naur's retained passages do not establish a human-only theory bearer* | full pass `20260826T115728Z-a18058`, disposition `keep (reframe)`: premise-decomposition GLOBAL defeat (halting-decider counterexample to the universal "irreducibility"), `semantic/grounding-alignment` FAIL (source-wide "assumed" claim from a quote subset), critique |
 | v2 | 15:22 (`4d707961`) | `versions/v2-defensive-trim-4d707961.md` | same | operator asked whether v1 had accumulated defensive talk; 969 → 677 words, same claims, each limit stated once |
-| v3 | ~16:30 (uncommitted at workshop creation) | `versions/v3-essay-level-rewrite.md` | *Naur binds program theory to humans through the premise that machines only follow rules* | operator: "argue about the full article, not retained passages"; full snapshot read; four `cp-skill-ground` runs (5 → 18 quotes); file relocated |
+| v3 | ~16:30 (committed `eac2b0b8`) | `versions/v3-essay-level-rewrite.md` | *Naur binds program theory to humans through the premise that machines only follow rules* | operator: "argue about the full article, not retained passages"; full snapshot read; four `cp-skill-ground` runs (5 → 18 quotes); file relocated |
+
+### Second cycle, same day
+
+| Step | Time | Artifact | Title-level claim | What moved it |
+|---|---|---|---|---|
+| v4 | ~17:40 | `versions/v4-second-pass-reframe.md` | *Naur's rule-inexpressibility argument does not by itself bind program theory to humans* | second full pass `20260826T140020Z-7c9e` on v3, disposition `keep (reframe)`: critique and premise gate defeated v3's "a trained interpreter falls outside Naur's partition" (an LLM *is* formal symbol manipulation on a computer; an induced decision tree is learned yet an explicit rule set), plus real grounding faults (universals over the essay, unsourced 1985 motive, "only personal advice repaired") |
+| v5 | ~18:10 | `versions/v5-bridge-as-equation.md` | *Naur binds program theory to humans by equating machine execution with formulated criteria* | operator review of the v4 packet: the defeat of v3 was correct, the repair retreated to a bare logical point ("needs an additional premise") plus a three-level taxonomy the closing gates found partly unused; the operator's correction — at the time, execution by machine meant formal interpretation of formulated rules, so the bridge was accurate for its day and trained recognizers *separated* execution from formulated criteria rather than falling outside a partition |
+
+**The twist in cycle 2.** The pass caught a genuine error in v3 *and* drifted: it replaced a wrong strong claim with a true weak one, and recorded the contribution as *strengthened* against its own reframed update. Both things are true at once, which is why "the gates found real defects" cannot be the test of whether a repair was right. The v5 claim is stronger than v3, v4, and v0, and it came from reading the objections against the motivation rather than against the incumbent text.
+
+Pass-2 evidence: `evidence/pass2-full-pass-report.md`, `evidence/pass2-initial/` (critique, friction, premises), `evidence/pass2-closing/` (same). One further `cp-skill-ground` run retained the section 6 program-life passage (19 quotes).
 
 **Motivation as stated before v0** (session discussion): Naur's thesis splits into an argued half — text cannot carry the application judgment a program's theory needs — and a second half, that only a person can hold it, which the operator did not accept. The intended note was about that second half. v3 is the first version that actually says what the motivation said, and it says it more strongly than v0 did: the human binding is *argued* in the essay, from an identifiable premise (machine = formal symbol manipulation = rule-following; §2, §5, §6, §8), and that premise is what a trained interpreter contests.
 
@@ -40,7 +51,7 @@ Candidate claim: **a repair loop that can narrow a claim but cannot extend its e
 - `evidence/full-pass-report.md` — the reconciled packet (warranted contribution, disposition, body edits, routed attention, gate table, closing cycle). Copied from the gitignored `kb/reports/full-pass/…/20260826T115728Z-a18058/`.
 - `evidence/initial/` — critique, friction, premises, compression bundle, and the `semantic/grounding-alignment` FAIL that drove the reframe.
 - `evidence/closing/` — closing critique (attack "partially lands": exegetical force of "someone"/"programmer", unsupported narrow reading of "rules"), friction, premises.
-- `versions/` — the four texts.
-- Git: `def1280a` (v1), `4d707961` (v2); v3 in the commit that adds this workshop.
+- `versions/` — the six texts, v0 through v5.
+- Git: `def1280a` (v1), `4d707961` (v2), `eac2b0b8` (v3); v4 was never committed; v5 in the commit that adds cycle 2.
 - Session: <https://claude.ai/code/session_017dDJmV15wVzPkVffW1eLEh> — the motivation discussion (Naur, Ryle's regress, the "only humans" objection), the v2 trim, the full-essay read, and the four grounding runs. The pass itself ran in a separate operator session.
 - `kb/log.md` FIX entry dated 2026-08-26 keyed on the pass id.
