@@ -40,3 +40,7 @@ The second edit is a guard on the gate's input rather than on the repair, and it
 ## What this adds
 
 Episodes one to four are about which narrowings of a defeated claim are honest; the fifth is about who can repair at all. This one shows the gate producing a false defeat, and the pattern is the same as the repair failure: the gate reads the text and its own counterexample, and the term's meaning sat in neither. Sharpening the antecedent — writing the definition the note had only in its author's head — is the repair Naur would predict and the one the bite rule now routes to.
+
+## Postscript (same day)
+
+The coherence audit ([`full-pass-instruction-coherence-audit`](../full-pass-instruction-coherence-audit/README.md), finding 4) showed the clause above contained its own loophole: "the missing definition is itself the answerable finding" lets an editor write the narrower antecedent after seeing the counterexample — the immunizing move the clause claimed to block. The clause was removed with the rest of in-pass reframing under ADR 080. Under the new procedure this episode's four defeats route the note to a pending `revise`; the equivocation judgment is made by the author reading the quoted counterexamples, which is where it was actually made here.
