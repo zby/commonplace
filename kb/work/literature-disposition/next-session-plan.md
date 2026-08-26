@@ -24,10 +24,10 @@ two workshop-level decisions then remain.
   `pass` outcomes in the `codex` partition.
 - The MOC repair is not yet a final disposition. Resume
   `kb/work/multistage/multistage-write-enforced-tag-readme-moc-20260826/`
-  from its `README.md`. At handoff it contains only `original.md` and
-  `brief.md`; reconstruction through acceptance, promotion, source-lineage
-  decision, validation, and workshop cleanup remain. Do not restart the run or
-  treat the committed candidate as accepted.
+  from its `README.md`. Its live checklist is authoritative because the run
+  may continue after this plan is committed. Do not restart the run or treat
+  the committed candidate as accepted until that checklist reaches acceptance,
+  promotion, source-lineage validation, and workshop cleanup.
 - The first four dated dispositions remain in [README.md](./README.md): Gödel
   machines, proposal selection, the Pirolli navigation premise, and end-to-end
   knowledge access.
