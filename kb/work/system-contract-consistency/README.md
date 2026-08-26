@@ -2,11 +2,15 @@
 
 **Opened:** 2026-07-29
 
-**Last recheck:** 2026-08-23
+**Last full recheck:** 2026-08-23
+
+**Last plan refresh:** 2026-08-27 (T1 tag semantics and navigation boundary)
 
 **State:** seven findings remain open; C1 and F1 were resolved on 2026-08-19,
 and S1 was resolved on 2026-08-23. Plans and outcomes are recorded in the
-[plan index](./plans/README.md)
+[plan index](./plans/README.md). T1's design was refreshed after a separate tag
+semantic contract and grounded search literature landed; implementation status
+is unchanged.
 
 **Scope:** current Commonplace contracts outside the linking and lineage
 domains
@@ -70,7 +74,7 @@ Priorities mean:
 | V1 | P0 | Both documented `all` procedures use `kb/*/COLLECTION.md`, while installed library collections are nested below `kb/commonplace/` | The normal completion path skips the shipped library | [Validate all](./plans/v1-validate-all.md) |
 | I3 | P1 | Generated routing treats sources/work as collections without contracts and treats contract-bearing `kb/types/` as not a collection | Read-before-write is impossible at two routed destinations and discovery excludes a real collection | [Installed topology](./plans/i3-installed-topology.md) |
 | S1 | P1 | **Resolved 2026-08-23:** the tracked ingest owns durable `genre`; a local snapshot's optional genre is provisional and its bytes remain immutable after capture | ADR 072 removes the mutation exception and aligns the collection, types, and ingest write boundary | [Completed outcome](./plans/s1-snapshot-mutation-boundary.md) |
-| T1 | P1 | Tag coverage is stated and routed beyond one collection but generated and checked within one collection | A validated mark can falsely license a reader to stop searching | [Tag scope](./plans/t1-tag-scope.md) |
+| T1 | P1 | Tag coverage is stated and routed beyond one collection but generated and checked within one collection | A validated mark can falsely license a reader to skip the exact membership query that would expose omissions | [Tag scope](./plans/t1-tag-scope.md) |
 | E1 | P1 | Native Windows is supported, but promoted skills retain unpaired POSIX-only commands | Selected recovery and authoring procedures are non-operative on a declared channel | [Windows execution](./plans/e1-windows-execution.md) |
 | F1 | P1 | **Resolved 2026-08-19:** the unsupported generic accept entry point, transition, schema, and current-facing claims were withdrawn | ADR 065 requires a concrete non-review target before the surface can return | [Completed outcome](./plans/f1-freshness-accept.md) |
 | M1 | P2 | Three accepted representation migrations retain live guidance; the text-promotion and snapshot-pointer packets closed on 2026-08-19 | Agents can still author schema-invalid or semantically retired artifacts from current docs | [Migration residue](./plans/m1-migration-residue.md) |
@@ -237,7 +241,9 @@ contract rather than revive the old exception.
 
 The active [tag-scope
 proposal](../../reference/proposals/tag-scope-is-declared-where-membership-claims-are-made.md)
-remains unadopted. The [tag-readme type](../../types/tag-readme.md) and current
+and the newer [semantic contract for tags and tag
+heads](../../reference/proposals/semantic-contract-for-tags-and-tag-heads.md)
+remain unadopted. The [tag-readme type](../../types/tag-readme.md) and current
 routing use unqualified “every note” language across collection-facing
 surfaces, while generation and validation index one collection.
 
@@ -247,24 +253,57 @@ which carries `learning-theory` but none of the six children declared by the
 notes collection's
 [learning-theory-README.md](../../notes/learning-theory-README.md). Its
 `covered_by` claim is therefore false at cross-collection scope while validation
-passes because it checks only notes.
+passes because it checks only notes. Under the proposed participating set, the
+live reference proposal omitted by the `artifact-analysis` head is the second
+violation.
 
-The proposal has since converged on a different resolution: one namespace per
-KB root, with membership claims ranging over the root's explicitly
-participating library collections in the concrete projection. A shared resolver
-must drive validation, generated augmentation, connect, recipes, and every skip
-rule. Host and vendored KB roots remain independent, and shared `kb/types/`
-admits no tags because it has no single root owner.
+The selected scope remains one namespace per KB root, with membership claims
+ranging over explicitly participating library collections in the concrete
+projection. A shared resolver drives validation, generated augmentation,
+connect, recipes, and every exact-membership skip rule. Host and vendored roots
+remain independent, and shared `kb/types/` admits no tags because it has no
+single root owner.
 
-Under that proposed scope, two live violations remain: the external
-`learning-theory` member above, and the live reference proposal omitted by the
-`artifact-analysis` head. The plan also moves the 20 existing per-tag heads to
-canonical `kb/tags/` paths and adds a twenty-first `trace-learning` head. That
-tag remains the source for website navigation and the derived matrix Boolean,
-with the review contract enforcing its evidence requirements. Redundant
-source-family tags are removed, and source and installed projection fixtures
-guard the boundary. The design remains unadopted and current behavior remains
-collection-scoped until the ADR and coordinated implementation land.
+The semantic contract now states what the mechanism means. Assigning a tag
+asserts that an artifact belongs to a reusable candidate set for a recurring
+information need. It does not assert that every query should load every member.
+The resolver recovers exact membership; a canonical head supplies stable
+definition and contextual routing; task-level search may find relevant material
+outside one tag or rank its members for the current query. A `complete` or
+`covered_by` mark may license skipping only the exact membership operation it
+replaces. It cannot certify that broader discovery is complete.
+
+The grounded navigation corpus now bounds that distinction. [Pirolli's
+information-foraging account](../../sources/pirolli-proximal-information-scent-distal-content.ingest.md)
+models selection of unseen content from proximal cues. [Teevan and
+colleagues](../../sources/teevan-perfect-search-engine-orienteering.ingest.md)
+observed human searchers combining contextual local steps with direct jumps.
+[Tombros and
+Sanderson](../../sources/tombros-sanderson-query-biased-summaries.ingest.md)
+found better human relevance judgments from query-biased summaries than from a
+static surrogate. [Milo's contextual-map account](../../sources/nick-milo-mocs-definition.ingest.md)
+and the [Luhmann Archive's selective-entry-point
+record](../../sources/luhmann-archive-schlagwortregister.ingest.md) separately
+bound the curated-head comparison. These are human, practitioner, and
+historical sources. They motivate an agent-side comparison but do not establish
+LLM behavior or choose a resolver presentation.
+
+The implementation plan still moves the 20 existing per-tag heads to canonical
+`kb/tags/` paths and adds a twenty-first `trace-learning` head. That tag remains
+the source for website navigation and the derived matrix Boolean, with the
+review contract enforcing its evidence requirements. Redundant source-family
+tags are removed, and source and installed projection fixtures guard the
+boundary. The combined adopting ADR must also settle the semantic proposal's
+head, provisional-vocabulary, reuse-check, tag-relation, and result-presentation
+choices.
+
+No T1 implementation has landed: no adopting ADR, shared resolver,
+participation declarations, `kb/tags/` collection, canonical-head relocation,
+or consumer migration exists. T1 still consumes I3's root and collection
+topology, I2's installed bundle, I1's upgrade semantics, and V1's truthful full
+check. Its [refreshed plan](./plans/t1-tag-scope.md) treats an agent navigation
+trial as follow-up evidence rather than a structural closure gate unless the
+future ADR claims a retrieval-performance improvement.
 
 ## E1 — Native Windows support and promoted procedures disagree
 
@@ -361,7 +400,10 @@ projections retained the old contract.
 
 “Every tagged note,” “all collections,” and “supported on Windows” are scope
 claims. Validator, glob, site hook, and promoted procedure each select their
-own set rather than consuming a shared declaration.
+own set rather than consuming a shared declaration. T1 also showed that an
+exact membership shortcut and a task-level discovery stop are different
+permissions; using “search” for both hides the boundary the mark actually
+checks.
 
 ### 4. Presence is mistaken for capability
 
@@ -386,9 +428,12 @@ presence, not that any legal invocation or supported execution channel works.
    enumeration, retain orphan-type and top-level-landing coverage, and replace
    the shell loop.
 6. **Land the other repairs.** T1 consumes the settled I3/I2/I1 product boundary
-   and V1's truthful full check, then precedes M1's areas packet. E1 also
-   consumes V1 and remains with the execution-channel workshop. I3 must copy
-   S1's resolved source contract into the installed sources template.
+   and V1's truthful full check. Its adopting ADR reconciles the scope and
+   semantic proposals, limits marks to exact-membership shortcuts, and keeps
+   contextual head traversal distinct from task-level search. T1 then precedes
+   M1's areas packet. E1 also consumes V1 and remains with the
+   execution-channel workshop. I3 must copy S1's resolved source contract into
+   the installed sources template.
 7. **Finish the M1 sweep and cheap drift guards.** Retain focused parity and
    lexical checks at the boundaries that drifted.
 

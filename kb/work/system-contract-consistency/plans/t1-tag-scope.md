@@ -1,26 +1,39 @@
 # T1 plan — Align tag membership claims at the KB-root boundary
 
-**State:** open; refreshed 2026-08-21 against the converged but unadopted
-[tag-scope proposal](../../../reference/proposals/tag-scope-is-declared-where-membership-claims-are-made.md).
-The current validator, generated listing, routing, recipes, and mark wording
-still select incompatible membership sets. No adoption implementation has
-landed.
+**State:** open; refreshed 2026-08-27 against the converged but unadopted
+[tag-scope proposal](../../../reference/proposals/tag-scope-is-declared-where-membership-claims-are-made.md),
+the newer [semantic contract](../../../reference/proposals/semantic-contract-for-tags-and-tag-heads.md),
+and the grounded navigation literature they now cite. The current validator,
+generated listing, routing, recipes, and mark wording still select incompatible
+membership sets. No adoption implementation has landed.
 
 ## Resolution selected
 
 Adopt one tag namespace per KB root. A tag string has one sense throughout its
-KB, while every exhaustive membership claim ranges over the root's explicitly
-participating library collections in the concrete projection being read. A
-`complete` or `covered_by` mark licenses skipping only that resolved membership
-set. It grants no skip right across another KB root.
+KB. Assigning it to an artifact asserts membership in a reusable semantic
+candidate set. Every
+exhaustive membership claim ranges over the root's explicitly participating
+library collections in the concrete projection being read. A `complete` or
+`covered_by` mark licenses skipping only exact resolution of that membership
+set. It grants no skip right across another KB root and no right to stop
+task-level search.
 
 Every root-owned collection declares `participating` or `non-participating` in
 its `COLLECTION.md`. Shared `kb/types/` declares tags prohibited because it has
 no single KB owner. Missing participation state fails validation. A pure,
 root-aware resolver supplies the same membership set to validation, published
 tag-page augmentation, `cp-skill-connect`, operator recipes, and every skip
-rule. A cross-KB search explicitly unions independently resolved sets without
-combining their marks.
+rule. A cross-KB membership query explicitly unions independently resolved sets
+without combining their marks.
+
+Keep three navigation operations distinct. The resolver answers which eligible
+artifacts carry a tag. A canonical head supplies stable definition and
+contextual local routing. Task-level search may recover artifacts outside that
+tag or rank members for the current query. [Link-following and
+search](../../../notes/link-following-and-search-impose-different-metadata-requirements.md)
+and [pointer design](../../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md)
+ground this distinction in bounded human evidence and local agent-facing
+inference; they do not establish an LLM performance result.
 
 Per-tag heads move to canonical `kb/tags/<tag>-README.md` paths in the adopting
 change. The filename supplies tag identity; `index_source: tag`, `index_key`,
@@ -49,37 +62,47 @@ a competing topology:
 - V1 supplies the truthful full-validation path used by final source and
   initialized-project checks.
 
-Before implementation, the adopting ADR must also settle the proposal's
-remaining free choices: declaration syntax, resolver command interface, the
-six projection-sensitive head links, footer behavior for non-participating
-layers, treatment of remaining source topic tags, and whether the known-tags
-registry rider lands now or separately.
+Before implementation, the adopting ADR must reconcile both proposals and
+settle their remaining free choices: when heads become mandatory, where
+provisional tags may live, how semantic reuse is checked, whether more tag
+relations are needed, how resolver results are presented, declaration syntax,
+the six projection-sensitive head links, footer behavior for
+non-participating layers, treatment of remaining source topic tags, and whether
+the known-tags registry rider lands now or separately.
 
 ## Work
 
 1. **Record the combined decision.** Add an ADR that defines the KB-root
-   namespace, tag-token grammar, explicit participation states, projection-
-   relative membership, mark skip right, canonical head identity, the retained
+   namespace, semantic membership predicate, tag-token grammar, explicit
+   participation states, projection-relative membership, membership-only mark
+   skip right, canonical head identity and routing prefix, the retained
    `trace-learning` facet, redundant source-family tag removal, and its
-   relationship to ADRs 025 and 026. Keep the proposal live until the
-   implementation passes.
+   relationship to ADRs 025 and 026. Name exact membership recovery, contextual
+   head traversal, and task-level search as distinct operations. Keep both
+   proposals live until the implementation passes.
 2. **Build one membership resolver.** Discover participating collections for
    one KB root, prune embedded foreign KBs, apply declared exclusions and
    artifact-visibility rules, and expose a by-tag operator command. Make absent
    declarations and tags on shared tag-prohibited artifacts validation errors.
+   Keep the exact result independent of its path-only, fixed-description, or
+   query-conditioned presentation; settle the CLI default in the ADR.
    Treat every membership-affecting declaration as an all-head invalidation
    input; require whole-tag-collection validation for collection creation,
    deletion, or relocation.
 3. **Make every consumer use the resolver.** Replace independent membership
    logic in mark validation and impact expansion, ProperDocs generated
    augmentation, `cp-skill-connect`, `AGENTS.md` and `navigation.md` recipes,
-   and every mark-based skip rule. ProperDocs resolves a tag directly to the
-   declaring root's canonical head and renders plain text when none exists.
+   and every mark-based exact-membership skip rule. State at each consumer that
+   no mark licenses stopping broader task discovery. ProperDocs resolves a tag
+   directly to the declaring root's canonical head and renders plain text when
+   none exists.
 4. **Install the authoring contracts.** Add participation state to every
    discovered source and scaffold collection; enforce one-string-one-sense and
    the tag-token grammar in root instructions and schemas; prohibit tags in
    shared `kb/types/`; and add the `kb/tags/` collection contract with its
-   introduction quality goal and cross-library link grammar.
+   introduction quality goal, common meaning/use/boundary/route/stopping prefix,
+   and cross-library link grammar. Say explicitly that fixed head cues are not
+   query-relative relevance judgments.
 5. **Preserve navigational classification and remove redundant provenance.**
    Keep `trace-learning` in `tags:` and keep `systems_matrix.py` deriving its
    Boolean from that tag. Make the review schema, type, template, writing skill,
@@ -117,10 +140,33 @@ registry rider lands now or separately.
    tests pass, annotate ADR 026 forward, archive the adopted proposal through
    the normal proposal lifecycle, and update this workshop's T1 outcome.
 
+## Evidence boundary and follow-up
+
+The recent [Pirolli](../../../sources/pirolli-proximal-information-scent-distal-content.ingest.md),
+[Teevan](../../../sources/teevan-perfect-search-engine-orienteering.ingest.md),
+and [Tombros–Sanderson](../../../sources/tombros-sanderson-query-biased-summaries.ingest.md)
+sources concern human information seeking. They support the structural
+distinction among proximal cues, contextual local navigation, and
+query-conditioned results. They do not show which interface helps an LLM
+agent, so T1 must not claim a retrieval performance improvement as part of
+structural adoption.
+
+After the resolver and canonical heads exist, a bounded agent trial can compare
+an exact membership listing, a curated head, and query-conditioned result
+pointers. Measure membership recovery and task-relevant discovery separately,
+then record wrong opens, full-artifact reads, tool calls or context cost, task
+outcome, and false stopping. This trial is follow-up evidence, not a T1 closure
+gate unless the adopting ADR makes a performance claim.
+
 ## Verification
 
 - Resolver, validator, ProperDocs, connect, recipes, and skip rules return or
   consume the same projection-relative membership set.
+- Every `complete` and `covered_by` shortcut is stated and tested as an exact
+  membership shortcut; no mark suppresses task-level search or claims that a
+  tag exhausts the current information need.
+- Exact resolver output remains separable from fixed or query-conditioned
+  presentation, so a later navigation trial cannot change tag semantics.
 - Every discovered collection in both the source checkout and initialized
   fixture has an explicit valid participation state; shared `kb/types/` rejects
   tags, and an embedded KB never enters its host's membership.
@@ -145,7 +191,7 @@ registry rider lands now or separately.
   scaffold, upgrade, and matrix tests pass, followed by the full test suite,
   lint, relevant `commonplace-validate` runs, and a site build.
 
-T1 closes when the ADR and its full adoption criteria are implemented, the
-proposal is archived, every stated skip right equals the resolver's exact
-membership set, and no route presents a tag page that omits an eligible source
-artifact.
+T1 closes when the ADR and its full adoption criteria are implemented, both
+proposals are archived, every stated skip right equals the resolver's exact
+membership set, no mark implies task-level discovery completeness, and no route
+presents a tag page that omits an eligible source artifact.

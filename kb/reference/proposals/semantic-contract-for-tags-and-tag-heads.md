@@ -2,6 +2,7 @@
 description: "Proposal: define tags as KB-wide semantic membership predicates and tag heads as canonical definition and bounded-context routing surfaces"
 type: kb/reference/types/design-proposal.md
 tags: [tags]
+traits: [has-external-sources]
 ---
 
 # Semantic contract for tags and tag heads
@@ -13,7 +14,7 @@ the same classification. This proposal isolates that contract from the wider
 tag-scope and migration design. It leaves the remaining policy choices explicit
 rather than presenting the contract as shipped behavior.
 
-## Current state (as of 2026-08-24)
+## Current state (as of 2026-08-27)
 
 The shared `tags` field accepts free-form strings. [ADR 026](../adr/026-tag-readme-type-with-completeness-and-coverage-marks.md)
 defines curated tag heads and the `complete` and `covered_by` marks, but it
@@ -27,6 +28,19 @@ paths, and a shared resolver. This proposal states the semantic contract that
 those mechanisms would implement. Neither proposal describes the current
 system.
 
+Recent grounded navigation work now supplies a bounded evidence boundary for
+the routing half of the design. [Pirolli's information-foraging
+account](../../sources/pirolli-proximal-information-scent-distal-content.ingest.md)
+models selection of unseen content from proximal cues; [Teevan and
+colleagues](../../sources/teevan-perfect-search-engine-orienteering.ingest.md)
+observed human searchers combining contextual local steps with direct jumps;
+and [Tombros and
+Sanderson](../../sources/tombros-sanderson-query-biased-summaries.ingest.md)
+found better human relevance judgments from query-biased summaries than from a
+static surrogate. These sources distinguish navigation problems and motivate
+agent-side tests. They do not establish LLM-agent behavior or choose a tag
+interface.
+
 ## Forces
 
 - A tag must be precise enough that writers, readers, and deterministic
@@ -35,6 +49,12 @@ system.
   without letting a tag's meaning vary.
 - Curated routing must save bounded-context work without becoming the only way
   to recover membership.
+- Exact tag membership, contextual head traversal, and task-level search answer
+  different questions; a guarantee about one must not silently authorize
+  stopping another.
+- A retained head supplies stable and authored cues, while a query-time result
+  can condition its cue on the current task. The design must preserve both
+  options without making an untested agent-performance claim.
 - Stable vocabulary needs a discoverable boundary and reuse rule, but
   exploratory work must be able to try provisional classifications cheaply.
 - Tag relationships may improve routing without constituting a taxonomy.
@@ -52,11 +72,17 @@ M_{K,P}(t)
 
 be the artifacts in the resolved projection that satisfy the predicate represented by \(t\).
 
-Tagging an artifact with `t` asserts that the artifact belongs to this set. A tag is therefore stronger than a search keyword: it is a maintained semantic claim that this artifact is a plausible direct candidate when retrieving knowledge about the concept represented by the tag.
+Tagging an artifact with `t` asserts that the artifact belongs to this set. A
+tag is therefore stronger than a search keyword: it is a maintained semantic
+claim that the artifact is a plausible candidate for at least one recurring
+information need represented by the tag. Membership does not assert that every
+query about the tag should load every member.
 
 A useful operational test is:
 
-> Would an agent asking a recurring question represented by this tag plausibly want this artifact among its direct retrieval candidates?
+> Would an agent pursuing at least one recurring information need named by this
+> tag plausibly need this artifact considered before route- or query-specific
+> selection?
 
 Mentioning a concept is not sufficient for membership.
 
@@ -95,7 +121,13 @@ The remainder of the head may take whatever form best represents the area: a fla
 
 Uniform routing does not require uniform exposition.
 
-### Completeness licenses skipping search
+The prefix is a stable pointer, not a relevance oracle. The [proximal-cue
+account](../../notes/agents-navigate-by-deciding-what-to-read-next.md) explains
+why meaning, use conditions, boundaries, and context phrases can help a reader
+judge unseen destinations. Their usefulness remains relative to a task and
+consumer, and structural validation cannot establish their editorial quality.
+
+### Completeness licenses skipping membership resolution
 
 By default a tag head is selective. An agent requiring exhaustive membership must fall back to the shared tag-membership resolver.
 
@@ -107,9 +139,15 @@ M_{K,P}(t) \subseteq links(head(t))
 
 for the projection against which the head is being consumed.
 
-This is an operational claim, not editorial prose: it licenses the reader to skip fallback membership search. It therefore must be mechanically checked wherever it is relied upon.
+This is an operational claim, not editorial prose: it licenses the reader to
+skip fallback resolution of `M_{K,P}(t)`. It therefore must be mechanically
+checked wherever it is relied upon.
 
 Without an enforced completeness mark, omission from a tag head does not imply non-membership.
+
+Even a valid mark says nothing about artifacts outside the tag that may matter
+to the current task. It cannot license stopping task-level search or establish
+that the tag's predicate captures the whole information need.
 
 ### Coverage is a routing relation, not necessarily a taxonomy
 
@@ -160,15 +198,32 @@ A machine-specific classification that only partially overlaps a navigation conc
 
 A tag must not silently acquire a second meaning merely because code consumes it.
 
-### Search is the recovery layer
+### Membership recovery, head traversal, and search remain distinct
 
-Curated tag navigation optimizes common retrieval paths; it does not replace search.
+The shared membership resolver is authoritative for recovering the eligible
+members of a tag in a projection. It answers an exact classification question,
+not which artifacts best answer the current task.
 
-The shared membership resolver remains authoritative for recovering the eligible members of a tag in a projection.
+A tag head is a contextual local-navigation surface over that recoverable set.
+Its groupings and context phrases can support a sequence of informed next-read
+decisions. [Teevan and colleagues' human study](../../sources/teevan-perfect-search-engine-orienteering.ingest.md)
+shows that contextual local steps and direct jumps can serve different
+information-seeking paths, while withholding any claim that LLM agents prefer
+the same strategy.
 
-Failure or staleness of a curated route should therefore cost an additional search, not make eligible knowledge unreachable.
+Task-level search is the complementary long-range route. It may recover
+relevant artifacts outside one tag or rank members for a narrower query.
+[Tombros and Sanderson's human experiment](../../sources/tombros-sanderson-query-biased-summaries.ingest.md)
+supports testing query-conditioned result pointers rather than assuming that a
+fixed head or description is sufficient. It does not warrant a required
+agent-facing summarizer.
 
-This gives tag heads a bounded role: they are precomputed semantic routing surfaces over a recoverable underlying membership relation.
+Failure or staleness of a curated head must therefore leave exact membership
+recoverable through the resolver. Task discovery may still require search even
+when the head is complete. The [end-to-end access
+account](../../notes/knowledge-access-architecture-must-be-evaluated-end-to-end.md)
+also prevents successful membership recovery from standing in for useful
+selection, loading, uptake, or task success.
 
 ## Free choices
 
@@ -190,6 +245,11 @@ This gives tag heads a bounded role: they are precomputed semantic routing surfa
 - **How tag relations are represented.** `covered_by` supplies one routing
   relation. Additional subtype or overlap metadata should be introduced only
   if a recurring consumer needs it.
+- **How resolver results are presented.** Exact membership is fixed by the
+  resolver, but its agent-facing view may expose path/title/description records
+  or add query-conditioned ranking and summaries. The human evidence motivates
+  preserving this comparison; an agent trial, not the source analogy, must
+  choose between presentations.
 
 ## Operativity
 
@@ -200,7 +260,7 @@ This gives tag heads a bounded role: they are precomputed semantic routing surfa
   routing prefix and the meanings of `complete` and `covered_by`.
 - The shared resolver, validator, and documentation build would compute one
   projection-relative membership relation and enforce every claim that licenses
-  skipping search.
+  skipping membership resolution.
 - The write path would consult the stable vocabulary when assigning tags and
   route new stable predicates through the chosen head or registry policy.
 - Type-local validators and deterministic consumers would enforce parity when
@@ -220,6 +280,11 @@ as current guarantees.
   reuse check are decided and enforced consistently.
 - Tag heads expose meaning, use condition, boundary, route, and stopping rule
   cheaply enough for the write and read paths to use them.
+- Every stopping shortcut is limited to exact tag-membership recovery; no mark
+  is presented as evidence that task-level discovery is complete.
+- Resolver output keeps exact membership separate from any fixed or
+  query-conditioned presentation so those pointer strategies can be evaluated
+  without changing tag semantics.
 - Every deterministic consumer either uses exactly the navigation predicate or
   moves its classification to a typed field or explicit derived relation.
 - Existing tag uses are audited against the adopted predicates, including
@@ -247,3 +312,6 @@ as current guarantees.
 
 - [Tag scope is declared where membership claims are made](./tag-scope-is-declared-where-membership-claims-are-made.md) — part-of: owns the KB-root, projection, resolver, canonical-path, and migration machinery this semantic contract assumes
 - [Write-time vocabulary collision controls](./write-time-vocabulary-collision-controls.md) — see-also: supplies candidate registry and write-time mechanisms for enforcing one-string-one-sense
+- [Link-following and search impose different metadata requirements](../../notes/link-following-and-search-impose-different-metadata-requirements.md) — rests-on: distinguishes contextual local navigation from long-range selection without treating the tool invoked as the strategy
+- [Pointer design tradeoffs in progressive disclosure](../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md) — rests-on: separates fixed, query-time, and authored pointers by specificity, cost, availability, and accuracy
+- [An enforced tag-README combines a MOC pattern with checked membership](../../notes/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md) — rests-on: separates editorial mapping from the exact checked relation that authorizes a membership shortcut

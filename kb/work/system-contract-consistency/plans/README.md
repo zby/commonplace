@@ -1,10 +1,12 @@
 # Resolution plans
 
 These are implementation plans and completed outcomes for the ten
-contradictions rechecked on 2026-08-19. They are workshop state, not new system
-authority. Each open plan names the durable contracts, code, tests, or owner
-workshop that must absorb its outcome before the finding can close; completed
-outcomes record the guard that keeps a closed contradiction from recurring.
+contradictions rechecked on 2026-08-19. T1 was refreshed on 2026-08-27 after
+the tag semantic contract and grounded search literature supplied a sharper
+navigation boundary. These files are workshop state, not new system authority.
+Each open plan names the durable contracts, code, tests, or owner workshop that
+must absorb its outcome before the finding can close; completed outcomes record
+the guard that keeps a closed contradiction from recurring.
 
 | Finding | Recommended resolution | Plan |
 |---|---|---|
@@ -13,7 +15,7 @@ outcomes record the guard that keeps a closed contradiction from recurring.
 | V1 | Make `commonplace-validate all` the one recursive, non-fail-fast full-validation path | [Validate all](./v1-validate-all.md) |
 | I3 | Scaffold contracts for every routed writable collection and classify `kb/types/` consistently | [Installed topology](./i3-installed-topology.md) |
 | S1 | **Resolved 2026-08-23:** make the tracked ingest authoritative for genre and keep local snapshots whole-file immutable | [Completed outcome](./s1-snapshot-mutation-boundary.md) |
-| T1 | Resolve tag membership per KB root across explicitly participating library collections and give heads canonical `kb/tags/` paths | [Tag scope](./t1-tag-scope.md) |
+| T1 | Define KB-wide semantic membership, resolve it per root and projection, limit marks to membership shortcuts, and give heads canonical `kb/tags/` paths | [Tag scope](./t1-tag-scope.md) |
 | E1 | Retain native Windows support and remove or pair every channel-specific promoted procedure | [Windows execution](./e1-windows-execution.md) |
 | F1 | **Resolved 2026-08-19:** unsupported generic freshness acceptance was withdrawn until a real non-review target exists | [Completed outcome](./f1-freshness-accept.md) |
 | M1 | Complete the three remaining migration-residue packets; text promotion and the snapshot pointer are resolved and guarded | [Migration residue](./m1-migration-residue.md) |
@@ -37,9 +39,11 @@ outcomes record the guard that keeps a closed contradiction from recurring.
    command-parity guard.
 5. **Finish tag and channel owner work:** after I3, I2, and I1 settle the
    installed-product boundary, T1 consumes that boundary and V1's truthful full
-   check; T1 then precedes the areas packet of M1. E1 also consumes V1, remains
-   owned by the execution-channel workshop, and must include a native-Windows
-   evidence run.
+   check. Its adopting ADR must reconcile the scope and semantic proposals,
+   distinguish exact membership recovery from head traversal and task-level
+   search, and avoid claiming untested agent retrieval gains. T1 then precedes
+   the areas packet of M1. E1 also consumes V1, remains owned by the
+   execution-channel workshop, and must include a native-Windows evidence run.
 6. **Sweep representation residue:** run the M1 packets after their governing
    contracts are settled, then retain narrow guards against reintroducing the
    retired executable examples.
