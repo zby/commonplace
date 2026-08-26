@@ -1,53 +1,59 @@
 ---
-description: "Tag-READMEs inherit the Zettelkasten/LYT Map-of-Content tradition; the complete/covered_by marks add a completeness contract human PKM never made — humans neither needed nor could cheaply enforce it"
+description: "Explains how Commonplace combines Milo's grouped-link MOC pattern with validator-enforced completeness while treating Luhmann's non-exhaustive registers as a separate bounded analogue"
 type: kb/types/note.md
-traits: [title-as-claim]
+traits: [title-as-claim, has-external-sources]
 tags: [kb-maintenance, document-system]
 ---
 
 # An enforced tag-README is a MOC with a machine-checked contract
 
-A tag-README is a Map of Content wearing a validator. Strip the marks and what remains is an ordinary MOC in the sense human personal-knowledge-management already had: a curated hub note that orients a reader through a topic with editorial links and context phrases rather than an exhaustive listing. The `complete`/`covered_by` marks (the mark contract lives in the [`tag-readme` type spec](../types/tag-readme.md)) add one thing on top, and it is the one thing the tradition never supplied: a machine-checked claim that the map's membership is exhaustive, or that its children cover it. The general form is old plus new — an inherited curated hub, plus a completeness contract the hub never carried.
+A tag-README is a Map of Content wearing a validator. In Nick Milo's stated sense, a MOC maps things in context and can take the form of a note whose links are clustered into groups. A Commonplace tag-README fits that positive description: its groupings and context phrases orient a reader through a topic. The `complete` and `covered_by` marks add machine-checked membership and coverage claims. The result is an inherited grouped-link map plus a local contract, not a claim that every MOC has the same structure or maintenance policy.
 
-## The inherited half is pure MOC
+The mark contract lives in the [`tag-readme` type spec](../types/tag-readme.md). `complete: true` says the curated README links every note carrying the tag. `covered_by` says every note carrying the parent tag also carries at least one listed child tag. Both are recomputable claims about membership. Neither says that the grouping, ordering, or explanation is editorially adequate.
 
-The curated-hub idea is not a Commonplace invention. Luhmann's Zettelkasten had structure and hub notes — entry-point cards that gathered a line of thought and pointed into the slip-box; Nick Milo's Linking Your Thinking (LYT) named the pattern a Map of Content: a note whose body is a curated, annotated set of links into a topic. A tag-README is exactly this artifact — the orientation paragraph plus selective picks with context phrases — and it inherits the tradition's core commitment that [index completeness does not determine editorial orientation](./index-completeness-does-not-determine-editorial-orientation.md). Its groupings and context phrases are editorial judgments about role. A person or model can draft them, but exhaustive membership does not establish which judgments the map should adopt.
+## The sources establish two bounded historical comparisons
 
-## Why the tradition never contracted completeness
+[Milo defines a MOC](../sources/nick-milo-mocs-definition.ingest.md) as a cluster that maps things in context, helps gather, develop, and navigate ideas, and may be a digital note whose links are clustered into groups. This supports the grouped-link orientation half of the comparison. It does not establish that every MOC is annotated or selective, that a tag-README is exactly equivalent to every MOC, or that MOC practitioners never promise completeness.
 
-A MOC in human PKM is *selective by design*, and no Zettelkasten or LYT practitioner writes "this map lists every note on the topic" as an enforced promise. That silence was not an oversight. Two independent conditions had to hold before completeness was worth asserting, and human PKM failed both — which is why the claim never appeared.
+The [Niklas Luhmann Archive](../sources/luhmann-archive-schlagwortregister.ingest.md) describes Luhmann's own keyword registers separately. It says those registers made no claim to complete term locations and named only the relevant entry points into the collection. This is evidence about Luhmann's registers, not evidence that the registers were MOCs or that all Zettelkasten and PKM practice rejects completeness claims.
 
-**The human reader didn't need it.** A person who reaches an incomplete MOC degrades gracefully: she keeps browsing, runs a search, recalls a note the map omits. The map orients but does not bound her — its incompleteness costs a little friction, not invisibility. So there was no reader demand for a completeness guarantee; the map was a starting point, never an authority on what exists.
+These sources therefore do not support the stronger historical story that human PKM lacked completeness contracts because readers never needed them or maintainers could never afford them. The defensible inheritance claim is positive and narrower: Milo supplies a grouped-link mapping pattern, while Luhmann supplies a distinct example of non-exhaustive entry-point navigation.
 
-**The human maintainer couldn't cheaply supply it.** Verifying that a MOC lists every note on its topic means re-scanning the whole corpus against the map by hand — an expensive, error-prone audit that goes stale on the next note written. Even a practitioner who wanted the guarantee couldn't stand behind it at a price worth paying. A completeness claim a human can't recheck is exactly the hand-maintained-and-trusted copy that [a derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) forbids — so the disciplined move was to not make the claim.
+## Commonplace adds a useful and enforceable stopping rule
 
-## Both conditions flip for the agent consumer, together
+The machine-checked delta follows from Commonplace's own routing semantics. An LLM reader may use `complete: true` as a stopping rule and skip a fallback by-tag search. [Indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md), so that shortcut is safe only while the membership claim remains true. Without the mark, the reader cannot treat the curated head as exhaustive.
 
-This is an instance of the general point that [human–LLM differences are load-bearing for knowledge-system design](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md): the consumer changed, and the same artifact acquires a contract it never had. What makes the tag-README case sharp is that *both* conditions reverse at once, and in the direction that makes the contract both necessary and achievable.
+The same system can recheck the claim mechanically. Validation compares the README's links with current tag membership and rejects a stale mark. Since [a derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md), this enforced-or-omitted design avoids asking a model to trust an unchecked completeness claim.
 
-**The agent reader needs the claim.** An LLM reader can use an explicit completeness signal as a stopping rule. [Indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md): if an agent treats a curated head as exhaustive and skips the by-tag sweep, a missing note lowers recall along that route even though other routes may still find it. So completeness stops being a nicety and becomes information the reader must have: `complete: true` is precisely the signal that tells the agent it may skip the by-tag sweep, and the absence of the mark tells it it may not. The reader now demands the guarantee the human reader could do without.
+Both parts matter to this local design. A cheap check without a consumer-visible stopping rule guards a promise nobody uses. A useful stopping rule without enforcement creates a stale trusted cache. This joint-necessity argument explains why Commonplace adds the marks; it does not claim that the same need or enforcement cost holds for every human knowledge system.
 
-**The agent maintainer can supply it cheaply.** The audit a human couldn't afford is, for a machine, a scoped `rg` sweep re-derived on every validation pass — detection and verification collapse into one near-zero-cost step, so the check that was prohibitively expensive by hand is free in code. This is the same economics that make a [validated cache worth materializing for a model reader](./llm-recompute-cost-inverts-the-store-vs-recompute-default.md): the recompute is what's dear, so a checked derived value pays. The maintainer can now stand behind the claim the human maintainer couldn't.
+## The contract stops at membership
 
-The co-arrival is the whole point. Human PKM lacked the contract because *both* the need and the means were absent — and their absence was consistent, so leaving the claim unmade was correct, not lazy. Agent KBs get the contract because both the need and the means appear together — the reader can't recover from a stale map *and* a validator can keep the map non-stale for free. Neither condition alone would produce the mark: a need without cheap enforcement leaves you with the forbidden hand-maintained claim; cheap enforcement without a need leaves a validator guarding a guarantee no reader uses.
+The validator checks set membership and child coverage. It cannot establish which topics deserve emphasis, which notes should be read first, or whether a context phrase explains a note's role well. Those remain editorial judgments. Milo's MOC definition supplies a useful model for grouped-link orientation, while Commonplace's marks constrain only the recomputable dimension beside it.
 
-## What is and isn't under contract
+An enforced tag-README is therefore a MOC with a machine-checked contract in this precise sense: the artifact combines a grouped contextual map with explicit, validated membership claims. The sources identify the inherited patterns. The local argument identifies the added contract and its consumer.
 
-The contract lands on exactly the mechanically-checkable half and nowhere else. `complete` checks set membership; `covered_by` checks that the children cover the parent. The map's orientation value — the groupings, the "start here" ordering, the context phrase that says *why* a note matters — stays editorial, un-contracted, and inherited wholesale from the MOC tradition. A generator may draft or render that layer, but completeness validation cannot establish its semantic adequacy. So enforcement does not colonize the curated hub; it bolts a completeness guarantee onto the one mechanically verifiable dimension while leaving the other as an editor's accepted judgment. An enforced tag-README is therefore not a new kind of artifact — it is the old MOC with a machine-checked contract fastened to its one checkable claim.
+## Scope
+
+- The MOC comparison uses Milo's positive definition; it is not a survey of MOC practice.
+- Luhmann's registers are a separate analogue and are not identified as MOCs.
+- The evidence does not establish how often human-maintained maps promise completeness or why a particular tradition did or did not do so.
 
 ## Open Questions
 
-- Does the same MOC-plus-contract split apply to other inherited PKM artifacts (backlink pages, tag hierarchies, folgezettel sequences), or is completeness the only MOC property that is both agent-critical and machine-checkable?
-- Is there a MOC property humans *did* contract informally (e.g. a "these are the canonical entry points" claim) that an agent KB should drop rather than enforce?
+- Do other MOC practitioners state explicit completeness or canonical-entry-point policies?
+- Does the same map-plus-contract split apply to backlink pages, tag hierarchies, or folgezettel sequences?
 
 ---
 
 Relevant Notes:
 
-- [Human–LLM differences are load-bearing for knowledge system design](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — exemplifies: the general claim this note is a worked instance of — the MOC completeness contract appears because the consumer shifted from human to LLM
-- [A derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — grounds: the enforce-or-omit rule that makes an uncheckable completeness claim the forbidden state, so the human tradition was right not to assert it
-- [Indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — grounds: the fallback-suppression mechanism that makes the agent reader need the completeness claim a human reader could do without
-- [LLM recompute cost inverts the store-vs-recompute default](./llm-recompute-cost-inverts-the-store-vs-recompute-default.md) — grounds: the economics under which the completeness check is cheap enough for the agent maintainer to supply what the human maintainer couldn't
-- [Index completeness does not determine editorial orientation](./index-completeness-does-not-determine-editorial-orientation.md) — extends: the inherited MOC half; this note keeps its orientation-value claim un-contracted and adds the completeness contract beside it
-- [Soft-bound traditions as sources for context engineering strategies](./soft-bound-traditions-as-sources-for-context-engineering-strategies.md) — exemplifies: a concrete case of transferring a Zettelkasten idea (the MOC) into agent context, with the transfer condition made explicit
-- [tag-readme type spec](../types/tag-readme.md) — evidenced-by: the shipped, validator-enforced `complete`/`covered_by` marks that are the machine-checked contract this note grounds in tradition
+- [Human–LLM differences are load-bearing for knowledge system design](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — exemplifies: the general claim this note applies by separating a human-oriented mapping pattern from the contract used by an LLM reader
+- [A derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — grounds: the enforce-or-omit rule for the recomputable completeness claim
+- [Indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — grounds: the fallback-suppression mechanism that makes a false completeness signal harmful
+- [LLM recompute cost inverts the store-vs-recompute default](./llm-recompute-cost-inverts-the-store-vs-recompute-default.md) — grounds: the economics under which a checked cached mark can serve a model reader
+- [Index completeness does not determine editorial orientation](./index-completeness-does-not-determine-editorial-orientation.md) — extends: separates mechanically complete membership from the editorial value of grouping and context phrases
+- [Soft-bound traditions as sources for context engineering strategies](./soft-bound-traditions-as-sources-for-context-engineering-strategies.md) — exemplifies: a human knowledge-organization pattern is transferred into agent context with the source-side pattern and local delta kept separate
+- [tag-readme type spec](../types/tag-readme.md) — evidenced-by: the shipped `complete` and `covered_by` semantics that constitute the machine-checked contract
+- [MOCs (defn)](../sources/nick-milo-mocs-definition.ingest.md) — evidenced-by: Milo defines MOCs as contextual maps and gives a grouped-link note as one form
+- [Schlagwortregister](../sources/luhmann-archive-schlagwortregister.ingest.md) — evidenced-by: the Archive describes Luhmann's keyword registers as non-exhaustive lists of relevant entry points, not as MOCs

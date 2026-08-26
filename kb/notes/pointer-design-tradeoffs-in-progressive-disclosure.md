@@ -1,7 +1,7 @@
 ---
 description: "Compares fixed, query-time, and crafted retrieval pointers across specificity, cost, availability, accuracy, and authoring dependence"
 type: kb/types/note.md
-traits: []
+traits: [has-external-sources]
 tags: [links, computational-model]
 ---
 
@@ -18,6 +18,8 @@ The most obvious axis. A pointer can know nothing about why the consumer is look
 **Fixed at write time.** Descriptions, OpenViking's L0 abstracts. One precomputed summary per note, amortized over all reads. The same summary regardless of who's reading or why — context-free. This is enough for global operations (search, comparative reading, index building) where there's no surrounding argument to leverage.
 
 **Produced at query time.** Search result snippets, retrieval scores, re-rankers, query-specific summaries. Some are cheap retrieval artifacts; some require inference. The common property is that they are produced for this query rather than stored ahead of time. That makes them more query-specific than fixed abstracts: "how does this system handle memory dedup?" can produce a ranking or snippet that fixed abstracts cannot. Cost and reliability vary by mechanism.
+
+Tombros and Sanderson supply a bounded human-IR instance of this branch. They compared query-biased summaries with static title-plus-leading-lines summaries and found significantly better relevance judgments with the query-biased condition. Their same-length follow-up attributed the performance difference to query bias rather than the amount of displayed text. [The experiment](../sources/tombros-sanderson-query-biased-summaries.ingest.md) supports the possibility that query-conditioned pointer content can improve human relevance judgment. It does not establish LLM-agent performance, the cost of producing such pointers, or this note's three-way pointer taxonomy.
 
 **Crafted at link-authoring time.** Link phrases in our system. The same note gets a different characterization at every link site:
 
@@ -45,19 +47,11 @@ The four axes therefore pull in different directions:
 
 No single type wins all four. A system needs a mix.
 
-## What this looks like in practice
+## One system can mix pointer types
 
-Comparing OpenViking's tiers with ours makes the tradeoffs concrete:
+OpenViking illustrates why the categories are not competing architectures. Its [code-grounded review](../agent-memory-systems/reviews/openviking.md) records generated L0 abstracts and L1 overviews over L2 content. Those are fixed views once retained. The same system's `find` and `search` tools return query-ranked results with URIs, abstracts, and scores, while hierarchical retrieval can use vector search, score propagation, and reranking. Those are query-time pointers under this note's definition.
 
-| Role | OpenViking | Commonplace |
-|------|-----------|-------------|
-| Identity pointer | URI/name (~5-10 tok) | Title-as-claim (~10 tok) |
-| Fixed filter | L0 abstract (~100 tok) | Description (~50 tok) |
-| Intermediate overview | L1 overview (~2000 tok) | *No equivalent* |
-| Relation-specific pointer | `.relations.json` reason string (weaker, relation-level) | Link phrase (~20 tok), varies per link site |
-| Full content | L2 original files | Note body |
-
-Each system has a tier the other emphasizes. OpenViking invests in L1 — a 2000-token overview between the fixed filter and full content, useful for scoping before committing to a full read. We invest in crafted link phrases — 20-token characterizations that tell the agent why a target matters in the current argument. OpenViking does have relation annotations via `.relations.json` reason strings, but its main retrieval path still centers fixed pointers (`uri` + `abstract`) rather than per-link argumentative characterizations. Neither system uses query-time computation for navigation pointers yet.
+Commonplace's titles and descriptions illustrate fixed pointers, while its link phrases illustrate crafted pointers. The comparison establishes that a system can combine categories at different stages. It does not establish which mix produces better navigation outcomes, nor does the OpenViking review establish a per-link prose equivalent to Commonplace's context phrases.
 
 ## Design implications
 
@@ -74,9 +68,10 @@ The practical path: invest in crafted link phrases for local navigation (the com
 
 Relevant Notes:
 
-- [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds: the navigation decision is what pointers optimize for; link phrases are the most context-specific pointer type for that decision
-- [agent statelessness makes routing architectural, not learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — grounds: the availability axis; fixed pointers avoid a query-time execution dependency, while a missing dynamic route exposes the degradation cliff
+- [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds: navigation repeatedly presents follow-or-skip decisions that pointers help an agent make
+- [agent statelessness makes routing architectural, not learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — grounds: routing must survive cold starts, and unavailable routing can expose the degradation cliff
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: the cost spectrum is a context efficiency trade-off
-- [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — mechanism: fixed pointers precompute a consumer-facing view, while query-time pointers work one out for the current query
+- [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — exemplifies: fixed and query-time pointers instantiate its broader split between a precomputed fast path and live work for the current case
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: the tier structure defines the resolution gradient; query-time computation could fill gaps dynamically
-- [OpenViking](../agent-memory-systems/reviews/openviking.md) — contrasts: their L0/L1/L2 emphasizes fixed pointers, with weaker relation-level reason strings rather than crafted per-link argument pointers; the comparison crystallized this note
+- [OpenViking](../agent-memory-systems/reviews/openviking.md) — evidenced-by: the code-grounded review shows one system combining fixed L0/L1 sidecars with ranked and reranked query-time selection
+- [Advantages of Query Biased Summaries in Information Retrieval](../sources/tombros-sanderson-query-biased-summaries.ingest.md) — evidenced-by: query-biased summaries improved human relevance judgments against a static-summary baseline, without establishing the agent-facing taxonomy or cost model

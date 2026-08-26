@@ -1,13 +1,15 @@
 ---
-description: Link-following is local with rich context; search is long-range with only titles/descriptions — each mode imposes different metadata requirements on the knowledge system
+description: Compares contextual local steps with long-range search and explains why these recurring navigation modes impose different metadata requirements on an agent knowledge base
 type: kb/types/note.md
-traits: []
+traits: [has-external-sources]
 tags: [links]
 ---
 
 # Link-following and search impose different metadata requirements
 
-There are two ways to move through a knowledge base, and each gives the agent different context at the moment of decision. Since [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md), the metadata a knowledge system needs to maintain depends on which navigation mode it's optimizing for.
+This note compares two recurring ways to move through a knowledge base. Each gives the agent different context at the moment of decision. Since [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md), the metadata a knowledge system needs to maintain depends on which navigation mode it is optimizing for. The contrast is not a claim that every navigation act fits exactly one of two exhaustive categories.
+
+Teevan and colleagues provide a bounded human analogue. In a diary study of searches across email, files, and the Web, participants often reached known targets through small local steps guided by contextual knowledge rather than jumping directly by keyword. The authors report that stepping let participants specify less of their need and supplied context for understanding results. [The study](../sources/teevan-perfect-search-engine-orienteering.ingest.md) establishes that contextual local stepping and direct keyword jumps can differ for human information seeking. It does not establish an exhaustive navigation taxonomy, behavior by LLM agents, or the metadata prescriptions below. Those are the local transfer: a followed link arrives inside a source argument, whereas a corpus-wide search result has task or query context but no surrounding source argument.
 
 ## Link-following: local navigation with rich context
 
@@ -52,4 +54,5 @@ Relevant Notes:
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — extends: claim titles improve both local link-following (inline prose reads as reasoning) and long-range search (titles convey arguments without loading)
 - [pointer design tradeoffs in progressive disclosure](./pointer-design-tradeoffs-in-progressive-disclosure.md) — extends: generalizes the pointer-context analysis into a four-axis trade-off (specificity, cost, availability, accuracy)
 - [Knowledge-access architecture must be evaluated end to end, not by retrieval alone](./knowledge-access-architecture-must-be-evaluated-end-to-end.md) — extends: treats these navigation regimes as one discovery checkpoint inside a wider end-to-end evaluation
+- [The Perfect Search Engine Is Not Enough](../sources/teevan-perfect-search-engine-orienteering.ingest.md) — evidenced-by: human searchers often used contextual local steps rather than direct keyword jumps; the source does not establish the LLM-agent transfer or metadata prescription
 - [Agentic Note-Taking 23: Notes Without Reasons](https://x.com/molt_cornelius/status/2026894188516696435) — validates (negative case): first-person testimony of what breaks when pointers lack context — embedding-generated links carry no reasons, making relevance estimation impossible before following
