@@ -1,0 +1,71 @@
+---
+description: "Recuris couples verified working state, event-triggered skill retrieval, and gated component patches; code confirms the mechanisms, while benchmark gains remain paper-only."
+source: https://arxiv.org/abs/2608.24876v1
+captured: "2026-08-26"
+capture: pdftotext
+capture_scope: full-source
+genre: scientific-paper
+snapshot_sha256: 48b65e016367852f19628abdbbec78c1f033e69975ea3cc3878e0cabd44f9667
+secondary_sources:
+  - role: implementation
+    source: https://github.com/Gen-Verse/Recuris/commit/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7
+ingested: "2026-08-26"
+type: kb/sources/types/ingest-report.md
+domains: [agent-memory, context-engineering, long-horizon-agents, self-improving-systems]
+---
+
+# Ingest: Recursive Experiential–Working Memory Evolution
+
+## Classification
+
+This is a full-length scientific preprint that proposes an agent-memory architecture and reports benchmarks, ablations, transfer studies, and case studies.
+Author: eight researchers affiliated with NUS, Stanford University, the University of Oxford, and Princeton University; the paper also names corresponding authors and releases an implementation, but this arXiv v1 source is not evidence of peer review.
+
+## Summary
+
+Recuris treats a frozen model's external memory-control layer as the update surface: a verified working-state ledger tracks unresolved goals, runtime events activate experiential skills, checker-grounded observations control state transitions, and a fixed Meta-Agent uses structured traces to propose component-scoped changes that a held-out gate may admit. The paper reports broad long-horizon task gains and cross-task and cross-model transfer, while its ablations argue that live state and invocation control matter more than merely placing skills in context. The pinned code supports the central mechanism claims, but the repository does not independently substantiate the reported quantitative outcomes, so the source is strongest as an inspectable architecture and experimental design rather than as reproduced benchmark evidence.
+
+## Code Grounding
+
+Static inspection of the [pinned Recuris revision](https://github.com/Gen-Verse/Recuris/commit/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7) supports the following bounded classifications:
+
+- **Implemented — four-component memory and invariant turn path.** The package represents the memory as experiential memory, working memory, invocation policy, and checkers; it loads those component surfaces and runs them through the same execution path ([memory representation](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/src/recuris/skillmemory.py#L26-L42), [component loading](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/src/recuris/skillmemory.py#L167-L223), [runtime path](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/src/recuris/runtime.py#L192-L266)).
+- **Implemented — evidence-grounded goal state.** Working Memory records pending, done, and blocked goals, while harness-grounded evidence rather than the model's assertion controls closure ([goal ledger](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/src/recuris/wm/ledger.py#L111-L200), [grounding checks](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/src/recuris/grounding.py#L137-L195)).
+- **Implemented — state- and event-grounded activation.** Pending Working Memory entries drive retrieval, and the runtime validates, injects, and fingerprints selected memory under declared deliverer configuration ([deliverers](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/src/recuris/builtin/deliverers.py#L96-L174), [runtime activation](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/src/recuris/runtime.py#L282-L357), [base manifest](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/skill_memories/_base/manifest.yaml#L8-L23)).
+- **Implemented — component-scoped Meta-Agent patches.** The plan schema binds diagnoses and edits to declared components and a legal edit surface ([component model](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/src/recuris/metaagent/plan_schema.py#L1-L18), [patch operations](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/src/recuris/metaagent/plan_schema.py#L25-L43), [legal surface](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/src/recuris/metaagent/plan_schema.py#L83-L89), [driver contract](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/src/recuris/metaagent/driver.py#L1-L25)).
+- **Implemented — deterministic paired admission gate.** The repository defines a held-out paired gate, and the Meta-Agent driver runs contemporaneous paired checks before promotion ([gate contract](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/src/recuris/metaagent/gates.py#L1-L15), [gate calculation](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/src/recuris/metaagent/gates.py#L31-L75), [paired execution](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/src/recuris/metaagent/driver.py#L9361-L9379), [promotion checks](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/src/recuris/metaagent/driver.py#L9420-L9522)).
+- **Implemented — per-task procedure reuse.** The test-time-adaptation driver can convert a failed trajectory into a reusable procedure card and supply it on the next attempt ([driver scope](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/src/recuris/tta/driver.py#L1-L35), [card construction](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/src/recuris/tta/driver.py#L325-L388), [subsequent-attempt use](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/src/recuris/tta/driver.py#L391-L490)).
+- **Artifact-supported — setup and provenance only.** Frozen [Tau2](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/splits/tau2/split_manifest.json) and [Terminal-Bench](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/splits/tb21/split_manifest.json) manifests, [integrity anchors](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/integrity/anchors.json), the [champion-package lock](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/skill_memories/champions.lock.json), and [protected-package rules](https://github.com/Gen-Verse/Recuris/blob/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7/docs/skill-memory-format.md#L110-L132) support the operational setup and provenance. They do not show that benchmark runs occurred or reproduced the paper's results.
+- **Paper-only — outcomes and transfer.** All quantitative claims remain supported only by the paper, including 35 of 37 improved pairs, benchmark point gains, horizon-stratified gains, failure reductions, component-localization accuracy, later-round effects, and transfer across models or tasks. README restatements and `assets/results.png` are not independent outcome evidence, and the checkout contains no raw benchmark-result JSON, JSONL, CSV, or Parquet artifacts.
+
+The only code executed was `python3 scripts/reanchor_integrity.py --check`; it passed with `ANCHORS OK tree_sha256=afea57d670a22cfee95c15b8d580bc0835de805c76f10c5de423a8345ca13193`. No unit-test suite was found. No dependencies were installed, no weights or datasets were downloaded, and no training, benchmark, or experiment reproduction was run. Static inspection establishes that mechanisms and configurations exist, not that the experiments ran or that their reported results are correct.
+
+## Quotes
+
+No source quotes have been retained yet.
+
+## Connections Found
+
+The source is a code-grounded technical basis for [active work state as distinct from retrospective memory](../notes/active-work-state-is-not-retrospective-memory-or-chat-history.md) and for the requirement to [activate behavior-changing memory before the mistake](../notes/agent-memory-requirements/activate-behavior-changing-memory.md): its verified pending/done/blocked ledger is an operative control state, and current goals plus typed runtime events select memory before a state-changing action. It also provides an inspectable case for [diagnostic richness constraining outer-loop learning](../notes/diagnostic-richness-constrains-outer-loop-learning-quality.md), because the same state, invocation, action, observation, and checker events become component-tagged proposal evidence rather than being reduced to final success.
+
+As a bounded improvement-loop example, Recuris instantiates search, evaluation, and operative retention as distinguished in [the proposal-selection loop](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md). Its interpretation rests on [the fixed-decomposition boundary](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md): only the four memory coordinates are editable, so gains inside them do not validate the frozen outer choices. The reported second-round improvement is relevant to [the stronger test for compounding](../notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md), but successive retained gains alone do not establish that an earlier improvement made a later improvement episode more productive. No dedicated Recuris system review exists yet, so this ingest currently serves as the source anchor rather than a complete casebook analysis.
+
+## Extractable Value
+
+1. **A verified work-state ledger can be both a context router and a diagnostic scaffold.** Recuris joins two roles that the KB currently treats separately: unresolved state activates pre-action memory, while the resulting state/event trace helps localize later repairs. A transferable claim would need comparison with at least one other system before promotion. [deep-dive]
+2. **The four-coordinate memory package is an inspectable effective update space.** Experiential content, working-state rules, invocation policy, and checkers can change, while the model, runtime kernel, outer improvement procedure, benchmark partitions, and gate remain fixed; this is a concrete audit case for separating learned coordinates from inherited design commitments. [quick-win]
+3. **The repository supplies a concrete proposal-selection implementation.** Component-bound patch plans, contemporaneous paired checks, rejection, and later package reuse operationalize search, evaluation, and retention without granting the Meta-Agent an unrestricted harness edit surface. [quick-win]
+4. **Failed-task adaptation is represented as reusable procedure construction.** The test-time driver turns one failed trajectory into a procedure card for the next attempt, offering a bounded implementation target for comparing retry-only controls with deploy-time memory updates. [experiment]
+5. **The quantitative results are useful as hypotheses, not yet as grounded outcome evidence.** The reported gains, failure reductions, localization accuracy, and transfer effects can guide a future reproduction or artifact request, but should not be promoted as independently confirmed findings from this ingest. [just-a-reference]
+
+## Limitations (our opinion)
+
+The paper's full-source capture permits assessment of its argument and stated protocol, but the released checkout does not provide independent raw outcome artifacts. Static code inspection confirms mechanisms at one pinned revision; it cannot confirm that experiments ran, that the reported configurations produced the stated scores, or that the statistical analysis is correct. The sole executed integrity check validates repository anchors, not behavior. The absence of a discovered unit-test suite further limits confidence in unexecuted implementation paths.
+
+The effective learning space is narrower than the paper's broad recursive-self-improvement framing. Behavior can condition on the task, interaction history, verified goal ledger, typed execution events, tool receipts, and structured traces. The learner can compose edits to experiential skills, state specification and update proposals, invocation triggers and retrieval keys, and completion predicates; in test-time adaptation, the editable surface narrows to reusable procedure cards. Those coordinates can express mappings from current verified state and event to selected skills, from observations to committed progress, and from trace-localized diagnoses to scoped patches. The base model, tools, fixed commit kernel, outer harness, component decomposition, Meta-Agent procedure, legal edit surface, gate, benchmark objective, and data partitions remain outside the effective update space. Improvement within the editable coordinates therefore shows that the compound setup can work, not that these fixed representations, partitions, or choices are necessary or optimal, as [learning inside a fixed decomposition inherits its mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md).
+
+The empirical claims also have narrower scope than the headline. SkillFlow's selected templates are in-sample with respect to their task families; the matched-budget test-time-adaptation contrast is reported as direction rather than an established effect; several airline contrasts remain unresolved; and the horizon analysis is stratified observational evidence rather than a controlled manipulation. These qualifications, together with paper-only outcome support, block generalization to arbitrary long-horizon tasks, open-ended self-modification, or reliable recursive compounding.
+
+## Recommended Next Action
+
+Create `kb/agent-memory-systems/reviews/recuris.md` as a code-grounded system review that separates implemented architecture from paper-only outcomes and compares Recuris's verified-state activation, four-coordinate edit surface, and promotion gate with its nearest memory-system designs.
