@@ -181,6 +181,7 @@ plugins:
         'reference/proposals/harness-orchestrated-review-sweeps.md': 'reference/proposals/archive/harness-orchestrated-review-sweeps.md'
         'reference/proposals/ingest-source-units-and-supporting-material.md': 'reference/proposals/archive/ingest-source-units-and-supporting-material.md'
         'reference/proposals/one-validation-algorithm-over-declared-scopes.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'
+        'reference/proposals/operational-destinations-for-literature-grounding-findings.md': 'reference/adr/081-literature-disposition-is-explicit-and-claim-grained.md'
         'reference/proposals/packet-owned-captures-for-guarded-operation-transitions.md': 'reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md'
         'reference/proposals/reader-facing-banner-for-unreviewed-notes.md': 'reference/proposals/a-reader-facing-banner-for-user-verification.md'
         'reference/proposals/report-owned-resolution-for-asynchronous-full-pass-dispositions.md': 'reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md'

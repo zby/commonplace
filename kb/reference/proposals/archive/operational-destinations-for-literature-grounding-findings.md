@@ -1,14 +1,16 @@
 ---
-description: "Proposal: finish routing literature-grounding findings after claim-grained disposition was adopted, including whether bilateral isolation earns an operative assessment branch"
-type: ../types/design-proposal.md
+description: "Proposal (adopted by ADR 081): dated cohort, propagation, and bilateral-isolation design texture behind claim-grained literature disposition and the ordinary-writer prior-art boundary"
+type: ../../types/design-proposal.md
 tags: [kb-maintenance, review-system]
 ---
 
 # Operational destinations for literature-grounding findings
 
+> **Archived** (see [archive README](./README.md)). Adopted by [ADR 081](../../adr/081-literature-disposition-is-explicit-and-claim-grained.md): the live claim-grained assessment, conditional isolation branch, and ordinary-writer prior-art boundary now reside in that ADR and the [assessment instruction](../../../instructions/assess-a-claim-bearing-artifact-against-external-literature.md). What remains here is the dated cohort state, propagation trace, and bilateral-isolation option texture — design texture only.
+
 Commonplace should not let source-grounding or literature-disposition workshop
 closure strand method-bearing findings in `kb/work/`. Most of that disposal is
-now complete: [ADR 081](../adr/081-literature-disposition-is-explicit-and-claim-grained.md)
+now complete: [ADR 081](../../adr/081-literature-disposition-is-explicit-and-claim-grained.md)
 adopted the claim-grained disposition method and made ordinary prior-art search
 an explicit no-change decision. This proposal retains the remaining design
 choice: whether a bounded Pirolli result warrants bilateral isolation of target
@@ -18,15 +20,15 @@ workshops as historical registers.
 ## Current state (as of 2026-08-26)
 
 The direct grounding path is already operative. ADRs
-[073](../adr/073-untracked-source-snapshots-require-ingest-grounding.md),
-[076](../adr/076-source-claim-grounding-is-a-promoted-skill.md), and
-[078](../adr/078-writers-invoke-grounding-and-evidence-stays-in-the-ingest.md)
+[073](../../adr/073-untracked-source-snapshots-require-ingest-grounding.md),
+[076](../../adr/076-source-claim-grounding-is-a-promoted-skill.md), and
+[078](../../adr/078-writers-invoke-grounding-and-evidence-stays-in-the-ingest.md)
 put exact retained quotes or a declared pinned snapshot between a named source
 dependency and the standard grounding gate. The writer invokes
-[`cp-skill-ground`](../../instructions/cp-skill-ground/SKILL.md), while the
+[`cp-skill-ground`](../../../instructions/cp-skill-ground/SKILL.md), while the
 target owns its interpretation and transfer argument. The rollout's decision
 not to add normalized claim identifiers is bounded by
-[the retained evidence](../../notes/evidence/quotes-route-rollout-grounded-more-uses-without-earning-claim-ids.md).
+[the retained evidence](../../../notes/evidence/quotes-route-rollout-grounded-more-uses-without-earning-claim-ids.md).
 Those results need no second implementation.
 
 All fourteen candidates in the literature-disposition cohort are resolved:
@@ -34,7 +36,7 @@ thirteen dated artifact dispositions keep their targets, several after
 narrowing, rewriting, attribution repair, or removal of stale material, and one
 candidate was removed from the cohort after failing its membership test. ADR
 081 now routes an explicit retrospective literature question into [a
-claim-grained assessment instruction](../../instructions/assess-a-claim-bearing-artifact-against-external-literature.md),
+claim-grained assessment instruction](../../../instructions/assess-a-claim-bearing-artifact-against-external-literature.md),
 loaded conditionally by `cp-skill-write-multistage`. The instruction inventories
 live claims before source selection, separates source-established units from
 the Commonplace remainder, attempts the smallest faithful replacement, and
@@ -56,7 +58,7 @@ numeric rate, so git remains the audit path and no propagation evidence note is
 needed.
 
 The source-grounding workshop is now consumed. Its independent Pirolli pass is
-retained as [bounded evidence](../../notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md):
+retained as [bounded evidence](../../../notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md):
 three of four support verdicts tightened after source reconstruction,
 target-claim inventory, and comparison were separated. The case motivates a
 bilateral-isolation control but cannot attribute the change to isolation alone,
@@ -105,7 +107,7 @@ chosen by the force each finding should have.
 | Backlinks identify the impact-search population, not the inherited claim | Semantic inbound classification in the adopted instruction | Resolved by ADR 081: raw count prices inspection and rewiring; imported claims determine semantic impact |
 | The one-of-twenty propagation result bounds that step | Git history unless an operative decision depends on the rate | Explicit no-change in ADR 081: the instruction uses semantic classification without relying on the measurement's numeric value |
 | Write-time grounding does not discover missing prior art | Ordinary writing remains bounded; explicit retrospective questions load the adopted assessment | Resolved for the current system by ADR 081. A future candidacy assay still needs its own trigger, search boundary, budget, and consumption path |
-| Model recall can nominate prior art but cannot settle overlap or disposition | A binding boundary in the adopted instruction | Resolved by ADR 081: suggestions create reading assignments that must reach tracked direct evidence, since [candidacy evidence licenses escalation rather than acceptance](../../notes/candidacy-evidence-licenses-escalation-not-acceptance.md) |
+| Model recall can nominate prior art but cannot settle overlap or disposition | A binding boundary in the adopted instruction | Resolved by ADR 081: suggestions create reading assignments that must reach tracked direct evidence, since [candidacy evidence licenses escalation rather than acceptance](../../../notes/candidacy-evidence-licenses-escalation-not-acceptance.md) |
 | A decomposed pass tightened three of four Pirolli support verdicts after a source-blind target inventory and target-blind source reconstruction were given to a separate comparator | The bounded evidence record plus a bilateral-isolation option in an adopted literature-assessment procedure | A prospective test must form the target inventory without source exposure, form the source reconstruction without target exposure, and give only the frozen outputs to a comparator; the existing case motivates this control but does not establish its causal effect |
 | Thirteen consecutive keeps may reflect either the cohort or an incumbent-preserving test | The adopted outcome-neutral replacement test | Resolved by ADR 081: keep is not a default, and the cohort-removal case is the negative control that shows the procedure can reject the assessment premise |
 | Exact Quotes or snapshot grounding, target-owned interpretation, and no V1 claim identifiers | Existing ADRs, skills, gate, and evidence note | Explicit no-change: do not duplicate these settled results in the new procedure beyond its preconditions |
@@ -118,13 +120,13 @@ conditionally loads the standalone assessment instruction. Ordinary grounding,
 synthesis, revision, and writing do not pay for that branch.
 
 The current
-[`cp-skill-write-multistage`](../../instructions/cp-skill-write-multistage/SKILL.md)
+[`cp-skill-write-multistage`](../../../instructions/cp-skill-write-multistage/SKILL.md)
 path provides only asymmetric protection. Its claim architect receives a source
 reconstruction before receiving the incumbent, then inventories the incumbent
 in that same context, so source vocabulary can still shape the target
 representation. Likewise, a grounding helper that forks from a caller cannot
 guarantee that it has never seen target prose; [ADR
-076](../adr/076-source-claim-grounding-is-a-promoted-skill.md) records that
+076](../../adr/076-source-claim-grounding-is-a-promoted-skill.md) records that
 limitation. True bilateral isolation would create the target
 inventory in a fresh source-blind context, create the source reconstruction in
 a fresh target-blind context, freeze both, and give only those outputs to a
@@ -198,7 +200,7 @@ current evidence justifies that test, not the implementation.
 
 Relevant Notes:
 
-- [An independent pass tightened three of four Pirolli grounding verdicts](../../notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md) — rests-on: bounds the observed verdict change and the causal uncertainty that a prospective isolation test must preserve
-- [A borrowed pattern transfers only as far as source and target share a mechanism](../../notes/borrowed-patterns-transfer-only-over-shared-mechanism.md) — rests-on: bounds which source-side mechanism can warrant a Commonplace transfer
-- [Theory warrant should be tracked at the finest granularity evidence licenses](../../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) — rests-on: keeps grounding and propagation judgments at claim rather than document grain
-- [Narrowing bought to survive review is paid for in content](../../notes/narrowing-bought-to-survive-review-is-paid-for-in-content.md) — rests-on: supplies the adversarial warning against accepting a defensible but empty local remainder
+- [An independent pass tightened three of four Pirolli grounding verdicts](../../../notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md) — rests-on: bounds the observed verdict change and the causal uncertainty that a prospective isolation test must preserve
+- [A borrowed pattern transfers only as far as source and target share a mechanism](../../../notes/borrowed-patterns-transfer-only-over-shared-mechanism.md) — rests-on: bounds which source-side mechanism can warrant a Commonplace transfer
+- [Theory warrant should be tracked at the finest granularity evidence licenses](../../../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) — rests-on: keeps grounding and propagation judgments at claim rather than document grain
+- [Narrowing bought to survive review is paid for in content](../../../notes/narrowing-bought-to-survive-review-is-paid-for-in-content.md) — rests-on: supplies the adversarial warning against accepting a defensible but empty local remainder
