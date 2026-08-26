@@ -27,11 +27,8 @@ Titles, typed links, graph structure, and embeddings can constrain a candidate m
 
 [Title-as-claim exposes commitments, enabling Popperian maintenance](./title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) is a partial counterpoint: claim titles expose more structure than topic titles even in a generated listing. Typed links can likewise make some inter-note relations explicit. These inputs reduce the editorial work, but they do not choose which valid relationships should organize a purpose-specific map.
 
-Additional orientation has diminishing returns on small collections and increasing returns on large ones. Below roughly five notes, a reader can often scan the complete listing without needing another layer. Above that threshold, the listing becomes a wall of entries and the curated section becomes the primary navigation surface. This matches the COLLECTION.md lifecycle guidance: "Create when 5+ related notes accumulate under a tag. Curate when the generated listing alone isn't enough." The threshold concerns the value of curation, not whether membership logically entails orientation.
-
 ## Caveats
 
-- The 5-note threshold is a rough heuristic, not a bright line. Some topics with 3 notes benefit from curation if the relationships are non-obvious; some with 10 need no curation because the titles alone are clear.
 - This claim does not require a human to draft the curated layer. An LLM or graph algorithm can propose it; editorial review is what turns a proposal into accepted orientation.
 - A schema can make roles, groups, or reading order mechanically reproducible. In that case the encoded fields, rather than index completeness, are the source of the orientation.
 - Curation cost is non-trivial. Each curated entry requires reading the note, understanding its role in the topic, and writing a context phrase. The [maintain-curated-indexes](../instructions/maintain-curated-indexes.md) instruction exists because this is ongoing maintenance, not a one-time cost.

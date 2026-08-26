@@ -3,8 +3,8 @@
 Date fixed: 2026-08-26
 
 Start the next session here. The source corpus is complete for the current
-cohort. Eight of fourteen candidates have dated, executed artifact
-dispositions. Six further artifact judgments and two workshop-level decisions
+cohort. Nine of fourteen candidates have dated, executed artifact dispositions.
+Five further artifact judgments and two workshop-level decisions
 remain.
 
 ## State to inherit
@@ -26,13 +26,16 @@ remain.
 - The first four dated dispositions remain in [README.md](./README.md): Gödel
   machines, proposal selection, the Pirolli navigation premise, and end-to-end
   knowledge access.
+- The first post-MOC judgment is recorded in
+  [remaining-dispositions.md](./remaining-dispositions.md): keep the independent
+  membership/orientation premise after removing its stale five-note heuristic.
 - The working tree also contains
   `kb/work/multistage-skill-coherence-audit/`, which belongs to another task.
   Do not stage or edit it as part of this workshop.
 
 ## Remaining candidate order
 
-The remaining six are the starting cohort minus the starting-cohort notes
+The remaining five are the starting cohort minus the starting-cohort notes
 already decided. Their proposed external traditions were explicitly deferred
 in [the source selection](../source-grounding/corpus-selection.md#candidates-not-selected-for-the-current-live-claims)
 because those traditions no longer establish a load-bearing live premise.
@@ -41,12 +44,11 @@ acquisition.
 
 | Order | Candidate | Current source-side finding | Decision work |
 |---:|---|---|---|
-| 1 | `index-completeness-does-not-determine-editorial-orientation` | LIS and PKM candidates were not selected for a surviving claim; the categorical generation claim was already scoped to deterministic membership generation | Compare the current note with the newly repaired MOC note and its ADR consumers; decide keep, merge, rewrite, or cohort removal |
-| 2 | `indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more` | Automation-bias and materialized-view sources were deferred because the live claim is now a conditional control-flow mechanism | Decide whether the conditional mechanism remains an independent premise or should merge into the completeness cluster |
-| 3 | `a-knowledge-base-should-support-fluid-resolution-switching` | Shneiderman was deferred as adjacent to, but not authoritative for, the live qualitative KB criterion | Decide whether the local mechanism inventory earns a note or belongs in a neighboring navigation synthesis |
-| 4 | `design-for-the-first-time-human-except-on-access-cost` | DITA and single-source publishing were deferred because the live contribution is the access-mode transfer and per-consumer materialization | Test whether that transfer remains a distinct claim after the superseded navigation row was repaired |
-| 5 | `addressability-grain-sets-a-matched-selective-read-floor` | Database cost-model and passage-retrieval sources were deferred; the live note uses a conditional matched-unit relation and local measurements | Decide whether the local relation and measurements earn the artifact without importing a database analogy as authority |
-| 6 | `human-llm-differences-are-load-bearing-for-knowledge-system-design` | The claim inventory found almost no information-foraging content and the source selection found no missing authoritative source for its central claim | Re-test cohort membership explicitly; record either a keep disposition or removal from the settled cohort rather than silently dropping it |
+| 1 | `indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more` | Automation-bias and materialized-view sources were deferred because the live claim is now a conditional control-flow mechanism | Decide whether the conditional mechanism remains an independent premise or should merge into the completeness cluster |
+| 2 | `a-knowledge-base-should-support-fluid-resolution-switching` | Shneiderman was deferred as adjacent to, but not authoritative for, the live qualitative KB criterion | Decide whether the local mechanism inventory earns a note or belongs in a neighboring navigation synthesis |
+| 3 | `design-for-the-first-time-human-except-on-access-cost` | DITA and single-source publishing were deferred because the live contribution is the access-mode transfer and per-consumer materialization | Test whether that transfer remains a distinct claim after the superseded navigation row was repaired |
+| 4 | `addressability-grain-sets-a-matched-selective-read-floor` | Database cost-model and passage-retrieval sources were deferred; the live note uses a conditional matched-unit relation and local measurements | Decide whether the local relation and measurements earn the artifact without importing a database analogy as authority |
+| 5 | `human-llm-differences-are-load-bearing-for-knowledge-system-design` | The claim inventory found almost no information-foraging content and the source selection found no missing authoritative source for its central claim | Re-test cohort membership explicitly; record either a keep disposition or removal from the settled cohort rather than silently dropping it |
 
 ## Per-candidate procedure
 
@@ -70,7 +72,7 @@ For each candidate:
 
 ## Final workshop decisions
 
-After the six artifact judgments:
+After the five remaining artifact judgments:
 
 1. Promote a general disposition rule, or record the positive finding that
    literature disposition remains per-note. The worked cases currently favor a
@@ -87,7 +89,7 @@ After the six artifact judgments:
 
 - [x] Active MOC multistage run is accepted and promoted; its dated
       artifact disposition is recorded.
-- [ ] Six remaining candidates have dated, executed dispositions.
+- [ ] Five remaining candidates have dated, executed dispositions.
 - [ ] General rule or explicit no-general-rule finding is promoted.
 - [ ] Write-time prior-art-check decision is recorded.
 - [ ] Durable findings are promoted.
