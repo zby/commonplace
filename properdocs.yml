@@ -109,6 +109,7 @@ plugins:
         'notes/inductive-bias-splits-into-generic-and-specific-levels.md': 'notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md'
         'notes/intents-are-the-highest-yield-seed-contingent-fact-their-limit.md': 'notes/specific-intent-may-out-yield-local-rationales-facts-stay-separate.md'
         'notes/interpretation-errors-are-failures-of-the-interpreter.md': 'notes/out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md'
+        'notes/irreducibility-to-rules-bounds-text-alone-not-text-plus-interpreter.md': 'notes/naur-binds-theory-to-humans-via-premise-that-machines-follow-rules.md'
         'notes/kb-maintenance-index.md': 'notes/kb-maintenance-README.md'
         'notes/learning-theory-index.md': 'notes/learning-theory-README.md'
         'notes/links-index.md': 'notes/links-README.md'
