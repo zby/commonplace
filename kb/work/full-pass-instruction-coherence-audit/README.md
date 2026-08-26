@@ -337,6 +337,96 @@ The operator assigned the repair and chose simplification for finding 3. The dec
 | add. | `split` body-edit action | **fixed** — removed; split is a rehome remedy |
 | cross-cutting | duplicated policy prose | **fixed** — one decision table; "Reconciling disagreement" reduced to passage-level rules; Do-not list reduced to eight non-inferable rules |
 
-Code: `full_pass.py` parses `revise`, a `final` capture role, and guards each path against its latest capture; the schema adds `phase`, `final_capture`, `final_sha256` with the phase/disposition and phase/final-capture constraints; validation verifies every capture; 30 tests pass.
+Code: `full_pass.py` parses `revise`, the closing state, and a `final` capture role, and guards each path against its latest capture; the schema enforces phase/disposition, final-capture, closing-status, and one-recovery constraints; validation verifies every capture. The focused full-pass suite has 37 tests; the repository suite has 580.
 
-**Remaining before close:** exercise the scenario matrix against the rewritten procedure. Not yet run: plain keep, keep with no body edits, `revise` (each direction), answerable objection, undetermined update, delete, merge with mixed guard failure, whole and split rehome, interruption before packet synthesis, interruption during steps 8–10, concurrent edit during closing. The rows for downward/upward reframe now read as `revise` hand-backs.
+One instrumented run now exercises a guarded `keep` with an answerable
+objection, pre-packet orphan detection, closing-phase interruption/re-entry, and
+a concurrent-edit mismatch. Still not run: keep with no body edits, `revise`
+(each direction), undetermined update, delete, merge with mixed guard failure,
+whole and split rehome, an editing-phase interruption, and a successful bounded
+closing recovery. The rows for downward/upward reframe now read as `revise`
+hand-backs.
+
+## Instrumented keep run (2026-08-26/27)
+
+Pass `20260826T214434Z-8272bf` ran the rewritten procedure over
+`kb/notes/candidacy-evidence-licenses-escalation-not-acceptance.md` under the
+`codex` partition with one pass ID. It began at 21:44:34 UTC and reached a
+validated `phase: complete` packet under the then-current contract at 22:29
+UTC, about 45 minutes later. The pass used 25 fresh worker executions: 16
+snapshot-anchored review jobs, eight direct method workers (compression,
+friction, premise decomposition, and connect in both phases), and one copyedit
+worker. Each of `initial/` and `closing/` retained 46 reports: 41 catalog gate
+results plus critique, compression, friction, premises, and connect.
+
+The substantive branch was `keep` with an answerable objection. The initial
+critique and premise hunt raised the counterexample that one cheap artifact can
+both nominate an assessment and decide a narrow verdict. Synthesis selected an
+answer already implied by the incumbent's first two definitions and its linked
+warrant rule: the labels name the authority the evidence currently carries,
+not an intrinsic artifact kind, so one item can separately satisfy both roles
+without routing authority transferring into verdict authority. The body edit
+made that answer explicit, removed the cheapness-as-definition inference,
+compressed both witnesses, removed one ungrounded historical claim, and passed
+an isolated copyedit candidate through orchestrator diff review. The title and
+thesis were not changed.
+
+The interruption and concurrency observations were deterministic:
+
+- After `source.txt` was captured but before the packet existed, re-entry
+  inspection found the pass directory without `full-pass-report.md` and
+  classified it as an orphan that must stop. `source.txt` and the live note
+  both hashed to
+  `eff95c5ee6ecdd1d313ab671b836288967041cd7dade7fd0ca6d8024d52dfc96`.
+- After copyedit, `final.txt` was written, the packet entered `phase: closing`,
+  and the guard compared the live note with that latest capture successfully.
+  This exercised discoverable closing-phase interruption and resumability
+  before any closing jobs were created.
+- A controlled concurrent-edit probe then appended one uniquely named HTML
+  comment to the live note. The guard exited 1, reported `status: changed`, and
+  returned the exact diff against `final.txt`. Removing the probe restored the
+  note byte-for-byte; both paths hashed to
+  `32bd38b26793dfdb2702d7be01d9cc89f3dc477a428d2ea9183f7256983856c8`,
+  and the guard returned `all_matching: true`. Closing jobs were created only
+  after that restoration.
+
+The closing cycle attacked the added answer rather than merely replaying the
+initial wording. It preserved the selected update but left material residuals:
+critique questioned whether the new distinction adds a prospective
+discriminator beyond warrant non-distribution; premise decomposition left two
+`DOUBTFUL GLOBAL` pressure points; frontmatter returned one FAIL and one WARN
+on the unchanged title's apparent breadth; and sentence review found two real
+misleading link texts plus a missing verb introduced by the edit. The latter
+made one Pirolli sentence syntactically incomplete even though deterministic
+validation remained clean. Per the procedure then in force, all residuals were
+routed to Open items and did not start a second edit cycle. The exact failed
+sentence, closing verdict, hashes, and state contradiction are retained in
+[closing-completion-failure-evidence.md](./closing-completion-failure-evidence.md).
+
+At the time, deterministic checks passed cleanly for the note, its packet, and
+both connect reports; the guard reported the live note matching `final.txt`.
+That combination is the failure evidence: exact retention and schema validity
+did not imply semantic acceptability. This run therefore covers the observable
+mechanics of the matrix's guarded keep, answerable-objection, pre-packet
+interruption, closing interruption, and concurrent-edit rows, while
+disconfirming the old completion rule.
+
+## Post-run closing-state repair (2026-08-27)
+
+The operator accepted one more repair after reviewing this evidence. ADR 080
+now makes closing a three-way retention gate:
+
+- `ready` is the only closing status compatible with `phase: complete`;
+- `repair-needed` permits one local correction, a new immutable capture, and a
+  complete rerun under `closing-recovery/`; and
+- `hand-back` covers claim-level failure, a newly introduced angle, or any
+  defect remaining after that recovery. It restores `source.txt` before
+  stopping.
+
+The packet schema requires `closing_status` and
+`closing_repair_attempted`, forbids a second `repair-needed` state, and binds
+each status to its legal phase. Claim-level hand-back takes precedence over
+local cleanup, so this run's title/body failure makes the historical result a
+hand-back even though the missing verb and link texts would otherwise be
+locally repairable. The live note is restored to its pass-start text; the
+failed final capture and closing reports remain inspection evidence.

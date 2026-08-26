@@ -17,7 +17,9 @@ The guard compares each guarded logical path with its **latest** packet capture:
 
 `merge_target` is also a repository-relative logical path. Capture fields are normalized packet-relative `.txt` paths and must resolve to regular non-symlink files inside the report's packet directory. Never substitute a capture path for a logical path when invoking an assessment method.
 
-`phase` records execution progress (`packet`, `editing`, `closing`, `complete`) and is distinct from `resolution`. Every disposition other than `keep` stays in phase `packet`. `final_capture` and `final_sha256` are set together, only on a `keep` report, when the pass enters phase `closing` after its copyedit; they are null otherwise. A `merge` disposition requires all merge-target fields. Other dispositions set them to null. A `keep` report begins `resolution: not-required`; `revise`, `delete`, `merge`, and `rehome` reports begin `pending`. Any of them may become `superseded` when its pre-transition live-version guard finds changed text. Only explicit user authority may accept, reject, or apply an alternative. A missing input or corrupted capture requires reconciliation and does not change resolution automatically.
+`phase` records execution progress (`packet`, `editing`, `closing`, `complete`) and is distinct from `resolution`. Every disposition other than `keep` stays in phase `packet`. `closing_status` records the closing decision for the current final capture: null while closing has not been reconciled, `ready` when completion is allowed, `repair-needed` for one bounded correction of defects introduced by the pass, or `hand-back` when a claim-level failure or exhausted recovery requires author action. `closing_repair_attempted` starts false and may become true once; `repair-needed` is invalid after that attempt. A complete packet must be `ready`. Packet and editing phases require null status and no attempted repair.
+
+`final_capture` and `final_sha256` are set together, only on a `keep` report, when the pass enters phase `closing` after its copyedit; they are null otherwise. Each capture file is immutable. A bounded closing repair writes a new capture and changes the pointer instead of overwriting the failed capture. A closing hand-back restores the live note from `source_capture` and points `final_capture` to that same immutable source text, so the guard describes the text the unsuccessful pass actually left. A `merge` disposition requires all merge-target fields. Other dispositions set them to null. A `keep` report begins `resolution: not-required`; `revise`, `delete`, `merge`, and `rehome` reports begin `pending`. Any of them may become `superseded` when its pre-transition live-version guard finds changed text. Only explicit user authority may accept, reject, or apply an alternative. A missing input or corrupted capture requires reconciliation and does not change resolution automatically.
 
 Render the `Resolution` section exactly from the structured fields. Quote a terminal ISO-8601 `resolved_at` value in YAML so it remains a string rather than becoming a YAML timestamp object. Null values and an empty `resulting_paths` list render as an em dash. Non-empty resulting paths render as comma-separated code spans.
 
@@ -32,6 +34,8 @@ source_capture: source.txt
 source_sha256: <lowercase SHA-256>
 pass_id: <unique pass ID>
 phase: packet
+closing_status: null
+closing_repair_attempted: false
 disposition: keep
 merge_target: null
 merge_target_capture: null

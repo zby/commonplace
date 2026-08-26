@@ -13,6 +13,8 @@ allOf:
           - source_sha256
           - pass_id
           - phase
+          - closing_status
+          - closing_repair_attempted
           - disposition
           - final_capture
           - final_sha256
@@ -43,6 +45,10 @@ allOf:
             minLength: 1
           phase:
             enum: [packet, editing, closing, complete]
+          closing_status:
+            enum: [ready, repair-needed, hand-back, null]
+          closing_repair_attempted:
+            type: boolean
           disposition:
             enum: [keep, revise, delete, merge, rehome]
           final_capture:
@@ -171,6 +177,70 @@ allOf:
               const: null
             final_sha256:
               const: null
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            phase:
+              enum: [packet, editing]
+    then:
+      properties:
+        frontmatter:
+          properties:
+            closing_status:
+              const: null
+            closing_repair_attempted:
+              const: false
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            phase:
+              const: complete
+    then:
+      properties:
+        frontmatter:
+          properties:
+            closing_status:
+              const: ready
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            closing_status:
+              const: ready
+    then:
+      properties:
+        frontmatter:
+          properties:
+            phase:
+              const: complete
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            closing_status:
+              const: repair-needed
+    then:
+      properties:
+        frontmatter:
+          properties:
+            phase:
+              const: closing
+            closing_repair_attempted:
+              const: false
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            closing_status:
+              const: hand-back
+    then:
+      properties:
+        frontmatter:
+          properties:
+            phase:
+              const: closing
   - if:
       properties:
         frontmatter:

@@ -17,6 +17,8 @@ _RESOLUTION_HEADING_RE = re.compile(r"^## Resolution\s*$", re.MULTILINE)
 _NEXT_H2_RE = re.compile(r"^## (?!Resolution\s*$).+$", re.MULTILINE)
 
 GuardStatus = Literal["matching", "changed", "missing", "corrupt-capture"]
+ClosingStatus = Literal["ready", "repair-needed", "hand-back"]
+Phase = Literal["packet", "editing", "closing", "complete"]
 
 
 @dataclass(frozen=True)
@@ -36,6 +38,9 @@ class FullPassReport:
     frontmatter: dict[str, Any]
     body: str
     disposition: Literal["keep", "revise", "delete", "merge", "rehome"]
+    phase: Phase
+    closing_status: ClosingStatus | None
+    closing_repair_attempted: bool
     captures: tuple[GuardedInput, ...]
     """Every packet-owned capture, for hash verification."""
     guarded_inputs: tuple[GuardedInput, ...]
@@ -172,6 +177,42 @@ def parse_full_pass_report(
         disposition_value
     )
 
+    phase_value = frontmatter.get("phase")
+    if phase_value not in {"packet", "editing", "closing", "complete"}:
+        raise ValueError("phase: expected packet, editing, closing, or complete")
+    phase: Phase = phase_value
+
+    closing_status_value = frontmatter.get("closing_status")
+    if closing_status_value not in {None, "ready", "repair-needed", "hand-back"}:
+        raise ValueError(
+            "closing_status: expected null, ready, repair-needed, or hand-back"
+        )
+    closing_status: ClosingStatus | None = closing_status_value
+
+    closing_repair_attempted = frontmatter.get("closing_repair_attempted")
+    if not isinstance(closing_repair_attempted, bool):
+        raise ValueError(  # noqa: TRY004 - packet shape errors share one CLI path
+            "closing_repair_attempted: expected a boolean"
+        )
+    if phase in {"packet", "editing"} and (
+        closing_status is not None or closing_repair_attempted
+    ):
+        raise ValueError(
+            "closing state: packet and editing phases require null status and no repair"
+        )
+    if phase == "complete" and closing_status != "ready":
+        raise ValueError("closing state: complete phase requires ready status")
+    if closing_status == "ready" and phase != "complete":
+        raise ValueError("closing state: ready status requires complete phase")
+    if closing_status in {"repair-needed", "hand-back"} and phase != "closing":
+        raise ValueError(
+            f"closing state: {closing_status} status requires closing phase"
+        )
+    if closing_status == "repair-needed" and closing_repair_attempted:
+        raise ValueError(
+            "closing state: repair-needed is unavailable after the bounded repair"
+        )
+
     packet_dir = report_path.parent
     source_input = _guarded_input(
         frontmatter,
@@ -206,6 +247,14 @@ def parse_full_pass_report(
     elif any(frontmatter.get(field) is not None for field in final_fields):
         raise ValueError("final fields: expected both final_capture and final_sha256")
 
+    if closing_status == "hand-back" and (
+        frontmatter.get("final_capture") != frontmatter.get("source_capture")
+        or frontmatter.get("final_sha256") != frontmatter.get("source_sha256")
+    ):
+        raise ValueError(
+            "closing hand-back: final capture and hash must point to the pass-start capture"
+        )
+
     merge_fields = (
         "merge_target",
         "merge_target_capture",
@@ -234,6 +283,9 @@ def parse_full_pass_report(
         frontmatter=frontmatter,
         body=document.body,
         disposition=disposition,
+        phase=phase,
+        closing_status=closing_status,
+        closing_repair_attempted=closing_repair_attempted,
         captures=tuple(captures),
         guarded_inputs=tuple(guarded_inputs),
     )

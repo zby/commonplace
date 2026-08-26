@@ -22,7 +22,14 @@ def write_packet(
     live_target_text: str | None = None,
     phase: str = "packet",
     final_text: str | None = None,
+    closing_status: str | None = None,
+    closing_repair_attempted: bool = False,
 ) -> Path:
+    if phase == "complete" and closing_status is None:
+        closing_status = "ready"
+    closing_status_value = "null" if closing_status is None else closing_status
+    repair_attempted_value = str(closing_repair_attempted).lower()
+
     source = root / "kb/notes/source.md"
     source.parent.mkdir(parents=True, exist_ok=True)
     source.write_text(
@@ -36,7 +43,11 @@ def write_packet(
 
     if final_text is not None:
         (packet / "final.txt").write_text(final_text, encoding="utf-8")
-        final_fields = f"""final_capture: final.txt
+        if closing_status == "hand-back":
+            final_fields = f"""final_capture: source.txt
+final_sha256: {content_sha256_for_text(source_text)}"""
+        else:
+            final_fields = f"""final_capture: final.txt
 final_sha256: {content_sha256_for_text(final_text)}"""
     else:
         final_fields = """final_capture: null
@@ -71,6 +82,8 @@ source_capture: source.txt
 source_sha256: {content_sha256_for_text(source_text)}
 pass_id: pass-1
 phase: {phase}
+closing_status: {closing_status_value}
+closing_repair_attempted: {repair_attempted_value}
 disposition: {disposition}
 {merge_fields}
 {final_fields}
@@ -259,6 +272,45 @@ def test_final_capture_refuses_a_source_edited_after_the_pass(
 
     assert [result.status for result in results] == ["changed"]
     assert results[0].capture_path == "final.txt"
+
+
+def test_closing_hand_back_guards_the_restored_pass_start_text(
+    tmp_path: Path,
+) -> None:
+    report_path = write_packet(
+        tmp_path,
+        phase="closing",
+        final_text="failed edit\n",
+        closing_status="hand-back",
+    )
+
+    report = load_full_pass_report(report_path, repo_root=tmp_path)
+    results = guard_full_pass_report(report)
+
+    assert report.closing_status == "hand-back"
+    assert report.frontmatter["final_capture"] == "source.txt"
+    assert [result.status for result in results] == ["matching"]
+
+
+def test_closing_hand_back_rejects_a_non_source_final_capture(
+    tmp_path: Path,
+) -> None:
+    report_path = write_packet(
+        tmp_path,
+        phase="closing",
+        final_text="failed edit\n",
+        closing_status="hand-back",
+    )
+    text = report_path.read_text(encoding="utf-8").replace(
+        "final_capture: source.txt\nfinal_sha256: "
+        + content_sha256_for_text("source text\n"),
+        "final_capture: final.txt\nfinal_sha256: "
+        + content_sha256_for_text("failed edit\n"),
+    )
+    report_path.write_text(text, encoding="utf-8")
+
+    with pytest.raises(ValueError, match="must point to the pass-start capture"):
+        load_full_pass_report(report_path, repo_root=tmp_path)
 
 
 def test_final_capture_is_rejected_on_a_pending_disposition(tmp_path: Path) -> None:
