@@ -21,13 +21,14 @@ for the operative grounding path.
 and checked against an actual source in the worked case; the other eleven have
 claim inventories and candidate reading assignments. The 2026-08-26 handoff
 triage admitted two further candidates, so the working cohort now has fourteen.
-Four candidates now have final dated artifact dispositions: the Gödel-machine,
-proposal-selection, and first Pirolli worked-case notes were kept on 2026-08-26,
-and the knowledge-access candidate was kept after an in-place synthesis reframe.
-The first two followed grounded handoff repairs; the Pirolli note followed a
-claim correction, direct source route, and artifact-level graph assessment; the
-knowledge-access note dropped unsupported or separately owned subclaims and
-retained the cross-stage inference no component note states alone. The
+Seven candidates now have final dated artifact dispositions. The Gödel-machine,
+proposal-selection, first Pirolli worked-case, and knowledge-access notes were
+kept first. Contextual activation was then kept after comparison with two
+primary psychology sources. Link-following/search and pointer design were kept
+as agent-facing transfers whose human evidence covers only narrower branches.
+The enforced tag-README has a source-bounded target repair in `ae1ce1dd`, but
+its separately opened multistage acceptance run is still active, so its final
+artifact disposition is not counted yet. The
 claim-grounding rollout produced 264 terminal claim-use dispositions and
 sixteen `literature handoff`s across ten notes. Those handoffs are intake for
 source acquisition or target re-evaluation; they are not by themselves keep,
@@ -35,27 +36,33 @@ merge, thin, or retire decisions.
 
 | Closure condition | State | What remains |
 |---|---|---|
-| Source-grounded disposition for every settled cohort member | Open | Four of fourteen working candidates are complete. Finish source routes and adjudicate the remaining ten, including the activation candidate. |
+| Source-grounded disposition for every settled cohort member | Open | Seven of fourteen working candidates are complete. Finish the active MOC acceptance run, then adjudicate the six candidates listed in [the continuation plan](./next-session-plan.md#remaining-candidate-order). |
 | One disposition executed end to end | Done 2026-08-26 | The Gödel-machine note was kept after source comparison and its ancillary literature handoff was replaced with a grounded primary route. Its path, title, and central claim stayed stable, so no inbound rewiring was needed. |
 | General disposition rule | Open | The evidence supports claim-level, source-grounded judgment, but no rule or no-general-rule finding has been promoted. |
 | Write-time check decision | Partial | ADR 073 guards explicit new or changed source dependencies. It cannot discover unattributed prior art, which is the check this closure condition still needs decided. |
 
+**Fresh-session entry point:** use
+[next-session-plan.md](./next-session-plan.md). It records the completed source
+handoffs, the active MOC run, the six untouched candidates in working order,
+the per-candidate procedure, and the two final workshop-level decisions.
+
 The direct source-grounding machinery no longer blocks progress. Evidence
-selection and artifact judgment do. The source-independent
+selection is complete for the current cohort; artifact judgment remains. The source-independent
 [Channel 2](./three-channels.md#channel-2--claims-to-change) pass completed on
 2026-08-26: the stale-index claim was reframed around greater realized coverage,
 four prose-only defects were repaired, and the false external-source trait was
 dropped. None of those corrections is an artifact disposition. The handoff
 triage is now complete: two of the nine new notes joined the working cohort and
 the other seven remain source-grounding, provenance, or evidence-stabilization
-work. The first four dated dispositions are complete: the Gödel-machine,
-proposal-selection, and first Pirolli worked-case notes were kept after direct
-comparison with their primary sources, while the knowledge-access candidate was
-rewritten around a source-bounded synthesis of existing local premises. The
-Pirolli case is the first completed member of the original cohort; the
-knowledge-access case is the first rename-and-reframe disposition. Most other
-final dispositions wait on the wider corpus, whose selection is now the next
-step. The rollout's all-68-fresh
+work. Seven dated dispositions are complete. The activation note and two
+navigation/pointer notes followed the first four after the wider source corpus
+landed. The MOC-plus-contract target was repaired in the same batch, but its
+final multistage acceptance is still pending. The comparisons and current
+status are recorded in [activation-disposition.md](./activation-disposition.md)
+and [source-backed-dispositions.md](./source-backed-dispositions.md). After the
+MOC run, six artifact judgments remain; none has an automatic
+source-acquisition prerequisite. The
+rollout's all-68-fresh
 statement is a dated certification result, not standing assurance:
 post-certification note edits require current freshness checks and sometimes new
 reviews. The 2026-08-26 `concept-attribution` and `misleading-link-text` prompt
@@ -309,7 +316,7 @@ dated intake decisions, not permanent immunity from a later prior-art finding.
 
 | Target | Uses | Current source state | Cohort decision and remaining queue |
 |---|---:|---|---|
-| `knowledge-storage-does-not-imply-contextual-activation` | 1 | Primary Tulving/Pearlstone and Gick/Holyoak captures remain absent; Gao–Chen does not answer that source-side question | **In — starting cohort.** The handoff bears on the note's central storage/access/activation distinction. Acquire the two primary routes. |
+| `knowledge-storage-does-not-imply-contextual-activation` | 1 | Tulving/Pearlstone and Gick/Holyoak now have quote-backed primary ingests; Gao–Chen remains a narrower agent-documentation case | **In — kept 2026-08-26.** The sources ground narrower human antecedents while the note retains the agent-specific read-back definition and evaluation ladder. |
 | `rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence` | 1 | Owned sources establish within-execution state but not post-return disposal | **Out on present evidence.** The missing fact would restore one lifecycle cell in a four-system comparison, not subsume the comparison. Keep it in source acquisition. |
 | `llm-generation-relaxes-goals-where-human-writing-stalls` | 1 | Borretti reproduces and attributes the passage; the primary Weizenbaum text is not captured | **Out.** This is quotation provenance; the note's argmax-and-relaxation mechanism remains an explicit local conjecture. Preserve secondary attribution until the primary is checked. |
 | `context-contamination-operates-below-an-agents-compliance-reasoning` | 1 | The controlled experiment remains in a sibling repository's workshop layer, not a tracked source route here | **Out of the literature cohort.** Decide whether to promote or import stable experiment evidence before treating the result as durably grounded. |
@@ -324,16 +331,16 @@ The result separates the source-route matrix cleanly:
 
 | Current source state | Uses in disposition-candidate targets | Uses outside the disposition cohort | Total |
 |---|---:|---:|---:|
-| Grounded direct route | 6 — proposal-selection (5), Gödel machines (1) | 0 | 6 |
+| Grounded direct route | 7 — proposal-selection (5), Gödel machines (1), activation (1) | 0 | 7 |
 | Matching tracked ingest; target repair pending | 0 | 3 — scaling, selective revision, maintainability oracles | 3 |
-| Direct route or stable evidence absent | 1 — activation | 6 — RLM lifecycle, Weizenbaum, contamination evidence, theory-mediated learning (3) | 7 |
+| Direct route or stable evidence absent | 0 | 6 — RLM lifecycle, Weizenbaum, contamination evidence, theory-mediated learning (3) | 6 |
 | **Total** | **7** | **9** | **16** |
 
 Two of the nine new notes therefore join the working cohort, taking it from
 twelve to fourteen candidates. Seven notes and nine uses do not become
 artifact-disposition work merely because their source route is incomplete.
-Their grounding and provenance repairs remain valid work, but they do not block
-the cohort's remaining eleven artifact judgments.
+Their grounding and provenance repairs remain valid work, but they did not
+block the cohort's then-remaining eleven artifact judgments.
 
 ## First dated artifact disposition — Gödel machines
 
@@ -426,6 +433,29 @@ durable contribution, even when most of its original inventory belongs
 elsewhere or remains ungrounded. That is another worked shape, not yet a general
 rule.
 
+## Fifth through seventh dispositions, with the eighth in progress
+
+Three source-backed handoffs are decided and executed; the fourth target repair
+is committed but its final disposition awaits the active multistage run:
+
+- [Contextual activation](./activation-disposition.md) — keep as the canonical
+  read-back and activation synthesis after comparison with Tulving/Pearlstone
+  and Gick/Holyoak.
+- [Link-following and search](./source-backed-dispositions.md#sixth-dated-artifact-disposition--link-following-and-search)
+  — keep as an agent-KB metadata transfer from Teevan's bounded human case.
+- [Pointer design](./source-backed-dispositions.md#seventh-dated-artifact-disposition--pointer-design)
+  — keep after grounding the query-time branch and repairing the contradictory
+  OpenViking comparison.
+- [Enforced tag-README](./source-backed-dispositions.md#pending-eighth-artifact-disposition--enforced-tag-readme)
+  — target repair committed after replacing a universal history with separate
+  source-bounded Milo and Luhmann statements; final acceptance remains open in
+  `kb/work/multistage/multistage-write-enforced-tag-readme-moc-20260826/`.
+
+The source corpus is no longer a standing blocker. The
+[continuation plan](./next-session-plan.md) starts by completing that active run,
+then takes the six remaining artifact judgments and reserves the general-rule
+and write-time-check decisions for the evidence they produce.
+
 ## Boundaries
 
 In scope:
@@ -470,6 +500,16 @@ corpus has to adjudicate.
 
 ## Files
 
+- [Fresh-session continuation plan](./next-session-plan.md) — authoritative
+  restart point after seven of fourteen final dispositions and one committed
+  target repair; lists the active acceptance run, six remaining candidates,
+  procedure, and final synthesis decisions
+- [Source-backed target dispositions](./source-backed-dispositions.md) — dated
+  artifact judgments for link-following/search, pointer design, and the
+  enforced tag-README
+- [Contextual activation disposition](./activation-disposition.md) — dated
+  keep decision after comparison with the primary availability/accessibility
+  and analogical-transfer sources
 - [Received claim-grounding rollout handoffs](#received-claim-grounding-rollout-handoffs)
   — retained intake from the completed retrospective ADR 073 application; its
   sixteen literature handoffs feed source and target triage here without
