@@ -19,16 +19,16 @@ for the operative grounding path.
 
 **Open.** The starting cohort has twelve candidates. The first was inventoried
 and checked against an actual source in the worked case; the other eleven have
-claim inventories and candidate reading assignments. No candidate yet has a
-final dated artifact disposition. The claim-grounding rollout has since produced
-264 terminal claim-use dispositions and sixteen `literature handoff`s across ten
-notes. Those handoffs are intake for source acquisition or target re-evaluation;
-they are not keep, merge, thin, or retire decisions, and only one of their notes
-belongs to the starting cohort.
+claim inventories and candidate reading assignments. The 2026-08-26 handoff
+triage admitted two further candidates, so the working cohort now has fourteen.
+No candidate yet has a final dated artifact disposition. The claim-grounding
+rollout produced 264 terminal claim-use dispositions and sixteen `literature
+handoff`s across ten notes. Those handoffs are intake for source acquisition or
+target re-evaluation; they are not keep, merge, thin, or retire decisions.
 
 | Closure condition | State | What remains |
 |---|---|---|
-| Source-grounded disposition for every settled cohort member | Open | Settle cohort membership, triage the sixteen rollout handoffs, capture the remaining claim-selected sources, and adjudicate the eleven candidates not yet checked against their assigned literature. The worked candidate's final artifact disposition is also open. |
+| Source-grounded disposition for every settled cohort member | Open | Complete the source routes and adjudicate the fourteen working candidates. The first worked candidate still needs a final artifact disposition, and the two candidates admitted from the handoffs need artifact-level source comparison. |
 | One disposition executed end to end | Open | The first case produced and executed a claim correction, not a final keep, merge, thin, or retire decision. |
 | General disposition rule | Open | The evidence supports claim-level, source-grounded judgment, but no rule or no-general-rule finding has been promoted. |
 | Write-time check decision | Partial | ADR 073 guards explicit new or changed source dependencies. It cannot discover unattributed prior art, which is the check this closure condition still needs decided. |
@@ -38,10 +38,14 @@ selection and artifact judgment do. The source-independent
 [Channel 2](./three-channels.md#channel-2--claims-to-change) pass completed on
 2026-08-26: the stale-index claim was reframed around greater realized coverage,
 four prose-only defects were repaired, and the false external-source trait was
-dropped. None of those corrections is an artifact disposition. The next work is
-to triage the sixteen rollout handoffs before selecting the wider source corpus.
-Most final dispositions still wait on that corpus. The rollout's all-68-fresh
-statement is a dated certification result, not standing assurance:
+dropped. None of those corrections is an artifact disposition. The handoff
+triage is now complete: two of the nine new notes joined the working cohort and
+the other seven remain source-grounding, provenance, or evidence-stabilization
+work. The next bounded case is the Gödel-machine note: its main source route is
+already present, and its one ancillary handoff now has a matching ingest that
+can be grounded before the first dated artifact judgment. Most other final
+dispositions still wait on the wider corpus. The rollout's all-68-fresh statement
+is a dated certification result, not standing assurance:
 post-certification note edits require current freshness checks and sometimes new
 reviews. The 2026-08-26 `concept-attribution` and `misleading-link-text` prompt
 edits also stale their prior criterion partitions. Neither freshness nor a gate
@@ -284,23 +288,40 @@ artifact disposition.
 Current triage distinguishes missing sources from matching ingests available
 outside the handoff's original owned source set:
 
-| Target | Uses | Current source state | Literature-disposition implication |
-|---|---:|---|---|
-| `knowledge-storage-does-not-imply-contextual-activation` | 1 | Primary Tulving/Pearlstone and Gick/Holyoak captures remain absent; Gao–Chen does not answer that source-side question | Starting-cohort handoff remains open |
-| `rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence` | 1 | Owned sources establish within-execution state but not post-return disposal | Find an implementation-specific lifecycle source before reconsidering the removed claim |
-| `llm-generation-relaxes-goals-where-human-writing-stalls` | 1 | Borretti reproduces and attributes the passage; the primary Weizenbaum text is not captured | Preserve secondary attribution until the primary is checked |
-| `context-contamination-operates-below-an-agents-compliance-reasoning` | 1 | The controlled experiment remains in a sibling repository's workshop layer, not a tracked source route here | Decide whether to import a stable evidence artifact before treating the result as durable grounding |
-| `scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier` | 1 | The exact financial-services practitioner report has a tracked ingest with relevant Quotes; the target still uses the bare URL | A tracked source route is available; target grounding and route migration remain |
-| `selective-revision-needs-a-faithful-rationale-not-just-a-legible-one` | 1 | The self-evolver paper has a tracked ingest with intervention Quotes; the target still uses the bare arXiv URL | A tracked source route is available; target grounding and route migration remain |
-| `theory-mediated-learning-may-improve-sample-efficiency-under-shifts` | 3 | Yosinski transfer, MAML, and Bengio fast-adaptation sources remain bare URLs with no tracked ingests | Three source acquisitions remain before re-evaluation |
-| `a-proposal-selection-loop-requires-search-evaluation-and-retention` | 5 | Ashby has a local source review but no direct ingest; Zinkevich, Kephart/Chess, Weyns, and Petrovska now have tracked ingests, mostly without retained Quotes for these uses | Two Ashby uses still need a direct route; three removed claims can now be reconsidered through grounding |
-| `brainstorming-maintainability-oracles-for-agentic-development` | 1 | *Why Software Factories Fail Part II* now has a tracked ingest but no retained Quotes | Ground the source-side claim before deciding whether to restore the attribution |
-| `goedel-machines-are-a-proof-governed-case-of-self-modification` | 1 | The Incremental Self-Improvement primary report now has a tracked ingest but no retained Quotes for the use | Ground the retention/rollback rule before replacing the local-review handoff |
+The membership test is artifact-level: admit a target when source reading could
+show that its central contribution is established elsewhere, or could leave it
+with only a narrower Commonplace delta. A missing source for one quotation,
+example, comparison cell, or already removed clause stays in the grounding or
+provenance queue. Evidence retained only in another project's workshop is an
+evidence-stabilization problem, not external-literature disposition. These are
+dated intake decisions, not permanent immunity from a later prior-art finding.
 
-Seven of the sixteen uses therefore have a matching tracked ingest now; source
-acquisition alone does not complete their target-side judgment. Only KSA-1 is a
-member of the starting cohort. The other fifteen uses are a wider intake queue
-whose cohort membership must be decided rather than inherited from the rollout.
+| Target | Uses | Current source state | Cohort decision and remaining queue |
+|---|---:|---|---|
+| `knowledge-storage-does-not-imply-contextual-activation` | 1 | Primary Tulving/Pearlstone and Gick/Holyoak captures remain absent; Gao–Chen does not answer that source-side question | **In — starting cohort.** The handoff bears on the note's central storage/access/activation distinction. Acquire the two primary routes. |
+| `rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence` | 1 | Owned sources establish within-execution state but not post-return disposal | **Out on present evidence.** The missing fact would restore one lifecycle cell in a four-system comparison, not subsume the comparison. Keep it in source acquisition. |
+| `llm-generation-relaxes-goals-where-human-writing-stalls` | 1 | Borretti reproduces and attributes the passage; the primary Weizenbaum text is not captured | **Out.** This is quotation provenance; the note's argmax-and-relaxation mechanism remains an explicit local conjecture. Preserve secondary attribution until the primary is checked. |
+| `context-contamination-operates-below-an-agents-compliance-reasoning` | 1 | The controlled experiment remains in a sibling repository's workshop layer, not a tracked source route here | **Out of the literature cohort.** Decide whether to promote or import stable experiment evidence before treating the result as durably grounded. |
+| `scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier` | 1 | The exact financial-services practitioner report has a tracked ingest with relevant Quotes; the target still uses the bare URL | **Out.** The report is one illustration; the central frontier-recurrence claim remains a conditional hypothesis requiring longitudinal evidence. Ground and migrate the route separately. |
+| `selective-revision-needs-a-faithful-rationale-not-just-a-legible-one` | 1 | The self-evolver paper has a tracked ingest with intervention Quotes; the target still uses the bare arXiv URL | **Out.** The paper supports one causal-faithfulness premise; the transfer to revision of natural-language rationales remains the note's stated delta. Ground and migrate the route separately. |
+| `theory-mediated-learning-may-improve-sample-efficiency-under-shifts` | 3 | Yosinski transfer, MAML, and Bengio fast-adaptation sources remain bare URLs with no tracked ingests | **Out on present evidence.** The three uses establish comparison and boundary facts, while the title interaction remains an explicitly untested experiment. Acquire the sources if those uses remain. |
+| `a-proposal-selection-loop-requires-search-evaluation-and-retention` | 5 | Ashby has a local source review but no direct ingest; Zinkevich, Kephart/Chess, Weyns, and Petrovska now have tracked ingests, mostly without retained Quotes for these uses | **In — new candidate.** The handoffs bear jointly on the model's Ashby ancestry, counterexamples, and relation to established adaptive-loop traditions; source reading could reduce the three-function model to a narrower local subtype or vocabulary delta. Ground the three available uses and obtain a direct Ashby route for two. |
+| `brainstorming-maintainability-oracles-for-agentic-development` | 1 | *Why Software Factories Fail Part II* now has a tracked ingest but no retained Quotes | **Out.** The handoff concerns one removed workflow attribution inside an explicit seedling; the proposed oracle design survives independently. Ground before any restoration. |
+| `goedel-machines-are-a-proof-governed-case-of-self-modification` | 1 | The Incremental Self-Improvement primary report now has a tracked ingest but no retained Quotes for the use | **In — new candidate.** Exposition of Schmidhuber's architecture is central, while the prompt-editing and acceptance-axis comparisons may be the local remainder. Ground the ancillary retention/rollback use, then make an artifact-level disposition. |
+
+The result separates the source-route matrix cleanly:
+
+| Current source state | Uses in disposition-candidate targets | Uses outside the disposition cohort | Total |
+|---|---:|---:|---:|
+| Matching tracked ingest | 4 — proposal-selection (3), Gödel machines (1) | 3 — scaling, selective revision, maintainability oracles | 7 |
+| Direct route or stable evidence absent | 3 — activation (1), proposal-selection (2) | 6 — RLM lifecycle, Weizenbaum, contamination evidence, theory-mediated learning (3) | 9 |
+| **Total** | **7** | **9** | **16** |
+
+Two of the nine new notes therefore join the working cohort, taking it from
+twelve to fourteen candidates. Seven notes and nine uses do not become
+artifact-disposition work merely because their source route is incomplete.
+Their grounding and provenance repairs remain valid work, but they do not block
+the cohort's first artifact judgment.
 
 ## Boundaries
 

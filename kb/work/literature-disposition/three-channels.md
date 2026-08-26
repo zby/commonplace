@@ -73,15 +73,19 @@ works.
 
 ### 1e. Rollout literature-handoff intake
 
-**Open [v].** The completed claim-grounding rollout handed off sixteen claim
-uses across ten notes. Seven uses now have a matching tracked ingest, while nine
-still lack a direct source route or stable evidence artifact. Only
-`knowledge-storage-does-not-imply-contextual-activation` belongs to this
-workshop's starting cohort. The other nine notes need an explicit
-cohort-membership decision before they become disposition work. Source
-acquisition, route migration, target re-evaluation, and final artifact
-disposition remain separate steps; none of the sixteen handoffs is itself a
-keep, merge, thin, or retire decision. The detailed triage is in the [workshop
+**Intake triaged 2026-08-26 [v]; route work open.** The completed
+claim-grounding rollout handed off sixteen claim uses across ten notes. Seven
+uses now have a matching tracked ingest, while nine still lack a direct source
+route or stable evidence artifact. Artifact-level triage admitted
+`a-proposal-selection-loop-requires-search-evaluation-and-retention` and
+`goedel-machines-are-a-proof-governed-case-of-self-modification` as two new
+candidates alongside the already-cohort activation note. The other seven notes
+stay in source-grounding, provenance, or evidence-stabilization queues: their
+handoffs concern supporting uses, not credible subsumption of the artifact's
+central contribution. Source acquisition, route migration, target
+re-evaluation, and final artifact disposition remain separate steps; none of
+the sixteen handoffs is itself a keep, merge, thin, or retire decision. The
+detailed test, decisions, and 7-by-9 route matrix are in the [workshop
 README](./README.md#received-claim-grounding-rollout-handoffs).
 
 ---
@@ -262,18 +266,24 @@ form without the eighth move propagates the problem in more convincing packaging
 
 ## Sequencing
 
-1. **Triage the received literature handoffs.** Separate the seven uses that now
-   have matching tracked ingests from the nine that still lack a direct route,
-   and decide whether the nine out-of-cohort notes belong here.
-2. **Select the wider corpus from the claim inventory.** Source-grounding owns
-   the selection; the V1 Quotes/snapshot path is ready to carry each result.
-3. **Run the remaining migrations and source-dependent claim judgments** in
-   small source-coherent batches.
-4. **Record dated artifact dispositions and execute one end to end.** A claim
-   correction does not substitute for the first keep, merge, thin, or retire
-   decision with all required rewiring.
-5. **Close the two general questions.** Promote a disposition rule or record
-   that judgment remains per-note, and decide the unresolved prior-art check.
+1. **Ground the Gödel-machine note's ancillary handoff, then make the first
+   dated artifact judgment.** Its primary Schmidhuber route is already present
+   and the Incremental Self-Improvement report now has a matching ingest, making
+   this the smallest candidate that can exercise disposition rather than only
+   claim repair.
+2. **Complete the proposal-selection candidate's source set.** Ground the three
+   matching ingests and obtain a direct primary Ashby route for its two remaining
+   uses before judging whether the three-function model is established
+   vocabulary, a local subtype, or a mixture.
+3. **Select the wider corpus from the original claim inventory.**
+   Source-grounding owns the selection; the V1 Quotes/snapshot path is ready to
+   carry each result.
+4. **Run the remaining migrations and source-dependent claim judgments** in
+   small source-coherent batches, without treating the seven excluded handoff
+   notes as artifact-disposition blockers.
+5. **Record the remaining dated artifact dispositions and close the two general
+   questions.** Promote a disposition rule or record that judgment remains
+   per-note, and decide the unresolved prior-art check.
 
 Bulk migration still should not precede source selection. The machinery is no
 longer the blocker; choosing evidence from the wrong tradition is.

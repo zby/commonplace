@@ -24,9 +24,15 @@ inventory's starting cohort. Its handoff remains open: Gao and Chen now provide
 a bounded agent-documentation case that separates explicit consultation from
 behavioral uptake, but they do not supply the primary
 availability/accessibility or spontaneous-transfer evidence assigned here. The
-other fifteen uses are new intake whose cohort membership must be decided; their
-current source states are recorded in the [workshop
-README](./README.md#received-claim-grounding-rollout-handoffs).
+other fifteen uses were triaged at artifact level on 2026-08-26. Five uses in
+`a-proposal-selection-loop-requires-search-evaluation-and-retention` and one in
+`goedel-machines-are-a-proof-governed-case-of-self-modification` admit those two
+notes as new disposition candidates. The remaining nine uses across seven notes
+stay in source-grounding, provenance, or evidence-stabilization queues because
+they concern a supporting example, quotation, comparison cell, removed clause,
+or sibling-workshop experiment rather than credible subsumption of the note's
+central contribution. The dated decisions and current source states are in the
+[workshop README](./README.md#received-claim-grounding-rollout-handoffs).
 
 The operative source route has also changed since this inventory was built.
 Current work grounds a use directly in retained exact `## Quotes` or in an exact
