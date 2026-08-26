@@ -1,5 +1,5 @@
 ---
-description: "Naur's program theory becomes operative when an interpreter with application judgment consumes retained theory; theory-mediated learning as the general case, methodology as one realization, T/R/S properties, harnesses positioned, self-witnessed repair failure"
+description: "Naur's program theory becomes operative when an interpreter with application judgment consumes retained theory; theory-mediated learning as the general case, T/R/S properties, harnesses positioned, self-witnessed repair failure"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
