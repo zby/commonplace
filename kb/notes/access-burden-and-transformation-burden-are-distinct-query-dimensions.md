@@ -44,5 +44,5 @@ Execution changes the state against which both burdens are measured, so routing 
 
 Relevant Notes:
 
-- [charting the knowledge-access problem beyond RAG](./knowledge-access-architecture-must-be-evaluated-end-to-end.md) — this distinction emerged from its broader map of knowledge access
+- [Knowledge-access architecture must be evaluated end to end, not by retrieval alone](./knowledge-access-architecture-must-be-evaluated-end-to-end.md) — extends: uses this distinction as one checkpoint in a wider evaluation boundary
 - [soft degradation often binds before the hard cap when required evidence fits](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) — its account of task-dependent context costs bounds how both burdens appear within a model call

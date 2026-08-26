@@ -49,7 +49,7 @@ Relevant Notes:
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — exemplifies: the loading hierarchy is a resolution gradient from always-loaded broad context to on-demand narrow detail
 - [link strength is encoded in position and prose](./link-strength-is-encoded-in-position-and-prose.md) — extends: link semantics encode zoom direction — "since" zooms into foundations, "extends" zooms out to generalizations
 - [recognition, not linking, is the hard problem in knowledge systems](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — enables: resolution-switching is the navigation skill recognition depends on, and what must be recognized sets how deep the zoom goes
-- [charting the knowledge-access problem beyond RAG](./knowledge-access-architecture-must-be-evaluated-end-to-end.md) — extends: resolution-switching is one part of the broader access problem alongside substrate choice, synthesis, and maintenance
+- [Knowledge-access architecture must be evaluated end to end, not by retrieval alone](./knowledge-access-architecture-must-be-evaluated-end-to-end.md) — extends: places resolution-switching inside the discovery and loading checkpoints of a wider task-relative evaluation
 
 Source:
 - Adapted from a social media post on "The Art of Good Thinking: Moving Between Levels" — the core insight about resolution-switching applied to KB design

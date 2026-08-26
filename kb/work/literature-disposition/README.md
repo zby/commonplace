@@ -21,10 +21,13 @@ for the operative grounding path.
 and checked against an actual source in the worked case; the other eleven have
 claim inventories and candidate reading assignments. The 2026-08-26 handoff
 triage admitted two further candidates, so the working cohort now has fourteen.
-Three candidates now have final dated artifact dispositions: the Gödel-machine,
-proposal-selection, and first Pirolli worked-case notes were kept on 2026-08-26.
+Four candidates now have final dated artifact dispositions: the Gödel-machine,
+proposal-selection, and first Pirolli worked-case notes were kept on 2026-08-26,
+and the knowledge-access candidate was kept after an in-place synthesis reframe.
 The first two followed grounded handoff repairs; the Pirolli note followed a
-claim correction, direct source route, and artifact-level graph assessment. The
+claim correction, direct source route, and artifact-level graph assessment; the
+knowledge-access note dropped unsupported or separately owned subclaims and
+retained the cross-stage inference no component note states alone. The
 claim-grounding rollout produced 264 terminal claim-use dispositions and
 sixteen `literature handoff`s across ten notes. Those handoffs are intake for
 source acquisition or target re-evaluation; they are not by themselves keep,
@@ -32,7 +35,7 @@ merge, thin, or retire decisions.
 
 | Closure condition | State | What remains |
 |---|---|---|
-| Source-grounded disposition for every settled cohort member | Open | Three of fourteen working candidates are complete. Finish source routes and adjudicate the remaining eleven, including the activation candidate. |
+| Source-grounded disposition for every settled cohort member | Open | Four of fourteen working candidates are complete. Finish source routes and adjudicate the remaining ten, including the activation candidate. |
 | One disposition executed end to end | Done 2026-08-26 | The Gödel-machine note was kept after source comparison and its ancillary literature handoff was replaced with a grounded primary route. Its path, title, and central claim stayed stable, so no inbound rewiring was needed. |
 | General disposition rule | Open | The evidence supports claim-level, source-grounded judgment, but no rule or no-general-rule finding has been promoted. |
 | Write-time check decision | Partial | ADR 073 guards explicit new or changed source dependencies. It cannot discover unattributed prior art, which is the check this closure condition still needs decided. |
@@ -45,11 +48,14 @@ four prose-only defects were repaired, and the false external-source trait was
 dropped. None of those corrections is an artifact disposition. The handoff
 triage is now complete: two of the nine new notes joined the working cohort and
 the other seven remain source-grounding, provenance, or evidence-stabilization
-work. The first three dated dispositions are complete: the Gödel-machine,
+work. The first four dated dispositions are complete: the Gödel-machine,
 proposal-selection, and first Pirolli worked-case notes were kept after direct
-comparison with their primary sources. The Pirolli case is the first completed
-member of the original cohort. Most other final dispositions wait on the wider
-corpus, whose selection is now the next step. The rollout's all-68-fresh
+comparison with their primary sources, while the knowledge-access candidate was
+rewritten around a source-bounded synthesis of existing local premises. The
+Pirolli case is the first completed member of the original cohort; the
+knowledge-access case is the first rename-and-reframe disposition. Most other
+final dispositions wait on the wider corpus, whose selection is now the next
+step. The rollout's all-68-fresh
 statement is a dated certification result, not standing assurance:
 post-certification note edits require current freshness checks and sometimes new
 reviews. The 2026-08-26 `concept-attribution` and `misleading-link-text` prompt
@@ -394,6 +400,31 @@ not a source-side construction or a set of neighboring engineering mechanisms.
 The note survives because it is the normalized target-side transfer argument.
 That repeated shape is evidence for later synthesis, not yet a general
 disposition rule.
+
+## Fourth dated artifact disposition — end-to-end knowledge access
+
+**Disposition: Keep after rewriting as a synthesis. Decided and executed
+2026-08-26.** The former brainstorming map was renamed to
+[Knowledge-access architecture must be evaluated end to end, not by retrieval
+alone](../../notes/knowledge-access-architecture-must-be-evaluated-end-to-end.md).
+The comparison used the completed Pirolli ingest for the bounded human
+navigation case and the note's existing component premises for the
+agent-architecture remainder.
+
+| Test | Finding |
+|---|---|
+| Source overlap | Pirolli supports the human proximal-cue/distal-content structure behind candidate discovery, but not an LLM-agent transfer or an end-to-end architecture. The incumbent's RAG taxonomy, five-mode navigation taxonomy, prescribed view stack, and historical-library analogy were not needed for the governing claim and lacked sufficient tracked support in this run, so they were omitted rather than presented as established. |
+| Commonplace remainder | The surviving contribution composes separately citable boundaries: stored material can fail discovery or loadability; retrieval can leave transformation undone; context presence can fail activation or downstream benefit; and pointers, indexes, and reconciled views depend on upkeep. No component note derives the joint conclusion that retrieval measures and substrate labels cannot proxy for task-relative whole-path quality. |
+| Recovery and shape | Retiring the note would make each consumer reconstruct the cross-stage inference from several component notes. Moving it to `kb/work/` would also break the library boundary. A compact `synthesis` note preserves the composition while leaving each component's definitions, evidence, and revision surface with its existing owner. |
+| Graph role | Six tracked note, index, and source consumers linked to the incumbent before relocation. Four note/index consumers were reworded for the new claim, Pirolli's edge was narrowed to a bounded human discovery case, and the semantic-memory ingest's obsolete direct edge was removed. |
+| Execution | Pure relocation commit `c63fca67` moved the note, rewrote tracked paths, and added the published redirect before any content edit. The follow-up rewrite replaced the brainstorming status with a claim title and `synthesis` trait, reconciled all substantive inbound consumers, and passed deterministic validation together with both changed ingests and the redirect map. All 35 orphaned old-path review baselines were retired; the final 43-gate `codex` pass is fresh with every outcome `pass`. The final note has no direct external-source dependency. |
+
+This is a keep reached through subtraction and recomposition rather than source
+exposition or a thin transfer adapter. It is evidence that a note can survive
+literature disposition because the relation among already-owned claims is the
+durable contribution, even when most of its original inventory belongs
+elsewhere or remains ungrounded. That is another worked shape, not yet a general
+rule.
 
 ## Boundaries
 

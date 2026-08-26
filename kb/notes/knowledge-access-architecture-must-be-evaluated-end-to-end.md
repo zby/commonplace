@@ -1,129 +1,48 @@
 ---
-description: Brainstorming note that decomposes the "how should an agent find what it needs?" problem into storage substrate, pointers, navigation, synthesis, and maintenance beyond RAG-vs-filesystem debates
+description: Explains why retrieval measures and storage-substrate labels cannot proxy for task-relative quality across discovery, loading, transformation, activation, and upkeep
 type: kb/types/note.md
-traits: []
-tags: [foundations]
+traits: [title-as-claim, synthesis]
+tags: [foundations, context-engineering]
 ---
 
-# Charting the knowledge-access problem beyond RAG
+# Knowledge-access architecture must be evaluated end to end, not by retrieval alone
 
-Discussion about RAG, filesystems, databases, and graphs often treats storage or interface choice as the main question. But those are only part of the design space. The deeper problem is: how should a knowledge system be structured so a bounded agent can find, judge, combine, and trust the information needed for a task?
+For a specified task, knowledge-access architecture must be evaluated across the path from identifying candidate material to producing and sustaining the outcome being evaluated. That path includes finding relevant material, constructing a usable task-facing context, turning inputs into the requested result, getting the material to affect the agent's behavior, and keeping the access route current. Each boundary can fail separately. Success at one therefore does not establish success at another.
 
-This is a brainstorming note, not a settled position. The goal is to chart the subproblems so comparisons stop collapsing unlike things into the same bucket.
+A retrieval evaluation observes a particular event or property, such as candidate coverage, ordering, a relevance decision, payload return, or read-back. None alone establishes that the returned material stays within the amount of context the task can use reliably, supports the required transformation, changes the agent's behavior, improves the outcome being evaluated, or stays valid as the knowledge base changes. A storage substrate likewise shapes available operations and their costs, but is not itself an outcome measure.
 
-## What success should be measured against
+## Discovery is not a task-facing context
 
-The goal is not retrieval accuracy in isolation. A knowledge system for an agent should improve [contextual competence through discoverable, composable, trusted remembered knowledge](./agent-memory-needs-discoverable-composable-trusted-knowledge-under.md): not just answering a question, but helping the agent classify, plan, explain, and act appropriately under bounded context.
+Stored material becomes a candidate only when the consumer can identify it as relevant through an affordable route and a sufficiently discriminating cue. This is the task-relative discoverability requirement in [agent memory needs discoverable, composable, trusted knowledge under a context budget](./agent-memory-needs-discoverable-composable-trusted-knowledge-under.md), while [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) explains why the cue must justify the cost of following it. Storage can therefore succeed while candidate discovery fails.
 
-That widens the evaluation target. An access strategy might be good at exact lookup but poor at orientation. Good at landing on a page but poor at surfacing contradictions. Good at retrieving chunks but poor at helping the agent compose them into an argument. Once the target is contextual competence rather than search accuracy, "best retrieval system" stops being a single-axis question.
+Discovery can also succeed while loading or composition fails. The remembered-knowledge tests linked above separate these properties. A discovered artifact can lack a decision-relevant representation that fits without displacing more valuable task material. A fitting representation can still lack the scope, relationships, or conditions that it needs to combine with task context. Separately, a provider can accept more text than the model can use reliably for the task because [performance can degrade before the hard context-window cap](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md). Nor is delivery enough. The same selected material can support different results when it is framed around a different relation to test or resolve, so [selection and framing cannot generally be evaluated independently](./bounded-context-orchestration-model.md).
 
-## The parts of the problem
+## Access is not the requested result
 
-**Storage substrate** — where knowledge lives and what operations are cheap. Files make hierarchical browsing and exact reads cheap. Databases make scored queries and derived indexes cheap. Graphs make typed traversal and neighborhood operations cheap. This is the [storage-substrate](./definitions/storage-substrate.md) question, not yet the navigation strategy. [Canonical files may defer a shared schema while database authority remains a separate commitment](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md) separates when a shared schema should bind from where state should live and which record should govern, but it does not settle how an agent decides what to load next.
+Even affordable, well-framed material can leave required work undone. [Access burden and transformation burden are distinct](./access-burden-and-transformation-burden-are-distinct-query-dimensions.md): locating inputs can be easy while deriving an explanation, judgment, synthesis, or other accepted result remains hard. The two burdens are relative to the current evidence, available operators and representations, and the conditions that make an answer acceptable. They can also alternate when transformation exposes another evidence need.
 
-**Pointers** — what the agent sees before it commits to reading. Titles, descriptions, table-of-contents entries, index blurbs, link phrases, path names, and graph edge labels are all pointers. Their job is not to answer the question directly, but to make the follow/skip decision cheap. This is the design space described by [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md).
+Presence in context is a further checkpoint, not proof of use. [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md): retained material can be read back without changing which information the agent selects, which plan or check it produces, which output it gives, or which action it takes. A behavioral change, in turn, does not by itself establish improvement in the downstream outcome. Evaluation must therefore name whether it claims exposure, uptake, an action, a validated artifact, or task success, and observe that outcome rather than substitute an upstream event for it.
 
-**Navigation modes** — there are several distinct tasks usually lumped together as "retrieval":
+## Upkeep is part of access
 
-- long jump: find a promising landing point from the whole corpus
-- local traversal: move from one relevant item to nearby ones
-- exact lookup: find the place containing a string, syntax, or API name
-- orientation: get the shape of an area before descending
-- synthesis setup: assemble the subset worth reading together
+A route that works once may not keep working. Fixed pointers can drift when their targets change, while query-time pointers depend on their producing machinery remaining available and accurate, as described in [pointer design tradeoffs in progressive disclosure](./pointer-design-tradeoffs-in-progressive-disclosure.md). An index can become misleading when source membership changes and the index's apparent completeness suppresses a fallback search; that conditional failure is developed in [indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md). Views whose inputs have already been reconciled have their own refresh boundary because [evolving understanding can require holistic rewrite](./evolving-understanding-needs-holistic-rewrite-not-composition.md).
 
-Search, hierarchy browsing, link-following, grep, and indexes support different mixes of these tasks. [Link-following and search impose different metadata requirements](./link-following-and-search-impose-different-metadata-requirements.md) names one important split, but there are probably more than two modes.
+These mechanisms make maintenance part of [context engineering](./definitions/context-engineering.md)—getting the right knowledge into a bounded context at the right time and keeping that route healthy—not aftercare. A design may reduce work in the consuming call by assigning relevance judgment, reconciliation, or checking to an author or another runtime process, but it then depends on that work remaining current and available. The improvement must be evaluated together with the burden and dependency it introduces.
 
-These modes also consume context differently. A representation that works well for exact lookup may work poorly for synthesis setup because [soft degradation often binds before the hard cap when required evidence fits](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md). The same token count can be easy for one task shape and unusable for another.
+## Compare remaining burdens, not substrate names
 
-**Transformation burden** — queries also differ in how much work remains after the relevant inputs have been found. This seems independent from navigation mode. Some questions are mostly lookup: "Who is the HR head?" Some are derivation or aggregation: "What were last year's expenses?" if the answer requires selecting records and summing them. Some are synthesis: "Why did expenses increase?" Some are conjectural or creative: "How should we reorganize HR next year?"
+A storage choice matters through the operations it makes available for the task and the burdens that remain around those operations. Its label does not specify how the surrounding architecture routes, loads, frames, transforms, activates, or maintains knowledge.
 
-This suggests a second axis alongside access difficulty:
+Before comparing designs, fix the task, consumer or model, evidence state, available operators and representations, amount of context the task can use reliably, conditions that make an answer acceptable, and outcome being evaluated. Then ask:
 
-- access burden: how hard is it to find the right inputs?
-- transformation burden: how hard is it to turn those inputs into the requested output?
+- What relevant candidate coverage does the design realize, and at what navigation or decision cost?
+- Can the selected material be loaded and framed within the amount of context this task can use reliably?
+- What transformation or reconciliation remains, including any further access that the work reveals?
+- Does the material change behavior in the intended direction, and does the named downstream outcome improve?
+- What authoring, checking, regeneration, and refresh work keeps the route and representation valid?
 
-That distinction matters because "creating new information" covers several different operations. A derived answer may be new in the sense that it was not stored verbatim, but it is mechanically implied by existing data. That is different from open-ended synthesis or conjecture.
+Interpret each question's importance relative to the named task and outcome. Exact lookup can leave little transformation, while synthesis can be dominated by reconciliation and context feasibility. Keeping the diagnostics separate shows which burden a design reduces and which ones remain without inventing a total score.
 
-**Symbolic vs semantic post-processing** — one important split inside transformation burden is whether the work after retrieval can be done symbolically or requires semantic judgment. Summing last year's expenses is a symbolic operation over selected records. Explaining why expenses increased requires semantic processing over the records and their context. A common architecture is therefore symbolic search or filtering first, then semantic processing over the retrieved material. Plain RAG is one version of this. Agentic RAG is a stronger version where the LLM also helps decide which symbolic searches to run next.
+## Scope
 
-This symbolic/semantic split is not incidental. It is close to the KB's central architectural move: keep bookkeeping, filtering, aggregation, and orchestration symbolic where possible, and reserve LLM calls for semantic judgment. [Bounded-context orchestration model](./bounded-context-orchestration-model.md) states this explicitly as symbolic steps outside context and bounded agent calls for semantic work. On that framing, some queries should stay mostly symbolic end-to-end, while others need a symbolic retrieval stage that prepares inputs for a semantic call.
-
-**Synthesis** — some questions are not "which page contains the answer?" but "which set of pages must be reconciled to produce the answer?" This is different from landing on the right document. Once a question requires comparison, contradiction resolution, or a whole-picture narrative, the problem becomes one of prompt assembly or prior synthesis, not just retrieval. [Evolving understanding needs holistic rewrite, not composition](./evolving-understanding-needs-holistic-rewrite-not-composition.md) is one case of this broader pattern.
-
-**Maintenance** — any navigation aid can go stale. A table of contents, index, abstract, or graph edge is valuable only while it still predicts what the target contains. A stale navigation aid is most dangerous when it still looks complete: [indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md). The more a system depends on pointers and derived views, the more it needs maintenance loops that keep them trustworthy.
-
-## Why the RAG framing is too narrow
-
-"RAG" usually names one move: turn a question into a query, retrieve chunks, stuff them into context, answer. That is one routing and loading strategy. It is not the full problem.
-
-The framing becomes misleading when it hides these differences:
-
-- selecting one landing point vs assembling a reading plan
-- finding the right inputs vs transforming them into the requested output
-- symbolic derivation over retrieved inputs vs semantic synthesis over them
-- retrieving chunks vs exposing structure the agent can traverse
-- finding candidate pages vs preparing a synthesizable packet
-- storing knowledge vs activating it in the right context
-
-A filesystem interface can outperform naive RAG not because files are magical, but because it converts one hard global decision into many cheaper local ones: `ls` to orient, `grep` to narrow, `cat` to inspect, then continue. A graph can outperform both when typed neighborhoods matter. A database can outperform both when scoring and filtering dominate. The right comparison is task-relative, not ideology-relative.
-
-The bounded-context reason for this is easy to miss. Since [soft degradation often binds before the hard cap when required evidence fits](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md), access strategies should be compared by how they manage degradation for a task shape, not by whether they match a preferred storage metaphor.
-
-## Precomputed views as navigation infrastructure
-
-A table of contents is a derived view built for the task of search. So are abstracts, descriptions, index entries, overviews, and maybe graph neighborhood summaries. They compress a larger body so the agent can decide whether to descend.
-
-This suggests that good knowledge systems may need multiple precomputed views of the same source, each aimed at a different navigation or synthesis task:
-
-- title: fastest coarse relevance check
-- description: search-result discrimination
-- TOC or index entry: orientation within an area
-- abstract or overview: mid-resolution relevance judgment
-- full text: detailed reasoning material
-- synthesized narrative: whole-picture consumption when composition would exceed effective context
-
-If this is right, then the question is not whether semantic search is enough. It is whether the system provides the right pre-compressed views for the decisions the agent must make at each step.
-
-## Discovery and synthesis want different structures
-
-[Short composable notes maximize combinatorial discovery](./short-composable-notes-maximize-combinatorial-discovery.md) argues that the library should be optimized for co-loading many small independent claims. That is one access goal: discovery by juxtaposition.
-
-But the same structure can be bad for consumers who need the whole current picture. When the task is onboarding into an evolving situation, resolving tensions across many notes, or carrying forward a current strategy, fragment composition can exceed effective context. In those cases, a synthesized narrative or workshop artifact may be the right access surface. This suggests that "knowledge access" includes a tension between discovery-optimized structures and synthesis-optimized structures, not just a choice of retriever.
-
-## Historical analogy
-
-Libraries solved analogous problems long before computers. They did not rely on one universal access mechanism. They used catalogues, subject headings, shelf order, abstracts, bibliographies, and reference desks. The pattern seems durable: one corpus, multiple projections, each optimized for a different access task.
-
-The broader pattern may be older and wider than libraries. [Soft-bound traditions as sources for context engineering strategies](./soft-bound-traditions-as-sources-for-context-engineering-strategies.md) identifies recurring responses wherever a bounded processor cannot consume everything at once: selection pressure, compression, progressive formalization, and modularity. Library systems, technical writing, hypertext, and faceted classification all look like members of this family.
-
-What seems new in agent systems is not the existence of these layers but the hard bounded-context constraint. For an LLM, bad organization is not just inconvenient. It directly competes with the task for limited reasoning budget. That makes [context engineering](./definitions/context-engineering.md) the umbrella problem and makes derived views part of the access architecture, not just a summarization afterthought.
-
-## Open questions
-
-- How many distinct navigation modes are there beyond link-following and search?
-- What is the right taxonomy for transformation burden: lookup, derivation, aggregation, synthesis, conjecture, or something else?
-- Can access burden and transformation burden be estimated separately for a query?
-- Which query classes should stay symbolic end-to-end, and which should hand off to semantic processing?
-- When does a question cross from retrieval into synthesis, and can that boundary be detected automatically?
-- What is the right division of labor between discovery-optimized library structures and synthesis-optimized workshop artifacts?
-- What kinds of precomputed views are worth maintaining by hand, and which should be generated?
-- When does graph structure earn its maintenance cost over indexes plus links?
-- Can a system measure whether its pointers actually improve read/skip decisions, rather than only final answer accuracy?
-
----
-
-Relevant Notes:
-
-- [agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) — broadens the success criterion from answer-finding to contextual competence
-- [context engineering](./definitions/context-engineering.md) — frames the umbrella problem as routing, loading, scoping, and maintenance under bounded context
-- [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds the pointer-design part of the problem
-- [link-following and search impose different metadata requirements](./link-following-and-search-impose-different-metadata-requirements.md) — names one navigation split this note broadens into a larger task taxonomy
-- [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends the navigation question from retrieval accuracy to movement between abstraction levels
-- [soft degradation often binds before the hard cap when required evidence fits](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) — grounds the claim that access architecture must manage degradation rather than only fit under a hard limit
-- [bounded-context orchestration model](./bounded-context-orchestration-model.md) — grounds the symbolic/semantic split as symbolic scheduling and bounded semantic calls rather than treating all post-retrieval work as one kind
-- [ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — adds the case where answers are mechanically derived on demand rather than retrieved verbatim or persisted as durable knowledge
-- [short composable notes maximize combinatorial discovery](./short-composable-notes-maximize-combinatorial-discovery.md) — adds the discovery-optimized side of the library vs synthesis tension
-- [soft-bound traditions as sources for context engineering strategies](./soft-bound-traditions-as-sources-for-context-engineering-strategies.md) — extends the library analogy into a broader family of bounded-processor traditions
-- [evolving understanding needs holistic rewrite, not composition](./evolving-understanding-needs-holistic-rewrite-not-composition.md) — grounds the claim that some questions are synthesis problems, not page-selection problems
-- [Canonical files may defer a shared schema while database authority remains a separate commitment](./files-defer-centralized-schema-commitment-until-invariants-stabilize.md) — narrows schema timing and authority within storage design rather than treating either as the whole access architecture
-- [access burden and transformation burden are distinct query dimensions](./access-burden-and-transformation-burden-are-distinct-query-dimensions.md) — develops the two-burden decomposition and its specification-sensitive routing consequence as a standalone claim
+This is an architectural synthesis of established component distinctions, not a directly tested end-to-end empirical result. Its checkpoints are a non-exhaustive diagnostic: they can recur or overlap, and maintenance conditions several of them rather than forming the last step of a linear pipeline. The note supplies no aggregate score, universal stage weights, or evidence about which failure usually dominates. It also supplies no validated benchmark for agent pointer decisions, causal instrumentation for activation, or maintenance-adjusted cost comparison. Where a task requires calibrated reliance, trust remains an additional condition of usable knowledge rather than a mandatory sixth stage.
