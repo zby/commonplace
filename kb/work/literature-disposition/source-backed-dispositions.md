@@ -5,11 +5,9 @@ Date: 2026-08-26
 The source-corpus handoff in commit `18c6adf1` supplied retained exact quotes
 for Teevan, Tombros and Sanderson, the Niklas Luhmann Archive, and Nick Milo.
 Commit `ae1ce1dd` applied those sources to three targets after separating the
-source-side result from the Commonplace-side transfer or synthesis.
-Link-following/search and pointer design have final dispositions below. The MOC
-target repair is recorded as pending because a separately opened multistage
-acceptance run still owns its final artifact judgment. The fifth disposition,
-contextual activation, is recorded separately in
+source-side result from the Commonplace-side transfer or synthesis. All three
+targets now have final dispositions below. The fifth disposition, contextual
+activation, is recorded separately in
 [activation-disposition.md](./activation-disposition.md).
 
 ## Sixth dated artifact disposition — link-following and search
@@ -38,22 +36,22 @@ comparison. Decided and executed 2026-08-26.**
 | Graph role | Ten tracked library artifacts link to the note. Six note, reference, review, or type consumers use the tier or trade-off model; four source ingests connect evidence and adjacent cases. The path and title remain accurate. |
 | Execution | The first grounding run caught an older contradiction: the note denied OpenViking query-time pointers while defining scores and rerankers as such. It also found unsupported token estimates and relation-field details. Commit `ae1ce1dd` removed those claims, replaced them with the supported fixed-plus-query-time example, narrowed two footer annotations, and added the Tombros route. Deterministic validation passed; the final targeted grounding pair is fresh with outcome `pass` in the `codex` partition. |
 
-## Pending eighth artifact disposition — enforced tag-README
+## Eighth dated artifact disposition — enforced tag-README
 
-**Candidate disposition: Keep after a source-bounded historical rewrite. Target
-repair executed 2026-08-26; final disposition pending multistage acceptance.**
+**Disposition: Keep after a source-bounded multistage rewrite. Decided and
+executed 2026-08-26.**
 
 | Test | Finding |
 |---|---|
 | Source overlap | Milo defines an MOC as a contextual map and gives a grouped-link note as one form. The Luhmann Archive says Luhmann's own keyword registers made no completeness claim and named relevant entry points. Neither source says the registers were MOCs, that all MOCs are selective or annotated, or that no practitioner promises completeness. |
-| Commonplace remainder | The [note](../../notes/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md) maps Milo's positive grouped-link pattern onto a tag-README, then explains the local machine-checked delta: a useful stopping rule and a recomputable membership check are jointly necessary, while editorial orientation remains outside the contract. |
-| Recovery and shape | The two source routes cannot replace the note because neither describes Commonplace's marks or derives their consumer-facing role. The local type spec supplies the implementation witness, but not the historical comparison or the map-plus-contract synthesis. |
-| Graph role | Five tracked library artifacts link to the note, including the tag-README type contract, one supporting methodology note, one proposal, and the two source ingests. The type contract uses the note as rationale for the inherited-map-plus-enforcement distinction. |
-| Execution | Commit `ae1ce1dd` removed the unsupported universal negative and the causal story about what all human readers and maintainers needed or could afford. It kept only the two bounded historical statements, added the direct ingest routes, and restated the machine-checked delta locally. Deterministic validation and the targeted grounding assay both passed. The active run at `kb/work/multistage/multistage-write-enforced-tag-readme-moc-20260826/` must still reconstruct, audit, accept, and either promote or revise this candidate before the workshop counts it as final. |
+| Commonplace remainder | The [note](../../notes/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md) applies Milo's contextual-map pattern to a tag-README, then states the exact local delta: `complete` and `covered_by` are validator-rederived membership predicates whose success authorizes bounded stopping shortcuts. Grouping, priorities, context phrases, reading order, and map quality remain editorial. |
+| Recovery and shape | The two source routes cannot replace the note because neither describes Commonplace's marks or relates them to the inherited mapping function. The local type spec owns the mark semantics, but it does not supply the historical comparison or the bounded map-plus-checked-membership composition. The accepted note keeps that one composition while citing its independent premises. |
+| Graph role | Five tracked library artifacts link to the note: the tag-README type contract, one supporting methodology note, one proposal, and the two source ingests. The count estimates rewiring cost; the type contract's use of the note as PKM grounding shows why neither source ingest is a substitute. The fixed path remains accurate, so no rewiring is needed. |
+| Execution | Commit `ae1ce1dd` first removed the unsupported universal negative and added the two direct source routes. The multistage run then independently reconstructed the claim, omitted the unsupported adoption-history, universal MOC, broad human–LLM, model-economics, and general-transfer branches, and promoted a smaller one-claim artifact in `37de2baf`. The target and both ingests validate cleanly. Review job `8462` finalized the targeted `semantic/grounding-alignment` pair with outcome `pass`; the pair is fresh in the `codex` partition. |
 
-The two final dispositions are keeps, and the pending MOC judgment currently
-points the same way, but the source relation differs in each case: human
+All three final dispositions are keeps, but the source relation differs in each
+case: human
 navigation supplies a transfer premise, a human IR experiment grounds one
 branch of a local taxonomy, and two practitioner-history sources bound an
 old-plus-new synthesis. This diversity is evidence for claim-level comparison.
-It is not yet a general keep rule, and the pending case is not counted as one.
+It is not yet a general keep rule.

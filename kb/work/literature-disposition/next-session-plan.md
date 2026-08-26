@@ -3,10 +3,9 @@
 Date fixed: 2026-08-26
 
 Start the next session here. The source corpus is complete for the current
-cohort. Seven of fourteen candidates have dated artifact dispositions, and the
-eighth target has a committed source-bounded repair whose multistage acceptance
-run is still open. Complete that run first. Six further artifact judgments and
-two workshop-level decisions then remain.
+cohort. Eight of fourteen candidates have dated, executed artifact
+dispositions. Six further artifact judgments and two workshop-level decisions
+remain.
 
 ## State to inherit
 
@@ -18,30 +17,23 @@ two workshop-level decisions then remain.
   `df158ebe`; read [activation-disposition.md](./activation-disposition.md)
   rather than reconstructing the 222-edge graph analysis.
 - The Teevan, Tombros, Luhmann, and Milo target repairs landed in `ae1ce1dd`.
-  Link-following/search and pointer design have dated decisions in
-  [source-backed-dispositions.md](./source-backed-dispositions.md). All three
-  edited targets validate, and their targeted grounding pairs are fresh with
-  `pass` outcomes in the `codex` partition.
-- The MOC repair is not yet a final disposition. Resume
-  `kb/work/multistage/multistage-write-enforced-tag-readme-moc-20260826/`
-  from its `README.md`. Its live checklist is authoritative because the run
-  may continue after this plan is committed. Do not restart the run or treat
-  the committed candidate as accepted until that checklist reaches acceptance,
-  promotion, source-lineage validation, and workshop cleanup.
+  Link-following/search, pointer design, and the enforced tag-README have dated
+  decisions in
+  [source-backed-dispositions.md](./source-backed-dispositions.md). The MOC
+  target's source-first multistage rewrite subsequently passed acceptance,
+  deterministic validation, and review job `8462`; all three targets' targeted
+  grounding pairs are fresh with `pass` outcomes in the `codex` partition.
 - The first four dated dispositions remain in [README.md](./README.md): Gödel
   machines, proposal selection, the Pirolli navigation premise, and end-to-end
   knowledge access.
 - The working tree also contains
   `kb/work/multistage-skill-coherence-audit/`, which belongs to another task.
-  Do not stage or edit it as part of this workshop. The current
-  `kb/work/README.md` modification belongs to the active MOC run and should
-  be reconciled by that run's eventual cleanup, not swept into an unrelated
-  commit.
+  Do not stage or edit it as part of this workshop.
 
 ## Remaining candidate order
 
-After the MOC run closes, the remaining six are the starting cohort minus the
-starting-cohort notes already decided. Their proposed external traditions were explicitly deferred
+The remaining six are the starting cohort minus the starting-cohort notes
+already decided. Their proposed external traditions were explicitly deferred
 in [the source selection](../source-grounding/corpus-selection.md#candidates-not-selected-for-the-current-live-claims)
 because those traditions no longer establish a load-bearing live premise.
 That means the next step is artifact judgment, not automatic source
@@ -93,7 +85,7 @@ After the six artifact judgments:
 
 ## Closure checklist
 
-- [ ] Active MOC multistage run is accepted and promoted or revised; its dated
+- [x] Active MOC multistage run is accepted and promoted; its dated
       artifact disposition is recorded.
 - [ ] Six remaining candidates have dated, executed dispositions.
 - [ ] General rule or explicit no-general-rule finding is promoted.

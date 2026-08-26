@@ -21,14 +21,14 @@ for the operative grounding path.
 and checked against an actual source in the worked case; the other eleven have
 claim inventories and candidate reading assignments. The 2026-08-26 handoff
 triage admitted two further candidates, so the working cohort now has fourteen.
-Seven candidates now have final dated artifact dispositions. The Gödel-machine,
+Eight candidates now have final dated artifact dispositions. The Gödel-machine,
 proposal-selection, first Pirolli worked-case, and knowledge-access notes were
 kept first. Contextual activation was then kept after comparison with two
 primary psychology sources. Link-following/search and pointer design were kept
 as agent-facing transfers whose human evidence covers only narrower branches.
-The enforced tag-README has a source-bounded target repair in `ae1ce1dd`, but
-its separately opened multistage acceptance run is still active, so its final
-artifact disposition is not counted yet. The
+The enforced tag-README was then kept after a source-first multistage rewrite
+separated Milo's mapping pattern, Luhmann's bounded analogue, and Commonplace's
+checked membership contract. The
 claim-grounding rollout produced 264 terminal claim-use dispositions and
 sixteen `literature handoff`s across ten notes. Those handoffs are intake for
 source acquisition or target re-evaluation; they are not by themselves keep,
@@ -36,15 +36,15 @@ merge, thin, or retire decisions.
 
 | Closure condition | State | What remains |
 |---|---|---|
-| Source-grounded disposition for every settled cohort member | Open | Seven of fourteen working candidates are complete. Finish the active MOC acceptance run, then adjudicate the six candidates listed in [the continuation plan](./next-session-plan.md#remaining-candidate-order). |
+| Source-grounded disposition for every settled cohort member | Open | Eight of fourteen working candidates are complete. Adjudicate the six candidates listed in [the continuation plan](./next-session-plan.md#remaining-candidate-order). |
 | One disposition executed end to end | Done 2026-08-26 | The Gödel-machine note was kept after source comparison and its ancillary literature handoff was replaced with a grounded primary route. Its path, title, and central claim stayed stable, so no inbound rewiring was needed. |
 | General disposition rule | Open | The evidence supports claim-level, source-grounded judgment, but no rule or no-general-rule finding has been promoted. |
 | Write-time check decision | Partial | ADR 073 guards explicit new or changed source dependencies. It cannot discover unattributed prior art, which is the check this closure condition still needs decided. |
 
 **Fresh-session entry point:** use
 [next-session-plan.md](./next-session-plan.md). It records the completed source
-handoffs, the active MOC run, the six untouched candidates in working order,
-the per-candidate procedure, and the two final workshop-level decisions.
+handoffs and MOC run, the six untouched candidates in working order, the
+per-candidate procedure, and the two final workshop-level decisions.
 
 The direct source-grounding machinery no longer blocks progress. Evidence
 selection is complete for the current cohort; artifact judgment remains. The source-independent
@@ -54,14 +54,14 @@ four prose-only defects were repaired, and the false external-source trait was
 dropped. None of those corrections is an artifact disposition. The handoff
 triage is now complete: two of the nine new notes joined the working cohort and
 the other seven remain source-grounding, provenance, or evidence-stabilization
-work. Seven dated dispositions are complete. The activation note and two
+work. Eight dated dispositions are complete. The activation note and two
 navigation/pointer notes followed the first four after the wider source corpus
-landed. The MOC-plus-contract target was repaired in the same batch, but its
-final multistage acceptance is still pending. The comparisons and current
+landed. The MOC-plus-contract target then passed its multistage acceptance and
+targeted grounding review. The comparisons and current
 status are recorded in [activation-disposition.md](./activation-disposition.md)
-and [source-backed-dispositions.md](./source-backed-dispositions.md). After the
-MOC run, six artifact judgments remain; none has an automatic
-source-acquisition prerequisite. The
+and [source-backed-dispositions.md](./source-backed-dispositions.md). Six
+artifact judgments remain; none has an automatic source-acquisition
+prerequisite. The
 rollout's all-68-fresh
 statement is a dated certification result, not standing assurance:
 post-certification note edits require current freshness checks and sometimes new
@@ -433,10 +433,9 @@ durable contribution, even when most of its original inventory belongs
 elsewhere or remains ungrounded. That is another worked shape, not yet a general
 rule.
 
-## Fifth through seventh dispositions, with the eighth in progress
+## Fifth through eighth dispositions
 
-Three source-backed handoffs are decided and executed; the fourth target repair
-is committed but its final disposition awaits the active multistage run:
+Four source-backed handoffs are decided and executed:
 
 - [Contextual activation](./activation-disposition.md) — keep as the canonical
   read-back and activation synthesis after comparison with Tulving/Pearlstone
@@ -446,15 +445,15 @@ is committed but its final disposition awaits the active multistage run:
 - [Pointer design](./source-backed-dispositions.md#seventh-dated-artifact-disposition--pointer-design)
   — keep after grounding the query-time branch and repairing the contradictory
   OpenViking comparison.
-- [Enforced tag-README](./source-backed-dispositions.md#pending-eighth-artifact-disposition--enforced-tag-readme)
-  — target repair committed after replacing a universal history with separate
-  source-bounded Milo and Luhmann statements; final acceptance remains open in
-  `kb/work/multistage/multistage-write-enforced-tag-readme-moc-20260826/`.
+- [Enforced tag-README](./source-backed-dispositions.md#eighth-dated-artifact-disposition--enforced-tag-readme)
+  — keep after a source-first multistage rewrite separated the inherited
+  mapping pattern from the checked membership contract and bounded the Luhmann
+  comparison.
 
 The source corpus is no longer a standing blocker. The
-[continuation plan](./next-session-plan.md) starts by completing that active run,
-then takes the six remaining artifact judgments and reserves the general-rule
-and write-time-check decisions for the evidence they produce.
+[continuation plan](./next-session-plan.md) takes the six remaining artifact
+judgments and reserves the general-rule and write-time-check decisions for the
+evidence they produce.
 
 ## Boundaries
 
@@ -501,9 +500,8 @@ corpus has to adjudicate.
 ## Files
 
 - [Fresh-session continuation plan](./next-session-plan.md) — authoritative
-  restart point after seven of fourteen final dispositions and one committed
-  target repair; lists the active acceptance run, six remaining candidates,
-  procedure, and final synthesis decisions
+  restart point after eight of fourteen final dispositions; lists the six
+  remaining candidates, procedure, and final synthesis decisions
 - [Source-backed target dispositions](./source-backed-dispositions.md) — dated
   artifact judgments for link-following/search, pointer design, and the
   enforced tag-README
