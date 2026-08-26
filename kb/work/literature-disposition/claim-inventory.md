@@ -2,7 +2,8 @@
 
 Built 2026-08-24, deliberately **before** reading any external source, so the
 literature's vocabulary does not decide what counts as a claim — the ordering the
-[first worked case](../source-grounding/worked-case-agents-navigate.md) followed.
+[first worked case](../../notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md)
+followed.
 
 **Epistemic status of the attributions.** Every `established-elsewhere` row below
 is a *recalled* placement, not a read one. That is precisely the status this

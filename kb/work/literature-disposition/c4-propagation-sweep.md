@@ -2,7 +2,7 @@
 
 Sweep executed 2026-08-24 over every tracked artifact citing
 `agents-navigate-by-deciding-what-to-read-next`, after the
-[first source-grounding case](../source-grounding/worked-case-agents-navigate.md)
+[bounded Pirolli case](../../notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md)
 found its C4 — "the more context a pointer carries, the cheaper the navigation
 decision" — absent from the source and wrong by the source's own lights.
 
@@ -12,8 +12,11 @@ defect in it had propagated, and how expensively.
 ## Result: 1 inheritor, 15 uses of the sound claims, 4 incidental
 
 Twenty tracked artifacts cite the note. One rests on the monotone; fifteen rest
-only on the claims the source does support (the follow/skip unit, the
-probabilistic judgment, judging a target from its pointer); four are incidental.
+only on the repaired note's sound claims (the bounded follow/skip model, the
+probabilistic judgment, and judging a target from its pointer); four are
+incidental. The [bounded Pirolli
+case](../../notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md)
+separates the narrower source support from the target-side transfers.
 
 **The one inheritor is a verbatim copy, not an inference.**
 [`linking-theory.md`](../../notes/linking-theory.md) line 17 reproduces the

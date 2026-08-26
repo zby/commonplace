@@ -7,17 +7,20 @@ should it be retired into a source route, thinned to a normalized claim node,
 rewritten around the part Commonplace actually adds, or left as it is — and is
 there a general rule, or only per-note judgments?
 
-The upstream half — which sources are authoritative, what an ingest must
-extract, and whether the graph needs a thin claim node at all — belongs to
-[source-grounding](../source-grounding/README.md). This workshop owns what
-happens to the notes. The sibling workshop still owns corpus selection, but its
-machinery account predates the current direct Quotes/snapshot protocol; use
+The upstream source-grounding workshop is complete. This workshop owns what
+happens to the notes. Use
 [ADR 073](../../reference/adr/073-untracked-source-snapshots-require-ingest-grounding.md)
-for the operative grounding path.
+for the operative Quotes/snapshot grounding path. [ADR
+081](../../reference/adr/081-literature-disposition-is-explicit-and-claim-grained.md)
+and the [literature-assessment
+instruction](../../instructions/assess-a-claim-bearing-artifact-against-external-literature.md)
+now carry the adopted source-selection and disposition method; the
+[operational-destinations proposal](../../reference/proposals/operational-destinations-for-literature-grounding-findings.md)
+retains the open bilateral-isolation control question.
 
 ## Current status — 2026-08-26
 
-**Open.** The starting cohort has twelve candidates. The first was inventoried
+**Open only for closure.** The starting cohort has twelve candidates. The first was inventoried
 and checked against an actual source in the worked case; the other eleven have
 claim inventories and candidate reading assignments. The 2026-08-26 handoff
 triage admitted two further candidates, so the working cohort now has fourteen.
@@ -51,23 +54,25 @@ merge, thin, or retire decisions.
 |---|---|---|
 | Source-grounded disposition for every settled cohort member | Done 2026-08-26 | All thirteen settled members have dated artifact dispositions. The fourteenth working candidate failed the membership test and has a dated cohort-removal record rather than a false keep. |
 | One disposition executed end to end | Done 2026-08-26 | The Gödel-machine note was kept after source comparison and its ancillary literature handoff was replaced with a grounded primary route. Its path, title, and central claim stayed stable, so no inbound rewiring was needed. |
-| General disposition rule | Open | The evidence supports claim-level, source-grounded judgment, but no rule or no-general-rule finding has been promoted. |
-| Write-time check decision | Partial | ADR 073 guards explicit new or changed source dependencies. It cannot discover unattributed prior art, which is the check this closure condition still needs decided. |
+| General disposition rule | Done 2026-08-26 | ADR 081 adopts an explicit, claim-grained literature-assessment instruction with keep, rewrite, thin, merge, retire, and cohort-removal outcomes. |
+| Write-time check decision | Done 2026-08-26 | ADR 081 keeps missing-prior-art search out of ordinary writing and routes explicit retrospective questions to the bounded multistage assessment. |
 
 **Fresh-session entry point:** use
 [next-session-plan.md](./next-session-plan.md). It records the completed source
-handoffs, all fourteen candidate resolutions, and the two final workshop-level
-decisions.
+handoffs, all fourteen candidate resolutions, the two adopted workshop-level
+decisions, and the remaining closure action.
 
 The direct source-grounding machinery no longer blocks progress. Evidence
-selection and candidate judgment are complete; final synthesis remains. The source-independent
+selection, candidate judgment, and final synthesis are complete; only workshop
+closure remains. The source-independent
 [Channel 2](./three-channels.md#channel-2--claims-to-change) pass completed on
 2026-08-26: the stale-index claim was reframed around greater realized coverage,
 four prose-only defects were repaired, and the false external-source trait was
 dropped. None of those corrections is an artifact disposition. The handoff
 triage is now complete: two of the nine new notes joined the working cohort and
-the other seven remain source-grounding, provenance, or evidence-stabilization
-work. Thirteen dated dispositions and one cohort correction are complete. The
+the other seven were routed to source acquisition, provenance, or
+evidence-stabilization rather than artifact disposition. Thirteen dated
+dispositions and one cohort correction are complete. The
 activation note and two navigation/pointer notes followed the first four after
 the wider source corpus landed. The MOC-plus-contract target then passed its
 multistage acceptance and targeted grounding review, and the adjacent
@@ -257,8 +262,8 @@ context a pointer carries, the cheaper the navigation decision," was **not** in
 the source and was wrong by the source's own lights: it merged estimate quality
 with interaction cost where the source separates them, and the source's nearest
 test fixed cue size rather than varying it. Three further claims were local and
-absent from the source. See the [worked
-case](../source-grounding/worked-case-agents-navigate.md).
+absent from the source. See the [bounded evidence
+record](../../notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md).
 
 So the note is **not** the clean rediscovery case the critique proposed. A note
 whose central design claim is wrong is not obviously a retirement candidate — it
@@ -405,7 +410,8 @@ identify.
 **Disposition: Keep as a normalized agent-navigation premise. Decided and
 executed 2026-08-26.** The comparison used the retained passages in
 [Pirolli's Web-navigation ingest](../../sources/pirolli-proximal-information-scent-distal-content.ingest.md)
-and the claim-by-claim [worked case](../source-grounding/worked-case-agents-navigate.md).
+and the claim-by-claim [evidence
+record](../../notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md).
 The source correction and direct route landed on 2026-08-24; this disposition
 decides the repaired artifact's shape.
 
@@ -467,8 +473,8 @@ Four source-backed handoffs are decided and executed:
   comparison.
 
 The source corpus is no longer a standing blocker. The
-[continuation plan](./next-session-plan.md) now contains only the general-rule
-and write-time-check decisions.
+[continuation plan](./next-session-plan.md) now records the adopted general rule,
+the no-change write-time-search decision, and the remaining closure action.
 
 ## Ninth disposition — index completeness and editorial orientation
 
@@ -544,7 +550,13 @@ Out of scope as artifacts:
   Commonplace does; their job is not theoretical novelty, and they should not be
   shrunk because their rationale rests on established theory. They may need
   *added* source routes while staying self-sufficient to operate the system.
-- Source selection and the ingest contract — [source-grounding](../source-grounding/README.md)
+- Source selection and the ingest contract —
+  [ADR 073](../../reference/adr/073-untracked-source-snapshots-require-ingest-grounding.md)
+  for the operative grounding path and [ADR
+  081](../../reference/adr/081-literature-disposition-is-explicit-and-claim-grained.md)
+  for explicit literature assessment; the
+  [operational-destinations proposal](../../reference/proposals/operational-destinations-for-literature-grounding-findings.md)
+  retains the unadopted bilateral-isolation control
 - Link-label semantics — [linking-foundations](../linking-foundations/README.md)
   and [linking-contract-consistency](../linking-contract-consistency/README.md)
 
@@ -571,11 +583,15 @@ corpus has to adjudicate.
    recorded finding that the existing intra-KB novelty tests should not grow an
    external-literature arm, with the reason.
 
+All four conditions are satisfied as of 2026-08-26. The workshop now awaits
+removal from the active-workshop index and deletion after its remaining durable
+links are checked.
+
 ## Files
 
 - [Fresh-session continuation plan](./next-session-plan.md) — authoritative
   restart point after thirteen artifact dispositions and one cohort correction;
-  lists the final synthesis decisions
+  records the adopted synthesis decisions and the closure checklist
 - [Source-backed target dispositions](./source-backed-dispositions.md) — dated
   artifact judgments for link-following/search, pointer design, and the
   enforced tag-README

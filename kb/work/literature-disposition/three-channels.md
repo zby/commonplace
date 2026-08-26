@@ -15,9 +15,12 @@ Channel 2 pass and the false-provenance repair are now recorded as executed.
   wording checkable. Additive, low risk, batchable. Owner: this workshop.
 - **Claims** — content discovered to be untrue, unscoped, or unsupported.
   Truth-apt; some sit under ADRs. Needs per-item judgment and approval.
-- **Machinery** — system and procedure changes. Owner:
-  [source-grounding](../source-grounding/README.md) and
-  [`kb/reference/proposals/`](../../reference/proposals/README.md).
+- **Machinery** — system and procedure changes. Owner: [ADR
+  081](../../reference/adr/081-literature-disposition-is-explicit-and-claim-grained.md)
+  and the [adopted
+  instruction](../../instructions/assess-a-claim-bearing-artifact-against-external-literature.md),
+  with bilateral isolation retained by the
+  [operational-destinations proposal](../../reference/proposals/operational-destinations-for-literature-grounding-findings.md).
 
 **Verification status is marked on every row.** `[v]` = confirmed directly
 against the file. `[r]` = reported by a sweep and not independently re-checked;

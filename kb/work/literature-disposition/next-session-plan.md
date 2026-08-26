@@ -5,7 +5,7 @@ Date fixed: 2026-08-26
 Start the next session here. The source corpus is complete for the settled
 cohort. All fourteen candidates have dated resolutions: thirteen artifact
 dispositions and one explicit removal from the cohort. Two workshop-level
-decisions remain.
+decisions were adopted in ADR 081; only workshop closure remains.
 
 ## State to inherit
 
@@ -26,6 +26,10 @@ decisions remain.
 - The first four dated dispositions remain in [README.md](./README.md): Gödel
   machines, proposal selection, the Pirolli navigation premise, and end-to-end
   knowledge access.
+- ADR 081 and the claim-grained literature-assessment instruction resolve the
+  general-rule and write-time prior-art-check decisions. Ordinary writing does
+  not search for missing prior art; an explicit retrospective question loads
+  the bounded multistage assessment.
 - The six post-MOC candidate resolutions are recorded in
   [remaining-dispositions.md](./remaining-dispositions.md): keep the independent
   membership/orientation premise after removing its stale five-note heuristic,
@@ -53,17 +57,16 @@ The claim inventory found almost no navigation content, and its one access row
 had already been split into the first-time-human note. The target file remains
 unchanged and valid.
 
-The source-selection deferrals remain recorded in [the corpus
-selection](../source-grounding/corpus-selection.md#candidates-not-selected-for-the-current-live-claims).
-They are not residual acquisition work for this workshop.
+Git commit `18c6adf1` retains the source-selection deferrals and their
+disposition. They are not residual acquisition work for this workshop.
 
 ## Per-candidate procedure
 
 For each candidate:
 
 1. Read the current note, its row in
-   [claim-inventory.md](./claim-inventory.md), and the matching deferral in the
-   source-corpus selection.
+   [claim-inventory.md](./claim-inventory.md), and the matching source assignment
+   retained by git commit `18c6adf1`.
 2. Re-measure inbound library references. Use the count as rewiring cost, not as
    the disposition signal.
 3. Separate source-established units from the Commonplace remainder and apply
@@ -77,19 +80,16 @@ For each candidate:
    the settled edit, belongs to `cp-skill-connect`.
 6. Update the cohort count and this plan after each completed disposition.
 
-## Final workshop decisions
+## Resolved workshop decisions
 
-With candidate resolution complete:
+With candidate resolution complete, ADR 081 selected both remaining decisions:
 
-1. Promote a general disposition rule, or record the positive finding that
-   literature disposition remains per-note. The worked cases currently favor a
-   claim-level recovery test, but this is not yet a promoted rule.
-2. Decide the write-time prior-art check. ADR 073 guards sources already named
-   by a writer; the open question is whether authoring should also search for
-   missing external prior art. Record either the new check and its home or the
-   reason the existing intra-KB novelty tests should not grow one.
-3. Promote durable conclusions to the appropriate library collection, remove
-   this workshop from `kb/work/README.md`, and delete the workshop directory.
+1. Explicit retrospective literature disposition uses the adopted
+   claim-grained multistage instruction.
+2. Ordinary writing does not search for missing external prior art. A bounded
+   retrospective request, not every write, triggers the assessment.
+3. Remove this workshop from `kb/work/README.md`, and delete the workshop
+   directory.
    Finished workshop files are not retained as a historical register.
 
 ## Closure checklist
@@ -98,7 +98,7 @@ With candidate resolution complete:
       artifact disposition is recorded.
 - [x] All candidates have dated resolutions: thirteen artifact dispositions and
       one explicit cohort removal.
-- [ ] General rule or explicit no-general-rule finding is promoted.
-- [ ] Write-time prior-art-check decision is recorded.
-- [ ] Durable findings are promoted.
+- [x] General rule or explicit no-general-rule finding is promoted.
+- [x] Write-time prior-art-check decision is recorded.
+- [x] Durable findings are promoted.
 - [ ] Workshop entry and directory are removed.
