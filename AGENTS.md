@@ -74,6 +74,7 @@ Use ordinary spaced phrases in prose (`adapted from`, `derived from`). Registere
 ## Development
 
 - **Use `python3`** for stdlib-only throwaway tooling; if the code is expected to be reused, save it to `scripts/` instead of discarding it (see `scripts/README.md`) — genuinely one-shot code stays a heredoc. Commonplace runtime code lives in the Python package as `commonplace-*` commands.
+- **curl downloads**: order arguments as `curl -fsSL -o <destination> [additional options] <URL>` so they match the preapproved `["curl", "-fsSL", "-o"]` command prefix. Put options such as `-A 'Mozilla/5.0'` after the output path; `S` and `L` are uppercase.
 - **Package documentation**: inspect `src/commonplace/lib/` for exact internal API behavior; [freshness-architecture.md](./kb/reference/freshness-architecture.md) describes the general freshness store and transitions; [review-architecture.md](./kb/reference/review-architecture.md) describes the review adapter and execution.
 - **YAGNI** — don't implement features that aren't needed yet. If you identify a gap, write it down instead of implementing it: a system feature or design gap becomes a design proposal in `kb/reference/proposals/` (see its README for the contract); a transferable insight becomes a note in `kb/notes/`.
 - **No backwards compatibility** — with no external consumers, always prioritize cleaner design over keeping old behavior alive. If backcompat code is ever needed, mark it with `# BACKCOMPAT: <reason> - remove after <condition>`.
