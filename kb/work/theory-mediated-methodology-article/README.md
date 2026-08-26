@@ -15,6 +15,10 @@
 
 Draft rewritten in place, now at `kb/articles/theory-building-inside-the-system.md` (~4,850 words; validation passes). All nine outline sections are present; the adjoiner is consumed (Part 1 into §3, Part 2 into §8) and deleted. Kept from the old draft: compounding, the three tests, both experiments, the six-system evidence shrunk to one paragraph plus HyperAgents. Renamed to `kb/articles/theory-building-inside-the-system.md` (pure relocation, redirect kept). Remaining before closing: a review pass under the articles contract, and the three open items below.
 
+## Status (2026-08-27)
+
+Revised after an external round of comments (ChatGPT, relayed by the operator; adopted selectively) and three new harness ingests. Changes: the thesis now runs Naur → interpreter inside the system → **theory-mediated learning** as the general architecture, with theory-mediated methodology as this project's realization; a new section *From held theory to learned state* makes the `failure → theory revision → derived patch` step explicit and introduces the three independent properties (theory-mediated, reflective, self-improving) after the argument rather than before it; "cannot be written down" is restated as "propositions about a theory do not transfer possession of it"; Popper compressed to two paragraphs; a new short section on formalization and proof (verification moves the open question to the theory–model correspondence); a new *Three recent harnesses on the grid* subsection positions Prime Agent (R+S, no gate, no theory), Recuris (R+S with a fixed gate; retained state accumulates and cannot be rescoped), and Apodex (parametric retention, not a loop), with Sutton/Javed as the weights-side counterpoint. ~7,150 words; validation passes. Not adopted: editing for quotable sentences (contract defers memorability to a later pass). Remaining: the review pass under the articles contract, and the three open items below.
+
 ## Outline
 
 Working title: *Theory building inside the system*. Subtitle candidate: *how natural-language theories become operative, and when that is reflective self-improvement*.
