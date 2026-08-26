@@ -2,10 +2,10 @@
 
 Date fixed: 2026-08-26
 
-Start the next session here. The source corpus is complete for the current
-cohort. Thirteen of fourteen candidates have dated, executed artifact dispositions.
-One further artifact judgment and two workshop-level decisions
-remain.
+Start the next session here. The source corpus is complete for the settled
+cohort. All fourteen candidates have dated resolutions: thirteen artifact
+dispositions and one explicit removal from the cohort. Two workshop-level
+decisions remain.
 
 ## State to inherit
 
@@ -26,7 +26,7 @@ remain.
 - The first four dated dispositions remain in [README.md](./README.md): Gödel
   machines, proposal selection, the Pirolli navigation premise, and end-to-end
   knowledge access.
-- The first five post-MOC judgments are recorded in
+- The six post-MOC candidate resolutions are recorded in
   [remaining-dispositions.md](./remaining-dispositions.md): keep the independent
   membership/orientation premise after removing its stale five-note heuristic,
   and keep the conditional retrieval-suppression mechanism as a separate
@@ -35,23 +35,27 @@ remain.
   keep the first-time-human heuristic as a conditional access-path comparison
   with one authority and consumer-specific interfaces; then keep addressability
   grain as an independent matched-unit relation after pinning its measured case
-  and making its unmeasured helping case conditional.
+  and making its unmeasured helping case conditional; finally remove the
+  human–LLM-differences candidate from this cohort after the claim inventory
+  placed no central claim in an outside tradition and found its only
+  navigation-adjacent unit already split out. The artifact itself remains
+  unchanged.
 - The working tree also contains
   `kb/work/multistage-skill-coherence-audit/`, which belongs to another task.
   Do not stage or edit it as part of this workshop.
 
-## Remaining candidate order
+## Candidate resolution complete
 
-The remaining candidate is from the starting cohort and has not yet received a
-dated disposition. Its proposed external tradition was explicitly deferred
-in [the source selection](../source-grounding/corpus-selection.md#candidates-not-selected-for-the-current-live-claims)
-because it no longer establishes a load-bearing live premise.
-That means the next step is artifact judgment, not automatic source
-acquisition.
+No candidate remains. The final candidate,
+`human-llm-differences-are-load-bearing-for-knowledge-system-design`, was removed
+from the settled cohort rather than silently dropped or mislabeled as a keep.
+The claim inventory found almost no navigation content, and its one access row
+had already been split into the first-time-human note. The target file remains
+unchanged and valid.
 
-| Order | Candidate | Current source-side finding | Decision work |
-|---:|---|---|---|
-| 1 | `human-llm-differences-are-load-bearing-for-knowledge-system-design` | The claim inventory found almost no information-foraging content and the source selection found no missing authoritative source for its central claim | Re-test cohort membership explicitly; record either a keep disposition or removal from the settled cohort rather than silently dropping it |
+The source-selection deferrals remain recorded in [the corpus
+selection](../source-grounding/corpus-selection.md#candidates-not-selected-for-the-current-live-claims).
+They are not residual acquisition work for this workshop.
 
 ## Per-candidate procedure
 
@@ -75,7 +79,7 @@ For each candidate:
 
 ## Final workshop decisions
 
-After the remaining artifact judgment:
+With candidate resolution complete:
 
 1. Promote a general disposition rule, or record the positive finding that
    literature disposition remains per-note. The worked cases currently favor a
@@ -92,7 +96,8 @@ After the remaining artifact judgment:
 
 - [x] Active MOC multistage run is accepted and promoted; its dated
       artifact disposition is recorded.
-- [ ] One remaining candidate has a dated, executed disposition.
+- [x] All candidates have dated resolutions: thirteen artifact dispositions and
+      one explicit cohort removal.
 - [ ] General rule or explicit no-general-rule finding is promoted.
 - [ ] Write-time prior-art-check decision is recorded.
 - [ ] Durable findings are promoted.

@@ -2,9 +2,10 @@
 
 Date: 2026-08-26
 
-This file records the six artifact judgments queued after the enforced
-tag-README run. Each disposition applies the workshop's claim-level recovery
-test and updates the continuation plan when complete.
+This file records the six candidate resolutions queued after the enforced
+tag-README run. The first five are artifact dispositions. The sixth is an
+explicit cohort correction after the candidate failed the workshop's membership
+test.
 
 ## Ninth dated artifact disposition — index completeness and editorial orientation
 
@@ -92,3 +93,21 @@ after correcting the evidence boundary. Decided and executed 2026-08-26.**
 The keep does not claim that addressability or read amplification originated in
 Commonplace. It retains a precisely scoped comparison node whose variables,
 agent-context application, and local evidence are consumed independently.
+
+## Fourteenth candidate resolution — human–LLM differences
+
+**Resolution: Remove from the settled literature-disposition cohort as a
+category error; leave the artifact unchanged. Decided and executed 2026-08-26.**
+
+| Test | Finding |
+|---|---|
+| Cohort membership | The source-blind inventory found five claims and placed none in an outside tradition. Its only navigation-adjacent unit was the access-mode table row, which the first-time-human note already normalized as a separate premise. The later discovery that the original cohort spans several literatures does not change this result: no surviving central claim in this artifact is presented as a rediscovery needing a literature disposition. |
+| Source-side finding | The Context Engineering paper supplies a bounded observation that projects distinguish human READMEs from agent context files. The Harness Engineering report supplies one agent-first endpoint. Seven source ingests link to the note as examples, contrasts, or applications of its transfer test. Those routes make the artifact source-connected, but they do not turn its central per-convention evaluation method into an externally established claim. |
+| Commonplace remainder | The [note](../../notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md) synthesizes two local design pressures: inherited human-oriented conventions require a transfer test, and retained KB artifacts may serve human and LLM readers with different needs. That synthesis may warrant an independent artifact, but deciding its optimal shape is not a disposition of externally established content and therefore lies outside this workshop's settled cohort. |
+| Graph role | Fourteen tracked library artifacts link to the note: seven notes or reference artifacts and seven source ingests. This confirms that removing the candidate from the cohort must not be confused with retiring the artifact. The count estimates the impact of any future artifact change; it does not convert a failed membership test into a keep decision. |
+| Execution | The target passed deterministic validation and remains byte-for-byte unchanged. No links, source dependencies, title, or path changed, so no grounding assay, rewiring, relocation, or retirement approval applies. The working cohort is corrected from fourteen to thirteen members. All fourteen candidates have now been resolved: thirteen received artifact dispositions, and this false-positive candidate received a dated cohort removal. |
+
+This resolution deliberately does not assert that the note is novel, optimal,
+or permanently exempt from source review. It says only that this workshop would
+answer the wrong question by forcing a keep, merge, thin, or retire judgment
+after its own claim inventory disproved membership.
