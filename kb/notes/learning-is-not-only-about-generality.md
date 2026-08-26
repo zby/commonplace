@@ -26,13 +26,13 @@ The scope axis contains a qualitative distinction, not just a quantitative one. 
 
 Fact accumulation is real and valuable — [AgeMem's](./memory-management-policy-is-learnable-but-oracle-dependent.md) 23-49% improvement on task completion comes entirely from storing and retrieving the right facts. But facts alone don't compound into deeper understanding. Positing an abstraction and recognizing particulars as instances of it is the operation that produces theories — and [recognizing what the particulars share](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) is its expensive step. Theories are the highest-explanatory-reach items accumulation can store.
 
-Argyris's [single-loop vs double-loop learning](https://infed.org/dir/welcome/chris-argyris-theories-of-action-double-loop-learning-and-organizational-learning/) maps onto this axis as rough regions: single-loop corrects within existing rules (narrow scope), double-loop changes the governing variables themselves (wide scope).
+[Argyris's single- and double-loop distinction (snapshot required)](../sources/argyris-organizational-learning-and-mis-1977.ingest.md) separates error correction that leaves underlying objectives and policies unquestioned from inquiry that questions governing values. This note interprets that distinction as rough regions on the generality axis: single-loop changes tend to be narrower because they retain the governing commitments, while double-loop changes can be wider because those commitments enter the update space.
 
 ## The compound — reliability, speed, cost
 
 Capacity has a second cluster of dimensions that tend to move together: **reliability** (how consistently it works), **speed** (how fast), and **cost** (how cheaply). These form a compound because they often improve simultaneously — [codification](./definitions/codification.md) is the clearest example, where moving from LLM to deterministic code improves all three at once. But the compound isn't exclusive to codification: conventions improve reliability, caching improves speed, derived skills reduce cost.
 
-The generality trade-off is the primary dynamic: [constraining and extraction can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md). Learning cuts across Argyris's loops — it can be single-loop (codifying one check into a script) or double-loop (deciding that [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured.md)).
+The generality trade-off is the primary dynamic: [constraining and extraction can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md). By this note's analogy, learning can occupy either rough region: codifying one check into a script resembles single-loop change, while deciding that [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured.md) resembles double-loop change.
 
 ## Other dimensions
 
@@ -41,7 +41,7 @@ Generality and the compound don't exhaust what matters. A verified claim is more
 ## Sources
 
 - Herbert Simon: "Learning is any change in a system that produces a more or less permanent change in its capacity for adapting to its environment."
-- Chris Argyris: [Single-loop vs double-loop learning](https://infed.org/dir/welcome/chris-argyris-theories-of-action-double-loop-learning-and-organizational-learning/) — single-loop corrects within existing rules; double-loop changes the governing variables.
+- Chris Argyris: [Organizational Learning and Management Information Systems (snapshot required)](../sources/argyris-organizational-learning-and-mis-1977.ingest.md) — primary source for the single-/double-loop distinction; its mapping to generality is this note's interpretation.
 - [Knowledge acquisition](https://en.wikipedia.org/wiki/Knowledge_acquisition) — extracting and structuring knowledge from sources; one region on the learning spectrum, not a separate activity.
 
 ---
