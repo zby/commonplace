@@ -64,6 +64,15 @@ When those inputs already determine the choices, proceed without a formal brief.
 
 Write does not run active discovery — that is `cp-skill-connect`'s job. Write authors one note and commits only links the author already has in hand, plus a cheap duplicate guard:
 
+This guard is intra-KB only. Do not search the external literature for missing
+prior art and do not infer novelty from the absence of a named source. If the
+user explicitly asks whether an artifact duplicates, restates, or is subsumed
+by external literature, or asks for an artifact disposition on that basis,
+invoke `cp-skill-write-multistage` with the same target and request. That
+explicit request supplies the confirmation required by Step 4; do not ask the
+user to authorize the handoff again. The multistage skill loads the specialised
+literature-disposition procedure.
+
 1. **Near-duplicate check.** Search the target collection for the new note's distinctive title terms with `rg` (e.g. `rg -i "key term" kb/notes/ --glob "*.md"`). This is a targeted term search — do **not** enumerate the whole collection; a complete listing costs linear context and is the wrong tool for a single note's duplicate check. If a near-duplicate already exists, prefer editing it to creating a second note.
 2. **Context already loaded.** Notes, sources, and ingests pulled into the session for this write are first-class link candidates. If it was worth reading, it is worth considering as a link.
 3. **User-named targets.** Link targets the user mentions in the prompt.

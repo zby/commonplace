@@ -25,6 +25,19 @@ Determine whether this is:
 - **Edit mode:** `$ARGUMENTS` identifies one existing Markdown artifact.
 - **New-write mode:** `$ARGUMENTS` identifies a collection, type, topic, or intended path.
 
+**Conditional external-literature disposition.** If the task explicitly asks
+whether an existing claim-bearing artifact duplicates, restates, or is
+subsumed by external literature, or asks whether to keep, rewrite, thin, merge,
+retire, or remove it from a cohort on that basis, load the framework procedure
+`assess-a-claim-bearing-artifact-against-external-literature.md` before
+continuing. In an installed project, read it from
+`kb/commonplace/instructions/`; in the Commonplace source checkout, read it
+from `kb/instructions/`. Treat that procedure as the governing source-selection
+and disposition contract, add its required assessment records to this skill's
+workshop checklist, and use this skill's later stages to realize any selected
+artifact change. Do not load it for ordinary named-source grounding, synthesis,
+or local revision.
+
 Resolve the target collection to a directory under `kb/` with a local `COLLECTION.md`, and read that file in full.
 
 In edit mode, read `type:` from the incumbent frontmatter and open that type specification. If the file has frontmatter but no `type:`, stop and repair that structural problem first. If it has no frontmatter, treat it as implicit `text`; do not invent a type or type specification.
