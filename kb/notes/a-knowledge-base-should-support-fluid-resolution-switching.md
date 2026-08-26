@@ -1,5 +1,5 @@
 ---
-description: "Frames movement between abstraction levels as a KB design criterion and inventories how titles, indexes, links, and progressive disclosure support it"
+description: "Defines resolution-switching as movement among KB views with different scope and detail, then inventories the mechanisms and limits of that qualitative criterion"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations]
@@ -7,49 +7,109 @@ tags: [foundations]
 
 # A knowledge base should support fluid resolution-switching
 
-Good thinking is not staying at one level of abstraction — it is constantly moving between levels. Start broad to see the landscape, narrow in when something is interesting, zoom back out to check bearings, dive deep into the load-bearing detail, then abstract up to see the pattern. A knowledge base that supports good thinking must support this motion fluidly.
+A reader using a knowledge base alternates between broad views that expose
+possible routes and narrower views that supply detail. This note calls movement
+between those views **resolution-switching**. Resolution here means the scope
+and detail exposed by a view, not an intrinsic abstraction rank assigned to an
+artifact.
 
-The Commonplace KB already has several mechanisms that serve resolution-switching, but they aren't usually described under that framing:
+A knowledge base should make task-relevant switches inexpensive in both
+directions. A broad view should lead to specific claims or evidence. A detailed
+artifact should leave a discoverable route back to wider organizing context.
+This is a qualitative design criterion, not yet a metric or a claim that every
+task needs the same sequence of views.
 
-**Titles vs bodies are a resolution pair.** Claim titles give the zoomed-out view — the principle, the assertion. The note body gives the zoomed-in view — the mechanism, the evidence, the specifics. Scanning a list of titles is surveying the landscape; opening a note is examining the territory. Since [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md), following links between claim titles reads as a chain of reasoning at the abstract level — without requiring the reader to descend into any specific note.
+## Commonplace mechanisms
 
-**Indexes and notes operate at different resolutions.** An area index like `tags-README.md` is the broad view — it shows what topics exist and how they relate. Following a link from the index zooms in. Returning to the index zooms out to check bearings. This is the [two kinds of navigation](./link-following-and-search-impose-different-metadata-requirements.md) distinction: local link-following is narrow and contextual; search and index browsing are broad and orienting.
+**Titles, descriptions, and bodies expose different amounts of detail.** A
+claim title carries the assertion. A description adds a fixed routing cue. The
+body supplies the mechanism, qualifications, and evidence. Because a
+[title-as-claim supports traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md),
+a reader can inspect a chain of assertions before choosing which bodies to load.
 
-**Link semantics encode zoom direction.** "Since [X]" zooms into a foundation — following it takes you deeper, toward the grounds of the current argument. "This extends [Y]" zooms out toward a generalization. "Contradicts [Z]" shifts laterally to a competing view at the same level. The relationship words in [link strength](./link-strength-is-encoded-in-position-and-prose.md) aren't just categorization — they tell the reader which direction in abstraction space they're moving.
+**Indexes and notes expose different scopes.** A curated index groups claims
+and explains their roles in a topic. Following an entry reaches the narrower
+claim and its support. Returning to the index restores the topic-level view.
+Search supplies another broad entry route, while local link-following uses the
+reader's current context. Those routes have [different metadata
+requirements](./link-following-and-search-impose-different-metadata-requirements.md),
+but both can participate in a resolution switch.
 
-**Progressive disclosure is a resolution gradient.** The [instruction specificity matching loading frequency](./instruction-specificity-should-match-loading-frequency.md) principle layers information from always-loaded (CLAUDE.md — broadest, least specific) through on-demand descriptions (medium) to full note bodies (narrowest, most specific). An agent traversing this hierarchy is adjusting resolution.
+**Link context preserves bearings during a switch.** A contextual phrase says
+why the target matters in the current argument. It lets a reader move to a
+different scope without reducing the connection to an untyped jump. The link's
+relation does not by itself determine which artifact is more abstract; its role
+is to preserve the task-relative relationship across the transition. This is
+the navigational value of [encoding link strength in position and
+prose](./link-strength-is-encoded-in-position-and-prose.md).
+
+**Progressive disclosure supplies intermediate views.** Titles, descriptions,
+contextual link phrases, generated summaries, and full bodies can form a cost
+gradient. A reader first inspects a cheaper pointer and loads a more expensive
+view only when needed. The gradient is useful only when each pointer supports a
+sound next-read decision; [pointer types trade off specificity, cost,
+availability, and accuracy](./pointer-design-tradeoffs-in-progressive-disclosure.md).
 
 ## The evaluative criterion
 
-This framing suggests a qualitative design criterion that complements retrieval accuracy: **resolution-switching fluidity**. A KB supports it when readers can move between abstraction levels with low friction. A KB obstructs it when readers get stuck in abstractions (indexes that link to indexes without reaching specifics) or in details (dense notes with no outward route to broader context). The criterion is not yet a measurement method; the questions below identify what one would have to establish.
+**Resolution-switching fluidity** asks whether a reader can move among the
+views a task needs without paying avoidable transition cost or losing the
+relationship between them. It complements retrieval accuracy: a system may
+retrieve the right detailed artifact yet make its wider context hard to recover,
+or offer an elegant overview that never reaches the required detail.
 
-Concrete symptoms of poor resolution-switching:
-- Notes with no outbound links — you can zoom in but can't zoom back out
-- Indexes with bare links (no context phrases) — the broad view has no resolution; everything looks the same
-- Topic-titled notes — titles don't carry the abstract-level argument, so you must open every note to learn anything
-- Missing relationship articulation — links exist but don't tell you which direction you're moving
+The criterion prompts four questions:
+
+- Can a reader choose a narrower target from the broader view without opening
+  every candidate body?
+- Can the reader reach the needed detail without loading unrelated material?
+- After opening the detail, can the reader recover a relevant broader view
+  through an available route such as an authored link, index, or search?
+- Does the transition preserve why the two views belong together for this task?
+
+These questions identify possible friction. They do not yet supply a scoring
+rule or universal threshold.
 
 ## Connection to discovery
 
-[Recognizing shared structure](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) is the expensive step in connecting knowledge, and what must be recognized ranges from a surface feature through a shared structure to a common generative process. Resolution-switching is the navigation skill that makes such recognition possible — you can only see the particular as an instance of the general if you can move between the two levels. A KB that traps you at one level suppresses discovery.
+[Recognizing shared structure](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md)
+requires more than navigation. Broad views can place several candidate claims in
+one context, while detailed reads can expose the mechanisms needed for
+comparison. Resolution-switching helps a reader assemble those views; it does
+not perform the recognition or guarantee a discovery.
+
+## Boundaries
+
+Resolution-switching is not the same as addressability grain. Grain sets the
+smallest amount one access path can retrieve for a matched target;
+resolution-switching asks whether useful views at different scopes exist and
+whether the reader can move among them. It is also distinct from pointer
+accuracy and retrieval recall. Those properties can enable or defeat a switch,
+but none alone establishes bidirectional navigability.
+
+An artifact does not need an outbound link in every case. Backlinks, an index,
+or search may supply the outward route. Nor does every task need to return to a
+broad view after reading detail. Fluidity is relative to the task and to the
+navigation operations actually available to the reader.
 
 ## Open questions
 
-- Can resolution-switching fluidity be measured? Candidate signal: for a random note, how many clicks to reach an index (zoom out) and how many from an index to reach a specific mechanism (zoom in)?
-- Does the KB have resolution dead-ends — areas where you can zoom in but not out, or vice versa?
-- Is there a sweet spot for note granularity that maximises resolution-switching? Too fine-grained and zooming out requires too many hops; too coarse and zooming in means reading irrelevant material.
+- Which cost should a measurement use: navigation steps, bytes or tokens read,
+  inference calls, or time to a task-relevant view?
+- How should a test distinguish a genuine dead end from a route intentionally
+  supplied by search or backlinks rather than an authored outbound link?
+- How does the useful number of intermediate views vary with the task and the
+  reader's available operations?
 
 ---
 
 Relevant Notes:
 
-- [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — enables: claim titles are the zoomed-out resolution layer; they carry the argument without requiring descent into the note body
-- [two kinds of navigation](./link-following-and-search-impose-different-metadata-requirements.md) — grounds: local link-following (narrow) vs search/index browsing (broad) are the two primary resolution-switching modes
-- [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — operationalises: every read/skip decision is a resolution-switching decision — follow to zoom in, skip to stay broad
-- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — exemplifies: the loading hierarchy is a resolution gradient from always-loaded broad context to on-demand narrow detail
-- [link strength is encoded in position and prose](./link-strength-is-encoded-in-position-and-prose.md) — extends: link semantics encode zoom direction — "since" zooms into foundations, "extends" zooms out to generalizations
-- [recognition, not linking, is the hard problem in knowledge systems](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — enables: resolution-switching is the navigation skill recognition depends on, and what must be recognized sets how deep the zoom goes
-- [Knowledge-access architecture must be evaluated end to end, not by retrieval alone](./knowledge-access-architecture-must-be-evaluated-end-to-end.md) — extends: places resolution-switching inside the discovery and loading checkpoints of a wider task-relative evaluation
-
-Source:
-- Adapted from a social media post on "The Art of Good Thinking: Moving Between Levels" — the core insight about resolution-switching applied to KB design
+- [Title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — enables: titles expose assertions as a lower-cost view before a reader loads their full support
+- [Link-following and search impose different metadata requirements](./link-following-and-search-impose-different-metadata-requirements.md) — enables: supplies the two entry routes whose views can differ in scope and context
+- [Agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — operationalized-by: each transition depends on a follow-or-skip decision at the current pointer
+- [Link strength is encoded in position and prose](./link-strength-is-encoded-in-position-and-prose.md) — enables: contextual articulation preserves why a target matters across a transition
+- [Pointer design tradeoffs in progressive disclosure](./pointer-design-tradeoffs-in-progressive-disclosure.md) — grounds: supplies the pointer tiers and trade-offs that can form intermediate views
+- [Recognition, not linking, is the hard problem in knowledge systems](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — bounds: movement can assemble candidate views but does not perform recognition
+- [Addressability grain sets a matched selective-read floor](./addressability-grain-sets-a-matched-selective-read-floor.md) — contrasts: grain prices the smallest retrievable matched unit, while resolution-switching evaluates transitions among views
+- [Knowledge-access architecture must be evaluated end to end, not by retrieval alone](./knowledge-access-architecture-must-be-evaluated-end-to-end.md) — extends: places resolution-switching inside a wider task-relative evaluation

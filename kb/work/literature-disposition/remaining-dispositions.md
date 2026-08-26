@@ -41,3 +41,20 @@ This keep is not a claim that the mechanism is novel. It preserves the smallest
 local premise needed to reason about a consumer whose trusted view changes which
 retrieval operation runs. Empirical predictions about consumer behavior or
 maintenance effectiveness remain outside the note until grounded separately.
+
+## Eleventh dated artifact disposition — fluid resolution-switching
+
+**Disposition: Rewrite around the local qualitative transition criterion and
+keep. Decided and executed 2026-08-26.**
+
+| Test | Finding |
+|---|---|
+| Source-side finding | Shneiderman's visual-information-seeking mantra was deferred because it is adjacent to, but not authoritative for, a criterion about agent-readable KB views. The target also attributed its framing to an unidentified social-media post. Two source ingests link to the note from their own comparisons, but the live criterion does not import either as a premise. No source in the selected corpus establishes the bidirectional KB transition claim. |
+| Commonplace remainder | The [note](../../notes/a-knowledge-base-should-support-fluid-resolution-switching.md) now defines resolution as the scope and detail exposed by a view. Its distinct claim is that a KB should make task-relevant movement among broader routing views, intermediate pointers, and detailed artifacts inexpensive while preserving why the views belong together. It inventories how Commonplace titles, descriptions, indexes, link context, and progressive disclosure support that movement. |
+| Recovery and shape | Pointer design owns the specificity, cost, availability, and accuracy of individual lower-cost representations. End-to-end knowledge-access evaluation owns the sequence from discovery through upkeep. Addressability grain owns the minimum volume a matched path can retrieve. None owns the availability and transition relation among views at different scopes, so merging into any one would either lose the criterion or make a narrower note absorb unrelated mechanisms. |
+| Graph role | Seven tracked library artifacts link to the note: five notes or indexes use its resolution-level relation, and two source ingests record external comparisons. The uses in pointer tiers, collection context boundaries, read-together areas, and composable-note loading show a coherent library-side role despite the modest count. |
+| Execution | The rewrite removed the untraceable social-media attribution and its universal claims about good thinking. It defined the term operationally, changed link semantics from a supposed abstraction direction to context preservation, treated navigation as enabling rather than performing recognition, replaced categorical dead-end symptoms with task-relative questions, and separated the criterion from grain, pointer accuracy, and recall. The description changed, but the path and title remain stable. Validation passes cleanly. Because no named external premise remains or was added, no grounding assay or inbound rewiring is required. |
+
+The keep preserves a local cross-mechanism criterion, not a borrowed slogan.
+Measurement remains an open problem; the note says what a measurement would
+need to distinguish before proposing a score.
