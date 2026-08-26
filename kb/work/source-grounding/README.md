@@ -18,9 +18,37 @@ the borrowed claim attaches. The sibling
 [literature-disposition](../literature-disposition/README.md) workshop owns the
 downstream half — what happens to notes that turn out to restate a source.
 
-## Why this is open now
+## Current status — 2026-08-26
 
-Two measurements, both taken 2026-08-24:
+**Ready to close. The V1 extraction and attachment questions and the dated
+source-corpus selection are complete for the current cohort.**
+
+| Closure condition | State | Evidence or remaining work |
+|---|---|---|
+| Authoritative source corpus | **Done for the 2026-08-26 cohort** | [Wider source-corpus selection](./corpus-selection.md) records seven accepted, quote-backed source cases, the rejected or deferred candidates, and each transfer boundary. |
+| Ingest extraction contract | **Done for V1, 2026-08-25** | [ADR 073](../../reference/adr/073-untracked-source-snapshots-require-ingest-grounding.md) retains minimum exact passages in `## Quotes`; broader support uses an explicit `(snapshot required)` route. |
+| Intermediate claim node | **No new node in V1, decided 2026-08-25** | The rollout did not find enough identity, reconciliation, or reuse pressure to justify normalized claim or quote IDs. Target-specific transfer reasoning stays in the target. |
+
+The operative path is source material → target claim, not source → ingest
+paraphrase → target claim. A normal ingest link declares that its tracked exact
+quotes are sufficient. A `(snapshot required)` link declares that the exact
+name-paired, checksum-verified local snapshot is necessary. Both routes use the
+standard `semantic/grounding-alignment` gate. The old normalized `## Claims`
+ledger, virtual source lens, link-derived source review pairs, and
+source-specific freshness behavior are retired.
+
+The in-scope evidential blocker is now cleared for the claims in the dated
+cohort. This is not an exhaustive literature claim: the selection records which
+sources adjudicate the live claims, why other candidates were deferred, and
+where each human or practitioner source stops. Target edits, grounding assays,
+and final note dispositions are downstream handoffs to
+[literature-disposition](../literature-disposition/README.md), not remaining
+source-corpus work.
+
+## Opening evidence — 2026-08-24
+
+These measurements explain why the workshop opened. They are historical
+baselines, not claims about the current corpus.
 
 **The relevant literature is not ingested.** `kb/sources/` holds 289 ingests. A
 search across it for `pirolli|foraging|information scent|berrypicking|
@@ -58,35 +86,32 @@ An amendment to it is an ADR, not a workshop conclusion.
 the general adoption test rather than growing a second link theory" — so a
 second general adoption test is the thing not to build here.
 
-**The current ingest contract has no *named field* for the four extractions the
-question needs, but three of them land anyway.** `.ingest.md` files are
-`kb/sources/types/ingest-report.md`, schema-enforced to `## Classification`,
-`## Summary`, `## Connections Found`, `## Extractable Value`,
-`## Limitations (our opinion)`, and `## Recommended Next Action`. The
-[first worked case](./worked-case-agents-navigate.md) ran the real pipeline and
-measured what actually arrives:
+**The ingest retains source evidence, while the target owns interpretation.**
+Every ingest has one append-only `## Quotes` section containing exact source
+wording and human-resolvable locations. Scope judgments, confidence,
+limitations, normalized claims, and target-specific transfer arguments do not
+belong there. This keeps the semantic check direct and prevents an ingest
+paraphrase from acquiring source authority merely because it is tracked.
 
-| Needed | What the contract does |
-|---|---|
-| Exact claims the source establishes | **Gap.** Summary and Extractable Value carry claim-level content, but there is no enumerable ledger a later reader can cite an entry from |
-| Population, costs, scope conditions | **Lands, and is asked for.** The `scientific-paper` Limitations lens pulls it out |
-| What transfers to LLM agents | **Lands, but voluntarily.** No field requires it; the worked case's worker wrote it into Limitations by choice |
-| Which notes the source subsumes | **Lands, but against the current.** `Connections Found` is instructed to "drop weak, speculative, or duplicate edges" and `Extractable Value` is defined as "what is new relative to the connection context" — a novelty polarity pointing away from recording that a claim is already held locally |
+**The target-side comparison is a separate operation.** The first worked case
+showed that source ingestion and connection discovery can detect overlap but do
+not determine whether a local claim survives contact with the source. The writer
+or reviewer must compare the target's exact source-dependent passage with the
+retained quotes or pinned snapshot. This is where contradiction, scope, and
+transfer are judged.
 
-So the problem is **reliability, not capability**. An earlier version of this
-section asserted "no slot for any of the four," and the worked case falsified it.
-Design for making the three that land dependable, and for adding the one that
-does not — not for four new fields.
+**The subsumption signal can reach the drafting worker.** The worker in
+[`draft-ingest-report.md`](../../instructions/draft-ingest-report.md) runs in an
+isolated context, but `cp-skill-connect` runs in the parent and can find local
+overlap. That signal is useful for routing. It is not a subsumption verdict and
+does not replace the target-side grounding check.
 
-**The subsumption signal reaches the drafting worker, contrary to an earlier
-reading of the isolation rule.** The worker in
-[`draft-ingest-report.md`](../../instructions/draft-ingest-report.md) runs in a
-clean isolated context and cannot browse or run broad KB searches. But
-`cp-skill-connect` runs in the **parent**, and can. In the worked case connect
-surfaced the overlapping note as its top edge unprompted, named the defect ("cites
-nobody"), and deferred the verdict to the sibling workshop by name. The binding
-question is therefore not whether the worker can find overlap; it is whether
-connect's output and the ingest's sections preserve it.
+**No separate claim adapter is justified in V1.** The first direct-route rollout
+covered 59 source uses after a larger normalized-Claims prototype. It found no
+semantic reconciliation or reuse pressure that earned stable claim or quote
+identity. Whole-ingest links plus target-local transfer reasoning were enough.
+This is a provisional architecture decision, not a claim that a larger, denser
+corpus can never justify identifiers.
 
 **One local note already has the target shape.**
 [an enforced tag-README is a MOC with a machine-checked contract](../../notes/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md)
@@ -96,11 +121,15 @@ it may show that the shape needs no new machinery at all.
 
 ## What a later session should not assume
 
-**That a "claim adapter" is a new artifact kind.** The
-[input critique](../literature-disposition/chatgpt-critique.md) proposes a thin
-normalized-claim node between ingest and delta note. It may turn out to be an
-ordinary note written to the existing `note` contract, a section in a tag
-README, a field on the ingest, or unnecessary. All four are legitimate findings.
+**That the absence of claim identifiers is permanent.** V1 deliberately has no
+normalized claim node or quote ID. Reopen that decision only if later cases show
+concrete identity, reconciliation, or reuse failures that whole-ingest links
+cannot carry.
+
+**That direct grounding discovers prior art.** ADR 073 guards a source
+dependency once an author names it. It does not detect an uncited claim that an
+external literature already establishes. Model recall may propose a reading
+assignment, but it has no verdict authority until a source is captured and read.
 
 **That the corpus is a navigation corpus.** The critique proposed a
 foraging/LIS reading list, and the first ingest fit it. But the sibling
@@ -119,10 +148,10 @@ Commonplace's actual claims. Which sources are *authoritative for the claims
 this KB actually makes* is a finding, and a source that turns out not to bear on
 any local claim should not be ingested to complete a reading list.
 
-**That every borrowed claim needs the same treatment.** The architecture may be
-uniform (ingest → node → delta → operative) or may differ by how many local
-notes depend on the borrowed claim, by whether several sources jointly establish
-it, and by whether local terminology diverges from the literature's.
+**That every borrowed claim needs the same amount of retained source text.** A
+bounded claim may fit the Quotes route. A distributed argument may require the
+declared snapshot route. Either way, the target still owns the transfer from the
+source's population and mechanism to Commonplace's LLM-agent setting.
 
 **That the notes collection contract permits a pure pointer.**
 `kb/notes/COLLECTION.md` carries a theory-independence constraint — the claim
@@ -132,7 +161,7 @@ Check the contract before proposing the shape, and if the shape is right and the
 contract forbids it, that is a contract question to hand off, not a shape to
 abandon quietly.
 
-## Horizon: the implementation and cleanup successor
+## Landed V1 and the maintenance successor
 
 The destination is an operation the KB can re-run — a sweep that asks of the
 corpus, not of one note, "which claims here rest on established results the KB
@@ -142,33 +171,19 @@ and a finding phrased as "these twelve notes" is worth less than one phrased as
 a rule a sweep could apply.
 
 [ADR 073](../../reference/adr/073-untracked-source-snapshots-require-ingest-grounding.md)
-and the promoted claim-pull instructions made the prospective rule operative;
-the first retrospective cleanup returned the results below. They settle the V1
-implementation, not this workshop's broader source-corpus question. The next
-move here must still not be a new sweep command.
+and the promoted grounding instructions make the rule operative. Their final V1
+shape supersedes the earlier claim-ledger prototype: retain exact source
+passages, declare when the full pinned snapshot is required, and judge the
+target directly. The rollout retained 374 exact extracts and found only 4 of 65
+sampled note-to-ingest pairs reusing the same normalized claim string. That
+evidence supported removing interpreted claim entries rather than assigning
+them stable identity.
 
-### Claim-pull rollout evidence, 2026-08-24
-
-The implementation's first cleanup cohort returned the evidence this workshop
-requested. Two demand-driven Claims entries in the Pirolli ingest were enough to
-ground, narrow, or repair eight frozen uses across two notes. Each entry carried
-the source proposition, extracts and locations, scope, confidence, and
-limitation. This made the source boundary inspectable without requiring either
-note to recover the ignored snapshot.
-
-Whole-ingest links were also sufficient in this small run. The source review
-lens derived one pair per note, judged every use against the complete Claims
-section, passed both repaired notes, and left no stale pair. No ambiguous claim
-identity, similar-entry accumulation, or need for a thin intermediate node was
-observed. This supports the ingest-ledger design as the V1 answer; it does not
-settle whether a larger or denser source corpus will eventually earn claim IDs
-or separate nodes.
-
-The cohort also confirmed that transfer belongs in the target. Pirolli grounded
-the human proximal-cue/distal-source structure, while the notes separately
-argued what carries to bounded-context LLM agents and replaced an unsupported
-monotone context claim. No source was unavailable, and no case required an
-artifact-level literature-disposition handoff.
+The Pirolli case confirmed the target/source division. Pirolli grounds the human
+proximal-cue/distal-source structure. The target note separately argues what
+carries to bounded-context LLM agents, prices cue inspection in tokens and tool
+calls, and removes the unsupported monotone claim that more pointer context is
+always cheaper. The sibling workshop kept the repaired note on 2026-08-26.
 
 Two reasons to expect the destination is smaller than a new command, both worth
 checking before proposing one:
@@ -197,22 +212,25 @@ that routes to the expensive step, capturing and reading the source, and settles
 nothing on its own. A sweep that emitted verdicts instead of reading assignments
 would industrialize the original error at corpus scale.
 
-## Where to start
+## Wider corpus selected — 2026-08-26
 
-Simpler than the sweep, and simpler than the schema question: take **one claim
-through the whole chain by hand**. Pick a claim, find and capture the source
-that would settle it, ingest it under the existing contract, then try to use
-that ingest to judge the note — and record what the ingest fails to carry.
+The source-blind [claim inventory](../literature-disposition/claim-inventory.md)
+was worked in source-coherent batches and recorded in
+[corpus-selection.md](./corpus-selection.md). The accepted set is Pirolli;
+Tulving and Pearlstone; Gick and Holyoak; Teevan et al.; Tombros and Sanderson;
+the Niklas Luhmann Archive; and Nick Milo. Each accepted source now has a
+tracked ingest with exact retained quotes. The record also explains why the
+other proposed information-seeking, human-factors, database, publishing, and
+retrieval traditions are deferred for the current live claims.
 
-The ordering is the point. The extraction contract is this workshop's main
-question, and it is far easier to answer from one instance of the contract
-failing than from reasoning about what a contract ought to contain. The same
-holds for the intermediate node: whether it is needed becomes visible once a
-real ingest and a real note exist for it to sit between.
-
-Do not begin by ingesting the corpus. Ingests made before anyone has tried to
-use one for this purpose will be shaped by the current contract's questions,
-and finding where those questions fall short is the reason to do the work.
+The transfer boundaries are load-bearing. Teevan and Tombros report human
+information-seeking judgments, not LLM-agent behavior. Milo defines an LYT
+artifact but does not establish its claimed cognitive effects or a completeness
+history. The Luhmann Archive page describes Luhmann's own keyword registers as
+non-exhaustive entry-point indexes; it does not identify them as MOCs or license
+a claim about every Zettelkasten practitioner. The current MOC note's combined
+tradition claim and universal negative therefore remain downstream repair work,
+not conclusions supplied by these sources.
 
 ## Boundaries
 
@@ -240,18 +258,11 @@ Out of scope:
 
 ## What closes this workshop
 
-1. A decided source corpus, with the sources judged authoritative actually
-   ingested — and the ones considered and rejected recorded with the reason.
-2. An answer on the ingest extraction contract: either promoted changes to
-   `kb/sources/types/ingest-report.md`, its schema, and the drafting
-   instruction, or the recorded finding that the existing sections suffice and
-   why. If the answer requires relaxing the drafting worker's isolation, that is
-   a proposal with its cost stated, not a silent edit.
-3. An answer on the intermediate node: a promoted shape with at least one worked
-   instance, or the recorded finding that no new shape is needed.
-
-"No new machinery is needed" is a legitimate close for 2 and 3, but only after a
-worked case, not from the armchair.
+The closure condition was satisfied on 2026-08-26: the corpus is decided for
+the dated cohort, every source judged authoritative is ingested with retained
+quotes, and every considered source not used has a rejection or deferral
+reason. The V1 extraction contract and intermediate-node questions were already
+decided in the status table above.
 
 The maintenance sweep is a **successor**, not a closure condition. Recording
 which half is deterministic and which is an assay criterion is in scope;
@@ -267,17 +278,24 @@ re-proposes them.
 
 ## Files
 
+- [Next-session plan](./next-session-plan.md) — restart-ready work queue for
+  target grounding, disposition recording, and consuming this workshop
+- [Wider source-corpus selection](./corpus-selection.md) — dated accepted,
+  rejected, and deferred sources, with source/target transfer boundaries and
+  downstream handoffs
+
 - [Worked case: `agents-navigate-by-deciding-what-to-read-next`](./worked-case-agents-navigate.md)
   — the first claim taken through the whole chain by hand, 2026-08-24. Falsified
   this README's "no slot for any of the four" and found the gap the pipeline
-  cannot close: it detects overlap but not contradiction
+  cannot close by ingestion alone: it detects overlap but target-side comparison
+  is needed for contradiction
 - [Three channels](../literature-disposition/three-channels.md) — channel 3 is
-  this workshop's machinery backlog: the claim ledger, quote retention, the
-  missing write-time check, and the corpus-scoping rule
+  the dated implementation and backlog ledger: direct grounding is landed;
+  prior-art discovery, identifiable provenance, and one quote-walker bug remain
 - [Candidate procedure: pull the claim through the ingest before using it](./candidate-procedure-claim-pull.md)
-  — operator proposal, 2026-08-24: read the source, extract the claim, add it to
-  the ingest if missing, then use it. Under evaluation; the strongest candidate
-  answer so far to the intermediate-node question
+  — historical operator proposal, 2026-08-24. Its demand-driven retention
+  direction survived, but ADR 073 replaced normalized claim entries with exact
+  quotes or an explicit snapshot requirement
 
 ## Input
 
