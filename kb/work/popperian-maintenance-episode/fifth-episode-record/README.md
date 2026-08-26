@@ -1,10 +1,10 @@
-# Editorial drift under repair: the Naur note episode
+# Fifth-episode record: the Naur note's drift under repair
 
-**Posed by:** the operator (Zbigniew Lukasiak), 2026-08-26, after watching one note drift through a write → full pass → trim → rewrite cycle in a single day. Direction: retain the episode with its evidence and work out what, if anything, is durable.
+**Posed by:** the operator (Zbigniew Lukasiak), 2026-08-26, after watching one note drift through a write → full pass → trim → rewrite cycle in a single day. Opened as the workshop `editorial-drift-under-repair`; folded into the Popperian-maintenance workshop the same day as its fifth episode's record. Direction: retain the episode with its evidence and work out what, if anything, is durable.
 
 **Goal.** Understand how a note whose motivation was clear ended up, after a sequence of individually justified edits, asserting something different and weaker — and whether the mechanism is a property of the improvement pipeline that deserves a library note, an instruction change, or nothing.
 
-**What closes it.** One of: (a) a `kb/notes/` note stating the mechanism with this episode as witness, plus any instruction change to `kb/instructions/run-full-improvement-pass-on-note.md` the mechanism warrants; or (b) a finding that the episode is a one-off with no transferable mechanism, recorded in `kb/log.md` (already has a FIX entry dated 2026-08-26) and the workshop deleted.
+**What closes it.** Closes with the parent workshop. The durable candidates are listed in [fifth-episode-critique-without-repair.md](../fifth-episode-critique-without-repair.md); `kb/log.md` already carries a FIX entry dated 2026-08-26.
 
 **Evaluation boundary.** Pipeline behaviour and the resulting texts only. Whether the final Naur reading is *correct* is the note's own business (`kb/notes/naur-binds-theory-to-humans-via-premise-that-machines-follow-rules.md`); here it matters only that the final version returned to the original motivation and survived grounding.
 
@@ -35,6 +35,10 @@ Pass-2 evidence: `evidence/pass2-full-pass-report.md`, `evidence/pass2-initial/`
 **Where v1 went wrong.** The pass repaired the grounding failure by making the evidence set the qualifier — "retained passages do not establish…". True, defensible, and no longer a claim about Naur or about the world: a claim about what this KB had retained. The subject did not narrow (compare the subject-narrowing escape in `kb/notes/narrowing-bought-to-survive-review-is-paid-for-in-content.md`); the *evidence scope* became the claim's boundary.
 
 **Why the pass did that.** Step 7 of the full pass has "narrow the claim" as an operation and no "extend the evidence" operation: `cp-skill-ground` sits outside the pass, and `grounding-alignment` judges against the retained quotes as fixed evidence. When a note's motivation exceeds its retained grounding, the cheapest in-pass repair is to bound the claim by the grounding — even when the full source sits in `kb/sources/.snapshots/`, as it did here. The closing cycle then recorded the contribution as *preserved*, because it compared v1 against v1's own reframed update, not against the motivation.
+
+## Analysis
+
+The analysis of this episode as a case of the pass working as critique and failing as repair is [fifth-episode-critique-without-repair.md](../fifth-episode-critique-without-repair.md). This directory holds the record; that file holds the argument and the candidate design consequences.
 
 ## Raw theoretical part (unreviewed)
 
