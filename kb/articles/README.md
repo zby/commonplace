@@ -14,7 +14,7 @@ Nothing published yet.
 
 ## In draft
 
-- [Reflective self-improvement](./reflective-self-improvement.md) — defines the causal test, compares how far six systems and Commonplace make improvement machinery addressable, and separates accumulation from compounding.
+- [Theory building inside the system](./reflective-self-improvement.md) — reads Naur's theory-building view with an interpreter inside the system, defines theory-mediated methodology and its reflective case, keeps the compounding tests, and witnesses one repair failure on its own basis note.
 
 ---
 
