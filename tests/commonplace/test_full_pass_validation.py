@@ -139,3 +139,62 @@ resulting_paths: [kb/notes/source.md]""",
     result = validate_note(report, repo_root=tmp_path)
 
     assert not result.fails
+
+
+def test_pending_revise_validates_as_a_packet_phase_hand_back(tmp_path: Path) -> None:
+    install_types(tmp_path)
+    report = write_packet(tmp_path, disposition="revise")
+
+    result = validate_note(report, repo_root=tmp_path)
+
+    assert not result.fails
+
+
+def test_completed_keep_pass_verifies_both_captures(tmp_path: Path) -> None:
+    install_types(tmp_path)
+    report = write_packet(
+        tmp_path,
+        phase="complete",
+        final_text="edited text\n",
+        live_source_text="edited text\n",
+    )
+
+    result = validate_note(report, repo_root=tmp_path)
+
+    assert not result.fails
+    assert any("packet captures: all 2" in item for item in result.passes)
+
+
+def test_completed_keep_pass_rejects_a_corrupt_final_capture(tmp_path: Path) -> None:
+    install_types(tmp_path)
+    report = write_packet(
+        tmp_path,
+        phase="complete",
+        final_text="edited text\n",
+        live_source_text="edited text\n",
+    )
+    (report.parent / "final.txt").write_text("corrupted\n", encoding="utf-8")
+
+    result = validate_note(report, repo_root=tmp_path)
+
+    assert any("final capture" in item for item in result.fails)
+
+
+def test_closing_phase_requires_a_final_capture(tmp_path: Path) -> None:
+    install_types(tmp_path)
+    report = write_packet(tmp_path, phase="closing")
+
+    result = validate_note(report, repo_root=tmp_path)
+
+    assert result.fails
+
+
+def test_pending_disposition_must_stay_in_packet_phase(tmp_path: Path) -> None:
+    install_types(tmp_path)
+    report = write_packet(tmp_path, disposition="delete")
+    text = report.read_text(encoding="utf-8").replace("phase: packet", "phase: editing")
+    report.write_text(text, encoding="utf-8")
+
+    result = validate_note(report, repo_root=tmp_path)
+
+    assert result.fails

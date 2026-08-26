@@ -20,6 +20,8 @@ def write_packet(
     disposition: str = "keep",
     target_text: str = "target text\n",
     live_target_text: str | None = None,
+    phase: str = "packet",
+    final_text: str | None = None,
 ) -> Path:
     source = root / "kb/notes/source.md"
     source.parent.mkdir(parents=True, exist_ok=True)
@@ -31,6 +33,14 @@ def write_packet(
     packet = root / "kb/reports/full-pass/source/pass-1"
     packet.mkdir(parents=True)
     (packet / "source.txt").write_text(source_text, encoding="utf-8")
+
+    if final_text is not None:
+        (packet / "final.txt").write_text(final_text, encoding="utf-8")
+        final_fields = f"""final_capture: final.txt
+final_sha256: {content_sha256_for_text(final_text)}"""
+    else:
+        final_fields = """final_capture: null
+final_sha256: null"""
 
     if disposition == "merge":
         target = root / "kb/notes/target.md"
@@ -60,8 +70,10 @@ source: kb/notes/source.md
 source_capture: source.txt
 source_sha256: {content_sha256_for_text(source_text)}
 pass_id: pass-1
+phase: {phase}
 disposition: {disposition}
 {merge_fields}
+{final_fields}
 resolution: {resolution}
 resolved_at: null
 resolution_authority: null
@@ -200,3 +212,63 @@ def test_resolution_section_renderer_is_deterministic() -> None:
 
     assert rendered.endswith("**Resulting paths:** `kb/notes/target.md`")
     assert "**Status:** accepted" in rendered
+
+
+def test_revise_report_parses_as_pending_with_only_the_source_guarded(
+    tmp_path: Path,
+) -> None:
+    report_path = write_packet(tmp_path, disposition="revise")
+
+    report = load_full_pass_report(report_path, repo_root=tmp_path)
+
+    assert report.disposition == "revise"
+    assert report.frontmatter["resolution"] == "pending"
+    assert [item.role for item in report.guarded_inputs] == ["source"]
+
+
+def test_final_capture_guards_the_live_source_against_the_text_the_pass_left(
+    tmp_path: Path,
+) -> None:
+    report_path = write_packet(
+        tmp_path,
+        phase="complete",
+        final_text="edited text\n",
+        live_source_text="edited text\n",
+    )
+
+    report = load_full_pass_report(report_path, repo_root=tmp_path)
+    results = guard_full_pass_report(report)
+
+    assert [item.role for item in report.captures] == ["source", "final"]
+    assert [item.role for item in report.guarded_inputs] == ["final"]
+    assert [result.status for result in results] == ["matching"]
+
+
+def test_final_capture_refuses_a_source_edited_after_the_pass(
+    tmp_path: Path,
+) -> None:
+    report_path = write_packet(
+        tmp_path,
+        phase="complete",
+        final_text="edited text\n",
+        live_source_text="edited again\n",
+    )
+
+    report = load_full_pass_report(report_path, repo_root=tmp_path)
+    results = guard_full_pass_report(report)
+
+    assert [result.status for result in results] == ["changed"]
+    assert results[0].capture_path == "final.txt"
+
+
+def test_final_capture_is_rejected_on_a_pending_disposition(tmp_path: Path) -> None:
+    report_path = write_packet(tmp_path, disposition="revise")
+    text = report_path.read_text(encoding="utf-8").replace(
+        "final_capture: null\nfinal_sha256: null",
+        "final_capture: final.txt\nfinal_sha256: "
+        + content_sha256_for_text("x\n"),
+    )
+    report_path.write_text(text, encoding="utf-8")
+
+    with pytest.raises(ValueError, match="final capture: expected null"):
+        load_full_pass_report(report_path, repo_root=tmp_path)

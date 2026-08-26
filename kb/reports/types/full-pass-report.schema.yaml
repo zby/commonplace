@@ -12,7 +12,10 @@ allOf:
           - source_capture
           - source_sha256
           - pass_id
+          - phase
           - disposition
+          - final_capture
+          - final_sha256
           - merge_target
           - merge_target_capture
           - merge_target_title
@@ -38,8 +41,20 @@ allOf:
           pass_id:
             type: string
             minLength: 1
+          phase:
+            enum: [packet, editing, closing, complete]
           disposition:
-            enum: [keep, delete, merge, rehome]
+            enum: [keep, revise, delete, merge, rehome]
+          final_capture:
+            anyOf:
+              - type: "null"
+              - type: string
+                pattern: '^[^/].*\.txt$'
+          final_sha256:
+            anyOf:
+              - type: "null"
+              - type: string
+                pattern: '^[0-9a-f]{64}$'
           merge_target:
             type: [string, "null"]
           merge_target_capture:
@@ -131,6 +146,31 @@ allOf:
           properties:
             resolution:
               enum: [pending, accepted, rejected, alternative-applied, superseded]
+            phase:
+              const: packet
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            phase:
+              enum: [closing, complete]
+    then:
+      properties:
+        frontmatter:
+          properties:
+            final_capture:
+              type: string
+              minLength: 1
+            final_sha256:
+              type: string
+    else:
+      properties:
+        frontmatter:
+          properties:
+            final_capture:
+              const: null
+            final_sha256:
+              const: null
   - if:
       properties:
         frontmatter:

@@ -21,7 +21,7 @@ GuardStatus = Literal["matching", "changed", "missing", "corrupt-capture"]
 
 @dataclass(frozen=True)
 class GuardedInput:
-    role: Literal["source", "merge-target"]
+    role: Literal["source", "merge-target", "final"]
     logical_path: str
     logical_file: Path
     capture_path: str
@@ -35,8 +35,11 @@ class FullPassReport:
     packet_dir: Path
     frontmatter: dict[str, Any]
     body: str
-    disposition: Literal["keep", "delete", "merge", "rehome"]
+    disposition: Literal["keep", "revise", "delete", "merge", "rehome"]
+    captures: tuple[GuardedInput, ...]
+    """Every packet-owned capture, for hash verification."""
     guarded_inputs: tuple[GuardedInput, ...]
+    """One input per guarded logical path, each against its latest capture."""
 
 
 @dataclass(frozen=True)
@@ -114,7 +117,7 @@ def _capture_file(value: str, *, packet_dir: Path, field: str) -> Path:
 def _guarded_input(
     frontmatter: dict[str, Any],
     *,
-    role: Literal["source", "merge-target"],
+    role: Literal["source", "merge-target", "final"],
     logical_field: str,
     capture_field: str,
     hash_field: str,
@@ -161,22 +164,47 @@ def parse_full_pass_report(
         raise ValueError(f"type: expected {FULL_PASS_REPORT_TYPE}")
 
     disposition_value = frontmatter.get("disposition")
-    if disposition_value not in {"keep", "delete", "merge", "rehome"}:
-        raise ValueError("disposition: expected keep, delete, merge, or rehome")
-    disposition: Literal["keep", "delete", "merge", "rehome"] = disposition_value
+    if disposition_value not in {"keep", "revise", "delete", "merge", "rehome"}:
+        raise ValueError(
+            "disposition: expected keep, revise, delete, merge, or rehome"
+        )
+    disposition: Literal["keep", "revise", "delete", "merge", "rehome"] = (
+        disposition_value
+    )
 
     packet_dir = report_path.parent
-    guarded_inputs = [
-        _guarded_input(
+    source_input = _guarded_input(
+        frontmatter,
+        role="source",
+        logical_field="source",
+        capture_field="source_capture",
+        hash_field="source_sha256",
+        packet_dir=packet_dir,
+        repo_root=repo_root,
+    )
+    captures = [source_input]
+    guarded_inputs = [source_input]
+
+    final_fields = ("final_capture", "final_sha256")
+    if frontmatter.get("final_capture") is not None:
+        if disposition != "keep":
+            raise ValueError("final capture: expected null unless disposition is keep")
+        final_input = _guarded_input(
             frontmatter,
-            role="source",
+            role="final",
             logical_field="source",
-            capture_field="source_capture",
-            hash_field="source_sha256",
+            capture_field="final_capture",
+            hash_field="final_sha256",
             packet_dir=packet_dir,
             repo_root=repo_root,
         )
-    ]
+        captures.append(final_input)
+        # The live source is guarded against the text the pass left, not the
+        # text it started from; the start capture stays for hash verification
+        # and capture-to-current diffs.
+        guarded_inputs = [final_input]
+    elif any(frontmatter.get(field) is not None for field in final_fields):
+        raise ValueError("final fields: expected both final_capture and final_sha256")
 
     merge_fields = (
         "merge_target",
@@ -186,17 +214,17 @@ def parse_full_pass_report(
     )
     if disposition == "merge":
         _required_string(frontmatter, "merge_target_title")
-        guarded_inputs.append(
-            _guarded_input(
-                frontmatter,
-                role="merge-target",
-                logical_field="merge_target",
-                capture_field="merge_target_capture",
-                hash_field="merge_target_sha256",
-                packet_dir=packet_dir,
-                repo_root=repo_root,
-            )
+        target_input = _guarded_input(
+            frontmatter,
+            role="merge-target",
+            logical_field="merge_target",
+            capture_field="merge_target_capture",
+            hash_field="merge_target_sha256",
+            packet_dir=packet_dir,
+            repo_root=repo_root,
         )
+        captures.append(target_input)
+        guarded_inputs.append(target_input)
     elif any(frontmatter.get(field) is not None for field in merge_fields):
         raise ValueError("merge fields: expected null unless disposition is merge")
 
@@ -206,6 +234,7 @@ def parse_full_pass_report(
         frontmatter=frontmatter,
         body=document.body,
         disposition=disposition,
+        captures=tuple(captures),
         guarded_inputs=tuple(guarded_inputs),
     )
 
@@ -326,7 +355,7 @@ def guard_input(guarded_input: GuardedInput, *, packet_dir: Path) -> GuardResult
 
 
 def guard_full_pass_report(report: FullPassReport) -> tuple[GuardResult, ...]:
-    """Compare every report-owned capture with its current logical artifact."""
+    """Compare each guarded logical artifact with its latest packet capture."""
     return tuple(
         guard_input(guarded_input, packet_dir=report.packet_dir)
         for guarded_input in report.guarded_inputs

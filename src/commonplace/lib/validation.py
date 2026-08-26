@@ -982,19 +982,19 @@ def validate_full_pass_report(
         return
 
     capture_failures = 0
-    for guarded_input in report.guarded_inputs:
+    for capture in report.captures:
         _text, actual_sha256, error = verify_capture(
-            guarded_input, packet_dir=report.packet_dir
+            capture, packet_dir=report.packet_dir
         )
         if error is not None:
             capture_failures += 1
             results.fails.append(
-                f"{guarded_input.role} capture: {error}"
+                f"{capture.role} capture: {error}"
                 + (f" ({actual_sha256})" if actual_sha256 is not None else "")
             )
     if not capture_failures:
         results.passes.append(
-            f"packet captures: all {len(report.guarded_inputs)} present and hash-verified"
+            f"packet captures: all {len(report.captures)} present and hash-verified"
         )
 
     expected_resolution = render_resolution_section(report.frontmatter)
