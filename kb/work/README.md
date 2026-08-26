@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [multistage-skill-coherence-audit](./multistage-skill-coherence-audit/README.md) — does cp-skill-write-multistage share the full pass's repair, guard, and state defects; eight findings (four edit-mode-only), checked against the finished knowledge-access run; repair deferred
 - [theory-mediated-methodology-article](./theory-mediated-methodology-article/README.md) — restructure the reflective-self-improvement article around Naur's theory building as the third pillar; outline mapped to notes and grounded sources (Naur 19, Popper 8, Argyris 9 quotes), keep/shrink/cut table for the current draft
 - [change-operations-catalogue](./change-operations-catalogue/README.md) — a working list of the operations by which Commonplace gets changed, each admitted by an observed instance, with the premises it must read and where they live; used to audit `kb/reference/` in both directions under ADR 074. Carries no completeness claim
 - [full-pass-recompute-cluster](./full-pass-recompute-cluster/README.md) — queued full improvement passes over the six recoverability/economics notes written 2026-08-22/23, in two dependency-ordered batches so a reframe in the first lands before the second reads its premises
