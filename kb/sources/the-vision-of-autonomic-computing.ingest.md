@@ -23,7 +23,10 @@ Kephart and Chess argue that rising software complexity is outstripping human ca
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** As Figure 2 shows, an autonomic element will typically consist of one or more managed elements coupled with a single autonomic manager that con- trols and represents them.
+  - **Source location:** Figure 2 discussion, IEEE Computer p. 44
+- **Source extract (verbatim):** By monitoring the managed element and its external environment, and con- structing and executing plans based on an analysis of this information, the autonomic manager will relieve humans of the responsibility of directly man- aging the managed element.
+  - **Source location:** Figure 2 discussion, IEEE Computer p. 44
 
 ## Connections Found
 

@@ -33,9 +33,10 @@ they concern a supporting example, quotation, comparison cell, removed clause,
 or sibling-workshop experiment rather than credible subsumption of the note's
 central contribution. The dated decisions and current source states are in the
 [workshop README](./README.md#received-claim-grounding-rollout-handoffs).
-The Gödel-machine candidate was subsequently kept on 2026-08-26 after its
-ancillary source use was grounded; the proposal-selection candidate remains
-open.
+The Gödel-machine and proposal-selection candidates were subsequently kept on
+2026-08-26 after their source uses were grounded. In the second case, the
+literature established neighboring direct-update and adaptive-loop traditions
+but not the note's narrower reject-capable subtype.
 
 The operative source route has also changed since this inventory was built.
 Current work grounds a use directly in retained exact `## Quotes` or in an exact
@@ -356,3 +357,12 @@ proof-versus-prompt comparison, and split between inference rigor and premise
 adequacy. The ancillary Incremental Self-Improvement handoff was grounded and
 replaced with a direct ingest route. No inbound rewiring was needed because the
 note's path, title, and central claim stayed stable.
+
+The proposal-selection note is the second dated artifact disposition: keep.
+Ashby supplies the direct viability-driven contrast, Zinkevich a direct gradient
+update, and the autonomic-computing sources a neighboring engineering reference
+model whose semantics do not settle field membership. The note's contribution
+is the narrower reject-capable subtype, its search–evaluation–operative-retention
+decomposition, and its separation from reflection, cumulativity, and gate
+strength. Five grounded primary routes replaced the handoffs; no inbound
+rewiring was needed because the artifact's identity remained stable.

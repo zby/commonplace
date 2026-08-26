@@ -88,11 +88,12 @@ the sixteen handoffs is itself a keep, merge, thin, or retire decision. The
 detailed test, decisions, and 7-by-9 route matrix are in the [workshop
 README](./README.md#received-claim-grounding-rollout-handoffs).
 
-The Gödel-machine branch is complete. Two exact passages now ground the
-Incremental Self-Improvement payoff/rollback comparison, the target links that
-primary ingest directly, and the artifact was kept on 2026-08-26. The remaining
-candidate-side route work is the activation handoff plus five proposal-selection
-uses.
+The two handoff-admitted branches are complete. The Gödel-machine target links
+its grounded payoff/rollback source and was kept on 2026-08-26. The
+proposal-selection target now has grounded routes for Ashby, Zinkevich, and the
+autonomic-computing tradition and was also kept: the sources establish
+neighboring mechanisms, not its local reject-capable subtype boundary. The
+remaining candidate-side route gap is the activation handoff.
 
 ---
 
@@ -176,8 +177,9 @@ decision.
 That is the running result of this workshop restated: pointed at redundancy, the
 method returned **three defects and zero clean rediscoveries a retirement would
 tidily remove.** All three defects in that running tally are repaired. The first
-artifact disposition is now a keep: the Gödel-machine source establishes the
-formal construction, but does not subsume the note's local comparisons.
+two completed artifact dispositions are keeps: the Gödel-machine source does
+not subsume its local comparisons, and the proposal-selection sources do not
+supply its combined architectural boundary.
 
 ---
 
@@ -277,10 +279,11 @@ form without the eighth move propagates the problem in more convincing packaging
    the ancillary Incremental Self-Improvement comparison; the note links the
    primary ingest and is kept as a source-grounded worked comparison. No inbound
    rewiring was needed.
-2. **Complete the proposal-selection candidate's source set.** Ground the three
-   matching ingests and obtain a direct primary Ashby route for its two remaining
-   uses before judging whether the three-function model is established
-   vocabulary, a local subtype, or a mixture.
+2. **Proposal-selection disposition. Done 2026-08-26.** Five primary routes now
+   ground the Ashby, direct-update, and MAPE-K comparisons. The result is a
+   mixture: established neighboring mechanisms around a local reject-capable
+   subtype and three-function decomposition. The note is kept without inbound
+   rewiring.
 3. **Select the wider corpus from the original claim inventory.**
    Source-grounding owns the selection; the V1 Quotes/snapshot path is ready to
    carry each result.

@@ -21,16 +21,16 @@ for the operative grounding path.
 and checked against an actual source in the worked case; the other eleven have
 claim inventories and candidate reading assignments. The 2026-08-26 handoff
 triage admitted two further candidates, so the working cohort now has fourteen.
-One candidate now has a final dated artifact disposition: the Gödel-machine
-note was kept on 2026-08-26 after its ancillary source handoff was grounded and
-repaired. The claim-grounding rollout produced 264 terminal claim-use
+Two candidates now have final dated artifact dispositions: the Gödel-machine
+and proposal-selection notes were both kept on 2026-08-26 after their source
+handoffs were grounded and repaired. The claim-grounding rollout produced 264 terminal claim-use
 dispositions and sixteen `literature handoff`s across ten notes. Those handoffs
 are intake for source acquisition or target re-evaluation; they are not by
 themselves keep, merge, thin, or retire decisions.
 
 | Closure condition | State | What remains |
 |---|---|---|
-| Source-grounded disposition for every settled cohort member | Open | One of fourteen working candidates is complete. Finish source routes and adjudicate the remaining thirteen, including the first Pirolli worked candidate and the proposal-selection candidate admitted from the handoffs. |
+| Source-grounded disposition for every settled cohort member | Open | Two of fourteen working candidates are complete. Finish source routes and adjudicate the remaining twelve, including the first Pirolli worked candidate and the activation candidate. |
 | One disposition executed end to end | Done 2026-08-26 | The Gödel-machine note was kept after source comparison and its ancillary literature handoff was replaced with a grounded primary route. Its path, title, and central claim stayed stable, so no inbound rewiring was needed. |
 | General disposition rule | Open | The evidence supports claim-level, source-grounded judgment, but no rule or no-general-rule finding has been promoted. |
 | Write-time check decision | Partial | ADR 073 guards explicit new or changed source dependencies. It cannot discover unattributed prior art, which is the check this closure condition still needs decided. |
@@ -43,11 +43,11 @@ four prose-only defects were repaired, and the false external-source trait was
 dropped. None of those corrections is an artifact disposition. The handoff
 triage is now complete: two of the nine new notes joined the working cohort and
 the other seven remain source-grounding, provenance, or evidence-stabilization
-work. The first dated disposition is also complete: the Gödel-machine note was
-kept after direct comparison with its primary sources. The next bounded
-candidate is the proposal-selection note, whose three matching ingests need
-grounding and whose two Ashby uses still need a direct primary route. Most other
-final dispositions wait on the wider corpus. The rollout's all-68-fresh
+work. The first two dated dispositions are complete: the Gödel-machine and
+proposal-selection notes were kept after direct comparison with their primary
+sources. The next bounded candidate is the first Pirolli worked case: its claim
+correction and source route have landed, but its final artifact disposition
+remains open. Most other final dispositions wait on the wider corpus. The rollout's all-68-fresh
 statement is a dated certification result, not standing assurance:
 post-certification note edits require current freshness checks and sometimes new
 reviews. The 2026-08-26 `concept-attribution` and `misleading-link-text` prompt
@@ -308,7 +308,7 @@ dated intake decisions, not permanent immunity from a later prior-art finding.
 | `scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier` | 1 | The exact financial-services practitioner report has a tracked ingest with relevant Quotes; the target still uses the bare URL | **Out.** The report is one illustration; the central frontier-recurrence claim remains a conditional hypothesis requiring longitudinal evidence. Ground and migrate the route separately. |
 | `selective-revision-needs-a-faithful-rationale-not-just-a-legible-one` | 1 | The self-evolver paper has a tracked ingest with intervention Quotes; the target still uses the bare arXiv URL | **Out.** The paper supports one causal-faithfulness premise; the transfer to revision of natural-language rationales remains the note's stated delta. Ground and migrate the route separately. |
 | `theory-mediated-learning-may-improve-sample-efficiency-under-shifts` | 3 | Yosinski transfer, MAML, and Bengio fast-adaptation sources remain bare URLs with no tracked ingests | **Out on present evidence.** The three uses establish comparison and boundary facts, while the title interaction remains an explicitly untested experiment. Acquire the sources if those uses remain. |
-| `a-proposal-selection-loop-requires-search-evaluation-and-retention` | 5 | Ashby has a local source review but no direct ingest; Zinkevich, Kephart/Chess, Weyns, and Petrovska now have tracked ingests, mostly without retained Quotes for these uses | **In — new candidate.** The handoffs bear jointly on the model's Ashby ancestry, counterexamples, and relation to established adaptive-loop traditions; source reading could reduce the three-function model to a narrower local subtype or vocabulary delta. Ground the three available uses and obtain a direct Ashby route for two. |
+| `a-proposal-selection-loop-requires-search-evaluation-and-retention` | 5 | A checksum-paired Ashby ingest now retains the trial/retention, move-or-stay, and randomized-successor passages; Zinkevich, Kephart/Chess, Weyns, and Petrovska retain the direct-update and adaptive-loop passages | **In — kept 2026-08-26.** Source comparison established neighboring mechanisms and reference models, not the note's reject-capable subtype boundary or three-function vocabulary. The grounded primary routes replaced all five handoffs. |
 | `brainstorming-maintainability-oracles-for-agentic-development` | 1 | *Why Software Factories Fail Part II* now has a tracked ingest but no retained Quotes | **Out.** The handoff concerns one removed workflow attribution inside an explicit seedling; the proposed oracle design survives independently. Ground before any restoration. |
 | `goedel-machines-are-a-proof-governed-case-of-self-modification` | 1 | Two retained passages in the Incremental Self-Improvement ingest now establish the payoff-per-time retention rule and stack-based restoration | **In — kept 2026-08-26.** The note's source exposition is a necessary premise for a local comparison that the source does not supply; the direct primary route replaced the handoff. |
 
@@ -316,15 +316,16 @@ The result separates the source-route matrix cleanly:
 
 | Current source state | Uses in disposition-candidate targets | Uses outside the disposition cohort | Total |
 |---|---:|---:|---:|
-| Matching tracked ingest | 4 — proposal-selection (3 pending grounding), Gödel machines (1 grounded) | 3 — scaling, selective revision, maintainability oracles | 7 |
-| Direct route or stable evidence absent | 3 — activation (1), proposal-selection (2) | 6 — RLM lifecycle, Weizenbaum, contamination evidence, theory-mediated learning (3) | 9 |
+| Grounded direct route | 6 — proposal-selection (5), Gödel machines (1) | 0 | 6 |
+| Matching tracked ingest; target repair pending | 0 | 3 — scaling, selective revision, maintainability oracles | 3 |
+| Direct route or stable evidence absent | 1 — activation | 6 — RLM lifecycle, Weizenbaum, contamination evidence, theory-mediated learning (3) | 7 |
 | **Total** | **7** | **9** | **16** |
 
 Two of the nine new notes therefore join the working cohort, taking it from
 twelve to fourteen candidates. Seven notes and nine uses do not become
 artifact-disposition work merely because their source route is incomplete.
 Their grounding and provenance repairs remain valid work, but they do not block
-the cohort's remaining artifact judgments.
+the cohort's remaining twelve artifact judgments.
 
 ## First dated artifact disposition — Gödel machines
 
@@ -346,6 +347,27 @@ This is a worked keep decision, not a general rule that source-derived
 exposition should survive. Here the external construction is the premise of a
 local comparison, literature recovery is materially more expensive than a
 local file read, and the comparison is already consumed as a shared unit.
+
+## Second dated artifact disposition — proposal selection
+
+**Disposition: Keep. Decided and executed 2026-08-26.** The comparison used a
+new checksum-paired [Ashby ingest](../../sources/ashby-design-for-a-brain-1960.ingest.md)
+and grounded passages from Zinkevich, Kephart and Chess, Weyns, and Petrovska,
+Erjiage, and Kugele.
+
+| Test | Finding |
+|---|---|
+| Source overlap | Ashby establishes trial-and-error change, persistence while essential variables remain in bounds, and randomized successors when they do not. Zinkevich supplies a direct-update algorithm. Kephart and Chess and Weyns establish the autonomic-manager and MAPE-K engineering tradition, while Petrovska and colleagues establish that its semantics and the field's definitions remain unsettled. |
+| Commonplace remainder | The [note](../../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) defines a narrower subtype by a separately rejectable adoption decision, makes rejection distinct from generating another state, adds operative retention through behavioral authority, and separates that architecture from reflection, cumulativity, and gate strength. None of the sources supplies that combined boundary or vocabulary. |
+| Recovery and shape | A source pointer cannot recover the note's proposition because the relevant sources establish different neighboring mechanisms. Thinning would leave an unattributed adapter while forcing each consumer to reconstruct why Ashby, direct gradient update, MAPE-K, and the Gödel machine fall on different sides of one boundary. |
+| Graph role | Sixty-four tracked library artifacts link to the note across definitions, pathway casebooks, oracle and autonomy claims, external-system analyses, and the reflective-self-improvement article. The count estimates rewiring cost; the range of uses shows that the subtype already acts as a normalized premise rather than optional exposition. |
+| Execution | The source passages were retained in five ingests, the note now links the primary routes and states which distinctions are Commonplace's, and the stale literature handoffs are closed. Its path, title, and central claim remain unchanged, so no inbound rewiring or retirement approval stop applies. |
+
+This second keep is another per-note result, not yet a general rule. The source
+comparison found a mixture: established component mechanisms and neighboring
+loop traditions around a local architectural distinction. Retiring or thinning
+the note would erase the distinction the literature comparison was needed to
+identify.
 
 ## Boundaries
 

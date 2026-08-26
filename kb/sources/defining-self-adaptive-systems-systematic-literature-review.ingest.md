@@ -23,7 +23,10 @@ The review searches 1,493 papers, selects 314 relevant papers, and finds only ni
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** Although MAPE-K gives some intuition behind the engineering of self-adaptive (and self-*) systems by the separation of concerns between the managing and the managed system, a more specific semantics of these two components is still missing. For instance, one can assume that every system that does some monitoring, planning, anal- ysis, and execution and has some loose interpretation of the knowledge (e. g. every cyber-physical system), is self-adaptive by default.
+  - **Source location:** Section IV-A, Discussion on the results and future works
+- **Source extract (verbatim):** Our results showed that 1) the majority of the papers we analysed do not even provide an informal definition or description of what they consider a self-adaptive system to be, and 2) only nine papers aimed to define or specify self-adaptive systems in their contributions formally. The results of our study clearly revealed that the problem of defining self-adaptive systems remains under- researched, which, to some extent, explains why the research field lacks more unified definitions—or generally a better understanding of the terminology.
+  - **Source location:** Section VI, Conclusion
 
 ## Connections Found
 

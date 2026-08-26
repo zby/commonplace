@@ -23,7 +23,8 @@ Weyns defines self-adaptation through complementary external and internal princi
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** The adaptation plan is then executed by theExecuteelement that adapts the managed element as needed. MAPE-K provides a reference model for a manag- ing system. MAPE-K’s power is its intuitive structure of the different functions that are involved in realising the feedback control loop in a self-adaptive system.
+  - **Source location:** Section 3.1, Wave I: Automating Tasks
 
 ## Connections Found
 

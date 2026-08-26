@@ -23,7 +23,8 @@ The paper defines online convex programming as choosing each feasible point befo
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** Algorithm 1 Greedy Projection Select an arbitrary x1  F and a sequence of learning rates 1, 2, . . .  R+. In time step t, after receiving a cost function, select the next vector xt+1 according to: xt+1 = P xt - tct(xt) .
+  - **Source location:** Section 2, Algorithm 1 (Greedy Projection)
 
 ## Connections Found
 
