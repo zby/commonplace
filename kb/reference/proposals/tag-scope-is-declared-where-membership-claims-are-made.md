@@ -163,7 +163,7 @@ The `kb/tags/` `COLLECTION.md` joins the system-definition surface as the heads'
 
 Relevant Notes:
 
-- [Stale indexes reduce discovery when they suppress fallback search](../../notes/stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) — rests-on: a mark whose enforced scope is narrower than its stated scope can suppress the more complete sweep the marks exist to preserve
+- [Stale indexes reduce discovery when they suppress fallback search](../../notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — rests-on: a mark whose enforced scope is narrower than its stated scope can suppress the more complete sweep the marks exist to preserve
 - [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: scope is a parameter of the derived claim, so it must be part of what the check enforces or the claim must not be made
 - [Load-bearing vocabulary collisions should be prevented or visibly scoped at write time](../../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — rests-on: one-string-one-sense is this invariant applied to tag strings within a KB root; the authoring contract makes violations visible errors now, while the registry rider can later prevent them at write time
 - [An enforced tag-README is a MOC with a machine-checked contract](../../notes/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md) — rests-on: the head's identity is the MOC's orientation-plus-picks role with one checkable claim fastened on; relocation must carry that identity rather than replace it with routing

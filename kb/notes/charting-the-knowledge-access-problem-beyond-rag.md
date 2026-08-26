@@ -50,7 +50,7 @@ This symbolic/semantic split is not incidental. It is close to the KB's central 
 
 **Synthesis** — some questions are not "which page contains the answer?" but "which set of pages must be reconciled to produce the answer?" This is different from landing on the right document. Once a question requires comparison, contradiction resolution, or a whole-picture narrative, the problem becomes one of prompt assembly or prior synthesis, not just retrieval. [Evolving understanding needs holistic rewrite, not composition](./evolving-understanding-needs-holistic-rewrite-not-composition.md) is one case of this broader pattern.
 
-**Maintenance** — any navigation aid can go stale. A table of contents, index, abstract, or graph edge is valuable only while it still predicts what the target contains. A stale navigation aid is most dangerous when it still looks complete: [stale indexes reduce discovery when they suppress fallback search](./stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md). The more a system depends on pointers and derived views, the more it needs maintenance loops that keep them trustworthy.
+**Maintenance** — any navigation aid can go stale. A table of contents, index, abstract, or graph edge is valuable only while it still predicts what the target contains. A stale navigation aid is most dangerous when it still looks complete: [stale indexes reduce discovery when they suppress fallback search](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md). The more a system depends on pointers and derived views, the more it needs maintenance loops that keep them trustworthy.
 
 ## Why the RAG framing is too narrow
 

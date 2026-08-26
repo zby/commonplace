@@ -27,7 +27,7 @@ The "rebuild" is not automatic rewriting — it's a review prompt. A human or ag
 
 Not every change to a target invalidates the linking note. WRITING.md might get a typo fix that doesn't affect any note referencing it. This is the same tradeoff `make` accepts — it rebuilds targets that may not need rebuilding because the cost of a redundant rebuild is lower than the cost of a missed one.
 
-For a KB, the cost of a false positive is "agent re-reads a note unnecessarily." That's cheap. A false negative can leave an apparently complete navigation artifact suppressing fallback discovery — the problem [stale indexes reduce discovery when they suppress fallback search](./stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) identifies.
+For a KB, the cost of a false positive is "agent re-reads a note unnecessarily." That's cheap. A false negative can leave an apparently complete navigation artifact suppressing fallback discovery — the problem [stale indexes reduce discovery when they suppress fallback search](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) identifies.
 
 Possible filters to reduce noise:
 - Only flag notes whose targets changed substantively (exclude commits that only touch whitespace or frontmatter).
@@ -41,7 +41,7 @@ This works for intra-KB links where both files are in git. It does not cover ext
 ## Relationship to existing staleness work
 
 The KB already has staleness concepts:
-- [Stale indexes reduce discovery when they suppress fallback search](./stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) identifies the fallback-suppression failure that makes some stale navigation dangerous.
+- [Stale indexes reduce discovery when they suppress fallback search](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) identifies the fallback-suppression failure that makes some stale navigation dangerous.
 - [Quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) proposes note-age-vs-connection-count as a staleness proxy.
 - Related-system reviews use `last-checked` for external sources.
 
@@ -55,7 +55,7 @@ If most staleness comes from notes whose claims drift due to accumulated context
 
 Relevant Notes:
 
-- [Stale indexes reduce discovery when they suppress fallback search](./stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md) — foundation: the fallback-suppression risk that motivates detection
+- [Stale indexes reduce discovery when they suppress fallback search](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — foundation: the fallback-suppression risk that motivates detection
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — extends: adds dependency-aware detection alongside age-based heuristics
 - [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — motivates: its proposal-pruning pattern is a concrete use case for this detection
 - [traversal improves the graph](./traversal-improvements-should-be-deferred-via-logging-to-avoid-mid.md) — mechanism: traversal is when staleness gets noticed today; this note proposes detecting it before traversal

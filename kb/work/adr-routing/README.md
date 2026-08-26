@@ -45,7 +45,7 @@ the code and the task.
 ## Constraints a solution must respect
 
 **A partial index is worse than none.** [Stale indexes reduce discovery when
-they suppress fallback search](../../notes/stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md):
+they suppress fallback search](../../notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md):
 an agent that finds three relevant ADRs stops looking for the fourth. Any
 index either carries a completeness guarantee it can keep, or must not read as
 complete.

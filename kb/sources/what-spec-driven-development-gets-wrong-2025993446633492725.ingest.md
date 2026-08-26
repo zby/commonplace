@@ -55,7 +55,7 @@ The `/connect` discovery found 11 connections across the KB, with 5 strong, 4 mo
 
 2. **Update granularity as a design variable** — "Too much and the spec becomes noise you learn to ignore. Too little and you're back to guessing what happened." This is a signal-to-noise tradeoff on inspectable substrates that the KB hasn't articulated. What counts as a "directional decision" worth surfacing? [experiment]
 
-3. **The "confidence trap" of stale authoritative artifacts** — "A stale spec misleads agents that don't know any better. They'll execute a plan that no longer matches reality, confidently." This generalizes the mechanism in [stale indexes reduce discovery when they suppress fallback search](../notes/stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md): an outdated artifact can lower discovery recall when consumers treat it as exhaustive and therefore skip a more current check. [deep-dive]
+3. **The "confidence trap" of stale authoritative artifacts** — "A stale spec misleads agents that don't know any better. They'll execute a plan that no longer matches reality, confidently." This generalizes the mechanism in [stale indexes reduce discovery when they suppress fallback search](../notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md): an outdated artifact can lower discovery recall when consumers treat it as exhaustive and therefore skip a more current check. [deep-dive]
 
 4. **The junior engineer analogy as a design spec for agent reporting** — surface interpretation choices, not implementation details. This is a concrete operationalization of what "inspectable substrate" means in practice for agent-to-human communication. [just-a-reference]
 
