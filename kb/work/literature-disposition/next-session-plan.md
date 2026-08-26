@@ -3,8 +3,8 @@
 Date fixed: 2026-08-26
 
 Start the next session here. The source corpus is complete for the current
-cohort. Eleven of fourteen candidates have dated, executed artifact dispositions.
-Three further artifact judgments and two workshop-level decisions
+cohort. Twelve of fourteen candidates have dated, executed artifact dispositions.
+Two further artifact judgments and two workshop-level decisions
 remain.
 
 ## State to inherit
@@ -26,19 +26,21 @@ remain.
 - The first four dated dispositions remain in [README.md](./README.md): Gödel
   machines, proposal selection, the Pirolli navigation premise, and end-to-end
   knowledge access.
-- The first three post-MOC judgments are recorded in
+- The first four post-MOC judgments are recorded in
   [remaining-dispositions.md](./remaining-dispositions.md): keep the independent
   membership/orientation premise after removing its stale five-note heuristic,
   and keep the conditional retrieval-suppression mechanism as a separate
   control-flow premise; then rewrite and keep fluid resolution-switching as the
-  local qualitative criterion for transitions among KB views.
+  local qualitative criterion for transitions among KB views; then rewrite and
+  keep the first-time-human heuristic as a conditional access-path comparison
+  with one authority and consumer-specific interfaces.
 - The working tree also contains
   `kb/work/multistage-skill-coherence-audit/`, which belongs to another task.
   Do not stage or edit it as part of this workshop.
 
 ## Remaining candidate order
 
-The remaining three are the starting cohort minus the starting-cohort notes
+The remaining two are the starting cohort minus the starting-cohort notes
 already decided. Their proposed external traditions were explicitly deferred
 in [the source selection](../source-grounding/corpus-selection.md#candidates-not-selected-for-the-current-live-claims)
 because those traditions no longer establish a load-bearing live premise.
@@ -47,9 +49,8 @@ acquisition.
 
 | Order | Candidate | Current source-side finding | Decision work |
 |---:|---|---|---|
-| 1 | `design-for-the-first-time-human-except-on-access-cost` | DITA and single-source publishing were deferred because the live contribution is the access-mode transfer and per-consumer materialization | Test whether that transfer remains a distinct claim after the superseded navigation row was repaired |
-| 2 | `addressability-grain-sets-a-matched-selective-read-floor` | Database cost-model and passage-retrieval sources were deferred; the live note uses a conditional matched-unit relation and local measurements | Decide whether the local relation and measurements earn the artifact without importing a database analogy as authority |
-| 3 | `human-llm-differences-are-load-bearing-for-knowledge-system-design` | The claim inventory found almost no information-foraging content and the source selection found no missing authoritative source for its central claim | Re-test cohort membership explicitly; record either a keep disposition or removal from the settled cohort rather than silently dropping it |
+| 1 | `addressability-grain-sets-a-matched-selective-read-floor` | Database cost-model and passage-retrieval sources were deferred; the live note uses a conditional matched-unit relation and local measurements | Decide whether the local relation and measurements earn the artifact without importing a database analogy as authority |
+| 2 | `human-llm-differences-are-load-bearing-for-knowledge-system-design` | The claim inventory found almost no information-foraging content and the source selection found no missing authoritative source for its central claim | Re-test cohort membership explicitly; record either a keep disposition or removal from the settled cohort rather than silently dropping it |
 
 ## Per-candidate procedure
 
@@ -73,7 +74,7 @@ For each candidate:
 
 ## Final workshop decisions
 
-After the three remaining artifact judgments:
+After the two remaining artifact judgments:
 
 1. Promote a general disposition rule, or record the positive finding that
    literature disposition remains per-note. The worked cases currently favor a
@@ -90,7 +91,7 @@ After the three remaining artifact judgments:
 
 - [x] Active MOC multistage run is accepted and promoted; its dated
       artifact disposition is recorded.
-- [ ] Three remaining candidates have dated, executed dispositions.
+- [ ] Two remaining candidates have dated, executed dispositions.
 - [ ] General rule or explicit no-general-rule finding is promoted.
 - [ ] Write-time prior-art-check decision is recorded.
 - [ ] Durable findings are promoted.

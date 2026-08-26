@@ -21,7 +21,7 @@ for the operative grounding path.
 and checked against an actual source in the worked case; the other eleven have
 claim inventories and candidate reading assignments. The 2026-08-26 handoff
 triage admitted two further candidates, so the working cohort now has fourteen.
-Eleven candidates now have final dated artifact dispositions. The Gödel-machine,
+Twelve candidates now have final dated artifact dispositions. The Gödel-machine,
 proposal-selection, first Pirolli worked-case, and knowledge-access notes were
 kept first. Contextual activation was then kept after comparison with two
 primary psychology sources. Link-following/search and pointer design were kept
@@ -35,6 +35,8 @@ retrieval-suppression note was then kept as a separate control-flow premise
 used beyond that completeness/orientation cluster. The fluid-resolution note
 was rewritten around a local qualitative transition criterion and kept after
 its untraceable source attribution and broad cognition claims were removed. The
+first-time-human note was rewritten as a conditional access-path comparison and
+kept as the one-authority/per-consumer-interface premise used by two ADRs. The
 claim-grounding rollout produced 264 terminal claim-use dispositions and
 sixteen `literature handoff`s across ten notes. Those handoffs are intake for
 source acquisition or target re-evaluation; they are not by themselves keep,
@@ -42,14 +44,14 @@ merge, thin, or retire decisions.
 
 | Closure condition | State | What remains |
 |---|---|---|
-| Source-grounded disposition for every settled cohort member | Open | Eleven of fourteen working candidates are complete. Adjudicate the three candidates listed in [the continuation plan](./next-session-plan.md#remaining-candidate-order). |
+| Source-grounded disposition for every settled cohort member | Open | Twelve of fourteen working candidates are complete. Adjudicate the two candidates listed in [the continuation plan](./next-session-plan.md#remaining-candidate-order). |
 | One disposition executed end to end | Done 2026-08-26 | The Gödel-machine note was kept after source comparison and its ancillary literature handoff was replaced with a grounded primary route. Its path, title, and central claim stayed stable, so no inbound rewiring was needed. |
 | General disposition rule | Open | The evidence supports claim-level, source-grounded judgment, but no rule or no-general-rule finding has been promoted. |
 | Write-time check decision | Partial | ADR 073 guards explicit new or changed source dependencies. It cannot discover unattributed prior art, which is the check this closure condition still needs decided. |
 
 **Fresh-session entry point:** use
 [next-session-plan.md](./next-session-plan.md). It records the completed source
-handoffs and MOC run, the three remaining candidates in working order, the
+handoffs and MOC run, the two remaining candidates in working order, the
 per-candidate procedure, and the two final workshop-level decisions.
 
 The direct source-grounding machinery no longer blocks progress. Evidence
@@ -60,7 +62,7 @@ four prose-only defects were repaired, and the false external-source trait was
 dropped. None of those corrections is an artifact disposition. The handoff
 triage is now complete: two of the nine new notes joined the working cohort and
 the other seven remain source-grounding, provenance, or evidence-stabilization
-work. Eleven dated dispositions are complete. The activation note and two
+work. Twelve dated dispositions are complete. The activation note and two
 navigation/pointer notes followed the first four after the wider source corpus
 landed. The MOC-plus-contract target then passed its multistage acceptance and
 targeted grounding review, and the adjacent index-completeness note was kept
@@ -68,7 +70,7 @@ after its independent citation boundary was re-tested. The comparisons and curre
 status are recorded in [activation-disposition.md](./activation-disposition.md)
 and [source-backed-dispositions.md](./source-backed-dispositions.md), with the
 post-MOC decision in
-[remaining-dispositions.md](./remaining-dispositions.md). Three artifact
+[remaining-dispositions.md](./remaining-dispositions.md). Two artifact
 judgments remain; none has an automatic source-acquisition
 prerequisite. The
 rollout's all-68-fresh
@@ -460,7 +462,7 @@ Four source-backed handoffs are decided and executed:
   comparison.
 
 The source corpus is no longer a standing blocker. The
-[continuation plan](./next-session-plan.md) takes the three remaining artifact
+[continuation plan](./next-session-plan.md) takes the two remaining artifact
 judgments and reserves the general-rule and write-time-check decisions for the
 evidence they produce.
 
@@ -492,6 +494,16 @@ but none asks whether useful views at different scopes exist and preserve
 context across the transition. The execution removed an untraceable source
 attribution and narrowed broad cognition and discovery claims to that recoverable
 KB-design remainder.
+
+## Twelfth disposition — first-time-human access heuristic
+
+[The dated disposition](./remaining-dispositions.md#twelfth-dated-artifact-disposition--first-time-human-access-heuristic)
+rewrites and keeps the note as a path-relative access comparison. The broader
+human–LLM note owns the convention-transfer filter; this note owns the selected
+slice versus whole-artifact boundary and the response of exposing different
+interfaces over one authority. Two ADRs and several documentation notes consume
+that premise directly, while the deferred single-source-publishing tradition is
+only an analogue.
 
 ## Boundaries
 
@@ -538,7 +550,7 @@ corpus has to adjudicate.
 ## Files
 
 - [Fresh-session continuation plan](./next-session-plan.md) — authoritative
-  restart point after eleven of fourteen final dispositions; lists the three
+  restart point after twelve of fourteen final dispositions; lists the two
   remaining candidates, procedure, and final synthesis decisions
 - [Source-backed target dispositions](./source-backed-dispositions.md) — dated
   artifact judgments for link-following/search, pointer design, and the

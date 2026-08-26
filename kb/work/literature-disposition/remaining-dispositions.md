@@ -58,3 +58,20 @@ keep. Decided and executed 2026-08-26.**
 The keep preserves a local cross-mechanism criterion, not a borrowed slogan.
 Measurement remains an open problem; the note says what a measurement would
 need to distinguish before proposing a score.
+
+## Twelfth dated artifact disposition — first-time-human access heuristic
+
+**Disposition: Rewrite the access comparison as a path-relative conditional and
+keep. Decided and executed 2026-08-26.**
+
+| Test | Finding |
+|---|---|
+| Source-side finding | DITA, docs-as-code, and single-source publishing were deferred because the live note does not depend on them to establish its access-path comparison. Those traditions can exemplify one authority producing several views, but they do not establish the transfer from human-newcomer ergonomics to an LLM consumer or decide which interface charges a given consumer for a whole artifact. The target has no named external premise. |
+| Commonplace remainder | The [note](../../notes/design-for-the-first-time-human-except-on-access-cost.md) treats competent-newcomer ergonomics as a property-by-property starting heuristic, then isolates one failure boundary. A selected-slice path chooses material before the consumer processes it; a whole-artifact path charges the consumer for the container. Consumer identity does not determine that ordering. When available paths differ, one authoritative source can supply a browsable view for one consumer and a scoped query for another. |
+| Recovery and shape | The broader human–LLM note owns the requirement to test human conventions rather than adopting or rejecting them wholesale. This note owns the normalized access-path comparison and its one-authority/multiple-interfaces response. ADRs 025 and 026 import that premise for complete indexes, while navigation and documentation notes apply it to other views. Merging into the broader comparison would bury a reusable premise; merging into an ADR would make transferable theory depend on one shipped decision. |
+| Graph role | Ten tracked library artifacts link to the note: six notes or tag indexes and four reference artifacts. The two ADRs use it as decision rationale; other consumers use the same access boundary for inbound views, documentation segmentation, executor competence, and operator navigation. The count is a rewiring estimate, while the cross-setting uses establish the citation boundary. |
+| Execution | The rewrite removed predictions that humans and agents intrinsically default to opposite cost modes. It defined linear and sublinear cost as material admitted to the consumer's working set relative to artifact size, not work performed inside search; held requested information and reliability fixed; made the comparison currency explicit; and described per-consumer materializations as views of one authority rather than duplicated truth. The path, title, central claim, and inbound links remain stable. Validation passes cleanly, and no grounding assay is needed because no named source dependency changed. |
+
+The result keeps a transfer argument and a structural response that cannot be
+recovered from single-source-publishing literature alone. It makes no prevalence
+claim about which interface humans or agents usually receive.
