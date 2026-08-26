@@ -63,6 +63,7 @@ plugins:
         'notes/architecture-index.md': 'notes/architecture-README.md'
         'notes/audience-segmentation-cannot-be-decided-from-one-reader-property.md': 'notes/opposed-recompute-factors-do-not-decide-documentation-segmentation.md'
         'notes/brainstorming-how-reach-informs-kb-design.md': 'notes/brainstorming-how-explanatory-reach-informs-kb-design.md'
+        'notes/charting-the-knowledge-access-problem-beyond-rag.md': 'notes/knowledge-access-architecture-must-be-evaluated-end-to-end.md'
         'notes/closure-under-recommendations-bounds-governed-self-extension.md': 'notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md'
         'notes/codified-scheduling-patterns-can-turn-tools-into-hidden-schedulers.md': 'notes/cross-task-transition-policy-remains-scheduling-behind-tools.md'
         'notes/commonplace-architecture.md': 'reference/architecture.md'
