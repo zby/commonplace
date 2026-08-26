@@ -25,6 +25,15 @@ provenance, genre, checksum, and analysis belong in the tracked
 - Set `captured` to the capture date or datetime.
 - Set `capture` to the capture mechanism, such as `trafilatura`, `pdftotext`,
   `xdk`, or `gh-api`.
+- When the capture boundary is known, set `capture_scope` to one of:
+  - `full-source` — the captured body contains the complete source document or
+    page used as evidence;
+  - `partial-source` — the capture is incomplete relative to that source;
+  - `abstract` — only the source's abstract was captured;
+  - `excerpt` — the captured body is an intentionally bounded part of the
+    source, such as one chapter or section.
+  Omit the field when the boundary cannot be determined. Never infer
+  `full-source` merely because extraction succeeded.
 - `genre` is optional capture-time metadata. The ingest report is the durable
   genre authority and may correct this surface classification after reading.
 - `tags` are optional topical tags. Do not put the content family in `tags` — genre carries it, and the platform or container is already visible from `capture` and the source URL.
@@ -70,6 +79,7 @@ file, because doing so would change its exact-file checksum.
 
 ## Boundaries
 
+- The first nonblank body line after frontmatter is the snapshot's H1 title.
 - Do not add commentary, claims, or relevance analysis to the snapshot. The single `genre` classification is capture metadata, not analysis.
 - Do not link a tracked artifact to a local snapshot. Use the ingest or the
   external source URL according to what the sentence cites.

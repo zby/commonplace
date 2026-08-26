@@ -542,6 +542,10 @@ INGEST_QUOTE_RE = re.compile(
     r"^\s*-\s*\*\*Source extract \(verbatim\):\*\*\s*(?P<text>.+?)\s*$",
     re.MULTILINE,
 )
+INGEST_QUOTES_HEADING_RE = re.compile(r"^## Quotes[ \t]*$", re.MULTILINE)
+NEXT_H2_RE = re.compile(r"^##[ \t]+", re.MULTILINE)
+EMPTY_INGEST_QUOTES_SENTENCE = "No source quotes have been retained yet."
+SNAPSHOT_REQUIRED_MARKER = "(snapshot required)"
 SNAPSHOT_SHA256_RE = re.compile(
     r"^snapshot_sha256:\s*(?P<checksum>[0-9a-f]{64})\s*$",
     re.MULTILINE,
@@ -555,6 +559,15 @@ ORIGINAL_SNAPSHOT_SHA256_RE = re.compile(
 def _name_paired_snapshot(path: Path) -> Path:
     slug = path.name[: -len(".ingest.md")]
     return path.parent / ".snapshots" / f"{slug}.md"
+
+
+def _content_outside_ingest_quotes(content: str) -> str:
+    heading = INGEST_QUOTES_HEADING_RE.search(content)
+    if heading is None:
+        return content
+    next_heading = NEXT_H2_RE.search(content, heading.end())
+    section_end = next_heading.start() if next_heading is not None else len(content)
+    return content[: heading.start()] + content[section_end:]
 
 
 def _display_snapshot_path(path: Path, sources_dir: Path) -> str:
@@ -774,6 +787,19 @@ def validate_ingest_quotes(
     if not extracts:
         return
 
+    outside_quotes = _content_outside_ingest_quotes(content)
+    if EMPTY_INGEST_QUOTES_SENTENCE in outside_quotes:
+        results.fails.append(
+            "source quotes: populated Quotes section conflicts with "
+            f"{EMPTY_INGEST_QUOTES_SENTENCE!r} elsewhere in the ingest"
+        )
+    if SNAPSHOT_REQUIRED_MARKER in outside_quotes:
+        results.warns.append(
+            "source quotes: populated Quotes section coexists with "
+            f"{SNAPSHOT_REQUIRED_MARKER!r}; verify the marker still names a claim "
+            "that needs broader snapshot context"
+        )
+
     recorded = SNAPSHOT_SHA256_RE.search(content)
     if recorded is None:
         results.warns.append(
@@ -817,6 +843,26 @@ def _linked_md_targets(parsed: ParsedNote) -> set[Path]:
             continue
         targets.add(target)
     return targets
+
+
+@type_rule("kb/sources/types/snapshot.md")
+def _snapshot_body_rule(
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+) -> None:
+    del run
+    first_nonblank = next(
+        (line.strip() for line in parsed.document.body.splitlines() if line.strip()),
+        None,
+    )
+    starts_with_h1 = first_nonblank is not None and re.fullmatch(
+        r"#(?!#)[ \t]+\S.*", first_nonblank
+    ) is not None
+    if not starts_with_h1:
+        results.fails.append(
+            "snapshot structure: first nonblank body line must be an H1 title"
+        )
+        return
+    results.passes.append("snapshot structure: body starts with an H1 title")
 
 
 @type_rule("kb/agent-memory-systems/types/agent-memory-system-review.md")

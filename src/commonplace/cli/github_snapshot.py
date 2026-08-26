@@ -16,7 +16,11 @@ from datetime import UTC, datetime
 from pathlib import Path
 from urllib.parse import urlparse
 
-from commonplace.lib.naming import slugify_text
+from commonplace.lib.naming import (
+    MAX_INGEST_SNAPSHOT_SLUG_LENGTH,
+    slugify_text,
+    slugify_text_with_suffix,
+)
 from commonplace.lib.snapshot import (
     SNAPSHOT_DIR,
     dedup_existing_snapshot,
@@ -135,8 +139,27 @@ def snapshot_github_url(url: str, out_dir: str) -> str:
     number = str(data.get("number") or "")
     repo = str(data.get("repository_url") or "").rstrip("/").split("/")[-2:]
     repo_slug = "-".join(repo) if len(repo) == 2 else ""
-    slug_bits = [repo_slug, number, slugify_text(title, max_len=45, default="github-snapshot")]
-    slug = "-".join(bit for bit in slug_bits if bit).strip("-") or "github-snapshot"
+    slug_prefix = "-".join(
+        bit
+        for bit in (
+            repo_slug,
+            slugify_text(title, max_len=45, default="github-snapshot"),
+        )
+        if bit
+    )
+    if number:
+        slug = slugify_text_with_suffix(
+            slug_prefix,
+            number,
+            max_len=MAX_INGEST_SNAPSHOT_SLUG_LENGTH,
+            default="github-snapshot",
+        )
+    else:
+        slug = slugify_text(
+            slug_prefix,
+            max_len=MAX_INGEST_SNAPSHOT_SLUG_LENGTH,
+            default="github-snapshot",
+        )
 
     source_path = dest / f"{slug}.json"
     md_path = dest / f"{slug}.md"

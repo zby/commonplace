@@ -7,6 +7,8 @@ from pathlib import Path
 
 import yaml
 
+from commonplace.lib.naming import MAX_INGEST_SNAPSHOT_SLUG_LENGTH
+
 REPO_ROOT = Path(__file__).resolve().parents[3]
 
 TEXT_PROMOTION_GUIDANCE = (
@@ -157,3 +159,32 @@ def test_ingest_owns_durable_source_and_snapshot_anchor() -> None:
 
     snapshot_required = set(snapshot_schema["properties"]["frontmatter"]["required"])
     assert "genre" not in snapshot_required
+
+    snapshot_frontmatter = snapshot_schema["properties"]["frontmatter"]
+    snapshot_scopes = set(
+        snapshot_frontmatter["properties"]["capture_scope"]["enum"]
+    )
+    ingest_scopes = set(ingest_fields["properties"]["capture_scope"]["enum"])
+    assert snapshot_scopes == {
+        "full-source",
+        "partial-source",
+        "abstract",
+        "excerpt",
+    }
+    assert ingest_scopes == snapshot_scopes
+    assert "capture_scope" not in snapshot_required
+    assert "capture_scope" not in required
+    assert "`capture_scope`" in ingest_contract
+
+
+def test_snapshot_and_ingest_skills_budget_the_derived_filename() -> None:
+    snapshot_skill = (
+        REPO_ROOT / "kb/instructions/cp-skill-snapshot-web/SKILL.md"
+    ).read_text(encoding="utf-8")
+    ingest_skill = (
+        REPO_ROOT / "kb/instructions/cp-skill-ingest/SKILL.md"
+    ).read_text(encoding="utf-8")
+
+    assert f"max {MAX_INGEST_SNAPSHOT_SLUG_LENGTH} chars" in snapshot_skill
+    assert "Before connection discovery" in ingest_skill
+    assert "stem (`<slug>.ingest`) to be at most 70 characters" in ingest_skill

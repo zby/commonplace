@@ -91,11 +91,16 @@ stored in an ingest as source support.
      restoration, and report failure rather than leaving an invalid or partial
      append. A `source quote` failure is about the item, not the splice: fix
      the extract against the snapshot, never rewrite the file around it.
+     A `populated Quotes section conflicts` failure identifies stale prose
+     outside Quotes. Restore the incumbent and report that non-quote prose must
+     be repaired before grounding is retried; this skill must not repair it.
 8. Return the ingest path and exactly one route: `quotes sufficient`, `quotes
    added`, or `snapshot required`. For `quotes added`, also return the appended
-   quote texts. For `snapshot required`, repeat the exact link-text marker and
-   the requirement to run `semantic/grounding-alignment` before the source
-   claim lands.
+   quote texts. If validation warned that a populated Quotes section coexists
+   with `(snapshot required)`, repeat that warning so the caller verifies that
+   the marker still belongs to a claim needing broader snapshot context. For
+   `snapshot required`, repeat the exact link-text marker and the requirement
+   to run `semantic/grounding-alignment` before the source claim lands.
 
 Semantic uniqueness is not required. Similar, overlapping, or disputed exact
 passages are never merged, rewritten, or deleted by this procedure.

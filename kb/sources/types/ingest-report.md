@@ -27,6 +27,8 @@ Assess fit relative to the installed KB's goals, local collection contracts, and
 - Set `source` to the canonical external URL of the primary source.
 - Set `captured` to the date or datetime of the observation used for the
   analysis, and `capture` to its capture mechanism.
+- Preserve `capture_scope` from the snapshot when present. Do not upgrade a
+  partial, abstract-only, or excerpt capture to `full-source` during ingest.
 - Set `genre` to the primary source's evidential genre.
 - Set `snapshot_sha256` to the lowercase SHA-256 of the exact bytes of the
   primary Markdown snapshot. The hash includes frontmatter, line endings, and
@@ -76,7 +78,9 @@ adopted; a collection-local snapshot type does not extend this contract.
   later reviewer can judge ordinary source uses without the local snapshot.
 - `Connections Found` summarizes the connection discovery findings and explains how the source fits the current KB, as compact prose naming the source's role (for example: anchor, technical basis, counterpoint, legal disposition, public statement, limitation) rather than a transcribed candidate list. Drop weak, speculative, or duplicate edges; keep only settled, durable judgments. If no casebook notes exist yet, say so plainly instead of substituting a full map of relationships to other already-captured sources, or framing the section as prospective connections for notes that do not exist yet. The generated connect report is working context only; do not cite it, link to it, or name its path in the ingest report.
 - `Extractable Value` lists three to seven items, ordered by reach and novelty relative to the installed KB's goals and existing KB connections.
-- `Limitations (our opinion)` states where the source should not be trusted or over-generalized.
+- `Limitations (our opinion)` states where the source should not be trusted or
+  over-generalized. When `capture_scope` is not `full-source`, state what the
+  retained boundary prevents the ingest from establishing.
 - `Recommended Next Action` chooses one specific advisory next action. The ingest report recommends; it does not perform promotion.
 
 ## Quotes Shape
@@ -101,6 +105,11 @@ repeating both when support is non-contiguous. Copy exact snapshot text;
 whitespace normalization lets one extract span wrapped lines. Do not put a
 paraphrase, scope judgment, confidence assessment, limitation, or
 target-specific transfer argument in this section.
+
+Do not describe whether quotes are retained anywhere else in the ingest. That
+state changes when the append-only Quotes pool grows. Use `(snapshot required)`
+outside this section only for a specific claim that still needs broader context
+than the retained extracts provide.
 
 ## Extraction Standards
 
@@ -137,6 +146,7 @@ description: "{one-line retrieval filter}"
 source: {canonical external URL}
 captured: "{date or datetime from snapshot frontmatter}"
 capture: {capture mechanism from snapshot frontmatter}
+capture_scope: {capture scope from snapshot frontmatter, when present}
 genre: {source genre}
 snapshot_sha256: {lowercase SHA-256 of the exact snapshot file bytes}
 ingested: "{YYYY-MM-DD}"

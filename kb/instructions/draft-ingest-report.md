@@ -82,6 +82,10 @@ local snapshot link in the durable report.
    domain. Derive capture metadata from the snapshot frontmatter. Do not copy
    snapshot `type`, `description`, `genre`, or `tags`.
 
+   Preserve snapshot `capture_scope` when present. Treat `abstract`, `excerpt`,
+   and `partial-source` as analysis boundaries; never present one as a full
+   reading of the source.
+
    From the connect report, select settled connections, relationship roles,
    synthesis opportunities, and tensions. Do not transcribe its candidate
    inventory. Treat `Maintenance Observations` as non-actionable context. Write
@@ -123,11 +127,12 @@ local snapshot link in the durable report.
    Keep an irrelevant source's report short. Explain the mismatch and recommend
    source-only filing or no promotion when appropriate.
 
-   Put the snapshot's retained `source`, `captured`, `capture`, and flat adapter
-   fields in frontmatter along with `snapshot_sha256`. Set `genre` from the
-   closer reading. Do not create a `capture_metadata` field. Do not write the
-   removed `source_snapshot` or `code_revisions` fields. Do not link to
-   `.snapshots/` or cite a machine-local checkout such as `related-systems/`.
+   Put the snapshot's retained `source`, `captured`, `capture`, optional
+   `capture_scope`, and flat adapter fields in frontmatter along with
+   `snapshot_sha256`. Set `genre` from the closer reading. Do not create a
+   `capture_metadata` field. Do not write the removed `source_snapshot` or
+   `code_revisions` fields. Do not link to `.snapshots/` or cite a machine-local
+   checkout such as `related-systems/`.
 
    Place `retained_quotes` immediately before `## Connections Found`, verbatim.
    Preserve every character, line ending, blank line, heading, and entry in the
@@ -135,6 +140,12 @@ local snapshot link in the durable report.
    and do not write another Quotes section. In `repair` mode, replace any Quotes
    block in the repair candidate with the supplied value rather than using the
    candidate's version.
+
+   Do not describe whether quotes are retained outside `retained_quotes`.
+   Retention state changes when grounding appends to that block. Use `(snapshot
+   required)` only for a named claim that needs broader source context than the
+   retained extracts supply, never merely because the Quotes block was empty at
+   draft time.
 
    When `code_grounding_context` is `none`, omit `secondary_sources` and the
    `Code Grounding` section. Otherwise apply its pinned commit URLs, claim

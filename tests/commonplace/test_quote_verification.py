@@ -370,6 +370,46 @@ class TestIngestQuoteValidation:
         results = self._run(ingest)
         assert not results.fails
 
+    def test_populated_quotes_reject_stale_global_empty_claim(self, tmp_path):
+        ingest = self._ingest(
+            tmp_path,
+            "the exact words",
+            snapshot="here are the exact words indeed",
+        )
+        ingest.write_text(
+            ingest.read_text(encoding="utf-8")
+            + "\n## Recommended Next Action\n\n"
+            + "No source quotes have been retained yet.\n",
+            encoding="utf-8",
+        )
+
+        results = self._run(ingest)
+
+        assert any(
+            "populated Quotes section conflicts" in item for item in results.fails
+        )
+
+    def test_populated_quotes_warn_on_snapshot_required_marker(self, tmp_path):
+        ingest = self._ingest(
+            tmp_path,
+            "the exact words",
+            snapshot="here are the exact words indeed",
+        )
+        ingest.write_text(
+            ingest.read_text(encoding="utf-8")
+            + "\n## Recommended Next Action\n\n"
+            + "Use this ingest as (snapshot required) for the broader claim.\n",
+            encoding="utf-8",
+        )
+
+        results = self._run(ingest)
+
+        assert not results.fails
+        assert any(
+            "verify the marker still names a claim" in item
+            for item in results.warns
+        )
+
     def test_missing_snapshot_is_silent(self, tmp_path):
         ingest = self._ingest(tmp_path, "anything at all", snapshot=None, sha="0" * 64)
         results = self._run(ingest)

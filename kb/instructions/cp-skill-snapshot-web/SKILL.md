@@ -181,8 +181,15 @@ From the bounded excerpts, extractor metadata, and `source_url`, determine:
 - **title**: The article/post title. Use the first H1 if present, otherwise derive from content.
 - **author**: If identifiable from the content or URL (e.g. simonwillison.net → Simon Willison)
 - **genre**: the source's genre per the snapshot type spec's vocabulary. This is a surface judgment of what kind of document the source is as evidence — ingestion may correct it later. Prefer a value from the type spec's list; a value outside it validates with a warning, so extend only for a genuinely new evidential kind, not a container.
+- **capture_scope**: `full-source`, `partial-source`, `abstract`, or `excerpt`
+  under the snapshot type contract. Judge the retained body, not the success of
+  the extraction command. In particular, label a publisher page that exposes
+  only an abstract as `abstract`, even when that abstract is substantive.
 - **description**: One sentence describing what makes this source worth retrieving. Not a summary — a retrieval filter (e.g. "Anthropic CEO's capability-timeline predictions — verifiable domains get confident timelines, unverifiable ones get hedged"). Focus on what distinguishes this source from others on the same topic.
-- **slug**: Lowercase, hyphenated, max 70 chars. Derived from title. Example: `simon-willison-karpathy-claws`
+- **slug**: Lowercase, hyphenated, max 63 chars. The paired ingest adds
+  `.ingest` to the validated stem, so the snapshot basename must reserve those
+  seven characters within the 70-character authored-artifact limit. Derive it
+  from the title. Example: `simon-willison-karpathy-claws`.
 
 For academic papers: prefer the title and complete author list printed in the
 paper over `pdfinfo` or Trafilatura metadata.
@@ -201,6 +208,7 @@ source: {source_url}
 description: {description}
 captured: "{YYYY-MM-DD}"
 capture: {capture_method}
+capture_scope: {capture_scope}
 genre: {genre}
 type: kb/sources/types/snapshot.md
 ---

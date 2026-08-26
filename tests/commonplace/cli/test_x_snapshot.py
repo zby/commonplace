@@ -13,6 +13,7 @@ if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 from commonplace.cli import x_snapshot
+from commonplace.lib.naming import MAX_INGEST_SNAPSHOT_SLUG_LENGTH
 
 
 def frontmatter(path: Path) -> dict:
@@ -176,6 +177,9 @@ def test_x_snapshot_captures_each_content_family(
 
     assert fm["type"] == "kb/sources/types/snapshot.md"
     assert fm["tags"] == [expected_family]
+    assert len(md_path.stem) <= MAX_INGEST_SNAPSHOT_SLUG_LENGTH
+    assert len(f"{md_path.stem}.ingest") <= 70
+    assert md_path.stem.endswith(f"-{target_post['id']}")
     assert sidecar["family"] == expected_family
     assert "type" not in sidecar
     rendered = md_path.read_text(encoding="utf-8")

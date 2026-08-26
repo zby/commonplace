@@ -66,6 +66,7 @@ source: https://example.com/source
 description: Local retrieval description
 captured: "2026-08-22"
 capture: gh-api
+capture_scope: partial-source
 genre: github-issue
 type: kb/sources/types/snapshot.md
 tags: [github-issue]
@@ -81,6 +82,7 @@ issue_number: 1
         "source": "https://example.com/source",
         "captured": "2026-08-22",
         "capture": "gh-api",
+        "capture_scope": "partial-source",
         "api_url": "https://api.github.com/repos/example/repo/issues/1",
         "issue_number": 1,
     }

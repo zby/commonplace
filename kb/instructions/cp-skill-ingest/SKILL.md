@@ -114,21 +114,26 @@ re_ingest_request:
      snapshot for the next step.
    - For a non-URL target, require one Markdown file under
      `kb/sources/.snapshots/`. A directory is not a v1 primary source.
-   - Read the snapshot frontmatter. Retain `source`, `captured`, `capture`, and
-     flat capture-adapter fields such as `status_id`, `conversation_id`,
-     `post_count`, or `api_url`. Do not copy snapshot `type`, `description`, or
-     `tags`.
+   - Read the snapshot frontmatter. Retain `source`, `captured`, `capture`,
+     optional `capture_scope`, and flat capture-adapter fields such as
+     `status_id`, `conversation_id`, `post_count`, or `api_url`. Do not copy
+     snapshot `type`, `description`, or `tags`.
    - Compute lowercase SHA-256 from the exact Markdown file bytes after capture
      completes. Do not hash a JSON, PDF, image, or other companion.
-   - Derive `kb/sources/<slug>.ingest.md`. If URL resolution already found an
-     ingest, require this derived path to equal it. For every existing output,
-     require the snapshot to be its exact name-paired path, require exact
-     frontmatter `source` equality, and require its `snapshot_sha256` to equal
-     the snapshot checksum. On a mismatch, stop and report the permanent
-     `re-ingest.md` route; an ordinary target never authorizes a changed
-     observation. Extract `retained_quotes` exactly as defined above, using the
-     canonical empty block when the incumbent section is absent. For a new
-     output, set `retained_quotes` to the canonical empty block.
+   - Derive `kb/sources/<slug>.ingest.md`. Before connection discovery, require
+     the snapshot basename to be at most 63 characters and the derived path's
+     stem (`<slug>.ingest`) to be at most 70 characters. Stop and report the
+     overlong paired paths if either check fails; do not run connection
+     discovery or draft against a name that cannot validate. If URL resolution
+     already found an ingest, require this derived path to equal it. For every
+     existing output, require the snapshot to be its exact name-paired path,
+     require exact frontmatter `source` equality, and require its
+     `snapshot_sha256` to equal the snapshot checksum. On a mismatch, stop and
+     report the permanent `re-ingest.md` route; an ordinary target never
+     authorizes a changed observation. Extract `retained_quotes` exactly as
+     defined above, using the canonical empty block when the incumbent section
+     is absent. For a new output, set `retained_quotes` to the canonical empty
+     block.
 
      On an ordinary-target checksum mismatch, report one permanent route with
      the exact ingest path filled in: in the source checkout, `Read and execute
@@ -212,11 +217,12 @@ re_ingest_request:
    equal both the pre-dispatch checksum and the ingest's `snapshot_sha256`.
    Require exactly one Quotes block, immediately before `## Connections Found`,
    whose bytes equal `retained_quotes`. Verify that the ingest retained the
-   snapshot's capture metadata, contains no `source_snapshot` or
-   `code_revisions`, and does not link to `.snapshots/`, cite a
-   `related-systems/` checkout, or name the generated connect report. For a
-   code-grounded ingest, verify its `secondary_sources` and `Code Grounding`
-   section against the supplied context. Run full validation:
+   snapshot's capture metadata, including `capture_scope` when present,
+   contains no `source_snapshot` or `code_revisions`, and does not link to
+   `.snapshots/`, cite a `related-systems/` checkout, or name the generated
+   connect report. For a code-grounded ingest, verify its `secondary_sources`
+   and `Code Grounding` section against the supplied context. Run full
+   validation:
 
    ```bash
    commonplace-validate kb/sources/some-article.ingest.md

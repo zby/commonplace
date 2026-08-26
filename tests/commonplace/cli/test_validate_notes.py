@@ -196,6 +196,7 @@ def test_source_snapshot_validates_without_description(tmp_path: Path) -> None:
 source: https://example.com/article
 captured: "2026-04-19"
 capture: web-fetch
+capture_scope: full-source
 genre: conceptual-essay
 type: kb/sources/types/snapshot.md
 ---
@@ -286,6 +287,78 @@ Captured text.
     assert any("genre" in item for item in results.warns)
 
 
+def test_source_snapshot_rejects_unknown_capture_scope(tmp_path: Path) -> None:
+    write(
+        tmp_path / "kb" / "sources" / "types" / "snapshot.schema.yaml",
+        (Path.cwd() / "kb" / "sources" / "types" / "snapshot.schema.yaml").read_text(
+            encoding="utf-8"
+        ),
+    )
+    write_type_spec(
+        tmp_path,
+        "kb/sources/types/snapshot.md",
+        name="snapshot",
+        schema="kb/sources/types/snapshot.schema.yaml",
+    )
+    snapshot = write(
+        tmp_path / "kb" / "sources" / "sample.md",
+        """---
+source: https://example.com/article
+captured: "2026-04-19"
+capture: web-fetch
+capture_scope: complete-enough
+type: kb/sources/types/snapshot.md
+---
+
+# Sample
+
+Captured text.
+""",
+    )
+
+    results = validation.validate_note(snapshot, repo_root=tmp_path)
+
+    assert any("capture_scope" in item for item in results.fails)
+
+
+def test_source_snapshot_requires_h1_as_first_nonblank_body_line(
+    tmp_path: Path,
+) -> None:
+    write(
+        tmp_path / "kb" / "sources" / "types" / "snapshot.schema.yaml",
+        (Path.cwd() / "kb" / "sources" / "types" / "snapshot.schema.yaml").read_text(
+            encoding="utf-8"
+        ),
+    )
+    write_type_spec(
+        tmp_path,
+        "kb/sources/types/snapshot.md",
+        name="snapshot",
+        schema="kb/sources/types/snapshot.schema.yaml",
+    )
+    snapshot = write(
+        tmp_path / "kb" / "sources" / "sample.md",
+        """---
+source: https://example.com/article
+captured: "2026-04-19"
+capture: web-fetch
+type: kb/sources/types/snapshot.md
+---
+
+Captured text before the title.
+
+# Accidental later heading
+""",
+    )
+
+    results = validation.validate_note(snapshot, repo_root=tmp_path)
+
+    assert any(
+        "snapshot structure: first nonblank body line must be an H1 title" in item
+        for item in results.fails
+    )
+
+
 def configure_ingest_report_repo(tmp_path: Path) -> None:
     for name in ("note-base.schema.yaml", "note.schema.yaml"):
         write(
@@ -374,6 +447,19 @@ def test_code_grounded_ingest_requires_code_grounding_section(tmp_path: Path) ->
     results = validation.validate_note(ingest, repo_root=tmp_path)
 
     assert any("missing '## Code Grounding'" in item for item in results.fails)
+
+
+def test_ingest_rejects_unknown_capture_scope(tmp_path: Path) -> None:
+    configure_ingest_report_repo(tmp_path)
+    content = code_grounded_ingest(include_heading=True).replace(
+        "capture: pdf-read\n",
+        "capture: pdf-read\ncapture_scope: complete-enough\n",
+    )
+    ingest = write(tmp_path / "kb" / "sources" / "paper.ingest.md", content)
+
+    results = validation.validate_note(ingest, repo_root=tmp_path)
+
+    assert any("capture_scope" in item for item in results.fails)
 
 
 def test_code_grounded_ingest_accepts_multiple_pinned_repositories(

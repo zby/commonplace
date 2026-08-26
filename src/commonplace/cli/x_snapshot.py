@@ -17,7 +17,10 @@ from urllib.parse import urlparse
 
 import xdk
 
-from commonplace.lib.naming import slugify_text
+from commonplace.lib.naming import (
+    MAX_INGEST_SNAPSHOT_SLUG_LENGTH,
+    slugify_text_with_suffix,
+)
 from commonplace.lib.snapshot import (
     SNAPSHOT_DIR,
     dedup_existing_snapshot,
@@ -390,7 +393,12 @@ def snapshot_x_url(url: str, out_dir: str, max_posts: int) -> str:
         or _post_text(target_post)[:70]
         or f"x-status-{status_id}"
     )
-    slug = f"{slugify_text(base_title, max_len=70, default='x-snapshot')}-{status_id}"
+    slug = slugify_text_with_suffix(
+        base_title,
+        status_id,
+        max_len=MAX_INGEST_SNAPSHOT_SLUG_LENGTH,
+        default="x-snapshot",
+    )
 
     json_path = dest / f"{slug}.json"
     md_path = dest / f"{slug}.md"
