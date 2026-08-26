@@ -83,6 +83,7 @@ These artifacts are composition siblings. Before changing their trigger, inputs,
 
 Relevant Notes:
 
+- [An independent pass tightened three of four Pirolli grounding verdicts](../notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md) — rests-on: the bounded comparison motivates the conditional diagnostic while withholding a routine default
 - [Candidacy evidence licenses escalation to assessment, not acceptance](../notes/candidacy-evidence-licenses-escalation-not-acceptance.md) — rests-on: source suggestions may route reading but cannot decide disposition
 - [Theory warrant should be tracked at the finest granularity evidence licenses](../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) — rests-on: source support and local remainder are assessed at claim-region grain
 - [A borrowed pattern transfers only as far as source and target share a mechanism](../notes/borrowed-patterns-transfer-only-over-shared-mechanism.md) — rests-on: a target-local transfer survives only over an identified shared mechanism

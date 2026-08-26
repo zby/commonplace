@@ -191,5 +191,6 @@ Relevant Notes:
 - [Ground a source-dependent claim](../../instructions/cp-skill-ground/SKILL.md) — procedure: the source-resolution and retained-evidence subroutine
 - [ADR 076 — Source-claim grounding is a promoted skill](./076-source-claim-grounding-is-a-promoted-skill.md) — see-also: the grounding entry point and inherited-context caveat used by the bilateral-isolation branch
 - [ADR 078 — Writers invoke grounding and evidence stays in the ingest](./078-writers-invoke-grounding-and-evidence-stays-in-the-ingest.md) — see-also: the ordinary-writer grounding boundary preserved outside this decision's explicit literature-assessment exception
+- [An independent pass tightened three of four Pirolli grounding verdicts](../../notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md) — rests-on: the bounded comparison warrants a conditional diagnostic while withholding a routine default
 - [Candidacy evidence licenses escalation to assessment, not acceptance](../../notes/candidacy-evidence-licenses-escalation-not-acceptance.md) — rests-on: source nomination cannot decide overlap, novelty, or disposition
 - [Theory warrant should be tracked at the finest granularity evidence licenses](../../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) — rests-on: external support stays scoped to the exact claim region it licenses

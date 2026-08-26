@@ -79,3 +79,9 @@ Relevant Notes:
 
 - [Candidacy evidence licenses escalation to assessment, not acceptance](../candidacy-evidence-licenses-escalation-not-acceptance.md) — exemplifies: source resemblance nominated an assessment but failed when treated as support authority
 - [Reasoning production is not reasoning evaluation](../reasoning-production-is-not-reasoning-evaluation.md) — exemplifies: the first pass accepted plausible routes to the target claims that the separated pass did not find in the source reconstruction
+- [An experiment identifies only the contrast it actually runs](../an-experiment-identifies-only-the-contrast-it-actually-runs.md) — exemplifies: fresh roles, prompts, and intermediate representations changed together, so the rerun identifies only a bundle-level contrast
+- [A borrowed pattern transfers only as far as source and target share a mechanism](../borrowed-patterns-transfer-only-over-shared-mechanism.md) — exemplifies: the C1-C3 verdicts retain shared source mechanisms while withholding stronger target-side additions
+
+Operationalized into:
+
+- [Assess a claim-bearing artifact against external literature](../../instructions/assess-a-claim-bearing-artifact-against-external-literature.md) — turns the bounded result into a conditional diagnostic with explicit triggers, frozen representations, and checks for both over-attribution and false narrowing
