@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [editorial-drift-under-repair](./editorial-drift-under-repair/README.md) — one note's same-day drift through write → full pass → trim → rewrite, with all four versions and the pass evidence; candidate mechanism: a repair loop that can narrow claims but not extend evidence drifts claims toward the retained evidence
 - [change-operations-catalogue](./change-operations-catalogue/README.md) — a working list of the operations by which Commonplace gets changed, each admitted by an observed instance, with the premises it must read and where they live; used to audit `kb/reference/` in both directions under ADR 074. Carries no completeness claim
 - [full-pass-recompute-cluster](./full-pass-recompute-cluster/README.md) — queued full improvement passes over the six recoverability/economics notes written 2026-08-22/23, in two dependency-ordered batches so a reframe in the first lands before the second reads its premises
 - [adr-routing](./adr-routing/README.md) — 71 ADRs, no index, and no instruction that routes a self-improvement run into them; the change loop is the only loop without an instruction, so the decisions that bind a change are consulted by luck. Shape is open: index, instruction, subsystem-keyed routing, or none of these
