@@ -21,16 +21,18 @@ for the operative grounding path.
 and checked against an actual source in the worked case; the other eleven have
 claim inventories and candidate reading assignments. The 2026-08-26 handoff
 triage admitted two further candidates, so the working cohort now has fourteen.
-Two candidates now have final dated artifact dispositions: the Gödel-machine
-and proposal-selection notes were both kept on 2026-08-26 after their source
-handoffs were grounded and repaired. The claim-grounding rollout produced 264 terminal claim-use
-dispositions and sixteen `literature handoff`s across ten notes. Those handoffs
-are intake for source acquisition or target re-evaluation; they are not by
-themselves keep, merge, thin, or retire decisions.
+Three candidates now have final dated artifact dispositions: the Gödel-machine,
+proposal-selection, and first Pirolli worked-case notes were kept on 2026-08-26.
+The first two followed grounded handoff repairs; the Pirolli note followed a
+claim correction, direct source route, and artifact-level graph assessment. The
+claim-grounding rollout produced 264 terminal claim-use dispositions and
+sixteen `literature handoff`s across ten notes. Those handoffs are intake for
+source acquisition or target re-evaluation; they are not by themselves keep,
+merge, thin, or retire decisions.
 
 | Closure condition | State | What remains |
 |---|---|---|
-| Source-grounded disposition for every settled cohort member | Open | Two of fourteen working candidates are complete. Finish source routes and adjudicate the remaining twelve, including the first Pirolli worked candidate and the activation candidate. |
+| Source-grounded disposition for every settled cohort member | Open | Three of fourteen working candidates are complete. Finish source routes and adjudicate the remaining eleven, including the activation candidate. |
 | One disposition executed end to end | Done 2026-08-26 | The Gödel-machine note was kept after source comparison and its ancillary literature handoff was replaced with a grounded primary route. Its path, title, and central claim stayed stable, so no inbound rewiring was needed. |
 | General disposition rule | Open | The evidence supports claim-level, source-grounded judgment, but no rule or no-general-rule finding has been promoted. |
 | Write-time check decision | Partial | ADR 073 guards explicit new or changed source dependencies. It cannot discover unattributed prior art, which is the check this closure condition still needs decided. |
@@ -43,11 +45,11 @@ four prose-only defects were repaired, and the false external-source trait was
 dropped. None of those corrections is an artifact disposition. The handoff
 triage is now complete: two of the nine new notes joined the working cohort and
 the other seven remain source-grounding, provenance, or evidence-stabilization
-work. The first two dated dispositions are complete: the Gödel-machine and
-proposal-selection notes were kept after direct comparison with their primary
-sources. The next bounded candidate is the first Pirolli worked case: its claim
-correction and source route have landed, but its final artifact disposition
-remains open. Most other final dispositions wait on the wider corpus. The rollout's all-68-fresh
+work. The first three dated dispositions are complete: the Gödel-machine,
+proposal-selection, and first Pirolli worked-case notes were kept after direct
+comparison with their primary sources. The Pirolli case is the first completed
+member of the original cohort. Most other final dispositions wait on the wider
+corpus, whose selection is now the next step. The rollout's all-68-fresh
 statement is a dated certification result, not standing assurance:
 post-certification note edits require current freshness checks and sometimes new
 reviews. The 2026-08-26 `concept-attribution` and `misleading-link-text` prompt
@@ -325,7 +327,7 @@ Two of the nine new notes therefore join the working cohort, taking it from
 twelve to fourteen candidates. Seven notes and nine uses do not become
 artifact-disposition work merely because their source route is incomplete.
 Their grounding and provenance repairs remain valid work, but they do not block
-the cohort's remaining twelve artifact judgments.
+the cohort's remaining eleven artifact judgments.
 
 ## First dated artifact disposition — Gödel machines
 
@@ -368,6 +370,30 @@ comparison found a mixture: established component mechanisms and neighboring
 loop traditions around a local architectural distinction. Retiring or thinning
 the note would erase the distinction the literature comparison was needed to
 identify.
+
+## Third dated artifact disposition — Pirolli worked case
+
+**Disposition: Keep as a normalized agent-navigation premise. Decided and
+executed 2026-08-26.** The comparison used the retained passages in
+[Pirolli's Web-navigation ingest](../../sources/pirolli-proximal-information-scent-distal-content.ingest.md)
+and the claim-by-claim [worked case](../source-grounding/worked-case-agents-navigate.md).
+The source correction and direct route landed on 2026-08-24; this disposition
+decides the repaired artifact's shape.
+
+| Test | Finding |
+|---|---|
+| Source overlap | Pirolli establishes the proximal-cue/distal-source structure: links and citations provide concise cues about unavailable content, and human Web users assess those cues when choosing actions. The source supplies a stochastic link-choice account and a separate value-over-interaction-cost tendency. It does not establish that follow/skip is the fundamental unit of navigation, compose a pointer-level benefit/cost trade-off, or model cue inspection as a cost paid from an LLM's context budget. |
+| Commonplace remainder | The [note](../../notes/agents-navigate-by-deciding-what-to-read-next.md) uses read/skip as a bounded agent-navigation model rather than a universal reduction, states why the proximal/distal information structure transfers, and names the resource boundary that does not: an LLM agent pays tokens and tool calls to inspect both cues and targets. Its local claim is that diagnostic context must repay its own context cost, not that more pointer context is always better. |
+| Recovery and shape | A direct source route would silently drop the human-to-LLM transfer and substitute human interaction cost for the target's token/tool-call economics. Merging into `linking-theory` would make a broad synthesis carry a narrow premise that many consumers cite independently. At 545 words, the repaired note already has the compact source-baseline, transfer-boundary, local-consequence shape that a claim adapter would need; further thinning would remove the argument that earns the adapter. |
+| Graph role | Twenty tracked library artifacts currently link to the note: fifteen notes use the navigation-decision premise for routing descriptions, progressive disclosure, metadata, traversal priority, and pruning evaluation, while five source ingests connect external cases to it. The count estimates rewiring cost; the coherent library-side use shows that the note is an atomic premise rather than optional exposition. |
+| Execution | The unsupported pointer-context monotone and its sole inherited copy were already removed, the direct Pirolli route and transfer boundary were already added, and the ingest's stale pre-correction connection wording is now reconciled. The path, title, and central claim remain stable, so no inbound rewiring or retirement approval stop applies. |
+
+This is the first final disposition from the starting cohort. It is also a third
+keep reached by a different route: Pirolli supplies a narrower human analogue,
+not a source-side construction or a set of neighboring engineering mechanisms.
+The note survives because it is the normalized target-side transfer argument.
+That repeated shape is evidence for later synthesis, not yet a general
+disposition rule.
 
 ## Boundaries
 

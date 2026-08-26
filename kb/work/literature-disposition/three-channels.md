@@ -130,8 +130,8 @@ with interaction cost. The [propagation sweep](./c4-propagation-sweep.md) found
 one inheritor and zero operative reach. The claim-pull rollout removed the
 monotone from `agents-navigate-...` and `linking-theory`, promoted uncertainty
 reduction per unit of context, added the Pirolli source route, and passed both
-then-operative source review pairs. The first note's artifact-level disposition
-remains open.
+then-operative source review pairs. The first note was subsequently kept on
+2026-08-26 as the normalized LLM-agent transfer and navigation-decision premise.
 
 **2d. `pointer-design-tradeoffs...` conflates availability with accuracy. Done
 2026-08-26 [v].** The note now treats specificity, cost, availability, and
@@ -177,9 +177,10 @@ decision.
 That is the running result of this workshop restated: pointed at redundancy, the
 method returned **three defects and zero clean rediscoveries a retirement would
 tidily remove.** All three defects in that running tally are repaired. The first
-two completed artifact dispositions are keeps: the Gödel-machine source does
-not subsume its local comparisons, and the proposal-selection sources do not
-supply its combined architectural boundary.
+three completed artifact dispositions are keeps: the Gödel-machine source does
+not subsume its local comparisons, the proposal-selection sources do not supply
+its combined architectural boundary, and Pirolli does not supply the LLM-agent
+transfer and token-cost boundary that its target normalizes.
 
 ---
 
@@ -284,13 +285,18 @@ form without the eighth move propagates the problem in more convincing packaging
    mixture: established neighboring mechanisms around a local reject-capable
    subtype and three-function decomposition. The note is kept without inbound
    rewiring.
-3. **Select the wider corpus from the original claim inventory.**
+3. **Pirolli worked-case disposition. Done 2026-08-26.** The repaired note is
+   kept as the normalized LLM-agent navigation-decision premise. The source
+   supplies a narrower human proximal-cue/distal-source analogue; it does not
+   supply the transfer or shared context-cost boundary. No inbound rewiring was
+   needed.
+4. **Select the wider corpus from the original claim inventory.**
    Source-grounding owns the selection; the V1 Quotes/snapshot path is ready to
    carry each result.
-4. **Run the remaining migrations and source-dependent claim judgments** in
+5. **Run the remaining migrations and source-dependent claim judgments** in
    small source-coherent batches, without treating the seven excluded handoff
    notes as artifact-disposition blockers.
-5. **Record the remaining dated artifact dispositions and close the two general
+6. **Record the remaining dated artifact dispositions and close the two general
    questions.** Promote a disposition rule or record that judgment remains
    per-note, and decide the unresolved prior-art check.
 

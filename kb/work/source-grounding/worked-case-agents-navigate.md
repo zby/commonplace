@@ -330,3 +330,15 @@ unknown, which is the premise the note discharges"), and
 `fluid-resolution-switching` ("the source's switching is lateral, not vertical").
 The external critique had guessed the latter two belonged to this tradition. A
 reading contradicts it.
+
+## 10. Disposition received — 2026-08-26
+
+The sibling workshop kept
+[`agents-navigate-by-deciding-what-to-read-next`](../../notes/agents-navigate-by-deciding-what-to-read-next.md)
+as a normalized agent-navigation premise. Pirolli supplies the narrower human
+proximal-cue/distal-source structure; the note supplies the target-side transfer
+and prices cue inspection against target loading in LLM tokens and tool calls.
+A direct source route would lose that argument, while a merge into
+`linking-theory` would replace a narrow premise used by fifteen other notes with
+a broader synthesis dependency. The correction and direct source route had
+already landed, so no inbound rewiring was needed.

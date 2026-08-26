@@ -38,6 +38,14 @@ The Gödel-machine and proposal-selection candidates were subsequently kept on
 literature established neighboring direct-update and adaptive-loop traditions
 but not the note's narrower reject-capable subtype.
 
+Separately, the first Pirolli worked-case note was kept on 2026-08-26. Pirolli
+establishes the narrower human proximal-cue/distal-source structure, while the
+note carries the explicit transfer to LLM agents, their token/tool-call cost
+boundary, and the normalized navigation-decision premise used by fifteen other
+notes. The source-grounded correction removed the unsupported monotone before
+the artifact judgment; the repaired note is already the compact adapter shape
+the initial critique proposed as an alternative to retirement.
+
 The operative source route has also changed since this inventory was built.
 Current work grounds a use directly in retained exact `## Quotes` or in an exact
 name-paired snapshot through a `(snapshot required)` link and the standard
@@ -366,3 +374,13 @@ is the narrower reject-capable subtype, its search–evaluation–operative-rete
 decomposition, and its separation from reflection, cumulativity, and gate
 strength. Five grounded primary routes replaced the handoffs; no inbound
 rewiring was needed because the artifact's identity remained stable.
+
+The first Pirolli worked-case note is the third dated artifact disposition and
+the first from the starting cohort: keep. Pirolli supplies a narrower human
+analogue for judging distal content from proximal cues. The note supplies the
+target-side transfer, changes the priced resource from human interaction to LLM
+tokens and tool calls, and serves as an atomic navigation-decision premise for
+fifteen other notes. A direct source route would lose that argument, while a
+merge into `linking-theory` would replace a narrow premise with a broad
+synthesis dependency. Its correction and source route had already landed, so
+the keep required no inbound rewiring.

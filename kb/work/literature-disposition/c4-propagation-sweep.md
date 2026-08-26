@@ -103,12 +103,12 @@ sole inheritor, and the Pirolli ingest — written without access to this sweep 
 independently recommended it as the update target, noting that "prediction 4
 (link density has diminishing returns) is the patch model under another name."
 
-Still open, and genuinely: whether `agents-navigate-...` survives the correction
-at all. After correction it contains three narrowed source-adjacent claims, an
-explicit human-to-LLM transfer argument, and local pointer-mode design
-implications. Whether those warrant a separate note, a merge into
-`linking-theory.md`, a thinner node, or retirement remains an artifact-level
-decision.
+Still open at sweep time, and genuinely so: whether `agents-navigate-...`
+survives the correction at all. After correction it contains three narrowed
+source-adjacent claims, an explicit human-to-LLM transfer argument, and local
+pointer-mode design implications. Whether those warrant a separate note, a
+merge into `linking-theory.md`, a thinner node, or retirement remains an
+artifact-level decision.
 
 ## Execution update — 2026-08-24
 
@@ -118,6 +118,18 @@ C4 with uncertainty reduction per unit of context consumed. `linking-theory.md`
 received the same source route and no longer carries the monotone. Source review
 pairs passed for both artifacts with no stale pair.
 
-The artifact-level disposition remains open. The correction removed the known
-error and its only propagation edge; it did not decide whether the first note
-should survive, merge into `linking-theory.md`, become thinner, or retire.
+At correction time, the artifact-level disposition remained open. The
+correction removed the known error and its only propagation edge; it did not
+decide whether the first note should survive, merge into `linking-theory.md`,
+become thinner, or retire.
+
+## Disposition update — 2026-08-26
+
+**Keep as a normalized agent-navigation premise.** Pirolli supplies the narrower
+human proximal-cue/distal-source structure. The repaired note supplies the
+target-side transfer, changes the priced resource to LLM tokens and tool calls,
+and gives fifteen other notes a narrow premise for routing, progressive
+disclosure, metadata, and pruning evaluation. A direct source route would lose
+the transfer argument; merging into `linking-theory` would replace the atomic
+premise with a broader synthesis dependency. The correction had already landed,
+so the keep required no inbound rewiring.
