@@ -15,7 +15,7 @@ machinery account predates the current direct Quotes/snapshot protocol; use
 [ADR 073](../../reference/adr/073-untracked-source-snapshots-require-ingest-grounding.md)
 for the operative grounding path.
 
-## Current status — 2026-08-25
+## Current status — 2026-08-26
 
 **Open.** The starting cohort has twelve candidates. The first was inventoried
 and checked against an actual source in the worked case; the other eleven have
@@ -28,21 +28,24 @@ belongs to the starting cohort.
 
 | Closure condition | State | What remains |
 |---|---|---|
-| Source-grounded disposition for every settled cohort member | Open | Settle cohort membership, triage the sixteen rollout handoffs, capture the remaining claim-selected sources, and adjudicate the eleven unworked candidates. The worked candidate's final artifact disposition is also open. |
+| Source-grounded disposition for every settled cohort member | Open | Settle cohort membership, triage the sixteen rollout handoffs, capture the remaining claim-selected sources, and adjudicate the eleven candidates not yet checked against their assigned literature. The worked candidate's final artifact disposition is also open. |
 | One disposition executed end to end | Open | The first case produced and executed a claim correction, not a final keep, merge, thin, or retire decision. |
 | General disposition rule | Open | The evidence supports claim-level, source-grounded judgment, but no rule or no-general-rule finding has been promoted. |
 | Write-time check decision | Partial | ADR 073 guards explicit new or changed source dependencies. It cannot discover unattributed prior art, which is the check this closure condition still needs decided. |
 
 The direct source-grounding machinery no longer blocks progress. Evidence
-selection and artifact judgment do. The operative `index-curation` claim has
-been scoped without destabilizing its dependent ADRs. The next unblocked work in
-[Channel 2](./three-channels.md#channel-2--claims-to-change) is to re-check
-`stale-indexes` before deciding whether to change it. Most final dispositions
-still wait on the wider source corpus. The rollout's all-68-fresh statement is a
-dated certification result, not standing assurance: post-certification note
-edits, including the 2026-08-25 activation-note revision, require current
-freshness checks and sometimes new reviews. Neither freshness nor a gate outcome
-is an artifact disposition.
+selection and artifact judgment do. The source-independent
+[Channel 2](./three-channels.md#channel-2--claims-to-change) pass completed on
+2026-08-26: the stale-index claim was reframed around greater realized coverage,
+four prose-only defects were repaired, and the false external-source trait was
+dropped. None of those corrections is an artifact disposition. The next work is
+to triage the sixteen rollout handoffs before selecting the wider source corpus.
+Most final dispositions still wait on that corpus. The rollout's all-68-fresh
+statement is a dated certification result, not standing assurance:
+post-certification note edits require current freshness checks and sometimes new
+reviews. The 2026-08-26 `concept-attribution` and `misleading-link-text` prompt
+edits also stale their prior criterion partitions. Neither freshness nor a gate
+outcome is an artifact disposition.
 
 ## The parallel worth exploiting, and where it breaks
 
@@ -157,14 +160,14 @@ pure pointer. Both cut against reflexive thinning.
 ## Starting cohort
 
 The notes the critique names, with library inbound-reference counts re-measured
-2026-08-25 by `rg -l "<slug>.md"` across `notes reference instructions types
+2026-08-26 by `rg -l "<slug>.md"` across `notes reference instructions types
 agent-memory-systems agentic-systems articles sources`. Counts are a rewiring
 cost estimate, not a disposition signal.
 
 | Note | Tags | Inbound |
 |---|---|---|
 | `agents-navigate-by-deciding-what-to-read-next` | links | 20 |
-| `stale-indexes-reduce-discovery-when-they-suppress-fallback-search` | kb-maintenance | 26 |
+| `indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more` | kb-maintenance | 27 |
 | `human-llm-differences-are-load-bearing-for-knowledge-system-design` | document-system | 15 |
 | `design-for-the-first-time-human-except-on-access-cost` | document-system, context-engineering | 10 |
 | `link-following-and-search-impose-different-metadata-requirements` | links | 8 |
@@ -174,7 +177,7 @@ cost estimate, not a disposition signal.
 | `charting-the-knowledge-access-problem-beyond-rag` | foundations | 6 |
 | `addressability-grain-sets-a-matched-selective-read-floor` | document-system, context-engineering | 5 |
 | `an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract` | kb-maintenance, document-system | 3 |
-| `knowledge-storage-does-not-imply-contextual-activation` | llm-reliability, failure-modes, evaluation | 218 |
+| `knowledge-storage-does-not-imply-contextual-activation` | llm-reliability, failure-modes, evaluation | 220 |
 
 Two things the table already shows. The last row includes 158 citations from
 `kb/agent-memory-systems/reviews/` and five more from that collection's other

@@ -21,7 +21,7 @@ New knowledge — extracting claims, writing synthesis notes, discovering connec
 
 A KB's knowledge is in the content of its notes and in the structure of its links — neither alone is sufficient. A note without links still says something. A link without good notes on both ends is useless. But the link structure is the part that's hardest to get right and most underinvested in: adding notes is easy, discovering which notes genuinely connect and why requires judgment.
 
-This suggests that learning at scale for a KB involves improving both — better notes and better links — but that the link structure is where the most untapped value sits, because it's where understanding is encoded: which ideas support each other, which are in tension, which compose into larger arguments. [Stale indexes reduce discovery when they suppress fallback search](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md); the cost of underinvestment becomes concrete when apparently complete navigation omits notes and closes a broader discovery route.
+This suggests that learning at scale for a KB involves improving both — better notes and better links — but that the link structure is where the most untapped value sits, because it's where understanding is encoded: which ideas support each other, which are in tension, which compose into larger arguments. [Indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md); the cost of underinvestment becomes concrete when apparently complete navigation omits notes and closes a broader discovery route.
 
 ## The boiling cauldron (aspirational)
 

@@ -44,11 +44,11 @@ the code and the task.
 
 ## Constraints a solution must respect
 
-**A partial index is worse than none.** [Stale indexes reduce discovery when
-they suppress fallback search](../../notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md):
-an agent that finds three relevant ADRs stops looking for the fourth. Any
-index either carries a completeness guarantee it can keep, or must not read as
-complete.
+**A partial index can lower recall by closing a better route.** [Indexes lower
+recall when they suppress retrieval that would find more](../../notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md):
+an agent that finds three relevant ADRs can stop before a search that would
+find the fourth. Any index either carries a completeness guarantee it can keep,
+or must not read as complete.
 
 **Enforce or omit.** If a routing surface caches anything recomputable from the
 ADR set, [it must be machine-checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md).

@@ -35,8 +35,10 @@ These readers need different things from the same document:
 | Reasoning | Wants to understand *why* — context, trade-offs, alternatives considered | Needs enough reasoning to handle edge cases, but excess reasoning wastes context |
 | Completeness | Can fill gaps from background knowledge and experience | Cannot fill gaps — if it's not in the loaded context, it doesn't exist |
 | Persistence | Remembers this document next time they encounter the topic | Starts fresh every session — the document must be self-sufficient |
-| Navigation | Can browse, skim, and get a "feel" for relevance | Relies on routing tables and descriptions to decide what to load |
+| Navigation and access | Usually skims or searches sublinearly with interactive tools | Often loads whole artifacts linearly; can also read sublinearly when given a query or search interface |
 | Nuance | Appreciates hedging, qualification, open questions | May perform worse with excessive hedging (reduced instruction clarity) |
+
+The navigation row states a default access mode, not an invariant difference between consumer kinds. [Design for the first-time human, except on access cost](./design-for-the-first-time-human-except-on-access-cost.md) sharpens the divider: sublinear access pays for a selected slice, while linear access pays for the whole artifact. Interfaces can move either consumer across that divider.
 
 The tension is genuine: a document optimized for human understanding (rich reasoning, extensive context, open-ended exploration) may be suboptimal for LLM execution (needs clarity, completeness, directness). A document optimized for LLM execution (imperative, complete, no ambiguity) may be opaque to human maintainers (why does it say this? what's the reasoning?).
 

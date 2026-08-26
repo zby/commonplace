@@ -1,5 +1,5 @@
 ---
-description: "Compares fixed, query-time, and crafted retrieval pointers across specificity, precomputation cost, reliability, and authoring dependence to explain when each progressive-disclosure form pays"
+description: "Compares fixed, query-time, and crafted retrieval pointers across specificity, cost, availability, accuracy, and authoring dependence"
 type: kb/types/note.md
 traits: []
 tags: [links, computational-model]
@@ -9,7 +9,7 @@ tags: [links, computational-model]
 
 A **pointer** is any lower-resolution representation that helps decide whether to load a knowledge item — a description, an abstract, a search result snippet, a re-ranker score, even a title. The concept is substrate-independent: a **link** (markdown reference with context phrase) is a pointer in our substrate; OpenViking's `.abstract.md` is a pointer in their virtual filesystem; a re-ranker output is a pointer in a retrieval pipeline.
 
-Progressive disclosure works by giving agents pointers at increasing resolution — scan cheap ones first, load expensive content only when needed. But not all pointers are alike. They vary on three axes: **context-specificity**, **cost**, and **reliability**.
+Progressive disclosure works by giving agents pointers at increasing resolution — scan cheap ones first, load expensive content only when needed. But not all pointers are alike. They vary on four axes: **context-specificity**, **cost**, **availability**, and **accuracy**.
 
 ## Context-specificity: when does the pointer learn about the consumer?
 
@@ -27,23 +27,23 @@ The most obvious axis. A pointer can know nothing about why the consumer is look
 
 Each phrase leverages the surrounding argument the agent already has loaded — not just "what is this item" but "why does it matter *here*." This is the densest pointer type, but it requires human judgment and only exists where someone authored a link.
 
-## Reliability: the axis you forget until it breaks
+## Availability and accuracy fail differently
 
 If context-specificity were the only axis, the answer would be simple: compute the most specific pointer you can afford. As inference gets cheaper, query-time computation replaces fixed pointers. Problem solved.
 
-But [agent statelessness](./agent-statelessness-makes-routing-architectural-not-learned.md) complicates this. Agents start cold every session. Routing is permanent architecture, not scaffolding they outgrow. And the [degradation cliff](./agent-statelessness-makes-routing-architectural-not-learned.md) is unforgiving: when routing fails, the agent doesn't slow down — it falls into generic LLM behavior, confidently executing without the KB's methodology.
+But [agent statelessness](./agent-statelessness-makes-routing-architectural-not-learned.md) complicates this. Agents start cold every session. Routing is permanent architecture, not scaffolding they outgrow. And the [degradation cliff](./agent-statelessness-makes-routing-architectural-not-learned.md) is unforgiving: when routing is unavailable, the agent doesn't slow down — it falls into generic LLM behavior, confidently executing without the KB's methodology.
 
-Fixed pointers are reliable. They're there every time, same content, no query-time dependency. A query-time pipeline introduces new failure modes: poor retrieval, poor reranking, or poor inference can send the agent off the cliff. Crafted link phrases introduce another: if the author skipped the context phrase, the pointer is simply absent.
+Fixed pointers are highly available. They are retained with the artifact, have the same content on every read, and need no query-time pipeline. That does not make them accurate: a fixed description can remain confidently available after its target changes. Query-time pointers have the opposite exposure. Their existence depends on retrieval or inference running, and their accuracy depends on those mechanisms selecting and characterizing the target well. Crafted link phrases are available only where an author supplied them; when present, their accuracy still depends on the author's judgment and on later target drift.
 
-This means the three axes pull in different directions:
+The four axes therefore pull in different directions:
 
-| Pointer type | Specificity | Cost | Reliability |
-|-------------|------------|------|-------------|
-| Fixed (write-time) | Low — context-free | Cheapest per read | Highest — always present, deterministic |
-| Query-time | Medium — query-specific | Per-query retrieval/inference cost | Medium — depends on retrieval/inference quality |
-| Crafted (authoring-time) | Highest — argument-specific | Human judgment | Variable — depends on discipline |
+| Pointer type | Specificity | Cost | Availability | Accuracy |
+|-------------|------------|------|--------------|----------|
+| Fixed (write-time) | Low — context-free | Cheapest per read | High — retained with the artifact | Variable — generic and can go stale |
+| Query-time | Medium — query-specific | Per-query retrieval/inference cost | Conditional — pipeline must run | Variable — depends on retrieval and inference quality |
+| Crafted (authoring-time) | Highest — argument-specific | Human judgment | Sparse — only at authored link sites | Variable — depends on judgment and target drift |
 
-No single type wins all three. A system needs a mix.
+No single type wins all four. A system needs a mix.
 
 ## What this looks like in practice
 
@@ -63,19 +63,19 @@ Each system has a tier the other emphasizes. OpenViking invests in L1 — a 2000
 
 | Property | Fixed | Query-time | Crafted |
 |----------|-------|-----------|---------|
-| Guaranteed to exist | Yes | Per-query | Authoring discipline |
+| Availability | Retained with artifact | Only if pipeline runs | Only at authored link sites |
 | Quality ceiling | Generic | Query-specific | Argument-specific |
 | Scales to global ops | Yes | Yes (at cost) | No |
 | Failure mode | Stale if source changes | Bad retrieval/rerank/inference → cliff | Absent or weak |
 
-The practical path: invest in crafted link phrases for local navigation (the common agent case), and use `/validate` to pressure notes toward reliable fixed descriptions for global operations. Watch query-time computation as inference costs drop — but treat it as supplementary to architectural routing, not a replacement.
+The practical path: invest in crafted link phrases for local navigation (the common agent case), and use `/validate` to pressure notes toward available fixed descriptions for global operations. Check their accuracy separately. Watch query-time computation as inference costs drop — but treat it as supplementary to architectural routing, not a replacement.
 
 ---
 
 Relevant Notes:
 
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds: the navigation decision is what pointers optimize for; link phrases are the most context-specific pointer type for that decision
-- [agent statelessness makes routing architectural, not learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — grounds: the reliability axis; fixed pointers are architectural routing that stateless agents depend on, and query-time computation introduces the degradation cliff
+- [agent statelessness makes routing architectural, not learned](./agent-statelessness-makes-routing-architectural-not-learned.md) — grounds: the availability axis; fixed pointers avoid a query-time execution dependency, while a missing dynamic route exposes the degradation cliff
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: the cost spectrum is a context efficiency trade-off
 - [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — mechanism: fixed pointers precompute a consumer-facing view, while query-time pointers work one out for the current query
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: the tier structure defines the resolution gradient; query-time computation could fill gaps dynamically

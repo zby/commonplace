@@ -90,6 +90,6 @@ Relevant Notes:
 - [Link vocabulary and linking approach](./link-vocabulary.md) - part-of: the link-specific layer inside the broader navigation stack
 - [Agent memory coverage](./agent-memory-coverage.md) - part-of: summarizes discoverability surfaces and current gaps across the shipped system
 - [Link-following and search impose different metadata requirements](../notes/link-following-and-search-impose-different-metadata-requirements.md) - rationale: search, links, and indexes require different pointer metadata
-- [Pointer design tradeoffs in progressive disclosure](../notes/pointer-design-tradeoffs-in-progressive-disclosure.md) - rationale: descriptions, query-time search, and link phrases occupy different cost/specificity/reliability positions
+- [Pointer design tradeoffs in progressive disclosure](../notes/pointer-design-tradeoffs-in-progressive-disclosure.md) - rationale: descriptions, query-time search, and link phrases occupy different specificity, cost, availability, and accuracy positions
 - [Two context boundaries govern collection operations](../notes/two-context-boundaries-govern-collection-operations.md) - rationale: collections have both full-text and title-plus-description scan boundaries
 - [Design for the first-time human, except on access cost](../notes/design-for-the-first-time-human-except-on-access-cost.md) - rationale: complete listings are routed to the consumer whose access mode makes them cheap — build-time pages for humans, scoped queries for agents

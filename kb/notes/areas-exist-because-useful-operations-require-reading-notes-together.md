@@ -139,7 +139,7 @@ Several consequences follow from keeping those objectives separate:
 Relevant Notes:
 
 - [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: finite usable attention creates the capacity side of the cohort boundary
-- [Stale indexes reduce discovery when they suppress fallback search](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — grounds: explains why omission becomes harmful when an apparently complete set closes broader discovery
+- [Indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — grounds: explains why omission becomes harmful when an apparently complete set closes broader discovery
 - [Two context boundaries govern collection operations](./two-context-boundaries-govern-collection-operations.md) — extends: separates full-body comparison from title-and-description orientation and derives the resulting operating regimes
 - [A knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: places read-together cohorts among the resolution levels a consumer must move between
 - [Quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — extends: treats comparative-reading yield as a possible signal for evaluating cohort construction

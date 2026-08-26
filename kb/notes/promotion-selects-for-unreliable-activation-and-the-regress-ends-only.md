@@ -61,7 +61,7 @@ Delivery is a different gate from [validity and learning value](./choosing-what-
 
 ## Scope
 
-Rooting is necessary for an intended unprompted delivery path, but it is not sufficient for value. A stale index can fire perfectly and route to nothing. [Stale indexes reduce discovery when they suppress fallback search](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md); here, satisfying the navigation cue suppresses a search that would have found the needed item.
+Rooting is necessary for an intended unprompted delivery path, but it is not sufficient for value. A stale index can fire perfectly and route to nothing. [Indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md); here, satisfying the navigation cue suppresses a search that would have found the needed item.
 
 Termination can also be priced out. Unconditional loading is reliable but costly, and a shared terminator has finite capacity. [ADR 025](../reference/adr/025-complete-generated-indexes-are-build-time-only.md) retired always-loaded generated indexes when their unconditional cost grew with the collection. A path can therefore terminate correctly and still fail step 4.
 

@@ -1,7 +1,7 @@
 ---
-description: Good thinking requires moving between abstraction levels — broad for context, narrow for mechanism, back out for pattern. A KB's quality should be measured by how fluidly it supports this resolution-switching, not just retrieval accuracy.
+description: "Frames movement between abstraction levels as a KB design criterion and inventories how titles, indexes, links, and progressive disclosure support it"
 type: kb/types/note.md
-traits: [has-external-sources, title-as-claim]
+traits: [title-as-claim]
 tags: [foundations]
 ---
 
@@ -21,7 +21,7 @@ The Commonplace KB already has several mechanisms that serve resolution-switchin
 
 ## The evaluative criterion
 
-This framing suggests a quality criterion for knowledge bases that complements retrieval accuracy: **resolution-switching fluidity**. A good KB lets you move between abstraction levels with low friction. A bad one traps you — either stuck in abstractions (indexes that link to indexes, never reaching specifics) or stuck in details (dense notes with no outward links to broader context).
+This framing suggests a qualitative design criterion that complements retrieval accuracy: **resolution-switching fluidity**. A KB supports it when readers can move between abstraction levels with low friction. A KB obstructs it when readers get stuck in abstractions (indexes that link to indexes without reaching specifics) or in details (dense notes with no outward route to broader context). The criterion is not yet a measurement method; the questions below identify what one would have to establish.
 
 Concrete symptoms of poor resolution-switching:
 - Notes with no outbound links — you can zoom in but can't zoom back out

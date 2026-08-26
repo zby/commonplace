@@ -31,7 +31,7 @@ The analogy: AlphaGo works because the game has a perfect verifier. KBs don't. B
 
 **Structural health:**
 - Dangling link rate — links pointing to non-existent files. Purely deterministic, always bad.
-- Index coverage — what % of notes appear in at least one area index? (Directory indexes don't count — they're auto-generated.) An apparently complete index can [reduce discovery by suppressing fallback search](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) while omitting entries; this signal detects the coverage precondition for that failure.
+- Index coverage — what % of notes appear in at least one area index? (Directory indexes don't count — they're auto-generated.) An apparently complete index can [lower recall by suppressing retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md); this signal detects the coverage precondition for that failure.
 - Index staleness — do all index entries point to existing files? Do indexes mention notes that have been renamed or deleted?
 - Note age vs connection count — old notes with few connections may be stale or orphaned by topic drift.
 
@@ -148,7 +148,7 @@ Relevant Notes:
 - [automated-tests-for-text](./automated-tests-for-text.md) — the condensed observation that text can be tested like software; this note extends that by asking which tests, combined, could drive automated improvement
 - [spec-mining-as-codification](../notes/spec-mining-as-codification.md) — the metamorphic relations section is spec mining applied to KB structure: extracting testable invariants from observed mutation behavior
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — prerequisite: content quality proxies (frontmatter completeness, title-as-claim ratio) depend on the type system being trustworthy
-- [Stale indexes reduce discovery when they suppress fallback search](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — exemplifies why index coverage is valuable when apparent completeness would otherwise close a broader discovery route
+- [Indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — exemplifies why index coverage is valuable when apparent completeness would otherwise close a broader discovery route
 - [Selecting an LLM output fixes a result, not its interpretation](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — extends: the composite quality signal could gate which generated KB artifact is retained, while generator-level evaluation remains a separate target
 - [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — boundary condition: all signals here are retrieval/structure oriented; action capacity (classification, planning, communication) would need different quality signals
 - [Agentic Note-Taking 23: Notes Without Reasons](https://x.com/molt_cornelius/status/2026894188516696435) — validates Goodhart risk: embedding-based systems inflate connection counts while measuring vocabulary overlap, not understanding — exactly the corruption this note's composite oracle must detect

@@ -17,17 +17,17 @@ You're reading something, you encounter a link, you decide whether to follow it.
 
 **Index entries** carry less, but more than they appear to. The context phrase next to the link — "extends this by adding the temporal dimension" — is the explicit hint. But the index's structure adds implicit context too: an entry under an "Approvals" heading tells the agent more than the same entry in a flat list.
 
-**Skill descriptions** carry only what fits in a single line. The runtime loads all descriptions at session start: "Use when the user wants to find connections between notes." That line is the entire hint; the full definition is the target.
-
-What these share: the agent already has local context (the current note, the current section, the surrounding argument) that makes the follow/skip decision tractable.
+What inline links and index entries share: the agent already has source-local context (the current note, section, or index grouping) that makes the follow/skip decision tractable.
 
 ## Search: long-range jumps without local context
 
 You have a question or keyword, you query the whole corpus, you land somewhere potentially distant. No surrounding argument guides the decision.
 
+**Skill descriptions** are an analogous long-range selection surface. The runtime loads them at session start rather than exposing them inside a source document's argument: "Use when the user wants to find connections between notes." The task supplies some context, but that one line must identify when and why to load the full skill without help from neighboring prose.
+
 **Search results** split the decision in two. First the agent decides *whether to search*, guided by earlier hints: an instruction mentioning a directory path, a tool description saying "searches the knowledge base." Then she decides *which result to open*, guided only by titles, snippets, and descriptions. Frontmatter descriptions matter here — at that second decision point, they're often all the agent has.
 
-What's different: the agent has no local context. The pointer must carry enough information on its own for the agent to judge relevance.
+What's different: the agent has no source-local context. The pointer must carry enough information on its own for the agent to judge relevance from the task or query.
 
 ## Indexes bridge both modes
 
@@ -50,6 +50,6 @@ Relevant Notes:
 
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — foundation: the navigation-decision model that this note decomposes by mode
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — extends: claim titles improve both local link-following (inline prose reads as reasoning) and long-range search (titles convey arguments without loading)
-- [pointer design tradeoffs in progressive disclosure](./pointer-design-tradeoffs-in-progressive-disclosure.md) — extends: generalizes the pointer-context analysis into a three-axis trade-off (specificity, cost, reliability)
+- [pointer design tradeoffs in progressive disclosure](./pointer-design-tradeoffs-in-progressive-disclosure.md) — extends: generalizes the pointer-context analysis into a four-axis trade-off (specificity, cost, availability, accuracy)
 - [charting the knowledge-access problem beyond RAG](./charting-the-knowledge-access-problem-beyond-rag.md) — extends: broadens this two-mode split into a larger access-task taxonomy
 - [Agentic Note-Taking 23: Notes Without Reasons](https://x.com/molt_cornelius/status/2026894188516696435) — validates (negative case): first-person testimony of what breaks when pointers lack context — embedding-generated links carry no reasons, making relevance estimation impossible before following

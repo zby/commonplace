@@ -15,7 +15,7 @@ A represented constraint that no available path surfaces for a task is inert for
 
 ## The failure is worst where the wire is trusted
 
-The sharpest case is a membership claim that is asserted rather than enforced, [since stale indexes reduce discovery when they suppress fallback search](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md). A head that says *this lists every note with the tag* tells an exhaustive consumer to stop looking. If members are missing, the claim cuts the wire precisely where a process was relying on it — and that process cannot tell, because the whole point of trusting the claim was to skip the check that would have caught it. Another process that runs the full search can still find the member, so the failure belongs to the trusted shortcut's path rather than to the system as a whole.
+The sharpest case is a membership claim that is asserted rather than enforced, [since indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md). A head that says *this lists every note with the tag* tells an exhaustive consumer to stop looking. If members are missing, the claim cuts the wire precisely where a process was relying on it — and that process cannot tell, because the whole point of trusting the claim was to skip the check that would have caught it. Another process that runs the full search can still find the member, so the failure belongs to the trusted shortcut's path rather than to the system as a whole.
 
 The [Commonplace reference case](./evidence/commonplace-as-a-reflective-system.md) shows this failure being converted from an asserted completeness claim into an enforced one.
 
@@ -42,7 +42,7 @@ The same [reference case](./evidence/commonplace-as-a-reflective-system.md) reco
 Relevant Notes:
 
 - [Reflective system](./definitions/reflective-system.md) — grounds: supplies the path-relative causal-connection criterion this note applies to retrieval
-- [Stale indexes reduce discovery when they suppress fallback search](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — mechanism: why a trusted-but-incomplete membership claim is the sharpest form of the failure
+- [Indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — mechanism: why a trusted-but-incomplete membership claim is the sharpest form of the failure
 - [Behavioral authority](./definitions/behavioral-authority.md) — extends: the consumer, channel, and force that must hold after an artifact is found
 - [Commonplace as a reflective system](./evidence/commonplace-as-a-reflective-system.md) — evidenced-by: the observed trace where a symbolic check corrected the natural-language search recipe that had been missing a member
 - [Memento-Skills](../sources/memento-skills-let-agents-design-agents.ingest.md) — evidenced-by: in the reported router comparison, behavior-trained routing improves both route hits and downstream success while causal uptake after retrieval remains untested

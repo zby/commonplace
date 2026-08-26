@@ -11,7 +11,7 @@ Some artifacts carry a copy of information that is mechanically recomputable fro
 
 ## The asymmetry that forces the rule
 
-The two failure modes are not symmetric, and the rule rides entirely on that. An *absent* copy costs the consumer one bounded recomputation: run the query, read the source, do the work the copy would have saved. A *false* copy can cause silent, unbounded wrongness when it tells consumers to stop looking or to follow a snapshot of a world that has since moved, with no signal that anything is wrong. This is the sharpest case of [stale indexes reducing discovery when they suppress fallback search](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md): a trusted-but-stale claim suppresses the recomputation that would have exposed the mismatch.
+The two failure modes are not symmetric, and the rule rides entirely on that. An *absent* copy costs the consumer one bounded recomputation: run the query, read the source, do the work the copy would have saved. A *false* copy can cause silent, unbounded wrongness when it tells consumers to stop looking or to follow a snapshot of a world that has since moved, with no signal that anything is wrong. This is the sharpest case of [indexes lowering recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md): a trusted-but-stale claim suppresses the recomputation that would have exposed the mismatch.
 
 A bounded, recoverable downside on one side; a silent, unbounded one on the other — that is why hand-maintained-and-trusted is *forbidden* rather than merely risky. An unenforced copy is always one missed edit away from the catastrophic state, with nothing watching.
 
@@ -60,7 +60,7 @@ It is the general form of "a cache must never be the only copy" — applied not 
 
 Relevant Notes:
 
-- [Stale indexes reduce discovery when they suppress fallback search](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — grounds: false completeness can suppress the recomputation that an absent copy would trigger
+- [Indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — grounds: false completeness can suppress the recomputation that an absent copy would trigger
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: the "checked" branch exists only where a cheap deterministic oracle can re-derive and compare; where verification is unavailable, omission is the only safe state
 - [Frontloading spares execution context](./frontloading-spares-execution-context.md) — extends: enforcement is the move that secures frontloading's validity window for recomputable inserted values
 - [An author should fix what the executor can't determine, not what it will](./fix-what-the-executor-cant-determine-not-what-it-will.md) — extends: adds recomputable-and-checked as a third class between arbitrary and situational on its fix-or-leave axis

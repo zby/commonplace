@@ -5,10 +5,11 @@ is** rather than by which note it came from. The three channels have different
 owners, different risk, and different blockers, and mixing them is what makes a
 corpus cleanup stall.
 
-**Refreshed 2026-08-25.** Rows describing the original sweep remain historical.
+**Refreshed 2026-08-26.** Rows describing the original sweep remain historical.
 The operative grounding machinery below now follows ADR 073's direct
 Quotes/snapshot protocol, and the rollout's literature handoffs have been added
-as intake rather than counted as artifact dispositions.
+as intake rather than counted as artifact dispositions. The source-independent
+Channel 2 pass and the false-provenance repair are now recorded as executed.
 
 - **Migration** — make the route from a claim to its source navigable and its
   wording checkable. Additive, low risk, batchable. Owner: this workshop.
@@ -42,7 +43,7 @@ route.
 | `index-completeness-does-not-determine-editorial-orientation` | Needs LIS pathfinders / annotated bibliographies / PKM MOC. **Attribution already exists one hop away** in `an-enforced-tag-readme`, which links back here — may be a move, not an invention | Open [v] |
 | `an-enforced-tag-readme...` | "Luhmann" and "Nick Milo's LYT" named with no dated work, no URL, no ingest | Open [v] |
 | `knowledge-storage-does-not-imply-contextual-activation` | Six tracked LLM-side ingests cited. Gao and Chen add bounded evidence about explicit documentation consultation versus behavioral uptake, but no primary cognitive source for C1/C2; the 2026-08-25 edit requires current grounding freshness to be checked | Open [v] |
-| `stale-indexes-reduce-discovery...` | Zero external references and no `Relevant Notes` tail at all | Open [r] |
+| `indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more` | No external source route; the 2026-08-26 claim reframe does not supply one | Open [v] |
 | `addressability-grain...` | Zero external references | Open [r] |
 | `pointer-design-tradeoffs...`, `link-following-and-search...`, `design-for-the-first-time-human...`, `charting-...-beyond-rag` | Zero external citations for claims placed in outside traditions | Open [r] |
 
@@ -56,11 +57,11 @@ the first, [r] for the others. **Open.**
 
 ### 1c. Repair a false provenance signal
 
-**Open [v].** `a-knowledge-base-should-support-fluid-resolution-switching` declares
-`traits: [has-external-sources]` on the strength of "a social media post on 'The
-Art of Good Thinking: Moving Between Levels'" — no author, no URL. Either
-identify the source or drop the trait; a provenance signal pointing at nothing is
-worse than none.
+**Done 2026-08-26 [v].**
+`a-knowledge-base-should-support-fluid-resolution-switching` no longer declares
+`has-external-sources` for the unnamed social-media post. The origin note remains
+visible in prose, but it no longer emits a false machine-readable provenance
+signal.
 
 ### 1d. Blocked on a corpus decision
 
@@ -99,13 +100,16 @@ models, and graph algorithms to draft orientation, and explains how encoded
 judgments can be regenerated. ADR 025, ADR 026, and the dependent MOC note now
 use the scoped claim; neither ADR was destabilized.
 
-**2b. `stale-indexes...` C1 may be analytic, not empirical.** [r] It stipulates
-the stopping behaviour into the comparison, so the conclusion holds by
-construction and the claim cannot fail — yet ADR 026 treats it as a finding, "the
-problem in [this note] in its sharpest form." The empirical claim the ADR needs —
-that agents in fact stop at an apparently complete head — is assumed, not argued.
-Re-check the wording before acting; if it holds, this needs either evidence or a
-restatement that can fail.
+**2b. `indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more`.
+Done 2026-08-26 [v].** The re-check found a narrower defect than the sweep
+reported. A conditional control-flow mechanism may be analytic, but suppression
+alone does not lower recall: the suppressed operation must produce greater
+realized task-relevant coverage at the same endpoint. The note was retitled and
+reframed around that condition, distinguishes the mechanism from prevalence,
+and now states what a predictive use must evidence. ADR 026 remains sound
+without an empirical generalization because Commonplace explicitly authorizes
+an exhaustive consumer to skip the by-tag `rg` when `complete: true` is present;
+an omitted member is exactly what that suppressed sweep would recover.
 
 ### Prose-only — no shipped artifact depends on it
 
@@ -118,20 +122,23 @@ reduction per unit of context, added the Pirolli source route, and passed both
 then-operative source review pairs. The first note's artifact-level disposition
 remains open.
 
-**2d. `pointer-design-tradeoffs...` conflates availability with accuracy.** [r]
-Table 1 scores fixed pointers "Highest — always present, deterministic"; Table 2
-gives them "Stale if source changes." A stale description is confidently wrong,
-which is worse than an absent one — as this KB's own `stale-indexes` note argues.
+**2d. `pointer-design-tradeoffs...` conflates availability with accuracy. Done
+2026-08-26 [v].** The note now treats specificity, cost, availability, and
+accuracy as four axes. Fixed pointers are highly available but may be stale;
+query-time and crafted pointers carry separate availability and accuracy failure
+modes. Dependent summaries were reconciled.
 
-**2e. `link-following-and-search...` misfiles skill descriptions.** [r] They are
-placed under "link-following: local navigation with rich context," but load at
-session start with no surrounding argument. By the note's own criterion they
-belong on the search side, and the section's summary sentence is false for one of
-its three members.
+**2e. `link-following-and-search...` misfiles skill descriptions. Done
+2026-08-26 [v].** Skill descriptions now sit with long-range selection surfaces:
+the task supplies context, but no source document's surrounding argument helps
+the agent decide whether to load the full skill. The local-navigation summary
+now covers only inline links and index entries.
 
-**2f. `fluid-resolution-switching` title overclaims.** [r] The title says KB
-quality "should be measured by" fluidity; the body defers all measurement to open
-questions.
+**2f. `fluid-resolution-switching` retrieval surface overclaims. Done
+2026-08-26 [v].** Direct inspection found the wording in the description, not the
+title. The description and criterion section now present resolution fluidity as
+a qualitative design lens whose measurement remains open. The false
+`has-external-sources` trait was removed with Channel 1c.
 
 **2g. `an-enforced-tag-readme` C2 is an unsurveyed universal negative.** [r] "No
 Zettelkasten or LYT practitioner writes 'this map lists every note on the topic'
@@ -144,21 +151,22 @@ is not cut on one principle (a target type sits beside a task type), and its
 standalone note without being tested. Self-labelled brainstorming, which
 discounts any disposition applied to it.
 
-**2i. `human-llm-differences...` Navigation row is superseded in place.** [r]
-`design-for-the-first-time-human` was written partly to correct it; the original
-row was never retracted.
+**2i. `human-llm-differences...` Navigation row is superseded in place. Done
+2026-08-26 [v].** The row now states the human and agent defaults in access-mode
+terms and links the sharper claim: either consumer can move between linear and
+sublinear access when the interface changes.
 
 ### What is notable about this channel
 
-**Five of the seven open findings need no source at all.** 2b, 2d, 2e, 2f, and
-2i are internal — scope errors, category errors, and self-contradictions
-findable by reading the note against itself and its dependents. So **Channel 2
-is only partly blocked on Channel 1**, and the remaining operative item 2b is
-among the unblocked.
+**The five source-independent findings are closed.** 2b, 2d, 2e, 2f, and 2i
+were scope errors, category errors, or self-contradictions found by reading the
+notes against themselves and their dependents. None required a source-corpus
+decision.
 
 That is the running result of this workshop restated: pointed at redundancy, the
 method returned **three defects and zero clean rediscoveries a retirement would
-tidily remove.** Two defects are repaired; the remaining operative item is 2b.
+tidily remove.** All three defects in that running tally are repaired. The first
+artifact disposition remains open.
 
 ---
 
@@ -192,11 +200,13 @@ stable identifiers for normalized claims or retained quotes. Quotes remain
 append-only exact passages; target-specific transfer reasoning remains in the
 target.
 
-**Freshness note, 2026-08-25 [v].** At its certification freeze, the rollout had
-a fresh standard grounding result for all 68 target notes: 34 PASS, 10 WARN, and
-24 FAIL. That is a dated coverage result, not standing assurance. Later edits,
+**Freshness note, refreshed 2026-08-26 [v].** At its certification freeze, the
+rollout had a fresh standard grounding result for all 68 target notes: 34 PASS,
+10 WARN, and 24 FAIL. That is a dated coverage result, not standing assurance. Later edits,
 including the activation-note revision, require current freshness checks and
-may require new reviews. Neither a fresh result nor its outcome settles an
+may require new reviews. The 2026-08-26 `concept-attribution` and
+`misleading-link-text` prompt edits also changed criterion snapshots and stale
+their previous partitions. Neither a fresh result nor its outcome settles an
 artifact disposition.
 
 ### Still open
@@ -211,8 +221,8 @@ no broader write-time arm is warranted.
 
 **3e. Identifiable provenance. Open [v].** Nothing checks that
 `has-external-sources` resolves to an identifiable external reference. The
-unnamed social-media post in 1c still passes the trait contract. This remains a
-candidate deterministic check.
+false trait instance in 1c is repaired, but another instance could still pass
+the current contract. This remains a candidate deterministic check.
 
 ### Bugs
 
@@ -252,20 +262,17 @@ form without the eighth move propagates the problem in more convincing packaging
 
 ## Sequencing
 
-1. **Continue with Channel 2's unblocked five.** Re-check 2b before changing it
-   because ADR 026 rests on it, then repair 2d, 2e, 2f, and 2i. These need no
-   source-corpus decision.
-2. **Triage the received literature handoffs.** Separate the seven uses that now
+1. **Triage the received literature handoffs.** Separate the seven uses that now
    have matching tracked ingests from the nine that still lack a direct route,
    and decide whether the nine out-of-cohort notes belong here.
-3. **Select the wider corpus from the claim inventory.** Source-grounding owns
+2. **Select the wider corpus from the claim inventory.** Source-grounding owns
    the selection; the V1 Quotes/snapshot path is ready to carry each result.
-4. **Run the remaining migrations and source-dependent claim judgments** in
+3. **Run the remaining migrations and source-dependent claim judgments** in
    small source-coherent batches.
-5. **Record dated artifact dispositions and execute one end to end.** A claim
+4. **Record dated artifact dispositions and execute one end to end.** A claim
    correction does not substitute for the first keep, merge, thin, or retire
    decision with all required rewiring.
-6. **Close the two general questions.** Promote a disposition rule or record
+5. **Close the two general questions.** Promote a disposition rule or record
    that judgment remains per-note, and decide the unresolved prior-art check.
 
 Bulk migration still should not precede source selection. The machinery is no

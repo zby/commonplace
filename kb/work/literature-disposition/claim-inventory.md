@@ -10,7 +10,7 @@ workshop exists to distrust, so each row is a hypothesis with a named target for
 the sibling workshop to adjudicate, and confidence is recorded honestly including
 where it is low. A row is a reading assignment, not a verdict.
 
-## Post-inventory update — 2026-08-25
+## Post-inventory update — 2026-08-26
 
 The tables below remain the source-blind 2026-08-24 inventory. They are retained
 as evidence of what the notes and model recall suggested before source reading;
@@ -135,7 +135,7 @@ slowdown, which defeats "compute the most specific pointer you can afford."
 Table 1 scores fixed pointers "Highest — always present, deterministic"; Table 2
 gives them the failure mode "Stale if source changes." A stale description is
 confidently wrong, which is worse than an absent one — as the KB's own
-`stale-indexes-reduce-discovery-when-they-suppress-fallback-search` argues.
+`indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more` argues.
 
 ### charting-the-knowledge-access-problem-beyond-rag
 
@@ -188,7 +188,7 @@ both workshops scoped.** The traditions the claims actually place into:
 |---|---|---|
 | `knowledge-storage-does-not-imply-contextual-activation` | cognitive psychology of memory and transfer — Tulving & Pearlstone 1966 availability vs accessibility; Gick & Holyoak spontaneous-transfer failure | no |
 | `an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract` | PKM / Zettelkasten — Luhmann hub notes, Milo LYT | **yes** |
-| `stale-indexes-reduce-discovery-when-they-suppress-fallback-search` | human-factors automation bias, omission errors — Skitka, Mosier & Burdick 1999; Parasuraman & Riley 1997; plus materialized-view maintenance | adjacent |
+| `indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more` | human-factors automation bias, omission errors — Skitka, Mosier & Burdick 1999; Parasuraman & Riley 1997; plus materialized-view maintenance | adjacent |
 | `design-for-the-first-time-human-except-on-access-cost` | single-source publishing (DITA, docs-as-code); materialized views | no |
 | `addressability-grain-sets-a-matched-selective-read-floor` | storage-systems **read amplification** and the DB **access path** (Selinger et al. 1979); IR passage retrieval | no |
 
@@ -303,23 +303,40 @@ than asserting it.
 
 ## Running tally
 
-Across all eleven notes inventoried, the count stands at **three defects** — two
-operative ones, the unscoped "generation cannot produce" under ADRs 025/026 and
-the possibly-analytic `stale-indexes` C1 under ADR 026; plus the prose-only
-pointer-context monotone — against **zero clean rediscoveries that a retirement
-would tidily remove**. The method keeps returning errors where it was pointed at
-redundancy.
+Across all eleven notes inventoried, the source-blind count stood at **three
+defects** — two operative ones, the unscoped "generation cannot produce" under
+ADRs 025/026 and the possibly-analytic `stale-indexes` C1 under ADR 026; plus the
+prose-only pointer-context monotone — against **zero clean rediscoveries that a
+retirement would tidily remove**. The method keeps returning errors where it was
+pointed at redundancy.
 
 **Execution update, 2026-08-24.** The pointer-context monotone was subsequently
 removed from `agents-navigate-by-deciding-what-to-read-next` and its sole
 inheritor, `linking-theory`, during the claim-pull rollout. The categorical
 `index-curation` claim was renamed and scoped to distinguish complete membership
 from editorial orientation; the revised claim was propagated through ADR 025,
-ADR 026, and its dependent MOC note. The possibly-analytic `stale-indexes` defect
-remains open; the zero-clean-rediscoveries finding is unchanged.
+ADR 026, and its dependent MOC note. At that date the possibly-analytic
+`stale-indexes` defect remained open; the zero-clean-rediscoveries finding was
+unchanged.
 
 **Intake update, 2026-08-25.** Neither the Gao–Chen source nor the sixteen
 rollout handoffs changes that tally or supplies a final artifact disposition.
 They add bounded evidence and a triaged source/target queue. The first
 keep, merge, thin, or retire decision remains to be made and executed end to
 end.
+
+**Execution update, 2026-08-26.** Re-checking the current note and ADR 026 found
+that the conditional control-flow mechanism did not need prevalence evidence,
+but its title omitted a necessary condition: the suppressed retrieval must
+produce greater realized task-relevant coverage. The note is now
+`indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more`; its
+title, thesis, scope, and dependent summaries carry that condition. ADR 026
+still rests on it because Commonplace explicitly tells exhaustive consumers to
+skip the by-tag sweep under `complete: true`.
+
+The same pass separated pointer availability from accuracy, moved skill
+descriptions out of source-local link-following, narrowed resolution fluidity to
+a qualitative criterion, repaired the superseded dual-audience navigation row,
+and dropped the false external-source trait. All three defects in the running
+tally are now repaired. The zero-clean-rediscoveries finding and the absence of
+a first artifact disposition are unchanged.
