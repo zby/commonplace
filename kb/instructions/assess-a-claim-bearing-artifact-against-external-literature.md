@@ -11,6 +11,12 @@ Use this procedure only for an explicit retrospective literature-disposition que
 
 Run the procedure inside `cp-skill-write-multistage`. Use that workflow's workshop for the records below and its reconstruction, audit, source-dependency guard, promotion, and validation stages for any live edit.
 
+## Composition contract
+
+`cp-skill-write` routes an explicit literature-disposition request to `cp-skill-write-multistage`, which loads this instruction. This instruction owns source candidacy, source-versus-target comparison, and artifact disposition. For every admitted source-side claim it invokes `cp-skill-ground`, which owns ingest resolution, retained Quotes, the snapshot-required route, any call to `cp-skill-ingest`, and conditional routing to `re-ingest.md`. Do not duplicate or bypass that grounding protocol here.
+
+These artifacts are composition siblings. Before changing their trigger, inputs, results, mutation authority, or stop conditions, inspect the other direct callers and callees under the instruction collection's edit-time rule.
+
 ## Steps
 
 1. **Fix the assessment boundary.** Record the target, the alleged externally established subject, the intended consumer, and a finite source-candidacy boundary. Prefer a user-supplied corpus or source. Otherwise record the exact queries, venues, dates, or result limit used to look for the strongest plausible host. Ask the user only when materially different reasonable boundaries could change the requested disposition.
@@ -19,11 +25,21 @@ Run the procedure inside `cp-skill-write-multistage`. Use that workflow's worksh
 
    Use bilateral isolation only when the user explicitly requests an independence control, a prior comparison is challenged because one side may have shaped the representation of the other, or the task is a prospective evaluation of the comparison method. When it applies, add `target-claim-inventory.md`, `source-reconstruction.md`, and `isolated-comparison.md` to the multistage workshop checklist. Launch a fresh target worker now to write `target-claim-inventory.md` from the target and its contracts without seeing the source, source reconstruction, or prior comparison. Do not make bilateral isolation the default from the existing single bounded case; it changed verdicts but did not isolate which procedural difference caused the change.
 
-3. **Nominate sources against exact claims.** For each in-scope claim region, record the proposition a source would need to establish, contradict, or bound. A user-named source, model recall, search result, citation graph, or topical resemblance may nominate a reading assignment; none supplies verdict evidence. Admit a source to the assessment only when a direct tracked `kb/sources/*.ingest.md` identifies it. If no ingest exists, report the exact source or URL for a separate `cp-skill-ingest` run. Do not change the target from a snippet, paraphrase, or remembered source.
+3. **Nominate sources against exact claims.** For each in-scope claim region, record the proposition a source would need to establish, contradict, or bound. A user-named source, model recall, search result, citation graph, or topical resemblance may nominate a reading assignment; none supplies verdict evidence. Admit an exact tracked ingest immediately. A canonical URL explicitly supplied by the user as an assessment source is also admitted: that input authorizes `cp-skill-ground` to resolve or create its ingest. If the agent nominates an untracked URL, record it as a reading assignment and obtain user approval before admitting it, because passing it to `cp-skill-ground` can create a source artifact. Do not invoke `cp-skill-ingest` directly and do not change the target from a snippet, paraphrase, or remembered source.
 
-4. **Ground each admitted source use.** Read the ingest's complete `## Quotes` section and judge only what those retained extracts establish. If they are insufficient, invoke `cp-skill-ground` with `Target: <ingest path>` and `Claim needed: <source-side proposition>`, then follow its result. Use a pinned snapshot only when that skill returns `snapshot required`. Record the source-established unit and its limits separately from any Commonplace transfer, synthesis, application, counterexample, or boundary.
+4. **Ground each admitted source use through `cp-skill-ground`.** For the ordinary branch, invoke it once per source-side proposition with `Target: <exact ingest path or authorized canonical URL>` and `Claim needed: <source-side proposition or question>`. Do not include target prose or a target-specific transfer argument. The grounding skill owns ingest resolution, any permitted ingest creation, Quotes sufficiency and append, and the snapshot-required route; do not reproduce those decisions here.
 
-   When bilateral isolation applies, launch a separate fresh source worker after grounding. Have it write `source-reconstruction.md` from the admitted source evidence and source-side question without seeing target prose, the target inventory, or a prior comparison. Then launch a third worker with only the two frozen outputs, the intended consumer, and the assessment question. Have it write `isolated-comparison.md`, testing both charitable over-attribution and false narrowing. It marks missing information instead of opening either live input. Use that comparison as the source-versus-target input to the remaining steps.
+   When bilateral isolation applies, the fresh target-blind source worker must be the grounding caller. Give it only the admitted source identifiers, exact source-side questions, source collection and ingest contracts, and an instruction to invoke `cp-skill-ground`; do not give it target prose, the target inventory, or a prior comparison. Its grounding fork then inherits a source-only conversation. Have the worker write `source-reconstruction.md` from the returned direct evidence and its stated limits.
+
+   Consume its result as follows:
+
+   - `quotes sufficient` or `quotes added` — read the returned ingest's complete `## Quotes` section and use only its retained verbatim extracts as source support. Record every `quotes added` side effect with the ingest path.
+   - `snapshot required` — use the verified name-paired snapshot and apply `semantic/grounding-alignment`; preserve the exact marker on any resulting ingest link.
+   - any stop or blocker — do not assign a disposition that relies on the unresolved source-side proposition.
+
+   Record the source-established unit and its limits separately from any Commonplace transfer, synthesis, application, counterexample, or boundary.
+
+   When bilateral isolation applies, launch a third worker with only the two frozen outputs, the intended consumer, and the assessment question. Have it write `isolated-comparison.md`, testing both charitable over-attribution and false narrowing. It marks missing information instead of opening either live input. Use that comparison as the source-versus-target input to the remaining steps.
 
 5. **Build a claim-region disposition table.** Give every live claim region one row with:
 
@@ -56,7 +72,7 @@ Run the procedure inside `cp-skill-write-multistage`. Use that workflow's worksh
 
 ## Verify
 
-- Every admitted source was selected against an exact live claim and assessed from tracked direct evidence.
+- Every admitted source was selected against an exact live claim and passed through `cp-skill-ground` from a tracked ingest or authorized canonical URL.
 - Every claim region has a source-established unit, a local remainder, a smallest faithful replacement, and a disposition.
 - The replacement test could have produced a non-keep outcome; verbal distinctness did not decide it.
 - Inbound links were classified by imported claim before they affected impact or rewiring decisions.

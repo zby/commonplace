@@ -61,17 +61,23 @@ warranting a novelty or subsumption verdict.
    independence control, a previous comparison is challenged for cross-side
    contamination, or the task prospectively evaluates the method. Freeze the
    two independent inventories before comparison and give the comparator only
-   those outputs. Do not make the control routine until a prospective matched
-   test measures both over-attribution and false narrowing.
+   those outputs. The target-blind source worker invokes `cp-skill-ground`
+   itself; the skill's ordinary `context: fork` from a target-bearing caller
+   does not establish isolation. Do not make the control routine until a
+   prospective matched test measures both over-attribution and false narrowing.
 4. **Inbound links are impact candidates, not warrant.** Each inbound use is
    classified by whether it imports the affected claim, another claim, or
    nothing material. Raw count may price inspection and rewiring but cannot
    decide semantic propagation or artifact value.
 5. **Candidacy and verdict authority stay separate.** A user-named source,
    model recollection, search result, or citation graph may create a reading
-   assignment. The target cannot change until a tracked direct source is read
-   against the exact claim through the existing Quotes-or-pinned-snapshot
-   grounding path.
+   assignment. For each admitted source-side claim, the literature procedure
+   invokes `cp-skill-ground` rather than reproducing its ingest, Quotes, or
+   snapshot decisions. A user-supplied canonical URL may take that skill's
+   missing-ingest path. An agent-nominated untracked URL requires user approval
+   before it is passed to the skill. The target cannot change until direct
+   source evidence is read against the exact claim through the resulting
+   Quotes-or-pinned-snapshot path.
 6. **Ordinary writing does not search for missing external prior art.** Its
    intra-KB near-duplicate check and named-source dependency guard remain
    bounded as designed. `cp-skill-write` routes an explicit literature
@@ -84,6 +90,12 @@ warranting a novelty or subsumption verdict.
    authority. The observed propagation trace motivates semantic inbound
    classification, but this decision does not depend on its numeric rate, so
    git remains its audit path.
+
+The user-supplied or separately authorized URL path in decision 5 narrowly
+amends ADR 078. Its ordinary-writer boundary remains: a generic named-source
+dependency with no tracked ingest stops for a separate ingest run. The
+exception applies only inside an explicit literature-disposition assessment,
+where source acquisition is itself part of the authorized operation.
 
 ## Considered alternatives
 
@@ -156,9 +168,11 @@ Operativity path: harness selection loads the promoted `cp-skill-write` or
 request; the multistage skill then reads
 `assess-a-claim-bearing-artifact-against-external-literature.md` from the
 source-checkout or installed-framework instruction tree and treats it as a
-binding decision contract. The multistage promotion and validation stages
-carry any selected edit into the library. No validator enforces the semantic
-disposition.
+binding decision contract. That instruction invokes `cp-skill-ground` for each
+admitted source-side proposition; grounding may invoke `cp-skill-ingest` for an
+authorized canonical URL or return the conditional re-ingest route. The
+multistage promotion and validation stages carry any selected edit into the
+library. No validator enforces the semantic disposition.
 
 Where the decision stops applying: it covers explicit retrospective comparison
 of claim-bearing artifacts against external literature. It does not require
@@ -174,6 +188,8 @@ Relevant Notes:
 - [Assess a claim-bearing artifact against external literature](../../instructions/assess-a-claim-bearing-artifact-against-external-literature.md) — procedure: the claim-grained assessment adopted here
 - [Write a KB artifact through multiple stages](../../instructions/cp-skill-write-multistage/SKILL.md) — procedure: the conditional loader and execution workflow
 - [Write one KB note](../../instructions/cp-skill-write/SKILL.md) — procedure: the ordinary writer's explicit no-search boundary and handoff
-- [ADR 078 — Writers invoke grounding and evidence stays in the ingest](./078-writers-invoke-grounding-and-evidence-stays-in-the-ingest.md) — see-also: the existing direct-evidence path this decision reuses without changing
+- [Ground a source-dependent claim](../../instructions/cp-skill-ground/SKILL.md) — procedure: the source-resolution and retained-evidence subroutine
+- [ADR 076 — Source-claim grounding is a promoted skill](./076-source-claim-grounding-is-a-promoted-skill.md) — see-also: the grounding entry point and inherited-context caveat used by the bilateral-isolation branch
+- [ADR 078 — Writers invoke grounding and evidence stays in the ingest](./078-writers-invoke-grounding-and-evidence-stays-in-the-ingest.md) — see-also: the ordinary-writer grounding boundary preserved outside this decision's explicit literature-assessment exception
 - [Candidacy evidence licenses escalation to assessment, not acceptance](../../notes/candidacy-evidence-licenses-escalation-not-acceptance.md) — rests-on: source nomination cannot decide overlap, novelty, or disposition
 - [Theory warrant should be tracked at the finest granularity evidence licenses](../../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) — rests-on: external support stays scoped to the exact claim region it licenses

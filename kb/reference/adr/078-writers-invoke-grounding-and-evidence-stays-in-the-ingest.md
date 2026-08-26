@@ -1,5 +1,5 @@
 ---
-description: "Accepted decision that the promoted writers invoke cp-skill-ground automatically and report every quotes-added append, that creating a missing ingest stays manual, and that bounded evidence stays in the ingest Quotes pool"
+description: "Accepted decision that promoted writers invoke cp-skill-ground and report quote appends, ordinary writer grounding leaves missing-ingest creation manual, and bounded evidence stays in the ingest Quotes pool"
 type: ../types/adr.md
 tags: []
 status: accepted
@@ -9,6 +9,7 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-08-25
+**Amended by:** [ADR 081](./081-literature-disposition-is-explicit-and-claim-grained.md) — an explicit literature-disposition branch may pass a user-supplied or separately authorized canonical URL to `cp-skill-ground`; the ordinary writer's missing-ingest stop remains
 
 ## Context
 

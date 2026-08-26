@@ -18,6 +18,14 @@ Tests for precision:
 
 **Instruction duality.** These docs are both content and working system — changing an instruction changes agent behaviour immediately. Treat edits as deployments, not documentation updates: before changing one, name what consumes it and through which channel (the type spec's Operativity section states the test); the edit is live for the next agent that loads the text, with no separate release step. The same duality means an instruction nothing loads is inert — it deploys to no one, and nothing will report that (rationale: [operative change](../notes/definitions/operative-change.md)).
 
+## Composition siblings
+
+Skills and plain instructions can be parts of one operation rather than independent procedures. A composition sibling is a direct caller, callee, conditional instruction loaded by the artifact, or producer or consumer of its named arguments and result protocol.
+
+Before editing an instruction or skill, search `kb/instructions/` for its exact filename, skill name, and any named result literals. Read every direct composition sibling before drafting. If the change affects a trigger, argument, result, mutation authority, stop condition, or path-resolution rule, update the affected siblings in the same change or report the unresolved interface mismatch as a blocker. Do not rewrite artifacts that merely mention the procedure without consuming its interface.
+
+For a promoted skill, edit the canonical source under `kb/instructions/`, not its runtime projections. Inspect the promotion manifest and runtime projections only when the skill name, directory, promotion status, or packaged resources change.
+
 ## Title and description conventions
 
 **Imperative titles.** Answer "what does this tell me to do?" — "Write an instruction", "Review triage", "Fix warnings". For promoted skills, the skill name is the title (`write/SKILL.md`).

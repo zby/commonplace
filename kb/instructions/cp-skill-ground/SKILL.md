@@ -1,6 +1,6 @@
 ---
 name: cp-skill-ground
-description: Ground one source-side claim by retaining the minimum verbatim quotes in its ingest, or declare that the pinned snapshot is required. Use when a note needs source support or when asked to retain quotes; never call cp-skill-ingest for that.
+description: Ground one source-side claim by retaining minimum verbatim quotes or requiring the pinned snapshot. Use when a note needs source support or retained quotes; choose this skill, not cp-skill-ingest, for quote retention.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Edit, Write, Grep, Glob, Bash, Skill
@@ -22,6 +22,18 @@ This skill may reuse or append verbatim quotes and is the only procedure
 that writes an ingest's Quotes section. It never edits the target artifact,
 never changes any other part of an ingest, and never interprets a paraphrase
 stored in an ingest as source support.
+
+## Composition contract
+
+This skill owns source resolution and retained source evidence, not target-side
+interpretation. Its direct callers include `cp-skill-write`,
+`cp-skill-write-multistage`, and
+`assess-a-claim-bearing-artifact-against-external-literature.md`. It may invoke
+`cp-skill-ingest` for a canonical URL with no ingest and may return the
+conditional `re-ingest.md` route. `Target`, `Claim needed`, the three result
+literals, ingest-creation authority, and Quotes ownership are shared interfaces.
+Before changing one, inspect these composition siblings under the instruction
+collection's edit-time rule.
 
 ## Procedure
 
