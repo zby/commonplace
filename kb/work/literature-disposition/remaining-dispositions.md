@@ -23,3 +23,21 @@ This keep does not infer novelty from a failed source search. It follows from
 the live artifact boundary: the available historical sources establish narrower
 examples, while the note owns a general analytic relation that its MOC and ADR
 consumers need independently.
+
+## Tenth dated artifact disposition — retrieval suppression by exhaustive views
+
+**Disposition: Keep as an independent conditional control-flow premise.
+Decided and executed 2026-08-26.**
+
+| Test | Finding |
+|---|---|
+| Source-side finding | The source-selection pass deferred automation-bias and materialized-view literature because the repaired note does not claim that consumers usually stop at apparently complete views, that fallback retrieval usually performs better, or that a particular maintenance regime prevents drift. Those would be empirical claims needing sources. Its live claim instead fixes the consumer, task, relevant-item set, endpoint, stopping behavior, and realized coverage on both routes. |
+| Commonplace remainder | The [note](../../notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) isolates a conditional mechanism: an apparently exhaustive view lowers route-level recall only when trusting it suppresses a retrieval operation that would actually find more task-relevant material. It distinguishes missing content from the control-flow decision that conceals the omission, generalizes the mechanism beyond indexes, and derives defenses according to whether membership is mechanically queryable or semantically judged. |
+| Recovery and shape | The completeness/orientation note describes what exact membership cannot choose; this note describes when a false completeness signal makes a consumer skip a better route. Neither relation derives the other. The derived-copy rule, reflective retrieval and staleness notes, and ADRs 026 and 068 import the suppression mechanism in settings that do not depend on editorial orientation. Merging it into the completeness cluster would erase that reusable causal boundary. |
+| Graph role | Twenty-eight tracked library artifacts link to the note. The count estimates rewiring cost rather than deciding the outcome, but the uses span notes, evidence, ADRs, proposals, a type contract, an instruction, a system review, and source comparisons. Several consumers explicitly use it as their control-flow premise. |
+| Execution | The 2026-08-26 Channel 2 repair had already added the missing greater-realized-coverage condition and separated the analytic mechanism from prevalence claims. This pass found no remaining source-dependent or stale empirical language. The path, title, text, and source dependencies therefore remain unchanged; deterministic validation is the only required execution check. |
+
+This keep is not a claim that the mechanism is novel. It preserves the smallest
+local premise needed to reason about a consumer whose trusted view changes which
+retrieval operation runs. Empirical predictions about consumer behavior or
+maintenance effectiveness remain outside the note until grounded separately.

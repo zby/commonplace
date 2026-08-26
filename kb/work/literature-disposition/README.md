@@ -21,7 +21,7 @@ for the operative grounding path.
 and checked against an actual source in the worked case; the other eleven have
 claim inventories and candidate reading assignments. The 2026-08-26 handoff
 triage admitted two further candidates, so the working cohort now has fourteen.
-Nine candidates now have final dated artifact dispositions. The Gödel-machine,
+Ten candidates now have final dated artifact dispositions. The Gödel-machine,
 proposal-selection, first Pirolli worked-case, and knowledge-access notes were
 kept first. Contextual activation was then kept after comparison with two
 primary psychology sources. Link-following/search and pointer design were kept
@@ -30,7 +30,9 @@ The enforced tag-README was then kept after a source-first multistage rewrite
 separated Milo's mapping pattern, Luhmann's bounded analogue, and Commonplace's
 checked membership contract. The index-completeness note was kept as the
 independent membership/orientation premise consumed by that MOC note and two
-ADRs, after removing a stale five-note heuristic. The
+ADRs, after removing a stale five-note heuristic. The conditional
+retrieval-suppression note was then kept as a separate control-flow premise
+used beyond that completeness/orientation cluster. The
 claim-grounding rollout produced 264 terminal claim-use dispositions and
 sixteen `literature handoff`s across ten notes. Those handoffs are intake for
 source acquisition or target re-evaluation; they are not by themselves keep,
@@ -38,14 +40,14 @@ merge, thin, or retire decisions.
 
 | Closure condition | State | What remains |
 |---|---|---|
-| Source-grounded disposition for every settled cohort member | Open | Nine of fourteen working candidates are complete. Adjudicate the five candidates listed in [the continuation plan](./next-session-plan.md#remaining-candidate-order). |
+| Source-grounded disposition for every settled cohort member | Open | Ten of fourteen working candidates are complete. Adjudicate the four candidates listed in [the continuation plan](./next-session-plan.md#remaining-candidate-order). |
 | One disposition executed end to end | Done 2026-08-26 | The Gödel-machine note was kept after source comparison and its ancillary literature handoff was replaced with a grounded primary route. Its path, title, and central claim stayed stable, so no inbound rewiring was needed. |
 | General disposition rule | Open | The evidence supports claim-level, source-grounded judgment, but no rule or no-general-rule finding has been promoted. |
 | Write-time check decision | Partial | ADR 073 guards explicit new or changed source dependencies. It cannot discover unattributed prior art, which is the check this closure condition still needs decided. |
 
 **Fresh-session entry point:** use
 [next-session-plan.md](./next-session-plan.md). It records the completed source
-handoffs and MOC run, the five remaining candidates in working order, the
+handoffs and MOC run, the four remaining candidates in working order, the
 per-candidate procedure, and the two final workshop-level decisions.
 
 The direct source-grounding machinery no longer blocks progress. Evidence
@@ -56,7 +58,7 @@ four prose-only defects were repaired, and the false external-source trait was
 dropped. None of those corrections is an artifact disposition. The handoff
 triage is now complete: two of the nine new notes joined the working cohort and
 the other seven remain source-grounding, provenance, or evidence-stabilization
-work. Nine dated dispositions are complete. The activation note and two
+work. Ten dated dispositions are complete. The activation note and two
 navigation/pointer notes followed the first four after the wider source corpus
 landed. The MOC-plus-contract target then passed its multistage acceptance and
 targeted grounding review, and the adjacent index-completeness note was kept
@@ -64,7 +66,7 @@ after its independent citation boundary was re-tested. The comparisons and curre
 status are recorded in [activation-disposition.md](./activation-disposition.md)
 and [source-backed-dispositions.md](./source-backed-dispositions.md), with the
 post-MOC decision in
-[remaining-dispositions.md](./remaining-dispositions.md). Five artifact
+[remaining-dispositions.md](./remaining-dispositions.md). Four artifact
 judgments remain; none has an automatic source-acquisition
 prerequisite. The
 rollout's all-68-fresh
@@ -456,7 +458,7 @@ Four source-backed handoffs are decided and executed:
   comparison.
 
 The source corpus is no longer a standing blocker. The
-[continuation plan](./next-session-plan.md) takes the five remaining artifact
+[continuation plan](./next-session-plan.md) takes the four remaining artifact
 judgments and reserves the general-rule and write-time-check decisions for the
 evidence they produce.
 
@@ -468,6 +470,16 @@ the distinction, while ADRs 025 and 026 apply it to different shipped choices;
 none can recover the general claim without reversing that dependency. The
 execution removed only an obsolete five-note curation heuristic and its stale
 `COLLECTION.md` quotation.
+
+## Tenth disposition — retrieval suppression by exhaustive views
+
+[The dated disposition](./remaining-dispositions.md#tenth-dated-artifact-disposition--retrieval-suppression-by-exhaustive-views)
+keeps the note as an independent conditional control-flow premise. Its live
+claim fixes both retrieval routes and does not predict how often consumers stop
+or whether fallback retrieval usually wins. Derived-copy policy, reflective
+retrieval and staleness notes, and ADRs 026 and 068 reuse that mechanism outside
+the completeness/orientation distinction, so merging would erase a real
+citation boundary.
 
 ## Boundaries
 
@@ -514,7 +526,7 @@ corpus has to adjudicate.
 ## Files
 
 - [Fresh-session continuation plan](./next-session-plan.md) — authoritative
-  restart point after nine of fourteen final dispositions; lists the five
+  restart point after ten of fourteen final dispositions; lists the four
   remaining candidates, procedure, and final synthesis decisions
 - [Source-backed target dispositions](./source-backed-dispositions.md) — dated
   artifact judgments for link-following/search, pointer design, and the
