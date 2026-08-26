@@ -21,15 +21,17 @@ for the operative grounding path.
 and checked against an actual source in the worked case; the other eleven have
 claim inventories and candidate reading assignments. The 2026-08-26 handoff
 triage admitted two further candidates, so the working cohort now has fourteen.
-No candidate yet has a final dated artifact disposition. The claim-grounding
-rollout produced 264 terminal claim-use dispositions and sixteen `literature
-handoff`s across ten notes. Those handoffs are intake for source acquisition or
-target re-evaluation; they are not keep, merge, thin, or retire decisions.
+One candidate now has a final dated artifact disposition: the Gödel-machine
+note was kept on 2026-08-26 after its ancillary source handoff was grounded and
+repaired. The claim-grounding rollout produced 264 terminal claim-use
+dispositions and sixteen `literature handoff`s across ten notes. Those handoffs
+are intake for source acquisition or target re-evaluation; they are not by
+themselves keep, merge, thin, or retire decisions.
 
 | Closure condition | State | What remains |
 |---|---|---|
-| Source-grounded disposition for every settled cohort member | Open | Complete the source routes and adjudicate the fourteen working candidates. The first worked candidate still needs a final artifact disposition, and the two candidates admitted from the handoffs need artifact-level source comparison. |
-| One disposition executed end to end | Open | The first case produced and executed a claim correction, not a final keep, merge, thin, or retire decision. |
+| Source-grounded disposition for every settled cohort member | Open | One of fourteen working candidates is complete. Finish source routes and adjudicate the remaining thirteen, including the first Pirolli worked candidate and the proposal-selection candidate admitted from the handoffs. |
+| One disposition executed end to end | Done 2026-08-26 | The Gödel-machine note was kept after source comparison and its ancillary literature handoff was replaced with a grounded primary route. Its path, title, and central claim stayed stable, so no inbound rewiring was needed. |
 | General disposition rule | Open | The evidence supports claim-level, source-grounded judgment, but no rule or no-general-rule finding has been promoted. |
 | Write-time check decision | Partial | ADR 073 guards explicit new or changed source dependencies. It cannot discover unattributed prior art, which is the check this closure condition still needs decided. |
 
@@ -41,11 +43,12 @@ four prose-only defects were repaired, and the false external-source trait was
 dropped. None of those corrections is an artifact disposition. The handoff
 triage is now complete: two of the nine new notes joined the working cohort and
 the other seven remain source-grounding, provenance, or evidence-stabilization
-work. The next bounded case is the Gödel-machine note: its main source route is
-already present, and its one ancillary handoff now has a matching ingest that
-can be grounded before the first dated artifact judgment. Most other final
-dispositions still wait on the wider corpus. The rollout's all-68-fresh statement
-is a dated certification result, not standing assurance:
+work. The first dated disposition is also complete: the Gödel-machine note was
+kept after direct comparison with its primary sources. The next bounded
+candidate is the proposal-selection note, whose three matching ingests need
+grounding and whose two Ashby uses still need a direct primary route. Most other
+final dispositions wait on the wider corpus. The rollout's all-68-fresh
+statement is a dated certification result, not standing assurance:
 post-certification note edits require current freshness checks and sometimes new
 reviews. The 2026-08-26 `concept-attribution` and `misleading-link-text` prompt
 edits also stale their prior criterion partitions. Neither freshness nor a gate
@@ -286,7 +289,7 @@ not by itself add the note to this workshop's settled cohort or choose an
 artifact disposition.
 
 Current triage distinguishes missing sources from matching ingests available
-outside the handoff's original owned source set:
+outside the handoff's original owned source set.
 
 The membership test is artifact-level: admit a target when source reading could
 show that its central contribution is established elsewhere, or could leave it
@@ -307,13 +310,13 @@ dated intake decisions, not permanent immunity from a later prior-art finding.
 | `theory-mediated-learning-may-improve-sample-efficiency-under-shifts` | 3 | Yosinski transfer, MAML, and Bengio fast-adaptation sources remain bare URLs with no tracked ingests | **Out on present evidence.** The three uses establish comparison and boundary facts, while the title interaction remains an explicitly untested experiment. Acquire the sources if those uses remain. |
 | `a-proposal-selection-loop-requires-search-evaluation-and-retention` | 5 | Ashby has a local source review but no direct ingest; Zinkevich, Kephart/Chess, Weyns, and Petrovska now have tracked ingests, mostly without retained Quotes for these uses | **In — new candidate.** The handoffs bear jointly on the model's Ashby ancestry, counterexamples, and relation to established adaptive-loop traditions; source reading could reduce the three-function model to a narrower local subtype or vocabulary delta. Ground the three available uses and obtain a direct Ashby route for two. |
 | `brainstorming-maintainability-oracles-for-agentic-development` | 1 | *Why Software Factories Fail Part II* now has a tracked ingest but no retained Quotes | **Out.** The handoff concerns one removed workflow attribution inside an explicit seedling; the proposed oracle design survives independently. Ground before any restoration. |
-| `goedel-machines-are-a-proof-governed-case-of-self-modification` | 1 | The Incremental Self-Improvement primary report now has a tracked ingest but no retained Quotes for the use | **In — new candidate.** Exposition of Schmidhuber's architecture is central, while the prompt-editing and acceptance-axis comparisons may be the local remainder. Ground the ancillary retention/rollback use, then make an artifact-level disposition. |
+| `goedel-machines-are-a-proof-governed-case-of-self-modification` | 1 | Two retained passages in the Incremental Self-Improvement ingest now establish the payoff-per-time retention rule and stack-based restoration | **In — kept 2026-08-26.** The note's source exposition is a necessary premise for a local comparison that the source does not supply; the direct primary route replaced the handoff. |
 
 The result separates the source-route matrix cleanly:
 
 | Current source state | Uses in disposition-candidate targets | Uses outside the disposition cohort | Total |
 |---|---:|---:|---:|
-| Matching tracked ingest | 4 — proposal-selection (3), Gödel machines (1) | 3 — scaling, selective revision, maintainability oracles | 7 |
+| Matching tracked ingest | 4 — proposal-selection (3 pending grounding), Gödel machines (1 grounded) | 3 — scaling, selective revision, maintainability oracles | 7 |
 | Direct route or stable evidence absent | 3 — activation (1), proposal-selection (2) | 6 — RLM lifecycle, Weizenbaum, contamination evidence, theory-mediated learning (3) | 9 |
 | **Total** | **7** | **9** | **16** |
 
@@ -321,7 +324,28 @@ Two of the nine new notes therefore join the working cohort, taking it from
 twelve to fourteen candidates. Seven notes and nine uses do not become
 artifact-disposition work merely because their source route is incomplete.
 Their grounding and provenance repairs remain valid work, but they do not block
-the cohort's first artifact judgment.
+the cohort's remaining artifact judgments.
+
+## First dated artifact disposition — Gödel machines
+
+**Disposition: Keep. Decided and executed 2026-08-26.** The source-side
+construction was checked against the verified
+[Gödel-machine snapshot route](../../sources/goedel-machines-schmidhuber.ingest.md),
+and the ancillary acceptance comparison was grounded in two retained passages
+from [Incremental Self-Improvement](../../sources/on-learning-how-to-learn-learning-strategies.ingest.md).
+
+| Test | Finding |
+|---|---|
+| Source overlap | Schmidhuber establishes the rewritable architecture, target-theorem gate, Global Optimality Theorem, and exclusion of improvements the machine cannot prove. Those are source-derived premises, not a Commonplace novelty claim. |
+| Commonplace remainder | The [note](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md) maps the construction into the proposal-selection decomposition, identifies the coupling of evaluation, authority, and retention, contrasts proof-gated self-rewrite with prompt editing, and separates inference rigor from the adequacy of the encoded premises and objective. The source does not make those local comparisons. |
+| Recovery and shape | A pure source pointer would make every consumer reconstruct the transfer from a long formal paper. Thinning would also split one comparison across several neighboring notes while losing the worked case that makes their abstract claims concrete. Keeping the bounded source exposition makes the local synthesis self-contained. |
+| Graph role | Thirteen tracked artifacts currently link to the note and consume different facets of the worked case: proof-bounded autonomy, proposal selection, objective licensing, repeatable redesign, and formal reach-assessment. The count estimates rewiring cost; the differing reader needs explain why no single merge target substitutes for the note. |
+| Execution | The path, title, and central claim remain unchanged. The stale local-review handoff was replaced with a direct ingest link and source-bounded payoff/rollback wording. No inbound link needed rewiring, and the retirement approval stop did not apply. |
+
+This is a worked keep decision, not a general rule that source-derived
+exposition should survive. Here the external construction is the premise of a
+local comparison, literature recovery is materially more expensive than a
+local file read, and the comparison is already consumed as a shared unit.
 
 ## Boundaries
 

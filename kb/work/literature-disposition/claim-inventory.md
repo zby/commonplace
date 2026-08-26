@@ -33,6 +33,9 @@ they concern a supporting example, quotation, comparison cell, removed clause,
 or sibling-workshop experiment rather than credible subsumption of the note's
 central contribution. The dated decisions and current source states are in the
 [workshop README](./README.md#received-claim-grounding-rollout-handoffs).
+The Gödel-machine candidate was subsequently kept on 2026-08-26 after its
+ancillary source use was grounded; the proposal-selection candidate remains
+open.
 
 The operative source route has also changed since this inventory was built.
 Current work grounds a use directly in retained exact `## Quotes` or in an exact
@@ -344,5 +347,12 @@ The same pass separated pointer availability from accuracy, moved skill
 descriptions out of source-local link-following, narrowed resolution fluidity to
 a qualitative criterion, repaired the superseded dual-audience navigation row,
 and dropped the false external-source trait. All three defects in the running
-tally are now repaired. The zero-clean-rediscoveries finding and the absence of
-a first artifact disposition are unchanged.
+tally are now repaired. The zero-clean-rediscoveries finding is unchanged.
+
+**Artifact-disposition update, 2026-08-26.** The Gödel-machine note is the first
+dated artifact disposition: keep. Its external source supplies the formal
+construction, while the note supplies the proposal-selection mapping,
+proof-versus-prompt comparison, and split between inference rigor and premise
+adequacy. The ancillary Incremental Self-Improvement handoff was grounded and
+replaced with a direct ingest route. No inbound rewiring was needed because the
+note's path, title, and central claim stayed stable.

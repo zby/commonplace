@@ -88,6 +88,12 @@ the sixteen handoffs is itself a keep, merge, thin, or retire decision. The
 detailed test, decisions, and 7-by-9 route matrix are in the [workshop
 README](./README.md#received-claim-grounding-rollout-handoffs).
 
+The Gödel-machine branch is complete. Two exact passages now ground the
+Incremental Self-Improvement payoff/rollback comparison, the target links that
+primary ingest directly, and the artifact was kept on 2026-08-26. The remaining
+candidate-side route work is the activation handoff plus five proposal-selection
+uses.
+
 ---
 
 ## Channel 2 — Claims to change
@@ -170,7 +176,8 @@ decision.
 That is the running result of this workshop restated: pointed at redundancy, the
 method returned **three defects and zero clean rediscoveries a retirement would
 tidily remove.** All three defects in that running tally are repaired. The first
-artifact disposition remains open.
+artifact disposition is now a keep: the Gödel-machine source establishes the
+formal construction, but does not subsume the note's local comparisons.
 
 ---
 
@@ -266,11 +273,10 @@ form without the eighth move propagates the problem in more convincing packaging
 
 ## Sequencing
 
-1. **Ground the Gödel-machine note's ancillary handoff, then make the first
-   dated artifact judgment.** Its primary Schmidhuber route is already present
-   and the Incremental Self-Improvement report now has a matching ingest, making
-   this the smallest candidate that can exercise disposition rather than only
-   claim repair.
+1. **Gödel-machine disposition. Done 2026-08-26.** Two retained passages ground
+   the ancillary Incremental Self-Improvement comparison; the note links the
+   primary ingest and is kept as a source-grounded worked comparison. No inbound
+   rewiring was needed.
 2. **Complete the proposal-selection candidate's source set.** Ground the three
    matching ingests and obtain a direct primary Ashby route for its two remaining
    uses before judging whether the three-function model is established

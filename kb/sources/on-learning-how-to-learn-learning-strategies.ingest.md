@@ -23,7 +23,18 @@ Schmidhuber introduces "incremental self-improvement": a lifelong reinforcement-
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** If there are no previous useful self-modi cation programs (e.g. at
+  system start-up), a new self-modi cation program is considered useful only for as long as its utility
+  value exceeds the system's utility value. More recent self-modi cation programs are considered
+  useful for as long as they have higher utility values than all preceding self-modi cation programs
+  currently considered useful. Essentially, the system only keeps modi cations to its probability values
+  that originated from useful self-modi cation programs.
+  - **Source location:** Section 2, item 4, “Useful self-modification programs accelerate payoff intake.”
+- **Source extract (verbatim):** The task of the top-level is to countermand the modi cations to
+  the Pij values that were made by self-modi cation programs no longer considered useful (see recursive
+  description in section 2). This countermanding is done by restoring \old" probability distributions saved
+  onto a stack before the corresponding self-modi cation programs modi ed them.
+  - **Source location:** Section 3.1, “Overview,” paragraph describing the top-level credit-assignment strategy.
 
 ## Connections Found
 
