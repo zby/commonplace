@@ -7,7 +7,7 @@ status: accepted
 
 # 066-Claims declare modality in text, and passes repair mode mismatch
 
-**Status:** accepted
+**Status:** accepted — decision 4 amended by [ADR 080](./080-full-passes-hand-claim-changes-back-as-a-pending-revise.md) (2026-08-26): the full pass no longer converts mode in-pass; a mode mismatch is a pending `revise` whose brief names the target mode and its guard
 **Date:** 2026-08-19
 
 ## Context

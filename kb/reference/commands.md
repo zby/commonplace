@@ -58,10 +58,15 @@ use the scoped `rg` routes in [navigation](./navigation.md). The retired
 
 ### commonplace-guard-full-pass-report
 
-Compare a full-pass packet's guarded captures with their live artifacts before
-any disposition is executed. The
+Compare each of a full-pass packet's guarded logical artifacts with its latest
+packet capture — `final.txt` for a keep pass that reached its closing phase,
+otherwise `source.txt`; `merge-target.txt` for a merge target — before any
+disposition, edit, or follow-up is executed. Emits per-input JSON with status
+`matching`, `changed` (with a diff), `missing`, or `corrupt-capture`; exits 0
+only when every input matches. The
 [full-improvement instruction](../instructions/run-full-improvement-pass-on-note.md)
-owns the refusal and reconciliation workflow.
+and [resolve a full-pass disposition](../instructions/resolve-full-pass-disposition.md)
+own the refusal and reconciliation workflow.
 
 ### commonplace-relocate-note
 

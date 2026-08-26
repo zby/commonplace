@@ -7,7 +7,7 @@ status: accepted
 
 # 051-Full-pass packets own guarded captures and resolutions
 
-**Status:** accepted
+**Status:** accepted — amended by [ADR 080](./080-full-passes-hand-claim-changes-back-as-a-pending-revise.md) (2026-08-26): `revise` joins the pending dispositions, the packet carries `phase` and a final capture, and the guard compares each path with its latest capture
 **Date:** 2026-07-13
 
 ## Context

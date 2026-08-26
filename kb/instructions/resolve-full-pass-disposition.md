@@ -1,5 +1,5 @@
 ---
-description: Resolve, reject, supersede, or reconcile a retained full-pass delete, merge, or rehome disposition
+description: Resolve, reject, supersede, or reconcile a retained full-pass revise, delete, merge, or rehome disposition
 type: kb/types/instruction.md
 ---
 
@@ -19,16 +19,17 @@ Inputs:
 3. Run `commonplace-guard-full-pass-report {report-path}` immediately before recording a rejection or beginning any filesystem mutation.
 4. Interpret the JSON and exit status:
    - Exit 0 with every input `matching`: the decision may proceed.
-   - Exit 1 with any `changed`: preserve every live artifact and resolve the report to `superseded` with `resolution_authority: version-guard`. State which guarded paths changed. Do not accept, reject, rebase, or apply an alternative.
-   - Exit 1 with `missing` or `corrupt-capture`: leave `resolution: pending` and reconcile. Absence cannot prove a delete, merge, or rehome succeeded; capture corruption is not source drift.
+   - Exit 1 with any `missing` or `corrupt-capture` input: leave `resolution: pending` and reconcile, whatever the other inputs report. Absence cannot prove a delete, merge, or rehome succeeded; capture corruption is not source drift. Reconciliation precedes supersession.
+   - Exit 1 with `changed` inputs and no missing or corrupt input: preserve every live artifact and resolve the report to `superseded` with `resolution_authority: version-guard`. State which guarded paths changed. Do not accept, reject, rebase, or apply an alternative.
    - Exit 2: leave the report unchanged and repair or reconcile the invalid invocation/report.
 
-If several inputs are returned, inspect every result; the command never short-circuits after the first failure.
+If several inputs are returned, inspect every result; the command never short-circuits after the first failure. The guard compares each path with its latest packet capture (`final.txt` after a completed keep pass, otherwise `source.txt`).
 
 ## Resolve a matching recommendation
 
 Proceed only with an explicit user decision:
 
+- **Accept revise.** The packet's Revision brief names the objection, candidate replacement claims with their mode guards, and the citer scope. The author revises the note under the notes contract — retitling, renaming with `commonplace-relocate-note`, and reconciling inbound citers' link text and summaries as the brief's scope requires — or writes a different repair that meets the objection. The candidate claims are suggestions; adopting one is not required. Run `commonplace-validate` on every touched artifact. Record `accepted` with the note's surviving path (and any relocated path) in `resulting_paths`. A new full pass on the revised note starts from a fresh capture.
 - **Accept delete.** Delete only `source`. Verify it is absent and that no unintended path changed. Then record `accepted`; `resulting_paths` is empty.
 - **Accept merge.** Reconcile the captured source into the named live `merge_target` as a semantic edit, update affected backlinks as needed, remove invalid `user-verified` attestation from the edited target, and delete the source only after the target contains the accepted result. Verify the source is absent, the target exists at the recorded path, and validation succeeds. Record `accepted` with the target in `resulting_paths`. Do not substitute `commonplace-relocate-note` for semantic reconciliation.
 - **Accept rehome.** The packet's Disposition names the target collection and whether the remedy is a whole move or a split. For a **whole rehome**, move `source` to the target collection with `commonplace-relocate-note` (which rewrites inbound link paths and the redirect map), retype the note's `type:` frontmatter to the target collection's type, and revise it to fit the target's text contract (for example, drop first-person operational framing when the target requires a faithful system description). For a **split**, first author the extracted transferable claim as a new note in the origin collection, then rehome the operational remainder as above. In both cases update inbound citers' visible link text and summaries, remove invalid `user-verified` attestation from any edited artifact, and run `commonplace-validate` on every touched artifact. Record `accepted` with every surviving path (the relocated note, and for a split the extracted note) in `resulting_paths`.
@@ -52,4 +53,4 @@ resulting_paths: [<every surviving path left by the resolution>]
 
 Use `user` only for accepted, rejected, or alternative decisions. Use `version-guard` only for deterministic supersession caused by a readable changed input. Deterministically render `## Resolution` from those fields: null or empty values are `—`; non-empty resulting paths are comma-separated code spans.
 
-Run `commonplace-validate {report-path}` after rendering. Retain the report and captures while a rejection or alternative remains load-bearing. An accepted report may be removed with its packet after Git history durably records the operation; pending reports must never be pruned.
+Run `commonplace-validate {report-path}` after rendering. Retain the report and captures while a rejection or alternative remains load-bearing. An accepted report may be removed with its packet after Git history durably records the operation; pending reports — for any of the four hand-back dispositions — must never be pruned.
