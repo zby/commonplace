@@ -13,7 +13,7 @@
 
 ## Status (2026-08-26, evening)
 
-Draft rewritten in place at `kb/articles/reflective-self-improvement.md` (~4,850 words; validation passes). All nine outline sections are present; the adjoiner is consumed (Part 1 into §3, Part 2 into §8) and deleted. Kept from the old draft: compounding, the three tests, both experiments, the six-system evidence shrunk to one paragraph plus HyperAgents. The file keeps its old slug; renaming to match the new title is a `commonplace-relocate-note` decision left to the operator. Remaining before closing: a review pass under the articles contract, and the three open items below.
+Draft rewritten in place, now at `kb/articles/theory-building-inside-the-system.md` (~4,850 words; validation passes). All nine outline sections are present; the adjoiner is consumed (Part 1 into §3, Part 2 into §8) and deleted. Kept from the old draft: compounding, the three tests, both experiments, the six-system evidence shrunk to one paragraph plus HyperAgents. Renamed to `kb/articles/theory-building-inside-the-system.md` (pure relocation, redirect kept). Remaining before closing: a review pass under the articles contract, and the three open items below.
 
 ## Outline
 
