@@ -14,7 +14,7 @@ Nothing published yet.
 
 ## In draft
 
-- [Theory building inside the system](./reflective-self-improvement.md) — reads Naur's theory-building view with an interpreter inside the system, defines theory-mediated methodology and its reflective case, keeps the compounding tests, and witnesses one repair failure on its own basis note.
+- [Theory building inside the system](./theory-building-inside-the-system.md) — reads Naur's theory-building view with an interpreter inside the system, defines theory-mediated methodology and its reflective case, keeps the compounding tests, and witnesses one repair failure on its own basis note.
 
 ---
 

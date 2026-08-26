@@ -43,7 +43,7 @@ Imagine a constitutional order with its authoritative text stored in a writable 
 
 People propose, approve, interpret, and apply amendments in roles the order recognizes. The order need not encode their private reasoning.
 
-Commonplace's human-inclusive claim follows the same pattern: its declared boundary includes designated maintainers, whereas the systems compared in [the reflective self-improvement article](./reflective-self-improvement.md) draw their reported boundaries around agent loops. Including their research teams would make those systems broadly editable too. The claim under examination is not that maintainers can change everything. It is that Commonplace gives their changes an explicit path into operation and keeps that path available for revising what they install.
+Commonplace's human-inclusive claim follows the same pattern: its declared boundary includes designated maintainers, whereas the systems compared in [the reflective self-improvement article](./theory-building-inside-the-system.md) draw their reported boundaries around agent loops. Including their research teams would make those systems broadly editable too. The claim under examination is not that maintainers can change everything. It is that Commonplace gives their changes an explicit path into operation and keeps that path available for revising what they install.
 
 The audit tested a more precise version:
 
@@ -130,4 +130,4 @@ The audit covers six paths within [Commonplace's declared frame](../reference/co
 
 The theoretical [Gödel machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md) provides a contrast in warrant: its incumbent formalization must prove that switching is better than continuing, even when the switch revises governing machinery. Commonplace instead uses fallible semantic and empirical warrant. It can therefore admit useful changes that the proof gate cannot certify, but also bad ones. This contrast concerns which changes may be admitted, not whether improvement compounds.
 
-Even complete coverage would not establish compounding. That requires evidence that retained benefits [help produce later improvements](../notes/improvements-can-accumulate-without-compounding.md), directly or through reinvested savings, and that this feedback persists across episodes. The [main article](./reflective-self-improvement.md) develops both the compounding test and the Gödel-machine comparison.
+Even complete coverage would not establish compounding. That requires evidence that retained benefits [help produce later improvements](../notes/improvements-can-accumulate-without-compounding.md), directly or through reinvested savings, and that this feedback persists across episodes. The [main article](./theory-building-inside-the-system.md) develops both the compounding test and the Gödel-machine comparison.
