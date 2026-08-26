@@ -38,7 +38,20 @@ This grounding used static source inspection only. No project dependencies, mode
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** Delegation, staged return, synthesis, branch revision, and recovery are represented in the training trajectories rather than treated only as properties of an inference-time wrapper.
+  - **Source location:** Section 3.4 ("Training"), opening paragraph
+- **Source extract (verbatim):** To balance specialization with general capability, we train SFT variants over major capability domains, including general, agentic, and coding data, and combine them through model-soup merging. The resulting checkpoint serves as the unified behavioral initialization for subsequent optimization stages.
+  - **Source location:** Section 3.4.1 ("Supervised Fine-Tuning"), closing paragraph
+- **Source extract (verbatim):** PIVOT-RL uses hindsight-guided trajectory localization over a large policy-training corpus.
+  - **Source location:** Section 3.4.2 ("Reinforcement Learning"), paragraph "PIVOT-RL: Localized Optimization at Consequential Decisions"
+- **Source extract (verbatim):** At each pivot, we preserve the useful prefix and construct a localized continuation task with a short corrective hint. The hint provides directional guidance for the local correction, is never a prediction target, and is absent at inference time; for stateful tasks, we also restore the corresponding executable environment state.
+  - **Source location:** Section 3.4.2 ("Reinforcement Learning"), paragraph following "PIVOT-RL: Localized Optimization at Consequential Decisions"
+- **Source extract (verbatim):** Apodex 1.1 externalizes this architecture onto a persistent task board and adds four capabilities: asynchronous human intervention, asymmetric verification, adaptive Max Team Effort, and evidence-grounded synthesis.
+  - **Source location:** Section 3.2 ("Apodex Agent Team 1.1: Interactive Self-Organizing Teams"), opening paragraph
+- **Source extract (verbatim):** It is the shared coordination record between the model, runtime, and user: subagents receive their scope from it, completed work is attached back to it, and plan revisions are expressed as tool-mediated edits to it.
+  - **Source location:** Section 3.2.1 ("From Latent Decomposition to an Explicit Task Board")
+- **Source extract (verbatim):** The coordination plane is also run-scoped rather than a durable distributed database. The current task board and Agent Bus sessions live in the worker process, and the runtime does not atomically checkpoint them together with the workspace filesystem.
+  - **Source location:** Section 3.3, "Operational Boundaries" discussion closing the AgentOS runtime section (p. 17)
 
 ## Connections Found
 

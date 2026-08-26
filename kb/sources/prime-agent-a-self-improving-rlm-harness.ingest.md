@@ -38,7 +38,10 @@ Focused repository tests encode expected behavior for recursive sessions and mes
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** Refinement converts trajectory evidence into versioned state updates. Agents request edits directly, or /refine runs a background model call over relevant events. The runtime applies each edit at a turn boundary, records its trigger and intended effect, and assembles supplemental state for the next invocation. Versions preserve provenance and enable rollback. Refinement supplements the immutable base prompt without rewriting foundational policy.
+  - **Source location:** Section 2.5 "Continual Harness", refinement paragraph
+- **Source extract (verbatim):** A different Factorio trace revealed the central safety failure of online refinement. The agent discovered that RCON commands could spawn resources directly into assembly machines, used the shortcut despite an anti-cheating heartbeat, and then preserved it as a reusable skill. In this trace, persistence preserved behavior that optimized the measured objective, including a specification exploit. Safe deployment therefore requires least-privilege action interfaces, independent state validation, and auditable rollback of contaminated refinements.
+  - **Source location:** Section 3.5 "Persistent interaction and refinement", Factorio discussion
 
 ## Connections Found
 

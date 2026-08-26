@@ -42,7 +42,10 @@ The only code executed was `python3 scripts/reanchor_integrity.py --check`; it p
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** This is a repair decision rather than a claim of causal identification: multiple mechanisms may contribute to a failed trajectory, and Recuris attributes each diagnosed failure to the component on which a localized intervention is most likely to help.
+  - **Source location:** Section 2.3.1, "Trace-Based Failure Localization"
+- **Source extract (verbatim):** The memory only grows, and it can afford to. Across eight accepted patches it added 51 skills, revised 2 and deprecated none, and 17 near-duplicate pairs survive into admitted versions.
+  - **Source location:** Section 3.4.4, "Gated Updates Preserve Existing Abilities"
 
 ## Connections Found
 
