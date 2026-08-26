@@ -14,7 +14,8 @@ Nothing published yet.
 
 ## In draft
 
-- [Theory building inside the system](./theory-building-inside-the-system.md) — reads Naur's theory-building view with an interpreter inside the system, defines theory-mediated methodology and its reflective case, keeps the compounding tests, and witnesses one repair failure on its own basis note.
+- [When systems learn theories about themselves](./when-systems-learn-theories-about-themselves.md) — treats theory-mediated, reflective, and self-improving as independent properties of a learning system, states the architecture and evidence tests for their intersection, reads three recent harnesses against them, and says what Commonplace can and cannot show.
+- [Theory building inside the system](./theory-building-inside-the-system.md) — reads Naur's theory-building view with an interpreter inside the system, says what makes retained natural-language theory operative and how it becomes learned state, places formalization and proof, and witnesses one repair failure on its own basis note.
 
 ---
 
