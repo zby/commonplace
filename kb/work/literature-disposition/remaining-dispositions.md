@@ -75,3 +75,20 @@ keep. Decided and executed 2026-08-26.**
 The result keeps a transfer argument and a structural response that cannot be
 recovered from single-source-publishing literature alone. It makes no prevalence
 claim about which interface humans or agents usually receive.
+
+## Thirteenth dated artifact disposition — addressability grain
+
+**Disposition: Keep the matched-unit relation and its bounded local evidence
+after correcting the evidence boundary. Decided and executed 2026-08-26.**
+
+| Test | Finding |
+|---|---|
+| Source-side finding | Selinger-style access paths, storage read amplification, and passage retrieval were deferred. They are prior traditions for query planning, bytes read beyond requested data, and subdocument retrieval, but the live note neither imports a database cost model nor predicts retrieval performance. Its known-question premise also discharges the unknown-target problem addressed by information-foraging work. No selected external source is a load-bearing premise. |
+| Commonplace remainder | The [note](../../notes/addressability-grain-sets-a-matched-selective-read-floor.md) fixes a known question, target information, reliability requirement, and read-volume currency, then compares one discriminating answer-bearing unit on each path. The smaller selected unit sets that raw read-volume floor. Whole-artifact compression cannot decide the relation unless the wholes are the selected units. The note also separates this floor from discovery, fan-out, sufficiency, reconstruction, freshness, and total cache value. |
+| Recovery and shape | The sufficiency note asks whether the selected answer ends the task. The recompute and documentation-segmentation notes price the larger cost ledger. Resolution-switching asks whether views and transitions exist. None can recover the narrower matched-unit condition without importing it, and each already treats the addressability note as its independent boundary. Folding it into a database analogy would also lose the agent-context comparison and its recoverability conditions. |
+| Graph role | Six tracked library artifacts link to the note. Three substantive consumers use it as a premise: the documentation-disposition evidence applies it to retrieval experiments, the sufficiency note proves the tests independent, and the recompute note installs it as one decision boundary. Two tag indexes route to it, and the fluid-resolution note contrasts transitions with grain. |
+| Execution | The analytic relation and path remain unchanged. This pass corrected the examples' evidential symmetry: the frontmatter-description path is now explicitly conditional rather than presented as a benchmark, while the historical `type_resolver` comparison is pinned to commit `3c25fc66`, whose message and retained diff record the 3,657-byte prose unit and 1,530-byte source selection. The note now says that the paths illustrate possible opposite orderings rather than isolate a general causal effect. Validation passes cleanly, and no named external dependency changed. |
+
+The keep does not claim that addressability or read amplification originated in
+Commonplace. It retains a precisely scoped comparison node whose variables,
+agent-context application, and local evidence are consumed independently.

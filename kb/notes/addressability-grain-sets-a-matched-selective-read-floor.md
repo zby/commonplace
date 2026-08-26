@@ -23,15 +23,39 @@ These selected units define the raw retrieval floors. A coarser summary can stil
 
 In the Commonplace paths below, source symbols and Markdown metadata or headings provide the keys. Other naming schemes and tools can make either side finer or coarser. The conditional relation stays the same, but the measured units change.
 
-## Two Commonplace cases run in opposite directions
+## The rule explains two Commonplace paths
 
-Commonplace, the system this note is written inside, provides one bounded example of each ordering. The pair shows that either side can win. It does not show that read volume is the only difference between the tasks.
+Commonplace, the system this note is written inside, provides a candidate
+helping path and one dated hurting measurement. The first shows the conditions
+under which structured descriptions lower the floor; it is not a benchmark.
+The second records the selected units in a historical repository snapshot.
 
-**Helps: structured frontmatter descriptions over a note collection.** For a candidate whose path and title do not settle a routing question, a scoped search can retrieve its one-line `description`. Without that layer, the reader must open enough of the same note to judge relevance. This is a matched per-candidate comparison. A collection-wide search can fan out across many candidates, multiplying those units rather than turning the whole task into one unit. Commonplace's move from whole generated inventories to scoped path-plus-description selection is recorded in [ADR 025](../reference/adr/025-complete-generated-indexes-are-build-time-only.md).
+**Can help: structured frontmatter descriptions over a note collection.** For a
+candidate whose path and title do not settle a routing question, a scoped search
+can retrieve its one-line `description`. When that line is sufficient for the
+routing decision and smaller than the body material the reader would otherwise
+need, the description lowers the matched floor. A collection-wide search can
+fan out across many candidates, multiplying those units rather than turning the
+whole task into one unit. Commonplace's move from whole generated inventories
+to scoped path-plus-description selection is recorded in [ADR
+025](../reference/adr/025-complete-generated-indexes-are-build-time-only.md).
 
-**Hurts: a per-module prose reference over a code package.** In a 2026-08-23 Commonplace snapshot, the `lib-modules.md` section for `type_resolver` was 3,657 bytes. A symbol search for `validate_type_eligibility` selected 1,530 bytes of source. For that question, the source path therefore had the lower byte-volume floor, even though the reference compressed the package as a whole. This is a snapshot-bound observation, not a maintained benchmark. It also illustrates the independent [sufficiency](./an-insufficient-summary-precedes-the-source-rather-than-replacing.md) question: if the approximate reference answer cannot license a reliability-compliant stop, the source remains in the path.
+**Measured hurt: a per-module prose reference over a code package.** In the
+2026-08-23 Commonplace snapshot recorded by commit `3c25fc66`, the
+`lib-modules.md` section for `type_resolver` was measured at 3,657 bytes. A
+symbol search for `validate_type_eligibility` selected 1,530 bytes of source.
+For that question, the source path therefore had the lower byte-volume floor,
+even though the reference compressed the package as a whole. This is a
+snapshot-bound observation, not a maintained benchmark. It also illustrates
+the independent [sufficiency](./an-insufficient-summary-precedes-the-source-rather-than-replacing.md)
+question: if the approximate reference answer cannot license a
+reliability-compliant stop, the source remains in the path.
 
-The same one-unit rule therefore runs in opposite directions. The helpful layer exposes a smaller per-candidate routing unit. The harmful layer exposes a larger symbol-answer unit. Because the examples involve different tasks and other differences, they show both orderings without isolating read volume as the only cause.
+The same one-unit rule can therefore run in opposite directions. A sufficient,
+smaller description exposes a lower per-candidate routing unit. The historical
+prose reference exposed a larger symbol-answer unit. Because the paths involve
+different tasks and other differences, they illustrate the two orderings
+without estimating a general effect or isolating read volume as the only cause.
 
 ## Consequences
 
