@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [multistage-write-context-operation-interface-20260827](./multistage/multistage-write-context-operation-interface-20260827/README.md) — completed and accepted the context-operation-interface note; Scroll code review completed, retained for the possible matrix-axis extension
 - [full-pass-instruction-coherence-audit](./full-pass-instruction-coherence-audit/README.md) — repaired claim-change authority, phase/guard recovery, and closing completion after one instrumented keep exposed a schema-valid final capture with an edit-introduced parsing failure; scenario coverage remains incomplete
 - [multistage-skill-coherence-audit](./multistage-skill-coherence-audit/README.md) — does cp-skill-write-multistage share the full pass's repair, guard, and state defects; eight findings (four edit-mode-only), checked against the finished knowledge-access run; repair deferred
 - [theory-mediated-methodology-article](./theory-mediated-methodology-article/README.md) — restructure the reflective-self-improvement article around Naur's theory building as the third pillar; outline mapped to notes and grounded sources (Naur 19, Popper 8, Argyris 9 quotes), keep/shrink/cut table for the current draft
