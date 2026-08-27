@@ -26,6 +26,10 @@ Two earlier drafts stand on their own and are cited by the sequence:
 - [The Bitter Lesson does not require everything to live in weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) — separates Sutton's 2019 search-and-learning claim from a weights-only extrapolation, and names credit assignment, evaluation, and decomposition revision as the open problems for learned artifacts.
 - [What makes human-inclusive self-revision non-trivial](./what-makes-human-inclusive-self-revision-non-trivial.md) — develops the declared system boundary with maintainers inside it, the audit of Commonplace's operating paths, and the admission machinery through which agent-proposed changes are installed.
 
+One draft stands apart from the sequence and concerns how the KB reviews itself:
+
+- [Atomic steps: size the note to its check](./atomic-steps-size-the-note-to-its-check.md) — argues that a review budget belongs on the artifact rather than the review: a note should be one checkable inference, unquoted sources are its unit for the grounding check, validated verbatim quotes discharge a source mechanically, and links to other notes are charged to a different check.
+
 ---
 
 Authoring and publication conventions live in [COLLECTION.md](./COLLECTION.md); [ADR 057](../reference/adr/057-articles-use-an-editorial-profile-and-excluded-drafts.md) records the design.

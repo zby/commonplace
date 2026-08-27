@@ -34,6 +34,8 @@ An ADR selecting α, β, the budget, and the mechanism — or a recorded finding
 
 Posed 2026-08-25 by the maintainer: "first of all we need the two constants + cap mechanism".
 
+**2026-08-27.** The maintainer proposed a third mechanism that reverses this workshop's direction: cap the artifact, not the review — a note is sized so its grounding fits one pass ("atomic steps"), and a note with more sources quotes them verbatim so the check becomes mechanical (ADR 046). Under that mechanism Track B and most of Mechanism B are unnecessary. The idea is written up as the draft article [Atomic steps: size the note to its check](../../articles/atomic-steps-size-the-note-to-its-check.md) (workshop: [atomic-step-article](../atomic-step-article/README.md)); the mechanism decision here waits on that draft's review. What it changes for this workshop: under atomic steps the unit of a grounding step is the *unquoted* source — a source quoted verbatim in the note is discharged by the ADR 046 validator, and note links are charged to the representation criteria rather than to grounding — so Track B (degradation) and Mechanism B's code-assembled pack are unnecessary if the artifact-side rule is adopted, and Track A (cost) stays useful only as a side measurement. The number, the validator rule (distinct ingest targets without a verified inline quote ≤ N, with ingest-target quotes matched against `## Quotes` only), and ADR 079's fate remain this workshop's decisions. The corpus counts and the reinterpretation of the four-miss evidence are in that workshop's `grounding.md`.
+
 ## Files
 
 - [calibration-design.md](./calibration-design.md) — Tracks A and B, Mechanism A, Mechanism B with pack rules, transport, exception, and splitting
