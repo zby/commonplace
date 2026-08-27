@@ -7,11 +7,9 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
+from commonplace.freshness.selector import ChangedInput
 from commonplace.lib import frontmatter
-from commonplace.lib.hashing import (
-    content_sha256_for_text,
-    file_content_sha256,
-)
+from commonplace.lib.hashing import content_sha256_for_text
 from commonplace.review.collection_conformance import (
     COLLECTION_CONFORMANCE_LENS,
     is_collection_conformance_request,
@@ -48,6 +46,7 @@ from commonplace.review.type_conformance import (
 NOTES_ROOT = Path("kb/notes")
 REFERENCE_ROOT = Path("kb/reference")
 REVIEWABLE_ROOTS: tuple[Path, ...] = (NOTES_ROOT, REFERENCE_ROOT)
+SELECTOR_SCHEMA = "commonplace-review-targets/2"
 
 
 def _has_frontmatter(path: Path) -> bool:
@@ -242,13 +241,17 @@ def _partition_criterion_requests(
 class StaleCriterion:
     note_path: str
     criterion_path: str
-    reason: str
+    reasons: tuple[str, ...]
     result_kind: str
-    diff: str | None = None
+    baseline_revision: int | None = None
+    changed_inputs: tuple[ChangedInput, ...] = ()
 
     @property
     def criterion_id(self) -> str:
         return criterion_id_from_stored_path(self.criterion_path)
+
+    def has_reason(self, reason: str) -> bool:
+        return reason in self.reasons
 
 
 def _criterion_paths_for_notes(
@@ -292,13 +295,13 @@ def _criterion_paths_for_notes(
     return selected
 
 
-def note_diff_from_text(note_path: str, previous_text: str, current_text: str) -> str | None:
+def text_diff_from_text(path: str, previous_text: str, current_text: str) -> str | None:
     diff = "".join(
         difflib.unified_diff(
             previous_text.splitlines(keepends=True),
             current_text.splitlines(keepends=True),
-            fromfile=f"a/{note_path}",
-            tofile=f"b/{note_path}",
+            fromfile=f"a/{path}",
+            tofile=f"b/{path}",
         )
     ).strip()
     return diff or None
@@ -341,9 +344,9 @@ def select_stale_criteria(
                 if (note_path, criterion_path) not in baseline_pairs:
                     stale.append(
                         StaleCriterion(
-                            note_path,
-                            criterion_path,
-                            "missing-baseline",
+                            note_path=note_path,
+                            criterion_path=criterion_path,
+                            reasons=("missing-baseline",),
                             result_kind=result_kind_for_criterion_path(criterion_path),
                         )
                     )
@@ -353,9 +356,9 @@ def select_stale_criteria(
             if freshness_baseline is None:
                 stale.append(
                     StaleCriterion(
-                        note_path,
-                        criterion_path,
-                        "missing-baseline",
+                        note_path=note_path,
+                        criterion_path=criterion_path,
+                        reasons=("missing-baseline",),
                         result_kind=result_kind_for_criterion_path(criterion_path),
                     )
                 )
@@ -363,27 +366,62 @@ def select_stale_criteria(
             if current_note_hash is None:
                 current_note_text = note_abs.read_text(encoding="utf-8")
                 current_note_hash = content_sha256_for_text(current_note_text)
-            current_criterion_hash = file_content_sha256(criterion_abs)
+            assert current_note_text is not None
+            current_criterion_text = criterion_abs.read_text(encoding="utf-8")
+            current_criterion_hash = content_sha256_for_text(current_criterion_text)
+            changed_inputs: list[ChangedInput] = []
+            if freshness_baseline.baseline_note_hash != current_note_hash:
+                changed_inputs.append(
+                    ChangedInput(
+                        input_role="note",
+                        artifact_path=note_path,
+                        version_kind="file-text",
+                        status="input-changed",
+                        accepted_snapshot_id=freshness_baseline.baseline_note_snapshot_id,
+                        accepted_content_sha256=freshness_baseline.baseline_note_hash,
+                        current_content_sha256=current_note_hash,
+                        diff=(
+                            text_diff_from_text(
+                                note_path,
+                                freshness_baseline.baseline_note_text,
+                                current_note_text,
+                            )
+                            if include_diff
+                            else None
+                        ),
+                    )
+                )
             if freshness_baseline.baseline_criterion_hash != current_criterion_hash:
-                reason = "criterion-changed"
-            elif freshness_baseline.baseline_note_hash != current_note_hash:
-                reason = "note-changed"
-            else:
+                changed_inputs.append(
+                    ChangedInput(
+                        input_role="criterion",
+                        artifact_path=criterion_path,
+                        version_kind="file-text",
+                        status="input-changed",
+                        accepted_snapshot_id=freshness_baseline.baseline_criterion_snapshot_id,
+                        accepted_content_sha256=freshness_baseline.baseline_criterion_hash,
+                        current_content_sha256=current_criterion_hash,
+                        diff=(
+                            text_diff_from_text(
+                                criterion_path,
+                                freshness_baseline.baseline_criterion_text,
+                                current_criterion_text,
+                            )
+                            if include_diff
+                            else None
+                        ),
+                    )
+                )
+            if not changed_inputs:
                 continue
-            diff = None
-            if (
-                reason == "note-changed"
-                and include_diff
-                and current_note_text is not None
-            ):
-                diff = note_diff_from_text(note_path, freshness_baseline.baseline_note_text, current_note_text)
             stale.append(
                 StaleCriterion(
-                    note_path,
-                    criterion_path,
-                    reason,
-                    diff=diff,
+                    note_path=note_path,
+                    criterion_path=criterion_path,
+                    reasons=tuple(f"{item.input_role}-changed" for item in changed_inputs),
                     result_kind=result_kind_for_criterion_path(criterion_path),
+                    baseline_revision=freshness_baseline.baseline_revision,
+                    changed_inputs=tuple(changed_inputs),
                 )
             )
 
@@ -404,9 +442,9 @@ def select_requested_criteria(
         for criterion_path in criterion_paths_for_note:
             requested.append(
                 StaleCriterion(
-                    note_path,
-                    criterion_path,
-                    "requested",
+                    note_path=note_path,
+                    criterion_path=criterion_path,
+                    reasons=("requested",),
                     result_kind=result_kind_for_criterion_path(criterion_path),
                 )
             )
@@ -414,21 +452,38 @@ def select_requested_criteria(
     return sorted(requested, key=lambda s: (s.note_path, s.criterion_path))
 
 
+def _changed_input_payload(item: ChangedInput) -> dict[str, object]:
+    payload: dict[str, object] = {
+        "input_role": item.input_role,
+        "artifact_path": item.artifact_path,
+        "version_kind": item.version_kind,
+        "status": item.status,
+        "accepted_snapshot_id": item.accepted_snapshot_id,
+        "accepted_content_sha256": item.accepted_content_sha256,
+        "current_content_sha256": item.current_content_sha256,
+    }
+    if item.diff is not None:
+        payload["diff"] = item.diff
+    return payload
+
+
 def render_json(records: list[StaleCriterion], *, model_partition: str | None = None) -> str:
     items = []
     for record in records:
-        entry: dict[str, str] = {
+        entry: dict[str, object] = {
             "note_path": record.note_path,
             "criterion_path": record.criterion_path,
             "criterion_id": record.criterion_id,
-            "reason": record.reason,
+            "reasons": list(record.reasons),
             "result_kind": record.result_kind,
+            "changed_inputs": [_changed_input_payload(item) for item in record.changed_inputs],
         }
-        if record.diff is not None:
-            entry["diff"] = record.diff
+        if record.baseline_revision is not None:
+            entry["baseline_revision"] = record.baseline_revision
         items.append(entry)
     return json.dumps(
         {
+            "schema": SELECTOR_SCHEMA,
             "model_partition": model_partition,
             "targets": items,
         },
@@ -444,5 +499,5 @@ def render_grouped(records: list[StaleCriterion]) -> str:
     for note_path in sorted(grouped):
         lines.append(note_path)
         for record in sorted(grouped[note_path], key=lambda item: item.criterion_path):
-            lines.append(f"  - {record.criterion_path} ({record.reason})")
+            lines.append(f"  - {record.criterion_path} ({', '.join(record.reasons)})")
     return "\n".join(lines)

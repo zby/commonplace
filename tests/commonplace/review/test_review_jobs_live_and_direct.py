@@ -657,7 +657,7 @@ def test_failed_rereview_preserves_previous_freshness_baseline_and_artifacts(tmp
         note_filter=["kb/notes/sample.md"],
         db_path=db_path,
     )
-    assert [record.reason for record in stale] == ["note-changed"]
+    assert [record.reasons for record in stale] == [("note-changed",)]
 
 
 def test_successful_rereview_prunes_superseded_job_and_artifacts(tmp_path: Path) -> None:

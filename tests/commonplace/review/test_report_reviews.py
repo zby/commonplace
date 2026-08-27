@@ -89,8 +89,8 @@ def test_critique_report_flow_is_snapshot_anchored_and_writes_artifact(tmp_path:
         criterion_ids=["critique"],
         note_filter=[NOTE_PATH],
     )
-    assert [(record.reason, record.result_kind) for record in missing] == [
-        ("missing-baseline", "report")
+    assert [(record.reasons, record.result_kind) for record in missing] == [
+        (("missing-baseline",), "report")
     ]
 
     prepared = prepare_grouped_review_job(
@@ -127,7 +127,7 @@ def test_critique_report_flow_is_snapshot_anchored_and_writes_artifact(tmp_path:
         criterion_ids=["critique"],
         note_filter=[NOTE_PATH],
     )
-    assert [record.reason for record in stale] == ["criterion-changed"]
+    assert [record.reasons for record in stale] == [("criterion-changed",)]
 
     write(repo / CRITIQUE_PATH, original_instruction)
     write(repo / NOTE_PATH, (repo / NOTE_PATH).read_text(encoding="utf-8") + "\nFinal edit.\n")
@@ -137,7 +137,7 @@ def test_critique_report_flow_is_snapshot_anchored_and_writes_artifact(tmp_path:
         criterion_ids=["critique"],
         note_filter=[NOTE_PATH],
     )
-    assert [record.reason for record in stale] == ["note-changed"]
+    assert [record.reasons for record in stale] == [("note-changed",)]
 
 
 def test_review_job_rejects_mixed_result_kinds(tmp_path: Path) -> None:

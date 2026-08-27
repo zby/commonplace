@@ -66,7 +66,7 @@ commonplace-review-target-selector --model-partition {model-partition} --all-gat
   | commonplace-create-review-jobs --input - --grouping {note|criterion} [--batch-size {n}]
 ```
 
-Add `--reason {missing-baseline|criterion-changed|note-changed}` to the selector only when the user asks for that stale subset.
+Add `--reason {missing-baseline|criterion-changed|note-changed}` to the selector only when the user asks for that stale subset. A joint note-and-criterion edit belongs to both changed-input subsets and retains both reasons in its output.
 
 ### Choose grouping
 

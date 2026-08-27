@@ -235,9 +235,9 @@ class TestMissingReview:
             criterion_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/unreviewed.md"],
         )
-        assert [(s.criterion_id, s.reason) for s in stale] == [
-            ("prose/confidence-miscalibration", "missing-baseline"),
-            ("prose/source-residue", "missing-baseline"),
+        assert [(s.criterion_id, s.reasons) for s in stale] == [
+            ("prose/confidence-miscalibration", ("missing-baseline",)),
+            ("prose/source-residue", ("missing-baseline",)),
         ]
 
     def test_missing_review_without_model_partition_uses_any_partition_coverage(self, tmp_path: Path) -> None:
@@ -257,9 +257,9 @@ class TestMissingReview:
         )
 
         assert stable == []
-        assert [(s.criterion_id, s.reason) for s in unreviewed] == [
-            ("prose/confidence-miscalibration", "missing-baseline"),
-            ("prose/source-residue", "missing-baseline"),
+        assert [(s.criterion_id, s.reasons) for s in unreviewed] == [
+            ("prose/confidence-miscalibration", ("missing-baseline",)),
+            ("prose/source-residue", ("missing-baseline",)),
         ]
 
     def test_claude_opus_alias_queries_canonical_partition(self, tmp_path: Path) -> None:
@@ -554,8 +554,8 @@ class TestGateChanged:
             criterion_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/stable.md"],
         )
-        assert [(s.criterion_id, s.reason) for s in stale] == [
-            ("prose/source-residue", "criterion-changed"),
+        assert [(s.criterion_id, s.reasons) for s in stale] == [
+            ("prose/source-residue", ("criterion-changed",)),
         ]
 
 
@@ -570,9 +570,9 @@ class TestNoteChanged:
             criterion_ids=["prose/confidence-miscalibration", "prose/source-residue"],
             note_filter=["kb/notes/stable.md"],
         )
-        assert [(s.criterion_id, s.reason) for s in stale] == [
-            ("prose/confidence-miscalibration", "note-changed"),
-            ("prose/source-residue", "note-changed"),
+        assert [(s.criterion_id, s.reasons) for s in stale] == [
+            ("prose/confidence-miscalibration", ("note-changed",)),
+            ("prose/source-residue", ("note-changed",)),
         ]
 
     def test_snapshot_freshness_baseline_diff_does_not_need_git(self, tmp_path: Path) -> None:
@@ -596,10 +596,53 @@ class TestNoteChanged:
         )
 
         assert len(stale) == 1
-        assert stale[0].reason == "note-changed"
-        assert stale[0].diff is not None
-        assert "Original line" in stale[0].diff
-        assert "Updated line" in stale[0].diff
+        assert stale[0].reasons == ("note-changed",)
+        note_change = stale[0].changed_inputs[0]
+        assert note_change.input_role == "note"
+        assert note_change.diff is not None
+        assert "Original line" in note_change.diff
+        assert "Updated line" in note_change.diff
+
+    def test_joint_edit_reports_both_inputs_with_diffs(self, tmp_path: Path) -> None:
+        fixture = build_fixture(tmp_path)
+        make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
+        fixture["gate_prose_sr"].write_text(
+            fixture["gate_prose_sr"].read_text(encoding="utf-8") + "\nUpdated criterion.\n",
+            encoding="utf-8",
+        )
+
+        stale = review_target_selector.select_stale_criteria(
+            tmp_path,
+            model=TEST_MODEL,
+            criterion_ids=["prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
+            include_diff=True,
+        )
+
+        assert len(stale) == 1
+        assert stale[0].reasons == ("note-changed", "criterion-changed")
+        assert [item.input_role for item in stale[0].changed_inputs] == ["note", "criterion"]
+        assert all(item.diff is not None for item in stale[0].changed_inputs)
+        assert "Updated line" in (stale[0].changed_inputs[0].diff or "")
+        assert "Updated criterion" in (stale[0].changed_inputs[1].diff or "")
+
+        for reason in ("note-changed", "criterion-changed"):
+            result = run_cli(
+                "review_target_selector",
+                "prose/source-residue",
+                "--note",
+                "kb/notes/stable.md",
+                "--model-partition",
+                TEST_MODEL,
+                "--reason",
+                reason,
+                "--json",
+                cwd=tmp_path,
+            )
+            assert json.loads(result.stdout)["targets"][0]["reasons"] == [
+                "note-changed",
+                "criterion-changed",
+            ]
 
 
 class TestAckMetadata:
@@ -630,12 +673,13 @@ class TestAckMetadata:
             note_filter=["kb/notes/stable.md"],
         )
         assert len(stale_before) == 2
+        stale_by_id = {record.criterion_id: record for record in stale_before}
 
         acked = ack_pairs(
             tmp_path,
             [
-                "kb/notes/stable.md:prose/source-residue",
-                "kb/notes/stable.md:prose/confidence-miscalibration",
+                stale_by_id["prose/source-residue"],
+                stale_by_id["prose/confidence-miscalibration"],
             ],
             TEST_MODEL,
         )
@@ -671,9 +715,15 @@ class TestAckMetadata:
     def test_ack_allows_dirty_note_and_records_snapshot_baseline(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nDirty update.\n")
+        records = review_target_selector.select_stale_criteria(
+            tmp_path,
+            model=TEST_MODEL,
+            criterion_ids=["prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
+        )
         ack_pairs(
             tmp_path,
-            ["kb/notes/stable.md:prose/source-residue"],
+            records,
             TEST_MODEL,
         )
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
@@ -729,11 +779,13 @@ Fixture test.
                 ("kb/notes/stable.md", "kb/instructions/review-gates/prose/source-residue.md", TEST_MODEL),
             ).fetchone()
 
-        ack_pairs(
+        records = review_target_selector.select_stale_criteria(
             tmp_path,
-            ["kb/notes/stable.md:prose/source-residue"],
-            TEST_MODEL,
+            model=TEST_MODEL,
+            criterion_ids=["prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
         )
+        ack_pairs(tmp_path, records, TEST_MODEL)
 
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
             conn.row_factory = sqlite3.Row
@@ -749,6 +801,66 @@ Fixture test.
         assert row["evidence_review_pair_id"] == source_review_pair["review_pair_id"]
         assert row["baseline_criterion_snapshot_id"] is not None
         assert row["baseline_criterion_hash"] is not None
+
+    def test_ack_can_advance_only_one_inspected_role_from_a_joint_change(self, tmp_path: Path) -> None:
+        fixture = build_fixture(tmp_path)
+        make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
+        fixture["gate_prose_sr"].write_text(
+            fixture["gate_prose_sr"].read_text(encoding="utf-8") + "\nUpdated criterion.\n",
+            encoding="utf-8",
+        )
+        records = review_target_selector.select_stale_criteria(
+            tmp_path,
+            model=TEST_MODEL,
+            criterion_ids=["prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
+        )
+        payload = json.loads(review_target_selector.render_json(records, model_partition=TEST_MODEL))
+        target = payload["targets"][0]
+        target["reasons"] = ["note-changed"]
+        target["changed_inputs"] = [
+            item for item in target["changed_inputs"] if item["input_role"] == "note"
+        ]
+        (tmp_path / "note-only.json").write_text(json.dumps(payload), encoding="utf-8")
+
+        result = run_cli(
+            "ack_review",
+            "--input",
+            "note-only.json",
+            cwd=tmp_path,
+        )
+
+        assert "acked: kb/notes/stable.md prose/source-residue" in result.stdout
+        remaining = review_target_selector.select_stale_criteria(
+            tmp_path,
+            model=TEST_MODEL,
+            criterion_ids=["prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
+        )
+        assert len(remaining) == 1
+        assert remaining[0].reasons == ("criterion-changed",)
+
+    def test_ack_rejects_an_input_changed_after_selection(self, tmp_path: Path) -> None:
+        fixture = build_fixture(tmp_path)
+        make_note(fixture["stable"], "Stable title", "\nInspected update.\n")
+        records = review_target_selector.select_stale_criteria(
+            tmp_path,
+            model=TEST_MODEL,
+            criterion_ids=["prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
+        )
+        make_note(fixture["stable"], "Stable title", "\nUninspected update.\n")
+
+        with pytest.raises(ValueError, match="live hash mismatch"):
+            ack_pairs(tmp_path, records, TEST_MODEL)
+
+        stale = review_target_selector.select_stale_criteria(
+            tmp_path,
+            model=TEST_MODEL,
+            criterion_ids=["prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
+        )
+        assert stale[0].reasons == ("note-changed",)
 
     def test_repeated_ack_prunes_prior_ack_snapshot_but_keeps_reviewed_snapshot(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
@@ -766,7 +878,13 @@ Fixture test.
             ).fetchone()["baseline_note_snapshot_id"]
 
         make_note(fixture["stable"], "Stable title", "\nFirst ack update.\n")
-        ack_pairs(tmp_path, ["kb/notes/stable.md:prose/source-residue"], TEST_MODEL)
+        first_records = review_target_selector.select_stale_criteria(
+            tmp_path,
+            model=TEST_MODEL,
+            criterion_ids=["prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
+        )
+        ack_pairs(tmp_path, first_records, TEST_MODEL)
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
             conn.row_factory = sqlite3.Row
             first_ack_snapshot_id = conn.execute(
@@ -779,7 +897,13 @@ Fixture test.
             ).fetchone()["baseline_note_snapshot_id"]
 
         make_note(fixture["stable"], "Stable title", "\nSecond ack update.\n")
-        ack_pairs(tmp_path, ["kb/notes/stable.md:prose/source-residue"], TEST_MODEL)
+        second_records = review_target_selector.select_stale_criteria(
+            tmp_path,
+            model=TEST_MODEL,
+            criterion_ids=["prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
+        )
+        ack_pairs(tmp_path, second_records, TEST_MODEL)
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
             conn.row_factory = sqlite3.Row
             second_ack_snapshot_id = conn.execute(
@@ -827,11 +951,13 @@ Fixture test.
             )
             conn.commit()
 
-        ack_pairs(
+        records = review_target_selector.select_stale_criteria(
             tmp_path,
-            ["kb/notes/stable.md:prose/source-residue"],
-            TEST_MODEL,
+            model=TEST_MODEL,
+            criterion_ids=["prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
         )
+        ack_pairs(tmp_path, records, TEST_MODEL)
 
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
             conn.row_factory = sqlite3.Row
@@ -847,15 +973,16 @@ Fixture test.
         assert row["evidence_review_pair_id"] == expected_pair["review_pair_id"]
         assert row["evidence_review_pair_id"] != other_pair_id
 
-    def test_ack_rejects_invalid_pair_without_exiting(self, tmp_path: Path) -> None:
+    def test_ack_rejects_requested_record_without_baseline_observations(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
+        requested = review_target_selector.select_requested_criteria(
+            tmp_path,
+            criterion_ids=["prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
+        )
 
-        with pytest.raises(ValueError, match="invalid pair"):
-            ack_pairs(
-                tmp_path,
-                ["kb/notes/stable.md"],
-                TEST_MODEL,
-            )
+        with pytest.raises(ValueError, match="no baseline revision"):
+            ack_pairs(tmp_path, requested, TEST_MODEL)
 
     def test_ack_rejects_pair_without_completed_review_and_writes_nothing(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
@@ -870,15 +997,8 @@ Fixture test.
             freshness_baseline_count_before = conn.execute("SELECT count(*) FROM freshness_baselines").fetchone()[0]
             snapshot_count_before = conn.execute("SELECT count(*) FROM artifact_snapshots").fetchone()[0]
 
-        with pytest.raises(ValueError, match="no freshness baseline"):
-            ack_pairs(
-                tmp_path,
-                [
-                    "kb/notes/unreviewed.md:prose/confidence-miscalibration",
-                    "kb/notes/unreviewed.md:prose/source-residue",
-                ],
-                TEST_MODEL,
-            )
+        with pytest.raises(ValueError, match="no baseline revision"):
+            ack_pairs(tmp_path, stale_before, TEST_MODEL)
 
         stale_after = review_target_selector.select_stale_criteria(
             tmp_path,
@@ -902,15 +1022,21 @@ Fixture test.
             freshness_baseline_count_before = conn.execute("SELECT count(*) FROM freshness_baselines").fetchone()[0]
             snapshot_count_before = conn.execute("SELECT count(*) FROM artifact_snapshots").fetchone()[0]
 
-        with pytest.raises(ValueError, match="no freshness baseline"):
-            ack_pairs(
-                tmp_path,
-                [
-                    "kb/notes/stable.md:prose/source-residue",
-                    "kb/notes/unreviewed.md:prose/source-residue",
-                ],
-                TEST_MODEL,
-            )
+        stable_records = review_target_selector.select_stale_criteria(
+            tmp_path,
+            model=TEST_MODEL,
+            criterion_ids=["prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
+        )
+        missing_records = review_target_selector.select_stale_criteria(
+            tmp_path,
+            model=TEST_MODEL,
+            criterion_ids=["prose/source-residue"],
+            note_filter=["kb/notes/unreviewed.md"],
+        )
+
+        with pytest.raises(ValueError, match="no baseline revision"):
+            ack_pairs(tmp_path, [*stable_records, *missing_records], TEST_MODEL)
 
         stale_after = review_target_selector.select_stale_criteria(
             tmp_path,
@@ -925,7 +1051,7 @@ Fixture test.
         assert freshness_baseline_count_after == freshness_baseline_count_before
         assert snapshot_count_after == snapshot_count_before
 
-    def test_ack_dedupes_requested_pairs_before_advancing_freshness_baseline(self, tmp_path: Path) -> None:
+    def test_ack_rejects_duplicate_selector_targets(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
         criterion_path = "kb/instructions/review-gates/prose/source-residue.md"
@@ -940,14 +1066,14 @@ Fixture test.
                 ("kb/notes/stable.md", criterion_path, TEST_MODEL),
             ).fetchone()[0]
 
-        acked = ack_pairs(
+        records = review_target_selector.select_stale_criteria(
             tmp_path,
-            [
-                "kb/notes/stable.md:prose/source-residue",
-                f"kb/notes/stable.md:{criterion_path}",
-            ],
-            TEST_MODEL,
+            model=TEST_MODEL,
+            criterion_ids=["prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
         )
+        with pytest.raises(ValueError, match="duplicate selector target"):
+            ack_pairs(tmp_path, [records[0], records[0]], TEST_MODEL)
 
         with sqlite3.connect(db_path_for(tmp_path)) as conn:
             freshness_baseline_count_after = conn.execute(
@@ -958,7 +1084,6 @@ Fixture test.
                 """,
                 ("kb/notes/stable.md", criterion_path, TEST_MODEL),
             ).fetchone()[0]
-        assert acked == [("kb/notes/stable.md", "prose/source-residue")]
         assert freshness_baseline_count_after == freshness_baseline_count_before
 
 
@@ -1000,9 +1125,9 @@ class TestDiffGeneration:
             include_diff=True,
         )
         assert len(stale) == 1
-        assert stale[0].reason == "note-changed"
-        assert stale[0].diff is not None
-        assert "Updated line" in stale[0].diff
+        assert stale[0].reasons == ("note-changed",)
+        assert stale[0].changed_inputs[0].diff is not None
+        assert "Updated line" in (stale[0].changed_inputs[0].diff or "")
 
 
 class TestJsonOutput:
@@ -1016,6 +1141,7 @@ class TestJsonOutput:
         )
         json_str = review_target_selector.render_json(stale)
         payload = json.loads(json_str)
+        assert payload["schema"] == review_target_selector.SELECTOR_SCHEMA
         assert payload["model_partition"] is None
         assert len(payload["targets"]) == 2
         for item in payload["targets"]:
@@ -1055,10 +1181,10 @@ class TestJsonOutput:
 
         payload = json.loads(result.stdout)
         assert payload["model_partition"] == TEST_MODEL
-        assert [(item["criterion_id"], item["reason"]) for item in payload["targets"]] == [
-            ("prose/confidence-miscalibration", "requested"),
-            ("prose/source-residue", "requested"),
-            ("semantic/grounding-alignment", "requested"),
+        assert [(item["criterion_id"], item["reasons"]) for item in payload["targets"]] == [
+            ("prose/confidence-miscalibration", ["requested"]),
+            ("prose/source-residue", ["requested"]),
+            ("semantic/grounding-alignment", ["requested"]),
         ]
 
     def test_requested_mode_json_feeds_create_review_jobs(self, tmp_path: Path) -> None:
@@ -1148,13 +1274,22 @@ class TestModelOptional:
     def test_ack_review_cli_writes_non_null_review_pair_id(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
-
-        result = run_cli(
-            "ack_review",
+        selected = run_cli(
+            "review_target_selector",
+            "prose/source-residue",
+            "--note",
             "kb/notes/stable.md",
             "--model-partition",
             TEST_MODEL,
-            "prose/source-residue",
+            "--json",
+            cwd=tmp_path,
+        )
+        (tmp_path / "selected.json").write_text(selected.stdout, encoding="utf-8")
+
+        result = run_cli(
+            "ack_review",
+            "--input",
+            "selected.json",
             cwd=tmp_path,
         )
 
@@ -1170,6 +1305,75 @@ class TestModelOptional:
             ).fetchone()
         assert row is not None
         assert row[0] is not None
+
+    def test_ack_review_cli_rejects_mismatched_criterion_identity(self, tmp_path: Path) -> None:
+        fixture = build_fixture(tmp_path)
+        make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
+        selected = run_cli(
+            "review_target_selector",
+            "prose/source-residue",
+            "--note",
+            "kb/notes/stable.md",
+            "--model-partition",
+            TEST_MODEL,
+            "--json",
+            cwd=tmp_path,
+        )
+        payload = json.loads(selected.stdout)
+        payload["targets"][0]["criterion_id"] = "prose/other"
+        (tmp_path / "selected.json").write_text(json.dumps(payload), encoding="utf-8")
+
+        result = run_cli(
+            "ack_review",
+            "--input",
+            "selected.json",
+            cwd=tmp_path,
+            check=False,
+        )
+
+        assert result.returncode == 2
+        assert "does not match criterion_path" in result.stderr
+        stale = review_target_selector.select_stale_criteria(
+            tmp_path,
+            model=TEST_MODEL,
+            criterion_ids=["prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
+        )
+        assert stale[0].reasons == ("note-changed",)
+
+    def test_ack_review_cli_rejects_change_after_selector_inspection(self, tmp_path: Path) -> None:
+        fixture = build_fixture(tmp_path)
+        make_note(fixture["stable"], "Stable title", "\nInspected update.\n")
+        selected = run_cli(
+            "review_target_selector",
+            "prose/source-residue",
+            "--note",
+            "kb/notes/stable.md",
+            "--model-partition",
+            TEST_MODEL,
+            "--json",
+            cwd=tmp_path,
+        )
+        (tmp_path / "selected.json").write_text(selected.stdout, encoding="utf-8")
+        make_note(fixture["stable"], "Stable title", "\nUninspected update.\n")
+
+        result = run_cli(
+            "ack_review",
+            "--input",
+            "selected.json",
+            cwd=tmp_path,
+            check=False,
+        )
+
+        assert result.returncode == 2
+        assert "live hash mismatch" in result.stderr
+        stale = review_target_selector.select_stale_criteria(
+            tmp_path,
+            model=TEST_MODEL,
+            criterion_ids=["prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
+        )
+        assert stale[0].reasons == ("note-changed",)
 
 class TestResolveGates:
     def test_individual_gate_resolves(self, tmp_path: Path) -> None:

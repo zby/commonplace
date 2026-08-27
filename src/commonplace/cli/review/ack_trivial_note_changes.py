@@ -10,7 +10,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from commonplace.review.ack_trivial_note_changes import qualifying_pairs
+from commonplace.review.ack_trivial_note_changes import qualifying_records
 from commonplace.review.acknowledgement import ack_pairs
 from commonplace.review.paths import review_gates_dir
 from commonplace.review.resolve_criteria import criterion_ids_for_cli
@@ -67,7 +67,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
 
     try:
         criterion_ids = criterion_ids_for_cli(gates_dir, args.criterion_or_bundle, all_gates=args.all_gates)
-        pairs = qualifying_pairs(
+        records = qualifying_records(
             repo_root,
             model=model,
             criterion_ids=criterion_ids,
@@ -77,23 +77,23 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     except (FileNotFoundError, ValueError) as exc:
         parser.error(str(exc))
 
-    if not pairs:
+    if not records:
         print("No qualifying stale pairs found.")
         return 0
 
     if args.dry_run:
-        for pair in pairs:
-            print(pair)
-        print(f"\nWould ack {len(pairs)} stale pair(s).")
+        for record in records:
+            print(f"{record.note_path}:{record.criterion_path}")
+        print(f"\nWould ack {len(records)} stale pair(s).")
         return 0
 
     try:
-        acked = ack_pairs(repo_root, pairs, model)
+        acked = ack_pairs(repo_root, records, model)
     except (FileNotFoundError, ValueError) as exc:
         parser.error(str(exc))
     for note_path, criterion_id in acked:
         print(f"acked: {note_path} {criterion_id}")
-    print(f"acked {len(pairs)} stale pair(s)")
+    print(f"acked {len(records)} stale pair(s)")
     return 0
 
 

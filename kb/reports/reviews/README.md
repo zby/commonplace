@@ -30,8 +30,10 @@ commonplace-review-target-selector --model-partition codex prose
 # JSON output with diffs
 commonplace-review-target-selector --model-partition codex --all-gates --json
 
-# Ack a review (note change was insignificant for this gate)
-commonplace-ack-gate-review --model-partition codex kb/notes/backlinks.md prose/source-residue
+# Save and inspect the exact stale input before acknowledging it
+commonplace-review-target-selector --model-partition codex prose/source-residue \
+  --note kb/notes/backlinks.md --json > /tmp/commonplace-ack.json
+commonplace-ack-review --input /tmp/commonplace-ack.json
 ```
 
 ## Status

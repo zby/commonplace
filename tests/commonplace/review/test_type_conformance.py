@@ -244,8 +244,8 @@ class TestSelectorTypePairs:
             criterion_ids=["type"],
             note_filter=["kb/notes/plain.md"],
         )
-        assert [(s.note_path, s.criterion_path, s.criterion_id, s.reason) for s in stale] == [
-            ("kb/notes/plain.md", "kb/types/note.md", "type/note", "missing-baseline"),
+        assert [(s.note_path, s.criterion_path, s.criterion_id, s.reasons) for s in stale] == [
+            ("kb/notes/plain.md", "kb/types/note.md", "type/note", ("missing-baseline",)),
         ]
 
     def test_type_name_request_filters_to_cohort(self, tmp_path: Path) -> None:
@@ -268,7 +268,9 @@ class TestSelectorTypePairs:
             criterion_ids=["type/definition"],
             note_filter=["kb/notes/definition.md"],
         )
-        assert [(s.criterion_id, s.reason) for s in stale] == [("type/definition", "missing-baseline")]
+        assert [(s.criterion_id, s.reasons) for s in stale] == [
+            ("type/definition", ("missing-baseline",))
+        ]
 
     def test_fresh_type_pair_is_not_selected(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
@@ -297,8 +299,8 @@ class TestSelectorTypePairs:
             criterion_ids=["type"],
             user_verified_only=True,
         )
-        assert [(s.note_path, s.criterion_id, s.reason) for s in stale] == [
-            ("kb/notes/definition.md", "type/definition", "criterion-changed"),
+        assert [(s.note_path, s.criterion_id, s.reasons) for s in stale] == [
+            ("kb/notes/definition.md", "type/definition", ("criterion-changed",)),
         ]
 
     def test_note_edit_marks_type_pair_note_changed_with_diff(self, tmp_path: Path) -> None:
@@ -313,9 +315,11 @@ class TestSelectorTypePairs:
             note_filter=["kb/notes/definition.md"],
             include_diff=True,
         )
-        assert [(s.criterion_id, s.reason) for s in stale] == [("type/definition", "note-changed")]
-        assert stale[0].diff is not None
-        assert "Updated body" in stale[0].diff
+        assert [(s.criterion_id, s.reasons) for s in stale] == [
+            ("type/definition", ("note-changed",))
+        ]
+        assert stale[0].changed_inputs[0].diff is not None
+        assert "Updated body" in (stale[0].changed_inputs[0].diff or "")
 
     def test_note_without_valid_type_binding_gets_no_type_pair(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
@@ -339,9 +343,9 @@ class TestSelectorTypePairs:
             criterion_ids=["prose/source-residue", "type"],
             note_filter=["kb/notes/plain.md"],
         )
-        assert [(s.criterion_id, s.reason) for s in stale] == [
-            ("prose/source-residue", "missing-baseline"),
-            ("type/note", "missing-baseline"),
+        assert [(s.criterion_id, s.reasons) for s in stale] == [
+            ("prose/source-residue", ("missing-baseline",)),
+            ("type/note", ("missing-baseline",)),
         ]
 
     def test_requested_mode_emits_type_pairs(self, tmp_path: Path) -> None:
@@ -351,9 +355,9 @@ class TestSelectorTypePairs:
             criterion_ids=["type"],
             user_verified_only=True,
         )
-        assert [(s.note_path, s.criterion_id, s.reason) for s in requested] == [
-            ("kb/notes/definition.md", "type/definition", "requested"),
-            ("kb/notes/plain.md", "type/note", "requested"),
+        assert [(s.note_path, s.criterion_id, s.reasons) for s in requested] == [
+            ("kb/notes/definition.md", "type/definition", ("requested",)),
+            ("kb/notes/plain.md", "type/note", ("requested",)),
         ]
 
     def test_all_gates_cli_includes_type_pairs(self, tmp_path: Path) -> None:
@@ -390,11 +394,11 @@ class TestAckTypePair:
             criterion_ids=["type"],
             note_filter=["kb/notes/definition.md"],
         )
-        assert [s.reason for s in stale_before] == ["criterion-changed"]
+        assert [s.reasons for s in stale_before] == [("criterion-changed",)]
 
         acked = ack_pairs(
             tmp_path,
-            ["kb/notes/definition.md:type/definition"],
+            stale_before,
             TEST_MODEL,
         )
         assert acked == [("kb/notes/definition.md", "type/definition")]

@@ -67,7 +67,9 @@ Observation acknowledgement applies only to an existing baseline. It compares
 the caller's expected revision, resolves live text, and preserves the evidence
 pair. Hashes supplied from an earlier status result guard against change
 between inspection and acknowledgement; omitting them observes both registered
-inputs at execution time.
+inputs at execution time. The review-specific acknowledgement adapter always
+supplies the hashes and roles from inspected review-selector output; only the
+generic transition retains the observe-at-execution option.
 
 Retirement removes the current baseline, inputs, and evidence association. It
 does not imply deletion of historical jobs or artifacts. The retirement

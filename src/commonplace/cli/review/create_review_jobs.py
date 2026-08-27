@@ -40,7 +40,6 @@ class RequestedPair:
     note_path: str
     criterion_path: str
     criterion_id: str
-    reason: str
     result_kind: str
 
 
@@ -102,7 +101,6 @@ def _selector_pairs(
         note_raw = target.get("note_path")
         criterion_raw = target.get("criterion_path")
         criterion_id_raw = target.get("criterion_id")
-        reason_raw = target.get("reason", "stale")
         result_kind_raw = target.get("result_kind", "verdict")
         if not isinstance(note_raw, str) or not note_raw.strip():
             raise ValueError(f"selector target {index} missing note_path")
@@ -110,8 +108,6 @@ def _selector_pairs(
             raise ValueError(f"selector target {index} missing criterion_path")
         if not isinstance(criterion_id_raw, str) or not criterion_id_raw.strip():
             raise ValueError(f"selector target {index} missing criterion_id")
-        if not isinstance(reason_raw, str) or not reason_raw.strip():
-            reason_raw = "stale"
         if result_kind_raw not in {"verdict", "report"}:
             raise ValueError(f"selector target {index} has invalid result_kind: {result_kind_raw!r}")
         note_path = _normalize_note_path(repo_root, note_raw)
@@ -131,7 +127,6 @@ def _selector_pairs(
                 note_path=note_path,
                 criterion_path=criterion_path,
                 criterion_id=criterion_id,
-                reason=reason_raw.strip(),
                 result_kind=result_kind_raw,
             )
         )

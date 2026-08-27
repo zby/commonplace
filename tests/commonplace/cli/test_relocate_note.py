@@ -222,8 +222,8 @@ def test_relocate_note_apply_leaves_review_state_rows_unchanged_and_paths_derive
         note_filter=["kb/notes/archive/new-note-title.md"],
         db_path=db_path,
     )
-    assert [(record.note_path, record.criterion_id, record.reason) for record in stale] == [
-        ("kb/notes/archive/new-note-title.md", GATE_ID, "missing-baseline")
+    assert [(record.note_path, record.criterion_id, record.reasons) for record in stale] == [
+        ("kb/notes/archive/new-note-title.md", GATE_ID, ("missing-baseline",))
     ]
 
 

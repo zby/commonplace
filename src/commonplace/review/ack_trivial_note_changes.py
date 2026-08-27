@@ -22,7 +22,10 @@ from commonplace.review.review_db import (
     prepare_review_db,
 )
 from commonplace.review.review_model import normalize_model_partition
-from commonplace.review.review_target_selector import select_stale_criteria
+from commonplace.review.review_target_selector import (
+    StaleCriterion,
+    select_stale_criteria,
+)
 
 _TITLE_RE = re.compile(r"^#\s+(.+)$", re.MULTILINE)
 KNOWN_WATCHES = {"body", "title", "description"}
@@ -115,7 +118,7 @@ def has_only_unwatched_changes(
     return all(previous.get(key) == current.get(key) for key in watches)
 
 
-def qualifying_pairs(
+def qualifying_records(
     repo_root: Path,
     *,
     model: str,
@@ -123,7 +126,7 @@ def qualifying_pairs(
     note_filter: list[str] | None = None,
     user_verified_only: bool = False,
     db_path: Path | None = None,
-) -> list[str]:
+) -> list[StaleCriterion]:
     model = normalize_model_partition(model)
     db_path = prepare_review_db(repo_root, str(db_path) if db_path is not None else None)
     with connect(db_path) as conn:
@@ -140,12 +143,12 @@ def qualifying_pairs(
             db_path=db_path,
             freshness_baselines=freshness_baselines,
         )
-        if record.reason == "note-changed"
+        if record.reasons == ("note-changed",)
     ]
 
     current_text_cache: dict[str, str] = {}
     gate_watches_cache: dict[str, set[str] | None] = {}
-    pairs: list[str] = []
+    qualifying: list[StaleCriterion] = []
     for record in stale_records:
         freshness_baseline = freshness_baselines.get((record.note_path, record.criterion_path, model))
         if freshness_baseline is None:
@@ -172,6 +175,6 @@ def qualifying_pairs(
             current_text,
             watches=watches,
         ):
-            pairs.append(f"{record.note_path}:{record.criterion_path}")
+            qualifying.append(record)
 
-    return sorted(set(pairs))
+    return sorted(qualifying, key=lambda record: (record.note_path, record.criterion_path))

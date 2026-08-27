@@ -33,7 +33,7 @@ The mechanism records exact input snapshots against which a target was accepted,
 - **Queued-job revision at pair create.** `review_pairs.expected_baseline_revision` (or `NULL`). Finalization CASes the stored value. Baseline moved after queue → fail (`stale-baseline-revision` / migration `stale-queued-capture` for job `49`).
 - **Two refresh paths.** Capture (review `finalize_capture_refresh()`, job snapshots) vs observation (accept/ack, live revalidation). Generic accept rejects `review-pair`.
 - **Retirement.** `commonplace-freshness-retire`; migration skips baselines whose paths no longer exist (four `transformation-closure`). `input-missing` → exit `1`.
-- **Review parity before extension.** Missing-baseline discovery, reason mapping, trivial ack, all-or-nothing finalization, evidence retention, pruning — unchanged at the CLI boundary. `criterion-changed` before `note-changed` when both changed.
+- **Review parity before extension.** Missing-baseline discovery, reason mapping, trivial ack, all-or-nothing finalization, evidence retention, and pruning were unchanged during the v1 migration. Later RF-10/RF-11 hardening replaced the priority reason for joint changes with role-labelled observations and bound review ack to selector hashes.
 - **Malformed state is errors.** Never downgrade to `missing-baseline` or ordinary staleness.
 
 ## Semantic model

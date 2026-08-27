@@ -29,7 +29,7 @@ ack/retire parsers.
 - **Store:** new `commonplace-store.sqlite`; old `review-store.sqlite` read-only backup forever.
 - **Versioning:** `file-text` only.
 - **Targets:** `review-pair` only (migrated + newly finalized).
-- **Review adapters stay:** `missing-baseline` discovery, reason mapping (`criterion-changed` before `note-changed`), trivial ack, capture finalization.
+- **Review adapters at v1 migration:** `missing-baseline` discovery, reason mapping, trivial ack, capture finalization. Later RF-10/RF-11 hardening made joint reasons non-lossy and made review ack submit selector observations.
 
 ## Resolved contracts (do not re-litigate)
 

@@ -48,7 +48,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         action="store_true",
         help="Filter to notes with frontmatter user-verified: true.",
     )
-    parser.add_argument("--json", action="store_true", help="JSON output (includes diffs for note-changed).")
+    parser.add_argument("--json", action="store_true", help="JSON output with per-changed-input diffs and hashes.")
     parser.add_argument(
         "--model-partition",
         help=(
@@ -104,7 +104,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         parser.error(str(exc))
 
     if args.reason:
-        records = [record for record in records if record.reason == args.reason]
+        records = [record for record in records if record.has_reason(args.reason)]
 
     if args.json:
         print(render_json(records, model_partition=normalize_model_partition(model) if model is not None else None))

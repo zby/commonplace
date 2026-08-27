@@ -231,9 +231,9 @@ def test_relocate_directory_apply_leaves_review_state_rows_unchanged_and_paths_d
         ],
         db_path=db_path,
     )
-    assert [(record.note_path, record.criterion_id, record.reason) for record in stale] == [
-        ("kb/agent-memory-systems/bar.md", GATE_ID, "missing-baseline"),
-        ("kb/agent-memory-systems/foo.md", GATE_ID, "missing-baseline"),
+    assert [(record.note_path, record.criterion_id, record.reasons) for record in stale] == [
+        ("kb/agent-memory-systems/bar.md", GATE_ID, ("missing-baseline",)),
+        ("kb/agent-memory-systems/foo.md", GATE_ID, ("missing-baseline",)),
     ]
 
 

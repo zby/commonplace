@@ -13,16 +13,22 @@ Acknowledgement reuses completed evidence and advances the existing snapshot bas
 
 1. Before editing, run the selector for the intended note scope under every affected model partition. Only migrate pairs that are currently fresh; resolve or rerun any pair already reported as `note-changed`, `criterion-changed`, or `missing-baseline`. A fresh pre-edit pair proves that both current files match its baseline snapshots.
 2. Edit the gate file. Keep the criterion semantically equivalent; wording cleanup alone is not evidence that a behavioral change is harmless.
-3. Select the affected pairs under each model partition and confirm they are stale only because the criterion changed:
+3. Select the affected pairs under each model partition into an acknowledgement
+   manifest. Confirm every target's complete `reasons` array contains only
+   `criterion-changed`; `--reason` also returns a joint change and therefore is
+   not sufficient evidence by itself.
 
    ```bash
-   commonplace-review-target-selector {gate-id} --model-partition {model-partition} --note {note-paths...} --reason criterion-changed --json
+   commonplace-review-target-selector {gate-id} --model-partition {model-partition} --note {note-paths...} --reason criterion-changed --json > {ack-manifest}
    ```
 
-4. Acknowledge each verified pair. This preserves its completed verdict evidence while replacing the one existing freshness baseline row with snapshots of the unchanged note and edited criterion:
+4. Remove any target that is not verified for migration, then acknowledge the
+   inspected manifest. This preserves completed verdict evidence while replacing
+   only the criterion input snapshot. The command rejects any file or baseline
+   change since selection:
 
    ```bash
-   commonplace-ack-review {note-path} --model-partition {model-partition} {gate-id}
+   commonplace-ack-review --input {ack-manifest}
    ```
 
 5. Rerun the same selector without `--reason`. An empty `targets` list means the migrated pairs are fresh. Inspect the evidence result rather than claiming that acknowledgement produced a new outcome.

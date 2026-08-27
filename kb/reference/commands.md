@@ -145,9 +145,10 @@ freshness-baseline invariants.
 
 ### commonplace-ack-review
 
-Advance existing review freshness without rerunning the assay. It preserves
-the evidence review pair; for a report, it does not endorse or resolve the
-findings.
+Advance exact changed-input observations from inspected review-selector JSON
+without rerunning the assay. It preserves the evidence review pair and rejects
+an inspection-to-ack hash or baseline-revision race; for a report, it does not
+endorse or resolve the findings.
 
 ### commonplace-ack-trivial-note-changes
 

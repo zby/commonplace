@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 from commonplace.review import ack_trivial_note_changes, review_db
-from commonplace.review.ack_trivial_note_changes import qualifying_pairs
+from commonplace.review.ack_trivial_note_changes import qualifying_records
 from commonplace.review.acknowledgement import ack_pairs
 from tests.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
 
@@ -230,24 +230,26 @@ def test_has_only_unwatched_changes_respects_gate_watch_fields(
     )
 
 
-# --- Integration tests: qualifying_pairs + ack_pairs ------------------------
+# --- Integration tests: qualifying_records + ack_pairs ----------------------
 
 
-def test_qualifying_pairs_finds_note_with_only_unwatched_changes_and_ack_records_it(tmp_path: Path) -> None:
+def test_qualifying_records_finds_note_with_only_unwatched_changes_and_ack_records_it(tmp_path: Path) -> None:
     repo, db_path = build_fixture(tmp_path)
     note_path = repo / "kb" / "notes" / "sample.md"
     make_note(note_path, "\nBody.\n", traits="[title-as-claim]", tags="[computational-model]")
 
-    pairs = qualifying_pairs(
+    records = qualifying_records(
         repo,
         model=TEST_MODEL,
         criterion_ids=["kb/instructions/review-gates/prose/source-residue.md"],
         note_filter=["kb/notes"],
         db_path=db_path,
     )
-    assert pairs == ["kb/notes/sample.md:kb/instructions/review-gates/prose/source-residue.md"]
+    assert [(record.note_path, record.criterion_path) for record in records] == [
+        ("kb/notes/sample.md", "kb/instructions/review-gates/prose/source-residue.md")
+    ]
 
-    ack_pairs(repo, pairs, TEST_MODEL, db_path=db_path)
+    ack_pairs(repo, records, TEST_MODEL, db_path=db_path)
 
     with sqlite3.connect(db_path) as conn:
         row = conn.execute(
@@ -344,7 +346,7 @@ State one claim per note.
     assert "acked 1 stale pair(s)" in result.stdout
 
 
-def test_qualifying_pairs_uses_snapshot_text_without_git(tmp_path: Path) -> None:
+def test_qualifying_records_uses_snapshot_text_without_git(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
     note = make_note(repo / "kb" / "notes" / "sample.md", "\nBody.\n")
@@ -361,7 +363,7 @@ def test_qualifying_pairs_uses_snapshot_text_without_git(tmp_path: Path) -> None
     )
     make_note(note, "\nBody.\n", traits="[title-as-claim]", tags="[computational-model]")
 
-    pairs = qualifying_pairs(
+    records = qualifying_records(
         repo,
         model=TEST_MODEL,
         criterion_ids=["kb/instructions/review-gates/prose/source-residue.md"],
@@ -369,10 +371,12 @@ def test_qualifying_pairs_uses_snapshot_text_without_git(tmp_path: Path) -> None
         db_path=db_path,
     )
 
-    assert pairs == ["kb/notes/sample.md:kb/instructions/review-gates/prose/source-residue.md"]
+    assert [(record.note_path, record.criterion_path) for record in records] == [
+        ("kb/notes/sample.md", "kb/instructions/review-gates/prose/source-residue.md")
+    ]
 
 
-def test_qualifying_pairs_excludes_notes_where_watched_parts_changed(tmp_path: Path) -> None:
+def test_qualifying_records_excludes_notes_where_watched_parts_changed(tmp_path: Path) -> None:
     repo, db_path = build_fixture(
         tmp_path,
         criterion_id="frontmatter/title-body-alignment",
@@ -382,17 +386,17 @@ def test_qualifying_pairs_excludes_notes_where_watched_parts_changed(tmp_path: P
     note_path = repo / "kb" / "notes" / "sample.md"
     make_note(note_path, "\nBody.\n", title="Updated title", tags="[computational-model]")
 
-    pairs = qualifying_pairs(
+    records = qualifying_records(
         repo,
         model=TEST_MODEL,
         criterion_ids=["kb/instructions/review-gates/frontmatter/title-body-alignment.md"],
         note_filter=["kb/notes"],
         db_path=db_path,
     )
-    assert pairs == []
+    assert records == []
 
 
-def test_qualifying_pairs_rejects_baseline_without_snapshot_text(tmp_path: Path) -> None:
+def test_qualifying_records_rejects_baseline_without_snapshot_text(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
 

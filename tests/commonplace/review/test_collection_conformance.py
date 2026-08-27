@@ -195,8 +195,8 @@ class TestSelectorCollectionPairs:
             criterion_ids=["collection"],
             note_filter=["kb/notes/plain.md"],
         )
-        assert [(s.note_path, s.criterion_path, s.criterion_id, s.reason) for s in stale] == [
-            ("kb/notes/plain.md", "kb/notes/COLLECTION.md", "collection/notes", "missing-baseline"),
+        assert [(s.note_path, s.criterion_path, s.criterion_id, s.reasons) for s in stale] == [
+            ("kb/notes/plain.md", "kb/notes/COLLECTION.md", "collection/notes", ("missing-baseline",)),
         ]
 
     def test_collection_path_request_filters_to_cohort(self, tmp_path: Path) -> None:
@@ -238,8 +238,8 @@ class TestSelectorCollectionPairs:
             criterion_ids=["collection"],
             user_verified_only=True,
         )
-        assert [(s.note_path, s.criterion_id, s.reason) for s in stale] == [
-            ("kb/notes/plain.md", "collection/notes", "criterion-changed"),
+        assert [(s.note_path, s.criterion_id, s.reasons) for s in stale] == [
+            ("kb/notes/plain.md", "collection/notes", ("criterion-changed",)),
         ]
 
     def test_note_edit_marks_collection_pair_note_changed_with_diff(self, tmp_path: Path) -> None:
@@ -254,9 +254,11 @@ class TestSelectorCollectionPairs:
             note_filter=["kb/notes/plain.md"],
             include_diff=True,
         )
-        assert [(s.criterion_id, s.reason) for s in stale] == [("collection/notes", "note-changed")]
-        assert stale[0].diff is not None
-        assert "Updated body" in stale[0].diff
+        assert [(s.criterion_id, s.reasons) for s in stale] == [
+            ("collection/notes", ("note-changed",))
+        ]
+        assert stale[0].changed_inputs[0].diff is not None
+        assert "Updated body" in (stale[0].changed_inputs[0].diff or "")
 
     def test_note_outside_any_collection_gets_no_collection_pair(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
@@ -294,9 +296,9 @@ State one claim per note.
             criterion_ids=["type", "collection"],
             note_filter=["kb/notes/plain.md"],
         )
-        assert [(s.criterion_id, s.reason) for s in stale] == [
-            ("collection/notes", "missing-baseline"),
-            ("type/note", "missing-baseline"),
+        assert [(s.criterion_id, s.reasons) for s in stale] == [
+            ("collection/notes", ("missing-baseline",)),
+            ("type/note", ("missing-baseline",)),
         ]
 
     def test_requested_mode_emits_collection_pairs(self, tmp_path: Path) -> None:
@@ -306,9 +308,9 @@ State one claim per note.
             criterion_ids=["collection"],
             user_verified_only=True,
         )
-        assert [(s.note_path, s.criterion_id, s.reason) for s in requested] == [
-            ("kb/notes/plain.md", "collection/notes", "requested"),
-            ("kb/reference/doc.md", "collection/reference", "requested"),
+        assert [(s.note_path, s.criterion_id, s.reasons) for s in requested] == [
+            ("kb/notes/plain.md", "collection/notes", ("requested",)),
+            ("kb/reference/doc.md", "collection/reference", ("requested",)),
         ]
 
     def test_all_gates_cli_includes_collection_pairs(self, tmp_path: Path) -> None:
@@ -379,11 +381,11 @@ class TestAckCollectionPair:
             criterion_ids=["collection"],
             note_filter=["kb/notes/plain.md"],
         )
-        assert [s.reason for s in stale_before] == ["criterion-changed"]
+        assert [s.reasons for s in stale_before] == [("criterion-changed",)]
 
         acked = ack_pairs(
             tmp_path,
-            ["kb/notes/plain.md:collection/notes"],
+            stale_before,
             TEST_MODEL,
         )
         assert acked == [("kb/notes/plain.md", "collection/notes")]

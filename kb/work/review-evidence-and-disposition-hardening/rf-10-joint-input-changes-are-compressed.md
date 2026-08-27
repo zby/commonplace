@@ -1,6 +1,6 @@
 # RF-10 — Joint note and criterion changes are compressed to one reason
 
-**State:** open  
+**State:** fixed 2026-08-27
 **Repair shape:** selector payload and test change  
 **Severity:** medium
 
@@ -38,3 +38,12 @@ inspect every input that acknowledgement would advance.
 - Existing single-change filtering remains expressible without hiding joint
   changes.
 - Tests cover note-only, criterion-only, and joint edits.
+
+## Resolution
+
+Review selector records now carry a `reasons` tuple, the accepted baseline
+revision, and role-labelled `changed_inputs` with accepted and current hashes.
+JSON includes a diff on every changed input. A joint edit retains both note and
+criterion observations, and `--reason` matches membership without removing the
+other observation. Regression tests cover note-only, criterion-only, joint, and
+both joint-filter views.

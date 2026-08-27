@@ -240,7 +240,7 @@ Two baseline-update paths share the same baseline/input tables but differ in obs
 | path | entry | live-version check | evidence |
 |---|---|---|---|
 | **Capture refresh** | `commonplace.review.finalize_capture_refresh()` | No — writes job-owned snapshots | Replaced on review-pair targets |
-| **Observation ack** | `commonplace-freshness-ack`, `commonplace-ack-review` | Yes — revalidates status output | Preserved on review-pair targets |
+| **Observation ack** | `commonplace-freshness-ack`, `commonplace-ack-review` | Yes — revalidates status or review-selector observations | Preserved on review-pair targets |
 
 Review evidence replacement requires a completed pair id and therefore stays in the review-owned capture transaction. No generic initial-acceptance or refresh transition ships ([ADR 065](../../reference/adr/065-publish-only-supported-freshness-transitions.md)).
 

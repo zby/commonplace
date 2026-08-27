@@ -25,7 +25,7 @@ The operational database is `kb/reports/commonplace-store.sqlite` (`COMMONPLACE_
 
 One freshness mechanism owns path-keyed `file-text` artifact snapshots with mandatory stored text; one current baseline per registered target with a monotonic revision; accepted input roles pointing at snapshots; and a review-only bridge retaining the completed evidence pair for `review-pair` targets.
 
-v1 admits only `file-text` inputs and `review-pair` targets. Review commands are adapters: they keep `missing-baseline` discovery, reason mapping (`criterion-changed` before `note-changed`), trivial ack, all-or-nothing finalization, evidence retention, and pruning. Global commands `commonplace-freshness-{status,ack,retire}` operate over registered targets. Review finalization owns initial acceptance and replacement because capture refresh requires a completed pair id. No generic initial-acceptance or refresh transition ships ([ADR 065](./065-publish-only-supported-freshness-transitions.md)).
+v1 admits only `file-text` inputs and `review-pair` targets. Review commands are adapters: they keep `missing-baseline` discovery, role-labelled change mapping, trivial ack, all-or-nothing finalization, evidence retention, and pruning. When both registered inputs change, the review selector retains both observations rather than prioritizing one reason. Global commands `commonplace-freshness-{status,ack,retire}` operate over registered targets. Review finalization owns initial acceptance and replacement because capture refresh requires a completed pair id. No generic initial-acceptance or refresh transition ships ([ADR 065](./065-publish-only-supported-freshness-transitions.md)).
 
 Two baseline-update paths remain distinct:
 

@@ -91,7 +91,12 @@ The selector reports each requested `(note, criterion)` pair as fresh or, if not
 - baseline note text differs from the current note → `note-changed`
 - otherwise the pair is fresh
 
-For `note-changed` pairs, the selector can show the diff against the baseline note text, so you can judge whether the change invalidates that assay's evidence.
+JSON targets carry `reasons` as an array, so a joint edit reports both
+`note-changed` and `criterion-changed`. Each entry in `changed_inputs` names the
+role, path, accepted snapshot and hash, current hash, and—under `--json`—its
+diff. The target also carries `baseline_revision`. `--reason` tests membership:
+a joint edit is returned by either changed-input filter without hiding its other
+change.
 
 Repository-wide status over **registered** targets is separate from applicable-pair discovery. `commonplace-freshness-status` reports every migrated `review-pair` baseline, with `--json`, `--diff`, `--all`, and partition filters. It does not emit `missing-baseline` for pairs that were never reviewed. See [freshness architecture](./freshness-architecture.md).
 
@@ -117,15 +122,22 @@ The full procedure is in [run review batches](../instructions/run-review-batches
 
 ## Acknowledging trivial changes
 
-For a `note-changed` pair, inspect the selector diff first. If the change does not invalidate the existing evidence, acknowledge it instead of rerunning. For a closed-ended verdict pair this carries an outcome; for an open-ended report pair it only reuses the report as current evidence and endorses nothing.
+For a changed pair, inspect every changed input first. If a change does not invalidate the existing evidence, acknowledge it instead of rerunning. For a closed-ended verdict pair this carries an outcome; for an open-ended report pair it only reuses the report as current evidence and endorses nothing.
 
-`commonplace-ack-review` advances an existing baseline when a note changed but not in a way that matters for the criterion. It records the current note and criterion snapshots while preserving `evidence_review_pair_id`. It does not create evidence or rewrite any file or assay text.
+`commonplace-ack-review` consumes inspected JSON from
+`commonplace-review-target-selector`. Keep only the targets and changed-input
+roles authorized for acknowledgement, with each retained role's matching
+reason. The command advances those exact observed hashes while preserving
+`evidence_review_pair_id`; omitted roles keep their accepted snapshots and
+remain stale. It does not create evidence or rewrite any file or assay text.
 
 ```
-commonplace-ack-review --model-partition {model-partition} {note_path} {criterion_id}...
+commonplace-ack-review --input {inspected-selector-json}
 ```
 
-Ack fails when there is no freshness baseline for the same `(note_path, criterion_path, model_partition)`. Output lines have the form `acked: <note_path> <criterion_id>`.
+Ack fails when the baseline revision changed, any retained input's live hash no
+longer matches the inspected hash, or its accepted identity does not match the
+named baseline. Output lines have the form `acked: <note_path> <criterion_id>`.
 
 `commonplace-ack-trivial-note-changes` may select type- and
 collection-conformance pairs, but never auto-acks them. Their criterion
@@ -159,7 +171,7 @@ Open-ended methods therefore remain report-shaped rather than being forced into 
 - `--user-verified` to filter exactly to notes with committed `user-verified: true`
 - `--model-partition {model-partition}` selects the review model partition to inspect or write; omit it only for model-agnostic missing-baseline coverage
 - `--json`
-- `--reason {missing-baseline,criterion-changed,note-changed}`
+- `--reason {missing-baseline,criterion-changed,note-changed}`; changed-input filters match membership in `reasons`
 
 With `--model-partition` omitted, the selector reports only model-agnostic missing-baseline coverage: a pair is `missing-baseline` only when there is no freshness baseline under any model partition. It does not classify `criterion-changed` or `note-changed` in that mode, because those need a chosen baseline.
 
@@ -167,7 +179,7 @@ With `--model-partition` omitted, the selector reports only model-agnostic missi
 
 **Finalize** — `commonplace-finalize-review-job --review-job-id {id} [--runner {worker}] [--model {model} [--effort {effort}]] [--telemetry-json {json}]`.
 
-**Ack** — `commonplace-ack-review --model-partition {model-partition} {note_path} {criterion_id}...`.
+**Ack** — `commonplace-ack-review --input {inspected-selector-json}`.
 
 **Warn queue** — `commonplace-warn-selector`.
 

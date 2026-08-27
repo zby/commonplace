@@ -15,17 +15,22 @@ Inputs:
 
 ## Steps
 
-### 1. Get note-changed pairs
+### 1. Capture note-changed candidates
 
 ```bash
-commonplace-review-target-selector --model-partition {model-partition} {criteria} --note {note-scope} --json --reason note-changed
+commonplace-review-target-selector --model-partition {model-partition} {criteria} --note {note-scope} --json --reason note-changed > {ack-manifest}
 ```
 
 If the output object has `"targets": []`, stop — nothing to triage.
+Keep this exact file: its baseline revisions and current hashes bind the later
+acknowledgement to what you inspect.
 
 ### 2. For each note-changed pair, judge the diff
 
-For each entry in `targets`, read the `diff`, `criterion_id`, and `result_kind`. Ask: does this diff invalidate what the criterion's existing result says?
+For each entry in `targets`, read `reasons`, every item in `changed_inputs`,
+`criterion_id`, and `result_kind`. A joint note-and-criterion edit is returned
+by the note filter but still carries both changes. Ask whether each diff
+invalidates what the criterion's existing result says.
 
 Guidelines:
 
@@ -36,16 +41,24 @@ Guidelines:
 
 When in doubt, do not ack — rerun the assay.
 
-### 3. Ack insignificant pairs
+### 3. Retain only authorized observations
 
-Ack all insignificant pairs in one command:
+Edit `{ack-manifest}` so `targets` contains only pairs authorized for
+acknowledgement. For a joint edit, retain every harmless `changed_inputs` item
+and its corresponding reason; remove a role that must stay stale for rereview.
+Do not update hashes, snapshot ids, paths, or baseline revisions.
+
+### 4. Ack the inspected candidates
 
 ```bash
-commonplace-ack-review --model-partition {model-partition} {note-path} {gate-id} [{gate-id} ...]
+commonplace-ack-review --input {ack-manifest}
 ```
 
-This advances the existing freshness baseline to the current note and criterion snapshots while preserving its evidence review pair. It produces no new judgment and does not rely on `touch` or filesystem timestamps.
+This advances only the retained input roles while preserving the evidence
+review pair. An intervening file edit or baseline transition fails instead of
+accepting uninspected state. It produces no new judgment and does not rely on
+`touch` or filesystem timestamps.
 
-### 4. Report
+### 5. Report
 
 Report which pairs were acked and which were left for review. The remaining stale pairs will be picked up by the next review sweep.
