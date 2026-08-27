@@ -1,19 +1,16 @@
+# Decisions 1–2 — draft criterion text
+
+Drafts for the three link-following gates under the artifact-side bound. These are copied into `kb/instructions/review-gates/` when the ADR lands, in one commit, because each edit stales its population once.
+
+Shared reading rule for anything with a claim title — a linked note or another library artifact — stated once here and repeated in each gate (a gate's test must be self-contained, per the review-gate type):
+
+> Read the target's title and opening paragraph. Judge there when the invoked claim is the target's title claim. When it is an interior concept, judge the note's verbatim quotation of the target if it gives one; only otherwise locate the target's treatment of that concept.
+
+## `semantic/grounding-alignment` — new `## Test`
+
+Frontmatter unchanged. Failure mode unchanged. Replace the `## Test` body with:
+
 ---
-gate_id: semantic/grounding-alignment
-name: Grounding alignment
-description: 'The note cites sources or linked notes as if they ground a claim more directly or more broadly than they actually do.'
-type: kb/types/review-gate.md
-lens: semantic
-watches: [body]
-staleness: changed
----
-
-## Failure mode
-
-The note cites sources or linked notes as if they ground a claim more directly
-or more broadly than they actually do.
-
-## Test
 
 For each material claim or conclusion that the note presents as grounded by a
 link, extract the route the note gives: the claim, the cited material, and the
@@ -81,3 +78,46 @@ linked material. Return WARN for support that is plausible but whose
 qualification, modest scope extension, or transfer is not articulated clearly
 enough to verify. Report INFO for plausible but non-load-bearing inferences
 that are not airtight.
+
+---
+
+What changed: the sixteen-artifact budget and its disclosure clause are gone; linked notes get a head-first representation route and are never re-grounded; quoted sources are judged on the page; the two ingest routes are unchanged for unquoted sources.
+
+## `sentence/misleading-link-text` — new `## Test`
+
+---
+
+For each markdown link, read the link text and the sentence it appears in. What
+does the reader expect to find at the target? Then read the target's title and
+opening paragraph. Does the target match the expectation? Open more of the
+target only when its head does not settle the question.
+
+Check every link. Repeated links to the same target are one check. Name any
+target that cannot be resolved.
+
+---
+
+What changed: the five-target cap and its disclosure clause are gone; the head-first rule is explicit.
+
+## `sentence/concept-attribution` — new `## Test`
+
+---
+
+For each sentence that identifies this note's concept with a concept from
+another note — phrases like "this is the X problem from [note]," "this is X in
+architectural form," "the same mechanism as [note]'s Y" — check the identity
+against the target. Read the target's title and opening paragraph first; judge
+there when the concept is the target's title claim. When it is an interior
+concept, judge this note's verbatim quotation of the target if it gives one;
+only otherwise locate the target's treatment of that concept.
+
+Check every identity claim. Name any target that cannot be resolved.
+
+An attribution is valid if the linked note's core concept supports the claim
+being made, even if the exact phrasing differs. Only flag when the linked
+note's treatment of the concept is substantively different — not merely when
+the vocabulary doesn't match verbatim.
+
+---
+
+What changed: the five-target cap and its disclosure clause are gone; the head-first ladder is explicit. The paraphrased-interior case remains a finding-step outside the artifact-side bound (see [representation-gate-limits.md](./representation-gate-limits.md)).

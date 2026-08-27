@@ -44,7 +44,38 @@ NEGATED_VERBATIM_RE = re.compile(
     r"(?:was|is|were|are)\s+not",
     re.IGNORECASE,
 )
-DOUBLE_QUOTE_RE = re.compile(r'"([^"\n]+)"|“([^”\n]+)”')
+# A quotation may wrap across source lines inside one paragraph; paragraphs
+# are already split on blank lines, so the span cannot cross one.
+DOUBLE_QUOTE_RE = re.compile(r'"([^"]+)"|“([^”]+)”')
+INGEST_QUOTES_HEADING_RE = re.compile(r"^## Quotes[ \t]*$", re.MULTILINE)
+NEXT_H2_RE = re.compile(r"^##[ \t]+", re.MULTILINE)
+
+
+def ingest_quotes_section(content: str) -> str:
+    """Return the body of an ingest's ``## Quotes`` section, or "" if absent.
+
+    The section runs from the end of the ``## Quotes`` heading line to the start
+    of the next ``## `` heading, or the end of the file.
+    """
+    heading = INGEST_QUOTES_HEADING_RE.search(content)
+    if heading is None:
+        return ""
+    next_heading = NEXT_H2_RE.search(content, heading.end())
+    end = next_heading.start() if next_heading is not None else len(content)
+    return content[heading.end() : end]
+
+
+def _source_support_text(source: Path, content: str) -> str:
+    """Return the span of a source that can support a verbatim quotation.
+
+    An ingest's own analysis prose is not source support (ADR 073): only the
+    passages retained under ``## Quotes`` are copied from the pinned snapshot,
+    so a quote satisfied by analytical text would assert support the ingest
+    never carries. Other sources are searched whole.
+    """
+    if source.name.endswith(".ingest.md"):
+        return ingest_quotes_section(content)
+    return content
 
 
 @dataclass(frozen=True)
@@ -292,18 +323,19 @@ def verify_content(
                         "linked source is missing or is not a file",
                     )
                 )
-            elif normalize_text(quote.text) in normalize_text(load_source(source)):
+            elif normalize_text(quote.text) in normalize_text(
+                _source_support_text(source, load_source(source))
+            ):
                 results.append(QuoteResult("match", note, line, quote.text, source, ""))
             else:
+                detail = (
+                    "normalized quotation does not occur in the linked ingest's "
+                    "Quotes section"
+                    if source.name.endswith(".ingest.md")
+                    else "normalized quotation does not occur in linked source"
+                )
                 results.append(
-                    QuoteResult(
-                        "mismatch",
-                        note,
-                        line,
-                        quote.text,
-                        source,
-                        "normalized quotation does not occur in linked source",
-                    )
+                    QuoteResult("mismatch", note, line, quote.text, source, detail)
                 )
 
         # An explicit citation-level marker is a candidate even when quote

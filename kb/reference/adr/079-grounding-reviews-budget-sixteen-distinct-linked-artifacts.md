@@ -1,13 +1,13 @@
 ---
-description: "Accepted decision that grounding reviews budget sixteen distinct linked artifacts globally, count repeated targets once, and disclose sampled coverage without failing on budget alone"
+description: "Superseded (ADR 082) decision that grounding reviews budget sixteen distinct linked artifacts globally, count repeated targets once, and disclose sampled coverage without failing on budget alone"
 type: ../types/adr.md
 tags: []
-status: accepted
+status: superseded
 ---
 
 # 079-Grounding reviews budget sixteen distinct linked artifacts
 
-**Status:** accepted
+**Status:** superseded by [ADR 082](./082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md)
 **Date:** 2026-08-25
 
 ## Context

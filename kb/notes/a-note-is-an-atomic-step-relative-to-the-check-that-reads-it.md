@@ -49,10 +49,9 @@ can name what it left unread — but disclosure reports the budget's boundary, n
 whether a finding was sitting behind it.
 
 An artifact-side bound does not have that failure mode, because a conforming
-artifact fits by construction. The reviewer's limit still exists; on a
-conforming note it never binds. What the bound relies on is exactly the
-behaviour that makes a review-side cap lossy: a reviewer honours a reading
-limit. That is the same fact read from the other side.
+artifact fits by construction: the bound is held by a validator that fails the
+note, not by a reviewer that stops reading. The reviewer's limit still exists;
+on a conforming note it never binds.
 
 ## Mechanism: for the grounding check, the unit is the unquoted source
 
@@ -102,7 +101,12 @@ passes](../reference/proposals/exceeding-a-review-budget-splits-the-task.md)
 identified when it concluded that any partition would have to be by claim rather
 than by link. Under an artifact-side bound the author, who knows which passages
 jointly carry the claim, puts them on the page together and the check reads them
-together. Links to other notes are also not sources in this sense, because a
+together. This is where the two bounds meet: every quoted passage lengthens the
+note, so quoting spends against the co-loading bound. The bounds are independent
+as constraints but coupled through this remedy. A claim whose joint support
+cannot be quoted within a note the reader can still co-load has only the
+snapshot route or a split left, and the split has to be by claim, so that each
+fragment states what it establishes. Links to other notes are also not sources in this sense, because a
 linked note carries its own claim title and its own grounding review; [a
 linked note discharges its own grounding, so a citing note owes it
 representation, not re-grounding](./a-linked-note-discharges-its-own-grounding-so-a-citing-note-owes.md).
@@ -154,7 +158,11 @@ redo the step. This is what a small step buys that a well-calibrated reviewer
 budget does not. A verdict resting on fourteen artifacts costs as much to audit
 as it cost to produce, so in practice it is trusted rather than audited; a
 verdict resting on three sources and six quoted passages can be re-checked from
-the same page. The value is not that the reviewer copes, but that the review
+the same page. What the page re-checks is the support judgment — that these
+passages carry this claim; whether a passage was lifted out of a qualifying
+context still costs a trip to the source, so the audit the bound buys is of the
+step the validator did not do, not of the one it cannot. The value is not that
+the reviewer copes, but that the review
 becomes auditable — and Commonplace's own measurement that language-model
 verdicts disagree with themselves on unchanged input is the reason auditability
 is worth paying for.

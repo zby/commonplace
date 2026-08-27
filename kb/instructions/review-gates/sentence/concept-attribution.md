@@ -14,11 +14,20 @@ The prose claims that a concept in this note IS a concept from a linked note, bu
 
 ## Test
 
-For each sentence that identifies this note's concept with a concept from another note — phrases like "this is the X problem from [note]," "this is X in architectural form," "the same mechanism as [note]'s Y" — read the target note's treatment of that concept. Does the target's version match the identity claim?
+For each sentence that identifies this note's concept with a concept from
+another note — phrases like "this is the X problem from [note]," "this is X in
+architectural form," "the same mechanism as [note]'s Y" — check the identity
+against the target. Read the target's title and opening paragraph first; judge
+there when the concept is the target's title claim. When it is an interior
+concept, judge this note's verbatim quotation of the target if it gives one;
+only otherwise locate the target's treatment of that concept.
 
-Read at most 5 distinct target notes per review; check every identity claim that points at a target you have read. Report all mismatches. If the limit leaves identity claims unchecked, name them in the findings.
+Check every identity claim. Name any target that cannot be resolved.
 
-An attribution is valid if the linked note's core concept supports the claim being made, even if the exact phrasing differs. Only flag when the linked note's treatment of the concept is substantively different — not merely when the vocabulary doesn't match verbatim.
+An attribution is valid if the linked note's core concept supports the claim
+being made, even if the exact phrasing differs. Only flag when the linked
+note's treatment of the concept is substantively different — not merely when
+the vocabulary doesn't match verbatim.
 
 ## Example (fail)
 

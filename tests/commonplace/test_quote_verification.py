@@ -2,7 +2,11 @@
 
 from pathlib import Path
 
-from commonplace.lib.quote_verification import normalize_text, verify_note
+from commonplace.lib.quote_verification import (
+    ingest_quotes_section,
+    normalize_text,
+    verify_note,
+)
 from commonplace.lib.validation import CheckResults, validate_verbatim_quotes
 
 
@@ -167,6 +171,84 @@ def test_missing_linked_source_is_unresolved(tmp_path: Path):
     results = verify_note(note)
 
     assert [result.status for result in results] == ["unresolved"]
+
+
+def _write_ingest_pair(tmp_path: Path, note_body: str, ingest_body: str) -> Path:
+    notes = tmp_path / "notes"
+    sources = tmp_path / "sources"
+    notes.mkdir()
+    sources.mkdir()
+    (sources / "src.ingest.md").write_text(ingest_body, encoding="utf-8")
+    note = notes / "note.md"
+    note.write_text(note_body, encoding="utf-8")
+    return note
+
+
+_INGEST_WITH_SUMMARY_PHRASE = (
+    "## Summary\n\n"
+    "The paper argues that shorter contexts help.\n\n"
+    "## Quotes\n\n"
+    "- **Source extract (verbatim):** an unrelated retained passage\n"
+    "  - **Source location:** Section 1.\n"
+)
+
+_INGEST_WITH_QUOTED_PHRASE = (
+    "## Summary\n\n"
+    "Analysis prose that does not repeat the passage.\n\n"
+    "## Quotes\n\n"
+    "- **Source extract (verbatim):** shorter contexts help\n"
+    "  - **Source location:** Section 1.\n"
+)
+
+
+def test_ingest_analysis_prose_does_not_satisfy_a_verbatim_quote(tmp_path: Path):
+    """An ingest's own analysis is not source support (ADR 073)."""
+    note = _write_ingest_pair(
+        tmp_path,
+        'The paper says "shorter contexts help" '
+        "([Ingest](../sources/src.ingest.md), Summary, verbatim).",
+        _INGEST_WITH_SUMMARY_PHRASE,
+    )
+
+    results = verify_note(note)
+
+    assert [result.status for result in results] == ["mismatch"]
+    assert results[0].detail == (
+        "normalized quotation does not occur in the linked ingest's Quotes section"
+    )
+
+
+def test_quote_retained_in_the_ingest_quotes_section_matches(tmp_path: Path):
+    note = _write_ingest_pair(
+        tmp_path,
+        'The paper says "shorter contexts help" '
+        "([Ingest](../sources/src.ingest.md), Section 1, verbatim).",
+        _INGEST_WITH_QUOTED_PHRASE,
+    )
+
+    assert [result.status for result in verify_note(note)] == ["match"]
+
+
+def test_non_ingest_source_still_matches_anywhere_in_the_file(tmp_path: Path):
+    note = _write_pair(
+        tmp_path,
+        'The paper says "shorter contexts help" '
+        "([Source](../sources/source.md), Summary, verbatim).",
+        "## Summary\n\nThe paper argues that shorter contexts help.\n",
+    )
+
+    assert [result.status for result in verify_note(note)] == ["match"]
+
+
+def test_ingest_without_a_quotes_section_supports_nothing(tmp_path: Path):
+    note = _write_ingest_pair(
+        tmp_path,
+        'The paper says "shorter contexts help" '
+        "([Ingest](../sources/src.ingest.md), Summary, verbatim).",
+        "## Summary\n\nThe paper argues that shorter contexts help.\n",
+    )
+
+    assert [result.status for result in verify_note(note)] == ["mismatch"]
 
 
 # --- validator integration ---------------------------------------------------
@@ -571,3 +653,28 @@ def test_marker_word_inside_a_link_target_is_not_a_citation(tmp_path: Path):
     )
 
     assert verify_note(note) == []
+
+
+def test_ingest_quotes_section_stops_at_the_next_h2():
+    content = "## Quotes\n\nretained passage\n\n## Recommended Next Action\n\nlater prose\n"
+
+    section = ingest_quotes_section(content)
+
+    assert "retained passage" in section
+    assert "later prose" not in section
+
+
+def test_ingest_quotes_section_is_empty_without_the_heading():
+    assert ingest_quotes_section("## Summary\n\nprose\n") == ""
+
+
+def test_quotation_wrapped_across_lines_is_verified(tmp_path: Path):
+    note = _write_pair(
+        tmp_path,
+        'The source states, verbatim, "the first half of the sentence\n'
+        'and its second half" ([Source](../sources/source.md)).',
+        "Intro. the first half of the sentence and its second half. Outro.",
+    )
+    results = _check(note)
+    assert not results.fails
+    assert any("1 resolve against their cited sources" in p for p in results.passes)

@@ -23,7 +23,11 @@ from commonplace.lib.index_generated import (
     collect_collection_tag_index,
 )
 from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH, MAX_NOTE_TITLE_LENGTH
-from commonplace.lib.note_parser import ParsedDocument, parse_document
+from commonplace.lib.note_parser import (
+    ParsedDocument,
+    find_markdown_links_with_text,
+    parse_document,
+)
 from commonplace.lib.project_paths import (
     collection_for_path,
     is_collection_dir,
@@ -31,7 +35,12 @@ from commonplace.lib.project_paths import (
     iter_validation_markdown_files,
     kb_root,
 )
-from commonplace.lib.quote_verification import normalize_text, verify_content
+from commonplace.lib.quote_verification import (
+    INGEST_QUOTES_HEADING_RE,
+    NEXT_H2_RE,
+    normalize_text,
+    verify_content,
+)
 from commonplace.lib.snapshot import (
     DuplicateSnapshotError,
     find_snapshot_by_sha256,
@@ -56,6 +65,15 @@ TAG_README_MAX_FANOUT = 7
 # Validator messages must name the fixing instruction so the maintenance loop
 # is self-routing (ADR 026).
 _TAG_README_FIX_HINT = "see kb/instructions/maintain-curated-indexes.md"
+
+# Artifact-side grounding bound: a note may cite at most this many distinct
+# tracked sources without a verified verbatim quotation paired to each, so
+# that its grounding review fits one pass. Note links are exempt;
+# `(snapshot required)` sources always count.
+MAX_UNQUOTED_SOURCES = 5
+_UNQUOTED_SOURCES_FIX_HINT = (
+    "quote the supporting passage verbatim via cp-skill-ground, or split the claim"
+)
 
 # Generated connect reports preserve the complete source-artifact stem and add
 # `.connect` for a stable, reversible mapping. Exempting that derived filename
@@ -542,8 +560,6 @@ INGEST_QUOTE_RE = re.compile(
     r"^\s*-\s*\*\*Source extract \(verbatim\):\*\*\s*(?P<text>.+?)\s*$",
     re.MULTILINE,
 )
-INGEST_QUOTES_HEADING_RE = re.compile(r"^## Quotes[ \t]*$", re.MULTILINE)
-NEXT_H2_RE = re.compile(r"^##[ \t]+", re.MULTILINE)
 EMPTY_INGEST_QUOTES_SENTENCE = "No source quotes have been retained yet."
 SNAPSHOT_REQUIRED_MARKER = "(snapshot required)"
 SNAPSHOT_SHA256_RE = re.compile(
@@ -1011,6 +1027,69 @@ def validate_article(
     else:
         results.passes.append(
             f"source_notes: all {len(source_notes)} paths resolve"
+        )
+
+
+@type_rule("kb/types/note.md", "kb/notes/types/structured-claim.md")
+def validate_unquoted_sources(
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+) -> None:
+    """Bound the tracked sources a note cites without a verified verbatim quote.
+
+    Each unquoted tracked source is a full read a grounding reviewer has to
+    perform; past the bound the review no longer fits one pass. A source marked
+    `(snapshot required)` counts even when a quote resolves, because the claim
+    it carries needs the snapshot rather than the retained extract.
+    """
+    repo_root = run.repo_root.resolve()
+    targets: dict[Path, bool] = {}
+    for text, link in find_markdown_links_with_text(parsed.document.body):
+        target = _resolve_local_link_target(parsed.path, link)
+        if target is None or not target.name.endswith(".ingest.md"):
+            continue
+        try:
+            relative = target.relative_to(repo_root)
+        except ValueError:
+            continue
+        if not relative.as_posix().startswith("kb/sources/"):
+            continue
+        targets[target] = targets.get(target, False) or (
+            SNAPSHOT_REQUIRED_MARKER in text
+        )
+
+    # Most notes cite no tracked source; a pass line there would be noise.
+    if not targets:
+        return
+
+    quoted = {
+        result.source
+        for result in verify_content(
+            parsed.content,
+            parsed.path,
+            load_source=lambda path: run.load_document(path).content,
+        )
+        if result.status == "match"
+    }
+    unquoted = sorted(
+        (
+            target
+            for target, snapshot_required in targets.items()
+            if snapshot_required or target not in quoted
+        ),
+        key=lambda target: target.name,
+    )
+
+    if len(unquoted) > MAX_UNQUOTED_SOURCES:
+        names = ", ".join(target.name for target in unquoted)
+        results.warns.append(
+            f"unquoted sources: {len(unquoted)} distinct tracked sources cited "
+            f"without a verified verbatim quote (limit {MAX_UNQUOTED_SOURCES}); "
+            f"{_UNQUOTED_SOURCES_FIX_HINT}: {names}"
+        )
+    else:
+        results.passes.append(
+            f"unquoted sources: {len(unquoted)} of {len(targets)} tracked sources "
+            f"need a full read (limit {MAX_UNQUOTED_SOURCES})"
         )
 
 
