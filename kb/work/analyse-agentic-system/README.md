@@ -97,8 +97,8 @@ These are design questions, not permission to mechanically relocate or patch the
 - [x] `acceptance.md` — **Verdict: PROMOTE WITH NAMED CHANGES** (fresh reviewer, 2026-08-21). Twelve required changes in its §5, all text-local (~10 lines added, 3 removed); no design decision reopened, nothing the trials validated disturbed. Frontmatter resolved with named values (§6). Nine known limits routed to a `kb/reference/proposals/` design proposal so they survive workshop deletion (§8).
 - [x] apply the twelve required changes from `acceptance.md` §5 to `candidate.md` — all applied 2026-08-21, plus a full self-narration sweep and the two record corrections (this file's audit-link claim; `brief.md`'s superseded four-combination criterion). Link resolution from the promotion path verified: 9 markdown links resolve, the one code-span pointer exists. **`candidate.md` is ready for promotion; the coordinator writes the target.**
 - [x] promotion — `kb/instructions/analyse-agentic-system/SKILL.md` written from `candidate.md` (200 lines, byte-identical), 2026-08-21. `commonplace-validate`: **PASS (clean)**, zero warnings, all local relative links resolve. Projected as committed relative symlinks into `.claude/skills/` and `.agents/skills/`, and confirmed discoverable by the harness. Collection navigation deliberately not touched: `kb/reference/README.md:52` still describes the memory-review workflow this skill will eventually subsume, and rewriting it belongs to the corpus migration below, not to promotion
-- [ ] collection/type/schema migration design
-- [ ] corpus regeneration plan
+- [ ] collection/type/schema migration design — includes deciding whether context-operation interface and projection boundary belong in the general result contract rather than the legacy memory matrix
+- [ ] corpus regeneration plan — includes Scroll as a candidate pilot, using its pinned source boundary rather than mechanically translating the existing memory review
 
 ## Lens-routing trial design
 
@@ -125,6 +125,7 @@ Slate provenance: two scouting passes over the reviewed pool found no clean runt
 
 ## Pending handoffs
 
+- **Parked Scroll/context-operation migration input (2026-08-27).** The legacy [Scroll memory review](../../agent-memory-systems/reviews/scroll.md) remains migration input, not a target for further matrix development. After the target collection/type/schema is fixed, source-regenerate Scroll through the unified workflow as a candidate pilot. During schema design, disposition the [context-operation interface](../../notes/context-operation-interface-bounds-context-policy.md) and projection-boundary distinctions as possible general agentic-system fields. Do not add them to the legacy `kb/agent-memory-systems/systems.csv` or its rendered table.
 - Revise `kb/agentic-systems/COLLECTION.md` only after the instruction and output shape survive representative trials.
 - Replace or retire the current memory review type, schema, skill, matrix discovery, and separate collection only through a source-regeneration migration; do not mechanically retrofit semantic classifications.
 - Reconcile the current memory type/schema trace-learning drift (`trace-learning`/`### Trace-learning` in the type versus legacy `trace-derived`/`### Trace-derived learning` in the schema) before treating the schema as the durable lens contract.

@@ -6,7 +6,7 @@
 - Collection: `kb/notes/`
 - Type: `kb/types/note.md`
 - Acceptance review: complete (`PASS`)
-- Run state: completed and retained for the remaining matrix-axis handoff below
+- Run state: completed; downstream review and schema work transferred to the unified agentic-system workshop
 
 ## Inputs
 
@@ -35,10 +35,11 @@ None.
 ## Completed handoffs
 
 1. Target: `kb/agent-memory-systems/reviews/scroll.md`. Completed 2026-08-27 as a code-grounded review of the `scroll-research` implementation at commit `3db60c5975187fc7c549e16573567a7cd21fd51f`.
+2. The proposed operation-interface and projection-boundary comparison work was transferred on 2026-08-27 to [Workshop: analyse an agentic system](../../analyse-agentic-system/README.md). That workshop will decide whether these distinctions belong in the general agentic-system result contract and will treat Scroll as a source-regeneration candidate.
 
 ## Pending handoffs
 
-1. Target: `kb/agent-memory-systems/systems.csv` and its rendered matrix. Proposed delta: consider adding operation-interface and projection-boundary axes. User authorization: record as a later handoff only; do not execute in this run. Order: only in a separately authorized change. The ordinary row and table regeneration performed with the Scroll review does not execute this schema extension.
+None. Do not extend the legacy agent-memory `systems.csv` or rendered table with these axes; the unified agentic-system workshop now owns their disposition.
 
 ## Grounding guard
 
