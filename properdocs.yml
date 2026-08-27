@@ -29,7 +29,7 @@ plugins:
       redirect_maps:
         'agent-memory-systems/landscape.md': 'agent-memory-systems/README.md'
         'agent-memory-systems/related-systems-index.md': 'agent-memory-systems/README.md'
-        'articles/atomic-steps-size-the-note-to-its-check.md': 'work/atomic-step-article/draft-article.md'
+        'articles/atomic-steps-size-the-note-to-its-check.md': 'notes/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md'
         'articles/recursive-targetability.md': 'articles/what-makes-human-inclusive-self-revision-non-trivial.md'
         'articles/reflective-self-improvement.md': 'articles/when-systems-learn-theories-about-themselves.md'
         'articles/what-makes-a-system-self-improving.md': 'articles/when-systems-learn-theories-about-themselves.md'
