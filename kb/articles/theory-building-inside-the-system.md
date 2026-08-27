@@ -1,5 +1,5 @@
 ---
-description: "Given an interpreter that can apply retained natural-language theory, a system can make the theory operative through its consumption path, turn it into learned state through theory-mediated learning, and formalize its stable parts without removing the theory–world question"
+description: "With an interpreter that applies retained theory, a system can make the theory operative via its consumption path, turn it into learned state through theory-mediated learning, and formalize stable parts without closing the theory–world question"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
