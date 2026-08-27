@@ -7,9 +7,11 @@ workshop
 
 **Audited starting commit:** `6660bd2ad0d53938551ac283f60463f3c3d91b8e`
 
-**State:** active. Design inputs exist, but no adopting ADR, logical-root and
-participation declarations, exact resolver, consumer migration, canonical tag
-collection, or upgrade migration has landed.
+**State:** active. The [readiness pass](./plans/00-readiness.md) fixed the
+activation boundary, declaration syntax, resolver surface, transitional head
+model, consumer ledger, and fixture. Core implementation waits for minimal I3;
+no adopting ADR, live participation declaration, exact resolver, consumer
+migration, canonical tag collection, or upgrade migration has landed.
 
 ## Goal
 
@@ -92,21 +94,27 @@ The adopting decision should begin from these narrow choices:
 - Canonical heads are the vocabulary registry. Do not add a second manually
   maintained known-tags list unless a concrete provisional-tag lifecycle needs
   one.
+- Phase 2 activates these semantics once, with live participation declarations,
+  mandatory transitional heads, every exact-membership consumer, and the
+  accepted ADR. Phase 1 may land dormant resolver machinery; Phase 3 later
+  changes head representation without changing membership.
 
 These are workshop selections until an ADR adopts them.
 
 ## Staged program
 
+0. [Readiness and execution inventory — complete](./plans/00-readiness.md)
 1. [Semantic foundation and exact resolver](./plans/01-semantic-resolver.md)
-2. [Consumer convergence](./plans/02-consumer-convergence.md)
+2. [Consumer convergence and contract activation](./plans/02-consumer-convergence.md)
 3. [Canonical heads and migration](./plans/03-canonical-heads-migration.md)
 4. [Independent metadata cleanup and empirical follow-up](./plans/04-cleanup-and-follow-up.md)
 
-The first three phases share one invariant but land as separately reviewable
-changes. Phase 2 is where the original contradiction closes. Phase 3 changes
-canonical paths only after consumers resolve semantics correctly in existing
-locations. Source-family cleanup is independent and must not enlarge the core
-adoption patch.
+Phase 1 is separately landable only while its resolver and head lookup remain
+dormant. Phase 2 is the single activation packet: the accepted ADR, live
+declarations, head requirement, consumer switches, and witness repairs change
+operative behavior together. Phase 3 changes canonical paths only after
+consumers resolve semantics correctly in existing locations. Source-family
+cleanup is independent and must not enlarge the core adoption patch.
 
 ## External dependencies
 

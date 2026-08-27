@@ -14,14 +14,17 @@ the semantic foundation patch.
 1. Add the `kb/tags/` collection contract and landing. Define its introduction
    quality goal, common meaning/use/boundary/route/stopping prefix, and
    cross-library link grammar.
-2. Move the existing per-tag heads to direct children of `kb/tags/` and add the
-   required `trace-learning` head. Derive the execution inventory rather than
-   freezing today's count.
+2. Re-derive all transitional heads and participating tags. Move every head to
+   a direct child of `kb/tags/`; Phase 2 has already required and dispositioned
+   a head for each participating tag, including `trace-learning`. Never freeze
+   a head count in migration code or acceptance.
 3. Let filenames supply canonical tag identity. Remove `index_source: tag`,
    `index_key`, the legacy `tags-README.md` hub, and
    `index_source: tag-indexes` after moving useful hub prose to the landing.
 4. Update footer routing, generated augmentation, review-sweep scope, redirects,
-   and every path-constructing consumer without retaining a legacy fallback.
+   and every path-constructing consumer. Switch `resolve_tag_head` from legacy
+   metadata lookup to direct canonical construction without retaining a legacy
+   fallback.
 5. Give every projection-sensitive head link an explicit I2 disposition.
    Scaffold an empty host tag collection and project eligible Commonplace heads
    under the vendored logical root without merging namespaces.
@@ -32,8 +35,7 @@ the semantic foundation patch.
 
 ## Acceptance
 
-- Every eligible artifact reaches its own root's canonical head when one
-  exists.
+- Every tag on an eligible artifact reaches its own root's canonical head.
 - Host and vendored heads, marks, and generated listings remain independent.
 - No live duplicate head identity or legacy hub identity remains.
 - Every shipped head link resolves in the selected installed edition.
