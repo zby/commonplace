@@ -21,6 +21,11 @@ Four drafts form one sequence and are best read in this order: the disagreement 
 - [When systems learn theories about themselves](./when-systems-learn-theories-about-themselves.md) — treats theory-mediated, reflective, and self-improving as independent properties of a learning system, states the architecture and evidence tests for their intersection, reads three recent harnesses against them, and says what Commonplace can and cannot show.
 - [Continual learning outside the weights](./continual-learning-outside-the-weights.md) — accepts Sutton and Javed's big-world premise and their question of what keeps knowledge correct, parts from one inference about where learning must live, and describes a frozen interpreter over a revisable artifact layer as a second substrate with its own scope, limits, and a comparison that would decide between the two.
 
+Two earlier drafts stand on their own and are cited by the sequence:
+
+- [The Bitter Lesson does not require everything to live in weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) — separates Sutton's 2019 search-and-learning claim from a weights-only extrapolation, and names credit assignment, evaluation, and decomposition revision as the open problems for learned artifacts.
+- [What makes human-inclusive self-revision non-trivial](./what-makes-human-inclusive-self-revision-non-trivial.md) — develops the declared system boundary with maintainers inside it, the audit of Commonplace's operating paths, and the admission machinery through which agent-proposed changes are installed.
+
 ---
 
 Authoring and publication conventions live in [COLLECTION.md](./COLLECTION.md); [ADR 057](../reference/adr/057-articles-use-an-editorial-profile-and-excluded-drafts.md) records the design.
