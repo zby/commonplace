@@ -55,7 +55,7 @@ Curation operations and the full authority and signal flag sets are dropped from
 this compact view; they live in [`systems.csv`](./systems.csv).
 
 
-## The systems (148 code-reviewed)
+## The systems (155 code-reviewed)
 
 | System | What it is | Storage | Read-back | Targeting | Learns from traces | Enforces |
 |---|---|---|---|---|---|---|
@@ -68,6 +68,7 @@ this compact view; they live in [`systems.csv`](./systems.csv).
 | [AgentFly](./reviews/AgentFly.md) | planner-executor agent with JSONL case-bank memory, trace-judged case writes, and parametric or SimCSE case read-back | files | push | targeted | yes | — |
 | [Agentic Harness Engineering](./reviews/agentic-harness-engineering.md) | trace-driven outer loop that distills coding-agent rollouts into debugger reports and durable harness edits | files | both | targeted | yes | yes |
 | [Agentic Local Brain](./reviews/agentic-local-brain.md) | local PKM capture into Markdown, SQLite, Chroma vectors, mining tables, RAG chat traces, and recommendation ranking | sqlite | both | targeted | yes | — |
+| [AI Research OS Workshop](./reviews/ai-research-os-workshop.md) | source-preserving Markdown research wikis with progressive pull retrieval, multi-agent synthesis, and deterministic indexes | files | pull | — | no | yes |
 | [AI-Context-OS](./reviews/AI-Context-OS.md) | filesystem-first Markdown memory with L0/L1/L2 context loading, generated adapters, MCP/chat read-back, and trace-learning optimization suggestions | files | both | targeted | yes | — |
 | [ai-memex-cli](./reviews/ai-memex-cli.md) | Git-backed Markdown vault, agent skill workflows, trace distillation, lint/watch loops, and context bootstrap | files | both | coarse | yes | — |
 | [ai-modules](./reviews/theafh--ai-modules.md) | deployable multi-vendor skill/plugin bundle with Markdown wiki, session wrapup, task backlog, and linted file memory | files | pull | — | yes | yes |
@@ -114,6 +115,7 @@ this compact view; they live in [`systems.csv`](./systems.csv).
 | [Eidetic](./reviews/eidetic.md) | Claude Code Markdown memory with hook-pushed context, FTS/vector recall, trace capture, compounding, drift penalties, and vault export | files | both | targeted | yes | — |
 | [Engraph](./reviews/engraph.md) | local Obsidian-vault gateway with hybrid search, MCP/HTTP tools, identity context, and folder-feedback learning | files | pull | — | no | yes |
 | [EQUIPA](./reviews/equipa.md) | SQLite-backed agent orchestrator with trace-learning lessons, episodes, prompt variants, and prompt-time read-back | sqlite | both | targeted | yes | — |
+| [Exo](./reviews/exo.md) | file-backed long-running agent with append-only traces, coarse-pushed memory, progressive skills, and reversible self-modification | files | both | coarse | no | yes |
 | [Exocomp](./reviews/exocomp.md) | Go multi-agent coding workbench with YAML roles, .exocomp ledgers, sandboxed tools, skills, and recovery | files | both | coarse | no | yes |
 | [ExpeL](./reviews/expel.md) | trace-learning benchmark agent that distills task trajectories into rules and retrieves prior trials as few-shots | files | both | targeted | yes | — |
 | [Funes](./reviews/funes.md) | Git-native Librarian protocol for raw-source preservation, compiled Markdown wiki memory, outputs, and health-check governance | repo | pull | — | no | — |
@@ -123,12 +125,14 @@ this compact view; they live in [`systems.csv`](./systems.csv).
 | [Gnosis](./reviews/gnosis.md) | repo-local why-memory CLI with JSONL entries, disposable SQLite FTS search, doctrine-guided capture, and pull-only read-back | files | pull | — | no | — |
 | [Graphiti](./reviews/graphiti.md) | temporal graph memory with episode provenance, LLM extraction, fact invalidation, hybrid retrieval, MCP tools, and pull-only activation | graph | pull | — | yes | — |
 | [HALO](./reviews/halo.md) | trace-learning agent-harness optimizer with SQLite desktop trace store, JSONL trace indexes, recursive trace agents, and local analysis runs | sqlite | pull | — | yes | — |
+| [Hermes Agent](./reviews/hermes-agent.md) | Code-grounded review of Hermes Agent's bounded prompt memory, progressive skills, session recall, background trace learning, and skill curation | files | both | targeted | yes | yes |
 | [Hindsight](./reviews/hindsight.md) | service-backed agent memory with LLM fact extraction, observations, hybrid recall, integrations, hooks, transfer, and trace-learning | rdbms | both | targeted | yes | — |
 | [HippoRAG](./reviews/HippoRAG.md) | document-ingest memory framework using OpenIE triples, parquet embedding stores, igraph PageRank retrieval, and RAG QA | files | pull | — | no | — |
 | [hyalo](./reviews/hyalo.md) | Rust CLI for structured Markdown vault search, mutation, linting, snapshot indexes, and Claude skill/rule integration | files | pull | — | no | yes |
 | [HyperAgents](./reviews/hyperagents.md) | self-improving agent harness where trace-learning benchmark feedback promotes executable patch lineages | files | push | targeted | yes | yes |
 | [interview-doc-agent](./reviews/interview-doc-agent.md) | single-file job-document skill using a file-native experience library, templates, and index-guided context | files | pull | — | no | — |
 | [KBLaM](./reviews/KBLaM.md) | model-integrated key/value knowledge injection with trained encoders, modified attention, and KB-conditioned generation | files | push | targeted | no | — |
+| [kgai](./reviews/kgai.md) | local-first Go CLI storing engineering decisions as an append-only content-addressed event log projected into an embedded Kuzu graph, with Claude Code auto-capture | files | pull | — | no | yes |
 | [Kompl](./reviews/Kompl.md) | SQLite-backed knowledge compiler that ingests sources into a generated wiki with provenance, FTS/vector retrieval, MCP tools, and chat-derived drafts | sqlite | both | targeted | yes | yes |
 | [LACP](./reviews/lacp.md) | local control-plane agent harness with trace-learning Obsidian/SMS memory, hook-time context injection, RAG pull, and policy gates | files | both | targeted | yes | yes |
 | [Letta](./reviews/letta.md) | stateful agent server with core memory blocks, archival and recall tools, compaction, sleeptime memory agents, and optional git-backed memory | rdbms | both | targeted | yes | yes |
@@ -169,6 +173,7 @@ this compact view; they live in [`systems.csv`](./systems.csv).
 | [Phantom](./reviews/phantom.md) | VM co-worker with Qdrant memory, heuristic session extraction, and queued self-evolution over config files | vector | both | targeted | yes | yes |
 | [pi-self-learning](./reviews/pi-self-learning.md) | pi extension that reflects completed agent sessions into git-backed daily, core, and long-term memory files | files | both | coarse | yes | — |
 | [Playground](./reviews/playground.md) | TribleSpace pile runtime with user-created temporal memory chunks and budget-aware context cover | graph | both | coarse | no | — |
+| [pond](./reviews/pond.md) | Lance-backed cross-harness agent-session archive with canonical codecs, scheduled ingestion, BM25/vector recall, read-only MCP/SQL, and pull-only read-back | files | pull | — | yes | — |
 | [Quicky Wiki](./reviews/quicky-wiki.md) | document-derived SQLite claim graph with confidence events, metabolism, generated wiki files, and MCP pull tools | sqlite | pull | — | no | — |
 | [ReasoningBank](./reviews/reasoning-bank.md) | trace-learning benchmark memories selected by embeddings and injected into WebArena and mini-SWE-agent prompts | files | both | targeted | yes | — |
 | [Reflexion](./reviews/reflexion.md) | benchmark agents turn failed trajectories and test feedback into task-local verbal lessons for later attempts | in-memory | push | targeted | yes | — |
@@ -176,6 +181,7 @@ this compact view; they live in [`systems.csv`](./systems.csv).
 | [REM](./reviews/REM.md) | episodic memory service with trace-learning episodes, vector/graph retrieval, LangChain injection, and partially wired consolidation | rdbms | both | targeted | yes | — |
 | [SAGE](./reviews/sage.md) | consensus-governed local agent memory with MCP turn capture, hooks, hybrid recall, decay, and corroboration | sqlite | both | targeted | yes | yes |
 | [sage-wiki](./reviews/sage-wiki.md) | LLM-compiled wiki memory with SQLite search/vector/ontology state, MCP pull tools, session capture, and trust gates | files | pull | — | yes | — |
+| [Scroll](./reviews/scroll.md) | SQLite-backed executable context manager with write-through interaction traces, tiered eviction maps, validated summaries, and programmable recall | sqlite | both | targeted | yes | yes |
 | [Secure LLM-Wiki](./reviews/secure-llm-wiki.md) | hardened claim-wiki pipeline with nonce-delimited extraction, trust tiers, adversarial review, write gates, quarantine, and coarse read-back | files | both | coarse | no | yes |
 | [Self-Training-LLM](./reviews/Self-Training-LLM.md) | offline synthetic Wikipedia QA generation, uncertainty-filtered SFT/DPO datasets, and model-weight learning rather than contextual memory | files | pull | — | yes | — |
 | [Semiont](./reviews/semiont.md) | event-sourced W3C annotation KB with human/AI peer workflows, graph/vector projections, context gathering, and pull-based agent access | files | pull | — | no | — |
@@ -191,6 +197,7 @@ this compact view; they live in [`systems.csv`](./systems.csv).
 | [Sparks](./reviews/sparks.md) | Go runtime for Karpathy-style LLM wikis with deterministic ingest, manifest, lint, collection, query, brief, and MCP plumbing | files | pull | — | no | yes |
 | [Stash](./reviews/stash.md) | MCP-served Postgres/pgvector memory with episodes, consolidated facts, graph-like relations, goals, failures, hypotheses, and decay | rdbms | pull | — | no | — |
 | [supermemory](./reviews/supermemory.md) | hosted memory API with generated SDK contracts, profile/search injection middleware, MCP tools, browser capture, graph UI, and trace-learning memory | service-object | both | targeted | yes | — |
+| [Swamp](./reviews/swamp.md) | agent-authored automation compiled into validated YAML workflows, with versioned operational data and progressively disclosed skills | files | pull | — | no | yes |
 | [Synapptic](./reviews/synapptic.md) | trace-learning user-model builder that mines Claude transcripts into weighted profiles, benchmarked guards, and assistant memory files | files | both | targeted | yes | — |
 | [Synthadoc](./reviews/synthadoc.md) | local LLM wiki compiler with Markdown pages, provenance, lifecycle audit, query agents, routing, SSE UI, and context packs | files | both | targeted | no | yes |
 | [Synto](./reviews/synto.md) | local LLM vault compiler that turns raw notes into reviewed Markdown wiki articles, SQLite identity state, agent packs, and MCP read tools | files | both | targeted | yes | yes |

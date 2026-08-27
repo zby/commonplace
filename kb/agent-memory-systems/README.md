@@ -4,7 +4,7 @@ A survey of external **agent memory systems** — how AI agents store, retrieve,
 **Choosing or designing one?** Scan the [comparison table](./systems-table.md) — one
 row per system, a plain-English description plus the handful of fields that
 actually discriminate. Then read the [comparison](./agentic-memory-systems-comparative-review.md),
-which synthesizes the current 148-row matrix, and
+which synthesizes a 148-system matrix snapshot, and
 browse the repo-backed reviews under `reviews/` — each reads the actual
 code and reports what a system _does_, not what its README claims.
 
@@ -45,7 +45,7 @@ Cross-cutting reads:
 
 - [Comparison table](./systems-table.md) — one scannable row per code-reviewed system
   
-- [Comparison](./agentic-memory-systems-comparative-review.md) — the current synthesis across 148 code-reviewed systems
+- [Comparison](./agentic-memory-systems-comparative-review.md) — synthesis across its 148-system code-reviewed snapshot
   
 - [Trace-learning techniques in related systems](./trace-learning-techniques-in-related-systems.md) — broadens the comparison to artifact-learning and weight-learning systems fed by live traces
   
@@ -91,6 +91,8 @@ The divergences are more revealing:
 - **System boundary** — CocoIndex sits one layer below most systems here: it is an incremental engine for maintaining derived vector/graph/relational projections, not a primary knowledge medium. That makes it more relevant to our "operational layer beneath the KB" question than to the note/link semantics question directly
   
 - **Agent-facing UX** — Napkin is the clearest example of treating CLI output itself as part of the memory architecture: hidden scores, match-only snippets, and next-step hints are all tuned for model behavior rather than human browsing. Most other systems focus on storage and retrieval internals but leave the interaction layer human-shaped
+
+- **Context-operation interface** — Scroll combines a coarse pushed map with structured recall and model-authored Python over a retention-bounded event store, while Virtual Context uses proxy-owned selection plus paging tools. The comparison supports [context-operation interface bounds context policy](../notes/context-operation-interface-bounds-context-policy.md): retained volume alone does not determine what a controller can project into the next bounded call
   
 - **Packaging unit** — most systems distribute concerns across multiple files (notes, configs, scripts, indexes), but o-o pushes the opposite extreme: each document is a self-contained polyglot file carrying rendering, update contract, shell dispatch, source cache, and changelog. That maximizes portability and local inspectability at the cost of modularity and inter-document structure
   

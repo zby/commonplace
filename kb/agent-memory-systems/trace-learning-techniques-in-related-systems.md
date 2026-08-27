@@ -9,7 +9,7 @@ tags: [learning-theory, observability]
 
 Trace-learning systems learn from CLI sessions, event streams, assistant turns, run trajectories, or next-state feedback. This note reviews what each system actually does, then draws out the axes that separate them: how they ingest traces (ingestion pattern), what representational form they promote into (distributed-parametric, natural-language, symbolic, or mixed), and what behavioral authority the result has (knowledge artifact consumed as evidence/advice vs system-definition artifact consumed with instruction, enforcement, routing, validation, evaluation, or learning force).
 
-The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, Claude Workstream Kit, nao, MemoryOS, ClawVault, CrewAI Memory, cass-memory, deja-vu, pond, Compound Engineering, WUPHF, REM, Autocontext, Meta-Harness, Agentic Harness Engineering, HALO, ARIS, Hermes Agent, Reflexion, Dynamic Cheatsheet, Agent Workflow Memory, ACE, ExpeL, ReasoningBank, G-Memory, AgentFly, Gnosis, Voyager, OS-Copilot, Tendril, SkillX, SkillRL, SkillWeaver, AriGraph, Amazon Science SAGE, Agent-R, Agent-S, and Self-Training-LLM (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The lightweight systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
+The review-backed code-inspected systems are Napkin, Pi Self-Learning, OpenViking, Operational Ontology Framework, Claude Workstream Kit, nao, MemoryOS, ClawVault, CrewAI Memory, cass-memory, deja-vu, pond, Scroll, Compound Engineering, WUPHF, REM, Autocontext, Meta-Harness, Agentic Harness Engineering, HALO, ARIS, Hermes Agent, Reflexion, Dynamic Cheatsheet, Agent Workflow Memory, ACE, ExpeL, ReasoningBank, G-Memory, AgentFly, Gnosis, Voyager, OS-Copilot, Tendril, SkillX, SkillRL, SkillWeaver, AriGraph, Amazon Science SAGE, Agent-R, Agent-S, and Self-Training-LLM (source paths noted in per-system reviews). OpenClaw-RL is a TODO for repo-backed review now that a repository exists; its current placement is based on source coverage. The lightweight systems — AgeMem and Trajectory-Informed Memory Generation — are included with lower confidence, based on local ingest notes rather than implementation inspection.
 
 **What the survey finds.** Across readable artifacts, structure ranges from minimal verbal hints (Reflexion) through scored flat rules (ACE, ExpeL) to executable code (Voyager, OS-Copilot) — the natural-language content-to-symbolic span. Candidate generation from traces is concrete enough to adapt; the open problem is evaluation — deciding what deserves trust, persistence, and retirement in open-ended domains. The per-system catalog below provides the evidence; the comparative analysis follows it.
 
@@ -200,6 +200,20 @@ A value-complete trace-to-recall system: cross-harness agent histories become on
 **Reinjection.** Agents or users explicitly pull ranked snippets, sessions, messages, or SQL results through CLI, HTTP, or read-only MCP. Static skill/tool instructions encourage recall but no retained session content is pushed automatically.
 
 **Scope.** Cross-harness, cross-machine, and cross-task, with project/session/source/date filters at read time. [The Pond review](./reviews/pond.md) extends the weak-promotion branch beyond deja-vu's lexical index: a trace archive can add parametric ranking and object-store scale while remaining evidence memory rather than semantic distillation.
+
+## Scroll
+
+A framework-integrated context manager that turns the live interaction trace into both a retention-bounded recall environment and a bounded working-state projection.
+
+**Trigger.** Every live turn is written through to SQLite. Context pressure triggers tool-result folding, middle eviction, eviction-index updates, and continuation-summary generation; startup and teardown handle session import and retention.
+
+**Source format.** Typed QwenPaw/AgentScope messages: user and assistant text, tool calls and results, message tags, timestamps, and restored session JSON. The history store preserves structured rows rather than flattening the trace to transcript text.
+
+**Extraction.** Code serializes raw events and compiles FTS and tiered sequence maps. The acting model emits a hidden retrieval headline for each substantive response, while a separate model call updates a fixed-section continuation summary from bounded archived evidence. Local validation checks shape, durable sequence endpoints, secrets, duplicates, and opaque identifiers, but supplies no outcome oracle or semantic-entailment test.
+
+**Promotion.** SQLite history rows and the separately retained full files for oversized tool outputs remain the evidence authority within their independent retention windows. Derived headlines, a tiered eviction map, a continuation summary, FTS state, and optional model-authored scratch tables provide knowledge, routing, and ranking rather than reviewed rules or policy. The map and summary are pushed after compression; sequence spans, lexical search, tool results, and Python computations remain pull paths.
+
+**Scope.** Raw history is workspace-local and searchable across one agent's sessions by default; the eviction map and continuation summary are session-specific. [The Scroll review](./reviews/scroll.md) adds a context-runtime subtype to the trace-to-recall branch: the learned surface is a retention-bounded query environment plus task-resumption cache, not a promoted cross-project lesson library.
 
 ## Compound Engineering
 
@@ -649,7 +663,7 @@ With the per-system evidence in place, the two axes previewed in the introductio
 
 **Local trace recall index.** Discover existing session stores from several harnesses, preserve the original logs as authority, and build a redacted access structure for later lookup rather than mining lessons. deja-vu fits here: it indexes Claude, Codex, and opencode histories into a local lexical cache, then serves pull recall and optional project-scoped startup context. This category separates "trace-extracted memory as search substrate" from systems that distill traces into playbooks or policies.
 
-**Framework-integrated runtime memory.** Live inside the agent framework, consume task/run outputs and optional human feedback at the framework hook boundary, and promote into the same memory store that later prompt assembly uses. CrewAI Memory is the clear case here. It is not an external service, and it is not an offline trajectory learner; its distinctive feature is tight integration with agent execution.
+**Framework-integrated runtime memory.** Live inside the agent framework and capture trace material at the execution boundary into the same store that later context assembly uses. CrewAI Memory extracts task/run outputs and optional human feedback into scoped records. Scroll instead writes through the structured interaction stream, then derives a source-addressed eviction map and task-state cache while preserving addressable source traces. Neither is an external service or an offline trajectory learner; their shared distinction is tight integration with agent execution.
 
 **Online capability creation.** Keep the runtime's bootstrap tool surface stable, but let the agent turn live task needs into durable callable artifacts during deployment. Tendril is the clean case: it lists workspace capabilities, registers a new Deno TypeScript tool when none fits, then executes future requests by capability name. This differs from trajectory-run systems because there is no offline consolidation phase; the write immediately creates a system-definition artifact.
 
@@ -659,7 +673,7 @@ With the per-system evidence in place, the two axes previewed in the introductio
 
 ### Axis 2: promotion target / representational form
 
-**Trace-to-recall access structures.** Mine traces into searchable records, indexes, metadata, and context digests whose job is to make prior episodes findable, not to assert a new lesson. deja-vu is the clean case: its durable learned surface is a redacted lexical cache plus routing/ranking metadata. The original session logs remain the evidence authority; the promoted artifact changes future work only by retrieval and optional startup injection.
+**Trace-to-recall access structures.** Mine traces into searchable records, indexes, metadata, and context digests whose job is to make prior episodes findable, not to assert a new lesson. deja-vu is the clean cross-harness case: its durable learned surface is a redacted lexical cache plus routing/ranking metadata. Scroll is the runtime-integrated variant: it owns a retention-bounded SQLite trace, compiles sequence-addressed headlines and a continuation cache, and combines coarse push with model-directed recall and computation. In both, original trace evidence remains authoritative; the derived artifacts improve access and continuity without becoming policy.
 
 **Readable artifact learning.** Mine traces into inspectable artifacts — observations, tips, playbooks, reports, executable code, structured memory records, case rows, or skill patches. Keep learned results in forms humans can inspect, diff, or curate. Use heuristics, recurrence, judges, or retrieval-time relevance to decide what persists. ClawVault, CrewAI Memory, cass-memory, REM, nao, MemoryOS, Tendril, and Trajectory-Informed Memory Generation fit cleanly; Autocontext for its playbooks and reports; Napkin, Pi Self-Learning, Operational Ontology Framework, and Gnosis in narrower senses; Reflexion, Dynamic Cheatsheet, Agent Workflow Memory, ACE, ExpeL, ReasoningBank, AgentFly, SkillX, SkillRL, Agent-S, and G-Memory as trajectory-run artifact-learners. AriGraph adds a temporary symbolic-state variant: traces become triplets, graph edges, embeddings, and episodic records that are inspectable in code/log terms but not promoted into a maintained library. Voyager, OS-Copilot, and SkillWeaver extend the category to executable code artifacts — JavaScript skills in Voyager, Python OS tools in OS-Copilot, Playwright browser APIs in SkillWeaver — all promoted after environment-grounded success; Meta-Harness extends it to executable harness code promoted by benchmark frontiers; Agentic Harness Engineering extends that harness-code branch with a broader component menu spanning promptware, tool descriptions, middleware, skills, sub-agents, and memory files; ARIS extends it to markdown skill diffs promoted by hook-log evidence and reviewer judgment. The category spans from natural-language form (verbal hints, profile/fact strings, scored rules, structured records, repo-local entries) to symbolic form (workflow instructions and executable code); their storage substrates differ further still, but they share the readable side of the representational-form split with weight learning.
 
@@ -681,6 +695,7 @@ Within the readable-artifact branch, the artifact-learning systems span a wide r
 - **Profile and fact memory:** MemoryOS (session summaries, user profile, user knowledge, assistant knowledge, embeddings).
 - **Structured records:** ReasoningBank (title/description/content JSONL), CrewAI Memory (vector records with scope/categories/importance/source/private metadata), cass-memory (YAML playbook with maturity stages).
 - **Repo-local natural-language entries:** Gnosis (JSONL why-memory with topics, related IDs, and timestamps, extracted by live agent judgment).
+- **Source-addressed working-state caches:** Scroll (model-authored headlines, tiered sequence map, and continuation summary over retained turns).
 - **Typed durable observations:** ClawVault (observation ledgers with weekly reflection), OpenViking (categorized user/agent memory spaces), nao (user instruction/profile rows with supersession).
 - **Workflow instruction patches:** ARIS (hook-log-derived diffs to markdown skills and workflow defaults).
 - **Executable code:** Voyager (JavaScript skills with generated descriptions and vector retrieval), OS-Copilot (Python OS tools with generated descriptions and vector retrieval), Tendril (Deno TypeScript capabilities with trigger/suppression metadata), SkillWeaver (async Playwright APIs with docstrings, metadata, and static checks).
@@ -702,6 +717,7 @@ The biggest difference across systems is not extraction prompt wording but the s
 | CrewAI Memory | Framework-assembled task outputs, standalone input/result pairs, and optional human-feedback output/feedback pairs |
 | cass-memory | Multi-agent session files (Claude Code JSON, Cursor, Codex, Aider, Pi), discovered via `cass` search engine, normalized to markdown |
 | deja-vu | Existing Claude Code and Codex JSONL histories plus opencode SQLite text parts, parsed into redacted lexical records |
+| Scroll | Typed live user/model/tool events plus restored session JSON, written through to SQLite rows with stable sequence addresses |
 | REM | Agent-submitted content strings via HTTP API, parsed by GPT-4o-mini into intent/entities/domain/emotion/importance |
 | Autocontext | Run trajectories from SQLite metrics, competitor outputs, playbooks, hints |
 | Meta-Harness | Benchmark run logs, saved memory/harness state, frontiers, proposer sessions, and task trajectories |
@@ -759,6 +775,7 @@ Trace richness constrains what can be learned. Tool calls, statuses, gates, scor
 - **Oracle/filtering surgery before weight updates.** Self-Training-LLM separates question-quality filtering from unknownness filtering before constructing SFT/DPO records.
 - **Counter-based artifact scoring.** ACE's bullet-level helpful/harmful counters and ExpeL's strength counters create real lifecycle behavior without full curation.
 - **Human-context capture filter.** Gnosis shows the lowest-friction way to control noise in agent-written memory: tell agents to preserve perishable human or empirical context, not reasoning that future agents can rederive from code.
+- **Source-addressed continuation cache.** Scroll keeps compact task state advisory, preserves its covered sequence range, and discards it when the source endpoints expire; the pattern is useful for work-in-flight state that must never silently replace its evidence.
 
 ## What remains open
 
@@ -792,6 +809,7 @@ Relevant Notes:
 - [CrewAI Memory](./reviews/crewai-memory.md) — source-inspected instance: framework-integrated task/output and HITL feedback mining into scoped vector memory records with automatic prompt reinjection
 - [cass-memory](./reviews/cass_memory_system.md) — source-inspected instance: cross-agent session mining via `cass` search engine, two-phase diary-then-reflection extraction, and confidence-decayed YAML playbook with anti-pattern inversion
 - [deja-vu](./reviews/deja-vu.md) — source-inspected instance: Claude, Codex, and opencode session traces indexed into redacted lexical recall plus optional project-scoped Claude startup context
+- [Scroll](./reviews/scroll.md) — source-inspected instance: write-through interaction traces compiled into a tiered eviction map and source-addressed continuation cache, with structured and Python recall
 - [REM](./reviews/REM.md) — source-inspected instance: service-owned episodic memory backend with keyword-clustered consolidation into append-only scored facts; widest gap between aspirational lifecycle fields and actual single-pass implementation
 - [Autocontext](./reviews/autocontext.md) — source-inspected instance: run-trajectory mining into playbooks, session reports, JSONL training exports, and optional weight distillation
 - [Meta-Harness](./reviews/meta-harness.md) — source-inspected instance: benchmark-trace-driven outer loop that promotes generated memory systems and agent scaffolds into executable harness code
