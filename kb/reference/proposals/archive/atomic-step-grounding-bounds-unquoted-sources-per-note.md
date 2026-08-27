@@ -1,15 +1,17 @@
 ---
 description: "Proposal: move the grounding reading limit from the review to the note — a note may cite at most N sources a reviewer must open and search, with validated inline quotes and note links exempt"
-type: ../types/design-proposal.md
+type: ../../types/design-proposal.md
 tags: []
 ---
 
 # Atomic-step grounding bounds unquoted sources per note
 
+> **Archived** (see [archive README](./README.md)). Adopted by [ADR 082](../../adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md): the bound, the validator rule, and the uncapped criteria are the live design. What remains here is the 2026-08-27 current-state anchor and the corpus measurement (344 notes, eight over five sources, median seven distinct artifacts) — design texture only.
+
 Commonplace currently places its grounding reading limit on the review. The
 `semantic/grounding-alignment` criterion lets a pass inspect at most sixteen
 distinct linked artifacts, and sixteen was chosen because it is the corpus p90
-offer ([ADR 079](../adr/079-grounding-reviews-budget-sixteen-distinct-linked-artifacts.md)).
+offer ([ADR 079](../../adr/079-grounding-reviews-budget-sixteen-distinct-linked-artifacts.md)).
 Two costs follow from that placement. The number is calibrated to a corpus, so
 it has to be recalibrated whenever the corpus's evidence needs move. And when it
 lags, the failure is silent: a reviewer that stops at its limit and returns a
@@ -21,7 +23,7 @@ The option this proposal describes is the other placement of the same
 constraint. **Bound the artifact instead: a note may cite at most N sources that
 a reviewer must open and search.** A source quoted inline, where the quotation
 is resolved against the linked file by the validator
-([ADR 046](../adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)),
+([ADR 046](../../adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)),
 does not count against N, because the finding step has moved into code and what
 is left for the reviewer is a bounded judgment over a passage already on the
 page. Links to other notes do not count either, because a claim-titled note
@@ -33,7 +35,7 @@ transferable claims this proposal rests on, cited below.
 ## Current state (as of 2026-08-27)
 
 - ADR 079 is in force. `semantic/grounding-alignment`
-  ([gate text](../../instructions/review-gates/semantic/grounding-alignment.md))
+  ([gate text](../../../instructions/review-gates/semantic/grounding-alignment.md))
   budgets sixteen distinct linked artifacts per pass, counts a repeated target
   once, and treats reaching the limit as disclosure rather than failure.
 - `sentence/concept-attribution` and `sentence/misleading-link-text` each read
@@ -45,7 +47,7 @@ transferable claims this proposal rests on, cited below.
   quoted span with the nearest link in its paragraph.
 - Tracked ingests hold retained quotes in a `## Quotes` section validated
   against the pinned snapshot; analysis elsewhere in an ingest is not source
-  support ([ADR 073](../adr/073-untracked-source-snapshots-require-ingest-grounding.md)).
+  support ([ADR 073](../../adr/073-untracked-source-snapshots-require-ingest-grounding.md)).
 - Corpus measurement over `kb/notes/`: 344 notes, of which 256 link no ingest at
   all, 18 link more than three, and 8 link more than five (maximum 9). The eight
   are single-claim notes:
@@ -144,7 +146,7 @@ disclosure. The two placements are compatible; what changes is which one
 normally decides.
 
 **The joint-support hazard is avoided rather than solved.**
-[Exceeding a review budget splits the task](./exceeding-a-review-budget-splits-the-task.md)
+[Exceeding a review budget splits the task](../exceeding-a-review-budget-splits-the-task.md)
 identified that partitioning a review by link severs claims whose support spans
 several sources, so any partition would have to be by claim. Under an
 artifact-side bound the author, who knows which passages jointly carry the
@@ -153,12 +155,12 @@ partition problem does not arise because nothing is partitioned; the hazard is
 sidestepped, not answered.
 
 **ADR 078 is not contradicted.**
-[ADR 078](../adr/078-writers-invoke-grounding-and-evidence-stays-in-the-ingest.md)
+[ADR 078](../../adr/078-writers-invoke-grounding-and-evidence-stays-in-the-ingest.md)
 rejected evidence living in the target artifact and kept the ingest `## Quotes`
 pool as the evidence owner. An inline quotation is not a second evidence store:
 it is a checked copy of a quote the ingest already retains, admissible exactly
 because a validator re-derives it and fails on mismatch — the general rule that
-[a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md).
+[a derived copy of recomputable truth must be checked or absent](../../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md).
 The ingest remains the owner, and the required `## Quotes` tightening above is
 what keeps that true.
 
@@ -195,8 +197,8 @@ without touching any production criterion.
 
 Relevant Notes:
 
-- [A note is an atomic step relative to the check that reads it](../../notes/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md) — rests-on: supplies the artifact-side placement, the unquoted source as the grounding check's unit, and what kind of number N is
-- [A linked note discharges its own grounding, so a citing note owes representation, not re-grounding](../../notes/a-linked-note-discharges-its-own-grounding-so-a-citing-note-owes.md) — rests-on: supplies the note-link exemption without which the bound would put over half the corpus in violation
-- [Exceeding a review budget splits the task](./exceeding-a-review-budget-splits-the-task.md) — compares-with: the review-side answer to the same over-budget case, whose joint-support hazard this option sidesteps
-- [079-Grounding reviews budget sixteen distinct linked artifacts](../adr/079-grounding-reviews-budget-sixteen-distinct-linked-artifacts.md) — evidenced-by: the interim ceiling and the corpus measurement this option would leave in place as a non-binding ceiling
-- [Grounding alignment gate](../../instructions/review-gates/semantic/grounding-alignment.md) — procedure: the criterion that carries the review-side budget today and would be unchanged
+- [A note is an atomic step relative to the check that reads it](../../../notes/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md) — rests-on: supplies the artifact-side placement, the unquoted source as the grounding check's unit, and what kind of number N is
+- [A linked note discharges its own grounding, so a citing note owes representation, not re-grounding](../../../notes/a-linked-note-discharges-its-own-grounding-so-a-citing-note-owes.md) — rests-on: supplies the note-link exemption without which the bound would put over half the corpus in violation
+- [Exceeding a review budget splits the task](../exceeding-a-review-budget-splits-the-task.md) — compares-with: the review-side answer to the same over-budget case, whose joint-support hazard this option sidesteps
+- [079-Grounding reviews budget sixteen distinct linked artifacts](../../adr/079-grounding-reviews-budget-sixteen-distinct-linked-artifacts.md) — evidenced-by: the interim ceiling and the corpus measurement this option would leave in place as a non-binding ceiling
+- [Grounding alignment gate](../../../instructions/review-gates/semantic/grounding-alignment.md) — procedure: the criterion that carries the review-side budget today and would be unchanged
