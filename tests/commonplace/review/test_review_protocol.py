@@ -34,6 +34,7 @@ def test_render_pairs_prompt_multi_note_shares_gate_and_lists_pairs() -> None:
                         "concept",
                         "./concept.md",
                         "kb/notes/concept.md",
+                        "kb/notes/concept.md",
                         1234,
                     )
                 ],
@@ -59,8 +60,14 @@ def test_render_pairs_prompt_multi_note_shares_gate_and_lists_pairs() -> None:
     assert f"- kb/notes/first.md :: {GATE}" in prompt
     assert f"- kb/notes/second.md :: {GATE}" in prompt
     assert "review job id" not in prompt
-    assert "Available cost: 1 resolved link(s), 1 distinct artifact(s), 1234 bytes total." in prompt
-    assert "| [concept](./concept.md) | `kb/notes/concept.md` | 1234 bytes |" in prompt
+    assert (
+        "Available cost: 1 resolved link(s), 1 distinct link target(s), "
+        "1 consumption target(s), 1234 bytes total."
+    ) in prompt
+    assert (
+        "| [concept](./concept.md) | `kb/notes/concept.md` | "
+        "`kb/notes/concept.md` | 1234 bytes |"
+    ) in prompt
     assert "- [missing](./missing.md) -> `kb/notes/missing.md` (missing file)" in prompt
     # Note contents are frontloaded
     assert "=== note: kb/notes/first.md ===" in prompt
@@ -93,9 +100,27 @@ def test_render_pairs_prompt_charges_repeated_target_once() -> None:
             make_target(
                 "kb/notes/only.md",
                 resolved_links=[
-                    ResolvedMarkdownLink("first", "./shared.md", "kb/notes/shared.md", 800),
-                    ResolvedMarkdownLink("again", "./shared.md#part", "kb/notes/shared.md", 800),
-                    ResolvedMarkdownLink("other", "./other.md", "kb/notes/other.md", 300),
+                    ResolvedMarkdownLink(
+                        "first",
+                        "./shared.md",
+                        "kb/notes/shared.md",
+                        "kb/notes/shared.md",
+                        800,
+                    ),
+                    ResolvedMarkdownLink(
+                        "again",
+                        "./shared.md#part",
+                        "kb/notes/shared.md",
+                        "kb/notes/shared.md",
+                        800,
+                    ),
+                    ResolvedMarkdownLink(
+                        "other",
+                        "./other.md",
+                        "kb/notes/other.md",
+                        "kb/notes/other.md",
+                        300,
+                    ),
                 ],
             )
         ],
@@ -104,8 +129,39 @@ def test_render_pairs_prompt_charges_repeated_target_once() -> None:
         job_output_path="job-output.md",
     )
 
-    assert "3 resolved link(s), 2 distinct artifact(s), 1100 bytes total" in prompt
-    assert prompt.count("`kb/notes/shared.md`") == 2
+    assert (
+        "3 resolved link(s), 2 distinct link target(s), "
+        "2 consumption target(s), 1100 bytes total"
+    ) in prompt
+    assert prompt.count("`kb/notes/shared.md`") == 4
+
+
+def test_render_pairs_prompt_names_snapshot_consumption_target() -> None:
+    prompt = render_pairs_prompt(
+        notes=[
+            make_target(
+                "kb/notes/only.md",
+                resolved_links=[
+                    ResolvedMarkdownLink(
+                        "source (snapshot required)",
+                        "../sources/source.ingest.md",
+                        "kb/sources/source.ingest.md",
+                        "kb/sources/.snapshots/source.md",
+                        2400,
+                    )
+                ],
+            )
+        ],
+        criterion_texts={GATE: GATE_TEXT},
+        result_kind="verdict",
+        job_output_path="job-output.md",
+    )
+
+    assert (
+        "| [source (snapshot required)](../sources/source.ingest.md) | "
+        "`kb/sources/source.ingest.md` | `kb/sources/.snapshots/source.md` | 2400 bytes |"
+    ) in prompt
+    assert "report the derived snapshot shown in the Consumption target column" in prompt
 
 
 def test_render_pairs_prompt_names_destination() -> None:
@@ -120,7 +176,7 @@ def test_render_pairs_prompt_names_destination() -> None:
     assert "`self-reported-model: <model-id>`" in prompt
     assert "The model line is optional." in prompt
     assert "`review-consumption:` JSON object" in prompt
-    assert "`opened_paths` lists each distinct repo-relative path you actually opened" in prompt
+    assert "`opened_paths` lists each distinct repo-relative consumption target you used" in prompt
     assert "`stop_reason` is exactly `budget`" in prompt
     assert "This bookkeeping never changes the result." in prompt
     assert (

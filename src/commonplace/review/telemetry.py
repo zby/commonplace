@@ -12,28 +12,52 @@ _COMMONPLACE_KEY = "commonplace"
 _LINK_AVAILABILITY_KEY = "review_link_availability"
 _LINK_CONSUMPTION_KEY = "review_link_consumption"
 _HARNESS_TELEMETRY_KEY = "harness_telemetry_json"
-_LINK_AVAILABILITY_VERSION = 2
-_LINK_CONSUMPTION_VERSION = 1
+_LINK_AVAILABILITY_VERSION = 3
+_LINK_CONSUMPTION_VERSION = 2
 
 
 def _available_artifacts(note: NoteReviewTarget) -> list[dict[str, object]]:
     sizes_by_path: dict[str, int] = {}
     for link in note.resolved_links:
-        sizes_by_path.setdefault(link.repo_path, link.size_bytes)
+        sizes_by_path.setdefault(link.consumption_path, link.size_bytes)
     return [
         {"path": path, "size_bytes": size_bytes}
         for path, size_bytes in sizes_by_path.items()
     ]
 
 
+def _available_routes(note: NoteReviewTarget) -> list[dict[str, str]]:
+    routes: list[dict[str, str]] = []
+    seen: set[tuple[str, str]] = set()
+    for link in note.resolved_links:
+        route = (link.link_target_path, link.consumption_path)
+        if route in seen:
+            continue
+        seen.add(route)
+        routes.append(
+            {
+                "link_target_path": link.link_target_path,
+                "consumption_path": link.consumption_path,
+            }
+        )
+    return routes
+
+
 def _note_link_availability(note: NoteReviewTarget) -> dict[str, object]:
-    resolved_link_count, distinct_artifact_count, total_bytes = available_link_cost(note)
+    (
+        resolved_link_count,
+        distinct_link_target_count,
+        distinct_consumption_target_count,
+        total_bytes,
+    ) = available_link_cost(note)
 
     return {
         "resolved_link_count": resolved_link_count,
-        "distinct_artifact_count": distinct_artifact_count,
+        "distinct_link_target_count": distinct_link_target_count,
+        "distinct_consumption_target_count": distinct_consumption_target_count,
         "total_bytes": total_bytes,
         "artifacts": _available_artifacts(note),
+        "routes": _available_routes(note),
         "unavailable_targets": [
             {
                 "link_text": target.link_text,

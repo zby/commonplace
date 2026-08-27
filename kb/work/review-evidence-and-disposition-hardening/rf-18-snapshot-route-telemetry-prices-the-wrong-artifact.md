@@ -1,6 +1,6 @@
 # RF-18 — Snapshot-route telemetry prices the wrong artifact
 
-**State:** open  
+**State:** fixed 2026-08-27
 **Repair shape:** local telemetry correction  
 **Severity:** low
 
@@ -17,8 +17,8 @@ not describe the artifact actually consumed.
   intentionally prices the ingest while checking only snapshot availability.
 - [The prompt protocol](../../../src/commonplace/review/protocol/prompt.py) tells
   workers to report the ingest path for this route.
-- [`test_resolve_note_markdown_links_does_not_charge_required_snapshot_in_v1`](../../../tests/commonplace/review/test_job_prompt.py)
-  fixes the mismatch as current expected behavior.
+- [The former V1 regression in `test_job_prompt.py`](../../../tests/commonplace/review/test_job_prompt.py)
+  fixed the mismatch as expected behavior before this repair.
 
 ## Why it matters
 
@@ -38,3 +38,15 @@ to name it, while preserving the ingest as lineage metadata.
 - Charged bytes equal the actual snapshot size.
 - The ingest-to-snapshot lineage remains explicit.
 - The existing V1 mismatch test is replaced by the intended behavior.
+
+## Resolution
+
+Resolved links now distinguish `link_target_path` from `consumption_path`.
+Ordinary routes map the path to itself; `(snapshot required)` maps the linked
+ingest to its derived snapshot and uses the snapshot's actual size. Availability
+schema v3 exposes the route mapping, separate logical and physical counts, and
+the priced physical artifacts. The generated prompt
+shows both paths and requires `opened_paths` to name the snapshot consumption
+target. Consumption schema v2 then prices that reported snapshot path. Tests
+cover resolution, missing snapshots, prompt instructions, lineage telemetry,
+snapshot byte cost, and the logical-count/physical-cost boundary.

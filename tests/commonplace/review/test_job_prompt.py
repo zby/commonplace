@@ -17,7 +17,7 @@ def test_resolve_note_markdown_links_sizes_occurrences_and_reports_unavailable_t
     repo = tmp_path / "repo"
     note = write(repo / "kb/notes/note.md", "# Note\n")
     shared = write(repo / "kb/notes/shared.md", "shared bytes\n")
-    ingest = write(repo / "kb/sources/source.ingest.md", "ingest bytes\n")
+    write(repo / "kb/sources/source.ingest.md", "ingest bytes\n")
     body = """
 [first](./shared.md)
 [same target](./shared.md#section)
@@ -32,13 +32,21 @@ def test_resolve_note_markdown_links_sizes_occurrences_and_reports_unavailable_t
         note_body=body,
     )
 
-    assert [(link.link_text, link.repo_path, link.size_bytes) for link in resolved] == [
-        ("first", "kb/notes/shared.md", shared.stat().st_size),
-        ("same target", "kb/notes/shared.md", shared.stat().st_size),
+    assert [
         (
-            "source (snapshot required)",
-            "kb/sources/source.ingest.md",
-            ingest.stat().st_size,
+            link.link_text,
+            link.link_target_path,
+            link.consumption_path,
+            link.size_bytes,
+        )
+        for link in resolved
+    ] == [
+        ("first", "kb/notes/shared.md", "kb/notes/shared.md", shared.stat().st_size),
+        (
+            "same target",
+            "kb/notes/shared.md",
+            "kb/notes/shared.md",
+            shared.stat().st_size,
         ),
     ]
     assert [
@@ -54,13 +62,13 @@ def test_resolve_note_markdown_links_sizes_occurrences_and_reports_unavailable_t
     ]
 
 
-def test_resolve_note_markdown_links_does_not_charge_required_snapshot_in_v1(
+def test_resolve_note_markdown_links_charges_required_snapshot_and_retains_lineage(
     tmp_path: Path,
 ) -> None:
     repo = tmp_path / "repo"
     note = write(repo / "kb/notes/note.md", "# Note\n")
     ingest = write(repo / "kb/sources/source.ingest.md", "small ingest\n")
-    write(repo / "kb/sources/.snapshots/source.md", "a much larger snapshot body\n")
+    snapshot = write(repo / "kb/sources/.snapshots/source.md", "a much larger snapshot body\n")
 
     resolved, unavailable = resolve_note_markdown_links(
         repo_root=repo,
@@ -68,7 +76,15 @@ def test_resolve_note_markdown_links_does_not_charge_required_snapshot_in_v1(
         note_body="[source (snapshot required)](../sources/source.ingest.md)",
     )
 
-    assert [(link.repo_path, link.size_bytes) for link in resolved] == [
-        ("kb/sources/source.ingest.md", ingest.stat().st_size)
+    assert [
+        (link.link_target_path, link.consumption_path, link.size_bytes)
+        for link in resolved
+    ] == [
+        (
+            "kb/sources/source.ingest.md",
+            "kb/sources/.snapshots/source.md",
+            snapshot.stat().st_size,
+        )
     ]
+    assert snapshot.stat().st_size > ingest.stat().st_size
     assert unavailable == []

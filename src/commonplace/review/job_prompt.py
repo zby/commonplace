@@ -55,9 +55,9 @@ def resolve_note_markdown_links(
     """Resolve and size local Markdown targets without making availability a judgment.
 
     Resolved link occurrences remain separate so telemetry can compare occurrence
-    count with distinct artifacts. Whole-file cost is deduplicated later by
-    ``repo_path``. A required snapshot is only reported when unavailable; V1
-    still prices the directly resolved ingest, as documented by the proposal.
+    count with distinct artifacts. Whole-file cost is deduplicated later by the
+    physical consumption path. Snapshot-required ingest links retain the ingest
+    as their logical target while pricing the derived snapshot.
     """
     resolved: list[ResolvedMarkdownLink] = []
     unavailable: list[UnavailableMarkdownTarget] = []
@@ -109,31 +109,36 @@ def resolve_note_markdown_links(
             continue
         assert size_bytes is not None
 
+        consumption_path = repo_rel
+        consumption_size = size_bytes
+        if SNAPSHOT_REQUIRED_MARKER in link_text:
+            snapshot_repo_path = _required_snapshot_path(repo_rel)
+            if snapshot_repo_path is not None:
+                snapshot_abs = repo_root_resolved / snapshot_repo_path
+                snapshot_size, snapshot_reason = _target_size(snapshot_abs)
+                if snapshot_reason is not None:
+                    unavailable.append(
+                        UnavailableMarkdownTarget(
+                            link_text=link_text,
+                            raw_target=raw_target,
+                            target_path=snapshot_repo_path,
+                            reason=f"required snapshot {snapshot_reason}",
+                        )
+                    )
+                    continue
+                assert snapshot_size is not None
+                consumption_path = snapshot_repo_path
+                consumption_size = snapshot_size
+
         resolved.append(
             ResolvedMarkdownLink(
                 link_text=link_text,
                 raw_target=raw_target,
-                repo_path=repo_rel,
-                size_bytes=size_bytes,
+                link_target_path=repo_rel,
+                consumption_path=consumption_path,
+                size_bytes=consumption_size,
             )
         )
-
-        if SNAPSHOT_REQUIRED_MARKER not in link_text:
-            continue
-        snapshot_repo_path = _required_snapshot_path(repo_rel)
-        if snapshot_repo_path is None:
-            continue
-        snapshot_abs = repo_root_resolved / snapshot_repo_path
-        _, snapshot_reason = _target_size(snapshot_abs)
-        if snapshot_reason is not None:
-            unavailable.append(
-                UnavailableMarkdownTarget(
-                    link_text=link_text,
-                    raw_target=raw_target,
-                    target_path=snapshot_repo_path,
-                    reason=f"required snapshot {snapshot_reason}",
-                )
-            )
 
     return resolved, unavailable
 

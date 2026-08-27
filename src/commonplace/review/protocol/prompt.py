@@ -87,7 +87,8 @@ def _collection_conformance_wrapper_lines() -> tuple[str, ...]:
 class ResolvedMarkdownLink:
     link_text: str
     raw_target: str
-    repo_path: str
+    link_target_path: str
+    consumption_path: str
     size_bytes: int
 
 
@@ -108,12 +109,19 @@ class NoteReviewTarget:
     unavailable_targets: Sequence[UnavailableMarkdownTarget] = ()
 
 
-def available_link_cost(note: NoteReviewTarget) -> tuple[int, int, int]:
-    """Return resolved occurrences, distinct artifacts, and whole-file bytes."""
+def available_link_cost(note: NoteReviewTarget) -> tuple[int, int, int, int]:
+    """Return occurrences, logical targets, consumption targets, and bytes."""
+    link_target_paths: set[str] = set()
     sizes_by_path: dict[str, int] = {}
     for link in note.resolved_links:
-        sizes_by_path.setdefault(link.repo_path, link.size_bytes)
-    return len(note.resolved_links), len(sizes_by_path), sum(sizes_by_path.values())
+        link_target_paths.add(link.link_target_path)
+        sizes_by_path.setdefault(link.consumption_path, link.size_bytes)
+    return (
+        len(note.resolved_links),
+        len(link_target_paths),
+        len(sizes_by_path),
+        sum(sizes_by_path.values()),
+    )
 
 
 def _markdown_table_cell(value: str) -> str:
@@ -184,13 +192,13 @@ def render_pairs_prompt(
             f"`{REVIEW_CONSUMPTION_FIELD}:` JSON object with `opened_paths` and `stop_reason`."
         ),
         (
-            "- `opened_paths` lists each distinct repo-relative path you actually opened from that "
-            "target note's pre-resolved link table. Use `[]` if you opened no linked artifact. "
-            "Do not include the target note or criterion."
+            "- `opened_paths` lists each distinct repo-relative consumption target you used from that "
+            "target note's pre-resolved link table. Use `[]` if you used no linked artifact. "
+            "Do not include the target note, criterion, or a lineage-only link target."
         ),
         (
-            "- For a `(snapshot required)` route, report the linked ingest path from the table, "
-            "which is the V1 path charged by the measurement."
+            "- For a `(snapshot required)` route, report the derived snapshot shown in the "
+            "Consumption target column, not its linked ingest in the Resolved link target column."
         ),
         (
             "- `stop_reason` is exactly `budget` if a reading limit prevented further inspection, "
@@ -264,25 +272,34 @@ def render_pairs_prompt(
             ]
         )
         if note.resolved_links:
-            resolved_link_count, distinct_artifact_count, total_bytes = available_link_cost(note)
+            (
+                resolved_link_count,
+                distinct_link_target_count,
+                distinct_consumption_target_count,
+                total_bytes,
+            ) = available_link_cost(note)
             lines.extend(
                 [
                     (
                         f"Available cost: {resolved_link_count} resolved link(s), "
-                        f"{distinct_artifact_count} distinct artifact(s), {total_bytes} bytes total. "
-                        "The total charges each artifact once."
+                        f"{distinct_link_target_count} distinct link target(s), "
+                        f"{distinct_consumption_target_count} consumption target(s), "
+                        f"{total_bytes} bytes total. "
+                        "The total charges each consumption target once."
                     ),
                     "",
-                    "| Link | Resolved local target | Whole-file size |",
-                    "| --- | --- | ---: |",
+                    "| Link | Resolved link target | Consumption target | Whole-file size |",
+                    "| --- | --- | --- | ---: |",
                 ]
             )
             for link in note.resolved_links:
                 link_text = _markdown_table_cell(link.link_text)
                 raw_target = _markdown_table_cell(link.raw_target)
-                repo_path = _markdown_table_cell(link.repo_path)
+                link_target_path = _markdown_table_cell(link.link_target_path)
+                consumption_path = _markdown_table_cell(link.consumption_path)
                 lines.append(
-                    f"| [{link_text}]({raw_target}) | `{repo_path}` | {link.size_bytes} bytes |"
+                    f"| [{link_text}]({raw_target}) | `{link_target_path}` | "
+                    f"`{consumption_path}` | {link.size_bytes} bytes |"
                 )
         else:
             lines.append("- none")

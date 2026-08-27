@@ -240,18 +240,25 @@ def test_review_job_records_deduplicated_available_link_cost_and_preserves_harne
     assert telemetry == {
         "commonplace": {
             "review_link_availability": {
-                "version": 2,
+                "version": 3,
                 "pairs": [
                     {
                         "note_path": "kb/notes/first.md",
                         "criterion_path": GATE_PATH,
                         "resolved_link_count": 2,
-                        "distinct_artifact_count": 1,
+                        "distinct_link_target_count": 1,
+                        "distinct_consumption_target_count": 1,
                         "total_bytes": shared.stat().st_size,
                         "artifacts": [
                             {
                                 "path": "kb/notes/shared.md",
                                 "size_bytes": shared.stat().st_size,
+                            }
+                        ],
+                        "routes": [
+                            {
+                                "link_target_path": "kb/notes/shared.md",
+                                "consumption_path": "kb/notes/shared.md",
                             }
                         ],
                         "unavailable_targets": [
@@ -303,7 +310,7 @@ def test_review_job_records_deduplicated_available_link_cost_and_preserves_harne
         == telemetry["commonplace"]["review_link_availability"]
     )
     assert completed_telemetry["commonplace"]["review_link_consumption"] == {
-        "version": 1,
+        "version": 2,
         "pairs": [
             {
                 "note_path": "kb/notes/first.md",

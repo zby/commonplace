@@ -34,6 +34,20 @@ def _distribution(values: list[int]) -> str:
     )
 
 
+def _offered_count(version: object, offered: dict[str, Any]) -> int | None:
+    if version == 3:
+        value = offered.get("distinct_consumption_target_count")
+    elif version == 1 or version == 2:
+        # BACKCOMPAT: availability v1/v2 used this name for the same logical
+        # count - remove after historical v1/v2 jobs are excluded from reports.
+        value = offered.get("distinct_artifact_count")
+    else:
+        return None
+    if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+        return None
+    return value
+
+
 def _load_rows(
     connection: sqlite3.Connection,
 ) -> tuple[
@@ -90,10 +104,12 @@ def _load_rows(
             if offered is None:
                 continue
 
-            offered_count = offered.get("distinct_artifact_count")
+            offered_count = _offered_count(availability.get("version"), offered)
             offered_bytes = offered.get("total_bytes")
             consumed_count = report.get("distinct_artifact_count")
             consumed_bytes = report.get("total_bytes")
+            if offered_count is None:
+                continue
             job_totals["offered_count"] += offered_count or 0
             job_totals["consumed_count"] += consumed_count or 0
             job_totals["offered_bytes"] += offered_bytes or 0
