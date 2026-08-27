@@ -7,7 +7,7 @@ tags: [learning-theory, llm-reliability, evaluation]
 
 # Brainstorming: maintainability oracles for agentic development
 
-This is a seedling about two coupled design questions:
+This exploratory note keeps two coupled design questions open:
 
 1. How could we construct an oracle that discriminates maintainable from merely correct agent-generated code?
 2. How should that oracle participate in planning, implementation, review, and later learning without turning noisy proxies into hard gates?

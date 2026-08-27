@@ -21,9 +21,9 @@ The KB keeps [authored files canonical while meanings and write rules remain uns
 
 Types assert structural properties of individual documents — what sections are expected, what metadata is required, what's checkable. Directories group documents by topic, lifecycle, provenance, or whatever convention the user finds useful. These are independent axes.
 
-A task in `tasks/active/` has `type: task` defining its structure (Goal, Tasks checklist, Current State). The `active/` directory tells you its lifecycle stage. Moving it to `completed/` changes the lifecycle signal without changing its type or structure.
+A task in `kb/tasks/active/` can use `type: kb/tasks/types/task-active.md` to define its Goal, Tasks checklist, and Current State structure. Its directory carries a separate lifecycle signal.
 
-A `structured-claim` works identically whether it lives in `notes/`, `notes/definitions/`, or `claw-design/`. The directory carries provenance or topic grouping; the type carries structural expectations.
+A collection-local type works throughout its owning collection, not in arbitrary peer collections. For example, `type: kb/notes/types/structured-claim.md` has the same contract at the root of `kb/notes/` and in its subdirectories. The type path carries structural expectations; subdirectories may carry another organization axis.
 
 If types depended on arbitrary content directories, you'd need to redefine types whenever someone creates a new subdirectory. If those directories encoded type information, you'd lose the freedom to organise by whatever dimension matters — topic, lifecycle, provenance, project area. In the [current type system](../reference/collections-and-types.md), an artifact points to its contract directly; subdirectories inside the owning collection do not determine its type.
 

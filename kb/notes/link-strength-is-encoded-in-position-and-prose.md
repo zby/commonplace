@@ -59,7 +59,7 @@ The inferred approach is probably right for now — position (inline vs footer) 
 
 - How much of the strength signal is recoverable from position alone (inline vs footer), without prose analysis?
 - Should /connect explicitly choose between inline and footer placement based on relationship strength, or leave that to the author?
-- Does link strength decay over time? A premise link from a note that's now `outdated` is weaker than the same link from a `current` note. Should link strength be static (property of the link) or dynamic (property of the link × source note status)?
+- Does link strength decay over time? A premise link from a claim explicitly superseded in prose or links is weaker than the same link from a claim still treated as operative. Should link strength be static (a property of the link) or dynamic (the link combined with a source-specific currency signal)? Ordinary notes expose no global status from which to compute that signal.
 - The arscontexta "specificity test" ("genuine elaboration is specific enough to be wrong") is a link quality gate. Is there a link strength gate — a minimum strength below which a link isn't worth creating?
 
 ---

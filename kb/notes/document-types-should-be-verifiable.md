@@ -17,7 +17,7 @@ The test: after reading the type, can you say something concrete about the docum
 
 In programming, types are useful because the compiler enforces them. If nothing checked that a `List` is actually a list, the type annotation would be decoration. The value of a type comes from enforcement — something in the system acts on it.
 
-Here, the "compiler" is a mix of agents and scripts. An agent reading `type: spec` can decide to implement from it. A script can grep for `type: structured-claim` to find citable arguments with full Evidence/Reasoning sections. But they can only do this if the type asserts something checkable. `type: design` gives them nothing to act on — every note in a design KB is "about design." An unverifiable type is like an unenforced type annotation: technically present, practically invisible. The [text testing pyramid](./automated-tests-for-text.md) sketches what enforcement could look like in practice: deterministic checks for structural contracts, LLM rubrics for judgment-dependent traits.
+Here, the "compiler" is a mix of agents and scripts. An agent reading `type: kb/reference/types/adr.md` can expect Context, Decision, and Consequences sections. A script validating `type: kb/notes/types/structured-claim.md` can require Evidence and Reasoning headings. They can only act this way if the resolved type spec asserts something checkable. A subject-matter label such as the retired `design` value gives them nothing to act on — every note in a design KB is "about design." An unverifiable type is like an unenforced type annotation: technically present, practically invisible. The [text testing pyramid](./automated-tests-for-text.md) sketches the enforcement split: deterministic checks for structural contracts, LLM rubrics for judgment-dependent traits.
 
 Types guide what the processor — an [LLM interpreting underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — can do with the document. A `spec` tells an agent it can build against this. A `has-comparison` tells it there are alternatives to choose between. Since [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md), types and traits are precisely the hints that make those decisions informed rather than blind — the type tells the agent what it can do with the document *before opening it*. The type is only useful if the processor can trust it, and trust requires the ability to check.
 
@@ -27,13 +27,13 @@ In conventional programming, types are crisp because the processor is determinis
 
 Our processor is an [LLM that interprets underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md). This has a direct consequence: type *assignment* is also underspecified. An agent classifying a document resolves the ambiguity inherent in the type definitions — the same document might be classified differently by different agents, or even the same agent on different runs. The underspecification isn't a bug in the type system. It's a consequence of the specifications (both the document and the type definitions) being in natural language, which doesn't have precise denotations.
 
-This means we need types that are useful despite underspecification — types that assert structural properties you can check, even if the checking requires judgment rather than proof. Type assignment has the same selection boundary as [selecting an LLM output](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md): choosing `type: spec` fixes which classification downstream tools consume, but it does not make the natural-language type definitions unambiguous.
+This means we need types that are useful despite underspecification — types that assert structural properties you can check, even if the checking requires judgment rather than proof. Type assignment has the same selection boundary as [selecting an LLM output](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md): choosing `type: kb/notes/types/structured-claim.md` fixes which contract downstream tools consume, but it does not make the natural-language parts of that contract unambiguous.
 
 ## What went wrong with flat types
 
 The original type system used a flat enum: `design`, `analysis`, `insight`, `research`, `comparison`, `spec`, `review`, `index`.
 
-**"design" says nothing structural.** A design note could be a spec, an exploration, a brainstorm, or a comparison. It describes subject matter (this is about design), which is what the `areas` field is for. As a type it dominated the KB — half the notes were "design" — which means it did no discriminatory work. An agent reading `type: design` learns nothing about what it can do with the document.
+**"design" says nothing structural.** A design note could be a spec, an exploration, a brainstorm, or a comparison. It describes subject matter (this is about design), which is what the `areas` field is for. As a type it dominated the KB — half the notes were "design" — which means it did no discriminatory work. In the retired flat encoding, an agent reading `type: design` learned nothing about what it could do with the document.
 
 **Flat types force false choices.** Is a research note that reaches a codified conclusion an insight or research? Is an analysis that cites external sources research or analysis? A flat enum forces a single choice and loses information. In object-oriented terms, this is like having `class ResearchInsight` but being forced to inherit from only one of `Research` or `Insight`.
 
@@ -51,8 +51,8 @@ traits: [has-comparison, has-external-sources]
 | Base type | What it tells the agent |
 |-----------|------------------------|
 | `kb/types/note.md` | Default — read it to find out what you can do with it |
-| `spec` | You can implement from this; it has enough detail to build against |
-| `review` | This examines specific code; expect findings and a date |
+| `kb/notes/types/structured-claim.md` | This argument supplies Evidence and Reasoning sections |
+| `kb/reference/types/adr.md` | This records a decision through Context, Decision, and Consequences |
 | `kb/types/generated-index.md` | This is a build-generated listing; use it to enumerate the directory it covers |
 
 **Traits** are independently checkable properties — like interfaces or protocols that a value can satisfy in any combination:
@@ -63,16 +63,16 @@ traits: [has-comparison, has-external-sources]
 | `has-external-sources` | This connects to material outside the project |
 | `has-implementation` | This contains code sketches or concrete API proposals |
 
-A note can satisfy multiple traits without conflict. What the old system called "research" becomes `kb/types/note.md` + `has-external-sources`. What it called "insight" becomes `structured-claim` (if the argument is developed) or stays `kb/types/note.md` (if the title is a claim but the body is free-form). A research note with a codified conclusion is `kb/notes/types/structured-claim.md` + `has-external-sources` — no forced choice.
+A note can satisfy multiple traits without conflict. What the old system called "research" becomes `kb/types/note.md` + `has-external-sources`. What it called "insight" uses `kb/notes/types/structured-claim.md` if the argument is developed, or stays `kb/types/note.md` if the title is a claim but the body is free-form. A research note with a codified conclusion is `kb/notes/types/structured-claim.md` + `has-external-sources` — no forced choice.
 
 ## The verifiability gradient
 
-`note` is the base type that makes no structural claim — like `Any` in a gradually typed language. This connects to the [verifiability gradient](./verifiability-gradient.md): just as logic starts underspecified and constrains to precise, documents start untyped and gain type information as they mature.
+[`kb/types/note.md`](../types/note.md) is the base structured type that makes few body-shape claims — like `Any` in a gradually typed language. This connects to the [verifiability gradient](./verifiability-gradient.md): just as logic starts underspecified and constrains toward precision, documents can start as frontmatter-free text and gain checkable structure.
 
-1. New content enters as `type: note` — soft, no structural claims
+1. New content enters as implicit `text` or as `type: kb/types/note.md` — soft, with no required body sections
 2. Traits accumulate as the document develops — `has-implementation` when code sketches appear, `has-external-sources` when citing external material
-3. Base type gets promoted to `structured-claim`, `spec`, or `review` when hard structural criteria are met
-4. A bare `note` with no traits that persists is a signal — maybe it needs splitting, promotion, or review
+3. The type pointer changes to a narrower contract such as `type: kb/notes/types/structured-claim.md` when its structural criteria are met
+4. A base note with no traits may still be the right final shape; when its body makes stronger promises, a narrower type or trait makes those promises checkable
 
 This is gradual typing applied to documents. The system works at every point on the spectrum, from fully untyped to fully classified.
 
@@ -87,14 +87,14 @@ Several type system concepts map to specific aspects of this design:
 
 ## Tolerance of misclassification
 
-Since types are assigned by a processor that interprets underspecified instructions, the system must degrade gracefully when classifications are wrong:
+Since types are assigned by a processor that interprets underspecified instructions, deterministic and semantic mismatch need different handling:
 
-- Search by type should be "usually right", not "guaranteed complete"
-- A note typed `spec` that's really an exploration is a quality issue, not a system failure
-- The trait list is a best-effort annotation, not a contract
-- Nothing should break if a type or trait is missing or incorrect
+- A missing or non-path `type:` value on a frontmatter-bearing artifact is a validation error.
+- A declared type whose required fields or sections are absent is a validation error.
+- A structurally conforming artifact assigned to the wrong semantic type is a review-quality problem; schema validation cannot settle authorial intent.
+- Traits are stored review expectations. A false or missing trait degrades review routing even when it does not break structural validation.
 
-The practical test: an agent that ignores the type field entirely and reads every document should still work — just less efficiently. Types are an optimization for navigation, not a correctness requirement.
+An agent can still understand content by reading the whole artifact, but authoring and type-directed operations should follow the path-valued contract. Type metadata is both a navigation affordance and a structural correctness boundary.
 
 ---
 

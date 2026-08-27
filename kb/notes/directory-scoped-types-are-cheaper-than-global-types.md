@@ -1,5 +1,5 @@
 ---
-description: Global types tax every session's context; directory-scoped types load only when working in that directory — most structural affordances are directory-local, so the type system should match that economy
+description: Globally eligible types widen every collection's authoring choices; collection-local types keep specialized contracts scoped while path pointers load either kind on demand
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [type-system]
@@ -7,63 +7,64 @@ tags: [type-system]
 
 # Directory-scoped types are cheaper than global types
 
-A global type system taxes every session's context. Every type an agent might encounter must be in the context window, because there's no compiler or import mechanism to load definitions on demand. Making every type global means paying the load cost every session whether the type is relevant or not.
+A globally eligible type widens the authoring choice set in every collection. Its contract must also make sense everywhere it is eligible. A collection-local type enters the choice set only where its specialized structure applies.
 
-But most structural affordances are directory-local. An agent working in a notes area doesn't need to know what sections an ADR requires. An agent working in an ADR directory doesn't need to know what a related-system review looks like. The real structural expectations — what sections to write, what metadata to include, what validation to run — come from directory conventions (READMEs, templates), not from a global type name.
+Most structural affordances are collection-local. An agent writing theory does not need the sections of an ADR or an agent-memory-system review. Those contracts belong beside the collection that can use them. Global types are justified when their structure is reusable across collections.
 
-The global type name mostly tells an agent "this is a structured document" — which is useful, but thin. The thick affordances live next to the documents they describe. A type system that ignores this ends up paying global cost for precision it doesn't deliver.
+Commonplace makes that scope explicit in the filesystem. Global type specs live under `kb/types/`; collection-local specs live under the owning collection's `types/` directory. The validator permits a global spec or the artifact's own collection-local spec, while rejecting a peer collection's local spec.
 
 ## Why this doesn't happen in programming
 
 In programming, types are global (at least fully qualified names are) — and cheap. You can define a thousand types; only the ones you import are in scope. The compiler resolves references automatically. Declaration cost is near zero; resolution is free.
 
-In an LLM context, there's no compiler and no import mechanism. Every type the agent needs to reason about must be *in the context window*. The agent either knows what a given type means because it was loaded upfront, or it doesn't. There's no `from kb.types import StructuredClaim` that pulls in the definition on demand.
+In an LLM context, loading still costs context, but a path-valued type pointer supplies a simple import mechanism. An existing artifact names its contract directly. The agent follows that pointer and loads one type spec on demand instead of preloading a global vocabulary.
 
-So the cost difference isn't really about types being global vs local — it's about the resolution mechanism. Programming has cheap declaration + automatic resolution. LLM instructions have expensive pre-loading and no resolution at all. Directory scoping is a workaround for this: the directory's conventions are a primitive import mechanism. "You're in this directory; here's what types mean here." If we had real on-demand type resolution — "when you encounter this type name, load its definition from X" — types could be global names with on-demand definitions, just like programming.
+Path resolution removes the old preload cost, but it does not erase eligibility cost. A new write given only a shorthand still searches the live type specs and requires one exact `name:` match. More importantly, making a type global claims that its contract is appropriate across collections. Collection-local placement keeps that claim narrow without sacrificing on-demand loading.
 
 ## The economic argument
 
-Given that there's no automatic resolution, [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) establishes the loading hierarchy: always-loaded surfaces should be slim, task-specific detail loads on demand. The same principle applies to types:
+Since [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md), a writer should load the selected contract rather than a catalogue of every possible contract. Scope still determines which contracts enter a writing decision:
 
-- **Global layer:** loaded every session. Should be as thin as possible. Only types that carry affordances relevant across every directory.
-- **Directory layer:** loaded when you work there (read the README, read the template). Types that carry affordances specific to that directory. Zero cost when elsewhere.
+- **Global layer:** eligible across collections. Use it for structures whose meaning and authoring contract are genuinely reusable.
+- **Collection-local layer:** eligible in the owning collection. Use it for structure whose operations or sections only make sense there.
 
-A thin global layer might be just the maturity ladder:
+A small portable core can cover ordinary capture and note authoring:
 
-| Global type | What it tells an agent |
+| Form | What it tells an agent |
 |---|---|
-| `text` | No frontmatter — raw capture with no type-specific structural checks |
-| `note` | Has valid frontmatter with a description and a type pointer resolving to the base note contract — searchable, connectable, validatable |
+| implicit [`text`](../types/text.md) | No frontmatter; raw capture with no type-specific structural checks. |
+| [`kb/types/note.md`](../types/note.md) | Structured note frontmatter: required path-valued `type` and `description`; optional `traits`, `tags`, and `user-verified`. |
 
-Everything else — ADRs, source reviews, structured claims, reviews, indexes — is plausibly a directory-local specialisation of `note`. A specialised type is a note that lives in a specific directory and has a specific section structure. The directory's template defines the structure; validation checks against the directory's expectations.
+Other global contracts remain possible when their structure is reusable. Specialized contracts such as ADRs, structured claims, articles, source artifacts, and agent-memory-system reviews stay collection-local. The type spec defines their structure, and validation checks the resolved schema.
 
 ## What moves between directories?
 
-An argument against directory scoping is that it prevents types from being portable. But in practice, how many documents actually move between directories? ADRs stay with their decisions. Source reviews stay in the source-review collection. Tasks stay in the task tree. Related-system reviews stay in the related-systems area.
+An argument against local scoping is that it prevents types from being portable. But the relevant boundary is the collection, not every subdirectory. A structured claim can move anywhere inside `kb/notes/` while retaining `type: kb/notes/types/structured-claim.md`. Moving it to another durable collection requires either a globally eligible contract or a deliberate type change.
 
-The types that genuinely move are `text` and `note` — and those are exactly the maturity ladder, not domain types. The portable types are the thin global ones. The non-portable types are the ones currently paying global cost for no global benefit.
+Frontmatter-free text and the global note contract are portable because their structure is collection-independent. A local type is intentionally less portable: its narrower eligibility records that the contract is intended only for artifacts in that collection.
 
-## What this would change
+## How Commonplace applies the split
 
-**The control-plane file gets thinner.** The routing table stays (agents still need to know which directory to put things in). The global type vocabulary shrinks to `text` vs `note` (no frontmatter vs valid typed frontmatter).
+**Existing artifacts import one contract.** Their `type:` field stores a repository-relative or file-relative path to a type spec. The path, not the spec's shorthand `name:`, is type identity.
 
-**Directory READMEs and templates become the type definitions.** Each directory's conventions say what structure is expected, what metadata matters, what validation applies. This is already happening informally in any KB with collection-level READMEs; making it explicit means the README *is* the type spec for that directory.
+**New writes discover without a hand-maintained menu.** An exact path is opened directly. A shorthand search inspects type-spec frontmatter and succeeds only on one exact `name:` match. The filesystem remains the inventory.
 
-**Validation becomes directory-aware.** Instead of one global validator checking all types, validation reads the directory's conventions and checks against those. The global layer validates only the universal properties (frontmatter exists, description is non-empty, links resolve).
+**Validation enforces scope.** Global specs under `kb/types/` are eligible everywhere. A local spec is eligible in its owning collection. The workshop subtree is the deliberate staging exception and may use any valid type spec.
 
-**Templates stay where they are.** A per-directory `types/` folder already provides per-type scaffolds. The change is that the template is authoritative for the directory it serves, not a convenience wrapper around a global type.
+**The type spec is authoritative.** Its body contains the semantic authoring contract and any template; its `schema:` pointer names the deterministic structural contract.
 
 ## What stays global
 
-Some things genuinely apply everywhere:
+The base note contract supplies the shared structured-note surface:
 
-- **Frontmatter conventions** — description, status, tags. Every note has these regardless of directory.
-- **Status ladder** — seedling/current/speculative/outdated. Universal commitment tracking.
-- **Link conventions** — how to link, what semantics to use. Directory-independent.
-- **The text → note promotion** — adding valid frontmatter with `description`
-  and `type: kb/types/note.md` to a raw capture. Universal maturity step.
+- **Required fields** — a path-valued `type` and a non-empty `description`.
+- **Optional shared fields** — `traits`, `tags`, and `user-verified`. Absence of
+  `user-verified` says nothing about maturity, truth, currency, or review state.
+- **Text → note promotion** — adding complete note frontmatter with
+  `description` and `type: kb/types/note.md` to a raw capture. This is a
+  structural change, not a global lifecycle transition.
 
-These are the real global affordances. They're thin — which is the point.
+Collections own their text and outbound-link conventions. Specialized types may own coherent local lifecycle fields, but ordinary notes have no global `status`.
 
 ---
 

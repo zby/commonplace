@@ -4,7 +4,7 @@
 
 Catalogue the system differences that can make a Commonplace instruction executable in one environment and non-operative in another, then compare the available solution families without assuming that instruction compilation is the answer.
 
-The forcing case is intentionally small: after installation has created the project `.venv`, a session-start check should be able to invoke `commonplace-validate --help` by bare command name, exactly as later agent tool calls will. POSIX CLI sessions can inherit an activated venv. A native Windows desktop application may not inherit a project-specific shell environment, and one long-lived application can operate on several projects whose venvs must not conflict. This exposes a larger issue than venv activation: executable instructions depend on an execution channel composed from operating system, shell, agent runtime, process/environment semantics, working directory, sandbox, and installed tools.
+The forcing case is intentionally small: after installation has placed Commonplace commands in the user-level uv-tool bin directory, a fresh session should be able to invoke `commonplace-validate --help` by bare command name, exactly as later agent tool calls will. A native Windows desktop application may not inherit a shell's updated `PATH`, and a source checkout's editable installation selects one active Commonplace command version per OS user. This exposes a larger issue than environment activation: executable instructions depend on an execution channel composed from operating system, shell, agent runtime, process/environment semantics, working directory, sandbox, installed tools, and launch-time environment inheritance.
 
 The workshop widens the existing [channel-compiled instruction artifacts proposal](../../reference/proposals/channel-compiled-instruction-artifacts.md). That proposal already distinguishes compiling promoted skills, the whole instructions tree, and the control plane. Here compilation remains one candidate in a broader catalogue. The unit under investigation is not just the promoted skill: it is every instruction-bearing artifact that invokes Commonplace's Python entry points or another external tool.
 
@@ -60,7 +60,7 @@ For each tool, distinguish presence, bare-name resolution, behavioral compatibil
 
 ## Working invariant
 
-Installation owns creating `.venv` and installing the package. Session start does not repair installation. It runs the same bare command expected later—initially `commonplace-validate --help`—and reports a channel-specific remediation if that fails.
+Installation owns installing the package as a user-level uv tool and making its bin directory discoverable to later processes. Source checkouts use the editable form of that same user-level installation; project development dependencies remain separate. Session start does not repair installation. It runs the same bare command expected later—initially `commonplace-validate --help`—and reports a channel-specific remediation if that fails.
 
 This invariant is provisional only in the sense that the exact probe may change. The separation of responsibilities is fixed for the workshop: installation establishes tools; session start verifies the effective execution channel.
 
@@ -68,7 +68,7 @@ This invariant is provisional only in the sense that the exact probe may change.
 
 1. What capability facts actually determine an execution channel? Do OS, shell, path layout, environment inheritance, and tool inventory co-vary enough to form named profiles, or must they remain independent axes?
 2. Which agent surfaces launch every tool call in a fresh process, which preserve environment, and which offer a runtime-native environment handoff?
-3. How can a native Windows desktop application acquire a project-specific command environment without globally selecting one project's venv for every application and project?
+3. How can a native Windows desktop application inherit the uv-tool bin directory after `uv tool update-shell`, and how should a long-lived process report that it needs a restart?
 4. Which instructions depend only on bare `commonplace-*` resolution, and which also depend on Bash syntax or external Unix utilities?
 5. Which external tools are true prerequisites, runtime-bundled conveniences, optional accelerators, or replaceable implementation details?
 6. If instructions are compiled, what is the compilation boundary: promoted skills, all executable instructions, their directly invoked references, or the control plane too?
@@ -80,6 +80,7 @@ This invariant is provisional only in the sense that the exact probe may change.
 - [inventory.md](./inventory.md) — repeatable inventory method, initial counts, execution surfaces, tool-dependency schema, and known gaps.
 - [solution-catalogue.md](./solution-catalogue.md) — candidate mechanisms and their trade-offs; no preferred architecture until worked cases eliminate options.
 - [probe-procedure.md](./probe-procedure.md) — typed instruction for capability-gated evidence gathering from any current Commonplace environment, with native-Windows Codex as the forcing case rather than the assumed layout.
+- [E1 promoted-skill rebaseline](./e1-promoted-skill-rebaseline-2026-08-27.md) — manifest-derived static inventory and disposition of every promoted skill selected on 2026-08-27; it records no native-Windows runtime result.
 - [evidence/](./evidence/README.md) — append-only probe reports from different agents, runtimes, operating systems, shells, and launch paths.
 - A dated capability matrix for each observed environment class: install/layout mode, execution interface, command lookup, process persistence, session hooks, environment handoff, worktree behavior, bundled tools, and sandbox constraints.
 - An instruction-to-tool dependency map covering all canonical instructions, not only promoted skills.
@@ -105,7 +106,7 @@ This invariant is provisional only in the sense that the exact probe may change.
 
 ## Non-goals
 
-- creating or reinstalling `.venv` at session start;
+- creating or reinstalling the user-level tool or a project environment at session start;
 - globally activating one project's venv for all applications;
 - translating shell languages mechanically before cataloguing the actual semantic dependencies;
 - treating tool presence as proof of compatible behavior;

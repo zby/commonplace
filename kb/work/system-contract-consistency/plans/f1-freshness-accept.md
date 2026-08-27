@@ -34,27 +34,25 @@ operator, and test contracts.
    that generic accept shipped are now dated historical evidence, while the
    active proposal makes registration a future adoption choice.
 7. Removed the entry point and command-reference section in the same change.
-   C1's exact parity guard passes with 21 names on each side.
+   C1's exact parity guard remained equal; the 2026-08-27 baseline observes 22
+   names on each side after later paired additions.
 
 ## Verification
 
 - The focused freshness-transition and command-catalogue tests pass (9 tests).
-- Exact command/reference parity is 21 to 21 and is not hardcoded by the test.
+- Exact command/reference parity was 21 to 21 at closure and is 22 to 22 at the
+  2026-08-27 baseline; the test hardcodes neither count.
 - The complete suite passes (489 tests), as do deterministic validation of all
   21 changed Markdown artifacts and the focused Ruff check. The Ruff run
   excludes three pre-existing `TRY004` findings in retained parser code.
 - Reinstalling the editable uv tool produced 21 launchers. The deleted accept
   launcher is absent and the retained status launcher runs.
-- The shared [workshop index](../../README.md) already had unrelated local
-  edits, so its two stale summaries were not overwritten. Updating its
-  system-contract count from nine to eight and marking the freshness-module
-  finding resolved remains a pending navigation-only edit.
+- The shared [workshop index](../../README.md) is corrected in the 2026-08-27
+  rebaseline so it no longer presents generic acceptance as live.
 
 ## Completion
 
-No package, live code path, current reference, or help surface exposes
-`commonplace-freshness-accept`. ADR 052 no longer presents the withdrawn command
-as accepted current behavior. Remaining substantive mentions are dated
-historical evidence or completed outcomes. The only stale current wording is
-the pending one-line shared-workshop navigation summary noted above; it is not
-a runtime or system contract.
+No package, live code path, current reference, help surface, or active-workshop
+summary exposes `commonplace-freshness-accept` as current. ADR 052 no longer
+presents the withdrawn command as accepted behavior. Remaining substantive
+mentions are dated historical evidence or completed outcomes.

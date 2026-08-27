@@ -57,11 +57,11 @@ The traversal-as-reasoning framing explains why. A claim-titled note can serve a
 
 The two layers coexist. Specs link TO their constituent claim-notes for justification ([document types should be verifiable](./document-types-should-be-verifiable.md) is the rationale extracted from the classification spec). Claim-notes link TO specs as the system they support. But they have different title conventions because they play different roles in traversal.
 
-This maps onto the existing type system: notes with claim titles may be promoted to `type: structured-claim` when the argument matures; `spec`, `index`, and other structural types carry topical titles. The title convention (claim vs topical) is independent of the type — any `note` can use a claim title.
+This maps onto the existing type system: a claim-titled note may change to `type: kb/notes/types/structured-claim.md` when its body meets that contract; ADRs, design proposals, generated indexes, and other multi-claim structural types carry topical titles. The title convention is independent of the type — an artifact using `type: kb/types/note.md` can use a claim title.
 
 ## The shadow side
 
-Not every idea decomposes into a single declarative sentence — some are relational, procedural, emergent, or compositional. When reformulation feels forced, the question is whether the insight isn't ready or the format can't accommodate it. The type system makes this explicit: if you can't write a claim title, the note stays `type: note` with a topical title, and that's fine.
+Not every idea decomposes into a single declarative sentence — some are relational, procedural, emergent, or compositional. When reformulation feels forced, the question is whether the insight isn't ready or the format can't accommodate it. The type system makes this explicit: a note can keep `type: kb/types/note.md` with a topical title, and that's fine.
 
 ---
 

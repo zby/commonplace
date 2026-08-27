@@ -25,7 +25,8 @@ No frontmatter is currently required for recurring task documents; this type has
 | `description` | No | Retrieval description of the recurring review or maintenance scope. |
 | `type` | No | `kb/tasks/types/task-recurring.md` when the runbook is made into an explicitly typed artifact. |
 | `tags` | No | Routing tags for the work area or review cadence. |
-| `status` | No | KB lifecycle status if needed; individual run state belongs in the output log, not this runbook. |
+
+Individual run state belongs in the output log. Do not add a generic frontmatter `status` field to the stable runbook.
 
 ## Template
 

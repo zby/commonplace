@@ -1,7 +1,7 @@
 # C1 outcome — Executable and documented command sets are equal
 
-**State:** resolved 2026-08-19. There are 21 `commonplace-*` console scripts and
-21 unique command-reference sections.
+**State:** resolved 2026-08-19. At the 2026-08-27 baseline there are 22
+`commonplace-*` console scripts and 22 unique command-reference sections.
 
 ## Resolution
 
@@ -12,7 +12,8 @@ count.
 
 F1 was a separate operativity contradiction. Its resolution removed
 `commonplace-freshness-accept` from the package and command reference together;
-the C1 guard passed at 21 without modification.
+the C1 guard passed without modification. Later additions changed both sets
+together. The count is an observation, not the guard.
 
 ## Implemented
 
@@ -31,7 +32,7 @@ the C1 guard passed at 21 without modification.
 ## Verification
 
 - The focused catalogue test passes.
-- The complete test suite passes after F1's removal: 489 tests.
+- The complete test suite passed after F1's removal: 489 tests.
 - The new test passes focused Ruff validation. Repository-wide Ruff still has
   pre-existing failures outside this change.
 - `commands.md`, this outcome, the plan index, and workshop state pass

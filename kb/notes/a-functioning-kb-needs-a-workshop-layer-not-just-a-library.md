@@ -7,7 +7,7 @@ tags: []
 
 # A functioning knowledge base needs a workshop layer, not just a library
 
-The KB's [current type system](../reference/collections-and-types.md) includes durable shapes such as `note`, `structured-claim`, `definition`, and `adr`. Documents can move up a maturity ladder: a text gets promoted to a note, a note codifies into a structured claim, and design work can resolve into an ADR. The [wikiwiki principle](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) animates this ladder: capture with zero friction, then refine in place. These types describe artifact contracts, not the consumed-value lifecycle of work in progress.
+The KB's [current type system](../reference/collections-and-types.md) includes durable shapes such as `note`, `structured-claim`, `definition`, and `adr`. Documents can follow a structural-refinement path: a text gets promoted to a note, a note can adopt the structured-claim contract, and design work can resolve into an ADR. The [wikiwiki principle](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) animates this path: capture with zero friction, then refine in place. These types describe artifact contracts, not one global maturity or consumed-value lifecycle.
 
 This works well for **durable knowledge**. But a functioning knowledge base also needs to support **work in motion** — documents that have lifecycles, change state, interact with each other, and eventually produce outcomes — durable artifacts in the KB, actions on the outside world (drafted emails, responses to messages, code changes), or simply get discarded. The task system (`tasks/`) is the clearest example: it has state machines (backlog → active → completed), directional dependencies (blocks/blocked-by), and expiration (completed tasks become irrelevant). None of this maps onto the existing type system.
 
@@ -20,7 +20,7 @@ This works well for **durable knowledge**. But a functioning knowledge base also
 | Property | Library | Workshop |
 |----------|---------|----------|
 | Value trajectory | Accumulates | Consumed |
-| State | Status (commitment level) | State machine with valid transitions |
+| Lifecycle signal | Usually prose, links, placement, or a specialized type-local field | State machine with valid transitions |
 | Relationships | Bidirectional (related, extends, contradicts) | Directional (blocks, depends-on, produces) |
 | Time sensitivity | Ages slowly, staleness is a bug | Urgency and staleness are features |
 | Success state | Referenced and connected | Completed or discarded |

@@ -2,15 +2,18 @@
 
 **Opened:** 2026-07-29
 
-**Last full recheck:** 2026-08-23
+**Last full recheck:** 2026-08-27
 
-**Last plan refresh:** 2026-08-27 (T1 tag semantics and navigation boundary)
+**Audited commit:** `6660bd2ad0d53938551ac283f60463f3c3d91b8e`
+
+**Last plan refresh:** 2026-08-27 (full rebaseline, installation program,
+and T1 transfer)
 
 **State:** seven findings remain open; C1 and F1 were resolved on 2026-08-19,
 and S1 was resolved on 2026-08-23. Plans and outcomes are recorded in the
-[plan index](./plans/README.md). T1's design was refreshed after a separate tag
-semantic contract and grounded search literature landed; implementation status
-is unchanged.
+[plan index](./plans/README.md). T1 remains an open finding here, but its design
+and implementation have transferred to the dedicated
+[tag-contract convergence workshop](../tag-contract-convergence/README.md).
 
 **Scope:** current Commonplace contracts outside the linking and lineage
 domains
@@ -21,24 +24,26 @@ Seven of the ten confirmed contradictions remain open. C1 closed by documenting
 the omitted executable and enforcing exact catalogue parity. F1 closed by
 withdrawing a generic freshness command that had no legal target. S1 closed
 when ADR 072 moved durable genre authority to the tracked ingest and restored
-whole-file immutability for local snapshots. Three other findings received
-partial repairs at one edge, but both conflicting witnesses remain live:
+whole-file immutability for local snapshots. Several witnesses changed without
+closing their findings:
 
 - E1: the health check gained one PowerShell-paired step and dropped obsolete
   activation instructions, but several promoted procedures are still
   POSIX-only;
-- V1: the skill and command reference now agree, but they agree on the same
-  one-level glob that omits nested shipped collections;
-- I3: the global type collection now explains its dual role, but the generated
-  control plane still denies that role and installed sources/work still lack
-  contracts;
+- V1: the promoted skill's one-level glob now sees five of eight installed
+  collection contracts and still omits all three nested shipped collections;
+- I3: installed sources gained a contract and the generated control plane
+  stopped denying that types is a collection, but installed work remains
+  contractless and discovery still excludes the global type collection;
 
-The install-integrity result worsened from 447 broken links on 2026-07-29 to
-**516** on 2026-08-19: 502 in the three shipped library collections and 14 in
-the shared global types. The installed reference collection also had one
-projection-specific type-resolution failure. The advertised full-validation
-procedure still skips all three shipped collections, so it can report
-completion without examining this broken surface.
+The install-integrity result is now **532** missing-link warnings across 181
+files: 518 in the three shipped library collections and 14 in shared global
+types. Installed reference also has one projection-specific type failure. The
+advertised full-validation procedure still skips all three shipped
+collections, so it can report completion without examining this broken
+surface. The generated counts, stale-witness dispositions, and reproduction
+boundary are recorded in the [2026-08-27 witness
+ledger](./baseline-2026-08-27.md).
 
 The recurring mechanisms remain:
 
@@ -70,15 +75,15 @@ Priorities mean:
 | ID | Priority | Current contradiction | Immediate consequence | Plan |
 |---|---|---|---|---|
 | I1 | P0 | Accepted ADR 021 promises four shipped collections, a marker, and marker-backed refresh; init ships three, writes no marker, and preserves every differing file | Package upgrades cannot update existing project-local library or skill copies as promised | [Shipping and upgrade](./plans/i1-shipping-upgrade.md) |
-| I2 | P0 | Source-valid local paths are copied through a topology change without shipping or translating their targets | A pristine install has 516 broken links and one type failure | [Install projection integrity](./plans/i2-install-projection-integrity.md) |
-| V1 | P0 | Both documented `all` procedures use `kb/*/COLLECTION.md`, while installed library collections are nested below `kb/commonplace/` | The normal completion path skips the shipped library | [Validate all](./plans/v1-validate-all.md) |
-| I3 | P1 | Generated routing treats sources/work as collections without contracts and treats contract-bearing `kb/types/` as not a collection | Read-before-write is impossible at two routed destinations and discovery excludes a real collection | [Installed topology](./plans/i3-installed-topology.md) |
+| I2 | P0 | Source-valid local paths are copied through a topology change without shipping or translating their targets | A pristine install has 532 missing-link warnings and one type failure | [Install projection integrity](./plans/i2-install-projection-integrity.md) |
+| V1 | P0 | The promoted skill's `all` procedure uses `kb/*/COLLECTION.md`, while installed library collections are nested below `kb/commonplace/` | The normal completion path skips the shipped library | [Validate all](./plans/v1-validate-all.md) |
+| I3 | P1 | Generated routing treats installed work as a collection without a contract, while discovery and conformance exclude contract-bearing `kb/types/` | Read-before-write is impossible for installed workshop writes and a real collection remains outside collection consumers | [Installed topology](./plans/i3-installed-topology.md) |
 | S1 | P1 | **Resolved 2026-08-23:** the tracked ingest owns durable `genre`; a local snapshot's optional genre is provisional and its bytes remain immutable after capture | ADR 072 removes the mutation exception and aligns the collection, types, and ingest write boundary | [Completed outcome](./plans/s1-snapshot-mutation-boundary.md) |
-| T1 | P1 | Tag coverage is stated and routed beyond one collection but generated and checked within one collection | A validated mark can falsely license a reader to skip the exact membership query that would expose omissions | [Tag scope](./plans/t1-tag-scope.md) |
+| T1 | P1 | Tag coverage is stated and routed beyond one collection but generated and checked within one collection | A validated mark can falsely license a reader to skip the exact membership query that would expose omissions | [Transferred owner and closure tracker](./plans/t1-tag-scope.md) |
 | E1 | P1 | Native Windows is supported, but promoted skills retain unpaired POSIX-only commands | Selected recovery and authoring procedures are non-operative on a declared channel | [Windows execution](./plans/e1-windows-execution.md) |
 | F1 | P1 | **Resolved 2026-08-19:** the unsupported generic accept entry point, transition, schema, and current-facing claims were withdrawn | ADR 065 requires a concrete non-review target before the surface can return | [Completed outcome](./plans/f1-freshness-accept.md) |
-| M1 | P2 | Three accepted representation migrations retain live guidance; the text-promotion and snapshot-pointer packets closed on 2026-08-19 | Agents can still author schema-invalid or semantically retired artifacts from current docs | [Migration residue](./plans/m1-migration-residue.md) |
-| C1 | P2 | **Resolved 2026-08-19:** 21 console scripts now have 21 unique command-reference sections | An exact set-parity test prevents one-sided catalogue changes | [Completed outcome](./plans/c1-command-catalogue.md) |
+| M1 | P2 | One accepted representation migration retains live guidance; four independent packets are now resolved and guarded | Agents can still follow the retired Areas/Topics grouping contract until tag adoption supplies its replacement | [Migration residue](./plans/m1-migration-residue.md) |
+| C1 | P2 | **Resolved 2026-08-19:** the current 22 console scripts have 22 unique command-reference sections | An exact set-parity test prevents one-sided catalogue changes without freezing the count | [Completed outcome](./plans/c1-command-catalogue.md) |
 
 ## I1 — Shipping and upgrade contracts disagree
 
@@ -98,14 +103,16 @@ automatic synchronization. [ADR
 requires manual diff-and-merge for projected skills, and
 [INSTALL.md](../../../INSTALL.md) says reruns acquire new scaffold files rather
 than replace existing ones. ADR 021 remains the marker-backed replacement
-witness. Separately, [architecture.md](../../reference/architecture.md) still
-makes the broader claim that init can “re-sync” the library on upgrade.
+witness. Architecture's former “re-sync” wording is now stale and no longer a
+current witness.
 
-The selected plan preserves current behavior rather than inventing an
-unimplemented drift protocol: settle I2's exact bundle, mark ADR 021
-superseded, restate the surviving namespace decision, and state one
-missing-files-only transition and manual upgrade procedure across ADRs, code,
-tests, install docs, and architecture.
+Preserve-only reruns are the honest current and possible interim contract, but
+they are not a credible terminal upgrade design for hundreds of framework-owned
+files. The revised plan first settles product ownership, then records prior
+framework hashes so an upgrade can replace unchanged framework files, preserve
+and report locally edited forks, never overwrite user-owned paths, and report
+upstream removals for deliberate pruning. T1 supplies migration inputs; it does
+not build a parallel upgrade mechanism.
 
 ## I2 — The install projection breaks the library graph
 
@@ -116,39 +123,47 @@ otherwise valid paths:
 
 | Installed surface | Files with broken links | Broken links | Failures |
 |---|---:|---:|---:|
-| `kb/commonplace/notes` | 150 | 468 | 0 |
-| `kb/commonplace/reference` | 23 | 33 | 1 |
+| `kb/commonplace/notes` | 146 | 462 | 0 |
+| `kb/commonplace/reference` | 30 | 55 | 1 |
 | `kb/commonplace/instructions` | 1 | 1 | 0 |
 | `kb/types` | 4 | 14 | 0 |
-| **Total** | **178** | **516** | **1** |
+| **Total** | **181** | **532** | **1** |
 
-Resolved against their intended source targets, the 516 broken edges divide as
+Resolved against their intended source targets, the 532 broken edges divide as
 follows:
 
 | Intended target class | Broken edges |
 |---|---:|
-| `kb/sources/` | 321 |
-| `kb/agent-memory-systems/` | 112 |
-| `kb/agentic-systems/` | 29 |
-| `kb/types/` | 29 |
+| `kb/sources/` | 335 |
+| `kb/agent-memory-systems/` | 101 |
+| `kb/types/` | 34 |
+| `kb/agentic-systems/` | 31 |
 | `kb/notes/` | 9 |
 | `kb/reference/` | 5 |
-| `AGENTS.md`, `tasks/`, `src/`, `kb/articles/`, `kb/reports/` | 10 |
+| `src/` | 5 |
+| `kb/articles/`, `kb/reports/` | 6 |
+| `AGENTS.md`, `kb/tasks/` | 4 |
 | `kb/log.md` | 1 |
+| `kb/work/` | 1 |
 
-The sole failure is [text-contract-profiles.md](../../reference/collection-prototypes.md):
-its file-relative `type:` pointer reaches global `kb/types/` in the source but
-resolves to absent `kb/commonplace/types/` after installation. Shared type
-contracts exhibit the inverse depth change when they link back into notes or
-reference.
+The sole failure is the installed copy of [the tag semantic contract
+proposal](../../reference/proposals/semantic-contract-for-tags-and-tag-heads.md):
+its repository-relative collection-local type pointer remains under absent
+top-level `kb/reference/types/` instead of projecting under
+`kb/commonplace/reference/types/`. Shared type contracts exhibit the inverse
+depth change when they link back into notes or reference.
 
 The resolution plan treats init as a build projection with an explicit
 source-to-installed map, an explicit disposition for omitted dependencies, one
 code-safe link rewriter, and a strict packaged-wheel acceptance test. The
-current-system recommendation is to retain the three documented library
-collections and replace omitted first-party and source edges with stable public
-or canonical external targets. Expanding the bundle remains coherent, but must
-be chosen explicitly before the I1 successor ADR.
+[installed-product decision](./installed-product-edition-decision.md) compares
+the self-contained, thin, curated, and hybrid options and recommends one hybrid
+evidence-local edition: complete methodology, a fixed-point closure of tracked
+source analyses, and immutable publication links for omitted review corpora
+and other first-party material. It also selects three logical roots, five
+per-file ownership classes, one compiler, and hash-aware upgrades. A successor
+installation ADR must adopt that packet before implementation. Wheel and
+editable-source installation must invoke the same compiler-like projection.
 
 ### Reproduction
 
@@ -164,23 +179,22 @@ commonplace-validate kb/commonplace/instructions
 commonplace-validate kb/types
 ```
 
-These counts were reproduced on 2026-08-19. Missing links are warnings, so exit
-status alone cannot establish product integrity. Reference exits nonzero only
-for the projection-specific type pointer; the previously reported source
-filename failure no longer exists.
+These counts were reproduced at the audited commit on 2026-08-27. Missing links
+are warnings, so exit status alone cannot establish product integrity. The
+reference collection exits nonzero for the projection-specific type pointer.
 
 ## V1 — “Validate all” still means one depth
 
-[commands.md](../../reference/commands.md) no longer contains its stale
-hardcoded collection list. It now matches the promoted [validation
-skill](../../instructions/cp-skill-validate/SKILL.md): both loop over
-`kb/*/COLLECTION.md`. That removes the previous second meaning but preserves the
-core gap. A pristine install contains seven `COLLECTION.md` files; the glob sees
-four and misses all three nested shipped collections.
+[commands.md](../../reference/commands.md) no longer publishes its former
+hardcoded collection list. The promoted [validation
+skill](../../instructions/cp-skill-validate/SKILL.md) remains the operative
+`all` procedure and loops over `kb/*/COLLECTION.md`. A pristine install now
+contains eight `COLLECTION.md` files; the glob sees five and misses all three
+nested shipped collections.
 
 [project_paths.py](../../../src/commonplace/lib/project_paths.py) already has a
 recursive `collection_dirs()`, but no `all` procedure consumes it. It also
-filters out any path containing `types`, so it returns six of the seven install
+filters out any path containing `types`, so it returns seven of the eight install
 collections, and in the source checkout it can include the deliberately ignored
 `kb/work/dialectical-sample` fixture. The full-validation enumerator therefore
 must include the I3 disposition of global types, prune
@@ -190,34 +204,37 @@ basenames, continue after failures, and own one aggregate result.
 Collection discovery is not the whole current `types` target: support type
 specs under paths such as `kb/reports/types/` and `kb/tasks/types/` may have no
 enclosing collection. `all` must cover those exactly once after collection
-runs. It must also run the existing direct-child-of-`kb/` landing check once,
-without silently imposing that landing rule on nested library collections.
+runs. V1 should expose a stable Python aggregate result before rendering text,
+with optional JSON as a secondary interface. It must also run the existing
+direct-child-of-`kb/` landing check once, without silently imposing that landing
+rule on nested library collections.
 
 ## I3 — Installed routing and material topology disagree
 
-[kb/types/COLLECTION.md](../../types/COLLECTION.md) now correctly explains that
-`kb/types/` is both global in reach and a collection by contract. The source
-control plane and architecture agree. The generated
-[AGENTS.md.template](../../../AGENTS.md.template) still says it is “not a
-collection,” while `collection_dirs()` excludes it.
+[kb/types/COLLECTION.md](../../types/COLLECTION.md) correctly explains that
+`kb/types/` is both global in reach and a collection by contract. The generated
+[AGENTS.md.template](../../../AGENTS.md.template) now defines collections by a
+local contract and no longer contains the former “not a collection” witness.
+`collection_dirs()` still excludes `kb/types/`, so material contract and
+runtime discovery continue to disagree.
 
 [collection_conformance.py](../../../src/commonplace/review/collection_conformance.py)
 also excludes every contract under a `types` path even though accepted [ADR
 060](../../reference/adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md)
 places `kb/types/` inside collection-conformance review.
 
-The template also routes `kb/sources/` and `kb/work/` as writable collections
-and requires their contract to be read before writing. The scaffold creates the
-directories but installs neither `COLLECTION.md` nor a landing for either.
-Write and connect can therefore hard-fail on a pristine install. Snapshot-web's
-newly hedged contract pointer does not supply the missing contract that ingest
-and type extension still require.
+The template routes `kb/sources/` and `kb/work/` as writable collections and
+requires their contract to be read before writing. The scaffold now installs a
+sources contract and landing. It still creates only the work directory, so a
+workshop write can hard-fail on a pristine install.
 
 The selected topology makes sources and work genuine scaffolded user
 collections, classifies types as the global type collection, and keeps
-`kb/commonplace/` as a namespace rather than a collection. A package-owned
-machine-readable declaration must drive or be parity-checked against manifest,
-routing, discovery, top-level landing coverage, and smoke tests.
+`kb/commonplace/` as a namespace rather than a collection. Extend the existing
+`ScaffoldManifest` with role, owner, writability, source/projection, template,
+upgrade, and logical-root data instead of creating a second topology inventory.
+Runtime discovery still follows concrete `COLLECTION.md` files so user-created
+collections remain visible.
 
 ## S1 — Snapshot immutability contradiction is resolved
 
@@ -234,81 +251,40 @@ type](../../sources/types/ingest-report.md), and
 [cp-skill-ingest](../../instructions/cp-skill-ingest/SKILL.md) now agree on the
 same boundary: snapshotting may create the ignored reading copy; ingestion
 writes only the tracked report and verifies that the reading copy's checksum
-did not change. I3's future installed source template must project this resolved
-contract rather than revive the old exception.
+did not change. The installed source template now projects this resolved
+contract; I3 retains only its manifest and routing parity obligation.
 
 ## T1 — Tag completeness claims have incompatible scopes
 
-The active [tag-scope
-proposal](../../reference/proposals/tag-scope-is-declared-where-membership-claims-are-made.md)
-and the newer [semantic contract for tags and tag
-heads](../../reference/proposals/semantic-contract-for-tags-and-tag-heads.md)
-remain unadopted. The [tag-readme type](../../types/tag-readme.md) and current
-routing use unqualified “every note” language across collection-facing
-surfaces, while generation and validation index one collection.
-
-The live witness is
-[trace-learning-techniques-in-related-systems.md](../../agent-memory-systems/trace-learning-techniques-in-related-systems.md),
-which carries `learning-theory` but none of the six children declared by the
-notes collection's
-[learning-theory-README.md](../../notes/learning-theory-README.md). Its
-`covered_by` claim is therefore false at cross-collection scope while validation
+The [tag-readme type](../../types/tag-readme.md) and current routing still use
+unqualified “every note” language across collection-facing surfaces, while
+generation and validation index one collection. The concrete witness remains
+[trace-learning-techniques-in-related-systems.md](../../agent-memory-systems/trace-learning-techniques-in-related-systems.md):
+it carries `learning-theory` but none of the six children declared by
+[learning-theory-README.md](../../notes/learning-theory-README.md). Validation
 passes because it checks only notes. Under the proposed participating set, the
-live reference proposal omitted by the `artifact-analysis` head is the second
-violation.
+live reference proposal omitted by the complete `artifact-analysis` head is a
+second witness.
 
-The selected scope remains one namespace per KB root, with membership claims
-ranging over explicitly participating library collections in the concrete
-projection. A shared resolver drives validation, generated augmentation,
-connect, recipes, and every exact-membership skip rule. Host and vendored roots
-remain independent, and shared `kb/types/` admits no tags because it has no
-single root owner.
+No local wording repair can close this finding. It requires a semantic model,
+logical-root ownership, exact membership resolution, consumer convergence,
+published projection behavior, and a breaking corpus migration. Those design
+and implementation responsibilities have therefore transferred to the
+[tag-contract convergence workshop](../tag-contract-convergence/README.md).
+The two reference proposals remain unadopted inputs, not authority.
 
-The semantic contract now states what the mechanism means. Assigning a tag
-asserts that an artifact belongs to a reusable candidate set for a recurring
-information need. It does not assert that every query should load every member.
-The resolver recovers exact membership; a canonical head supplies stable
-definition and contextual routing; task-level search may find relevant material
-outside one tag or rank its members for the current query. A `complete` or
-`covered_by` mark may license skipping only the exact membership operation it
-replaces. It cannot certify that broader discovery is complete.
-
-The grounded navigation corpus now bounds that distinction. [Pirolli's
-information-foraging account](../../sources/pirolli-proximal-information-scent-distal-content.ingest.md)
-models selection of unseen content from proximal cues. [Teevan and
-colleagues](../../sources/teevan-perfect-search-engine-orienteering.ingest.md)
-observed human searchers combining contextual local steps with direct jumps.
-[Tombros and
-Sanderson](../../sources/tombros-sanderson-query-biased-summaries.ingest.md)
-found better human relevance judgments from query-biased summaries than from a
-static surrogate. [Milo's contextual-map account](../../sources/nick-milo-mocs-definition.ingest.md)
-and the [Luhmann Archive's selective-entry-point
-record](../../sources/luhmann-archive-schlagwortregister.ingest.md) separately
-bound the curated-head comparison. These are human, practitioner, and
-historical sources. They motivate an agent-side comparison but do not establish
-LLM behavior or choose a resolver presentation.
-
-The implementation plan still moves the 20 existing per-tag heads to canonical
-`kb/tags/` paths and adds a twenty-first `trace-learning` head. That tag remains
-the source for website navigation and the derived matrix Boolean, with the
-review contract enforcing its evidence requirements. Redundant source-family
-tags are removed, and source and installed projection fixtures guard the
-boundary. The combined adopting ADR must also settle the semantic proposal's
-head, provisional-vocabulary, reuse-check, tag-relation, and result-presentation
-choices.
-
-No T1 implementation has landed: no adopting ADR, shared resolver,
-participation declarations, `kb/tags/` collection, canonical-head relocation,
-or consumer migration exists. T1 still consumes I3's root and collection
-topology, I2's installed bundle, I1's upgrade semantics, and V1's truthful full
-check. Its [refreshed plan](./plans/t1-tag-scope.md) treats an agent navigation
-trial as follow-up evidence rather than a structural closure gate unless the
-future ADR claims a retrieval-performance improvement.
+This parent workshop retains only the audit finding, its witnesses,
+installed-product dependencies I1/I2/I3/V1, and the [handoff and closure
+tracker](./plans/t1-tag-scope.md). T1 closes here when the owner workshop's
+adoption tests show that every exact-membership consumer uses the same
+projection-relative set and the original witnesses no longer contradict the
+implemented contract. The later agent navigation experiment is follow-up, not
+a closure gate unless an adopted decision makes a retrieval-performance claim.
 
 ## E1 — Native Windows support and promoted procedures disagree
 
 Native Windows and PowerShell remain supported, and the manifest now promotes
-nine skills. [cp-skill-health-check](../../instructions/cp-skill-health-check/SKILL.md)
+ten skills. [cp-skill-health-check](../../instructions/cp-skill-health-check/SKILL.md)
 improved its uv-tool step and removed the old `direnv`, `bash -c`, and active
 `.venv/bin` instructions. Its layout, projection, and legacy-residue checks
 still use unpaired Bash constructs such as `test`, `&&`, `||`, and `sed`.
@@ -319,12 +295,14 @@ Bash `if`/`for` program.
 
 The [execution-channel
 workshop](../execution-channel-compatibility/README.md) remains the owner, but
-its earlier project-venv premise is stale under the current user-level uv-tool
-installation model and its evidence is Linux-only. The plan retains Windows,
-uses V1's package-owned target dispatcher (including `all`), replaces connect's
-pipeline with a runtime-native algorithm, pairs the pre-command health checks,
-audits all nine promoted skills and their execution declarations, and adds
-native-Windows CI and evidence.
+its runtime evidence remains Linux-only. Its [2026-08-27 promoted-skill
+audit](../execution-channel-compatibility/e1-promoted-skill-rebaseline-2026-08-27.md)
+now derives the selected set from `MANIFEST.promoted_skills`, uses the current
+user-level uv-tool model, and classifies every executable locus. The plan
+retains Windows, uses V1's package-owned target dispatcher, moves connect's
+deterministic tag/path enumeration behind T1's resolver, pairs only true
+preflight checks, consolidates byte-level and orchestration work behind shared
+package/runtime operations, and adds native-Windows CI and runtime evidence.
 
 ## F1 — Generic freshness acceptance is withdrawn
 
@@ -339,42 +317,40 @@ non-review target and its complete registration contract.
 The package entry point, CLI module, unreachable transition, empty target-kind
 set, rejection-only tests, JSON schema, and current-facing documentation were
 removed together. Status, acknowledgement, retirement, capture finalization,
-and the generic tables remain. The C1 parity test now observes 21 published
-commands and 21 unique command sections, so a one-sided reintroduction fails.
+and the generic tables remain. The C1 parity test now observes 22 published
+commands and 22 unique command sections, so a one-sided reintroduction fails.
 
 The dated [freshness-module review](../freshness-module-review/findings.md) and
 historical artifact-freshness implementation documents retain the old command
 only as explicitly marked evidence. The active collection-freshness proposal
 describes initial registration as future work rather than claiming that a
-generic command ships. The shared `kb/work/README.md` still has a stale
-one-line freshness-module summary because it already contained unrelated
-uncommitted edits; that navigation-only cleanup remains pending rather than
-sweeping another change into this outcome.
+generic command ships.
 
-## M1 — Three representation migrations retain live residue
+## M1 — One representation migration retains live residue
 
-Three audited rows remain active. The text-promotion and snapshot-pointer rows
-closed on 2026-08-19:
+Only Areas/Topics remains active. Global note status and path-valued types
+closed on 2026-08-27; text promotion and the snapshot pointer closed on
+2026-08-19:
 
 | State | Current contract | Guidance disposition |
 |---|---|---|
-| Open | [ADR 044](../../reference/adr/044-user-verification-replaces-global-note-status.md) and [note.schema.yaml](../../types/note.schema.yaml) remove global note `status` | The type-reference exposition sweep corrected the former catalogue, notes landing, document-system landing, and workshop-layer opening; the directory-scoped-type note and a full present-tense consumer sweep remain. |
+| **Resolved** | [ADR 044](../../reference/adr/044-user-verification-replaces-global-note-status.md), [note-base.schema.yaml](../../types/note-base.schema.yaml), and [note.schema.yaml](../../types/note.schema.yaml) remove global note `status` | Current guidance now teaches the actual shared fields and no maturity ladder. A parsed-frontmatter guard confines `status` to declared ADR and article lifecycle values; a scoped guidance check rejects retired current wording. |
 | Open | [ADR 004](../../reference/adr/004-replace-areas-with-tags.md) replaces `areas` and Topics footers | [areas-exist-because-useful-operations-require-reading-notes-together.md](../../notes/areas-exist-because-useful-operations-require-reading-notes-together.md) teaches the retired mechanism as current |
-| Open | [collections-and-types.md](../../reference/collections-and-types.md) and the resolver require path-valued `type:` | The type-reference exposition sweep corrected storage architecture and consolidated the reference model; [document-types-should-be-verifiable.md](../../notes/document-types-should-be-verifiable.md) and related type-ladder notes still use current bare-type examples. |
+| **Resolved** | [collections-and-types.md](../../reference/collections-and-types.md) and the resolver require path-valued `type:` | Current examples use resolvable paths. A parsed scan validates every visible active artifact's frontmatter and the inventoried executable examples; only ADR 012 retains the pre-path enum as dated history. |
 | **Resolved** | [snapshot.schema.yaml](../../sources/types/snapshot.schema.yaml) requires `type: kb/sources/types/snapshot.md` | [snapshot.md](../../sources/types/snapshot.md) now gives the same path-valued default. A schema-derived parity test covers the type spec, collection Types menu, and snapshot skill; existing emitter tests cover X and GitHub captures. |
 | **Resolved** | [note-base.schema.yaml](../../types/note-base.schema.yaml) requires `description` and `type`, while convert writes `type: kb/types/note.md` and never grants verification | The text contract, root and reference guides, and five conceptual notes now require complete note frontmatter in their text-promotion passages. A schema-derived check covers the authoritative text contract and converter template; a scoped regression scan rejects retired shortcuts in all eight current consumers. |
 
-The [migration plan and manifest](./plans/m1-migration-residue.md) records both
-completed packets and their guards. The other rows remain starting witness sets
-rather than complete inventories. Their packets must still distinguish
-explicit history from current instructions and add narrow guards for the
-retired executable forms.
+The [migration plan and manifest](./plans/m1-migration-residue.md) records all
+four completed packets and their guards. The Areas/Topics packet still must
+distinguish explicit history from current instructions and add a narrow guard
+for the retired executable form after the tag-contract outcome supplies its
+replacement.
 
 ## C1 — Command-catalogue parity is resolved
 
-The scripts table in [pyproject.toml](../../../pyproject.toml) publishes 21
+The scripts table in [pyproject.toml](../../../pyproject.toml) publishes 22
 `commonplace-*` entry points, and [commands.md](../../reference/commands.md) now
-has 21 unique matching command sections. The new quote-verification section
+has 22 unique matching command sections. The quote-verification section
 documents its targets, `--show-matches`, result classes, and exit behavior.
 
 [test_command_catalogue_integrity.py](../../../tests/commonplace/docs/test_command_catalogue_integrity.py)
@@ -394,7 +370,9 @@ output, including warnings, rather than only unit tests over its copier.
 
 ADRs 004, 021, 044, and 045 changed concepts with many readers. Primary
 implementations moved while navigation, examples, skills, or installed
-projections retained the old contract.
+projections retained the old contract. Naming one operativity path did not
+inventory independent consumer classes, generated forms, or installed
+migrations; the workshop-wide contract-change gate addresses that process gap.
 
 ### 3. Scope is prose reimplemented as traversal
 
@@ -412,30 +390,50 @@ presence, not that any legal invocation or supported execution channel works.
 
 ## Implementation order
 
-1. **Settle the installed-product inputs.** I3 defines the collection roles,
-   discovery semantics, and machine-readable topology shape; I2 chooses which
-   dependency classes ship and which receive explicit external projections.
-   S1's source mutation boundary is already settled by ADR 072.
-2. **Record the combined decision (I1).** The successor ADR marks ADR 021
-   superseded and records the actual bundle, topology, and preserve-only upgrade
-   semantics.
-3. **Finish material topology (I3).** Scaffold sources/work contracts using the
-   resolved ADR 072 boundary, apply I2's library routing, and align discovery
-   and conformance review.
-4. **Close the projection and test the packaged product (I2).** Translate every
-   included edge and make unresolved dependencies fail release acceptance.
-5. **Expose truthful full validation (V1).** Consume the same collection
-   enumeration, retain orphan-type and top-level-landing coverage, and replace
-   the shell loop.
-6. **Land the other repairs.** T1 consumes the settled I3/I2/I1 product boundary
-   and V1's truthful full check. Its adopting ADR reconciles the scope and
-   semantic proposals, limits marks to exact-membership shortcuts, and keeps
-   contextual head traversal distinct from task-level search. T1 then precedes
-   M1's areas packet. E1 also consumes V1 and remains with the
-   execution-channel workshop. I3 must copy S1's resolved source contract into
-   the installed sources template.
-7. **Finish the M1 sweep and cheap drift guards.** Retain focused parity and
-   lexical checks at the boundaries that drifted.
+1. **Rebaseline at a named commit — complete for this cycle.** The witness
+   ledger classifies open, partial, stale, new, and count-only changes at
+   `6660bd2a`.
+2. **Installed-product recommendation — complete.** The decision packet selects
+   the hybrid evidence-local edition, logical-root boundaries, ownership
+   classes, projection policy, and terminal upgrade policy. Adopt it in the
+   successor installation ADR before coding the projection.
+3. **Implement minimal I3 plus V1.** Extend `ScaffoldManifest` enough to expose
+   roles and roots, keep runtime discovery contract-based, and land the
+   recursive structured validation suite. V1 may truthfully report current
+   product failures; that makes it I2's acceptance harness.
+4. **Implement I2.** Build one compiler-like projection for wheel and editable
+   sources, disposition every dependency edge, and test the actual fresh
+   install through V1.
+5. **Finish I3 and I1.** Complete templates and routing parity, then supersede
+   ADR 021 with ownership-aware upgrade behavior. Preserve-only may be an
+   explicitly temporary release constraint, not the terminal architecture.
+6. **Continue E1; independent M1 packets are complete.** Implement the
+   manifest-derived promoted-skill audit's dispositions and gather native
+   Windows evidence. Global-note-status and path-valued-type cleanup closed on
+   2026-08-27; Areas/Topics still waits for tags.
+7. **Consume the tag owner outcome.** The tag-contract workshop implements its
+   semantic/resolver, consumer, and migration phases against the settled
+   installed-product boundary. This workshop then rechecks T1's original
+   witnesses.
+8. **Finish Areas/Topics and the process guard.** Promote the contract-change
+   implementation gate, record outcomes, and delete this workshop.
+
+## Workshop-wide durable outcome
+
+Closing the individual contradictions is insufficient if a later
+cross-cutting contract change again inventories only one consumer. The
+[contract-change gate plan](./plans/contract-change-gate.md) must promote a
+small implementation/review instruction covering:
+
+- authoritative declaration and declared scope;
+- current operative consumer classes;
+- generated and projected forms;
+- fresh-install consequence and existing-install migration;
+- acceptance test and drift guard;
+- explicitly historical retained witnesses.
+
+This is a review aid, not a general semantic-contradiction detector and not an
+ADR file inventory.
 
 ## Exclusions and non-findings
 
@@ -460,5 +458,6 @@ presence, not that any legal invocation or supported execution channel works.
 
 This workshop closes only after every plan's acceptance criteria are satisfied
 in durable system artifacts or the finding is explicitly transferred to a
-named owner with those criteria. The workshop must then be deleted so it does
-not become a second authority surface.
+named owner with those criteria, the contract-change gate is promoted, and all
+transferred findings are rechecked against their original witnesses. The
+workshop must then be deleted so it does not become a second authority surface.

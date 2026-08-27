@@ -44,7 +44,7 @@ Our link semantics (extends, grounds, contradicts, exemplifies) are lighter than
 
 ## Theory
 
-- [linking-theory](./linking-theory.md) — seedling: open questions about what makes links load-bearing, how relationship types interact with position, and what a principled linking theory would predict
+- [linking-theory](./linking-theory.md) — open questions about what makes links load-bearing, how relationship types interact with position, and what a principled linking theory would predict
 
 ## Reference material
 

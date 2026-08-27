@@ -79,7 +79,7 @@ Given the amplification condition and the decorrelation requirement, the design 
 Structured document types already function as error correction by constraining the output space through structural checks. [Structured-prompt gains do not establish training-distribution selection](./structured-prompt-gains-do-not-establish-distribution-selection.md), so this role should rest on the checks the type makes possible rather than on an inferred training-data mechanism. The framework developed here suggests going further:
 
 - **Validation scripts** are hard-oracle checks — cheap, deterministic, but narrow.
-- **Multiple generation + voting** could improve seedling quality before human review.
+- **Multiple generation + voting** could improve candidate quality before human review.
 - **Metamorphic checks on claims** — does rephrasing the evidence change the conclusion? Does removing one piece of evidence weaken it proportionally? These test argument robustness without requiring ground truth.
 - **Cross-note consistency** — does a new claim contradict existing notes? This uses the KB itself as an oracle.
 

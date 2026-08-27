@@ -1,10 +1,10 @@
 # E1 plan — Make native Windows support operative
 
-**State:** open, with partial health-check improvement. The manifest now
-promotes nine skills. The health check pairs only its uv ownership step with
-PowerShell; its layout, projection, and legacy-residue checks remain Bash-only.
-Connect still uses a load-bearing `xargs -r` pipeline, and validate still embeds
-a Bash `if`/`for` program.
+**State:** open; rebaselined at commit `6660bd2a` on 2026-08-27. The
+[manifest-derived promoted-skill audit](../../execution-channel-compatibility/e1-promoted-skill-rebaseline-2026-08-27.md)
+classifies all ten skills selected in that snapshot without making the count a
+future inventory. The implementation dispositions and native-Windows evidence
+remain open. See the [witness ledger](../baseline-2026-08-27.md).
 
 ## Resolution selected
 
@@ -18,30 +18,35 @@ must work before a package command can be assumed available.
 
 ## Work
 
-1. Rebaseline the execution-channel workshop on the user-level uv-tool model.
-   Remove its stale project-venv/session-activation premise, inventory all nine
-   promoted skills, and collect at least one native-Windows PowerShell result.
-2. Consume V1: make `cp-skill-validate` pass the requested file, collection,
+1. **Static rebaseline — complete 2026-08-27.** The owner workshop now uses the
+   user-level uv-tool model, and the dated audit derives its exact selected set
+   from `MANIFEST.promoted_skills`. Its implementation guard must preserve that
+   set equality rather than encode “all ten” or a remaining count.
+2. Collect at least one native-Windows PowerShell result after the owning
+   package operations land. The current audit is source-static and Linux-hosted;
+   it makes no native-Windows runtime claim.
+3. Consume V1: make `cp-skill-validate` pass the requested file, collection,
    `all`, `types`, `landings`, or `redirects` target directly to
    `commonplace-validate <target>`, with the CLI interpreting `all` and no shell
    program in the skill.
-3. Replace connect's pipeline with an explicit two-call algorithm using the
-   runtime's search/read tools: collect paths carrying the tag, stop cleanly on
-   an empty set, then inspect descriptions only in returned paths. Preserve a
-   no-match test proving the search never widens to the repository.
-4. Pair every health-check preflight:
+4. Do not replace connect's pipeline with permanent runtime-specific Grep/Read
+   choreography. Put deterministic tag/path collection behind a package command
+   or shared Python helper, preferably T1's exact resolver once available, and
+   keep the skill a thin caller. Preserve a no-match test proving the search
+   never widens to the repository.
+5. Pair every health-check preflight:
    - project/layout presence;
    - canonical and projected skill presence;
    - uv command ownership;
    - legacy `.envrc` and `.venv` inspection.
    Keep repair instructions labelled by channel and do not treat the historical
    `.venv/bin` signature as a current dependency.
-5. Audit the remaining six promoted skills for shell syntax, utility flags,
-   `/tmp`, path separators, executable discovery, process-persistence
-   assumptions, `allowed-tools` declarations, and any declared Bash-only
-   execution interface. In particular, recheck snapshot-web's temporary paths
-   and revise-autoreason's POSIX file choreography.
-6. Add Windows CI for package install, pristine init, validation, and focused
+6. Implement the audit's remaining package/runtime dispositions: shared
+   checksum and byte-preservation operations for write, ingest, ground, and
+   multistage writing; portable capture and temporary-file operations for
+   snapshot-web; runtime-native orchestration for AutoReason; and an explicit
+   disposition for promoted skills' `allowed-tools: Bash` declarations.
+7. Add Windows CI for package install, pristine init, validation, and focused
    health checks. Add a narrow static inventory/check for known incompatible
    idioms so a new unpaired `xargs`, POSIX conditional, or hardcoded `/tmp`
    becomes visible at review time.

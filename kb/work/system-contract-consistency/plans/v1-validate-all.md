@@ -1,17 +1,32 @@
 # V1 plan — Make `validate all` mean every declared collection
 
-**State:** open. The skill and command reference now agree, but both use the
-same one-level `kb/*/COLLECTION.md` loop. A current clean install contains seven
-contracts and that glob sees four; it misses all three shipped library
-collections.
+**State:** open; rebaselined at commit `6660bd2a` on 2026-08-27. The promoted
+skill's one-level `kb/*/COLLECTION.md` loop sees five of eight pristine-install
+contracts and misses all three shipped library collections. The command
+reference no longer publishes a second hardcoded enumeration. See the [witness
+ledger](../baseline-2026-08-27.md).
 
 ## Resolution selected
 
 Make `commonplace-validate all` the sole implementation of full deterministic
 validation. The Python command should discover scopes recursively, validate
 each collection separately, cover type specs outside collections exactly once,
-continue after failures, run repository-level checks once, print an aggregate
-summary, and return nonzero after the complete sweep if any phase failed.
+continue after failures, run repository-level checks once, return a stable
+`ValidationSuiteResult` (or equivalent), render an aggregate summary, and
+return nonzero after the complete sweep if any phase failed. Optional JSON may
+render that result, but console text is not the programmatic interface.
+
+Land V1 after the minimal I3 role/root model and before I2. A truthful `all`
+command may report that the current installed product is broken; I2 then uses
+the same suite as its acceptance harness. Coverage and severity remain
+separate: `all` guarantees every declared scope was examined, ordinary warnings
+stay warnings, and the packaged-product test may require zero missing-link
+warnings.
+
+The [installed-product decision](../installed-product-edition-decision.md)
+selects the three-root model V1 must consume. Collection discovery remains
+recursive and contract-based; `shared-types` remains a collection even though
+artifact-oriented consumers may exclude it explicitly.
 
 ## Work
 
@@ -28,8 +43,9 @@ summary, and return nonzero after the complete sweep if any phase failed.
    Preserve each collection as its own `ValidationRun` so collection-local tag,
    type, and structure rules retain the correct boundary.
 3. Do not fail fast. Accumulate collection results, ignored scopes, warnings,
-   failures, and execution errors, then render one final scope ledger showing
-   every discovered collection exactly once.
+   failures, and execution errors in one stable Python result, then render one
+   final scope ledger showing every discovered collection exactly once. Add an
+   optional JSON renderer only after the result contract is tested.
 4. After collection runs, validate type specs not already covered by a
    scheduled collection exactly once. Preserve the current `types` coverage of
    support roots such as `kb/reports/types/` and `kb/tasks/types/`; report this
@@ -54,7 +70,7 @@ summary, and return nonzero after the complete sweep if any phase failed.
 - A failing early collection followed by a later collection that is still run.
 - Landing and conditional redirect phases.
 
-The current fixture's seven contracts are a regression witness, not the future
+The current fixture's eight contracts are a regression witness, not the future
 hardcoded answer: I2 and I3 may add collections. V1 closes when the invoked set
 always equals the discovered declared set and the promoted skill is a
 shell-neutral one-command wrapper.

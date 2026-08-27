@@ -7,7 +7,9 @@ from pathlib import Path
 
 import yaml
 
+from commonplace.lib import frontmatter
 from commonplace.lib.naming import MAX_INGEST_SNAPSHOT_SLUG_LENGTH
+from commonplace.lib.type_resolver import validate_type_path
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 
@@ -35,6 +37,119 @@ RETIRED_TEXT_PROMOTION_WORDING = (
     "`type: note`",
 )
 RETIRED_BARE_NOTE_YAML = re.compile(r"(?m)^\s*type:\s*note\s*(?:#.*)?$")
+
+GLOBAL_NOTE_STATUS_GUIDANCE = (
+    Path("kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md"),
+    Path("kb/notes/brainstorming-maintainability-oracles-for-agentic-development.md"),
+    Path("kb/notes/directory-scoped-types-are-cheaper-than-global-types.md"),
+    Path("kb/notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md"),
+    Path("kb/notes/link-strength-is-encoded-in-position-and-prose.md"),
+    Path("kb/notes/links-README.md"),
+    Path("kb/notes/memory-design-adds-operational-axes-to-artifact-analysis.md"),
+    Path("kb/notes/oracle-strength-spectrum.md"),
+    Path("kb/notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md"),
+    Path("kb/notes/topology-isolation-and-verification-form-a-causal-chain-for-reliable.md"),
+    Path("kb/reference/source-adoption-policy.md"),
+    Path("kb/tasks/types/task-active.md"),
+    Path("kb/tasks/types/task-backlog.md"),
+    Path("kb/tasks/types/task-recurring.md"),
+)
+
+RETIRED_GLOBAL_NOTE_STATUS_WORDING = (
+    "description, status, tags",
+    "kb lifecycle status if needed",
+    "maturity ladder",
+    "source note status",
+    "seedling",
+    "status (commitment level)",
+    "status ladder",
+    "universal commitment tracking",
+)
+
+TYPE_EXAMPLE_GUIDANCE = (
+    Path("kb/notes/agent-statelessness-means-the-context-engine-should-inject-context.md"),
+    Path("kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md"),
+    Path("kb/notes/document-types-should-be-verifiable.md"),
+    Path("kb/notes/title-as-claim-enables-traversal-as-reasoning.md"),
+    Path("kb/notes/why-directories-despite-their-costs.md"),
+    Path("kb/reference/collections-and-types.md"),
+    Path("kb/types/note.md"),
+)
+
+# This example is explicitly an ADR under kb/reference/adr/, so its
+# file-relative pointer resolves from that illustrated artifact location.
+TYPE_EXAMPLE_SOURCE_CONTEXTS = {
+    (
+        Path("kb/reference/collections-and-types.md"),
+        "../types/adr.md",
+    ): Path("kb/reference/adr/example.md"),
+}
+
+RETIRED_BARE_TYPE_ASSIGNMENT = re.compile(
+    r"(?<![\w/.-])type:\s*(note|spec|structured-claim|snapshot)"
+    r"(?=[\s`,;.)\]}]|$)"
+)
+
+# ADR 012 records the pre-path type system in its dated Context. Current
+# guidance and executable examples must not use these retired assignments.
+EXPECTED_BARE_TYPE_HISTORY = {
+    Path("kb/reference/adr/012-types-for-structure-traits-for-review.md"): (
+        "note",
+    ),
+}
+
+TYPE_LOCAL_STATUS_VALUES = {
+    "kb/articles/types/article.md": {
+        "draft",
+        "working-paper",
+        "published",
+        "superseded",
+        "withdrawn",
+    },
+    "kb/reference/types/adr.md": {"accepted", "superseded", "deprecated"},
+}
+
+FENCED_EXAMPLE = re.compile(
+    r"(?ms)^```(?P<language>yaml|markdown)\s*\n(?P<body>.*?)^```\s*$"
+)
+
+
+def _active_kb_markdown_paths() -> tuple[Path, ...]:
+    paths: list[Path] = []
+    for path in (REPO_ROOT / "kb").rglob("*.md"):
+        relative_path = path.relative_to(REPO_ROOT)
+        # Workshops and generated reports retain experiments, captured prompts,
+        # and immutable pre-migration copies. They are evidence, not current
+        # artifact contracts or authoring guidance.
+        if relative_path.is_relative_to(Path("kb/work")):
+            continue
+        if relative_path.is_relative_to(Path("kb/reports")):
+            continue
+        if ".snapshots" in relative_path.parts:
+            continue
+        paths.append(relative_path)
+    return tuple(sorted(paths))
+
+
+def _canonical_type_path(relative_path: Path, value: object) -> str:
+    canonical, resolved = validate_type_path(
+        value,
+        repo_root=REPO_ROOT,
+        source_file=REPO_ROOT / relative_path,
+    )
+    assert resolved.is_file(), f"{relative_path}: missing type spec {canonical}"
+    return canonical
+
+
+def _example_frontmatter(block: str, language: str) -> dict[str, object] | None:
+    if block.startswith("---\n"):
+        parsed = frontmatter.parse(block)
+        assert parsed.ok, parsed.errors
+        return parsed.data
+    if language == "yaml":
+        parsed = yaml.safe_load(block)
+        return parsed if isinstance(parsed, dict) else None
+    return None
 
 
 def test_text_promotion_requires_complete_note_frontmatter() -> None:
@@ -93,6 +208,134 @@ def test_current_text_promotion_guidance_avoids_retired_shortcuts() -> None:
     assert occurrences == [], "retired text-promotion guidance remains:\n" + "\n".join(
         occurrences
     )
+
+
+def test_note_contract_matches_the_global_frontmatter_schema() -> None:
+    base_schema = yaml.safe_load(
+        (REPO_ROOT / "kb/types/note-base.schema.yaml").read_text(encoding="utf-8")
+    )
+    frontmatter_schema = base_schema["properties"]["frontmatter"]
+    required_fields = set(frontmatter_schema["required"])
+    shared_fields = set(frontmatter_schema["properties"])
+
+    assert required_fields == {"description", "type"}
+    assert shared_fields == {
+        "description",
+        "type",
+        "traits",
+        "tags",
+        "user-verified",
+    }
+    assert "status" not in shared_fields
+
+    note_schema = yaml.safe_load(
+        (REPO_ROOT / "kb/types/note.schema.yaml").read_text(encoding="utf-8")
+    )
+    note_fields = note_schema["allOf"][1]["properties"]["frontmatter"][
+        "properties"
+    ]
+    assert note_fields["status"] is False
+
+    note_contract = (REPO_ROOT / "kb/types/note.md").read_text(encoding="utf-8")
+    table = note_contract.split("## Frontmatter", maxsplit=1)[1].split(
+        "## Description", maxsplit=1
+    )[0]
+    rows: dict[str, tuple[str, str]] = {}
+    for line in table.splitlines():
+        if not line.startswith("| `"):
+            continue
+        field, required, use = (cell.strip() for cell in line.strip("|").split("|"))
+        rows[field.strip("`")] = (required, use)
+
+    assert set(rows) == shared_fields
+    assert {field for field, (required, _) in rows.items() if required == "Yes"} == (
+        required_fields
+    )
+    assert rows["type"][1] == "`kb/types/note.md`"
+
+
+def test_status_frontmatter_is_confined_to_specialized_type_contracts() -> None:
+    observed_types: set[str] = set()
+    violations: list[str] = []
+
+    for relative_path in _active_kb_markdown_paths():
+        content = (REPO_ROOT / relative_path).read_text(encoding="utf-8")
+        parsed = frontmatter.parse(content)
+        assert parsed.ok, f"{relative_path}: {parsed.errors}"
+        if "status" not in parsed.data:
+            continue
+
+        type_path = _canonical_type_path(relative_path, parsed.data.get("type"))
+        observed_types.add(type_path)
+        allowed_values = TYPE_LOCAL_STATUS_VALUES.get(type_path)
+        status = parsed.data["status"]
+        if allowed_values is None or status not in allowed_values:
+            violations.append(f"{relative_path}: {type_path} status={status!r}")
+
+    assert violations == [], "non-local status frontmatter remains:\n" + "\n".join(
+        violations
+    )
+    assert observed_types == set(TYPE_LOCAL_STATUS_VALUES)
+
+
+def test_current_global_note_guidance_avoids_retired_status_contract() -> None:
+    occurrences: list[str] = []
+    for relative_path in GLOBAL_NOTE_STATUS_GUIDANCE:
+        content = (REPO_ROOT / relative_path).read_text(encoding="utf-8").casefold()
+        occurrences.extend(
+            f"{relative_path}: {wording}"
+            for wording in RETIRED_GLOBAL_NOTE_STATUS_WORDING
+            if wording in content
+        )
+
+    assert occurrences == [], "retired global note status remains:\n" + "\n".join(
+        occurrences
+    )
+
+
+def test_active_frontmatter_types_are_paths() -> None:
+    for relative_path in _active_kb_markdown_paths():
+        content = (REPO_ROOT / relative_path).read_text(encoding="utf-8")
+        parsed = frontmatter.parse(content)
+        assert parsed.ok, f"{relative_path}: {parsed.errors}"
+        if not parsed.data:
+            continue
+        assert "type" in parsed.data, f"{relative_path}: frontmatter.type is missing"
+        _canonical_type_path(relative_path, parsed.data["type"])
+
+
+def test_current_type_examples_use_path_values() -> None:
+    checked: list[str] = []
+    for relative_path in TYPE_EXAMPLE_GUIDANCE:
+        content = (REPO_ROOT / relative_path).read_text(encoding="utf-8")
+        for match in FENCED_EXAMPLE.finditer(content):
+            metadata = _example_frontmatter(
+                match.group("body"), match.group("language")
+            )
+            if not metadata or "type" not in metadata:
+                continue
+            example_type = metadata["type"]
+            assert isinstance(example_type, str), (
+                f"{relative_path}: example type must be a string"
+            )
+            source_context = TYPE_EXAMPLE_SOURCE_CONTEXTS.get(
+                (relative_path, example_type), relative_path
+            )
+            canonical = _canonical_type_path(source_context, example_type)
+            checked.append(f"{relative_path}: {canonical}")
+
+    assert checked, "no path-valued type examples were checked"
+
+
+def test_retired_bare_type_assignments_are_explicit_history_only() -> None:
+    occurrences: dict[Path, tuple[str, ...]] = {}
+    for relative_path in _active_kb_markdown_paths():
+        content = (REPO_ROOT / relative_path).read_text(encoding="utf-8")
+        values = tuple(RETIRED_BARE_TYPE_ASSIGNMENT.findall(content))
+        if values:
+            occurrences[relative_path] = values
+
+    assert occurrences == EXPECTED_BARE_TYPE_HISTORY
 
 
 def test_snapshot_type_pointer_matches_schema() -> None:

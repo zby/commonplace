@@ -1,52 +1,57 @@
 # Resolution plans
 
 These are implementation plans and completed outcomes for the ten
-contradictions rechecked on 2026-08-19. T1 was refreshed on 2026-08-27 after
-the tag semantic contract and grounded search literature supplied a sharper
-navigation boundary. These files are workshop state, not new system authority.
+contradictions rechecked at commit `6660bd2a` on 2026-08-27. The generated
+[witness ledger](../baseline-2026-08-27.md) classifies changed and stale
+witnesses. These files are workshop state, not new system authority.
 Each open plan names the durable contracts, code, tests, or owner workshop that
 must absorb its outcome before the finding can close; completed outcomes record
 the guard that keeps a closed contradiction from recurring.
 
+I1, I2, I3, and V1 are separate implementation packets within one
+installed-product architecture program: topology, projection, upgrade, and
+whole-product validation must share one model without becoming one correlated
+patch.
+
 | Finding | Recommended resolution | Plan |
 |---|---|---|
-| I1 | Supersede the unimplemented marker contract and make preserve-only/manual upgrades explicit | [Shipping and upgrade](./i1-shipping-upgrade.md) |
-| I2 | Treat the generated install as a tested projection with an explicit dependency policy | [Install projection integrity](./i2-install-projection-integrity.md) |
+| I1 | Supersede the unimplemented marker contract with ownership-aware upgrades; preserve-only is at most an explicit interim limit | [Shipping and upgrade](./i1-shipping-upgrade.md) |
+| I2 | Compile and test the selected hybrid evidence-local edition with explicit dependency dispositions | [Install projection integrity](./i2-install-projection-integrity.md) |
 | V1 | Make `commonplace-validate all` the one recursive, non-fail-fast full-validation path | [Validate all](./v1-validate-all.md) |
-| I3 | Scaffold contracts for every routed writable collection and classify `kb/types/` consistently | [Installed topology](./i3-installed-topology.md) |
+| I3 | Extend `ScaffoldManifest` with roles and logical roots, scaffold work, and classify `kb/types/` consistently | [Installed topology](./i3-installed-topology.md) |
 | S1 | **Resolved 2026-08-23:** make the tracked ingest authoritative for genre and keep local snapshots whole-file immutable | [Completed outcome](./s1-snapshot-mutation-boundary.md) |
-| T1 | Define KB-wide semantic membership, resolve it per root and projection, limit marks to membership shortcuts, and give heads canonical `kb/tags/` paths | [Tag scope](./t1-tag-scope.md) |
-| E1 | Retain native Windows support and remove or pair every channel-specific promoted procedure | [Windows execution](./e1-windows-execution.md) |
+| T1 | **Transferred:** retain the contradiction and close it only after the dedicated tag workshop proves consumer convergence | [Owner handoff](./t1-tag-scope.md) |
+| E1 | Retain native Windows support and implement the manifest-derived portability dispositions | [Windows execution](./e1-windows-execution.md) |
 | F1 | **Resolved 2026-08-19:** unsupported generic freshness acceptance was withdrawn until a real non-review target exists | [Completed outcome](./f1-freshness-accept.md) |
-| M1 | Complete the three remaining migration-residue packets; text promotion and the snapshot pointer are resolved and guarded | [Migration residue](./m1-migration-residue.md) |
+| M1 | Complete Areas/Topics after tag adoption; the other four migration packets are resolved and guarded | [Migration residue](./m1-migration-residue.md) |
 | C1 | **Resolved 2026-08-19:** quote verification is documented and exact console-script/reference parity is enforced | [Completed outcome](./c1-command-catalogue.md) |
+
+Workshop-wide outcome: promote the [contract-change implementation
+gate](./contract-change-gate.md) before closure.
 
 ## Execution order
 
-1. **Settle installed-product inputs:** I3 defines the collection roles,
-   discovery semantics, and machine-readable topology shape; I2 decides the
-   shipped bundle and omitted-edge policy. S1's source mutation boundary is
-   already settled by ADR 072.
-2. **Record and materialize the contract:** I1's successor marks ADR 021
-   superseded and records the chosen topology, bundle, and preserve-only upgrade
-   semantics. I3 then finishes sources/work templates and library routing with
-   ADR 072's resolved source boundary and the I2 inputs.
-3. **Close projection and validation:** I2 implements projection closure and
-   packaged-product acceptance. V1 exposes one truthful full check without
-   losing orphan-type or top-level-landing coverage.
-4. **Carry resolved inputs forward:** I3's installed source template projects
-   S1's resolved ADR 072 contract. F1 is already closed under C1's
-   command-parity guard.
-5. **Finish tag and channel owner work:** after I3, I2, and I1 settle the
-   installed-product boundary, T1 consumes that boundary and V1's truthful full
-   check. Its adopting ADR must reconcile the scope and semantic proposals,
-   distinguish exact membership recovery from head traversal and task-level
-   search, and avoid claiming untested agent retrieval gains. T1 then precedes
-   the areas packet of M1. E1 also consumes V1, remains owned by the
-   execution-channel workshop, and must include a native-Windows evidence run.
-6. **Sweep representation residue:** run the M1 packets after their governing
-   contracts are settled, then retain narrow guards against reintroducing the
-   retired executable examples.
+1. **Rebaseline — complete for this cycle:** use the named-commit ledger, not
+   inherited prose counts.
+2. **Installed-product recommendation — complete:** the
+   [decision packet](../installed-product-edition-decision.md) selects one
+   hybrid evidence-local edition, three logical roots, five ownership classes,
+   one projection compiler, and hash-aware upgrades. Adopt it in the successor
+   installation ADR before implementation.
+3. **Implement minimal I3 plus V1:** extend the existing manifest, retain
+   contract-based runtime discovery, and land a structured recursive suite
+   before projection cleanup.
+4. **Implement I2:** one compiler-like projection for wheel and editable-source
+   modes, accepted by V1 over a pristine initialized artifact.
+5. **Finish I3 and I1:** complete routing/templates and ownership-aware upgrade
+   behavior; label preserve-only explicitly if it ships as an interim limit.
+6. **Continue E1; independent M1 packets are complete:** use the
+   [manifest-derived E1 audit](../../execution-channel-compatibility/e1-promoted-skill-rebaseline-2026-08-27.md)
+   to implement portability. Global status and path-valued types were resolved
+   and guarded on 2026-08-27.
+7. **Consume the tag owner:** let `tag-contract-convergence` implement its
+   staged program, then recheck T1 here. Areas/Topics waits for that outcome.
+8. **Promote the contract-change gate, record outcomes, and close.**
 
 The implementation must not hardcode today's collection or command counts.
 Tests compare declared/discovered sets with consumed sets so later additions

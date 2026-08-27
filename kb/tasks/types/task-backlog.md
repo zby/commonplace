@@ -26,7 +26,8 @@ No frontmatter is currently required for backlog task documents; this type has `
 | `description` | No | Retrieval description of the deferred work and the condition that would make it relevant. |
 | `type` | No | `kb/tasks/types/task-backlog.md` when the task is made into an explicitly typed artifact. |
 | `tags` | No | Routing tags for the work area. |
-| `status` | No | KB lifecycle status if needed; the backlog state itself belongs in `## Why Not Now` and `## Trigger to Activate`. |
+
+The task's path plus `## Why Not Now` and `## Trigger to Activate` carry its backlog state. Do not add a generic frontmatter `status` field.
 
 ## Template
 

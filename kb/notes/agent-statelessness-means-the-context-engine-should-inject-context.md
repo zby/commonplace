@@ -30,7 +30,7 @@ This would make definitions behave like imported constants in a programming lang
 
 ### The `definition` type
 
-For the context engine to identify definitions, they need a machine-readable type. Definition notes now use `type: definition`, which can:
+For the context engine to identify definitions, they need a machine-readable type. Definition notes now use `type: kb/types/definition.md`, which can:
 
 - Signal the context engine to auto-inject on first reference
 - Assert checkable structural properties, such as scope, exclusions, misuse cases, sibling-definition links, or bounded length

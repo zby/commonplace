@@ -46,9 +46,9 @@ The steps have different failure modes: manufacturing without amplification give
 
 Using artifact checks as a [selection gate](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) helps only when the checks discriminate on the acceptance objective within the decision horizon and cost budget. A quality gate that cannot discriminate correct from incorrect outputs (TPR ≈ FPR) adds cost without adding reliability. The manufacture/amplify pipeline above is therefore a prerequisite for reliable artifact filtering, not an optimisation.
 
-## Maturation path
+## Evidence needed
 
-This note stays seedling because it bundles several speculative claims under a coherent narrative. To mature, extract each and find adequate support — literature, external sources, worked examples, or direct argument:
+This framework remains conjectural because it bundles several speculative claims under a coherent narrative. To strengthen it, extract each claim and find adequate support — literature, external sources, worked examples, or direct argument:
 
 1. **Oracle strength is a gradient underlying the exact-spec/proxy-theory distinction** — the core reframing. Currently asserted by analogy to the Karpathy verifiability framing. Needs independent support, e.g. from reinforcement learning literature on reward shaping or verification complexity theory.
 2. **"Harden the oracle" is the primary engineering move** — plausible prescription but no practitioner evidence. Cases where teams invested in eval infrastructure before capability (or failed by not doing so) would ground this.

@@ -42,7 +42,7 @@ Most claims don't need the structure — only the ones worth structuring do.
 
 ### The promotion path
 
-A note with a claim title starts as `type: note`. When the argument matures — evidence accumulates, reasoning gets explicit — it gets promoted to `type: kb/notes/types/structured-claim.md`. The remaining notes keep `type: note` with their claim-ish titles, honest about their level of development. Of the current 30 `has-claim` notes, perhaps 5-10 are developed enough for `type: kb/notes/types/structured-claim.md` today.
+A note with a claim title can start as `type: kb/types/note.md`. When its evidence and reasoning become explicit and fit the Toulmin scaffold, its pointer can change to `type: kb/notes/types/structured-claim.md`. Other claim-titled notes keep `type: kb/types/note.md`. This is structural refinement, not a global maturity or verification verdict.
 
 ### Evidence vs Reasoning (from Toulmin)
 
@@ -56,7 +56,10 @@ The key insight from Toulmin that a simple Reasoning/Caveats split misses: **evi
 
 ```markdown
 ---
+description: Developed argument whose evidence and reasoning are explicit enough for the structured-claim contract
 type: ./types/structured-claim.md
+traits: [title-as-claim]
+tags: []
 ---
 # [Claim as title]
 
@@ -103,19 +106,19 @@ this evidence imply this claim?
 
 Each of these is a bounded judgment within a known section, not an open-ended document read.
 
-## What happens to `has-claim`
+## What happened to `has-claim`
 
-The `has-claim` trait is retired. The 30 notes currently carrying it split into:
+The adoption retired the `has-claim` trait. Artifacts split into:
 
-- **`type: kb/notes/types/structured-claim.md`** — notes with developed arguments that can fill Evidence/Reasoning/Caveats sections (estimated 5-10 today)
-- **`type: note`** — notes with claim-like titles but free-form bodies. The title-as-claim convention still applies; they just don't commit to the Toulmin scaffold.
+- **`type: kb/notes/types/structured-claim.md`** — notes with developed arguments that can fill Evidence/Reasoning/Caveats sections
+- **`type: kb/types/note.md`** — notes with claim-like titles but free-form bodies. The title-as-claim convention still applies; they just don't commit to the Toulmin scaffold.
 
 The other traits (`has-comparison`, `has-implementation`, `has-external-sources`) remain as traits — they describe properties within a document, not its overall shape. A `structured-claim` can still carry `traits: [has-comparison]` if it uses a comparison table as evidence.
 
 ## Caveats
 
 - **Warrant is often implicit.** Toulmin acknowledges warrants are frequently unstated. Forcing authors to articulate them is the point — but it adds friction. The bet is that explicit warrants produce more trustworthy claims, worth the cost.
-- **Migration effort.** Retiring `has-claim` means updating 30 notes. Most just drop the trait; a few get promoted. This should be a gradual process, not a batch migration.
+- **Migration effort.** At adoption, 30 notes carried `has-claim`. Most only needed the trait removed; the few that adopted the structured contract needed a deliberate rewrite rather than a mechanical field change.
 - **New collection-local contract.** `structured-claim` adds a type spec under `kb/notes/types/`; instances point to that contract directly. No global type enum changes.
 - **In practice, without additional methodology (warrant extraction, claim sharpening, revision for flow after structuring), the Toulmin sections create flow problems.** Notes written with Evidence/Reasoning/Caveats sections tend to read as stiff academic scaffolding rather than flowing argument. In multiple cases, notes promoted to `structured-claim` had to be demoted back to `note` and the Toulmin sections dissolved to restore readability. The type is experimental — don't promote notes to `structured-claim` unless the argument genuinely fits the scaffold without forcing.
 

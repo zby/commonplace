@@ -1,64 +1,79 @@
-# I1 plan — Make preserve-only upgrade semantics explicit
+# I1 plan — Make framework upgrades ownership-aware
 
-**State:** open; witnesses rechecked 2026-08-19.
+**State:** open; rebaselined at commit `6660bd2a` on 2026-08-27. See the
+[witness ledger](../baseline-2026-08-27.md). ADR 021 remains the contradictory
+operative witness; architecture's former “re-sync” wording is stale and no
+longer part of the finding.
 
 ## Resolution selected
 
-Keep ADR 021's `kb/commonplace/` namespacing, but supersede its unimplemented
-marker and automatic-refresh clauses. Make the current preserve-only behavior
-the deliberate contract: init creates missing paths, classifies existing files
-as identical or different, and never replaces or deletes an existing path.
-Package upgrades therefore require an explicit manual diff/merge or a clean
-regeneration when existing library or projected-skill files must change.
+Keep ADR 021's useful `kb/commonplace/` namespace decision, but supersede its
+unimplemented marker and refresh protocol with explicit ownership classes and
+a prior-version baseline. Preserve-only describes current behavior and may be
+documented as an interim limitation. It is not the terminal architecture for a
+large framework-owned projection.
 
-This is the smaller coherent resolution because ADR 014, ADR 037, `INSTALL.md`,
-the initializer, and its tests already agree on preservation. Accepted ADR 021
-still carries the marker-backed replacement contract; architecture separately
-retains a broader claim that init can re-sync on upgrade.
+The [installed-product decision](../installed-product-edition-decision.md)
+selects the concrete edition, logical roots, five per-file ownership classes,
+and base/desired-hash transition this plan will promote through a successor
+ADR. The workshop packet is an implementation input, not durable authority.
+
+The terminal transition is:
+
+- user-owned paths are never overwritten automatically;
+- framework-owned paths unchanged since installation are replaced safely;
+- framework-owned paths edited locally are preserved and reported as forks;
+- upstream-removed framework paths are reported as obsolete and removed only
+  by a deliberate prune operation.
+
+Projected runtime skills follow the same rule as framework library content.
+Generated control-plane templates need an explicit ownership/customization
+classification rather than being treated as an undifferentiated file set.
 
 ## Work
 
-1. Resolve I3's collection roles, S1's installed-sources mutation boundary, and
-   I2's bundle decision first. The successor must name the exact topology and
-   shipped collections rather than inherit ADR 021's obsolete list.
-2. Write a successor ADR that restates the surviving namespacing decision and
-   replaces ADR 021's bundle, `.commonplace` marker, drift detection, and
-   clean-tree overwrite clauses. Mark ADR 021 `status: superseded` and link its
-   status/body to the successor so its old Decision is no longer operative.
-   Reconcile ADR 014's loosely worded “upgrade + rerun” consequence with its
-   explicit no-automatic-sync rule.
-3. Define the rerun transition for every scaffold class:
-   - missing library, template, type, and projected-skill files are created;
-   - byte-identical files are reported as matching;
-   - every differing existing file is preserved and reported without guessing
-     whether the cause is a user edit or an older package version;
-   - upstream deletion or rename never deletes an installed path.
-4. Document the manual upgrade procedure. Generate the new scaffold in a clean
-   comparison directory or inspect packaged canonical content, review the diff,
-   and deliberately reconcile existing library and runtime copies. Do not imply
-   that reinstalling the Python package alone updates project-local content.
-5. Update `architecture.md` (especially its re-sync claim), `INSTALL.md`, the
-   init command reference, ADR 037 links, and the ADR 021 path-audit context to
-   one vocabulary: rerun acquires newly introduced paths but does not refresh an
-   existing path.
-6. Derive and test the selected bundle from the scaffold/package manifest. Do
-   not add a `.commonplace` marker whose presence would imply unimplemented
-   refresh semantics.
+1. Adopt the installed-product decision in the successor installation ADR. I3
+   supplies roles and logical roots, I2 supplies the hybrid edition and
+   projection map, and S1 supplies the installed sources boundary. The upgrade
+   mechanism is generic; T1 supplies later migration inputs and acceptance
+   criteria rather than its own updater.
+2. Extend the manifest model with owner and upgrade policy for each projected
+   entry. Define the status of library files, projected skills, user collection
+   heads, generated templates, shared framework types, and user extensions.
+3. Persist an installed per-file manifest or equivalent containing enough
+   package identity, target path, ownership, and prior bytes/hash information to
+   distinguish an unchanged old framework file from a local fork. Do not use
+   presence alone as provenance.
+4. Implement and test the four terminal transitions above. A prune command or
+   explicit mode may remove confirmed obsolete framework-owned paths only after
+   showing the exact targets; ordinary init remains non-destructive toward
+   ambiguous and user-owned paths.
+5. Write a successor ADR that restates the surviving namespace decision and
+   replaces ADR 021's bundle, marker, drift, and refresh clauses. Mark ADR 021
+   superseded and reconcile ADRs 014 and 037, architecture, `INSTALL.md`, and
+   command documentation.
+6. If terminal upgrades cannot land in the first release, document preserve-only
+   as an explicit interim limitation and open a separate upgrade-mechanism
+   proposal with the terminal acceptance criteria below. Do not present manual
+   reconciliation of the whole framework tree as the steady-state workflow.
 
 ## Verification
 
-- The selected bundle is identical in scaffold, wheel, sdist, tests, and docs.
-- A fresh init creates no `kb/commonplace/.commonplace` marker.
-- A same-version rerun reports all scaffold files as identical.
-- In both the old-upstream and practitioner-edited cases, the installed file
-  retains exactly its own pre-rerun local bytes and appears in
-  `preserved_different`.
-- New upstream paths are added; removed upstream paths are preserved locally.
-- User collection content and projected-skill edits are never overwritten.
-- A lexical/reference check finds no live claim that plain init “re-syncs” or
-  automatically updates existing project-local files.
+- The selected edition is identical across scaffold, wheel, sdist, tests, and
+  docs, and the installed ownership manifest covers every projected file.
+- A same-version rerun reports framework files as unchanged without rewriting
+  them.
+- An unchanged old framework file upgrades to the new package bytes.
+- A locally edited framework file and projected skill retain their local bytes,
+  are reported as forks, and are not confused with merely old upstream bytes.
+- New upstream paths are added. Removed upstream paths are reported as obsolete
+  and survive until the explicit prune path is invoked.
+- User-owned content and user collection contracts are never overwritten.
+- A corrupted or missing ownership baseline fails safely rather than guessing.
+- A checked-in pre-upgrade fixture and a fresh scaffold converge on all
+  unchanged framework-owned paths while preserving sentinel user content.
 
-I3's roles/discovery decision, S1's sources boundary, and I2's bundle choice are
-inputs to this successor. I1 is complete only when the ADR chain, reference,
-installer, and tests describe the same preserve-only transition and upgrade
-expectation.
+I1 is complete only when the ADR chain, reference, installer, and tests describe
+the same ownership-aware transition. An interim preserve-only release does not
+close I1; it only removes misleading upgrade claims while the terminal proposal
+remains open.

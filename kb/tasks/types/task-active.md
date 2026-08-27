@@ -28,7 +28,8 @@ No frontmatter is currently required for active task documents; this type has `s
 | `description` | No | Retrieval description of the active work and current resume point. |
 | `type` | No | `kb/tasks/types/task-active.md` when the task is made into an explicitly typed artifact. |
 | `tags` | No | Routing tags for the work area. |
-| `status` | No | KB lifecycle status if needed; do not confuse this with the operational `## Status` section. |
+
+The operational `## Status` section is body state owned by this task type. Do not duplicate it in a generic frontmatter `status` field.
 
 ## Template
 

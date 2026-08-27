@@ -9,7 +9,7 @@ tags: [agent-memory, context-engineering, learning-theory, artifact-analysis]
 
 [Axes of artifact analysis](./axes-of-artifact-analysis.md) separates retained behavior-shaping artifacts by [storage substrate](./definitions/storage-substrate.md) (where state persists), [representational form](./definitions/representational-form.md) (how the operative part is encoded and consumed), [lineage](./definitions/lineage.md) (what source dependencies govern invalidation), and [behavioral authority](./definitions/behavioral-authority.md) (who consumes it, through which channel, with what force). That taxonomy prevents category mistakes like treating "files versus weights" as a single design choice. Agent memory needs those fields, but artifact identity is not enough on its own. A memory system also needs to say how retained material is captured, transformed, activated, governed, evaluated, and retired over time.
 
-This seedling note names those cross-cutting operational axes. It does not replace the detailed memory-requirements notes. It makes those requirements easier to compare when a memory discussion starts from a storage format, representational form, or memory-mechanism label.
+This provisional taxonomy names those cross-cutting operational axes. It does not replace the detailed memory-requirements notes. It makes those requirements easier to compare when a memory discussion starts from a storage format, representational form, or memory-mechanism label.
 
 Here, an operational axis is a recurring comparison question, not a claim that the questions form a uniquely exhaustive or pairwise-independent basis. This checklist remains provisional: if repeated system comparisons support a different grouping, its rows should be merged or split.
 
