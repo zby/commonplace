@@ -126,6 +126,20 @@ def _links(paragraph: str) -> list[_Link]:
     ]
 
 
+def _mask_link_targets(paragraph: str, links: Sequence[_Link]) -> str:
+    """Blank every link target so a marker word inside a path is not prose.
+
+    Offsets are preserved: the returned text has the same length as
+    ``paragraph`` and is used only for marker searches, never for pairing.
+    """
+    chars = list(paragraph)
+    for link in links:
+        target_start = paragraph.index("](", link.start, link.end) + 2
+        for index in range(target_start, link.end - 1):
+            chars[index] = " "
+    return "".join(chars)
+
+
 def _citation_ranges(paragraph: str, links: Sequence[_Link]) -> list[tuple[int, int]]:
     ranges: list[tuple[int, int]] = []
     for link in links:
@@ -170,21 +184,31 @@ def _nearest_link(quote: _Quote, links: Sequence[_Link]) -> tuple[_Link | None, 
     return ordered[0], ambiguous
 
 
-def _marker_is_confident(paragraph: str, quote: _Quote, link: _Link) -> bool:
-    """Return whether local prose explicitly marks this quote as verbatim."""
+def _marker_is_confident(
+    paragraph: str, quote: _Quote, link: _Link, prose: str | None = None
+) -> bool:
+    """Return whether local prose explicitly marks this quote as verbatim.
+
+    ``prose`` is ``paragraph`` with link targets blanked (same offsets); marker
+    words are searched there so a path such as ``046-verbatim-quotes.md``
+    never counts as a citation marker. Structure is still read from
+    ``paragraph``.
+    """
+    if prose is None:
+        prose = _mask_link_targets(paragraph, [link])
 
     def positive_marker(text: str) -> bool:
         return bool(VERBATIM_RE.search(text) and not NEGATED_VERBATIM_RE.search(text))
 
     # Support ``verbatim: "quote"`` and ``states, verbatim, that ...`` without
     # borrowing a marker from an earlier sentence in the same paragraph.
-    before = paragraph[max(0, quote.start - 120) : quote.start]
+    before = prose[max(0, quote.start - 120) : quote.start]
     before = re.split(r"[.!?]\s+", before)[-1]
     if positive_marker(before):
         return True
 
     if quote.end <= link.start:
-        between = paragraph[quote.end : link.start]
+        between = prose[quote.end : link.start]
         # A later sentence's citation belongs to that later quotation, not this
         # one. Multiple quotations joined inside one sentence remain supported.
         another_quote = DOUBLE_QUOTE_RE.search(between)
@@ -192,18 +216,18 @@ def _marker_is_confident(paragraph: str, quote: _Quote, link: _Link) -> bool:
             another_quote and quote.text.rstrip().endswith((".", "!", "?"))
         ):
             return False
-        citation_tail = paragraph[link.end : min(len(paragraph), link.end + 120)]
+        citation_tail = prose[link.end : min(len(prose), link.end + 120)]
         for start, end in _citation_ranges(paragraph, [link]):
             if start <= link.start < end:
-                citation_tail = paragraph[link.end:end]
+                citation_tail = prose[link.end:end]
                 break
         return positive_marker(between + citation_tail)
 
     # Less common prefix form: ``verbatim in [source]: "quote"``.
-    between = paragraph[link.end : quote.start]
+    between = prose[link.end : quote.start]
     if re.search(r"[.!?]\s+", between):
         return False
-    return positive_marker(paragraph[max(0, link.start - 80) : quote.start])
+    return positive_marker(prose[max(0, link.start - 80) : quote.start])
 
 
 def verify_content(
@@ -234,11 +258,14 @@ def verify_content(
         quotes = _quotes(paragraph, links)
         if not links:
             continue
+        prose = _mask_link_targets(paragraph, links)
+        if not VERBATIM_RE.search(prose):
+            continue
 
         paired_links: set[_Link] = set()
         for quote in quotes:
             link, ambiguous = _nearest_link(quote, links)
-            if link is None or not _marker_is_confident(paragraph, quote, link):
+            if link is None or not _marker_is_confident(paragraph, quote, link, prose):
                 continue
             paired_links.add(link)
             line = start_line + paragraph.count("\n", 0, quote.start)
@@ -287,7 +314,7 @@ def verify_content(
                 continue
             citation = next(
                 (
-                    paragraph[start:end]
+                    prose[start:end]
                     for start, end in _citation_ranges(paragraph, [link])
                     if start <= link.start < end
                 ),

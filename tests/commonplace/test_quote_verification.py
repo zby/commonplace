@@ -557,3 +557,17 @@ class TestIngestQuoteValidation:
         results = CheckResults(note_type="instruction")
         validate_ingest_quotes(results, doc.read_text(encoding="utf-8"), doc)
         assert not results.fails and not results.warns and not results.passes
+
+
+def test_marker_word_inside_a_link_target_is_not_a_citation(tmp_path: Path):
+    notes = tmp_path / "notes"
+    notes.mkdir()
+    (notes / "046-verbatim-quotes-are-validated.md").write_text("An ADR.", encoding="utf-8")
+    note = notes / "note.md"
+    note.write_text(
+        "The validator fails a note on a mismatch "
+        "([ADR 046](./046-verbatim-quotes-are-validated.md)), so the marker is load-bearing.",
+        encoding="utf-8",
+    )
+
+    assert verify_note(note) == []
