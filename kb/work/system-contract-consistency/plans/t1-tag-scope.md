@@ -18,7 +18,7 @@ head also omits a live member in reference under the proposed participating
 scope.
 
 No local wording patch is sufficient. Closing the contradiction requires one
-tag semantic contract, logical-root and participation rules, an exact resolver,
+tag semantic contract, `kb-root` and participation rules, an exact resolver,
 consumer convergence, projection behavior, and a corpus migration.
 
 ## Disposition
@@ -31,7 +31,7 @@ The owner workshop develops and implements:
 - separately reviewable provenance and source-family cleanup.
 
 I1 owns the generic installed-upgrade mechanism. I2 owns projection compilation
-and link rewriting. I3 supplies installed roles and logical-root boundaries. V1
+and link rewriting. I3 supplies explicit disjoint `kb-root` boundaries. V1
 supplies the whole-product validation suite. The tag workshop provides inputs
 and acceptance criteria to those packets rather than creating parallel
 machinery.

@@ -20,25 +20,29 @@ externalizing large review collections and other omitted first-party material
 to immutable source-revision-pinned Commonplace publications. Raw snapshots
 remain excluded. There is no edition flag in this program.
 
-The decision also supplies the logical roots, ownership classes, compiler
-boundary, and terminal upgrade transition shared with I1, I3, and V1. A
-successor installation ADR must adopt that packet before implementation; the
-workshop recommendation is not system authority.
+The decision also supplies pairwise-disjoint `kb-root`s, root-local type
+semantics, ownership values, compiler boundary, and terminal upgrade transition
+shared with I1, I3, and V1. The successor ADR remains a workshop draft during
+dormant foundation and compiler work, then activates with the operative product
+surfaces. The workshop recommendation is not system authority.
 
 ## Work
 
 1. Consume V1's structured full-validation suite as the acceptance harness.
    Freeze a fixture from a built wheel plus `commonplace-init`. Resolve every
    local Markdown link and type pointer originating in the proposed projected
-   set plus shared types, then apply one declared source-to-installed projection
-   map. An edge without a mapped local target or explicit external replacement
-   is an error.
-2. Adopt the hybrid evidence-local edition in the successor installation ADR
-   and extend `ScaffoldManifest` with its source-analysis fixed-point rule and
-   one declared source-to-target projection for every shipped entry. Do not
-   duplicate the edition in init, packaging, tests, and documentation.
+   set plus its root-local types, then apply one declared source-to-installed
+   projection map. An edge without a mapped local target or explicit external
+   replacement is an error.
+2. Compile the hybrid evidence-local edition from source `kb/` into installed
+   `commonplace-library/kb/`. Keep host `kb/` independent and reserve
+   `commonplace/kb/` for the optional reader checkout. Promote the successor ADR
+   only when the activation path becomes true. Extend `ScaffoldManifest` with
+   the edition's source-analysis fixed-point rule and one declared
+   source-to-target projection for every shipped entry. Do not duplicate the
+   edition in init, packaging, tests, and documentation.
 3. Inventory every link and `type:` dependency from the proposed shipped set
-   and shared types. Give each edge one disposition:
+   and its type contracts. Give each edge one disposition:
    - target is shipped and the projected relative link is preserved or
      deterministically rewritten;
    - a raw captured source is omitted and can become its canonical source URL;
@@ -68,16 +72,17 @@ workshop recommendation is not system authority.
    supplementary in the source KB only when the shipped form has a valid
    primary citation.
 6. Make projection-sensitive path handling explicit:
-   - translate Markdown links from shared `kb/types/` into the shipped library
-     namespace when their targets move;
-   - keep pointers to global type specs repository-relative (`kb/types/...`);
+   - project source `kb/types/` into `commonplace-library/kb/types/`;
+   - resolve `kb/...` pointers against the artifact's owning `kb-root` and keep
+     that root-relative spelling when the target remains in the same root;
+   - project selected Commonplace type contracts into host `kb/types/` as
+     recorded replicas when host-root operations need them;
    - translate or make file-relative any collection-local type pointer such as
      the current semantic proposal's `kb/reference/types/design-proposal.md`;
    - compute any other rewritten relative URL from the source and target maps,
      never from hardcoded depth assumptions.
-   Reject a file-relative pointer that only reaches shared global types in the
-   source layout and an absolute collection-local pointer that bypasses the
-   declared projection map.
+   Reject a pointer that falls through into another root and an absolute
+   collection-local pointer that bypasses the declared projection map.
 7. Add a projection audit that fails on an unresolved local target, an included
    file whose type/schema no longer resolves, or an undeclared dependency on an
    omitted collection. It should report the source edge and its disposition
@@ -89,7 +94,7 @@ workshop recommendation is not system authority.
 
 ## Acceptance
 
-- The proposed shipped source set plus shared types retains zero missing-link
+- The proposed shipped source set plus root-local types retains zero missing-link
   warnings, and the clean installed tree has zero projection-introduced
   failures and zero missing-link warnings. V1's coverage guarantee and this
   stricter product severity policy remain separate.
@@ -100,6 +105,6 @@ workshop recommendation is not system authority.
   test fail. Because ordinary link warnings exit zero, the test inspects
   structured validation results or uses an explicit strict product-test mode.
 
-I1 owns ownership-aware rerun and reconciliation semantics for the resulting
-installed set, I3 owns its topology and logical-root declaration, and V1
+I1 owns ownership-aware rerun and legacy-layout reconciliation for the
+resulting installed set, I3 owns its topology and `kb-root` declaration, and V1
 validates the whole result without a bespoke test loop.

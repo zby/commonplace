@@ -16,6 +16,10 @@ Prefer shell-neutral package commands or runtime-native tool operations for
 load-bearing behavior. Use paired POSIX/PowerShell snippets only where diagnosis
 must work before a package command can be assumed available.
 
+Path enumeration also consumes I3's explicit `kb-root` model. A skill must not
+recreate root discovery with shell globs, assume one workspace `kb/`, or merge
+host and Commonplace results without naming a navigation union.
+
 ## Work
 
 1. **Static rebaseline — complete 2026-08-27.** The owner workshop now uses the
@@ -50,6 +54,10 @@ must work before a package command can be assumed available.
    health checks. Add a narrow static inventory/check for known incompatible
    idioms so a new unpaired `xargs`, POSIX conditional, or hardcoded `/tmp`
    becomes visible at review time.
+8. Exercise the installed disjoint-root fixture on Windows: host `kb/`,
+   `commonplace-library/kb/`, and an optional explicitly selected reader target.
+   Assert the same declared/discovered root set as Linux without path-separator
+   normalization leaks.
 
 ## Completion
 

@@ -18,7 +18,7 @@ patch.
 | I1 | Supersede the unimplemented marker contract with ownership-aware upgrades; preserve-only is at most an explicit interim limit | [Shipping and upgrade](./i1-shipping-upgrade.md) |
 | I2 | Compile and test the selected hybrid evidence-local edition with explicit dependency dispositions | [Install projection integrity](./i2-install-projection-integrity.md) |
 | V1 | Make `commonplace-validate all` the one recursive, non-fail-fast full-validation path | [Validate all](./v1-validate-all.md) |
-| I3 | Extend `ScaffoldManifest` with roles and logical roots, scaffold work, and classify `kb/types/` consistently | [Installed topology](./i3-installed-topology.md) |
+| I3 | Add explicit, pairwise-disjoint `kb-root`s, root-local types, complete user scaffolds, and contract-based collection discovery | [Installed topology](./i3-installed-topology.md) |
 | S1 | **Resolved 2026-08-23:** make the tracked ingest authoritative for genre and keep local snapshots whole-file immutable | [Completed outcome](./s1-snapshot-mutation-boundary.md) |
 | T1 | **Transferred:** retain the contradiction and close it only after the dedicated tag workshop proves consumer convergence | [Owner handoff](./t1-tag-scope.md) |
 | E1 | Retain native Windows support and implement the manifest-derived portability dispositions | [Windows execution](./e1-windows-execution.md) |
@@ -33,18 +33,25 @@ gate](./contract-change-gate.md) before closure.
 
 1. **Rebaseline — complete for this cycle:** use the named-commit ledger, not
    inherited prose counts.
-2. **Installed-product recommendation — complete:** the
+2. **Workshop architecture — complete:** the
    [decision packet](../installed-product-edition-decision.md) selects one
-   hybrid evidence-local edition, three logical roots, five ownership classes,
-   one projection compiler, and hash-aware upgrades. Adopt it in the successor
-   installation ADR before implementation.
-3. **Implement minimal I3 plus V1:** extend the existing manifest, retain
-   contract-based runtime discovery, and land a structured recursive suite
-   before projection cleanup.
+   hybrid evidence-local edition, disjoint host and Commonplace `kb-root`s,
+   root-local types, five scoped ownership values, one projection compiler,
+   and hash-aware upgrades. The [impact
+   ledger](../disjoint-root-impact-ledger.md), [ADR
+   draft](../successor-installation-adr-draft.md), and [implementation
+   packets](../disjoint-root-implementation-packets.md) make the choice
+   reviewable without activating it.
+3. **Implement the dormant I3 foundation plus V1:** add explicit root objects,
+   overlap rejection, root-local path/type resolution, contract-based
+   collection discovery, and a structured recursive suite before projection
+   cleanup.
 4. **Implement I2:** one compiler-like projection for wheel and editable-source
    modes, accepted by V1 over a pristine initialized artifact.
-5. **Finish I3 and I1:** complete routing/templates and ownership-aware upgrade
-   behavior; label preserve-only explicitly if it ships as an interim limit.
+5. **Activate fresh installs, then finish I1:** route the compiled Commonplace
+   root to `commonplace-library/kb/`, update generated surfaces, then migrate
+   legacy `kb/commonplace/` through ownership-aware reconciliation. Label
+   preserve-only explicitly if it ships as an interim limit.
 6. **Continue E1; independent M1 packets are complete:** use the
    [manifest-derived E1 audit](../../execution-channel-compatibility/e1-promoted-skill-rebaseline-2026-08-27.md)
    to implement portability. Global status and path-valued types were resolved

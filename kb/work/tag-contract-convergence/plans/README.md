@@ -6,7 +6,7 @@ workshop state, not adopted system authority.
 | Phase | Outcome | Dependency |
 |---|---|---|
 | 0 | **Complete:** [activation boundary, decisions, inventory, and fixture](./00-readiness.md) | Current workshop and implementation audit |
-| 1 | [Dormant semantic foundation and exact resolver](./01-semantic-resolver.md) | Minimal I3 logical-root model |
+| 1 | [Dormant semantic foundation and exact resolver](./01-semantic-resolver.md) | Minimal I3 `kb-root` model |
 | 2 | [Consumer convergence and contract activation](./02-consumer-convergence.md) | Phase 1; V1 for full product coverage |
 | 3 | [Canonical heads and migration](./03-canonical-heads-migration.md) | Phases 1–2; I1/I2 for installed migration |
 | 4 | [Cleanup and empirical follow-up](./04-cleanup-and-follow-up.md) | Cleanup can be reviewed independently; experiment follows resolver and heads |

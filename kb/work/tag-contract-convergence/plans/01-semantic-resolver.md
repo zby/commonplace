@@ -1,10 +1,10 @@
 # Phase 1 — Build the dormant semantic foundation and exact resolver
 
-**State:** ready after minimal I3 logical-root semantics.
+**State:** ready after minimal I3 `kb-root` semantics.
 
 ## Outcome
 
-Implement and test one candidate tag meaning per logical KB root,
+Implement and test one candidate tag meaning per `kb-root`,
 projection-relative participation, one exact membership resolver, and
 root-aware transitional head lookup. Keep the machinery dormant: live
 collection declarations, binding wording, consumer switches, mandatory-head
@@ -16,9 +16,10 @@ Maintain the ADR as a workshop draft during this phase. It reconciles both tag
 proposals and states:
 
 - assigning a tag asserts membership in a reusable semantic candidate set;
-- every root-owned collection declares `participating` or
-  `non-participating`;
-- shared `kb/types/` rejects tags because it has no single root owner;
+- every collection inside the selected root declares one allowed participation
+  state;
+- each root's `types/` collection rejects tags because type artifacts are
+  structural support, not because they lack a root owner;
 - a minimal canonical head is required from first stable participating use;
 - provisional tags may exist only outside participating library content;
 - canonical heads are the registry and add no new relation beyond
@@ -36,20 +37,20 @@ such conflict to this workshop before inventing a second root or topology model.
 
 ## Resolver work
 
-1. Consume I3's logical-root boundary and collection discovery. Do not infer
-   root ownership indefinitely from path depth.
+1. Consume I3's explicit, pairwise-disjoint `kb-root` boundary and collection
+   discovery. Do not infer root ownership from path depth.
 2. Parse fixture-local `## Tag participation` clauses, discover participating
-   collections within one root, prune embedded foreign KBs and
-   validation-ignored subtrees, and apply the existing artifact eligibility
+   collections within one root, prune validation-ignored subtrees, reject
+   paths outside the selected root, and apply the existing artifact eligibility
    rules explicitly. Do not add the clauses to live contracts yet.
 3. Return one deterministic by-tag set. A cross-root caller may union
    separately resolved sets for navigation and never transfers marks between
    roots.
 4. Reject absent participation declarations, invalid tag tokens, and tags on
-   tag-prohibited shared artifacts.
+   prohibited root-local type artifacts.
 5. Keep membership independent of presentation. Implement and test the stable
    Python result and the JSON-lines renderer for
-   `commonplace-tag-members TAG --root LOGICAL_ROOT_PATH`, but do not register
+   `commonplace-tag-members TAG --root KB_ROOT_PATH`, but do not register
    or document the command until Phase 2 activation.
 6. Treat membership-affecting collection changes as invalidation inputs for all
    heads in that root.
@@ -61,11 +62,13 @@ such conflict to this workshop before inventing a second root or topology model.
 
 - Source and pristine installed fixtures identify their roots without
   path-depth heuristics.
-- Every discovered root-owned collection in the Phase 1 fixtures has one valid
-  participation state; live contracts remain unchanged until activation.
+- Every collection discovered inside a selected root in the Phase 1 fixtures
+  has one valid participation state; live contracts remain unchanged until
+  activation.
 - Resolver membership is deterministic and independent of head location.
-- Embedded host and vendored KBs resolve independently.
-- Shared global types cannot enter either tag space.
+- Sibling host and projected Commonplace KBs resolve independently; an
+  explicitly selected reader KB remains a third independent target.
+- Root-local type collections cannot enter their root's tag space.
 - Exact output can be rendered as path/title/description without adding
   relevance ranking or summary claims.
 - No live collection contract, binding authoring surface, mark consumer, build

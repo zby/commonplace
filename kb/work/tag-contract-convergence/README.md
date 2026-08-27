@@ -33,7 +33,7 @@ check.
 ## Why this is a separate workshop
 
 T1 is no longer one local contradiction repair. It joins tag semantics,
-logical-root ownership, collection participation, exact resolution, validation,
+`kb-root` ownership, collection participation, exact resolution, validation,
 publishing, navigation, installed projection, and migration. Keeping that
 design here lets the consistency workshop ask where operative contracts
 disagree while this workshop asks what coherent architecture replaces them.
@@ -71,11 +71,16 @@ from those inputs motivate a distinction among proximal cues, contextual local
 navigation, and query-conditioned results. They concern humans, practitioner
 method, or historical systems. They do not establish LLM-agent performance.
 
+The parent workshop's disjoint-root decision supersedes the tag proposals'
+embedded-root pruning and physically shared `kb/types/` assumptions as design
+inputs. The proposals remain unchanged until adoption because this workshop
+does not make them operative authority.
+
 ## Working architecture
 
 The adopting decision should begin from these narrow choices:
 
-- One tag string has one canonical declared sense within one logical KB root.
+- One tag string has one canonical declared sense within one `kb-root`.
 - Membership is projection-relative and ranges over explicitly participating
   collections in that root.
 - A minimal canonical head is required from the first stable use in a
@@ -118,7 +123,10 @@ cleanup is independent and must not enlarge the core adoption patch.
 
 ## External dependencies
 
-- I3 supplies installed roles and an unambiguous logical-root boundary.
+- I3 supplies explicit, pairwise-disjoint `kb-root` boundaries and root-local
+  collection/type discovery. The selected installation shape is recorded in
+  the parent workshop's [impact
+  ledger](../system-contract-consistency/disjoint-root-impact-ledger.md).
 - V1 supplies structured whole-product validation.
 - I2 supplies the installed edition and compiler-like projection.
 - I1 supplies the generic ownership-aware upgrade mechanism.

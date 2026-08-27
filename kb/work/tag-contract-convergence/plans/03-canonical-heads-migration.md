@@ -26,8 +26,9 @@ the semantic foundation patch.
    metadata lookup to direct canonical construction without retaining a legacy
    fallback.
 5. Give every projection-sensitive head link an explicit I2 disposition.
-   Scaffold an empty host tag collection and project eligible Commonplace heads
-   under the vendored logical root without merging namespaces.
+   Scaffold an empty host tag collection at `kb/tags/` and project eligible
+   Commonplace heads to `commonplace-library/kb/tags/`. Resolve each within its
+   owning `kb-root`; do not merge membership or marks across roots.
 6. Supply the move map, obsolete paths, and sentinel user content to I1's
    ownership-aware upgrade mechanism. Do not create a tag-specific updater.
 7. Retire both adopted proposals and annotate prior tag ADRs forward after all
@@ -36,10 +37,11 @@ the semantic foundation patch.
 ## Acceptance
 
 - Every tag on an eligible artifact reaches its own root's canonical head.
-- Host and vendored heads, marks, and generated listings remain independent.
+- Host and projected Commonplace heads, marks, and generated listings remain
+  independent; an explicitly selected reader root is independent as well.
 - No live duplicate head identity or legacy hub identity remains.
 - Every shipped head link resolves in the selected installed edition.
-- Fresh and upgraded fixtures converge on framework-owned paths while
+- Fresh and upgraded fixtures converge on `commonplace-managed` paths while
   preserving user additions.
 - Resolver, validation, ProperDocs, connect, relocation, upgrade, site-build,
   and full-suite checks pass in their appropriate packets.

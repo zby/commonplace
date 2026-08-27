@@ -6,8 +6,8 @@
 
 **Audited commit:** `6660bd2ad0d53938551ac283f60463f3c3d91b8e`
 
-**Last plan refresh:** 2026-08-27 (full rebaseline, installation program,
-and T1 transfer)
+**Last plan refresh:** 2026-08-27 (full rebaseline, disjoint-root installation
+program, and T1 transfer)
 
 **State:** seven findings remain open; C1 and F1 were resolved on 2026-08-19,
 and S1 was resolved on 2026-08-23. Plans and outcomes are recorded in the
@@ -44,6 +44,15 @@ collections, so it can report completion without examining this broken
 surface. The generated counts, stale-witness dispositions, and reproduction
 boundary are recorded in the [2026-08-27 witness
 ledger](./baseline-2026-08-27.md).
+
+The workshop resolution now selects a different future shape from the current
+witnesses: host `kb/` and projected `commonplace-library/kb/` are disjoint
+`kb-root`s, while `commonplace/kb/` stays reserved for the optional full reader
+checkout. The [decision](./installed-product-edition-decision.md), [consumer
+impact ledger](./disjoint-root-impact-ledger.md), [successor ADR
+draft](./successor-installation-adr-draft.md), and [implementation
+packets](./disjoint-root-implementation-packets.md) are design inputs only;
+none changes the current installed contract.
 
 The recurring mechanisms remain:
 
@@ -107,12 +116,13 @@ witness. Architecture's former “re-sync” wording is now stale and no longer 
 current witness.
 
 Preserve-only reruns are the honest current and possible interim contract, but
-they are not a credible terminal upgrade design for hundreds of framework-owned
-files. The revised plan first settles product ownership, then records prior
-framework hashes so an upgrade can replace unchanged framework files, preserve
-and report locally edited forks, never overwrite user-owned paths, and report
-upstream removals for deliberate pruning. T1 supplies migration inputs; it does
-not build a parallel upgrade mechanism.
+they are not a credible terminal upgrade design for hundreds of
+Commonplace-owned files. The selected plan installs a new disjoint library at
+`commonplace-library/kb/`, records prior hashes so upgrades can replace
+unchanged Commonplace files, preserves local forks and user-owned paths, and
+reports both upstream removals and clean legacy `kb/commonplace/` paths for
+deliberate pruning. T1 supplies migration inputs; it does not build a parallel
+upgrade mechanism.
 
 ## I2 — The install projection breaks the library graph
 
@@ -160,10 +170,13 @@ code-safe link rewriter, and a strict packaged-wheel acceptance test. The
 the self-contained, thin, curated, and hybrid options and recommends one hybrid
 evidence-local edition: complete methodology, a fixed-point closure of tracked
 source analyses, and immutable publication links for omitted review corpora
-and other first-party material. It also selects three logical roots, five
-per-file ownership classes, one compiler, and hash-aware upgrades. A successor
-installation ADR must adopt that packet before implementation. Wheel and
-editable-source installation must invoke the same compiler-like projection.
+and other first-party material. It also selects pairwise-disjoint host and
+Commonplace `kb-root`s, root-local types, five scoped per-file ownership
+values, one compiler, and hash-aware upgrades. Source `kb/` projects to
+`commonplace-library/kb/`; host `kb/` remains independent. A successor
+installation ADR becomes authoritative only with its operativity path. Wheel
+and editable-source installation must invoke the same compiler-like
+projection.
 
 ### Reproduction
 
@@ -197,9 +210,9 @@ recursive `collection_dirs()`, but no `all` procedure consumes it. It also
 filters out any path containing `types`, so it returns seven of the eight install
 collections, and in the source checkout it can include the deliberately ignored
 `kb/work/dialectical-sample` fixture. The full-validation enumerator therefore
-must include the I3 disposition of global types, prune
-`.commonplace-validation-ignore`, carry repository-relative paths rather than
-basenames, continue after failures, and own one aggregate result.
+must select each declared `kb-root`, include its type collection, prune
+`.commonplace-validation-ignore`, carry root-aware paths rather than basenames,
+continue after failures, and own one aggregate result.
 
 Collection discovery is not the whole current `types` target: support type
 specs under paths such as `kb/reports/types/` and `kb/tasks/types/` may have no
@@ -228,13 +241,14 @@ requires their contract to be read before writing. The scaffold now installs a
 sources contract and landing. It still creates only the work directory, so a
 workshop write can hard-fail on a pristine install.
 
-The selected topology makes sources and work genuine scaffolded user
-collections, classifies types as the global type collection, and keeps
-`kb/commonplace/` as a namespace rather than a collection. Extend the existing
-`ScaffoldManifest` with role, owner, writability, source/projection, template,
-upgrade, and logical-root data instead of creating a second topology inventory.
-Runtime discovery still follows concrete `COLLECTION.md` files so user-created
-collections remain visible.
+The selected topology makes host sources and work genuine scaffolded user
+collections and makes types root-local. Source Commonplace uses `kb/`; an
+initialized project has disjoint host `kb/` and projected
+`commonplace-library/kb/` roots. Extend the existing `ScaffoldManifest` with
+orthogonal root, ownership, collection/template, materialization, and upgrade
+data instead of creating a second topology inventory or a catch-all `kind`
+enum. Runtime collection discovery still follows concrete `COLLECTION.md`
+files inside each selected root so user-created collections remain visible.
 
 ## S1 — Snapshot immutability contradiction is resolved
 
@@ -267,7 +281,7 @@ live reference proposal omitted by the complete `artifact-analysis` head is a
 second witness.
 
 No local wording repair can close this finding. It requires a semantic model,
-logical-root ownership, exact membership resolution, consumer convergence,
+`kb-root` ownership, exact membership resolution, consumer convergence,
 published projection behavior, and a breaking corpus migration. Those design
 and implementation responsibilities have therefore transferred to the
 [tag-contract convergence workshop](../tag-contract-convergence/README.md).
@@ -393,20 +407,24 @@ presence, not that any legal invocation or supported execution channel works.
 1. **Rebaseline at a named commit — complete for this cycle.** The witness
    ledger classifies open, partial, stale, new, and count-only changes at
    `6660bd2a`.
-2. **Installed-product recommendation — complete.** The decision packet selects
-   the hybrid evidence-local edition, logical-root boundaries, ownership
-   classes, projection policy, and terminal upgrade policy. Adopt it in the
-   successor installation ADR before coding the projection.
-3. **Implement minimal I3 plus V1.** Extend `ScaffoldManifest` enough to expose
-   roles and roots, keep runtime discovery contract-based, and land the
-   recursive structured validation suite. V1 may truthfully report current
-   product failures; that makes it I2's acceptance harness.
+2. **Workshop architecture — complete.** The decision packet selects the
+   hybrid evidence-local edition, disjoint host and Commonplace `kb-root`s,
+   root-local types, scoped ownership values, projection policy, and terminal
+   upgrade policy. The impact ledger, successor ADR draft, and packet sequence
+   make the choice reviewable without activating it.
+3. **Implement the dormant I3 foundation plus V1.** Extend
+   `ScaffoldManifest` enough to expose explicit roots, reject overlap, make
+   path/type identity root-aware, keep collection discovery contract-based,
+   and land the recursive structured validation suite. V1 may truthfully
+   report current product failures; that makes it I2's acceptance harness.
 4. **Implement I2.** Build one compiler-like projection for wheel and editable
    sources, disposition every dependency edge, and test the actual fresh
    install through V1.
-5. **Finish I3 and I1.** Complete templates and routing parity, then supersede
-   ADR 021 with ownership-aware upgrade behavior. Preserve-only may be an
-   explicitly temporary release constraint, not the terminal architecture.
+5. **Activate fresh installs, then finish I1.** Route the compiled Commonplace
+   library to `commonplace-library/kb/`, update generated surfaces and promote
+   the successor ADR, then migrate legacy `kb/commonplace/` through
+   ownership-aware reconciliation. Preserve-only may be an explicitly
+   temporary release constraint, not the terminal architecture.
 6. **Continue E1; independent M1 packets are complete.** Implement the
    manifest-derived promoted-skill audit's dispositions and gather native
    Windows evidence. Global-note-status and path-valued-type cleanup closed on
@@ -433,7 +451,9 @@ small implementation/review instruction covering:
 - explicitly historical retained witnesses.
 
 This is a review aid, not a general semantic-contradiction detector and not an
-ADR file inventory.
+ADR file inventory. The [disjoint-root impact
+ledger](./disjoint-root-impact-ledger.md) is its first workshop application;
+one independent application and durable promotion remain open.
 
 ## Exclusions and non-findings
 

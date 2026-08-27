@@ -64,7 +64,8 @@ were covered.
   task search.
 - A zero-member query returns an empty bounded result and cannot widen into a
   repository search.
-- Source, fresh-install, and vendored-root fixtures agree on root isolation.
+- Source, fresh-install host/projected-library, and explicitly selected reader
+  fixtures agree on root isolation.
 - Every participating tag resolves to exactly one current-location head, while
   headless tags remain possible only outside participating content.
 - The accepted ADR, binding prose, live declarations, validator, build, skills,

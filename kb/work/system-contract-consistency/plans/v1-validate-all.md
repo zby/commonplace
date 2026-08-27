@@ -24,22 +24,23 @@ stay warnings, and the packaged-product test may require zero missing-link
 warnings.
 
 The [installed-product decision](../installed-product-edition-decision.md)
-selects the three-root model V1 must consume. Collection discovery remains
-recursive and contract-based; `shared-types` remains a collection even though
-artifact-oriented consumers may exclude it explicitly.
+selects explicit, pairwise-disjoint roots. V1 selects each declared root first,
+then performs recursive contract-based collection discovery inside it. Each
+root's `types/` remains a collection even when artifact-oriented consumers
+exclude type specs explicitly.
 
 ## Work
 
-1. Resolve I3's collection definition. Refactor `collection_dirs()` or add a
-   validation-specific wrapper so enumeration:
-   - includes namespace-nested and global-type collections;
+1. Resolve I3's root and collection definitions. Refactor
+   `collection_dirs()` or add a validation-specific wrapper so enumeration:
+   - operates inside one explicit root and includes its type collections;
    - prunes subtrees beneath `.commonplace-validation-ignore`;
    - schedules only a visible collection root with no collection ancestor,
      leaving an ancestor's structure check to report a non-ignored nested
      `COLLECTION.md`;
-   - returns deterministic repository-relative paths.
-2. Add an internal all-runner to `validate_notes.py`. Pass full paths such as
-   `kb/commonplace/notes`, never basenames that collide with user collections.
+   - returns deterministic root-aware paths.
+2. Add an internal all-runner to `validate_notes.py`. Pass root identity plus
+   root-relative collection paths, never basenames that collide across roots.
    Preserve each collection as its own `ValidationRun` so collection-local tag,
    type, and structure rules retain the correct boundary.
 3. Do not fail fast. Accumulate collection results, ignored scopes, warnings,
@@ -48,10 +49,10 @@ artifact-oriented consumers may exclude it explicitly.
    optional JSON renderer only after the result contract is tested.
 4. After collection runs, validate type specs not already covered by a
    scheduled collection exactly once. Preserve the current `types` coverage of
-   support roots such as `kb/reports/types/` and `kb/tasks/types/`; report this
+   support directories such as `kb/reports/types/` and `kb/tasks/types/`; report this
    phase separately so broader collection discovery cannot create duplicates.
-5. Run the existing top-level landing check once; do not silently broaden its
-   direct-child-of-`kb/` contract to nested library collections. Decide and
+5. Run the landing check once per declared root under its stated scope; do not
+   silently broaden it to arbitrary nested collections. Decide and
    document whether redirects are part of `all`; the recommended behavior is to
    run them once when `properdocs.yml` exists and record “not applicable” when
    it does not.
@@ -63,8 +64,9 @@ artifact-oriented consumers may exclude it explicitly.
 
 - Source layout and pristine installed layout.
 - User and shipped collections with the same basename.
-- A namespace-nested collection and a validation-ignored nested fixture.
-- The I3 disposition of `kb/types/` and collection-local type specs.
+- Host and Commonplace collections with the same root-relative path, plus a
+  validation-ignored nested fixture.
+- The I3 disposition of root-local `types/` and collection-local type specs.
 - Report/task type specs outside collections, with exact-once coverage.
 - Exact-once execution and deterministic order.
 - A failing early collection followed by a later collection that is still run.

@@ -1,7 +1,7 @@
 # Readiness pass — Fix the activation boundary and execution inventory
 
-**State:** complete on 2026-08-27. Core implementation remains gated by
-minimal I3 logical-root semantics.
+**State:** complete on 2026-08-27 and revised for the disjoint-root decision.
+Core implementation remains gated by minimal I3 `kb-root` semantics.
 
 **Audited starting commit:** `6660bd2ad0d53938551ac283f60463f3c3d91b8e`
 
@@ -20,7 +20,9 @@ This pass also fixes the participation declaration, resolver surface,
 transitional head identity, initial projection states, consumer ledger, and
 cross-consumer fixture. The two older proposals remain design inputs. Their
 optional-head and single-atomic-migration clauses are superseded by the choices
-recorded here and must be dispositioned when the adopting ADR retires them.
+recorded here. The parent installation decision also supersedes their
+embedded-root and shared-type topology. The adopting ADR must disposition
+those clauses when it retires the proposals.
 
 ## Activation boundary
 
@@ -77,16 +79,17 @@ exactly one machine-read body section of this form:
 
 The allowed states are:
 
-- `participating` — eligible ordinary artifacts enter this logical root's tag
+- `participating` — eligible ordinary artifacts enter this `kb-root`'s tag
   membership relation;
 - `non-participating` — tags may exist for search or provisional work, but no
   artifact in the collection enters an exact membership claim; and
 - `prohibited` — artifacts in the collection may not declare `tags` at all.
 
-`prohibited` is initially reserved for the shared global type collection,
-whose artifacts have no single tag-namespace owner. A root-owned collection
-uses one of the other two states. Missing, duplicated, unknown, or malformed
-state clauses fail validation.
+`prohibited` is initially reserved for each root's type collection. Type
+artifacts are structural support and do not enter tag vocabulary, even though
+the collection has an unambiguous root owner. Other collections use one of the
+other two states. Missing, duplicated, unknown, or malformed state clauses
+fail validation.
 
 A participating collection may repeat an exact collection-relative exclusion
 line after the state:
@@ -102,26 +105,27 @@ stale projection clause cannot silently widen membership. The initial source
 use is `kb/reference/proposals/archive/`. I2 must omit or rewrite that line in a
 projection where the directory is absent.
 
-Package-wide artifact eligibility remains code-owned. The resolver prunes
-validation-ignored and foreign-root subtrees and excludes `COLLECTION.md`, type
-specifications, tag heads, generated or infrastructure artifacts, and replaced
-archives. Collection clauses select participation and deliberate local
-subtrees; they do not restate those package rules.
+Package-wide artifact eligibility remains code-owned. The resolver stays
+inside its selected disjoint root, prunes validation-ignored subtrees, and
+excludes `COLLECTION.md`, type specifications, tag heads, generated or
+infrastructure artifacts, and replaced archives. Collection clauses select
+participation and deliberate local subtrees; they do not restate those package
+rules.
 
 Every participation or exclusion edit invalidates all marked heads in the
-logical root. Creation, deletion, or relocation of a collection requires an
+`kb-root`. Creation, deletion, or relocation of a collection requires an
 explicit whole-head validation because the old declaration may no longer exist
 to supply an impact edge.
 
 ## Resolver and command contract
 
 Phase 1 adds `commonplace.lib.tag_membership`, with one immutable result for a
-declared logical root:
+declared `kb-root`:
 
-- logical-root identity and physical boundary;
+- `kb-root` identity and physical boundary;
 - deterministic participating-collection paths;
 - deterministic `by_tag` membership; and
-- member records containing repository-relative POSIX path, title, and
+- member records containing `kb-root`-relative POSIX path, title, and
   description.
 
 Tag keys and member records are ordered lexically; a member appears once per
@@ -136,10 +140,10 @@ operation supplies zero or one head for routing consumers.
 The thin operator surface is:
 
 ```text
-commonplace-tag-members TAG --root LOGICAL_ROOT_PATH
+commonplace-tag-members TAG --root KB_ROOT_PATH
 ```
 
-`--root` is required and must select one I3-declared logical root. The command
+`--root` is required and must select one I3-declared `kb-root`. The command
 has no repository-wide fallback and no cross-root union mode. It emits one JSON
 object per line with exactly `path`, `title`, and `description`, in resolver
 order. A zero-member query emits no records and exits successfully. Resolution
@@ -158,9 +162,9 @@ content. The head defines the tag's canonical sense and supplies its fixed
 meaning, use, boundary, route, and stopping prefix; richer curation remains
 optional.
 
-During Phases 1 and 2, `resolve_tag_head` scans root-owned artifacts for the
-existing `tag-readme` type with `index_source: tag` and uses `index_key` as
-identity. Duplicate identities fail. Phase 2 requires every participating tag
+During Phases 1 and 2, `resolve_tag_head` scans artifacts inside the selected
+root for the existing `tag-readme` type with `index_source: tag` and uses
+`index_key` as identity. Duplicate identities fail. Phase 2 requires every participating tag
 to resolve to one such head but leaves the files in their existing locations.
 The legacy `tag-indexes` hub is not a tag head.
 
@@ -181,14 +185,13 @@ not this list or a fixed collection count.
 
 | Projection/root | Participating | Non-participating | Prohibited |
 |---|---|---|---|
-| Source Commonplace root | `notes`, `reference` except `proposals/archive/`, `instructions`, `agent-memory-systems`, `agentic-systems`, `articles` | `sources`, `work`, later `tags` | none inside the root; `kb/types/` is the separate support root |
-| Fresh host root | `notes`, `reference`, `instructions`; every user-created collection must choose explicitly | `sources`, `work`, `tags` | none inside the root |
-| Installed Commonplace library root | projected `notes`, `reference`, `instructions`; any later projected participating collection carries its declaration | projected `sources`, `tags` | none inside the root |
-| Shared-types support root | none | none | `kb/types/` |
+| Source Commonplace root at `kb/` | `notes`, `reference` except `proposals/archive/`, `instructions`, `agent-memory-systems`, `agentic-systems`, `articles` | `sources`, `work`, later `tags` | `types` |
+| Fresh host root at `kb/` | `notes`, `reference`, `instructions`; every user-created collection must choose explicitly | `sources`, `work`, `tags` | `types` |
+| Installed Commonplace root at `commonplace-library/kb/` | projected `notes`, `reference`, `instructions`; any later projected participating collection carries its declaration | projected `sources`, `tags` | `types` |
 
 An omitted source collection has no declaration in that projection and is not
-an error. A concrete discovered root-owned collection with no declaration is
-an error.
+an error. A concrete collection discovered inside a selected root with no
+declaration is an error.
 
 ## Live head audit
 
@@ -213,20 +216,20 @@ not activate with a headless participating tag.
 
 | Consumer class | Current operative surface | Required disposition | Projection or guard |
 |---|---|---|---|
-| Root and collection discovery | `src/commonplace/lib/project_paths.py`; `src/commonplace/scaffold_manifest.py` | Consume I3 logical-root and collection objects; do not infer ownership from depth. | I3 manifest/discovery parity and source/install root fixtures. |
+| Root and collection discovery | `src/commonplace/lib/project_paths.py`; `src/commonplace/scaffold_manifest.py` | Consume I3 `kb-root` and collection objects; reject overlap and do not infer roots from depth. | I3 manifest/discovery parity and source/install root fixtures. |
 | Membership enumeration | `src/commonplace/lib/index_generated.py` | Move eligibility and `by_tag` assembly into the resolver; leave generation as a consumer. | Unit tests compare exact records and ordering. |
 | Operator command | No current exact-membership command | Build and test the renderer in Phase 1; register and document `commonplace-tag-members` in the Phase 2 activation without adding a second resolver. | `pyproject.toml`, `kb/reference/commands.md`, CLI tests, and command-catalogue parity. |
 | Mark validation | `src/commonplace/lib/validation.py` | Check `complete` and `covered_by` over resolver membership for the head's root. | `tests/commonplace/lib/test_validation_tag_readme.py`. |
 | Impact expansion | `ValidationRun.impacted_marked_tag_readmes` in `validation.py` | Resolve heads root-wide; eligible tag edits affect their heads, while declaration edits affect every marked head. | Tests for member, participation, exclusion, creation, deletion, and relocation changes. |
 | Generated tag-page tail | `src/commonplace/docs/properdocs_hooks.py`; `index_generated.py` | Generate uncurated members from the same resolver result. | ProperDocs tests compare the shared fixture's member paths. |
-| Footer routing | `_find_tag_index` in `properdocs_hooks.py` | Use `resolve_tag_head`; route within the artifact's logical root, including declared non-participating artifacts. | Headed, headless, host, vendored, and foreign-root build cases. |
+| Footer routing | `_find_tag_index` in `properdocs_hooks.py` | Use `resolve_tag_head`; route within the artifact's `kb-root`, including declared non-participating artifacts. | Headed, headless, host, projected-library, and explicitly selected reader-root build cases. |
 | Connect discovery and skip license | `kb/instructions/cp-skill-connect/SKILL.md` | Read root-global heads; call `commonplace-tag-members` for exact fallback; scope marks to one root and keep task discovery open. | Source skill and promoted installed copies must match. |
 | Agent recipes | `AGENTS.md`, `AGENTS.md.template`, `kb/reference/navigation.md` | Replace path-list `rg` recipes with one command call per root; label cross-root unions as navigation only. | Template/init fixture plus lexical guard against the retired recipes. |
 | Mark and head authoring | `kb/types/tag-readme.md`, its schema, `kb/instructions/maintain-curated-indexes.md` | State projection-relative mark semantics, mandatory stable heads, and transitional identity; keep the old identity fields until Phase 3. | Type/schema tests and maintenance examples. |
 | Tag assignment grammar | `kb/types/note-base.schema.yaml`, root authoring instructions, collection clauses | Enforce the token grammar structurally and semantic reuse through the write path/review. | Schema fixtures cover `tags` and `covered_by`; semantic review remains non-deterministic. |
 | Legacy hub and generated-index branches | `kb/types/generated-index.*`, tag-readme schema, generation/validation branches | Retain through Phase 2; remove only with the Phase 3 move. | Phase 3 lexical absence checks. |
-| Review population | `src/commonplace/review/review_target_selector.py` and review-sweep procedures | Phase 2 preserves current heads; Phase 3 adds `kb/tags/` to reviewable roots before moving them. | Selector tests prove heads remain reviewable across the move. |
-| Distribution and upgrades | `ScaffoldManifest`, package data, init tests, projected instructions and skills | Consume I2's projection and I1's ownership-aware migration; do not add a tag-specific updater. | Fresh and pre-adoption upgraded fixtures converge on framework-owned paths. |
+| Review population | `src/commonplace/review/review_target_selector.py` and review-sweep procedures | Phase 2 preserves current heads; Phase 3 adds each root-local `tags/` collection to the reviewable set before moving heads. | Selector tests prove heads remain reviewable across the move. |
+| Distribution and upgrades | `ScaffoldManifest`, package data, init tests, projected instructions and skills | Consume I2's projection and I1's ownership-aware migration; do not add a tag-specific updater. | Fresh and pre-adoption upgraded fixtures converge on `commonplace-managed` paths. |
 | Published paths | `properdocs.yml` redirect map and build configuration | Phase 2 changes semantics at old URLs; Phase 3 records redirects for every moved head and the retired hub. | Site build and redirect validation. |
 | Machine classification using one tag | `src/commonplace/lib/systems_matrix.py` and agent-memory review contracts | Continue reading `trace-learning` directly; this is predicate parity, not general membership recovery. | Independent Phase 4 schema/type/template/skill/tests packet. |
 
@@ -243,16 +246,16 @@ Build one reusable multi-root fixture after I3 supplies the root object. It has:
 - a host `work` artifact carrying the same tag;
 - a validation-ignored participating subtree carrying the same tag;
 - a host head for `shared-topic`, initially incomplete and then repaired;
-- an embedded Commonplace root with its own `notes` and `reference` members and
+- a sibling projected Commonplace root with its own `notes` and `reference` members and
   its own head for the same string;
-- a tagged shared-type artifact as a prohibited negative case;
+- a tagged type artifact in one root as a prohibited negative case;
 - one participating collection with a missing declaration;
 - one malformed exclusion and one participation change; and
 - a tag with zero members.
 
 Expected host membership contains exactly the two host library members.
-Expected embedded membership contains exactly the embedded members. Neither
-set contains archive, work, ignored, shared-type, or other-root artifacts. An
+Expected Commonplace membership contains exactly the Commonplace members.
+Neither set contains archive, work, ignored, type, or other-root artifacts. An
 explicit navigation union contains both sets but licenses neither head's marks
 across the root boundary.
 
@@ -271,7 +274,7 @@ that the original contradiction actually closes.
 ## Execution gates
 
 - Phase 1 starts only after I3 exposes root identity, boundary, ownership, and
-  recursive collection discovery including shared types.
+  recursive collection discovery including each root's type collection.
 - Phase 2 activates only after the resolver contract is stable and V1 can run
   every declared source and installed scope without fail-fast behavior.
 - Phase 3 starts only after Phase 2 converges consumers and I1/I2 expose the
