@@ -1268,6 +1268,47 @@ Check the sample condition.
     )
 
 
+def test_review_gate_schema_rejects_unsupported_staleness(tmp_path: Path) -> None:
+    configure_temp_repo(tmp_path)
+    write_type_spec(
+        tmp_path,
+        "kb/types/review-gate.md",
+        name="review-gate",
+        schema="kb/types/review-gate.schema.yaml",
+    )
+    shutil.copyfile(
+        Path.cwd() / "kb" / "types" / "review-gate.schema.yaml",
+        tmp_path / "kb" / "types" / "review-gate.schema.yaml",
+    )
+    gate = write(
+        tmp_path / "kb" / "instructions" / "review-gates" / "frontmatter" / "sample.md",
+        """---
+gate_id: frontmatter/sample
+name: Sample
+description: Sample gate with an unsupported rewrite threshold
+type: kb/types/review-gate.md
+lens: frontmatter
+watches: [title, body]
+staleness: rewrite(0.5)
+---
+
+# Sample
+
+## Failure mode
+
+The title and body diverge.
+
+## Test
+
+Compare the title with the body.
+""",
+    )
+
+    results = validation.validate_note(gate, repo_root=tmp_path)
+
+    assert any("staleness" in failure for failure in results.fails)
+
+
 def test_title_length_over_limit_fails_validation(tmp_path: Path) -> None:
     notes_root = configure_temp_repo(tmp_path)
     title = "A" * 101

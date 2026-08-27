@@ -1,6 +1,6 @@
 # RF-17 — Gate staleness declarations overstate runtime semantics
 
-**State:** open  
+**State:** fixed 2026-08-27
 **Repair shape:** contract cleanup or feature decision  
 **Severity:** low
 
@@ -13,10 +13,10 @@ does not read the field; every note or criterion text change is exact-hash stale
 
 ## Evidence
 
-- [The review-gate type](../../types/review-gate.md) describes
+- [The former review-gate type](../../types/review-gate.md) described
   `staleness: changed | always | ...` as operative policy.
 - [Title/body alignment](../../instructions/review-gates/frontmatter/title-body-alignment.md)
-  declares `rewrite(0.5)`.
+  formerly declared `rewrite(0.5)`.
 - Registered implementation search finds staleness decisions in hash comparison,
   not gate-frontmatter consumption.
 
@@ -36,3 +36,13 @@ only if a concrete second policy has an accepted consumer and tests.
 - Every admitted value has one documented runtime meaning and consumer.
 - The title/body gate no longer claims an unenforced threshold.
 - Validator, type contract, gate files, and selector tests agree.
+
+## Resolution
+
+`changed` is now the only supported gate-staleness declaration. The review-gate
+schema admits only that value, catalog resolution rejects missing or different
+values, and the type and review-system contracts state that it names the
+system-wide exact-text rule rather than a per-gate tuning surface. The
+title/body-alignment gate now declares `changed`. Regression tests cover schema
+and resolver rejection of `rewrite(0.5)` and prove that a single-character note
+edit stales an accepted pair under the supported policy.

@@ -65,6 +65,7 @@ def make_gate(
     *,
     requires_trait: str | None = None,
     requires_type: str | None = None,
+    staleness: str = "changed",
 ) -> Path:
     requires_trait_line = f"requires_trait: {requires_trait}\n" if requires_trait else ""
     requires_type_line = f"requires_type: {requires_type}\n" if requires_type else ""
@@ -75,7 +76,7 @@ gate_id: {criterion_id}
 name: {path.stem.replace("-", " ").title()}
 lens: {lens}
 watches: [body]
-staleness: changed
+staleness: {staleness}
 {requires_trait_line}{requires_type_line}---
 
 ## Failure mode
@@ -560,6 +561,24 @@ class TestGateChanged:
 
 
 class TestNoteChanged:
+    def test_changed_policy_marks_a_single_character_edit_stale(self, tmp_path: Path) -> None:
+        fixture = build_fixture(tmp_path)
+        current = fixture["stable"].read_text(encoding="utf-8")
+        fixture["stable"].write_text(
+            current.replace("Line 1.", "Line 1!"),
+            encoding="utf-8",
+        )
+
+        stale = review_target_selector.select_stale_criteria(
+            tmp_path,
+            model=TEST_MODEL,
+            criterion_ids=["prose/source-residue"],
+            note_filter=["kb/notes/stable.md"],
+        )
+
+        assert len(stale) == 1
+        assert stale[0].reasons == ("note-changed",)
+
     def test_note_sha_change_marks_stale(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
@@ -1414,6 +1433,24 @@ class TestResolveGates:
 
         with pytest.raises(FileNotFoundError, match="prose/nonexistent"):
             resolve_criteria.resolve_to_criterion_ids(["prose/nonexistent"], gates_dir)
+
+    def test_gate_resolution_rejects_unsupported_staleness(self, tmp_path: Path) -> None:
+        gates_dir = tmp_path / "kb" / "instructions" / "review-gates"
+        make_gate(
+            gates_dir / "frontmatter" / "title-body-alignment.md",
+            "frontmatter/title-body-alignment",
+            "frontmatter",
+            staleness="rewrite(0.5)",
+        )
+
+        with pytest.raises(
+            ValueError,
+            match="unsupported staleness declaration.*expected 'changed'",
+        ):
+            resolve_criteria.resolve_to_criterion_ids(
+                ["frontmatter/title-body-alignment"],
+                gates_dir,
+            )
 
     def test_gate_resolution_rejects_parent_directory_traversal(self, tmp_path: Path) -> None:
         gates_dir = tmp_path / "kb" / "instructions" / "review-gates"

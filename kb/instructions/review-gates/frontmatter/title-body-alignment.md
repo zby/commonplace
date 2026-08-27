@@ -5,7 +5,7 @@ description: 'The title promises one thing but the body now establishes somethin
 type: kb/types/review-gate.md
 lens: frontmatter
 watches: [title, body]
-staleness: rewrite(0.5)
+staleness: changed
 ---
 
 ## Failure mode

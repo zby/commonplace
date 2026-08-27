@@ -17,6 +17,8 @@ from commonplace.review.type_conformance import (
     is_type_conformance_request,
 )
 
+GATE_STALENESS_CHANGED = "changed"
+
 
 def criterion_ids_for_cli(gates_dir: Path, requests: list[str], *, all_gates: bool) -> list[str]:
     """Resolve the shared CLI contract: positional criterion/bundle names XOR --all-gates."""
@@ -82,11 +84,13 @@ def resolve_to_criterion_ids(args: list[str], gates_dir: Path) -> list[str]:
         bundle_dir = gates_dir / arg
         if bundle_dir.is_dir():
             for gate_file in sorted(bundle_dir.glob("*.md")):
+                _load_gate_metadata(gate_file)
                 criterion_ids.append(f"{arg}/{gate_file.stem}")
         else:
             gate_file = gates_dir / f"{arg}.md"
             if not gate_file.is_file():
                 raise FileNotFoundError(f"gate not found: {arg}")
+            _load_gate_metadata(gate_file)
             criterion_ids.append(arg)
     return criterion_ids
 
@@ -99,6 +103,17 @@ def _load_frontmatter(path: Path) -> dict[str, Any]:
     if not parsed.ok:
         return {}
     return parsed.data
+
+
+def _load_gate_metadata(path: Path) -> dict[str, Any]:
+    metadata = _load_frontmatter(path)
+    staleness = metadata.get("staleness")
+    if staleness != GATE_STALENESS_CHANGED:
+        raise ValueError(
+            f"unsupported staleness declaration in review gate {path}: "
+            f"{staleness!r}; expected {GATE_STALENESS_CHANGED!r}"
+        )
+    return metadata
 
 
 def _matches_requirement(actual_values: set[str], required: Any) -> bool:
@@ -122,7 +137,7 @@ def applicable_criterion_ids_for_note(note_path: Path, criterion_ids: list[str],
     applicable: list[str] = []
     for criterion_id in criterion_ids:
         gate_abs = gates_dir / f"{criterion_id}.md"
-        gate_meta = _load_frontmatter(gate_abs)
+        gate_meta = _load_gate_metadata(gate_abs)
         if not _matches_requirement(note_traits, gate_meta.get("requires_trait")):
             continue
         if not _matches_requirement(note_types, gate_meta.get("requires_type")):

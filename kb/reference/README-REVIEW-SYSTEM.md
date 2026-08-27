@@ -85,6 +85,10 @@ in the note, named by the criterion. It is not a licence to search the corpus.
 
 The selector reports each requested `(note, criterion)` pair as fresh or, if not, why it is stale. JSON and schema fields use `criterion_*` names. Selection compares the current note file, current criterion file, and current freshness baseline for the persisted key.
 
+Catalog gates declare `staleness: changed`. This is a validated statement of the
+system-wide exact-text rule, not a per-gate tuning surface: gate resolution
+rejects missing or different values, and no rewrite threshold is supported.
+
 - no freshness baseline for the pair → `missing-baseline`
 - malformed, missing, or inconsistent data inside a present baseline → store integrity error
 - baseline criterion text differs from the current criterion → `criterion-changed`

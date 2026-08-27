@@ -17,7 +17,10 @@ A review gate is a closed-ended, verdict-kind quality assay. Each gate is one ma
 - `name: {Human-Readable Name}` — used in rendered reviews.
 - `lens: {bundle}` — the bundle this gate belongs to (`accessibility`, `semantic`, `structural`, `complexity`, `prose`, `frontmatter`, `sentence`).
 - `watches: [body | frontmatter | ...]` — which parts of the target the gate inspects.
-- `staleness: changed | always | ...` — when an accepted review becomes stale.
+- `staleness: changed` — declares the only supported runtime policy: ordinary
+  selection marks an accepted pair stale after any exact text change to its note
+  or criterion. Gate resolution and schema validation reject missing or other
+  values. This field is not a per-gate threshold or tuning surface.
 - `description` — the trigger condition: what kind of authoring problem this gate catches.
 - `type: kb/types/review-gate.md`.
 - Optional `requires_trait` or `requires_type` — narrow the gate to a subset of artifacts that carry the given trait or type.

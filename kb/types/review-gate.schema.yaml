@@ -31,8 +31,7 @@ allOf:
             items:
               type: string
           staleness:
-            type: string
-            minLength: 1
+            const: changed
           requires_trait:
             anyOf:
               - type: string
