@@ -28,7 +28,7 @@ Two earlier drafts stand on their own and are cited by the sequence:
 
 One draft stands apart from the sequence and concerns how the KB reviews itself:
 
-- [Atomic steps: size the note to its check](./atomic-steps-size-the-note-to-its-check.md) — argues that a review budget belongs on the artifact rather than the review: a note should be one checkable inference, unquoted sources are its unit for the grounding check, validated verbatim quotes discharge a source mechanically, and links to other notes are charged to a different check.
+- [Atomic steps: size the note to its check](../work/atomic-step-article/draft-article.md) — argues that a review budget belongs on the artifact rather than the review: a note should be one checkable inference, unquoted sources are its unit for the grounding check, validated verbatim quotes discharge a source mechanically, and links to other notes are charged to a different check.
 
 ---
 
