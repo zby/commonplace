@@ -1,5 +1,5 @@
 ---
-description: "With a judgment-capable interpreter, the functions of theory building — applying, criticizing, deriving, proposing revisions — can move from human to computational actors inside a declared boundary; states the allocation, where it stopped, and what a later profile must record"
+description: "With a judgment-capable interpreter, functions of theory building — applying, criticizing, deriving, proposing — can move from human to computational actors inside a declared boundary; records one allocation, where it stopped, and what to record next"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
