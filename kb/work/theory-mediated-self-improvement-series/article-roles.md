@@ -9,8 +9,8 @@ claims only after the incumbent ledger disposes them.
 | Order | Argumentative job | Current source |
 |---:|---|---|
 | 1 | Establish that coherent programming requires a program-specific theory and that Naur's human-only binding is no longer established by his argument | Accepted Naur baseline |
-| 2 | Specify a non-degenerate mixed-representation endpoint: a capability-adequate system closes a same-theory self-change path while symbolic machinery faithfully carries long-horizon transitions | Claims to reconstruct from the self-theories draft, scheduler/code correction, and closure–capability map |
-| 3 | Describe Commonplace as an already useful human–agent theory-building tool, locate its current human cut, and make progress observable without inventing a unique autonomy scalar | Claims to reconstruct from the theory-building draft plus the operator's tool-use direction |
+| 2 | Specify a non-degenerate mixed-representation benchmark: a capability-adequate system closes a same-theory self-change path while symbolic machinery faithfully carries long-horizon transitions; competent remote-programmer performance is the strong comparison, not a prerequisite for useful progress | Claims to reconstruct from the self-theories draft, scheduler/code correction, and closure–capability map |
+| 3 | Describe Commonplace as an already useful human–agent theory-building tool, locate its residual human work, and compare progress through leverage and bounded automation envelopes without inventing a unique autonomy scalar | Claims to reconstruct from the theory-building draft plus the operator's tool-use direction |
 | 4 | State the transition unit: what must be represented, bound, checked, executed, and recoverable for one revision decision to leave the human cut | Claims to reconstruct from the revision-decisions draft |
 | 5 | Ask when governed artifact and code revision constitutes system-level continual learning outside weights and how the same substrate extends to other LLM-wiki functions | Claims to reconstruct from the continual-learning draft and current Commonplace operations |
 | 6 | State the scaling conjecture: search and learning over mixed artifacts may increase improvement yield, while representational form alone decides nothing | Accepted Bitter Lesson baseline |
@@ -50,7 +50,7 @@ do not establish theory mediation. The evidence protocol needs an explicit
 mediation trace or intervention.
 
 Computational closure must not be the article's success criterion by itself.
-The endpoint needs an independently stated capability floor, effective reach
+The strong benchmark needs an independently stated capability floor, effective reach
 over consequential commitments, an adequate evaluator, and recurrence. Trivial
 closed loops and broad write surfaces with weak realization belong on the map,
 not below it on an assumed ladder.
@@ -61,14 +61,19 @@ The former theory-building draft retains an evidence-bounded allocation as a
 candidate description. It may not claim that the allocation is unique or turn
 heterogeneous judgments into a scalar percentage. The successor should record
 named functions, their decision content, their current bearers, untraced
-stages, and the remaining human cut at a fixed comparison grain.
+stages, the remaining human work, and the automation envelope of each method at
+a fixed comparison grain.
 
 The practical claim is different: the current composite can already be useful
 to people building theories and operating an LLM wiki. Evidence for that claim
 concerns task quality, reach, cost, and repeatability. It neither requires nor
 establishes computational possession of the theory. Increasing automation is
 valuable when it improves those outcomes or preserves them with less required
-intervention.
+intervention. Automating a bounded responsibility is genuine progress even if
+that method cannot cover the rest of the programmer's role. The ceiling limits
+the method, not the transfer already achieved. Better quality, reliability,
+coverage, latency, or resource efficiency inside a fixed envelope also counts
+as capability or yield progress, but not as transfer of a new responsibility.
 
 ### Moving one decision
 
@@ -96,7 +101,7 @@ methods.
 
 ## Separation rules
 
-- The endpoint article says what would close the loop. The bootstrap article
+- The strong-benchmark article says what would close the loop. The bootstrap article
   says where the current loop is open and why the open loop can still be a
   useful tool.
 - Closure and capability are separate coordinates. Neither unattended
@@ -107,8 +112,10 @@ methods.
 - The continual-learning argument concerns the unit and substrate of learning.
   It must not serve as evidence that closure or compounding has already
   occurred.
-- Present LLM-wiki usefulness is a product and methodology claim. It must not
-  be used as a proxy for autonomy.
+- Present LLM-wiki usefulness is a product and methodology claim. A measured
+  increase in accepted outcomes per human programming effort is lower-bound
+  progress, but it must not be used as evidence of closure or of reach beyond
+  the responsible mechanism's automation envelope.
 - The Bitter Lesson concerns scalable production methods and possible power.
   It must not silently become an autonomy theorem.
 - Code is both execution machinery and revisable system content. No article may

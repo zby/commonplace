@@ -8,22 +8,39 @@ Reconstruct the series around one research program without treating four
 review-defeated drafts as foundations. The program asks whether a mixed system
 of retained natural-language theory, language-model interpretation, symbolic
 procedures and code, and operational evidence can progressively internalize
-the work needed for its own theory-mediated improvement.
+the work needed for software construction and its own theory-mediated
+improvement.
 
-The endpoint is scoped computational closure. For a declared revision surface
-and time horizon, every decision needed to continue the improvement path is
-represented and executable inside the declared automatic system. The present
-Commonplace arrangement is a weaker, human-inclusive bootstrap. The work must
-show where human judgment remains and what would count as moving each such
-decision into the automatic path.
+The program has a practical lower bound rather than a binary starting line. A
+programming tool moves in the desired direction when, for a nontrivial task
+class, it increases the accepted software outcomes obtainable from a fixed
+amount of total human programming effort. A bounded mechanism still counts: a
+formatter can remove formatting work even though formatting alone can never
+cover the programmer's role. Its ceiling limits that mechanism, not the
+progress already made. The larger system must combine and extend such
+automation envelopes until progressively less programming work remains human.
+Progress can also occur inside a fixed envelope: a better formatter may produce
+better results, cover more inputs, fail less often, or consume fewer resources
+without taking over a new responsibility. That improves capability or yield;
+only envelope expansion reduces the kinds of work that remain human.
 
-Closure alone is not the endpoint. The closed path must surround a system that
-meets a declared capability threshold on consequential theory-building or
-LLM-wiki work. The workshop must map trivial and deceptively closed systems so
-that a no-op loop, narrow optimizer, weak evaluator, or exported human decision
-cannot satisfy the target by definition.
+Scoped computational closure is a stronger structural milestone. For a
+declared revision surface and time horizon, every decision needed to continue
+the improvement path is represented and executable inside the declared
+automatic system. The present Commonplace arrangement is a weaker,
+human-inclusive bootstrap. The work must show where human work remains, which
+mechanism could internalize it, and what that mechanism cannot reach.
 
-The endpoint is not the only payoff. Commonplace already serves its human
+Closure alone is not enough. A strong capability benchmark is a system that
+works at least as well as a competent remote programmer when given the same
+task brief, repository, digital tools, permissions, and feedback, without
+requiring a human to make programming decisions. This benchmark rules out
+trivial and deceptively closed systems; it is neither a prerequisite for
+present usefulness nor a final upper limit. The workshop must map no-op loops,
+narrow optimizers, weak evaluators, and exported human decisions rather than
+letting them satisfy the benchmark by definition.
+
+The strong milestones are not the only payoff. Commonplace already serves its human
 operators as a theory-building tool. The same substrate can grow to cover
 other LLM-wiki functions, and each warranted transfer of work to automatic
 operation can make the tool more useful before the closed-system goal is
@@ -44,6 +61,18 @@ reached.
 - Commonplace is already useful as a human–agent theory-building tool. That
   practical role does not establish independent computational theory
   possession or computational closure.
+- Any programming-tool change that produces more accepted work from the same
+  total human programming effort, or the same work from less effort, is
+  practical progress toward the broad direction. It need not demonstrate a
+  complete route to the strong benchmark.
+- Each mechanism has an automation envelope. Reaching its ceiling leaves the
+  other residual programming work visible; it does not retroactively make the
+  bounded transfer unreal.
+- Better performance inside a fixed envelope also counts, through outcome
+  quality, reliability, coverage, latency, or resource efficiency. It is not
+  the same change as transferring another kind of responsibility.
+- Competent remote-programmer performance is a strong capability benchmark,
+  not the definition of all useful progress or the final limit of the system.
 - The substrate may support other LLM-wiki operations such as grounding,
   routing, retrieval, synthesis, criticism, revision, validation, and
   publication. This list is a working scope, not a completeness claim.
@@ -65,11 +94,20 @@ a previously supplied objective.
 
 The practical tool claim is evaluated at the human–agent boundary instead.
 Does the arrangement help its operators form, criticize, retain, retrieve,
-apply, and revise theories or perform another declared wiki function? Reducing
-human intervention counts as a tool improvement only when usefulness and
-warrant survive.
+apply, and revise theories or perform another declared wiki function? Hold the
+task class and acceptance threshold fixed, and count configuration, review,
+recovery, and repair rather than hiding them outside the effort measure. A
+change is forward when it increases accepted outcomes for the same total human
+programming effort or reduces that effort for the same outcomes without an
+unacceptable loss of warrant. Client direction and feedback are held apart
+from programming decisions when the remote-programmer benchmark is used.
 
-The workshop does not assume that every transition to the endpoint is
+This comparison is a partial order, not proof that every improving method can
+reach the benchmark. A formatter may eliminate one residual responsibility
+and then stop. Further progress requires another mechanism or a composition
+whose automation envelope covers more of the remaining work.
+
+The workshop does not assume that every transition to the strong benchmark is
 possible. Demonstrating or defeating those transitions is the experiment.
 
 ## Source handling

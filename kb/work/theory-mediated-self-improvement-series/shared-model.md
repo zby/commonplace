@@ -49,10 +49,34 @@ This uses the error-correction asymmetry described in
 and the promotion/fallback relation described in
 [the two-layer execution system](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md).
 
-## Target and bootstrap
+## Direction, strong benchmark, and bootstrap
 
-The target is computational closure for a declared improvement path. Every
-premise, transition, authorization, evaluation, and recovery operation needed
+The broad direction is increasing programmer leverage: expand the accepted
+software outcomes attainable from a fixed amount of human programming effort,
+or preserve those outcomes while reducing that effort. For a given task, the
+**residual human work** is the set of programming decisions and actions that a
+human must still supply for an accepted result. This includes configuration,
+review, recovery, and repair when the tool displaces work into those stages.
+
+Each mechanism has an **automation envelope**: the responsibilities it can
+carry under stated conditions. A formatter has a narrow envelope, but removing
+formatting work is still movement toward a system that requires no human
+programming work. Once that envelope is exhausted, formatter improvement alone
+cannot remove design, theory-building, debugging, or maintenance work. The
+limit belongs to the method. Reaching the broader benchmark requires
+complementary mechanisms whose combined envelope covers progressively more of
+the residual work.
+
+A mechanism can also improve without expanding its envelope. A better
+formatter may increase output quality, reliability, input coverage, or speed,
+or reduce computational cost while formatting remains its only
+responsibility. That improvement counts on the capability or yield dimensions.
+It does not count as transfer of a new kind of programming work. The progress
+record must preserve both contributions instead of treating responsibility
+transfer as the only kind of improvement.
+
+Computational closure is a structural milestone for a declared improvement
+path. Every premise, transition, authorization, evaluation, and recovery operation needed
 to continue that path over the stated horizon is available inside the
 automatic system. Code and scheduling are themselves possible revision
 targets; otherwise the apparent closure hides a fixed external meta-level.
@@ -64,6 +88,16 @@ theory-building or LLM-wiki work, and the closed path must reach commitments
 that materially determine that capability. The
 [closure–capability map](./closure-capability-map.md) records this second axis
 and the principal degenerate cases.
+
+A strong capability benchmark is performance at least as good as a competent
+remote programmer over a declared challenge distribution. The comparison
+holds constant the task brief, repository, digital tools, permissions, and
+feedback. It removes the human programmer's decisions from the construction
+path, not the client's ability to state goals or respond to results. Outcome
+quality and reliability are primary; time, compute, and monetary cost remain
+separate comparison coordinates. This benchmark excludes narrow closed loops
+without making parity a prerequisite for practical value or a final upper
+bound.
 
 Commonplace is a human-inclusive bootstrap. Its models and machinery already
 perform some criticism, proposal, checking, drafting, and execution. Humans
@@ -104,6 +138,9 @@ fixed grain using a vector:
 
 | Dimension | Question |
 |---|---|
+| Human leverage | What accepted outcomes are attainable for a fixed amount of total human programming effort, or how much effort is required for a fixed outcome? |
+| Residual human work | Which programming decisions and actions must a human still supply, including configuration, review, recovery, and repair? |
+| Automation envelope | Which residual responsibilities can the current mechanism carry, under what conditions, and where does its method reach a ceiling? |
 | Path coverage | Which named revision paths, theory-building functions, and other LLM-wiki operations are internally executable? |
 | Horizon | How many linked episodes can proceed before indispensable human judgment? |
 | Human cut set | Which required decisions still cross an unrepresented human boundary? |
@@ -112,17 +149,32 @@ fixed grain using a vector:
 | Tool usefulness | How well does the human–agent arrangement perform the declared theory-building or wiki function? |
 | Improvement yield | What quality-adjusted improvements does the path produce for its computational and human cost? |
 
-A change is unambiguously forward toward the non-degenerate target when it
-removes or internalizes at least one required human decision while preserving
-the capability floor, protected warrant, and previously available paths. It is
-unambiguously a tool improvement when usefulness rises without an unacceptable
-loss elsewhere. These orders can diverge. If one dimension improves by
-sacrificing another, the result needs an explicit objective rather than being
-called monotone progress by definition.
+A change is unambiguously forward in the leverage order when, at a fixed task
+and acceptance grain, it produces no worse outcomes with no more total human
+programming effort and strictly improves at least one of those terms. Expanding
+the accepted task set under a fixed human-effort budget is the corresponding
+breadth improvement. Reducing a single bounded responsibility qualifies even
+when the responsible mechanism cannot reduce any other part of the residual
+work.
 
-The scoped non-degenerate endpoint has an empty human cut set for the declared
-path and horizon while retaining the capability floor, correction path, and
-continuity conditions. A practically successful tool may stop far short of it.
+Within the same automation envelope, better output quality, reliability,
+coverage, latency, or computational efficiency counts as capability or yield
+progress. It can help meet the strong benchmark even when residual human work
+does not change. Only a reduction in that residual counts as an autonomy
+transfer.
+
+This partial order does not imply convergence. A method can make real progress
+and then reach its automation ceiling. Record both the work transferred and
+the work still outside its envelope. If human effort falls by weakening
+quality or warrant, or apparent automation exports effort into review and
+recovery, the dimensions trade off and an explicit objective is required.
+
+The scoped non-degenerate closure milestone has an empty human cut set for the
+declared path and horizon while retaining the capability floor, correction
+path, and continuity conditions. A practically successful tool may stop far
+short of it. Remote-programmer parity adds the strong capability comparison;
+it is a milestone on the same direction, not the reason earlier tool
+improvements count.
 
 This also separates autonomy from power. The Bitter Lesson suggests that
 replacing hand-designed selection with scalable search and learning may

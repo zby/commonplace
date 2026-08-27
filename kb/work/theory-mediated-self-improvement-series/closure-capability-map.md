@@ -12,12 +12,22 @@ candidate threshold is the ability to help build and revise explanatory
 theories, operate consequential LLM-wiki functions, and revise both retained
 theory and some symbolic machinery in response to external evidence.
 
+The practical lower bound is broader. Any tool that increases accepted
+software outcomes for fixed total human programming effort, or preserves the
+outcomes with less effort, moves toward the goal. This does not imply that the
+tool's method can reach the strong benchmark. A method may exhaust a narrow
+automation envelope after eliminating one genuine part of the residual human
+work.
+
 ## Coordinates
 
 Do not place systems on one ladder. Record a profile:
 
 | Coordinate | Question |
 |---|---|
+| Human leverage | At a fixed acceptance threshold, what outcomes are attainable per unit of total human programming effort? |
+| Residual human work | Which programming decisions and actions, including review and recovery, still require a person? |
+| Automation envelope | Which residual responsibilities can this mechanism carry, and which remain beyond its method? |
 | Computational closure | For which named path and horizon can operation continue without indispensable human judgment? |
 | Operational capability | Which externally evaluated tasks can the incumbent system perform, at what quality and breadth? |
 | Effective revision reach | Which behavior-determining commitments can the path both determine and install, not merely write syntactically? |
@@ -31,6 +41,27 @@ already separates broad syntactic writability from effective revision reach and
 warns that a closed evidence-responsive path does not establish a favorable
 outcome. This map adds incumbent operational capability and supplied capability
 because a loop may borrow most of its power from fixed machinery.
+
+## Bounded progress and method ceilings
+
+A narrow automation envelope is not itself a degenerate case. A formatter can
+faithfully remove formatting work, and a compiler can remove work that would
+otherwise be required to translate and execute a program. Both reduce the
+residual programmer role. Neither mechanism can thereby take over
+requirements interpretation, program-specific theory building, architectural
+choice, or open-ended diagnosis.
+
+The correct conclusion is that the method has a ceiling. It made progress up
+to that ceiling, but it does not supply a convergence argument. The broader
+program must record which responsibility each mechanism transfers and compose
+or add mechanisms for the remainder. Calling bounded progress worthless would
+erase real tool gains; calling it sufficient would erase the unsolved work.
+
+Improvement can continue inside the bounded envelope. Better correctness,
+reliability, coverage, latency, or resource efficiency counts on the
+operational-capability or improvement-yield coordinates even when no new
+responsibility moves from the programmer. Envelope expansion and performance
+within the envelope are separate contributions to the larger system.
 
 ## Degenerate closure patterns
 
@@ -60,13 +91,14 @@ has already been measured.
 | System or ideal type | Closure profile | Incumbent capability | Effective revision reach | Evaluator and continuity | Current reading |
 |---|---|---|---|---|---|
 | Constant or no-op loop | Complete for an empty or constant path | None beyond the fixed output | None | Trivial acceptance; indefinite repetition | Vacuous closed floor |
+| Formatter, compiler, or similar exact tool | Closed over a fixed mechanical subtask, not a software-construction path | Reliably performs one supplied transformation | Normally none over its own method | Deterministic checks or language rules can warrant the bounded result | Real reduction in residual human work with a narrow automation envelope |
 | Thermostat or Homeostat | Closed over a narrow regulation path | Maintains a bounded variable or viable setting | Fixed parameters or settings inside a supplied action basis | Fixed viability signal; repeated operation | Real but deliberately narrow closure |
 | Fixed-metric parameter or prompt optimizer | Potentially closed for the declared metric and edit slot | Inherits the base model and task representation | Named parameters, prompt, or bounded artifact slots | Fixed benchmark or score; repeatable while decomposition stays fixed | Useful narrow optimizer; supplied capability dominates |
 | Artifact repair loop with tests | Some prompt, rule, skill, or code paths may close | Base-model competence plus retained artifacts | Exercised artifact-local changes; broader reach varies | Tests, judges, or regression gates usually stay fixed | Operational closure can coexist with fixed decomposition and thin semantic warrant |
 | Self-rebuilding code agent | Some build–test–restart paths are computational | Broad coding competence borrowed from a foundation model | Large syntactic code surface; effective reach bounded by interfaces and tests | Build, tests, or viability may preserve recurrence without proving improvement | Broad write reach, uncertain effective and useful reach |
 | Gödel machine | Formally computational inside its axiomatized software boundary | Whatever the formalized machine can compute and prove useful | Broad syntactic software replacement but only proof-reachable changes are admissible | Proof gate; successor may replace the searcher if incumbent proof licenses it | Strong formal closure with a potentially near-empty practical reachable set |
 | Commonplace now | Human-inclusive rather than computationally closed | Demonstrated use as an agent-operated KB and candidate theory-building tool | Broad mixed prose, schema, instruction, validator, and code changes through several paths | Mechanical and model review plus human direction and admission | High practical reach is plausible; closure and independent theory possession remain open |
-| Target mixed system | Closed only when every required decision on the named path is represented | Must meet declared theory-building and LLM-wiki task thresholds | Theory, derived procedures, code, scheduler, and relevant evaluators remain revisable | Independent evidence, rejection, rollback, and recurrent same-path theory revision | Non-degenerate target; not yet demonstrated |
+| Target mixed system | Closed only when every required decision on the named path is represented | At the strong benchmark, performs at least as well as a competent remote programmer on the declared challenge distribution | Theory, derived procedures, code, scheduler, and relevant evaluators remain revisable | Independent evidence, rejection, rollback, and recurrent same-path theory revision | Non-degenerate milestone; useful partial systems lie below it |
 
 Evidence starting points:
 
@@ -85,13 +117,15 @@ Evidence starting points:
 
 ## Candidate adequacy gate for this program
 
-A claimed endpoint is non-degenerate only if all of the following are stated
+A claimed strong milestone is non-degenerate only if all of the following are stated
 and evidenced for the same boundary and horizon:
 
 1. **Non-vacuous work:** a held-out or externally anchored challenge
    distribution distinguishes useful outcomes from no-op behavior.
-2. **Capability floor:** the incumbent system meets a declared threshold on
-   theory-building or another consequential LLM-wiki function.
+2. **Capability floor:** the incumbent system meets a declared stage-relative
+   threshold. At the strong software-construction benchmark it performs at
+   least as well as a competent remote programmer given the same brief,
+   repository, digital tools, permissions, and feedback.
 3. **Consequential reach:** the closed path can revise commitments that
    materially determine that capability, not only inert text or cosmetic
    parameters.
@@ -120,4 +154,7 @@ change the map.
   the target function.
 - Compare each closed system with a no-update baseline and a human-inclusive
   tool baseline.
+- Record total residual human work and the automation envelope of each
+  mechanism; do not infer that a real local gain supplies a path beyond its
+  ceiling.
 - Record counterexamples that force new axes or split an existing region.
