@@ -96,10 +96,9 @@ A consequence worth stating, because it answers the obvious objection to
 bounding the artifact: a claim supported *jointly* by several sources, none
 sufficient alone, should be quoted rather than split. Splitting it across notes
 severs the support, so each fragment fails a check the whole would pass — the
-hazard a review-side [proposal to split an over-budget review into covering
-passes](../reference/proposals/exceeding-a-review-budget-splits-the-task.md)
-identified when it concluded that any partition would have to be by claim rather
-than by link. Under an artifact-side bound the author, who knows which passages
+hazard the review-side proposal *Exceeding a review budget splits the task*,
+now archived, identified when it concluded that any partition would have to be
+by claim rather than by link. Under an artifact-side bound the author, who knows which passages
 jointly carry the claim, puts them on the page together and the check reads them
 together. This is where the two bounds meet: every quoted passage lengthens the
 note, so quoting spends against the co-loading bound. The bounds are independent
@@ -241,6 +240,5 @@ Relevant Notes:
 - [Title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — enables: the convention that lets a chain of notes read as a chain of checked steps
 - [A five-link cap missed four grounding findings in twelve reviews](./evidence/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md) — evidenced-by: the paired outcomes this note rereads as evidence about note size rather than reviewer capacity
 - [ADR 079 — Grounding reviews budget sixteen distinct linked artifacts](../reference/adr/079-grounding-reviews-budget-sixteen-distinct-linked-artifacts.md) — see-also: the review-side placement of the same constraint, currently in force
-- [Exceeding a review budget splits the task](../reference/proposals/exceeding-a-review-budget-splits-the-task.md) — see-also: the splitting hazard for jointly supported claims, which quoting answers
 - [Descartes, *Discourse on the Method*](../sources/descartes-discourse-on-the-method.ingest.md) — evidenced-by: the second precept sizes the parts to the solution and rests long chains on simple links
 - [Lamport, *How to Write a 21st Century Proof*](../sources/lamport-how-to-write-a-21st-century-proof.ingest.md) — evidenced-by: proof-step detail is set by the reader who checks it, and structured proofs make error-finding possible rather than inevitable

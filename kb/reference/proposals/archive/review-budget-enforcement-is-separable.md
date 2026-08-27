@@ -1,12 +1,14 @@
 ---
 description: "Proposal: decide separately whether exceeding a review link budget fails a pair or only requires disclosure, and whether that behavior should be selectable rather than fixed"
-type: ../types/design-proposal.md
+type: ../../types/design-proposal.md
 tags: []
 ---
 
 # Review budget enforcement is a separable decision
 
-[Pricing a review link budget](./review-link-budget-prices-reviewer-attention.md)
+> **Archived** (see [archive README](./README.md)). Retired by [ADR 082](../../adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md): there is no review budget left to exceed, and the artifact-side bound's fail-or-warn severity is decided in the ADR (WARN, with FAIL deferred). What remains here is the 2026-08-25 current-state anchor and the four enforcement options with the forces weighed against them — design texture only.
+
+*Review link budget prices reviewer attention*, now archived alongside this one,
 proposes measuring what a reviewer opens. It does not settle what happens when a
 reviewer would exceed the budget, and that question is independent: the same
 measurement supports either answer.
@@ -27,7 +29,7 @@ exceedance would not have recovered them; raising the reading ceiling did.
 
 Resolved for the current grounding criterion. Advisory disclosure is selected;
 enforced failure, per-run selection, and a second hard ceiling are rejected for
-now. [The bounded evidence](../../notes/evidence/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md)
+now. [The bounded evidence](../../../notes/evidence/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md)
 records the outcome and the trigger for revisiting it. This proposal is ready
 for archival after its inbound references are retired.
 
@@ -79,8 +81,8 @@ derivation.
 
 ## Earlier supersession candidate
 
-[Exceeding a review budget splits the task](./exceeding-a-review-budget-splits-the-task.md)
-proposes a third answer that dissolves this question: exceeding the budget
+*Exceeding a review budget splits the task*, also archived, proposes a third
+answer that dissolves this question: exceeding the budget
 triggers decomposition into covering passes, so a verdict is neither sampled nor
 failed. What survives here is the disclosure requirement — a pass should still
 record what it covered — but as provenance rather than as the mechanism keeping a

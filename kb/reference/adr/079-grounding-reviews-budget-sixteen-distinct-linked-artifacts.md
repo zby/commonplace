@@ -102,4 +102,3 @@ Relevant Notes:
 
 - [A five-link cap missed four grounding findings in twelve reviews](../../notes/evidence/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md) — evidenced-by: supplies the paired outcomes, repeat baseline, natural reading demand, and limits behind the selected ceiling
 - [Grounding alignment gate](../../instructions/review-gates/semantic/grounding-alignment.md) — procedure: carries the operative count, scope, and disclosure rule
-- [Review link budget prices reviewer attention](../proposals/review-link-budget-prices-reviewer-attention.md) — see-also: retains the unresolved count-and-byte calibration beyond this interim ceiling

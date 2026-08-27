@@ -1,10 +1,12 @@
 ---
 description: "Proposal: when a review's evidence exceeds one pass's capacity, decompose the review into covering passes and combine their outcomes, rather than sampling links or failing the artifact"
-type: ../types/design-proposal.md
+type: ../../types/design-proposal.md
 tags: []
 ---
 
 # Exceeding a review budget splits the task
+
+> **Archived** (see [archive README](./README.md)). Retired by [ADR 082](../../adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md): the artifact-side bound keeps a claim's joint support on one page, so nothing partitions and the splitting question does not arise. What remains here is the 2026-08-25 current-state anchor, the atomicity of a review pair it recorded, and the partition options weighed against the joint-support hazard — design texture only.
 
 A budget on how much linked material one review pass may open has so far implied
 one of two bad answers when the budget is exceeded: the reviewer **samples**, or
@@ -37,7 +39,7 @@ Rejected for now by ADR 079. Raising the ceiling covers every divergent case in
 the assay without adding partial-coverage, combination, or freshness semantics.
 The assay supplies no divergent tail fixture above sixteen. It also cannot
 validate or refute the severed-support hazard below because every capped
-baseline was PASS. [The bounded evidence](../../notes/evidence/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md)
+baseline was PASS. [The bounded evidence](../../../notes/evidence/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md)
 records the result. This proposal is ready for archival after its inbound
 references are retired.
 
@@ -94,16 +96,15 @@ overlap is small; degenerates toward C when it is not.
 ## What this changes elsewhere
 
 It largely supersedes
-[Review budget enforcement is a separable decision](./review-budget-enforcement-is-separable.md).
-That proposal asked whether exceeding a budget should fail or merely require
+*Review budget enforcement is a separable decision*, now archived alongside this
+one. That proposal asked whether exceeding a budget should fail or merely require
 disclosure. Under splitting, exceeding does neither: it triggers decomposition.
 The disclosure requirement remains valuable — a pass should still say what it
 covered — but as provenance rather than as the thing that keeps a sampled verdict
 honest, because verdicts stop being sampled.
 
-It does not supersede the measurement work.
-[Pricing the budget](./review-link-budget-prices-reviewer-attention.md) becomes
-*more* load-bearing, because a split needs a sizing basis to decide where to cut,
+It does not supersede the measurement work. *Review link budget prices reviewer
+attention*, also archived, becomes *more* load-bearing, because a split needs a sizing basis to decide where to cut,
 and consumed cost is what says how large a pass can usefully be.
 
 ## Adoption criteria

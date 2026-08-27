@@ -1,10 +1,12 @@
 ---
 description: "Proposal: price a review gate's link-following by a two-term attention heuristic — per-artifact plus per-byte — computed by a sizing command rather than estimated by the reviewer"
-type: ../types/design-proposal.md
+type: ../../types/design-proposal.md
 tags: []
 ---
 
 # Review link budget prices reviewer attention
+
+> **Archived** (see [archive README](./README.md)). Retired by [ADR 082](../../adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md): grounding is bounded on the artifact by unquoted sources per note, so no review-side budget remains for a price to calibrate. What remains here is the 2026-08-25 current-state anchor and the offered-cost measurement over 337 targets (p50 7 artifacts and 67 KB, p90 16 and 148 KB, max 35 and 355 KB), which survives as a measurement of review cost and not as a cap — design texture only.
 
 `semantic/grounding-alignment` limits how much linked material a reviewer may
 open. It now expresses that limit as a count of distinct resolved artifacts.
@@ -162,7 +164,7 @@ identifies their relative contribution — for example independent usage or
 active-time telemetry, or a paired assay that keeps the evidence task fixed
 while varying artifact count and bytes — rather than chosen from raw stop
 points. This is the same move
-[ADR 025](../adr/025-complete-generated-indexes-are-build-time-only.md)
+[ADR 025](../../adr/025-complete-generated-indexes-are-build-time-only.md)
 made for description length, replacing a ceiling that had "inherited an earlier
 full-index cost concern" with an allowance set by a retrieval assay.
 
