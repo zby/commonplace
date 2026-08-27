@@ -72,9 +72,3 @@ The remaining details narrow the demonstrated process further. The main policy, 
 ## Recommended Next Action
 
 Retain ACM as a source-only worked case and do not promote its two-tool decomposition into methodology unless a future study compares rival operation sets or changes a stated constraint strongly enough to make the decomposition itself refutable.
-
----
-
-Relevant Notes:
-
-- [A context-operation interface bounds the projections its policy can realize](../notes/context-operation-interface-bounds-context-policy.md) — abstracted-from: learning invocation and abstention over two fixed context-management tools witnesses policy improvement inside an unchanged interface

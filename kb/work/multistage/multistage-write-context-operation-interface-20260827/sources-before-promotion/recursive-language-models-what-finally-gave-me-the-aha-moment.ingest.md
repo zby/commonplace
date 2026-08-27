@@ -87,9 +87,3 @@ The /connect discovery found 7 connections to KB notes and 1 to another source. 
 ## Recommended Next Action
 
 Update [rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md](../notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md): add this source as a citation under Relevant Notes — it is primary evidence for the note's claims and currently uncited. The citation should note that it grounds the note's analysis with a concrete walkthrough of the REPL mechanism, symbolic variable return, and scaffold-level truncation.
-
----
-
-Relevant Notes:
-
-- [A context-operation interface bounds the projections its policy can realize](../notes/context-operation-interface-bounds-context-policy.md) — abstracted-from: model-written prompt exploration and transformation with printed or returned exposure witnesses an open programmable context-operation interface
