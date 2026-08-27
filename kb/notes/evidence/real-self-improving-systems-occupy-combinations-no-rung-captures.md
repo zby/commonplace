@@ -21,7 +21,7 @@ Selected profile fields, not the whole profile: the governance dimension appears
 | Parametric self-improvers | direct, gradient | no | yes | computational | training-time evaluation |
 | [Self-Improving Algorithms](https://page.mi.fu-berlin.de/mulzer/pubs/selfimpSICOMP.pdf) | direct, staged | no | yes | computational | the declared input distribution |
 | [Continual Harness](../../sources/continual-harness-online-adaptation-foundation-agents.ingest.md) | direct, refiner-mediated | yes | yes | computational | the Refiner's own judgment — end metrics observed, never gating |
-| [DreamCoder](../../sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md) | proposal-selection | partly | yes | computational | statistical program fit |
+| [DreamCoder](../../sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md) | proposal-selection | partly | yes | computational | unread — the retained capture states no acceptance criterion |
 | [Gödel machine](../goedel-machines-are-a-proof-governed-case-of-self-modification.md) | proposal-selection | yes | yes | computational | what its proof system establishes |
 | [Knowledge-Centric Self-Improvement](../../sources/knowledge-centric-self-improvement-2607.19592.ingest.md) | proposal-selection | partly | yes | computational | benchmark oracles; debate for transfer |
 | [Self-Harness](../../sources/self-harness-harnesses-that-improve-themselves.ingest.md) | proposal-selection | yes | yes | computational | two-split regression pass counts, the "held-out" split reused as selection data |
@@ -31,6 +31,16 @@ Selected profile fields, not the whole profile: the governance dimension appears
 | [Exo](../../agentic-systems/exo.md) | proposal-selection | yes | yes | computational | build, test, immediate behaviour |
 | [Commonplace](./commonplace-as-a-reflective-system.md) | proposal-selection | yes | yes | joint, by decision | tests and validators; human judgment |
 
+### Retained evidence
+
+Three of the evidential-limit cells rest on passages retained in their ingests; the passages sit here rather than in the table cells.
+
+Autogenesis is scored inside its own loop — "Evaluate scores the candidate against the objective and safety invariants" — while what may change is fixed outside it: "A binary learnability mask specifies which variables may be modified" ([Autogenesis, Appendix E.3](../../sources/autogenesis-a-self-evolving-agent-protocol.ingest.md), verbatim).
+
+The Darwin Gödel Machine accepts on viability — "Only agents that compile successfully and retain the ability to edit a given codebase are added to the DGM archive" — and its benchmark score enters only as "Parent selection is roughly proportional to each agent’s performance score" ([Darwin Gödel Machine, Section 3](../../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md), verbatim).
+
+Accumulated Behavioral Rules turns on one person at capture time: "The engineer who receives the review feedback makes this judgment" ([Accumulated Behavioral Rules, Section II-D](../../sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md), verbatim).
+
 ## What the hard cases teach
 
 **The Homeostat is the floor, and it is not a low rung.** Operative, computationally autonomous, and non-cumulative at once: its retained setting steers behavior and determines whether reorganization fires, yet the successor comes from a random table and carries nothing of the incumbent. Any scale that reads autonomy as maturity puts a randomized relay bank above a human-reviewed repository.
@@ -39,7 +49,7 @@ Selected profile fields, not the whole profile: the governance dimension appears
 
 **Ailon et al. show cumulativity without either reflection or a gate.** Its staged training phase is where the accumulation sits: a retained snapshot of a typical instance is built first, and the auxiliary search structures are then constructed against it. The stationary regime that follows retains those structures as the operative basis for later inputs without further improving them. Its objective is expected running time under a declared input distribution, and distribution shift is the boundary where the retained structure stops being warranted.
 
-**DreamCoder and the Gödel machine differ in gate kind, not gate strength.** Both run reject-capable loops; one accepts on statistical program fit, the other only on proof. DreamCoder is also split internally — an inspectable symbolic library alongside an opaque recognition network — so its reflective coverage has to be reported per component rather than as a verdict about the system.
+**DreamCoder and the Gödel machine cannot be compared on gate kind from what is retained.** The Gödel machine accepts only on proof; the DreamCoder capture does not state what its loop accepts on, so that comparison stays open. DreamCoder is also split internally — an inspectable symbolic library alongside an opaque recognition network — so its reflective coverage has to be reported per component rather than as a verdict about the system.
 
 **Knowledge-Centric Self-Improvement is the strongest external case for addressability.** Its appendix traces a claim cited by id, challenged, split into two scoped claims, with the falsified branch retained as a rejection — the read-criticize-revise operations exercised computationally, not just structurally available. Its warrant splits: benchmark oracles are strong for pass/fail, while transfer-worthiness rests only on model debate.
 
@@ -65,7 +75,7 @@ Relevant Notes:
 - [Measuring autonomy well enough to see it improve is an open problem](../measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — extends: why these rows still cannot be ordered even after the profile is fixed
 - [Ashby, Design for a Brain — ultrastability](../../sources/ashby-design-for-a-brain-ultrastability.md) — evidenced-by: the operative, non-cumulative, non-reflective floor
 - [Self-Improving Algorithms](https://page.mi.fu-berlin.de/mulzer/pubs/selfimpSICOMP.pdf) — evidenced-by: cumulative retention with no representation and no gate
-- [DreamCoder](../../sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md) — evidenced-by: a statistical reject-capable gate, with coverage split across a symbolic library and an opaque network
+- [DreamCoder](../../sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md) — evidenced-by: iterative growth of a symbolic library, with coverage split across that library and an opaque network; the capture states no acceptance criterion
 - [Knowledge-Centric Self-Improvement](../../sources/knowledge-centric-self-improvement-2607.19592.ingest.md) — evidenced-by: addressability operations exercised computationally, with warrant split by question
 - [An omitted improvement-loop function and a frozen one need different repairs](../an-omitted-loop-function-and-a-frozen-one-need-different-repairs.md) — contrasts: reads the 2025–26 rows at finer grain, by omitted or frozen loop function rather than by pathway profile
 - [Six reported self-improvement paths expose bounded redesign surfaces within supplied methods](./six-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md) — evidenced-by: extends the detailed five-system reading with HyperAgents while this profile casebook remains at thirteen rows

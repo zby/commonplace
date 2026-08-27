@@ -101,6 +101,15 @@ Scan `kb/notes/`, `kb/types/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/
 | `operationalized-from` | asym | instructions | procedure adds ordering, defaults, or stopping conditions this methodology note doesn't itself fix; not claim-preserving — see lineage semantics in `kb/reference/link-vocabulary.md` |
 | `see-also` | asym | reference, agent-memory, agentic-systems, sources, instructions | adjacent companion; use sparingly |
 
+## Source grounding
+
+A note's grounding check must fit one pass, so the note is bounded on the artifact side ([ADR 082](../reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md)): at most five distinct tracked sources (`kb/sources/*.ingest.md`) cited without a verbatim quotation paired to each. `commonplace-validate` fails past five. A source is discharged by quoting it: a quoted span in the same paragraph as its link, marked `verbatim`, whose words occur in that ingest's `## Quotes` section — retain the quote through `cp-skill-ground`, never by editing the ingest. A source linked with `(snapshot required)` anywhere in the note always counts. Links to other notes never count; a linked note has passed its own grounding review, and this note owes it faithful representation, not re-grounding. Over the bound, quote or split by claim; a claim carried jointly by several sources is quoted together, not split.
+
+Two conventions keep the bound honest:
+
+- **A source cited as evidence is cited in the body.** A footer-only source citation has no sentence to carry its use, so nothing in the note can be checked against it and nothing can quote it. Either host it in a sentence or drop the entry.
+- **A casebook hosts its retained evidence in prose.** When sources sit in table rows, put the quotes in a short block under the table — one sentence per source, naming the row — rather than in the cells.
+
 ## Type eligibility
 
 A typed artifact in this collection may use a global type spec under `kb/types/` or a local type spec under this collection's `types/` directory. Its `type:` value is the path to that contract. Frontmatter-free Markdown is implicit `text`.
