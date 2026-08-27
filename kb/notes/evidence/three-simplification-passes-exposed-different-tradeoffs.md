@@ -13,7 +13,7 @@ This is evidence about how these instructions behaved on one article, not a gene
 
 ## Experiment
 
-The target was the 1,991-word version of [Reflective self-improvement](../../articles/theory-building-inside-the-system.md) at commit `7e21c9ae`, immediately before the first explicit simplification commit. Three fresh sub-agents received that exact baseline. Each saw only its assigned instruction and wrote a separate candidate; none saw the live article or another candidate.
+The target was the 1,991-word version then titled *Reflective self-improvement* at commit `7e21c9ae`, immediately before the first explicit simplification commit. Three fresh sub-agents received that exact baseline. Each saw only its assigned instruction and wrote a separate candidate; none saw the live article or another candidate.
 
 | Treatment | Instruction shape | Result |
 |---|---|---|

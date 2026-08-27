@@ -1,6 +1,11 @@
 # Workshop: theory-mediated methodology article
 
-**Posed by:** the operator, 2026-08-26. Restructure [`kb/articles/reflective-self-improvement.md`](../../articles/theory-building-inside-the-system.md) — not discard it — into the third article pillar beside [the bitter-lesson article](../../articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) and [the human-inclusive revision article](../../articles/moving-revision-decisions-into-the-automatic-system.md): theory-mediated methodology, with Naur's *Programming as Theory Building* as the hook.
+> **Superseded for new work.** Continue the series in the
+> [theory-mediated self-improvement workshop](../theory-mediated-self-improvement-series/README.md).
+> This directory remains temporarily as a historical input while its live
+> decisions are checked and consumed; do not resume article drafting here.
+
+**Posed by:** the operator, 2026-08-26. Restructure [`kb/articles/reflective-self-improvement.md`](../theory-mediated-self-improvement-series/rejected-drafts/theory-building-inside-the-system.txt) — not discard it — into the third article pillar beside [the bitter-lesson article](../../articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) and [the human-inclusive revision article](../theory-mediated-self-improvement-series/rejected-drafts/moving-revision-decisions-into-the-automatic-system.txt): theory-mediated methodology, with Naur's *Programming as Theory Building* as the hook.
 
 **The angle, as posed.** Naur: the programmer builds a theory of the part of the world a program handles, and the program alone cannot preserve it. LLMs change the second half: natural-language theories can become operative artifacts inside the system. An agent can use them to explain failures, derive changes, revise its assumptions, and progressively formalize what stabilizes. When the theories describe the system itself, theory building becomes a route to reflective self-improvement.
 
