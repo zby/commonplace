@@ -3,7 +3,7 @@
 **State:** open  
 **Repair shape:** capacity policy and job packing change  
 **Severity:** medium  
-**Related:** [review attention price](../review-attention-price/README.md), [review bundle packing](../review-bundle-packing/README.md)
+**Related:** review attention price (workshop closed 2026-08-27, ADR 082), [review bundle packing](../review-bundle-packing/README.md)
 
 ## Finding
 
