@@ -2,6 +2,7 @@
 type: kb/types/note.md
 description: Explains why improving context selection within a fixed operation interface cannot establish that the interface admits every useful active-context projection.
 traits: [title-as-claim, has-comparison, has-external-sources]
+tags: [context-engineering, computational-model, agent-memory]
 ---
 
 # A context-operation interface bounds the projections its policy can realize
@@ -27,3 +28,14 @@ An evaluation of controller improvement should report the retained substrate and
 Structural reach is not achieved use. Exact retained material can coexist with a lossy or missed active projection. A legal trace may never be discovered or produced reliably, and a delivered view may still fail to affect behavior. The claim here ends at exposure into active context; [storage, read-back, and contextual activation remain distinct](./knowledge-storage-does-not-imply-contextual-activation.md).
 
 The claim does not rank interfaces. A restricted interface may trade admitted transformations for reliability, safety, inspectability, trainability, latency, or cost. An open-ended programming interface remains bounded by its primitives, sandbox, permitted compositions, model competence, and budget. The system contrasts show that these architecture coordinates vary across described systems. They do not estimate the causal performance effect of changing any one coordinate, and they leave open which interface is preferable under a given set of operational constraints.
+
+---
+
+Relevant Notes:
+
+- [Knowledge-access architecture must be evaluated end to end, not by retrieval alone](./knowledge-access-architecture-must-be-evaluated-end-to-end.md) — extends: places structural projection reach inside the larger path from discovery through upkeep
+- [Rule-based context selection needs a pre-existing signal](./rule-based-context-selection-needs-a-pre-existing-signal.md) — extends: characterizes when a fixed selector can choose a legal projection
+- [RLM, λ-RLM, Tendril, and llm-do separate restriction from persistence](./rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md) — extends: separates interface restriction from persistence horizon
+- [An experiment identifies only the contrast it actually runs](./an-experiment-identifies-only-the-contrast-it-actually-runs.md) — grounds: explains why a fixed-interface evaluation cannot identify an unrun rival interface
+- [Scroll](../agent-memory-systems/reviews/scroll.md) — evidenced-by: code-grounded mixed push/pull interface with structured and programmable recall
+- [Virtual Context](../agent-memory-systems/reviews/virtual-context.md) — evidenced-by: code-grounded proxy-owned assembly and model paging over retained conversation state

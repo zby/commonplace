@@ -39,3 +39,4 @@ Relevant Notes:
 
 - [Oracle strength spectrum](./oracle-strength-spectrum.md) — extends: distinguishes hard, soft, interactive, and delayed forms of the evaluative signal required here
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — exemplifies: learned memory-policy automation is one case where the ability to update safely is bounded by the ability to evaluate outcomes
+- [A context-operation interface bounds the projections its policy can realize](./context-operation-interface-bounds-context-policy.md) — grounds: explains why learning when to invoke hand-designed operations cannot produce projections outside that fixed interface

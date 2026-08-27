@@ -136,3 +136,4 @@ Relevant Notes:
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies raw history, retrieved evidence, headlines, summaries, and scratch results when they advise later work.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies Scroll's prompt, tool schemas, validation rules, sandbox policy, and compaction manager.
 - [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why Scroll's pushed state is coarse or session-identifier-scoped rather than content-inferred.
+- [A context-operation interface bounds the projections its policy can realize](../../notes/context-operation-interface-bounds-context-policy.md) - is-evidence-for: Scroll combines a bounded automatic projection with structured and programmable pull interfaces over the same retained trace.

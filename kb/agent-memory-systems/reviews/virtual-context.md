@@ -137,3 +137,4 @@ Relevant Notes:
 - [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: raw traces, summaries, facts, embeddings, tools, and proxy rules carry different storage, form, lineage, and authority.
 - [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: stored turns, summaries, facts, quotes, and restored tool outputs advise later reasoning when consumed.
 - [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: proxy mutation, provider adapters, tool schemas, compaction fences, retrieval scoring, and command handlers shape behavior with stronger force.
+- [A context-operation interface bounds the projections its policy can realize](../../notes/context-operation-interface-bounds-context-policy.md) - is-evidence-for: Virtual Context exposes proxy-owned push assembly, model paging, and manual retrieval as distinct legal projection paths over retained conversation state.

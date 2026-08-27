@@ -46,3 +46,9 @@ Interpret each question's importance relative to the named task and outcome. Exa
 ## Scope
 
 This is an architectural synthesis of established component distinctions, not a directly tested end-to-end empirical result. Its checkpoints are a non-exhaustive diagnostic: they can recur or overlap, and maintenance conditions several of them rather than forming the last step of a linear pipeline. The note supplies no aggregate score, universal stage weights, or evidence about which failure usually dominates. It also supplies no validated benchmark for agent pointer decisions, causal instrumentation for activation, or maintenance-adjusted cost comparison. Where a task requires calibrated reliance, trust remains an additional condition of usable knowledge rather than a mandatory sixth stage.
+
+---
+
+Relevant Notes:
+
+- [A context-operation interface bounds the projections its policy can realize](./context-operation-interface-bounds-context-policy.md) — mechanism: formalizes how available operators and compositions bound the task-facing views an access architecture can construct

@@ -29,6 +29,7 @@ Agent memory notes treat memory as part of agent architecture, not just storage.
 ## Boundaries And Failure Modes
 
 - [Active work state is not retrospective memory or chat history](./active-work-state-is-not-retrospective-memory-or-chat-history.md) — separates live task state from retained retrospective memory
+- [A context-operation interface bounds the projections its policy can realize](./context-operation-interface-bounds-context-policy.md) — separates retained substrate, available projection operations, controller policy, and active-context exposure
 - [Preserve Evidence Without Making History The Next Context](./agent-memory-requirements/preserve-evidence-without-loading-history.md) — keeps trace evidence available for audit and extraction without loading raw history by default
 - [Flat memory predicts specific cross-contamination failures that are empirically testable](./flat-memory-predicts-specific-cross-contamination-failures-that-are.md) — predicts search pollution, identity scatter, and insight trapping when memory roles collapse
 - [Trace-extracted memory earns authority per operation, not at capture](./trace-extracted-memory-earns-authority-per-operation-not-at-capture.md) — trace-extracted records become knowledge only after operations such as verification, abstraction, and consultation

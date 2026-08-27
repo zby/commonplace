@@ -74,5 +74,6 @@ AgeMem qualifies: it learns a durable artifact (the policy) from agent traces.
 
 - [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — primary analysis note: interprets AgeMem as learnable policy under a task-completion oracle
 - [trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) — cross-system placement: uses AgeMem as a lower-confidence source-ingested trajectory-to-weights case
+- [A context-operation interface bounds the projections its policy can realize](../../notes/context-operation-interface-bounds-context-policy.md) — is-evidence-for: AgeMem learns a controller over a fixed set of six reported memory and context operations
 - [AgeMem paper](https://arxiv.org/html/2601.01885v1) — primary arXiv source
 - [AgeMem ingest](../../sources/agentic-memory-learning-unified-long-term-and-short-term.ingest.md) — source coverage: paper snapshot analysis and limitations
