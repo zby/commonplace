@@ -15,6 +15,18 @@
 
 Draft rewritten in place, now at `kb/articles/theory-building-inside-the-system.md` (~4,850 words; validation passes). All nine outline sections are present; the adjoiner is consumed (Part 1 into §3, Part 2 into §8) and deleted. Kept from the old draft: compounding, the three tests, both experiments, the six-system evidence shrunk to one paragraph plus HyperAgents. Renamed to `kb/articles/theory-building-inside-the-system.md` (pure relocation, redirect kept). Remaining before closing: a review pass under the articles contract, and the three open items below.
 
+## Status (2026-08-27, third pass): the Naur argument is its own article
+
+The operator judged the constructive article still too long and wanted the disagreement with Naur — where the pushback will land — separated from what results from it. Split again:
+
+- `kb/articles/what-bound-naurs-theory-to-programmers.md` (~2,600 words, new) — Naur's thesis both halves, what a theory is (Popper), why the binding held and what changed (with Naur's three tests), the self-witnessed repair episode, pre-registering the tests, doorway to the constructive article.
+- `kb/articles/theory-building-inside-the-system.md` (~2,100 words) — takes the Naur article as premise: operative arrangements, held theory → learned state, formalization and proof, the direction caveat, doorway to the reflective article.
+- `kb/articles/when-systems-learn-theories-about-themselves.md` unchanged in content; its companion links now distinguish the two.
+
+Reading order: Naur → theory building → when systems learn. Both new drafts validate clean.
+
+**Next article (not started):** where this project disagrees with Sutton and Javed — their position that context-state adaptation cannot replace continual weight learning (`kb/sources/sutton-javed-why-ai-models-stop-learning.ingest.md`, retained quotes present). The bitter-lesson article is the nearest existing text; the disagreement is not yet integrated anywhere in the cluster.
+
 ## Status (2026-08-27, later): split into two articles
 
 The operator decided to split by thesis at the reflective turn, after two external comment rounds that agreed on the seam and disagreed on where the self-witnessed episode goes (kept in the Naur article: it tests that article's claim on its own machinery, and this settles the first open item below).

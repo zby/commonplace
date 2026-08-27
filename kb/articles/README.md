@@ -15,7 +15,8 @@ Nothing published yet.
 ## In draft
 
 - [When systems learn theories about themselves](./when-systems-learn-theories-about-themselves.md) — treats theory-mediated, reflective, and self-improving as independent properties of a learning system, states the architecture and evidence tests for their intersection, reads three recent harnesses against them, and says what Commonplace can and cannot show.
-- [Theory building inside the system](./theory-building-inside-the-system.md) — reads Naur's theory-building view with an interpreter inside the system, says what makes retained natural-language theory operative and how it becomes learned state, places formalization and proof, and witnesses one repair failure on its own basis note.
+- [What bound Naur's theory to programmers](./what-bound-naurs-theory-to-programmers.md) — states Naur's thesis at full strength, locates the premise that bound program theory to humans, says what trained models changed and did not, and reports one repair failure on the article's own basis note.
+- [Theory building inside the system](./theory-building-inside-the-system.md) — given an interpreter that can apply retained theory, says what makes the theory operative rather than documentary, how it becomes learned state through theory-mediated learning, and what formalization moves rather than removes.
 
 ---
 
