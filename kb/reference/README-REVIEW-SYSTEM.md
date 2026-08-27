@@ -156,7 +156,11 @@ watched.
 
 - it reads current evidence review pairs across all models
 - it loads each review's rationale text from the evidence pair's result file (unavailable if the file is missing)
-- it skips findings whose gate changed since freshness baseline
+- it queues findings only when both the live note and live criterion match the
+  freshness baseline
+- it reports skipped stale WARN residue separately as `stale_pairs`, using
+  `note-changed` and `criterion-changed` reasons rather than presenting those
+  findings as current
 - it collapses model partitions to one current entry per `(note_path, criterion_path)`, choosing the latest baseline-backed warn review
 
 ## Interpreting review output

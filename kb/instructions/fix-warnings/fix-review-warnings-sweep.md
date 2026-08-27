@@ -19,9 +19,14 @@ Check the line count first. If more than 100 lines, tell the user to filter to s
 commonplace-warn-selector --json
 ```
 
-This returns notes sorted by actionable finding count descending, with full finding text and gate ids. The selector reads effective completed review pairs, and model partitions are collapsed so each `(note, gate)` contributes at most one current finding.
+This returns notes sorted by actionable finding count descending, with full
+finding text and gate ids. It collapses model partitions so each `(note, gate)`
+contributes at most one current review. Only note entries with `warns` belong in
+the work queue. A trailing `stale_pairs` entry is advisory: report those pairs
+as needing re-review and do not delegate fixes from their retained text.
 
-If the queue is empty, stop — no warn findings to fix.
+If there are no actionable note entries, stop — there are no current warn
+findings to fix, even if stale pairs were reported.
 
 ### 2. Delegate
 

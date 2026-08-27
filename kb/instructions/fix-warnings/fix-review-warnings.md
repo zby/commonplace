@@ -1,5 +1,5 @@
 ---
-description: Fix actionable findings from current baseline-backed warn review pairs for one note, classify fixes by strategy, and report results
+description: Fix actionable findings from baseline-backed warn reviews whose live inputs still match, then classify and report the fixes
 type: kb/types/instruction.md
 ---
 
@@ -11,18 +11,28 @@ If target is empty, ask which note to fix. If target is a name without path, sea
 
 ## What this is
 
-An editing pass that fixes actionable findings from prose and/or semantic reviews whose current baseline-backed outcome is `warn`. The reviews already contain specific recommendations — this instruction provides constraints on how to apply them and a reporting format that makes the fixes auditable.
+An editing pass that fixes actionable findings from prose and/or semantic
+reviews whose outcome is `warn` and whose live inputs match their freshness
+baseline. The reviews already contain specific recommendations. This
+instruction constrains how to apply them and gives the fixes an auditable report
+format.
 
 ## Prerequisites
 
-1. Run `commonplace-warn-selector --json {note-path}` to get actionable findings for this note from current baseline-backed `warn` review pairs across all models. This selector reads effective completed review pairs and collapses model partitions to one current entry per `(note, gate)`. If there are none, report "no warn findings" and stop.
+1. Run `commonplace-warn-selector --json {note-path}`. The selector returns
+   actionable findings whose live inputs match their baseline and collapses
+   model partitions to one current review per `(note, gate)`. Only note entries
+   with `warns` are actionable. A trailing `stale_pairs` entry is advisory:
+   report that those pairs need re-review and do not fix from their retained
+   text. If there are no actionable note entries, report "no current warn
+   findings" and stop.
 2. Read the target note in full.
 3. Read the corresponding review pair text from the warn_selector output. The DB-backed review text in the output is the authoritative source.
 4. Read `kb/instructions/fix-warnings/fix-strategy-taxonomy.md` for the named fix strategies.
 
 ## Procedure
 
-For each actionable finding from the current baseline-backed `warn` review pairs:
+For each actionable finding returned in a note entry:
 
 1. **Read the recommendation** in the review finding. It tells you what to fix and usually how.
 2. **Read enough context** around the flagged passage to understand the argument, the evidence relationship, and the flow.

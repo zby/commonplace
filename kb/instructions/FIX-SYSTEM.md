@@ -8,6 +8,12 @@ This system is experimental and opt-in, like the review system it depends on.
 
 **Warn finding.** An actionable finding extracted from a review pair whose canonical outcome is `warn`. The `commonplace-warn-selector` command parses these from the `### Findings` or `### Summary` sections of stored review text.
 
+**Stale WARN pair.** A baseline-backed `warn` review whose live note or
+criterion no longer matches that baseline. The selector excludes its findings
+from the fix queue and reports the pair under `stale_pairs` with
+`note-changed` and/or `criterion-changed`. Re-review it instead of fixing from
+the stale text.
+
 **Fix strategy.** A named pattern of review warning + appropriate fix, catalogued in `kb/instructions/fix-warnings/fix-strategy-taxonomy.md`. Agents classify each fix by strategy name to make fixes auditable and to grow the taxonomy over time.
 
 **Fix report.** A per-note markdown file in `kb/reports/fixes/{note-stem}.fix-report.md` that maps each warning to its disposition, the strategy used when a fix is applied, and the status (`fixed`, `rejected`, or `deferred`). `Rejected` means the finding was judged spurious or inapplicable and the note was deliberately left unchanged; it is distinct from postponing a finding that may be valid.
@@ -28,10 +34,12 @@ Reviews are never modified by fixes. The review system owns the assessment; the 
 
 `commonplace-warn-selector` builds the fix queue from the review DB.
 
-- Reads current baseline-backed reviews across all models
+- Reads effective baseline-backed reviews across all models
 - Selects findings from reviews whose canonical outcome is `warn`
 - Extracts actionable items from `### Findings` sections (lines starting with `- warn:`)
 - When a warn review has no `- warn:` items, falls back in order to the `### Summary` section, then the whole `### Findings` block, then the result-stripped review body
+- Compares both the live note and criterion with their freshness baseline;
+  stale pairs are advisory output, never queue entries
 - Collapses model partitions to one current entry per `(note_path, criterion_id)`, choosing the latest baseline-backed warn review
 
 CLI:

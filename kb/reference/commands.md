@@ -171,5 +171,6 @@ requested-mode scope, for inspection or piping into job creation.
 
 ### commonplace-warn-selector
 
-Extract actionable findings from effective `warn` review pairs. It is the
-entry point to the [fix system](../instructions/FIX-SYSTEM.md).
+Extract actionable findings from effective `warn` review pairs whose live inputs
+match their freshness baseline. Stale WARN pairs are reported separately. This
+command is the entry point to the [fix system](../instructions/FIX-SYSTEM.md).

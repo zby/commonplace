@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pytest
@@ -18,10 +19,10 @@ def write(path: Path, content: str) -> Path:
     return path
 
 
-def make_note(path: Path) -> Path:
+def make_note(path: Path, *, body: str = "Body.") -> Path:
     return write(
         path,
-        """---
+        f"""---
 description: Test note
 type: kb/types/note.md
 traits: []
@@ -29,7 +30,7 @@ traits: []
 
 # Test note
 
-Body.
+{body}
 """,
     )
 
@@ -125,9 +126,9 @@ def test_warn_selector_uses_criterion_snapshot_hash_without_git(tmp_path: Path) 
     db_path = repo / "kb" / "reports" / "commonplace-store.sqlite"
     seed_review(repo, db_path)
 
-    notes, stale_gates = warn_selector.scan_reviews(repo, db_path=db_path)
+    notes, stale_pairs = warn_selector.scan_reviews(repo, db_path=db_path)
 
-    assert stale_gates == []
+    assert stale_pairs == []
     assert len(notes) == 1
     assert notes[0].note_path == "kb/notes/sample.md"
     assert notes[0].warns[0].warn_text == "actionable finding"
@@ -142,10 +143,57 @@ def test_warn_selector_skips_warns_when_snapshot_gate_changed(tmp_path: Path) ->
     seed_review(repo, db_path)
     make_gate(gate, extra="\nChanged gate text.\n")
 
-    notes, stale_gates = warn_selector.scan_reviews(repo, db_path=db_path)
+    notes, stale_pairs = warn_selector.scan_reviews(repo, db_path=db_path)
 
     assert notes == []
-    assert stale_gates == [GATE_PATH]
+    assert [
+        (pair.note_path, pair.criterion_path, pair.model_partition, pair.reasons)
+        for pair in stale_pairs
+    ] == [
+        (
+            "kb/notes/sample.md",
+            GATE_PATH,
+            TEST_MODEL,
+            ("criterion-changed",),
+        )
+    ]
+
+
+def test_warn_selector_reports_note_changed_residue_outside_queue(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    note = make_note(repo / "kb" / "notes" / "sample.md")
+    make_gate(repo / GATE_PATH)
+    db_path = repo / "kb" / "reports" / "commonplace-store.sqlite"
+    seed_review(repo, db_path)
+    make_note(note, body="Changed body.")
+
+    notes, stale_pairs = warn_selector.scan_reviews(repo, db_path=db_path)
+
+    assert notes == []
+    assert len(stale_pairs) == 1
+    stale_pair = stale_pairs[0]
+    assert stale_pair.note_path == "kb/notes/sample.md"
+    assert stale_pair.criterion_path == GATE_PATH
+    assert stale_pair.model_partition == TEST_MODEL
+    assert stale_pair.reasons == ("note-changed",)
+    assert json.loads(warn_selector.render_json(notes, stale_pairs)) == [
+        {
+            "stale_pairs": [
+                {
+                    "note_path": "kb/notes/sample.md",
+                    "criterion_path": GATE_PATH,
+                    "model_partition": TEST_MODEL,
+                    "review_pair_id": stale_pair.review_pair_id,
+                    "reasons": ["note-changed"],
+                }
+            ]
+        }
+    ]
+    assert "stale warn review pair(s) skipped" in warn_selector.render_grouped(
+        notes,
+        stale_pairs,
+    )
 
 
 @pytest.mark.parametrize("outcome", ["pass", "fail"])
@@ -164,8 +212,9 @@ def test_warn_selector_skips_explicit_warns_from_non_warn_pairs(
         outcome=outcome,
         review_text=ACTIONABLE_WARN_REVIEW + f"\n## Result: {outcome.upper()}\n",
     )
+    make_note(repo / "kb" / "notes" / "sample.md", body="Changed body.")
 
-    notes, stale_gates = warn_selector.scan_reviews(repo, db_path=db_path)
+    notes, stale_pairs = warn_selector.scan_reviews(repo, db_path=db_path)
 
     assert notes == []
-    assert stale_gates == []
+    assert stale_pairs == []

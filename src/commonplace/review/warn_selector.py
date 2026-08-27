@@ -61,6 +61,15 @@ class NoteWarns:
         return len(self.warns)
 
 
+@dataclass(frozen=True)
+class StaleWarnPair:
+    note_path: str
+    criterion_path: str
+    model_partition: str
+    review_pair_id: int
+    reasons: tuple[str, ...]
+
+
 def _extract_section(text: str, pattern: re.Pattern[str]) -> str | None:
     match = pattern.search(text)
     if match is None:
@@ -92,10 +101,10 @@ def extract_warns(review_text: str, *, outcome: str) -> list[str]:
     return []
 
 
-def _current_gate_content_hash(criterion_path: Path) -> str | None:
-    if not criterion_path.is_file():
+def _current_artifact_content_hash(path: Path) -> str | None:
+    if not path.is_file():
         return None
-    return file_content_sha256(criterion_path)
+    return file_content_sha256(path)
 
 
 def _load_review_text(repo_root: Path, review: ReviewPairRow) -> str | None:
@@ -112,13 +121,14 @@ def scan_reviews(
     note_filter: set[str] | None = None,
     *,
     db_path: Path | None = None,
-) -> tuple[list[NoteWarns], list[str]]:
+) -> tuple[list[NoteWarns], list[StaleWarnPair]]:
     if db_path is None:
         db_path = prepare_review_db(repo_root)
 
     by_note: dict[str, NoteWarns] = {}
     selected_by_gate: dict[tuple[str, str], tuple[ReviewPairRow, str, list[str]]] = {}
-    stale_gates: set[str] = set()
+    stale_pairs: list[StaleWarnPair] = []
+    current_hashes: dict[str, str | None] = {}
     with connect(db_path) as conn:
         effective_reviews = load_effective_review_pair_map(
             conn,
@@ -130,21 +140,50 @@ def scan_reviews(
     for (note_path, criterion_path, model_partition), review in sorted(effective_reviews.items()):
         if note_filter and note_path not in note_filter:
             continue
-        freshness_baseline = freshness_baselines.get((note_path, criterion_path, model_partition))
-        if freshness_baseline is None:
-            stale_gates.add(criterion_path)
-            continue
-        current_criterion_hash = _current_gate_content_hash(repo_root / criterion_path)
-        if current_criterion_hash is None or current_criterion_hash != freshness_baseline.baseline_criterion_hash:
-            stale_gates.add(criterion_path)
-            continue
-        if review.outcome is None:
+        if review.outcome != "warn":
             continue
         review_text = _load_review_text(repo_root, review)
         if review_text is None:
             continue
         warns = extract_warns(review_text, outcome=review.outcome)
         if not warns:
+            continue
+
+        freshness_baseline = freshness_baselines.get((note_path, criterion_path, model_partition))
+        if freshness_baseline is None:
+            reasons = ("missing-baseline",)
+        else:
+            for artifact_path in (note_path, criterion_path):
+                if artifact_path not in current_hashes:
+                    current_hashes[artifact_path] = _current_artifact_content_hash(
+                        repo_root / artifact_path
+                    )
+            reasons = tuple(
+                reason
+                for reason, current_hash, baseline_hash in (
+                    (
+                        "note-changed",
+                        current_hashes[note_path],
+                        freshness_baseline.baseline_note_hash,
+                    ),
+                    (
+                        "criterion-changed",
+                        current_hashes[criterion_path],
+                        freshness_baseline.baseline_criterion_hash,
+                    ),
+                )
+                if current_hash != baseline_hash
+            )
+        if reasons:
+            stale_pairs.append(
+                StaleWarnPair(
+                    note_path=note_path,
+                    criterion_path=criterion_path,
+                    model_partition=model_partition,
+                    review_pair_id=review.review_pair_id,
+                    reasons=reasons,
+                )
+            )
             continue
 
         gate_key = (note_path, criterion_path)
@@ -173,10 +212,18 @@ def scan_reviews(
             )
 
     notes = sorted(by_note.values(), key=lambda nw: (-nw.count, nw.note_path))
-    return notes, sorted(stale_gates)
+    return notes, sorted(
+        stale_pairs,
+        key=lambda pair: (
+            pair.note_path,
+            pair.criterion_path,
+            pair.model_partition,
+            pair.review_pair_id,
+        ),
+    )
 
 
-def render_json(notes: list[NoteWarns], stale_gates: list[str]) -> str:
+def render_json(notes: list[NoteWarns], stale_pairs: list[StaleWarnPair]) -> str:
     items = []
     for nw in notes:
         items.append(
@@ -196,17 +243,33 @@ def render_json(notes: list[NoteWarns], stale_gates: list[str]) -> str:
                 ],
             }
         )
-    if stale_gates:
-        items.append({"stale_gates": stale_gates})
+    if stale_pairs:
+        items.append(
+            {
+                "stale_pairs": [
+                    {
+                        "note_path": pair.note_path,
+                        "criterion_path": pair.criterion_path,
+                        "model_partition": pair.model_partition,
+                        "review_pair_id": pair.review_pair_id,
+                        "reasons": list(pair.reasons),
+                    }
+                    for pair in stale_pairs
+                ]
+            }
+        )
     return json.dumps(items, indent=2)
 
 
-def render_grouped(notes: list[NoteWarns], stale_gates: list[str]) -> str:
+def render_grouped(notes: list[NoteWarns], stale_pairs: list[StaleWarnPair]) -> str:
     lines: list[str] = []
-    if stale_gates:
-        lines.append(f"WARNING: {len(stale_gates)} gate(s) changed since last review — findings skipped:")
-        for g in stale_gates:
-            lines.append(f"  - {g}")
+    if stale_pairs:
+        lines.append(f"WARNING: {len(stale_pairs)} stale warn review pair(s) skipped:")
+        for pair in stale_pairs:
+            lines.append(
+                f"  - {pair.note_path} :: {pair.criterion_path} "
+                f"[{pair.model_partition}] ({', '.join(pair.reasons)})"
+            )
         lines.append("")
     for nw in notes:
         lines.append(f"{nw.note_path} ({nw.count} warn findings)")
