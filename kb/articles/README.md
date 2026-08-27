@@ -24,7 +24,7 @@ Four drafts form one sequence and are best read in this order: the disagreement 
 Two earlier drafts stand on their own and are cited by the sequence:
 
 - [The Bitter Lesson does not require everything to live in weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) — separates Sutton's 2019 search-and-learning claim from a weights-only extrapolation, and names credit assignment, evaluation, and decomposition revision as the open problems for learned artifacts.
-- [What makes human-inclusive self-revision non-trivial](./moving-revision-decisions-into-the-automatic-system.md) — develops the declared system boundary with maintainers inside it, the audit of Commonplace's operating paths, and the admission machinery through which agent-proposed changes are installed.
+- [Moving revision decisions into the automatic system](./moving-revision-decisions-into-the-automatic-system.md) — treats human-inclusive self-revision as the cheap case, states the six things a revision decision needs represented before machinery can make it, and reads Commonplace's six-path audit for which decisions could move and the two that cannot yet.
 
 ---
 
