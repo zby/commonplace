@@ -1,5 +1,5 @@
 ---
-description: "Accepted decision that a note may cite at most five distinct tracked sources without a paired verified quotation, enforced as a WARN validator rule, while the three link-following review criteria drop their reader-side caps"
+description: "Accepted decision that a note may cite at most five distinct tracked sources without a paired verified quotation, enforced as a FAIL validator rule, while the three link-following review criteria drop their reader-side caps"
 type: ../types/adr.md
 tags: []
 status: accepted
@@ -51,8 +51,10 @@ note*.
    artifacts never count. A linked note has passed its own grounding review,
    and the citing note owes it representation, not re-grounding.
 2. **Enforcement is a `commonplace-validate` type rule on notes, severity
-   WARN.** FAIL is deferred until the eight notes currently over the bound are
-   conformed and the two authoring conventions named below exist.
+   FAIL.** It shipped as WARN while the eight notes then over the bound were
+   conformed and the two authoring conventions named below were written into
+   the notes collection contract; both were done the same day, and the rule
+   fails from then on.
 3. **Quote verification is confined for ingest targets.** A verbatim quotation
    aimed at an `*.ingest.md` must occur in that ingest's `## Quotes` section,
    not anywhere in the file. Otherwise the exemption could be earned by quoting
@@ -112,9 +114,11 @@ combination semantics the review model does not have.
 **N = 3.** Rejected: it would put eighteen notes over the bound, against eight
 at five, without a corresponding gain in what a second checker can redo.
 
-**FAIL now.** Rejected: the eight over-bound notes are not yet conformed, and
-two of them cite sources only from a trailer or a table cell, where there is no
-hosting sentence for a quotation.
+**WARN indefinitely.** Rejected: a bound that only warns is a visible
+pressure, not a contract, and the trial showed conformance is cheap. WARN was
+kept only until the eight over-bound notes were conformed, because two of them
+cited sources only from a trailer or a table cell, where there was no hosting
+sentence for a quotation.
 
 **Per-link `(snapshot required)` semantics.** Rejected because a source could
 then be both discharged by a quotation at one link and snapshot-required at
@@ -129,11 +133,11 @@ conform numerically, so nothing yet forces the exemption.
 notes, leaving the majority of the corpus only partly checked and making the
 note-link exemption's precondition false.
 
-Free choices left open: whether `kb/articles/` gets its own N or an exemption;
-what triggers the flip from WARN to FAIL; and the two authoring conventions the
-flip waits on — that a source cited as evidence is cited in the body rather
-than only in the trailer, and that a casebook table hosts its retained evidence
-in an accompanying prose block.
+Free choices resolved: the two authoring conventions — that a source cited as
+evidence is cited in the body rather than only in the trailer, and that a
+casebook table hosts its retained evidence in an accompanying prose block —
+live in the notes collection contract. Left open: whether `kb/articles/` gets
+its own N or an exemption.
 
 ## Consequences
 
@@ -145,7 +149,8 @@ review rather than expensive.
 
 Authors pay what the review used to absorb. A note over the bound must quote or
 split, and every quoted passage lengthens the note, so the remedy spends
-against the co-loading bound. Eight notes warn immediately.
+against the co-loading bound. The eight notes over the bound at adoption were
+conformed from already-retained quotes at 2–10% word growth.
 
 Two risks stay. Occurrence is not representativeness: a validated quotation
 establishes that the words appear in the source, not that they mean there what

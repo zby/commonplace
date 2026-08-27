@@ -1081,7 +1081,7 @@ def validate_unquoted_sources(
 
     if len(unquoted) > MAX_UNQUOTED_SOURCES:
         names = ", ".join(target.name for target in unquoted)
-        results.warns.append(
+        results.fails.append(
             f"unquoted sources: {len(unquoted)} distinct tracked sources cited "
             f"without a verified verbatim quote (limit {MAX_UNQUOTED_SOURCES}); "
             f"{_UNQUOTED_SOURCES_FIX_HINT}: {names}"

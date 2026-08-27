@@ -87,10 +87,10 @@ def test_six_unquoted_tracked_sources_warn(tmp_path: Path) -> None:
 
     results = validate_note(path, repo_root=tmp_path)
 
-    warns = [warn for warn in results.warns if "unquoted sources" in warn]
-    assert len(warns) == 1
-    assert "6 distinct tracked sources" in warns[0]
-    assert all(f"{slug}.ingest.md" in warns[0] for slug in slugs)
+    fails = [fail for fail in results.fails if "unquoted sources" in fail]
+    assert len(fails) == 1
+    assert "6 distinct tracked sources" in fails[0]
+    assert all(f"{slug}.ingest.md" in fails[0] for slug in slugs)
 
 
 def test_one_verified_quote_brings_the_note_under_the_bound(tmp_path: Path) -> None:
@@ -109,7 +109,7 @@ def test_one_verified_quote_brings_the_note_under_the_bound(tmp_path: Path) -> N
 
     results = validate_note(path, repo_root=tmp_path)
 
-    assert not [warn for warn in results.warns if "unquoted sources" in warn]
+    assert not [fail for fail in results.fails if "unquoted sources" in fail]
     assert any(
         "unquoted sources: 5 of 6 tracked sources need a full read (limit 5)" in line
         for line in results.passes
@@ -132,10 +132,10 @@ def test_snapshot_required_source_counts_even_when_quoted(tmp_path: Path) -> Non
 
     results = validate_note(path, repo_root=tmp_path)
 
-    warns = [warn for warn in results.warns if "unquoted sources" in warn]
-    assert len(warns) == 1
-    assert "6 distinct tracked sources" in warns[0]
-    assert "src-1.ingest.md" in warns[0]
+    fails = [fail for fail in results.fails if "unquoted sources" in fail]
+    assert len(fails) == 1
+    assert "6 distinct tracked sources" in fails[0]
+    assert "src-1.ingest.md" in fails[0]
 
 
 def test_note_citing_no_tracked_source_says_nothing(tmp_path: Path) -> None:
@@ -177,6 +177,6 @@ def test_quote_matching_only_ingest_analysis_does_not_discharge(tmp_path: Path) 
 
     results = validate_note(path, repo_root=tmp_path)
 
-    warns = [warn for warn in results.warns if "unquoted sources" in warn]
-    assert len(warns) == 1
-    assert "6 distinct tracked sources" in warns[0]
+    fails = [fail for fail in results.fails if "unquoted sources" in fail]
+    assert len(fails) == 1
+    assert "6 distinct tracked sources" in fails[0]
