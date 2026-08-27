@@ -14,7 +14,7 @@ sources, rename a record, or mint a parallel ID namespace.
 | Run / result ID | `AAS-20260820-CCDW-01` |
 | System identifier | Claude Code **dynamic workflows** — the Workflow orchestration facility inside the Claude Code harness (model-authored JavaScript orchestrator over sub-agents) |
 | Orchestrating instruction | `analyse-agentic-system` (candidate under trial) |
-| Staging identity | `kb/work/multistage/multistage-write-analyse-agentic-system-20260820/trials/cc-dynamic-workflows/` |
+| Staging identity | `kb/work/analyse-agentic-system/trials/cc-dynamic-workflows/` |
 | Publication target | **none authorized for this run** — publication blocker recorded (see result §11) |
 | Analysis cutoff | 2026-06-03 (capture date of `SRC-1`) |
 | Run date | 2026-08-20 |

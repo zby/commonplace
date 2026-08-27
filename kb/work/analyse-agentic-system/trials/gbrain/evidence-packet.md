@@ -21,7 +21,7 @@ Lens workers consume this packet plus targeted reads inside the frozen boundary.
 
 - Run/result ID: `RUN-GBRAIN-20260820`
 - Target system: GBrain (github.com/garrytan/gbrain)
-- Staging identity: `kb/work/multistage/multistage-write-analyse-agentic-system-20260820/trials/gbrain/`
+- Staging identity: `kb/work/analyse-agentic-system/trials/gbrain/`
 - Analysis cutoff: 2026-08-20 (inspection date); frozen revision below.
 
 ## 2. Frozen revision

@@ -10,7 +10,7 @@ change the revision, and must not create their own ID namespace.
 - Run/result ID: `AGS-2026-08-20-SWAMP-01`
 - Target system: Swamp (`github.com/swamp-club/swamp`), the `swamp` CLI
 - Analysis cutoff: 2026-08-20
-- Staging identity: `kb/work/multistage/multistage-write-analyse-agentic-system-20260820/trials/swamp/`
+- Staging identity: `kb/work/analyse-agentic-system/trials/swamp/`
 
 ## Boundary declaration
 

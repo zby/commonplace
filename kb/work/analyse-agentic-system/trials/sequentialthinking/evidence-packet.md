@@ -12,7 +12,7 @@ reacquire, refresh, or widen sources, or mint a canonical ID.
 |---|---|
 | Run / result ID | `AGS-20260821-sequentialthinking` |
 | Instruction | `analyse-agentic-system` (candidate under trial) |
-| Staging identity | `kb/work/multistage/multistage-write-analyse-agentic-system-20260820/trials/sequentialthinking/` |
+| Staging identity | `kb/work/analyse-agentic-system/trials/sequentialthinking/` |
 | Publication target | **None authorized** — see `RESULT.md` §11 publication blocker |
 | Analysis cutoff | 2026-08-21 (inspection date) |
 | Physical layout | package of files; `RESULT.md` is the canonical index and names one canonical location per logical record |

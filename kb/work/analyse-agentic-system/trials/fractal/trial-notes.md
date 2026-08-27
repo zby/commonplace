@@ -2,7 +2,7 @@
 
 **Trial apparatus. Not part of the instruction's logical result.**
 
-Candidate: `kb/work/multistage/multistage-write-analyse-agentic-system-20260820/candidate.md`
+Candidate: `kb/work/analyse-agentic-system/candidate.md`
 Target: Fractal, `github.com/Trampoline-AI/fractal`, checkout at `5954a07d464feeaf6c311a9fa5ca2e54200a6794`
 Run ID: `AAS-2026-08-20-fractal-01`
 Executed: 2026-08-20, cold (no prior Commonplace coverage of this system consulted; nothing under

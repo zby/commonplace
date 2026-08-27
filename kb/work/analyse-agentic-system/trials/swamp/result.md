@@ -8,7 +8,7 @@ plus `evidence-packet.md` (records 1–3 in full). IDs resolve across both.
 ## 1. Run / staging identity
 
 - **Run/result ID:** `AGS-2026-08-20-SWAMP-01`
-- **Staging identity:** `kb/work/multistage/multistage-write-analyse-agentic-system-20260820/trials/swamp/`
+- **Staging identity:** `kb/work/analyse-agentic-system/trials/swamp/`
 - **Publication:** withheld — see record 11.
 
 ## 2. System boundary, revision, evidence tier
@@ -733,7 +733,7 @@ so there is no contract for it to check.
 ### Report
 
 - **Result identity and location:** `AGS-2026-08-20-SWAMP-01`, retained at
-  `kb/work/multistage/multistage-write-analyse-agentic-system-20260820/trials/swamp/`
+  `kb/work/analyse-agentic-system/trials/swamp/`
   (`result.md`, `evidence-packet.md`, `canonical-records.md`).
 - **Boundary / revision / tier:** swamp as an agent operating layer, external
   harness and backend excluded; `cf38c4e`; `code-grounded`.

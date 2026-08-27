@@ -33,7 +33,7 @@ Supporting artifact (not a logical record): `capture-live-session-tool-roster.md
 |---|---|
 | Run / result ID | `AAS-20260820-CCDW-01` |
 | System | Claude Code **dynamic workflows** — the Workflow orchestration facility inside the Claude Code harness |
-| Staging identity | `kb/work/multistage/multistage-write-analyse-agentic-system-20260820/trials/cc-dynamic-workflows/` |
+| Staging identity | `kb/work/analyse-agentic-system/trials/cc-dynamic-workflows/` |
 | Publication target | **none authorized** — result retained under the staging identity; publication blocker `PB-1` in §11 |
 | Boundary | **subsystem-only** (`evidence-packet.md` §3) |
 | Revision / capture | `SRC-1` captured **2026-06-03**; analysis cutoff **2026-06-03** |
@@ -382,7 +382,7 @@ lenses ran.
 | Field | Value |
 |---|---|
 | Result identity | `AAS-20260820-CCDW-01` |
-| Location | `kb/work/multistage/multistage-write-analyse-agentic-system-20260820/trials/cc-dynamic-workflows/` (staging identity; entry point `result.md`) |
+| Location | `kb/work/analyse-agentic-system/trials/cc-dynamic-workflows/` (staging identity; entry point `result.md`) |
 | Boundary | Claude Code dynamic workflows — **subsystem-only** |
 | Revision / capture | `SRC-1`, captured 2026-06-03; cutoff 2026-06-03 |
 | Evidence tier | `doc-grounded` |
@@ -439,7 +439,7 @@ to "applicable generic validation plus the semantic checklist"; the semantic che
 There is no authorized publication target for this run, and no existing collection contract
 in reach can represent an eleven-record, multi-lens, ID-reconciled system analysis. Per the
 step-9 rule, the complete logical result is **retained under the run's staging identity**
-(`kb/work/multistage/multistage-write-analyse-agentic-system-20260820/trials/cc-dynamic-workflows/`) and
+(`kb/work/analyse-agentic-system/trials/cc-dynamic-workflows/`) and
 the blocker is reported here. No collection contract was improvised and the agent-memory
 review schema was not reused.
 

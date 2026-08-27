@@ -2,7 +2,7 @@
 
 **Trial apparatus. This file sits OUTSIDE the instruction's own logical result.**
 
-- Trial: cold execution of `kb/work/multistage/multistage-write-analyse-agentic-system-20260820/candidate.md`
+- Trial: cold execution of `kb/work/analyse-agentic-system/candidate.md`
 - Target: Claude Code dynamic workflows
 - Run ID minted: `AAS-20260820-CCDW-01`
 - Date: 2026-08-20

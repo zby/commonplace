@@ -18,7 +18,7 @@ across all of them.
 ## Record 1 — Run and staging identity
 
 - **Run/result ID:** `AAS-2026-08-20-fractal-01`
-- **Staging identity:** `kb/work/multistage/multistage-write-analyse-agentic-system-20260820/trials/fractal/`
+- **Staging identity:** `kb/work/analyse-agentic-system/trials/fractal/`
 - **Status:** retained under the staging identity. **Not published** — see record 11.
 - **Consumer:** an analysing agent or maintainer. **Force:** analysis, not endorsement; nothing here
   accepts Fractal's own claims.
@@ -395,7 +395,7 @@ validation path. Verification therefore rests on 11.1 and 11.2.
 
 | Blocker | Kind | Detail |
 |---|---|---|
-| **BLK-1 — no authorized target contract** | publication blocker | This run was given no authorized publication target, and no existing collection contract was identified that can represent an eleven-record agentic-system analysis result. Per step 9 the logical result is **retained under the staging identity** `kb/work/multistage/multistage-write-analyse-agentic-system-20260820/trials/fractal/`. No collection contract was improvised and the agent-memory review schema was **not** reused. |
+| **BLK-1 — no authorized target contract** | publication blocker | This run was given no authorized publication target, and no existing collection contract was identified that can represent an eleven-record agentic-system analysis result. Per step 9 the logical result is **retained under the staging identity** `kb/work/analyse-agentic-system/trials/fractal/`. No collection contract was improvised and the agent-memory review schema was **not** reused. |
 
 **No other blockers.** No logical record is missing (all eleven are present or pointed to from the map
 at the top). No ID collisions. No unsupported material claim: every claim carries a `SRC-*` anchor and
@@ -409,7 +409,7 @@ experiment — LIM-4; unresolved applicability — none (LIM-10); conflicting ev
 ### 11.5 Report
 
 - **Result identity:** `AAS-2026-08-20-fractal-01`
-- **Location:** `kb/work/multistage/multistage-write-analyse-agentic-system-20260820/trials/fractal/` (staging;
+- **Location:** `kb/work/analyse-agentic-system/trials/fractal/` (staging;
   five physical parts, one identity)
 - **Boundary:** Fractal's host layer at `5954a07d`; **subsystem-only** with respect to deployed
   agentic behavior — `predict-rlm` and sbx excluded and uninspected

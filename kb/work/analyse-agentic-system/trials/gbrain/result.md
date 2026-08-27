@@ -33,7 +33,7 @@ Trial apparatus (outside the instruction's result): `trial-notes.md`.
   depends on model calls plus surrounding machinery: a durable job queue with an LLM tool loop
   (`gbrain agent run`), an autonomous nightly maintenance cycle, a synthesis engine, an MCP tool
   server, and a shipped skillpack that instructs a host agent platform.
-- **Staging identity:** `kb/work/multistage/multistage-write-analyse-agentic-system-20260820/trials/gbrain/`
+- **Staging identity:** `kb/work/analyse-agentic-system/trials/gbrain/`
 - **Publication:** none. See §11.
 
 ## 2. Boundary, revision, evidence tier
@@ -598,7 +598,7 @@ and are reported above. No schema or parser was changed to manufacture a validat
 **Publication blocker — no authorized target contract.** There is no authorized target for this run
 whose existing contract can represent this result. Per step 9's publication rule the complete logical
 result is **retained under the run's staging identity**
-(`kb/work/multistage/multistage-write-analyse-agentic-system-20260820/trials/gbrain/`) and the blocker is
+(`kb/work/analyse-agentic-system/trials/gbrain/`) and the blocker is
 recorded here rather than worked around. No collection contract was improvised and the agent-memory
 review schema was not reused.
 
@@ -612,7 +612,7 @@ one was unavailable, which is recorded as a blocker rather than reported as a pa
 ### 11.5 Report
 
 - **Result identity:** `RUN-GBRAIN-20260820`
-- **Location:** `kb/work/multistage/multistage-write-analyse-agentic-system-20260820/trials/gbrain/` (six files)
+- **Location:** `kb/work/analyse-agentic-system/trials/gbrain/` (six files)
 - **Boundary:** GBrain repository, declared by function; **subsystem-only w.r.t. the advertised agent
   loop**, whose other half runs in an out-of-boundary host platform
 - **Revision:** `9a0bae8d62cdd1e0dd6655e24e082fe6c69c5dac` (`VERSION` 0.42.25.0), clean tree

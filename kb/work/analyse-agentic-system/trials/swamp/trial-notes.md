@@ -4,7 +4,7 @@ Trial apparatus. Not part of the instruction's logical result. Records friction
 points, lens-applicability reasoning, and what could not be done.
 
 Run: `AGS-2026-08-20-SWAMP-01`. Candidate:
-`kb/work/multistage/multistage-write-analyse-agentic-system-20260820/candidate.md`.
+`kb/work/analyse-agentic-system/candidate.md`.
 Target: `github.com/swamp-club/swamp` at `cf38c4ec1068613bb7d3432eb74a1ad854156dd7`.
 
 ## Lens-applicability reasoning

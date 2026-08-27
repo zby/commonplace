@@ -36,7 +36,7 @@ Trial apparatus, **outside** this logical result: `trial-notes.md`.
 | Field | Value |
 |---|---|
 | Run / result ID | **`AGS-20260821-sequentialthinking`** |
-| Staging identity | `kb/work/multistage/multistage-write-analyse-agentic-system-20260820/trials/sequentialthinking/` |
+| Staging identity | `kb/work/analyse-agentic-system/trials/sequentialthinking/` |
 | Publication target | **none authorized** — retained under the staging identity; blocker recorded in §11 |
 | Analysis cutoff | 2026-08-21 |
 | Lens execution | fresh worker contexts, one per lens, each consuming only the frozen evidence packet, the runtime account, the dispositions, and read-only access to the frozen boundary |
@@ -297,7 +297,7 @@ expanded into a claim that no informal or unobserved route exists anywhere.
 ### 11.1 Result identity and location
 
 Result `AGS-20260821-sequentialthinking`, retained under the staging identity
-`kb/work/multistage/multistage-write-analyse-agentic-system-20260820/trials/sequentialthinking/` as a
+`kb/work/analyse-agentic-system/trials/sequentialthinking/` as a
 seven-file package indexed by §0 of this file.
 
 Boundary, revision, and tier: §2. Both lens dispositions: `lens-dispositions.md` — memory/context

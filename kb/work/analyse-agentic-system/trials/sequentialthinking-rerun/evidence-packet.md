@@ -10,7 +10,7 @@ Canonical location for logical records 1–5 of the emitted result (identity; bo
 |---|---|
 | run/result ID | `AGS-2026-08-21-SEQTHINK` |
 | system identifier | `sequentialthinking` MCP server (`@modelcontextprotocol/server-sequential-thinking`), subtree `src/sequentialthinking` of github.com/modelcontextprotocol/servers |
-| staging identity | `kb/work/multistage/multistage-write-analyse-agentic-system-20260820/trials/sequentialthinking-rerun/` |
+| staging identity | `kb/work/analyse-agentic-system/trials/sequentialthinking-rerun/` |
 | publication target | none authorized for this run — logical result retained under the staging identity (see record 11) |
 | analysis cutoff | 2026-08-21, against frozen revision `2ecb382a02d7921511180dfbadcef24eb66a052f` |
 

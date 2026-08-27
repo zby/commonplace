@@ -173,7 +173,7 @@ The README documents the tool as `sequential_thinking`; the dispatch predicate m
 
 ### 11.1 Result identity and location
 
-Result `AGS-2026-08-21-SEQTHINK`, retained under the run's staging identity at `kb/work/multistage/multistage-write-analyse-agentic-system-20260820/trials/sequentialthinking-rerun/`, comprising `result.md` (this file, canonical entry point), `evidence-packet.md`, `lens-scoping.md`, `lens-memory.md`, `lens-epistemic.md`. Boundary: `src/sequentialthinking` as a complete artifact with a partial loop. Revision `2ecb382a02d7921511180dfbadcef24eb66a052f`. Tier: `code-grounded`. Memory lens depth: **brief**. Epistemic lens depth: **full**.
+Result `AGS-2026-08-21-SEQTHINK`, retained under the run's staging identity at `kb/work/analyse-agentic-system/trials/sequentialthinking-rerun/`, comprising `result.md` (this file, canonical entry point), `evidence-packet.md`, `lens-scoping.md`, `lens-memory.md`, `lens-epistemic.md`. Boundary: `src/sequentialthinking` as a complete artifact with a partial loop. Revision `2ecb382a02d7921511180dfbadcef24eb66a052f`. Tier: `code-grounded`. Memory lens depth: **brief**. Epistemic lens depth: **full**.
 
 ### 11.2 Structural verification (step 10.1)
 
