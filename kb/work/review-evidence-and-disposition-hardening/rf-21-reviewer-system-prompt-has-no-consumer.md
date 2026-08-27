@@ -1,6 +1,6 @@
 # RF-21 — The declared reviewer system prompt has no registered consumer
 
-**State:** open  
+**State:** fixed 2026-08-27
 **Repair shape:** dead-code removal or explicit wiring  
 **Severity:** low
 
@@ -37,3 +37,14 @@ accept and record it, test delivery, and include its version in judging identity
 - There is one authoritative reviewer-contract path.
 - Every retained instruction has a registered consumer.
 - A test fails when the documented dispatch path stops delivering that contract.
+
+## Resolution
+
+The generated `prompt.md` was already the sole worker contract selected by
+ADR 067 and the binding batch procedure, so the unused
+`REVIEW_RUNNER_SYSTEM_PROMPT` constant and its false consumer claim were
+deleted. The renderer module now describes only scaffolding it actually emits.
+The existing worker-contract test requires fresh-context dispatch with exactly
+`Read {prompt_path} and follow it exactly.`, while review-protocol tests require
+the generated prompt to carry its reading scope, write isolation, destination,
+and result protocol.

@@ -7,9 +7,9 @@ creation. Conformance criteria retain a short mechanical wrapper explaining
 how to apply the embedded type spec or COLLECTION.md contract.
 
 Freshness boundary: the freshness baseline hashes only the note and criterion
-texts. Everything this module renders around them — the runner system prompt,
-reading scope, output contract, templates, the conformance wrappers — is
-outside the freshness hash, so editing it does NOT invalidate baseline
+texts. Everything this module renders around them — the reading scope, output
+contract, templates, and conformance wrappers — remains outside the freshness
+hash, so editing it does NOT invalidate baseline
 assays. Keep this layer mechanical (how to read inputs and emit a result);
 judgment-bearing criteria must live in criterion files, where the hash sees
 them. In particular a conformance wrapper may say how to apply a type spec or
@@ -81,17 +81,6 @@ def _collection_conformance_wrapper_lines() -> tuple[str, ...]:
         "Structural checks (frontmatter fields, schema conformance) are the deterministic validator's job; do not re-check them here.",
         "The note's conformance to its type spec is the type-conformance pair's job; judge only what the collection contract asks beyond the type contract.",
     )
-
-
-# Used as the reviewer system prompt; the task prompt rendered below carries
-# the per-job specifics.
-REVIEW_RUNNER_SYSTEM_PROMPT = (
-    "Your goal is to write review artifacts for the requested assays. "
-    "The task prompt provides the exact notes, criteria, result contract, and output destination. "
-    "Stay within the target note, provided criteria, and only the linked neighborhood that an active criterion requires. "
-    "Do not do broad repository exploration or search for alternate review criteria. "
-    "Treat helper scripts as command interfaces; inspect workflow files or script source only if a command fails and you need to debug it."
-)
 
 
 @dataclass(frozen=True)
