@@ -55,3 +55,4 @@ Relevant Notes:
 - [a functioning KB needs a workshop layer not just a library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — enables: workshops are where longer synthesized views live
 - [evolving understanding needs holistic rewrite, not composition](./evolving-understanding-needs-holistic-rewrite-not-composition.md) — tension: some consumers need narrative coherence; resolved by placing narratives in workshops
 - [a knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: title-level scanning for breadth, full loading for depth
+- [A note is an atomic step relative to the check that reads it](./a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md) — contrasts: a second, independent size bound — one checkable inference sized to the checker's pass — that a single-claim note over many sources can fail
