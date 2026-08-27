@@ -15,6 +15,14 @@
 
 Draft rewritten in place, now at `kb/articles/theory-building-inside-the-system.md` (~4,850 words; validation passes). All nine outline sections are present; the adjoiner is consumed (Part 1 into §3, Part 2 into §8) and deleted. Kept from the old draft: compounding, the three tests, both experiments, the six-system evidence shrunk to one paragraph plus HyperAgents. Renamed to `kb/articles/theory-building-inside-the-system.md` (pure relocation, redirect kept). Remaining before closing: a review pass under the articles contract, and the three open items below.
 
+## Status (2026-08-27, full passes)
+
+`run-full-improvement-pass-on-note.md` was run on four of the six articles (session limit stopped it before `when-systems-learn-theories-about-themselves` and `continual-learning-outside-the-weights`). Method coverage was complete for all four. Results: `theory-building`, `what-makes-human-inclusive`, and `the-bitter-lesson` each reached closing and were **handed back** (live text rolled back; each pass's `final.txt` edit set is retained under `kb/reports/full-pass/<name>/` and judged to strengthen or preserve the update, so it is reusable once the author decision is made). Author decisions pending: theory-building — whether "inside the system" includes the maintainer and admission workflow; human-inclusive — whether a represented authorization path is *necessary* or a governance ideal (and whether "broad" addressability is evidentially settled); bitter-lesson — the Memento-Skills acceptance-mechanism cell.
+
+`what-bound-naurs-theory-to-programmers` ended `revise` and was **accepted with candidate claim 2** (packet `20260827T080417Z-76a3c9` resolved). The article now declares both readings of "formulated criteria" and takes the rubric reading with textual reasons, concedes that under the formal reading nothing has come apart, bounds the bridge premise to the programs Naur describes (the Neocognitron predates 1985), answers the independent-bearer objection by routing it to the three tests, downgrades the LLM sentence to "the same formal kind," and reframes the episode as a failure of Naur's *third* test with the purpose present in the inputs (the pass had defeated "in none of its inputs"). The four citers in the brief's scope (README, theory-building intro, when-systems-learn, continual-learning) were reconciled to "candidate holder that Naur's tests must vet."
+
+Next: run the two missing passes; decide the three hand-back questions and reapply the retained `final.txt` edits.
+
 ## Status (2026-08-27, third pass): the Naur argument is its own article
 
 The operator judged the constructive article still too long and wanted the disagreement with Naur — where the pushback will land — separated from what results from it. Split again:
