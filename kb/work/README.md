@@ -6,7 +6,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [atomic-step-adoption](./atomic-step-adoption/README.md) — ADR 082 decided: five unquoted sources per note (validator WARN), three link-following gates uncapped with a head-first rule, ADR 079 superseded; eight-note trial passed; remaining: archive the proposal, close review-attention-price, conform the eight notes, flip to FAIL
 - [multistage-write-prototype-standing-revision-cost-20260827](./multistage/multistage-write-prototype-standing-revision-cost-20260827/README.md) — promoted `prototype-standing-is-revision-cost-binding-plus-lost-investment.md` (standing = external binding plus lost investment; form and acceptance separate); retained for three handoffs: fold the correspondence branch into `formal-systems-assess-…`, the defense-portfolio link question, and the pre-formal note's binding-only definition wording
 - [full-pass-instruction-coherence-audit](./full-pass-instruction-coherence-audit/README.md) — repaired claim-change authority, phase/guard recovery, and closing completion after one instrumented keep exposed a schema-valid final capture with an edit-introduced parsing failure; scenario coverage remains incomplete
 - [multistage-skill-coherence-audit](./multistage-skill-coherence-audit/README.md) — does cp-skill-write-multistage share the full pass's repair, guard, and state defects; eight findings (four edit-mode-only), checked against the finished knowledge-access run; repair deferred
