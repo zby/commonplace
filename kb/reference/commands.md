@@ -120,7 +120,9 @@ List queued, completed, or failed review jobs and optionally emit JSON.
 ### commonplace-finalize-review-job
 
 Finalize one job-owned output all-or-nothing, record worker provenance, write
-pair results, and advance their freshness baselines.
+pair results, advance their freshness baselines, and return the committed
+per-pair outcomes and result paths. Unsuccessful finalization returns an empty
+`pairs` array.
 
 ### commonplace-freshness-status
 

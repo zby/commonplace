@@ -96,7 +96,7 @@ class FinalizeReviewJobOutcome:
     completed: bool
     state_changed: bool
     review_job_id: int
-    completed_pair_count: int = 0
+    pairs: tuple[ReviewPairRow, ...] = ()
     failure_reason: str | None = None
     job_status: str | None = None
     reason: str | None = None
@@ -107,27 +107,31 @@ class FinalizeReviewJobOutcome:
     def exit_code(self) -> int:
         return 0 if self.completed else 1
 
+    @property
+    def completed_pair_count(self) -> int:
+        return len(self.pairs)
+
     def to_payload(self) -> dict[str, object]:
+        pair_payloads = [
+            pair.to_payload()
+            for pair in sorted(self.pairs, key=lambda pair: pair.pair_ordinal)
+        ]
+        payload: dict[str, object] = {
+            "completed": self.completed,
+            "state_changed": self.state_changed,
+            "review_job_id": self.review_job_id,
+            "completed_pair_count": self.completed_pair_count,
+            "pairs": pair_payloads,
+        }
         if not self.state_changed:
-            payload: dict[str, object] = {
-                "completed": False,
-                "state_changed": False,
-                "review_job_id": self.review_job_id,
-                "reason": self.reason,
-            }
+            payload["reason"] = self.reason
             if self.warnings:
                 payload["warnings"] = list(self.warnings)
             return payload
-        payload = {
-            "completed": self.completed,
-            "state_changed": True,
+        payload["failure_reason"] = self.failure_reason
+        payload["job"] = {
             "review_job_id": self.review_job_id,
-            "completed_pair_count": self.completed_pair_count,
-            "failure_reason": self.failure_reason,
-            "job": {
-                "review_job_id": self.review_job_id,
-                "status": self.job_status,
-            },
+            "status": self.job_status,
         }
         if self.warnings:
             payload["warnings"] = list(self.warnings)
@@ -254,7 +258,6 @@ def finalize_review_job_from_owned_output(
                 completed=False,
                 state_changed=True,
                 review_job_id=review_job_id,
-                completed_pair_count=0,
                 failure_reason=failure_reason,
                 job_status="failed",
                 warnings=warnings,
@@ -268,7 +271,7 @@ def finalize_review_job_from_owned_output(
             completed=True,
             state_changed=True,
             review_job_id=review_job_id,
-            completed_pair_count=len(finalized.pairs),
+            pairs=tuple(finalized.pairs),
             job_status="completed",
             self_reported_model=parsed.self_reported_model,
             warnings=warnings,

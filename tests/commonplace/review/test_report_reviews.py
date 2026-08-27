@@ -117,6 +117,18 @@ def test_critique_report_flow_is_snapshot_anchored_and_writes_artifact(tmp_path:
     assert outcome.completed
 
     result_path = next(iter(prepared.result_paths.values()))
+    assert outcome.to_payload()["pairs"] == [
+        {
+            "review_pair_id": prepared.pairs[0].review_pair_id,
+            "note_path": NOTE_PATH,
+            "criterion_path": CRITIQUE_PATH,
+            "criterion_id": "critique",
+            "pair_ordinal": 1,
+            "result_kind": "report",
+            "outcome": None,
+            "result_path": result_path,
+        }
+    ]
     result_text = (repo / result_path).read_text(encoding="utf-8")
     assert "result_kind: report" in result_text
     assert result_text.rstrip().endswith("## Result: REPORT")

@@ -114,6 +114,8 @@ Run finalization once per completed sub-agent output. It reads job-owned output,
 
 `ERROR` means the worker could not produce a contracted result. It follows the same all-or-nothing failure path: no pair completes and no freshness baseline advances.
 
+Read every entry in the returned `pairs` array before reporting or continuing. Each completed entry identifies the pair, its `result_kind`, canonical `outcome`, and `result_path`. A verdict outcome is `pass`, `warn`, or `fail`; a completed report has `outcome: null`. Command success and `completed: true` mean the finalization transaction completed, not that every verdict passed. A failed or precondition-rejected finalization returns `pairs: []`.
+
 After finalization, `MANIFEST.json` in the job artifact directory is refreshed for inspection with job-derived pair display status and derived `result_path` files. Treat the returned job payload and derived job paths as pipeline state; do not read `MANIFEST.json` to decide what to finalize.
 
 ## Verify

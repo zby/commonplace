@@ -118,6 +118,8 @@ The full procedure is in [run review batches](../instructions/run-review-batches
 
 **Finalization is all-or-nothing.** If any expected pair is missing, duplicated, unexpected, malformed, or lacks a valid result line, the job fails and writes no freshness baseline rows — a failed job accepts nothing. On success, every pair records per-kind completion and the current freshness baseline row for each pair is upserted. The `review-consumption` measurement is the exception to structural strictness: missing, partial, or malformed measurement metadata is recorded as such and never fails the job.
 
+Every finalization response includes `completed_pair_count` and an ordered `pairs` array. Successful entries project the committed pair ID, note and criterion identities, result kind, canonical outcome, and derived result path. Verdict outcomes are `pass`, `warn`, or `fail`; a completed report carries an explicit null outcome. Failed and no-state-change responses carry an empty array. A completed job therefore means every pair satisfied its result protocol, not that every verdict passed.
+
 **Finalization-time provenance is optional.** When supplied, `--model` (with optional `--effort`) is validated against the job's model partition before any state changes, and the runner/model/effort are recorded. `--effort` requires `--model`. `--telemetry-json` stores opaque harness telemetry without making it review identity. Commonplace's code-generated availability and reviewer-reported consumption measurements occupy versioned keys beside that opaque value in the same `review_jobs.telemetry_json` column.
 
 ## Acknowledging trivial changes
@@ -177,7 +179,7 @@ With `--model-partition` omitted, the selector reports only model-agnostic missi
 
 **Create jobs** — `commonplace-create-review-jobs --input - --grouping {note|criterion}`. Consumes selector JSON.
 
-**Finalize** — `commonplace-finalize-review-job --review-job-id {id} [--runner {worker}] [--model {model} [--effort {effort}]] [--telemetry-json {json}]`.
+**Finalize** — `commonplace-finalize-review-job --review-job-id {id} [--runner {worker}] [--model {model} [--effort {effort}]] [--telemetry-json {json}]`. Returns committed per-pair outcomes and result paths in `pairs`.
 
 **Ack** — `commonplace-ack-review --input {inspected-selector-json}`.
 

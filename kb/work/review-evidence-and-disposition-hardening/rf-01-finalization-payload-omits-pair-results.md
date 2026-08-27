@@ -1,6 +1,6 @@
 # RF-01 — Finalization omits per-pair results from its return payload
 
-**State:** open  
+**State:** fixed 2026-08-27
 **Repair shape:** local API and test change  
 **Severity:** medium
 
@@ -37,3 +37,13 @@ immediate projection of committed state.
   of an outcome explicit.
 - Failure and no-op payloads retain an unambiguous shape.
 - CLI and library tests cover PASS, WARN, FAIL, and REPORT.
+
+## Resolution
+
+`FinalizeReviewJobOutcome` now retains the committed pair rows and derives
+`completed_pair_count` from them. Every response contains an ordered `pairs`
+array. Successful entries project the pair ID, note and criterion identities,
+result kind, canonical outcome, and derived result path; report completion
+keeps the outcome explicitly null. Failed and no-state-change responses return
+an empty array. CLI and library regression tests cover `PASS`, `WARN`, `FAIL`,
+`REPORT`, transaction failure, and precondition rejection.

@@ -500,15 +500,27 @@ def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmat
     )
 
     payload = json.loads(result.stdout)
+    result_path = f"kb/reports/review-jobs/review-job-{review_job_id}/pair-1-undefined-terms.md"
     assert payload == {
         "completed": True,
         "completed_pair_count": 1,
         "failure_reason": None,
         "job": {"review_job_id": review_job_id, "status": "completed"},
+        "pairs": [
+            {
+                "review_pair_id": prepared_job["pairs"][0]["review_pair_id"],
+                "note_path": "kb/notes/sample.md",
+                "criterion_path": GATE_ONE_PATH,
+                "criterion_id": GATE_ONE,
+                "pair_ordinal": 1,
+                "result_kind": "verdict",
+                "outcome": "warn",
+                "result_path": result_path,
+            }
+        ],
         "review_job_id": review_job_id,
         "state_changed": True,
     }
-    result_path = f"kb/reports/review-jobs/review-job-{review_job_id}/pair-1-undefined-terms.md"
     result_text = (repo / result_path).read_text(encoding="utf-8")
     parsed_frontmatter = frontmatter.parse(result_text)
     assert {
@@ -607,6 +619,7 @@ def test_finalize_review_job_result_write_failure_leaves_no_result_artifact(
     payload = json.loads(result.stdout)
     assert payload["completed"] is False
     assert payload["completed_pair_count"] == 0
+    assert payload["pairs"] == []
     assert payload["failure_reason"] == "simulated result write failure"
     assert payload["job"] == {"review_job_id": review_job_id, "status": "failed"}
 

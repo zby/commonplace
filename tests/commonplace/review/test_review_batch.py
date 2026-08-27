@@ -402,6 +402,28 @@ def test_finalize_review_job_finalizes_all_criterion_packed_pairs(tmp_path: Path
     assert payload["completed_pair_count"] == 2
     assert payload["failure_reason"] is None
     assert payload["job"] == {"review_job_id": review_job_id, "status": "completed"}
+    assert payload["pairs"] == [
+        {
+            "review_pair_id": prepared_job["pairs"][0]["review_pair_id"],
+            "note_path": "kb/notes/first.md",
+            "criterion_path": GATE_PATH,
+            "criterion_id": GATE,
+            "pair_ordinal": 1,
+            "result_kind": "verdict",
+            "outcome": "warn",
+            "result_path": prepared_job["pairs"][0]["result_path"],
+        },
+        {
+            "review_pair_id": prepared_job["pairs"][1]["review_pair_id"],
+            "note_path": "kb/notes/second.md",
+            "criterion_path": GATE_PATH,
+            "criterion_id": GATE,
+            "pair_ordinal": 2,
+            "result_kind": "verdict",
+            "outcome": "pass",
+            "result_path": prepared_job["pairs"][1]["result_path"],
+        },
+    ]
 
     with sqlite3.connect(db_path) as conn:
         conn.row_factory = sqlite3.Row
@@ -437,6 +459,47 @@ def test_finalize_review_job_finalizes_all_criterion_packed_pairs(tmp_path: Path
     assert [pair["status"] for pair in manifest["pairs"]] == ["completed", "completed"]
 
 
+def test_finalize_review_job_returns_canonical_fail_outcome(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    prepared = json.loads(
+        create_gate_jobs(
+            repo,
+            db_path,
+            [target("kb/notes/first.md", GATE_PATH, GATE)],
+        ).stdout
+    )
+    prepared_job = prepared["jobs"][0]
+    review_job_id = prepared_job["review_job_id"]
+    write(
+        repo / prepared_job["job_output_path"],
+        pair_block("kb/notes/first.md", GATE_PATH, "The term is undefined.", "FAIL"),
+    )
+
+    result = run_cli(
+        "finalize_review_job",
+        "--review-job-id",
+        str(review_job_id),
+        cwd=repo,
+        db_path=db_path,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["completed"] is True
+    assert payload["completed_pair_count"] == 1
+    assert payload["pairs"] == [
+        {
+            "review_pair_id": prepared_job["pairs"][0]["review_pair_id"],
+            "note_path": "kb/notes/first.md",
+            "criterion_path": GATE_PATH,
+            "criterion_id": GATE,
+            "pair_ordinal": 1,
+            "result_kind": "verdict",
+            "outcome": "fail",
+            "result_path": prepared_job["pairs"][0]["result_path"],
+        }
+    ]
+
+
 def test_finalize_review_job_fails_partial_output_without_salvage(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     prepared = json.loads(
@@ -468,6 +531,7 @@ def test_finalize_review_job_fails_partial_output_without_salvage(tmp_path: Path
     payload = json.loads(result.stdout)
     assert payload["completed"] is False
     assert payload["completed_pair_count"] == 0
+    assert payload["pairs"] == []
     assert payload["state_changed"] is True
     assert payload["failure_reason"] == f"missing pairs: kb/notes/second.md :: {GATE_PATH}"
     assert payload["job"] == {"review_job_id": review_job_id, "status": "failed"}
@@ -512,6 +576,8 @@ def test_finalize_review_job_missing_output_does_not_change_job_state(tmp_path: 
     payload = json.loads(result.stdout)
     assert payload == {
         "completed": False,
+        "completed_pair_count": 0,
+        "pairs": [],
         "reason": f"job output file not found: {prepared_job['job_output_path']}",
         "review_job_id": review_job_id,
         "state_changed": False,
@@ -547,6 +613,7 @@ def test_finalize_review_job_parse_error_marks_job_failed(tmp_path: Path) -> Non
     payload = json.loads(result.stdout)
     assert payload["completed"] is False
     assert payload["completed_pair_count"] == 0
+    assert payload["pairs"] == []
     assert payload["state_changed"] is True
     assert "unexpected pair" in payload["failure_reason"]
     with sqlite3.connect(db_path) as conn:
@@ -582,6 +649,7 @@ def test_finalize_review_job_error_fails_without_pair_completion_or_baseline(tmp
     assert result.returncode == 1
     payload = json.loads(result.stdout)
     assert payload["completed_pair_count"] == 0
+    assert payload["pairs"] == []
     assert payload["failure_reason"] == "worker reported ERROR"
     with sqlite3.connect(db_path) as conn:
         job = conn.execute("SELECT status FROM review_jobs").fetchone()
@@ -614,6 +682,8 @@ def test_finalize_review_job_rejects_completed_job(tmp_path: Path) -> None:
     assert rejected.returncode == 1
     assert json.loads(rejected.stdout) == {
         "completed": False,
+        "completed_pair_count": 0,
+        "pairs": [],
         "reason": "review job is not finalizable: completed",
         "review_job_id": review_job_id,
         "state_changed": False,
