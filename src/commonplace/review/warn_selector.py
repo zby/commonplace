@@ -70,14 +70,14 @@ def _extract_section(text: str, pattern: re.Pattern[str]) -> str | None:
 
 
 def extract_warns(review_text: str, *, outcome: str) -> list[str]:
+    if outcome != "warn":
+        return []
+
     findings = _extract_section(review_text, FINDINGS_SECTION_RE)
     if findings:
         actionable = [match.group("body").strip() for match in ACTIONABLE_FINDING_RE.finditer(findings)]
         if actionable:
             return actionable
-
-    if outcome != "warn":
-        return []
 
     summary = _extract_section(review_text, SUMMARY_SECTION_RE)
     if summary:
