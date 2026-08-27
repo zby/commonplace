@@ -25,7 +25,7 @@ The operator judged the constructive article still too long and wanted the disag
 
 Reading order: Naur → theory building → when systems learn. Both new drafts validate clean.
 
-**Next article (not started):** where this project disagrees with Sutton and Javed — their position that context-state adaptation cannot replace continual weight learning (`kb/sources/sutton-javed-why-ai-models-stop-learning.ingest.md`, retained quotes present). The bitter-lesson article is the nearest existing text; the disagreement is not yet integrated anywhere in the cluster.
+**Fourth article (2026-08-27):** `kb/articles/continual-learning-outside-the-weights.md` (~3,400 words) — the disagreement with Sutton and Javed, argued as "there is a second substrate", not "their program is wrong". Accepts the big-world premise, "weights never change" as description, and the what-keeps-knowledge-correct question; parts from one inference (concepts formed by weight learning ⇒ must continue by weight learning); describes the frozen-interpreter-over-artifact-layer substrate and three things it answers (named concepts as artifacts, explicit coherence maintenance, deployment-local learning); learn-a-model-and-plan in the artifact layer with its dependency stated; four mechanism limits plus the human-in-loop difference of aim; the comparative test. Grounded on seven retained quotes in the Sutton/Javed ingest (added via cp-skill-ground on 2026-08-27). Reading order is now Naur → theory building → when systems learn → outside the weights.
 
 ## Status (2026-08-27, later): split into two articles
 
