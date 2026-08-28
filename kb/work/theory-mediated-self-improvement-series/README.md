@@ -224,6 +224,9 @@ against this workshop and then closes under the workshop contract.
   order; these do not promise that every rejected title survives.
 - [Incumbent ledger](./incumbent-ledger.md) — source identities, review
   constraints, and claim-by-claim transfer decisions.
+- [Extraction candidates](./extraction-candidates.md) — nine library notes
+  proposed so the articles cite claims instead of arguing them; coverage
+  verdicts and nearest neighbours per candidate.
 - [Accepted baselines](./accepted/README.md) — the only inherited prose that
   may seed a successor directly.
 - [Rejected draft captures](./rejected-drafts/README.md) — read-only evidence
