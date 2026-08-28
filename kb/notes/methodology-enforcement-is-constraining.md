@@ -1,69 +1,49 @@
 ---
-description: "Places instructions, skills, hooks, and scripts on a gradient from model-interpreted guidance to deterministic execution, with hooks combining fixed triggers and semantic responses"
+description: "Explains why enforcement strength is a partial order over activation and response semantics, rather than a fixed instruction-to-skill-to-hook-to-script ladder"
 type: kb/types/note.md
-traits: [title-as-claim]
+traits: [has-comparison, title-as-claim]
 tags: [learning-theory, constraining]
 ---
 
 # Methodology enforcement is constraining
 
-The ways we enforce methodology in the KB — instructions, skills, hooks, scripts — map directly onto the [constraining spectrum](./agentic-systems-interpret-underspecified-instructions.md). The enforcement layers parallel the [verifiability gradient](./verifiability-gradient.md) — where codification moves code from prompt tweaks through schemas to deterministic modules, methodology enforcement moves practices from written guidance through structured skills to automated scripts. Each layer trades flexibility for reliability by reducing two things: **semantic underspecification** (committing to one interpretation of what the practice means) and **execution indeterminism** (ensuring the practice fires consistently across runs). Moving from instructions to scripts progressively eliminates both.
+Methodology enforcement is [constraining](./definitions/constraining.md) because it commits choices about when a requirement applies and what consequences follow. These are separate operative parts. An **activation rule** constrains which events invoke the requirement. A **response rule** constrains which interpretations or outputs count as satisfying it. An enforcement design can commit either part without committing the other.
 
-| Layer | Trigger | Response | Reliability | Example |
-|-------|---------|----------|-------------|---------|
-| Ad hoc prompt | indeterministic (caller writes one) | underspecified + indeterministic (LLM interprets) | lowest | "read these three docs through this lens" in a one-off instructions note |
-| Instruction | indeterministic (LLM remembers) | underspecified + indeterministic (LLM interprets) | low | "check descriptions" in CLAUDE.md |
-| Skill | deterministic (user invokes) | underspecified + indeterministic (LLM executes) | medium | `/validate` checks note quality |
-| Hook (warn) | deterministic (event fires) | underspecified + indeterministic (LLM acts on output) | medium-high | validate-note.sh outputs WARN on missing description |
-| Hook (block) | deterministic (event fires) | deterministic (rejected) | high | exit 1 prevents the operation |
-| Script | deterministic (user/hook runs) | deterministic (code runs) | highest | `generate_notes_index.py` rebuilds note listings |
+This makes enforcement strength a partial order, not an inherent instruction → skill → hook → script ladder. Those names describe different packages and runtime surfaces. A skill can preserve the same natural-language procedure as an instruction while adding more reliable discovery or explicit invocation. A hook can attach a fixed trigger to an interpreted warning or to a symbolic rejection. A deterministic command can assign exact consequences yet remain optional because nothing requires it to run.
 
-[Ad hoc prompts](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) are looser than persistent instructions — they're one-shot, not loaded into every session, and exist only for a single use. They sit below instructions on the gradient because they add a third source of unreliability: the prompt itself is ephemeral, so it can't even accumulate the weak consistency that comes from an instruction being present every time.
+| Surface | Activation | Response | Remaining latitude |
+|---|---|---|---|
+| Routed instruction | A model or human decides that the rule applies | A model or human interprets the guidance | Both applicability and compliance remain open to interpretation |
+| Explicitly invoked skill | Invocation is fixed for that run | The skill body is usually interpreted natural language | Invocation is settled, but compliant execution may still vary |
+| Event hook with a warning | A runtime assigns the triggering event | A model or human interprets the warning and chooses a repair | Detection is fixed; response and recovery remain open |
+| Event hook with a rejection | A runtime assigns the triggering event | The attempted operation is rejected | Detection and blocking are fixed; repair remains open |
+| Optional validator or command | A caller decides whether it runs | A formal consumer assigns consequences to the encoded rule | The checked predicate is fixed, but coverage depends on invocation |
+| Required validator or command | A runtime requires it at the relevant boundary | A formal consumer assigns consequences to the encoded rule | Both activation and the encoded acceptance condition are fixed |
 
-Instructions have the lowest *persistent* reliability because both phenomena compound: the LLM may not remember to apply the practice (indeterminism in triggering), and when it does, it interprets the instruction through underspecified semantics ("check descriptions" admits multiple valid readings of what counts as a good description). Skills eliminate the trigger problem — the user invokes them deterministically — but the response is still an LLM interpreting an underspecified spec. Blocking hooks and scripts eliminate both phenomena entirely.
+The table classifies configured combinations, not artifact types in isolation. A mixed artifact must be split by operative part, [since representational form follows how each part is encoded and consumed](./definitions/representational-form.md). Skill routing metadata may be symbolic while its procedure remains natural-language. A hook is a scheduling attachment; its handler determines whether the response is interpreted or symbolic. A script supplies symbolic response semantics, but its caller determines activation.
 
-The key insight: hooks are not cleanly "deterministic." A hook that outputs a warning is a deterministic trigger with an underspecified, indeterministic response — the LLM decides what to do with the warning. Only blocking hooks (exit non-zero) are fully deterministic. This means the three-tier model (instruction → skill → hook) that arscontexta uses oversimplifies — the real picture is a gradient, which is just constraining.
+## Hardening can constrain either axis
 
-## Maturation trajectory
+Activation hardens when applicability moves from contextual recognition to explicit invocation, an event trigger, or a required gate. Response semantics harden when broad guidance becomes narrower natural-language criteria and, where a formal consumer assigns consequences, crosses into [codification](./definitions/codification.md). The two movements often travel together, but neither entails the other. An always-running warning hook has stronger activation than a manually run validator and weaker response semantics.
 
-This is [progressive compilation applied to methodology](./underspecification-and-indeterminism-complicate-programming-for.md) — new best practices should start as underspecified natural-language guidance and constrain toward precise, deterministic enforcement as they prove out:
+This separation explains what the familiar maturation trajectory gets right. A practice can begin as interpreted guidance while its useful meaning is unsettled. Repeated failures to notice the rule create pressure to constrain activation. Stable, verifiable interpretations create warrant to constrain the response. When both conditions hold, a required symbolic check can constrain both parts. The trajectory is therefore one common path through the two-axis space, not a ranking built into the words *instruction*, *skill*, *hook*, and *script*.
 
-1. **Instruction** — write it in CLAUDE.md or WRITING.md. Cheap to revise, tests whether the practice is worth encoding. If the LLM follows it inconsistently, that's signal.
-2. **Skill** — encode it as a structured prompt. Reliable when invoked, but requires explicit invocation. Good for judgment-requiring operations that shouldn't be automated.
-3. **Hook/script** — automate the deterministic parts. Only after the practice has constrained enough that you know exactly what the check should do.
+Reliability increases only within the committed scope. A required validator guarantees that its encoded predicate runs at its boundary; it does not show that the predicate represents the real requirement. Codifying a proxy can enforce the wrong rule consistently. Judgment-heavy practices may therefore remain natural-language even when their activation is made reliable, [because the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md).
 
-**When to move down.** The strongest signal for automation is when the agent consistently proposes the same correct next step — meaning both that the LLM has converged on a single interpretation of the underspecified spec, and that it executes it reliably across runs. If the LLM's response is predictable and always right, the prompt-to-action path is just overhead; a hook or script would do the same thing without the latency or token cost. This is the codification trigger: a pattern has emerged from repeated execution, and constraining it commits to that interpretation in precise code — resolving the semantic underspecification by design rather than by luck, and eliminating the indeterminism entirely.
+## Scope
 
-Not everything should complete the trajectory. Operations requiring semantic judgment (like "is this connection genuine?") belong permanently at the skill level — their [oracle strength](../notes/oracle-strength-spectrum.md) is too low to support deterministic verification. Attempting to automate judgment produces confident systematic errors — the over-automation risk. The former Topics-footer sync script is a clean example of the trajectory completing: an LLM-generated footer was recognised as fully mechanical, and the operation moved to a deterministic script.
-
-**The trajectory requires active observation.** The [context engineering study](https://arxiv.org/pdf/2510.21413) found that 50% of AGENTS.md files were never changed after creation — write-once artifacts that never enter the maturation trajectory at all. The codification trigger above (observing that the agent consistently proposes the same correct step) only fires if someone is watching. Among the files that do evolve, additions (78 commits) and modifications (59) vastly outnumber removals (23) and section deletions (2) — pruning is a discipline, not an emergent behavior. Instructions accumulate unless someone actively removes them.
-
-The maturation trajectory parallels [document type maturation](./document-types-should-be-verifiable.md) — just as documents start as untyped `note` and gain type information as they codify, practices start as written guidance and gain enforcement structure as they prove out. Both are gradual typing applied to different substrates: types accumulate verifiable structural properties; enforcement accumulates deterministic triggers and responses. The [loading frequency hierarchy](./instruction-specificity-should-match-loading-frequency.md) mirrors the same gradient from the information-delivery side — CLAUDE.md instructions, skill descriptions, skill bodies — but for loading specificity rather than enforcement reliability.
-
-## Current state
-
-We have hooks in `.claude/hooks/` but they aren't wired up (`"hooks": {}` in settings.json) and reference old paths. We have scripts that work (`generate_notes_index.py`). We have skills that work (validate, connect, ingest). We have instructions that work (CLAUDE.md, WRITING.md). The gradient exists — we just haven't needed to push anything further toward the deterministic end yet.
-
-## Open questions
-
-- When should a WRITING.md instruction become a validate check? [Oracle strength](../notes/oracle-strength-spectrum.md) may provide the answer: a practice is ready to move down the gradient when you can cheaply verify whether it was followed correctly. If verification requires semantic judgment, the practice stays at skill level; if it can be reduced to structural checks, it is a candidate for scripting.
-- Should hook warnings be treated differently from skill output? The LLM sees both as text, but the trigger mechanism differs.
-- Are there practices currently at skill level that should be scripts? (`sync_topic_links.py` was probably this historically — a skill-level operation that turned out to be fully deterministic before the underlying Topics system was removed.)
+- The claim concerns activation and the immediate response to a requirement. Recovery after detection or rejection is a separate design dimension.
+- The table describes idealized configurations. A particular harness may combine routing, triggering, and response semantics differently.
+- Stronger enforcement is not automatically better. It trades interpretive latitude for a narrower commitment whose quality depends on its evidence and coverage.
 
 ---
 
 Relevant Notes:
 
-- [the verifiability gradient](./verifiability-gradient.md) — grounds: the ladder for code (prompt tweaks -> schemas -> evals -> deterministic modules) is the general pattern this note instantiates for methodology
-- [constraining is learning](./definitions/constraining.md) — foundation: the constraining gradient for code; this note applies the same gradient to methodology
-- [programming practices apply to prompting](./underspecification-and-indeterminism-complicate-programming-for.md) — synthesizes: the maturation trajectory is progressive compilation applied to methodology — flexible instructions frozen into rigid, efficient automation
-- [document types should be verifiable](./document-types-should-be-verifiable.md) — parallels: document type maturation (note -> traits -> promoted base type) follows the same gradual-typing pattern as methodology maturation (instruction -> skill -> hook -> script); both trade flexibility for reliability as verifiability increases
-- [oracle strength spectrum](../notes/oracle-strength-spectrum.md) — determines when a practice is ready to move down the enforcement gradient: cheap verification enables scripting; expensive verification keeps the practice at skill level
-- [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — mirrors: the loading hierarchy (CLAUDE.md -> skill descriptions -> skill bodies) parallels the enforcement hierarchy, but for information specificity rather than practice reliability
-- [error messages that teach are a constraining technique](./error-messages-that-teach-are-a-constraining-technique.md) — extends: adds the inform axis orthogonal to the trigger/response gradient; the most effective enforcement artifacts simultaneously constrain and teach
-- [spec mining as codification](./spec-mining-as-codification.md) — generalizes: the maturation trajectory (instruction → script) is spec mining applied to methodology; both share the same codification trigger ("a pattern has emerged from repeated execution")
-- [Agentic Note-Taking 23: Notes Without Reasons](https://x.com/molt_cornelius/status/2026894188516696435) — exemplifies: the judgment/verification gradient explains why automated link generation (judgment operation) degrades quality while automated link validation (verification operation) preserves it
-- [Context Engineering for AI Agents in OSS](https://arxiv.org/pdf/2510.21413) — validates: 169 annotated commits across 10 actively maintained AGENTS.md files show add-then-modify dominance (Add 78, Modify 59, Remove 23, Remove-section 2), confirming the maturation trajectory empirically
-- [ABC: Agent Behavioral Contracts](https://arxiv.org/html/2602.22302v1) — formalizes: hard/soft constraint vocabulary and Drift Bounds Theorem (D*=α/γ) provide mathematical grounding for the enforcement gradient; maps warning hooks to soft constraints with recovery windows
-- [Harness Engineering (Lopopolo, 2026)](https://openai.com/index/harness-engineering/) — exemplifies: three runtime pillars (instructions → structural tests → automated cleanup agents) map to the constraining gradient; "every mistake is a harness bug" is the maturation trajectory in practitioner language
-- [enforcement without structured recovery is incomplete](./enforcement-without-structured-recovery-is-incomplete.md) — extends: adds the recovery column (corrective → fallback → escalation) missing from the enforcement gradient; oracle strength determines which recovery strategies are viable at each layer
+- [Constraining](./definitions/constraining.md) — defined-in: supplies the semantic-narrowing operation that both enforcement axes instantiate
+- [Representational form](./definitions/representational-form.md) — defined-in: separates natural-language and symbolic operative parts inside mixed enforcement artifacts
+- [Agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — mechanism: explains why interpreted response rules retain several valid executions even when activation is fixed
+- [Skills are instructions plus routing and execution policy](./skills-are-instructions-plus-routing-and-execution-policy.md) — grounds: shows why skill packaging can strengthen activation without changing the procedure's representational form
+- [Progressive constraining commits only after patterns stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — grounds: supplies the evidential condition for hardening response semantics rather than freezing one arbitrary interpretation
+- [Moving the interpretation–enforcement boundary requires cross-form coverage](./moving-the-interpretation-enforcement-boundary-requires-coverage.md) — extends: develops the governance requirements for transferring responsibility between interpreted and symbolic responses
+- [Enforcement without structured recovery is incomplete](./enforcement-without-structured-recovery-is-incomplete.md) — extends: adds the post-response dimension deliberately excluded from this two-axis account
