@@ -2,503 +2,508 @@
 
 ## Executive conclusion
 
-The source comparison does not identify one complete methodology that should
-replace all others. It identifies independent decisions that an adaptive plan
-must make:
+Military command is a high-yield source domain for agent planning and
+delegation in a narrow sense: it is a justified place to search for mechanisms,
+not a source of wholesale prescriptions. Modern doctrine makes a
+planner--executor information problem central. Consequential work proceeds
+under friction, uncertainty, changing local conditions, and limited ability to
+specify means in advance. The doctrine then describes how stable intent and
+control can coexist with locally chosen means.
 
-1. **Authority:** who should choose the means when relevant information is
-   distributed between planner and executor?
-2. **Detail:** how much of later work should be specified before its premises
-   are available?
-3. **Commitment:** when is preserving a decision worth more than acting now?
-4. **Alternatives:** when should several candidates remain live, and how should
-   they be eliminated?
-5. **Adaptation:** what observations should cause a plan to change, and early
-   enough for what response?
-
-Auftragstaktik and modern mission tactics remain the strongest compact
-methodology for the first decision: preserve intent and constraints while
-delegating execution-time choice of means. Rolling-wave planning, real-options
-theory, Dynamic Adaptive Policy Pathways (DAPP), and set-based design do not
-displace that mechanism. They govern the other four decisions.
-
-Real-options theory is a load-bearing part of the synthesis, not a secondary
-analogy. It supplies the missing normative test for deferral. A plan should
-preserve a choice only when later observation can change the decision,
-commitment would destroy a valuable alternative, the opportunity remains
-available, and the value preserved exceeds the cost of waiting. Pindyck also
-shows why the choice is not always between passive waiting and full commitment:
-a bounded early action can be valuable because it produces information.
-
-The resulting Commonplace theory is therefore stronger than “delegate under
-uncertainty”:
-
-> Fix upstream the intent, constraints, privileged facts, and coordination
-> boundaries that execution cannot safely reconstruct. Place each remaining
-> decision at the stage and actor that will have its decision-relevant
-> information. Preserve alternatives only while later observation or active
-> testing can discriminate among them and commitment remains costly to reverse.
-> Make planned adaptation governable through observation, thresholds, lead
-> time, and an explicit convergence or escalation rule.
-
-This paragraph is a Commonplace synthesis. No source states it as a unit.
-
-## Starting theory and what the sources can establish
-
-The investigation began from a first-principles selection argument:
-predictable recurring decisions can progressively move from LLM judgment into
-methodology, schemas, validators, workflows, or deterministic code. The work
-left at the agent boundary is consequently selected for execution states that
-are harder to anticipate. Information needed to choose means often arrives
-only during execution, creating a planner-executor information asymmetry.
-
-The external sources do not establish that selection argument. They supply
-mature formulations of what to do after the asymmetry exists, conditions under
-which deferral is rational, and mechanisms for preserving flexibility. They
-therefore ground or refine the planning consequence of
+Agent work can expose the same narrow problem for an independent reason. Under
+the conditions in
 [Preferential codification concentrates less predictable work at the agent boundary](../../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md),
-not its premise about how codification reshapes the residual work distribution.
+symbolic enforcement removes more operationally predictable cases from agent
+judgment. The residual cases are then selected toward choices whose relevant
+state can arrive during execution or whose branches are cheaper to resolve
+then. This is a candidate mechanism match. It is not a claim that war and agent
+work are generally alike.
 
-That evidential boundary matters. Military doctrine is normative doctrine,
-PMI's lexicon standardizes terminology, Githens reports practitioner experience,
-Pindyck presents formal theory, DAPP integrates methods and illustrates them in
-a model-supported case, and the set-based paper is methodological and
-case-based. Together they provide independent mature-domain mechanisms and
-useful limits. They do not constitute a controlled test of agent planning.
+The comparison separates five decisions that an adaptive plan can make:
+
+1. **Authority:** who chooses means when the planner and executor hold
+   different decision-relevant information?
+2. **Detail:** when should later work become more specific?
+3. **Commitment:** when should a costly-to-reverse choice remain open?
+4. **Alternatives:** when should several candidates remain feasible, and what
+   evidence will narrow them?
+5. **Adaptation:** what observation should select a prepared response, and how
+   early must it do so?
+
+Mission tactics, rolling-wave planning, real-options reasoning, Dynamic
+Adaptive Policy Pathways (DAPP), and set-based practice contribute different
+mechanisms to those decisions. A Commonplace method can compose their bounded
+contributions around a target problem. No source states the composite as a
+unit, and the comparison does not establish that it improves agent outcomes.
+
+## Why military command is a productive source domain
+
+### Source-domain reason
+
+[MCDP 1](../../sources/marine-corps-mcdp-1-warfighting-1997.ingest.md)
+and
+[ADRP 6-0](../../sources/us-army-adrp-6-0-mission-command-2012.ingest.md)
+are modern normative systems organized around friction, uncertainty,
+unanticipated change, distributed information, and decisions made near the
+point of action. They make the allocation of information and decision rights
+across a planner--executor boundary a first-order design problem. They also
+make intent, authority, resources, coordination, reporting, supervision, and
+responsibility explicit parts of the answer.
+
+That concentration makes the domain productive to inspect. It does not show
+that the doctrines cause better results, that decentralization is generally
+superior, or that the military and agent domains are broadly similar.
+[Stahel's historical reassessment](../../sources/david-stahel-auftragstaktik-mission-command.ingest.md)
+adds a further limit: *Auftragstaktik* varied by period, command level,
+circumstances, communications, training, doctrine, institutional culture, and
+personalities. The name does not identify one timeless portable package or an
+uncomplicated lineage into modern mission command.
+
+### Independent target-side premise
+
+The military sources do not establish why agent work has this shape. That
+premise comes from the Commonplace account of preferential codification. Its
+selection claim has strict conditions: hold the incoming workload and routing
+policy fixed, codify a nonzero share of recurring decision cases, and require
+every removed case to be more operationally predictable than every case left
+to agent judgment. Only then does the residual distribution concentrate toward
+the less predictable end.
+
+Operational predictability is relative to the system being compared. The
+state-to-action mapping and an acceptable result must be specifiable and
+verifiable more cheaply and reliably there. Codification also has a precise
+boundary: code, a schema, validator, grammar, or another symbolic consumer must
+apply the mapping without asking the agent to choose it again. Natural-language
+methodology can constrain a choice without codifying it.
+
+This selection effect concerns the composition of residual cases. It does not
+show that an individual case becomes intrinsically harder or that aggregate
+effort, duration, token use, or cost increases. Nor does it show that deployed
+agent systems usually satisfy the selection conditions.
+
+The planning consequence needs another condition. Execution-time choice is
+favored when decision-relevant state appears only during execution, or when
+execution can cheaply resolve the branch that matters while advance planning
+would elaborate many unused branches. Detailed advance planning remains
+appropriate when state is stable and available, branch resolution is
+economical, coordination requires a shared sequence, or the choice is
+predictable enough to settle. Weak verification or expensive symbolic
+implementation can leave a choice with an agent without creating an
+execution-time information advantage.
+
+### Search heuristic, transfer warrant, and inference
+
+The governing transfer rule is that
+[borrowed patterns transfer only over a shared mechanism](../../notes/borrowed-patterns-transfer-only-over-shared-mechanism.md).
+Analogy, shared terminology, conceptual resemblance, maturity, longevity,
+severity, and institutional prestige can motivate a search. None warrants an
+import. The target must independently instantiate the particular mechanism and
+its premises, and warrant stops where that mechanism stops.
+
+Here the proposed match is **intent-preserving delegated adaptation**. Upstream
+fixes a purpose-bearing result and non-negotiable decision boundaries. A
+competent executor receives real authority to choose execution-dependent means
+using decision-relevant live evidence. The choice remains answerable to the
+fixed intent and bounds. The executor's advantage is specific to the decision;
+the executor need not know more overall.
+
+This search discipline has precedents in Commonplace. One survey searches
+[soft-bound traditions organized around a matching problem](../../notes/soft-bound-traditions-as-sources-for-context-engineering-strategies.md)
+and then tests optimization target, feedback, and failure-mode conditions.
+Another evaluates
+[human writing structures by the failure modes they share with LLM work](../../notes/human-writing-structures-transfer-to-llms-because-failure-modes.md).
+Those precedents support per-mechanism testing. They add no military warrant.
+
+Military command is therefore a promising source domain because it retains an
+explicit concentration of mechanisms for consequential later-informed,
+intent-bounded choice of means. Preferential codification supplies an
+independent reason that an agent boundary can increasingly retain the same
+narrow information problem under its selection conditions. The conjunction
+justifies a search priority, not a general analogy or a transfer.
+
+`High-yield` has only that qualitative meaning here. The authorized record does
+not compare source domains, measure search yield, show how often agent work has
+this composition, or test a military-derived method in agents. Domain maturity
+may make a tradition worth inspecting; only a target-side mechanism match can
+license a bounded import.
 
 ## Comparative evaluation
 
-### 1. Auftragstaktik and mission tactics: allocate authority by information
+The retained Commonplace synthesis of
+[productive deferral](../../notes/productive-deferral-requires-option-evidence-and-convergence.md)
+keeps the neighboring methods distinct. This table is a map; the substantive
+evaluations follow it. The source links preserve navigation, but the target-side
+composition is a Commonplace construction rather than a method claimed by any
+one source.
+
+| Target decision | Source method | Bounded contribution |
+|---|---|---|
+| Who chooses execution-dependent means? | Mission tactics | Purpose-bearing assignment and bounded local judgment over means. |
+| When is later work elaborated? | Rolling-wave planning | Coarse later horizons with an explicit replanning return. |
+| When should a future choice remain live? | Real-options reasoning | Option preservation under costly reversal, expiry, and waiting cost. |
+| How does observed change select a response? | DAPP | Monitored signposts, mapped triggers, responses, and lead-time awareness. |
+| How are several candidates kept and narrowed? | Set-based practice | Feasible alternatives, discriminating tests, narrowing, and a convergence point. |
+
+### 1. Mission tactics: allocate bounded authority over means
 
 #### Source methodology
 
 [MCDP 1](../../sources/marine-corps-mcdp-1-warfighting-1997.ingest.md)
-derives decentralized execution from friction, uncertainty, disorder, and
-distributed decision-making. A senior supplies task and purpose, intent,
-support, and coordination-essential guidance; a competent subordinate chooses
-means from local conditions and can continue acting when the original task no
-longer fits.
+treats war as disorderly, uncertain, dynamic, and affected by friction. A
+subordinate at the point of decision can have a fresher view of the current
+situation than a remote senior. Mission tactics therefore assign a mission
+without prescribing every means. The senior supplies the task and its purpose,
+prescribes method where coordination requires it, and normally intervenes by
+exception. The subordinate chooses means from the live situation, reports,
+acts in conformity with intent, and remains inside the assigned authority.
+
+The source distinguishes a task's `what` from intent's `why`. A changed
+situation can make the former unfit while the latter continues to guide action.
+It also treats competence, trust, familiarity, shared doctrine, training,
+support, coordination, reporting, and tolerance for good-faith error as
+enabling conditions. This is bounded local judgment inside a control system,
+not a rule to maximize autonomy.
 
 [ADRP 6-0](../../sources/us-army-adrp-6-0-mission-command-2012.ingest.md)
-makes the control system more explicit. Mission orders, intent, disciplined
-initiative, resources, information flow, feedback, adjustable control, risk
-acceptance, and retained commander responsibility operate together. Delegation
-is not absence of control.
+gives a compatible but more explicit control account. It places some fast
+decisions at the point of action and joins freedom over means in specified
+areas to purpose, key tasks, desired end state, resources, broad guidance,
+coordination, communication, feedback, risk management, supervision, and
+accountability. Disciplined initiative applies when unanticipated circumstances
+make prior orders unfit. Delegated authority does not move ultimate
+responsibility away from the commander in the source system.
 
-[Stahel's historical reassessment](../../sources/david-stahel-auftragstaktik-mission-command.ingest.md)
-prevents treating *Auftragstaktik* as a timeless stable package. Its meaning and
-application changed; initiative varied with period, level, competence,
-communications, personality, and command culture. The source supports a core
-logic while contesting an uncomplicated lineage into modern mission command.
+These publications are normative institutional statements. Their overlap is
+good evidence that two modern doctrines formulate bounded delegation around
+uncertainty and distributed information. It is not evidence of causal
+effectiveness or agent applicability.
+
+[Stahel](../../sources/david-stahel-auftragstaktik-mission-command.ingest.md)
+prevents the two modern formulations from becoming a timeless historical
+package. Historical variation limits claims about identity, lineage, and a
+generally valid degree of delegation. It does not invalidate the modern
+doctrines as descriptions of what those institutions prescribed.
 
 #### Shared mechanism
 
-The transferable mechanism is **intent-preserving delegated adaptation**:
-communicate the purpose and non-negotiable boundaries the executor cannot
-infer, then leave situation-dependent means to a competent executor with a
-real information advantage at the point of action.
+The shared mechanism is **intent-preserving delegated adaptation**. Upstream
+retains the purpose-bearing result, non-negotiable bounds, cross-task coupling,
+privileged facts, external commitments, ownership, and done conditions that an
+executor cannot safely reconstruct. A competent executor receives actual
+authority over means when live evidence can change which permitted means best
+serve the intent. The result has a defined route into composed work or
+authorized action.
 
-The information asymmetry is bidirectional. The executor does not simply “know
-more.” The planner may hold the purpose, cross-task coupling, privileged facts,
-risk limits, and external commitments. The executor may hold live state,
-tool results, local failures, and evidence produced by earlier steps. A sound
-plan transmits the first category and avoids freezing the second.
+The information relation is bidirectional. The executor may hold current state,
+tool results, local failures, or evidence produced by earlier steps. The
+planner may hold purpose and global constraints. Delegation follows the
+decision-specific information difference; it does not assume that one side
+knows more overall.
 
-#### Commonplace consequence
+#### Commonplace consequence and non-transfer boundary
 
-Mission tactics is the best compact operative methodology for delegation when
-execution states cannot be usefully enumerated. It is not a complete planning
-method. It does not say when waiting is economically justified, how many
-alternatives to retain, or how to encode observable adaptation conditions.
+An agent handoff instantiates the mechanism only when intent, authority,
+resources and accessible context, ownership and integration, feedback or
+verification, and recovery or escalation are operative for the consequential
+surfaces involved. Timing, liveness, and concurrency also matter when their
+failure is consequential. This is why
+[intent-framed delegation is a control regime, not a short prompt](../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md).
 
-It also cannot be reduced to a short outcome prompt. Agent-side analogues must
-provide appropriate authority, resources, accessible context, feedback,
-verification, isolation, and upstream accountability. Military hierarchy,
-lawful command, rank, force structure, professional formation, shared danger,
-staff organization, synchronization doctrine, and combat risk machinery do not
-transfer merely because the abstract mechanism does.
+Mission tactics contributes the one mechanism in this comparison that
+allocates bounded execution-time judgment over means. It does not decide
+whether waiting is worthwhile, when later detail returns, how several
+alternatives narrow, or how an observed condition maps to a prepared response.
 
-The historical ambiguity creates a second boundary: a bare
-“Use *Auftragstaktik*” cue may activate incompatible historical and modern
-representations. Weight-resident use needs an activation-fidelity test or a
-short explicit gloss.
+The transfer excludes military hierarchy, rank, force structure, professional
+military culture, lethal-risk doctrine, adversarial purpose, and organizational
+machinery. Source functions such as competence, resources, communication,
+feedback, and accountability matter only where the target mechanism
+independently requires them; their military embodiments do not transfer. The
+comparison supports neither a general preference for decentralization nor an
+empirical agent-effectiveness claim.
 
 ### 2. Rolling-wave planning: allocate detail by information horizon
 
 #### Source methodology
 
-The [PMI Lexicon, Version 4](../../sources/pmi-lexicon-project-management-terms-v4.ingest.md)
-defines progressive elaboration as increasing plan detail as information and
-estimate accuracy improve. It defines rolling-wave planning as detailing
-near-term work while leaving future work at a higher level.
-
-[Githens](../../sources/githens-manage-innovation-programs-rolling-wave.ingest.md)
-adds a practitioner implementation: establish a top-down structure, elaborate
-the near horizon, execute, learn, and replan at explicit points. Future work is
-not omitted; it remains visible at an intentionally coarser resolution.
+The retained source records are the
+[PMI Lexicon](../../sources/pmi-lexicon-project-management-terms-v4.ingest.md)
+and a
+[practitioner account by Githens](../../sources/githens-manage-innovation-programs-rolling-wave.ingest.md).
+At the level supported by the retained reconstruction, rolling-wave planning
+makes near-term work detailed while later work remains at a higher level and is
+elaborated as information improves. A stronger form adds a fixed replanning
+date, an assessment of what has been learned, and planning of the next horizon.
+Later work stays visible; its detail is deliberately deferred.
 
 #### Shared mechanism
 
-The transferable mechanism is **progressive commitment of detail as its
-premises become available**. It is temporal rather than organizational. The
-same planner may elaborate the work later; no delegation is required.
+The shared mechanism is **progressive commitment of detail as its premises
+become available**. The return path is part of the mechanism. A coarse horizon
+without an owned replanning event is indistinguishable from missing thought
+once the work has moved past it.
 
-#### Commonplace consequence
+This allocation is temporal. The same planner may add the later detail. No
+transfer of authority is required.
 
-Plans should distinguish an intentionally coarse future from missing thought.
-Deferral should normally include a relearning or replanning commitment rather
-than an unowned placeholder. The mechanism supports
-[An author should fix what the executor can't determine, not what it will](../../notes/fix-what-the-executor-cant-determine-not-what-it-will.md)
-and the execution-discovery phase in
-[Specification strategy should follow where understanding lives](../../notes/specification-strategy-should-follow-where-understanding-lives.md).
+#### Commonplace consequence and non-transfer boundary
 
-PMI does not establish effectiveness or prescribe a universal cadence.
-Work-breakdown structures, Gantt charts, baselines, phase gates, change-control
-regimes, and approval chains are additional governance machinery, not part of
-the minimal transfer.
+An agent plan can leave later work coarse when the necessary state is not yet
+available or when resolving every branch in advance would be uneconomical. It
+should name the replanning date or other explicit return at which learning is
+assessed and the next horizon is elaborated.
 
-### 3. Real options: decide when preserving choice has value
+Rolling-wave planning says when detail is added. It does not itself preserve a
+materially exercisable option, show that delay is worthwhile, delegate
+judgment, or determine which response follows an observation. The authorized
+evidence supplies no universal replanning cadence and no effectiveness claim.
+
+### 3. Real options: preserve a costly-to-reverse choice conditionally
 
 #### Source methodology
 
-[Pindyck](../../sources/pindyck-irreversibility-uncertainty-investment.ingest.md)
-argues that conventional investment rules omit the option surrendered by an
-irreversible commitment. When an opportunity can remain open and later-observed
-conditions can change whether or when investment is desirable, committing now
-has an opportunity cost in addition to its direct cost.
-
-Waiting is not automatically optimal. Current benefits forgone, expiry,
-competitive pre-emption, and other delay costs can favor immediate action.
-Nor must uncertainty disappear for waiting to have value. The relevant fact is
-that action can later be conditioned on an observed state. Sequential early
-investment can also be rational when the early stage produces information.
+The retained
+[Pindyck source record](../../sources/pindyck-irreversibility-uncertainty-investment.ingest.md)
+supports the bounded real-options formulation used here. When present
+commitment is irreversible or costly to reverse, delaying commitment can
+preserve a materially live future choice and an opportunity to observe. The
+option can expire, and waiting can forgo present benefit or incur other costs.
+The mechanism does not require several alternatives.
 
 #### Shared mechanism
 
-The transferable mechanism is **conditional preservation of a costly-to-reverse
-choice**. Four questions decide whether it applies:
+The shared mechanism is **conditional preservation of a costly-to-reverse
+choice**. The future choice must remain feasible, and a possible later
+observation must be capable of changing the decision. Mere uncertainty does
+not supply that relation. Mere postponement does not preserve an option if the
+choice will no longer be exercisable.
 
-1. Would commitment materially destroy an alternative or create costly
-   dependencies?
-2. Will later observation or a bounded experiment be capable of changing the
-   preferred choice?
-3. Will the opportunity to choose still exist then?
-4. What present benefit, coordination value, or expiring opportunity is lost
-   by waiting?
+#### Commonplace consequence and non-transfer boundary
 
-This is more precise than “uncertainty favors flexibility.” Uncertainty without
-a later discriminating observation does not create the relevant option value.
-Reversibility without meaningful switching cost weakens the case for delay.
+Real-options reasoning contributes the `option` part of productive deferral and
+forces delay costs into view. It does not by itself supply the evidence process
+or convergence rule. A bounded test can be useful when its possible results
+would discriminate among later choices, but the authorized record does not show
+that testing dominates passive waiting or present commitment.
 
-#### Commonplace consequence
+Option, discriminating evidence, and convergence are necessary for productive
+deferral; together they still do not prove that waiting is worthwhile.
+Foregone benefit, delay, carrying cost, pre-emption, lead time, or expiry can
+favor present commitment or abandonment. The source supplies no universal
+threshold and no agent-effectiveness result.
 
-Real options supplies the decision rule missing from both mission tactics and
-rolling-wave planning. It grounds a refinement to
-[Current-task fit alone does not warrant costly structural entrenchment](../../notes/current-task-fit-alone-does-not-warrant-costly-entrenchment.md):
-replaceability has value when future evidence can alter the decision, but that
-value must be compared with foregone coordination and current-use benefits.
-
-It also separates three agent-planning moves that should not be conflated:
-
-- **commit now** when evidence already discriminates or delay is costly;
-- **wait** when a later observation will discriminate and passive delay is
-  cheap; and
-- **stage a probe** when a bounded action can cheaply produce the missing
-  information without committing the whole course.
-
-Financial-option valuation, complete-market assumptions, hedging portfolios,
-Brownian-motion models, discount-rate machinery, and monetary calibration are
-not needed for this qualitative transfer. The formal source identifies
-variables and relationships; Commonplace still needs target-side evidence for
-operational thresholds.
-
-### 4. DAPP: make deferred adaptation observable and timely
+### 4. DAPP: map observed change to a prepared response
 
 #### Source methodology
 
-[Haasnoot et al.](../../sources/haasnoot-dynamic-adaptive-policy-pathways-2013.ingest.md)
-combine Adaptive Policymaking's monitoring and contingency actions with
-Adaptation Pathways' sequences, alternatives, lock-ins, and path dependencies.
-An adaptation tipping point is the condition under which an action no longer
-meets its objectives. A signpost is monitored information. A trigger is a
-critical signpost condition that activates a contingency early enough to
-account for implementation lead time. A trigger and a tipping point are related
-but are not synonyms.
+The retained
+[DAPP source record](../../sources/haasnoot-dynamic-adaptive-policy-pathways-2013.ingest.md)
+supports a bounded formulation built from monitored signposts, triggers,
+mapped responses, and lead-time-aware action. A signal alone is not enough. A
+trigger must connect an observed condition to a response early enough for that
+response to be carried out.
 
 #### Shared mechanism
 
-The transferable mechanism is **state-conditioned later commitment among
-prepared alternatives**. A stable objective coexists with near-term action,
-monitored variables, thresholds, response lead time, and successor actions.
+The shared mechanism is **state-conditioned later commitment among prepared
+responses**. A stable objective coexists with monitored variables, target-
+defined trigger conditions, mapped responses, and the lead time needed to act.
 
-#### Commonplace consequence
+This is mapped control rather than open judgment. When the trigger condition is
+met, the mapping selects a prepared response; the executor is not choosing
+freely among unspecified means.
 
-“Decide later” becomes an adaptive plan only when the system knows what it will
-observe, what condition matters, which alternatives remain viable, and how
-early it must act. This differs from rolling-wave planning's scheduled increase
-of detail and from mission tactics' delegation of unanticipated choice.
+#### Commonplace consequence and non-transfer boundary
 
-DAPP is especially relevant to the starting selection argument. Recurring
-adaptation conditions that can be named as signposts and triggers should move
-out of open-ended LLM judgment into workflow, validation, or deterministic
-control. States outside the prepared pathway set remain at the agent boundary
-or trigger reassessment of the plan itself.
+For agent planning, `decide later` becomes governable only when the plan names
+the observation, the condition that matters, the mapped response, and the lead
+time. This differs from a scheduled rolling-wave return and from mission
+tactics' allocation of unanticipated choice.
 
-Climate scenario ensembles, water-system models, metro-style pathway diagrams,
-scorecards, stakeholder procedures, and the complete ten-step policy method do
-not transfer by default.
+A mapped trigger can remove executor judgment, but the existence of a recurring
+condition does not automatically justify codifying it. Symbolic control requires
+an independently predictable and verifiable mapping. The report does not
+transfer climate-policy machinery, establish that a prepared response is
+correct, or show empirical agent benefit.
 
-### 5. Set-based design: preserve and actively discriminate alternatives
+### 5. Set-based practice: preserve alternatives while evidence discriminates
 
 #### Source methodology
 
-[Kennedy, Sobek, and Kennedy](../../sources/kennedy-sobek-kennedy-set-based-rework.ingest.md)
-formulate set-based work as a front-end system rather than the slogan “keep
-options open.” Requirements and candidates are represented as bounded ranges
-or sets; knowledge gaps are tested; qualitatively different alternatives remain
-in parallel; weak options are eliminated with evidence; coupled specialties
-communicate feasible sets and minimum constraints; and the work converges by a
-latest safe commitment date.
-
-This later peer-reviewed methodological paper was used because the preferred
-1999 Sobek, Ward, and Liker article could be verified but not captured as usable
-text without OCR. The substitution is sufficient for the planning mechanism,
-but not for direct attribution of the original article's canonical
-three-principle wording.
+The retained
+[Kennedy--Sobek--Kennedy source record](../../sources/kennedy-sobek-kennedy-set-based-rework.ingest.md)
+supports the bounded set-based formulation used here. Several alternatives
+remain feasible while focused tests address a named knowledge gap. Test results
+eliminate or narrow alternatives before a latest convergence point. Activity
+counts as evidence-producing only when a possible result can change the later
+decision.
 
 #### Shared mechanism
 
-The transferable mechanism is **preserve an evaluable feasible set, actively
-produce discriminating evidence, and converge by an explicit deadline**.
+The shared mechanism is **preservation of an evaluable feasible set while
+evidence discriminates**. It requires live alternatives, tests connected to the
+decision, a way to compare results, and a boundary by which the choice
+converges.
 
-It differs from rolling wave because it defers selection rather than merely
-detail. It differs from DAPP because it narrows candidates through tests and
-compatibility evidence before a commitment boundary rather than switching
-pathways when an external state crosses a trigger. It extends Pindyck by showing
-how active information generation and multiple live candidates can be
-organized.
+This differs from rolling-wave planning because it defers selection, not only
+detail. It differs from DAPP because evidence narrows candidates rather than an
+observed trigger selecting a mapped response. It can use active evidence
+generation without assigning the final judgment to an executor.
 
-#### Commonplace consequence
+#### Commonplace consequence and non-transfer boundary
 
-Set-based work applies when tests are cheap and informative, reversal or rework
-is expensive, alternatives interact, and maintaining what is learned has reuse
-value. Point selection can be better when evidence already discriminates,
-alternatives are independent or cheap to reverse, parallel maintenance is
-expensive, or no credible evaluation surface exists.
+An agent plan should not label parallel activity `set-based` unless possible
+test results can alter the choice and the alternatives remain feasible until
+the convergence boundary. The plan must also account for the cost of carrying
+several candidates.
 
-The result bounds
-[Solve low-degree-of-freedom subproblems first](../../notes/solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking.md).
-That heuristic applies when the feasible sets and constraints are sufficiently
-known. If the feasible set itself remains epistemically uncertain, an early
-apparently constrained choice may be exactly the premature commitment that
-testing should prevent.
+Set-based practice does not establish that multiple alternatives are worth
+retaining in a particular case, provide a universal latest point, or decide who
+owns the final choice. Source-specific organizational and engineering machinery
+does not become an agent requirement merely because it accompanies the source
+method. No causal effectiveness claim transfers.
 
-Toyota's roles and supplier relationships, V-model restructuring,
-customer/business-interest paperwork, CAD/CAE, prototypes, design-of-experiment
-machinery, trade-off curves, phase gates, and claims that rework can be
-eliminated do not transfer as necessary parts of the mechanism.
+## Constructing a target method from bounded mechanisms
 
-## Integrated theory claims
+The five evaluations show how a target method can be constructed mechanism by
+mechanism rather than adopted as a named source package. One possible
+Commonplace construction is:
 
-### Decision placement should follow information availability
+1. Fix stable intent, constraints, interfaces, acceptance evidence, authority,
+   and convergence rules upstream.
+2. Leave later work coarse only when its premises are unavailable or resolving
+   all branches now would be uneconomical, and give it an explicit replanning
+   return.
+3. Preserve a costly-to-reverse choice only while the later option remains
+   feasible, and identify evidence whose possible results can change it.
+4. Use monitored signposts and mapped responses where a target-defined state
+   can select a prepared action; use bounded tests where evidence must narrow
+   several feasible alternatives.
+5. Give an authorized executor judgment over means only where live evidence
+   genuinely changes which permitted means best serve fixed intent.
+6. Return each deferred choice through a replanning date, mapped trigger,
+   evidence-gated test, latest safe decision point, or authorized procedure
+   before the option expires.
 
-The planner-executor boundary should not be described as a simple hierarchy in
-which one side knows more. Planning distributes decisions across complementary
-information positions. Upstream fixes stable intent, constraints, global
-coupling, privileged facts, and conventions whose shared selection carries
-coordination value. Execution chooses means whose premises depend on live state
-or evidence produced by the run. A harmless decoupled choice may remain open;
-being arbitrary does not by itself assign the choice upstream.
+Productive deferral connects several of these contributions without erasing
+their differences. It requires a materially preserved option, evidence whose
+possible outcomes can change the named decision, and a convergence rule that
+joins a return condition to a response while the option remains feasible. The
+response can select, modify, abandon, authorize more bounded work, or transfer
+the reopened choice to an authorized procedure.
 
-This claim refines the existing executor-boundary note. In particular, “the
-executor is guaranteed to know more” should be narrowed: the executor is
-normally later-informed along execution-dependent variables, while the planner
-may retain information the executor cannot recover.
+Each component keeps its own premises, costs, and limit. Composition also needs
+interaction checks. A mapped trigger can remove the executor's judgment. A
+convergence deadline can constrain local adaptation. An authority allocation
+can determine who may exercise an option. Component warrant does not
+automatically become warrant for their combination.
 
-### Deferral is a decision with premises, not a general virtue
+This construction is a Commonplace inference. It is not a doctrine attributed
+to a military, project-management, finance, policy, or design source. The
+authorized evidence supports it as a design proposal, not as an empirically
+settled agent effect.
 
-Deferral is warranted when later evidence can change a costly-to-reverse
-choice, the choice will remain available, and delay costs less than the option
-preserved. Otherwise the plan should decide now. When cheap action can produce
-the discriminating evidence, a staged probe can dominate both waiting and full
-commitment.
+## Present Commonplace disposition
 
-This claim is the largest theoretical addition exposed by the source pass. It
-connects real options to rolling-wave planning, set-based design, reversible KB
-structure, experimentation, and agent execution without importing financial
-valuation.
+The durable notes in the authorized evidence set have distinct current roles.
+This report uses those roles; it does not claim that the notes were changed by
+this workshop.
 
-### Productive deferral requires an option, evidence, and convergence
+| Durable note | Current role in this report | Supported gap or boundary |
+|---|---|---|
+| [Preferential codification concentrates less predictable work at the agent boundary](../../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md) | Supplies the conditional target-side selection effect and the boundary between natural-language constraint and symbolic codification. | Does not establish prevalence, aggregate difficulty, or agent effectiveness. |
+| [Borrowed patterns transfer only over a shared mechanism](../../notes/borrowed-patterns-transfer-only-over-shared-mechanism.md) | Supplies the transfer gate and separates search priority from import warrant. | Does not itself prove that a source and target share a mechanism. |
+| [Intent-framed delegation is a control regime, not a short prompt](../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) | Owns the bounded military-to-agent reconstruction, target-side truth conditions, and non-exhaustive control surfaces used here. | The conditions are not an experimentally proven minimum or a sufficient implementation packet. |
+| [Productive deferral requires option, evidence, and convergence](../../notes/productive-deferral-requires-option-evidence-and-convergence.md) | Owns the cross-source necessary conditions and the bounded distinctions among rolling-wave planning, real options, DAPP, set-based practice, and mission tactics. | The three conditions do not prove that waiting is worthwhile or effective for agents. |
+| [Soft-bound traditions as sources for context-engineering strategies](../../notes/soft-bound-traditions-as-sources-for-context-engineering-strategies.md) | Supplies an advisory precedent for searching a tradition by a matching problem and then testing optimization target, feedback, and failure mode. | Adds no direct military evidence or warrant for this composite. |
+| [Human writing structures transfer to LLMs because failure modes overlap](../../notes/human-writing-structures-transfer-to-llms-because-failure-modes.md) | Supplies an advisory precedent for evaluating a borrowed convention by the failure it prevents and whether that failure exists in the target. | Adds no warrant for a different pattern without a fresh match. |
 
-A deferred item is not automatically flexible. The plan must preserve a viable
-alternative, identify how later evidence will discriminate, and state when or
-how the decision will converge. Depending on the problem, that convergence can
-be:
+This workshop suggests one additional durable synthesis: source-domain
+maturity can prioritize where to search, shared mechanism determines what may
+transfer, and bounded mechanisms can then be composed around a target problem.
+That claim is not yet assigned a durable path, type, or final scope. It belongs
+in the separately requested synthesis note, which needs its own brief,
+grounding, authorship, and review rather than inheriting this workshop report as
+a premise.
 
-- a scheduled replanning horizon;
-- an observed trigger with sufficient response lead time;
-- an evidence-gated elimination process with a latest safe decision date; or
-- delegated judgment bounded by intent when consequential states cannot be
-  pre-enumerated.
+## Source revisit and future-evidence queue
 
-These are different control forms. Treating all of them as “be agile” would
-discard the mechanisms that justified borrowing them.
-
-### Intent-framed delegation remains a control regime
-
-The planner retains responsibility for the goal, authority boundary,
-coordination requirements, resources, monitoring, and response to failure.
-Delegation transfers the choice of means; it does not transfer away the need to
-make execution observable or to provide recovery and accountability paths.
-
-## Implications for existing Commonplace theory
-
-### Grounding and revision disposition
-
-- [An author should fix what the executor can't determine, not what it will](../../notes/fix-what-the-executor-cant-determine-not-what-it-will.md)
-  was revised as the main integration point. It now separates bidirectional
-  information allocation, active evidence production, temporal deferral, and
-  actor delegation while preserving competence and coupling conditions.
-- [Current-task fit alone does not warrant costly structural entrenchment](../../notes/current-task-fit-alone-does-not-warrant-costly-entrenchment.md)
-  now carries the real-options conditions, bounded-probe alternative, and
-  explicit delay-cost term without treating delay cost as an independent
-  warrant for entrenchment.
-- [Specification strategy should follow where understanding lives](../../notes/specification-strategy-should-follow-where-understanding-lives.md)
-  remains a candidate for a later rolling-wave and set-based fold concerning
-  discovered-during-execution understanding and tests that move information
-  earlier.
-- [Solve low-degree-of-freedom subproblems first](../../notes/solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking.md)
-  now separates actor ownership from temporal deferral. Its known-feasible-set
-  boundary remains unresolved.
-- [A capable agent needs methodology selection, not just relevant knowledge](../../notes/capable-agents-need-methodology-selection.md),
-  [Weight-resident methodologies provide context-efficient behavioral compression](../../notes/weight-resident-methodologies-compress-behavior-in-context.md),
-  and [Borrowing can operate through retained artifacts or weight activation](../../notes/borrowing-can-operate-through-retained-artifacts-or-weight-activation.md)
-  now require a disambiguating gloss or target-model evidence when an ambiguous
-  methodology cue could change consequential choices.
-
-### Compare but do not claim direct grounding
-
-- [Progressive constraining commits only after patterns stabilize](../../notes/progressive-constraining-commits-only-after-patterns-stabilize.md)
-  shares a commitment-under-learning shape, but its evidence object is repeated
-  interpretation stability rather than project information arrival.
-- The real-options and set-based sources compare with
-  [Solve low-degree-of-freedom subproblems first](../../notes/solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking.md)
-  but do not establish its computational sequencing rule.
-- DAPP's fixed scenarios, objectives, indicators, and action sets reinforce the
-  scope warning in
-  [Learning inside a fixed decomposition inherits its mistakes](../../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md);
-  they do not prove that Commonplace claim.
-
-### Promoted theory notes
-
-The pass promoted two atomic claims rather than one catalogue of source
-methodologies:
-
-1. [Intent-framed delegation is a control regime, not a short prompt](../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md).
-2. [Productive deferral requires a preserved option, discriminating evidence,
-   and a convergence rule](../../notes/productive-deferral-requires-option-evidence-and-convergence.md).
-
-“Information-producing action can dominate both waiting and full commitment”
-is probably a mechanism section of the second note rather than a third note.
-
-## Methodology verdict
-
-No neighboring methodology is better suited to the whole agent-planning
-problem because none addresses the whole problem.
-
-Auftragstaktik remains the best compact methodology for allocating
-unanticipatable execution-time choice while preserving intent. It is not the
-best standalone planning instruction. A more reliable current cue is the
-explicit transfer gloss **“preserve intent and constraints; delegate
-execution-time choice of means”**, optionally paired with the historical name
-after activation fidelity has been tested.
-
-The complementary sources also reveal where Auftragstaktik should cease to be
-used. If a recurring choice can be captured as a deterministic trigger, a
-scheduled elaboration, an evidence-gated test, or a reversible staged probe,
-then that choice should move out of unconstrained delegated judgment. Mission
-tactics governs the residual cases that remain consequential and hard to
-pre-enumerate after those moves.
-
-That conclusion supports the starting theory while making it operational:
-
-1. codify stable recurring decisions;
-2. preplan identifiable contingencies and observation surfaces;
-3. preserve explicit options while evidence can still change the choice;
-4. use bounded probes to acquire missing information where worthwhile; and
-5. delegate the remaining situation-dependent means under stable intent and
-   constraints.
-
-## Deliberate exclusions
-
-OODA and effectuation were inspected but did not earn ingestion for this
-question. OODA's distinctive mechanism is adversarial tempo and the disruption
-of an opponent's orientation; its useful delegation material duplicates the
-mission-tactics core. Effectuation begins from available means, emphasizes
-affordable loss and stakeholder commitments, and permits goals to emerge. That
-goal plasticity is poorly matched to intent preservation. Either may deserve a
-future source unit for adversarial agent work or exploratory goal formation,
-but neither improves the current mechanism enough to enter this source set.
-
-The Dixit and Pindyck book was not ingested because Pindyck's paper establishes
-the required option-value mechanism and limitations. The book should be added
-only if a later claim depends on a distinction the paper cannot support.
-
-## Source revisit queue
-
-- **PMI Lexicon Version 5:** the complete pinned source is Version 4. Revisit if
-  current wording rather than the established paired definitions becomes
-  load-bearing.
-- **Sobek, Ward, and Liker (1999):** revisit if Commonplace needs direct
-  attribution of the original three-principle formulation or historical Toyota
-  performance claims. The available archive was image-only.
-- **ADRP 6-0 (untouched 2012 edition):** revisit if edition-specific wording,
-  the omitted glossary, or source lineage matters. The retained substantive
-  chapters incorporate later changes.
-- **Pindyck's published JEL version:** revisit only for publication-specific
-  wording or pagination, not for the minimal mechanism.
-- **Empirical effectiveness:** none of the current ingests warrants a claim
-  that the combined methodology improves LLM-agent outcomes. That requires
+- **Modern Marine Corps formulation:** the retained MCDP record supports an
+  official 1997 formulation. Revisit it or a current successor if present
+  doctrinal currency becomes material.
+- **Army formulation:** the retained ADRP capture is partial and records a 2012
+  publication with changes through 2014. Revisit a complete edition or current
+  successor if exact edition wording, omitted material, lineage, or present
+  currency becomes load-bearing.
+- **Historical variation:** Stahel is a historiographical synthesis. A causal
+  claim about which condition produced a historical result needs stronger
+  historical evidence.
+- **Neighboring methods:** this revision uses the bounded reconstruction in the
+  productive-deferral note while retaining direct source links for navigation.
+  Revisit the exact source records before making source-specific wording,
+  edition, lineage, or effect claims beyond that reconstruction.
+- **Agent outcomes:** no authorized evidence shows that any single mechanism or
+  the composite improves agent effectiveness. That question requires
   target-side tests.
 
-## Machinery revision brief
+## Machinery revision handoff
 
-The theory should not be pasted wholesale into every planning prompt. The next
-pass must locate each decision at the cheapest representation that can enforce
-or reliably activate it.
+A later method-design pass can use the comparison as a checklist without
+copying the report wholesale into an instruction:
 
-Candidate obligations to test against current machinery are:
-
-1. A planner distinguishes fixed intent and constraints from deferred choices.
-2. Every deferred consequential choice names why later information will help,
-   or is explicitly delegated because the state cannot be enumerated.
-3. Where commitment is costly, the plan records the preserved alternative and
-   the cost of delay.
-4. Where a bounded probe can buy discriminating evidence, the plan considers it
-   separately from passive waiting and full commitment.
-5. A coarse future item has a replanning horizon, evidence condition, trigger,
-   convergence rule, or explicit executor authority; it is not an unowned
+1. **Separate stable material from deferred choice.** Mission tactics exposes
+   the bidirectional information boundary: upstream can hold purpose and global
+   constraints while execution holds later means-relevant state.
+2. **For each consequential deferral, state why later evidence can alter the
+   choice and how the option remains feasible.** Real-options reasoning makes
+   irreversibility, expiry, foregone benefit, and waiting cost visible; it does
+   not make delay a virtue.
+3. **Give deliberately coarse future work an owned return.** Rolling-wave
+   planning supplies a replanning horizon at which learning is assessed and the
+   next detail is added. A coarse item without a return is an unowned
    placeholder.
-6. Adaptation triggers identify the observation, threshold, and lead time.
-7. Multiple alternatives are maintained only when an evaluation surface and
-   convergence boundary justify their carrying cost.
-8. Delegation states intent, constraints, authority, resources or accessible
-   context, coordination boundaries, feedback, and escalation or recovery.
-9. A compact methodology cue is used only where its activation fidelity has
-   been established or an explicit gloss supplies the intended mechanism.
+4. **For mapped adaptation, name the observation, response, and lead time.**
+   DAPP explains why a signal alone is insufficient and why a trigger is
+   different from open executor judgment.
+5. **Maintain several alternatives only behind a real evaluation surface.**
+   Set-based practice requires tests whose possible results can change the
+   choice, a convergence boundary, and explicit attention to carrying cost.
+6. **For delegated judgment, supply the control regime.** State purpose,
+   constraints, authority, accessible context and resources, ownership and
+   integration, feedback or verification, and recovery or escalation for the
+   consequential failure surfaces.
+7. **Check component interactions.** A trigger can remove judgment, a deadline
+   can constrain adaptation, and authority can determine who may exercise an
+   option. Do not infer composition warrant from component warrant alone.
 
-The audit should decide separately whether each obligation belongs in natural
-language methodology, a schema field, deterministic validation, workflow
-control, an assay, or runtime code. Predictable checks should not remain LLM
-judgment merely because the theory was discovered in prose.
+This handoff advises later method design. It does not decide implementation or
+change any planning machinery in this report revision.
 
 ## Evidence and artifact status
 
-The eight ingest reports linked above pass deterministic validation. Seven are
-clean; the PMI lexicon has one deliberate warning for the accurate
-open-vocabulary genre `reference-lexicon`. Every retained snapshot checksum
-matches its ingest frontmatter. Subsequent grounding passes retained a minimal
-`## Quotes` section in each ingest before promoting the two source-dependent
-claims. Future promotions may use those extracts where they support the exact
-claim, but must still run the normal source-grounding guard rather than treating
-the ingest analysis as evidence.
+The evidence roles in this report are explicit. The MCDP, ADRP, and Stahel
+ingests supply the military source formulations and historical boundary. The
+six Commonplace notes in the present-state disposition supply the target-side
+selection premise, transfer gate, bounded delegation and deferral syntheses,
+and advisory precedents. The five neighboring-method source links preserve
+source navigation; the bounded claims used here come through the authorized
+productive-deferral reconstruction.
+
+This is a frontmatter-free workshop report. This revision changes no cited
+note, source ingest, tag, instruction, index, or sibling artifact. Independent
+verification for this revision ran `commonplace-validate` on all eight linked
+ingests. All eight pass; seven are clean; the PMI lexicon has the known
+`frontmatter.genre: reference-lexicon` warning. Across the eight ingests, all 30
+retained source quotes resolve against their pinned snapshots. These checks
+establish current deterministic validation and quote-to-pinned-snapshot
+resolution. They do not establish present doctrinal currency or broader
+snapshot assurance.
+
+The substantive evidence limits are also unchanged. The MCDP record supports a
+1997 institutional formulation, not present currency or effectiveness. The
+ADRP record is partial and does not provide a complete lineage audit or present
+currency. Stahel cannot isolate which historical condition caused a result.
+The authorized evidence does not establish empirical effectiveness for the
+military doctrines or the proposed agent composite, compare them with detailed
+command, validate a competence test, set a consequence threshold, or supply
+domain-independent numeric rules for delegation or deferral.
