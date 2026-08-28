@@ -26,6 +26,13 @@ Then provide a self-contained `## Request`. Add `## Context` only for material
 the recipient cannot cheaply recover. A review request names exact commits or
 paths and states whether the recipient may edit or should only report findings.
 
+For consequential work, the request also names the intended result,
+non-negotiable constraints and authority, exact owned outputs or report-only
+boundary, accessible inputs, concurrent owners or coordination rule,
+verification and return channel, stop or escalation condition, and whether
+nested delegation is authorized. Omit fields that are genuinely harmless for
+the request; do not turn a mailbox note into a generic plan form.
+
 ## Responding
 
 To answer, create a new message with the sender and recipient reversed and add

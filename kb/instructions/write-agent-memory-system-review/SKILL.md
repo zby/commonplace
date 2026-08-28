@@ -131,7 +131,7 @@ If the system has no reachable source code, stop and write a lightweight note in
    Then run: commonplace-validate {note_path}
    Fix any structural or description-quality issues it reports and re-run until clean — you own this file, so fix it directly rather than reporting it back.
 
-   Do not edit indexes, archived reviews, the trace-learning survey, checkout state, or any file other than note_path. Do not run any commonplace-* command other than commonplace-validate on note_path. Do not spawn further agents unless a proper sub-agent/worker tool is available to you; if you need one and none is available, pause and report the blocker — never run codex, codex exec, claude, or another agent CLI as a substitute.
+   Do not edit indexes, archived reviews, the trace-learning survey, checkout state, or any file other than note_path. Do not run any commonplace-* command other than commonplace-validate on note_path. Do not spawn or delegate to another agent. If direct completion is impossible, stop and report the blocker — never run codex, codex exec, claude, or another agent CLI as a substitute.
 
    Report: your commonplace-validate result and whether trace-learning applies.
    ```

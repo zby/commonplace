@@ -39,7 +39,7 @@ For each actionable finding returned in a note entry:
 3. **Decide** which disposition the evidence supports:
    - **Fixed** — the finding applies and can be resolved by changing framing or accuracy without changing the note's argument. Apply the smallest edit that resolves it.
    - **Rejected** — the finding is spurious, factually mistaken, or inapplicable to the passage. Leave the note unchanged and record the evidence or reasoning for rejection.
-   - **Deferred** — the finding may be valid, but resolving it would change the argument or requires a substantive human decision. Leave the note unchanged and record why it cannot be settled in this pass.
+   - **Deferred** — the finding may be valid, but resolving it would change the argument or requires a substantive human decision. Leave the note unchanged and record the exact claim, evidence, or source choice; the affected passage; the acceptable response choices; and why this pass cannot select among them.
 4. **Classify each applied fix** using a named strategy from the taxonomy. If no existing strategy fits, classify it as `new-pattern` and describe the pattern briefly. Use `—` for rejected or deferred findings because no fix strategy was applied.
 
 After all fixes:
@@ -83,7 +83,7 @@ For each fix, quote or paraphrase the review warning that triggered it, so the f
 - **#3 (Grounding):** The cited passage explicitly supports the scoped claim; no note change is warranted.
 
 ### Deferred items
-- **#4 (Grounding):** Resolving this requires deciding whether to narrow the claim or reframe the source usage — human judgment needed.
+- **#4 (Grounding):** The affected passage uses source X for claim Y. Choose whether to narrow Y to Z or keep Y and replace the source; this pass lacks authority to select either response.
 
 ### New patterns
 - (none, or describe any fix that didn't fit an existing taxonomy strategy)

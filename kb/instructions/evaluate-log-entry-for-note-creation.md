@@ -140,7 +140,10 @@ Use when the proposal points at something real but the mechanism is not yet clea
 Action:
 
 - leave the log entry in place
-- optionally sharpen its wording so the unresolved question is easier to revisit
+- name the missing mechanism or evidence, the observation that could change
+  the outcome, and the trigger for re-evaluation
+- if no plausible later evidence can discriminate, reject the proposal rather
+  than retaining an indefinite deferral
 
 #### Outcome E: Create the new note
 

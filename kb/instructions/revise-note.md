@@ -45,7 +45,16 @@ A content-level editorial pass on a single note. You may rewrite sentences, reor
    - Remove citations or source references from the body.
    - Edit files outside the target note as part of the main revision pass.
 
-5. **Handle tag changes as a separate follow-up.** If you changed `tags`, spawn a sub-agent after the main revision is complete. The sub-agent should inspect nearby notes, indexes, and workflows affected by the tag change, make the minimal external edits needed to keep those connections accurate, and then report what it changed. Verify its edits and report, then close, terminate, or release the worker; do not retain it for another task. Keep the write scope narrow: only files directly impacted by the tag change. Do not use this step for broad taxonomy cleanup or unrelated refactors.
+5. **Handle tag changes as a separate follow-up.** If you changed `tags`, the
+   parent inventories the exact affected tag READMEs, indexes, and validation
+   results after the main revision. Do not delegate merely to reset context:
+   the parent already holds the tag rationale, current diff, and user scope.
+   Before any external edit, require authority and an exact write set. Apply a
+   settled change locally, or give a fresh worker a complete packet with exact
+   paths, deltas, validation, return, and stop conditions when independent
+   judgment or disjoint parallel work provides a named benefit. Otherwise
+   report the follow-up without editing. Do not use this step for broad
+   taxonomy cleanup or unrelated refactors.
 
 6. **Report.** After editing, output a short report for the user:
 

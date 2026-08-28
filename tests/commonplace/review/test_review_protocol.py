@@ -164,10 +164,25 @@ def test_render_pairs_prompt_names_destination() -> None:
     assert "`opened_paths` lists each distinct repo-relative consumption target you used" in prompt
     assert "`stop_reason` is exactly `budget`" in prompt
     assert "This bookkeeping never changes the result." in prompt
+    assert "Do not delegate or spawn another agent." in prompt
     assert (
         'review-consumption: {"opened_paths": [<JSON strings for each distinct opened path>], '
         '"stop_reason": "<budget|sufficiency>"}'
     ) in prompt
+
+
+def test_render_pairs_prompt_report_allows_error_escalation() -> None:
+    prompt = render_pairs_prompt(
+        notes=[make_target("kb/notes/only.md")],
+        criterion_texts={GATE: GATE_TEXT},
+        result_kind="report",
+        job_output_path="job-output.md",
+    )
+
+    assert "`## Result: REPORT` or `## Result: ERROR`" in prompt
+    assert "it fails the whole job and is not a completion" in prompt
+    assert "Do not emit PASS, WARN, or FAIL." in prompt
+    assert "## Result: REPORT|ERROR" in prompt
 
 
 def test_render_pairs_prompt_rejects_sentinel_in_note_text() -> None:

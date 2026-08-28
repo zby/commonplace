@@ -42,6 +42,10 @@ Vocabulary overlap alone does not warrant transfer.
   instruction, skill, validator, test, experiment, and proposal program.
 - [Implementation handoff](./implementation-handoff.md) — completed changes,
   validation evidence, deliberate non-changes, and the remaining queue.
+- [Delegated authoring surface sweep](./delegated-authoring-surface-sweep.md) —
+  second-pass coverage of commands, worker packets, deferrals, mailbox
+  requests, task types, and generated review prompts, with applied and deferred
+  dispositions.
 
 ## Implementation status
 
@@ -55,9 +59,12 @@ exact surfaces and test results.
 The completed executor-boundary and intent-framed-delegation staging workshops
 were removed after their handoffs were consumed. The costly-entrenchment run is
 retained only because it contains one proposed, unconfirmed retirement-cost
-note. This parent workshop remains active for the larger procedure changes,
-behavioral experiments, and proposal decisions that did not earn immediate
-implementation.
+note. The multistage writer has since been simplified to a three-role universal
+core, and a second repository-wide authoring-surface sweep applied the bounded
+packet, return-condition, anti-recursion, and generated-prompt repairs recorded
+in its report. This parent workshop remains active for the larger procedure
+changes, behavioral experiments, and proposal decisions that did not earn
+immediate implementation.
 
 The next work should be selected from the implementation handoff rather than
 repeating the audits. In particular, do not infer that every item in the

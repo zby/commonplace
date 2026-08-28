@@ -92,7 +92,21 @@ At most one pending packet may exist for a source path; more than one stops the 
 
    If the disposition is anything but `keep`, or the `Update` is `UNDETERMINED`, the pass ends here: leave the note byte-identical, retain the pass directory, and hand back the packet. Executing a hand-back belongs to whoever reads it, under `resolve-full-pass-disposition.md`.
 8. **`keep` only.** Run `commonplace-guard-full-pass-report <report-path>`. Continue only on exit 0 with every input `matching`. On `changed`, do not edit; render the packet `superseded` with `version-guard` authority and stop. On `missing`, `corrupt-capture`, or exit 2, reconcile and leave the packet unchanged. After a successful guard set `phase: editing`, then apply the packet's body edits directly to the note. Body-edit actions are `remove`, `compress`, `add` (an answer to an answerable objection, at the point of attack), and `keep`. Do not change the title, thesis, or any title-as-claim; do not rename the file; do not edit citers. Then reread each friction and premise report's "For the human" line against the edited text: not a rerun, only a check that the thing it pointed to is still accurately described or actually addressed; if not, record that in Open items rather than re-editing.
-9. Dispatch a fresh sub-agent with only the current note text and exactly this prompt: `revise the note for flow, coherence, logic and readability`. The worker writes its result to `kb/reports/full-pass/<note-name>/<pass-id>/copyedit-candidate.md` and nothing else. The orchestrator diffs the candidate against the note: it may reflow, reorder within a section, and tighten wording; it may not add claims, reintroduce material step 8 removed, change the title or thesis, or replace the selected contribution with a more generic treatment. Apply the acceptable parts to the note and discard the rest. Run `commonplace-validate {note-path}`; a failure is fixed before proceeding. Then write the note's exact text to immutable packet-relative `final.txt`, record `final_capture: final.txt` and `final_sha256`, keep `closing_status: null`, set `phase: closing`, and validate the packet. **Do not start step 10 before this.**
+9. Dispatch a fresh copyeditor with only the current note text and a complete
+   task packet. Its result is a copyedited version of those exact bytes for
+   flow, coherence, logic, and readability. It owns only
+   `kb/reports/full-pass/<note-name>/<pass-id>/copyedit-candidate.md`; it may
+   reflow, reorder within a section, and tighten wording, but must preserve the
+   title, thesis, claims, evidence, sources, frontmatter, and every Step 8 cut.
+   It must not read other repository files, invoke an auto-loaded revision
+   skill, edit the note, or delegate. If a useful change would be substantive,
+   it stops and returns the exact passage and decision instead of making the
+   change. The parent diffs the candidate against the note, applies only edits
+   within those bounds, and discards the rest. Run `commonplace-validate
+   {note-path}`; fix any failure before proceeding. Then write the note's exact
+   text to immutable packet-relative `final.txt`, record `final_capture:
+   final.txt` and `final_sha256`, keep `closing_status: null`, set `phase:
+   closing`, and validate the packet. **Do not start step 10 before this.**
 10. Run and reconcile the closing cycle below against the current final capture. Set `phase: complete` only when reconciliation sets `closing_status: ready`; a schema or deterministic validation failure leaves the pass in phase `closing`. `repair-needed` permits the one bounded recovery below. `hand-back` restores the pass-start text and stops.
 
 ## Decision table

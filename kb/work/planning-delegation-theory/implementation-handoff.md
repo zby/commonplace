@@ -2,7 +2,7 @@
 
 ## Status
 
-The source-grounding and first machinery-revision pass are complete. This file
+The source-grounding and two machinery-revision passes are complete. This file
 records what landed, what was deliberately not built, and which unresolved
 items still have a reason to exist. The comparative argument remains in the
 [research report](./research-report.md); the ordered possibility space remains
@@ -94,6 +94,30 @@ that item returns to decision, while non-plan workshops incur no such protocol.
 - Focused review and scaffold tests passed before this handoff. The final
   integrated result is recorded below.
 
+## Second delegated-authoring pass
+
+The promoted multistage writer now uses one isolated reconstruction worker,
+one staged-reveal disposition/candidate author, and one digest-bound independent
+reviewer. The parent retains evidence, authority, invalidation, integration,
+promotion, validation, and recovery. Separate skeleton, draft-only, mutable
+audit, and redundant acceptance stages were removed. The exact accepted target
+digest and audit account are in the [delegated authoring surface
+sweep](./delegated-authoring-surface-sweep.md).
+
+The same pass repaired bounded consumers that shared the mechanism:
+
+- instruction type, authoring, and collection rules now distinguish a complete
+  worker handoff from consequential temporal deferral and no longer prefer a
+  fresh context merely for reset;
+- mailbox requests, warning deferrals, prose deferrals, and retained log work
+  now name the choice, evidence, return, and stop boundaries they actually need;
+- warning sweeps and tag follow-up no longer delegate automatically without an
+  information or disjoint-capacity advantage;
+- AutoReason actors, the full-pass copyeditor, and the memory-review drafter
+  have complete anti-recursion and no-grandchild boundaries; and
+- generated report-job prompts now permit the parser's existing `ERROR`
+  escalation route and forbid nested delegation instead of forcing a guess.
+
 ## Deliberate non-changes
 
 The pass did not build a generic planner, persisted plan type, scheduler,
@@ -108,7 +132,6 @@ parts of the changes above:
 
 - ingest handoff validation against name-paired snapshots;
 - memory-system review staging, recovery, and failure-path tests;
-- sparse mutating-delegation repairs in warning sweeps and tag follow-up;
 - retirement or harness-native replacement of the legacy nested-CLI iterative
   revision skill;
 - static nested-delegation and agent-CLI authority checks;
@@ -141,3 +164,13 @@ The integrated pass completed on 2026-08-28:
 - focused `ruff` checks passed for the changed runtime and test files;
 - `git diff --check` passed; and
 - `uv run pytest` passed all 598 tests in 37.41 seconds.
+
+The second delegated-authoring pass also completed on 2026-08-28:
+
+- all 17 changed or newly created Markdown artifacts passed their explicit
+  `commonplace-validate` calls without warnings or failures;
+- focused `ruff` checks passed for the review-prompt code and test;
+- focused review-protocol tests passed all 26 cases, and the scaffold projection
+  test passed all 18 cases;
+- `git diff --check` passed; and
+- `uv run pytest` passed all 599 tests in 44.24 seconds.

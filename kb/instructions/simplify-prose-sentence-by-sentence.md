@@ -34,7 +34,7 @@ Skip frontmatter, code, formulas, link destinations, and generated blocks unless
 
 Keep a compact coverage ledger containing one decision for every `S` and `F` identifier while working. By default, report every non-`keep` decision and summarize the number of `keep` decisions. Include the full ledger or collapsed `keep` ranges only when the caller or containing workflow asks for auditable coverage.
 
-For each `revise`, `split`, `merge`, or `delete`, give the nearest heading, original wording, final wording, and a brief reason. For each `defer`, name the larger problem without solving it. End with decision counts, excluded regions, changed file paths, and validation results. Do not create a durable report unless the caller or containing workflow supplies a path.
+For each `revise`, `split`, `merge`, or `delete`, give the nearest heading, original wording, final wording, and a brief reason. For each `defer`, name the exact author-owned choice or missing evidence, the affected units, the next procedure or recipient, and the condition for resuming; do not solve it in this pass. End with decision counts, excluded regions, changed file paths, and validation results. Do not create a durable report unless the caller or containing workflow supplies a path.
 
 ## Verify
 

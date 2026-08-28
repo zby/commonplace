@@ -60,7 +60,7 @@ Scan `kb/instructions/`, `kb/notes/`, and `kb/reference/` for link targets. Do n
 |---|---|---|
 | `composition` | instructions | sequential: complete this, then follow the target. Reader drops current context |
 | `precondition` | instructions | conditional: verify target is done/true before starting; skip if already satisfied |
-| `invokes` | instructions | subroutine call. **Prefer sub-agent invocation** so context resets; same-context only for small, heavily-reused procedures |
+| `invokes` | instructions | subroutine call. Use a fresh worker only when isolation, later-produced evidence, or independent judgment gives that worker a specific advantage and its packet fixes consequential controls; otherwise invoke in the current context |
 | `applies-when` | instructions | conditional branch; reader follows only if the trigger applies |
 | `see-also` | instructions | reserved for error procedures and conditional fallbacks |
 | `operates-on` | reference | the system component this procedure acts on |

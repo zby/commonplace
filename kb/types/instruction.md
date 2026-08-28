@@ -36,6 +36,11 @@ Use `instruction` for prescriptive content: procedures, skill bodies, wrapper pr
   Leave situation-dependent choices to live or produced evidence. A fixed live-
   state detail is an authoring-time snapshot that may go stale; a value whose
   inputs are static and remain valid may safely be resolved upstream.
+- When an instruction deliberately leaves a consequential future choice coarse,
+  name the evidence or observation that can discriminate, how control returns,
+  who owns the next decision, and what invalidates prior work or ends retries.
+  Do not add this machinery to ordinary queueing or harmless, cheap-to-reverse
+  choices merely because they happen later.
 - Keep rationale minimal. Put durable reasoning in `kb/notes/` and link from there.
 
 ## Operativity
@@ -69,3 +74,4 @@ Relevant Notes:
 - [Operative change](../notes/definitions/operative-change.md) - rationale for the operativity rule: a change operates only through a consumer, channel, and force over a declared horizon
 - [A retrieval miss is a local reflective-path failure](../notes/a-retrieval-miss-is-a-local-reflective-path-failure.md) - rationale for the description and routing rules: retrieval is the wire a retained instruction acts along, and it is best-effort unless a loaded surface enumerates the route
 - [Intent-framed delegation is a control regime; prompt length does not establish it](../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) - rationale for the consequential-worker handoff and retained-parent-control rule
+- [Productive deferral requires a preserved option, discriminating evidence, and a convergence rule](../notes/productive-deferral-requires-option-evidence-and-convergence.md) - rationale for the return and convergence rule on intentionally coarse consequential choices

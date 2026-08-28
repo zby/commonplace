@@ -28,20 +28,36 @@ as needing re-review and do not delegate fixes from their retained text.
 If there are no actionable note entries, stop — there are no current warn
 findings to fix, even if stale pairs were reported.
 
-### 2. Delegate
+### 2. Execute or delegate
 
-For each note in the queue, launch a sub-agent with a prompt to:
+Run a single-note queue locally unless several notes have disjoint note and
+report paths and a fresh per-note context or parallel capacity gives a specific
+benefit. When that condition holds, launch one single-use worker per note with
+this complete packet:
 
-> Run `kb/instructions/fix-warnings/fix-review-warnings.md` on `{note-path}`
+- run `kb/instructions/fix-warnings/fix-review-warnings.md` on the exact
+  `{note-path}`;
+- own only that note and
+  `kb/reports/fixes/{note-stem}.fix-report.md`;
+- read the inputs authorized by that instruction and no unrelated notes;
+- do not delegate or use another orchestration skill;
+- validate the note and return its diff summary, report path, and validation;
+- defer and return the exact substantive choice when the instruction's edit
+  boundary would be crossed.
 
-Multiple sub-agents can run in parallel since each note's fixes are independent. After each worker returns, verify its note changes and report, then close, terminate, or release that worker before dispatching more work. Workers are single-use; do not send follow-up tasks.
+The parent owns queue selection, collision checks, scheduling, integration, and
+failure recovery. After each worker returns, verify its note diff, report, and
+validation, then close, terminate, or release it before dispatching more work.
+Stop on missing or partial output; workers are single-use and receive no
+follow-up task.
 
 ### 3. Report
 
 After sub-agents complete, report:
 - **Fixed by strategy:** count of fixes per taxonomy strategy name
 - **Rejected:** findings judged spurious or inapplicable, with evidence
-- **Deferred:** items needing human review with reasons
+- **Deferred:** exact claim/evidence/source choices, affected passages,
+  acceptable responses, and why the worker could not select one
 - **New patterns:** any `new-pattern` classifications
 
 ### 4. Evolve taxonomy

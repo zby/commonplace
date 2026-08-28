@@ -187,6 +187,7 @@ def render_pairs_prompt(
     destination_lines = [
         f"- Write exactly one markdown document to `{job_output_path}`.",
         "- Do not write or edit any other file.",
+        "- This prompt is the complete worker brief. Do not delegate or spawn another agent.",
         "- Do not invoke review helper scripts while writing the job output.",
         (
             "- If your environment explicitly states your exact model ID, add exactly one top-level line "
@@ -218,7 +219,12 @@ def render_pairs_prompt(
     result_instruction = (
         OUTCOME_LINE_INSTRUCTION
         if result_kind == "verdict"
-        else "- Inside each block, include exactly one completion line: `## Result: REPORT`. Do not emit PASS, WARN, FAIL, or ERROR."
+        else (
+            "- Inside each block, include exactly one final result line: `## Result: REPORT` "
+            "or `## Result: ERROR`. Use ERROR only when unavailable required evidence or a hard "
+            "budget limit prevents the contracted report; it fails the whole job and is not a "
+            "completion. Do not emit PASS, WARN, or FAIL."
+        )
     )
     result_template = RESULT_LINE_TEMPLATE if result_kind == "verdict" else REPORT_LINE_TEMPLATE
     task_line = (

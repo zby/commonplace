@@ -23,7 +23,7 @@ RESERVED_SENTINEL_RE = re.compile(r"^===\s.+\s===$")
 PAIR_START_TEMPLATE = "=== PAIR REVIEW START: {note_path} :: {criterion_path} ==="
 PAIR_END_TEMPLATE = "=== PAIR REVIEW END: {note_path} :: {criterion_path} ==="
 RESULT_LINE_TEMPLATE = "## Result: PASS|WARN|FAIL|ERROR"
-REPORT_LINE_TEMPLATE = "## Result: REPORT"
+REPORT_LINE_TEMPLATE = "## Result: REPORT|ERROR"
 
 OUTCOME_LINE_INSTRUCTION = (
     "- Inside each block, include exactly one final result line: "

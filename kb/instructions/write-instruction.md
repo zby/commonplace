@@ -31,6 +31,11 @@ You should have performed the task manually at least twice in different contexts
      nested delegation is authorized. Keep scheduling, integration, and
      recovery with the parent; give parallel writers disjoint ownership or an
      explicit coordination rule.
+   - Fix intent, bounds, done conditions, privileged facts, and cross-task
+     coupling upstream. Leave a bounded choice open only when authorized live
+     or produced evidence can change it. If the choice is consequential and
+     intentionally left coarse for later, name the discriminating evidence,
+     return condition, decision owner, and retry or invalidation boundary.
 
 3. **Add frontmatter.** Every instruction needs:
    ```yaml
@@ -56,6 +61,8 @@ You should have performed the task manually at least twice in different contexts
 - Reasoning is minimal — just enough for edge cases
 - Scope boundaries are explicit
 - Frontmatter has a description
+- Consequential delegation and deferral have complete authority, return, and
+  convergence boundaries without prescribing executor-chosen means
 
 ## Promotion to skill
 
