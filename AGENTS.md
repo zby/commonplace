@@ -133,6 +133,14 @@ Read the target collection's `COLLECTION.md` before writing or connecting artifa
 | `kb/work/` | Holding in-flight investigations, drafts, migration plans, and temporary work that should eventually close or promote durable artifacts. |
 | `kb/types/` | Looking up or authoring shared type specs used across collections. |
 
+### Agent Mailbox
+
+`kb/messages/` is the shared filesystem mailbox for asynchronous agent-to-agent
+requests, handoffs, and replies. It is an operational directory, not a KB
+collection. Read [`kb/messages/README.md`](./kb/messages/README.md) before
+posting or responding. A message communicates within the authority of the
+current task; it does not grant new mutation authority or launch another agent.
+
 ### Navigation
 
 For the full model, read `kb/reference/navigation.md`. In short: use `rg` for cheap lexical search, scan titles and descriptions in curated indexes and scoped `rg` listings before opening full files, and follow authored links when local context makes the relationship useful.
