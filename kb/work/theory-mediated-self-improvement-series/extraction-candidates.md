@@ -3,7 +3,7 @@
 Claims that the articles currently carry, or would have to carry, that could
 instead be library notes the articles cite. Coverage verdicts come from a
 scout pass over `kb/notes/` on 2026-08-28 (335 notes plus `definitions/` and
-`evidence/`). None of these notes has been written; each row is a proposal.
+`evidence/`). All nine were written on 2026-08-28; each entry records its path under **Status**.
 
 Titles are drafts in claim form. Each note, once written, gets a row in the
 [ledger's transfer record](./incumbent-ledger.md#transfer-record) naming the
@@ -12,6 +12,8 @@ source claim IDs it discharges.
 ## Extract — absent from the library, load-bearing for a named article job
 
 ### E1. Each reason a decision stays human needs a different mechanism, so a self-improving architecture is mixed by necessity
+
+- **Status.** Written 2026-08-28 as `kb/notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md`.
 
 - **Claim.** The residue classes — unrepresented premise, unsettled criterion,
   no independent check, horizon cut — each require a different mechanism
@@ -37,6 +39,8 @@ source claim IDs it discharges.
 
 ### E2. A benchmark that holds the client fixed exports the least-warrantable decisions by design
 
+- **Status.** Written 2026-08-28 as `kb/notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md`.
+
 - **Claim.** Any "as good as a competent remote X" comparison holds brief,
   feedback, and acceptance constant. Those are the unsettled-criterion and
   acceptance rows of the residue — the hardest to warrant. The benchmark
@@ -51,6 +55,8 @@ source claim IDs it discharges.
 - **Ledger IDs.** O7, O9.
 
 ### E3. A theory-mediated loop closes only by causal co-indexing, not by co-occurrence inside one boundary
+
+- **Status.** Written 2026-08-28 as `kb/notes/a-theory-mediated-loop-closes-only-by-causal-co-indexing.md`.
 
 - **Claim.** The same theory must guide the change, the change's result must
   test that theory, and the revised theory must affect later operation on the
@@ -71,6 +77,8 @@ source claim IDs it discharges.
 
 ### E4. A method's ceiling bounds the method, not the transfer it already made
 
+- **Status.** Written 2026-08-28 as `kb/notes/a-method-ceiling-bounds-the-method-not-the-transfer-already-made.md`.
+
 - **Claim.** A bounded mechanism (formatter, compiler) makes real progress up
   to its ceiling; reaching the ceiling leaves the rest of the residue visible
   without making the transfer unreal. Performance inside an envelope (quality,
@@ -87,6 +95,8 @@ source claim IDs it discharges.
 
 ### E5. Tool usefulness, computational autonomy, warrant, and system power are separate dimensions
 
+- **Status.** Written 2026-08-28 as `kb/notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md`.
+
 - **Claim.** Four dimensions move independently: how well the human–agent
   composite performs its function, how much of a path runs without a person,
   whether what runs unattended can be trusted, and how capable the system is.
@@ -102,6 +112,8 @@ source claim IDs it discharges.
 - **Ledger IDs.** O3, O11, and the author-direction bullet on dimensions.
 
 ### E6. Citing retained theory at the decision point is a mediation trace
+
+- **Status.** Written 2026-08-28 as `kb/notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md`.
 
 - **Claim.** When the theory that guided a decision is cited where the
   decision is made, the citation is the mediation trace: addressability makes
@@ -120,6 +132,8 @@ source claim IDs it discharges.
 
 ### E7. Programming-tool progress is a partial order on accepted outcomes per total human effort
 
+- **Status.** Written 2026-08-28 as `kb/notes/programming-tool-progress-is-a-partial-order-not-a-scalar.md`.
+
 - **Claim.** A change is forward when, at a fixed task class and acceptance
   threshold, it produces no worse outcomes with no more total human
   programming effort and strictly improves one term. Effort counts
@@ -136,6 +150,8 @@ source claim IDs it discharges.
 
 ### E8. Explicit artifacts buy addressability, not credit assignment, coherence, retrieval, or admission
 
+- **Status.** Written 2026-08-28 as `kb/notes/explicit-artifacts-buy-addressability-not-credit-assignment.md`.
+
 - **Claim.** Making retained state explicit makes it inspectable and
   addressable. It does not by itself assign credit for outcomes, keep the
   store coherent, guarantee correct retrieval, or decide admission; each is a
@@ -151,6 +167,8 @@ source claim IDs it discharges.
 - **Ledger IDs.** C4, C1.
 
 ### E9. Removing a human judgment can degrade the judgments that remain
+
+- **Status.** Written 2026-08-28 as `kb/notes/removing-a-human-judgment-can-degrade-the-judgments-that-remain.md`.
 
 - **Claim.** A person left only with the decisions that cannot be checked,
   and with less contact with the routine cases that used to inform them, is

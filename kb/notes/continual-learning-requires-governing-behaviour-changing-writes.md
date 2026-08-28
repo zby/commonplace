@@ -36,3 +36,4 @@ Relevant Notes:
 - [Constraining during deployment is continual learning](./constraining-during-deployment-is-continuous-learning.md) — exemplifies: versioned prompts, schemas, tools, and tests as one concrete system-definition loop
 - [LLM contexts interpret instructions and content through the same token medium](./llm-context-interprets-instructions-and-content-through-one-medium.md) — mechanism: lets readable artifacts function as instruction rather than only as data
 - [Trace-learning techniques in related systems](../agent-memory-systems/trace-learning-techniques-in-related-systems.md) — evidenced-by: surveyed systems already split into weight-promotion and artifact-promotion loops
+- [Explicit artifacts buy addressability, not credit assignment, coherence, retrieval, or admission](./explicit-artifacts-buy-addressability-not-credit-assignment.md) — grounds: why governance must be built rather than inherited from the writes being explicit

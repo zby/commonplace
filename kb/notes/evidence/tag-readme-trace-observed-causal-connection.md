@@ -78,3 +78,4 @@ Relevant Notes:
 - [Behavioral authority](../definitions/behavioral-authority.md) — defined-in: names each consumer, channel, and force in the trace
 - [Indexes lower recall when they suppress retrieval that would find more](../indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — rests-on: the retained claim the strain was read through
 - [ADR 026: tag-readme type with completeness and coverage marks](../../reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) — evidenced-by: records the decision and implemented contract reconstructed by this trace
+- [Citing retained theory at the decision point is a mediation trace](../citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — exemplifies: the general claim this trace instantiates: decision records naming the claim they were read through are the mediation evidence

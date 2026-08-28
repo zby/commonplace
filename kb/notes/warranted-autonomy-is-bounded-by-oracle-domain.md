@@ -49,3 +49,4 @@ Relevant Notes:
 - [Oracle-strength spectrum](./oracle-strength-spectrum.md) — extends: grades the verification surfaces that determine oracle domain
 - [Commonplace as a reflective system](./evidence/commonplace-as-a-reflective-system.md) — evidenced-by: a pathway-mixed system whose autonomy profile aligns with heterogeneous oracle domain
 - [Computationally directed self-improvement is a fixed-boundary reallocation ending in contraction](./computationally-directed-self-improvement-is-a-reallocation.md) — contrasts: the completion test a contracted pathway can pass while its acceptances remain outside any oracle's warranted domain
+- [Tool usefulness, computational autonomy, warrant, and system power are separate dimensions](./usefulness-autonomy-warrant-and-power-are-separate-dimensions.md) — extends: the four-dimension separation of which this note's autonomy/warrant distinction is one pair

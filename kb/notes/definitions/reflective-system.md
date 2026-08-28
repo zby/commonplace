@@ -85,3 +85,4 @@ Relevant Notes:
 - [Maes, Computational Reflection](../../sources/maes-computational-reflection-1988.ingest.md) — derived-from: supplies causal connection, self-representation, and theory-relativity
 - [Wuyts and Ducasse, Symbiotic Reflection](../../sources/wuyts-ducasse-2001-symbiotic-reflection.ingest.md) — evidenced-by: corroborates the causal self-representation threshold and the introspection/intercession distinction
 - [Ashby, Design for a Brain — ultrastability](../../sources/ashby-design-for-a-brain-ultrastability.md) — evidenced-by: a negative case — an adaptive, self-modifying system that is not reflective, having no self-representation
+- [A theory-mediated loop closes only by causal co-indexing, not by co-occurrence inside one boundary](../a-theory-mediated-loop-closes-only-by-causal-co-indexing.md) — extends: what an improvement attribution needs beyond a two-way connected path: the same theory at both ends of it

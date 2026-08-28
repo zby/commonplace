@@ -52,3 +52,4 @@ Relevant Notes:
 - [Representational form](./definitions/representational-form.md) — defined-in: the natural-language / symbolic / distributed-parametric axis the tacit/explicit divide runs across
 - [Retained artifact](./definitions/retained-artifact.md) — defined-in: the umbrella term for durable behavior-shaping state this note's rows instantiate
 - [Commonplace as a reflective system](./evidence/commonplace-as-a-reflective-system.md) — evidenced-by: the excluded external-provider case and the distinction between its writable localized binding request and the provider weights it names
+- [Explicit artifacts buy addressability, not credit assignment, coherence, retrieval, or admission](./explicit-artifacts-buy-addressability-not-credit-assignment.md) — extends: what the addressable column does not buy: credit assignment, coherence, retrieval, admission

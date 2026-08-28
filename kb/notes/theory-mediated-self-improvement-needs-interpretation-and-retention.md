@@ -67,3 +67,4 @@ Relevant Notes:
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — grounds: why reflective membership does not establish the closure a test would need
 - [Commonplace as a reflective self-improving system](./evidence/commonplace-as-a-reflective-system.md) — evidenced-by: the closest running instance, with human, joint, and computational functions explicitly located
 - [Exo](../agentic-systems/exo.md) — evidenced-by: a running system satisfying the three conditions without a human, whose acceptance oracles reach liveness but not reach
+- [A theory-mediated loop closes only by causal co-indexing, not by co-occurrence inside one boundary](./a-theory-mediated-loop-closes-only-by-causal-co-indexing.md) — extends: adds the closure test the three conditions do not supply: the same theory guides the change and is revised by its result on one path
