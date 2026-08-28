@@ -62,9 +62,9 @@ while its placement of live choices with the subordinate who sees changing
 conditions supports [Specification strategy should follow where understanding
 lives](../notes/specification-strategy-should-follow-where-understanding-lives.md).
 Its distinction between repeatable drills and judgment-bearing, opposed
-exercises supplies a mature-domain instance for [Codifying predictable choices
-leaves agents with less predictable
-work](../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md).
+exercises supplies a mature-domain instance for [Preferential codification
+concentrates less predictable work at the agent
+boundary](../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md).
 The source also gives [A specific intent may out-yield local rationales, but
 contingent facts stay
 separate](../notes/specific-intent-may-out-yield-local-rationales-facts-stay-separate.md)

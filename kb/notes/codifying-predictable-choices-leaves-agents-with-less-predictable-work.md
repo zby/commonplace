@@ -1,51 +1,38 @@
 ---
-description: "Distinguishes unpredictability in residual agent work from uncertainty in the surrounding domain, then derives planning and self-improvement consequences"
+description: "Explains the negative-selection mechanism by which preferential codification changes the composition of work retained at an agent boundary"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, computational-model, self-improving-systems]
 ---
 
-# Codifying predictable choices leaves agents with less predictable work
+# Preferential codification concentrates less predictable work at the agent boundary
 
-When a system [codifies](./definitions/codification.md) a recurring choice previously assigned to an agent, it moves that choice into a symbolic control whose consequences are assigned by a formal consumer. The core claim is conditional: when a system preferentially codifies choices that are more predictable than the choices it leaves to agents, the residual agent workload becomes less predictable. Here, *predictable* means that the relevant state-to-action mapping and an acceptable result can be specified and verified cheaply and reliably enough to replace open-ended judgment.
+Within a fixed incoming workload and routing policy, suppose a system [codifies](./definitions/codification.md) a nonzero share of recurring decision cases and every removed case is more operationally predictable than every case left to agent judgment. The residual distribution is then concentrated at the less predictable end of the original population. This note calls that selection pattern *preferential codification*. The result is universal under the stated condition; it is not a claim that deployed systems usually satisfy the condition.
 
-This is a selection effect. It does not require the surrounding domain to be stochastic. A repository can be deterministic, a dataset fixed, and a knowledge base fully stored on disk while an agent's task remains unpredictable in this operational sense. The system may already have extracted the decisions whose responses could be fixed economically in advance, leaving investigation, diagnosis, synthesis, and exception handling at the agent boundary.
+Operational predictability is system-relative. A case is more predictable here when its relevant state-to-action mapping and an acceptable result can be specified and verified more cheaply and reliably under the system's adopted comparison. The distribution counts each decision case once; it is not weighted by case duration, token use, or cost. The claim is therefore about the composition of agent work, not an aggregate increase in agent effort or intrinsic task difficulty.
 
 ## Codification moves the boundary
 
-Repeated operation can expose a stable mapping between a situation and a response. The system may first retain that regularity as theory or natural-language methodology. Those artifacts narrow later interpretation, but they remain interpreted. The choice crosses into codification only when a schema, validator, program, or other symbolic artifact gives it formally assigned consequences.
+To codify a choice is to move it from model interpretation into code, a schema, a validator, a grammar, or another symbolic artifact that assigns consequences. A stable mapping may first be retained as theory or natural-language methodology. Those artifacts narrow later interpretation, but the model still interprets them. The choice crosses into codification only when a symbolic consumer applies the mapping without asking the agent to choose it anew.
 
-```text
-open-ended judgment
-        ↓ repeated cases expose a stable mapping
-explicit theory or natural-language methodology
-        ↓ trigger, response, and verification become settled
-schema / validator / program / other symbolic control
-```
-
-Each successful migration changes the division of work. It can lower uncertainty across the whole system while increasing the share of hard-to-pre-specify decisions within the agent layer. Better automation can therefore make the work assigned to agents less routine even as the system becomes more predictable overall.
+Preferential migration changes the division of work even when the surrounding domain is deterministic. A repository can be fixed while its agent boundary retains investigation, diagnosis, synthesis, and exception handling because the economically pre-specifiable cases have already moved elsewhere. The whole system can become more predictable while the agent layer contains a larger share of cases requiring interpretation. This is a negative-selection effect, not evidence that any retained case itself became harder.
 
 ## The planning consequence depends on when information arrives
 
-Residual work can resist pre-specification for several reasons: relevant facts may arrive only during execution, the contingency space may be too expensive to enumerate, verification may be weak, or implementation may cost more than continued agent judgment. Only the first two reasons necessarily give the executor an information advantage over an earlier planner.
+Residual work can resist pre-specification because relevant state becomes available only during execution, or because execution cheaply resolves the branch that matters while advance planning would have to elaborate many branches that never occur. Both conditions favor execution-time choice. Weak verification or uneconomical symbolic implementation can also keep a choice with an agent, but neither condition alone gives execution an advantage over advance planning.
 
-For those cases, a detailed plan is brittle when it commits to actions whose premises are not yet available. During execution, the agent can inspect the actual state, run tests, follow links, observe failures, and revise its model. The practical rule is to commit early to stable intent, constraints, invariants, coordination points, and verification requirements, while deferring a choice when its decision-relevant information is expected to arrive during execution.
-
-Detailed advance planning remains appropriate when the relevant state is already known, coordination requires a shared sequence, verification demands an explicit procedure, or the choice has become predictable enough to settle. The selection effect supports adaptive planning only where execution changes the available evidence.
+Where execution has that advantage, a plan should fix stable intent, constraints, invariants, coordination interfaces, and acceptance evidence while leaving the affected choice of means open. The corresponding authoring rule is that [an author should fix what the executor can't determine, not what it will](./fix-what-the-executor-cant-determine-not-what-it-will.md). Detailed advance planning remains appropriate when the decision-relevant state is already stable and available, the relevant branch is economical to resolve, coordination requires a shared sequence, or the choice has become predictable enough to settle.
 
 ## Self-improvement moves the frontier
 
-An unfamiliar case can supply the observation that starts the next migration. Repeated successful responses expose a regularity; retained theory explains it; methodology narrows the admissible response; verification establishes whether a symbolic control is safe; codification then removes that choice from future open-ended judgment. Verification is load-bearing because [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md).
-
-This loop expands the symbolic control surface and moves the agent frontier toward the cases that still require interpretation. Retained methodology can govern the transition only insofar as [it settles the meta-decisions that its own extension raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md). Progressive codification therefore need not converge on an agent-free system. The frontier may shrink, stabilize, or move as new work arrives and available representations, costs, and verification methods change.
+Residual cases also reveal where later codification may be worthwhile. A repeated successful response is only a candidate: it still needs an adequate representation, an economical implementation, and a verifier. Verification is load-bearing because [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md). When those conditions are met, migration repeats the selection process and moves the agent boundary. The residual distribution thus supplies observations for later codification without guaranteeing that any particular case will migrate.
 
 ## Scope
 
-- The claim compares work before and after selective migration under a fixed incoming workload and routing policy. New work or deliberate routing of routine tasks through an LLM can offset or reverse the observed shift.
-- Predictability is relative to the available representations, implementation cost, required reliability, and verification machinery. The same choice can sit on different sides of the boundary in different systems.
-- The claim predicts enrichment, not purity. Residual agent tasks can contain deterministic substeps, and some predictable work may remain with agents because moving it is not economical.
-- Natural-language instructions and methodology can constrain choices without codifying them. This note reserves *codification* for the move into a symbolic artifact with formally assigned consequences.
-- The mechanism does not establish how often real systems satisfy its selection condition. Evidence that deployed systems usually retain predictable choices in agent discretion, or codify without favoring predictable choices, would defeat a prevalence claim built from this mechanism.
+- New work or deliberate routing of routine cases through an LLM can offset or reverse the observed composition shift; that is why the comparison holds workload and routing fixed.
+- The same case can sit on different sides of the boundary when representations, implementation cost, required reliability, or verification machinery differ.
+- Concentration is not purity. Residual cases can contain deterministic substeps, and economical considerations can leave some predictable cases with agents.
+- The mechanism neither predicts convergence on an agent-free system nor establishes how often deployed systems preferentially codify.
 
 ---
 
@@ -54,3 +41,4 @@ Relevant Notes:
 - [Methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — mechanism: separates activation and response hardening on the path from interpreted guidance to symbolic control
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: explains why a stable response still needs a verifier before it can leave agent discretion
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — extends: develops what a self-improving system must settle to move its boundary under retained governance
+- [Productive deferral requires a preserved option, discriminating evidence, and a convergence rule](./productive-deferral-requires-option-evidence-and-convergence.md) — extends: tests whether a choice identified for late resolution is being deferred productively

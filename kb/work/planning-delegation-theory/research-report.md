@@ -56,7 +56,7 @@ The external sources do not establish that selection argument. They supply
 mature formulations of what to do after the asymmetry exists, conditions under
 which deferral is rational, and mechanisms for preserving flexibility. They
 therefore ground or refine the planning consequence of
-[Codifying predictable choices leaves agents with less predictable work](../../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md),
+[Preferential codification concentrates less predictable work at the agent boundary](../../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md),
 not its premise about how codification reshapes the residual work distribution.
 
 That evidential boundary matters. Military doctrine is normative doctrine,
