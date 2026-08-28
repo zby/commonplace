@@ -2,6 +2,42 @@
 
 **Posed by:** the operator, 2026-08-27, as author of the article series.
 
+## Intent
+
+In mission-command terms this is the commander's intent (*Absicht*): the
+purpose the workshop serves and the end state it should leave, stated so that
+a task below can be changed when it stops serving the purpose (see the
+[mission-command source](../../sources/us-army-adrp-6-0-mission-command-2012.ingest.md)).
+
+**Purpose.** Get researchers interested in Commonplace and, where it works,
+get fellow researchers working with it.
+
+**Mechanism, as a hypothesis.** The incentive offered is authorship: the KB is
+a substrate from which publishable articles can be distilled. One instance
+exists. The ASISAS 2026 position paper
+([ingest](../../sources/where-it-lives-retained-adaptation-2026-06-23.ingest.md))
+was written paper-from-notes: its vocabulary and corpus section were distilled
+from the artifact-analysis notes and the agent-memory review matrix, and
+refinements flowed back into notes afterwards. This series should be the
+second instance, and it should make the path visible: each article's claims
+traceable to notes, each note's warrant inspectable, open problems stated as
+invitations rather than hedges, and the theory usable through the instrument
+on a reader's own system. How collaboration then works — whether people write
+from the notes, contribute notes, run the instrument on their systems, or
+contest claims through issues — is not known; the workshop records what is
+tried and what it produced.
+
+**End state.** A published series that a researcher can read three ways: as
+an argument, as a map of the notes it was distilled from, and as a list of
+open problems they could take up with the same substrate and tools.
+
+**What this changes below.** The goal, article jobs, and closure conditions
+serve this purpose. When a condition costs more than it contributes to the
+purpose, revise the condition here instead of satisfying it. An accepted
+article that hides its lineage fails the intent even if it passes its
+contract. The invitation surface is the articles' open questions, the notes'
+scope sections, and the ledger's untested predictions.
+
 ## Goal
 
 The workshop's product is the article series. Its main article states the
@@ -215,6 +251,8 @@ The workshop closes when:
 8. the classify-and-route instrument exists and has been applied once to a
    Commonplace path, with the classification, the chosen transfer, and its
    outcome recorded; and
-9. the bootstrap article cites that record as its mediation trace.
+9. the bootstrap article cites that record as its mediation trace; and
+10. each published article names the notes it was distilled from and states
+    its open problems as invitations a reader could take up.
 
 At closure, durable results move to the library and this directory is deleted.
