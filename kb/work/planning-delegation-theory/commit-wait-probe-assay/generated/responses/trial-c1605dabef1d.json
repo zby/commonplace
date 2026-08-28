@@ -1,0 +1,12 @@
+{
+  "packet_id": "trial-c1605dabef1d",
+  "decision_class": "direct",
+  "recommended_next_move": "Correct the one-word command-name typo in the maintained instruction now.",
+  "option_analysis_used": false,
+  "preserved_alternative": null,
+  "discriminating_input": null,
+  "opportunity_status": null,
+  "delay_or_probe_cost": null,
+  "return_rule": null,
+  "reason": "The correction is validated by the implementation and a focused test, changes no interface or dependency, is one-line and immediately reversible, and no later evidence is expected to alter the decision. It should be handled directly rather than treated as a costly commitment."
+}

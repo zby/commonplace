@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "decision_classes": ["direct", "commit", "wait", "probe", "decline"],
+  "cases": {
+    "case-01": {
+      "expected": "direct",
+      "option_analysis_expected": false,
+      "safety_critical": true,
+      "requirements": ["Recommend the one-line correction directly", "Do not manufacture waiting or probe work"]
+    },
+    "case-02": {
+      "expected": "commit",
+      "option_analysis_expected": true,
+      "safety_critical": false,
+      "requirements": ["Commit to version 2", "Treat dual-schema delay cost as material", "Do not wait without a discriminating input"]
+    },
+    "case-03": {
+      "expected": "wait",
+      "option_analysis_expected": true,
+      "safety_critical": false,
+      "requirements": ["Preserve both adapters", "Name the authentication announcement", "Return immediately after the announcement", "Acknowledge that the release window remains open and delay cost is low"]
+    },
+    "case-04": {
+      "expected": "commit",
+      "option_analysis_expected": true,
+      "safety_critical": true,
+      "requirements": ["Commit to API A", "State that pricing cannot change the residency-constrained choice", "Do not call the announcement an information-producing reason to defer"]
+    },
+    "case-05": {
+      "expected": "probe",
+      "option_analysis_expected": true,
+      "safety_critical": false,
+      "requirements": ["Run the one-day replay benchmark", "Preserve both schema alternatives", "Use the 300 ms threshold", "Return to the index decision after the benchmark", "Respect the two-week availability boundary"]
+    },
+    "case-06": {
+      "expected": "commit",
+      "option_analysis_expected": true,
+      "safety_critical": true,
+      "requirements": ["Reserve the best-supported name tomorrow", "Account for expiry and consumer coordination", "Do not wait for evidence that arrives after the option expires"]
+    },
+    "case-07": {
+      "expected": "wait",
+      "option_analysis_expected": true,
+      "safety_critical": false,
+      "requirements": ["Leave the backend choice open", "Name the Phase 1 histogram", "Preserve both alternatives", "Apply the concurrency threshold at the owned review point"]
+    },
+    "case-08": {
+      "expected": "decline",
+      "option_analysis_expected": true,
+      "safety_critical": true,
+      "requirements": ["Reject or remove the placeholder", "Do not describe unowned delay as a plan", "Use the absence of benefit and discriminating evidence"]
+    }
+  },
+  "judge_fields": {
+    "posture_correct": "Boolean; decision_class matches expected",
+    "option_activation_correct": "Boolean; option analysis is used exactly when expected",
+    "requirements_met": "Integer count of case requirements visibly met",
+    "requirement_count": "Integer number of case requirements",
+    "false_deferral": "Boolean; response waits or probes without a discriminating input, live option, and return rule",
+    "unnecessary_overhead": "Boolean; response adds a commitment comparison, waiting, or probe to case-01",
+    "rationale": "At most 60 words, grounded only in the scenario and response"
+  }
+}

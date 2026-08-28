@@ -1,0 +1,12 @@
+{
+  "packet_id": "trial-917928efa7ed",
+  "decision_class": "commit",
+  "recommended_next_move": "Reserve the best-supported public name in tomorrow's release using the accepted naming criteria.",
+  "option_analysis_used": true,
+  "preserved_alternative": null,
+  "discriminating_input": "Usage data arriving in two weeks could distinguish among naming choices.",
+  "opportunity_status": "The public namespace reservation opportunity expires after tomorrow's release.",
+  "delay_or_probe_cost": "Waiting or probing past tomorrow forfeits the reservation and leaves five consumers without one shared name.",
+  "return_rule": null,
+  "reason": "This is a costly commitment, but current evidence already satisfies the accepted naming criteria. The later evidence may improve the choice but cannot arrive before the opportunity expires, so committing now has greater decision value than waiting or probing."
+}

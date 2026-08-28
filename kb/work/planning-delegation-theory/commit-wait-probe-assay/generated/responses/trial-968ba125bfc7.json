@@ -1,0 +1,12 @@
+{
+  "packet_id": "trial-968ba125bfc7",
+  "decision_class": "wait",
+  "recommended_next_move": "Keep the Phase 2 backend unspecified until the Phase 1 review, then apply the authorized concurrency threshold to select it.",
+  "option_analysis_used": true,
+  "preserved_alternative": "Both the embedded and service-backed store remain viable.",
+  "discriminating_input": "The Phase 1 workload histogram, specifically whether p95 concurrency is below 20.",
+  "opportunity_status": "Both choices remain available through the Phase 1 review.",
+  "delay_or_probe_cost": "Waiting loses no current benefit or coordination value.",
+  "return_rule": "At the Phase 1 review, choose embedded if p95 concurrency is below 20; otherwise choose the service-backed store.",
+  "reason": "The backend choice is costly to reverse, while an already-authorized phase will supply evidence that directly determines the decision. Waiting preserves both alternatives without coordination loss and has a precise review point and selection rule. No additional probe or durable artifact is warranted."
+}

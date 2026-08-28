@@ -1,0 +1,12 @@
+{
+  "packet_id": "trial-d738b4a5763e",
+  "decision_class": "wait",
+  "recommended_next_move": "Wait ten days for the vendor's authentication-protocol announcement, then select the adapter that supports the retained protocol.",
+  "option_analysis_used": true,
+  "preserved_alternative": "Both vendor adapter choices remain viable until the authentication protocol is known.",
+  "discriminating_input": "The vendor's announcement of which authentication protocol remains supported.",
+  "opportunity_status": "Both adapters will remain available after the announcement, well before the release.",
+  "delay_or_probe_cost": "Waiting ten days has no current benefit cost or coordination loss; the release remains more than four weeks away.",
+  "return_rule": "When the announcement arrives, choose the adapter mapped to the supported protocol; reassess if it is not issued in ten days.",
+  "reason": "The adapter decision is costly to reverse, and the imminent external announcement directly determines the correct choice. Waiting preserves both alternatives without losing availability, release time, current benefit, or coordination value. Commit after the signal arrives rather than creating a dependency today.")
+}

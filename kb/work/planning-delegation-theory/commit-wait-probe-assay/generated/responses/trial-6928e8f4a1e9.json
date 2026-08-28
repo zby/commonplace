@@ -1,0 +1,12 @@
+{
+  "packet_id": "trial-6928e8f4a1e9",
+  "decision_class": "commit",
+  "recommended_next_move": "Publish schema version 2 for the release.",
+  "option_analysis_used": true,
+  "preserved_alternative": "Publish schema version 1 instead.",
+  "discriminating_input": null,
+  "opportunity_status": "The release decision is ready: all decision-relevant evidence favors version 2.",
+  "delay_or_probe_cost": "Delay would force the three consumers to support both incompatible schemas, while no probe could change the choice.",
+  "return_rule": null,
+  "reason": "Publication is costly to reverse, so the commitment comparison applies. Version 2 satisfies all three named consumers and passes compatibility tests. The evidence is complete, no bounded test or scheduled observation could discriminate further, and delay creates avoidable dual-schema support work. Commit now."
+}

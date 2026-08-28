@@ -1,0 +1,12 @@
+{
+  "packet_id": "trial-245f371ece17",
+  "decision_class": "commit",
+  "recommended_next_move": "Publish schema version 2 now, since all three named consumers require it and compatibility tests pass.",
+  "option_analysis_used": true,
+  "preserved_alternative": null,
+  "discriminating_input": null,
+  "opportunity_status": "Publication is available now; no later observation could improve the choice.",
+  "delay_or_probe_cost": "Delay would force consumers to support both incompatible schema versions.",
+  "return_rule": null,
+  "reason": "Publication is costly to reverse, so commitment was compared with waiting, probing, and declining. Current evidence is complete and selects version 2: three named consumers require it and compatibility tests pass. Waiting or probing would add cost without producing decision-changing information."
+}

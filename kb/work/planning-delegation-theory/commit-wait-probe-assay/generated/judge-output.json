@@ -1,0 +1,165 @@
+{
+  "items": [
+    {
+      "judge_id": "item-825ac273ce12",
+      "posture_correct": false,
+      "option_activation_correct": true,
+      "requirements_met": 4,
+      "requirement_count": 4,
+      "false_deferral": false,
+      "unnecessary_overhead": false,
+      "rationale": "The response preserves both backends, names the Phase 1 histogram, and gives the owned review threshold. Its substance is waiting for already-authorized evidence, but it labels the decision as a probe rather than the expected wait. The deferral remains bounded and discriminating."
+    },
+    {
+      "judge_id": "item-be9cb09452b7",
+      "posture_correct": true,
+      "option_activation_correct": true,
+      "requirements_met": 3,
+      "requirement_count": 3,
+      "false_deferral": false,
+      "unnecessary_overhead": false,
+      "rationale": "The response commits to version 2, treats dual-schema support as a concrete delay cost, and correctly states that no further probe or observation could change the evidence-complete choice."
+    },
+    {
+      "judge_id": "item-4935fe29f79f",
+      "posture_correct": true,
+      "option_activation_correct": false,
+      "requirements_met": 3,
+      "requirement_count": 3,
+      "false_deferral": false,
+      "unnecessary_overhead": false,
+      "rationale": "The response removes the placeholder, rejects ownerless delay as useful planning, and relies on the lack of a problem, benefit, or evidence-producing path. However, it marks option analysis unused even though the expected flag is true."
+    },
+    {
+      "judge_id": "item-b38805371034",
+      "posture_correct": true,
+      "option_activation_correct": false,
+      "requirements_met": 3,
+      "requirement_count": 3,
+      "false_deferral": false,
+      "unnecessary_overhead": false,
+      "rationale": "The response removes the placeholder and explains that it has no demonstrated benefit, owner, meaningful preserved alternative, or evidence-gathering value. It does not present indefinite delay as a plan, but its option-analysis flag is false when true was expected."
+    },
+    {
+      "judge_id": "item-217ae8523c9c",
+      "posture_correct": true,
+      "option_activation_correct": true,
+      "requirements_met": 5,
+      "requirement_count": 5,
+      "false_deferral": false,
+      "unnecessary_overhead": false,
+      "rationale": "The response calls for the one-day replay benchmark, preserves both schema choices through the two-week release boundary, and supplies the 300 ms rule for returning to and resolving the index decision."
+    },
+    {
+      "judge_id": "item-e515730b98bc",
+      "posture_correct": true,
+      "option_activation_correct": true,
+      "requirements_met": 3,
+      "requirement_count": 3,
+      "false_deferral": false,
+      "unnecessary_overhead": false,
+      "rationale": "The response commits to version 2 now, explicitly identifies forced dual-schema support as the cost of delay, and rejects waiting or probing because no later information could change the choice."
+    },
+    {
+      "judge_id": "item-cdf689e2988e",
+      "posture_correct": true,
+      "option_activation_correct": true,
+      "requirements_met": 4,
+      "requirement_count": 4,
+      "false_deferral": false,
+      "unnecessary_overhead": false,
+      "rationale": "The response leaves the backend open, preserves both alternatives, names the Phase 1 workload histogram, and applies the below-20 concurrency threshold at the Phase 1 review. The wait has a discriminating input and precise return rule."
+    },
+    {
+      "judge_id": "item-e0d65206d125",
+      "posture_correct": true,
+      "option_activation_correct": true,
+      "requirements_met": 5,
+      "requirement_count": 5,
+      "false_deferral": false,
+      "unnecessary_overhead": false,
+      "rationale": "The response runs the bounded one-day benchmark, keeps both schema alternatives feasible within the two-week window, and returns to the decision using the stated 300 ms p95 threshold."
+    },
+    {
+      "judge_id": "item-162e8b8fe6d3",
+      "posture_correct": true,
+      "option_activation_correct": true,
+      "requirements_met": 3,
+      "requirement_count": 3,
+      "false_deferral": false,
+      "unnecessary_overhead": false,
+      "rationale": "The response reserves the best-supported name tomorrow and explicitly weighs both the expiring reservation and the five consumers' need for coordination. It correctly refuses to wait for useful evidence that arrives only after expiry."
+    },
+    {
+      "judge_id": "item-19657a034614",
+      "posture_correct": true,
+      "option_activation_correct": true,
+      "requirements_met": 3,
+      "requirement_count": 3,
+      "false_deferral": false,
+      "unnecessary_overhead": false,
+      "rationale": "The response commits tomorrow using current accepted criteria, accounts for the namespace expiry and coordination needs of five consumers, and explains why evidence arriving two weeks later cannot justify waiting past the reservation deadline."
+    },
+    {
+      "judge_id": "item-247ae363bf67",
+      "posture_correct": true,
+      "option_activation_correct": true,
+      "requirements_met": 2,
+      "requirement_count": 2,
+      "false_deferral": false,
+      "unnecessary_overhead": false,
+      "rationale": "The response directly recommends the confirmed one-word correction. It adds no waiting, probe, or commitment comparison and grounds immediate action in the edit's validation, low cost, reversibility, and absence of later decision-changing evidence."
+    },
+    {
+      "judge_id": "item-99bb53accff6",
+      "posture_correct": true,
+      "option_activation_correct": true,
+      "requirements_met": 3,
+      "requirement_count": 3,
+      "false_deferral": false,
+      "unnecessary_overhead": false,
+      "rationale": "The response selects API A now, states that neither pricing outcome can alter the residency-constrained choice, and treats waiting as integration-blocking delay rather than information-producing deferral."
+    },
+    {
+      "judge_id": "item-a53550fb2c42",
+      "posture_correct": true,
+      "option_activation_correct": true,
+      "requirements_met": 2,
+      "requirement_count": 2,
+      "false_deferral": false,
+      "unnecessary_overhead": false,
+      "rationale": "The response directly recommends fixing the confirmed one-word typo and does not manufacture a wait or probe. Its rationale recognizes that implementation and testing settle the correction and that no later evidence is expected to change it."
+    },
+    {
+      "judge_id": "item-de2eb01cb4f3",
+      "posture_correct": true,
+      "option_activation_correct": true,
+      "requirements_met": 3,
+      "requirement_count": 3,
+      "false_deferral": false,
+      "unnecessary_overhead": false,
+      "rationale": "The response selects API A immediately, clearly explains that pricing cannot make API B satisfy the fixed residency requirement, and rejects the announcement as a reason to defer while integration remains blocked."
+    },
+    {
+      "judge_id": "item-9c76d25965a4",
+      "posture_correct": true,
+      "option_activation_correct": true,
+      "requirements_met": 4,
+      "requirement_count": 4,
+      "false_deferral": false,
+      "unnecessary_overhead": false,
+      "rationale": "The response preserves both adapters, names the authentication-protocol announcement, and returns when it arrives to choose the mapped adapter. It also notes that availability continues well before release and that the ten-day delay has no current benefit or coordination cost."
+    },
+    {
+      "judge_id": "item-44842d547e7a",
+      "posture_correct": true,
+      "option_activation_correct": true,
+      "requirements_met": 4,
+      "requirement_count": 4,
+      "false_deferral": false,
+      "unnecessary_overhead": false,
+      "rationale": "The response keeps both adapters available, identifies the vendor's authentication announcement, and commits to choosing the matching adapter when the signal arrives. It recognizes the open six-week release window and the absence of opportunity loss during the ten-day wait."
+    }
+  ],
+  "cross_item_notes": "Most responses match the required posture, activate option analysis as expected, and make bounded waits or probes explicit through a live alternative, discriminating input, and return rule. One response mislabels a substantive wait as a probe. Both decline responses make the right decision and satisfy their substantive requirements, but report option analysis as unused despite the expected flag. The cheap reversible responses avoid unnecessary overhead."
+}

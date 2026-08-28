@@ -118,6 +118,14 @@ The same pass repaired bounded consumers that shared the mechanism:
 - generated report-job prompts now permit the parser's existing `ERROR`
   escalation route and forbid nested delegation instead of forcing a guess.
 
+## Commit / wait / probe assay
+
+The [behavioral assay](./commit-wait-probe-assay/report.md) compared the current
+real-options wording with the preceding least-commitment wording. Its 8/8
+treatment versus 7/8 control result was below the preregistered threshold and
+is not decision-useful. The evidence is retained for redesign; no machinery
+change follows from it.
+
 ## Deliberate non-changes
 
 The pass did not build a generic planner, persisted plan type, scheduler,
@@ -135,7 +143,8 @@ parts of the changes above:
 - retirement or harness-native replacement of the legacy nested-CLI iterative
   revision skill;
 - static nested-delegation and agent-CLI authority checks;
-- commit/wait/probe and methodology-cue behavioral assays;
+- the methodology-cue behavioral assay and any redesigned replication of the
+  inconclusive commit/wait/probe assay;
 - a decision on the unconsumed task subsystem; and
 - any generic persisted plan, only after two real workflows need the same state
   and a named consumer exists.

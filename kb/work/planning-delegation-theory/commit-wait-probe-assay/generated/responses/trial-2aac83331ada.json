@@ -1,0 +1,12 @@
+{
+  "packet_id": "trial-2aac83331ada",
+  "decision_class": "commit",
+  "recommended_next_move": "Select API A now so integration work can begin.",
+  "option_analysis_used": true,
+  "preserved_alternative": null,
+  "discriminating_input": "The fixed data-residency requirement already makes API A the only viable option; the coming pricing announcement cannot change that.",
+  "opportunity_status": "API A remains available, but no meaningful compliant alternative is preserved by waiting.",
+  "delay_or_probe_cost": "Waiting ten days blocks integration without producing decision-relevant information.",
+  "return_rule": null,
+  "reason": "Choosing the API is costly to reverse, so the option comparison applies. Current evidence already discriminates: API A alone satisfies the fixed data-residency requirement. Both possible pricing outcomes leave that conclusion unchanged, no other signal is expected, and delay prevents integration. Commit now rather than wait or probe without information value."
+}

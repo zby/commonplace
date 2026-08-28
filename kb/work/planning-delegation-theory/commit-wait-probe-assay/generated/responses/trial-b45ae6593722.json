@@ -1,0 +1,12 @@
+{
+  "packet_id": "trial-b45ae6593722",
+  "decision_class": "probe",
+  "recommended_next_move": "Run the one-day replay benchmark against the named query workload before deciding whether to add the persistent full-text index.",
+  "option_analysis_used": true,
+  "preserved_alternative": "Keep the current schema without a persistent full-text index.",
+  "discriminating_input": "The replay benchmark's p95 latency for the named query workload relative to 300 ms.",
+  "opportunity_status": "Both adding the index and retaining the current schema remain feasible until the release in two weeks.",
+  "delay_or_probe_cost": "One day of benchmark work and decision delay; the release window leaves enough time to act afterward.",
+  "return_rule": "Add the index if p95 exceeds 300 ms; keep the current schema if p95 is at or below 300 ms.",
+  "reason": "The performance concern is anecdotal, while adding the index requires a costly schema migration. A non-mutating, one-day replay benchmark can resolve the choice using a predefined threshold without foreclosing either alternative or missing the two-week release window."
+}

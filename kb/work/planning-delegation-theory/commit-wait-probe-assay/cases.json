@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "case-01",
+      "title": "Cheap reversible correction",
+      "factors": ["cheap", "reversible", "no-later-observation"],
+      "scenario": "A maintained local instruction contains a confirmed one-word typo that changes a command name. The correct command is established by the implementation and a focused test. The edit changes no interface or dependency, takes one line, and can be reverted immediately. No later observation is expected to change the correction. The proposed solution is to fix the word now."
+    },
+    {
+      "id": "case-02",
+      "title": "Costly commitment with complete current evidence",
+      "factors": ["costly-to-reverse", "no-later-observation", "coordination-cost"],
+      "scenario": "A release must publish one of two incompatible schema versions. Three named consumers require version 2, compatibility tests pass, and all decision-relevant evidence is available. Publication will make reversal costly. No scheduled observation or bounded test could change which version satisfies the requirements. Delaying would force consumers to support both schemas. The proposed solution is to publish version 2."
+    },
+    {
+      "id": "case-03",
+      "title": "Passive wait for a discriminating external signal",
+      "factors": ["costly-to-reverse", "later-discriminating-observation", "option-remains", "low-delay-cost"],
+      "scenario": "Choosing either of two vendor adapters creates a costly dependency. In ten days the vendor will announce which authentication protocol remains supported; either announcement maps to a different adapter choice. The release is six weeks away, both adapters remain available after the announcement, and there is no current benefit from choosing now. The proposed solution is to select an adapter today."
+    },
+    {
+      "id": "case-04",
+      "title": "Later signal that cannot change the choice",
+      "factors": ["costly-to-reverse", "later-nondiscriminating-observation", "coordination-cost"],
+      "scenario": "Choosing a storage API creates a costly dependency. A pricing announcement will arrive in ten days, but both possible prices leave API A as the only option that meets the already-fixed data-residency requirement. Integration work is blocked until the API is selected. No other later observation is expected. The proposed solution is to adopt API A."
+    },
+    {
+      "id": "case-05",
+      "title": "Cheap bounded probe before structural commitment",
+      "factors": ["costly-to-reverse", "cheap-probe", "probe-discriminates", "option-remains"],
+      "scenario": "Adding a persistent full-text index requires a costly schema migration. The performance problem is currently anecdotal. A one-day replay benchmark can measure the named query workload without mutating production: p95 above 300 ms warrants the index; p95 at or below 300 ms warrants keeping the current schema. Both alternatives remain feasible until the release in two weeks. The proposed solution is to add the index now."
+    },
+    {
+      "id": "case-06",
+      "title": "Useful later evidence that arrives after expiry",
+      "factors": ["costly-to-reverse", "later-discriminating-observation", "opportunity-expires", "current-coordination-value"],
+      "scenario": "A public namespace can be reserved only in tomorrow's release. Usage data arriving in two weeks could improve the naming choice, but by then the reservation opportunity is gone and five consumers will already need one shared name. Current evidence satisfies the accepted naming criteria. The proposed solution is to reserve the best-supported name in tomorrow's release."
+    },
+    {
+      "id": "case-07",
+      "title": "Owned coarse future choice with a return rule",
+      "factors": ["costly-to-reverse", "later-discriminating-observation", "owned-deferral", "convergence"],
+      "scenario": "Phase 2 of a migration must choose an embedded or service-backed store, and either choice will be costly to reverse. Phase 1 is already authorized and will produce a workload histogram. The migration owner will decide at the Phase 1 review: choose embedded if p95 concurrency is below 20, otherwise choose the service. Both alternatives remain feasible through that review and choosing now has no coordination benefit. The proposed solution is to leave the Phase 2 backend coarse until the review."
+    },
+    {
+      "id": "case-08",
+      "title": "Unowned decide-later placeholder",
+      "factors": ["coarse-future-item", "no-owner", "no-discriminating-observation", "no-benefit"],
+      "scenario": "A backlog proposal says only 'pick a new storage backend later.' It names no owner, observation, probe, review point, maintained alternative, or benefit. Current workload evidence shows the existing backend meets every accepted requirement, and no failure or consumer asks for a replacement. The proposed solution is to retain the placeholder as planned future work."
+    }
+  ]
+}

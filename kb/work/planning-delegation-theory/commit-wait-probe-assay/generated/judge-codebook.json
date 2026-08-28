@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "judge_id": "item-825ac273ce12",
+      "packet_id": "trial-c9498ae157f1"
+    },
+    {
+      "judge_id": "item-be9cb09452b7",
+      "packet_id": "trial-6928e8f4a1e9"
+    },
+    {
+      "judge_id": "item-4935fe29f79f",
+      "packet_id": "trial-51b31a1ff100"
+    },
+    {
+      "judge_id": "item-b38805371034",
+      "packet_id": "trial-26961c7622da"
+    },
+    {
+      "judge_id": "item-217ae8523c9c",
+      "packet_id": "trial-b45ae6593722"
+    },
+    {
+      "judge_id": "item-e515730b98bc",
+      "packet_id": "trial-245f371ece17"
+    },
+    {
+      "judge_id": "item-cdf689e2988e",
+      "packet_id": "trial-968ba125bfc7"
+    },
+    {
+      "judge_id": "item-e0d65206d125",
+      "packet_id": "trial-656739dd9c57"
+    },
+    {
+      "judge_id": "item-162e8b8fe6d3",
+      "packet_id": "trial-917928efa7ed"
+    },
+    {
+      "judge_id": "item-19657a034614",
+      "packet_id": "trial-b2413444ff68"
+    },
+    {
+      "judge_id": "item-247ae363bf67",
+      "packet_id": "trial-c1605dabef1d"
+    },
+    {
+      "judge_id": "item-99bb53accff6",
+      "packet_id": "trial-2aac83331ada"
+    },
+    {
+      "judge_id": "item-a53550fb2c42",
+      "packet_id": "trial-cda4c9f8b82e"
+    },
+    {
+      "judge_id": "item-de2eb01cb4f3",
+      "packet_id": "trial-d538d3d3b195"
+    },
+    {
+      "judge_id": "item-9c76d25965a4",
+      "packet_id": "trial-d738b4a5763e"
+    },
+    {
+      "judge_id": "item-44842d547e7a",
+      "packet_id": "trial-4b2c835c7977"
+    }
+  ]
+}

@@ -204,6 +204,10 @@ Compare current and proposed instruction wording on crossed cases varying:
 Score decision placement, preserved intent, appropriate option analysis, probe
 selection, convergence, escalation, and unnecessary planning overhead.
 
+This assay ran on 2026-08-28 but was not decision-useful. The compact
+[evidence record](./commit-wait-probe-assay/report.md) retains the result and
+the design changes needed before any replication. No machinery change follows.
+
 ### Methodology-cue activation fidelity
 
 Compare no cue, bare *Auftragstaktik*, and the explicit gloss “preserve intent

@@ -46,6 +46,8 @@ Vocabulary overlap alone does not warrant transfer.
   second-pass coverage of commands, worker packets, deferrals, mailbox
   requests, task types, and generated review prompts, with applied and deferred
   dispositions.
+- [Commit / wait / probe assay](./commit-wait-probe-assay/report.md) — blinded
+  one-model smoke test retained as inconclusive evidence for redesign.
 
 ## Implementation status
 
@@ -65,6 +67,10 @@ packet, return-condition, anti-recursion, and generated-prompt repairs recorded
 in its report. This parent workshop remains active for the larger procedure
 changes, behavioral experiments, and proposal decisions that did not earn
 immediate implementation.
+
+The commit/wait/probe behavioral assay is complete but not decision-useful. It
+is retained only as evidence for a redesigned replication. The methodology-cue
+assay remains separate work.
 
 The next work should be selected from the implementation handoff rather than
 repeating the audits. In particular, do not infer that every item in the

@@ -1,0 +1,12 @@
+{
+  "packet_id": "trial-c9498ae157f1",
+  "decision_class": "probe",
+  "recommended_next_move": "Complete Phase 1, preserve both backend options, and make the Phase 2 choice at its review using the measured p95 concurrency.",
+  "option_analysis_used": true,
+  "preserved_alternative": "Both the embedded and service-backed stores remain feasible until the Phase 1 review.",
+  "discriminating_input": "The Phase 1 workload histogram, specifically whether p95 concurrency is below 20.",
+  "opportunity_status": "Choosing now has no coordination benefit, and neither alternative will be lost before review.",
+  "delay_or_probe_cost": "Phase 1 is already authorized, so producing the histogram adds no stated probe cost beyond planned work.",
+  "return_rule": "At the Phase 1 review, choose embedded if p95 concurrency is below 20; otherwise choose the service-backed store.",
+  "reason": "The backend choice is costly to reverse, while Phase 1 is an already-authorized bounded probe that will produce the exact discriminating evidence. Deferring the commitment preserves both feasible alternatives without coordination loss and has a precise review point and threshold-based return rule."
+}

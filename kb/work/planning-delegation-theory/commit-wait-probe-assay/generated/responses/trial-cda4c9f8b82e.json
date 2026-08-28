@@ -1,0 +1,12 @@
+{
+  "packet_id": "trial-cda4c9f8b82e",
+  "decision_class": "direct",
+  "recommended_next_move": "Fix the confirmed one-word command typo now.",
+  "option_analysis_used": false,
+  "preserved_alternative": null,
+  "discriminating_input": null,
+  "opportunity_status": null,
+  "delay_or_probe_cost": null,
+  "return_rule": null,
+  "reason": "The operative instruction excludes mechanical, reversible, already-scoped changes. Implementation and a focused test establish the correct command, and no later evidence is expected to alter the correction, so further inversion or deferral would add no decision value."
+}
