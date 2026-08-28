@@ -8,6 +8,7 @@ claims only after the incumbent ledger disposes them.
 
 | Order | Argumentative job | Current source |
 |---:|---|---|
+| 0 | State the research program as the series hub: the question, the leverage order, adverse selection and the residue classification, the two milestones meeting at the evaluator, the theory as the wiki's own instrument, and the same classification read as a build plan for an LLM wiki, coding agent, or agent generally | Shared model, closure–capability map, and ledger rows O1–O11 |
 | 1 | Establish that coherent programming requires a program-specific theory and that Naur's human-only binding is no longer established by his argument | Accepted Naur baseline |
 | 2 | Specify a non-degenerate mixed-representation benchmark: a capability-adequate system closes a same-theory self-change path while symbolic machinery faithfully carries long-horizon transitions; competent remote-programmer performance is the strong comparison, not a prerequisite for useful progress | Claims to reconstruct from the self-theories draft, scheduler/code correction, and closure–capability map |
 | 3 | Describe Commonplace as an already useful human–agent theory-building tool, locate its residual human work, and compare progress through leverage and bounded automation envelopes without inventing a unique autonomy scalar | Claims to reconstruct from the theory-building draft plus the operator's tool-use direction |
@@ -15,8 +16,10 @@ claims only after the incumbent ledger disposes them.
 | 5 | Ask when governed artifact and code revision constitutes system-level continual learning outside weights and how the same substrate extends to other LLM-wiki functions | Claims to reconstruct from the continual-learning draft and current Commonplace operations |
 | 6 | State the scaling conjecture: search and learning over mixed artifacts may increase improvement yield, while representational form alone decides nothing | Accepted Bitter Lesson baseline |
 
-The likely reading order follows the table, but the claim ledger may merge jobs
-2–5 or split one of them. No rejected filename reserves a successor.
+The likely reading order follows the table, with the hub article read first
+or directly after Naur; the other articles argue the hub's parts. The claim
+ledger may merge jobs 2–5 or split one of them. No rejected filename reserves
+a successor.
 
 ## Accepted anchors
 
@@ -67,6 +70,11 @@ of warranted transfer rather than a catalogue of human capacities, and classify
 each residual decision by the reason it resisted transfer
 ([warranted transfer leaves people the hardest-to-warrant decisions](../../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md));
 the transition article then explains what moving one such row requires.
+The bootstrap article also carries the one recorded use of the
+classify-and-route instrument on a Commonplace path as its mediation trace.
+The earlier workshop's un-homed claim — proposer and judge are computational
+while direction under a fuzzy objective stays human — is the unsettled-criterion
+row of that first classification, and is homed there.
 
 The practical claim is different: the current composite can already be useful
 to people building theories and operating an LLM wiki. Evidence for that claim
@@ -122,6 +130,12 @@ methods.
   the responsible mechanism's automation envelope.
 - The Bitter Lesson concerns scalable production methods and possible power.
   It must not silently become an autonomy theorem.
+- The build-plan reading orders what to build next. It must not silently
+  become a power theorem: whether the plan yields a more powerful system is
+  measured, not derived.
+- The benchmark article names the client cut as a declared export of demand
+  choice and acceptance. It must not present the benchmark as closure over
+  those decisions.
 - Code is both execution machinery and revisable system content. No article may
   treat the scheduler as permanently outside the target while calling the
   result closed.

@@ -4,47 +4,91 @@
 
 ## Goal
 
-Reconstruct the series around one research program without treating four
-review-defeated drafts as foundations. The program asks whether a mixed system
-of retained natural-language theory, language-model interpretation, symbolic
-procedures and code, and operational evidence can progressively internalize
-the work needed for software construction and its own theory-mediated
-improvement.
+The workshop's product is the article series. Its main article states the
+research program; the other articles argue the program's parts. Reconstruct
+the series around that program without treating four review-defeated drafts
+as foundations.
 
-The program has a practical lower bound rather than a binary starting line. A
-programming tool moves in the desired direction when, for a nontrivial task
-class, it increases the accepted software outcomes obtainable from a fixed
-amount of total human programming effort. A bounded mechanism still counts: a
-formatter can remove formatting work even though formatting alone can never
-cover the programmer's role. Its ceiling limits that mechanism, not the
-progress already made. The larger system must combine and extend such
-automation envelopes until progressively less programming work remains human.
-Progress can also occur inside a fixed envelope: a better formatter may produce
-better results, cover more inputs, fail less often, or consume fewer resources
-without taking over a new responsibility. That improves capability or yield;
-only envelope expansion reduces the kinds of work that remain human.
+The program asks whether a mixed system of retained natural-language theory,
+language-model interpretation, symbolic procedures and code, and operational
+evidence can progressively close the set of programming decisions that a
+person must still supply — for software construction and for its own
+theory-mediated improvement.
 
-Scoped computational closure is a stronger structural milestone. For a
-declared revision surface and time horizon, every decision needed to continue
-the improvement path is represented and executable inside the declared
-automatic system. The present Commonplace arrangement is a weaker,
-human-inclusive bootstrap. The work must show where human work remains, which
-mechanism could internalize it, and what that mechanism cannot reach.
+Progress has a practical lower bound. A programming tool moves in the desired
+direction when, for a nontrivial task class, it increases the accepted
+outcomes obtainable from a fixed amount of total human programming effort,
+counting configuration, review, recovery, and repair. A bounded mechanism
+still counts: a formatter can remove formatting work even though formatting
+alone can never cover the programmer's role. Its ceiling limits that
+mechanism, not the progress already made. Better performance inside a fixed
+envelope — better results, more inputs, fewer failures, fewer resources —
+improves capability or yield; only envelope expansion reduces the kinds of
+decisions that remain human.
 
-Closure alone is not enough. A strong capability benchmark is a system that
-works at least as well as a competent remote programmer when given the same
-task brief, repository, digital tools, permissions, and feedback, without
-requiring a human to make programming decisions. This benchmark rules out
-trivial and deceptively closed systems; it is neither a prerequisite for
-present usefulness nor a final upper limit. The workshop must map no-op loops,
-narrow optimizers, weak evaluators, and exported human decisions rather than
-letting them satisfy the benchmark by definition.
+Transfer is adversely selective. Each mechanism takes the decisions it can
+warrant — represented inputs, a settled criterion, a result an independent
+oracle can check — and leaves a residue that is harder to warrant per
+decision
+([warranted transfer leaves people the hardest-to-warrant decisions](../../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md)).
+Envelopes therefore do not stack toward closure. The work must classify the
+residual human decisions on a named path by the reason each stayed human —
+unrepresented premise, unsettled criterion, no independent check, horizon
+cut, priced out — and show which part of the mixed architecture is the
+candidate mechanism for each class and what that part cannot reach. This is
+why the architecture is mixed: retained theory supplies representation and
+settlement, the interpreter applies settlements across unformalized cases,
+oracles supply verification, and the symbolic runtime supplies horizon.
 
-The strong milestones are not the only payoff. Commonplace already serves its human
+Two strong milestones follow, and they meet at the evaluator. Scoped
+computational closure holds when, for a declared path and horizon, every
+required decision is represented and executable inside the automatic system
+with no hidden cut. The remote-programmer benchmark holds when the system
+performs at least as well as a competent remote programmer given the same
+brief, repository, digital tools, permissions, and feedback; its client cut is
+a declared export of demand choice and acceptance, not closure over them.
+Both milestones are decided by whether the system can warrant its own hardest
+decisions. Neither is a prerequisite for present usefulness or a final upper
+limit. The workshop must map no-op loops, narrow optimizers, weak evaluators,
+and exported human decisions rather than letting them satisfy a milestone by
+definition. The present Commonplace arrangement is a human-inclusive
+bootstrap: evidence about an allocation, not the endpoint.
+
+The theory this program builds is retained natural-language theory of the
+kind the program studies, and it is consumed by the system it describes.
+Classifying a path's residual human decisions by reason, and routing each
+class to the architecture part that can move it, is a theory-building
+function of the wiki: it helps operators decide where their own automation
+should go next and what it cannot yet reach. Applied to Commonplace's own
+transfer decisions, it supplies the mediation trace the earlier drafts
+lacked — the same theory guides a change, the change's warrant record tests
+the theory, and a misclassified row revises it. This is a tool-usefulness
+claim and a traceability claim; it is not a closure claim, and it is earned
+by a recorded use, not by stating it.
+
+Read the same way, the research program is a build plan. The classification
+orders what to build next — for an LLM wiki first, and, because the theory is
+stated over decisions rather than over any one task, for an LLM coding agent
+or an LLM agent generally. Whether following the plan yields the most
+powerful system of its kind is the conjecture the program tests; power is an
+outcome to measure, not a consequence of the plan's shape.
+
+The strong milestones are not the only payoff. Commonplace already serves its
 operators as a theory-building tool. The same substrate can grow to cover
-other LLM-wiki functions, and each warranted transfer of work to automatic
-operation can make the tool more useful before the closed-system goal is
-reached.
+other LLM-wiki functions, and each warranted transfer can make the tool more
+useful before the closed-system goal is reached — or less useful, if it leaves
+people only the decisions they are worst placed to make.
+
+### Outputs
+
+- **Theory** — claims with reach, in `kb/notes/` (the self-improving-systems
+  cluster).
+- **Instrument** — one procedure in `kb/instructions/` that classifies a
+  path's residual human decisions and routes each class to a mechanism,
+  resting on the notes; repo-local first, promoted to a `cp-skill-*` after a
+  first use outside this checkout.
+- **Articles** — the outward distillation, paper-from-notes, led by the
+  research-program article.
 
 ## Author direction fixed by the operator
 
@@ -66,8 +110,12 @@ reached.
   practical progress toward the broad direction. It need not demonstrate a
   complete route to the strong benchmark.
 - Each mechanism has an automation envelope. Reaching its ceiling leaves the
-  other residual programming work visible; it does not retroactively make the
-  bounded transfer unreal.
+  other residual programming decisions visible; it does not retroactively make
+  the bounded transfer unreal. Envelopes do not stack toward closure: the
+  residue is adversely selected, and the next transfer is decided at the
+  evaluator.
+- The program's theory is also the KB's instrument and a build plan. Both
+  readings are earned by recorded use; neither is a closure or power claim.
 - Better performance inside a fixed envelope also counts, through outcome
   quality, reliability, coverage, latency, or resource efficiency. It is not
   the same change as transferring another kind of responsibility.
@@ -152,9 +200,9 @@ The workshop closes when:
 1. the shared model states the target architecture, present bootstrap,
    practical tool payoff, and progress comparison precisely enough for the
    articles to use;
-2. the closure–capability map has been tested on representative trivial,
-   narrow, human-inclusive, artifact-revising, code-rebuilding, formal, and
-   target systems;
+2. the closure–capability map has been exercised on a few contrasting
+   systems: their human cut classified by reason, with the degenerate
+   patterns checked against the verification row;
 3. every material claim in the four rejected drafts has a recorded
    disposition;
 4. accepted successor articles have been reconstructed and reconciled without
@@ -163,6 +211,10 @@ The workshop closes when:
    resolved;
 6. the earlier workshop has been consumed; and
 7. the durable articles and any supporting notes validate under their target
-   contracts.
+   contracts;
+8. the classify-and-route instrument exists and has been applied once to a
+   Commonplace path, with the classification, the chosen transfer, and its
+   outcome recorded; and
+9. the bootstrap article cites that record as its mediation trace.
 
 At closure, durable results move to the library and this directory is deleted.

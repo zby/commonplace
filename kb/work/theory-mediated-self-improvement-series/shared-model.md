@@ -200,7 +200,9 @@ autonomy definition.
 - What objective and authority may be supplied before an episode begins, and
   which revisions to them count as part of the target path?
 - At what path grain can the allocation and human cut set be compared without
-  hiding displaced work?
+  hiding displaced work? Candidate answer: per decision, each tagged with the
+  reason it stayed human; displaced review and repair appear as new tagged
+  decisions rather than vanishing into an effort total.
 - What evidence shows that a natural-language theory, rather than a generic
   criterion or an unrecorded model judgment, supplied the decision content?
 - Which code and scheduler changes must be reachable before the target deserves

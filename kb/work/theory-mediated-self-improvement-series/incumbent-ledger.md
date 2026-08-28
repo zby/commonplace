@@ -42,6 +42,9 @@ without that record is not a move.
 | O6 | A bounded mechanism can make real progress and still reach an automation ceiling; the ceiling limits that method rather than invalidating the responsibility already transferred or later performance improvements inside its envelope. | Candidate architectural framing; author direction | Name the residual responsibility transferred, the conditions of transfer, the work outside the method's envelope, and any composition needed to continue. Separate envelope expansion from performance inside the envelope. Do not infer convergence from either local improvement. |
 | O7 | Performance at least as good as a competent remote programmer is a strong capability benchmark, not the definition of all useful progress or the final upper limit. | Candidate comparator; author direction | Declare the challenge distribution; hold brief, repository, digital tools, permissions, and feedback constant; separate client direction from programming decisions; compare outcome quality and reliability independently from time and resource cost. |
 | O8 | Warranted transfer out of the human cut is adversely selective: the residual human decisions are harder to warrant per decision, so envelopes do not stack toward closure and the human-work list is a residue, not a capacity claim. | Candidate mechanism; library note `kb/notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md` (2026-08-28) | Hold boundary, objective, horizon, and workload fixed; classify each residual decision by the reason it resisted transfer; keep distinct from the elastic-backlog relocation mechanism; do not infer prevalence from the conditional. |
+| O9 | Scoped closure and the remote-programmer benchmark meet at the evaluator: both are decided by whether the system can warrant its own hardest decisions, and the benchmark's client cut is a declared export of demand choice and acceptance. | Candidate framing; author direction (2026-08-28) | Name the exported decisions; show that captured evaluator, viability-only gate, and boundary export all sit at the verification row; keep closure and capability as separate coordinates that share one deciding point. |
+| O10 | The program's theory is an operational instrument in the KB: classifying a path's residual human decisions by reason and routing each class to a mechanism is a theory-building wiki function, and its use on Commonplace's own transfers supplies a mediation trace. | Candidate; author direction (2026-08-28); earned by recorded use | One recorded application on a Commonplace path with classification, chosen transfer, and outcome; cite it from the bootstrap article. Tool-usefulness and traceability only; not closure. |
+| O11 | Read as a build plan, the classification orders what to build next for an LLM wiki, an LLM coding agent, or an LLM agent generally, because the theory is stated over decisions rather than tasks. | Candidate program claim; author direction (2026-08-28) | Separate the plan's ordering from any power claim; a power gain is a conjecture tested by matched comparison, not derived from the plan's shape. |
 
 ## Theory-building draft claims
 
@@ -86,6 +89,21 @@ without that record is not a move.
 | C4 | Explicit artifacts keep the knowledge coherent and correct. | Defeated as stated | Claim addressability and inspectability only; add credit assignment, conflict handling, retrieval, evaluation, and admission where warranted. |
 | C5 | Artifact-only learning should outperform weight updates on expressible structure-preserving shifts with less collateral change. | Untested prediction | Retain only as an experiment with matched baselines and an explicit interaction prediction. |
 | C6 | The artifact substrate already supports broader LLM-wiki operation. | Candidate through O2 | Describe demonstrated operations without using continual learning as a blanket label. |
+
+## Retained source grounding (carried from the earlier workshop)
+
+Quote counts as recorded when the earlier workshop closed its outline; verify
+against the ingest before relying on a count.
+
+| Source | Role in the series | Quotes retained |
+|---|---|---|
+| Naur, *Programming as Theory Building* | hook, both halves, three tests | 19 |
+| Popper, *A Realist View of Logic, Physics, and History* | what a theory is; consumption as criticism | 8 (no "World 3" label in this text) |
+| Argyris, *Organizational Learning and MIS* | espoused/theory-in-use; single/double loop; self-sealing | 9 (OCR artifacts preserved; "changes" governing variables is our reading) |
+| Craik, *Hypothesis on the Nature of Thought* | why a model pays | none — `(snapshot required)` marker |
+| Ashby, *Design for a Brain* | theory-free contrast | see ingest |
+| Sutton and Javed | weights-side counterpoint | 7 |
+| Memento-Skills | acceptance-mechanism cell in the Bitter Lesson article | 2 (test gate; rollback steps) |
 
 ## Transfer record
 
