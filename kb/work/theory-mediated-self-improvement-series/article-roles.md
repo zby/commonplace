@@ -141,7 +141,15 @@ Interaction checks the composition must run and record:
   bearer tests with test 3 read as track record under experimental exposure;
   (2) the exposures can refute, their evidence not authored by the candidate;
   (3) outcomes are read back against the retained theory and recorded (the
-  co-indexed path); (4) exposure frequency follows a declared error-cost rule.
+  co-indexed path); (4) exposure density is matched to stakes — dense where checks are cheap,
+  and where exposure is sparse the decisive check is decorrelated criticism
+  (science mode); (5) the coherence check is plural or otherwise decorrelated
+  from the proposer, since one composite's self-judgment shares its blind
+  spots; (6) the composite recognizes the cases it cannot judge and routes
+  them to exposure or a peer, and the record shows it doing so. Human holders
+  get (4)–(6) for free — dense cheap feedback, a group of holders, knowing
+  when unsure — which is why their self-judgment mostly works; science is the
+  regime where (4) fails and (5)–(6) are institutionalized instead.
   The repair episode is then reread: the pass was a *non-holder* judging its
   own work, not a holder; the degenerate patterns become non-holder
   self-assessment and holder-without-exposure, not self-assessment as such.
