@@ -168,7 +168,7 @@ source claim IDs it discharges.
 
 ### E9. Removing a human judgment can degrade the judgments that remain
 
-- **Status.** Written 2026-08-28 as `kb/notes/removing-a-human-judgment-can-degrade-the-judgments-that-remain.md`.
+- **Status.** Written and then retired 2026-08-28 as trivial: the parent note's one sentence plus its defeater carries it.
 
 - **Claim.** A person left only with the decisions that cannot be checked,
   and with less contact with the routine cases that used to inform them, is
