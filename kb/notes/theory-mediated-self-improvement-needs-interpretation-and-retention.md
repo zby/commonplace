@@ -17,6 +17,12 @@ That case does not inherit the conjecture automatically. It inherits it under th
 
 Interpretation and retention are the pair that has to come from somewhere. A system satisfying membership and retention but not interpretation revises confidently in the wrong direction; one satisfying membership and interpretation but not retention re-derives its theory every episode and cannot accumulate.
 
+## The attribution needs one co-indexed path
+
+The three conditions are properties a substrate has. They do not yet say that the system improves *through* the theory. That attribution holds only when one causal path carries four links in order: the retained theory guides a change; the change's result is read back against that theory; the theory is revised; the revised theory affects later operation on the same path. Call this **causal co-indexing** — the same theory is the object at every link, and the links lie on one path.
+
+Co-occurrence inside one boundary does not establish it. A system in which theory guides action on one path without being revised, a metric-gated loop revises artifacts the theory never touches on a second, and review revises the theory on a third satisfies every occurrence test and fails the chain. The existing tests — occurrence, revision surface, compounding — each check one link; none checks that the links share a theory and a path. The evidence is either a mediation trace, [a citation of the theory at the decision point plus the read-back of the outcome](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md), or an intervention on the retained theory that changes the later change. Whether a theory replaced wholesale, rather than rescoped, still counts as the same object at link three is open, and it is the same question as the last one below.
+
 ## Self-directed theories arrive unformalized
 
 Interpretation and retention could in principle be sourced separately and composed. In practice, what a system can say about its own operation resists the move that would make composition easy.
@@ -67,4 +73,5 @@ Relevant Notes:
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — grounds: why reflective membership does not establish the closure a test would need
 - [Commonplace as a reflective self-improving system](./evidence/commonplace-as-a-reflective-system.md) — evidenced-by: the closest running instance, with human, joint, and computational functions explicitly located
 - [Exo](../agentic-systems/exo.md) — evidenced-by: a running system satisfying the three conditions without a human, whose acceptance oracles reach liveness but not reach
-- [A theory-mediated loop closes only by causal co-indexing, not by co-occurrence inside one boundary](./a-theory-mediated-loop-closes-only-by-causal-co-indexing.md) — extends: adds the closure test the three conditions do not supply: the same theory guides the change and is revised by its result on one path
+- [Citing retained theory at the decision point is a mediation trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — enables: the record-based evidence for the first co-indexed link
+- [Three 2026 harnesses retain rules or weights, not a revisable theory](./evidence/three-2026-harnesses-retain-rules-or-weights-not-a-revisable-theory.md) — evidenced-by: applies the co-indexing test case-wise

@@ -80,4 +80,4 @@ Relevant Notes:
 - [Symbolic Learning Enables Self-Evolving Agents](https://arxiv.org/pdf/2406.18532) — evidenced-by: prompts, tools, and their composition searched as learnables — a fourth-quadrant fragment
 - [Memento-Skills: Let Agents Design Agents](https://arxiv.org/pdf/2603.18743) — evidenced-by: structured Markdown skills as continually rewritten persistent memory — a fourth-quadrant fragment
 - [Co-Harness: Co-Evolving Harnesses and Model Weights](https://arxiv.org/pdf/2607.22688) — evidenced-by: harness search alternating with parametric distillation — the closest published shape to full coevolution
-- [Explicit artifacts buy addressability, not credit assignment, coherence, retrieval, or admission](./explicit-artifacts-buy-addressability-not-credit-assignment.md) — extends: places credit assignment beside three other mechanisms an explicit corpus leaves open
+- [Reflection buys addressability](./reflection-buys-addressability.md#what-addressability-does-not-buy) — extends: what addressability does not buy: credit assignment, coherence, retrieval, admission

@@ -3,7 +3,7 @@
 Claims that the articles currently carry, or would have to carry, that could
 instead be library notes the articles cite. Coverage verdicts come from a
 scout pass over `kb/notes/` on 2026-08-28 (335 notes plus `definitions/` and
-`evidence/`). All nine were written on 2026-08-28; each entry records its path under **Status**.
+`evidence/`). All nine were written on 2026-08-28; E3, E7, E8 were then folded into existing notes and E9 retired as trivial — expanding a bounded claim into a full note is reverse compression. Five remain as notes; each entry records its state under **Status**.
 
 Titles are drafts in claim form. Each note, once written, gets a row in the
 [ledger's transfer record](./incumbent-ledger.md#transfer-record) naming the
@@ -56,7 +56,7 @@ source claim IDs it discharges.
 
 ### E3. A theory-mediated loop closes only by causal co-indexing, not by co-occurrence inside one boundary
 
-- **Status.** Written 2026-08-28 as `kb/notes/a-theory-mediated-loop-closes-only-by-causal-co-indexing.md`.
+- **Status.** Written 2026-08-28, then folded the same day into `kb/notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md` as a section; the satellite was deleted as reverse compression.
 
 - **Claim.** The same theory must guide the change, the change's result must
   test that theory, and the revised theory must affect later operation on the
@@ -132,7 +132,7 @@ source claim IDs it discharges.
 
 ### E7. Programming-tool progress is a partial order on accepted outcomes per total human effort
 
-- **Status.** Written 2026-08-28 as `kb/notes/programming-tool-progress-is-a-partial-order-not-a-scalar.md`.
+- **Status.** Written 2026-08-28, then folded the same day into `kb/notes/increasing-computational-autonomy-relocates-human-effort.md` as a section; the satellite was deleted as reverse compression.
 
 - **Claim.** A change is forward when, at a fixed task class and acceptance
   threshold, it produces no worse outcomes with no more total human
@@ -150,7 +150,7 @@ source claim IDs it discharges.
 
 ### E8. Explicit artifacts buy addressability, not credit assignment, coherence, retrieval, or admission
 
-- **Status.** Written 2026-08-28 as `kb/notes/explicit-artifacts-buy-addressability-not-credit-assignment.md`.
+- **Status.** Written 2026-08-28, then folded the same day into `kb/notes/reflection-buys-addressability.md` as a section; the satellite was deleted as reverse compression.
 
 - **Claim.** Making retained state explicit makes it inspectable and
   addressable. It does not by itself assign credit for outcomes, keep the

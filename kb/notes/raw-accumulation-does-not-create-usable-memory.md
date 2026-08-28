@@ -32,4 +32,4 @@ Relevant Notes:
 - [Recognition, not linking, is the hard problem in knowledge systems](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — mechanism: explains how naming a recognized pattern lets accumulated particulars compose
 - [First-principles reasoning selects for explanatory-reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — qualifies: explanatory-reach changes the value of accumulated knowledge without replacing the need for ingress structure
 - [Title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — exemplifies: claim titles are ingress handles that make memory both discoverable and composable
-- [Explicit artifacts buy addressability, not credit assignment, coherence, retrieval, or admission](./explicit-artifacts-buy-addressability-not-credit-assignment.md) — extends: generalizes the ingress gap to four mechanisms explicitness does not supply
+- [Reflection buys addressability](./reflection-buys-addressability.md#what-addressability-does-not-buy) — extends: what addressability does not buy: credit assignment, coherence, retrieval, admission
