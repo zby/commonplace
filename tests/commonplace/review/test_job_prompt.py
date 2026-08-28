@@ -36,17 +36,22 @@ def test_resolve_note_markdown_links_sizes_occurrences_and_reports_unavailable_t
         (
             link.link_text,
             link.link_target_path,
-            link.consumption_path,
-            link.size_bytes,
+            tuple(
+                (target.path, target.size_bytes)
+                for target in link.consumption_targets
+            ),
         )
         for link in resolved
     ] == [
-        ("first", "kb/notes/shared.md", "kb/notes/shared.md", shared.stat().st_size),
+        (
+            "first",
+            "kb/notes/shared.md",
+            (("kb/notes/shared.md", shared.stat().st_size),),
+        ),
         (
             "same target",
             "kb/notes/shared.md",
-            "kb/notes/shared.md",
-            shared.stat().st_size,
+            (("kb/notes/shared.md", shared.stat().st_size),),
         ),
     ]
     assert [
@@ -62,7 +67,7 @@ def test_resolve_note_markdown_links_sizes_occurrences_and_reports_unavailable_t
     ]
 
 
-def test_resolve_note_markdown_links_charges_required_snapshot_and_retains_lineage(
+def test_resolve_note_markdown_links_accounts_for_ingest_and_required_snapshot(
     tmp_path: Path,
 ) -> None:
     repo = tmp_path / "repo"
@@ -77,13 +82,21 @@ def test_resolve_note_markdown_links_charges_required_snapshot_and_retains_linea
     )
 
     assert [
-        (link.link_target_path, link.consumption_path, link.size_bytes)
+        (
+            link.link_target_path,
+            tuple(
+                (target.path, target.size_bytes)
+                for target in link.consumption_targets
+            ),
+        )
         for link in resolved
     ] == [
         (
             "kb/sources/source.ingest.md",
-            "kb/sources/.snapshots/source.md",
-            snapshot.stat().st_size,
+            (
+                ("kb/sources/source.ingest.md", ingest.stat().st_size),
+                ("kb/sources/.snapshots/source.md", snapshot.stat().st_size),
+            ),
         )
     ]
     assert snapshot.stat().st_size > ingest.stat().st_size

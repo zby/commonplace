@@ -10,6 +10,7 @@ from commonplace.lib import frontmatter
 from commonplace.lib.note_parser import find_markdown_links_with_text
 from commonplace.review.protocol.prompt import (
     NoteReviewTarget,
+    ResolvedConsumptionTarget,
     ResolvedMarkdownLink,
     UnavailableMarkdownTarget,
 )
@@ -57,7 +58,8 @@ def resolve_note_markdown_links(
     Resolved link occurrences remain separate so telemetry can compare occurrence
     count with distinct artifacts. Whole-file cost is deduplicated later by the
     physical consumption path. Snapshot-required ingest links retain the ingest
-    as their logical target while pricing the derived snapshot.
+    as their logical target and account for both the ingest metadata and the
+    derived snapshot bytes used by the grounding check.
     """
     resolved: list[ResolvedMarkdownLink] = []
     unavailable: list[UnavailableMarkdownTarget] = []
@@ -109,8 +111,9 @@ def resolve_note_markdown_links(
             continue
         assert size_bytes is not None
 
-        consumption_path = repo_rel
-        consumption_size = size_bytes
+        consumption_targets = [
+            ResolvedConsumptionTarget(path=repo_rel, size_bytes=size_bytes)
+        ]
         if SNAPSHOT_REQUIRED_MARKER in link_text:
             snapshot_repo_path = _required_snapshot_path(repo_rel)
             if snapshot_repo_path is not None:
@@ -127,16 +130,19 @@ def resolve_note_markdown_links(
                     )
                     continue
                 assert snapshot_size is not None
-                consumption_path = snapshot_repo_path
-                consumption_size = snapshot_size
+                consumption_targets.append(
+                    ResolvedConsumptionTarget(
+                        path=snapshot_repo_path,
+                        size_bytes=snapshot_size,
+                    )
+                )
 
         resolved.append(
             ResolvedMarkdownLink(
                 link_text=link_text,
                 raw_target=raw_target,
                 link_target_path=repo_rel,
-                consumption_path=consumption_path,
-                size_bytes=consumption_size,
+                consumption_targets=tuple(consumption_targets),
             )
         )
 

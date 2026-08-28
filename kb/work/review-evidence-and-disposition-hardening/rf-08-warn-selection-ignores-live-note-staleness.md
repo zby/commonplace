@@ -46,5 +46,8 @@ the note, criterion, model partition, review-pair identity, and the canonical
 `note-changed` and/or `criterion-changed` reasons. JSON exposes these advisories
 under `stale_pairs`; grouped output labels them as skipped stale WARN pairs.
 Direct fix-system consumers now treat that section as a re-review signal rather
-than actionable fix work. Tests cover live pairs, criterion-only staleness,
-note-only staleness and its rendered output, and non-WARN pairs that change.
+than actionable fix work. Staleness is classified before the selector reads
+mutable result prose, so a missing result artifact cannot suppress the advisory.
+Tests cover live pairs, criterion-only staleness, note-only staleness and its
+rendered output, missing result prose for a stale pair, and non-WARN pairs that
+change.

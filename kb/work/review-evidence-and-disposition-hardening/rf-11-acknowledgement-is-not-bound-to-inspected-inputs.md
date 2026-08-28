@@ -49,7 +49,9 @@ than resolving user-named pairs afresh. Each target supplies its expected
 baseline revision and selected input observations; `ack_pairs()` verifies their
 accepted identities and passes their current hashes through the existing
 `selected_inputs` guard. Omitted changed roles retain their accepted snapshots.
-The trivial-note acknowledgement path uses the same guarded records. CLI tests
-cover successful handoff, selective-role acknowledgement, and an intervening
-file edit that fails without advancing the baseline. The complete test suite
-passes (`596 passed`).
+The trivial-note acknowledgement path uses the same guarded records. It parses
+watch declarations from the accepted criterion snapshot and qualifies the exact
+note text named by the selector's current hash. Criterion and note interleavings,
+including ABA restores, fail closed. Tests cover successful handoff,
+selective-role acknowledgement, intervening edits that fail without advancing
+the baseline, and both trivial-qualification ABA paths.

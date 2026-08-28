@@ -396,6 +396,77 @@ def test_qualifying_records_excludes_notes_where_watched_parts_changed(tmp_path:
     assert records == []
 
 
+def test_qualifying_records_uses_accepted_gate_watches_across_gate_aba(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    repo, db_path = build_fixture(tmp_path, watches="[body]")
+    note_path = repo / "kb" / "notes" / "sample.md"
+    gate_path = repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md"
+    make_note(note_path, "\nChanged body.\n")
+    original_select = ack_trivial_note_changes.select_stale_criteria
+
+    def select_then_change_gate(*args: object, **kwargs: object) -> list[object]:
+        records = original_select(*args, **kwargs)
+        make_gate(gate_path, "prose/source-residue", watches="[title]")
+        return records
+
+    monkeypatch.setattr(
+        ack_trivial_note_changes,
+        "select_stale_criteria",
+        select_then_change_gate,
+    )
+
+    records = qualifying_records(
+        repo,
+        model=TEST_MODEL,
+        criterion_ids=["kb/instructions/review-gates/prose/source-residue.md"],
+        note_filter=["kb/notes"],
+        db_path=db_path,
+    )
+    make_gate(gate_path, "prose/source-residue", watches="[body]")
+
+    assert records == []
+
+
+def test_qualifying_records_rejects_note_interleaving_even_after_aba_restore(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    repo, db_path = build_fixture(tmp_path, watches="[body]")
+    note_path = repo / "kb" / "notes" / "sample.md"
+    selected_text = make_note(note_path, "\nChanged body.\n").read_text(
+        encoding="utf-8"
+    )
+    original_select = ack_trivial_note_changes.select_stale_criteria
+
+    def select_then_change_note(*args: object, **kwargs: object) -> list[object]:
+        records = original_select(*args, **kwargs)
+        make_note(
+            note_path,
+            "\nBody.\n",
+            tags="[computational-model]",
+        )
+        return records
+
+    monkeypatch.setattr(
+        ack_trivial_note_changes,
+        "select_stale_criteria",
+        select_then_change_note,
+    )
+
+    records = qualifying_records(
+        repo,
+        model=TEST_MODEL,
+        criterion_ids=["kb/instructions/review-gates/prose/source-residue.md"],
+        note_filter=["kb/notes"],
+        db_path=db_path,
+    )
+    write(note_path, selected_text)
+
+    assert records == []
+
+
 def test_qualifying_records_rejects_baseline_without_snapshot_text(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()

@@ -3,7 +3,11 @@ from __future__ import annotations
 import json
 
 from commonplace.review.protocol.parser import ParsedReviewConsumption
-from commonplace.review.protocol.prompt import NoteReviewTarget, ResolvedMarkdownLink
+from commonplace.review.protocol.prompt import (
+    NoteReviewTarget,
+    ResolvedConsumptionTarget,
+    ResolvedMarkdownLink,
+)
 from commonplace.review.telemetry import (
     link_availability_telemetry_json,
     with_review_link_consumption,
@@ -20,15 +24,13 @@ def test_link_availability_telemetry_records_cost_for_each_pair() -> None:
                 "first",
                 "./shared.md",
                 "kb/notes/shared.md",
-                "kb/notes/shared.md",
-                800,
+                (ResolvedConsumptionTarget("kb/notes/shared.md", 800),),
             ),
             ResolvedMarkdownLink(
                 "again",
                 "./shared.md#part",
                 "kb/notes/shared.md",
-                "kb/notes/shared.md",
-                800,
+                (ResolvedConsumptionTarget("kb/notes/shared.md", 800),),
             ),
         ),
     )
@@ -69,15 +71,18 @@ def test_link_availability_counts_one_ingest_across_two_consumption_routes() -> 
                 "source",
                 "../sources/source.ingest.md",
                 "kb/sources/source.ingest.md",
-                "kb/sources/source.ingest.md",
-                100,
+                (ResolvedConsumptionTarget("kb/sources/source.ingest.md", 100),),
             ),
             ResolvedMarkdownLink(
                 "source (snapshot required)",
                 "../sources/source.ingest.md",
                 "kb/sources/source.ingest.md",
-                "kb/sources/.snapshots/source.md",
-                2400,
+                (
+                    ResolvedConsumptionTarget("kb/sources/source.ingest.md", 100),
+                    ResolvedConsumptionTarget(
+                        "kb/sources/.snapshots/source.md", 2400
+                    ),
+                ),
             ),
         ),
     )
@@ -116,22 +121,19 @@ def test_review_consumption_joins_available_cost_and_prices_distinct_paths() -> 
                 "first",
                 "./shared.md",
                 "kb/notes/shared.md",
-                "kb/notes/shared.md",
-                800,
+                (ResolvedConsumptionTarget("kb/notes/shared.md", 800),),
             ),
             ResolvedMarkdownLink(
                 "again",
                 "./shared.md#part",
                 "kb/notes/shared.md",
-                "kb/notes/shared.md",
-                800,
+                (ResolvedConsumptionTarget("kb/notes/shared.md", 800),),
             ),
             ResolvedMarkdownLink(
                 "other",
                 "./other.md",
                 "kb/notes/other.md",
-                "kb/notes/other.md",
-                300,
+                (ResolvedConsumptionTarget("kb/notes/other.md", 300),),
             ),
         ),
     )
@@ -172,8 +174,9 @@ def test_review_consumption_joins_available_cost_and_prices_distinct_paths() -> 
     }
 
 
-def test_snapshot_route_telemetry_prices_snapshot_and_retains_ingest_lineage() -> None:
+def test_snapshot_route_telemetry_accounts_for_both_grounding_inputs() -> None:
     pair = ("kb/notes/sample.md", "criterion/one")
+    ingest_path = "kb/sources/source.ingest.md"
     snapshot_path = "kb/sources/.snapshots/source.md"
     target = NoteReviewTarget(
         note_path=pair[0],
@@ -183,9 +186,11 @@ def test_snapshot_route_telemetry_prices_snapshot_and_retains_ingest_lineage() -
             ResolvedMarkdownLink(
                 "source (snapshot required)",
                 "../sources/source.ingest.md",
-                "kb/sources/source.ingest.md",
-                snapshot_path,
-                2400,
+                ingest_path,
+                (
+                    ResolvedConsumptionTarget(ingest_path, 100),
+                    ResolvedConsumptionTarget(snapshot_path, 2400),
+                ),
             ),
         ),
     )
@@ -200,12 +205,19 @@ def test_snapshot_route_telemetry_prices_snapshot_and_retains_ingest_lineage() -
                 "criterion_path": pair[1],
                 "resolved_link_count": 1,
                 "distinct_link_target_count": 1,
-                "distinct_consumption_target_count": 1,
-                "total_bytes": 2400,
-                "artifacts": [{"path": snapshot_path, "size_bytes": 2400}],
+                "distinct_consumption_target_count": 2,
+                "total_bytes": 2500,
+                "artifacts": [
+                    {"path": ingest_path, "size_bytes": 100},
+                    {"path": snapshot_path, "size_bytes": 2400},
+                ],
                 "routes": [
                     {
-                        "link_target_path": "kb/sources/source.ingest.md",
+                        "link_target_path": ingest_path,
+                        "consumption_path": ingest_path,
+                    },
+                    {
+                        "link_target_path": ingest_path,
                         "consumption_path": snapshot_path,
                     }
                 ],
@@ -220,7 +232,7 @@ def test_snapshot_route_telemetry_prices_snapshot_and_retains_ingest_lineage() -
             {
                 pair: ParsedReviewConsumption(
                     report_status="complete",
-                    opened_paths=(snapshot_path,),
+                    opened_paths=(ingest_path, snapshot_path),
                     stop_reason="sufficiency",
                     missing_fields=(),
                     malformed_fields=(),
@@ -237,9 +249,9 @@ def test_snapshot_route_telemetry_prices_snapshot_and_retains_ingest_lineage() -
                 "note_path": pair[0],
                 "criterion_path": pair[1],
                 "report_status": "complete",
-                "opened_paths": [snapshot_path],
-                "distinct_artifact_count": 1,
-                "total_bytes": 2400,
+                "opened_paths": [ingest_path, snapshot_path],
+                "distinct_artifact_count": 2,
+                "total_bytes": 2500,
                 "stop_reason": "sufficiency",
                 "missing_fields": [],
                 "malformed_fields": [],
@@ -261,8 +273,7 @@ def test_review_consumption_records_missing_and_unpriced_reports_without_raising
                 "known",
                 "./known.md",
                 "kb/notes/known.md",
-                "kb/notes/known.md",
-                500,
+                (ResolvedConsumptionTarget("kb/notes/known.md", 500),),
             ),
         ),
     )

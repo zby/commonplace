@@ -19,7 +19,8 @@ _LINK_CONSUMPTION_VERSION = 2
 def _available_artifacts(note: NoteReviewTarget) -> list[dict[str, object]]:
     sizes_by_path: dict[str, int] = {}
     for link in note.resolved_links:
-        sizes_by_path.setdefault(link.consumption_path, link.size_bytes)
+        for target in link.consumption_targets:
+            sizes_by_path.setdefault(target.path, target.size_bytes)
     return [
         {"path": path, "size_bytes": size_bytes}
         for path, size_bytes in sizes_by_path.items()
@@ -30,16 +31,17 @@ def _available_routes(note: NoteReviewTarget) -> list[dict[str, str]]:
     routes: list[dict[str, str]] = []
     seen: set[tuple[str, str]] = set()
     for link in note.resolved_links:
-        route = (link.link_target_path, link.consumption_path)
-        if route in seen:
-            continue
-        seen.add(route)
-        routes.append(
-            {
-                "link_target_path": link.link_target_path,
-                "consumption_path": link.consumption_path,
-            }
-        )
+        for target in link.consumption_targets:
+            route = (link.link_target_path, target.path)
+            if route in seen:
+                continue
+            seen.add(route)
+            routes.append(
+                {
+                    "link_target_path": link.link_target_path,
+                    "consumption_path": target.path,
+                }
+            )
     return routes
 
 

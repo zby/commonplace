@@ -5,6 +5,7 @@ import pytest
 from commonplace.review.protocol.parser import extract_pair_results, parse_job_output
 from commonplace.review.protocol.prompt import (
     NoteReviewTarget,
+    ResolvedConsumptionTarget,
     ResolvedMarkdownLink,
     UnavailableMarkdownTarget,
     render_pairs_prompt,
@@ -34,8 +35,7 @@ def test_render_pairs_prompt_multi_note_shares_gate_and_lists_pairs() -> None:
                         "concept",
                         "./concept.md",
                         "kb/notes/concept.md",
-                        "kb/notes/concept.md",
-                        1234,
+                        (ResolvedConsumptionTarget("kb/notes/concept.md", 1234),),
                     )
                 ],
                 unavailable_targets=[
@@ -104,22 +104,19 @@ def test_render_pairs_prompt_charges_repeated_target_once() -> None:
                         "first",
                         "./shared.md",
                         "kb/notes/shared.md",
-                        "kb/notes/shared.md",
-                        800,
+                        (ResolvedConsumptionTarget("kb/notes/shared.md", 800),),
                     ),
                     ResolvedMarkdownLink(
                         "again",
                         "./shared.md#part",
                         "kb/notes/shared.md",
-                        "kb/notes/shared.md",
-                        800,
+                        (ResolvedConsumptionTarget("kb/notes/shared.md", 800),),
                     ),
                     ResolvedMarkdownLink(
                         "other",
                         "./other.md",
                         "kb/notes/other.md",
-                        "kb/notes/other.md",
-                        300,
+                        (ResolvedConsumptionTarget("kb/notes/other.md", 300),),
                     ),
                 ],
             )
@@ -136,7 +133,7 @@ def test_render_pairs_prompt_charges_repeated_target_once() -> None:
     assert prompt.count("`kb/notes/shared.md`") == 4
 
 
-def test_render_pairs_prompt_names_snapshot_consumption_target() -> None:
+def test_render_pairs_prompt_names_both_snapshot_grounding_targets() -> None:
     prompt = render_pairs_prompt(
         notes=[
             make_target(
@@ -146,8 +143,14 @@ def test_render_pairs_prompt_names_snapshot_consumption_target() -> None:
                         "source (snapshot required)",
                         "../sources/source.ingest.md",
                         "kb/sources/source.ingest.md",
-                        "kb/sources/.snapshots/source.md",
-                        2400,
+                        (
+                            ResolvedConsumptionTarget(
+                                "kb/sources/source.ingest.md", 100
+                            ),
+                            ResolvedConsumptionTarget(
+                                "kb/sources/.snapshots/source.md", 2400
+                            ),
+                        ),
                     )
                 ],
             )
@@ -159,9 +162,14 @@ def test_render_pairs_prompt_names_snapshot_consumption_target() -> None:
 
     assert (
         "| [source (snapshot required)](../sources/source.ingest.md) | "
+        "`kb/sources/source.ingest.md` | `kb/sources/source.ingest.md` | 100 bytes |"
+    ) in prompt
+    assert (
+        "| [source (snapshot required)](../sources/source.ingest.md) | "
         "`kb/sources/source.ingest.md` | `kb/sources/.snapshots/source.md` | 2400 bytes |"
     ) in prompt
-    assert "report the derived snapshot shown in the Consumption target column" in prompt
+    assert "lists both the linked ingest and its derived snapshot" in prompt
+    assert "2 consumption target(s), 2500 bytes total" in prompt
 
 
 def test_render_pairs_prompt_names_destination() -> None:

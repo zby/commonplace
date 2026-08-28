@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import Any
 
 from commonplace.lib import frontmatter
+from commonplace.lib.hashing import content_sha256_for_text
 from commonplace.review.review_db import (
     connect,
     load_current_freshness_baselines,
@@ -80,11 +81,8 @@ def _note_parts(content: str) -> dict[str, Any] | None:
     }
 
 
-def _load_gate_watches(criterion_path: Path) -> set[str] | None:
-    try:
-        parsed = frontmatter.parse(criterion_path.read_text(encoding="utf-8"))
-    except (OSError, UnicodeDecodeError):
-        return None
+def _gate_watches(criterion_text: str) -> set[str] | None:
+    parsed = frontmatter.parse(criterion_text)
     if not parsed.ok:
         return None
     raw = parsed.data.get("watches")
@@ -98,6 +96,13 @@ def _load_gate_watches(criterion_path: Path) -> set[str] | None:
     if not watches.issubset(KNOWN_WATCHES):
         return None
     return watches
+
+
+def _selected_note_hash(record: StaleCriterion) -> str | None:
+    for changed_input in record.changed_inputs:
+        if changed_input.input_role == "note":
+            return changed_input.current_content_sha256
+    return None
 
 
 def has_only_unwatched_changes(
@@ -147,28 +152,48 @@ def qualifying_records(
     ]
 
     current_text_cache: dict[str, str] = {}
-    gate_watches_cache: dict[str, set[str] | None] = {}
+    gate_watches_cache: dict[int, set[str] | None] = {}
     qualifying: list[StaleCriterion] = []
     for record in stale_records:
         freshness_baseline = freshness_baselines.get((record.note_path, record.criterion_path, model))
         if freshness_baseline is None:
             continue
 
-        if record.criterion_path not in gate_watches_cache:
-            gate_watches_cache[record.criterion_path] = _load_gate_watches(repo_root / record.criterion_path)
-        watches = gate_watches_cache[record.criterion_path]
+        if (
+            content_sha256_for_text(freshness_baseline.baseline_criterion_text)
+            != freshness_baseline.baseline_criterion_hash
+        ):
+            continue
+        criterion_snapshot_id = freshness_baseline.baseline_criterion_snapshot_id
+        if criterion_snapshot_id not in gate_watches_cache:
+            gate_watches_cache[criterion_snapshot_id] = _gate_watches(
+                freshness_baseline.baseline_criterion_text
+            )
+        watches = gate_watches_cache[criterion_snapshot_id]
         if watches is None:
             # No valid watches declaration = the gate watches the whole note;
             # nothing is trivial against it. Type-spec gates land here.
             continue
 
         previous_text = freshness_baseline.baseline_note_text
-        if previous_text is None:
+        if (
+            previous_text is None
+            or content_sha256_for_text(previous_text)
+            != freshness_baseline.baseline_note_hash
+        ):
             continue
 
         if record.note_path not in current_text_cache:
             current_text_cache[record.note_path] = (repo_root / record.note_path).read_text(encoding="utf-8")
         current_text = current_text_cache[record.note_path]
+        selected_note_hash = _selected_note_hash(record)
+        if (
+            selected_note_hash is None
+            or content_sha256_for_text(current_text) != selected_note_hash
+        ):
+            # The qualification read must be the exact note version selected
+            # for acknowledgement. An interleaving edit fails closed.
+            continue
 
         if has_only_unwatched_changes(
             previous_text,

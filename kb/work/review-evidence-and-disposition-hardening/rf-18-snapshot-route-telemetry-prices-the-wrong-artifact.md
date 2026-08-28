@@ -28,25 +28,25 @@ evidence dependency described in RF-04.
 
 ## Provisional repair direction
 
-Resolve snapshot-required links to both the logical ingest and the physical
-consumption target. Charge the latter's bytes and require consumption metadata
-to name it, while preserving the ingest as lineage metadata.
+Resolve snapshot-required links to the logical ingest and both physical inputs
+the grounding check consumes: ingest metadata and derived snapshot bytes. Charge
+both files and require consumption metadata to name each one actually opened.
 
 ## Done when
 
-- Availability and consumption telemetry name the derived snapshot.
-- Charged bytes equal the actual snapshot size.
-- The ingest-to-snapshot lineage remains explicit.
+- Availability and consumption telemetry name the ingest and derived snapshot.
+- Charged bytes equal both files' actual whole-file sizes.
+- The logical ingest-to-physical-input routes remain explicit.
 - The existing V1 mismatch test is replaced by the intended behavior.
 
 ## Resolution
 
-Resolved links now distinguish `link_target_path` from `consumption_path`.
-Ordinary routes map the path to itself; `(snapshot required)` maps the linked
-ingest to its derived snapshot and uses the snapshot's actual size. Availability
-schema v3 exposes the route mapping, separate logical and physical counts, and
-the priced physical artifacts. The generated prompt
-shows both paths and requires `opened_paths` to name the snapshot consumption
-target. Consumption schema v2 then prices that reported snapshot path. Tests
-cover resolution, missing snapshots, prompt instructions, lineage telemetry,
-snapshot byte cost, and the logical-count/physical-cost boundary.
+Resolved links now distinguish one `link_target_path` from one or more physical
+consumption targets. Ordinary routes map the path to itself. A `(snapshot
+required)` route maps the linked ingest to both the ingest and its derived
+snapshot, using each file's actual size. Availability schema v3 exposes both
+route mappings, separate logical and physical counts, and both priced artifacts.
+The generated prompt requires `opened_paths` to name each physical target the
+reviewer opened. Consumption schema v2 then prices those reported paths. Tests
+cover resolution, missing snapshots, prompt instructions, multi-target lineage
+telemetry, combined byte cost, and the logical-count/physical-cost boundary.

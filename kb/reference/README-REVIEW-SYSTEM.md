@@ -67,6 +67,9 @@ only permits the dereference. `semantic/grounding-alignment` is the first user:
 an ingest link marked `(snapshot required)` sends the reviewer to
 `kb/sources/.snapshots/<slug>.md`, which is deliberately not linkable from a note
 ([ADR 073](./adr/073-untracked-source-snapshots-require-ingest-grounding.md)).
+The route accounts for both physical inputs: the linked ingest supplies the
+canonical source and expected snapshot hash, while the derived snapshot supplies
+the source bytes being checked.
 Note what this does *not* loosen — one path, derived from a link that is already
 in the note, named by the criterion. It is not a licence to search the corpus.
 
@@ -148,19 +151,24 @@ named baseline. Output lines have the form `acked: <note_path> <criterion_id>`.
 `commonplace-ack-trivial-note-changes` may select type- and
 collection-conformance pairs, but never auto-acks them. Their criterion
 documents declare no `watches:`, so the command treats the entire artifact as
-watched.
+watched. For ordinary gates, trivial qualification parses `watches:` from the
+accepted criterion snapshot and checks the exact current note version selected
+for acknowledgement. An edit between selection and qualification fails closed,
+including an edit that later restores the same bytes.
 
 ## Building a warn/fix queue
 
 `commonplace-warn-selector` builds a fixing queue from the current review state — the actionable findings from reviews whose outcome is `warn`. It is the entry point to the [fix system](../instructions/FIX-SYSTEM.md), which turns these findings into applied corrections and fix reports.
 
 - it reads current evidence review pairs across all models
-- it loads each review's rationale text from the evidence pair's result file (unavailable if the file is missing)
 - it queues findings only when both the live note and live criterion match the
   freshness baseline
 - it reports skipped stale WARN residue separately as `stale_pairs`, using
   `note-changed` and `criterion-changed` reasons rather than presenting those
   findings as current
+- for a fresh WARN, it loads the rationale from the evidence pair's result file;
+  a missing result file prevents actionable finding extraction, but it cannot
+  hide a stale-pair advisory
 - it collapses model partitions to one current entry per `(note_path, criterion_path)`, choosing the latest baseline-backed warn review
 
 ## Interpreting review output
@@ -215,7 +223,7 @@ Inside every pair block, the worker reports linked-material consumption before t
 review-consumption: {"opened_paths": ["kb/notes/example.md"], "stop_reason": "sufficiency"}
 ```
 
-`opened_paths` contains each distinct repo-relative consumption target used from that target note's pre-resolved link table; it excludes the target note, criterion, and lineage-only link targets. An empty list means no linked artifact was used. For an ordinary route, the resolved link target and consumption target are the same. For `(snapshot required)`, the table retains the linked ingest as lineage but names and prices the derived snapshot as the consumption target, and the reviewer reports that snapshot path. `stop_reason` is `budget` when a reading limit prevented further inspection and `sufficiency` when the reviewer had enough evidence.
+`opened_paths` contains each distinct repo-relative consumption target used from that target note's pre-resolved link table; it excludes the target note and criterion. An empty list means no linked artifact was used. For an ordinary route, the resolved link target and consumption target are the same. For `(snapshot required)`, the table names and prices both physical inputs: the linked ingest metadata and the derived snapshot bytes. The reviewer reports each one actually opened. `stop_reason` is `budget` when a reading limit prevented further inspection and `sufficiency` when the reviewer had enough evidence.
 
 Finalization strips this line from the per-pair result artifact and records it under `commonplace.review_link_consumption` beside `commonplace.review_link_availability` in job telemetry. Each consumption row carries `report_status`; missing, partial, malformed, or unpriced reports retain diagnostics but never affect the pair's result, job completion, or freshness. Only a `complete` row with no unpriced paths supplies a comparable consumed byte total.
 

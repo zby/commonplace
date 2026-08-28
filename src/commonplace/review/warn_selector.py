@@ -142,13 +142,6 @@ def scan_reviews(
             continue
         if review.outcome != "warn":
             continue
-        review_text = _load_review_text(repo_root, review)
-        if review_text is None:
-            continue
-        warns = extract_warns(review_text, outcome=review.outcome)
-        if not warns:
-            continue
-
         freshness_baseline = freshness_baselines.get((note_path, criterion_path, model_partition))
         if freshness_baseline is None:
             reasons = ("missing-baseline",)
@@ -184,6 +177,13 @@ def scan_reviews(
                     reasons=reasons,
                 )
             )
+            continue
+
+        review_text = _load_review_text(repo_root, review)
+        if review_text is None:
+            continue
+        warns = extract_warns(review_text, outcome=review.outcome)
+        if not warns:
             continue
 
         gate_key = (note_path, criterion_path)
