@@ -59,6 +59,7 @@ plugins:
         'notes/agent-memory-index.md': 'notes/agent-memory-README.md'
         'notes/agent-memory-serves-contextual-competence-through-discoverable-composable-trusted-knowledge.md': 'notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md'
         'notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md': 'notes/agent-runtime-analysis-should-separate-scheduling-context-state.md'
+        'notes/agent-work-is-selected-for-unpredictability-because-predictable-decisions-can-be-codified.md': 'notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md'
         'notes/an-adaptation-loop-requires-search-evaluation-and-retention.md': 'notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md'
         'notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable.md': 'notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md'
         'notes/an-improvement-loop-requires-search-evaluation-and-operative-retention.md': 'notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md'
