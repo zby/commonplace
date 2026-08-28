@@ -62,7 +62,11 @@ candidate description. It may not claim that the allocation is unique or turn
 heterogeneous judgments into a scalar percentage. The successor should record
 named functions, their decision content, their current bearers, untraced
 stages, the remaining human work, and the automation envelope of each method at
-a fixed comparison grain.
+a fixed comparison grain. It should read the remaining human work as a residue
+of warranted transfer rather than a catalogue of human capacities, and classify
+each residual decision by the reason it resisted transfer
+([warranted transfer leaves people the hardest-to-warrant decisions](../../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md));
+the transition article then explains what moving one such row requires.
 
 The practical claim is different: the current composite can already be useful
 to people building theories and operating an LLM wiki. Evidence for that claim

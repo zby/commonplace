@@ -75,6 +75,20 @@ It does not count as transfer of a new kind of programming work. The progress
 record must preserve both contributions instead of treating responsibility
 transfer as the only kind of improvement.
 
+Envelopes do not stack toward an empty human cut set. Each mechanism takes the
+decisions it can warrant — represented inputs, a settled criterion, a result an
+independent oracle can check — and stops where warrant fails. The residual
+human work is therefore adversely selected: per decision it is harder to
+warrant than the work already transferred, and moving the next decision costs
+more than moving the last, even with a fixed incoming workload
+([warranted transfer leaves people the hardest-to-warrant decisions](../../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md)).
+Two consequences follow. The list of what humans still supply is a residue of
+selection, not evidence about an essentially human capacity. And closure over
+a declared path is decided at its least-warrantable decisions, which is to say
+at the evaluator; envelope expansion elsewhere on the path does not approach
+it. This is a mechanism at the human boundary, distinct from the elastic
+backlog that moves human attention to new work.
+
 Computational closure is a structural milestone for a declared improvement
 path. Every premise, transition, authorization, evaluation, and recovery operation needed
 to continue that path over the stated horizon is available inside the

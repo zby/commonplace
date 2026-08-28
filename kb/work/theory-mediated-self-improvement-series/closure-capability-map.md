@@ -63,6 +63,26 @@ operational-capability or improvement-yield coordinates even when no new
 responsibility moves from the programmer. Envelope expansion and performance
 within the envelope are separate contributions to the larger system.
 
+Ceilings are not independent of one another. Warranted transfer selects the
+decisions that can be represented, settled, and independently checked, so the
+residue left after several mechanisms have reached their ceilings is the
+hardest-to-warrant part of the path
+([warranted transfer leaves people the hardest-to-warrant decisions](../../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md)).
+Record each item of the human cut set with the reason it resisted transfer,
+because the reason names the mechanism that must grow before it can move:
+
+| Why the decision stayed human | What has to grow |
+|---|---|
+| A required premise is not represented where the system can read it | Representation |
+| The criterion is unsettled; the method names a decider instead of a rule | Settlement |
+| No oracle independent of the candidate can check the result | Verification |
+| The decision arises after the declared automatic horizon ends | Horizon and path continuity |
+| Transfer is possible but priced out | Nothing structural; a movable claim |
+
+The same selection explains why the degenerate patterns below cluster at the
+evaluator: a captured evaluator, a viability-only gate, and boundary export all
+supply apparent warrant at exactly the decisions where real warrant is missing.
+
 ## Degenerate closure patterns
 
 | Pattern | How closure is obtained | Why it is insufficient |
