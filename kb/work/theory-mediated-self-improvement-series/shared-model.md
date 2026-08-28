@@ -49,6 +49,20 @@ This uses the error-correction asymmetry described in
 and the promotion/fallback relation described in
 [the two-layer execution system](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md).
 
+## Realizing the holder conditions in a composite
+
+Ledger row O12 makes holding the theory equivalent to warrant at the
+coherent-modification decision under conditions that human holders get for
+free. Each has a composite realization, and where it rests (operator and
+agent, 2026-08-28):
+
+| Human condition | Composite realization | Where it rests |
+|---|---|---|
+| Dense exposure calibrates the holder | The model is exposed per call but unchanged by it; calibration happens only if the outcome is recorded, read back against the retained theory, and retrieved next time | The retention and read-back path — the learning-outside-weights claim (C1) in its most testable form |
+| Plural, decorrelated holders | Judges in a context clean of the proposer's trace but with the retained theory loaded; different model families and adversarial framings for model-level decorrelation | Cheaper than for humans: addressable theory makes a second holder a load, not years of contact. A judge without the theory is non-holder assessment |
+| Knowing when unable; routing to test or peer | Structural triggers — a falsifier condition observed, a coverage test failing — rather than self-reported uncertainty | Codeable; rests on the empirically weakest signal, so keep it structural |
+| Consequences land on the judge | Learning half folds into read-back. The incentive half has no human form in a composite; its analogue is training-induced disposition (sycophancy, self-consistency), to be treated as the composite's Model I and routed around by plurality | Absent as incentive; present as bias |
+
 ## Direction, strong benchmark, and bootstrap
 
 The broad direction is increasing programmer leverage: expand the accepted
