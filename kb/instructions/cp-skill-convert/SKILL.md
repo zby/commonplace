@@ -53,7 +53,9 @@ tags: []
 - Do not add `user-verified` — conversion structures the note but cannot grant human attestation.
 - `description` must add information beyond the title. See [note base type](../../types/note.md) for quality criteria.
 - `traits` is always `[]` — trait assignment is semantic work, done later by a writer or human reviewer; deterministic validation does not infer traits.
-- `tags` is always `[]` — tag assignment is semantic work, done later by the `cp-skill-connect` skill or human review.
+- `tags` is always `[]` — tag assignment is semantic work and remains empty
+  until a separately authorized editing task assigns it. `cp-skill-connect`
+  reports candidate links only; it does not edit tags or library artifacts.
 - Do NOT modify the body content. Conversion adds structure, not editorial changes.
 
 #### Step 3a: Rename the file
@@ -96,21 +98,20 @@ description: [the description you wrote]
 tags: []
 
 Next steps:
-- Run the `cp-skill-connect` skill on `new-filename.md` — find connections
+- Run the `cp-skill-connect` skill on `new-filename.md` — report candidate
+  connections without mutating the note
 - Run the `cp-skill-validate` skill on `new-filename.md` — check deterministic structure and references
 - Optionally ask the user to verify the artifact after review; only the human may add `user-verified: true`
 ===
 ```
 
-### Future conversions (not yet implemented)
+### Unsupported conversions
 
-These are documented as directions, not working features. If a user requests one, explain it's not implemented yet.
-
-- **note → structured-claim**: add Evidence/Reasoning/Caveats sections and set the collection-local structured-claim type
-- **note → spec**: add Design/Implementation sections
-- **note → review**: add Findings section, date
-- **note → adr**: add Context/Decision/Consequences sections
-- **any → text**: strip frontmatter, demote to raw capture (for notes that didn't work out)
+If a user requests any conversion other than text → note, explain that it is
+not implemented and stop. Do not invent a conversion or retain a speculative
+feature catalogue. If repeated use establishes a concrete missing conversion,
+route that design gap through the repository's normal proposal process before
+adding it here.
 
 ## Critical Constraints
 

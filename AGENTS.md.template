@@ -63,6 +63,16 @@ Use ordinary spaced phrases in prose. If this KB registers a hyphenated identifi
 
 Maintain this KB under the project's version-control system. Inspect diffs before accepting changes, and use history for rollback, attribution, and reconstruction when needed. Follow the project's own conventions for commits, branches, and review; Commonplace assigns those objects no portable semantics, and `commonplace-*` command correctness does not depend on Git history.
 
+## Delegation
+
+Delegation does not expand task authority. For consequential work, a worker
+handoff fixes the intended result, non-negotiable constraints, owned outputs or
+write scope, accessible inputs, coordination boundary, verification or
+feedback, and stop or escalation condition. The parent retains scheduling,
+integration, and recovery; parallel writers need disjoint ownership or an
+explicit coordination rule. Nested delegation requires explicit
+authorization; silence means no.
+
 ## Using the KB
 
 The knowledge base lives in `kb/`. Search it when the user asks about decisions, reasoning, design rationale, or project knowledge.

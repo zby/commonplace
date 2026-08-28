@@ -1,29 +1,116 @@
 ---
-description: "Separates arbitrary choices authors must fix from situational details executors can determine, preventing stale plans and prompts from consuming the live executor's search space"
+description: "A decision-specific rule for fixing upstream information the executor cannot recover while leaving bounded choices to live or produced evidence"
 type: kb/types/note.md
-traits: [title-as-claim]
+traits:
+  - title-as-claim
 tags: []
 ---
 
 # An author should fix what the executor can't determine, not what it will
 
-An instruction is written before it runs, and the executor acts later, on the live system. The same gap opens wherever an artifact is authored before execution: a plan, a spec, a workshop frame, the task prompt an orchestrator hands a subagent — in each, an author commits at one time and an executor acts at another. Any detail the artifact fixes is a snapshot taken at authoring time, and it diverges from what the executor actually faces for three reasons: at writing time the author saw only part of the situation; the situation keeps changing — which we *want* it to; and execution itself produces evidence, so the early steps generate exactly the information the later steps should use. The third reason is why plans are systematically worse candidates for detail-fixing than instructions: a plan's executor is guaranteed to know more than its author, even when nothing external changed. So a fixed detail goes stale — by ignorance, by drift, or by the run itself. When it does, the executor is stuck: follow the stale detail and get it wrong, or override the artifact it was handed. Either way the detail meant to help has discarded what the executor can now determine. That is why over-specified instructions — and over-committed plans — are brittle. (It also buries the details that matter among the ones that don't.)
+For each choice in an authored execution, the author should fix what a
+competent, authorized executor cannot safely determine from authorized,
+decision-relevant evidence. The author should leave a situational choice open
+when live or actively produced evidence can distinguish among its permitted
+alternatives. A harmless choice whose alternatives are all acceptable and
+decoupled may also remain open; coordination can instead require one common
+selection. This boundary is bidirectional and specific to the choice. The
+author may uniquely know intent, binding constraints, acceptance conditions,
+privileged facts, external commitments, and cross-task coupling. Execution may
+instead reveal current state, tool results, local failures, and evidence
+produced during the work. A premature choice can therefore be wrong because
+upstream lacked relevant evidence, become wrong when state later drifts, or be
+overturned by evidence the work itself produces. Neither actor has to know more
+overall; [intent-framed delegation is a control regime, not a short
+prompt](./intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md)
+owns the underlying information relation.
 
-The usual heuristic — *say what you want, not how to do it* — gestures at this, because the *how* is so often the part that depends on the situation. But the real line isn't how-versus-what: a *what* can be a snapshot too (which functions currently call it, what the config already contains), and some *how* is genuinely the author's to fix. The real test is what the executor can determine for itself — by looking, searching, or reasoning from the live situation. Leave that to the executor — its output then tracks the system as it evolves, not a past version of it. Fix only what it can't determine: the goal, the constraints, what *done* means, and any privileged fact the author holds but the executor can't reach. And fixing is not only mandating. An artifact fixes by framing too: a plan's decomposition, a workshop's opening question, a spec's choice of abstraction commit the executor to a method as firmly as a directive would — the commitment is just harder to see, because nothing in it reads as an order.
+## Determinability, not what versus how
 
-Arbitrary choices fall on the same side: they too are something the executor can't determine, because the situation itself doesn't determine them — the answer isn't in it at all. They include the obvious conventions — output paths, file names, templates — but also *which of several valid interpretations to follow* when the situation picks out none. One of the many has to be chosen, and only the author can choose it once and the same way. This is the mirror of the situational case: a situational detail goes stale because the situation determines it and then keeps moving, while an arbitrary choice can't, because the situation never determined it — which is just why pinning the first is brittle and pinning the second safe. Safe, though, only while the choice is genuinely decoupled: *arbitrary* means the options are equivalent downstream too, not just at the moment of choosing. A choice whose options differ in what they later allow or block — a method masquerading as a convention to settle — is situational in disguise; the situation will determine it eventually, and it belongs to the executor.
+“Specify what, not how” puts the boundary in the wrong place. An outcome,
+decomposition, opening question, or abstraction frame can constrain later
+means without naming a method. A method can also encode a binding constraint,
+shared convention, or coordination dependency that execution cannot recover.
+To fix a choice is to select or constrain it upstream, regardless of whether
+the choice is described as *what* or *how*. Leaving a choice open still
+requires enough purpose, bounds, and acceptance conditions for the executor to
+recognize permitted adaptation. Otherwise the author has omitted part of the
+commission and the executor must project an interpretation into the gap.
+[Agentic systems interpret underspecified
+instructions](./agentic-systems-interpret-underspecified-instructions.md)
+explains why added framing and constraints narrow this interpretation space.
+Here, an executor can *determine* a choice only when it can select safely from
+authorized evidence, preserve the fixed intent and bounds, and recognize when
+it cannot make a safe selection.
 
-Staleness is also not the only cost. A pinned choice consumes search space: every commitment narrows what stays feasible for the decisions downstream of it, and since [low-degree-of-freedom subproblems should be solved first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking.md), the flexible choices belong late in the sequence. The author occupies the earliest commitment slot and cannot defer to itself — deferral here *means* delegation to the executor. So the ordering rule independently derives the same line: what the test above tells the author to fix — goal, constraints, done-criteria, the genuinely arbitrary conventions — are the low-flexibility commitments, cheap to fix early because they consume little of the executor's feasible space; a pinned method or architecture is a high-flexibility commitment made in the earliest slot, able to block the strong positions before anyone has seen them.
+## Actor, time, and evidence are separate axes
 
-This is not a rival to [frontloading](./frontloading-spares-execution-context.md); it is a cost frontloading's decision has to weigh. Frontloading asks whether inserting a value saves context — but inserting one the executor would be better placed to choose forfeits its runtime advantage, so a value can be worth inserting for context and still be wrong to fix. Both pulls live in the same decision.
+Delegation changes who holds the judgment. Deferral changes when the judgment
+is exercised. A different actor can receive a choice and exercise judgment
+immediately, while the same actor can retain a choice and decide it later.
+Delegation also requires both competence and authority for the particular
+choice. When the delegated choice is consequential, it needs the governed
+handoff described by [intent-framed delegation is a control regime, not a
+short prompt](./intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md),
+not merely an instruction that leaves the choice open.
 
-Two premises hold the claim up, and dropping either flips it. If the executor isn't [competent enough to decide for itself](./design-for-the-first-time-human-except-on-access-cost.md), fixing the detail is help, not harm. And if the author can fully see the situation when writing *and* it won't change afterward — a static, fully-determined task — there is no snapshot to go stale; that is the one case where a fully specified plan is legitimate. Over-specification bites in the common middle: a capable executor acting on a system the author could only half-foresee and that keeps moving.
+Later timing supplies an information advantage only when a named observation
+has some possible result that would change selection, timing, modification, or
+abandonment for this choice. Evidence may arrive through later live-state
+observation or be produced by an earlier step or bounded probe. Activity
+produces decision-relevant evidence only when one of its possible outputs can
+change the follow-on choice. [Productive deferral requires option, evidence,
+and convergence](./productive-deferral-requires-option-evidence-and-convergence.md)
+owns this discriminating-evidence test. Waiting without such an observation
+does not improve the decision.
 
----
+Evidence production does not itself determine the actor or the time of
+choice. An author can run a probe and retain the later judgment. Another actor
+can exercise judgment immediately from evidence already available. The three
+axes must therefore be allocated independently for the choice at issue.
 
-Relevant Notes:
+## Arbitrary choices and coupling
 
-- [Design for the competent first-time human, except on access cost](./design-for-the-first-time-human-except-on-access-cost.md) — grounds: the competent-executor premise this claim rests on
-- [Frontloading spares execution context](./frontloading-spares-execution-context.md) — extends: the robustness cost here is a term frontloading's insert-to-save-context decision must weigh
-- [Agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — contrasts: under-specification is the dual failure; the skill is picking the right axis, not the right amount
-- [Solve low-degree-of-freedom subproblems first to avoid blocking better designs](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking.md) — grounds: the ordering rule behind the second cost; the author's slot is earliest, so its commitments must be the least flexible ones
+A choice is genuinely arbitrary here when no authorized, decision-relevant
+evidence selects among its permitted alternatives. Waiting cannot resolve such
+a choice. If its alternatives are decoupled and all acceptable, it need not be
+fixed. If consistency or hidden cross-task coupling requires several executors
+to use one convention, a coordination-bearing actor must establish or expose
+one shared selection rather than leave independent local projections. This is
+a target-side inference combining the hidden-coupling boundary in [intent-
+framed delegation](./intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md),
+the no-discriminating-evidence test in [productive
+deferral](./productive-deferral-requires-option-evidence-and-convergence.md),
+and the plural projections described by [agentic systems interpret
+underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md).
+For interdependent choices, [solving low-degree-of-freedom subproblems first
+can preserve the options of more flexible
+ones](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking.md);
+that scoped ordering mechanism does not decide the whole author–executor
+boundary. When alternatives change feasibility, acceptance, or another task's
+options, the choice is not genuinely arbitrary. The author must then expose
+any hidden coupling and apply the central determinability rule to the
+resulting choice.
+
+## Search cost and frontloading
+
+Leaving a choice open makes the consuming executor select among the permitted
+interpretations. Fixing a value that is already known and remains valid for
+that call can spare discovery, derivation, indirection, or interpretation
+work. [Frontloading spares execution
+context](./frontloading-spares-execution-context.md) owns that benefit. The
+comparison is local and qualitative: frontload a known value when the avoided
+work matters, but do not freeze a situational value that discriminating
+execution evidence could overturn.
+
+## Scope
+
+Leaving a choice open presumes a chooser competent and authorized for that
+particular choice. This note supplies no universal competence test or numeric
+measure of information advantage. If the available executor is not competent,
+that blocks delegation; it does not by itself show that an early guess will
+produce a safe choice. When all choice-relevant inputs are available upstream,
+remain valid for the consuming call, and no discriminating execution
+observation is expected, resolving even method detail upstream is permissible.
+It is not required when the alternatives are all acceptable and no
+coordination benefit calls for a common selection.

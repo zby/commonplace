@@ -16,6 +16,16 @@ Tests for precision:
 
 **Reasoning constraint.** Keep the procedure's goal — one sentence at the top saying what it exists to make true — and cut explanations of *why* each step exists from the body. The goal is not regenerable from the steps; the per-step reasons are regenerable from the goal plus the step, and if worth preserving they go in a theory note linked via `rests-on` (for meta-readers only). Keep only enough further reasoning for edge cases and decisions.
 
+**Delegated work.** When an instruction delegates consequential work, the
+worker packet states the intended result, non-negotiable constraints, owned
+outputs or write scope, accessible inputs, coordination boundary, verification
+or feedback, and stop or escalation condition. Delegation never expands the
+caller's authority. The parent retains scheduling, integration, and recovery;
+parallel writers need disjoint ownership or an explicit coordination rule.
+State whether nested delegation is authorized; silence means no. Use clean
+context when isolation, later evidence, or independent judgment creates a
+specific benefit, not as an automatic reason to pay handoff cost.
+
 **Instruction duality.** These docs are both content and working system — changing an instruction changes agent behaviour immediately. Treat edits as deployments, not documentation updates: before changing one, name what consumes it and through which channel (the type spec's Operativity section states the test); the edit is live for the next agent that loads the text, with no separate release step. The same duality means an instruction nothing loads is inert — it deploys to no one, and nothing will report that (rationale: [operative change](../notes/definitions/operative-change.md)).
 
 ## Composition siblings

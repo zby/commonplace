@@ -5,18 +5,16 @@ traits:
   - title-as-claim
   - has-comparison
   - has-external-sources
-tags: [document-system, foundations]
 ---
 
-# Current-task fit alone does not warrant costly structural entrenchment
+# Current-task fit alone does not warrant costly entrenchment
 
-A structure can fit the current task and deserve adoption at the narrowest
-useful scope without deserving costly entrenchment. Entrenchment still needs at
-least one of three warrants: an enduring constraint, discriminating transfer
-evidence or proof for a stated scope, or coordination value created by adopters
-that need a shared structure. Real-options reasoning can change when to commit
-or whether to preserve and investigate an alternative. It does not add a
-fourth warrant.
+A structure can fit the current task and deserve adoption without deserving
+costly entrenchment. Entrenchment still needs at least one of three warrants:
+an enduring constraint, discriminating transfer evidence or proof for a stated
+scope, or coordination value created by adopters that need a shared structure.
+Real-options reasoning can change when to commit or whether to preserve and
+investigate an alternative. It does not add a fourth warrant.
 
 Adoption means using a type, schema, link vocabulary, routing convention,
 validator, or similar structure for current work. Entrenchment means creating
@@ -115,13 +113,10 @@ probe has value merely because it postpones commitment.
 ## The Commonplace timing consequence
 
 For a costly Commonplace structure, first identify which substantive warrant
-supports entrenchment. If a warrant is not yet established, a bounded probe is
-relevant only when one of its possible outputs could satisfy that specific
-warrant's own test. Boundedness limits the probe's cost and dependency
-footprint; it does not make the resulting evidence warrant-bearing by itself.
-Then name the observation or probe result that could change the structural
-choice and check that the alternative will still be usable at the return
-point. Compare the preserved later choice with:
+supports entrenchment or which bounded evidence could establish one. Then name
+the observation or probe result that could change the structural choice and
+check that the alternative will still be usable at the return point. Compare
+the preserved later choice with:
 
 - routing or validation benefit forgone during delay;
 - fragmentation and foregone value from an actual need to coordinate;

@@ -137,7 +137,13 @@ def create_jobs_from_targets(
 ):
     selector_path = repo / "targets.json"
     selector_path.write_text(
-        json.dumps({"model_partition": model, "targets": targets}),
+        json.dumps(
+            {
+                "schema": review_target_selector.SELECTOR_SCHEMA,
+                "model_partition": model,
+                "targets": targets,
+            }
+        ),
         encoding="utf-8",
     )
     args = ["--input", "targets.json", "--grouping", grouping]
@@ -254,6 +260,7 @@ def test_create_review_jobs_accepts_selector_json_file_and_validates_model(tmp_p
     selector_path.write_text(
         json.dumps(
             {
+                "schema": review_target_selector.SELECTOR_SCHEMA,
                 "model_partition": "test-model",
                 "targets": [
                     {
@@ -304,7 +311,16 @@ def test_create_review_jobs_accepts_selector_json_file_and_validates_model(tmp_p
 def test_create_review_jobs_selector_noop_and_model_agnostic_input(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     selector_path = repo / "empty-targets.json"
-    selector_path.write_text(json.dumps({"model_partition": "test-model", "targets": []}), encoding="utf-8")
+    selector_path.write_text(
+        json.dumps(
+            {
+                "schema": review_target_selector.SELECTOR_SCHEMA,
+                "model_partition": "test-model",
+                "targets": [],
+            }
+        ),
+        encoding="utf-8",
+    )
 
     result = run_cli(
         "create_review_jobs",
@@ -321,7 +337,16 @@ def test_create_review_jobs_selector_noop_and_model_agnostic_input(tmp_path: Pat
     assert payload["jobs"] == []
     assert payload["skipped_pairs"] == []
 
-    selector_path.write_text(json.dumps({"model_partition": None, "targets": []}), encoding="utf-8")
+    selector_path.write_text(
+        json.dumps(
+            {
+                "schema": review_target_selector.SELECTOR_SCHEMA,
+                "model_partition": None,
+                "targets": [],
+            }
+        ),
+        encoding="utf-8",
+    )
     accepted = run_cli(
         "create_review_jobs",
         "--input",
@@ -350,6 +375,35 @@ def test_create_review_jobs_selector_noop_and_model_agnostic_input(tmp_path: Pat
     )
     assert rejected.returncode == 2
     assert "model_partition is required" in rejected.stderr
+
+
+def test_create_review_jobs_rejects_missing_or_unequal_selector_schema_before_targets(tmp_path: Path) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    selector_path = repo / "targets.json"
+
+    for payload in (
+        {"model_partition": "test-model", "targets": "not-a-list"},
+        {
+            "schema": "commonplace-review-targets/1",
+            "model_partition": "test-model",
+            "targets": "not-a-list",
+        },
+    ):
+        selector_path.write_text(json.dumps(payload), encoding="utf-8")
+        result = run_cli(
+            "create_review_jobs",
+            "--input",
+            "targets.json",
+            "--grouping",
+            "note",
+            cwd=repo,
+            db_path=db_path,
+            check=False,
+        )
+
+        assert result.returncode == 2
+        assert f"selector JSON schema must be {review_target_selector.SELECTOR_SCHEMA}" in result.stderr
+        assert "targets must be a list" not in result.stderr
 
 
 def test_create_review_jobs_selector_criterion_grouping_chunks_and_lists(tmp_path: Path) -> None:
@@ -403,6 +457,7 @@ def test_create_review_jobs_rejects_batch_size_with_note_grouping(tmp_path: Path
     selector_path.write_text(
         json.dumps(
             {
+                "schema": review_target_selector.SELECTOR_SCHEMA,
                 "model_partition": "test-model",
                 "targets": [target("kb/notes/sample.md", GATE_ONE_PATH, GATE_ONE)],
             }

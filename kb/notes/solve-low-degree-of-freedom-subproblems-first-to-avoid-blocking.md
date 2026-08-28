@@ -20,7 +20,7 @@ The reason this works is optionality preservation. Early decisions with many alt
 
 In agent workflows, low-degree-of-freedom choices usually correspond to hard constraints: required output schema, tool contracts, file locations, deterministic validation requirements, or precedence rules. High-degree choices are often rhetorical or representational: phrasing, narrative order, or which equivalent summary format to use. This matches [decomposition rules for bounded-context scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md): selection and constraint-setting happen first; expensive synthesis calls happen after the constrained frame is established.
 
-The rule also applies when commitments are split across an authoring/execution divide — an orchestrator and its subagents, a plan and the agent that runs it — where the sequence is fixed by role and deferring a choice means delegating it; that application is developed in [fix what the executor can't determine, not what it will](./fix-what-the-executor-cant-determine-not-what-it-will.md).
+The rule also applies when commitments are split across an authoring/execution divide — an orchestrator and its subagents, or a plan and the agent that runs it. Role can assign a decision to another actor, while later evidence can defer its timing; those choices may coincide, but they are independent. [An author should fix what the executor can't determine, not what it will](./fix-what-the-executor-cant-determine-not-what-it-will.md) applies that distinction to which facts and choices belong upstream or at execution.
 
 ## Open Questions
 
@@ -35,4 +35,4 @@ Relevant Notes:
 - [decomposition-heuristics-for-bounded-context-scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md) — extends: applies the same ordering rule to agent decomposition strategy
 - [bounded-context-orchestration-model](./bounded-context-orchestration-model.md) — enables: symbolic state lets constrained choices be fixed before costly semantic calls
 - [legal-drafting-solves-the-same-problem-as-context-engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — example: hard constraints precede softer interpretive guidance
-- [fix-what-the-executor-cant-determine-not-what-it-will](./fix-what-the-executor-cant-determine-not-what-it-will.md) — extends: the ordering rule applied across the authoring/execution divide, where the author's slot is earliest and deferring means delegating
+- [fix-what-the-executor-cant-determine-not-what-it-will](./fix-what-the-executor-cant-determine-not-what-it-will.md) — extends: applies the ordering rule across the authoring/execution divide while separating when a choice is made from which actor owns it

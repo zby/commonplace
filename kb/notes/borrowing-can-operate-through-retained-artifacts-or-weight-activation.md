@@ -46,11 +46,11 @@ current mission and constraints
 operative methodology for this task
 ```
 
-For example, a task could invoke *Auftragstaktik* while adding explicit Commonplace-specific constraints on irreversible changes, evidence, or review. The weight-resident doctrine provides context-efficient background structure; retained artifacts specify the parts that must be precise, writable, auditable, or different from the conventional doctrine.
+For example, a task could supply the gloss “preserve intent and constraints while delegating execution-time choice of means,” then add Commonplace-specific constraints on irreversible changes, evidence, or review. That hybrid uses the bounded mechanism in [intent-framed delegation is a control regime, not a short prompt](./intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) without assuming that the bare cue *Auftragstaktik* reconstructs the same package in every model. The weight-resident methodology provides context-efficient background structure; retained artifacts specify the parts that must be precise, writable, auditable, or different from the conventional doctrine.
 
 This hybrid explains why the existence of broad model knowledge does not remove the need for an external KB. The model weights provide a large but opaque and effectively read-only methodological library. The KB provides the writable complement: claims and methods whose exact content the system wants to inspect, revise, version, and selectively activate. The design question is therefore not simply whether knowledge exists in weights or in artifacts, but which parts deserve explicit retention and which can safely remain a parametric dependency.
 
-The distinction also creates a new transfer risk. Artifact borrowing can be reviewed against a source and the target-side mechanism. Weight-mediated borrowing additionally depends on whether a particular model actually reconstructs the intended methodology from the cue. A familiar label may activate a distorted, underspecified, or internally mixed representation. Economical activation therefore trades context cost against methodological fidelity.
+The distinction also creates a new transfer risk. Artifact borrowing can be reviewed against a source and the target-side mechanism. Weight-mediated borrowing additionally depends on whether a particular model actually reconstructs the intended methodology from the cue. A familiar label may activate a distorted, underspecified, or internally mixed representation. Where that difference would change consequential choices, the route therefore needs either a disambiguating gloss or target-side evidence from representative cases. Familiarity with the label is not evidence of activation fidelity. Economical activation trades context cost against methodological fidelity.
 
 ---
 
@@ -58,6 +58,6 @@ Relevant Notes:
 
 - [Source-adoption policy](../reference/source-adoption-policy.md) — contrasts: governs which borrowed ideas become retained Commonplace commitments; weight activation can use external intellectual machinery without adopting it into retained theory
 - [A borrowed pattern transfers only as far as source and target share a mechanism](./borrowed-patterns-transfer-only-over-shared-mechanism.md) — constrains: explicit adoption still requires a target-side transfer argument; pretrained familiarity does not establish valid transfer
-- [Weight-resident methodologies provide context-efficient behavioral compression](./weight-resident-methodologies-provide-context-efficient-behavioral-compression.md) — mechanism: explains why the weight-mediated route can be much cheaper in context
+- [Weight-resident methodologies provide context-efficient behavioral compression](./weight-resident-methodologies-compress-behavior-in-context.md) — mechanism: explains why the weight-mediated route can be much cheaper in context
 - [Only explicit retention is currently durable, writable, and addressable at once](./only-explicit-retention-is-durable-writable-and-addressable.md) — distinguishes: model competence can govern behavior without becoming retained, writable project theory
 - [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — mechanism: both retained and parametric knowledge still require activation before they affect behavior

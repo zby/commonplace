@@ -493,6 +493,7 @@ class TestCreateJobsForCollectionPairs:
         build_fixture(tmp_path)
         selector_json = json.dumps(
             {
+                "schema": review_target_selector.SELECTOR_SCHEMA,
                 "model_partition": TEST_MODEL,
                 "targets": [
                     {

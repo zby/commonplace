@@ -25,6 +25,12 @@ You should have performed the task manually at least twice in different contexts
    - Decision points where context determines the path
    - What to verify when done
    - What NOT to do (critical constraints)
+   - For consequential delegated work: intended result, non-negotiable
+     constraints, owned outputs or write scope, accessible inputs,
+     coordination, verification or feedback, stop or escalation, and whether
+     nested delegation is authorized. Keep scheduling, integration, and
+     recovery with the parent; give parallel writers disjoint ownership or an
+     explicit coordination rule.
 
 3. **Add frontmatter.** Every instruction needs:
    ```yaml

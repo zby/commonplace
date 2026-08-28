@@ -19,7 +19,7 @@ weight-resident methodology
 many coordinated behavioral consequences
 ```
 
-For example, invoking *Auftragstaktik* can bring with it commander intent, delegated choice of means, local initiative, and adaptation to changing circumstances without those elements being enumerated in the prompt. The supplied context carries little of the methodology's literal content; most of the usable structure comes from the model weights.
+Using *Auftragstaktik* as the selector illustrates both the compression and its limit. The label may activate intent, delegated choice of means, local initiative, and adaptation without enumerating them. But [intent-framed delegation is a control regime, not a short prompt](./intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) shows why the label does not identify one stable transferable package. When the exact mechanism matters, a bare name is only a candidate cue: pair it with a short gloss such as “preserve intent and constraints while delegating execution-time choice of means,” or establish through target-model trials that the name reliably activates that bounded mechanism without importing the surrounding military machinery.
 
 This makes weight-resident methodologies unusually economical under [context scarcity](./context-efficiency-is-the-central-design-concern-in-agent-systems.md). Instructions, task evidence, intermediate work, and retrieved project knowledge all compete for the same context window. A compact methodological cue can preserve that scarce space while still constraining many downstream choices.
 
@@ -32,13 +32,13 @@ This gives two different ways to make methodology operative:
 
 The two paths should not be treated as substitutes in every case. Weight-mediated activation is attractive when the model's reconstruction is sufficiently coherent and conventional. Explicit loading matters when exact project-specific distinctions, reproducibility, revision, or auditability dominate context economy.
 
-A practical consequence follows but is not yet an instruction: methodology loading can be optimized over a spectrum from a name, through a short disambiguating gloss, to an applicable retained fragment or full artifact. The theoretical criterion is whether the representation preserves the behavioral distinctions that matter for the current task, not whether it reproduces the full exposition.
+A practical consequence follows but is not yet an instruction: methodology loading can be optimized over a spectrum from a name, through a short disambiguating gloss, to an applicable retained fragment or full artifact. The theoretical criterion is whether the representation preserves the behavioral distinctions that matter for the current task, not whether it reproduces the full exposition. An ambiguous name therefore earns the shortest sufficient gloss or target-side activation test, not automatic trust merely because it is familiar.
 
 ---
 
 Relevant Notes:
 
-- [A capable agent needs methodology selection, not just relevant knowledge](./a-capable-agent-needs-methodology-selection-not-just-relevant-knowledge.md) — grounds: explains why selecting a coherent methodology is a distinct control problem
+- [A capable agent needs methodology selection, not just relevant knowledge](./capable-agents-need-methodology-selection.md) — grounds: explains why selecting a coherent methodology is a distinct control problem
 - [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — motivates: context savings are valuable because methodology text competes with task evidence and reasoning for the same bounded resource
 - [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — mechanism: weight-resident knowledge matters only when a cue makes it action-relevant
 - [Only explicit retention is currently durable, writable, and addressable at once](./only-explicit-retention-is-durable-writable-and-addressable.md) — constrains: behavioral activation from weights is not equivalent to explicit retained methodology

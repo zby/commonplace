@@ -18,6 +18,17 @@ The control-plane file the system ships is `AGENTS.md`. KB goals live in a dedic
 
 This placement is load-bearing. `AGENTS.md` is loaded on every agent invocation, including forked skill contexts (`context: fork`), so the goals are in context for every write decision without any tool call. The section sits alongside the routing table, vocabulary, version-control conventions, and other invariants the agent needs from turn one.
 
+## Delegation invariant
+
+The shipped control plane also states a compact delegation invariant. Delegated
+work remains inside the task's existing authority. A consequential handoff
+names its result, constraints, owned write surface, inputs, coordination,
+verification, and stop condition; the parent retains integration and recovery.
+Parallel writes require disjoint ownership or an explicit coordination rule,
+and nested delegation requires explicit authorization. The detailed authoring
+contract lives in the instruction type and collection so the always-loaded
+surface does not become a general planning checklist.
+
 ## What varies per installation vs. what ships with the framework
 
 | Concern | Per-installation or framework? | Where it lives |
@@ -27,6 +38,7 @@ This placement is load-bearing. `AGENTS.md` is loaded on every agent invocation,
 | Quality bar | Per-installation | same |
 | Routing table | Framework | `AGENTS.md` `## Using the KB`, generated/templated |
 | Version-control expectation | Framework default; project workflow | `AGENTS.md` `## Version control` |
+| Delegation safety boundary | Framework | `AGENTS.md` `## Delegation` |
 | Type system | Framework | `kb/types/` plus collection-local `kb/*/types/` directories with schemas and templates |
 | Writing conventions | Framework | `kb/*/COLLECTION.md` (per-collection) |
 | Link semantics | Framework | `kb/notes/links-README.md` and related guidance in `kb/instructions/` |
@@ -39,6 +51,7 @@ Only the per-installation rows require human input. Framework rows are shipped f
 
 - A placeholder `## KB Goals and Scope` section with HTML comment guidance for each subsection, as concrete prose examples the practitioner replaces with their own answers
 - A stock `## Version control` section that makes versioned maintenance the default while leaving commit, branch, and review semantics to the project
+- A stock `## Delegation` section that preserves task authority, worker ownership, parent integration, and explicit nested-delegation authority
 - A stock `## Using the KB` routing section pointing at `kb/notes/`, `kb/reference/`, and `kb/instructions/`
 - A stock Skills and Commands section listing the Commonplace-provided skills
 - `{{project_name}}` placeholders that `init_project` substitutes with the directory name
@@ -70,3 +83,4 @@ Relevant Notes:
 - [006-two-tree-installation-layout](./adr/006-two-tree-installation-layout.md) — decision: the installation step that creates the control-plane fragment and copies the template
 - [014-scripts-as-python-package-one-tree-model](./adr/014-scripts-as-python-package-one-tree-model.md) — decision: `commonplace-init` as the scaffold entry point and the one-tree install model
 - [architecture](./architecture.md) — shipped architecture: where the control-plane file sits inside the installed surface
+- [Intent-framed delegation is a control regime; prompt length does not establish it](../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) — rationale: the shared mechanism and conditional agent-side control surfaces behind the compact invariant

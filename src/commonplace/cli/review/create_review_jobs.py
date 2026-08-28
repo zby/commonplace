@@ -29,6 +29,7 @@ from commonplace.review.review_db import (
     prepare_review_db,
 )
 from commonplace.review.review_model import normalize_model_partition
+from commonplace.review.review_target_selector import SELECTOR_SCHEMA
 from commonplace.review.type_conformance import (
     is_type_spec_criterion_path,
     note_type_spec_path,
@@ -84,6 +85,8 @@ def _selector_pairs(
     fallback_model: str | None = None,
 ) -> tuple[str, list[RequestedPair]]:
     payload = _load_selector_json(raw_json)
+    if payload.get("schema") != SELECTOR_SCHEMA:
+        raise ValueError(f"selector JSON schema must be {SELECTOR_SCHEMA}")
     raw_model = payload.get("model_partition")
     if raw_model is None:
         raw_model = fallback_model

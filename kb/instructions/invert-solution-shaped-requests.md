@@ -1,5 +1,5 @@
 ---
-description: Use before accepting a solution-shaped request as the task; recover the underlying problem, evidence status, alternative framings, and least-committing next move.
+description: Use before accepting a solution-shaped request as the task; recover the underlying problem, evidence status, alternative framings, and the smallest sufficient next move.
 type: kb/types/instruction.md
 ---
 
@@ -127,7 +127,32 @@ Choose exactly one route:
 - `validator/script/command` -- the rule is precise enough for deterministic enforcement or automation
 - `skill` -- the procedure needs user-facing invocation, arguments, special tool permissions, model/context policy, or repeated direct use
 
-Prefer the least-committing route that preserves learning. Treat new skills, commands, validators, types, and indexes as high-maintenance surfaces; require stronger evidence for them than for a log entry, workshop, note, or instruction.
+Choose the smallest sufficient route whose commitment, delay, information, and
+maintenance costs are justified. Treat new skills, commands, validators, types,
+and indexes as high-maintenance surfaces; require stronger evidence for them
+than for a log entry, workshop, note, or instruction. Do not prefer delay merely
+because it commits less.
+
+Run the following branch only when the proposed solution would destroy a
+meaningful alternative or create dependencies that are costly to reverse.
+Otherwise select the route directly from the evidence above.
+
+Compare four moves:
+
+- `commit now` -- current evidence discriminates and the expected cost of
+  waiting, fragmentation, or lost coordination warrants commitment
+- `passively wait` -- name an exogenous observation that can change the choice
+- `run a bounded probe` -- name limited work whose possible output can change
+  the choice without committing the whole solution
+- `decline or do nothing` -- the problem or expected benefit does not warrant
+  commitment, waiting, or a probe
+
+For `passively wait` or `run a bounded probe`, name the alternative being
+preserved, the observation or possible output that can change the decision,
+whether the opportunity will remain available, and the current benefit,
+coordination value, or opportunity lost by waiting. Give the move a review,
+stop, or follow-on decision rule. If no later result can change the choice,
+waiting or probing is not an information-producing reason to defer it.
 
 ### 7. Recommend one next move
 
@@ -153,6 +178,9 @@ Before acting on the original solution, confirm:
 - Evidence status is explicit.
 - At least one alternative framing would lead to a different solution class.
 - The recommended route is the smallest sufficient outcome.
+- A costly-to-reverse commitment was compared with waiting or a bounded probe
+  only when a meaningful alternative can remain live.
+- Any deferral names discriminating evidence and a return to decision.
 - Any implementation step follows from the problem, not from momentum behind the initial solution.
 
 If any check fails, do not implement yet.
@@ -164,3 +192,10 @@ If any check fails, do not implement yet.
 - Do not force a new artifact when `do nothing`, `ask a question`, `log`, or `workshop` is the better route.
 - Do not bury ambiguity by silently choosing one problem hypothesis.
 - Do not include long rationale; keep the output short enough to precede real work.
+
+---
+
+Relevant Notes:
+
+- [Productive deferral requires a preserved option, discriminating evidence, and a convergence rule](../notes/productive-deferral-requires-option-evidence-and-convergence.md) — rests-on: supplies the conditional commit, wait, and bounded-probe test
+- [Current-task fit alone does not warrant costly structural entrenchment](../notes/current-task-fit-alone-does-not-warrant-costly-entrenchment.md) — rests-on: identifies costly structural dependency as the commitment boundary this instruction must test

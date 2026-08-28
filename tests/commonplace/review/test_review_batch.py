@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 
 from commonplace.lib import frontmatter
-from commonplace.review import review_db
+from commonplace.review import review_db, review_target_selector
 from commonplace.review.batch import prepare_grouped_review_job
 
 from ._run_cli import run_cli
@@ -101,7 +101,13 @@ def target(note_path: str, criterion_path: str, criterion_id: str, reason: str =
 def create_gate_jobs(repo: Path, db_path: Path, targets: list[dict[str, str]]):
     selector_path = repo / "targets.json"
     selector_path.write_text(
-        json.dumps({"model_partition": "test-model", "targets": targets}),
+        json.dumps(
+            {
+                "schema": review_target_selector.SELECTOR_SCHEMA,
+                "model_partition": "test-model",
+                "targets": targets,
+            }
+        ),
         encoding="utf-8",
     )
     return run_cli(

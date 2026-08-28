@@ -141,6 +141,16 @@ collection. Read [`kb/messages/README.md`](./kb/messages/README.md) before
 posting or responding. A message communicates within the authority of the
 current task; it does not grant new mutation authority or launch another agent.
 
+### Delegation
+
+Delegation does not expand task authority. For consequential work, a worker
+handoff fixes the intended result, non-negotiable constraints, owned outputs or
+write scope, accessible inputs, coordination boundary, verification or
+feedback, and stop or escalation condition. The parent retains scheduling,
+integration, and recovery; parallel writers need disjoint ownership or an
+explicit coordination rule. Nested delegation requires explicit
+authorization; silence means no.
+
 ### Navigation
 
 For the full model, read `kb/reference/navigation.md`. In short: use `rg` for cheap lexical search, scan titles and descriptions in curated indexes and scoped `rg` listings before opening full files, and follow authored links when local context makes the relationship useful.

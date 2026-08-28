@@ -23,7 +23,19 @@ Use `instruction` for prescriptive content: procedures, skill bodies, wrapper pr
 - State the goal first: one sentence saying what the procedure exists to make true. It is the only rationale the body keeps; an executor holding the goal can re-route around a blocked step instead of failing on it.
 - Keep the body executable on first reading.
 - State prerequisites, scope boundaries, decision points, and verification checks where they matter.
-- Fix only what the executor can't determine at run time: the goal, constraints, what *done* means, privileged facts, and arbitrary choices (paths, names, templates, which valid interpretation to follow). Leave anything the executor can determine from the live system to the executor — a fixed detail is an authoring-time snapshot and goes stale.
+- When the instruction delegates consequential work, state the intended result,
+  non-negotiable constraints, owned outputs or write scope, accessible inputs,
+  coordination boundary, verification or feedback, and stop or escalation
+  condition. State whether nested delegation is authorized; silence means no.
+  The parent keeps scheduling, integration, and recovery, and parallel writers
+  need disjoint ownership or an explicit coordination rule.
+- Fix what the executor cannot safely determine from authorized evidence: intent,
+  constraints, what *done* means, privileged or external facts, cross-task
+  coupling, and choices whose independent selection would break coordination.
+  A harmless decoupled choice need not be fixed merely because it is arbitrary.
+  Leave situation-dependent choices to live or produced evidence. A fixed live-
+  state detail is an authoring-time snapshot that may go stale; a value whose
+  inputs are static and remain valid may safely be resolved upstream.
 - Keep rationale minimal. Put durable reasoning in `kb/notes/` and link from there.
 
 ## Operativity
@@ -56,3 +68,4 @@ Relevant Notes:
 - [An author should fix what the executor can't determine, not what it will](../notes/fix-what-the-executor-cant-determine-not-what-it-will.md) - rationale for the detail-level rule: which details to fix and which to leave to the executor
 - [Operative change](../notes/definitions/operative-change.md) - rationale for the operativity rule: a change operates only through a consumer, channel, and force over a declared horizon
 - [A retrieval miss is a local reflective-path failure](../notes/a-retrieval-miss-is-a-local-reflective-path-failure.md) - rationale for the description and routing rules: retrieval is the wire a retained instruction acts along, and it is best-effort unless a loaded surface enumerates the route
+- [Intent-framed delegation is a control regime; prompt length does not establish it](../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) - rationale for the consequential-worker handoff and retained-parent-control rule

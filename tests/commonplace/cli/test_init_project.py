@@ -18,6 +18,7 @@ from commonplace.cli.init_project import (
 )
 from commonplace.lib.project_paths import is_collection_dir
 from commonplace.lib.validation import validate_collection_landings
+from commonplace.scaffold_manifest import MANIFEST
 
 
 def relative_files(root: Path) -> set[Path]:
@@ -173,15 +174,7 @@ def test_init_project_installs_skills_as_copies(tmp_path: Path) -> None:
         tmp_path / ".agents" / "skills",
     ):
         assert skills_dir.is_dir()
-        for skill_name in (
-            "cp-skill-write",
-            "cp-skill-validate",
-            "cp-skill-snapshot-web",
-            "cp-skill-connect",
-            "cp-skill-health-check",
-            "cp-skill-write-multistage",
-            "cp-skill-ground",
-        ):
+        for skill_name in MANIFEST.promoted_skills:
             dest = skills_dir / skill_name
             assert dest.is_dir()
             assert not dest.is_symlink(), f"{dest} should be a real directory"

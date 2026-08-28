@@ -12,7 +12,35 @@ Plain markdown without frontmatter is fine. Imported, copied, or transitional fi
 
 Substantial work lives in a named subdirectory `kb/work/<workshop-name>/` with a short `README.md` (or `framing.md` / `plan.md`) saying what the work is and what would close it. A workflow that produces many uniform run directories may group them under `kb/work/<workflow-name>/`; multistage writing uses `kb/work/multistage/`. Each nested run remains a workshop with its own framing file and entry in `kb/work/README.md`. Small one-off files can live directly under `kb/work/` until they disappear or grow into a workshop.
 
-The framing file should fix only what a later session can't determine — the goal, who posed it and in what role (the operator's direction, or an agent's proposal awaiting adoption), what closes the workshop, the evaluation boundary, and bookkeeping conventions. A later session cannot recover from the question whose intent it serves. Whether the intent is still held is not a field: it is read from the workshop's lifecycle position — listed in the Active Workshops list, or deleted — and from the date posed, which the framing records so a triage of that list can catch a stale question. Don't pre-commit method, first targets, or interpretation of prior results; the live work will determine those — rationale: [An author should fix what the executor can't determine, not what it will](../notes/fix-what-the-executor-cant-determine-not-what-it-will.md).
+The framing file should fix only what a later session cannot safely determine
+from its authorized evidence — the goal, who posed it and in what role (the
+operator's direction, or an agent's proposal awaiting adoption), what closes
+the workshop, the evaluation boundary, and bookkeeping conventions. It also
+retains planner-held constraints, cross-work coupling, external commitments,
+and coordination or evaluation premises that later work cannot reconstruct. A
+later session cannot recover from the question whose intent it serves. Whether
+the intent is still held is not a field: it is read from the workshop's
+lifecycle position — listed in the Active Workshops list, or deleted — and
+from the date posed, which the framing records so a triage of that list can
+catch a stale question. Do not freeze method, first targets, or interpretation
+merely because they can be chosen at framing time; retain them when privileged
+evidence or coordination requires the choice, and otherwise let live evidence
+discriminate — rationale: [An author should fix what the executor can't
+determine, not what it will](../notes/fix-what-the-executor-cant-determine-not-what-it-will.md).
+
+When a framing is an execution plan and deliberately leaves a consequential
+future item coarse, name how it returns to decision: a replanning horizon,
+discriminating observation or bounded probe, observable trigger, latest safe
+decision point, or bounded executor authority. Drafts, scratch investigations,
+and other non-plan workshops do not need this machinery.
+
+When a workshop delegates consequential work, its worker packet also fixes the
+owned output or write scope, accessible inputs, coordination boundary,
+verification or feedback, and stop or escalation condition. Delegation stays
+inside the workshop's existing authority. The parent retains scheduling,
+integration, and recovery; parallel writers need disjoint ownership or an
+explicit coordination rule, and nested delegation requires explicit
+authorization.
 
 The Active Workshops list in [`kb/work/README.md`](./README.md) is the curated operational navigation surface — add a one-line entry when starting, remove it when the workshop closes. If the README already has unrelated uncommitted edits, do not partially stage it just to keep navigation immediately complete; commit the workshop artifacts atomically and update the README in a later navigation cleanup.
 
