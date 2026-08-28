@@ -418,13 +418,13 @@ this workshop.
 | [Soft-bound traditions as sources for context-engineering strategies](../../notes/soft-bound-traditions-as-sources-for-context-engineering-strategies.md) | Supplies an advisory precedent for searching a tradition by a matching problem and then testing optimization target, feedback, and failure mode. | Adds no direct military evidence or warrant for this composite. |
 | [Human writing structures transfer to LLMs because failure modes overlap](../../notes/human-writing-structures-transfer-to-llms-because-failure-modes.md) | Supplies an advisory precedent for evaluating a borrowed convention by the failure it prevents and whether that failure exists in the target. | Adds no warrant for a different pattern without a fresh match. |
 
-This workshop suggests one additional durable synthesis: source-domain
-maturity can prioritize where to search, shared mechanism determines what may
-transfer, and bounded mechanisms can then be composed around a target problem.
-That claim is not yet assigned a durable path, type, or final scope. It belongs
-in the separately requested synthesis note, which needs its own brief,
-grounding, authorship, and review rather than inheriting this workshop report as
-a premise.
+[Problem matches guide method search; mechanism matches bound transfer](../../notes/problem-matches-guide-method-search-mechanism-matches-bound-transfer.md)
+now owns the additional durable synthesis exposed by this comparison. It uses
+problem match to select candidate source responses, mechanism match to bound
+transferred warrant, and interaction checks to bound a target method composed
+from several responses. That note earned its scope through a separate brief,
+source-first reconstruction, authorship pass, and independent review; it does
+not inherit this report as a durable premise.
 
 ## Source revisit and future-evidence queue
 
