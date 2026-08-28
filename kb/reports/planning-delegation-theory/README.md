@@ -18,6 +18,10 @@ non-adversarial agent work.
   comparison of mission tactics, rolling-wave planning, real-options
   reasoning, DAPP, and set-based practice; includes transfer boundaries,
   composition checks, source-revisit conditions, and a machinery handoff.
+- [Instruction machinery refinement](./instruction-machinery-refinement.md) —
+  records the second authoring sweep, the simplified multistage writer,
+  preserved exact protocols, deferred redesigns, and its independent forward
+  test.
 - [Commit / wait / probe assay](./commit-wait-probe-assay/report.md) — blinded
   one-model smoke test retained with its cases, rubric, runner, packets, and
   responses. Its 8/8 treatment result versus 7/8 control missed the

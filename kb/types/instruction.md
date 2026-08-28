@@ -23,12 +23,17 @@ Use `instruction` for prescriptive content: procedures, skill bodies, wrapper pr
 - State the goal first: one sentence saying what the procedure exists to make true. It is the only rationale the body keeps; an executor holding the goal can re-route around a blocked step instead of failing on it.
 - Keep the body executable on first reading.
 - State prerequisites, scope boundaries, decision points, and verification checks where they matter.
-- When the instruction delegates consequential work, state the intended result,
-  non-negotiable constraints, owned outputs or write scope, accessible inputs,
-  coordination boundary, verification or feedback, and stop or escalation
-  condition. State whether nested delegation is authorized; silence means no.
-  The parent keeps scheduling, integration, and recovery, and parallel writers
-  need disjoint ownership or an explicit coordination rule.
+- When the instruction delegates consequential work, give the executor the
+  intended result and decision boundary: what is fixed, what authorized
+  evidence may inform execution, and which choices the executor owns. Then add
+  controls for the task's consequential failure surfaces. Authority, input
+  access, output ownership, coordination, verification, return of control, and
+  recovery are an audit heuristic, not fields every packet must repeat. One
+  surrounding workflow can govern several of them. Delegation does not expand
+  caller authority. Unless explicitly transferred, the parent keeps scheduling,
+  integration, and recovery; parallel writers need disjoint ownership or an
+  explicit coordination rule. A worker cannot delegate without authority, but
+  say so in the packet only where the boundary could plausibly be mistaken.
 - Fix what the executor cannot safely determine from authorized evidence: intent,
   constraints, what *done* means, privileged or external facts, cross-task
   coupling, and choices whose independent selection would break coordination.
@@ -42,6 +47,11 @@ Use `instruction` for prescriptive content: procedures, skill bodies, wrapper pr
   Do not add this machinery to ordinary queueing or harmless, cheap-to-reverse
   choices merely because they happen later.
 - Keep rationale minimal. Put durable reasoning in `kb/notes/` and link from there.
+- Prefer outcome and boundary over a prescribed sequence when several means can
+  satisfy the goal and execution evidence can discriminate among them. Fix an
+  exact command, ordering, output grammar, or handoff protocol when a machine
+  interface, irreversible mutation, isolation requirement, or coordination
+  dependency makes that exactness load-bearing.
 
 ## Operativity
 

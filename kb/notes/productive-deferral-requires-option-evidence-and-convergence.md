@@ -105,3 +105,7 @@ value with reversal, carrying, delay, and expiry costs. The rule can expose an
 uncontrolled deferral and the estimates a domain-specific decision still
 needs; it cannot establish target-side effectiveness or decide universally
 between deferring and committing.
+
+Operationalized into:
+
+- [Write an instruction](../instructions/write-instruction.md) — requires a consequential deferred choice to retain an option, name discriminating evidence, and define its return and invalidation boundary

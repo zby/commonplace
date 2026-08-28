@@ -179,3 +179,8 @@ outcome, universal decentralization rule, LLM evaluation, or evidence that a
 bare historical or methodology label activates the mechanism. An explicit
 mechanism gloss avoids relying on *Auftragstaktik* or mission command as an
 exact specification.
+
+Operationalized into:
+
+- [Write an instruction](../instructions/write-instruction.md) — selects delegation controls from consequential failure surfaces instead of requiring a universal packet template
+- [cp-skill-write-multistage](../instructions/cp-skill-write-multistage/SKILL.md) — fixes the commission, evidence and authority boundaries, integration, review, and recovery while leaving bounded investigative and authorial means to workers

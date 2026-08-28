@@ -4,25 +4,35 @@
 
 This collection contains procedures, conventions, skill bodies, and operational rules. It directs what to do — optimised for an agent (or human) executing on first reading, without prior context.
 
-Quality goal is **executability + precision** — every step actionable, every decision point explicit, ambiguity eliminated. A vague prescription wastes bounded context on interpretation rather than action.
+Quality goal is **executability + precision** — the result, authority, interfaces,
+and acceptance boundary are unambiguous, while choices that depend on execution
+evidence remain deliberately open. A vague prescription wastes bounded context
+on interpretation; an over-specified one freezes choices before the relevant
+evidence exists.
 
 Tests for precision:
 - Could an agent with no prior context execute each step without asking a clarifying question?
 - Are decision points explicit — "if X, do A; otherwise do B" — rather than implied?
 - Are scope boundaries stated — when does this NOT apply, and what to do instead?
+- Does each fixed choice encode a stable rule, external commitment, or coordination
+  need rather than an author-time guess about future execution state?
 - Is reasoning minimal — just enough for edge cases, with the "why" living in theory notes?
 
 **Frontloading.** Self-contained enough for an agent with no prior context. Define terms inline; don't assume the reader has loaded other KB documents.
 
 **Reasoning constraint.** Keep the procedure's goal — one sentence at the top saying what it exists to make true — and cut explanations of *why* each step exists from the body. The goal is not regenerable from the steps; the per-step reasons are regenerable from the goal plus the step, and if worth preserving they go in a theory note linked via `rests-on` (for meta-readers only). Keep only enough further reasoning for edge cases and decisions.
 
-**Delegated work.** When an instruction delegates consequential work, the
-worker packet states the intended result, non-negotiable constraints, owned
-outputs or write scope, accessible inputs, coordination boundary, verification
-or feedback, and stop or escalation condition. Delegation never expands the
-caller's authority. The parent retains scheduling, integration, and recovery;
-parallel writers need disjoint ownership or an explicit coordination rule.
-State whether nested delegation is authorized; silence means no. Use clean
+**Delegated work.** Give the worker the intended result and the decision
+boundary: what is fixed upstream, what evidence the worker may use, and which
+choices it owns. Add operative controls for the failures that would matter in
+that task. Typical surfaces include authority, input access, output ownership,
+coordination, verification, return of control, and recovery, but do not turn
+that list into a mandatory packet template. One workflow mechanism may govern
+several surfaces. Delegation never expands the caller's authority. Unless the
+workflow explicitly transfers them, the parent retains scheduling, integration,
+and recovery. Parallel writers need disjoint ownership or an explicit
+coordination rule. State nested-delegation authority only when it could
+plausibly be mistaken; absent authority, a worker cannot delegate. Use clean
 context when isolation, later evidence, or independent judgment creates a
 specific benefit, not as an automatic reason to pay handoff cost.
 

@@ -1,4 +1,4 @@
 interface:
   display_name: "Multi-stage KB Writing"
-  short_description: "Develop substantive KB writing in stages"
-  default_prompt: "Use $cp-skill-write-multistage to develop this KB artifact through a staged workshop before promotion."
+  short_description: "Ground and independently review unsettled KB writing"
+  default_prompt: "Use $cp-skill-write-multistage to ground, author, and independently review this unsettled KB artifact before promotion."

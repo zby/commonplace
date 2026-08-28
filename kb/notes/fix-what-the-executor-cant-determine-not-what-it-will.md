@@ -114,3 +114,8 @@ remain valid for the consuming call, and no discriminating execution
 observation is expected, resolving even method detail upstream is permissible.
 It is not required when the alternatives are all acceptable and no
 coordination benefit calls for a common selection.
+
+Operationalized into:
+
+- [Write an instruction](../instructions/write-instruction.md) — makes stable-input and execution-evidence classification part of instruction authoring
+- [cp-skill-write-multistage](../instructions/cp-skill-write-multistage/SKILL.md) — fixes cross-stage invariants and lets workers choose source investigation, claim disposition form, and prose within them

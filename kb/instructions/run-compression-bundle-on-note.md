@@ -27,23 +27,29 @@ After the four criteria, apply `kb/instructions/compression-bundle/high-impact-s
 
 Do not route these criteria through selectors or review jobs. Do not write review DB state or invoke acknowledgement or ingestion commands.
 
-## Roles
+## Dispatch
 
-The **orchestrator** prepares the reviewer packet, dispatches one fresh reviewer, and verifies the report. The **reviewer** applies the packet and writes the report. Only the orchestrator dispatches: if a caller has already handed you the target text, criterion packet, output path, and output contract as a review task, you are the fresh reviewer. Perform the review directly and do not start another sub-agent.
+The parent reads the target once immediately before dispatch and reads the four
+criteria plus the synthesis instruction. It launches one fresh reviewer with a
+complete packet containing:
 
-## Procedure
+- the target path as identity and the captured full note text as the sole
+  authoritative assessed bytes; the reviewer does not reopen the live path;
+- the four criteria in the required order, preserving each `gate_id`, name,
+  failure mode, test, and examples, followed by the synthesis instruction;
+- `{output-path}` and the output contract below; and
+- the boundary that the target artifact, rather than ambient conversation or
+  topic familiarity, supplies its intended contribution.
 
-1. Read the target note.
-2. Read the four criterion files above.
-3. Concatenate the criterion definitions and the high-impact synthesis instruction into a reviewer packet. Preserve each criterion's `gate_id`, name, failure mode, test, and examples; `gate_id` is part of this bundle's report vocabulary, not a persisted review identity.
-4. As the orchestrator, start one fresh sub-agent and give it:
-   - the target note path and full note text;
-   - the concatenated gate packet;
-   - `{output-path}`;
-   - the output contract below.
-   Tell the reviewer to treat the target artifact as the evidence for its intended contribution. Ambient conversation and the topic alone do not settle an unstated thesis, audience, or purpose.
-5. As the dispatched reviewer, apply every criterion independently, then run the high-impact synthesis over the artifact and combined findings. Write only `{output-path}`. Do not edit the note or delegate the review again.
-6. As the orchestrator, verify that `{output-path}` exists and follows the output contract, then close, terminate, or release the reviewer with the harness's lifecycle operation. Do not retain it for a follow-up task.
+The reviewer independently applies every criterion, synthesizes the combined
+findings, and writes only `{output-path}`. It does not edit the note, write
+review-database state, or delegate. It chooses its analytic route within those
+bounds.
+
+The parent verifies that the report exists and satisfies the output contract,
+then closes, terminates, or releases the single-use reviewer. If a fresh worker
+cannot be launched, stop rather than reuse a context that may share the
+author's framing.
 
 ## Output Contract
 

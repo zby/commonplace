@@ -1,68 +1,95 @@
 ---
-description: Create a new instruction in kb/instructions/ by abstracting the stable core of repeated manual operations into a reusable, execution-optimized procedure.
+description: Create or revise a reusable instruction by codifying stable decisions while preserving execution-dependent judgment.
 type: kb/types/instruction.md
 ---
 
-# Write an Instruction
+# Write an instruction
 
-An instruction is a reusable procedure that lives in `kb/instructions/`. It has the same format as a skill but is invoked manually rather than through automatic routing.
+Write a procedure that removes predictable recurring decisions from execution
+without freezing choices whose answer depends on evidence available only while
+the work is running.
 
-Instructions are created in two moves. First, **abstract the stable core**: do the task by hand several times, notice which steps recur and which vary, and conjecture the recurring steps as a procedure with its boundary — the repetition is the evidence that licenses the generalization. Second, where companion methodology notes exist, **work the procedure body out from them**: the written steps should be recoverable from the methodology plus the task, so a methodology change flags the instruction for rework. The variable parts become parameters or decision points. The reasoning that produced the steps stays in methodology notes, not in the instruction.
+An instruction may be abstracted from repeated operations or operationalized
+from established methodology. In either case, the evidence must identify a
+stable decision rule and its boundary. Repetition alone does not make an
+accidental sequence binding, and a single untested convenience does not earn
+codification.
 
 Instructions must be [**frontloaded**](../notes/frontloading-spares-execution-context.md) — self-contained enough for an agent with no prior context. Define terms inline. Don't assume the reader has loaded other KB documents. An instruction may be handed to a sub-agent that has nothing else in its context window.
 
 ## Prerequisites
 
-You should have performed the task manually at least twice in different contexts. If you haven't, do it manually first — you can't abstract a stable core from repetitions that haven't happened.
+Have one of these:
+
+- repeated executions that expose which decisions remain stable across contexts;
+- an accepted methodology whose mechanism entails the rule being operationalized;
+- a machine or repository interface that already fixes the required protocol.
+
+Otherwise keep the work in a workshop or log until its boundary is understood.
 
 ## Steps
 
-1. **Identify the stable core.** Review what you did across instances. Which steps recurred? Which parts varied by context? The recurring steps are the procedure; the intro's two moves say what happens to the rest.
+1. **Name the operative path.** Identify who or what loads the instruction, when
+   it fires, and what authority it has. Search direct callers, callees, and
+   consumers of its arguments, result literals, mutation rules, and stop
+   conditions before changing a live instruction.
 
-2. **Draft the procedure.** Write it as a sequence of imperative steps. Use "do X" not "X is important because." Include:
-   - What to check before starting (prerequisites)
-   - The steps in execution order
-   - Decision points where context determines the path
-   - What to verify when done
-   - What NOT to do (critical constraints)
-   - For consequential delegated work: intended result, non-negotiable
-     constraints, owned outputs or write scope, accessible inputs,
-     coordination, verification or feedback, stop or escalation, and whether
-     nested delegation is authorized. Keep scheduling, integration, and
-     recovery with the parent; give parallel writers disjoint ownership or an
-     explicit coordination rule.
-   - Fix intent, bounds, done conditions, privileged facts, and cross-task
-     coupling upstream. Leave a bounded choice open only when authorized live
-     or produced evidence can change it. If the choice is consequential and
-     intentionally left coarse for later, name the discriminating evidence,
-     return condition, decision owner, and retry or invalidation boundary.
+2. **Classify the choices.** Fix upstream facts, commitments, interfaces,
+   coordination decisions, and acceptance conditions that execution cannot
+   safely recover. Codify recurring choices whose inputs are stable. Leave a
+   bounded choice to the executor when authorized live or produced evidence
+   can change it. Harmless, decoupled choices may remain open without extra
+   machinery.
 
-3. **Add frontmatter.** Every instruction needs:
+3. **Draft from the goal and boundary.** State the intended result first. Use
+   imperative steps for required sequencing and exact commands or grammars for
+   load-bearing interfaces. Where several means can work, state constraints,
+   available evidence, decision ownership, and verification instead of
+   prescribing a guessed route.
+
+   For consequential delegation, inspect the failures that could violate
+   acceptance, authority, composition, or recovery. Add controls for those
+   surfaces only. The parent normally retains scheduling, integration, and
+   recovery. When a consequential decision is deliberately deferred, preserve
+   the option and name the discriminating evidence, convergence or return
+   condition, decision owner, and invalidation or retry boundary.
+
+4. **Add frontmatter.** Every instruction needs:
    ```yaml
    ---
    description: One line — what this instruction does, when to use it.
    type: kb/types/instruction.md
    ---
    ```
-   The description helps a human scanning the directory decide whether this instruction fits their situation. It also makes promotion to a skill frictionless.
+   Write the description for the situation in which the instruction should be
+   retrieved, not as a summary of its internal vocabulary.
 
-4. **Cut the reasoning.** Remove explanations of *why* each step exists. If the reasoning is worth preserving, it belongs in a methodology note that links to this instruction — not in the instruction itself. Keep only enough reasoning for the agent to handle edge cases and decision points.
+5. **Cut regenerable detail.** Keep the goal and the rationale needed to choose
+   correctly at a boundary. Move durable theory to a methodology note. Remove
+   explanations and method choices a competent executor can recover from the
+   goal, authorized evidence, and repository contracts.
 
-5. **Test the boundaries.** Add explicit scope boundaries — when does this instruction NOT apply? The agent won't sense this on its own. If the task falls outside scope, say what to do instead.
+6. **Test the instruction.** Give it to an agent without the author's working
+   context. A passing run needs no clarification about purpose, authority,
+   owned outputs, interfaces, acceptance, or what returns control. It may choose
+   different permitted means. Verify exact protocols mechanically where
+   possible and test consequential branches, not only the happy path.
 
-6. **Write a companion note** (optional but recommended). Write a note in `kb/notes/` that describes the instruction, explains its rationale, and links to the instruction file. Keep its two possible source relationships separate:
+7. **Record the source relationship when useful.** A companion note is optional.
+   Keep these relationships separate:
    - The stable core is generalized from repeated manual operations. If those source instances are retained and their collection authorizes the edge, record `Abstracted into:` at the source.
    - Where methodology notes shape the procedure body, record `Operationalized into:` in each methodology source note, pointing to the instruction. Do not collapse either relationship into a target-side `derived-from` link.
 
 ## Verify
 
-- The instruction reads as a sequence of actions, not an essay
-- An agent reading it cold could execute it without asking clarifying questions
-- Reasoning is minimal — just enough for edge cases
-- Scope boundaries are explicit
-- Frontmatter has a description
-- Consequential delegation and deferral have complete authority, return, and
-  convergence boundaries without prescribing executor-chosen means
+- The operative consumer and trigger are known.
+- Fixed choices have a stable-input, interface, authority, or coordination reason.
+- Open consequential choices have an authorized chooser and discriminating evidence.
+- Failure-relevant authority, composition, verification, return, and recovery
+  surfaces have controls; generic packet fields were not added by rote.
+- A cold reader can execute the instruction without guessing its purpose,
+  permissions, owned outputs, interfaces, or acceptance condition.
+- Exact protocols are mechanically checked where possible.
 
 ## Promotion to skill
 
