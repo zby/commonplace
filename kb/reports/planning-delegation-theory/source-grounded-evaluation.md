@@ -4,11 +4,14 @@
 
 Military command is a high-yield source domain for agent planning and
 delegation in a narrow sense: it is a justified place to search for mechanisms,
-not a source of wholesale prescriptions. Modern doctrine makes a
-planner--executor information problem central. Consequential work proceeds
-under friction, uncertainty, changing local conditions, and limited ability to
-specify means in advance. The doctrine then describes how stable intent and
-control can coexist with locally chosen means.
+not a source of wholesale prescriptions. Its deep source problem is reciprocal
+adaptation against an intelligent opponent. The opponent has independent
+purposes and plans, observes and resists, and helps produce the state in which
+later action occurs. The consequences of a plan therefore depend partly on
+another chooser rather than on a fixed environment. Friction, chance, changing
+local conditions, and information limits add further divergence. Modern
+doctrine responds by describing how stable intent and control can coexist with
+locally chosen means.
 
 Agent work can expose the same narrow problem for an independent reason. Under
 the conditions in
@@ -16,8 +19,10 @@ the conditions in
 symbolic enforcement removes more operationally predictable cases from agent
 judgment. The residual cases are then selected toward choices whose relevant
 state can arrive during execution or whose branches are cheaper to resolve
-then. This is a candidate mechanism match. It is not a claim that war and agent
-work are generally alike.
+then. For non-adversarial work, this is a match at the downstream
+later-information problem, not at the military causal origin. Genuinely
+adversarial agent work may share the deeper origin when another capable actor
+adapts against it. Neither match makes war and agent work generally alike.
 
 The comparison separates five decisions that an adaptive plan can make:
 
@@ -41,23 +46,35 @@ unit, and the comparison does not establish that it improves agent outcomes.
 ### Source-domain reason
 
 [MCDP 1](../../sources/marine-corps-mcdp-1-warfighting-1997.ingest.md)
-and
+starts from war as interaction between hostile independent wills. The opponent
+is an actor with objectives and plans that resists and acts in return. In
+Commonplace terms, this means that some action-to-outcome relations depend on
+another chooser; that formulation is synthesis from the doctrine's premises,
+not its own terminology. MCDP 1 also treats war as uncertain, dynamic,
+disorderly, and dominated by friction.
+
+Together with
 [ADRP 6-0](../../sources/us-army-adrp-6-0-mission-command-2012.ingest.md)
-are modern normative systems organized around friction, uncertainty,
-unanticipated change, distributed information, and decisions made near the
-point of action. They make the allocation of information and decision rights
-across a planner--executor boundary a first-order design problem. They also
-make intent, authority, resources, coordination, reporting, supervision, and
-responsibility explicit parts of the answer.
+it forms a modern normative response organized around interactive and generic
+uncertainty, unanticipated change, distributed information, and decisions made
+near the point of action. The doctrines make allocation of information and
+decision rights across a planner--executor boundary a first-order design
+problem. They also make intent, authority, resources, coordination, reporting,
+supervision, and responsibility explicit parts of the answer.
 
 That concentration makes the domain productive to inspect. It does not show
 that the doctrines cause better results, that decentralization is generally
 superior, or that the military and agent domains are broadly similar.
 [Stahel's historical reassessment](../../sources/david-stahel-auftragstaktik-mission-command.ingest.md)
-adds a further limit: *Auftragstaktik* varied by period, command level,
-circumstances, communications, training, doctrine, institutional culture, and
-personalities. The name does not identify one timeless portable package or an
-uncomplicated lineage into modern mission command.
+adds both historical support and a limit. It describes Prussian-German thought
+as treating war as contingent and too affected by friction, chaos, and chance
+for operations to have a fully determined course; leadership was therefore
+conceived as directing war rather than completely controlling it. It also shows
+*Auftragstaktik* varying by period, command level, circumstances,
+communications, training, doctrine,
+institutional culture, and personalities. The name does not identify one
+timeless portable package or an uncomplicated lineage into modern mission
+command.
 
 ### Independent target-side premise
 
@@ -100,6 +117,14 @@ severity, and institutional prestige can motivate a search. None warrants an
 import. The target must independently instantiate the particular mechanism and
 its premises, and warrant stops where that mechanism stops.
 
+A source and target can match at different causal depths. A causal-origin
+match shares the condition that generated the source problem. A downstream
+problem match shares only the later control problem. The deeper match can make
+the analogy more informative, but neither kind transfers a response until its
+operative mechanism and premises also match. A downstream match is enough to
+guide search when the candidate response does not depend on the absent source
+cause.
+
 Here the proposed match is **intent-preserving delegated adaptation**. Upstream
 fixes a purpose-bearing result and non-negotiable decision boundaries. A
 competent executor receives real authority to choose execution-dependent means
@@ -114,12 +139,14 @@ Another evaluates
 [human writing structures by the failure modes they share with LLM work](../../notes/human-writing-structures-transfer-to-llms-because-failure-modes.md).
 Those precedents support per-mechanism testing. They add no military warrant.
 
-Military command is therefore a promising source domain because it retains an
-explicit concentration of mechanisms for consequential later-informed,
-intent-bounded choice of means. Preferential codification supplies an
-independent reason that an agent boundary can increasingly retain the same
-narrow information problem under its selection conditions. The conjunction
-justifies a search priority, not a general analogy or a transfer.
+Military command is therefore a promising source domain because intelligent
+opposition makes failure of exact advance determination endogenous to another
+chooser, while the command tradition retains explicit responses for
+consequential later-informed, intent-bounded choice of means. Preferential
+codification supplies an independent route by which a non-adversarial agent
+boundary can retain the downstream information problem under its selection
+conditions. The conjunction justifies a search priority, not a general analogy
+or a transfer.
 
 `High-yield` has only that qualitative meaning here. The authorized record does
 not compare source domains, measure search yield, show how often agent work has
@@ -149,13 +176,15 @@ one source.
 #### Source methodology
 
 [MCDP 1](../../sources/marine-corps-mcdp-1-warfighting-1997.ingest.md)
-treats war as disorderly, uncertain, dynamic, and affected by friction. A
-subordinate at the point of decision can have a fresher view of the current
-situation than a remote senior. Mission tactics therefore assign a mission
-without prescribing every means. The senior supplies the task and its purpose,
-prescribes method where coordination requires it, and normally intervenes by
-exception. The subordinate chooses means from the live situation, reports,
-acts in conformity with intent, and remains inside the assigned authority.
+first treats war as reciprocal interaction between hostile independent wills,
+then as disorderly, uncertain, dynamic, and affected by friction. Its command
+philosophy places some decisions with a competent subordinate who can better
+appreciate the situation at the point of decision than a remote senior. Mission
+tactics assign a mission without prescribing every means. The senior supplies
+the task and its purpose, prescribes method where coordination requires it, and
+normally intervenes by exception. The subordinate chooses means from the live
+situation, reports, acts in conformity with intent, and remains inside the
+assigned authority.
 
 The source distinguishes a task's `what` from intent's `why`. A changed
 situation can make the former unfit while the latter continues to guide action.
@@ -179,9 +208,11 @@ uncertainty and distributed information. It is not evidence of causal
 effectiveness or agent applicability.
 
 [Stahel](../../sources/david-stahel-auftragstaktik-mission-command.ingest.md)
-prevents the two modern formulations from becoming a timeless historical
-package. Historical variation limits claims about identity, lineage, and a
-generally valid degree of delegation. It does not invalidate the modern
+describes contingency, friction, chaos, and chance as the background against
+which Prussian-German leadership sought direction rather than complete control.
+He also prevents the two modern formulations from becoming a timeless
+historical package. Historical variation limits claims about identity, lineage,
+and a generally valid degree of delegation. It does not invalidate the modern
 doctrines as descriptions of what those institutions prescribed.
 
 #### Shared mechanism
@@ -193,6 +224,13 @@ executor cannot safely reconstruct. A competent executor receives actual
 authority over means when live evidence can change which permitted means best
 serve the intent. The result has a defined route into composed work or
 authorized action.
+
+This response mechanism must be separated from the source cause. Adversarial
+agent work may share reciprocal opposition itself. Non-adversarial work does
+not, but can still share the downstream mechanism when execution has another
+route to discriminating evidence. The bounded delegation response depends on
+the later information and authority relation; it does not require hostility as
+such.
 
 The information relation is bidirectional. The executor may hold current state,
 tool results, local failures, or evidence produced by earlier steps. The
@@ -214,13 +252,15 @@ allocates bounded execution-time judgment over means. It does not decide
 whether waiting is worthwhile, when later detail returns, how several
 alternatives narrow, or how an observed condition maps to a prepared response.
 
-The transfer excludes military hierarchy, rank, force structure, professional
-military culture, lethal-risk doctrine, adversarial purpose, and organizational
-machinery. Source functions such as competence, resources, communication,
-feedback, and accountability matter only where the target mechanism
-independently requires them; their military embodiments do not transfer. The
-comparison supports neither a general preference for decentralization nor an
-empirical agent-effectiveness claim.
+Adversarial purpose is part of the source problem and transfers only when the
+target independently has an adaptive opponent. It is not a requirement for the
+downstream delegation mechanism. The transfer otherwise excludes violence,
+military hierarchy, rank, force structure, professional military culture,
+lethal-risk doctrine, and organizational machinery. Source functions such as
+competence, resources, communication, feedback, and accountability matter only
+where the target mechanism independently requires them; their military
+embodiments do not transfer. The comparison supports neither a general
+preference for decentralization nor an empirical agent-effectiveness claim.
 
 ### 2. Rolling-wave planning: allocate detail by information horizon
 
@@ -420,10 +460,10 @@ this workshop.
 
 [Problem matches guide method search; mechanism matches bound transfer](../../notes/problem-matches-guide-method-search-mechanism-matches-bound-transfer.md)
 now owns the additional durable synthesis exposed by this comparison. It uses
-problem match to select candidate source responses, mechanism match to bound
-transferred warrant, and interaction checks to bound a target method composed
-from several responses. That note earned its scope through a separate brief,
-source-first reconstruction, authorship pass, and independent review; it does
+problem match to select candidate source responses, distinguishes causal-origin
+from downstream problem matches, uses mechanism match to bound transferred
+warrant, and requires interaction checks for a target method composed from
+several responses. That note earned its scope through separate review; it does
 not inherit this report as a durable premise.
 
 ## Source revisit and future-evidence queue
@@ -435,9 +475,11 @@ not inherit this report as a durable premise.
   publication with changes through 2014. Revisit a complete edition or current
   successor if exact edition wording, omitted material, lineage, or present
   currency becomes load-bearing.
-- **Historical variation:** Stahel is a historiographical synthesis. A causal
-  claim about which condition produced a historical result needs stronger
-  historical evidence.
+- **Historical causation:** Stahel supports contingency and limited control as
+  background to Prussian-German leadership and bounds the historical label. It
+  does not isolate intelligent opposition from communications, scale,
+  technology, training, culture, or other contributors. Revisit primary German
+  material if that stronger historical-genesis claim becomes load-bearing.
 - **Neighboring methods:** this revision uses the bounded reconstruction in the
   productive-deferral note while retaining direct source links for navigation.
   Revisit the exact source records before making source-specific wording,
@@ -451,28 +493,32 @@ not inherit this report as a durable premise.
 A later method-design pass can use the comparison as a checklist without
 copying the report wholesale into an instruction:
 
-1. **Separate stable material from deferred choice.** Mission tactics exposes
+1. **Name the source of unpredictability.** An adaptive opponent, generic
+   friction, delayed observation, and preferentially retained hard cases are
+   different causes. Record which one the target actually has before borrowing
+   a response.
+2. **Separate stable material from deferred choice.** Mission tactics exposes
    the bidirectional information boundary: upstream can hold purpose and global
    constraints while execution holds later means-relevant state.
-2. **For each consequential deferral, state why later evidence can alter the
+3. **For each consequential deferral, state why later evidence can alter the
    choice and how the option remains feasible.** Real-options reasoning makes
    irreversibility, expiry, foregone benefit, and waiting cost visible; it does
    not make delay a virtue.
-3. **Give deliberately coarse future work an owned return.** Rolling-wave
+4. **Give deliberately coarse future work an owned return.** Rolling-wave
    planning supplies a replanning horizon at which learning is assessed and the
    next detail is added. A coarse item without a return is an unowned
    placeholder.
-4. **For mapped adaptation, name the observation, response, and lead time.**
+5. **For mapped adaptation, name the observation, response, and lead time.**
    DAPP explains why a signal alone is insufficient and why a trigger is
    different from open executor judgment.
-5. **Maintain several alternatives only behind a real evaluation surface.**
+6. **Maintain several alternatives only behind a real evaluation surface.**
    Set-based practice requires tests whose possible results can change the
    choice, a convergence boundary, and explicit attention to carrying cost.
-6. **For delegated judgment, supply the control regime.** State purpose,
+7. **For delegated judgment, supply the control regime.** State purpose,
    constraints, authority, accessible context and resources, ownership and
    integration, feedback or verification, and recovery or escalation for the
    consequential failure surfaces.
-7. **Check component interactions.** A trigger can remove judgment, a deadline
+8. **Check component interactions.** A trigger can remove judgment, a deadline
    can constrain adaptation, and authority can determine who may exercise an
    option. Do not infer composition warrant from component warrant alone.
 
@@ -489,15 +535,15 @@ and advisory precedents. The five neighboring-method source links preserve
 source navigation; the bounded claims used here come through the authorized
 productive-deferral reconstruction.
 
-This is a frontmatter-free workshop report. This revision changes no cited
-note, source ingest, tag, instruction, index, or sibling artifact. Independent
-verification for this revision ran `commonplace-validate` on all eight linked
-ingests. All eight pass; seven are clean; the PMI lexicon has the known
-`frontmatter.genre: reference-lexicon` warning. Across the eight ingests, all 30
-retained source quotes resolve against their pinned snapshots. These checks
-establish current deterministic validation and quote-to-pinned-snapshot
-resolution. They do not establish present doctrinal currency or broader
-snapshot assurance.
+This is a frontmatter-free retained report. This correction also revised the
+two durable synthesis notes named above and added minimum source extracts to the
+MCDP and Stahel ingests for the adversarial-causation and historical-leadership
+claims. It changes no tag, instruction, index, or planning machinery.
+Independent verification ran `commonplace-validate` on the two changed ingests
+and both changed notes. Across the report's eight linked ingests, 33 retained
+source quotes now resolve against their pinned snapshots. These checks
+establish deterministic validation and quote-to-pinned-snapshot resolution.
+They do not establish present doctrinal currency or broader snapshot assurance.
 
 The substantive evidence limits are also unchanged. The MCDP record supports a
 1997 institutional formulation, not present currency or effectiveness. The

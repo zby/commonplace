@@ -7,7 +7,10 @@ instructions or durable theory premises.
 The compact theory entry point is
 [Problem matches guide method search; mechanism matches bound transfer](../../notes/problem-matches-guide-method-search-mechanism-matches-bound-transfer.md).
 Its worked case links the conditional agent-side residual to the bounded
-military-command mechanism without treating war as a general analogue.
+military-command mechanism. It explains why adaptive intelligent opposition
+makes the military source problem unusually hard to predict, then separates
+that causal-origin match from the downstream mechanism available to
+non-adversarial agent work.
 
 ## Retained reports
 

@@ -35,12 +35,26 @@ match bounds transfer. If several responses pass that test, combining them is
 still a new target-side construction: each contribution must retain its own
 conditions and non-transfer boundary, and their interactions must be checked.
 
+Source and target can reach the same control problem through different causes.
+A **causal-origin match** shares the condition that generated the source
+problem. A downstream problem match shares only the later control problem. The
+deeper match can strengthen the reason to inspect a source, but it is not a
+substitute for testing the response mechanism. The shallower match still guides
+search when the candidate response does not depend on the absent source cause.
+Naming the causal depth prevents a common downstream shape from being mistaken
+for a broad domain analogy.
+
 ## Worked case: later-informed delegated choice
 
-The relevant source object is military command, not war in general. Its bounded
-problem here is how to allocate purpose, information, and decision rights when
-upstream retains intent and non-negotiable boundaries while execution can hold
-the state relevant to the choice of means.
+The relevant source object is command in war. Its source problem is deeper than
+ordinary distributed information. As
+[the bounded military reconstruction](./intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md)
+explains, an intelligent opponent has independent purposes and can observe,
+resist, and respond. One side's actions therefore help change the other side's
+choices and the state in which later action occurs. Friction, chance, and
+information limits add other divergence between plan and execution. The
+military response retains purpose and non-negotiable boundaries while moving a
+bounded choice of means toward the actor who can observe the resulting state.
 
 The agent side of the relation must be established independently.
 [Preferential codification concentrates less predictable work at the agent boundary](./codifying-predictable-choices-leaves-agents-with-less-predictable-work.md)
@@ -58,19 +72,23 @@ live branch while advance planning would elaborate many unused branches. The
 later state must be capable of changing which permitted means best serves the
 fixed intent.
 
-Once that target problem is independently established, its relation to the
-bounded military-command problem is a problem match. That gate generates the
-pattern retained in
-[intent-framed delegation](./intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md)
-as a candidate source response: upstream fixes a purpose-bearing result and
-non-negotiable boundaries, while a competent executor receives defined
-authority to choose execution-dependent means. It becomes a mechanism match
-only when the target independently has the same information and authority
-relation. Upstream must hold intent or constraints that execution cannot safely
-reconstruct. The executor must have decision-relevant execution evidence, and
-the handoff must govern integration, verification, and return of control. The
-match transfers the bounded delegation relation, not military organization,
-doctrine, or evidence of agent effectiveness.
+Once that target problem is independently established, the depth of its match
+must be stated. Genuinely adversarial agent work may share the causal origin
+when another capable actor adapts against it. Non-adversarial residual work does
+not. It matches only the downstream problem when execution can reveal evidence
+that changes which permitted means best serve a fixed intent.
+
+That downstream problem match makes intent-framed delegation a candidate source
+response: upstream fixes a purpose-bearing result and non-negotiable boundaries,
+while a competent executor receives defined authority to choose
+execution-dependent means. It becomes a mechanism match only when the target
+independently has that information and authority relation. Upstream must hold
+intent or constraints that execution cannot safely reconstruct. The executor
+must have decision-relevant execution evidence, and the handoff must govern
+integration, verification, and return of control. The match transfers the
+bounded delegation relation. It does not transfer adversarial purpose to a
+non-adversarial task, military organization or doctrine, or evidence of agent
+effectiveness.
 
 ## Compose functions, not traditions
 
@@ -84,7 +102,7 @@ not show that waiting is worth its cost.
 
 | Contribution | Bounded target function | Conditions and non-transfer boundary |
 |---|---|---|
-| Mission tactics, narrowed to intent-framed delegation | Allocate judgment over execution-dependent means. | Upstream retains purpose and non-negotiable bounds; a competent executor has a decision-specific information advantage, defined authority, and a governed handoff. Goal choice, authority expansion, and military machinery do not transfer. |
+| Mission tactics, narrowed to intent-framed delegation | Allocate judgment over execution-dependent means. | Upstream retains purpose and non-negotiable bounds; a competent executor has a decision-specific information advantage, defined authority, and a governed handoff. Reciprocal opposition transfers only to a target with an adaptive opponent; goal choice, authority expansion, and military machinery do not transfer. |
 | Rolling-wave planning | Decide when to add detail: elaborate the near horizon and keep later work coarser until information improves. | Later information must inform an operative replanning return. Coarse wording alone does not preserve a live option, and the method does not decide who holds judgment. |
 | Real-options reasoning | Preserve one costly-to-recover future exercise choice while informative observation remains possible. | The choice must remain exercisable through a later decision point, with irreversibility, expiry, lead time, and waiting costs kept visible. Finance valuation machinery and a conclusion that waiting is valuable do not transfer. |
 | Dynamic adaptive policy pathways | Map monitored signposts or triggers to prepared, authorized responses. | The observation must discriminate the decision, and the response must remain feasible when the trigger fires. A trigger selects a prepared response; it is not unconstrained delegated judgment. |
@@ -121,11 +139,14 @@ interactions:
 - The agent worked case requires both the strict preferential-codification
   condition and a separate execution-time information advantage. It does not
   claim that either condition is common.
-- The military case transfers no adversarial purpose, hierarchy, rank, force
-  structure, professional culture, or source-specific doctrinal machinery. The
-  other contributions likewise bring no project-management bureaucracy,
-  finance valuation machinery, full scenario machinery, policy institutions,
-  or engineering organization.
+- Adversarial purpose is part of the military source cause, not a general
+  target requirement. It transfers only when the target independently has an
+  adaptive opponent. Hierarchy, rank, force structure, professional culture,
+  violence, and source-specific doctrinal machinery do not transfer merely
+  because the downstream delegation mechanism matches. The other contributions
+  likewise bring no project-management bureaucracy, finance valuation
+  machinery, full scenario machinery, policy institutions, or engineering
+  organization.
 - The five-way method is a target-side construction, not a source doctrine or
   an empirically validated package. Interaction checks are necessary design
   questions, not a sufficient composition test.

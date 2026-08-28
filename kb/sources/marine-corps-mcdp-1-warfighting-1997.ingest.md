@@ -50,6 +50,10 @@ to unconstrained delegation.
   - **Source location:** Chapter 4, “Mission Tactics,” p. 87
 - **Source extract (verbatim):** The task describes the action to be taken while the intent describes the purpose of the action. The task denotes what is to be done, and sometimes when and where; the intent explains why. Of the two, the intent is predominant. While a situation may change, making the task obsolete, the intent is more lasting and continues to guide our actions. Understanding the intent of our commander allows us to exercise initiative in harmony with the commander’s desires. The intent for a unit is established by the commander assigning that unit’s mission—usually the next higher commander, although not always. A commander normally provides intent as part of the mission statement assigned to a subordinate. A subordinate commander who is not given a clear purpose for the assigned mission should ask for one.
   - **Source location:** Chapter 4, “Commander’s Intent,” p. 88
+- **Source extract (verbatim):** The essence of war is a violent struggle between two hostile, independent, and irreconcilable wills, each trying to impose itself on the other. War is fundamentally an interactive social process.
+  - **Source location:** Chapter 1, “War Defined,” p. 3
+- **Source extract (verbatim):** It is critical to keep in mind that the enemy is not an inanimate object to be acted upon but an independent and animate force with its own objectives and plans. While we try to impose our will on the enemy, he resists us and seeks to impose his own will on us. Appreciating this dynamic interplay between opposing human wills is essential to understanding the fundamental nature of war.
+  - **Source location:** Chapter 1, “War Defined,” p. 4
 
 ## Connections Found
 
