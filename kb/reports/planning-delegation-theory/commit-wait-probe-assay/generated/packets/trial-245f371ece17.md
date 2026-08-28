@@ -1,4 +1,4 @@
-# Planning assay packet trial-b2413444ff68
+# Planning assay packet trial-245f371ece17
 
 Use only this packet. Do not inspect other repository files, run searches, read
 links from the instruction, or use conversation history. Do not delegate or
@@ -202,17 +202,17 @@ If any check fails, do not implement yet.
 
 ## Case
 
-**Useful later evidence that arrives after expiry**
+**Costly commitment with complete current evidence**
 
-A public namespace can be reserved only in tomorrow's release. Usage data arriving in two weeks could improve the naming choice, but by then the reservation opportunity is gone and five consumers will already need one shared name. Current evidence satisfies the accepted naming criteria. The proposed solution is to reserve the best-supported name in tomorrow's release.
+A release must publish one of two incompatible schema versions. Three named consumers require version 2, compatibility tests pass, and all decision-relevant evidence is available. Publication will make reversal costly. No scheduled observation or bounded test could change which version satisfies the requirements. Delaying would force consumers to support both schemas. The proposed solution is to publish version 2.
 
 ## Sole output
 
-Write one JSON object to `kb/work/planning-delegation-theory/commit-wait-probe-assay/generated/responses/trial-b2413444ff68.json` with exactly these keys:
+Write one JSON object to `kb/reports/planning-delegation-theory/commit-wait-probe-assay/generated/responses/trial-245f371ece17.json` with exactly these keys:
 
 ```json
 {
-  "packet_id": "trial-b2413444ff68",
+  "packet_id": "trial-245f371ece17",
   "decision_class": "direct | commit | wait | probe | decline",
   "recommended_next_move": "at most 45 words",
   "option_analysis_used": true,

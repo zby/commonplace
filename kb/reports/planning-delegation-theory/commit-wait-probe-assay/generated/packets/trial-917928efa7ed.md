@@ -180,7 +180,7 @@ A public namespace can be reserved only in tomorrow's release. Usage data arrivi
 
 ## Sole output
 
-Write one JSON object to `kb/work/planning-delegation-theory/commit-wait-probe-assay/generated/responses/trial-917928efa7ed.json` with exactly these keys:
+Write one JSON object to `kb/reports/planning-delegation-theory/commit-wait-probe-assay/generated/responses/trial-917928efa7ed.json` with exactly these keys:
 
 ```json
 {

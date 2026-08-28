@@ -1,4 +1,4 @@
-# Planning assay packet trial-d538d3d3b195
+# Planning assay packet trial-cda4c9f8b82e
 
 Use only this packet. Do not inspect other repository files, run searches, read
 links from the instruction, or use conversation history. Do not delegate or
@@ -174,17 +174,17 @@ If any check fails, do not implement yet.
 
 ## Case
 
-**Later signal that cannot change the choice**
+**Cheap reversible correction**
 
-Choosing a storage API creates a costly dependency. A pricing announcement will arrive in ten days, but both possible prices leave API A as the only option that meets the already-fixed data-residency requirement. Integration work is blocked until the API is selected. No other later observation is expected. The proposed solution is to adopt API A.
+A maintained local instruction contains a confirmed one-word typo that changes a command name. The correct command is established by the implementation and a focused test. The edit changes no interface or dependency, takes one line, and can be reverted immediately. No later observation is expected to change the correction. The proposed solution is to fix the word now.
 
 ## Sole output
 
-Write one JSON object to `kb/work/planning-delegation-theory/commit-wait-probe-assay/generated/responses/trial-d538d3d3b195.json` with exactly these keys:
+Write one JSON object to `kb/reports/planning-delegation-theory/commit-wait-probe-assay/generated/responses/trial-cda4c9f8b82e.json` with exactly these keys:
 
 ```json
 {
-  "packet_id": "trial-d538d3d3b195",
+  "packet_id": "trial-cda4c9f8b82e",
   "decision_class": "direct | commit | wait | probe | decline",
   "recommended_next_move": "at most 45 words",
   "option_analysis_used": true,

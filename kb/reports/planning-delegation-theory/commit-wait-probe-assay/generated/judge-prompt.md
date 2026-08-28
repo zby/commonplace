@@ -17,7 +17,7 @@ For each item, score:
   probe to the cheap reversible case.
 - `rationale`: at most 60 words, using only the case and response.
 
-Write one JSON object to `kb/work/planning-delegation-theory/commit-wait-probe-assay/generated/judge-output.json`:
+Write one JSON object to `kb/reports/planning-delegation-theory/commit-wait-probe-assay/generated/judge-output.json`:
 
 ```json
 {

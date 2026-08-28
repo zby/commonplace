@@ -76,9 +76,9 @@ result and the changes required before repeating it.
 ## Commands
 
 ```bash
-python3 kb/work/planning-delegation-theory/commit-wait-probe-assay/run_assay.py generate
-python3 kb/work/planning-delegation-theory/commit-wait-probe-assay/run_assay.py build-judge
-python3 kb/work/planning-delegation-theory/commit-wait-probe-assay/run_assay.py score
+python3 kb/reports/planning-delegation-theory/commit-wait-probe-assay/run_assay.py generate
+python3 kb/reports/planning-delegation-theory/commit-wait-probe-assay/run_assay.py build-judge
+python3 kb/reports/planning-delegation-theory/commit-wait-probe-assay/run_assay.py score
 ```
 
 Planner and judge execution is intentionally performed by fresh harness

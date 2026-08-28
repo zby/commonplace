@@ -1,4 +1,4 @@
-# Planning assay packet trial-6928e8f4a1e9
+# Planning assay packet trial-d738b4a5763e
 
 Use only this packet. Do not inspect other repository files, run searches, read
 links from the instruction, or use conversation history. Do not delegate or
@@ -134,7 +134,32 @@ Choose exactly one route:
 - `validator/script/command` -- the rule is precise enough for deterministic enforcement or automation
 - `skill` -- the procedure needs user-facing invocation, arguments, special tool permissions, model/context policy, or repeated direct use
 
-Prefer the least-committing route that preserves learning. Treat new skills, commands, validators, types, and indexes as high-maintenance surfaces; require stronger evidence for them than for a log entry, workshop, note, or instruction.
+Choose the smallest sufficient route whose commitment, delay, information, and
+maintenance costs are justified. Treat new skills, commands, validators, types,
+and indexes as high-maintenance surfaces; require stronger evidence for them
+than for a log entry, workshop, note, or instruction. Do not prefer delay merely
+because it commits less.
+
+Run the following branch only when the proposed solution would destroy a
+meaningful alternative or create dependencies that are costly to reverse.
+Otherwise select the route directly from the evidence above.
+
+Compare four moves:
+
+- `commit now` -- current evidence discriminates and the expected cost of
+  waiting, fragmentation, or lost coordination warrants commitment
+- `passively wait` -- name an exogenous observation that can change the choice
+- `run a bounded probe` -- name limited work whose possible output can change
+  the choice without committing the whole solution
+- `decline or do nothing` -- the problem or expected benefit does not warrant
+  commitment, waiting, or a probe
+
+For `passively wait` or `run a bounded probe`, name the alternative being
+preserved, the observation or possible output that can change the decision,
+whether the opportunity will remain available, and the current benefit,
+coordination value, or opportunity lost by waiting. Give the move a review,
+stop, or follow-on decision rule. If no later result can change the choice,
+waiting or probing is not an information-producing reason to defer it.
 
 ### 7. Recommend one next move
 
@@ -160,6 +185,9 @@ Before acting on the original solution, confirm:
 - Evidence status is explicit.
 - At least one alternative framing would lead to a different solution class.
 - The recommended route is the smallest sufficient outcome.
+- A costly-to-reverse commitment was compared with waiting or a bounded probe
+  only when a meaningful alternative can remain live.
+- Any deferral names discriminating evidence and a return to decision.
 - Any implementation step follows from the problem, not from momentum behind the initial solution.
 
 If any check fails, do not implement yet.
@@ -174,17 +202,17 @@ If any check fails, do not implement yet.
 
 ## Case
 
-**Costly commitment with complete current evidence**
+**Passive wait for a discriminating external signal**
 
-A release must publish one of two incompatible schema versions. Three named consumers require version 2, compatibility tests pass, and all decision-relevant evidence is available. Publication will make reversal costly. No scheduled observation or bounded test could change which version satisfies the requirements. Delaying would force consumers to support both schemas. The proposed solution is to publish version 2.
+Choosing either of two vendor adapters creates a costly dependency. In ten days the vendor will announce which authentication protocol remains supported; either announcement maps to a different adapter choice. The release is six weeks away, both adapters remain available after the announcement, and there is no current benefit from choosing now. The proposed solution is to select an adapter today.
 
 ## Sole output
 
-Write one JSON object to `kb/work/planning-delegation-theory/commit-wait-probe-assay/generated/responses/trial-6928e8f4a1e9.json` with exactly these keys:
+Write one JSON object to `kb/reports/planning-delegation-theory/commit-wait-probe-assay/generated/responses/trial-d738b4a5763e.json` with exactly these keys:
 
 ```json
 {
-  "packet_id": "trial-6928e8f4a1e9",
+  "packet_id": "trial-d738b4a5763e",
   "decision_class": "direct | commit | wait | probe | decline",
   "recommended_next_move": "at most 45 words",
   "option_analysis_used": true,

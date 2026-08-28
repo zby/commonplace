@@ -156,8 +156,8 @@ def generate() -> None:
         for case in cases:
             material = f"{SEED}:{condition_id}:{case['id']}".encode()
             packet_id = "trial-" + hashlib.sha256(material).hexdigest()[:12]
-            packet_rel = f"kb/work/planning-delegation-theory/commit-wait-probe-assay/generated/packets/{packet_id}.md"
-            response_rel = f"kb/work/planning-delegation-theory/commit-wait-probe-assay/generated/responses/{packet_id}.json"
+            packet_rel = f"kb/reports/planning-delegation-theory/commit-wait-probe-assay/generated/packets/{packet_id}.md"
+            response_rel = f"kb/reports/planning-delegation-theory/commit-wait-probe-assay/generated/responses/{packet_id}.json"
             text = packet_text(packet_id, condition_id, case, response_rel)
             (ROOT / packet_rel).write_text(text, encoding="utf-8")
             rows.append(
@@ -233,7 +233,7 @@ def build_judge() -> None:
             }
         )
     random.Random(SEED + 1).shuffle(anonymized)
-    judge_output = "kb/work/planning-delegation-theory/commit-wait-probe-assay/generated/judge-output.json"
+    judge_output = "kb/reports/planning-delegation-theory/commit-wait-probe-assay/generated/judge-output.json"
     prompt = f"""# Blind judge packet
 
 Use only this file. Do not inspect other repository files, search, use

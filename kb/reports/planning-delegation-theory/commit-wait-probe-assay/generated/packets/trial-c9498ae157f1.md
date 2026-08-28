@@ -1,4 +1,4 @@
-# Planning assay packet trial-656739dd9c57
+# Planning assay packet trial-c9498ae157f1
 
 Use only this packet. Do not inspect other repository files, run searches, read
 links from the instruction, or use conversation history. Do not delegate or
@@ -174,17 +174,17 @@ If any check fails, do not implement yet.
 
 ## Case
 
-**Cheap bounded probe before structural commitment**
+**Owned coarse future choice with a return rule**
 
-Adding a persistent full-text index requires a costly schema migration. The performance problem is currently anecdotal. A one-day replay benchmark can measure the named query workload without mutating production: p95 above 300 ms warrants the index; p95 at or below 300 ms warrants keeping the current schema. Both alternatives remain feasible until the release in two weeks. The proposed solution is to add the index now.
+Phase 2 of a migration must choose an embedded or service-backed store, and either choice will be costly to reverse. Phase 1 is already authorized and will produce a workload histogram. The migration owner will decide at the Phase 1 review: choose embedded if p95 concurrency is below 20, otherwise choose the service. Both alternatives remain feasible through that review and choosing now has no coordination benefit. The proposed solution is to leave the Phase 2 backend coarse until the review.
 
 ## Sole output
 
-Write one JSON object to `kb/work/planning-delegation-theory/commit-wait-probe-assay/generated/responses/trial-656739dd9c57.json` with exactly these keys:
+Write one JSON object to `kb/reports/planning-delegation-theory/commit-wait-probe-assay/generated/responses/trial-c9498ae157f1.json` with exactly these keys:
 
 ```json
 {
-  "packet_id": "trial-656739dd9c57",
+  "packet_id": "trial-c9498ae157f1",
   "decision_class": "direct | commit | wait | probe | decline",
   "recommended_next_move": "at most 45 words",
   "option_analysis_used": true,
