@@ -76,6 +76,7 @@ because the reason names the mechanism that must grow before it can move:
 | A required premise is not represented where the system can read it | Representation |
 | The criterion is unsettled; the method names a decider instead of a rule | Settlement |
 | No oracle independent of the candidate can check the result | Verification |
+| Only a delayed, expensive oracle exists (later demands, failed extensions) | A theory-holding composite with periodic exposure and read-back; the human standard |
 | The decision arises after the declared automatic horizon ends | Horizon and path continuity |
 | Transfer is possible but priced out | Nothing structural; a movable claim |
 

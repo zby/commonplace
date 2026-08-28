@@ -133,7 +133,22 @@ Interaction checks the composition must run and record:
 - **Bearer tests × evaluator crux.** P1's third test (coherent modification)
   and P2's least-warrantable decisions name the same decision class. State
   whether passing the bearer tests is equivalent to warranting those decisions
-  or merely necessary for it.
+  or merely necessary for it. Candidate answer (operator, 2026-08-28):
+  **equivalence, under conditions.** Naur's holders are the evaluators of
+  their own coherence; the independent check is the delayed, occasional
+  Popperian exposure — the next demand, the bug, the failed extension. A
+  composite is warranted the way a human holder is when (1) it passes the
+  bearer tests with test 3 read as track record under experimental exposure;
+  (2) the exposures can refute, their evidence not authored by the candidate;
+  (3) outcomes are read back against the retained theory and recorded (the
+  co-indexed path); (4) exposure frequency follows a declared error-cost rule.
+  The repair episode is then reread: the pass was a *non-holder* judging its
+  own work, not a holder; the degenerate patterns become non-holder
+  self-assessment and holder-without-exposure, not self-assessment as such.
+  Consequences: jobs 1 and 2 merge at the crux; job 2's honest test is a
+  horizon of later demands, not per-task acceptance; the residue row "no
+  independent check" splits into no-oracle and delayed-oracle, and the
+  delayed-oracle row is the one theory-holding composites can take.
 - **Criticism × theory-in-use.** Popper's cycle operates on stated theory;
   Argyris's self-sealing operates on consumed theory. Say which artifact the
   mediation trace reads, and whether criticism of the stated theory can reach
