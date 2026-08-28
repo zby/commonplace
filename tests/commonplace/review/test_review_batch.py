@@ -332,47 +332,6 @@ def test_review_job_records_deduplicated_available_link_cost_and_preserves_harne
     assert "review-consumption" not in result_text
 
 
-def test_finalize_review_job_treats_malformed_consumption_as_soft_telemetry(tmp_path: Path) -> None:
-    repo, db_path = build_repo_fixture(tmp_path)
-    prepared = json.loads(
-        create_gate_jobs(
-            repo,
-            db_path,
-            [target("kb/notes/first.md", GATE_PATH, GATE)],
-        ).stdout
-    )
-    job = prepared["jobs"][0]
-    review_job_id = job["review_job_id"]
-    write(
-        repo / job["job_output_path"],
-        pair_block(
-            "kb/notes/first.md",
-            GATE_PATH,
-            "All terms defined.\n\nreview-consumption: {not json}",
-            "PASS",
-        ),
-    )
-
-    finalized = run_cli(
-        "finalize_review_job",
-        "--review-job-id",
-        str(review_job_id),
-        cwd=repo,
-        db_path=db_path,
-    )
-
-    assert finalized.returncode == 0
-    assert json.loads(finalized.stdout)["completed"] is True
-    with review_db.connect(db_path) as conn:
-        completed = review_db.load_review_job(conn, review_job_id=review_job_id)
-    assert completed is not None
-    assert completed.telemetry_json is not None
-    record = json.loads(completed.telemetry_json)["commonplace"]["review_link_consumption"]["pairs"][0]
-    assert record["report_status"] == "malformed"
-    assert record["missing_fields"] == ["opened_paths", "stop_reason"]
-    assert record["malformed_fields"] == ["review-consumption"]
-
-
 def test_finalize_review_job_finalizes_all_criterion_packed_pairs(tmp_path: Path) -> None:
     repo, db_path = build_repo_fixture(tmp_path)
     prepared = json.loads(

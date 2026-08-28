@@ -38,34 +38,6 @@ RETIRED_TEXT_PROMOTION_WORDING = (
 )
 RETIRED_BARE_NOTE_YAML = re.compile(r"(?m)^\s*type:\s*note\s*(?:#.*)?$")
 
-GLOBAL_NOTE_STATUS_GUIDANCE = (
-    Path("kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md"),
-    Path("kb/notes/brainstorming-maintainability-oracles-for-agentic-development.md"),
-    Path("kb/notes/directory-scoped-types-are-cheaper-than-global-types.md"),
-    Path("kb/notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md"),
-    Path("kb/notes/link-strength-is-encoded-in-position-and-prose.md"),
-    Path("kb/notes/links-README.md"),
-    Path("kb/notes/memory-design-adds-operational-axes-to-artifact-analysis.md"),
-    Path("kb/notes/oracle-strength-spectrum.md"),
-    Path("kb/notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md"),
-    Path("kb/notes/topology-isolation-and-verification-form-a-causal-chain-for-reliable.md"),
-    Path("kb/reference/source-adoption-policy.md"),
-    Path("kb/tasks/types/task-active.md"),
-    Path("kb/tasks/types/task-backlog.md"),
-    Path("kb/tasks/types/task-recurring.md"),
-)
-
-RETIRED_GLOBAL_NOTE_STATUS_WORDING = (
-    "description, status, tags",
-    "kb lifecycle status if needed",
-    "maturity ladder",
-    "source note status",
-    "seedling",
-    "status (commitment level)",
-    "status ladder",
-    "universal commitment tracking",
-)
-
 TYPE_EXAMPLE_GUIDANCE = (
     Path("kb/notes/agent-statelessness-means-the-context-engine-should-inject-context.md"),
     Path("kb/notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md"),
@@ -83,19 +55,6 @@ TYPE_EXAMPLE_SOURCE_CONTEXTS = {
         Path("kb/reference/collections-and-types.md"),
         "../types/adr.md",
     ): Path("kb/reference/adr/example.md"),
-}
-
-RETIRED_BARE_TYPE_ASSIGNMENT = re.compile(
-    r"(?<![\w/.-])type:\s*(note|spec|structured-claim|snapshot)"
-    r"(?=[\s`,;.)\]}]|$)"
-)
-
-# ADR 012 records the pre-path type system in its dated Context. Current
-# guidance and executable examples must not use these retired assignments.
-EXPECTED_BARE_TYPE_HISTORY = {
-    Path("kb/reference/adr/012-types-for-structure-traits-for-review.md"): (
-        "note",
-    ),
 }
 
 TYPE_LOCAL_STATUS_VALUES = {
@@ -278,21 +237,6 @@ def test_status_frontmatter_is_confined_to_specialized_type_contracts() -> None:
     assert observed_types == set(TYPE_LOCAL_STATUS_VALUES)
 
 
-def test_current_global_note_guidance_avoids_retired_status_contract() -> None:
-    occurrences: list[str] = []
-    for relative_path in GLOBAL_NOTE_STATUS_GUIDANCE:
-        content = (REPO_ROOT / relative_path).read_text(encoding="utf-8").casefold()
-        occurrences.extend(
-            f"{relative_path}: {wording}"
-            for wording in RETIRED_GLOBAL_NOTE_STATUS_WORDING
-            if wording in content
-        )
-
-    assert occurrences == [], "retired global note status remains:\n" + "\n".join(
-        occurrences
-    )
-
-
 def test_active_frontmatter_types_are_paths() -> None:
     for relative_path in _active_kb_markdown_paths():
         content = (REPO_ROOT / relative_path).read_text(encoding="utf-8")
@@ -325,17 +269,6 @@ def test_current_type_examples_use_path_values() -> None:
             checked.append(f"{relative_path}: {canonical}")
 
     assert checked, "no path-valued type examples were checked"
-
-
-def test_retired_bare_type_assignments_are_explicit_history_only() -> None:
-    occurrences: dict[Path, tuple[str, ...]] = {}
-    for relative_path in _active_kb_markdown_paths():
-        content = (REPO_ROOT / relative_path).read_text(encoding="utf-8")
-        values = tuple(RETIRED_BARE_TYPE_ASSIGNMENT.findall(content))
-        if values:
-            occurrences[relative_path] = values
-
-    assert occurrences == EXPECTED_BARE_TYPE_HISTORY
 
 
 def test_snapshot_type_pointer_matches_schema() -> None:

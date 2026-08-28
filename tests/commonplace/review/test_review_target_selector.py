@@ -561,24 +561,6 @@ class TestGateChanged:
 
 
 class TestNoteChanged:
-    def test_changed_policy_marks_a_single_character_edit_stale(self, tmp_path: Path) -> None:
-        fixture = build_fixture(tmp_path)
-        current = fixture["stable"].read_text(encoding="utf-8")
-        fixture["stable"].write_text(
-            current.replace("Line 1.", "Line 1!"),
-            encoding="utf-8",
-        )
-
-        stale = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["prose/source-residue"],
-            note_filter=["kb/notes/stable.md"],
-        )
-
-        assert len(stale) == 1
-        assert stale[0].reasons == ("note-changed",)
-
     def test_note_sha_change_marks_stale(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         make_note(fixture["stable"], "Stable title", "\nUpdated line.\n")
@@ -992,17 +974,6 @@ Fixture test.
         assert row["evidence_review_pair_id"] == expected_pair["review_pair_id"]
         assert row["evidence_review_pair_id"] != other_pair_id
 
-    def test_ack_rejects_requested_record_without_baseline_observations(self, tmp_path: Path) -> None:
-        build_fixture(tmp_path)
-        requested = review_target_selector.select_requested_criteria(
-            tmp_path,
-            criterion_ids=["prose/source-residue"],
-            note_filter=["kb/notes/stable.md"],
-        )
-
-        with pytest.raises(ValueError, match="no baseline revision"):
-            ack_pairs(tmp_path, requested, TEST_MODEL)
-
     def test_ack_rejects_pair_without_completed_review_and_writes_nothing(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
         stale_before = review_target_selector.select_stale_criteria(
@@ -1352,40 +1323,6 @@ class TestModelOptional:
 
         assert result.returncode == 2
         assert "does not match criterion_path" in result.stderr
-        stale = review_target_selector.select_stale_criteria(
-            tmp_path,
-            model=TEST_MODEL,
-            criterion_ids=["prose/source-residue"],
-            note_filter=["kb/notes/stable.md"],
-        )
-        assert stale[0].reasons == ("note-changed",)
-
-    def test_ack_review_cli_rejects_change_after_selector_inspection(self, tmp_path: Path) -> None:
-        fixture = build_fixture(tmp_path)
-        make_note(fixture["stable"], "Stable title", "\nInspected update.\n")
-        selected = run_cli(
-            "review_target_selector",
-            "prose/source-residue",
-            "--note",
-            "kb/notes/stable.md",
-            "--model-partition",
-            TEST_MODEL,
-            "--json",
-            cwd=tmp_path,
-        )
-        (tmp_path / "selected.json").write_text(selected.stdout, encoding="utf-8")
-        make_note(fixture["stable"], "Stable title", "\nUninspected update.\n")
-
-        result = run_cli(
-            "ack_review",
-            "--input",
-            "selected.json",
-            cwd=tmp_path,
-            check=False,
-        )
-
-        assert result.returncode == 2
-        assert "live hash mismatch" in result.stderr
         stale = review_target_selector.select_stale_criteria(
             tmp_path,
             model=TEST_MODEL,

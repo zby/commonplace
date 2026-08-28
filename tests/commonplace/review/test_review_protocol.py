@@ -94,7 +94,7 @@ def test_render_pairs_prompt_single_note_shares_note_across_gates() -> None:
     assert "=== PAIR REVIEW START: kb/notes/only.md :: lens/beta ===" in prompt
 
 
-def test_render_pairs_prompt_charges_repeated_target_once() -> None:
+def test_render_pairs_prompt_reports_deduplicated_snapshot_route_costs() -> None:
     prompt = render_pairs_prompt(
         notes=[
             make_target(
@@ -113,33 +113,6 @@ def test_render_pairs_prompt_charges_repeated_target_once() -> None:
                         (ResolvedConsumptionTarget("kb/notes/shared.md", 800),),
                     ),
                     ResolvedMarkdownLink(
-                        "other",
-                        "./other.md",
-                        "kb/notes/other.md",
-                        (ResolvedConsumptionTarget("kb/notes/other.md", 300),),
-                    ),
-                ],
-            )
-        ],
-        criterion_texts={GATE: GATE_TEXT},
-        result_kind="verdict",
-        job_output_path="job-output.md",
-    )
-
-    assert (
-        "3 resolved link(s), 2 distinct link target(s), "
-        "2 consumption target(s), 1100 bytes total"
-    ) in prompt
-    assert prompt.count("`kb/notes/shared.md`") == 4
-
-
-def test_render_pairs_prompt_names_both_snapshot_grounding_targets() -> None:
-    prompt = render_pairs_prompt(
-        notes=[
-            make_target(
-                "kb/notes/only.md",
-                resolved_links=[
-                    ResolvedMarkdownLink(
                         "source (snapshot required)",
                         "../sources/source.ingest.md",
                         "kb/sources/source.ingest.md",
@@ -151,7 +124,7 @@ def test_render_pairs_prompt_names_both_snapshot_grounding_targets() -> None:
                                 "kb/sources/.snapshots/source.md", 2400
                             ),
                         ),
-                    )
+                    ),
                 ],
             )
         ],
@@ -161,6 +134,11 @@ def test_render_pairs_prompt_names_both_snapshot_grounding_targets() -> None:
     )
 
     assert (
+        "3 resolved link(s), 2 distinct link target(s), "
+        "3 consumption target(s), 3300 bytes total"
+    ) in prompt
+    assert prompt.count("`kb/notes/shared.md`") == 4
+    assert (
         "| [source (snapshot required)](../sources/source.ingest.md) | "
         "`kb/sources/source.ingest.md` | `kb/sources/source.ingest.md` | 100 bytes |"
     ) in prompt
@@ -169,7 +147,6 @@ def test_render_pairs_prompt_names_both_snapshot_grounding_targets() -> None:
         "`kb/sources/source.ingest.md` | `kb/sources/.snapshots/source.md` | 2400 bytes |"
     ) in prompt
     assert "lists both the linked ingest and its derived snapshot" in prompt
-    assert "2 consumption target(s), 2500 bytes total" in prompt
 
 
 def test_render_pairs_prompt_names_destination() -> None:

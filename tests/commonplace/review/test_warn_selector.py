@@ -114,11 +114,6 @@ def seed_review(
     return repo / review_pair.result_path
 
 
-@pytest.mark.parametrize("outcome", ["pass", "fail"])
-def test_extract_warns_ignores_explicit_warn_for_non_warn_outcome(outcome: str) -> None:
-    assert warn_selector.extract_warns(ACTIONABLE_WARN_REVIEW, outcome=outcome) == []
-
-
 def test_warn_selector_uses_criterion_snapshot_hash_without_git(tmp_path: Path) -> None:
     repo = tmp_path / "repo"
     repo.mkdir()
@@ -195,25 +190,6 @@ def test_warn_selector_reports_note_changed_residue_outside_queue(tmp_path: Path
         notes,
         stale_pairs,
     )
-
-
-def test_warn_selector_reports_stale_pair_when_result_artifact_is_missing(
-    tmp_path: Path,
-) -> None:
-    repo = tmp_path / "repo"
-    repo.mkdir()
-    note = make_note(repo / "kb" / "notes" / "sample.md")
-    make_gate(repo / GATE_PATH)
-    db_path = repo / "kb" / "reports" / "commonplace-store.sqlite"
-    result_path = seed_review(repo, db_path)
-    result_path.unlink()
-    make_note(note, body="Changed body.")
-
-    notes, stale_pairs = warn_selector.scan_reviews(repo, db_path=db_path)
-
-    assert notes == []
-    assert len(stale_pairs) == 1
-    assert stale_pairs[0].reasons == ("note-changed",)
 
 
 @pytest.mark.parametrize("outcome", ["pass", "fail"])

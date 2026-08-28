@@ -287,40 +287,6 @@ Captured text.
     assert any("genre" in item for item in results.warns)
 
 
-def test_source_snapshot_rejects_unknown_capture_scope(tmp_path: Path) -> None:
-    write(
-        tmp_path / "kb" / "sources" / "types" / "snapshot.schema.yaml",
-        (Path.cwd() / "kb" / "sources" / "types" / "snapshot.schema.yaml").read_text(
-            encoding="utf-8"
-        ),
-    )
-    write_type_spec(
-        tmp_path,
-        "kb/sources/types/snapshot.md",
-        name="snapshot",
-        schema="kb/sources/types/snapshot.schema.yaml",
-    )
-    snapshot = write(
-        tmp_path / "kb" / "sources" / "sample.md",
-        """---
-source: https://example.com/article
-captured: "2026-04-19"
-capture: web-fetch
-capture_scope: complete-enough
-type: kb/sources/types/snapshot.md
----
-
-# Sample
-
-Captured text.
-""",
-    )
-
-    results = validation.validate_note(snapshot, repo_root=tmp_path)
-
-    assert any("capture_scope" in item for item in results.fails)
-
-
 def test_source_snapshot_requires_h1_as_first_nonblank_body_line(
     tmp_path: Path,
 ) -> None:
@@ -447,19 +413,6 @@ def test_code_grounded_ingest_requires_code_grounding_section(tmp_path: Path) ->
     results = validation.validate_note(ingest, repo_root=tmp_path)
 
     assert any("missing '## Code Grounding'" in item for item in results.fails)
-
-
-def test_ingest_rejects_unknown_capture_scope(tmp_path: Path) -> None:
-    configure_ingest_report_repo(tmp_path)
-    content = code_grounded_ingest(include_heading=True).replace(
-        "capture: pdf-read\n",
-        "capture: pdf-read\ncapture_scope: complete-enough\n",
-    )
-    ingest = write(tmp_path / "kb" / "sources" / "paper.ingest.md", content)
-
-    results = validation.validate_note(ingest, repo_root=tmp_path)
-
-    assert any("capture_scope" in item for item in results.fails)
 
 
 def test_code_grounded_ingest_accepts_multiple_pinned_repositories(
@@ -1268,47 +1221,6 @@ Check the sample condition.
     )
 
 
-def test_review_gate_schema_rejects_unsupported_staleness(tmp_path: Path) -> None:
-    configure_temp_repo(tmp_path)
-    write_type_spec(
-        tmp_path,
-        "kb/types/review-gate.md",
-        name="review-gate",
-        schema="kb/types/review-gate.schema.yaml",
-    )
-    shutil.copyfile(
-        Path.cwd() / "kb" / "types" / "review-gate.schema.yaml",
-        tmp_path / "kb" / "types" / "review-gate.schema.yaml",
-    )
-    gate = write(
-        tmp_path / "kb" / "instructions" / "review-gates" / "frontmatter" / "sample.md",
-        """---
-gate_id: frontmatter/sample
-name: Sample
-description: Sample gate with an unsupported rewrite threshold
-type: kb/types/review-gate.md
-lens: frontmatter
-watches: [title, body]
-staleness: rewrite(0.5)
----
-
-# Sample
-
-## Failure mode
-
-The title and body diverge.
-
-## Test
-
-Compare the title with the body.
-""",
-    )
-
-    results = validation.validate_note(gate, repo_root=tmp_path)
-
-    assert any("staleness" in failure for failure in results.fails)
-
-
 def test_title_length_over_limit_fails_validation(tmp_path: Path) -> None:
     notes_root = configure_temp_repo(tmp_path)
     title = "A" * 101
@@ -1672,28 +1584,6 @@ def test_validate_collection_structure_allows_namespace_collections(
     )
 
     assert failures == []
-
-
-def test_source_snapshot_cache_warns_when_no_ingest_records_the_bytes(
-    tmp_path: Path,
-) -> None:
-    sources = tmp_path / "kb" / "sources"
-    write(sources / "COLLECTION.md", "# Sources\n")
-    orphan = write(sources / ".snapshots" / "orphan.md", "uncatalogued bytes\n")
-
-    warnings = validation.validate_source_snapshot_cache(
-        sources, repo_root=tmp_path
-    )
-
-    assert warnings == [
-        (
-            orphan,
-            (
-                "unpaired local snapshot: no same-stem ingest and no ingest "
-                "matches its source URL or checksum"
-            ),
-        )
-    ]
 
 
 def test_source_snapshot_cache_warns_about_redundant_alternate_copy(

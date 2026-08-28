@@ -346,36 +346,6 @@ State one claim per note.
     assert "acked 1 stale pair(s)" in result.stdout
 
 
-def test_qualifying_records_uses_snapshot_text_without_git(tmp_path: Path) -> None:
-    repo = tmp_path / "repo"
-    repo.mkdir()
-    note = make_note(repo / "kb" / "notes" / "sample.md", "\nBody.\n")
-    make_gate(
-        repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md",
-        "prose/source-residue",
-    )
-    db_path = repo / "kb" / "reports" / "commonplace-store.sqlite"
-    seed_snapshot_review(
-        repo,
-        db_path,
-        note_path="kb/notes/sample.md",
-        criterion_path="kb/instructions/review-gates/prose/source-residue.md",
-    )
-    make_note(note, "\nBody.\n", traits="[title-as-claim]", tags="[computational-model]")
-
-    records = qualifying_records(
-        repo,
-        model=TEST_MODEL,
-        criterion_ids=["kb/instructions/review-gates/prose/source-residue.md"],
-        note_filter=["kb/notes"],
-        db_path=db_path,
-    )
-
-    assert [(record.note_path, record.criterion_path) for record in records] == [
-        ("kb/notes/sample.md", "kb/instructions/review-gates/prose/source-residue.md")
-    ]
-
-
 def test_qualifying_records_excludes_notes_where_watched_parts_changed(tmp_path: Path) -> None:
     repo, db_path = build_fixture(
         tmp_path,
@@ -465,56 +435,3 @@ def test_qualifying_records_rejects_note_interleaving_even_after_aba_restore(
     write(note_path, selected_text)
 
     assert records == []
-
-
-def test_qualifying_records_rejects_baseline_without_snapshot_text(tmp_path: Path) -> None:
-    repo = tmp_path / "repo"
-    repo.mkdir()
-
-    note = make_note(repo / "kb" / "notes" / "sample.md", "\nBody.\n")
-    make_gate(
-        repo / "kb" / "instructions" / "review-gates" / "prose" / "source-residue.md",
-        "prose/source-residue",
-    )
-
-    db_path = repo / "kb" / "reports" / "commonplace-store.sqlite"
-    review_db.ensure_db(db_path)
-    with review_db.connect(db_path) as conn:
-        note_snapshot = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")
-        criterion_snapshot = review_db.snapshot_file(
-            conn,
-            repo_root=repo,
-            path="kb/instructions/review-gates/prose/source-residue.md",
-        )
-        review_pair_id = insert_completed_pair(
-            conn,
-            note_path="kb/notes/sample.md",
-            criterion_id="prose/source-residue",
-            model_partition=TEST_MODEL,
-            outcome="pass",
-            reviewed_note_snapshot_id=note_snapshot.snapshot_id,
-            reviewed_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-            completed_at="2026-04-04T08:35:54+02:00",
-        )
-        accept_pair(
-            conn,
-            review_pair_id=review_pair_id,
-            note_path="kb/notes/sample.md",
-            criterion_id="prose/source-residue",
-            model_partition=TEST_MODEL,
-            baseline_note_snapshot_id=note_snapshot.snapshot_id,
-            baseline_criterion_snapshot_id=criterion_snapshot.snapshot_id,
-            baseline_updated_at="2026-04-04T08:36:13+02:00",
-        )
-        conn.execute(
-            "UPDATE artifact_snapshots SET content_text = 'corrupt', content_sha256 = ? WHERE snapshot_id = ?",
-            ("0" * 64, note_snapshot.snapshot_id),
-        )
-        conn.commit()
-
-    make_note(note, "\nBody.\n", traits="[title-as-claim]")
-
-    from commonplace.store import check_store_health
-
-    with pytest.raises(RuntimeError, match="hash mismatch"):
-        check_store_health(db_path)

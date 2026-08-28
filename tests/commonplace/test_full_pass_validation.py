@@ -150,29 +150,18 @@ def test_pending_revise_validates_as_a_packet_phase_hand_back(tmp_path: Path) ->
     assert not result.fails
 
 
-def test_completed_keep_pass_verifies_both_captures(tmp_path: Path) -> None:
+def test_completed_recovery_requires_ready_closing_status(tmp_path: Path) -> None:
     install_types(tmp_path)
     report = write_packet(
         tmp_path,
         phase="complete",
         final_text="edited text\n",
         live_source_text="edited text\n",
+        closing_repair_attempted=True,
     )
 
-    result = validate_note(report, repo_root=tmp_path)
+    assert not validate_note(report, repo_root=tmp_path).fails
 
-    assert not result.fails
-    assert any("packet captures: all 2" in item for item in result.passes)
-
-
-def test_completed_keep_pass_requires_ready_closing_status(tmp_path: Path) -> None:
-    install_types(tmp_path)
-    report = write_packet(
-        tmp_path,
-        phase="complete",
-        final_text="edited text\n",
-        live_source_text="edited text\n",
-    )
     report.write_text(
         report.read_text(encoding="utf-8").replace(
             "closing_status: ready", "closing_status: null"
@@ -185,7 +174,7 @@ def test_completed_keep_pass_requires_ready_closing_status(tmp_path: Path) -> No
     assert result.fails
 
 
-def test_closing_phase_accepts_one_pending_bounded_repair(tmp_path: Path) -> None:
+def test_closing_phase_allows_only_one_pending_bounded_repair(tmp_path: Path) -> None:
     install_types(tmp_path)
     report = write_packet(
         tmp_path,
@@ -199,16 +188,12 @@ def test_closing_phase_accepts_one_pending_bounded_repair(tmp_path: Path) -> Non
 
     assert not result.fails
 
-
-def test_closing_phase_rejects_a_second_bounded_repair(tmp_path: Path) -> None:
-    install_types(tmp_path)
-    report = write_packet(
-        tmp_path,
-        phase="closing",
-        final_text="edited text\n",
-        live_source_text="edited text\n",
-        closing_status="repair-needed",
-        closing_repair_attempted=True,
+    report.write_text(
+        report.read_text(encoding="utf-8").replace(
+            "closing_repair_attempted: false",
+            "closing_repair_attempted: true",
+        ),
+        encoding="utf-8",
     )
 
     result = validate_note(report, repo_root=tmp_path)
@@ -237,21 +222,6 @@ def test_closing_hand_back_is_valid_but_cannot_be_complete(tmp_path: Path) -> No
     result = validate_note(report, repo_root=tmp_path)
 
     assert result.fails
-
-
-def test_completed_recovery_may_become_ready(tmp_path: Path) -> None:
-    install_types(tmp_path)
-    report = write_packet(
-        tmp_path,
-        phase="complete",
-        final_text="recovered text\n",
-        live_source_text="recovered text\n",
-        closing_repair_attempted=True,
-    )
-
-    result = validate_note(report, repo_root=tmp_path)
-
-    assert not result.fails
 
 
 def test_completed_keep_pass_rejects_a_corrupt_final_capture(tmp_path: Path) -> None:

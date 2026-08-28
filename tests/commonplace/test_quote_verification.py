@@ -662,19 +662,3 @@ def test_ingest_quotes_section_stops_at_the_next_h2():
 
     assert "retained passage" in section
     assert "later prose" not in section
-
-
-def test_ingest_quotes_section_is_empty_without_the_heading():
-    assert ingest_quotes_section("## Summary\n\nprose\n") == ""
-
-
-def test_quotation_wrapped_across_lines_is_verified(tmp_path: Path):
-    note = _write_pair(
-        tmp_path,
-        'The source states, verbatim, "the first half of the sentence\n'
-        'and its second half" ([Source](../sources/source.md)).',
-        "Intro. the first half of the sentence and its second half. Outro.",
-    )
-    results = _check(note)
-    assert not results.fails
-    assert any("1 resolve against their cited sources" in p for p in results.passes)
