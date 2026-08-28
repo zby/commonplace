@@ -25,8 +25,8 @@ assess** — no disposition yet.
 |---|---|---|---|---|---|
 | Naur 1985, *Programming as Theory Building* ([ingest](../../sources/programming-as-theory-building.ingest.md)) | Why documented programs die when their programmers leave: what a program's theory is and why documentation did not transfer it | P1 | Theory as capacity, not text; three bearer tests; transfer needs contact with the holder | **Established** (accepted Naur article). See worked row 1. | The human-binding conclusion, which runs through a premise absent in the target; any claim that a composite holds a theory |
 | Ryle, via Naur | Rule-following regress | P1 | Intelligent behaviour is not rule-following all the way down | Established as far as articulable rules; does not decide trained recognizers | Any claim about what a recognizer does or does not judge |
-| Popper 1966 ([ingest](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md)) | Growth of objective knowledge through criticism of stated theories | P3, and P1's "what a theory is" | Theory as an objective product with consequences beyond its producer; the problem–theory–criticism cycle | **Established** for criticism: retained theory is an addressable object whose consequences can be derived and tested | Acceptance and operational checks, which the source leaves unspecified; admission is target-side |
-| Argyris 1977 ([ingest](../../sources/argyris-organizational-learning-and-mis-1977.ingest.md)) | Organizational error correction when the theory governing behaviour differs from the one stated; self-sealing control systems | P3 | Espoused theory vs theory-in-use; single- and double-loop learning; self-sealing | **Established** for the consumption-path distinction (an artifact governs only through what consumes it with binding force); double-loop *changing* governing variables is our reading | Organizational politics and interpersonal dynamics; the claim that double loop *changes* rather than questions governing variables |
+| Popper 1966 ([ingest](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md)) | Growth of objective knowledge through criticism of stated theories | P3, and P1's "what a theory is" | Theory as an objective product with consequences beyond its producer; the problem–theory–criticism cycle | **Established** for criticism of an objective theory; admission and acceptance are target-side. See worked row 5. | Acceptance and operational checks, which the source leaves unspecified; the immediate successor-problem step as an operational stage; logical relations equated with what an interpreter finds |
+| Argyris 1977 ([ingest](../../sources/argyris-organizational-learning-and-mis-1977.ingest.md)) | Organizational error correction when the theory governing behaviour differs from the one stated; self-sealing control systems | P3 | Espoused theory vs theory-in-use; single- and double-loop learning; self-sealing | **Established** for the operativity test and the update-target distinction; **conjectured** for structural self-sealing; the motivational mechanism does not transfer. See worked row 6. | Model I values, defensive routines, organizational politics; the claim that double loop *changes* rather than questions governing variables; any evidence about agent-architecture performance |
 | Craik 1943 ([ingest](../../sources/craik-hypothesis-on-the-nature-of-thought-1943.ingest.md)) | Why an organism benefits from an internal model | P3 | Try alternatives on the model before the world | **To assess**; snapshot required for any quote | Learning and validation of the model, which the source leaves open |
 | Ashby 1960; Conant & Ashby 1970 ([ingest](../../sources/ashby-design-for-a-brain-1960.ingest.md), [ingest](../../sources/conant-ashby-every-good-regulator-1970.ingest.md)) | Adaptation without a theory: ultrastability; what a regulator must contain | P3 (contrast), P2 | Theory-free adaptation as the contrast class; a good regulator contains a model of what it regulates | **Contrast** | Ultrastability is not a mechanism for theory-mediated loops; the regulator theorem's model is not retained natural-language theory |
 | Sutton 2019, *The Bitter Lesson* ([ingest](../../sources/sutton-the-bitter-lesson-original-essay.ingest.md)) | Why hand-built domain knowledge loses to methods that exploit computation | P5 | The production-method axis (specified vs selected by search or learning) | **Established** (accepted Bitter Lesson article). See worked row 2. | The weights-only extrapolation: the source's mechanism concerns production, and representational form is a separate axis |
@@ -129,6 +129,149 @@ agent changed a task to serve the intent and the change was judged right.
 adversarial purpose transfers. Stahel's warning applies: the label
 *Auftragstaktik* is not stable operating guidance, so the workshop cites the
 relation, not the doctrine.
+
+### 5. Popper 1966 → P3, and P1's sense of "theory"
+
+**Problem match.** Popper's bounded problem is how objective knowledge grows:
+how theories, as products standing outside their producers, are consumed so
+that criticism yields new problems. P3 asks how retained natural-language
+theory guides operation and stays revisable; P1 needs a sense of *theory*
+that is not a mental state. The match covers the revisability half of P3 and
+the vocabulary half of P1, and returns four candidates from the retained
+quotes: theories are "exosomatic artefacts" that can be "contained in a book"
+or "stored in a library"; their logical relations hold "quite independently of
+whether or not anybody has noticed or understood" them, so that "the person
+who produces a theory may very often not understand it"; growth follows
+`P1 → TT → EE → P2`; and consuming a theory "means criticising them,
+changing them, and often even demolishing them, in order to replace them by
+better ones"
+([ingest](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md)).
+
+**Mechanism match.** The operative mechanism is that a stated theory has
+consequences that can be derived and compared — with other theories and with
+observations — by a consumer who need not be its producer, and that
+eliminating an error this way changes the problem. Its premises are: the
+theory is stated, so it has content beyond anyone's grasp of it; some consumer
+can derive consequences; criticism is applied with the strongest available
+means. All three are independently present in the target part this governs,
+the retained-theory layer. A note is a stored object; a language-model
+interpreter derives consequences and finds incompatibilities across notes;
+review gates apply criticism. So three things transfer: retained theory is an
+addressable object, not a mental state (this is what the accepted Naur article
+means by *retained theory* as against *holding* it); criticism operates on the
+object and can be done by a consumer who does not hold the capacity the object
+describes; and productive criticism is measured by the problem it exposes, not
+only by the correction it makes.
+
+Two target-side conditions attach. In Popper the consequences stand in
+*logical* relations; in the target they are derived by interpretation, so the
+derivation is itself a criticizable claim about the object, and the interpreter
+enters as an error source the schema does not model. And criticism converges
+in the target only when checks are decorrelated from the error — a
+re-reading under the same prompt is not Popper's "critical discussion" — as
+[mechanistic constraints make Popperian KB recommendations actionable](../../notes/mechanistic-constraints-make-popperian-kb-recommendations-actionable.md)
+already argues.
+
+The accepted Naur article's repair episode is target-side evidence for the
+transferred split: the improvement pass criticized the note correctly with only
+the object in hand, and failed at repair, which needed the capacity. Popper
+predicts the first; nothing in Popper predicts the second, which is Ryle's and
+Argyris's territory.
+
+**Non-transfer boundary.** Popper supplies no acceptance rule and no
+operational checks (the ingest's own limit), so admission is a target-side
+construction — the discovery lifecycle's staged acceptance and integration,
+not the immediate `P2`. "Problem depth" as a progress signal has no measure
+in the source. The essay's arguments on reduction, physics, and logic do not
+enter. And the World 3 vocabulary is Naur's citation, not this text's.
+
+### 6. Argyris 1977 → P3
+
+**Problem match.** Argyris's bounded problem is why organizations correct
+routine errors but fail at errors that require questioning governing
+objectives and policies, given that "theories-in-use are the theories of
+action that actually govern their actions" while espoused theories are the
+ones "people report are governing their actions", and given that control
+systems can make learning self-sealing
+([ingest](../../sources/argyris-organizational-learning-and-mis-1977.ingest.md)).
+P3 asks how retained theory comes to guide operation with binding force and
+stays revisable when its governing commitments are wrong. The match covers
+both halves and returns four candidates: an operativity test (espoused vs
+in-use); an update-target distinction (single loop corrects "so the job gets
+done and the action remains within stated policy guidelines"; double loop is
+"the thermostat questioning its order"); a learning unit ("organizations
+learn through individuals acting as agents for them", and learning "requires
+the capacity to know when it is unable to identify and correct errors"); and
+a self-sealing mechanism (errors "camouflaged", their inhibiting loops
+camouflaged, "the camouflage is camouflaged").
+
+**Mechanism match, per candidate.**
+
+- *Operativity test.* Mechanism: behaviour is governed by whatever theory is
+  actually consumed in selecting it, not by what is declared. Premises: an
+  actor selects behaviour; some representation participates; the declared and
+  the participating representation can differ. All present in the target, and
+  already carried by
+  [an action model matters only through its consumption path](../../notes/an-action-model-matters-only-through-its-consumption-path.md)
+  and the behavioral-authority definition. Transfers as P3's criterion: the
+  theory-in-use is the theory on the consumption path with binding force. The
+  target adds a location the source does not have: the gap between espoused
+  and in-use falls between retained text and the model's prior and routing,
+  so a note can be espoused while the weights supply the theory-in-use. The
+  mechanism is the same; the reason the gap opens is target-specific.
+  **Established.**
+- *Update-target distinction.* Mechanism: correction within governing
+  variables differs from inquiry into them. Premise: a distinction between
+  action rules and the objectives or policies that set them. Present in the
+  target as the difference between editing an artifact inside a decomposition
+  and revising the decomposition, objective, or evaluator. Transfers as the
+  update-target distinction. Does not transfer: that double loop *changes*
+  governing variables (the source says *questions*), and the mapping to a
+  generality axis, which
+  [learning is not only about generality](../../notes/learning-is-not-only-about-generality.md)
+  already labels as Commonplace's interpretation. **Established.**
+- *Learning unit.* Mechanism: the system learns through its agents' actions
+  when the results are retained in the system's maps and norms rather than
+  only in the agents. Premise: retention outside the acting individual. Present
+  in the target as retained artifacts consumed by later loops. Transfers as
+  the unit statement behind ledger row C2 — the deployed system, not the
+  interpreter, is the unit — and as a requirement on the evaluator: a
+  learning system needs the capacity to know when it cannot correct an error.
+  **Established** for the unit; the evaluator requirement is a candidate
+  gate-adequacy condition.
+- *Self-sealing.* Mechanism in the source: Model I theories-in-use (win,
+  control unilaterally, suppress) make threatening errors uncorrectable and
+  camouflage the inability. The motivational premise — an actor with status to
+  protect — is absent in the target, so that mechanism does not transfer.
+  What is present is the structural form: an evaluator that cannot detect its
+  own inability to correct. The accepted Naur article's episode is an
+  instance — the pass assessed each repair against a brief reconstructed
+  after it had defeated the earlier claim and reported the contribution
+  strengthened. The structural form transfers as a reading of captured or
+  self-confirming evaluators. **Conjectured**; the defensive-routine account
+  does not enter. Argyris's further claim that tightening control corrupts
+  the evidence it was meant to improve has a target-side analogue in
+  [narrowing bought to survive review](../../notes/narrowing-bought-to-survive-review-is-paid-for-in-content.md),
+  but it is an analogue, not a match, until the mechanism is shown to be the
+  same.
+
+**Non-transfer boundary.** Model I and Model II values, interpersonal
+defensive routines, organizational politics, and the stylized local-versus-
+distant information-system contrast do not enter. The source offers no
+addressable retained theory, theory-search procedure, benchmark, or
+sample-efficiency result, so it grounds vocabulary and the failure mechanism,
+never claims about an agent architecture's learning performance (the
+ingest's own boundary). The source's loop vocabulary does not establish a
+shared mechanism with Ashby's ultrastability; the two remain separate rows.
+
+**What the two rows settle together.** Popper's mechanism operates on the
+stated object; Argyris's binding operates on the consumed theory. The Naur
+repair episode splits exactly at that seam — critique needed the object,
+repair needed the theory-in-use — which is a candidate answer to the
+criticism × theory-in-use interaction check in
+[article roles](./article-roles.md#composition): criticism of the stated
+theory can reach a divergent theory-in-use only where the mediation trace
+reads what was consumed, not what was retained.
 
 ## What this register changes
 

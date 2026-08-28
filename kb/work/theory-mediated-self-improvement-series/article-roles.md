@@ -137,7 +137,9 @@ Interaction checks the composition must run and record:
 - **Criticism × theory-in-use.** Popper's cycle operates on stated theory;
   Argyris's self-sealing operates on consumed theory. Say which artifact the
   mediation trace reads, and whether criticism of the stated theory can reach
-  a theory-in-use that differs from it.
+  a theory-in-use that differs from it. Candidate answer from register rows 5
+  and 6: only where the trace reads what was consumed, not what was retained;
+  the Naur repair episode is the instance.
 - **Production axis × adverse selection.** Search-selected artifacts still
   need an evaluator; say whether selection by search moves a decision out of
   the human cut or only changes who proposes candidates.
