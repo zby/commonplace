@@ -111,6 +111,41 @@ than importing the stronger learning label. Different operations can share the
 artifact substrate while retaining different human cuts and evaluation
 methods.
 
+## Composition
+
+The series is a target-side construction that assigns bounded functions to
+matched mechanisms — compose functions, not traditions. Each contribution
+keeps its own conditions and non-transfer boundary from the
+[match register](./match-register.md).
+
+| Contribution | Bounded function in the argument | Conditions and non-transfer boundary |
+|---|---|---|
+| Naur, narrowed to the bearer tests | Say what holding a program's theory requires, so that a composite can be tested rather than assumed | Tests stated over capacities; the human-binding conclusion does not enter |
+| Popper, narrowed to criticism of an objective theory | Say how retained theory is consumed: consequences derived, tested, and used to find where it breaks | Acceptance and admission are target-side |
+| Argyris, narrowed to theory-in-use | Say when retained theory is operative: only through what consumes it with binding force | Double-loop *change* of governing variables is our reading |
+| Adverse selection (internal) | Say what transfer leaves behind and why the architecture is mixed | Preferential transfer condition; fixed workload and boundary |
+| Function allocation (Parasuraman et al.), narrowed to the per-function profile | Say how allocation is recorded without a scalar | No level scale; pathway functions, not task stages |
+| Sutton, narrowed to the production axis | Say what search and learning do and do not decide about representational form | Weights-only extrapolation does not enter |
+| Mission command, narrowed to intent-framed delegation | Govern the workshop's own execution across sessions | Conjectured; hierarchy and doctrine do not enter |
+
+Interaction checks the composition must run and record:
+
+- **Bearer tests × evaluator crux.** P1's third test (coherent modification)
+  and P2's least-warrantable decisions name the same decision class. State
+  whether passing the bearer tests is equivalent to warranting those decisions
+  or merely necessary for it.
+- **Criticism × theory-in-use.** Popper's cycle operates on stated theory;
+  Argyris's self-sealing operates on consumed theory. Say which artifact the
+  mediation trace reads, and whether criticism of the stated theory can reach
+  a theory-in-use that differs from it.
+- **Production axis × adverse selection.** Search-selected artifacts still
+  need an evaluator; say whether selection by search moves a decision out of
+  the human cut or only changes who proposes candidates.
+- **Delegation × hand-back.** The ADR 080 hand-back returns control when a
+  change would alter a claim. Say whether that is the governed return the
+  mission-command match requires or a case where the executor lacked the
+  operator's purpose.
+
 ## Separation rules
 
 - The strong-benchmark article says what would close the loop. The bootstrap article

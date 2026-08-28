@@ -6,8 +6,10 @@
 
 In mission-command terms this is the commander's intent (*Absicht*): the
 purpose the workshop serves and the end state it should leave, stated so that
-a task below can be changed when it stops serving the purpose (see the
-[mission-command source](../../sources/us-army-adrp-6-0-mission-command-2012.ingest.md)).
+a task below can be changed when it stops serving the purpose. The borrowing
+is a problem match with a conjectured mechanism match whose conditions are
+stated in the [match register](./match-register.md#4-mission-command--p6-workshop-intent);
+only the bounded delegation relation is used, not the doctrine.
 
 **Purpose.** Get researchers interested in Commonplace and, where it works,
 get fellow researchers working with it.
@@ -166,6 +168,27 @@ people only the decisions they are worst placed to make.
   separate dimensions. The Bitter Lesson motivates a possible power gain; it
   does not make power a consequence of autonomy.
 
+## Method
+
+The workshop follows the three stages of
+[problem matches guide method search; mechanism matches bound transfer](../../notes/problem-matches-guide-method-search-mechanism-matches-bound-transfer.md):
+
+1. **Target problems first.** Each problem the series addresses is stated on
+   its own, at a level where target, feedback, information structure, and
+   failure mode are visible ([target problems](./target-problems.md)).
+2. **Sources as matches, not authorities.** Every source tradition an article
+   uses has a row in the [match register](./match-register.md): the bounded
+   source problem, the target problem it matches, the candidate responses it
+   returns, the mechanism-match status, and the non-transfer boundary. A
+   source's conclusion supports a target claim only as far as its row licenses.
+3. **Composition is a target-side construction.** The series and the mixed
+   architecture assign bounded functions to matched mechanisms; the
+   interaction checks live in [article roles](./article-roles.md#composition).
+
+The [incumbent ledger](./incumbent-ledger.md) keeps its job — disposition of
+claims inherited from the drafts — and cross-references the register where a
+defeat was a transfer past the shared mechanism.
+
 ## Evaluation boundary
 
 The target claim is always relative to a named revision path, objective,
@@ -215,6 +238,10 @@ against this workshop and then closes under the workshop contract.
 
 ## Working artifacts
 
+- [Target problems](./target-problems.md) — the problems the series
+  addresses, stated independently of any source.
+- [Match register](./match-register.md) — per source: problem match,
+  mechanism-match status, non-transfer boundary; four worked rows.
 - [Shared model](./shared-model.md) — the current architecture, bootstrap
   relation, practical payoff, closure condition, and progress dimensions.
 - [Closure–capability map](./closure-capability-map.md) — comparison coordinates,
@@ -256,6 +283,9 @@ The workshop closes when:
    outcome recorded; and
 9. the bootstrap article cites that record as its mediation trace; and
 10. each published article names the notes it was distilled from and states
-    its open problems as invitations a reader could take up.
+    its open problems as invitations a reader could take up; and
+11. every source an article uses has a match-register row, no article carries
+    a source conclusion past its row's non-transfer boundary, and the
+    composition's interaction checks have been run and recorded.
 
 At closure, durable results move to the library and this directory is deleted.

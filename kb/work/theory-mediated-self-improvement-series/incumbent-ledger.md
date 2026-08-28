@@ -15,6 +15,10 @@ only after the claim it expresses has a disposition.
 | Omit | The claim does no necessary job or cannot be warranted. |
 | Promoted | An accepted successor contains exact replacement wording and evidence; the destination is recorded here. |
 
+Where a defeat was a transfer past a source's shared mechanism, the
+[match register](./match-register.md) records the row (S2, C3, R2) and the
+reconstruction must re-derive the claim from that mechanism or drop it.
+
 Moving a claim requires five fields: source claim ID, exact successor wording,
 destination, warrant, and affected-citer disposition. Copying a paragraph
 without that record is not a move.
