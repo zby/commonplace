@@ -265,4 +265,3 @@ must not be generalized merely because they are plan-like.
 4. Run the behavioral planning assay separately from deterministic tests.
 5. Measure context/fork overhead only after the final instruction wording is
    known; treat cost as a guard, not a quality oracle.
-

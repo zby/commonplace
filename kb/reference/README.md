@@ -100,7 +100,7 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 
 *What you get.* The same captured content as a structurally valid, unverified note, possibly under a title-aligned filename with its inbound links updated.
 
-*Limitations.* Only text → note is implemented. Demotion and note → specialised-type conversion are future directions. Conversion supplies structure and retrieval metadata; it does not improve the body or create rigor.
+*Limitations.* Only text → note is implemented; other conversions are unsupported. Conversion supplies structure and retrieval metadata; it does not improve the body or create rigor.
 
 ### Revise a note
 
