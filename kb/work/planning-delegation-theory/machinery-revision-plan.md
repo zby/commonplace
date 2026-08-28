@@ -156,6 +156,10 @@ short pointer to AutoReason or ordinary reviewed editing. Migration to a
 harness-native iterative worker remains a materially different alternative and
 should be selected only if a distinct use case survives the existing options.
 
+Retired on 2026-08-28: no distinct use case survived, so the instruction and
+its package entry were removed rather than migrated. A repository test now
+rejects direct agent-CLI launches in operative shell snippets.
+
 ## Phase 4: move repeated deterministic checks into code
 
 ### Ingest handoff validation
@@ -183,7 +187,7 @@ persist selector diagnostics into review jobs.
 
 - Derive the installed-skill copy test from `MANIFEST.promoted_skills` instead
   of a partial hard-coded tuple.
-- Add a static test rejecting active instruction or skill sources that launch
+- A static test now rejects operative instruction shell snippets that launch
   agent CLIs to bypass the harness.
 - Add contract fixtures requiring explicit nested-delegation authority in
   delegation-heavy worker packets.

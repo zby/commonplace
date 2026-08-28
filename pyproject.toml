@@ -94,7 +94,6 @@ include = [
 "kb/instructions/cp-skill-health-check" = "kb/instructions/cp-skill-health-check"
 "kb/instructions/cp-skill-ingest" = "kb/instructions/cp-skill-ingest"
 "kb/instructions/cp-skill-revise-autoreason" = "kb/instructions/cp-skill-revise-autoreason"
-"kb/instructions/cp-skill-revise-iterative" = "kb/instructions/cp-skill-revise-iterative"
 "kb/instructions/cp-skill-snapshot-web" = "kb/instructions/cp-skill-snapshot-web"
 "kb/instructions/cp-skill-validate" = "kb/instructions/cp-skill-validate"
 "kb/instructions/cp-skill-write" = "kb/instructions/cp-skill-write"

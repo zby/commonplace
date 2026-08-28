@@ -13,7 +13,7 @@ model: opus
 
 **Target: $ARGUMENTS** (exactly one note path or filename - if empty, ask which note)
 
-**Experimental.** This is the conservative note-revision adaptation of AutoReason, based on `related-systems/autoreason/`. Use it when you want to test the tournament workflow. `cp-skill-revise-iterative` is demoted to an explicit-invocation instruction — invoke it directly (`kb/instructions/cp-skill-revise-iterative/`) when you want the established prose-revision path instead.
+**Experimental.** This is the conservative note-revision adaptation of AutoReason, based on `related-systems/autoreason/`. Use it when you want to test the tournament workflow.
 
 This skill defaults to prose-preserving revision, but it may produce a separate substantive-revision sidecar when the revisions reveal that claim, evidence, source, or argument changes are actually needed. Keep that sidecar out of the B/AB blind tournament and never auto-apply it.
 
@@ -68,8 +68,8 @@ Use fresh Codex sub-agents for actor work. The parent agent is the orchestrator:
 For each actor prompt below:
 
 - Begin with: `This task is the complete role brief. Ignore auto-loaded
-  revision or orchestration skills, including cp-skill-revise-autoreason and
-  cp-skill-revise-iterative. Do not spawn or delegate to another agent.`
+  revision or orchestration skills, including cp-skill-revise-autoreason. Do
+  not spawn or delegate to another agent.`
 - Launch a new sub-agent. Do not reuse an actor across roles or passes.
 - Give the sub-agent only the files and instructions it needs. For judges, do not include `judge_mappings.md`, A/B/AB labels, or any provenance.
 - Prefer an unforked/minimal-context sub-agent when the harness supports that. If the harness exposes only forked workspaces, the sub-agent may write in its fork, but the parent must ensure the requested artifact exists in the parent run directory before continuing. If writeback is not automatic, have the sub-agent return the full artifact content and write it yourself.

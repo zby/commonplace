@@ -118,6 +118,12 @@ The same pass repaired bounded consumers that shared the mechanism:
 - generated report-job prompts now permit the parser's existing `ERROR`
   escalation route and forbid nested delegation instead of forcing a guess.
 
+The demoted `cp-skill-revise-iterative` instruction was retired. It had no
+remaining distinct use case and launched `claude -p` outside harness authority
+and lifecycle controls. Live routing now points only to supported revision
+paths, and a repository test rejects direct agent-CLI launches in operative
+shell snippets.
+
 ## Commit / wait / probe assay
 
 The [behavioral assay](./commit-wait-probe-assay/report.md) compared the current
@@ -140,9 +146,7 @@ parts of the changes above:
 
 - ingest handoff validation against name-paired snapshots;
 - memory-system review staging, recovery, and failure-path tests;
-- retirement or harness-native replacement of the legacy nested-CLI iterative
-  revision skill;
-- static nested-delegation and agent-CLI authority checks;
+- static nested-delegation contract fixtures;
 - the methodology-cue behavioral assay and any redesigned replication of the
   inconclusive commit/wait/probe assay;
 - a decision on the unconsumed task subsystem; and
@@ -183,3 +187,12 @@ The second delegated-authoring pass also completed on 2026-08-28:
   test passed all 18 cases;
 - `git diff --check` passed; and
 - `uv run pytest` passed all 599 tests in 44.24 seconds.
+
+The legacy iterative-revision retirement completed on 2026-08-28:
+
+- all four changed Markdown artifacts passed `commonplace-validate` cleanly;
+- the new agent-CLI guard passed its focused tests and the complete repository
+  passed `ruff`;
+- the editable user-level tool reinstalled successfully after the package
+  manifest change; and
+- `uv run pytest` passed all 601 tests in 39.57 seconds.

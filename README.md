@@ -87,7 +87,7 @@ A further family of commands drives the review system — selecting targets, que
 | `cp-skill-health-check` | Diagnose a broken Commonplace install |
 | `cp-skill-revise-autoreason` | Revise a note with AutoReason-style incumbent/revision/synthesis judging |
 
-**Instructions** are procedures written in Markdown, like skills, but without the auto-loading: the user or another skill invokes them explicitly. They live under `kb/instructions/`. This includes `cp-skill-revise-iterative`, an iterative note-revision procedure demoted from the promoted-skills list — its cost-to-value ratio didn't hold up, so it's available on explicit invocation only.
+**Instructions** are procedures written in Markdown, like skills, but without the auto-loading: the user or another skill invokes them explicitly. They live under `kb/instructions/`.
 
 ## Usage
 
