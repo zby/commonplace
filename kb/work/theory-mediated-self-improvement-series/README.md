@@ -198,6 +198,26 @@ remains one useful example of that process, while this workshop already
 contains material for related articles. Its job is to make that material
 coherent and traceable, not to publish it.
 
+## Working map
+
+This map preserves access to inherited work; it is not an execution order.
+
+- **Program and evaluation:** [target problems](./target-problems.md),
+  [shared model](./shared-model.md),
+  [task-scoped computational closure](./task-scoped-computational-closure.md),
+  [closure-capability map](./closure-capability-map.md), and the
+  [adequacy-gate run](./adequacy-gate-run.md).
+- **Claim and source control:** [match register](./match-register.md),
+  [incumbent ledger](./incumbent-ledger.md),
+  [gradual-compatibility result](./gradual-compatibility.md),
+  [absorption-survivors investigation](./absorption-survivors.md), and the
+  [grounding-sweep narrowing check](./grounding-sweep-narrowing-check.md).
+- **Exposition and inherited prose:** [article roles](./article-roles.md),
+  [accepted baselines](./accepted/README.md), and
+  [rejected draft captures](./rejected-drafts/README.md).
+- **Operational evidence:** the retained
+  [shared-doctrine operationalization report](../../reports/retained/planning-delegation-theory/instruction-machinery-refinement.md#shared-doctrine-operationalization-follow-on).
+
 ## What closes this workshop
 
 The workshop closes when:
