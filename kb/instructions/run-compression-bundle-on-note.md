@@ -43,8 +43,7 @@ complete packet containing:
 
 The reviewer independently applies every criterion, synthesizes the combined
 findings, and writes only `{output-path}`. It does not edit the note, write
-review-database state, or delegate. It chooses its analytic route within those
-bounds.
+review-database state. It chooses its analytic route within those bounds.
 
 The parent verifies that the report exists and satisfies the output contract,
 then closes, terminates, or releases the single-use reviewer. If a fresh worker

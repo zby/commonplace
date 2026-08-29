@@ -568,6 +568,31 @@ Acceptance: every inventoried surface has a retained disposition — revise,
 retain exact, defer behind evidence, or not a commissioning surface — and
 every revision names the consumption path that makes its omission safe.
 
+#### Outcome 4 result (2026-08-29)
+
+The [commissioning-surface audit](./commissioning-surface-audit.md) froze 230
+tracked control-plane files at commit `20cc50f8`, screened four broad search
+families, and recorded the required six-part account for sixteen reusable
+commissioning or handoff cohorts. Four are revised, seven retain exact
+controls, and five remain behind named evidence or design gates.
+
+Outcome 3 supplied the first revision. This outcome removes only verified
+generic defaults from the warning-fix and standalone compression-review
+surfaces: root Commonplace doctrine supplies parent scheduling, integration,
+recovery, and no unauthorized nested delegation to both supported worker
+runtimes. Exact note/report ownership, authoritative inputs, validation,
+single-use lifecycle, anti-orchestration controls, and substantive-decision
+stops remain local. The Second Brain example now distinguishes ambient project
+instructions from its two-file task-evidence boundary.
+
+Source ingest, bilateral literature isolation, standalone adversarial checkers,
+review-job prompts, workshop commissions, mailbox requests, and the compact
+`revise-note` follow-up retain their exact controls. Agentic-lens packet shape,
+the full-pass state machine, memory-review replacement recovery, AutoReason's
+versioned protocol, and the source-only task subsystem remain deferred for the
+specific dependencies the audit records. No schema, packet template, runtime
+branch, or checked-text reuse mechanism was added.
+
 ### 5. Evaluate the cue and packet policy, and expand only on evidence
 
 This outcome decides two things: whether *Auftragstaktik* may be used as a

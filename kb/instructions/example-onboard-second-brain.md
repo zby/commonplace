@@ -91,7 +91,10 @@ For each note, follow the standard Commonplace content workflow:
 5. Flag inferences explicitly. Do not blur quotation and synthesis.
 6. Run `/cp-skill-validate <note>` before considering it done.
 
-**Verify Phase 3**: each summary cites ≥5 source notes, validates clean, and a fresh agent loaded with only that summary plus `me.md` can answer "what is this operator trying to do" coherently.
+**Verify Phase 3**: each summary cites ≥5 source notes, validates clean, and a
+fresh read-only worker receiving ambient project instructions plus only that
+summary and `me.md` as task evidence can answer “what is this operator trying
+to do” coherently without opening another file.
 
 ---
 

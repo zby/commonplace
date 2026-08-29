@@ -89,7 +89,7 @@ A specialized sub-procedure for description-field warnings from `commonplace-val
 Instruction: `kb/instructions/fix-warnings/fix-review-warnings-sweep.md`
 
 1. `commonplace-warn-selector --json` — build priority queue (sorted by finding count descending)
-2. Run locally unless several notes have disjoint note/report paths and a named fresh-context or parallel-capacity benefit; then give each single-use worker the exact note and report paths, the fix instruction, sole write ownership, validation/return requirements, a substantive-decision stop, and no delegation, and verify each diff/report before closing the worker
+2. Run locally unless several notes have disjoint note/report paths and a named fresh-context or parallel-capacity benefit; then give each single-use worker the exact note and report paths, the fix instruction, sole write ownership, validation/return requirements, and a substantive-decision stop, and verify each diff/report before closing the worker
 3. Report: fixed by strategy, rejected findings, deferred items, new patterns
 4. If new patterns recur (3+ instances), propose adding to the taxonomy
 

@@ -40,16 +40,15 @@ this complete packet:
 - own only that note and
   `kb/reports/fixes/{note-stem}.fix-report.md`;
 - read the inputs authorized by that instruction and no unrelated notes;
-- do not delegate or use another orchestration skill;
+- do not use another orchestration skill;
 - validate the note and return its diff summary, report path, and validation;
 - defer and return the exact substantive choice when the instruction's edit
   boundary would be crossed.
 
-The parent owns queue selection, collision checks, scheduling, integration, and
-failure recovery. After each worker returns, verify its note diff, report, and
-validation, then close, terminate, or release it before dispatching more work.
-Stop on missing or partial output; workers are single-use and receive no
-follow-up task.
+The parent owns queue selection and collision checks. After each worker
+returns, verify its note diff, report, and validation, then close, terminate,
+or release it before dispatching more work. Stop on missing or partial output;
+workers are single-use and receive no follow-up task.
 
 ### 3. Report
 
