@@ -240,6 +240,10 @@ leave quarantine only through an explicit entry in the
 
 ## Working artifacts
 
+- [Gradual-compatibility brief](./gradual-compatibility-brief.md) — the next
+  authoring task: classify the operator's per-portion bitter-lesson defense
+  into the portfolio, answer the open production-axis interaction check, and
+  settle the disanalogy premise. Blocks the hub article.
 - [Target problems](./target-problems.md) — the problems the series
   addresses, stated independently of any source.
 - [Match register](./match-register.md) — per source: problem match,
