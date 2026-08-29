@@ -80,6 +80,9 @@ kb/reports/revise-autoreason/
 
 tmp/
 
+# agent mailbox
+kb/messages/
+
 kb/work/agent-memory-design/
 
 kb/work/auditable-llm-editing/experiment-01-memory-derivation/
