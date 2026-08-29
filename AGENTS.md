@@ -143,13 +143,29 @@ current task; it does not grant new mutation authority or launch another agent.
 
 ### Delegation
 
-Delegation does not expand task authority. For consequential work, a worker
-handoff fixes the intended result, non-negotiable constraints, owned outputs or
-write scope, accessible inputs, coordination boundary, verification or
-feedback, and stop or escalation condition. The parent retains scheduling,
-integration, and recovery; parallel writers need disjoint ownership or an
-explicit coordination rule. Nested delegation requires explicit
-authorization; silence means no.
+This file is the standing baseline a worker inherits when its runtime loads
+it; collection contracts, type specs, and an invoked skill specialize it. A
+handoff is a delta from that baseline. It states the task's purpose — what
+the result is for, not only what it is — its deviations from the baseline,
+and the consequential choices deliberately left open. The parent writing the
+handoff may leave out a rule this file supplies only when the worker's runtime
+loads this file. A rule that reaches the worker through nothing but the
+parent's conversation is not inherited; state it.
+
+Delegation does not expand task authority. Whatever the baseline supplies, a
+consequential handoff still fixes what it cannot: the intended result and its
+acceptance, non-negotiable constraints, owned outputs or write scope,
+accessible inputs, coordination boundary, verification or feedback, and stop
+or escalation condition. The parent retains scheduling, integration, and
+recovery; parallel writers need disjoint ownership or an explicit
+coordination rule. Nested delegation requires explicit authorization; silence
+means no.
+
+For a choice the handoff leaves unstated, a worker asks which case applies:
+governed by an inherited default — follow it; deliberately delegated — choose
+from execution evidence, answerable to the stated purpose and constraints;
+irrelevant to acceptance — any choice serves; or none of these — a gap, so
+return or escalate rather than fill it.
 
 ### Navigation
 

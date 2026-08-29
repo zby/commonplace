@@ -173,6 +173,17 @@ rather than picking one.
 
 Steps have real dependencies; the work inside each is left to its owner.
 
+One step was taken out of order on 2026-08-29 because its leverage is
+highest: the `AGENTS.md` and `AGENTS.md.template` Delegation section now
+declares the file as the standing baseline, states the handoff-as-delta rule
+with its consumption-path condition, and gives the four omission cases. That
+is the `AGENTS.md` part of outcome 2, landed before outcomes 1 and 2 proper.
+It does not change the dependencies: step 0 still decides whether workers
+receive that file, and outcome 2 still owns how the collection and instruction
+contracts specialize it. Outcome 1 adds the vocabulary entry for "standing
+baseline" once its definition note exists; the Delegation section uses the
+term inline until then.
+
 - **Step 0 — probe baseline delivery.** Discriminating evidence for
   outcomes 2–4.
 - **Outcome 1 — durable theory.** Must settle before it binds contracts.
