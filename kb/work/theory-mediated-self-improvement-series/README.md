@@ -253,7 +253,7 @@ leave quarantine only through an explicit entry in the
   order; these do not promise that every rejected title survives.
 - [Incumbent ledger](./incumbent-ledger.md) — source identities, review
   constraints, and claim-by-claim transfer decisions.
-- [Shared-doctrine operationalization report](../../reports/planning-delegation-theory/instruction-machinery-refinement.md#shared-doctrine-operationalization-follow-on)
+- [Shared-doctrine operationalization report](../../reports/retained/planning-delegation-theory/instruction-machinery-refinement.md#shared-doctrine-operationalization-follow-on)
   — supplies P3, ledger O10, and closure conditions 8–9 with its verified
   delivery boundary, commissioning audit, and scoped cue-policy deferral.
 - [Accepted baselines](./accepted/README.md) — the only inherited prose that

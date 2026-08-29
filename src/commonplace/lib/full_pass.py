@@ -154,12 +154,14 @@ def parse_full_pass_report(
     """Build the full-pass runtime view from an already parsed report."""
     repo_root = repo_root.resolve()
     report_path = path.resolve()
-    reports_root = (repo_root / "kb" / "reports" / "full-pass").resolve()
+    reports_root = (
+        repo_root / "kb" / "reports" / "state" / "full-pass"
+    ).resolve()
     try:
         report_path.relative_to(reports_root)
     except ValueError as exc:
         raise ValueError(
-            "report path: expected a file under kb/reports/full-pass/"
+            "report path: expected a file under kb/reports/state/full-pass/"
         ) from exc
 
     frontmatter = document.frontmatter

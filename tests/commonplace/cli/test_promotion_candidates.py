@@ -17,7 +17,7 @@ def test_promotion_candidates_uses_shared_markdown_parsing(
     capsys,
 ) -> None:
     notes_root = tmp_path / "kb" / "notes"
-    reports_root = tmp_path / "kb" / "reports"
+    reports_root = tmp_path / "kb" / "reports" / "cache"
     write(notes_root / "COLLECTION.md", "# Notes collection\n")
 
     write(
@@ -65,9 +65,9 @@ Real link: [raw](./raw-capture.md)
     assert "Unstructured text files: 2" in report
     assert "Seedling -> Current" not in report
     assert "Orphan Seedlings" not in report
-    assert "- [Raw capture](../notes/raw-capture.md) - **1 links in**" in report
-    assert "Sources: [Seedling note](../notes/seedling.md)" in report
-    assert "- [Ignored](../notes/ignored.md) - **0 links in**" in report
+    assert "- [Raw capture](../../notes/raw-capture.md) - **1 links in**" in report
+    assert "Sources: [Seedling note](../../notes/seedling.md)" in report
+    assert "- [Ignored](../../notes/ignored.md) - **0 links in**" in report
     assert "## Invalid frontmatter" in report
     assert "No invalid frontmatter found." in report
 
@@ -105,12 +105,12 @@ description: Missing closing delimiter
     assert exit_code == 0
     assert "1 unstructured text files, 2 invalid frontmatter files" in captured.out
 
-    report = (tmp_path / "kb" / "reports" / "promotion-candidates.md").read_text(
-        encoding="utf-8"
-    )
+    report = (
+        tmp_path / "kb" / "reports" / "cache" / "promotion-candidates.md"
+    ).read_text(encoding="utf-8")
     assert "Unstructured text files: 1" in report
-    assert "- [Raw](../notes/raw.md)" in report
+    assert "- [Raw](../../notes/raw.md)" in report
     assert "## Invalid frontmatter" in report
-    assert "- [Invalid YAML](../notes/invalid-yaml.md)" in report
-    assert "- [Missing close](../notes/missing-close.md)" in report
+    assert "- [Invalid YAML](../../notes/invalid-yaml.md)" in report
+    assert "- [Missing close](../../notes/missing-close.md)" in report
     assert "frontmatter: missing closing delimiter" in report

@@ -375,14 +375,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--source",
         type=Path,
-        default=Path("kb/reports") / LEGACY_DB_PATH.name,
-        help=f"Read-only review-store path (default: kb/reports/{LEGACY_DB_PATH.name}).",
+        default=LEGACY_DB_PATH,
+        help=f"Read-only review-store path (default: {LEGACY_DB_PATH}).",
     )
     parser.add_argument(
         "--destination",
         type=Path,
-        default=Path("kb/reports") / DEFAULT_DB_PATH.name,
-        help=f"Destination commonplace store path (default: kb/reports/{DEFAULT_DB_PATH.name}).",
+        default=DEFAULT_DB_PATH,
+        help=f"Destination commonplace store path (default: {DEFAULT_DB_PATH}).",
     )
     args = parser.parse_args(argv)
     repo_root = args.repo_root.resolve()

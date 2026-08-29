@@ -66,7 +66,7 @@ The collection contract is reviewed separately against the artifact's containing
 The filesystem is the live inventory. There are two normal locations:
 
 - **Global type specs** live in [`kb/types/`](../types/README.md). They are intended for reuse across collections.
-- **Collection-local type specs** live in the owning collection's `types/` directory, such as [`kb/reference/types/`](./types/adr.md), [`kb/notes/types/`](../notes/types/structured-claim.md), and [`kb/sources/types/`](../sources/types/snapshot.md).
+- **Collection-local type specs** live in the owning collection's `types/` directory, such as [`kb/reference/types/`](./types/adr.md), [`kb/notes/types/`](../notes/types/structured-claim.md), [`kb/sources/types/`](../sources/types/snapshot.md), and [`kb/reports/types/`](../reports/types/connect-report.md).
 
 Open those directories—or follow an artifact's `type:` pointer—to see the current definitions. A prose list elsewhere is only a snapshot and is not the authority for what exists.
 
@@ -83,6 +83,7 @@ These examples illustrate the model; they are not an exhaustive catalogue.
 | [`adr`](./types/adr.md) | `kb/reference/` | Architecture decisions about the shipped system. |
 | [`structured-claim`](../notes/types/structured-claim.md) | `kb/notes/` | Developed arguments whose shape fits its Evidence and Reasoning contract. |
 | [`snapshot`](../sources/types/snapshot.md) | `kb/sources/.snapshots/` | Local faithful captures of external source material. |
+| [`connect-report`](../reports/types/connect-report.md) | `kb/reports/` | Discovery-only connection output under the reports collection's retention policy. |
 
 Each linked type spec, not this table, defines the type.
 

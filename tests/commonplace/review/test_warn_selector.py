@@ -119,7 +119,7 @@ def test_warn_selector_uses_criterion_snapshot_hash_without_git(tmp_path: Path) 
     repo.mkdir()
     make_note(repo / "kb" / "notes" / "sample.md")
     make_gate(repo / GATE_PATH)
-    db_path = repo / "kb" / "reports" / "commonplace-store.sqlite"
+    db_path = repo / "kb" / "reports" / "state" / "commonplace-store.sqlite"
     seed_review(repo, db_path)
 
     notes, stale_pairs = warn_selector.scan_reviews(repo, db_path=db_path)
@@ -135,7 +135,7 @@ def test_warn_selector_skips_warns_when_snapshot_gate_changed(tmp_path: Path) ->
     repo.mkdir()
     make_note(repo / "kb" / "notes" / "sample.md")
     gate = make_gate(repo / GATE_PATH)
-    db_path = repo / "kb" / "reports" / "commonplace-store.sqlite"
+    db_path = repo / "kb" / "reports" / "state" / "commonplace-store.sqlite"
     seed_review(repo, db_path)
     make_gate(gate, extra="\nChanged gate text.\n")
 
@@ -160,7 +160,7 @@ def test_warn_selector_reports_note_changed_residue_outside_queue(tmp_path: Path
     repo.mkdir()
     note = make_note(repo / "kb" / "notes" / "sample.md")
     make_gate(repo / GATE_PATH)
-    db_path = repo / "kb" / "reports" / "commonplace-store.sqlite"
+    db_path = repo / "kb" / "reports" / "state" / "commonplace-store.sqlite"
     seed_review(repo, db_path)
     make_note(note, body="Changed body.")
 
@@ -201,7 +201,7 @@ def test_warn_selector_skips_explicit_warns_from_non_warn_pairs(
     repo.mkdir()
     make_note(repo / "kb" / "notes" / "sample.md")
     make_gate(repo / GATE_PATH)
-    db_path = repo / "kb" / "reports" / "commonplace-store.sqlite"
+    db_path = repo / "kb" / "reports" / "state" / "commonplace-store.sqlite"
     seed_review(
         repo,
         db_path,

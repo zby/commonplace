@@ -20,6 +20,17 @@ def test_raw_sources_stay_out_while_ingests_are_published() -> None:
     assert not excluded.match_file("sources/types/ingest-report.md")
 
 
+def test_report_collection_stays_out_of_the_published_site() -> None:
+    config = yaml.safe_load((ROOT / "properdocs.yml").read_text(encoding="utf-8"))
+    excluded = PathSpec().run_validation(config["exclude_docs"])
+
+    assert excluded.match_file("reports/README.md")
+    assert excluded.match_file("reports/COLLECTION.md")
+    assert excluded.match_file("reports/cache/connect/example.connect.md")
+    assert excluded.match_file("reports/state/reviews/example.md")
+    assert excluded.match_file("reports/retained/example.md")
+
+
 def test_source_redirects_only_cover_published_ingests() -> None:
     config = yaml.safe_load((ROOT / "properdocs.yml").read_text(encoding="utf-8"))
 

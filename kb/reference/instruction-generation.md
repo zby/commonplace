@@ -38,7 +38,8 @@ Substitution is a flat string replace in `_write_template`. Templates that don't
 - `kb/instructions/` — user's instructions collection
 - `kb/sources/`, `kb/sources/types/` — user's tracked source records and local-capture type contracts
 - `kb/tasks/backlog/`, `kb/tasks/active/`, `kb/tasks/completed/` — user's task lifecycle
-- `kb/work/`, `kb/reports/`, `kb/reports/connect/`, `kb/reports/types/` — user's workshops and reports
+- `kb/work/` — user's workshop surface
+- `kb/reports/`, its `cache/`, `state/`, and `retained/` policy areas, and `kb/reports/types/` — user's reports collection
 
 **Scaffold trees** — copied from scaffold sources. In a built wheel these sources live under packaged `commonplace/_data/`; in an editable source checkout `commonplace-init` falls back to the canonical repo paths:
 
@@ -50,6 +51,9 @@ Substitution is a flat string replace in `_write_template`. Templates that don't
 
 **Scaffold files** — individual files copied into the user's collections:
 
+- `kb/reports/COLLECTION.md`, `README.md`, policy-area READMEs, `.gitignore`,
+  and validation-ignore markers — the report retention contract and local
+  output boundaries
 - `kb/sources/.gitignore` — ignores the local `.snapshots/` materialization directory
 - `kb/sources/COLLECTION.md` — generic tracked-source and local-capture contract
 - `kb/sources/README.md` — curated empty-state landing
@@ -60,7 +64,7 @@ Substitution is a flat string replace in `_write_template`. Templates that don't
 - `kb/instructions/COLLECTION.md` — minimal template
 - `kb/instructions/README.md` — curated empty-state landing
 
-The notes, reference, and instructions `COLLECTION.md` templates invite the practitioner to state the collection's purpose, intended contribution, quality goal, and outbound link rules, with pointers to the corresponding shipped `kb/commonplace/<collection>/COLLECTION.md` as worked examples. The sources contract instead supplies generic rules for tracked source analyses and ignored immutable captures; the shipped Commonplace library has no sources collection to use as a worked example. Each `README.md` supplies the collection's stable reader landing, points authors to its local contract, and states that the collection has no artifacts yet.
+The notes, reference, and instructions `COLLECTION.md` templates invite the practitioner to state the collection's purpose, intended contribution, quality goal, and outbound link rules, with pointers to the corresponding shipped `kb/commonplace/<collection>/COLLECTION.md` as worked examples. The sources contract instead supplies generic rules for tracked source analyses and ignored immutable captures. The reports contract supplies cache, state, retained, and local-type policies. Neither user-space collection has a shipped library counterpart to use as a worked example. Each `README.md` supplies the collection's stable reader landing, points authors to its local contract, and states the collection's initial contents.
 
 **Resolved templates** — read, substituted, written:
 

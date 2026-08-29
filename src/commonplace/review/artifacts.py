@@ -12,7 +12,7 @@ import yaml
 from commonplace.review.protocol.format import SELF_REPORTED_MODEL_FIELD
 
 MANIFEST_NAME = "MANIFEST.json"
-REVIEW_JOBS_ROOT = Path("kb/reports/review-jobs")
+REVIEW_JOBS_ROOT = Path("kb/reports/state/review-jobs")
 
 
 class ReviewPairForPath(Protocol):

@@ -9,7 +9,7 @@ tags: [evaluation, kb-maintenance, observability]
 
 The switch from per-gate writes to one bundled review artifact was a real efficiency win. Even after reweighting the runs with Anthropic's prompt-caching prices, the bundled path still shows a substantial cost reduction. The important correction is only that the billing gain is smaller than the raw-token gain, because many of the removed tokens were discounted cache reads rather than full-price output or uncached input.
 
-The measurements below come from `kb/reports/review-store.sqlite`, using Claude review runs created by `scripts/run_review_bundle.py` between April 2, 2026 and April 4, 2026.
+The measurements below come from `kb/reports/state/review-store.sqlite`, using Claude review runs created by `scripts/run_review_bundle.py` between April 2, 2026 and April 4, 2026.
 
 ## Pricing correction
 

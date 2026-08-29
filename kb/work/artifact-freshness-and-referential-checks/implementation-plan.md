@@ -154,7 +154,7 @@ ruff check src tests && pytest
 Per migrated store copy:
 
 ```bash
-sqlite3 -readonly kb/reports/commonplace-store.sqlite 'PRAGMA integrity_check; PRAGMA foreign_key_check;'
+sqlite3 -readonly kb/reports/state/commonplace-store.sqlite 'PRAGMA integrity_check; PRAGMA foreign_key_check;'
 commonplace-review-target-selector --all-gates --model-partition <partition> --json
 commonplace-freshness-status --all --json
 ```

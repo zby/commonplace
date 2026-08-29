@@ -60,7 +60,7 @@ A `GLOBAL` failure on a load-bearing premise is the strongest signal this method
 
 ## Output
 
-Write to `kb/reports/premise-decomposition/<note-name>.premises.md`. Mutate nothing else.
+Write to `kb/reports/cache/premise-decomposition/<note-name>.premises.md`. Mutate nothing else.
 
 ```markdown
 # Premise decomposition: <note title>

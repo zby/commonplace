@@ -4,7 +4,7 @@ Schema authority for [implementation-plan.md](./implementation-plan.md) v1. **`f
 
 ## Decision
 
-Build a new `kb/reports/commonplace-store.sqlite` beside the existing `kb/reports/review-store.sqlite`. The old database is the immutable migration backup: the migration opens it read-only, never renames it, never changes its schema version, and never deletes it. Only after the new database passes structural and behavioral verification do commands switch their default path to `commonplace-store.sqlite`.
+Build a new `kb/reports/state/commonplace-store.sqlite` beside the existing `kb/reports/state/review-store.sqlite`. The old database is the immutable migration backup: the migration opens it read-only, never renames it, never changes its schema version, and never deletes it. Only after the new database passes structural and behavioral verification do commands switch their default path to `commonplace-store.sqlite`.
 
 The new database contains both:
 
@@ -17,9 +17,9 @@ There is one freshness mechanism. Review becomes the first target adapter over t
 
 | path | role after migration | mutation policy |
 |---|---|---|
-| `kb/reports/review-store.sqlite` | Schema-v7 backup and migration source | Open read-only; never automatically update or delete. |
-| `kb/reports/commonplace-store.sqlite` | Current operational database | All new review and general freshness writes go here. |
-| `kb/reports/commonplace-store.sqlite.tmp` | Migration construction path | May be removed after a failed migration; atomically renamed only after verification. |
+| `kb/reports/state/review-store.sqlite` | Schema-v7 backup and migration source | Open read-only; never automatically update or delete. |
+| `kb/reports/state/commonplace-store.sqlite` | Current operational database | All new review and general freshness writes go here. |
+| `kb/reports/state/commonplace-store.sqlite.tmp` | Migration construction path | May be removed after a failed migration; atomically renamed only after verification. |
 
 The new database starts a new store schema line at `PRAGMA user_version = 1`; it is not review schema v8. `commonplace.store` owns connection setup, schema creation, version refusal, foreign-key enforcement, and whole-store integrity dispatch. The old `commonplace.review.review_schema` version check is retired after migration.
 
@@ -27,7 +27,7 @@ Default and override names change together:
 
 | old | new |
 |---|---|
-| `kb/reports/review-store.sqlite` | `kb/reports/commonplace-store.sqlite` |
+| `kb/reports/state/review-store.sqlite` | `kb/reports/state/commonplace-store.sqlite` |
 | `COMMONPLACE_REVIEW_DB` | `COMMONPLACE_STORE` |
 | review-owned connection initialization | `commonplace.store` connection initialization |
 

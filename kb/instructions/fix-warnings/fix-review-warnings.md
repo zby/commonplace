@@ -59,7 +59,7 @@ After all fixes:
 
 ## Fix report format
 
-Write the fix report to `kb/reports/fixes/{note-stem}.fix-report.md`.
+Write the fix report to `kb/reports/state/fixes/{note-stem}.fix-report.md`.
 
 ```
 ## Fix Report: {note-stem}

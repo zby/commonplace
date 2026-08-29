@@ -1,6 +1,6 @@
 # Second witness: the class-instance-analogy defeats as priced exceptions
 
-Recorded 2026-08-19 from a parallel session's analysis, relayed by the operator; pass report verified on disk at `kb/reports/full-pass/agent-definitions-and-sessions-break-the-class-instance-analogy/20260818T221445Z-91860b/`.
+Recorded 2026-08-19 from a parallel session's analysis, relayed by the operator; pass report verified on disk at `kb/reports/state/full-pass/agent-definitions-and-sessions-break-the-class-instance-analogy/20260818T221445Z-91860b/`.
 
 ## What the gate did
 

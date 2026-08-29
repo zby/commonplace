@@ -86,7 +86,7 @@ def build_fixture(
         watches=watches,
     )
 
-    db_path = repo / "kb" / "reports" / "commonplace-store.sqlite"
+    db_path = repo / "kb" / "reports" / "state" / "commonplace-store.sqlite"
     review_db.ensure_db(db_path)
     with review_db.connect(db_path) as conn:
         note_snapshot = review_db.snapshot_file(conn, repo_root=repo, path="kb/notes/sample.md")

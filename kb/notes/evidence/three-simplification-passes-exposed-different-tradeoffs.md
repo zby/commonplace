@@ -25,7 +25,7 @@ A fourth fresh agent then compared anonymized copies of the baseline and all thr
 
 The judge identified `A` as the baseline with high confidence. This mistake is informative: the exhaustive pass stayed so close to the source that an independent reader could not distinguish it from the incumbent. The ranking itself remains one qualitative LLM judgment, not a reader-performance result.
 
-The exact baseline, instruction snapshots, candidates, coverage ledger, hashes, anonymous mapping, and comparison result are preserved under `kb/reports/simplification-instruction-comparison-20260807/`.
+The exact baseline, instruction snapshots, candidates, coverage ledger, hashes, anonymous mapping, and comparison result are preserved under `kb/reports/retained/simplification-instruction-comparison-20260807/`.
 
 ## What differed
 

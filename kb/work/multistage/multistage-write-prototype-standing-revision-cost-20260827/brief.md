@@ -70,7 +70,7 @@ External-case material (only relevant to the correspondence branch being moved o
 - `kb/agentic-systems/eigenius.md` — Lean proof checking with a separate correspondence check.
 - `kb/sources/discoverphysics-benchmarking-llms-out-of-the-box-scientific.ingest.md` — accuracy/explanation split.
 
-Review record (available to the architect after the source-first pass, and to the auditor; not to reconstruction): `kb/reports/full-pass/a-natural-language-theory-is-a-prototype-codified-or-rejected/20260826T111746Z-e1ae52/full-pass-report.md`, `closing/critique.md`, `closing/premises.md`.
+Review record (available to the architect after the source-first pass, and to the auditor; not to reconstruction): `kb/reports/state/full-pass/a-natural-language-theory-is-a-prototype-codified-or-rejected/20260826T111746Z-e1ae52/full-pass-report.md`, `closing/critique.md`, `closing/premises.md`.
 
 ## Retained intent and memory inputs
 

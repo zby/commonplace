@@ -5,11 +5,11 @@ type: kb/types/instruction.md
 
 # Resolve a full-pass disposition
 
-Use this procedure when a typed `kb/reports/full-pass/*/*/full-pass-report.md` has `resolution: pending`, or when a failed guard left a report requiring reconciliation. The report and its `.txt` captures are one retention unit; never remove or rewrite a capture independently.
+Use this procedure when a typed `kb/reports/state/full-pass/*/*/full-pass-report.md` has `resolution: pending`, or when a failed guard left a report requiring reconciliation. The report and its `.txt` captures are one retention unit; never remove or rewrite a capture independently.
 
 Inputs:
 
-- `{report-path}` — one `full-pass-report.md` under `kb/reports/full-pass/`.
+- `{report-path}` — one `full-pass-report.md` under `kb/reports/state/full-pass/`.
 - explicit user decision when accepting, rejecting, or applying an alternative. Agents may mark `superseded` only from a deterministic changed-input guard result.
 
 ## Inspect and guard

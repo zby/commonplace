@@ -41,7 +41,7 @@ def _init_store(tmp_path: Path) -> Path:
     gate = repo_root / CRITERION_PATH
     note.write_text("# Example\n", encoding="utf-8")
     gate.write_text("# Gate\n", encoding="utf-8")
-    db_path = repo_root / "kb/reports/commonplace-store.sqlite"
+    db_path = repo_root / "kb/reports/state/commonplace-store.sqlite"
     ensure_db(db_path)
     return db_path
 

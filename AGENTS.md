@@ -62,7 +62,7 @@ Terms needed to understand the project's structure and everyday operations, alph
 - **Explanatory-reach** — the property that a claim keeps working beyond the cases that produced it because it captures why the pattern works; the quality goal of `kb/notes/` and the property reach-assessment judges. The compound is the technical term (adapted from Deutsch's "reach"); bare "reach" stays ordinary English. See `kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md`.
 - **Frontloading** — pre-computing parts of an instruction whose inputs are already known (at build, install, or session start) and inserting the result, so the consuming call's context carries the answer instead of the work. See `kb/notes/frontloading-spares-execution-context.md`.
 - **Freshness baseline** — the current snapshot-pinned applicability boundary for one registered target. In v1 review targets are `review-pair` keys `(note, criterion, model partition)` with `note` and `criterion` `file-text` inputs; a baseline preserves an evidence review pair while tracking the latest accepted input snapshots — it is not endorsement or global approval. See `kb/reference/README-REVIEW-SYSTEM.md#concepts` and `kb/reference/freshness-architecture.md`.
-- **Commonplace store** — the operational SQLite database (`kb/reports/commonplace-store.sqlite`; `COMMONPLACE_STORE`) holding artifact snapshots, freshness baselines, and review execution state. See `kb/reference/freshness-architecture.md`.
+- **Commonplace store** — the operational SQLite database (`kb/reports/state/commonplace-store.sqlite`; `COMMONPLACE_STORE`) holding artifact snapshots, freshness baselines, and review execution state. See `kb/reference/freshness-architecture.md`.
 - **Gate** — a closed-ended, verdict-kind assay criterion. See `kb/reference/README-REVIEW-SYSTEM.md#concepts`.
 - **Mark** — a frontmatter field that caches a value recomputable from ground truth recorded elsewhere, validated by code, and read by agents to spare an expensive in-context recompute (`complete`/`covered_by` on tag-READMEs). Recomputable, so never load-bearing; enforced-or-omitted, because a stale trusted cache is a trap. See `kb/types/tag-readme.md`.
 - **Outcome** — the substantive `pass`, `warn`, or `fail` value produced by a completed verdict pair. Report pairs complete without an outcome; `ERROR` fails the job and is not an outcome. See `kb/reference/README-REVIEW-SYSTEM.md#concepts`.
@@ -134,6 +134,7 @@ Read the target collection's `COLLECTION.md` before writing or connecting artifa
 | `kb/agent-memory-systems/` | Reviewing and comparing external agent memory, knowledge, and context-engineering systems. |
 | `kb/agentic-systems/` | Analysing external agentic systems and harnesses as whole systems — execution loops, orchestration APIs, control surfaces. |
 | `kb/sources/` | Storing tracked ingests and source reviews; local source snapshots live ignored under `kb/sources/.snapshots/`. |
+| `kb/reports/` | Storing report outputs under an explicit retention policy: replaceable `cache/`, local load-bearing `state/`, or durable `retained/`. |
 | `kb/articles/` | Publishing self-standing technical articles distilled from the KB for external readers. |
 | `kb/work/` | Holding in-flight investigations, drafts, migration plans, and temporary work that should eventually close or promote durable artifacts. |
 | `kb/types/` | Looking up or authoring shared type specs used across collections. |
@@ -181,6 +182,7 @@ Entry points:
 - `kb/notes/tags-README.md` — top-level navigation hub: tag READMEs (including links), foundations, evaluation, gaps
 - `kb/agent-memory-systems/README.md` — curated index of external agent-memory/knowledge systems
 - `kb/reference/README.md` — shipped-system documentation entry point: architecture, type system, operator guide, and ADR navigation
+- `kb/reports/README.md` — report retention policies and durable report records
 - `kb/reference/adr/` — architecture outcome records for the shipped Commonplace system
 
 Each tag's curated head is its `<tag>-README.md` (type `tag-readme`), small by type contract. It may declare two validator-enforced frontmatter marks: `complete: true` — the README links every note carrying the tag, so a reader can skip the by-tag `rg` sweep; `covered_by: [children]` — every tagged note also carries a listed child tag, so a reader can trust the typed routing. Maintenance of the marks lives in `kb/types/tag-readme.md` (ADR 026).

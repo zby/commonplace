@@ -24,6 +24,7 @@ Force decides the destination among retained kinds:
 | premise: the reader must know it before changing the system | `kb/reference/` | when performing a named change operation |
 | decision: the reader must not silently reverse it | `kb/reference/adr/` | when revising or superseding a decision |
 | theory: the reader reasons with it | `kb/notes/` | on demand, via routing and links |
+| record: the reader needs the exact analytical output | `kb/reports/retained/` | when reproducing, auditing, or citing the report |
 | audit: the reader reconstructs what happened | git | through an instruction that declares the read path |
 | observation: nobody consumes it yet | `kb/log.md` | on triage |
 | in-flight: consumed by the work that produced it | `kb/work/` | during the workshop; deleted at close |
@@ -44,7 +45,7 @@ Force decides the destination among retained kinds:
 | 10 | **Change narrative** — what moved, when, in what order, migration steps, files touched, counts kept/cut/deferred | none | git | audit; ADR revision via `git log --grep` | commit message body, with `Decision:` / `Workshop:` trailers naming what it implements | subject: imperative summary; body: the narrative |
 | 11 | **Intent of a specific change** — what this commit is meant to make true, when the diff does not show it | modify (the similarity judgment at change grain) | nothing; the diff shows what, not what for | the next changer of the same site; ADR revision | commit message body, first sentence; promoted to ADR Context when it is a recurring force | one sentence; the commit is the decision surface for change-grain intent |
 | 12 | **Observation** — something worked or failed, first occurrence, mechanism not yet understood | none yet | nothing | triage | `kb/log.md`; a note once the mechanism is understood | dated entry; no explanation demanded |
-| 13 | **Measurement / evidence** behind a decision | justify | the implementing commits hold the full data | decision audit; any durable artifact that cites it | compressed warrant in the ADR (the numbers as reasons); full data in git; `kb/notes/evidence/` when a durable artifact cites it | numbers with the reason they mattered |
+| 13 | **Measurement / evidence** behind a decision | justify | the implementing commits hold change-grain data, but not every independently consumed report record | decision audit; reproduction; any durable artifact that cites it | compressed warrant in the ADR (the numbers as reasons); `kb/reports/retained/` when the exact report remains a consumed record; git when only change audit needs the full data; `kb/notes/evidence/` when the evidence itself contributes a durable claim | numbers with the reason they mattered; retain the exact report only when another consumer needs more than the compressed warrant |
 | 14 | **Identified gap not being done now** | justify (deferred) | nothing | the adoption decision | `kb/reference/proposals/` (system gap) or `kb/notes/` (insight) — the YAGNI rule | problem, option space, forces, free choices; no implementation detail |
 | 15 | **In-flight reasoning, drafts, traces** | any, unfinished | nothing, but consumed once | the work producing it | `kb/work/`; deleted at close after extraction | free form |
 | 16 | **Source-side claim and its evidence** | map (external world) | the pinned snapshot | grounding gate; any note citing the source | ingest `## Quotes` via `cp-skill-ground`; snapshot when bounded quotes cannot carry it | verbatim extract plus locator |
@@ -59,6 +60,9 @@ Force decides the destination among retained kinds:
 - `kb/instructions/COLLECTION.md` — the reasoning constraint; rows 1 and 8.
 - [`types/adr.md`](./types/adr.md) — the ADR retention rule; rows 3–5, 13.
 - `AGENTS.md` `## Git` — the commit-message convention; rows 10–11.
+- `kb/reports/COLLECTION.md` — policy for exact outputs after this table has
+  selected a report as the consumed artifact; `cache/` and `state/` remain
+  operational lifecycles rather than retained-content destinations.
 - [Design rationale management](./design-rationale-management.md) — the same
   surfaces organized by lifecycle state of a rationale rather than by content
   kind; the two tables agree on every shared cell.

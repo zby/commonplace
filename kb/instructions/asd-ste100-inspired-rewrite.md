@@ -20,7 +20,7 @@ Experimental. Use this instruction only with an explicit note path. It is inspir
    - Make necessary logical connections explicit.
 3. Preserve the note's claim, reasoning, evidence, scope, frontmatter, title, headings, links, code, quotations, and registered identifiers. If a preference would change the meaning, preserve the original wording.
 4. Run `commonplace-validate <note-path>`.
-5. Append departures, observed effects, and new ideas to `kb/reports/asd-ste100-inspired-rewrite.md`.
+5. Append departures, observed effects, and new ideas to `kb/reports/retained/asd-ste100-inspired-rewrite.md`.
 
 ## Verify
 

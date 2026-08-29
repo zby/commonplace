@@ -15,7 +15,7 @@ This reopened workshop is therefore a **continuation workshop**, not a rollback 
 ## Current artifact
 
 - [Designing a Memory System for LLM-Based Agents](../../notes/designing-agent-memory-systems.md) — current synthesis note under discussion.
-- [Connection report](../../reports/connect/notes/designing-agent-memory-systems.connect.md) — applied on 2026-04-23 as outbound links, reverse links, and index placements.
+- [Connection report](../../reports/cache/connect/notes/designing-agent-memory-systems.connect.md) — applied on 2026-04-23 as outbound links, reverse links, and index placements.
 - [Input-vs-output-driven memory](../input-vs-output-driven-memory/README.md) — upstream workshop asking whether memory design should start from observed inputs or output requirements.
 - [Life-cycle management](../lifecycle-management/README.md) — records the first closure of `agent-memory-design` as a single-file promotion with a `synthesis` trait.
 

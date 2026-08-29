@@ -52,7 +52,7 @@ Candidate claim: **a repair loop that can narrow a claim but cannot extend its e
 
 ## Evidence
 
-- `evidence/full-pass-report.md` — the reconciled packet (warranted contribution, disposition, body edits, routed attention, gate table, closing cycle). Copied from the gitignored `kb/reports/full-pass/…/20260826T115728Z-a18058/`.
+- `evidence/full-pass-report.md` — the reconciled packet (warranted contribution, disposition, body edits, routed attention, gate table, closing cycle). Copied from the gitignored `kb/reports/state/full-pass/…/20260826T115728Z-a18058/`.
 - `evidence/initial/` — critique, friction, premises, compression bundle, and the `semantic/grounding-alignment` FAIL that drove the reframe.
 - `evidence/closing/` — closing critique (attack "partially lands": exegetical force of "someone"/"programmer", unsupported narrow reading of "rules"), friction, premises.
 - `versions/` — the six texts, v0 through v5.

@@ -16,7 +16,7 @@ the stale text.
 
 **Fix strategy.** A named pattern of review warning + appropriate fix, catalogued in `kb/instructions/fix-warnings/fix-strategy-taxonomy.md`. Agents classify each fix by strategy name to make fixes auditable and to grow the taxonomy over time.
 
-**Fix report.** A per-note markdown file in `kb/reports/fixes/{note-stem}.fix-report.md` that maps each warning to its disposition, the strategy used when a fix is applied, and the status (`fixed`, `rejected`, or `deferred`). `Rejected` means the finding was judged spurious or inapplicable and the note was deliberately left unchanged; it is distinct from postponing a finding that may be valid.
+**Fix report.** A per-note markdown file in `kb/reports/state/fixes/{note-stem}.fix-report.md` that maps each warning to its disposition, the strategy used when a fix is applied, and the status (`fixed`, `rejected`, or `deferred`). `Rejected` means the finding was judged spurious or inapplicable and the note was deliberately left unchanged; it is distinct from postponing a finding that may be valid.
 
 ## Pipeline
 
@@ -76,7 +76,7 @@ Instruction: `kb/instructions/fix-warnings/fix-review-warnings.md`
 2. Read the target note in full
 3. For each finding: read the recommendation and context, then decide whether to fix, reject, or defer it
 4. Apply minimal edits to fixed findings and record evidence for rejected findings
-5. Write fix report to `kb/reports/fixes/{note-stem}.fix-report.md`
+5. Write fix report to `kb/reports/state/fixes/{note-stem}.fix-report.md`
 
 ### Fix descriptions
 
@@ -103,7 +103,7 @@ Instruction: `kb/instructions/fix-warnings/fix-review-warnings-sweep.md`
 
 ## Outputs
 
-Fix reports land in `kb/reports/fixes/`. Each report contains:
+Fix reports land in `kb/reports/state/fixes/`. Each report contains:
 
 - A table mapping each finding to a strategy, summary, and status
 - A warning-to-fix mapping for auditability

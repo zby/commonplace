@@ -46,6 +46,6 @@ The follow-up closed the residual with a worked comparison rather than another q
 
 ## Sources
 
-- `kb/reports/full-pass/llm-output-deviation-has-three-sources-with-non-substitutable/20260818T132531Z-e11d99/full-pass-report.md` — the pass packet: premise verdicts, friction joints, disposition rationale, open items
+- `kb/reports/state/full-pass/llm-output-deviation-has-three-sources-with-non-substitutable/20260818T132531Z-e11d99/full-pass-report.md` — the pass packet: premise verdicts, friction joints, disposition rationale, open items
 - `kb/log.md` — the two FIX entries recording the guard application and the worked-comparison closure
 - git history of both filenames (the `commonplace-relocate-note` rename breaks `--follow` at `af8feccf`)

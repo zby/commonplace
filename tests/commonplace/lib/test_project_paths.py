@@ -140,10 +140,11 @@ def test_find_repo_markdown_files_skips_artifact_trees_and_hidden_dirs(
 def test_list_kb_note_paths_spans_all_content_collections(tmp_path: Path) -> None:
     collection(tmp_path / "kb" / "notes")
     collection(tmp_path / "kb" / "sources")
+    collection(tmp_path / "kb" / "reports")
     note = write(tmp_path / "kb" / "notes" / "note.md")
     local_type = write(tmp_path / "kb" / "notes" / "types" / "structured-claim.md")
     source = write(tmp_path / "kb" / "sources" / "source.md")
-    report = write(tmp_path / "kb" / "reports" / "report.md")
+    report = write(tmp_path / "kb" / "reports" / "retained" / "report.md")
     type_doc = write(tmp_path / "kb" / "types" / "note.md")
 
     discovered = project_paths.list_kb_note_paths(tmp_path)
@@ -151,7 +152,7 @@ def test_list_kb_note_paths_spans_all_content_collections(tmp_path: Path) -> Non
     assert note in discovered
     assert local_type in discovered
     assert source in discovered
-    assert report not in discovered
+    assert report in discovered
     assert type_doc not in discovered
 
 

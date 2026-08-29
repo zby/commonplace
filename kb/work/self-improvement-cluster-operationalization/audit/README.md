@@ -44,7 +44,7 @@ The most important correction is conceptual and operational at once. Semantic re
 
 ## Evidence boundary
 
-This checkout has no `kb/reports/commonplace-store.sqlite` and no `kb/reports/fixes/` corpus. The audit could therefore inspect mechanisms, contracts, schemas, selectors, and code paths, but could not estimate historical warning rejection rates or model error rates. Those are empirical calibration tasks, not prerequisites for the structural findings above.
+This checkout has no `kb/reports/state/commonplace-store.sqlite` and no `kb/reports/state/fixes/` corpus. The audit could therefore inspect mechanisms, contracts, schemas, selectors, and code paths, but could not estimate historical warning rejection rates or model error rates. Those are empirical calibration tasks, not prerequisites for the structural findings above.
 
 ## Verification
 

@@ -1269,6 +1269,7 @@ traits: []
 
 def test_connect_report_derived_slug_is_exempt_from_note_limit(tmp_path: Path) -> None:
     configure_temp_repo(tmp_path)
+    write(tmp_path / "kb" / "reports" / "COLLECTION.md", "# Reports collection\n")
     write_type_spec(
         tmp_path,
         "kb/reports/types/connect-report.md",
@@ -1277,7 +1278,13 @@ def test_connect_report_derived_slug_is_exempt_from_note_limit(tmp_path: Path) -
     )
     source_slug = "a" * MAX_NOTE_SLUG_LENGTH
     report = write(
-        tmp_path / "kb" / "reports" / "connect" / "notes" / f"{source_slug}.connect.md",
+        tmp_path
+        / "kb"
+        / "reports"
+        / "cache"
+        / "connect"
+        / "notes"
+        / f"{source_slug}.connect.md",
         """---
 description: Derived connection report whose filename preserves a valid source artifact slug
 type: kb/reports/types/connect-report.md
@@ -1337,6 +1344,7 @@ traits: []
 
 def test_notes_target_scans_only_notes_collection(tmp_path: Path) -> None:
     write(tmp_path / "kb" / "notes" / "COLLECTION.md", "# Notes collection\n")
+    write(tmp_path / "kb" / "reports" / "COLLECTION.md", "# Reports collection\n")
     note = write(
         tmp_path / "kb" / "notes" / "note.md",
         """---
@@ -1349,7 +1357,7 @@ traits: []
 """,
     )
     report = write(
-        tmp_path / "kb" / "reports" / "report.md",
+        tmp_path / "kb" / "reports" / "retained" / "report.md",
         """---
 description: Report outside the notes collection
 type: kb/types/note.md
@@ -1505,7 +1513,7 @@ type: kb/types/note.md
         "# Review type\n",
     )
     other_note = write(
-        tmp_path / "kb" / "reports" / "report.md",
+        tmp_path / "kb" / "reports" / "retained" / "report.md",
         """---
 description: Report outside the target collection
 type: kb/types/note.md
@@ -1539,7 +1547,7 @@ def test_directory_without_collection_file_is_not_a_validation_scope(
 ) -> None:
     configure_temp_repo(tmp_path)
     write(
-        tmp_path / "kb" / "reports" / "report.md",
+        tmp_path / "kb" / "tasks" / "report.md",
         """---
 description: Report in a support directory without collection conventions
 type: kb/types/note.md
@@ -1551,7 +1559,7 @@ traits: []
     )
 
     with pytest.raises(ValueError, match="not a KB collection"):
-        validate_notes.resolve_validation_target("kb/reports", repo_root=tmp_path)
+        validate_notes.resolve_validation_target("kb/tasks", repo_root=tmp_path)
 
 
 def test_validate_collection_structure_flags_nested_collection(tmp_path: Path) -> None:

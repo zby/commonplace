@@ -1,6 +1,6 @@
 # Gate catch-rate statistics — first execution of the telemetry row
 
-Computed 2026-07-18 from `kb/reports/commonplace-store.sqlite`: 9,286 completed catalog-gate verdicts, 2026-03-13 → 2026-07-17. This is the first-ever consumption of the store at trend level (the systematisation's "telemetry aggregation" row, previously **missing**). Queries inline for refresh; all numbers are snapshots.
+Computed 2026-07-18 from `kb/reports/state/commonplace-store.sqlite`: 9,286 completed catalog-gate verdicts, 2026-03-13 → 2026-07-17. This is the first-ever consumption of the store at trend level (the systematisation's "telemetry aggregation" row, previously **missing**). Queries inline for refresh; all numbers are snapshots.
 
 ## 1. The activation quantification (robust)
 

@@ -18,7 +18,7 @@ Inputs:
 
 Ownership precondition: from step 1 until the pass stops after step 7 or completes step 10, no other actor or process may edit `{note-path}`. The orchestrator's prescribed edits in steps 8 and 9 are the only exception. If step 7 inspects a proposed merge target, no other actor may edit that target until the packet is handed back. These are cooperative ownership rules, not filesystem locks; do not start the pass when they cannot be maintained.
 
-Derive `<note-name>` once from the pass-start `{note-path}` as the filename without its extension. At the start of every invocation mint a unique `<pass-id>` (a UTC timestamp plus a short random suffix). Retain first-cycle reports under `kb/reports/full-pass/<note-name>/<pass-id>/{initial,closing}/`; a permitted recovery cycle writes `closing-recovery/`. Never reuse a pass ID or overwrite an initial or closing report. The `<note-name>` directory is historical packet identity: do not move or rename it if the note moves later.
+Derive `<note-name>` once from the pass-start `{note-path}` as the filename without its extension. At the start of every invocation mint a unique `<pass-id>` (a UTC timestamp plus a short random suffix). Retain first-cycle reports under `kb/reports/state/full-pass/<note-name>/<pass-id>/{initial,closing}/`; a permitted recovery cycle writes `closing-recovery/`. Never reuse a pass ID or overwrite an initial or closing report. The `<note-name>` directory is historical packet identity: do not move or rename it if the note moves later.
 
 ## Execution roles and isolation
 
@@ -42,7 +42,7 @@ Transitions run forward only. Each phase or closing-status change is a frontmatt
 
 ## Re-entrancy preflight
 
-Before minting a new pass ID, inspect `kb/reports/full-pass/<note-name>/` and every `kb/reports/full-pass/*/*/full-pass-report.md` whose `source` equals `{note-path}`. Match only this exact repository-relative path; do not use `properdocs.yml` redirects to infer identity, and never rewrite `source` or rename a packet directory.
+Before minting a new pass ID, inspect `kb/reports/state/full-pass/<note-name>/` and every `kb/reports/state/full-pass/*/*/full-pass-report.md` whose `source` equals `{note-path}`. Match only this exact repository-relative path; do not use `properdocs.yml` redirects to infer identity, and never rewrite `source` or rename a packet directory.
 
 - A pass directory with no `full-pass-report.md` is an orphan from an interrupted review phase. Stop; the operator deletes it or lets it be completed.
 - A `keep` packet in phase `editing`, or in phase `closing` with `closing_status: null`, is an unfinished pass. Stop. Run `commonplace-guard-full-pass-report` on it: if the live note matches the packet's latest capture, the pass may be resumed from that phase; otherwise reconcile by hand before any new pass.
@@ -66,8 +66,8 @@ At most one pending packet may exist for a source path; more than one stops the 
 
 ## Procedure
 
-1. Mint `<pass-id>` and create its `initial/` and `closing/` directories. Read `{note-path}` once as UTF-8 text, write that exact character sequence to `kb/reports/full-pass/<note-name>/<pass-id>/source.txt`, and compute its SHA-256. Retain the logical `{note-path}` as the historical `source`, alongside packet-relative `source.txt` and its hash. Never rewrite any member of this triple. Assessment methods receive `{note-path}`, never `source.txt`.
-2. Run the compression bundle per `run-compression-bundle-on-note.md`, passing `kb/reports/full-pass/<note-name>/<pass-id>/initial/compression-bundle-review.md` as its `{output-path}`.
+1. Mint `<pass-id>` and create its `initial/` and `closing/` directories. Read `{note-path}` once as UTF-8 text, write that exact character sequence to `kb/reports/state/full-pass/<note-name>/<pass-id>/source.txt`, and compute its SHA-256. Retain the logical `{note-path}` as the historical `source`, alongside packet-relative `source.txt` and its hash. Never rewrite any member of this triple. Assessment methods receive `{note-path}`, never `source.txt`.
+2. Run the compression bundle per `run-compression-bundle-on-note.md`, passing `kb/reports/state/full-pass/<note-name>/<pass-id>/initial/compression-bundle-review.md` as its `{output-path}`.
 3. Run `critique-note` through the requested-mode review pipeline in a fresh sub-agent:
 
    ```bash
@@ -88,14 +88,14 @@ At most one pending packet may exist for a source path; more than one stops the 
 
    Delegate, finalize, and verify as that instruction describes. Copy every finalized pair result to `initial/<bundle>/<gate>.md`.
 6. Run `cp-skill-connect` against the note and copy its canonical report to `initial/connect.md`; the closing run will overwrite the canonical path, never this copy.
-7. Synthesize the retained reports into one typed packet at `kb/reports/full-pass/<note-name>/<pass-id>/full-pass-report.md` by answering the decision table below, in order. Write every frontmatter field and the canonical `Resolution` section shown in the Output Contract, with `phase: packet`, `closing_status: null`, and `closing_repair_attempted: false`. A `keep` packet starts `resolution: not-required`; `revise`, `delete`, `merge`, and `rehome` start `pending`. Run `commonplace-validate <report-path>` and stop on any failure.
+7. Synthesize the retained reports into one typed packet at `kb/reports/state/full-pass/<note-name>/<pass-id>/full-pass-report.md` by answering the decision table below, in order. Write every frontmatter field and the canonical `Resolution` section shown in the Output Contract, with `phase: packet`, `closing_status: null`, and `closing_repair_attempted: false`. A `keep` packet starts `resolution: not-required`; `revise`, `delete`, `merge`, and `rehome` start `pending`. Run `commonplace-validate <report-path>` and stop on any failure.
 
    If the disposition is anything but `keep`, or the `Update` is `UNDETERMINED`, the pass ends here: leave the note byte-identical, retain the pass directory, and hand back the packet. Executing a hand-back belongs to whoever reads it, under `resolve-full-pass-disposition.md`.
 8. **`keep` only.** Run `commonplace-guard-full-pass-report <report-path>`. Continue only on exit 0 with every input `matching`. On `changed`, do not edit; render the packet `superseded` with `version-guard` authority and stop. On `missing`, `corrupt-capture`, or exit 2, reconcile and leave the packet unchanged. After a successful guard set `phase: editing`, then apply the packet's body edits directly to the note. Body-edit actions are `remove`, `compress`, `add` (an answer to an answerable objection, at the point of attack), and `keep`. Do not change the title, thesis, or any title-as-claim; do not rename the file; do not edit citers. Then reread each friction and premise report's "For the human" line against the edited text: not a rerun, only a check that the thing it pointed to is still accurately described or actually addressed; if not, record that in Open items rather than re-editing.
 9. Dispatch a fresh copyeditor with only the current note text and a complete
    task packet. Its result is a copyedited version of those exact bytes for
    flow, coherence, logic, and readability. It owns only
-   `kb/reports/full-pass/<note-name>/<pass-id>/copyedit-candidate.md`; it may
+   `kb/reports/state/full-pass/<note-name>/<pass-id>/copyedit-candidate.md`; it may
    reflow, reorder within a section, and tighten wording, but must preserve the
    title, thesis, claims, evidence, sources, frontmatter, and every Step 8 cut.
    It must not read other repository files, invoke an auto-loaded revision
@@ -279,7 +279,7 @@ resulting_paths: []
 **Resulting paths:** —
 ```
 
-Never omit "Warranted contribution", "Routed attention", or "Disposition". Quote or restate enough of each source report's substance that the packet stands alone; `kb/reports/full-pass/*` and the per-method report trees are gitignored inspection artifacts. Retain the pass directory while its packet or residual findings are in use; a pending packet is always in use.
+Never omit "Warranted contribution", "Routed attention", or "Disposition". Quote or restate enough of each source report's substance that the packet stands alone; `kb/reports/state/full-pass/*` and the per-method report trees are gitignored inspection artifacts. Retain the pass directory while its packet or residual findings are in use; a pending packet is always in use.
 
 ## Do not
 

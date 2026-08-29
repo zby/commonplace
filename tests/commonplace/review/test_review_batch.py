@@ -85,7 +85,7 @@ def build_repo_fixture(tmp_path: Path) -> tuple[Path, Path]:
     )
     subprocess.run(["git", "add", "."], cwd=repo, check=True, capture_output=True)
     subprocess.run(["git", "commit", "-m", "fixture"], cwd=repo, check=True, capture_output=True)
-    db_path = repo / "kb" / "reports" / "commonplace-store.sqlite"
+    db_path = repo / "kb" / "reports" / "state" / "commonplace-store.sqlite"
     return repo, db_path
 
 
@@ -162,8 +162,8 @@ def test_create_review_jobs_selector_creates_one_criterion_packed_job_and_prompt
         }
     ]
 
-    assert job["prompt_path"] == f"kb/reports/review-jobs/review-job-{review_job_id}/prompt.md"
-    assert job["job_output_path"] == f"kb/reports/review-jobs/review-job-{review_job_id}/job-output.md"
+    assert job["prompt_path"] == f"kb/reports/state/review-jobs/review-job-{review_job_id}/prompt.md"
+    assert job["job_output_path"] == f"kb/reports/state/review-jobs/review-job-{review_job_id}/job-output.md"
 
     prompt_text = (repo / job["prompt_path"]).read_text(encoding="utf-8")
     assert f"Write exactly one markdown document to `{job['job_output_path']}`." in prompt_text
@@ -171,12 +171,12 @@ def test_create_review_jobs_selector_creates_one_criterion_packed_job_and_prompt
     assert f"=== PAIR REVIEW START: kb/notes/second.md :: {GATE_PATH} ===" in prompt_text
     assert prompt_text.count(f"=== criterion: {GATE_PATH} ===") == 1
 
-    manifest_path = f"kb/reports/review-jobs/review-job-{review_job_id}/MANIFEST.json"
+    manifest_path = f"kb/reports/state/review-jobs/review-job-{review_job_id}/MANIFEST.json"
     manifest = json.loads((repo / manifest_path).read_text(encoding="utf-8"))
     assert manifest["grouping"] == "criterion"
     assert [pair["result_path"] for pair in manifest["pairs"]] == [
-        f"kb/reports/review-jobs/review-job-{review_job_id}/pair-1-first.md",
-        f"kb/reports/review-jobs/review-job-{review_job_id}/pair-2-second.md",
+        f"kb/reports/state/review-jobs/review-job-{review_job_id}/pair-1-first.md",
+        f"kb/reports/state/review-jobs/review-job-{review_job_id}/pair-2-second.md",
     ]
 
     with sqlite3.connect(db_path) as conn:
@@ -418,7 +418,7 @@ def test_finalize_review_job_finalizes_all_criterion_packed_pairs(tmp_path: Path
         freshness_baseline_count = conn.execute("SELECT COUNT(*) FROM freshness_baselines").fetchone()[0]
         assert freshness_baseline_count == 2
 
-    artifact_dir = repo / "kb" / "reports" / "review-jobs" / f"review-job-{review_job_id}"
+    artifact_dir = repo / "kb" / "reports" / "state" / "review-jobs" / f"review-job-{review_job_id}"
     shared_bundle = (artifact_dir / "job-output.md").read_text(encoding="utf-8")
     assert shared_bundle.count("=== PAIR REVIEW START:") == 2
     first_result = (artifact_dir / "pair-1-first.md").read_text(encoding="utf-8")
@@ -522,7 +522,7 @@ def test_finalize_review_job_fails_partial_output_without_salvage(tmp_path: Path
         ]
         assert conn.execute("SELECT COUNT(*) FROM freshness_baselines").fetchone()[0] == 0
 
-    artifact_dir = repo / "kb" / "reports" / "review-jobs" / f"review-job-{review_job_id}"
+    artifact_dir = repo / "kb" / "reports" / "state" / "review-jobs" / f"review-job-{review_job_id}"
     manifest = json.loads((artifact_dir / "MANIFEST.json").read_text(encoding="utf-8"))
     assert [pair["status"] for pair in manifest["pairs"]] == ["failed", "failed"]
 
@@ -708,7 +708,7 @@ watches: [body]
 Terms are undefined.
 """,
     )
-    db_path = repo / "kb" / "reports" / "commonplace-store.sqlite"
+    db_path = repo / "kb" / "reports" / "state" / "commonplace-store.sqlite"
     review_db.ensure_db(db_path)
 
     with pytest.raises(ValueError, match="exactly one note"):

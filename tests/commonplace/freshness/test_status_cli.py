@@ -14,7 +14,7 @@ def _seed_fresh_baseline(tmp_path: Path, *, note_stems: tuple[str, ...] = ("exam
     (tmp_path / "kb/instructions/review-gates/prose/source-residue.md").write_text("# Gate\n", encoding="utf-8")
     for stem in note_stems:
         (tmp_path / f"kb/notes/{stem}.md").write_text(f"# {stem}\n", encoding="utf-8")
-    db_path = tmp_path / "kb/reports/commonplace-store.sqlite"
+    db_path = tmp_path / "kb/reports/state/commonplace-store.sqlite"
     ensure_db(db_path)
     with connect(db_path) as conn:
         criterion_snapshot = snapshot_file(

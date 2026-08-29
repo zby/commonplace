@@ -10,7 +10,7 @@ tags: [kb-maintenance]
 
 ## Current state (as of 2026-07-18)
 
-- Connect reports accumulate ungrouped under `kb/reports/connect/`; a sweep for reports dated within the last two weeks alone found 45.
+- Connect reports accumulate ungrouped under `kb/reports/cache/connect/`; a sweep for reports dated within the last two weeks alone found 45.
 - `kb/log.md` is a 23-line, hand-maintained, append-only file; its oldest entries date from early June 2026.
 - One manual instance of the pattern this proposal generalizes ran today, in `kb/work/connect-report-mining/`: the 45 reports were split into 3 fixed batches of 15, one Sonnet subagent per batch extracted synthesis opportunities, recurring cross-report themes, systemic/maintenance issues, and candidate `kb/log.md` lines (~115-120k tokens and 2-2.5 minutes per batch), and the three raw-findings files were merged by hand into 10 deduped, ready-to-append log entries plus a triage table. No code was written; the pipeline was three parallel agent calls and one manual merge pass.
 - `kb/work/bulk-operations`'s case-family list already names "connect maintenance triage" — scan generated reports, extract maintenance observations, classify each as done/open/moved/watch, promote only the durable residue — but scopes it to one report's Maintenance Observations section, not cross-report synthesis mining over a time window.

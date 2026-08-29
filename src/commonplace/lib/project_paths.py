@@ -36,7 +36,7 @@ def collection_dirs(root: Path) -> list[Path]:
 
     A collection is identified by a local COLLECTION.md file. This lets
     installed library collections live under kb/commonplace/<collection>/ while
-    support directories such as kb/reports/ are ignored unless they explicitly
+    support directories such as kb/tasks/ are ignored unless they explicitly
     opt in as collections.
     """
     boundary = kb_root(root).resolve()

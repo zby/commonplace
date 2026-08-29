@@ -93,4 +93,4 @@ An artifact anywhere under `kb/work/` may reference any valid type spec under `k
 - Anything stable enough to be referenced from the library → promote to the right durable collection
 - External source captures → `kb/sources/`
 - Durable external agentic-system and harness analyses → `kb/agentic-systems/`
-- Generated reports → `kb/reports/`
+- Report outputs → choose `kb/reports/cache/`, `state/`, or `retained/` from the reports collection contract

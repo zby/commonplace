@@ -29,6 +29,17 @@ index_key: {tag}
     )
 
 
+def test_on_config_omits_unpublished_report_collection(tmp_path: Path) -> None:
+    docs_dir = tmp_path / "kb"
+    write(docs_dir / "notes" / "README.md", "# Notes\n")
+    write(docs_dir / "reports" / "README.md", "# Reports\n")
+
+    config = properdocs_hooks.on_config({"docs_dir": str(docs_dir)})
+
+    assert {"Notes": "notes/README.md"} in config["nav"]
+    assert {"Reports": "reports/README.md"} not in config["nav"]
+
+
 def test_on_page_markdown_renders_user_verification_and_specialized_status(tmp_path: Path) -> None:
     note = write(tmp_path / "kb" / "reference" / "adr" / "044-example.md", "# Example\n")
     page = SimpleNamespace(

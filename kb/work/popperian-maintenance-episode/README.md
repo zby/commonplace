@@ -53,4 +53,4 @@ The episode is evidence about this installation's review machinery operating und
 
 ## Bookkeeping
 
-Plain markdown, workshop register. Started 2026-08-19 from a conversation reconstructing the note's history from `git log`, the pass report `kb/reports/full-pass/llm-output-deviation-has-three-sources-with-non-substitutable/20260818T132531Z-e11d99/full-pass-report.md`, and `kb/log.md`. Positions attributed to "the operator" are where that conversation landed.
+Plain markdown, workshop register. Started 2026-08-19 from a conversation reconstructing the note's history from `git log`, the pass report `kb/reports/state/full-pass/llm-output-deviation-has-three-sources-with-non-substitutable/20260818T132531Z-e11d99/full-pass-report.md`, and `kb/log.md`. Positions attributed to "the operator" are where that conversation landed.

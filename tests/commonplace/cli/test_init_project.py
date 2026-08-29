@@ -47,12 +47,20 @@ def test_init_project_creates_core_layout_and_is_idempotent(tmp_path: Path) -> N
         Path("kb/sources"),
         Path("kb/instructions"),
         Path("kb/reports"),
+        Path("kb/reports/cache"),
+        Path("kb/reports/state"),
+        Path("kb/reports/retained"),
         Path("kb/types"),
         Path("kb/reports/types"),
     } <= relative_directories(tmp_path)
     assert (tmp_path / "kb" / "sources" / ".gitignore").read_text(
         encoding="utf-8"
     ) == ".snapshots/\n"
+    reports_ignore = (tmp_path / "kb" / "reports" / ".gitignore").read_text(
+        encoding="utf-8"
+    )
+    assert "cache/**" in reports_ignore
+    assert "state/**" in reports_ignore
     assert (tmp_path / "kb" / "log.md").is_file()
 
     rerun = init_project(tmp_path)
@@ -93,6 +101,14 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
         Path("kb/instructions/README.md"),
         Path("kb/sources/COLLECTION.md"),
         Path("kb/sources/README.md"),
+        Path("kb/reports/COLLECTION.md"),
+        Path("kb/reports/README.md"),
+        Path("kb/reports/.gitignore"),
+        Path("kb/reports/cache/README.md"),
+        Path("kb/reports/cache/.commonplace-validation-ignore"),
+        Path("kb/reports/state/README.md"),
+        Path("kb/reports/state/.commonplace-validation-ignore"),
+        Path("kb/reports/retained/README.md"),
         Path("kb/types/note.schema.yaml"),
         Path("kb/types/instruction.md"),
         Path("kb/types/instruction.schema.yaml"),
@@ -125,12 +141,13 @@ def test_init_project_satisfies_collection_landing_invariant(tmp_path: Path) -> 
     init_project(tmp_path)
 
     assert is_collection_dir(tmp_path / "kb" / "sources")
+    assert is_collection_dir(tmp_path / "kb" / "reports")
 
     results = validate_collection_landings(repo_root=tmp_path)
 
     assert results.fails == []
     assert (
-        "[repository] collection landings: all 5 top-level collections have README.md"
+        "[repository] collection landings: all 6 top-level collections have README.md"
         in results.passes
     )
 

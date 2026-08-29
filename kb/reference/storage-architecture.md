@@ -19,14 +19,16 @@ and the live [`commonplace.store`](../../src/commonplace/store.py) and
 | Authored KB artifacts | Tracked Markdown | Canonical retained knowledge, contracts, instructions, and decisions; edited and reviewed as source |
 | Source reading copies | Ignored files under `.snapshots/` | Reconstructable local materializations; the tracked ingest owns source identity and capture provenance |
 | Navigation and publishing views | Generated listings and the static site | Rebuilt from authored artifacts; not a second authority |
-| Regenerable reports | Ignored local files such as connect reports | Operational views that may be rebuilt from their inputs and current KB state |
-| Review evidence | Per-pair review result files | Judgment text not stored in SQLite; retained separately from canonical protocol state |
-| Stateful report packets | Full-pass report plus guarded captures | Local non-regenerable disposition state; retained and resolved as one unit |
-| Freshness and review state | SQLite operational store | Canonical for accepted input baselines and review execution, not for authored knowledge |
+| Regenerable reports | Ignored files under `kb/reports/cache/` | Operational views that may be rebuilt from authoritative inputs and current KB state |
+| Retained report records | Tracked files under `kb/reports/retained/` | Exact measurements, experiments, or analyses whose record remains useful without becoming a library claim |
+| Review evidence | Per-pair result files under `kb/reports/state/` | Judgment text not stored in SQLite; retained separately from canonical protocol state |
+| Stateful report packets | Full-pass report plus guarded captures under `kb/reports/state/` | Local non-regenerable disposition state; retained and resolved as one unit |
+| Freshness and review state | `kb/reports/state/commonplace-store.sqlite` | Canonical for accepted input baselines and review execution, not for authored knowledge |
 
-The role, not the file extension or parent directory alone, decides whether a
-missing artifact can be rebuilt. `kb/reports/` therefore contains disposable
-views, retained evidence, and packets that own actionable state.
+The role decides whether a missing artifact can be rebuilt; the reports
+collection makes that role visible through `cache/`, `state/`, and `retained/`
+policy areas. A move between them changes the retention contract rather than
+merely organizing files.
 
 ## Authored files and version control
 
@@ -68,12 +70,15 @@ the site generates reader-oriented listings at build time. The exact build and
 exclusion rules belong to [documentation site](./documentation-site.md) and
 its configuration.
 
-Some generated reports are reconstructable operational views. Connect reports,
-for example, may be ignored because their source artifact and the current KB
-can regenerate them ([ADR 007](./adr/007-reports-directory-for-generated-snapshots.md)).
-Generated and ignored do not imply disposable: per-pair review result files
-retain judgment text that the database does not store. SQLite owns their
-protocol and freshness state; the files retain the evidence body.
+Some generated reports are reconstructable operational views. Connect reports
+under `kb/reports/cache/`, for example, may be ignored because their source
+artifact and the current KB can replace them
+([ADR 007](./adr/007-reports-directory-for-generated-snapshots.md)). Generated
+and ignored do not imply disposable: per-pair review result files under
+`kb/reports/state/` retain judgment text that the database does not store.
+SQLite owns their protocol and freshness state; the files retain the evidence
+body. Exact report records whose value survives the run live under
+`kb/reports/retained/` and are kept with the project.
 
 Full-pass packets are a separate stateful case. A `full-pass-report.md` owns
 disposition and resolution state together with immutable start-state captures.

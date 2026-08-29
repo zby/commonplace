@@ -10,13 +10,13 @@ Run of `cp-skill-write-multistage`, opened 2026-08-27 on the operator's directio
 
 ## Incumbent recovery (recorded)
 
-At run start the incumbent was absent from the working tree and had never been committed (`git log` shows no history at the path; the only repository mention outside `kb/reports/` is `kb/work/theory-mediated-methodology-article/README.md`). The full-pass packet's closing SHA-256 `a58b8fadad82…` matched `artifact_snapshots` row 958 in `kb/reports/commonplace-store.sqlite`. That snapshot was written byte-exact to `original.md` here and restored to the target path (verified SHA-256 `a58b8fadad8208008508970b2b2b53b90e210d79d6e11dd08f95f907c3f38b52`). The packet's `source.txt` (pre-pass, `97c331e8…`) is the earlier version and was not used as the incumbent.
+At run start the incumbent was absent from the working tree and had never been committed (`git log` shows no history at the path; the only repository mention outside `kb/reports/` is `kb/work/theory-mediated-methodology-article/README.md`). The full-pass packet's closing SHA-256 `a58b8fadad82…` matched `artifact_snapshots` row 958 in `kb/reports/state/commonplace-store.sqlite`. That snapshot was written byte-exact to `original.md` here and restored to the target path (verified SHA-256 `a58b8fadad8208008508970b2b2b53b90e210d79d6e11dd08f95f907c3f38b52`). The packet's `source.txt` (pre-pass, `97c331e8…`) is the earlier version and was not used as the incumbent.
 
 ## Inputs
 
 - User brief (authoritative direction): recorded in `brief.md`.
 - Incumbent: `original.md` (post-pass text, see above).
-- Full-pass packet (review conclusions; for orchestrator, architect after source-first, auditor — not for reconstruction): `kb/reports/full-pass/a-natural-language-theory-is-a-prototype-codified-or-rejected/20260826T111746Z-e1ae52/full-pass-report.md`, `closing/critique.md`, `closing/premises.md`.
+- Full-pass packet (review conclusions; for orchestrator, architect after source-first, auditor — not for reconstruction): `kb/reports/state/full-pass/a-natural-language-theory-is-a-prototype-codified-or-rejected/20260826T111746Z-e1ae52/full-pass-report.md`, `closing/critique.md`, `closing/premises.md`.
 - Evidence paths: listed in `brief.md`.
 - Backlinks lookup (2026-08-27): no library artifact links the incumbent path. `kb/notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md` (named in the brief as the only library citer) currently cites `unformalized-improvements-need-a-pre-formal-stage-in-the-loop.md` for the cheap-formalization objection, not this note. Only `kb/work/theory-mediated-methodology-article/README.md` mentions the slug.
 

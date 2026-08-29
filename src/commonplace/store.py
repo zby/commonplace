@@ -9,8 +9,8 @@ from pathlib import Path
 
 STORE_SCHEMA_VERSION = 3
 SCHEMA_PATH = "store-schema.sql"
-DEFAULT_DB_PATH = Path("kb/reports/commonplace-store.sqlite")
-LEGACY_DB_PATH = Path("kb/reports/review-store.sqlite")
+DEFAULT_DB_PATH = Path("kb/reports/state/commonplace-store.sqlite")
+LEGACY_DB_PATH = Path("kb/reports/state/review-store.sqlite")
 DB_ENV_VAR = "COMMONPLACE_STORE"
 
 EXPECTED_TABLES = frozenset(

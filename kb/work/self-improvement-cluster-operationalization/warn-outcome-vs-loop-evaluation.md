@@ -35,11 +35,11 @@ The repair is in [FIX-SYSTEM](../../instructions/FIX-SYSTEM.md), [fix-review-war
 
 ## Evidence boundary and future empirical check
 
-The local checkout used for the audit contains neither `kb/reports/commonplace-store.sqlite` nor `kb/reports/fixes/`, so historical rejection rates cannot be measured here. That absence no longer blocks the mechanism-level classification: inspection established that the prior contract made rejection unrepresentable, and the contract has now been repaired. Once fix reports accumulate under the new contract, rejection frequency remains useful calibration evidence for whether downstream judgment is exercised rather than rubber-stamped.
+The local checkout used for the audit contains neither `kb/reports/state/commonplace-store.sqlite` nor `kb/reports/state/fixes/`, so historical rejection rates cannot be measured here. That absence no longer blocks the mechanism-level classification: inspection established that the prior contract made rejection unrepresentable, and the contract has now been repaired. Once fix reports accumulate under the new contract, rejection frequency remains useful calibration evidence for whether downstream judgment is exercised rather than rubber-stamped.
 
-Procedure, on a machine with `kb/reports/fixes/` and the commonplace store populated:
+Procedure, on a machine with `kb/reports/state/fixes/` and the commonplace store populated:
 
-1. Enumerate fix reports: `ls kb/reports/fixes/*.fix-report.md`. Each maps warnings to fix applied, strategy, and status (`fixed` or `deferred`).
+1. Enumerate fix reports: `ls kb/reports/state/fixes/*.fix-report.md`. Each maps warnings to fix applied, strategy, and status (`fixed` or `deferred`).
 2. Count dispositions across all reports: fixed vs. deferred vs. anything recording *rejected / spurious / no change needed*. The fix-report contract only names `fixed` and `deferred` — check whether "this warning is wrong" even has a representable disposition, or gets shoehorned into `deferred`. If it is unrepresentable, that is itself a finding: the pipeline has no rejection vocabulary.
 3. Read the deferred cases: are they "warning is wrong" (a real downstream filter — supports A) or "fix is hard / postponed" (no filter — supports B)?
 4. Cross-check `fail` outcomes in the store: does any consumer exist (triage records, retirement, demotion), or do `fail` notes simply persist untouched? `commonplace-warn-selector --json` plus the review store's completed verdict pairs give the counts.

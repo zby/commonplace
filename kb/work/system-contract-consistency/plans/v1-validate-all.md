@@ -48,9 +48,10 @@ exclude type specs explicitly.
    final scope ledger showing every discovered collection exactly once. Add an
    optional JSON renderer only after the result contract is tested.
 4. After collection runs, validate type specs not already covered by a
-   scheduled collection exactly once. Preserve the current `types` coverage of
-   support directories such as `kb/reports/types/` and `kb/tasks/types/`; report this
-   phase separately so broader collection discovery cannot create duplicates.
+   scheduled collection exactly once. `kb/reports/types/` is covered by its
+   reports collection; preserve the current `types` coverage of uncontracted
+   support directories such as `kb/tasks/types/`. Report this phase separately
+   so broader collection discovery cannot create duplicates.
 5. Run the landing check once per declared root under its stated scope; do not
    silently broaden it to arbitrary nested collections. Decide and
    document whether redirects are part of `all`; the recommended behavior is to

@@ -6,7 +6,7 @@ This document normalizes every lineage relation declared by Commonplace's shared
 (derivative, relation, source)
 ```
 
-It inventories declarations, not every corpus use. The authoritative surfaces are the shared [link vocabulary](../../reference/link-vocabulary.md) and each writable collection's `COLLECTION.md`; the frozen [`kb/reports/link-vocabulary.md`](../../reports/link-vocabulary.md) is historical corpus evidence, not a live vocabulary. Inventory date: 2026-07-28.
+It inventories declarations, not every corpus use. The authoritative surfaces are the shared [link vocabulary](../../reference/link-vocabulary.md) and each writable collection's `COLLECTION.md`; the frozen [`kb/reports/retained/link-vocabulary.md`](../../reports/retained/link-vocabulary.md) is historical corpus evidence, not a live vocabulary. Inventory date: 2026-07-28.
 
 ## Endpoint terminology
 

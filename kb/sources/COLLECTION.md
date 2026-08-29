@@ -131,4 +131,4 @@ A typed artifact in this collection may use a global type spec under `kb/types/`
 - External agent-memory system reviews → `kb/agent-memory-systems/`
 - External agentic-system and harness analyses → `kb/agentic-systems/`
 - Work-in-progress on a source → `kb/work/`
-- Generated reports → `kb/reports/`
+- Report outputs → choose `kb/reports/cache/`, `state/`, or `retained/` from the reports collection contract

@@ -255,8 +255,8 @@ def main(argv: list[str] | None = None) -> int:
         "database",
         nargs="?",
         type=Path,
-        default=Path("kb/reports/review-store.sqlite"),
-        help="Review-store SQLite path (default: kb/reports/review-store.sqlite).",
+        default=Path("kb/reports/state/review-store.sqlite"),
+        help="Review-store SQLite path (default: kb/reports/state/review-store.sqlite).",
     )
     args = parser.parse_args(argv)
     try:

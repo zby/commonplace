@@ -29,7 +29,7 @@ Do **not** emit an overall "consistent / not consistent" verdict, and do not pas
 
 ## Output
 
-Write to `kb/reports/friction/<note-name>.friction.md`. Mutate nothing else.
+Write to `kb/reports/cache/friction/<note-name>.friction.md`. Mutate nothing else.
 
 ```markdown
 # Friction check: <note title>

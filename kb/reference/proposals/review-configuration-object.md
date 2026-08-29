@@ -10,7 +10,7 @@ The review subsystem's assumptions about project shape are hardcoded as module-l
 
 ## Current state (as of 2026-07-13)
 
-General freshness and review execution share one operational store ([ADR 052](../adr/052-general-freshness-store-review-first-migration.md)). Store path resolution lives in `commonplace.store` (`kb/reports/commonplace-store.sqlite`; `COMMONPLACE_STORE`). Review modules re-export `DEFAULT_DB_PATH` and `resolve_db_path` from there. A `ReviewConfig` would still be review-owned, but its `db_path` field should align with `commonplace.store` rather than reintroducing a review-only default.
+General freshness and review execution share one operational store ([ADR 052](../adr/052-general-freshness-store-review-first-migration.md)). Store path resolution lives in `commonplace.store` (`kb/reports/state/commonplace-store.sqlite`; `COMMONPLACE_STORE`). Review modules re-export `DEFAULT_DB_PATH` and `resolve_db_path` from there. A `ReviewConfig` would still be review-owned, but its `db_path` field should align with `commonplace.store` rather than reintroducing a review-only default.
 
 Project-shape constants partition cleanly by owner:
 

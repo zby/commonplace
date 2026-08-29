@@ -113,4 +113,4 @@ not decide placement.
 - Procedures and how-to guidance → `kb/instructions/`
 - Descriptions of external systems → `kb/agent-memory-systems/reviews/` for memory/context-engineering systems, or `kb/agentic-systems/` for whole agentic systems and harnesses
 - Work in progress → `kb/work/` (workshops)
-- Generated operational artifacts → `kb/reports/`
+- Report outputs and operational evidence → choose `kb/reports/cache/`, `state/`, or `retained/` from the reports collection contract

@@ -38,7 +38,7 @@ MANIFEST = ScaffoldManifest(
         Path("kb/reference"),
         Path("kb/reference/types"),
         Path("kb/instructions"),
-        # User-space directories — no shipped content.
+        # User-space operating directories; collection files are seeded below.
         Path("kb/sources"),
         Path("kb/sources/types"),
         Path("kb/tasks/backlog"),
@@ -46,7 +46,10 @@ MANIFEST = ScaffoldManifest(
         Path("kb/tasks/completed"),
         Path("kb/work"),
         Path("kb/reports"),
-        Path("kb/reports/connect"),
+        Path("kb/reports/cache"),
+        Path("kb/reports/cache/connect"),
+        Path("kb/reports/state"),
+        Path("kb/reports/retained"),
         Path("kb/reports/types"),
     ),
     # Shipped library content lands under kb/commonplace/ (ADR-021). Shared
@@ -60,8 +63,8 @@ MANIFEST = ScaffoldManifest(
         ("kb/sources/types", "kb/sources/types"),
         ("kb/types", "kb/types"),
     ),
-    # Single files copied without a tree walk. User-collection contract and
-    # landing templates seed empty collections with authoring and routing heads.
+    # Single files copied without a tree walk. User-collection contract,
+    # landing, and local-policy templates seed empty collections.
     files=(
         ("kb/sources/.gitignore", "kb/sources/.gitignore"),
         ("templates/user-sources-COLLECTION.md", "kb/sources/COLLECTION.md"),
@@ -72,6 +75,20 @@ MANIFEST = ScaffoldManifest(
         ("templates/user-reference-README.md", "kb/reference/README.md"),
         ("templates/user-instructions-COLLECTION.md", "kb/instructions/COLLECTION.md"),
         ("templates/user-instructions-README.md", "kb/instructions/README.md"),
+        ("templates/user-reports-COLLECTION.md", "kb/reports/COLLECTION.md"),
+        ("templates/user-reports-README.md", "kb/reports/README.md"),
+        ("templates/user-reports-cache-README.md", "kb/reports/cache/README.md"),
+        ("templates/user-reports-state-README.md", "kb/reports/state/README.md"),
+        ("templates/user-reports-retained-README.md", "kb/reports/retained/README.md"),
+        ("templates/user-reports-gitignore", "kb/reports/.gitignore"),
+        (
+            "templates/user-reports-cache-validation-ignore",
+            "kb/reports/cache/.commonplace-validation-ignore",
+        ),
+        (
+            "templates/user-reports-state-validation-ignore",
+            "kb/reports/state/.commonplace-validation-ignore",
+        ),
     ),
     # Resolved with project-specific replacements at install time.
     templates=(

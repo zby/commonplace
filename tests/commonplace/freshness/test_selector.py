@@ -14,7 +14,7 @@ def _seed_baseline(tmp_path: Path) -> Path:
     gate = tmp_path / "kb/instructions/review-gates/prose/source-residue.md"
     note.write_text("# Example\n", encoding="utf-8")
     gate.write_text("# Gate\n", encoding="utf-8")
-    db_path = tmp_path / "kb/reports/commonplace-store.sqlite"
+    db_path = tmp_path / "kb/reports/state/commonplace-store.sqlite"
     ensure_db(db_path)
     with connect(db_path) as conn:
         note_snapshot = snapshot_file(conn, repo_root=tmp_path, path="kb/notes/example.md")

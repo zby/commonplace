@@ -91,7 +91,7 @@ def build_repo_fixture(
         "prose",
     )
     commit_all(repo, "fixture")
-    return repo, repo / "kb" / "reports" / "commonplace-store.sqlite"
+    return repo, repo / "kb" / "reports" / "state" / "commonplace-store.sqlite"
 
 
 def pair_block(note_path: str, criterion_id: str, body: str, outcome: str) -> str:
@@ -194,9 +194,9 @@ def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
     second_job = jobs[1]
     first_review_job_id = first_job["review_job_id"]
     second_review_job_id = second_job["review_job_id"]
-    assert first_job["prompt_path"] == f"kb/reports/review-jobs/review-job-{first_review_job_id}/prompt.md"
-    assert second_job["prompt_path"] == f"kb/reports/review-jobs/review-job-{second_review_job_id}/prompt.md"
-    first_manifest_path = f"kb/reports/review-jobs/review-job-{first_review_job_id}/MANIFEST.json"
+    assert first_job["prompt_path"] == f"kb/reports/state/review-jobs/review-job-{first_review_job_id}/prompt.md"
+    assert second_job["prompt_path"] == f"kb/reports/state/review-jobs/review-job-{second_review_job_id}/prompt.md"
+    first_manifest_path = f"kb/reports/state/review-jobs/review-job-{first_review_job_id}/MANIFEST.json"
 
     prompt = (repo / first_job["prompt_path"]).read_text(encoding="utf-8")
     assert f"=== PAIR REVIEW START: kb/notes/sample.md :: {GATE_ONE_PATH} ===" in prompt
@@ -207,7 +207,7 @@ def test_create_review_jobs_groups_cross_lens_gates_by_bundle(tmp_path: Path) ->
     manifest = json.loads((repo / first_manifest_path).read_text(encoding="utf-8"))
     assert manifest["grouping"] == "note"
     assert [pair["result_path"] for pair in manifest["pairs"]] == [
-        f"kb/reports/review-jobs/review-job-{first_review_job_id}/pair-1-undefined-terms.md",
+        f"kb/reports/state/review-jobs/review-job-{first_review_job_id}/pair-1-undefined-terms.md",
     ]
 
 
@@ -539,7 +539,7 @@ def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmat
     prepared_job = prepared["jobs"][0]
     review_job_id = prepared_job["review_job_id"]
     write(repo / prepared_job["job_output_path"], single_pair_job_output())
-    manifest_path = repo / f"kb/reports/review-jobs/review-job-{review_job_id}/MANIFEST.json"
+    manifest_path = repo / f"kb/reports/state/review-jobs/review-job-{review_job_id}/MANIFEST.json"
     manifest_path.write_text("{not valid json", encoding="utf-8")
 
     result = run_cli(
@@ -555,7 +555,7 @@ def test_finalize_review_job_uses_job_owned_paths_and_writes_provenance_frontmat
     )
 
     payload = json.loads(result.stdout)
-    result_path = f"kb/reports/review-jobs/review-job-{review_job_id}/pair-1-undefined-terms.md"
+    result_path = f"kb/reports/state/review-jobs/review-job-{review_job_id}/pair-1-undefined-terms.md"
     assert payload == {
         "completed": True,
         "completed_pair_count": 1,
@@ -626,7 +626,7 @@ def test_finalize_review_job_preserves_optional_self_reported_model(tmp_path: Pa
     payload = json.loads(result.stdout)
     assert payload["self_reported_model"] == "gpt-5.6-sol"
     result_path = repo / (
-        f"kb/reports/review-jobs/review-job-{review_job_id}/"
+        f"kb/reports/state/review-jobs/review-job-{review_job_id}/"
         "pair-1-undefined-terms.md"
     )
     parsed_frontmatter = frontmatter.parse(result_path.read_text(encoding="utf-8"))
@@ -678,7 +678,7 @@ def test_finalize_review_job_result_write_failure_leaves_no_result_artifact(
     assert payload["failure_reason"] == "simulated result write failure"
     assert payload["job"] == {"review_job_id": review_job_id, "status": "failed"}
 
-    artifact_dir = repo / "kb" / "reports" / "review-jobs" / f"review-job-{review_job_id}"
+    artifact_dir = repo / "kb" / "reports" / "state" / "review-jobs" / f"review-job-{review_job_id}"
     assert not (artifact_dir / "pair-1-undefined-terms.md").exists()
     manifest = json.loads((artifact_dir / "MANIFEST.json").read_text(encoding="utf-8"))
     assert manifest["status"] == "failed"
@@ -699,7 +699,7 @@ def test_failed_rereview_preserves_previous_freshness_baseline_and_artifacts(tmp
         db_path=db_path,
     )
     assert json.loads(first_result.stdout)["completed"] is True
-    first_artifact_dir = repo / "kb" / "reports" / "review-jobs" / f"review-job-{first_job_id}"
+    first_artifact_dir = repo / "kb" / "reports" / "state" / "review-jobs" / f"review-job-{first_job_id}"
 
     write(repo / "kb" / "notes" / "sample.md", "---\ndescription: Test note\ntype: kb/types/note.md\ntraits: []\n---\n\n# Test note\n\nChanged body.\n")
     second_job = create_single_review_job(repo, db_path)
@@ -740,7 +740,7 @@ def test_successful_rereview_prunes_superseded_job_and_artifacts(tmp_path: Path)
         cwd=repo,
         db_path=db_path,
     )
-    first_artifact_dir = repo / "kb" / "reports" / "review-jobs" / f"review-job-{first_job_id}"
+    first_artifact_dir = repo / "kb" / "reports" / "state" / "review-jobs" / f"review-job-{first_job_id}"
     assert first_artifact_dir.exists()
 
     write(repo / "kb" / "notes" / "sample.md", "---\ndescription: Test note\ntype: kb/types/note.md\ntraits: []\n---\n\n# Test note\n\nChanged body.\n")
@@ -757,7 +757,7 @@ def test_successful_rereview_prunes_superseded_job_and_artifacts(tmp_path: Path)
     )
 
     assert json.loads(second_result.stdout)["completed"] is True
-    second_artifact_dir = repo / "kb" / "reports" / "review-jobs" / f"review-job-{second_job_id}"
+    second_artifact_dir = repo / "kb" / "reports" / "state" / "review-jobs" / f"review-job-{second_job_id}"
     assert not first_artifact_dir.exists()
     assert second_artifact_dir.exists()
     stale = review_target_selector.select_stale_criteria(

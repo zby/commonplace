@@ -98,10 +98,11 @@ At current scale this is not necessary for performance, but adding it now avoids
 Root:
 
 ```text
-kb/reports/review-file-store/
+kb/reports/state/review-file-store/
 ```
 
-This remains under `kb/reports/`, not a KB collection.
+This remains under the reports collection's ignored `state/` policy area, not
+in a library collection.
 
 ### Runs
 

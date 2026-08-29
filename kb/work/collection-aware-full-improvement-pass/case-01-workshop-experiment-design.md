@@ -15,7 +15,7 @@ On 2026-08-21, the full-improvement instruction was run on [`kb/work/causal-impa
 | Procedure used | [`run-full-improvement-pass-on-note.md`](../../instructions/run-full-improvement-pass-on-note.md) |
 | First commit containing the final target | `dc379e97` |
 
-The ignored local evidence packet remains at `kb/reports/full-pass/experiment-design/20260821T103329Z-b7aa20/`. Its `source.txt` is the exact pass-start input. This case file records the material observations so the workshop does not depend on that ignored packet being available in another checkout.
+The ignored local evidence packet remains at `kb/reports/state/full-pass/experiment-design/20260821T103329Z-b7aa20/`. Its `source.txt` is the exact pass-start input. This case file records the material observations so the workshop does not depend on that ignored packet being available in another checkout.
 
 At pass start, the artifact explicitly said it was a proposed comparison rather than a completed experiment or implementation plan. It proposed broad comparison arms and measurements. The surrounding workshop explicitly left the calibration protocol, final acceptance rule, materiality threshold, selection objective, and several other design parameters unchosen.
 

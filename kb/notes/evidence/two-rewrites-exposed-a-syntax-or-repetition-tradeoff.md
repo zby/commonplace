@@ -23,7 +23,7 @@ The first pass moved a temporal qualifier away from the definition it limited, d
 
 The second pass retained risky complex constructions or restated their relations explicitly. For example, it repeated the refresh sufficiency condition for lineage, timestamp information, and a regeneration instruction rather than relying on one distributed qualifier. This prevented the known attachment failure, but it used more words than both the original and the first rewrite.
 
-The retained artifacts and both run logs are in commit `43a404f0` and `kb/reports/asd-ste100-inspired-rewrite.md`.
+The retained artifacts and both run logs are in commit `43a404f0` and `kb/reports/retained/asd-ste100-inspired-rewrite.md`.
 
 ## Inference
 

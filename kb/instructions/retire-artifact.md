@@ -49,7 +49,7 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
    rg -c '<artifact-slug>' -g '*.md' kb/
    ```
 
-   Present every reference with the disposition you propose for it and wait for approval before editing anything. Gitignored reports under `kb/reports/connect/` are exempt — leave them.
+   Present every reference with the disposition you propose for it and wait for approval before editing anything. Gitignored reports under `kb/reports/cache/connect/` are exempt — leave them.
 
 6. **Handle inbound references — this differs by destination.**
 

@@ -81,7 +81,7 @@ The command dry-runs unless `--apply` is supplied.
 ### commonplace-promotion-candidates
 
 Rank unstructured note files by incoming links and write
-`kb/reports/promotion-candidates.md`, separating invalid frontmatter from text
+`kb/reports/cache/promotion-candidates.md`, separating invalid frontmatter from text
 candidates.
 
 ## Snapshots

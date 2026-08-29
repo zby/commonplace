@@ -141,5 +141,5 @@ A typed artifact in this collection may use a global type spec under `kb/types/`
 
 - Transferable claims about KB methodology → `kb/notes/`
 - Descriptions of how the system works → `kb/reference/`
-- Generated reports and reviews → `kb/reports/`
+- Report outputs and review evidence → choose `kb/reports/cache/`, `state/`, or `retained/` from the reports collection contract
 - Work in progress → `kb/work/` (workshops)

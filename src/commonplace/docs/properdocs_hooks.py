@@ -25,6 +25,10 @@ TAG_PAGE_TYPES = {INDEX_TYPE, "kb/types/tag-readme.md"}
 # and the review-gates/ tree is a deep but flat catalog of gate definitions.
 COLLECTION_MAX_DEPTH = {"instructions": 1}
 
+# Operational collections can require a local contract and landing without
+# becoming part of the public documentation surface.
+UNPUBLISHED_COLLECTIONS = frozenset({"reports"})
+
 # Directories that received a virtual dir-index page in on_files, so
 # on_page_markdown can link each collection README to its full listing.
 _generated_index_dirs: set[Path] = set()
@@ -43,6 +47,8 @@ def on_config(config):
     collection_entries = []
     for child in sorted(docs_dir.iterdir()):
         if not child.is_dir() or child.name.startswith("."):
+            continue
+        if child.name in UNPUBLISHED_COLLECTIONS:
             continue
         readme = child / "README.md"
         if not readme.exists():
@@ -79,7 +85,7 @@ def on_files(files, config):
     }
 
     for collection in collection_dirs(root):
-        if collection.name == "reports":
+        if collection.name in UNPUBLISHED_COLLECTIONS:
             continue
         pages = index_directory.collect_index_pages(
             collection,

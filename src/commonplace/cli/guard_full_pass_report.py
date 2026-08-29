@@ -25,7 +25,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         allow_abbrev=False,
     )
     parser.add_argument(
-        "report", help="Path to kb/reports/full-pass/.../full-pass-report.md"
+        "report", help="Path to kb/reports/state/full-pass/.../full-pass-report.md"
     )
     try:
         args = parser.parse_args(argv)

@@ -2,7 +2,7 @@
 
 Run from the repository root with ``python3 scripts/review_link_consumption.py``.
 The optional positional argument overrides ``COMMONPLACE_STORE`` and the default
-``kb/reports/commonplace-store.sqlite`` path.
+``kb/reports/state/commonplace-store.sqlite`` path.
 """
 
 from __future__ import annotations
@@ -16,7 +16,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
-DEFAULT_STORE = Path("kb/reports/commonplace-store.sqlite")
+DEFAULT_STORE = Path("kb/reports/state/commonplace-store.sqlite")
 
 
 def _distribution(values: list[int]) -> str:

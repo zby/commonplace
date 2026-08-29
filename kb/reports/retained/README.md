@@ -1,0 +1,18 @@
+# Retained reports
+
+Durable report records kept with the project. These artifacts preserve exact
+measurements, experiments, evaluations, or analyses whose value survives the
+run that produced them but whose role is still evidence or record rather than
+a library claim or system definition.
+
+Current retained sets:
+
+- [Planning and delegation theory](./planning-delegation-theory/README.md)
+- [Simplification-instruction comparison](./simplification-instruction-comparison-20260807/README.md)
+- [ASD-STE100-inspired rewrite experiment](./asd-ste100-inspired-rewrite.md)
+- [Link-vocabulary audit](./link-vocabulary.md)
+- [Review-link availability baseline](./review-link-availability.md)
+
+Promote transferable conclusions to the appropriate library collection, but
+keep the report here when a later reader still needs the exact record behind
+that conclusion.

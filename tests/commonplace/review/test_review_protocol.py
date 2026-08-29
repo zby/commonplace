@@ -154,9 +154,9 @@ def test_render_pairs_prompt_names_destination() -> None:
         notes=[make_target("kb/notes/only.md")],
         criterion_texts={GATE: GATE_TEXT},
         result_kind="verdict",
-        job_output_path="kb/reports/review-jobs/review-job-7/job-output.md",
+        job_output_path="kb/reports/state/review-jobs/review-job-7/job-output.md",
     )
-    assert "Write exactly one markdown document to `kb/reports/review-jobs/review-job-7/job-output.md`." in prompt
+    assert "Write exactly one markdown document to `kb/reports/state/review-jobs/review-job-7/job-output.md`." in prompt
     assert "Do not write or edit any other file." in prompt
     assert "`self-reported-model: <model-id>`" in prompt
     assert "The model line is optional." in prompt

@@ -50,7 +50,7 @@ Case 03 uses `kb/notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-
 
 Case 04 uses `kb/notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md` — the first live run of [run-full-improvement-pass-on-note](./run-full-improvement-pass-on-note.md), applied directly to a current library note rather than a frozen baseline/accepted-delta pair, so there is no separate "accepted delta" to compare against; the edit was made in place.
 
-- Reports: [compression-bundle-review](./full-pass-a-derived-copy-of-recomputable-truth/compression-bundle-review.md); `critique-note` report at `kb/reports/critique/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.critique.md`; connect report at `kb/reports/connect/notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.connect.md` (semantic bundle skipped — exploratory pass, not a promotion decision).
+- Reports: [compression-bundle-review](./full-pass-a-derived-copy-of-recomputable-truth/compression-bundle-review.md); `critique-note` report at `kb/reports/cache/critique/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.critique.md`; connect report at `kb/reports/cache/connect/notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.connect.md` (semantic bundle skipped — exploratory pass, not a promotion decision).
 - Synthesis packet: [full-pass-report](./full-pass-a-derived-copy-of-recomputable-truth/full-pass-report.md).
 
 Result: clean end-to-end run, no reconciliation failures.
@@ -65,7 +65,7 @@ Takeaway: this is the first case where all four methods' outputs were genuinely 
 
 Case 05 uses `kb/notes/structure-inference-needs-capture-at-the-decision-surface.md` — the first run of [run-full-improvement-pass-on-note](./run-full-improvement-pass-on-note.md) including the new, experimental `composition-friction-gate` step. Applied directly to a current library note; no frozen baseline/accepted-delta pair.
 
-- Reports: [compression-bundle-review](./full-pass-structure-inference-needs-capture-at-the-decision-surface/compression-bundle-review.md); `critique-note` report at `kb/reports/critique/structure-inference-needs-capture-at-the-decision-surface.critique.md`; `composition-friction-gate` report at `kb/reports/friction/structure-inference-needs-capture-at-the-decision-surface.friction.md`; connect report at `kb/reports/connect/notes/structure-inference-needs-capture-at-the-decision-surface.connect.md` (semantic bundle skipped).
+- Reports: [compression-bundle-review](./full-pass-structure-inference-needs-capture-at-the-decision-surface/compression-bundle-review.md); `critique-note` report at `kb/reports/cache/critique/structure-inference-needs-capture-at-the-decision-surface.critique.md`; `composition-friction-gate` report at `kb/reports/cache/friction/structure-inference-needs-capture-at-the-decision-surface.friction.md`; connect report at `kb/reports/cache/connect/notes/structure-inference-needs-capture-at-the-decision-surface.connect.md` (semantic bundle skipped).
 - Synthesis packet: [full-pass-report](./full-pass-structure-inference-needs-capture-at-the-decision-surface/full-pass-report.md).
 
 Result: the first case with real cross-method corroboration, and the first real test of the friction-gate's "carry unresolved" rule.

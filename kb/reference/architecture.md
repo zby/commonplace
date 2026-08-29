@@ -25,8 +25,9 @@ project/
       reference/                     shipped system reference and ADRs
       instructions/                  shipped procedures and canonical cp-skill-* skills
     types/                           shared global contracts
-    notes/ reference/ instructions/  user-owned collections
-    sources/ tasks/ work/ reports/   user-owned operating surfaces
+    notes/ reference/ instructions/  user-owned library collections
+    sources/ reports/                user-owned source and report collections
+    tasks/ work/                     user-owned operating surfaces
     log.md                           user-owned operational log
   .agents/skills/ .claude/skills/    copied projections of selected shipped skills
 
@@ -46,9 +47,9 @@ The structural boundary is `kb/commonplace/`:
 - `kb/commonplace/{notes,reference,instructions}/` is the framework library.
   The project reads it as a dependency and treats it as read-only by
   convention.
-- Top-level `kb/notes/`, `kb/reference/`, and `kb/instructions/` are the
-  project's own collections. Sources, tasks, workshop material, reports, and
-  the log are also project-owned.
+- Top-level `kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/sources/`,
+  and `kb/reports/` are the project's own collections. Tasks, workshop
+  material, and the log are also project-owned operating surfaces.
 - `kb/types/` is shared ground. Commonplace installs the global contracts there
   and the project may extend them, so both library and user artifacts can keep
   the same absolute type identities.

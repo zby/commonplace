@@ -37,7 +37,7 @@ def write_packet(
         encoding="utf-8",
     )
 
-    packet = root / "kb/reports/full-pass/source/pass-1"
+    packet = root / "kb/reports/state/full-pass/source/pass-1"
     packet.mkdir(parents=True)
     (packet / "source.txt").write_text(source_text, encoding="utf-8")
 

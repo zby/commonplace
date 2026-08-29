@@ -106,5 +106,5 @@ Relevant Notes:
 - [ADR 009 — link relationship semantics](./009-link-relationship-semantics.md) — extended by this ADR; its five-label core stays canonical
 - [ADR 019 — collection-owned link vocabulary](./019-collection-owned-link-vocabulary.md) — depends-on: this ADR's additions land inside the architecture ADR 019 specifies
 - [linking theory](../../notes/linking-theory.md) — rests-on: the decision-cost model this vocabulary instantiates
-- [link-vocabulary report](../../reports/link-vocabulary.md) — frozen audit snapshot the analysis behind this decision was derived from
+- [link-vocabulary report](../../reports/retained/link-vocabulary.md) — frozen audit snapshot the analysis behind this decision was derived from
 - [inbound and outbound links serve asymmetric reader needs](../../notes/inbound-and-outbound-links-serve-asymmetric-reader-needs.md) — the inverse-view rationale that makes directional asymmetry workable

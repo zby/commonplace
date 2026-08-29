@@ -44,39 +44,10 @@ kb/sources/slate-moving-beyond-react-and-rlm.md
 # locally held copyrighted sources
 /kb/sources/sutskevers-list/
 
-# connect reports
-kb/reports/connect/*
+# local workshop outputs
 kb/work/connect/
-
-# critique reports (experimental — see kb/instructions/critique-note.md)
-kb/reports/critique/*
-!kb/reports/critique/README.md
-
-# friction reports (experimental — see kb/instructions/composition-friction-gate.md)
-kb/reports/friction/*
-!kb/reports/friction/README.md
-
-# premise-decomposition reports (experimental — see kb/instructions/premise-decomposition-gate.md)
-kb/reports/premise-decomposition/*
-!kb/reports/premise-decomposition/README.md
-
-# full-pass reports (see kb/work/agent-note-improvement/run-full-improvement-pass-on-note.md)
-kb/reports/full-pass/*
-!kb/reports/full-pass/README.md
 kb/work/review-db-migration/
 kb/work/review-runs-direct-write/
-
-# generated review artifacts
-kb/reports/reviews/**
-!kb/reports/reviews/
-!kb/reports/reviews/README.md
-kb/reports/review-jobs/
-kb/reports/fixes/*.fix-report.md
-kb/reports/review-store.sqlite
-kb/reports/review-store.v5.backup.sqlite
-kb/reports/review-store.sqlite.*.bak
-kb/reports/review-store-backups/
-kb/reports/revise-autoreason/
 
 tmp/
 
@@ -93,8 +64,4 @@ kb/work/auditable-llm-editing/experiment-02-full-memory-article/
 dir-index.md
 
 kb/work/agent-memory-review-rerun-comparison/
-
-kb/reports/commonplace-store.sqlite
-
-kb/reports/bundle-reviews/
 

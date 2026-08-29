@@ -172,7 +172,7 @@ and the delegated authority is matched by resources while responsibility stays
 with the operator — the two preconditions the ADRP ingest calls material; and
 the executing agent inherits the Commonplace doctrine through its real
 consumption path. Each is plausible. The shared-doctrine
-[cue and packet-policy decision](../../reports/planning-delegation-theory/instruction-machinery-refinement.md#cue-and-packet-policy-decision)
+[cue and packet-policy decision](../../reports/retained/planning-delegation-theory/instruction-machinery-refinement.md#cue-and-packet-policy-decision)
 deferred its independent comparison because clean evaluation contexts were not
 available under that turn's delegation boundary. No such case has therefore
 established that this combination preserves intent in execution.

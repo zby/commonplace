@@ -36,7 +36,7 @@ def resolve_link(source: Path, target: str) -> Path | None:
 def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
     """Write the promotion candidates report for kb/notes/."""
     notes_dir = root / "kb" / "notes"
-    reports_dir = root / "kb" / "reports"
+    reports_dir = root / "kb" / "reports" / "cache"
     if not notes_dir.is_dir():
         raise FileNotFoundError(f"Not a directory: {notes_dir}")
 
@@ -89,12 +89,12 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
         lines: list[str] = []
         for rel, title, count, sources in entries:
             source_list = ", ".join(
-                f"[{all_notes[s]['title']}](../notes/{all_notes[s]['rel'].relative_to(notes_dir)})"
+                f"[{all_notes[s]['title']}](../../notes/{all_notes[s]['rel'].relative_to(notes_dir)})"
                 for s in sources[:3]
             )
             if len(sources) > 3:
                 source_list += f" +{len(sources) - 3} more"
-            lines.append(f"- [{title}](../notes/{rel}) - **{count} links in**")
+            lines.append(f"- [{title}](../../notes/{rel}) - **{count} links in**")
             if source_list:
                 lines.append(f"  Sources: {source_list}")
             lines.append("")
@@ -119,7 +119,7 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
         for path, errors in sorted(invalid_frontmatter.items()):
             rel = all_notes[path]["rel"].relative_to(notes_dir)
             title = all_notes[path]["title"]
-            lines.append(f"- [{title}](../notes/{rel})")
+            lines.append(f"- [{title}](../../notes/{rel})")
             for error in errors:
                 diagnostic = " ".join(error.split())
                 lines.append(f"  - {diagnostic}")

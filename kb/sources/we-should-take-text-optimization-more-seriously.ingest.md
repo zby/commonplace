@@ -33,7 +33,7 @@ The essay argues that the mutable "text layer" around a model (prompts, context,
 
 ## Connections Found
 
-The companion connect report (`kb/reports/connect/sources/we-should-take-text-optimization-more-seriously-2064027464926716154.connect.md`) found the article to be a near-exact *upstream restatement* of this KB's continual-learning / substrate-coevolution / deploy-time-learning cluster, with its three pillars mapping one-to-one onto existing notes. Because the source is an immutable `kb/sources/` snapshot (it authors no outbound links), the load-bearing deliverable is seven reverse-edge `evidenced-by` candidates from `kb/notes/` plus one from the agent-memory survey:
+The companion connect report (`kb/reports/cache/connect/sources/we-should-take-text-optimization-more-seriously-2064027464926716154.connect.md`) found the article to be a near-exact *upstream restatement* of this KB's continual-learning / substrate-coevolution / deploy-time-learning cluster, with its three pillars mapping one-to-one onto existing notes. Because the source is an immutable `kb/sources/` snapshot (it authors no outbound links), the load-bearing deliverable is seven reverse-edge `evidenced-by` candidates from `kb/notes/` plus one from the agent-memory survey:
 
 - [continual-learning-open-problem-is-behaviour-not-knowledge](../notes/continual-learning-requires-governing-behaviour-changing-writes.md) — **evidence** for the legitimacy pillar (text layer is a behaviour-change mechanism co-equal with weight updates).
 - [treat-continual-learning-as-substrate-coevolution](../notes/treat-continual-learning-as-representational-form-coevolution.md) — **evidence**; the weights/text "routing problem" and co-evolution argument; pairs with the Meta-Harness citation already there.

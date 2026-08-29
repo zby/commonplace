@@ -19,7 +19,7 @@ kb/                       Knowledge base
   agent-memory-systems/   Reviews of external agent-memory and knowledge systems
   agentic-systems/        Reviews of external agentic systems and harnesses
   sources/                Snapshotted external sources + analysis
-  reports/                Generated review, connect, and fix reports
+  reports/                Cache, state, and retained report outputs
   work/                   Workshop space — in-flight drafts and explorations
   tasks/                  Work tracking
   log.md                  Improvement log

@@ -58,7 +58,9 @@ Author each link from the external reader's need at its source. Search these des
 - **→ `kb/articles/`** — when a companion article gives a distinct reader-facing development or explicit contrast that would interrupt this article. Relationships: `extends`, `contrasts`, `see-also`.
 - **→ `kb/instructions/` and `kb/tasks/`** — when the reader has a concrete operational next step. Relationship: `procedure`.
 
-Do not link into `kb/work/` or `kb/reports/`: unfinished investigations and generated reports are not durable onward paths for an external article reader.
+Do not link into `kb/work/` or `kb/reports/`: workshops are temporary and the
+reports collection is not published, so neither is an available onward path for
+an external article reader.
 
 In-prose links to the `external` destination are authorized for primary attribution, canonical sources, and material an external reader should be able to inspect directly; they carry no formal identifier. External prospecting is part of article research, not `cp-skill-connect`.
 

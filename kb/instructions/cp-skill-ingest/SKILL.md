@@ -154,7 +154,7 @@ re_ingest_request:
 2. **Run connection discovery.**
    Invoke `cp-skill-connect` on the source snapshot path. Wait for it to finish.
    For a source snapshot, require the completed report at
-   `kb/reports/connect/sources/<snapshot-name>.connect.md`. Verify that it
+   `kb/reports/cache/connect/sources/<snapshot-name>.connect.md`. Verify that it
    exists and is non-empty. The parent does not extract connections, classify
    the source, or begin value judgments; those belong to the fresh drafting
    worker.

@@ -46,7 +46,7 @@ Pure prose files do not naturally provide these. A bare-MD port therefore needs 
 
 ## File-Backed Candidate A: Run Directories Plus Event Ledger
 
-Keep each run as a directory under `kb/reports/bundle-reviews/review-run-<id>/`:
+Keep each run as a directory under `kb/reports/state/bundle-reviews/review-run-<id>/`:
 
 ```text
 review-run-123/
@@ -81,7 +81,7 @@ pairs:
     result_path: pairs/prose__source-residue.md
 ```
 
-Each pair markdown file would hold readable review prose plus frontmatter for the pair fields that automation consumes. Acceptance would live in an append-only ledger, for example `kb/reports/reviews/acceptance-events.jsonl`:
+Each pair markdown file would hold readable review prose plus frontmatter for the pair fields that automation consumes. Acceptance would live in an append-only ledger, for example `kb/reports/state/reviews/acceptance-events.jsonl`:
 
 ```json
 {"event_id":1,"note_path":"kb/notes/example.md","gate_path":"kb/instructions/review-gates/prose/source-residue.md","model_partition":"claude-3-5-sonnet-xhigh","accepted_review_pair_id":891,"accepted_note_hash":"abc123","accepted_gate_hash":"def456","accepted_at":"2026-06-23T10:22:00Z","acceptance_kind":"full-review"}
@@ -109,7 +109,7 @@ Costs:
 Store current acceptance near the reviewed artifact or in a mirror tree:
 
 ```text
-kb/reports/reviews/current/notes/example.yaml
+kb/reports/state/reviews/current/notes/example.yaml
 ```
 
 ```yaml
@@ -146,19 +146,19 @@ This option may be acceptable for low-volume artifact classes, but it is a weake
 Represent each acceptance event as a small markdown or YAML file:
 
 ```text
-kb/reports/reviews/events/2026/06/23/000123-full-review.yaml
+kb/reports/state/reviews/events/2026/06/23/000123-full-review.yaml
 ```
 
 Then generate a current-state index for selectors:
 
 ```text
-kb/reports/reviews/current-acceptances.sqlite
+kb/reports/state/reviews/current-acceptances.sqlite
 ```
 
 or:
 
 ```text
-kb/reports/reviews/current-acceptances.json
+kb/reports/state/reviews/current-acceptances.json
 ```
 
 Pros:

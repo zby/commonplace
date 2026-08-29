@@ -21,7 +21,7 @@ Review freshness worked, but its snapshot and baseline tables and its compare/pe
 
 ## Decision
 
-The operational database is `kb/reports/commonplace-store.sqlite` (`COMMONPLACE_STORE`).
+The operational database is `kb/reports/state/commonplace-store.sqlite` (`COMMONPLACE_STORE`).
 
 One freshness mechanism owns path-keyed `file-text` artifact snapshots with mandatory stored text; one current baseline per registered target with a monotonic revision; accepted input roles pointing at snapshots; and a review-only bridge retaining the completed evidence pair for `review-pair` targets.
 

@@ -1,4 +1,4 @@
-# Batch 2 raw findings — mining 15 `kb/reports/connect/sources/*.connect.md`
+# Batch 2 raw findings — mining 15 `kb/reports/cache/connect/sources/*.connect.md`
 
 Sources mined (frontmatter `source:`, report date): adaptation-of-agentic-ai-survey-post-training-memory-skills.md (06-09) · a-new-way-to-think-about-composing-skills...skill-g-2047124337191444844.md (04-23) · borretti-human-routers-of-machine-words.md (06-14) · build-systems-a-la-carte.md (07-06) · can-llms-perform-deep-technical-comprehension.md (07-17) · causal-inference-using-invariant-prediction.md (07-16) · causal-learn-causal-discovery-in-python.md (07-16) · dowhy-expressing-and-validating-causal-assumptions.md (07-16) · dulleck-kerschbamer-doctors-mechanics-computer-specialists.md (07-06) · emergent-analogical-reasoning-transformers.md (05-26) · externalization-in-llm-agents-unified-review.md (04-13) · giants-generative-insight-anticipation-scientific-literature.md (04-24) · how-we-built-our-knowledge-base-2077822555159945507.md (07-17) · interpolation-extrapolation-hyperpolation.md (05-19) · in-toto-farm-to-table-guarantees.md (07-06).
 
