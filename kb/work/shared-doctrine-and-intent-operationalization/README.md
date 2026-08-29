@@ -644,6 +644,36 @@ Use the results as signposts:
   shared doctrine or deterministic machinery. If evidence keeps changing the
   right answer, leave it with the authorized executor.
 
+#### Outcome 5 result (2026-08-29)
+
+Defer the comparison and retain its default decision: use a neutral
+intent-preserving gloss where a cue is useful, do not put *Auftragstaktik* on
+an operative surface, and keep the packet policy exactly as landed in outcomes
+3–4.
+
+No evaluation arm ran. A valid comparison requires fresh independent workers
+whose traces can be inspected across the selected runtime and model
+partitions. This turn cannot commission those workers under its delegation
+boundary. Running all arms in the already-informed parent context would leak
+the hypotheses and would not test activation or contamination. The missing
+capability is therefore an authorized set of clean, independently executed
+contexts with retained traces, not another prompt variant.
+
+That comparison could change only two decisions: whether the military name
+adds coherent adaptation beyond the neutral gloss without importing unrelated
+military machinery, and whether evidence supports compressing another packet
+cohort. It cannot retroactively weaken the authority, evidence, isolation,
+mutation, or recovery controls retained by outcomes 3–4.
+
+No interpreter baseline is assumed by this deferral. A future run must
+preregister a finite held-out task set, each supported runtime and model
+partition, repetitions, and one decision rule before its first arm. A name may
+replace the neutral gloss only if those trials show an advantage over the
+gloss without material contamination in every supported partition where the
+name would operate. A provider-model or context-assembly change invalidates
+that license and triggers re-evaluation. Independently, any delivery-path
+change triggers re-verification before a task packet relies on root doctrine.
+
 ## Drift checks
 
 Stop and re-read "Priorities when requirements conflict" if any of these is
