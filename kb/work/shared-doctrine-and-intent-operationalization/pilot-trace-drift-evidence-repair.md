@@ -1,5 +1,11 @@
 # Multistage pilot: drift, evidence, and repair forward trace
 
+> Historical first-candidate trace. Its state-machine findings remain valid,
+> but its overall failure depended on then-unverified native Claude doctrine
+> delivery. The later direct probe and lean-candidate comparison supersede that
+> consumption-path judgment. See [the final pilot
+> decision](./multistage-pilot.md).
+
 ## Result
 
 The doctrine-compressed candidate preserves the committed workflow on the

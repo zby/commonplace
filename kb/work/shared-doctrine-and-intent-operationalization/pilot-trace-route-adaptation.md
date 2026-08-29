@@ -1,5 +1,11 @@
 # Pilot trace: adapting an unsuitable reconstruction route
 
+> Historical first-candidate trace. Its adaptation findings remain valid, but
+> its overall failure depended on then-unverified native Claude doctrine
+> delivery. The later direct probe and lean-candidate comparison supersede that
+> consumption-path judgment. See [the final pilot
+> decision](./multistage-pilot.md).
+
 ## Evaluation boundary
 
 This is a structural forward trace, not a claim that the workflow was run

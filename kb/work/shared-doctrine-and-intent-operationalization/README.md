@@ -236,14 +236,17 @@ reviewable change.
   `AGENTS.md`; the generated prompt stays the complete task-specific review
   commission. This corrects step 0's earlier premise that review jobs run
   through the CLI instead of a sub-agent spawn.
-- **Claude Code workers — documented delivery, probe unverified.** This
-  checkout's `CLAUDE.md` is a symlink to `AGENTS.md`, and the installed Claude
-  Code CLI documents project-file auto-discovery as the default (its bare mode
-  explicitly disables that discovery). A fresh no-tools probe ended at its
-  cost cap before returning a quote, so direct binding-force evidence was not
-  obtained. Treat Claude Code packets as self-contained and do not compress
-  them against the Commonplace doctrine until a successful fresh-worker probe
-  establishes delivery.
+- **Claude Code native workers — verified ambient delivery.** Two fresh Claude
+  Code 2.1.251 in-process `Agent` workers using non-fork `general-purpose`
+  contexts from this checkout quoted the live parent-control and
+  silence-means-no-delegation sentences exactly. Both attributed them to
+  automatically loaded `CLAUDE.md` → `AGENTS.md`, used no tools or files, and
+  received no parent conversation. The earlier Bash-launched `claude -p`
+  attempt was inconclusive and does not govern this native path. The evidence
+  and scope are recorded in [Claude native-worker doctrine
+  delivery](./claude-native-worker-doctrine-delivery.md). Different working
+  directories, Bash subprocesses, remote or worktree isolation, and custom
+  agent definitions remain outside the verified scope.
 - **No package-owned model runtime.** The review package exposes deterministic
   selection, prompt creation, and finalization seams only. Repository tests
   reject operative instructions that launch `claude` or `codex` subprocesses.
@@ -498,29 +501,30 @@ skill and record why; that result still counts as a completed pilot.
 
 #### Outcome 3 result (2026-08-29)
 
-The [multistage pilot](./multistage-pilot.md) kept the current skill. A
-temporary candidate removed the parent scheduling, integration, and recovery
-defaults and the no-nested-delegation rule from the skill, relying on the new
-root doctrine. Two fresh workers traced both versions through the prior
-drift/evidence/repair scenario and an unsuitable-route scenario with an
-advisory route plus a binding counterfactual.
+The [multistage pilot](./multistage-pilot.md) adopted a lean revision of
+`cp-skill-write-multistage` at SHA-256
+`9e6893a96d3731edd092c5f9276b9acd7e8b7b4e69cf7dc251b177456dc6c6ba`.
+It removes the repeated parent scheduling, integration, and recovery clauses
+and the generic worker write-scope/no-delegation sentence. Root doctrine
+supplies the generic lifecycle and no-nested-delegation rules. Retained
+role-specific clauses supply stricter write scopes. Every task-specific
+evidence, review, digest, repair, drift, recovery, and mutation rule is
+unchanged.
 
-Both versions preserved every workflow invariant on verified Codex. The
-advisory route adapted from chronology to a dependency-preserving form without
-changing contribution, evidence, isolation, or authority; the binding route
-returned control. The candidate did not remove a state, branch, handoff, or
-exception and grew by two lines and twelve words. Because the same canonical
-skill is projected to Claude Code, it also made load-bearing rules implicit on
-a path where step 0 did not verify root-doctrine delivery. Adding a runtime
-fallback would create another branch solely to restore the current text.
+The first candidate was rejected because it grew by two lines and twelve words
+without reducing operational complexity. Its other objection — unverified
+Claude delivery — was later reversed by a direct native-worker probe. The lean
+candidate is one line, 16 words, and 117 bytes smaller than the baseline and
+adds no state, branch, handoff, exception, or fallback.
 
-The candidate was therefore rejected and reverted byte for byte. The live
-skill remains at SHA-256
-`ccb0f2ceeb984b41c5ab11706a2160a4ccbdc9ed8bec57e80513ce0f25aef812`.
-The temporary candidate and both trace artifacts passed Commonplace
-validation, and the scaffold projection test passed all 18 cases. No skill
-cachebuster, reinstall, or lineage change was needed because no live skill
-bytes changed.
+One Codex and one native Claude evaluator traced each of the two acceptance
+scenarios. All four fresh workers found no behavioral or authority divergence.
+The Claude comparison blinded version identity and reversed version ordering
+between scenarios. The advisory route adapted from chronology to a
+dependency-preserving form; the binding route returned control; the evidence
+repair, different-reviewer acceptance, exact digest binding, and live-drift
+stop were identical. Validation passed for all changed artifacts, and the
+scaffold projection test passed all 18 cases.
 
 ### 4. Audit every surface that commissions another agent
 

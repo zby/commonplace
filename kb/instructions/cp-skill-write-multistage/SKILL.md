@@ -23,15 +23,14 @@ evidence, or synthesis remain unsettled. Route a settled edit to
 `cp-skill-write`. Keep work with no authorized library target in a workshop.
 
 The invoking agent is the **parent**. It fixes the commission and authority
-boundary, supplies privileged context, schedules workers, integrates returns,
-owns all live mutations, and handles recovery. Workers choose investigative,
-structural, and prose means inside their assigned result and evidence boundary.
+boundary, supplies privileged context, and owns all live mutations. Workers
+choose investigative, structural, and prose means inside their assigned result
+and evidence boundary.
 
 Use three roles: a fresh source reconstructor, one fresh consolidated author,
-and a fresh independent reviewer. Workers write only their run artifacts and
-do not delegate. Conditional procedures may add roles only where they
-explicitly say so. If the harness cannot provide the required fresh contexts,
-initialize the run and stop before reconstruction.
+and a fresh independent reviewer. Conditional procedures may add roles only
+where they explicitly say so. If the harness cannot provide the required fresh
+contexts, initialize the run and stop before reconstruction.
 
 ## 1. Commission one artifact
 
