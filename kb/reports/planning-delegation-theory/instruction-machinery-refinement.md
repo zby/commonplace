@@ -54,10 +54,11 @@ and repeated rare promotion machinery on its common path.
 | Memory-system review | Change the trigger description from “optional sub-agent drafting” to “delegated drafting,” matching the actual workflow. | Existing anti-recursion, checkout, sole-write, and parent-QA controls. | Code reading, explanation, and review structure inside the artifact contract. |
 | Theory notes | Add formal `Operationalized into:` edges from the delegation, determinability, and productive-deferral notes. | Lineage from theory to procedure. | No new claim of source-side authorship or agent effectiveness. |
 
-The multistage entry file fell from 272 to 219 lines after the forward-test
-clarifications. Its 94-line promotion reference is loaded only after acceptance.
-Total package text did not shrink substantially; common-path context and
-preselection of worker means did. That is the relevant simplification.
+The first multistage pass reduced the entry file from 272 to 219 lines. Its
+94-line promotion reference is loaded only after acceptance. The follow-on
+pilot below reduced the entry file to 218 lines without changing its state
+machine. Total package text did not shrink substantially; common-path context
+and preselection of worker means did. That is the relevant simplification.
 
 ## Surfaces deliberately kept exact
 
@@ -73,9 +74,8 @@ preselection of worker means did. That is the relevant simplification.
 - The external-literature assessment uses bilateral isolation only when
   independence is explicitly at issue. Its extra roles are a conditional
   contamination control, not a default planning topology.
-- The warning-fix sweep and tag follow-up already delegate only disjoint,
-  authorized write sets with parent integration and a substantive-decision
-  stop.
+- The tag follow-up already delegates only a disjoint, authorized write set
+  with parent integration and a substantive-decision stop.
 - Worker-side review criteria and drafting instructions are not additional
   delegation-authoring workflows. Their callers own the handoff.
 
@@ -133,6 +133,145 @@ exits, and grounding composition are covered by the same setup, authority,
 invalidation, and sibling-interface rules. The independent forward test above
 exercised the highest-risk combined path.
 
+## Shared-doctrine operationalization follow-on
+
+The follow-on closed the gap between the theory above and the actual context a
+worker receives. A task commission is now defined as a delta from the
+Commonplace doctrine that its runtime verifiably supplies. Shared doctrine can
+answer an omitted choice already settled by the system. It can also guide an
+authorized worker in constructing a previously undecided means from task
+intent, binding bounds, and execution evidence. An omission that is neither
+inherited, deliberately delegated, nor irrelevant remains a gap and returns to
+the parent.
+
+The theory was folded into the existing delegation, determinability, and
+weight-resident-methodology notes; no new layer ontology or note was added. The
+instruction collection, instruction type, writing instruction, workshop
+contract, mailbox contract, and control-plane reference now make context
+completeness relative to a verified delivery path. Parent scheduling,
+integration, recovery, and the default denial of unauthorized nested
+delegation may be inherited on such a path. Task purpose, authority,
+commitments, owned mutations, acceptance, and return conditions remain local
+when standing doctrine cannot determine them.
+
+Commonplace accepts one broad dependency for universal root, collection, and
+type rules. Editing one of those rules reopens the commissioning cohort before
+another packet may omit it. Narrower methodology dependencies still use
+source-side lineage. This keeps the dependency searchable without adding a
+per-packet field or schema.
+
+### Verified delivery boundary
+
+The delivery evidence was collected on 2026-08-29 from this checkout:
+
+| Path | Evidence | Supported conclusion |
+|---|---|---|
+| Codex harness fresh worker | A fresh worker with parent-turn inheritance disabled quoted the root Delegation rule before opening a file and identified it as ambient repository instruction. | Root `AGENTS.md` is a binding baseline on this direct path; parent task narrative is not inherited. |
+| Claude Code 2.1.251 native non-fork `general-purpose` worker | Two concurrent workers quoted the parent-lifecycle and silence-means-no-nested-delegation sentences exactly, attributed them to automatically loaded `CLAUDE.md` → `AGENTS.md`, used no tools, and reported no parent conversation. | The same generic delegation defaults may be inherited on this native path. |
+| Generated review job | Source inspection showed that Commonplace creates and finalizes jobs but launches no model. The current parent supplies the generated prompt to a fresh harness worker. | The ambient baseline is a property of that harness path, not the CLI. The generated prompt remains the complete, portable task-specific contract. |
+| Bash subprocess, different working directory, remote or worktree isolation, or custom agent definition | No conclusive delivery probe. An earlier `claude -p` Bash attempt did not establish the native path. | A packet on one of these paths must carry every relied-on rule until that path is verified. |
+
+These probes establish delivery and provenance, not compliance under task
+pressure. The native Claude workers also received user-level instructions,
+memory, environment, tools, and skill listings; the context was not
+doctrine-only.
+
+### Multistage compression pilot
+
+The first doctrine-delta candidate was rejected. It added two lines and twelve
+words without reducing operational complexity, and its then-unverified Claude
+delivery premise prevented adoption. The direct native-worker probe reversed
+that delivery objection but not the complexity judgment.
+
+The adopted lean candidate has SHA-256
+`9e6893a96d3731edd092c5f9276b9acd7e8b7b4e69cf7dc251b177456dc6c6ba`.
+Against the baseline at SHA-256
+`ccb0f2ceeb984b41c5ab11706a2160a4ccbdc9ed8bec57e80513ce0f25aef812`,
+it is one line, 16 words, and 117 bytes smaller. It removes only repeated
+parent scheduling, integration, recovery, and no-delegation wording, plus one
+generic write-scope sentence. Root doctrine carries the lifecycle and
+delegation rules; retained role clauses give the reconstructor, author, and
+reviewer stricter write ownership. Every task-specific evidence, isolation,
+review, digest, repair, drift, mutation, rollback, and user-decision control is
+unchanged.
+
+One Codex and one native Claude evaluator independently traced each of two
+acceptance scenarios. All four found no behavioral or authority divergence.
+The advisory scenario changed an unsuitable chronological route to a
+dependency-preserving form while holding contribution and evidence fixed. The
+binding-format counterfactual returned control. The drift scenario preserved
+fresh reconstruction and authorship after new evidence, different-reviewer
+acceptance of changed bytes, exact digest binding, and the live-target stop.
+The Claude comparisons used neutral version names and reversed ordering.
+
+This is evidence of behavioral equivalence for the two tested scenarios on the
+two verified paths. It does not show that shorter packets improve model
+performance in general.
+
+### Frozen commissioning-surface audit
+
+The audit froze 230 tracked control-plane files at commit
+`20cc50f82f88f50e7b0dca71ec843d7ca28b647a`. It covered `AGENTS.md`,
+`AGENTS.md.template`, `kb/instructions/`, `kb/types/`, `kb/messages/`,
+`kb/tasks/`, and `src/commonplace/`. Canonical sources were inspected instead
+of their skill symlink projections. Every instruction and type file was
+enumerated, then four `git grep -Il -E` search families screened for delegation
+(39 files), prompt or packet production (93), deferral (40), and invocation or
+composition (65). Run messages, historical workshops, generated reports,
+source ingests, criteria, and composition-only callers were not counted as
+reusable packet producers.
+
+Each real cohort was checked for its delivered baseline, task intent and
+acceptance, inherited choices, deliberately delegated choices, retained exact
+controls, and unresolved gap. The sixteen dispositions were:
+
+| Cohort | Disposition | Reason retained |
+|---|---|---|
+| Workshop commissions | Retain exact | Authority, owned mutations, coordination, acceptance, and return vary by task. |
+| Mailbox requests | Retain exact | Recipient paths may cross sessions or harnesses, so messages are self-contained unless a verified path is named. |
+| Source-checkout task documents | Defer | Whether the source-only task subsystem should ship remains unsettled. |
+| Multistage writing | Revise | The verified Codex and native-Claude paths carry generic lifecycle and delegation defaults; the pilot retained every role-specific control. |
+| Source ingest and re-ingest | Retain exact | Snapshot identity, opaque Quotes bytes, clean context, replacement, and restore are correctness controls. |
+| Agentic-system lens workers | Defer | The active agentic-system migration still owns the physical result shape a reusable packet would have to select. |
+| External-literature bilateral isolation | Retain exact | Blind roles, admitted-source authority, and the explicit `cp-skill-ground` → ingest exception prevent contamination and authority drift. |
+| Warning-fix sweep | Revise | Verified root doctrine replaces repeated generic lifecycle and no-delegation text; disjoint writes, validation, anti-orchestration, and substantive-decision stops remain local. |
+| `revise-note` tag follow-up | Retain exact | It already states the exact disjoint delta, authority, validation, and return boundary. |
+| Standalone compression review | Revise | Root doctrine replaces only `or delegate`; captured-byte authority, report-only ownership, grammar, and fresh independence remain local. |
+| Standalone critique, friction, and premise checkers | Retain exact | Their report-only, no-verdict, output-shape, and independence controls create the required decorrelation. |
+| Full improvement pass | Defer | Source identity, captures, phase transitions, recovery, schema, and rollback form one state machine. |
+| Review-job dispatch and generated prompt | Retain exact | Portability, one-file authority, parser grammar, telemetry, and atomic finalization make self-containment part of the protocol. |
+| Agent-memory review drafting | Defer | Archiving the incumbent before worker availability can leave no active review; candidate promotion or exact restore needs a focused failure-path design. |
+| AutoReason revision | Defer | Its seven-role blind tournament, parseable returns, reruns, and recovery are a versioned experimental protocol. |
+| Second Brain fresh-agent example | Revise | Its two files are task evidence, not the worker's whole context; the read-only and no-other-file boundary is now explicit. |
+
+Four cohorts were therefore revised, including the multistage pilot; seven
+retained their exact controls; and five remain behind named evidence or design
+gates. The operative follow-on added no schema, state, branch, handoff,
+exception, parser field, runtime fallback, packet template, or checked-text
+reuse mechanism.
+
+### Cue and packet-policy decision
+
+No *Auftragstaktik* comparison was run. The closing turn could not commission
+the clean independent workers required for a multi-arm comparison under its
+delegation boundary. Having the already-informed parent simulate every arm
+would leak the hypotheses and would not test either activation or military
+contamination.
+
+The scoped default is therefore operative: use a neutral intent-preserving
+gloss where a cue helps, keep *Auftragstaktik* off operative surfaces, and do
+not extend packet compression beyond the audited cohorts without fresh
+evidence. This is a deferral, not evidence that the neutral gloss performs
+better.
+
+A future comparison must preregister its finite held-out task set, supported
+runtime and model partitions, repetition count, retained traces, and one
+decision rule before its first arm. The name may replace the gloss only if it
+improves coherent adaptation without material military imports in every
+partition where it would operate. A provider-model or context-assembly change
+invalidates that license. Any delivery-path change separately requires a new
+doctrine-delivery probe before a packet relies on the ambient baseline.
+
 ## Validation
 
 - Every changed KB artifact passed `commonplace-validate` without warnings or
@@ -140,6 +279,10 @@ exercised the highest-risk combined path.
 - The promoted-skill scaffold test passed all 18 cases, including copying the
   new conditional reference.
 - `git diff --check` passed.
+- The shared-doctrine follow-on passed clean `commonplace-validate` checks for
+  every changed KB artifact. The instruction-safety test passed both cases.
+- The multistage scaffold projection test passed all 18 cases against the
+  adopted lean candidate.
 - The generic Codex skill validator rejected Commonplace's pre-existing
   runtime frontmatter keys (`type`, `context`, `user-invocable`, and
   `argument-hint`). Those live Commonplace fields were preserved; the mismatch

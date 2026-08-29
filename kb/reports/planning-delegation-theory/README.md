@@ -19,20 +19,28 @@ non-adversarial agent work.
   reasoning, DAPP, and set-based practice; includes transfer boundaries,
   composition checks, source-revisit conditions, and a machinery handoff.
 - [Instruction machinery refinement](./instruction-machinery-refinement.md) —
-  records the second authoring sweep, the simplified multistage writer,
-  preserved exact protocols, deferred redesigns, and its independent forward
-  test.
+  records the authoring sweeps, verified Codex and native-Claude doctrine
+  delivery, the simplified multistage writer, all sixteen commissioning-surface
+  dispositions, deferred redesigns, and the cue-policy decision.
 - [Commit / wait / probe assay](./commit-wait-probe-assay/report.md) — blinded
   one-model smoke test retained with its cases, rubric, runner, packets, and
   responses. Its 8/8 treatment result versus 7/8 control missed the
   preregistered threshold and warrants no machinery change; retain it only to
   improve a later replication.
 
-## Deliberately unrun experiment
+## Deliberately deferred experiment
 
-The workshop did not run the methodology-cue activation-fidelity assay. If the
-question returns, compare no cue, bare *Auftragstaktik*, and the explicit gloss
-“preserve intent and constraints; delegate execution-time choice of means”
-across supported model partitions. Judge both activation of the bounded
-mechanism and rejection of irrelevant military machinery. Until representative
-trials discriminate those variants, the gloss is the safer operative form.
+The shared-doctrine follow-on did not run the methodology-cue
+activation-fidelity assay because its closing turn could not commission clean
+independent contexts under the available delegation boundary. Parent-side
+self-comparison would have leaked the hypotheses. This is not evidence that
+the neutral gloss performs better.
+
+If the question returns, preregister a finite held-out task set, supported
+runtime and model partitions, repetitions, retained traces, and one decision
+rule. Compare the landed doctrine-plus-task delta, the same packet with the
+neutral gloss “preserve intent and constraints; delegate execution-time choice
+of means,” and that gloss plus *Auftragstaktik*. Judge both activation of the
+bounded mechanism and rejection of irrelevant military machinery. Until those
+trials discriminate the variants, use the neutral gloss and keep the name off
+operative surfaces.
