@@ -125,17 +125,22 @@ change the permitted means. The military content does not enter.
 
 ## Evaluation boundary
 
-A computational-closure claim must name a task-selection rule, objective and
-acceptance criterion, system boundary, permitted exogenous inputs, horizon,
-resource budget, and coverage or abstention rule. Task selection must be fixed
-independently of the candidate system and its observed outcomes.
+A computational-closure claim must name a task-selection rule and who
+controls it, the objective and acceptance criterion, system boundary, permitted
+exogenous inputs, horizon, resource budget, and coverage or abstention rule.
+The rule and its treatment of failures and abstentions must be declared before
+the evaluated outcomes are observed. When the candidate controls task
+selection, that choice is part of the automatic path and the claim covers only
+the resulting self-selected workload. An externally anchored capability
+comparison requires task selection that the candidate does not control.
 
 For every selected task, trace the path from task presentation through
 decomposition, execution, evaluation, recovery, and any later episode inside
-the horizon. The path is computationally closed when every consequential
-decision on it is made inside the declared boundary or arrives through an
-explicitly allowed exogenous input. Human judgment may not be hidden in task
-selection, acceptance, evaluator design, repair, or continuation.
+the horizon. The path is computationally closed when every required decision
+and transition is determined and executable inside the declared boundary or
+arrives as an explicitly allowed exogenous input. Human judgment or execution
+may not be hidden in task selection, acceptance, evaluator design, repair, or
+continuation.
 
 Closure says where decisions are made, not whether they are good. Failure and
 abstention therefore do not disappear from scope; they count against capability
