@@ -241,7 +241,8 @@ against this workshop and then closes under the workshop contract.
 - [Target problems](./target-problems.md) — the problems the series
   addresses, stated independently of any source.
 - [Match register](./match-register.md) — per source: problem match,
-  mechanism-match status, non-transfer boundary; four worked rows.
+  mechanism-match status, non-transfer boundary; six worked rows; audited
+  2026-08-29.
 - [Shared model](./shared-model.md) — the current architecture, bootstrap
   relation, practical payoff, closure condition, and progress dimensions.
 - [Closure–capability map](./closure-capability-map.md) — comparison coordinates,

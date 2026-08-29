@@ -16,7 +16,8 @@ only after the claim it expresses has a disposition.
 | Promoted | An accepted successor contains exact replacement wording and evidence; the destination is recorded here. |
 
 Where a defeat was a transfer past a source's shared mechanism, the
-[match register](./match-register.md) records the row (S2, C3, R2) and the
+[match register](./match-register.md) records the row (C3; S2 and R2 were
+target-side defeats with no borrowed source) and the
 reconstruction must re-derive the claim from that mechanism or drop it.
 
 Moving a claim requires five fields: source claim ID, exact successor wording,

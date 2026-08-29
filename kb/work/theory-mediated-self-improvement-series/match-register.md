@@ -3,7 +3,9 @@
 One row per source tradition the series borrows from, following
 [problem matches guide method search and mechanism matches bound transfer](../../notes/problem-matches-guide-method-search-mechanism-matches-bound-transfer.md).
 A **problem match** pairs a bounded source problem with one of the
-[target problems](./target-problems.md) and returns candidate responses; it
+[target problems](./target-problems.md) — each established independently of
+any source and stated at a level where target, feedback, information
+structure, and failure mode stay visible — and returns candidate responses; it
 warrants nothing. A **mechanism match** holds when the response's operative
 mechanism and its premises are independently present in the target part the
 response would govern; only that shared relation carries warrant, and every
@@ -20,28 +22,33 @@ accepted article or a library note; **conjectured** — the match is plausible
 and its conditions are stated but not yet argued; **contrast** — the source
 enters as a comparison class, not a transferred mechanism; **evidence** — the
 source is a case for the closure–capability map, not a method; **failed** — a
-draft assumed transfer past the shared mechanism and review defeated it; **to
-assess** — no disposition yet.
+draft assumed transfer past the shared mechanism and review defeated it;
+**form** — a reporting or organizing form transfers, with no operative
+mechanism and so no mechanism match; **instance** — the source is a member of
+the target class, not a tradition borrowed from; **to assess** — no
+disposition yet. A worked row in this register is an argument, not a carrier:
+it can raise a status to conjectured, never to established.
 
 ## Register
 
 | Source | Bounded source problem | Target | Match depth | Candidate response | Mechanism-match status | Non-transfer boundary |
 |---|---|---|---|---|---|---|
-| Naur 1985, *Programming as Theory Building* ([ingest](../../sources/programming-as-theory-building.ingest.md)) | Why documented programs die when their programmers leave: what a program's theory is and why documentation did not transfer it | P1 | Causal-origin: the theory is a capacity a package may fail to carry, in source and target alike | Theory as capacity, not text; three bearer tests; transfer needs contact with the holder | **Established** (accepted Naur article). See worked row 1. | The human-binding conclusion, which runs through a premise absent in the target; any claim that a composite holds a theory |
-| Ryle, via Naur | Rule-following regress | P1 | Causal-origin: the regress applies to any rule-follower | Intelligent behaviour is not rule-following all the way down | Established as far as articulable rules; does not decide trained recognizers | Any claim about what a recognizer does or does not judge |
-| Popper 1966 ([ingest](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md)) | Growth of objective knowledge through criticism of stated theories | P3, and P1's "what a theory is" | Causal-origin for criticism: a stated theory has consequences beyond its producer in both | Theory as an objective product with consequences beyond its producer; the problem–theory–criticism cycle | **Established** for criticism of an objective theory; admission and acceptance are target-side. See worked row 5. | Acceptance and operational checks, which the source leaves unspecified; the immediate successor-problem step as an operational stage; logical relations equated with what an interpreter finds |
-| Argyris 1977 ([ingest](../../sources/argyris-organizational-learning-and-mis-1977.ingest.md)) | Organizational error correction when the theory governing behaviour differs from the one stated; self-sealing control systems | P3 | Per candidate. Operativity test: causal-origin — the actor acquired its operating theory tacitly before any declared theory existed, by socialization there and pretraining here. Update-target distinction: downstream — double loop is hard there because of threat, here because of a fixed decomposition and evaluator. Self-sealing: downstream — Model I is absent; training-induced disposition is only an analogue | Espoused theory vs theory-in-use; single- and double-loop learning; self-sealing | **Established** for the operativity test and the update-target distinction; **conjectured** for structural self-sealing; the motivational mechanism does not transfer. See worked row 6. | Model I values, defensive routines, organizational politics; the claim that double loop *changes* rather than questions governing variables; any evidence about agent-architecture performance |
+| Naur 1985, *Programming as Theory Building* ([ingest](../../sources/programming-as-theory-building.ingest.md)) | Why documented programs die when their programmers leave: what a program's theory is and why documentation did not transfer it | P1 | Causal-origin: the similarity judgment's criteria cannot be formulated — the accepted article leaves that generator intact and breaks only the bridge premise | Theory as capacity, not text; three bearer tests; transfer needs contact with the holder | Per candidate. Theory as capacity: **established**; bearer tests: **established** (both argued in the accepted Naur article); contact with the holder: **conjectured** — one episode's evidence, by the article's own caveat. See worked row 1. | The human-binding conclusion, which runs through a premise absent in the target; any claim that a composite holds a theory |
+| Ryle, via Naur | Rule-following regress | P1 | Causal-origin as far as it reaches: the regress concerns rules a person could follow, so it applies to articulable rules in both and does not decide trained recognizers | Intelligent behaviour is not rule-following all the way down | Established as far as articulable rules; does not decide trained recognizers | Any claim about what a recognizer does or does not judge |
+| Popper 1966 ([ingest](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md)) | Growth of objective knowledge through criticism of stated theories | P3; also supplies the register's sense of *retained theory* for P1, which is a definitional supply, not a problem match | Causal-origin for criticism: a stated theory has consequences beyond its producer in both | Theory as an objective product with consequences beyond its producer; the problem–theory–criticism cycle | **Established** for criticism of a single retained object; **conjectured** for cross-object incompatibility detection, which the target performs reliably only when externalized into structure; admission and acceptance are target-side. See worked row 5. | Acceptance and operational checks, which the source leaves unspecified; the immediate successor-problem step as an operational stage; logical relations equated with what an interpreter finds; incompatibility detection across notes loaded together, which the target's composition without scoping makes unreliable |
+| Argyris 1977 ([ingest](../../sources/argyris-organizational-learning-and-mis-1977.ingest.md)) | Organizational error correction when the theory governing behaviour differs from the one stated; self-sealing control systems | P3 | Per candidate. Operativity test: downstream — the shared generator would be tacit acquisition of the operating theory before any declared theory (socialization there, pretraining here), but the ingest retains no acquisition claim, so causal-origin waits on a grounding run. Update-target distinction: downstream — double loop is hard there because of threat, here because of a fixed decomposition and evaluator. Self-sealing: downstream — Model I is absent; training-induced disposition is only an analogue | Espoused theory vs theory-in-use; single- and double-loop learning; self-sealing | **Established** for the operativity test (carried by the consumption-path note) and the update-target distinction (carried by the generality note); **conjectured** for the learning unit (ledger C2 pending) and for structural self-sealing, whose premise is an evaluator whose acceptance standard the candidate can reconstruct; the motivational mechanism does not transfer. See worked row 6. | Model I values, defensive routines, organizational politics; the claim that double loop *changes* rather than questions governing variables; any evidence about agent-architecture performance |
 | Craik 1943 ([ingest](../../sources/craik-hypothesis-on-the-nature-of-thought-1943.ingest.md)) | Why an organism benefits from an internal model | P3 | Unassessed | Try alternatives on the model before the world | **To assess**; snapshot required for any quote | Learning and validation of the model, which the source leaves open |
-| Ashby 1960; Conant & Ashby 1970 ([ingest](../../sources/ashby-design-for-a-brain-1960.ingest.md), [ingest](../../sources/conant-ashby-every-good-regulator-1970.ingest.md)) | Adaptation without a theory: ultrastability; what a regulator must contain | P3 (contrast), P2 | Contrast; no match claimed | Theory-free adaptation as the contrast class; a good regulator contains a model of what it regulates | **Contrast** | Ultrastability is not a mechanism for theory-mediated loops; the regulator theorem's model is not retained natural-language theory |
-| Sutton 2019, *The Bitter Lesson* ([ingest](../../sources/sutton-the-bitter-lesson-original-essay.ingest.md)) | Why hand-built domain knowledge loses to methods that exploit computation | P5 | Causal-origin: growing computation rewards search and learning over hand-built knowledge in both | The production-method axis (specified vs selected by search or learning) | **Established** (accepted Bitter Lesson article). See worked row 2. | The weights-only extrapolation: the source's mechanism concerns production, and representational form is a separate axis |
-| Sutton & Javed ([ingest](../../sources/sutton-javed-why-ai-models-stop-learning.ingest.md)) | Why deployed models stop learning; context-state adaptation vs continual weight learning | P5 | Causal-origin for the big-world premise; the response mechanism failed | Concept formation requires continued weight learning | **Failed** as the continual-learning draft used it (C3: concept formation claimed for the composite without an autonomous witness); the big-world premise and the "what keeps knowledge correct" question transfer | The inference "concepts formed by weights must continue by weights"; the concept-formation label for artifact-level changes |
+| Ashby 1960; Conant & Ashby 1970 ([ingest](../../sources/ashby-design-for-a-brain-1960.ingest.md), [ingest](../../sources/conant-ashby-every-good-regulator-1970.ingest.md)) | Adaptation without a theory: ultrastability; what a regulator must contain | P3 (contrast) | No depth: contrast | Theory-free adaptation as the contrast class; a good regulator contains a model of what it regulates | **Contrast** | Ultrastability is not a mechanism for theory-mediated loops; the regulator theorem's model is not retained natural-language theory |
+| Sutton 2019, *The Bitter Lesson* ([ingest](../../sources/sutton-the-bitter-lesson-original-essay.ingest.md)) | Why hand-built domain knowledge loses to methods that exploit computation | P5 | Causal-origin: growing computation is the generator in both — P5 names compute among its growth variables — and it rewards search and learning over hand-built knowledge | The production-method axis (specified vs selected by search or learning) | **Established** (accepted Bitter Lesson article). See worked row 2. | The weights-only extrapolation: the source's mechanism concerns production, and representational form is a separate axis |
+| Sutton & Javed ([ingest](../../sources/sutton-javed-why-ai-models-stop-learning.ingest.md)) | Why deployed models stop learning; context-state adaptation vs continual weight learning | P5 | Per candidate. Big-world premise: causal-origin — the world exceeds what any store holds, in both. Weight-learning response: no depth claimed | Two candidates: (a) the big-world premise and the "what keeps knowledge correct" question; (b) concept formation requires continued weight learning | (a) **conjectured**: the premise is shared and the question transfers, with no carrier note yet; (b) **failed** as the continual-learning draft used it (C3: concept formation claimed for the composite without an autonomous witness) | The inference "concepts formed by weights must continue by weights"; the concept-formation label for artifact-level changes |
 | Schmidhuber, Gödel machine ([ingest](../../sources/goedel-machines-schmidhuber.ingest.md)) | Self-modification gated on a proof of higher axiomatized utility | P2 | Contrast; no match claimed | Gate before self-modification; searcher itself revisable | **Contrast** (the proof-governed limit; library note exists) | The proof gate requires an axiomatized utility the target lacks; nothing beyond the gate structure transfers |
-| DGM, HGM, HyperAgents ([ingest](../../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md), [ingest](../../sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md), [ingest](../../sources/hyperagents.ingest.md)) | Empirical self-improving coding loops with archive and benchmark selection | P2, P4 | Evidence; not a borrowed mechanism | Cases of viability-only gates, fixed outer loops, unestablished compounding | **Evidence** for the closure–capability map | No method transfers; the cases populate regions |
-| Memento-Skills, Co-Harness, Agent Symbolic Learning ([ingest](../../sources/memento-skills-let-agents-design-agents.ingest.md), [ingest](../../sources/co-harness-co-evolving-harness-and-model-weights.ingest.md), [ingest](../../sources/symbolic-learning-enables-self-evolving-agents.ingest.md)) | Learning localized artifacts around a frozen model inside a bounded update space | P5 | Instance of the target class, not a source tradition | Rewrite–test–rollback over prompts, skills, tools; alternation with fine-tuning | **Established** as existence evidence that the selected-localized cell is populated | Scaling, evaluator–deployment match, generalization of retained artifacts |
-| Prime Agent, Recuris, Apodex ([ingest](../../sources/prime-agent-a-self-improving-rlm-harness.ingest.md), [ingest](../../sources/apodex-1-1-scaling-agentic-intelligence-for-complex-work.ingest.md)) | Persistent harnesses that retain rules or weights | P3 (contrast) | Evidence; not a borrowed mechanism | Retention without a revisable theory | **Evidence** (library evidence note exists) | Nothing transfers as method |
-| Bainbridge 1983, *Ironies of Automation* | An operator asked to monitor a system installed because it outperforms the operator | P2 | Causal-origin: selective automation leaves the residue it could not take, in both | Automation leaves the residue that could not be automated; the monitoring irony; skill loss without routine contact | **Conjectured** for the degradation mechanism (extraction candidate E9); established for the residue reading in library notes | Industrial process-control specifics; any claim about how often the irony bites |
-| Parasuraman, Sheridan & Wickens 2000 | Which stages of a task to automate, judged by consequences | P4 | Downstream: supervisory-control allocation and pathway-function allocation share the reporting problem, not its cause | Per-function allocation profile; allocation judged by performance, reliability, and cost of consequences | **Established** with declared departures (closure-tracking note): the functions are the pathway's own, the ten-level scale is not inherited | The within-function level scale; task-performance stages |
-| Mission command (ADRP 6-0, MCDP 1, Stahel) ([ingest](../../sources/us-army-adrp-6-0-mission-command-2012.ingest.md), [ingest](../../sources/david-stahel-auftragstaktik-mission-command.ingest.md)) | Allocating purpose, information, and decision rights when upstream holds intent and execution holds the state | P6 | Downstream: no adaptive opponent in the workshop; only the later control problem is shared | Commander's intent: purpose, key tasks, end state; bounded executor authority; governed return of control | **Conjectured**. See worked row 4. | Hierarchy, rank, doctrine, adversarial purpose; the label as stable guidance (Stahel) |
+| DGM, HGM, HyperAgents ([ingest](../../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md), [ingest](../../sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md), [ingest](../../sources/hyperagents.ingest.md)) | Empirical self-improving coding loops with archive and benchmark selection | P2, P4 | No depth: evidence | Cases of viability-only gates, fixed outer loops, unestablished compounding | **Evidence** for the closure–capability map | No method transfers; the cases populate regions |
+| Memento-Skills, Co-Harness, Agent Symbolic Learning ([ingest](../../sources/memento-skills-let-agents-design-agents.ingest.md), [ingest](../../sources/co-harness-co-evolving-harness-and-model-weights.ingest.md), [ingest](../../sources/symbolic-learning-enables-self-evolving-agents.ingest.md)) | Learning localized artifacts around a frozen model inside a bounded update space | P5 | No depth: instance | Rewrite–test–rollback over prompts, skills, tools; alternation with fine-tuning | **Instance**: existence evidence that the selected-localized cell is populated; no mechanism borrowed | Scaling, evaluator–deployment match, generalization of retained artifacts |
+| Prime Agent, Recuris, Apodex ([ingest](../../sources/prime-agent-a-self-improving-rlm-harness.ingest.md), [ingest](../../sources/apodex-1-1-scaling-agentic-intelligence-for-complex-work.ingest.md)) | Persistent harnesses that retain rules or weights | P3 (contrast) | No depth: evidence | Retention without a revisable theory | **Evidence** (library evidence note exists) | Nothing transfers as method |
+| Bainbridge 1983, *Ironies of Automation* ([ingest](../../sources/ironies-of-automation.ingest.md)) | An operator asked to monitor a system installed because it outperforms the operator | P2 | Downstream: the source residue is what the designer could not think how to automate — arbitrary, by the ingest's reading — not a warrant-selected residue; the shared problem is the operator left with it | Automation leaves the residue that could not be automated; the monitoring irony; skill loss without routine contact | **Conjectured** throughout. The library notes cite Bainbridge as convergent precedent (`evidenced-by`), not as a mechanism match, and the residue they establish is the elastic backlog, which the KB distinguishes from P2's selection effect. Three residues — arbitrary (Bainbridge), elastic-backlog (relocation note), warrant-selected (P2) — are not one mechanism | Industrial process-control specifics; the analogy to agent oversight, which the ingest says is asserted, not tested; any claim about how often the irony bites |
+| Parasuraman, Sheridan & Wickens 2000 ([ingest](../../sources/model-types-levels-human-interaction-automation.ingest.md)) | Which stages of a task to automate, judged by consequences | P4 | Downstream: supervisory-control allocation and pathway-function allocation share the reporting problem, not its cause | Per-function allocation profile; allocation judged by performance, reliability, and cost of consequences | **Form**: a per-function reporting form transfers, with three declared departures in the closure-tracking note — the functions are the pathway's own, the ten-level scale is not inherited, and allocation establishes nothing about warrant. No operative mechanism, so no mechanism match | The within-function level scale; task-performance stages; any inference from an allocation to its warrant or safety |
+| Mission command (ADRP 6-0, MCDP 1, Stahel) ([ingest](../../sources/us-army-adrp-6-0-mission-command-2012.ingest.md), [ingest](../../sources/marine-corps-mcdp-1-warfighting-1997.ingest.md), [ingest](../../sources/david-stahel-auftragstaktik-mission-command.ingest.md)) | Command against an intelligent opponent who observes, resists, and responds, under friction and information limits, so that plan and execution diverge; the response allocates purpose, information, and decision rights toward the actor who can observe the resulting state | P6 | Downstream: no adaptive opponent in the workshop; only the later control problem is shared | Commander's intent: purpose, key tasks, end state; bounded executor authority; governed return of control | **Conjectured**. See worked row 4. | Hierarchy, rank, doctrine, adversarial purpose; the label as stable guidance (Stahel) |
+| FunSearch; AlphaDev (no ingest) | Search-selected programs retained and reused in bounded settings | P5 | No depth: instance | Existence evidence that the selected-localized cell is populated | **To assess**: cited by the accepted Bitter Lesson article as its only existence evidence, with no ingest and no row until now; ingest or replace before the article publishes | Economy of search, evaluator–deployment match, generalization |
 | Internal: [codifying predictable choices leaves agents with less predictable work](../../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md) | Composition of residual agent work after preferential codification | P2 | Causal-origin: the same selection mechanism, with the selector changed | Selection effect on the residue | **Established** (note written 2026-08-28). See worked row 3. | The planning consequence (executor information advantage) does not move unchanged |
 
 ## Worked rows
@@ -67,7 +74,10 @@ carry possession.
 
 **Non-transfer boundary.** Blocking the bridge shows nothing about whether
 any composite holds a theory. The accepted article's own repair episode is a
-target-side test that a composite failed the third bearer test.
+target-side test that a composite failed the third bearer test. The third
+candidate — transfer needs contact with the holder — is carried by that one
+episode only, "evidence about one note on one day" in the article's words,
+and stays conjectured.
 
 ### 2. Sutton 2019 → P5
 
@@ -119,15 +129,21 @@ workshop. The match returns commander's intent (purpose, key tasks, end state)
 and bounded executor authority as candidates, which the README's Intent
 section uses.
 
-**Mechanism match, conditions.** The match holds only if three things are
-independently true of the workshop: the operator holds a purpose the
+**Mechanism match, conditions.** The bounded source problem is one level
+deeper than the shared control problem: command against an opponent who
+observes and responds, under friction. The workshop has no opponent, so the
+match is downstream. It holds only if five things are independently true of
+the workshop: the operator holds a purpose the
 executing agents cannot safely reconstruct (attracting researchers is not
 derivable from the artifacts); the agents hold decision-relevant execution
 evidence the operator does not have at handoff (what review passes found);
 and the handoff governs integration, verification, and return of control (the
 ledger, the closure conditions, and the ADR 080 hand-back when a change would
-alter a claim). Each is plausible; none has been tested by a case where an
-agent changed a task to serve the intent and the change was judged right.
+alter a claim); the executing agents are competent for the delegated means;
+and the delegated authority is matched by resources while responsibility stays
+with the operator — the two preconditions the ADRP ingest calls material. Each
+is plausible; none has been tested by a case where an agent changed a task to
+serve the intent and the change was judged right.
 
 **Non-transfer boundary.** Nothing about hierarchy, rank, doctrine, or
 adversarial purpose transfers. Stahel's warning applies: the label
@@ -157,10 +173,16 @@ observations — by a consumer who need not be its producer, and that
 eliminating an error this way changes the problem. Its premises are: the
 theory is stated, so it has content beyond anyone's grasp of it; some consumer
 can derive consequences; criticism is applied with the strongest available
-means. All three are independently present in the target part this governs,
-the retained-theory layer. A note is a stored object; a language-model
-interpreter derives consequences and finds incompatibilities across notes;
-review gates apply criticism. So three things transfer: retained theory is an
+means. The first and third are independently present in the target part this
+governs, the retained-theory layer: a note is a stored object, and review
+gates apply criticism. The second is present for a single object — an
+interpreter derives consequences from one note under a bounded context — but
+not reliably across objects: contradictions between notes loaded together are
+averaged rather than flagged, [since mechanistic constraints make Popperian
+KB recommendations actionable](../../notes/mechanistic-constraints-make-popperian-kb-recommendations-actionable.md)
+only when criticism is externalized into structure. Incompatibility
+detection across the corpus is therefore a target-side construction, not a
+transferred mechanism. So three things transfer: retained theory is an
 addressable object, not a mental state (this is what the accepted Naur article
 means by *retained theory* as against *holding* it); criticism operates on the
 object and can be done by a consumer who does not hold the capacity the object
@@ -214,17 +236,22 @@ camouflaged, "the camouflage is camouflaged").
 - *Operativity test.* Mechanism: behaviour is governed by whatever theory is
   actually consumed in selecting it, not by what is declared. Premises: an
   actor selects behaviour; some representation participates; the declared and
-  the participating representation can differ. All present in the target, and
-  already carried by
+  the participating representation can differ. All present in the target. The
+  inertness half — a stored representation never consulted governs nothing —
+  is carried by
   [an action model matters only through its consumption path](../../notes/an-action-model-matters-only-through-its-consumption-path.md)
-  and the behavioral-authority definition. Transfers as P3's criterion: the
+  and the behavioral-authority definition; the divergence half — a declared
+  theory and a differently governing one — is this register's addition. Transfers as P3's criterion: the
   theory-in-use is the theory on the consumption path with binding force. The
   target adds a location the source does not have: the gap between espoused
   and in-use falls between retained text and the model's prior and routing,
   so a note can be espoused while the weights supply the theory-in-use. The
-  mechanism is the same, and so is the generating condition: an operating
-  theory acquired tacitly — by socialization there, by pretraining here —
-  before any declared theory was written. **Established; causal-origin.**
+  mechanism is the same. The generating condition would also be shared —
+  an operating theory acquired tacitly, by socialization there and
+  pretraining here, before any declared theory was written — but the ingest
+  retains no claim about how theories-in-use are acquired, so the depth stays
+  downstream until a grounding run retains one. **Established; downstream
+  pending grounding.**
 - *Update-target distinction.* Mechanism: correction within governing
   variables differs from inquiry into them. Premise: a distinction between
   action rules and the objectives or policies that set them. Present in the
@@ -242,7 +269,8 @@ camouflaged, "the camouflage is camouflaged").
   the unit statement behind ledger row C2 — the deployed system, not the
   interpreter, is the unit — and as a requirement on the evaluator: a
   learning system needs the capacity to know when it cannot correct an error.
-  **Established** for the unit; the evaluator requirement is a candidate
+  **Conjectured** for the unit, since C2 is a pending workshop decision and
+  no library note yet carries it; the evaluator requirement is a candidate
   gate-adequacy condition.
 - *Self-sealing.* Mechanism in the source: Model I theories-in-use (win,
   control unilaterally, suppress) make threatening errors uncorrectable and
@@ -283,8 +311,12 @@ reads what was consumed, not what was retained.
 - A draft may not cite a source's conclusion as support for a target claim
   unless the row's mechanism-match status licenses it; a **failed** or **to
   assess** row supports nothing beyond its non-transfer boundary.
-- Ledger defeats that were transfer failures are cross-referenced here (S2,
-  C3, R2). Reconstruction must re-derive the claim from the shared mechanism
-  or drop it.
+- The one ledger defeat that was a transfer past a source's shared mechanism
+  is cross-referenced here (C3). S2 and R2 were defeated on target-side
+  grounds and involve no borrowed source. Reconstruction of C3 must re-derive
+  the claim from the shared mechanism or drop it.
+- Concrete implementation, unmatched features, and outcome effectiveness need
+  target-side evidence even where a mechanism match is established; a row
+  licenses the shared relation, nothing more.
 - Rows marked **to assess** are work items; a source with no row may not
   enter an article.
