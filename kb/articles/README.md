@@ -14,8 +14,9 @@ Nothing published yet.
 
 ## In draft
 
-Two drafts currently remain in the article frontier:
+Three drafts currently remain in the article frontier:
 
+- [The decisions that stay human, and what would move them](./the-decisions-that-stay-human-and-what-would-move-them.md) — the series hub: states the research program, its progress order, the adverse selection of residual human decisions, the two milestones that meet at the evaluator, and the residue classification as instrument and build plan.
 - [What bound Naur's theory to programmers](./what-bound-naurs-theory-to-programmers.md) — states Naur's thesis at full strength, locates the premise his argument for the human binding runs through, says what trained recognizers changed and did not, and reports one repair failure on the article's own basis note.
 - [The Bitter Lesson does not require everything to live in weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) — separates Sutton's 2019 search-and-learning claim from a weights-only extrapolation, and names credit assignment, evaluation, and decomposition revision as the open problems for learned artifacts.
 
