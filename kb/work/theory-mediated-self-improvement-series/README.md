@@ -184,6 +184,12 @@ The workshop follows the three stages of
 3. **Composition is a target-side construction.** The series and the mixed
    architecture assign bounded functions to matched mechanisms; the
    interaction checks live in [article roles](./article-roles.md#composition).
+4. **Choose the battles.** Every register row carries a stance — divergence,
+   where the series contests the consensus reading and will pay for the
+   claim, or support, where the source is used on its consensus reading and
+   reviewer narrowing is accepted by default. Decorrelated review pushes
+   hardest against the most original claims, so the stance decides how a
+   finding is triaged before its merits are argued.
 
 The [incumbent ledger](./incumbent-ledger.md) keeps its job — disposition of
 claims inherited from the drafts — and cross-references the register where a

@@ -51,6 +51,32 @@ it can raise a status to conjectured, never to established.
 | FunSearch; AlphaDev (no ingest) | Search-selected programs retained and reused in bounded settings | P5 | No depth: instance | Existence evidence that the selected-localized cell is populated | **To assess**: cited by the accepted Bitter Lesson article as its only existence evidence, with no ingest and no row until now; ingest or replace before the article publishes | Economy of search, evaluator–deployment match, generalization |
 | Internal: [codifying predictable choices leaves agents with less predictable work](../../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md) | Composition of residual agent work after preferential codification | P2 | Causal-origin: the same selection mechanism, with the selector changed | Selection effect on the residue | **Established** (note written 2026-08-28). See worked row 3. | The planning consequence (executor information advantage) does not move unchanged |
 
+## Stance per row: divergence or support
+
+Every row has a stance, declared here because reviewers and executing agents
+cannot reconstruct which claims the operator means to defend — that is
+purpose, held upstream (P6).
+
+- **Divergence** — the series contests the consensus reading of the source.
+  Pushback from a decorrelated reviewer is predicted; a reversal needs a new
+  object-level argument; narrowing here is paid for in content. Rows: Naur
+  (the bridge premise, not the inexpressibility generator), Sutton 2019 (the
+  weights-only extrapolation, not the production-method generator).
+- **Support** — the source was brought in for what it supplies under its
+  consensus reading. Pushback is accepted by default: if a reviewer narrows
+  the row, take the narrowing, since nothing the series defends lives there.
+  Rows: Ryle, Popper, Argyris, Craik, Ashby and Conant, Sutton and Javed,
+  Gödel machine, the evidence and instance rows, Bainbridge, Parasuraman,
+  mission command, and the internal codification transfer.
+
+Triage rule for audit findings: at a support row, accept the finding unless
+it is factually wrong about the source; at a divergence row, accept only a
+finding that supplies a new object-level argument, and record a
+consensus-restating reversal as predicted. The 2026-08-29 audit sorted this
+way: the Argyris, Bainbridge, Parasuraman, and Popper narrowings were support
+findings and were taken; the Naur and Sutton reversals were divergence
+findings without a new argument and were declined.
+
 ## Declared divergence points
 
 Two rows are where the series contests the consensus reading of a source:
