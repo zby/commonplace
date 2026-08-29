@@ -40,7 +40,7 @@ to tell both apart from a real gap. Every step below serves that change. A
 step that does not make an executor better at classifying an omission, or an
 author better at deciding what to omit, is out of scope.
 
-## Shared baseline
+## Starting artifacts
 
 This plan is a delta from the current Commonplace operating system. An
 implementer reads the live versions of these artifacts rather than treating
@@ -175,7 +175,7 @@ Steps have real dependencies; the work inside each is left to its owner.
 
 One step was taken out of order on 2026-08-29 because its leverage is
 highest: the `AGENTS.md` and `AGENTS.md.template` Delegation section now
-declares the file as the standing baseline, states the handoff-as-delta rule
+declares the file as the Commonplace doctrine, states the handoff-as-delta rule
 with its consumption-path condition, and gives the four omission cases. That
 is the `AGENTS.md` part of outcome 2, landed before outcomes 1 and 2 proper.
 It does not change the dependencies: step 0 still decides whether workers
@@ -209,7 +209,7 @@ packet, or not at all. Read the harness documentation, then confirm with a
 probe worker asked to quote the delegation paragraph and say where it came
 from. Record the result per runtime in this file.
 
-Where delivery is absent or unverifiable, the "shared baseline" for that
+Where delivery is absent or unverifiable, the Commonplace doctrine for that
 runtime is whatever the packet explicitly carries. Compression there is off
 the table until the delivery path is repaired, and the repair is a separate,
 reviewable change.
@@ -297,43 +297,50 @@ functions of doctrine, intent, constraints, and local evidence.
 
 ### 2. Change the shared delegation doctrine
 
-Make `AGENTS.md` state the primary delegation baseline, and make the shared
-authoring contracts say how instructions specialize it: what a consequential
-handoff can inherit and what must remain task-specific. Inspect at least these
-live surfaces and their composition siblings:
+`AGENTS.md` and `AGENTS.md.template` already state the delegation baseline
+(commits `59304ba6`, `530c01e9`): the file is the Commonplace doctrine a
+worker inherits when its runtime loads it, a handoff is a delta from it, and a
+worker classifies an unstated choice as inherited, delegated, irrelevant, or a
+gap. What remains is to make the shared authoring contracts say how
+instructions specialize that doctrine — what a consequential handoff can
+inherit and what must remain task-specific — without restating it. Inspect at
+least these live surfaces and their composition siblings:
 
-- `AGENTS.md.template` and this checkout's `AGENTS.md` delegation invariant;
+- this checkout's `AGENTS.md` Delegation section and vocabulary entry, as the
+  text the contracts specialize (re-edit only if a contract needs it);
 - `kb/instructions/COLLECTION.md`;
 - `kb/types/instruction.md`;
 - `kb/instructions/write-instruction.md`;
 - `kb/work/COLLECTION.md` and `kb/messages/README.md`, whose workshop and
-  mailbox handoffs specialize the shared baseline;
+  mailbox handoffs specialize the Commonplace doctrine;
 - `kb/reference/control-plane-goals.md`; and
 - scaffold or conformance tests that consume the changed text.
 
-The resulting contract should establish these effects without requiring these
-phrases or a new mandatory schema:
+The resulting contracts should establish these effects without requiring these
+phrases or a new mandatory schema. The first, third, fourth, and fifth are now
+stated in the `AGENTS.md` Delegation section; the contracts specialize them for
+their artifacts rather than repeat them:
 
 - An instruction is context-complete relative to its declared consumption
-  path. It may rely on a verified always-loaded baseline, but not on
+  path. It may rely on verified always-loaded doctrine, but not on
   accidental conversational history or an unverified link chase.
 - The task carries its particular purpose or desired effect. Naming an output
   alone is insufficient when different valid-looking outputs could serve
   different purposes.
 - A handoff states deviations from inherited doctrine and consequential open
   choices. It need not restate generic rules already supplied with binding
-  force by the shared baseline.
+  force by the Commonplace doctrine.
 - The executor can tell whether an unstated choice is governed by an inherited
   default, deliberately delegated to its judgment, irrelevant to acceptance,
   or unresolved.
 - Shared doctrine does not silently grant authority. Task authority,
   task-specific constraints, external commitments, owned mutations, and
-  acceptance remain explicit where the baseline cannot determine them.
+  acceptance remain explicit where the doctrine cannot determine them.
 
 Two failure modes the contract must name:
 
-- **Change propagation.** Once packets omit a rule because the baseline
-  supplies it, editing the baseline silently re-commissions every worker that
+- **Change propagation.** Once packets omit a rule because the doctrine
+  supplies it, editing the doctrine silently re-commissions every worker that
   relied on the omission. The contract says how that reliance is recorded or
   found — the mechanism is the source-side lineage rule in
   `artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md` —
@@ -341,10 +348,10 @@ Two failure modes the contract must name:
   machinery for it here; record the decision.
 - **Standing authority.** Say which ownership, integration, and recovery
   defaults are stable enough to inherit and which must remain task-specific.
-  A default that changes with the task is not baseline material.
+  A default that changes with the task is not doctrine.
 
-Acceptance: a fresh agent receiving the actual declared baseline and the task
-delta can act without the parent conversation, preserve the purpose, and
+Acceptance: a fresh agent receiving the doctrine its runtime actually delivers
+and the task delta can act without the parent conversation, preserve the purpose, and
 identify both its discretion and its stop condition. Test this with a probe
 worker on the runtime step 0 confirmed, not by reading the text.
 
@@ -370,7 +377,7 @@ baseline cannot determine them, the inherited contracts, the commissioned
 contribution, task-specific intent, evidence boundary, exceptions, owned
 output, acceptance condition, and return triggers. Remove repeated generic
 delegation prose only when the worker demonstrably receives the rule from the
-shared baseline (step 0).
+Commonplace doctrine (step 0).
 
 Judge simplification by behavioral fidelity and by operational and
 interpretive complexity on the actual consumption path: states, branches,
@@ -449,7 +456,7 @@ a named methodology without a gloss; and what provider-model change triggers
 re-evaluation. Use tasks that require execution-time adaptation, not tasks
 whose method is already mechanically determined. Compare at least:
 
-1. the revised shared-baseline-plus-task-delta packet as landed;
+1. the revised doctrine-plus-task-delta packet as landed;
 2. the same packet with an explicit neutral intent-preserving delegation
    gloss; and
 3. the same gloss with *Auftragstaktik* as a recognition anchor.
@@ -470,7 +477,7 @@ decision, not a failure.
 
 Use the results as signposts:
 
-- If the shared baseline is not reliably present in a runtime, keep the packet
+- If the Commonplace doctrine is not reliably present in a runtime, keep the packet
   explicit there or repair the delivery path before compressing it.
 - If the name imports irrelevant military machinery or varies materially by
   model, retain the neutral mechanism and use the name only as an example.
@@ -519,7 +526,7 @@ Before removing repeated text, identify the artifact that now supplies its
 force and exercise that consumption path in a fresh context. If the revised
 path fails, restore the last accepted wording for that cohort and retain the
 failure as evaluation evidence. Do not continue a broad compression sweep
-after its shared-baseline premise has failed.
+after its shared-doctrine premise has failed.
 
 For each cohort, record which operational or interpretive complexity was
 added, removed, or consolidated and which consequential interpretations remain
@@ -553,7 +560,7 @@ This workshop closes when:
    generation, and accidental gaps, and the substrate draft has been consumed
    into it;
 3. the live instruction doctrine makes task packets relative to a verified
-   shared baseline;
+   Commonplace doctrine;
 4. the multistage pilot has a recorded result — revised skill adopted, or
    current skill kept with the reason — without loss of its epistemic or
    recovery invariants;
