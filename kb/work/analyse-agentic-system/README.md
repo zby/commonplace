@@ -15,7 +15,7 @@ Memory is an internal lens of agentic-system analysis. Its current separate coll
 
 ## Current state
 
-The public skill was promoted on 2026-08-21 after six cold trials, reconciliation, and acceptance review. It is live at `kb/instructions/analyse-agentic-system/SKILL.md` and projected into both runtime skill surfaces. The remaining workshop work is downstream: design the agentic-systems result contract and plan source-regeneration migration of the separate memory-review corpus. The completed construction, trial, and acceptance record remains below and in the linked workshop artifacts.
+The public skill was promoted on 2026-08-21 after six cold trials, reconciliation, and acceptance review. It is live at `kb/instructions/analyse-agentic-system/SKILL.md` and projected into both runtime skill surfaces. On 2026-08-29 it became the public entry point for external memory-system review: target classification now conditionally invokes the retained `write-agent-memory-system-review` instructions in prepared-source mode, so the old publication workflow reuses the unified run's frozen evidence boundary. The remaining workshop work is downstream: design the agentic-systems result contract and plan source-regeneration migration of the separate memory-review corpus. The completed construction, trial, and acceptance record remains below and in the linked workshop artifacts.
 
 ## Known instruction inputs
 
@@ -122,6 +122,7 @@ Slate provenance: two scouting passes over the reviewed pool found no clean runt
 ## Pending handoffs
 
 - **Parked Scroll/context-operation migration input (2026-08-27).** The legacy [Scroll memory review](../../agent-memory-systems/reviews/scroll.md) remains migration input, not a target for further matrix development. After the target collection/type/schema is fixed, source-regenerate Scroll through the unified workflow as a candidate pilot. During schema design, disposition the [context-operation interface](../../notes/context-operation-interface-bounds-context-policy.md) and projection-boundary distinctions as possible general agentic-system fields. Do not add them to the legacy `kb/agent-memory-systems/systems.csv` or its rendered table.
+- **Conditional legacy-review composition (2026-08-29).** `analyse-agentic-system` now detects when its selected target is a memory, knowledge, or context-engineering system and invokes the old review instructions against the same frozen sources. The embedded lens remains the canonical contribution to the whole-system result; the old workflow remains the authorized legacy collection projection until corpus migration retires or replaces it.
 - Revise `kb/agentic-systems/COLLECTION.md` only after the instruction and output shape survive representative trials.
 - Replace or retire the current memory review type, schema, skill, matrix discovery, and separate collection only through a source-regeneration migration; do not mechanically retrofit semantic classifications.
 - Reconcile the current memory type/schema trace-learning drift (`trace-learning`/`### Trace-learning` in the type versus legacy `trace-derived`/`### Trace-derived learning` in the schema) before treating the schema as the durable lens contract.

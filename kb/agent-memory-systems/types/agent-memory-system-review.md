@@ -11,9 +11,9 @@ A review of an external agent memory, knowledge, or context-engineering system. 
 
 These reviews serve two readers. For someone **surveying or choosing** a system, the review is a faithful account of what it is and does. For **Commonplace itself**, it surfaces ideas worth borrowing for our own design. The characterization sections (Core Ideas, Artifact analysis, Write side, Read-back) serve the first reader; `Comparison with Our System` and its nested `### Borrowable Ideas` serve the second.
 
-**Two evidence tiers, one type.** The `source-tier` frontmatter field records which: `code-grounded` (the default this spec assumes — findings rest on inspected source; abandoned-but-readable code counts) or `doc-grounded` (no reachable source; findings rest on paper/README/blog, kept claim-level, filed under `lightweight/`). The section specs, evidence-stance, source-metadata, and citation rules below are tier-neutral; only production, owned by the skill, differs by tier.
+**Two evidence tiers, one type.** The `source-tier` frontmatter field records which: `code-grounded` (the default this spec assumes — material findings rest on inspected implementation; abandoned-but-readable code counts) or `doc-grounded` (no inspectable implementation supports the material findings; they rest on paper/README/blog, stay claim-level, and are filed under `lightweight/`). The section specs, evidence-stance, source-metadata, and citation rules below are tier-neutral; only production, owned by the skill, differs by tier.
 
-Normal production goes through the [`write-agent-memory-system-review`](../../instructions/write-agent-memory-system-review/SKILL.md) skill, which owns source preparation, delegation, QA, validation, and reporting. Conformance here is judged only from the completed review — a writer's process is not something a reviewer can check.
+Normal production enters through [`analyse-agentic-system`](../../instructions/analyse-agentic-system/SKILL.md). When it detects a memory, knowledge, or context-engineering target, it invokes [`write-agent-memory-system-review`](../../instructions/write-agent-memory-system-review/SKILL.md) against the same frozen source boundary; that retained subworkflow owns legacy artifact lifecycle, delegated drafting, QA, validation, and reporting. Conformance here is judged only from the completed review — a writer's process is not something a reviewer can check.
 
 The section specs below distill [designing-agent-memory-systems](../../notes/designing-agent-memory-systems.md) and its requirements inventory into a review-time contract — don't load that note during ordinary review writing.
 
@@ -21,7 +21,7 @@ The section specs below distill [designing-agent-memory-systems](../../notes/des
 
 - `description` — discriminating retrieval filter (50–250 chars, double-quoted)
 - `type: ../types/agent-memory-system-review.md`
-- `source-tier` — `code-grounded` (findings rest on inspected source; abandoned-but-readable code counts) or `doc-grounded` (no reachable source; findings rest on docs/papers, kept claim-level, filed under `lightweight/`, excluded from the matrix). Required — the **only** authority difference between reviews. Promote a `doc-grounded` review by flipping to `code-grounded` once source is read.
+- `source-tier` — `code-grounded` (material findings rest on inspected implementation; abandoned-but-readable code counts) or `doc-grounded` (no inspectable implementation supports those findings; they rest on docs/papers, stay claim-level, are filed under `lightweight/`, and are excluded from the matrix). Required — the **only** authority difference between reviews. Promote a `doc-grounded` review by flipping to `code-grounded` once implementation source is inspected.
 - Do not add `user-verified`; creation and review generation cannot grant human attestation.
 - `last-checked: "{today}"`
 - `tags` — add `trace-learning` only when the system learns from agent traces (per the Write side rule below); otherwise omit `tags`. Collection membership comes from location, not a tag.
