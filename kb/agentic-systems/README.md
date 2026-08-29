@@ -4,6 +4,7 @@ Coverage of external **agentic systems and harnesses as whole systems** — exec
 
 ## Analyses
 
+- [AI Agents in Depth](./ai-agent-book.md) — whole-book comparison whose Model–Harness, context, evaluation, continual-evolution, and coordination doctrine largely converges with Commonplace, while memory admission, evaluator policy, authority granularity, and several evidence claims diverge
 - [Autogenesis](./autogenesis.md) — self-evolving agent framework whose paper-aligned release exposes versioned protocol resources and an explicit planning bus, while current `main` replaces them with an expanded extension taxonomy and uniform capability loop; substantial code, but incomplete experiment reproduction and a broken advertised test baseline
 - [Eigenius](./eigenius.md) — typed execution and verification substrate with a manually loaded host-agent reasoning protocol: curated MCP, checked justification certificates on named load paths, incomplete recovery/provenance, and conditional Lean correspondence
 - [Claude Code dynamic workflows](./claude-code-dynamic-workflows.md) — model-authored orchestrator scripts over sub-agents: the first shipped harness exposure of the bounded call beneath the frozen tool loop, mapped onto the [tool-loop cluster](../notes/tool-loop-README.md)
