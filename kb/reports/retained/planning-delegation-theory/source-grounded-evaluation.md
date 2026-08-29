@@ -15,7 +15,7 @@ locally chosen means.
 
 Agent work can expose the same narrow problem for an independent reason. Under
 the conditions in
-[Preferential codification concentrates less predictable work at the agent boundary](../../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md),
+[Preferential codification concentrates less predictable work at the agent boundary](../../../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md),
 symbolic enforcement removes more operationally predictable cases from agent
 judgment. The residual cases are then selected toward choices whose relevant
 state can arrive during execution or whose branches are cheaper to resolve
@@ -45,7 +45,7 @@ unit, and the comparison does not establish that it improves agent outcomes.
 
 ### Source-domain reason
 
-[MCDP 1](../../sources/marine-corps-mcdp-1-warfighting-1997.ingest.md)
+[MCDP 1](../../../sources/marine-corps-mcdp-1-warfighting-1997.ingest.md)
 starts from war as interaction between hostile independent wills. The opponent
 is an actor with objectives and plans that resists and acts in return. In
 Commonplace terms, this means that some action-to-outcome relations depend on
@@ -54,7 +54,7 @@ not its own terminology. MCDP 1 also treats war as uncertain, dynamic,
 disorderly, and dominated by friction.
 
 Together with
-[ADRP 6-0](../../sources/us-army-adrp-6-0-mission-command-2012.ingest.md)
+[ADRP 6-0](../../../sources/us-army-adrp-6-0-mission-command-2012.ingest.md)
 it forms a modern normative response organized around interactive and generic
 uncertainty, unanticipated change, distributed information, and decisions made
 near the point of action. The doctrines make allocation of information and
@@ -65,7 +65,7 @@ supervision, and responsibility explicit parts of the answer.
 That concentration makes the domain productive to inspect. It does not show
 that the doctrines cause better results, that decentralization is generally
 superior, or that the military and agent domains are broadly similar.
-[Stahel's historical reassessment](../../sources/david-stahel-auftragstaktik-mission-command.ingest.md)
+[Stahel's historical reassessment](../../../sources/david-stahel-auftragstaktik-mission-command.ingest.md)
 adds both historical support and a limit. It describes Prussian-German thought
 as treating war as contingent and too affected by friction, chaos, and chance
 for operations to have a fully determined course; leadership was therefore
@@ -111,7 +111,7 @@ execution-time information advantage.
 ### Search heuristic, transfer warrant, and inference
 
 The governing transfer rule is that
-[borrowed patterns transfer only over a shared mechanism](../../notes/borrowed-patterns-transfer-only-over-shared-mechanism.md).
+[borrowed patterns transfer only over a shared mechanism](../../../notes/borrowed-patterns-transfer-only-over-shared-mechanism.md).
 Analogy, shared terminology, conceptual resemblance, maturity, longevity,
 severity, and institutional prestige can motivate a search. None warrants an
 import. The target must independently instantiate the particular mechanism and
@@ -133,10 +133,10 @@ fixed intent and bounds. The executor's advantage is specific to the decision;
 the executor need not know more overall.
 
 This search discipline has precedents in Commonplace. One survey searches
-[soft-bound traditions organized around a matching problem](../../notes/soft-bound-traditions-as-sources-for-context-engineering-strategies.md)
+[soft-bound traditions organized around a matching problem](../../../notes/soft-bound-traditions-as-sources-for-context-engineering-strategies.md)
 and then tests optimization target, feedback, and failure-mode conditions.
 Another evaluates
-[human writing structures by the failure modes they share with LLM work](../../notes/human-writing-structures-transfer-to-llms-because-failure-modes.md).
+[human writing structures by the failure modes they share with LLM work](../../../notes/human-writing-structures-transfer-to-llms-because-failure-modes.md).
 Those precedents support per-mechanism testing. They add no military warrant.
 
 Military command is therefore a promising source domain because intelligent
@@ -157,7 +157,7 @@ license a bounded import.
 ## Comparative evaluation
 
 The retained Commonplace synthesis of
-[productive deferral](../../notes/productive-deferral-requires-option-evidence-and-convergence.md)
+[productive deferral](../../../notes/productive-deferral-requires-option-evidence-and-convergence.md)
 keeps the neighboring methods distinct. This table is a map; the substantive
 evaluations follow it. The source links preserve navigation, but the target-side
 composition is a Commonplace construction rather than a method claimed by any
@@ -175,7 +175,7 @@ one source.
 
 #### Source methodology
 
-[MCDP 1](../../sources/marine-corps-mcdp-1-warfighting-1997.ingest.md)
+[MCDP 1](../../../sources/marine-corps-mcdp-1-warfighting-1997.ingest.md)
 first treats war as reciprocal interaction between hostile independent wills,
 then as disorderly, uncertain, dynamic, and affected by friction. Its command
 philosophy places some decisions with a competent subordinate who can better
@@ -193,7 +193,7 @@ understanding, preparation, coordination, reporting, and tolerance for
 good-faith error as enabling conditions. This is bounded local judgment inside
 a control system, not a rule to maximize autonomy.
 
-[ADRP 6-0](../../sources/us-army-adrp-6-0-mission-command-2012.ingest.md)
+[ADRP 6-0](../../../sources/us-army-adrp-6-0-mission-command-2012.ingest.md)
 gives a compatible but more explicit control account. It places some fast
 decisions at the point of action and joins freedom over means in specified
 areas to purpose, key tasks, desired end state, resources, broad guidance,
@@ -207,7 +207,7 @@ good evidence that two modern doctrines formulate bounded delegation around
 uncertainty and distributed information. It is not evidence of causal
 effectiveness or agent applicability.
 
-[Stahel](../../sources/david-stahel-auftragstaktik-mission-command.ingest.md)
+[Stahel](../../../sources/david-stahel-auftragstaktik-mission-command.ingest.md)
 describes contingency, friction, chaos, and chance as the background against
 which Prussian-German leadership sought direction rather than complete control.
 He also prevents the two modern formulations from becoming a timeless
@@ -242,18 +242,18 @@ knows more overall.
 
 The modern source formulations do not make adaptation a reconstruction of an
 unstated complete order. [MCDP
-1](../../sources/marine-corps-mcdp-1-warfighting-1997.ingest.md) says a task can
+1](../../../sources/marine-corps-mcdp-1-warfighting-1997.ingest.md) says a task can
 become obsolete while its intent continues to guide action, and it makes
 competent judgment, preparation, familiarity, and shared understanding part of
 its command philosophy. [ADRP
-6-0](../../sources/us-army-adrp-6-0-mission-command-2012.ingest.md) links shared
+6-0](../../../sources/us-army-adrp-6-0-mission-command-2012.ingest.md) links shared
 understanding and clear intent to adaptation, while requiring education,
 rigorous training, and experience for effective application. Those are
 source-side claims about their institutional systems. They do not directly
 establish an agent packet policy.
 
 The Commonplace synthesis is that verified [Commonplace
-doctrine](../../reference/definitions/commonplace-doctrine.md) can do two kinds
+doctrine](../../../reference/definitions/commonplace-doctrine.md) can do two kinds
 of work. It can recover a default or method the system already selected. It can
 also supply common interpretation and decision rules that combine with
 task-specific intent, binding constraints, and execution evidence to let an
@@ -275,7 +275,7 @@ resources and accessible context, ownership and integration, feedback or
 verification, and recovery or escalation are operative for the consequential
 surfaces involved. Timing, liveness, and concurrency also matter when their
 failure is consequential. This is why
-[intent-framed delegation is a control regime, not a short prompt](../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md).
+[intent-framed delegation is a control regime, not a short prompt](../../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md).
 
 Mission tactics contributes the one mechanism in this comparison that
 allocates bounded execution-time judgment over means. It does not decide
@@ -297,9 +297,9 @@ preference for decentralization nor an empirical agent-effectiveness claim.
 #### Source methodology
 
 The retained source records are the
-[PMI Lexicon](../../sources/pmi-lexicon-project-management-terms-v4.ingest.md)
+[PMI Lexicon](../../../sources/pmi-lexicon-project-management-terms-v4.ingest.md)
 and a
-[practitioner account by Githens](../../sources/githens-manage-innovation-programs-rolling-wave.ingest.md).
+[practitioner account by Githens](../../../sources/githens-manage-innovation-programs-rolling-wave.ingest.md).
 At the level supported by the retained reconstruction, rolling-wave planning
 makes near-term work detailed while later work remains at a higher level and is
 elaborated as information improves. A stronger form adds a fixed replanning
@@ -333,7 +333,7 @@ evidence supplies no universal replanning cadence and no effectiveness claim.
 #### Source methodology
 
 The retained
-[Pindyck source record](../../sources/pindyck-irreversibility-uncertainty-investment.ingest.md)
+[Pindyck source record](../../../sources/pindyck-irreversibility-uncertainty-investment.ingest.md)
 supports the bounded real-options formulation used here. When present
 commitment is irreversible or costly to reverse, delaying commitment can
 preserve a materially live future choice and an opportunity to observe. The
@@ -367,7 +367,7 @@ threshold and no agent-effectiveness result.
 #### Source methodology
 
 The retained
-[DAPP source record](../../sources/haasnoot-dynamic-adaptive-policy-pathways-2013.ingest.md)
+[DAPP source record](../../../sources/haasnoot-dynamic-adaptive-policy-pathways-2013.ingest.md)
 supports a bounded formulation built from monitored signposts, triggers,
 mapped responses, and lead-time-aware action. A signal alone is not enough. A
 trigger must connect an observed condition to a response early enough for that
@@ -401,7 +401,7 @@ correct, or show empirical agent benefit.
 #### Source methodology
 
 The retained
-[Kennedy--Sobek--Kennedy source record](../../sources/kennedy-sobek-kennedy-set-based-rework.ingest.md)
+[Kennedy--Sobek--Kennedy source record](../../../sources/kennedy-sobek-kennedy-set-based-rework.ingest.md)
 supports the bounded set-based formulation used here. Several alternatives
 remain feasible while focused tests address a named knowledge gap. Test results
 eliminate or narrow alternatives before a latest convergence point. Activity
@@ -481,16 +481,16 @@ omission-class synthesis rather than adding a parallel layer ontology.
 
 | Durable note | Current role in this report | Supported gap or boundary |
 |---|---|---|
-| [Preferential codification concentrates less predictable work at the agent boundary](../../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md) | Supplies the conditional target-side selection effect and the boundary between natural-language constraint and symbolic codification. | Does not establish prevalence, aggregate difficulty, or agent effectiveness. |
-| [Borrowed patterns transfer only over a shared mechanism](../../notes/borrowed-patterns-transfer-only-over-shared-mechanism.md) | Supplies the transfer gate and separates search priority from import warrant. | Does not itself prove that a source and target share a mechanism. |
-| [Intent-framed delegation is a control regime, not a short prompt](../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) | Owns the bounded military-to-agent reconstruction, target-side truth conditions, and non-exhaustive control surfaces used here. | The conditions are not an experimentally proven minimum or a sufficient implementation packet. |
-| [An author should fix what the executor cannot determine, not what it will](../../notes/fix-what-the-executor-cant-determine-not-what-it-will.md) | Owns the decision-specific allocation rule, including inherited, delegated, irrelevant, and unresolved choices. | A rule may be inherited only through a verified binding consumption path. |
-| [Weight-resident methodologies provide context-efficient behavioral compression](../../notes/weight-resident-methodologies-compress-behavior-in-context.md) | Separates model repertoire and compact activation from explicit, authority-bearing Commonplace doctrine. | A familiar cue supplies neither project authority nor reliable activation by itself. |
-| [Productive deferral requires option, evidence, and convergence](../../notes/productive-deferral-requires-option-evidence-and-convergence.md) | Owns the cross-source necessary conditions and the bounded distinctions among rolling-wave planning, real options, DAPP, set-based practice, and mission tactics. | The three conditions do not prove that waiting is worthwhile or effective for agents. |
-| [Soft-bound traditions as sources for context-engineering strategies](../../notes/soft-bound-traditions-as-sources-for-context-engineering-strategies.md) | Supplies an advisory precedent for searching a tradition by a matching problem and then testing optimization target, feedback, and failure mode. | Adds no direct military evidence or warrant for this composite. |
-| [Human writing structures transfer to LLMs because failure modes overlap](../../notes/human-writing-structures-transfer-to-llms-because-failure-modes.md) | Supplies an advisory precedent for evaluating a borrowed convention by the failure it prevents and whether that failure exists in the target. | Adds no warrant for a different pattern without a fresh match. |
+| [Preferential codification concentrates less predictable work at the agent boundary](../../../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md) | Supplies the conditional target-side selection effect and the boundary between natural-language constraint and symbolic codification. | Does not establish prevalence, aggregate difficulty, or agent effectiveness. |
+| [Borrowed patterns transfer only over a shared mechanism](../../../notes/borrowed-patterns-transfer-only-over-shared-mechanism.md) | Supplies the transfer gate and separates search priority from import warrant. | Does not itself prove that a source and target share a mechanism. |
+| [Intent-framed delegation is a control regime, not a short prompt](../../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) | Owns the bounded military-to-agent reconstruction, target-side truth conditions, and non-exhaustive control surfaces used here. | The conditions are not an experimentally proven minimum or a sufficient implementation packet. |
+| [An author should fix what the executor cannot determine, not what it will](../../../notes/fix-what-the-executor-cant-determine-not-what-it-will.md) | Owns the decision-specific allocation rule, including inherited, delegated, irrelevant, and unresolved choices. | A rule may be inherited only through a verified binding consumption path. |
+| [Weight-resident methodologies provide context-efficient behavioral compression](../../../notes/weight-resident-methodologies-compress-behavior-in-context.md) | Separates model repertoire and compact activation from explicit, authority-bearing Commonplace doctrine. | A familiar cue supplies neither project authority nor reliable activation by itself. |
+| [Productive deferral requires option, evidence, and convergence](../../../notes/productive-deferral-requires-option-evidence-and-convergence.md) | Owns the cross-source necessary conditions and the bounded distinctions among rolling-wave planning, real options, DAPP, set-based practice, and mission tactics. | The three conditions do not prove that waiting is worthwhile or effective for agents. |
+| [Soft-bound traditions as sources for context-engineering strategies](../../../notes/soft-bound-traditions-as-sources-for-context-engineering-strategies.md) | Supplies an advisory precedent for searching a tradition by a matching problem and then testing optimization target, feedback, and failure mode. | Adds no direct military evidence or warrant for this composite. |
+| [Human writing structures transfer to LLMs because failure modes overlap](../../../notes/human-writing-structures-transfer-to-llms-because-failure-modes.md) | Supplies an advisory precedent for evaluating a borrowed convention by the failure it prevents and whether that failure exists in the target. | Adds no warrant for a different pattern without a fresh match. |
 
-[Problem matches guide method search; mechanism matches bound transfer](../../notes/problem-matches-guide-method-search-mechanism-matches-bound-transfer.md)
+[Problem matches guide method search; mechanism matches bound transfer](../../../notes/problem-matches-guide-method-search-mechanism-matches-bound-transfer.md)
 now owns the additional durable synthesis exposed by this comparison. It uses
 problem match to select candidate source responses, distinguishes causal-origin
 from downstream problem matches, uses mechanism match to bound transferred

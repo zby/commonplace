@@ -2,7 +2,7 @@
 
 Legacy rendered review artifacts and archived review outputs. The live review system stores canonical state in SQLite and does not use this directory as a runtime source of truth.
 
-**System design:** [kb/reference/README-REVIEW-SYSTEM.md](../../reference/README-REVIEW-SYSTEM.md)
+**System design:** [kb/reference/README-REVIEW-SYSTEM.md](../../../reference/README-REVIEW-SYSTEM.md)
 
 ## Bundles
 
@@ -38,4 +38,7 @@ commonplace-ack-review --input /tmp/commonplace-ack.json
 
 ## Status
 
-New live reviews are recorded in `kb/reports/review-store.sqlite` via queued review jobs. Files under this directory are optional rendered exports, backups, or historical artifacts.
+New live reviews use `kb/reports/state/commonplace-store.sqlite` for canonical
+protocol state and `kb/reports/state/review-jobs/` for queued job artifacts.
+Files under this directory are optional rendered exports, backups, or
+historical artifacts.
