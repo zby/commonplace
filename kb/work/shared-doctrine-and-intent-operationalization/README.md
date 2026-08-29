@@ -46,6 +46,11 @@ This plan is a delta from the current Commonplace operating system. An
 implementer reads the live versions of these artifacts rather than treating
 the summaries here as replacements:
 
+- [Shared operating substrate for agent work](./shared-operating-substrate.md)
+  is the draft skeleton for outcome 1. It distinguishes weight-resident
+  repertoire, methodology, doctrine, institutional memory, task commission,
+  and execution evidence. It is a composition of existing notes, not a
+  separate gate; outcome 1 says how to use it.
 - [Planning and delegation: source-grounded evaluation](../../reports/planning-delegation-theory/source-grounded-evaluation.md)
   separates source doctrine, shared mechanisms, and Commonplace consequences.
 - [Intent-framed instruction machinery refinement](../../reports/planning-delegation-theory/instruction-machinery-refinement.md)
@@ -220,6 +225,52 @@ at most one new note that owns these distinctions:
 - concise tasking is an effect of shared interpretive machinery, not evidence
   that the control relation is adequate.
 
+Use the substrate draft as the skeleton, under these rules:
+
+- **Map onto existing vocabulary; do not add a layer ontology.** The
+  doctrine/methodology split is the KB's system-definition versus knowledge
+  artifact distinction (`kb/notes/definitions/behavioral-authority.md` and its
+  two families): force comes from the consumption path, not from the content.
+  The five-layer stack is the composition diagram already in
+  `borrowing-can-operate-through-retained-artifacts-or-weight-activation.md`
+  plus execution-time evidence from the delegation notes. "Evidence is not a
+  standing prescription until adopted" is
+  `commitment-not-derivation-creates-new-ground-truth.md`. "Explicit even when
+  the model knows it" is the independent-role list in
+  `design-rationale-must-preserve-unregenerable-decision-premises.md` and the
+  heuristic/authority-bearing split in
+  `system-definition-artifacts-are-crystallized-reasoning-under-context.md`.
+  Frontloaded restatement is fine in the workshop draft, which now carries
+  provenance links at each passage; the durable note cites these rather than
+  restating them under new names.
+- **Resolve the word "doctrine" once.** In the retained reports and notes it
+  names source-side military doctrine (MCDP 1, ADRP 6-0). Either define
+  "shared doctrine" in one clause as a plain shorthand for standing
+  natural-language system-definition artifacts a worker receives with
+  binding force, linking that definition, or use "standing baseline" on the
+  Commonplace side. Do not coin a new artifact class.
+- **Fold, do not spawn.** The draft's "selections and binding restatements,
+  not only departures" point already existed in
+  `specific-intent-may-out-yield-local-rationales-facts-stay-separate.md`
+  (arbitrary conventions) and
+  `fix-what-the-executor-cant-determine-not-what-it-will.md`
+  (coordination-bearing selection); the borrowing note's composition diagram
+  now cross-links them (2026-08-29). The draft's independent-role list merges
+  those unrecoverable cases with the recoverable-but-role-bearing exceptions
+  in the design-rationale note; keep the two apart. What remains new — the
+  four omission classes, and concise tasking as an effect of shared
+  interpretive machinery rather than evidence of an adequate control
+  relation — folds into the delegation notes, or earns one new note if no
+  existing note can carry the omission-class argument.
+- **Use the classification table as a test, not as the deliverable.** The
+  outcome's acceptance below is reader-testable; classifying representative
+  artifacts consistently is a check on the way, not the finish.
+- **Route the draft's open questions** rather than settling them by
+  vocabulary: Q3 (actual inheritance) is step 0; Q4 (doctrine boundary) is
+  settled by the mapping above; Q5 (standing authority) and Q6 (change
+  propagation) go to outcome 2; Q1, Q2, and Q7 (supported interpreter,
+  activation evidence, model drift) are evaluation conditions for outcome 5.
+
 Ground source-side claims about doctrine, shared understanding, training, and
 commander's intent from the retained MCDP 1, ADRP 6-0, and Stahel materials
 through `cp-skill-ground`. Keep the stronger agent-side formulation visibly
@@ -264,6 +315,19 @@ phrases or a new mandatory schema:
 - Shared doctrine does not silently grant authority. Task authority,
   task-specific constraints, external commitments, owned mutations, and
   acceptance remain explicit where the baseline cannot determine them.
+
+Two failure modes the contract must name:
+
+- **Change propagation.** Once packets omit a rule because the baseline
+  supplies it, editing the baseline silently re-commissions every worker that
+  relied on the omission. The contract says how that reliance is recorded or
+  found — the mechanism is the source-side lineage rule in
+  `artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md` —
+  or states that the risk is accepted for a named class of rules. Do not add
+  machinery for it here; record the decision.
+- **Standing authority.** Say which ownership, integration, and recovery
+  defaults are stable enough to inherit and which must remain task-specific.
+  A default that changes with the task is not baseline material.
 
 Acceptance: a fresh agent receiving the actual declared baseline and the task
 delta can act without the parent conversation, preserve the purpose, and
@@ -364,7 +428,11 @@ reopen those outcomes.
 
 Before the first run, fix and record in this file a finite evaluation
 boundary: held-out task set, runtime and model partitions, repetition count,
-and decision rule. Use tasks that require execution-time adaptation, not tasks
+and decision rule. Record as conditions of the result, not as settled facts:
+which interpreter the recovery baseline assumes (weakest supported model,
+each partition, or the current selection); what evidence licenses relying on
+a named methodology without a gloss; and what provider-model change triggers
+re-evaluation. Use tasks that require execution-time adaptation, not tasks
 whose method is already mechanically determined. Compare at least:
 
 1. the revised shared-baseline-plus-task-delta packet as landed;
@@ -414,6 +482,9 @@ true:
   you have not named the fault.
 - The theory note restates the three existing notes instead of adding the
   omission classes.
+- You are defining layers or classes that the artifact-analysis vocabulary
+  (behavioral authority, system-definition and knowledge artifacts,
+  representational form) already names.
 - An evaluation is being designed whose every possible result leads to the
   same decision.
 - You are accepting a compression because a worker produced a plausible
@@ -465,7 +536,8 @@ This workshop closes when:
 1. baseline delivery is recorded per runtime, with the delivery path named or
    its absence recorded;
 2. the durable theory distinguishes inherited doctrine, intent-guided
-   generation, and accidental gaps;
+   generation, and accidental gaps, and the substrate draft has been consumed
+   into it;
 3. the live instruction doctrine makes task packets relative to a verified
    shared baseline;
 4. the multistage pilot has a recorded result — revised skill adopted, or
