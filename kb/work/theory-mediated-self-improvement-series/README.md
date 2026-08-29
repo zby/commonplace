@@ -84,10 +84,10 @@ They are not the workshop's primary product.
 2. **Install the mediation trace.** Create a procedure in `kb/instructions/`
    for the main-effort path above, including classification of the residual
    human decisions. Normalize one completed Commonplace change through it.
-3. **Preregister one forward Commonplace intervention.** Fix its task
-   selection, objective, acceptance threshold, boundary, baseline, horizon,
-   predicted contrast, plausible failure, evidence source, and rollback before
-   observing the result.
+3. **Preregister one forward Commonplace intervention.** Fix its task-selection
+   rule and controller, objective, acceptance threshold, boundary, baseline,
+   horizon, predicted contrast, plausible failure, evidence source, and
+   rollback before observing the result.
 4. **Commission one bounded programming-agent pilot.** State which
    project-specific theory the agent receives, how it is consumed, which
    programming decisions it should change, and how the comparison will be
@@ -125,8 +125,8 @@ change the permitted means. The military content does not enter.
 
 ## Evaluation boundary
 
-A computational-closure claim must name a task-selection rule and who
-controls it, the objective and acceptance criterion, system boundary, permitted
+A computational-closure claim must name a task-selection rule and who controls
+it, the objective and acceptance criterion, system boundary, permitted
 exogenous inputs, horizon, resource budget, and coverage or abstention rule.
 The rule and its treatment of failures and abstentions must be declared before
 the evaluated outcomes are observed. When the candidate controls task
@@ -136,11 +136,11 @@ comparison requires task selection that the candidate does not control.
 
 For every selected task, trace the path from task presentation through
 decomposition, execution, evaluation, recovery, and any later episode inside
-the horizon. The path is computationally closed when every required decision
-and transition is determined and executable inside the declared boundary or
-arrives as an explicitly allowed exogenous input. Human judgment or execution
-may not be hidden in task selection, acceptance, evaluator design, repair, or
-continuation.
+the horizon. Conditional on the declared exogenous inputs and interactions, the
+path is computationally closed when every required internal decision is made
+and every required internal transition is executable by machinery inside the
+declared boundary. Human judgment or manual execution may not be hidden in
+task selection, acceptance, evaluator design, repair, or continuation.
 
 Closure says where decisions are made, not whether they are good. Failure and
 abstention therefore do not disappear from scope; they count against capability
@@ -208,8 +208,9 @@ The workshop closes when:
    contrast or failure condition, evidence status, and disposition;
 3. the mediation-trace procedure exists and one retrospective Commonplace
    episode has been normalized through it;
-4. one forward Commonplace intervention has been preregistered with fixed task
-   selection, baseline, prediction, evaluator, horizon, and rollback;
+4. one forward Commonplace intervention has been preregistered with a fixed
+   task-selection rule and controller, baseline, prediction, evaluator,
+   horizon, and rollback;
 5. one bounded programming-agent pilot has a runnable commission, explicit
    task selection, and a project-specific-theory consumption path;
 6. inherited article material has been reconciled with the admitted claims and
