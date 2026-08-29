@@ -1,303 +1,224 @@
-# Workshop: theory-mediated self-improvement article series
+# Workshop: theory-mediated self-improvement research series
 
-**Posed by:** the operator, 2026-08-27, as author of the article series.
+**Posed by:** the operator, 2026-08-27.
 
 ## Intent
 
-This is the workshop's intent: the purpose it serves and the end state it
-should leave, stated so that a task below can be changed when it stops serving
-the purpose. The borrowing is a problem match with a conjectured mechanism
-match whose conditions are stated in the
-[match register](./match-register.md#4-mission-command--p6-workshop-intent).
-It uses the bounded delegation relation and the shared interpretive function
-that Commonplace doctrine supplies through a verified consumption path. The
-military content does not enter.
+Get researchers interested in the theory-mediated self-improvement research
+program and make substantive research exchange and collaboration possible.
 
-**Purpose.** Get researchers interested in Commonplace and, where it works,
-get fellow researchers working with it.
+The articles are means. They should make the program legible and credible,
+show where its claims come from, expose genuine open questions, and make it
+easy for researchers to criticize, test, extend, or connect the work to their
+own research. Completing the articles is not success by itself.
 
-**Mechanism, as a hypothesis.** The incentive offered is authorship: the KB is
-a substrate from which publishable articles can be distilled. One instance
-exists. The ASISAS 2026 position paper
-([ingest](../../sources/where-it-lives-retained-adaptation-2026-06-23.ingest.md))
-was written paper-from-notes: its vocabulary and corpus section were distilled
-from the artifact-analysis notes and the agent-memory review matrix, and
-refinements flowed back into notes afterwards. This series should be the
-second instance, and it should make the path visible: each article's claims
-traceable to notes, each note's warrant inspectable, open problems stated as
-invitations rather than hedges, and the theory usable through the instrument
-on a reader's own system. How collaboration then works — whether people write
-from the notes, contribute notes, run the instrument on their systems, or
-contest claims through issues — is not known; the workshop records what is
-tried and what it produced.
+Researchers may engage independently, in dialogue with Commonplace, or through
+joint work agreed together. They need not adopt the project's framing, enter
+its organizational boundary, or agree with its claims.
 
-**End state.** A published series that a researcher can read three ways: as
-an argument, as a map of the notes it was distilled from, and as a list of
-open problems they could take up with the same substrate and tools.
+This series is for researchers. Practitioner adoption, operational guidance,
+and product persuasion belong in a separate practitioner-facing series.
 
-**What this changes below.** The goal, article jobs, and closure conditions
-serve this purpose. When a condition costs more than it contributes to the
-purpose, revise the condition here instead of satisfying it. An accepted
-article that hides its lineage fails the intent even if it passes its
-contract. The invitation surface is the articles' open questions, the notes'
-scope sections, and the ledger's untested predictions.
+## Situation
 
-## Goal
+Commonplace already contains substantial theory, source work, article material,
+evaluations, and operative machinery. Repeated editing has left the material
+without one clean argument or plan. Two article baselines remain usable; four
+reviewed drafts remain evidence for claim recovery rather than prose
+foundations.
 
-The workshop's product is the article series. Its main article states the
-research program; the other articles argue the program's parts. Reconstruct
-the series around that program without treating four review-defeated drafts
-as foundations.
+Commonplace is also a live human-agent testbed. Persistent project-specific
+theory for programming agents is the first demanding external application.
+Neither case establishes computational closure or independent theory
+possession.
 
-The program asks whether a mixed system of retained natural-language theory,
-language-model interpretation, symbolic procedures and code, and operational
-evidence can progressively close the set of programming decisions that a
-person must still supply — for software construction and for its own
-theory-mediated improvement.
+The incentive for outside researchers is not yet known. Plausible sources of
+value are important questions, leverage from prepared material, freedom to
+challenge the framing, reciprocal research value, visible credit, and serious
+engagement with disagreement. These are hypotheses to test, not a contract.
+Prepared material should lower the cost of engagement without turning open
+questions into assigned tasks.
 
-Progress has a practical lower bound. A programming tool moves in the desired
-direction when, for a nontrivial task class, it increases the accepted
-outcomes obtainable from a fixed amount of total human programming effort,
-counting configuration, review, recovery, and repair. A bounded mechanism
-still counts: a formatter can remove formatting work even though formatting
-alone can never cover the programmer's role. Its ceiling limits that
-mechanism, not the progress already made. Better performance inside a fixed
-envelope — better results, more inputs, fewer failures, fewer resources —
-improves capability or yield; only envelope expansion reduces the kinds of
-decisions that remain human.
+## Direction fixed by the operator
 
-Transfer is adversely selective. Each mechanism takes the decisions it can
-warrant — represented inputs, a settled criterion, a result an independent
-oracle can check — and leaves a residue that is harder to warrant per
-decision
-([warranted transfer leaves people the hardest-to-warrant decisions](../../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md)).
-Envelopes therefore do not stack toward closure. The work must classify the
-residual human decisions on a named path by the reason each stayed human —
-unrepresented premise, unsettled criterion, no independent check, horizon
-cut, priced out — and show which part of the mixed architecture is the
-candidate mechanism for each class and what that part cannot reach. This is
-why the architecture is mixed: retained theory supplies representation and
-settlement, the interpreter applies settlements across unformalized cases,
-oracles supply verification, and the symbolic runtime supplies horizon.
+- Articles serve researcher understanding and engagement. Their number, titles,
+  and order may change.
+- Theory claims are first-class outputs. They may support articles, guide
+  machinery, and be revised by article or experimental work.
+- The target architecture is mixed: retained natural-language theory,
+  language-model interpretation, symbolic procedures and code, and operational
+  evidence have different functions and failures.
+- A theory-mediated improvement claim requires one causal path: the theory
+  guides a change, the result tests that theory, and the revision affects later
+  operation.
+- Practical usefulness and scientific discrimination are separate, coequal
+  criteria. A useful change need not prove self-improvement; a research claim
+  must expose something evidence can narrow or defeat.
+- Computational closure is task-scoped. Structural closure, capability,
+  warrant, and system power remain separate coordinates.
+- Researchers may work independently or jointly. The series must not assign
+  them roles, responsibilities, ownership, or a research agenda.
+- Source conclusions transfer only as far as the
+  [match register](./match-register.md) licenses. Review-defeated drafts are
+  evidence for claim recovery, not foundations for successor prose.
 
-Two strong milestones follow, and they meet at the evaluator. Scoped
-computational closure holds when, for a declared path and horizon, every
-required decision is represented and executable inside the automatic system
-with no hidden cut. The remote-programmer benchmark holds when the system
-performs at least as well as a competent remote programmer given the same
-brief, repository, digital tools, permissions, and feedback; its client cut is
-a declared export of demand choice and acceptance, not closure over them.
-Both milestones are decided by whether the system can warrant its own hardest
-decisions. Neither is a prerequisite for present usefulness or a final upper
-limit. The workshop must map no-op loops, narrow optimizers, weak evaluators,
-and exported human decisions rather than letting them satisfy a milestone by
-definition. The present Commonplace arrangement is a human-inclusive
-bootstrap: evidence about an allocation, not the endpoint.
+## Mission and priorities
 
-The theory this program builds is retained natural-language theory of the
-kind the program studies, and it is consumed by the system it describes.
-Classifying a path's residual human decisions by reason, and routing each
-class to the architecture part that can move it, is a theory-building
-function of the wiki: it helps operators decide where their own automation
-should go next and what it cannot yet reach. Applied to Commonplace's own
-transfer decisions, it supplies the mediation trace the earlier drafts
-lacked — the same theory guides a change, the change's warrant record tests
-the theory, and a misclassified row revises it. This is a tool-usefulness
-claim and a traceability claim; it is not a closure claim, and it is earned
-by a recorded use, not by stating it.
+Reconcile the inherited material into one credible researcher-facing program
+and use the articles to open useful points of contact with it.
 
-Read the same way, the research program is a build plan. The classification
-orders what to build next — for an LLM wiki first, and, because the theory is
-stated over decisions rather than over any one task, for an LLM coding agent
-or an LLM agent generally. Whether following the plan yields the most
-powerful system of its kind is the conjecture the program tests; power is an
-outcome to measure, not a consequence of the plan's shape.
+1. **Consolidate the program.** Reconcile the
+   [shared model](./shared-model.md),
+   [task-scoped closure formulation](./task-scoped-computational-closure.md),
+   [closure-capability map](./closure-capability-map.md),
+   [incumbent ledger](./incumbent-ledger.md), and durable notes. Give every
+   load-bearing claim a clear scope, mechanism, evidence status, and possible
+   failure.
+2. **Reconstruct the articles.** Treat
+   [article roles](./article-roles.md) as provisional argumentative jobs, not a
+   commitment to inherited drafts or article count. Each retained article
+   should clarify part of the program and expose the relevant evidence and open
+   questions.
+3. **Show the program operating.** Record at least one path in which theory
+   guides a Commonplace or programming-agent change, evidence bears on the
+   theory, and the result is retained, revised, rejected, or deferred.
+4. **Make research contact easy.** Present open questions and supporting
+   artifacts so they can be understood without reconstructing the whole
+   workshop. Possible investigations may be suggested, but not assigned.
+5. **Test the invitation.** Put a bounded part of the series before researchers
+   for whom its questions are relevant. Record substantive responses,
+   objections, independent uses, and reasons for disengagement; revise the
+   articles and incentive hypothesis accordingly.
 
-The strong milestones are not the only payoff. Commonplace already serves its
-operators as a theory-building tool. The same substrate can grow to cover
-other LLM-wiki functions, and each warranted transfer can make the tool more
-useful before the closed-system goal is reached — or less useful, if it leaves
-people only the decisions they are worst placed to make.
+These are priorities, not a fixed sequence. Execution evidence may change the
+means while preserving the intent and fixed direction.
 
-### Outputs
+## Delegated judgment and hand-back
 
-- **Theory** — claims with reach, in `kb/notes/` (the self-improving-systems
-  cluster).
-- **Instrument** — one procedure in `kb/instructions/` that classifies a
-  path's residual human decisions and routes each class to a mechanism,
-  resting on the notes; repo-local first, promoted to a `cp-skill-*` after a
-  first use outside this checkout.
-- **Articles** — the outward distillation, paper-from-notes, led by the
-  research-program article.
+Agents may choose the article architecture, researcher communities, examples,
+research starting points, outreach route, and order of work.
 
-## Author direction fixed by the operator
+Return the decision to the operator when proceeding would:
 
-- Naur supplies the starting requirement: coherent construction and
-  modification require a program-specific theory. The accepted Naur article
-  reopens computational possession of that theory without claiming that any
-  current composite has passed Naur's tests.
-- The target is not natural-language theory plus model weights alone. Exact or
-  long-horizon operations may require symbolic code because a scheduler can
-  execute an implemented transition faithfully where prompt execution remains
-  exposed to underspecification, indeterminism, and bias.
-- Code exactness is not correctness. The theory, language model, symbolic
-  runtime, and evidence oracles must remain in one revisable arrangement.
-- Commonplace is already useful as a human–agent theory-building tool. That
-  practical role does not establish independent computational theory
-  possession or computational closure.
-- Any programming-tool change that produces more accepted work from the same
-  total human programming effort, or the same work from less effort, is
-  practical progress toward the broad direction. It need not demonstrate a
-  complete route to the strong benchmark.
-- Each mechanism has an automation envelope. Reaching its ceiling leaves the
-  other residual programming decisions visible; it does not retroactively make
-  the bounded transfer unreal. Envelopes do not stack toward closure: the
-  residue is adversely selected, and the next transfer is decided at the
-  evaluator.
-- The program's theory is also the KB's instrument and a build plan. Both
-  readings are earned by recorded use; neither is a closure or power claim.
-- Better performance inside a fixed envelope also counts, through outcome
-  quality, reliability, coverage, latency, or resource efficiency. It is not
-  the same change as transferring another kind of responsibility.
-- Competent remote-programmer performance is a strong capability benchmark,
-  not the definition of all useful progress or the final limit of the system.
-- The substrate may support other LLM-wiki operations such as grounding,
-  routing, retrieval, synthesis, criticism, revision, validation, and
-  publication. This list is a working scope, not a completeness claim.
-- Commonplace is evidence about a bootstrap allocation, not evidence that the
-  endpoint has been reached.
-- Tool usefulness, computational autonomy, warrant, and system power are
-  separate dimensions. The Bitter Lesson motivates a possible power gain; it
-  does not make power a consequence of autonomy.
+- change the researcher-engagement intent or add practitioner conversion;
+- promise authorship, funding, employment, affiliation, or another external
+  reward;
+- assign an external researcher a role, responsibility, ownership, or agenda;
+- set terms for joint work or credit without mutual agreement;
+- strengthen, conceal, or preserve a claim merely to make the series more
+  persuasive;
+- resolve a substantive value trade-off not fixed above; or
+- create an external commitment beyond the authorized outreach experiment.
 
-## Method
+This is the workshop's use of
+[intent-framed delegation](../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md):
+the operator fixes purpose and binding bounds; agents adapt the means as new
+evidence arrives.
 
-The workshop follows the three stages of
-[problem matches guide method search; mechanism matches bound transfer](../../notes/problem-matches-guide-method-search-mechanism-matches-bound-transfer.md):
+## Evaluation
 
-1. **Target problems first.** Each problem the series addresses is stated on
-   its own, at a level where target, feedback, information structure, and
-   failure mode are visible ([target problems](./target-problems.md)).
-2. **Sources as matches, not authorities.** Every source tradition an article
-   uses has a row in the [match register](./match-register.md): the bounded
-   source problem, the target problem it matches, the candidate responses it
-   returns, the mechanism-match status, and the non-transfer boundary. A
-   source's conclusion supports a target claim only as far as its row licenses.
-3. **Composition is a target-side construction.** The series and the mixed
-   architecture assign bounded functions to matched mechanisms; the
-   interaction checks live in [article roles](./article-roles.md#composition).
-4. **Choose the battles.** Every register row carries a stance — divergence,
-   where the series contests the consensus reading and will pay for the
-   claim, or support, where the source is used on its consensus reading and
-   reviewer narrowing is accepted by default. Decorrelated review pushes
-   hardest against the most original claims, so the stance decides how a
-   finding is triaged before its merits are argued.
+### Research quality
 
-The [incumbent ledger](./incumbent-ledger.md) keeps its job — disposition of
-claims inherited from the drafts — and cross-references the register where a
-defeat was a transfer past the shared mechanism.
+The program improves when claims become more precise and discriminating,
+evidence changes their status, useful machinery is derived from them, or a
+counterexample forces revision. Article polish without stronger understanding
+or a clearer research surface is insufficient.
 
-## Evaluation boundary
+Computational closure may be claimed only relative to a declared task-selection
+rule and controller, objective and acceptance criterion, system boundary,
+permitted exogenous inputs and interactions, horizon, resources, and coverage
+rule. Conditional on those declarations, every remaining required decision and
+transition must be carried inside the automatic system. Closure says where the
+work is done, not whether it is done well; capability and warrant require
+separate evidence. See
+[Task-scoped computational closure](./task-scoped-computational-closure.md).
 
-The target claim is always relative to a named revision path, objective,
-system boundary, and horizon. The automatic side may include model calls,
-retained prose, code, schedulers, validators, tests, state, and evidence
-interfaces. The environment may supply observations and tasks. Closure means
-that no indispensable decision on the named path crosses an unrepresented
-human cut; it does not mean independence from infrastructure, observations, or
-a previously supplied objective.
+### Researcher engagement
 
-The practical tool claim is evaluated at the human–agent boundary instead.
-Does the arrangement help its operators form, criticize, retain, retrieve,
-apply, and revise theories or perform another declared wiki function? Hold the
-task class and acceptance threshold fixed, and count configuration, review,
-recovery, and repair rather than hiding them outside the effort measure. A
-change is forward when it increases accepted outcomes for the same total human
-programming effort or reduces that effort for the same outcomes without an
-unacceptable loss of warrant. Client direction and feedback are held apart
-from programming decisions when the remote-programmer benchmark is used.
+Page views, generic praise, and article completion are weak signals. Stronger
+signals include substantive criticism, independent testing or use, exchange of
+evidence or methods, and continuing reciprocal research dialogue. Joint work
+is one possible outcome, not the required destination.
 
-This comparison is a partial order, not proof that every improving method can
-reach the benchmark. A formatter may eliminate one residual responsibility
-and then stop. Further progress requires another mechanism or a composition
-whose automation envelope covers more of the remaining work.
+An outreach attempt that produces no substantive exchange still provides
+information when the likely cause is recorded: weak question, low credibility,
+poor audience match, high startup cost, one-sided value, unclear credit, or an
+inconvenient invitation. Do not answer weak engagement by strengthening claims
+or casually offering authorship.
 
-The workshop does not assume that every transition to the strong benchmark is
-possible. Demonstrating or defeating those transitions is the experiment.
+## Outputs
 
-## Source handling
+- durable theory claims with their scope, mechanisms, evidence, and open
+  problems;
+- operative methodologies, instructions, review mechanisms, schemas,
+  validators, or code derived from sufficiently grounded theory;
+- evidence records, including interventions, counterexamples, negative results,
+  and theory revisions;
+- coherent researcher-facing articles whose place in the program is explicit;
+- an accessible research surface connecting claims and open questions to their
+  supporting material; and
+- evidence from a bounded researcher-engagement attempt.
 
-Only the two closing-ready articles have been copied as prose baselines under
-[accepted](./accepted/README.md). Acceptance is local to their completed
-passes, not a promise that they will remain unchanged.
+Theory claims are both supporting machinery for the articles and outputs of the
+workshop in their own right. No practitioner-facing series or adoption guide is
+an output of this workshop.
 
-The four other article bodies are inert source captures under
-[rejected-drafts](./rejected-drafts/README.md). Rejection applies to each draft
-as a publishable argument, not automatically to every claim it contains. No
-agent should revise one of those files into a successor article. A claim can
-leave quarantine only through an explicit entry in the
-[incumbent ledger](./incumbent-ledger.md).
+## Source and draft handling
 
-## Working artifacts
+Only the two closing-ready articles under
+[accepted](./accepted/README.md) may seed successor prose directly. Their
+acceptance is local and does not make them immune to revision.
 
-- [Gradual compatibility result](./gradual-compatibility.md) — the
-  per-portion defense and production freedom classified in the portfolio, the
-  production-axis interaction check answered, the disanalogy premise settled
-  as far as the record allows, and the per-artifact-class production-freedom
-  audit. Unblocks the hub article's frame, conditional on the
-  absorption-survivors report.
-- [Target problems](./target-problems.md) — the problems the series
-  addresses, stated independently of any source.
-- [Match register](./match-register.md) — per source: problem match,
-  mechanism-match status, and non-transfer boundary, with six worked rows.
-- [Shared model](./shared-model.md) — the current architecture, bootstrap
-  relation, practical payoff, closure condition, and progress dimensions.
-- [Closure–capability map](./closure-capability-map.md) — comparison coordinates,
-  degenerate closure patterns, provisional system regions, and a candidate
-  adequacy gate.
-- [Adequacy-gate run](./adequacy-gate-run.md) — the map exercised on DGM, HGM,
-  HyperAgents, Prime Agent, Recuris, and Apodex 1.1: one named path each, the
-  seven adequacy conditions measured against the retained record, the degenerate
-  patterns landed on, and the residual human cut classified by reason.
-- [Article roles](./article-roles.md) — argumentative jobs and their dependency
-  order; these do not promise that every rejected title survives.
-- [Incumbent ledger](./incumbent-ledger.md) — source identities, review
-  constraints, and claim-by-claim transfer decisions.
-- [Shared-doctrine operationalization report](../../reports/retained/planning-delegation-theory/instruction-machinery-refinement.md#shared-doctrine-operationalization-follow-on)
-  — supplies P3, ledger O10, and closure conditions 8–9 with its verified
-  delivery boundary, commissioning audit, and scoped cue-policy deferral.
-- [Accepted baselines](./accepted/README.md) — the only inherited prose that
-  may seed a successor directly.
-- [Rejected draft captures](./rejected-drafts/README.md) — read-only evidence
-  for claim recovery.
+The four bodies under
+[rejected-drafts](./rejected-drafts/README.md) remain read-only source captures.
+Rejection applies to each draft as an argument, not automatically to every
+claim it contains. A claim leaves quarantine only through an explicit
+[incumbent-ledger](./incumbent-ledger.md) disposition.
+
+The [ASISAS 2026 paper](../../sources/where-it-lives-retained-adaptation-2026-06-23.ingest.md)
+is one example of paper-from-notes. Do not describe this workshop as the second
+instance. It already contains material for related articles, but article
+production or publication is not the intent.
+
+## Working map
+
+- **Program:** [target problems](./target-problems.md),
+  [shared model](./shared-model.md),
+  [task-scoped computational closure](./task-scoped-computational-closure.md),
+  [closure-capability map](./closure-capability-map.md), and
+  [adequacy-gate run](./adequacy-gate-run.md).
+- **Claim and source control:** [match register](./match-register.md),
+  [incumbent ledger](./incumbent-ledger.md),
+  [gradual-compatibility result](./gradual-compatibility.md),
+  [absorption-survivors investigation](./absorption-survivors.md), and
+  [grounding-sweep narrowing check](./grounding-sweep-narrowing-check.md).
+- **Articles:** [article roles](./article-roles.md),
+  [accepted baselines](./accepted/README.md), and
+  [rejected draft captures](./rejected-drafts/README.md).
+- **Operational evidence:** the retained
+  [shared-doctrine operationalization report](../../reports/retained/planning-delegation-theory/instruction-machinery-refinement.md#shared-doctrine-operationalization-follow-on).
 
 ## What closes this workshop
 
 The workshop closes when:
 
-1. the shared model states the target architecture, present bootstrap,
-   practical tool payoff, and progress comparison precisely enough for the
-   articles to use;
-2. the closure–capability map has been exercised on a few contrasting
-   systems: their human cut classified by reason, with the degenerate
-   patterns checked against the verification row;
-3. every material claim in the four rejected drafts has a recorded
-   disposition;
-4. accepted successor articles have been reconstructed and reconciled without
-   depending on a quarantined draft;
-5. the four latest full-pass findings and all affected article links have been
-   resolved;
-6. the earlier workshop has been consumed and closed; and
-7. the durable articles and any supporting notes validate under their target
-   contracts;
-8. the classify-and-route instrument exists and has been applied once to a
-   Commonplace path, with the classification, the chosen transfer, and its
-   outcome recorded; and
-9. the bootstrap article cites that record as its mediation trace; and
-10. each published article names the notes it was distilled from and states
-    its open problems as invitations a reader could take up; and
-11. every source an article uses has a match-register row, no article carries
-    a source conclusion past its row's non-transfer boundary, and the
-    composition's interaction checks have been run and recorded.
+1. the shared model, task-scoped closure formulation, closure-capability map,
+   and durable theory claims state one coherent research program;
+2. every load-bearing inherited claim has a recorded disposition and every
+   admitted claim states its scope, mechanism, evidence status, and failure
+   condition;
+3. the article architecture has been reconstructed around the admitted program
+   rather than the rejected drafts;
+4. at least one recorded Commonplace or programming-agent episode shows theory
+   guiding an intervention and evidence feeding back into the theory;
+5. the articles expose the important open questions and supporting material
+   without presenting them as assigned work;
+6. one bounded researcher-engagement attempt has produced either substantive
+   exchange or a recorded negative result that revises the invitation; and
+7. source uses remain inside their match-register boundaries, outstanding
+   review findings are resolved, durable outputs validate under their target
+   contracts, and the earlier workshop has been consumed and closed.
 
-At closure, durable results move to the library and this directory is deleted.
+Article completion alone cannot close the workshop. At closure, durable theory,
+machinery, evidence, and articles move to their library homes, and this
+directory is deleted.
