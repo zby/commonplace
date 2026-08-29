@@ -22,6 +22,15 @@ non-adversarial agent work.
   records the authoring sweeps, verified Codex and native-Claude doctrine
   delivery, the simplified multistage writer, all sixteen commissioning-surface
   dispositions, deferred redesigns, and the cue-policy decision.
+- [Multistage doctrine-compression pilot](./shared-doctrine-operationalization/multistage-pilot.md)
+  — records the rejected and adopted candidates, control carriers, four fresh
+  scenario evaluations, complexity judgment, and checks; it links both full
+  behavioral traces.
+- [Commissioning-surface audit](./shared-doctrine-operationalization/commissioning-surface-audit.md)
+  — retains the frozen searches and six-part disposition record for all
+  sixteen cohorts.
+- [Claude native-worker doctrine delivery](./shared-doctrine-operationalization/claude-native-worker-doctrine-delivery.md)
+  — retains the direct two-worker probe and its explicit runtime boundary.
 - [Commit / wait / probe assay](./commit-wait-probe-assay/report.md) — blinded
   one-model smoke test retained with its cases, rubric, runner, packets, and
   responses. Its 8/8 treatment result versus 7/8 control missed the

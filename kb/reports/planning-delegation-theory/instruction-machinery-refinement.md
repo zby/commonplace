@@ -162,7 +162,8 @@ per-packet field or schema.
 
 ### Verified delivery boundary
 
-The delivery evidence was collected on 2026-08-29 from this checkout:
+The [detailed delivery record](./shared-doctrine-operationalization/claude-native-worker-doctrine-delivery.md)
+was collected on 2026-08-29 from this checkout:
 
 | Path | Evidence | Supported conclusion |
 |---|---|---|
@@ -178,10 +179,12 @@ doctrine-only.
 
 ### Multistage compression pilot
 
-The first doctrine-delta candidate was rejected. It added two lines and twelve
-words without reducing operational complexity, and its then-unverified Claude
-delivery premise prevented adoption. The direct native-worker probe reversed
-that delivery objection but not the complexity judgment.
+The [full pilot record](./shared-doctrine-operationalization/multistage-pilot.md)
+retains both scenario traces. The first doctrine-delta candidate was rejected.
+It added two lines and twelve words without reducing operational complexity,
+and its then-unverified Claude delivery premise prevented adoption. The direct
+native-worker probe reversed that delivery objection but not the complexity
+judgment.
 
 The adopted lean candidate has SHA-256
 `9e6893a96d3731edd092c5f9276b9acd7e8b7b4e69cf7dc251b177456dc6c6ba`.
@@ -210,7 +213,8 @@ performance in general.
 
 ### Frozen commissioning-surface audit
 
-The audit froze 230 tracked control-plane files at commit
+The [full audit](./shared-doctrine-operationalization/commissioning-surface-audit.md)
+froze 230 tracked control-plane files at commit
 `20cc50f82f88f50e7b0dca71ec843d7ca28b647a`. It covered `AGENTS.md`,
 `AGENTS.md.template`, `kb/instructions/`, `kb/types/`, `kb/messages/`,
 `kb/tasks/`, and `src/commonplace/`. Canonical sources were inspected instead
