@@ -49,7 +49,7 @@ it can raise a status to conjectured, never to established.
 | Parasuraman, Sheridan & Wickens 2000 ([ingest](../../sources/model-types-levels-human-interaction-automation.ingest.md)) | Which stages of a task to automate, judged by consequences | P4 | Downstream: supervisory-control allocation and pathway-function allocation share the reporting problem, not its cause | Per-function allocation profile; allocation judged by performance, reliability, and cost of consequences | **Form**: a per-function reporting form transfers, with three declared departures in the closure-tracking note — the functions are the pathway's own, the ten-level scale is not inherited, and allocation establishes nothing about warrant. No operative mechanism, so no mechanism match | The within-function level scale; task-performance stages; any inference from an allocation to its warrant or safety |
 | Mission command (ADRP 6-0, MCDP 1, Stahel) ([ingest](../../sources/us-army-adrp-6-0-mission-command-2012.ingest.md), [ingest](../../sources/marine-corps-mcdp-1-warfighting-1997.ingest.md), [ingest](../../sources/david-stahel-auftragstaktik-mission-command.ingest.md)) | Command against an intelligent opponent who observes, resists, and responds, under friction and information limits, so that plan and execution diverge; the response allocates purpose, information, and decision rights toward the actor who can observe the resulting state | P6 | Downstream: no adaptive opponent in the workshop; only the later control problem is shared | Commander's intent: purpose, key tasks, end state; bounded executor authority; governed return of control; a shared interpretive basis that, as Commonplace doctrine, makes a compact task-specific delta intelligible | **Conjectured**. See worked row 4. | Military hierarchy, rank, force structure, synchronization and risk doctrine, adversarial purpose; the label as stable guidance (Stahel) |
 | FunSearch; AlphaDev (no ingest) | Search-selected programs retained and reused in bounded settings | P5 | No depth: instance | Existence evidence that the selected-localized cell is populated | **To assess**: cited by the accepted Bitter Lesson article as its only existence evidence, with no ingest and no row until now; ingest or replace before the article publishes | Economy of search, evaluator–deployment match, generalization |
-| Internal: [codifying predictable choices leaves agents with less predictable work](../../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md) | Composition of residual agent work after preferential codification | P2 | Causal-origin: the same selection mechanism, with the selector changed | Selection effect on the residue | **Established** (note written 2026-08-28). See worked row 3. | The planning consequence (executor information advantage) does not move unchanged |
+| Internal: [codifying predictable choices leaves agents with less predictable work](../../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md) | Composition of residual agent work after preferential codification | P2 | Causal-origin: the same selection mechanism, with the selector changed | Selection effect on the residue | **Established**. See worked row 3. | The planning consequence (executor information advantage) does not move unchanged |
 
 ## Stance per row: divergence or support
 
@@ -73,25 +73,10 @@ purpose, held upstream (P6), and
 Triage rule for audit findings: at a support row, accept the finding unless
 it is factually wrong about the source; at a divergence row, accept only a
 finding that supplies a new object-level argument, and record a
-consensus-restating reversal as predicted. The 2026-08-29 audit sorted this
-way: the Argyris, Bainbridge, Parasuraman, and Popper narrowings were support
-findings and were taken; the Naur and Sutton reversals were divergence
-findings without a new argument and were declined.
-
-## Declared divergence points
-
-Two rows are where the series contests the consensus reading of a source:
-Naur, whose human binding the series breaks at the bridge premise while
-keeping the inexpressibility generator; and Sutton 2019, whose weights-only
-extrapolation the series separates from the production-method generator. A
-reviewer carrying the consensus prior will read the consensus conclusion as
-the generator and propose reversing these rows to downstream. The 2026-08-29
-audit did exactly that. Treat such a reversal at a declared divergence point
-as predicted, not as evidence: plural judges drawn from the same training
-distribution share the field's prior, so plurality stops decorrelating
-there, and the remaining checks are the object-level argument in the accepted
-article and later exposure. A reversal supported by a *new* object-level
-argument is a finding; one that restates the consensus conclusion is not.
+consensus-restating reversal as predicted rather than new evidence. At Naur
+and Sutton, plurality stops decorrelating when reviewers share the field's
+prior; the remaining checks are the accepted article's object-level argument
+and later exposure.
 
 ## Worked rows
 

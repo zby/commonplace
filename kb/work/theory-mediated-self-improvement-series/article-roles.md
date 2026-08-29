@@ -72,9 +72,9 @@ each residual decision by the reason it resisted transfer
 the transition article then explains what moving one such row requires.
 The bootstrap article also carries the one recorded use of the
 classify-and-route instrument on a Commonplace path as its mediation trace.
-The earlier workshop's un-homed claim — proposer and judge are computational
-while direction under a fuzzy objective stays human — is the unsettled-criterion
-row of that first classification, and is homed there.
+The previously un-homed claim — proposer and judge are computational while
+direction under a fuzzy objective stays human — is the unsettled-criterion row
+of that first classification, and is homed there.
 
 The practical claim is different: the current composite can already be useful
 to people building theories and operating an LLM wiki. Evidence for that claim
@@ -133,7 +133,7 @@ Interaction checks the composition must run and record:
 - **Bearer tests × evaluator crux.** P1's third test (coherent modification)
   and P2's least-warrantable decisions name the same decision class. State
   whether passing the bearer tests is equivalent to warranting those decisions
-  or merely necessary for it. Candidate answer (operator, 2026-08-28):
+  or merely necessary for it. Candidate answer from the operator:
   **equivalence, under conditions.** Naur's holders are the evaluators of
   their own coherence; the independent check is the delayed, occasional
   Popperian exposure — the next demand, the bug, the failed extension. A

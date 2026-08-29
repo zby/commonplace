@@ -238,19 +238,12 @@ agent should revise one of those files into a successor article. A claim can
 leave quarantine only through an explicit entry in the
 [incumbent ledger](./incumbent-ledger.md).
 
-The earlier
-[theory-mediated methodology workshop](../theory-mediated-methodology-article/README.md)
-records how the drafts accumulated. It is historical input, not the place to
-continue the series. It remains until its live decisions have been checked
-against this workshop and then closes under the workshop contract.
-
 ## Working artifacts
 
 - [Target problems](./target-problems.md) — the problems the series
   addresses, stated independently of any source.
 - [Match register](./match-register.md) — per source: problem match,
-  mechanism-match status, non-transfer boundary; six worked rows; audited
-  2026-08-29.
+  mechanism-match status, and non-transfer boundary, with six worked rows.
 - [Shared model](./shared-model.md) — the current architecture, bootstrap
   relation, practical payoff, closure condition, and progress dimensions.
 - [Closure–capability map](./closure-capability-map.md) — comparison coordinates,
@@ -260,9 +253,6 @@ against this workshop and then closes under the workshop contract.
   order; these do not promise that every rejected title survives.
 - [Incumbent ledger](./incumbent-ledger.md) — source identities, review
   constraints, and claim-by-claim transfer decisions.
-- [Extraction candidates](./extraction-candidates.md) — nine library notes
-  proposed so the articles cite claims instead of arguing them; coverage
-  verdicts and nearest neighbours per candidate.
 - [Shared-doctrine and intent operationalization](../shared-doctrine-and-intent-operationalization/README.md)
   — pending supplier for P3, ledger O10, and closure conditions 8–9 after its
   outcomes 3–5 report.
@@ -287,7 +277,7 @@ The workshop closes when:
    depending on a quarantined draft;
 5. the four latest full-pass findings and all affected article links have been
    resolved;
-6. the earlier workshop has been consumed; and
+6. the earlier workshop has been consumed and closed; and
 7. the durable articles and any supporting notes validate under their target
    contracts;
 8. the classify-and-route instrument exists and has been applied once to a
