@@ -51,6 +51,21 @@ it can raise a status to conjectured, never to established.
 | FunSearch; AlphaDev (no ingest) | Search-selected programs retained and reused in bounded settings | P5 | No depth: instance | Existence evidence that the selected-localized cell is populated | **To assess**: cited by the accepted Bitter Lesson article as its only existence evidence, with no ingest and no row until now; ingest or replace before the article publishes | Economy of search, evaluator–deployment match, generalization |
 | Internal: [codifying predictable choices leaves agents with less predictable work](../../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md) | Composition of residual agent work after preferential codification | P2 | Causal-origin: the same selection mechanism, with the selector changed | Selection effect on the residue | **Established** (note written 2026-08-28). See worked row 3. | The planning consequence (executor information advantage) does not move unchanged |
 
+## Declared divergence points
+
+Two rows are where the series contests the consensus reading of a source:
+Naur, whose human binding the series breaks at the bridge premise while
+keeping the inexpressibility generator; and Sutton 2019, whose weights-only
+extrapolation the series separates from the production-method generator. A
+reviewer carrying the consensus prior will read the consensus conclusion as
+the generator and propose reversing these rows to downstream. The 2026-08-29
+audit did exactly that. Treat such a reversal at a declared divergence point
+as predicted, not as evidence: plural judges drawn from the same training
+distribution share the field's prior, so plurality stops decorrelating
+there, and the remaining checks are the object-level argument in the accepted
+article and later exposure. A reversal supported by a *new* object-level
+argument is a finding; one that restates the consensus conclusion is not.
+
 ## Worked rows
 
 ### 1. Naur → P1
