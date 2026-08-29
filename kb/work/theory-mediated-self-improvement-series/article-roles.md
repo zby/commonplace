@@ -10,7 +10,7 @@ only after disposition in the [incumbent ledger](./incumbent-ledger.md).
 | Module | Job | Essential content | Primary support | Open research contact |
 |---|---|---|---|---|
 | **Research-program hub** | Present the program as one research question and route readers to its component arguments | The co-indexed theory → change → evidence → theory-revision loop; the mixed architecture; Commonplace and programming agents as testbeds; what evidence would count | [Shared model](./shared-model.md), [target problems](./target-problems.md) | Rival architectures, counterexamples to the loop, and external testbeds |
-| **Bearer question** | Explain why program-specific theory matters and why Naur's argument does not settle that only humans can hold it | Retained theory is not the same as holding a theory; a composite must acquire program-specific premises, justify the parts, and modify coherently across later demands | [Accepted Naur baseline](./accepted/what-bound-naurs-theory-to-programmers.md), [Naur basis note](../../notes/naur-equates-machine-execution-with-formulated-criteria.md) | Rival readings of Naur and operational tests of theory possession |
+| **Bearer question** | Explain why program-specific theory matters and why Naur's argument does not settle that only humans can hold it | Retained theory is not the same as holding a theory; a holder sustains program-specific search, backtracking, and revision under delayed feedback rather than deducing a perfect change; a composite must acquire the required premises and modify coherently across later demands | [Accepted Naur baseline](./accepted/what-bound-naurs-theory-to-programmers.md), [Naur basis note](../../notes/naur-equates-machine-execution-with-formulated-criteria.md), [coherent search under delayed feedback](../../notes/holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md) | Rival readings of Naur, tests separating theory-guided from generic search, and task distributions that expose coherent recovery |
 | **Operative theory and mixed architecture** | Explain how explicit theory can participate in operation rather than remain documentation | Retention plus interpretation; causal co-indexing; addressability without automatic correctness; distinct representation, settlement, verification, and continuity roles; mediation traces; theory/methodology fast path and fallback | [Theory-mediated self-improvement needs interpretation and retention](../../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md), [mixed architecture from residue classes](../../notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md), [mediation trace](../../notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md), [two-layer execution](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md) | Better evidence of load-bearing theory use, alternative substrates, and failure cases for the role decomposition |
 | **Current bootstrap** | Show what Commonplace already demonstrates without presenting it as the endpoint | Useful human-agent theory work; explicit remaining human decisions; one recorded theory-mediated episode; programming agents with persistent project-specific theory as the first external testbed | [Shared model](./shared-model.md), [Commonplace as a reflective system](../../notes/evidence/commonplace-as-a-reflective-system.md), the episode record still to be normalized | Independent reproductions, comparison with adjacent systems, and evidence that retained theory changes outcomes |
 | **Progress, closure, and benchmarks** | State how progress is evaluated without collapsing usefulness, autonomy, warrant, and power | Automation envelopes and method ceilings; adverse selection of residual human work; task-scoped closure; capability and evaluator adequacy; fixed-client limits of the remote-programmer benchmark | [Task-scoped closure](./task-scoped-computational-closure.md), [closure-capability map](./closure-capability-map.md), [separate progress dimensions](../../notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md), [method ceilings](../../notes/a-method-ceiling-bounds-the-method-not-the-transfer-already-made.md), [fixed-client benchmark](../../notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md) | Formalizations, non-degenerate task selections, evaluator tests, and measurement of displaced human work |
@@ -51,6 +51,10 @@ drafts used them.
   affects later operation.
 - Retained text alone does not hold a program theory. A bearer claim concerns
   what an interpreter-plus-artifact composite can reliably do.
+- Naur's coherent-modification test and warranting the least-warrantable
+  modification decision are the same process-level crux. The theory guides
+  fallible search and recovery under delayed feedback; it need not determine a
+  correct first proposal.
 - Explicit artifacts provide addressability and inspectability, not automatic
   credit assignment, coherence, retrieval, correct interpretation, or
   admission.
@@ -66,14 +70,12 @@ drafts used them.
 
 ## Cross-module questions
 
-Three interactions remain live research questions rather than settled article
-machinery:
+The bearer/evaluator relation is fixed by the coherent-search claim above. Two
+interactions remain live research questions:
 
-1. Is passing Naur's coherent-modification test equivalent to warranting the
-   hardest residual decisions, or only necessary for it?
-2. What evidence distinguishes the theory actually consumed from a retained or
+1. What evidence distinguishes the theory actually consumed from a retained or
    cited theory that did not determine the decision?
-3. Search can move proposal into computation; under what conditions does an
+2. Search can move proposal into computation; under what conditions does an
    evaluator also move selection and acceptance out of the human cut?
 
 The articles should expose these questions rather than bury candidate answers

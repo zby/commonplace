@@ -106,6 +106,14 @@ therefore evidence about what the current system cannot warrant, not about an
 essentially human capacity. Each residual decision should be recorded with the
 reason it stayed human.
 
+At the least-warrantable point of open-ended program modification, this is the
+same problem as Naur's coherent-modification test. Human theory-holders do not
+need to deduce a correct change from a complete theory. They use a partial
+program theory to guide search, interpret failures, backtrack, and revise under
+delayed feedback. Warrant belongs to the process across later demands, not to
+the first proposal. See
+[holding a program theory means sustaining coherent search under delayed feedback](../../notes/holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md).
+
 ## Closure and strong capability
 
 Computational closure is task-scoped. A claim must declare task selection,
@@ -162,9 +170,9 @@ change, but it does not show theory-mediated improvement.
 
 ## Open questions
 
-- What evidence shows that a composite holds program-specific theory well
-  enough to modify a program coherently, especially when decisive feedback
-  arrives only through later demands?
+- What task distribution and horizon distinguish a composite that sustains
+  coherent program-specific search and recovery from one that succeeds by
+  luck, memorization, or a permissive evaluator?
 - How can load-bearing use of retained theory be distinguished from a merely
   decorative citation without rerunning every decision?
 - Can task choice, acceptance, and evaluator revision move inside the system
