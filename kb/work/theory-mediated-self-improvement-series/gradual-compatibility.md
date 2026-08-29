@@ -32,7 +32,7 @@ recovery, and repair.
 |---|---|---|
 | 1. Classify the new defense | Row *Compatibility is assessed per portion of a path*, role **scope rule**; mechanism carried by a new ≤220-word section in the production-method note, composed from the narrow rebuttal's per-update classification, adverse selection, and the ceiling note | [portfolio](../../notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md); [production-method note § Compatibility is assessed per portion of a path](../../notes/the-bitter-lesson-selects-production-methods-not-representational.md#compatibility-is-assessed-per-portion-of-a-path) |
 | 2. Production axis × adverse selection | Candidate answer: **splits per function** — search alone moves proposal (leverage), the decision moves only with the oracle (transfer); the two portions coincide at the evaluator | [article roles § Composition](./article-roles.md#composition) |
-| 3. Disanalogy premise | Earned reach **cannot** carry it; substitute versus complement is the candidate reason, conditional on the absorption-survivors report; the two-class tension resolves as two criteria | portfolio row corrected; candidate row added; [register](./match-register.md#stance-per-row-divergence-or-support) third divergence; this document |
+| 3. Disanalogy premise | Earned reach is the selection criterion for *claims* and clears theory-mediated learning; it does not carry the *artifact* disanalogy and never claimed to; substitute versus complement, narrowed to a function claim by the absorption-survivors report, is what carries that; the two-class tension resolves as two criteria | portfolio row corrected; candidate row added; [register](./match-register.md#stance-per-row-divergence-or-support) third divergence; this document |
 | 4. Production freedom | Row, role **separate-objection answer** with a checkable per-class form; the audit for Commonplace is below | portfolio; this document |
 | One stance, three applications | Recorded as a subsection of the portfolio; three rows kept, because the second columns differ | portfolio § Three members share one scoping move |
 | Regime | Scope bullet on the portfolio: results hold for improving a system around a frontier model the operator does not train; wider case out of scope, not denied | portfolio § Scope |
@@ -82,31 +82,31 @@ not a transfer.
 
 ## The disanalogy premise
 
-### Earned reach cannot carry it
+### Earned reach is the selection criterion, and it protects claims, not carriers
 
 The brief named
 [selection removes unearned reach, not structure](../../notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md)
-as the sharpest candidate. That note was narrowed on 2026-08-24 (commit
-92314f92, "Ground claim cleanup cohort 02") from *scale replaces
-generalizations whose scope was asserted; structure whose reach was earned is
-what search converges on* to *unsupported proxy scope may explain a
-structured method's loss under scaling* — a case-level conjecture whose two
-listed cases (IRM, DomainBed) do not complete its mechanism, and whose scope
-section disclaims the inverse: "the evidence does not show that adequately
-assessed structure necessarily survives scaling." The filename kept the old
-title, so inbound links still read as the strong claim. The portfolio row was
-never updated; it is now.
+as the sharpest candidate. At the time of the brief that note had been
+narrowed by a grounding cohort (2026-08-24, commit 92314f92) into a hedged
+case-level diagnostic that disclaimed its own claim — narrowing bought to
+survive review, applied to a divergence claim. The operator restored it on
+2026-08-29 (`0f506eb6`) and it was revised in place to current terminology
+with the critiques gathered since.
 
-The report independently confirms this: "a reject-capable test can select
-the learned replacement. It improves the production method; it does not
-guarantee that the selected structure remains explicit." Even in its strong
-form the criterion would not have carried the disanalogy.
-Earned reach filters *content* — which structure passes selection when the
-function it serves is demanded. The vision features did not lose because
-their reach was unearned in that sense; edge detection is exact relative to
-its own requirement. They lost because demand for the *function* moved to a
-learned substrate that supplied it better. A criterion that speaks only to
-content cannot say why demand for the function survives.
+On the restored reading the note does two things and declines a third. It
+clears theory-mediated learning in natural-language and symbolic forms: the
+lesson's criterion is whether a claim's scope was earned by a test that could
+refute it, indifferent to form and origin, so theory search with
+reject-capable acceptance is the lesson's own method — conditional on the
+gate earning reach rather than confirming fit. It answers the
+absorption-survivors report: a tested claim can be *extended* (a superset
+found; the carrier retired, the claim confirmed) as well as *replaced*, and
+only replacement indicts the claim — Stockfish's evaluator is extension. And
+it declines the carrier question: nothing in it promises that an artifact
+carrying an earned claim stays explicit. So it still does not carry the
+*artifact* disanalogy, and never claimed to; the report's "tested structure
+was replaced" confirms the note's own converse-denial rather than refuting
+it.
 
 ### Substitute versus complement is the candidate reason, and where it stops
 
@@ -230,6 +230,13 @@ before it moves — the residue table read on the production axis.
 - **The substitute-versus-complement row was narrowed** by the
   absorption-survivors report (above). Report consumed; the report itself
   stays a workshop artifact and is not yet ingested or promoted.
+- **Citations of the unearned-reach note were rewritten today to match its
+  narrowed form** (`02f407c5`, `e9e30c6b`, `43d43faa`, `bc6a37d2`) before the
+  restore. A mailbox request asks another agent to check the 2026-08-24
+  grounding cohorts for other narrowed claims and to list those citations
+  with a put-back / keep / rephrase verdict; the three I authored today
+  (portfolio row, production-method line and footer, scaffolding footer) are
+  already back on the restored reading.
 - Whether the per-portion rule wants its own note once the hub cites it: the
   current home is a section, on the fold-not-spawn rule; a section anchor is
   citable.

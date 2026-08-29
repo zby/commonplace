@@ -46,6 +46,6 @@ These cases make recurrence a live hypothesis, not a measured trend. Settling it
 
 Relevant Notes:
 
-- [Unsupported proxy scope may explain a structured method's loss under scaling](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md) — contrasts: offers a case-level conjecture about unsupported requirement-to-objective proxies; it does not establish scaffolding absorption or the fixed-difficulty/frontier distinction argued here
+- [The bitter lesson selects against unearned reach, not against structure](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md) — contrasts: supplies the selection criterion, asserted versus earned scope, for claims; it does not establish scaffolding absorption or the fixed-difficulty/frontier distinction argued here, which concern carriers
 - [The bitter lesson selects production methods, not representational forms](./the-bitter-lesson-selects-production-methods-not-representational.md) — extends: carries the moving-frontier argument into the production-method versus representational-form distinction
 - [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — extends: the frontier continues to generate deployment-pace change, which retained-artifact adaptation addresses
