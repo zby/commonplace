@@ -56,8 +56,6 @@ questions into assigned tasks.
   must expose something evidence can narrow or defeat.
 - Computational closure is task-scoped. Structural closure, capability,
   warrant, and system power remain separate coordinates.
-- Researchers may work independently or jointly. The series must not assign
-  them roles, responsibilities, ownership, or a research agenda.
 - Source conclusions transfer only as far as the
   [match register](./match-register.md) licenses. Review-defeated drafts are
   evidence for claim recovery, not foundations for successor prose.
@@ -103,7 +101,6 @@ Return the decision to the operator when proceeding would:
 - change the researcher-engagement intent or add practitioner conversion;
 - promise authorship, funding, employment, affiliation, or another external
   reward;
-- assign an external researcher a role, responsibility, ownership, or agenda;
 - set terms for joint work or credit without mutual agreement;
 - strengthen, conceal, or preserve a claim merely to make the series more
   persuasive;
