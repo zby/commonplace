@@ -20,7 +20,7 @@ Do not edit the finding, its subject, or supporting artifacts unless the user se
 
 Start with what happens, why it matters, or what the operator needs to decide. Keep conditions that control reachability, scope, impact, or confidence next to the claims they qualify. Do not turn a narrow but serious problem into a general one, or make a qualified conclusion sound certain.
 
-Use ordinary domain language and the active project vocabulary normally. Expand or define terms coined for this task and terms inherited from artifacts that have no canonical definition. A literal code or schema identifier may remain, but state what it represents before relying on the identifier. Do not promote vocabulary during this operation.
+Use ordinary domain language and project terms with canonical definitions normally. Expand or define terms coined for this task and terms inherited from artifacts that have no canonical definition. A literal code or schema identifier may remain, but state what it represents before relying on the identifier. Do not promote vocabulary during this operation.
 
 Add only enough mechanism to connect the practical account to the technical finding. Put deeper mechanism after the practical explanation. When the technical finding is retained in a file or report, point to its exact path and finding identifier under a natural phrase such as `Technical basis`; do not reproduce its evidence in the brief. If no retained finding exists, keep a clearly labelled technical finding after the practical explanation and keep evidence there rather than mixing it into the opening.
 
