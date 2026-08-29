@@ -315,7 +315,10 @@ evidence` keeps the current bytes and names what would reopen them.
   restore protocol, including staged rename recovery; removing duplicated
   packet text does not solve it. Retain bytes and defer until a focused
   failure-path design can exercise those states or the active agentic-system
-  corpus migration replaces this workflow.
+  corpus migration replaces this workflow. The failure path is carried as
+  [Recoverable replacement of an incumbent review](../../../reference/proposals/recoverable-replacement-of-an-incumbent-review.md)
+  (added 2026-08-29), so the design question now sits in the proposal frontier
+  rather than only in this deferral.
 
 ### AutoReason revision — defer behind versioned protocol evidence
 
