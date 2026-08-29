@@ -197,6 +197,7 @@ invariants, and orientation that the implementation does not cheaply recover.
 - [collections-never-own-frontmatter-semantics.md](./collections-never-own-frontmatter-semantics.md) — why the collection/type split is asymmetric: a type spec owns frontmatter semantics, `COLLECTION.md` owns only text-level features
 - [Answerability](./definitions/answerability.md) — Commonplace's stipulated admission boundary: what an artifact answers to, the property it asserts, and the discrepancy that triggers correction
 - [Collection and text contract](./definitions/collection.md) — canonical definitions of the collection boundary and its complete local authoring declaration
+- [Commonplace doctrine](./definitions/commonplace-doctrine.md) — the standing instruction a worker inherits with binding force when its runtime loads it; a handoff is a delta from it
 
 ### Authoring and operator procedures
 

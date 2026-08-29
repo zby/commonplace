@@ -65,16 +65,16 @@ Maintain this KB under the project's version-control system. Inspect diffs befor
 
 ## Delegation
 
-This file is the standing baseline a worker inherits when its runtime loads
-it; collection contracts, type specs, and an invoked skill specialize it. A
-handoff is a delta from that baseline. It states the task's purpose — what
-the result is for, not only what it is — its deviations from the baseline,
+This file is the Commonplace doctrine a worker inherits when its runtime
+loads it; collection contracts, type specs, and an invoked skill specialize it. A
+handoff is a delta from that doctrine. It states the task's purpose — what
+the result is for, not only what it is — its deviations from the doctrine,
 and the consequential choices deliberately left open. The parent writing the
 handoff may leave out a rule this file supplies only when the worker's runtime
 loads this file. A rule that reaches the worker through nothing but the
 parent's conversation is not inherited; state it.
 
-Delegation does not expand task authority. Whatever the baseline supplies, a
+Delegation does not expand task authority. Whatever the doctrine supplies, a
 consequential handoff still fixes what it cannot: the intended result and its
 acceptance, non-negotiable constraints, owned outputs or write scope,
 accessible inputs, coordination boundary, verification or feedback, and stop

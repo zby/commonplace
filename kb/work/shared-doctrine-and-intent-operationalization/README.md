@@ -180,9 +180,9 @@ with its consumption-path condition, and gives the four omission cases. That
 is the `AGENTS.md` part of outcome 2, landed before outcomes 1 and 2 proper.
 It does not change the dependencies: step 0 still decides whether workers
 receive that file, and outcome 2 still owns how the collection and instruction
-contracts specialize it. Outcome 1 adds the vocabulary entry for "standing
-baseline" once its definition note exists; the Delegation section uses the
-term inline until then.
+contracts specialize it. The term is *Commonplace doctrine*, defined in
+`kb/reference/definitions/commonplace-doctrine.md` and entered in the
+`AGENTS.md` vocabulary.
 
 - **Step 0 — probe baseline delivery.** Discriminating evidence for
   outcomes 2–4.
@@ -254,12 +254,15 @@ Use the substrate draft as the skeleton, under these rules:
   Frontloaded restatement is fine in the workshop draft, which now carries
   provenance links at each passage; the durable note cites these rather than
   restating them under new names.
-- **Resolve the word "doctrine" once.** In the retained reports and notes it
-  names source-side military doctrine (MCDP 1, ADRP 6-0). Either define
-  "shared doctrine" in one clause as a plain shorthand for standing
-  natural-language system-definition artifacts a worker receives with
-  binding force, linking that definition, or use "standing baseline" on the
-  Commonplace side. Do not coin a new artifact class.
+- **The term is resolved** (2026-08-29): *Commonplace doctrine* is the
+  technical compound, defined in
+  `kb/reference/definitions/commonplace-doctrine.md` as the standing
+  instruction a worker inherits with binding force when its runtime loads it
+  — a natural-language system-definition artifact, not a new class. Bare
+  *doctrine* stays ordinary English and abbreviates the compound only where
+  source-side military doctrine (MCDP 1, ADRP 6-0) could not be meant.
+  `AGENTS.md` carries the vocabulary entry and its Delegation section uses
+  the term.
 - **Fold, do not spawn.** The draft's "selections and binding restatements,
   not only departures" point already existed in
   `specific-intent-may-out-yield-local-rationales-facts-stay-separate.md`

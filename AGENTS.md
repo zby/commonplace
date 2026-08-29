@@ -52,6 +52,7 @@ Terms needed to understand the project's structure and everyday operations, alph
 - **Codification** — the far end of constraining, where natural language crosses into a symbolic artifact (code, schema, grammar) with formal semantics. See `kb/notes/definitions/codification.md`.
 - **Collection** — a `kb/` subtree whose root contains `COLLECTION.md`; that file is the local authoring and routing contract for artifacts in the subtree. See `kb/reference/definitions/collection.md`.
 - **Commonplace** — the name of this KB and framework. Capitalize it in prose; lowercase only in literal identifiers (`commonplace-*`, `llm-commonplace`, `src/commonplace/`, `kb/commonplace/`).
+- **Commonplace doctrine** — the standing instruction a worker inherits with binding force when its runtime loads it: this file, plus the collection contracts, type specs, and skill its runtime supplies. A handoff is a delta from it. The compound is the technical term; bare *doctrine* stays ordinary English and may abbreviate it where nothing else (such as the source-side military doctrine in the planning reports) could be meant. See `kb/reference/definitions/commonplace-doctrine.md`.
 - **Criterion** — the instruction text applied to a note in an assay. It occupies the persisted `criterion_path` side of a review pair; a gate is a closed-ended, verdict-kind criterion, while critique is an open-ended, report-kind criterion. See `kb/reference/README-REVIEW-SYSTEM.md#concepts`.
 - **Constraining** — narrowing the space of valid interpretations an artifact admits — from writing a convention up to committing to code. See `kb/notes/definitions/constraining.md`.
 - **Context engineering** — getting the right knowledge into a bounded context at the right time: routing, loading, scoping, maintenance. See `kb/notes/definitions/context-engineering.md`.
@@ -145,16 +146,16 @@ current task; it does not grant new mutation authority or launch another agent.
 
 ### Delegation
 
-This file is the standing baseline a worker inherits when its runtime loads
-it; collection contracts, type specs, and an invoked skill specialize it. A
-handoff is a delta from that baseline. It states the task's purpose — what
-the result is for, not only what it is — its deviations from the baseline,
+This file is the Commonplace doctrine a worker inherits when its runtime
+loads it; collection contracts, type specs, and an invoked skill specialize it. A
+handoff is a delta from that doctrine. It states the task's purpose — what
+the result is for, not only what it is — its deviations from the doctrine,
 and the consequential choices deliberately left open. The parent writing the
 handoff may leave out a rule this file supplies only when the worker's runtime
 loads this file. A rule that reaches the worker through nothing but the
 parent's conversation is not inherited; state it.
 
-Delegation does not expand task authority. Whatever the baseline supplies, a
+Delegation does not expand task authority. Whatever the doctrine supplies, a
 consequential handoff still fixes what it cannot: the intended result and its
 acceptance, non-negotiable constraints, owned outputs or write scope,
 accessible inputs, coordination boundary, verification or feedback, and stop
