@@ -10,6 +10,7 @@ Current retained sets:
 - [Planning and delegation theory](./planning-delegation-theory/README.md)
 - [Simplification-instruction comparison](./simplification-instruction-comparison-20260807/README.md)
 - [ASD-STE100-inspired rewrite experiment](./asd-ste100-inspired-rewrite.md)
+- [Provider treatment of operator-communication failures](./provider-treatment-of-operator-communication-failures-2026-08-29.md)
 - [Link-vocabulary audit](./link-vocabulary.md)
 - [Review-link availability baseline](./review-link-availability.md)
 
