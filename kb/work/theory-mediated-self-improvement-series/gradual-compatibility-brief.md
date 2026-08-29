@@ -136,14 +136,19 @@ formulation assume the tidy version.
   representing it. A claim that the system could learn without human input is
   caught by that pattern unless it says where the objective and the acceptance
   standard come from.
-- **The form constraint is scoping, not principle.**
+- **The form constraint is a regime, not a principle** (operator, 2026-08-29).
+  It is not "we do not train models" — limited auxiliary models such as
+  embedders, routers, or classifiers are not excluded. It is **"we improve a
+  system around a frontier model we do not train."** Budget is why; the
+  position is what, and it is the position nearly every deployed system
+  occupies, since frontier pretraining is concentrated in a few organizations.
   [The readable-artifact loop](../../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md)
-  already frames natural-language-plus-symbolic as the tractable *first* loop,
-  chosen for shared context, current tempos, and an existing codification
-  boundary. Not training models is a resource fact for this project. Stating it
-  as a principled limit needs an argument, and whether the fixed form stays
-  competitive is P5's open empirical question — so do not claim the constraint
-  is costless.
+  already frames natural-language-plus-symbolic as the tractable *first* loop
+  rather than a principled locus. State results for that regime, and mark the
+  wider case out of scope rather than denied. Whether the regime's fixed form
+  stays competitive is P5's open question, so do not claim the constraint is
+  costless — and say plainly that cheaper training could move the boundary,
+  which the frontier-recurrence forecast already anticipates.
 - **Conjectured is the ceiling** for any register status a worked row raises.
 - **Fold, do not spawn.** A bounded claim goes into the note it qualifies. A
   new note needs its own argument that no existing note can carry.
