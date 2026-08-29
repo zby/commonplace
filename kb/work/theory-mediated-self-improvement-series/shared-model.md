@@ -1,228 +1,176 @@
 # Shared model
 
-This is a working model for the series, not a promoted claim.
+This is the workshop's compact working synthesis. It connects the
+[target problems](./target-problems.md), durable theory notes, and evaluation
+artifacts. It does not promote claims by itself; the linked notes carry their
+arguments, evidence, and scope conditions.
 
-## Governing conjecture
+## Core conjecture
 
 A mixed system can improve through explicit theories without requiring every
-learned result to enter model weights. Retained natural-language theory gives
-semantic commitments an address. A language model interprets, criticizes,
-derives, and proposes. Symbolic code carries transitions that must be executed
-faithfully across time. Tests, validators, and observations provide correction.
-The parts form a learning system only when evidence selects retained changes
-that alter later operation.
+learned result to enter model weights. Retained natural-language theory makes
+premises, criteria, and scope addressable. A language model interprets and
+criticizes them. Symbolic machinery carries state and exact transitions.
+Evidence and oracles correct the result.
 
-The architecture is mixed by necessity, not compromise:
+The attribution *improvement through theory* requires one causally co-indexed
+path:
 
-| Part | Primary contribution | Characteristic failure |
+    retained theory
+      -> interpreted decision
+      -> realized change
+      -> outcome
+      -> read-back against the same theory
+      -> revised theory
+      -> later operation
+
+Co-occurrence inside one system boundary is insufficient. The same theory must
+guide the change, be tested by its result, and affect later operation after
+revision. This is the central constraint from
+[theory-mediated self-improvement needs interpretation and retention](../../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md).
+
+Explicit retention contributes addressability, not automatic correctness.
+Credit assignment, coherence, retrieval, interpretation, and admission remain
+separate problems, as
+[reflection buys addressability](../../notes/reflection-buys-addressability.md)
+sets out.
+
+## Functional architecture
+
+| Role | What it supplies | Characteristic failure |
 |---|---|---|
-| Retained natural-language theory | Purpose, causal explanation, assumptions, applicability, and a surface for criticism | Ambiguity, omission, drift, and inert documentation |
-| Language-model interpreter | Semantic application, criticism, proposal, and derivation across cases not fully formalized | Underspecification, stochastic deviation, bias, and confabulated rationale |
-| Symbolic runtime and code | Scheduling, state transitions, schemas, validation, installation, rollback, and repeatable execution | Faithful execution of the wrong transition or frozen decomposition |
-| Operational evidence and oracles | Failure signals, tests, comparisons, and correction from outside the candidate theory | Weak proxies, self-sealing evaluation, and incomplete coverage |
+| Retained explicit theory | Represented premises, objectives, explanations, assumptions, and applicability conditions | Omission, contradiction, drift, inert documentation, retrieval failure |
+| Language-model interpreter | Semantic application, criticism, derivation, and proposal where cases are not fully formalized | Underspecification, stochastic deviation, bias, confabulated rationale |
+| Symbolic runtime and code | State, scheduling, repeatable transitions, validation, installation, rollback, and continuity across calls | Faithful execution of the wrong transition; frozen decomposition |
+| Evidence and oracles | Rejection, comparison, correction, and outcome read-back independent of the candidate | Weak proxies, captured evaluation, self-sealing judgment, incomplete coverage |
 
-The operative loop is:
+The architecture is mixed because the residual decisions left with people fail
+for different reasons:
+
+| Why a decision remains human | Capacity that must grow |
+|---|---|
+| A required premise is not represented | Representation |
+| The criterion is unsettled or cannot yet be applied | Settlement and interpretation |
+| No sufficiently independent check exists | Verification |
+| The decision arises beyond the automatic horizon | Continuity |
+
+No one role supplies all four capacities. The parts are functional roles, not a
+required process diagram; one process may host several roles. The derivation
+and its limits live in
+[each residue class needs a different mechanism](../../notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md).
+
+## Operating cycle
+
+The working cycle is:
 
     observation or failure
       -> criticism of retained theory
       -> revised theory or derived candidate
       -> realization in prose, code, configuration, or model state
       -> evaluation and admission
-      -> installation and later execution
-      -> new evidence read against the retained theory
+      -> installation and execution
+      -> outcome read back against the retained theory
 
-The same causal path must carry the theory, the self-change, its result, and
-the later theory revision. Separate witnesses elsewhere inside a broad system
-do not close this loop.
+A contemporaneous citation of retained theory at the decision point is a cheap
+[mediation trace](../../notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md).
+It is necessary for a record-based mediation claim but does not prove correct or
+load-bearing use. Withholding or replacing the theory and observing a changed
+decision is stronger evidence.
 
-## Two-layer execution
+When a derivation recurs and its scope stabilizes, it may be codified into a
+methodology, validator, or scheduler. The narrower artifact becomes a cheaper,
+more faithful fast path; the theory remains available as a fallback while
+coverage is incomplete. This is the
+[two-layer execution model](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md).
 
-Natural-language theory is the generator and fallback for cases whose relevant
-distinctions have not been stabilized. Recurrent derivations can be codified
-into symbolic methodologies, validators, or schedulers that execute more
-faithfully and cheaply. A codified fast path does not retire its source theory:
-new counterexamples may require the code to be revised, relaxed, or returned
-to theory-level interpretation.
+## Progress and the human boundary
 
-This uses the error-correction asymmetry described in
-[scheduler–LLM separation](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md)
-and the promotion/fallback relation described in
-[the two-layer execution system](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md).
+Do not put systems on one ladder. Tool usefulness, computational autonomy,
+warrant, and system power ask different questions and require different
+evidence. A change must name which dimension moved; none follows from another.
+See
+[usefulness, autonomy, warrant, and power are separate dimensions](../../notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md).
 
-## Realizing the holder conditions in a composite
+A mechanism has an **automation envelope**: the responsibilities it can carry
+under stated conditions. Progress can expand that envelope by moving a
+responsibility out of the residual human work, or improve quality, reliability,
+coverage, latency, or cost inside a fixed envelope. Reaching a ceiling does not
+retract the transfer already made and does not show a path beyond the ceiling.
+See
+[a method's ceiling bounds the method](../../notes/a-method-ceiling-bounds-the-method-not-the-transfer-already-made.md).
 
-Ledger row O12 makes holding the theory equivalent to warrant at the
-coherent-modification decision under conditions that human holders get for
-free. Each has a composite realization and a place where it rests:
+Warranted transfer is adversely selective. It preferentially moves decisions
+with represented premises, settled criteria, and checkable outcomes, leaving a
+residue that is harder to warrant per decision. The remaining human work is
+therefore evidence about what the current system cannot warrant, not about an
+essentially human capacity. Each residual decision should be recorded with the
+reason it stayed human.
 
-| Human condition | Composite realization | Where it rests |
-|---|---|---|
-| Dense exposure calibrates the holder | The model is exposed per call but unchanged by it; calibration happens only if the outcome is recorded, read back against the retained theory, and retrieved next time. Retain friction, not only outcomes: retries, fallbacks, validator reruns, near-misses — the composite's analogue of irritation at a result that was right but came roughly. Friction is evidence of a dispersed output distribution or an over-wide valid set, obtained without an outcome failure | The retention and read-back path — the learning-outside-weights claim (C1) in its most testable form; friction densifies exposure and catches underspecification before it costs anything |
-| Plural, decorrelated holders | Two mechanisms matched to the three deviation sources: clean-context resampling and different model families decorrelate indeterminism and interpreter failure; the retained theory loaded into the judge narrows the valid set toward the intended one, which is the only remedy for underspecification, since every judge reads the same spec | Cheaper than for humans: addressable theory makes a second holder a load, not years of contact. A judge without the theory is non-holder assessment and converges with the proposer on valid-but-unwanted answers. Limit: judges from the same training distribution share the field's prior, so where the target claim diverges from consensus, plurality stops decorrelating and only the object-level argument and exposure remain |
-| Knowing when unable; routing to test or peer | Structural triggers — a falsifier condition observed, a coverage test failing — rather than self-reported uncertainty | Codeable; rests on the empirically weakest signal, so keep it structural |
-| Consequences land on the judge | Learning half folds into read-back. The incentive half has no human form in a composite; its analogue is training-induced disposition (sycophancy, self-consistency), to be treated as the composite's Model I and routed around by plurality | Absent as incentive; present as bias |
+## Closure and strong capability
 
-## Direction, strong benchmark, and bootstrap
+Computational closure is task-scoped. A claim must declare task selection,
+objective and acceptance, system boundary, permitted exogenous inputs and
+interactions, horizon, resources, and coverage. Conditional on those
+declarations, every remaining required decision and transition must be carried
+inside the automatic system. The detailed formulation is
+[task-scoped computational closure](./task-scoped-computational-closure.md).
 
-The broad direction is increasing programmer leverage: expand the accepted
-software outcomes attainable from a fixed amount of human programming effort,
-or preserve those outcomes while reducing that effort. For a given task, the
-**residual human work** is the set of programming decisions and actions that a
-human must still supply for an accepted result. This includes configuration,
-review, recovery, and repair when the tool displaces work into those stages.
+Closure is structural: it says where decisions and transitions occur, not
+whether they are good. A non-degenerate milestone also needs externally
+anchored capability, consequential revision reach, an adequate evaluator,
+continuity, no hidden human cut, and outcome evidence. The
+[closure-capability map](./closure-capability-map.md) records these coordinates
+and degenerate patterns.
 
-Each mechanism has an **automation envelope**: the responsibilities it can
-carry under stated conditions. A formatter has a narrow envelope, but removing
-formatting work is still movement toward a system that requires no human
-programming work. Once that envelope is exhausted, formatter improvement alone
-cannot remove design, theory-building, debugging, or maintenance work. The
-limit belongs to the method. Reaching the broader benchmark requires
-complementary mechanisms whose combined envelope covers progressively more of
-the residual work.
+Performance at least as good as a competent remote programmer is a strong
+worker-capability benchmark, not the definition of useful progress. Holding the
+client fixed exports task choice, feedback, and acceptance; passing the
+benchmark therefore does not establish closure over those decisions. See
+[a benchmark that holds the client fixed](../../notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md).
 
-A mechanism can also improve without expanding its envelope. A better
-formatter may increase output quality, reliability, input coverage, or speed,
-or reduce computational cost while formatting remains its only
-responsibility. That improvement counts on the capability or yield dimensions.
-It does not count as transfer of a new kind of programming work. The progress
-record must preserve both contributions instead of treating responsibility
-transfer as the only kind of improvement.
+## Current bootstrap
 
-Envelopes do not stack toward an empty human cut set. Each mechanism takes the
-decisions it can warrant — represented inputs, a settled criterion, a result an
-independent oracle can check — and stops where warrant fails. The residual
-human work is therefore adversely selected: per decision it is harder to
-warrant than the work already transferred, and moving the next decision costs
-more than moving the last, even with a fixed incoming workload
-([warranted transfer leaves people the hardest-to-warrant decisions](../../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md)).
-Two consequences follow. The list of what humans still supply is a residue of
-selection, not evidence about an essentially human capacity. And closure over
-a declared path is decided at its least-warrantable decisions, which is to say
-at the evaluator; envelope expansion elsewhere on the path does not approach
-it. This is a mechanism at the human boundary, distinct from the elastic
-backlog that moves human attention to new work.
+Commonplace is a human-inclusive testbed. It already retains and routes theory,
+supports criticism and revision, and can turn some theory into operative
+instructions, validators, schemas, and code. Humans still choose objectives,
+supply unrecorded premises, authorize consequential changes, interpret
+ambiguous evidence, and repair paths beyond represented coverage. This supports
+claims about present tool usefulness and mechanism traces, not independent
+computational theory possession or closure.
 
-Computational closure is a structural milestone for a declared improvement
-path. Every premise, transition, authorization, evaluation, and recovery operation needed
-to continue that path over the stated horizon is available inside the
-automatic system. Code and scheduling are themselves possible revision
-targets; otherwise the apparent closure hides a fixed external meta-level.
+The program uses two linked testbeds: Commonplace's own operation and
+programming agents supplied with persistent project-specific theory. Classifying
+the residual decisions on either path can suggest what to build next. Whether
+following that classification produces a more powerful system is an empirical
+question, not a consequence of the model.
 
-Closure must also be capability-adequate. A no-op loop, narrow parameter
-optimizer, or self-confirming evaluator can be computationally closed. The
-target must meet an independently declared threshold on consequential
-theory-building or LLM-wiki work, and the closed path must reach commitments
-that materially determine that capability. The
-[closure–capability map](./closure-capability-map.md) records this second axis
-and the principal degenerate cases.
+## Minimum evidence for one episode
 
-A strong capability benchmark is performance at least as good as a competent
-remote programmer over a declared challenge distribution. The comparison
-holds constant the task brief, repository, digital tools, permissions, and
-feedback. It removes the human programmer's decisions from the construction
-path, not the client's ability to state goals or respond to results. Outcome
-quality and reliability are primary; time, compute, and monetary cost remain
-separate comparison coordinates. This benchmark excludes narrow closed loops
-without making parity a prerequisite for practical value or a final upper
-bound.
+A useful episode record should identify:
 
-Commonplace is a human-inclusive bootstrap. Its models and machinery already
-perform some criticism, proposal, checking, drafting, and execution. Humans
-still choose demands, supply unrecorded premises, interpret ambiguous results,
-authorize changes, and repair failures that exceed the represented path. The
-research task is to expose that cut rather than call the composite autonomous.
+1. the selected task, objective, boundary, horizon, and starting human cut;
+2. the retained theory claimed to guide the decision, with a contemporaneous
+   mediation trace or an intervention on that theory;
+3. the realized change and the acceptance mechanism;
+4. the outcome and its read-back against the same theory;
+5. the retained theory or machinery revision, including rejection or deferral;
+   and
+6. the dimension that moved and the residual decisions that remain human.
 
-## Present tool and broader LLM-wiki payoff
+Without the same-theory trace and read-back, the record may show a useful
+change, but it does not show theory-mediated improvement.
 
-The same human-inclusive arrangement has value before closure. Commonplace can
-help an operator build a theory by retaining conjectures, exposing assumptions,
-routing relevant evidence, applying criticism, recording revisions, and
-deriving more constrained procedures. Calling it a theory-building tool is a
-claim about what the human–agent composite enables, not a claim that the
-computational part alone possesses Naur's program-specific theory.
+## Open questions
 
-Theory building is one LLM-wiki function. The substrate can also support
-source capture and grounding, retrieval and routing, connection and synthesis,
-criticism and review, revision and reconciliation, validation, lifecycle
-management, and publication. These operations share retained, addressable
-state but need not share one automation frontier or one success measure.
-
-Automation has a dual payoff:
-
-1. it is experimental progress toward a path with no required human cut; and
-2. it may improve the present tool by reducing latency and intervention,
-   increasing repeatability and throughput, or expanding which cases it can
-   handle.
-
-The second payoff is not automatic. Removing a human judgment can reduce tool
-quality, conceal errors, or increase correction cost. Each transfer therefore
-needs both an autonomy record and a utility-and-warrant comparison.
-
-## Progress record
-
-No unique percentage follows from the current theory. Compare systems at a
-fixed grain using a vector:
-
-| Dimension | Question |
-|---|---|
-| Human leverage | What accepted outcomes are attainable for a fixed amount of total human programming effort, or how much effort is required for a fixed outcome? |
-| Residual human work | Which programming decisions and actions must a human still supply, including configuration, review, recovery, and repair? |
-| Automation envelope | Which residual responsibilities can the current mechanism carry, under what conditions, and where does its method reach a ceiling? |
-| Path coverage | Which named revision paths, theory-building functions, and other LLM-wiki operations are internally executable? |
-| Horizon | How many linked episodes can proceed before indispensable human judgment? |
-| Human cut set | Which required decisions still cross an unrepresented human boundary? |
-| Operational capability | Which externally evaluated consequential tasks can the incumbent system perform, at what quality and breadth? |
-| Warrant | What independent checking, correction, rollback, and evidence protect the path? |
-| Tool usefulness | How well does the human–agent arrangement perform the declared theory-building or wiki function? |
-| Improvement yield | What quality-adjusted improvements does the path produce for its computational and human cost? |
-
-A change is unambiguously forward in the leverage order when, at a fixed task
-and acceptance grain, it produces no worse outcomes with no more total human
-programming effort and strictly improves at least one of those terms. Expanding
-the accepted task set under a fixed human-effort budget is the corresponding
-breadth improvement. Reducing a single bounded responsibility qualifies even
-when the responsible mechanism cannot reduce any other part of the residual
-work.
-
-Within the same automation envelope, better output quality, reliability,
-coverage, latency, or computational efficiency counts as capability or yield
-progress. It can help meet the strong benchmark even when residual human work
-does not change. Only a reduction in that residual counts as an autonomy
-transfer.
-
-This partial order does not imply convergence. A method can make real progress
-and then reach its automation ceiling. Record both the work transferred and
-the work still outside its envelope. If human effort falls by weakening
-quality or warrant, or apparent automation exports effort into review and
-recovery, the dimensions trade off and an explicit objective is required.
-
-The scoped non-degenerate closure milestone has an empty human cut set for the
-declared path and horizon while retaining the capability floor, correction
-path, and continuity conditions. A practically successful tool may stop far
-short of it. Remote-programmer parity adds the strong capability comparison;
-it is a milestone on the same direction, not the reason earlier tool
-improvements count.
-
-This also separates autonomy from power. The Bitter Lesson suggests that
-replacing hand-designed selection with scalable search and learning may
-increase yield. That is an empirical consequence to test, not part of the
-autonomy definition.
-
-## Open choices
-
-- What objective and authority may be supplied before an episode begins, and
-  which revisions to them count as part of the target path?
-- At what path grain can the allocation and human cut set be compared without
-  hiding displaced work? Candidate answer: per decision, each tagged with the
-  reason it stayed human; displaced review and repair appear as new tagged
-  decisions rather than vanishing into an effort total.
-- What evidence shows that a natural-language theory, rather than a generic
-  criterion or an unrecorded model judgment, supplied the decision content?
-- Which code and scheduler changes must be reachable before the target deserves
-  the name closed?
-- Which external observations and model services belong inside the declared
-  boundary, and which are environmental inputs?
-- Which theory-building and LLM-wiki outcomes should measure present tool
-  usefulness without collapsing into activity counts or self-scored prose?
-- Which challenge distribution and capability threshold make closure
-  non-vacuous without silently fixing the whole research outcome in advance?
+- What evidence shows that a composite holds program-specific theory well
+  enough to modify a program coherently, especially when decisive feedback
+  arrives only through later demands?
+- How can load-bearing use of retained theory be distinguished from a merely
+  decorative citation without rerunning every decision?
+- Can task choice, acceptance, and evaluator revision move inside the system
+  without producing captured evaluation or boundary export?
+- On which task distributions does explicit theory improve sample efficiency,
+  reliability, or revision cost relative to weight updates or fixed-decomposition
+  artifact learning?
+- At what grain can residual decisions and displaced review or repair be
+  compared without inventing a misleading scalar?
