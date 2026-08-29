@@ -43,6 +43,8 @@ A design insight is worth a note when it changes how someone would build or oper
 
 **Substantive specificity (best effort).** Make each paragraph earn its place by changing what the reader understands, infers, or can do; do not restate or praise a point merely to make the text sound complete. In load-bearing claims, resolve ambiguity that would change the claim's truth conditions, evidential support, or implications; when relevant, name the mechanism, comparison basis, or scope. Use available specifics, but never invent precision: narrow the claim, state uncertainty, or flag the unresolved choice.
 
+**Operator communication (best effort).** Shape messages around what the operator needs to understand or decide. Lead with the practical outcome, consequence, or decision needed, and keep important conditions and uncertainty next to the claim they limit. Use the simplest wording that preserves meaning, and make the opening understandable without first loading the implementation. Ordinary domain language and the project's active vocabulary are fine, but expand or define terms coined for the task and terms inherited from artifacts that have no canonical definition; introduce code identifiers only after stating what they represent. Put deeper mechanism afterward. When a technical finding carries the evidence, point to that finding instead of reproducing its evidence. When a consequential explanation still depends on several concepts or a long causal chain, use the `operator-brief` skill.
+
 ## Vocabulary
 
 Terms needed to understand the project's structure and everyday operations, alphabetical. Each links its full definition.
@@ -197,7 +199,7 @@ rg "^tags:.*learning-theory" kb/notes/ kb/reference/ kb/instructions/ --glob "*.
 
 ### Skills
 
-The `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connect`, etc.) is installed into `.claude/skills/` and `.agents/skills/` by `commonplace-init`; the harness loads them automatically. Repo-local skills (`roughdraft-review`, `write-agent-memory-system-review`) are symlinked the same way but are not promoted framework skills.
+The `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connect`, etc.) is installed into `.claude/skills/` and `.agents/skills/` by `commonplace-init`; the harness loads them automatically. Repo-local skills (`operator-brief`, `roughdraft-review`, `write-agent-memory-system-review`) are symlinked the same way but are not promoted framework skills.
 
 ### Commands
 
