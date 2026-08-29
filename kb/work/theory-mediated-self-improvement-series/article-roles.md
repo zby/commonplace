@@ -165,7 +165,29 @@ Interaction checks the composition must run and record:
   the Naur repair episode is the instance.
 - **Production axis × adverse selection.** Search-selected artifacts still
   need an evaluator; say whether selection by search moves a decision out of
-  the human cut or only changes who proposes candidates.
+  the human cut or only changes who proposes candidates. Candidate answer
+  from the gradual-compatibility task (2026-08-29): **it splits per
+  function.** Search alone moves *proposal*: candidates a person would have
+  drafted are drafted by a generator or a model, which raises leverage (P4)
+  without changing the human cut. The *decision* moves only with the oracle:
+  acceptance leaves the human cut when a check the candidate did not author
+  can reject the candidate, which is P2's binding warrantability condition.
+  So the portion of a path the lesson governs and the portion that has left
+  the human cut coincide at the evaluator. Consequences: (1) over the
+  remainder, search changes who proposes and nothing else — run there
+  without an independent oracle it yields the captured-evaluator or
+  boundary-export pattern, not a transfer; (2) the moved portion keeps its
+  objective, evaluator, and update space supplied — in FunSearch the
+  proposer and scorer moved while the specification, evaluator, skeleton,
+  and function boundary stayed, and those are the objective and
+  unsettled-criterion rows; (3) the remainder's difficulty is predicted
+  rather than embarrassing, since it is where no oracle exists and so where
+  nothing, hand or search, can currently select; (4) P5 and P2 remain
+  orthogonal as questions — form versus who decides — while their answers
+  meet at one point. Recorded in the
+  [defense portfolio](../../notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md)
+  and the production-method note's
+  [per-portion section](../../notes/the-bitter-lesson-selects-production-methods-not-representational.md#compatibility-is-assessed-per-portion-of-a-path).
 - **Delegation × hand-back.** The ADR 080 hand-back returns control when a
   change would alter a claim. Candidate answer from the shared-doctrine
   workshop: it is the Commonplace doctrine's *gap* case — neither inherited,

@@ -240,10 +240,12 @@ leave quarantine only through an explicit entry in the
 
 ## Working artifacts
 
-- [Gradual-compatibility brief](./gradual-compatibility-brief.md) — the next
-  authoring task: classify the operator's per-portion bitter-lesson defense
-  into the portfolio, answer the open production-axis interaction check, and
-  settle the disanalogy premise. Blocks the hub article.
+- [Gradual compatibility result](./gradual-compatibility.md) — the
+  per-portion defense and production freedom classified in the portfolio, the
+  production-axis interaction check answered, the disanalogy premise settled
+  as far as the record allows, and the per-artifact-class production-freedom
+  audit. Unblocks the hub article's frame, conditional on the
+  absorption-survivors report.
 - [Target problems](./target-problems.md) — the problems the series
   addresses, stated independently of any source.
 - [Match register](./match-register.md) — per source: problem match,

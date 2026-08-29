@@ -62,7 +62,19 @@ purpose, held upstream (P6), and
   Pushback from a decorrelated reviewer is predicted; a reversal needs a new
   object-level argument; narrowing here is paid for in content. Rows: Naur
   (the bridge premise, not the inexpressibility generator), Sutton 2019 (the
-  weights-only extrapolation, not the production-method generator).
+  weights-only extrapolation, not the production-method generator). Sutton
+  2019 carries a third bet, against the lesson's *case history* rather than
+  its scope: that Commonplace's retained complements — current state,
+  commitments, authority, project-specific facts — are not the hand-crafted
+  features of the vision era, which were substitutes for a capability the
+  model lacked. The vision era was commercial (face detection shipped in
+  consumer cameras; OCR and industrial machine vision were products), so the
+  bet cannot run through "only researchers cared"; it runs through
+  substitute versus complement, a candidate criterion under historical test
+  (the absorption-survivors search, report-only). Pushback is predicted; a
+  reversal needs evidence that a complement class was absorbed with its
+  function, not only its content. Methodology, heuristics, and conventions
+  are substitutes and are not defended here.
 - **Support** — the source was brought in for what it supplies under its
   consensus reading. Pushback is accepted by default: if a reviewer narrows
   the row, take the narrowing, since nothing the series defends lives there.
