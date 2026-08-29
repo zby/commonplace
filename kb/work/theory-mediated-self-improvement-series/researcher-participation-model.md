@@ -1,58 +1,59 @@
 # Researcher participation model
 
 This is a working model for how the series could turn researcher interest into
-collaboration. It is not a claim that one incentive works for all researchers.
-The workshop should test the model and retain the parts that produce concrete
-participation.
+substantive research exchange. It is not a claim that one incentive or one form
+of collaboration works for all researchers. The workshop should test the model
+and retain the parts that lead to useful engagement.
 
 ## Desired transition
 
-The target is not readership alone. The desired sequence is:
+The target is not readership alone. A possible path is:
 
     encounter the program
-      -> understand a distinctive research question
+      -> find a distinctive question worth pursuing
       -> trust that the claims are bounded and the work is real
-      -> see a contribution that fits the researcher's interests
-      -> take a low-cost first action
-      -> receive useful feedback, credit, and decision rights
-      -> take ownership of a continuing part of the program
+      -> see prepared material or a useful starting point
+      -> choose whether and how to investigate
+      -> exchange criticism, evidence, methods, or results
+      -> continue independently or collaborate where interests align
 
-A researcher has **joined the work** when they take responsibility for a
-research contribution whose result can change the program: for example a
-critique, counterexample, source synthesis, formalization, experiment,
-evaluation, implementation, or theory revision. Agreement with the current
-claims is not required.
+Joining the work need not mean entering a team, accepting an assigned role, or
+taking responsibility for part of Commonplace. It means substantive reciprocal
+research engagement through which the program and the researcher's own work can
+influence one another. A researcher may remain fully independent, contribute a
+single criticism or result, or develop a joint investigation. Agreement with
+the current claims is not required.
 
 ## Incentive hypothesis
 
 Participation is more likely when the expected intellectual, professional, and
 practical value exceeds the costs of understanding the program, finding a
-useful role, coordinating, and trusting that the contribution will matter.
-The series should therefore offer a portfolio rather than assume authorship is
-the universal incentive.
+useful point of contact, coordinating, and trusting that an exchange will
+matter. The series should therefore make several kinds of value available
+rather than assume authorship is a universal incentive.
 
 ### Intellectual upside
 
-Offer distinctive questions with real uncertainty, not only implementation
+Present distinctive questions with real uncertainty, not only implementation
 work. State what result would matter, what would discriminate among competing
 views, and where the present account may fail. A researcher should be able to
-see how a contribution could change an important claim.
+see how an investigation could change an important claim.
 
 ### Leverage from prepared substrate
 
 Reduce startup cost by providing the current theory, source record, code,
-instruments, evaluation design, unresolved objections, and prior negative
-results. The invitation should make a useful first contribution possible
-without first adopting the whole Commonplace methodology or reconstructing the
-project's history.
+instruments, evaluation designs, unresolved objections, and prior negative
+results. A useful investigation should be possible without first adopting the
+whole Commonplace methodology or reconstructing the project's history.
 
-### Ownership rather than task labour
+### Research freedom
 
-Package bounded subproblems for which an external researcher can influence the
-question, method, and interpretation. A predefined chore may attract help; it
-rarely creates a collaborator. State what is fixed, what the contributor may
-change, and what decision rights follow from taking responsibility for the
-subproblem.
+Offer questions and materials as possible starting points, not allocated
+subproblems. Researchers may reject the framing, choose another method, pursue
+a neighboring question, use the machinery on their own system, or study
+Commonplace from outside. Where work becomes genuinely joint, its scope and
+working relationship should be agreed together rather than assigned in
+advance.
 
 ### Visible and proportionate credit
 
@@ -74,56 +75,56 @@ one-sided as the default invitation.
 
 ### Intellectual community
 
-Fast, serious engagement with a contribution can itself be valuable. The
+Fast, serious engagement with criticism or results can itself be valuable. The
 program should make disagreement safe, distinguish criticism from admission of
 a claim, and show that external results can revise the retained theory rather
 than being absorbed as supporting anecdotes.
 
-These incentives can conflict. Ownership can reduce central coherence; low
-entry cost can produce shallow tasks; strong credit promises can distort
-project selection. The workshop must observe the trade-offs rather than
-silently maximizing one.
+These incentives can conflict. Openness can diffuse the agenda; low entry cost
+can produce shallow questions; strong credit promises can distort project
+selection. The workshop must observe the trade-offs rather than silently
+maximizing one.
 
-## Participation ladder
+## Forms of engagement
 
-The following are different depths of engagement, not ranks of scientific
-value:
+These are possible forms of engagement, not a ladder and not a required
+progression:
 
-| Stage | Concrete action | What the program must supply |
+| Form | Concrete activity | What makes it possible |
 |---|---|---|
 | Interested reader | Follows a claim or open problem far enough to ask a specific question | A legible argument and visible evidence boundary |
 | Critic | Identifies an objection, counterexample, missing source, or rival explanation | A place where criticism is answered and retained |
-| Investigator | Runs a bounded analysis, reproduction, formalization, or evaluation | A self-contained commission, inputs, and acceptance boundary |
-| Contributor | Produces an admitted theory, evidence, code, data, or method artifact | Review, provenance, and visible contribution credit |
-| Subproblem owner | Maintains a research question across iterations and interprets new evidence | Scoped decision rights and coordination with adjacent work |
-| Continuing collaborator | Repeatedly shapes the program, its methods, or its research agenda | Shared governance, credit, and responsibility |
+| Independent investigator | Uses or tests a claim, method, benchmark, or system in their own research | Standalone materials, inspectable assumptions, and reusable machinery |
+| Research contributor | Shares a theory, evidence, code, data, formalization, or method artifact | Provenance, serious review, and visible credit |
+| Joint investigator | Develops a question or experiment together with people working on Commonplace | Mutually agreed scope, methods, credit, and coordination |
+| Continuing collaborator | Repeatedly exchanges results or shapes connected lines of research | Reciprocity, trust, and sustained intellectual value |
 
-The first action should be smaller than "learn the repository and propose a
-project." The deeper path should nevertheless remain visible so that a small
-contribution can grow into ownership.
+A first engagement should be possible without learning the repository or
+proposing a whole project. There should be no expectation that a small action
+must deepen into a continuing commitment.
 
-## Contribution-unit contract
+## Prepared research starting points
 
-Every serious invitation should define a contribution unit with:
+A useful starting point should make the following visible:
 
 - the research question and why its answer would matter;
 - the current claim, rival explanations, and evidence boundary;
-- one bounded first action and the inputs needed to perform it;
-- the output expected from that action;
-- the method and interpretation choices left to the researcher;
-- the review, falsification, or acceptance route;
-- how negative and ambiguous results will be retained;
-- the possible deeper path if the first action is useful;
-- the contribution-credit rule; and
-- the coordination and hand-back boundary.
+- the theory, sources, data, code, or instruments already available;
+- one possible bounded first investigation;
+- which parts of the framing, method, and interpretation remain open;
+- how negative, contrary, and ambiguous results can be shared and retained;
+- possible routes to discussion or genuinely joint work; and
+- the provenance and credit norms if another person's work is incorporated into
+  Commonplace artifacts or later publications.
 
-A unit is not ready when understanding it requires loading the whole workshop,
-or when its only meaningful result is agreement with the incumbent claim.
+A starting point is not ready when understanding it requires loading the whole
+workshop, when it reads as an assigned task, or when its only meaningful result
+is agreement with the incumbent claim.
 
 ## What the articles must do
 
-The articles are recruitment machinery for the research program. Across the
-series they should:
+The articles are invitation and explanation machinery for the research program.
+Across the series they should:
 
 1. make the central questions and architecture understandable without the
    repository;
@@ -132,16 +133,18 @@ series they should:
 3. expose where the theory predicts different outcomes from plausible rivals;
 4. show existing machinery and results so the work is visibly more than a
    manifesto;
-5. connect open problems to ready contribution units; and
-6. provide a direct route from reading to a conversation, issue, experiment,
-   or owned subproblem.
+5. connect open problems to optional prepared research starting points; and
+6. provide a direct route from reading to a conversation, criticism,
+   independent investigation, shared result, or possible joint study.
 
 Not every article needs a separate call to action, but the series must not end
-at "here is our view." It should make the next research action obvious.
+at "here is our view." It should make possible research contact points visible
+without directing the reader into a predefined role.
 
-## Candidate researcher groups
+## Candidate researcher communities
 
-Do not write for an undifferentiated researcher. Initial groups may include:
+Do not write for an undifferentiated researcher. Initial communities may
+include:
 
 - agent-systems researchers interested in self-improvement, memory, evaluation,
   or adaptive harnesses;
@@ -155,45 +158,49 @@ Do not write for an undifferentiated researcher. Initial groups may include:
   architecture.
 
 This list selects possible audiences, not article sections. The pilot should
-choose only a few groups whose interests match ready contribution units.
+choose only a few communities whose interests match strong questions and useful
+prepared material.
 
-## Recruitment experiments
+## Invitation experiments
 
 For each pilot, record:
 
-- the target researcher group;
+- the researcher community addressed;
 - the article, claim, or problem used as the entry point;
-- the contribution unit offered;
-- the incentive emphasized;
-- the route by which the invitation reached researchers;
-- the first action requested;
-- the responses and the deepest participation stage reached; and
-- the stated or inferred reason for refusal, delay, or drop-off.
+- the prepared starting point, if any;
+- the kind of value the invitation was expected to provide;
+- the route by which researchers encountered it;
+- the possible next research move made visible;
+- the responses and forms of engagement that occurred; and
+- the stated or inferred reason for refusal, delay, or disengagement.
 
-Compare offers at the level of concrete participation. Page views and generic
-praise are weak signals. A substantive objection is stronger than passive
-agreement because it demonstrates that the research question was understood
-well enough to contest.
+Compare invitations at the level of substantive research exchange. Page views
+and generic praise are weak signals. A substantive objection is stronger than
+passive agreement because it demonstrates that the research question was
+understood well enough to contest.
 
 The initial experiment need not identify a universally effective incentive. It
 should distinguish at least one failed or promising route and revise the model.
 
 ## Success and failure
 
-The strongest success signal is a researcher taking continuing ownership of a
-subproblem. Earlier signals include a substantive critique, a completed
-reproduction or experiment, an admitted contribution, or an agreement to run a
-joint investigation.
+The strongest success signal is continuing reciprocal research exchange,
+whether it takes the form of independent work in dialogue with the program or a
+joint investigation. Earlier signals include a substantive critique, use of the
+ideas or machinery in another research setting, a completed reproduction or
+experiment, a shared artifact, or an agreement to investigate a question
+together.
 
-A bounded outreach trial with no such action is still evidence. Record whether
-the failure appears to be lack of interest in the question, insufficient
-credibility, high setup cost, poor audience selection, weak personal value,
-unclear credit, or an inconvenient first action. Do not repair every failure by
-making stronger claims or offering paper authorship.
+A bounded outreach trial with no such engagement is still evidence. Record
+whether the failure appears to be lack of interest in the question,
+insufficient credibility, high setup cost, poor audience selection, weak
+personal value, unclear credit, or an inconvenient starting point. Do not
+repair every failure by making stronger claims or offering paper authorship.
 
 ## Out of scope
 
 This model does not target practitioner adoption, consulting leads, product
 users, or general audience growth. A separate practitioner-facing series may
 translate the resulting theories and machinery into operational benefits. This
-series asks researchers to investigate and shape the program itself.
+series invites researchers to investigate, contest, extend, or collaborate on
+the program without requiring them to enter its organizational boundary.
