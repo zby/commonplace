@@ -1,48 +1,97 @@
-# Workshop: theory-mediated self-improvement research program
+# Workshop: theory-mediated self-improvement researcher series
 
 **Posed by:** the operator, 2026-08-27.
 
 ## Intent
 
-Establish a research-through-building program for theory-mediated agent systems
-in which research results can become part of the practical machinery. Use the
-program to make Commonplace progressively more capable as an LLM wiki, and use
-Commonplace's operation to test and revise the theory that guides it. When a
-result becomes sufficiently grounded, operationalize it as a methodology,
-instruction, review mechanism, schema, validator, or code; treat the
-consequences of using it as evidence for further theoretical revision.
+Get researchers interested in the theory-mediated self-improvement research
+program and enable some of them to join the work.
 
-Develop persistent project-specific theory for programming agents as the first
-demanding external application. Practical usefulness and scientific
-discrimination are coequal. A system change may be valuable without proving
-computational self-improvement. A research claim, however, must expose a
-mechanism, observable contrast, scope condition, prediction, or failure mode
-that evidence could defeat or narrow.
+The articles are means. They should make the program legible, credible, and
+joinable: explain the central questions and claims, show the existing evidence
+and machinery, expose genuine open problems, and route a researcher to a
+concrete contribution that can change the program. Completing a coherent set
+of articles is not success by itself.
 
-Leave a durable research program, not merely a set of drafts: explicit theory,
-a route from theory to operative machinery and back to evidence, an ordered
-build agenda for Commonplace, and a bounded programming-agent pilot.
-Article-shaped explanations are one possible exposition. Publication and
-recruitment of collaborators are not workshop closure conditions.
+A researcher has joined when they take responsibility for a research
+contribution whose result can revise the theory, evidence, methods, machinery,
+or agenda. That contribution may be a critique, counterexample, source
+synthesis, formalization, experiment, evaluation, implementation, or theory
+revision. Agreement with the current claims is not required.
+
+This series is for researchers who may investigate and shape the program.
+Practitioner adoption, operational guidance, and product persuasion belong in
+a separate practitioner-facing series.
+
+The desired end state is a credible research program, a researcher-facing
+article series, a set of ready contribution paths with clear credit and
+ownership, and evidence about which invitations turn interest into
+participation. The strongest success is a researcher taking continuing
+ownership of part of the program.
 
 ## Mission
 
-Reconcile the inherited work around one shared research program and install a
-repeatable research-through-building cycle. The main effort is the path:
+Reconcile the inherited work into one researcher-facing program and use the
+articles to turn that program into a practical invitation to collaborate.
+Run two connected cycles:
 
     claim
       -> proposed mechanism
-      -> affected system surface
       -> observable contrast or failure condition
-      -> intervention and consequence
+      -> intervention or investigation
       -> evidence
       -> retain, revise, reject, or defer
 
-The article architecture, source register, and draft ledger support this path.
-They are not the workshop's primary product.
+and:
+
+    researcher-facing explanation
+      -> open problem
+      -> bounded first contribution
+      -> useful feedback, credit, and decision rights
+      -> deeper ownership
+      -> continuing collaboration
+
+The first cycle makes the invitation scientifically credible. The second makes
+it possible to act on. Article architecture, source control, contribution
+units, and outreach all serve this mission.
+
+## Participation hypothesis
+
+Do not assume that authorship is the single or primary incentive. The working
+hypothesis is that participation becomes attractive when several forms of
+value outweigh the costs of understanding, trusting, and coordinating with the
+program:
+
+- **Intellectual upside:** distinctive questions with real uncertainty and
+  results that could change an important claim.
+- **Leverage:** prepared theory, sources, code, instruments, evaluation designs,
+  objections, and negative results that reduce startup cost.
+- **Ownership:** bounded subproblems whose contributor may shape the question,
+  method, and interpretation rather than merely execute a chore.
+- **Visible credit:** contribution records for theory, criticism, data,
+  experiments, software, and methods; citable artifacts where appropriate; and
+  paper authorship when the eventual intellectual contribution warrants it.
+- **Reciprocal value:** feedback, reusable machinery, stronger formalization,
+  evidence about the researcher's own system, or another result useful to
+  their research before the whole program succeeds.
+- **Intellectual community:** serious engagement with disagreement and a
+  demonstrated willingness to let external results revise the retained theory.
+
+These are hypotheses to test, not promises that every researcher values the
+same offer. Authorship must not be promised for a small task, and substantial
+work must not become invisible merely because it does not produce a paper.
+The detailed working model is
+[Researcher participation model](./researcher-participation-model.md).
 
 ## Direction fixed by the operator
 
+- The intended audience is researchers. Practitioner-facing explanation and
+  adoption are out of scope for this series.
+- Articles are recruitment and explanation machinery for the research program,
+  not the program's end product and not a commitment to journal submission.
+- Theory claims are first-class outputs. They may support articles, derive
+  operative machinery, and be revised through article work; they are not merely
+  scaffolding for exposition.
 - The target architecture is mixed: retained natural-language theory,
   language-model interpretation, symbolic procedures and code, and operational
   evidence have different jobs and characteristic failures.
@@ -53,23 +102,22 @@ They are not the workshop's primary product.
 - Commonplace is presently a useful human-agent bootstrap. Its usefulness does
   not establish independent computational possession of a program-specific
   theory or computational closure.
-- Practical usefulness and scientific discrimination are separate, coequal
-  success criteria. Improvements in quality, reliability, coverage, latency,
-  cost, or human leverage may be valuable without transferring a new kind of
-  decision out of the human cut.
+- Practical usefulness and scientific discrimination are coequal properties of
+  the research program. A system improvement may be valuable without proving
+  self-improvement; a research claim must expose a mechanism, contrast,
+  prediction, scope condition, or failure mode that evidence can defeat or
+  narrow.
 - Each mechanism has an automation envelope. A real local transfer remains
   progress when the method reaches its ceiling, but it supplies no convergence
   argument. Residual decisions must be classified by why they stayed human.
 - Computational closure is task-scoped and structural. Capability, warrant,
   and system power remain separate coordinates. Competent remote-programmer
   performance is a strong benchmark, not the definition of useful progress.
-- Theory claims are first-class workshop outputs. They may support articles,
-  derive operative machinery, and be revised by article work; they are not
-  merely scaffolding for publication.
-- Persistent project-specific theory for programming agents is the first
-  demanding external application. It is not evidence of general closure.
-- Article roles may be merged, split, reordered, or abandoned. The workshop is
-  not commissioned to publish a series.
+- Persistent project-specific theory for programming agents remains a demanding
+  research testbed. It is not a practitioner-audience commitment or evidence
+  of general closure.
+- Article roles may be merged, split, reordered, or abandoned when that better
+  serves the research and participation intent.
 - Source conclusions transfer only as far as the
   [match register](./match-register.md) licenses. Review-defeated drafts are
   evidence for claim recovery, not foundations for successor prose.
@@ -81,42 +129,57 @@ They are not the workshop's primary product.
    [closure-capability map](./closure-capability-map.md), and the durable
    self-improving-systems notes. Give each load-bearing claim a scope,
    mechanism, observable contrast or failure condition, and evidence status.
-2. **Install the mediation trace.** Create a procedure in `kb/instructions/`
-   for the main-effort path above, including classification of the residual
-   human decisions. Normalize one completed Commonplace change through it.
-3. **Preregister one forward Commonplace intervention.** Fix its task-selection
-   rule and controller, objective, acceptance threshold, boundary, baseline,
-   horizon, predicted contrast, plausible failure, evidence source, and
-   rollback before observing the result.
-4. **Commission one bounded programming-agent pilot.** State which
-   project-specific theory the agent receives, how it is consumed, which
-   programming decisions it should change, and how the comparison will be
-   evaluated.
-5. **Rebase the exposition.** Treat
-   [article roles](./article-roles.md) as an argument map. Map existing
-   article-shaped material to durable claims and evidence; merge, split, or
-   discard article jobs as the argument requires.
+2. **Select initial researcher groups and offers.** Choose only the researcher
+   groups for which the workshop has a strong question and a ready contribution
+   path. State the intellectual value, leverage, ownership, credit, and
+   reciprocal value offered to each group.
+3. **Package contribution units.** Prepare at least three bounded research
+   opportunities with a small first action and a visible path to ownership. The
+   initial portfolio should include a theoretical or evaluation problem, a
+   Commonplace self-application, and the programming-agent testbed unless
+   execution evidence identifies a better set.
+4. **Rebase the articles.** Treat
+   [article roles](./article-roles.md) as both an argument map and an engagement
+   map. Each article or cluster must have a research job, a target reader, and a
+   next action it makes possible. Merge, split, reorder, or discard inherited
+   article jobs as needed.
+5. **Make contribution and credit explicit.** Establish the public provenance,
+   review, credit, authorship, decision-right, and hand-back rules before asking
+   researchers to contribute.
+6. **Pilot the invitation.** Put a bounded part of the series and its
+   contribution paths in front of selected researchers. Record the offer,
+   response, deepest participation stage, objections, and reason for drop-off;
+   then revise the participation hypothesis and the series.
+7. **Install the research-through-building trace.** Create a procedure in
+   `kb/instructions/` that links a claim to an intervention, evidence, and
+   theory revision. Normalize one completed Commonplace episode through it and
+   use the trace as evidence that the program is operative rather than merely
+   proposed.
 
-These priorities fix the contribution, not the means or sequence. An executing
+These priorities fix contributions, not exact means or sequence. An executing
 agent may replace a planned move when new evidence shows that another permitted
 move serves the intent better.
 
 ## Delegated judgment and hand-back
 
-Agents may choose the Commonplace paths used for the retrospective and forward
-cases, the exact form of an operationalization, the order of work, and the
-shape of the exposition.
+Agents may choose the initial researcher groups, incentive mix, article order,
+contribution-unit design, outreach route, Commonplace example, and exact form
+of the research-through-building trace.
 
 Return the decision to the operator when proceeding would:
 
-- change the intent or any fixed direction above;
+- change the researcher-recruitment intent or include practitioner conversion;
+- promise paper authorship, funding, employment, affiliation, or another
+  external reward;
+- assign an external researcher responsibility without corresponding decision
+  rights, credit, and a review path;
+- strengthen or hide a research claim merely to make the invitation more
+  persuasive;
 - choose a substantive objective where the evidence exposes a real value
   trade-off;
 - alter task selection, acceptance, or the system boundary after seeing an
-  outcome;
-- weaken warrant in exchange for usefulness without a declared objective
-  resolving the trade-off; or
-- create an external commitment, including publication.
+  evaluated outcome; or
+- create an external commitment beyond the authorized outreach experiment.
 
 This is the workshop's use of
 [intent-framed delegation](../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md):
@@ -124,6 +187,15 @@ purpose and binding bounds are fixed upstream; execution-time evidence may
 change the permitted means. The military content does not enter.
 
 ## Evaluation boundary
+
+### Research progress
+
+Practical progress is evaluated through accepted outcomes, total human effort,
+quality, reliability, coverage, latency, and cost. Configuration, review,
+recovery, and repair remain inside the effort measure. Scientific progress is
+evaluated through sharper mechanisms, tested contrasts, observed failure
+conditions, counterexamples, and explicit retain, revise, reject, or defer
+decisions. Do not collapse the two scoreboards into one scalar.
 
 A computational-closure claim must name a task-selection rule and who controls
 it, the objective and acceptance criterion, system boundary, permitted
@@ -143,23 +215,33 @@ declared boundary. Human judgment or manual execution may not be hidden in
 task selection, acceptance, evaluator design, repair, or continuation.
 
 Closure says where decisions are made, not whether they are good. Failure and
-abstention therefore do not disappear from scope; they count against capability
-or coverage. A non-degenerate milestone adds an independently declared
-capability and warrant threshold over the same selected tasks. Evidence on a
-finite suite warrants closure only on that suite; a distributional claim needs
-a declared sampling protocol.
-
-The detailed working formulation is
+abstention remain in scope and count against capability or coverage. A
+non-degenerate milestone adds an independently declared capability and warrant
+threshold over the same selected tasks. Evidence on a finite suite warrants
+closure only on that suite; a distributional claim needs a declared sampling
+protocol. The detailed working formulation is
 [Task-scoped computational closure](./task-scoped-computational-closure.md).
-It narrows every existing reference to a "declared path": the path must be
-instantiated by selected tasks.
 
-Practical progress is evaluated through accepted outcomes, total human effort,
-quality, reliability, coverage, latency, and cost. Configuration, review,
-recovery, and repair remain inside the effort measure. Scientific progress is
-evaluated through sharper mechanisms, tested contrasts, observed failure
-conditions, counterexamples, and explicit retain/revise/reject decisions. Do
-not collapse the two scoreboards into one scalar.
+### Researcher participation
+
+Measure movement through concrete stages:
+
+1. a qualified researcher engages with a specific claim or question;
+2. they offer a substantive objection, comparison, or proposed investigation;
+3. they complete a bounded contribution;
+4. the contribution is admitted, rejected, or used to revise the program with
+   visible provenance; and
+5. they take continuing ownership of a subproblem or joint investigation.
+
+Page views, generic praise, and article completion are weak signals. A serious
+objection can be a stronger result than passive agreement. The strongest
+signal is continuing research ownership.
+
+A bounded outreach trial with no substantive action is still evidence, but it
+must be diagnosed: weak question, low credibility, poor audience selection,
+high startup cost, one-sided value, unclear credit, or an inconvenient first
+action. Do not repair every recruitment failure by strengthening claims or
+promising authorship.
 
 ## Outputs
 
@@ -167,18 +249,18 @@ not collapse the two scoreboards into one scalar.
   conditions, and evidence status in `kb/notes/`.
 - **Operative machinery:** methodologies, instructions, review mechanisms,
   schemas, validators, or code derived from sufficiently grounded theory.
-- **Evidence records:** retrospective traces, preregistrations, results,
-  counterexamples, and explicit theory revisions.
-- **System progress:** improvements to Commonplace and an ordered account of
-  which residual decisions should be attacked next.
-- **External application:** a bounded, runnable programming-agent pilot using
-  persistent project-specific theory.
-- **Exposition:** coherent article-shaped arguments distilled from the theory
-  and evidence, without a publication requirement.
+- **Evidence records:** retrospective traces, preregistrations, experiments,
+  counterexamples, negative results, and explicit theory revisions.
+- **Researcher-facing articles:** coherent explanations whose research and
+  engagement jobs are explicit; no journal-submission requirement.
+- **Participation surface:** ready contribution units, direct routes into the
+  work, and explicit credit, ownership, review, and hand-back rules.
+- **Research testbeds:** Commonplace self-application and a bounded
+  programming-agent application, insofar as they support the research program.
+- **Engagement evidence:** the offers tested, responses received, participation
+  stages reached, and resulting revisions to the participation model.
 
-The theory claims are both support for exposition and outputs in their own
-right. Article work may expose gaps that revise the theory; it is not the only
-route by which a theory claim earns retention.
+No practitioner-facing series or adoption guide is an output of this workshop.
 
 ## Source and draft handling
 
@@ -195,8 +277,8 @@ disposition in the [incumbent ledger](./incumbent-ledger.md).
 Do not describe this workshop as a second paper-from-notes instance. The
 [ASISAS 2026 paper](../../sources/where-it-lives-retained-adaptation-2026-06-23.ingest.md)
 remains one useful example of that process, while this workshop already
-contains material for related articles. Its job is to make that material
-coherent and traceable, not to publish it.
+contains material for related articles. Here, article construction serves
+researcher understanding and participation; it is not itself the intent.
 
 ## Working map
 
@@ -207,6 +289,9 @@ This map preserves access to inherited work; it is not an execution order.
   [task-scoped computational closure](./task-scoped-computational-closure.md),
   [closure-capability map](./closure-capability-map.md), and the
   [adequacy-gate run](./adequacy-gate-run.md).
+- **Researcher participation:**
+  [researcher participation model](./researcher-participation-model.md) and the
+  engagement jobs to be added to [article roles](./article-roles.md).
 - **Claim and source control:** [match register](./match-register.md),
   [incumbent ledger](./incumbent-ledger.md),
   [gradual-compatibility result](./gradual-compatibility.md),
@@ -223,22 +308,28 @@ This map preserves access to inherited work; it is not an execution order.
 The workshop closes when:
 
 1. the README, shared model, task-scoped closure formulation, and
-   closure-capability map state one coherent program;
+   closure-capability map state one coherent research program;
 2. every load-bearing claim has a recorded scope, mechanism, observable
    contrast or failure condition, evidence status, and disposition;
-3. the mediation-trace procedure exists and one retrospective Commonplace
-   episode has been normalized through it;
-4. one forward Commonplace intervention has been preregistered with a fixed
-   task-selection rule and controller, baseline, prediction, evaluator,
-   horizon, and rollback;
-5. one bounded programming-agent pilot has a runnable commission, explicit
-   task selection, and a project-specific-theory consumption path;
-6. inherited article material has been reconciled with the admitted claims and
-   evidence, without requiring publication;
-7. source uses remain inside their match-register boundaries, outstanding
+3. initial researcher groups have been selected and the value proposition for
+   each is explicit;
+4. at least three contribution units are ready, each with a bounded first
+   action, deeper ownership path, review route, and credit rule;
+5. the article architecture has been reconciled with the admitted claims and
+   evidence, and each retained article job has both a research role and an
+   engagement role;
+6. the contribution, credit, authorship, decision-right, and hand-back rules
+   are explicit before outreach;
+7. the research-through-building procedure exists and one retrospective
+   Commonplace episode has been normalized through it;
+8. one bounded researcher-outreach trial has been completed and has produced
+   either a substantive external action or a recorded negative result, revised
+   participation hypothesis, and next experiment;
+9. source uses remain inside their match-register boundaries, outstanding
    review findings are resolved, and durable outputs validate under their
    target contracts; and
-8. the earlier workshop has been consumed and closed.
+10. the earlier workshop has been consumed and closed.
 
-At closure, durable theory, machinery, evidence, and exposition move to their
+Article completion alone cannot close the workshop. At closure, durable theory,
+machinery, evidence, participation mechanisms, and exposition move to their
 library homes. This directory is then deleted.
