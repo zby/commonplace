@@ -31,13 +31,13 @@ The essay is the primary-source anchor for [The bitter lesson selects production
 ## Extractable Value
 
 1. **Primary wording for the production-method boundary** -- The essay grounds the contrast between hand-built domain knowledge and scalable search or learning without supporting the stronger claim that one representational form must replace another. [quick-win]
-2. **A historical pattern for scrutinizing fixed knowledge** -- The cross-domain examples support asking whether manually encoded structure keeps earning its place as compute grows, while leaving the KB's unearned-reach explanation visibly interpretive. [just-a-reference]
+2. **A historical pattern for scrutinizing fixed knowledge** -- The cross-domain examples support asking whether manually encoded structure keeps earning its place as compute grows, while leaving the KB's unsupported-scope diagnosis visibly a case-level conjecture. [just-a-reference]
 3. **The discoveries-versus-meta-methods distinction** -- Sutton's closing prescription gives the reflective-machinery note a direct source basis for retaining discovery procedures without exempting their outputs from review. [quick-win]
 4. **A primary/secondary source split** -- Keeping this original essay separate from the Wikipedia ingest lets readers use the former for Sutton's claims and the latter for reception and attribution context. [just-a-reference]
 
 ## Limitations (our opinion)
 
-The essay argues from a small set of selected success stories rather than a systematic comparison, so the examples may reflect hindsight and selection bias. It does not define a test for separating harmful hand-built knowledge from warranted structure, quantify when short-term gains repay long-term scaling costs, or test whether search and learning scale arbitrarily. It also does not establish representational-form orthogonality or the KB's unearned-reach mechanism; treating those interpretations as Sutton's own conclusions would overstate the source.
+The essay argues from a small set of selected success stories rather than a systematic comparison, so the examples may reflect hindsight and selection bias. It does not define a test for separating harmful hand-built knowledge from warranted structure, quantify when short-term gains repay long-term scaling costs, or test whether search and learning scale arbitrarily. It also does not establish representational-form orthogonality or the KB's unsupported-scope diagnosis; treating those interpretations as Sutton's own conclusions would overstate the source.
 
 ## Recommended Next Action
 

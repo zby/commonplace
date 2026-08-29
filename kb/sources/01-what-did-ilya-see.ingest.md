@@ -33,7 +33,7 @@ The source is most useful as evidence for [curation as orientation](../notes/ind
 
 1. **A canon is a prior over the design space, not merely a bibliography** -- the entries make some mechanisms easy to retrieve and compare while omissions reduce the visibility of alternatives. This extends the KB's curation account from navigation to epistemic selection. [deep-dive]
 2. **Omissions are evidence only against a declared sampling story** -- absence from a “secret list” is suggestive of priority, but cannot show rejection, ignorance, or causal irrelevance without knowing how the list was assembled. This is a useful guardrail for interpreting curated indexes. [quick-win]
-3. **The scale worldview should be separated from the structure-free slogan** -- the chapter's historical cases already depend on architecture, data, objectives, and engineering; the KB's earned-reach formulation captures this better than “compute wins.” [just-a-reference]
+3. **The scale worldview should be separated from the structure-free slogan** -- the chapter's historical cases already depend on architecture, data, objectives, and engineering; the KB's assessed-scope diagnosis of particular losses captures this better than “compute wins,” without guaranteeing that retained structure survives. [just-a-reference]
 4. **The reflective-self-improvement connection is contrastive** -- Sutskever's changing views and model weight updates may be cumulative, but the chapter offers no evidence of retained, readable self-theory being criticized and selectively revised as in [reflection buys addressability](../notes/reflection-buys-addressability.md). [quick-win]
 
 ## Limitations (our opinion)
