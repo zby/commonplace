@@ -220,6 +220,39 @@ runtime is whatever the packet explicitly carries. Compression there is off
 the table until the delivery path is repaired, and the repair is a separate,
 reviewable change.
 
+#### Step 0 findings (2026-08-29)
+
+- **Codex harness-spawned workers — verified ambient delivery.** A fresh worker
+  launched with parent-turn inheritance disabled received the root `AGENTS.md`
+  as an ambient repository instruction. It quoted the Delegation paragraph
+  without opening a file and distinguished that instruction from its compact
+  task packet. The injected repository instruction remains context supplied by
+  the harness; no parent task narrative is part of the inherited baseline.
+- **Hermetic review workers — the Codex result applies; this is not a second
+  runtime.** Live review documentation and source show that Commonplace's CLI
+  creates prompts and finalizes outputs but never launches a model. The parent
+  dispatches each generated prompt through the current harness's fresh-worker
+  surface. A Codex review worker therefore receives the same ambient
+  `AGENTS.md`; the generated prompt stays the complete task-specific review
+  commission. This corrects step 0's earlier premise that review jobs run
+  through the CLI instead of a sub-agent spawn.
+- **Claude Code workers — documented delivery, probe unverified.** This
+  checkout's `CLAUDE.md` is a symlink to `AGENTS.md`, and the installed Claude
+  Code CLI documents project-file auto-discovery as the default (its bare mode
+  explicitly disables that discovery). A fresh no-tools probe ended at its
+  cost cap before returning a quote, so direct binding-force evidence was not
+  obtained. Treat Claude Code packets as self-contained and do not compress
+  them against the Commonplace doctrine until a successful fresh-worker probe
+  establishes delivery.
+- **No package-owned model runtime.** The review package exposes deterministic
+  selection, prompt creation, and finalization seams only. Repository tests
+  reject operative instructions that launch `claude` or `codex` subprocesses.
+  No additional delegation runtime needs a separate baseline in this pass.
+
+Route deviation: step 0 named the hermetic review-prompt path as a non-spawn
+runtime. The live architecture disproves that classification, so the probe was
+applied to its actual harness-spawned consumption path instead.
+
 ## Required outcomes
 
 ### 1. Establish the durable theory
