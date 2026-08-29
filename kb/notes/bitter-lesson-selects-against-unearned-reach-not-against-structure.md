@@ -1,5 +1,5 @@
 ---
-description: "The bitter lesson's selection criterion is whether a claim's explanatory-reach was earned by a test that could refute it, not whether the claim is structured or human-authored — so theory search in natural-language and symbolic forms with reject-capable acceptance is the lesson's own method, while no artifact carrying an earned claim is thereby promised persistence"
+description: "The lesson selects against claims whose reach was asserted rather than earned by a refuting test, not against structure or origin — theory search in readable forms is its own method; earned reach protects the claim, not its carrier"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, constraining, deploy-time-learning]
