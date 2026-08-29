@@ -81,6 +81,13 @@ Claude worker per scenario. The two Claude workers were blinded with neutral
 version names and opposite version ordering. All four independently found no
 behavioral or authority divergence and recommended the lean candidate.
 
+The Claude evaluators ran on Claude Code 2.1.251 with both parent and workers
+on `claude-opus-5[1m]` (no subagent-model override configured), as native
+in-process non-fork `general-purpose` `Agent` workers at repository `HEAD`
+`44ab1fbe17ecc27f53636e0559aa14a93f53d957`. Each made six tool calls, all
+reads, and wrote nothing. That model partition bounds the Claude side of this
+comparison.
+
 | Required behavior | Baseline | Lean candidate on Codex | Lean candidate on native Claude |
 |---|---|---|---|
 | Source reconstruction remains incumbent-blind | Pass | Pass | Pass |

@@ -38,6 +38,13 @@ non-fork `general-purpose` context from this checkout's working directory. It
 is the native fresh-worker mechanism used by the multistage parent for its
 source reconstructor, consolidated author, and independent reviewer.
 
+Both workers ran on `claude-opus-5[1m]`: no subagent-model override was
+configured in `.claude/settings.json`, `.claude/settings.local.json`, or
+`~/.claude/settings.json`, so they inherited the parent session model. The
+probed `AGENTS.md` was commit `530c01e979eebb3053f0569617107732e05f3973` with
+a clean working tree for that path. The result is bounded by that model
+partition; a provider-model or context-assembly change requires a fresh probe.
+
 This result does not cover a `claude` Bash subprocess, a different working
 directory, remote or worktree isolation, or custom agent definitions with
 different context assembly. It proves delivery and provenance, not compliance
@@ -53,7 +60,6 @@ those defaults from the shared multistage skill is superseded within this
 scope. The later [lean candidate](./multistage-pilot.md) reduced the skill and
 matched the baseline in fresh Codex and native-Claude behavioral traces.
 
-The operational request and raw reply were exchanged through
-`kb/messages/` as
-`20260829T110037Z-codex-claude-verify-fresh-worker-doctrine-delivery.md` and
-`20260829T110727Z-claude-codex-verify-fresh-worker-doctrine-delivery-reply.md`.
+The request and raw reply were exchanged through `kb/messages/`, which is
+session-local and not retained. This report carries every boundary condition
+the exchange established; the message files were deleted once consumed.
