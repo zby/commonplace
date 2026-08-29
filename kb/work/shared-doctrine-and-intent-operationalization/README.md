@@ -201,13 +201,19 @@ contracts specialize it. The term is *Commonplace doctrine*, defined in
 
 ### Step 0. Probe baseline delivery
 
-For each runtime through which this checkout actually delegates — at least
-the harness running this plan's own sub-agents and the hermetic review-prompt
-path — determine whether a fresh worker receives the `AGENTS.md` delegation
-doctrine with binding force, and how: system-instruction load, explicit
-packet, or not at all. Read the harness documentation, then confirm with a
-probe worker asked to quote the delegation paragraph and say where it came
-from. Record the result per runtime in this file.
+Operator-supplied fact (2026-08-29): the Codex harness delivers `AGENTS.md`
+as the first message to every worker it spawns. For harness-spawned
+sub-agents, delivery is therefore established as standing instruction; record
+it as such and do not spend a probe on it.
+
+For every other path through which this checkout actually delegates — at
+least the hermetic review-prompt path, whose jobs run through the CLI rather
+than a sub-agent spawn, and any other harness in use — determine whether a
+fresh worker receives the `AGENTS.md` delegation doctrine with binding force,
+and how: system-instruction load, explicit packet, or not at all. Read the
+harness documentation, then confirm with a probe worker asked to quote the
+delegation paragraph and say where it came from. Record the result per
+runtime in this file.
 
 Where delivery is absent or unverifiable, the Commonplace doctrine for that
 runtime is whatever the packet explicitly carries. Compression there is off
