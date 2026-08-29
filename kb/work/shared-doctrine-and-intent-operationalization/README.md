@@ -486,6 +486,32 @@ rather than inventing authority. Inspect the traces, not only the final
 artifacts. If the revised skill loses on either scenario, keep the current
 skill and record why; that result still counts as a completed pilot.
 
+#### Outcome 3 result (2026-08-29)
+
+The [multistage pilot](./multistage-pilot.md) kept the current skill. A
+temporary candidate removed the parent scheduling, integration, and recovery
+defaults and the no-nested-delegation rule from the skill, relying on the new
+root doctrine. Two fresh workers traced both versions through the prior
+drift/evidence/repair scenario and an unsuitable-route scenario with an
+advisory route plus a binding counterfactual.
+
+Both versions preserved every workflow invariant on verified Codex. The
+advisory route adapted from chronology to a dependency-preserving form without
+changing contribution, evidence, isolation, or authority; the binding route
+returned control. The candidate did not remove a state, branch, handoff, or
+exception and grew by two lines and twelve words. Because the same canonical
+skill is projected to Claude Code, it also made load-bearing rules implicit on
+a path where step 0 did not verify root-doctrine delivery. Adding a runtime
+fallback would create another branch solely to restore the current text.
+
+The candidate was therefore rejected and reverted byte for byte. The live
+skill remains at SHA-256
+`ccb0f2ceeb984b41c5ab11706a2160a4ccbdc9ed8bec57e80513ce0f25aef812`.
+The temporary candidate and both trace artifacts passed Commonplace
+validation, and the scaffold projection test passed all 18 cases. No skill
+cachebuster, reinstall, or lineage change was needed because no live skill
+bytes changed.
+
 ### 4. Audit every surface that commissions another agent
 
 After the checkpoint, inventory instructions, skills, generated prompts,
