@@ -70,9 +70,10 @@ and use the articles to open useful points of contact with it.
 1. **Consolidate the program.** Reconcile the
    [shared model](./shared-model.md),
    [task-scoped closure formulation](./task-scoped-computational-closure.md),
-   [closure-capability map](./closure-capability-map.md), incumbent ledger, and
-   durable notes. Give every load-bearing claim a clear scope, mechanism,
-   evidence status, and possible failure.
+   [closure-capability map](./closure-capability-map.md),
+   [incumbent ledger](./incumbent-ledger.md), and durable notes. Give every
+   load-bearing claim a clear scope, mechanism, evidence status, and possible
+   failure.
 2. **Reconstruct the articles.** Treat
    [article roles](./article-roles.md) as provisional argumentative jobs, not a
    commitment to inherited drafts or article count. Each retained article
