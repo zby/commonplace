@@ -1,5 +1,5 @@
 ---
-description: "Decorrelating reviewers removes the author's errors, not the field's; plural judges converge on consensus exactly where a claim is original, so their findings are read by the claim's stance — divergence or support — not by vote"
+description: "Decorrelating reviewers removes the author's errors, not the field's; plural judges converge on consensus where a claim is original, so findings are read by stance and used as reconnaissance: engage where the claim is load-bearing, deflect where it is not"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, methodology]
@@ -25,6 +25,36 @@ back. Two stances suffice:
 Triage then runs stance-first: at a support claim, accept a finding unless it is factually wrong about the source; at a divergence claim, ask whether the finding adds a premise. This is a rule for allocating the check, not for deference. Divergence claims are not more likely to be true because they are original; they are the claims for which plural judgment is uninformative, so the remaining checks — an object-level refuter stated in advance, and later exposure to evidence the author did not produce — have to carry the weight.
 
 Seen from the repair side, this is why [narrowing bought to survive review is paid for in content](./narrowing-bought-to-survive-review-is-paid-for-in-content.md): review pressure pushes hardest exactly where narrowing costs most. Stance makes the two cases separable. Accepting narrowing on a support claim is ordinary repair; accepting it on a divergence claim is the loss that note describes.
+
+## Review as reconnaissance: engage or deflect
+
+The stance list is written before review, but it is not complete before
+review. Decorrelated judges also serve as reconnaissance: their findings map
+where pushback currently lands, and the map includes battles the author had
+not declared — a support claim that turns out to carry weight, or a
+divergence the author did not know the work contained. So the findings are
+read twice. First by stance, as above. Then, for each finding that lands on
+something the stance list did not settle, by a choice:
+
+- **Engage** when the claim is load-bearing — the purpose, or the claims and
+  citers that depend on it, cannot survive its loss. Engaging means paying:
+  an object-level argument, a stated refuter, and exposure to evidence the
+  author did not produce. The claim joins the divergence list.
+- **Deflect** when it is not. Deflection is legitimate and has several moves:
+  narrow the claim to the subject the argument actually supports, concede the
+  consensus reading where nothing downstream depends on the contested one,
+  reframe so the pushback lands on a claim the author is willing to defend,
+  or defer with a named open question. Each buys the review's agreement at a
+  price the author has decided is affordable.
+
+What decides between the two is what depends on the claim, not how much the
+author likes it. The citer test from the narrowing note is the cheapest
+instrument: what inbound uses import from a claim is what its loss would
+cost. A claim nothing imports can be deflected at no cost; a claim the
+purpose runs through cannot be deflected at any price, and pretending
+otherwise is the analytic narrowing that note describes. The stance list is
+then updated with what the reconnaissance found, so the next review round is
+triaged against a map that has already absorbed this one.
 
 ## The misreading: telling the judges
 
