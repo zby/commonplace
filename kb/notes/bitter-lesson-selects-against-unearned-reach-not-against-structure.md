@@ -1,57 +1,60 @@
 ---
-description: "A case-level conjecture that using an inspectable requirement-to-objective proxy beyond its assessed scope may cause a method to lose to computation-scalable search or learning on the same objective and regime"
+description: "Scale replaces generalizations whose claimed scope was asserted from source-case fit rather than tested; structure whose reach was earned is what a scalable search converges on"
 type: kb/types/note.md
-traits: [title-as-claim, has-comparison, has-external-sources, synthesis]
+traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, constraining]
 ---
 
-# Unsupported proxy scope may explain a structured method's loss under scaling
+# The bitter lesson selects against unearned reach, not against structure
 
-The [captured secondary summary of the bitter lesson](../sources/wikipedia-bitter-lesson.ingest.md) reports a long-run tendency for computation-scalable search or learning to outperform methods based on domain-specific understanding. The record does not identify unsupported proxy scope as the selected property or test explicit structure as a losing category.
+The [bitter lesson](../sources/wikipedia-bitter-lesson.ingest.md) is usually compressed to "hand-built structure loses to scale." On that reading any system that discovers, names, and retains explicit theories is building the thing scale is about to eat.
 
-This note instead proposes a case-level Commonplace conjecture. When a method exposes an inspectable requirement-to-objective commitment, using that proxy beyond its assessed scope may cause the method to lose to computation-scalable search or learning evaluated on the same objective and regime. A loss supports that diagnosis only when the boundary crossing and proxy mismatch, rather than explicit structure or another implementation or evaluation difference, explain the result.
+The compression is wrong at a specific point. What loses is not structure and not human origin — it is a generalization whose claimed scope was asserted rather than tested. Human-produced exact specifications, tests, interfaces, and measurement systems are frequently what make scaling possible, and calculators and validators do not become bad because learned systems got better; [exactness and proxyhood attach to an artifact's requirement chain, not to the artifact alone](./exact-implementation-does-not-validate-a-requirement.md), and only the conjectured links in that chain are exposed.
 
-## The possible failure is in the proxy link
+The sharper statement is about [explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md). A theory claims a scope. Where that claim was earned — the structure it names really does hold across the range asserted — a scalable search eventually finds the same structure, and finding it is agreement rather than replacement. Where the claim was not earned — it fit the cases that produced it and its scope was asserted on the strength of that fit — a method with more compute and a better signal replaces it. Low-reach adaptive fit is what loses, and human authorship is merely the most common way to produce it.
 
-Let `R` be a structured requirement or invariant implemented in service of a larger objective `O`. When `R` is a proxy, exact conformance to `R` does not establish that `R` serves `O`; [exact implementation and requirement warrant are different links](./exact-implementation-does-not-validate-a-requirement.md). This distinction concerns the proxy relation. It does not deny the correctness of a constitutive requirement inside its declared boundary.
+## Claiming reach is not earning it
 
-Here, **unsupported scope** means using the proposed mechanism or invariant beyond the shifts, interventions, cases, or formal domain that assessed it. It does not mean merely human-designed, explicit, complex, locally exact, or later defeated. [Reach-assessment warrants only the mechanism and range it actually tests](./definitions/reach-assessment.md): proof reaches across its formalized domain, while predictive fit reaches across the tested shift class. Because [explanatory-reach requires a mechanism to constrain what should happen as its premises change](./first-principles-reasoning-selects-for-explanatory-reach-over.md), a compatible loss is not confirmation while rival explanations remain live.
+The tempting converse is that high-reach methods resist being bitter-lessoned. That is false as stated, and the KB holds the case that refutes it.
 
-The conjectured mechanism has four links:
+[DomainBed](../sources/in-search-of-lost-domain-generalization.ingest.md) evaluated nine domain-generalization algorithms against carefully tuned empirical risk minimization across seven multi-domain datasets under a declared model-selection protocol. Every one of those algorithms makes an explicit reach claim — that it captures structure surviving a change of environment, which is exactly a claim to operate beyond the distribution that trained it. ERM matched or beat all of them. Reach was claimed in every case; what was absent was any test separating the claim from an artifact of an undeclared selection procedure, and declaring that procedure dissolved the advantage.
 
-1. A method implements `R` for `O`, but conformance to `R` does not settle the warrant for `R -> O`.
-2. Bounded assessment can validate local conformance or fit while leaving behavior outside its range unconstrained.
-3. A later regime outside that boundary can expose the unconstrained behavior and a failure on `O`.
-4. If computation-scalable search or learning succeeds on the same `O` and in the same regime while the structured method fails because of the proxy mismatch, it wins that comparison.
+Formalizing the claim does not rescue it either. [Rosenfeld, Ravikumar, and Risteski](../sources/rosenfeld-risks-of-invariant-risk-minimization.ingest.md) construct a predictor that discharges the invariant risk minimization objective and is indistinguishable from the invariant predictor on training data, while reverting to ERM once the test environment drifts. The obligation is satisfied and the commitment recovered is still the wrong one.
 
-Only the fourth link establishes comparative selection. A shift can expose failure without a successful comparator, and a benchmark loss can show an outcome without identifying its cause. Composing the four links gives a plausible causal path.
+So a reach claim can be explicit, formal, and checked against an obligation, and still be unearned. What separates the cases is whether anything tested the claim against evidence that could have refuted it — which is [reach-assessment](./definitions/reach-assessment.md), and which the bitter lesson is best read as measuring in retrospect.
 
-## IRM witnesses a bounded scope failure
+## Automation moves who supplies the structure, not whether it was earned
 
-In [the captured IRM result](../sources/rosenfeld-risks-of-invariant-risk-minimization.ingest.md), non-linear featurizers in a Gaussian latent-variable structural equation model permit a predictor that is near-optimal for the penalized IRM objective and near-identical to the optimal invariant predictor on the training distribution. When the test environment's mean is sufficiently far from the training means, the predictor instead behaves like the ERM solution on most test points. The construction puts its deviant behavior in a region with little training probability mass. The IRM penalty scales with the square of that rare-region mass and is exponentially small in the environmental dimension, so the training objective provides little leverage over the behavior exposed by the shifted test environment.
+This bears directly on automated theory search. A system that searches theory space, derives consequences, and tests them is running search and learning — the side of the ledger the bitter lesson endorses — and its retained theories are not hand-supplied priors. That much is a real answer to the objection.
 
-In Commonplace's terms, this construction is a formal witness that local objective fit can outrun warranted scope. It does not give an exact optimizer or exact training-distribution identity, a result for linear featurizers or arbitrary distributions, or a comparison in which increasing compute selects the predictor out. It therefore supports the third link in one qualified model, not the fourth.
+But it is an answer only if the acceptance test earns the reach rather than confirming the fit. A loop whose gate is "does this theory account for the cases that produced it" is a machine for manufacturing unearned reach claims faster than a human could, and the lesson applies to its output exactly as it applied to the hand-built version. Automating the search relocates the labor; it does not by itself change the property that determines the outcome.
 
-## DomainBed supplies an outcome, not its cause
+That is the same failure DomainBed found, arrived at automatically. Nine research groups each ran a search, each retained a theory, and the selection variable that would have tested the claims went undeclared.
 
-[DomainBed](../sources/in-search-of-lost-domain-generalization.ingest.md) compared nine baseline domain-generalization algorithms on seven multi-domain datasets under three model-selection criteria. Within those datasets and implementations, carefully implemented ERM achieved state-of-the-art performance. That result is compatible with a structured method losing a comparison, but the record does not attribute the outcome to unsupported scope. Dataset choice, implementation, model selection, and other benchmark-specific explanations remain live.
+## What this does and does not predict
 
-The record also does not establish that every compared algorithm made an explicit reach claim or that the IRM construction explains DomainBed. DomainBed therefore supplies neither the proxy and assessed boundary nor the boundary-crossing and causal-attribution evidence needed to instantiate the full mechanism.
+It does not restore foresight. [Which side of the boundary a component sits on is not identifiable until scale tests it](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md), and nothing here changes that — estimating whether a theory's reach was genuinely earned, before a shift tests it, is the same open problem under a different name. What this claim supplies is an account of what the test is testing, which turns the lesson from a prophecy about structure into a statement about a property structure can have or lack.
 
-## A supporting case must isolate the mechanism
+The prediction it carries: components that get bitter-lessoned should be the ones whose scope was asserted from source-case fit, and components that survive scaling should be the ones whose scope was checked against cases that could have broken it. A survey of superseded hand-built components that found no such difference would count against the claim.
 
-A case supports the conjecture only if it identifies:
+## Open Questions
 
-1. the structured requirement or invariant `R` and the larger objective `O` it proxies;
-2. the evidence, intervention, shift class, or formal domain that bounds `R`'s assessed scope;
-3. a new regime outside that boundary;
-4. failure on `O` attributable to the proxy mismatch after checking implementation, integration, resource, dataset, and model-selection alternatives; and
-5. computation-scalable search or learning that succeeds on the same `O` and in the same regime.
+- Whether "earned" can be operationalized ahead of the test, or whether it is only ever assigned in retrospect — in which case the claim explains outcomes without guiding decisions.
+- Whether exact specs are a third category or the limiting case of earned reach, where the claimed scope is the whole problem and there is nothing left to be wrong about.
+- Whether the account survives cases where a well-tested theory loses anyway because the general method found a *different* and better structure, rather than the same one — agreement and replacement may not exhaust the outcomes.
+- Whether [oracle strength](./oracle-strength-spectrum.md) tracks earnedness, since a hard oracle is what lets a claim be tested against refuting cases in the first place.
 
-Missing any item leaves the result compatible with the conjecture but does not support it as the explanation. A case refutes the diagnosis if the proxy's assessed or proved boundary already covers the alleged new regime, no boundary crossing occurred, the structured method still achieved `O`, the comparator failed, or another implementation or evaluation difference explains the loss. Evidence that isolates explicitness itself, rather than proxy mismatch, as the causal disadvantage also refutes this diagnosis for that case.
+---
 
-## Scope and open question
+Relevant Notes:
 
-The listed evidence does not isolate explicit structure as a causal disadvantage. Unsupported scope can also afflict learned or opaque commitments; this conjecture focuses on methods with inspectable `R`-for-`O` commitments because their requirements and boundaries can be examined, not because opacity earns scope. The IRM construction and DomainBed result do not complete the four-link mechanism, establish a historical or statistical tendency, or show that scale generally selects against unsupported scope.
-
-Failure to condemn structure as a category supplies no inverse guarantee. The evidence does not show that adequately assessed structure necessarily survives scaling or that scalable learning converges on the same structure. It also remains open whether assessed-scope mismatch can be identified prospectively with enough reliability to predict comparative scaling outcomes.
+- [First-principles reasoning selects for explanatory-reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: the adaptive-fit/reach distinction this applies to scaling
+- [Reach-assessment](./definitions/reach-assessment.md) — defined-in: the capability that earns a reach claim, whose absence this note identifies as what scale punishes
+- [Exact implementation does not validate a requirement against its objective](./exact-implementation-does-not-validate-a-requirement.md) — grounds: why not all hand-built structure is exposed
+- [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — extends: supplies the mechanism behind the decision procedure, without restoring the foresight that note denies
+- [Theory-mediated learning may improve sample efficiency under structured shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — extends: the pathway this claim clears of the objection, and the acceptance test it makes conditional
+- [Oracle strength spectrum](./oracle-strength-spectrum.md) — see-also: the verification gradient that plausibly governs which claims can be earned
+- [Constraining and distillation both trade generality for reliability, speed, and cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — grounds: why narrower artifacts survive when their reliability and cost gains dominate
+- [Sutton, The Bitter Lesson](../sources/wikipedia-bitter-lesson.ingest.md) — abstracted-from: the original argument, generalized here from human-versus-general-method to earned-versus-unearned reach
+- [In search of lost domain generalization](../sources/in-search-of-lost-domain-generalization.ingest.md) — evidenced-by: nine algorithms making explicit reach claims, beaten by tuned ERM once the selection protocol was declared
+- [The Risks of Invariant Risk Minimization](../sources/rosenfeld-risks-of-invariant-risk-minimization.ingest.md) — evidenced-by: a predictor that discharges a formal invariance obligation while recovering the wrong commitment
