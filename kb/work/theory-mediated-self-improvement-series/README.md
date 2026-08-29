@@ -14,12 +14,12 @@ machinery, expose genuine open problems, and make possible research directions
 visible without assigning work. Completing a coherent set of articles is not
 success by itself.
 
-A researcher has joined the work when there is substantive two-way research
-engagement that can change the program or the researcher's own account of the
-problem. This may take the form of a critique, counterexample, source synthesis,
+Researchers may engage through a critique, counterexample, source synthesis,
 formalization, experiment, evaluation, implementation, independent test, or
-joint investigation. The researcher may remain fully independent of
-Commonplace, and agreement with the current claims is not required.
+joint investigation. They may remain fully independent of Commonplace, and
+agreement with the current claims is not required. The relevant success signal
+is substantive two-way research exchange that can change the program or the
+researcher's own account of the problem.
 
 This series is for researchers who may investigate and shape the program.
 Practitioner adoption, operational guidance, and product persuasion belong in
@@ -28,8 +28,7 @@ a separate practitioner-facing series.
 The desired end state is a credible research program, a researcher-facing
 article series, prepared but optional research starting points, and evidence
 about which invitations lead to substantive exchange or continuing
-collaboration. The strongest success is an ongoing reciprocal research
-relationship, not the assignment of ownership over part of the program.
+collaboration. The strongest success is ongoing reciprocal research exchange.
 
 ## Mission
 
@@ -94,9 +93,9 @@ agenda. The detailed working model is
   adoption are out of scope for this series.
 - Articles are invitation and explanation machinery for the research program,
   not the program's end product and not a commitment to journal submission.
-- Researchers may engage independently or jointly. The program may provide
-  materials, questions, feedback, and collaboration, but it does not assign
-  them ownership, roles, or authority over a subproblem.
+- Participation need not place a researcher inside Commonplace's organizational
+  boundary. Independent work, exchange between projects, and genuinely joint
+  research are all valid forms of engagement.
 - Theory claims are first-class outputs. They may support articles, derive
   operative machinery, and be revised through article work; they are not merely
   scaffolding for exposition.
@@ -180,8 +179,8 @@ Return the decision to the operator when proceeding would:
 - change the researcher-engagement intent or include practitioner conversion;
 - promise paper authorship, funding, employment, affiliation, or another
   external reward;
-- describe an external researcher's possible participation as an assigned role,
-  responsibility, ownership, or grant of authority;
+- describe participation as if Commonplace were assigning an external
+  researcher a role or responsibility;
 - set terms for joint work or credit without mutual agreement;
 - strengthen or hide a research claim merely to make the invitation more
   persuasive;
@@ -300,7 +299,7 @@ This map preserves access to inherited work; it is not an execution order.
 - **Program and evaluation:** [target problems](./target-problems.md),
   [shared model](./shared-model.md),
   [task-scoped computational closure](./task-scoped-computational-closure.md),
-  [closure-capability map](./closure-capability-map), and the
+  [closure-capability map](./closure-capability-map.md), and the
   [adequacy-gate run](./adequacy-gate-run.md).
 - **Researcher participation:**
   [researcher participation model](./researcher-participation-model.md) and the
