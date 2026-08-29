@@ -5,35 +5,37 @@
 ## Intent
 
 Get researchers interested in the theory-mediated self-improvement research
-program and enable some of them to join the work.
+program and make it easy for interested researchers to engage with, test,
+contest, extend, or collaborate on the work.
 
 The articles are means. They should make the program legible, credible, and
-joinable: explain the central questions and claims, show the existing evidence
-and machinery, expose genuine open problems, and route a researcher to a
-concrete contribution that can change the program. Completing a coherent set
-of articles is not success by itself.
+open: explain the central questions and claims, show the existing evidence and
+machinery, expose genuine open problems, and make possible research directions
+visible without assigning work. Completing a coherent set of articles is not
+success by itself.
 
-A researcher has joined when they take responsibility for a research
-contribution whose result can revise the theory, evidence, methods, machinery,
-or agenda. That contribution may be a critique, counterexample, source
-synthesis, formalization, experiment, evaluation, implementation, or theory
-revision. Agreement with the current claims is not required.
+A researcher has joined the work when there is substantive two-way research
+engagement that can change the program or the researcher's own account of the
+problem. This may take the form of a critique, counterexample, source synthesis,
+formalization, experiment, evaluation, implementation, independent test, or
+joint investigation. The researcher may remain fully independent of
+Commonplace, and agreement with the current claims is not required.
 
 This series is for researchers who may investigate and shape the program.
 Practitioner adoption, operational guidance, and product persuasion belong in
 a separate practitioner-facing series.
 
 The desired end state is a credible research program, a researcher-facing
-article series, a set of ready contribution paths with clear credit and
-ownership, and evidence about which invitations turn interest into
-participation. The strongest success is a researcher taking continuing
-ownership of part of the program.
+article series, prepared but optional research starting points, and evidence
+about which invitations lead to substantive exchange or continuing
+collaboration. The strongest success is an ongoing reciprocal research
+relationship, not the assignment of ownership over part of the program.
 
 ## Mission
 
 Reconcile the inherited work into one researcher-facing program and use the
-articles to turn that program into a practical invitation to collaborate.
-Run two connected cycles:
+articles to turn that program into a practical invitation to engage and
+collaborate. Run two connected cycles:
 
     claim
       -> proposed mechanism
@@ -45,15 +47,16 @@ Run two connected cycles:
 and:
 
     researcher-facing explanation
-      -> open problem
-      -> bounded first contribution
-      -> useful feedback, credit, and decision rights
-      -> deeper ownership
+      -> question worth pursuing
+      -> optional low-cost starting point
+      -> substantive exchange
+      -> independent or joint investigation
       -> continuing collaboration
 
 The first cycle makes the invitation scientifically credible. The second makes
-it possible to act on. Article architecture, source control, contribution
-units, and outreach all serve this mission.
+it possible to act on without placing researchers inside a project hierarchy.
+Article architecture, source control, prepared starting points, and outreach all
+serve this mission.
 
 ## Participation hypothesis
 
@@ -66,8 +69,9 @@ program:
   results that could change an important claim.
 - **Leverage:** prepared theory, sources, code, instruments, evaluation designs,
   objections, and negative results that reduce startup cost.
-- **Ownership:** bounded subproblems whose contributor may shape the question,
-  method, and interpretation rather than merely execute a chore.
+- **Research freedom:** questions and materials offered as starting points, with
+  room to challenge the framing, change the method, pursue a neighboring
+  question, or study Commonplace independently.
 - **Visible credit:** contribution records for theory, criticism, data,
   experiments, software, and methods; citable artifacts where appropriate; and
   paper authorship when the eventual intellectual contribution warrants it.
@@ -78,17 +82,21 @@ program:
   demonstrated willingness to let external results revise the retained theory.
 
 These are hypotheses to test, not promises that every researcher values the
-same offer. Authorship must not be promised for a small task, and substantial
-work must not become invisible merely because it does not produce a paper.
-The detailed working model is
+same offer. Authorship must not be promised for a small task, substantial work
+must not become invisible merely because it does not produce a paper, and an
+invitation must not imply that Commonplace controls an external researcher's
+agenda. The detailed working model is
 [Researcher participation model](./researcher-participation-model.md).
 
 ## Direction fixed by the operator
 
 - The intended audience is researchers. Practitioner-facing explanation and
   adoption are out of scope for this series.
-- Articles are recruitment and explanation machinery for the research program,
+- Articles are invitation and explanation machinery for the research program,
   not the program's end product and not a commitment to journal submission.
+- Researchers may engage independently or jointly. The program may provide
+  materials, questions, feedback, and collaboration, but it does not assign
+  them ownership, roles, or authority over a subproblem.
 - Theory claims are first-class outputs. They may support articles, derive
   operative machinery, and be revised through article work; they are not merely
   scaffolding for exposition.
@@ -129,27 +137,28 @@ The detailed working model is
    [closure-capability map](./closure-capability-map.md), and the durable
    self-improving-systems notes. Give each load-bearing claim a scope,
    mechanism, observable contrast or failure condition, and evidence status.
-2. **Select initial researcher groups and offers.** Choose only the researcher
-   groups for which the workshop has a strong question and a ready contribution
-   path. State the intellectual value, leverage, ownership, credit, and
-   reciprocal value offered to each group.
-3. **Package contribution units.** Prepare at least three bounded research
-   opportunities with a small first action and a visible path to ownership. The
-   initial portfolio should include a theoretical or evaluation problem, a
-   Commonplace self-application, and the programming-agent testbed unless
-   execution evidence identifies a better set.
+2. **Select initial researcher communities and invitations.** Choose only the
+   communities for which the workshop has a strong question and useful prepared
+   material. State the intellectual value, leverage, research freedom, credit,
+   and reciprocal value that the invitation could provide.
+3. **Prepare research starting points.** Develop at least three optional,
+   self-contained ways into the work. Each should make a small first
+   investigation possible while leaving room to question its framing, method,
+   and interpretation. The initial set should include a theoretical or
+   evaluation problem, a Commonplace self-application, and the programming-agent
+   testbed unless execution evidence identifies a better set.
 4. **Rebase the articles.** Treat
    [article roles](./article-roles.md) as both an argument map and an engagement
    map. Each article or cluster must have a research job, a target reader, and a
-   next action it makes possible. Merge, split, reorder, or discard inherited
-   article jobs as needed.
-5. **Make contribution and credit explicit.** Establish the public provenance,
-   review, credit, authorship, decision-right, and hand-back rules before asking
-   researchers to contribute.
-6. **Pilot the invitation.** Put a bounded part of the series and its
-   contribution paths in front of selected researchers. Record the offer,
-   response, deepest participation stage, objections, and reason for drop-off;
-   then revise the participation hypothesis and the series.
+   possible next research move it makes visible. Merge, split, reorder, or
+   discard inherited article jobs as needed.
+5. **Make collaboration and credit legible.** Establish public provenance,
+   review, credit, and authorship norms, including how independent criticism or
+   research can be cited and how terms for genuinely joint work will be agreed.
+6. **Pilot the invitation.** Put a bounded part of the series and its research
+   starting points in front of selected researchers. Record the invitation,
+   response, form of engagement, objections, and reason for disengagement; then
+   revise the participation hypothesis and the series.
 7. **Install the research-through-building trace.** Create a procedure in
    `kb/instructions/` that links a claim to an intervention, evidence, and
    theory revision. Normalize one completed Commonplace episode through it and
@@ -162,17 +171,18 @@ move serves the intent better.
 
 ## Delegated judgment and hand-back
 
-Agents may choose the initial researcher groups, incentive mix, article order,
-contribution-unit design, outreach route, Commonplace example, and exact form
-of the research-through-building trace.
+Agents may choose the initial researcher communities, incentive mix, article
+order, research-starting-point design, outreach route, Commonplace example, and
+exact form of the research-through-building trace.
 
 Return the decision to the operator when proceeding would:
 
-- change the researcher-recruitment intent or include practitioner conversion;
+- change the researcher-engagement intent or include practitioner conversion;
 - promise paper authorship, funding, employment, affiliation, or another
   external reward;
-- assign an external researcher responsibility without corresponding decision
-  rights, credit, and a review path;
+- describe an external researcher's possible participation as an assigned role,
+  responsibility, ownership, or grant of authority;
+- set terms for joint work or credit without mutual agreement;
 - strengthen or hide a research claim merely to make the invitation more
   persuasive;
 - choose a substantive objective where the evidence exposes a real value
@@ -224,23 +234,25 @@ protocol. The detailed working formulation is
 
 ### Researcher participation
 
-Measure movement through concrete stages:
+Observe concrete forms of engagement without treating them as a required
+progression:
 
-1. a qualified researcher engages with a specific claim or question;
-2. they offer a substantive objection, comparison, or proposed investigation;
-3. they complete a bounded contribution;
-4. the contribution is admitted, rejected, or used to revise the program with
-   visible provenance; and
-5. they take continuing ownership of a subproblem or joint investigation.
+- a qualified researcher engages with a specific claim or question;
+- they offer a substantive objection, comparison, or possible investigation;
+- they independently use or test part of the work;
+- a bounded independent or joint investigation is completed and its result is
+  exchanged with visible provenance; or
+- the exchange develops into continuing reciprocal collaboration.
 
 Page views, generic praise, and article completion are weak signals. A serious
-objection can be a stronger result than passive agreement. The strongest
-signal is continuing research ownership.
+objection can be a stronger result than passive agreement. The strongest signal
+is continued two-way research exchange, whether the researcher works inside,
+alongside, or independently of Commonplace.
 
-A bounded outreach trial with no substantive action is still evidence, but it
-must be diagnosed: weak question, low credibility, poor audience selection,
-high startup cost, one-sided value, unclear credit, or an inconvenient first
-action. Do not repair every recruitment failure by strengthening claims or
+A bounded outreach trial with no substantive engagement is still evidence, but
+it must be diagnosed: weak question, low credibility, poor audience selection,
+high startup cost, one-sided value, unclear credit, or an inconvenient starting
+point. Do not repair every engagement failure by strengthening claims or
 promising authorship.
 
 ## Outputs
@@ -253,12 +265,13 @@ promising authorship.
   counterexamples, negative results, and explicit theory revisions.
 - **Researcher-facing articles:** coherent explanations whose research and
   engagement jobs are explicit; no journal-submission requirement.
-- **Participation surface:** ready contribution units, direct routes into the
-  work, and explicit credit, ownership, review, and hand-back rules.
+- **Participation surface:** optional research starting points, direct routes
+  into conversation or investigation, and explicit provenance and credit
+  norms.
 - **Research testbeds:** Commonplace self-application and a bounded
   programming-agent application, insofar as they support the research program.
-- **Engagement evidence:** the offers tested, responses received, participation
-  stages reached, and resulting revisions to the participation model.
+- **Engagement evidence:** the invitations tested, responses received, forms of
+  engagement observed, and resulting revisions to the participation model.
 
 No practitioner-facing series or adoption guide is an output of this workshop.
 
@@ -287,7 +300,7 @@ This map preserves access to inherited work; it is not an execution order.
 - **Program and evaluation:** [target problems](./target-problems.md),
   [shared model](./shared-model.md),
   [task-scoped computational closure](./task-scoped-computational-closure.md),
-  [closure-capability map](./closure-capability-map.md), and the
+  [closure-capability map](./closure-capability-map), and the
   [adequacy-gate run](./adequacy-gate-run.md).
 - **Researcher participation:**
   [researcher participation model](./researcher-participation-model.md) and the
@@ -311,20 +324,22 @@ The workshop closes when:
    closure-capability map state one coherent research program;
 2. every load-bearing claim has a recorded scope, mechanism, observable
    contrast or failure condition, evidence status, and disposition;
-3. initial researcher groups have been selected and the value proposition for
-   each is explicit;
-4. at least three contribution units are ready, each with a bounded first
-   action, deeper ownership path, review route, and credit rule;
+3. initial researcher communities have been selected and the value proposition
+   for each is explicit;
+4. at least three research starting points are ready, each with an optional
+   bounded first investigation, sufficient standalone material, room to change
+   the framing or method, a way to share contrary or negative results, and
+   clear provenance and credit norms;
 5. the article architecture has been reconciled with the admitted claims and
    evidence, and each retained article job has both a research role and an
    engagement role;
-6. the contribution, credit, authorship, decision-right, and hand-back rules
-   are explicit before outreach;
+6. provenance, review, credit, and authorship norms are explicit before
+   outreach, while terms for joint work remain subject to mutual agreement;
 7. the research-through-building procedure exists and one retrospective
    Commonplace episode has been normalized through it;
 8. one bounded researcher-outreach trial has been completed and has produced
-   either a substantive external action or a recorded negative result, revised
-   participation hypothesis, and next experiment;
+   either substantive research engagement or a recorded negative result,
+   revised participation hypothesis, and next experiment;
 9. source uses remain inside their match-register boundaries, outstanding
    review findings are resolved, and durable outputs validate under their
    target contracts; and
