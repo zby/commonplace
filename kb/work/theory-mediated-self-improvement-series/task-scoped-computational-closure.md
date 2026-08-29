@@ -13,17 +13,21 @@ horizon before a difficult decision arises. Computational closure is therefore
 not a context-free property of a system. It is a relation among a system, a
 task-selection rule, a boundary, and a horizon.
 
-Task selection need not be performed by the system. A client or benchmark may
-supply tasks as an explicitly exported input. The selection rule must still be
-declared because it determines which decision paths the closure claim covers.
+Task selection may be external or part of the system. A client or benchmark may
+supply tasks as an explicitly exported input. A system may instead choose its
+own tasks, in which case selection is one of the decisions inside the automatic
+path and the claim covers only the resulting self-selected workload. The
+selection rule must be declared because it determines which paths the closure
+claim covers.
 
 ## Scope of a closure claim
 
 Declare the following before observing the evaluated outcomes:
 
-- **Task selection:** a finite task set or a rule for sampling tasks from a
-  declared challenge distribution. State who applies the rule, whether the
-  system may refuse tasks, and how refusals are counted.
+- **Task selection:** a finite task set or a rule for sampling or generating
+  tasks from a declared domain. State who controls the rule, what system state
+  it may depend on, whether the system may refuse tasks, and how refusals are
+  counted. Fix the rule before observing the evaluated outcomes.
 - **Objective and acceptance:** the externally fixed result criterion for each
   task and any aggregate threshold used for the selected set.
 - **System boundary:** the models, retained artifacts, code, schedulers,
@@ -59,16 +63,18 @@ presentation through any required:
 - repair, rollback, or escalation; and
 - later episode included in `H`.
 
-The path is computationally closed when every consequential decision on that
-path is either:
+The path is computationally closed when every required decision and transition
+on that path is either:
 
-1. made by machinery inside `B`; or
+1. determined and executable by machinery inside `B`; or
 2. supplied through an input explicitly declared in `E`.
 
-No indispensable human judgment may be hidden in task admission, decomposition,
-acceptance, evaluator design, repair, continuation, or the choice to omit a
-failed case. A human action that merely transmits an already determined value
-does not open the path; a human judgment that selects or settles the value does.
+No indispensable human judgment or execution step may be hidden in task
+admission, decomposition, acceptance, evaluator design, repair, continuation,
+or the choice to omit a failed case. A human action that transmits an already
+determined exogenous value may be part of `E` when declared. A human action
+that selects the value or performs a required transition unavailable inside
+`B` opens the path.
 
 The path may terminate in success, failure, or abstention without a human cut.
 Structural closure therefore does not imply competence.
@@ -81,8 +87,8 @@ over the same selected tasks:
 - a predeclared capability or success threshold;
 - an evaluator capable of rejecting plausible harmful or inadequate outputs
   on grounds not authored solely by the candidate;
-- a coverage threshold that prevents easy cases from standing for the whole
-  selection; and
+- an externally anchored workload or a coverage threshold that prevents
+  self-selected easy cases from standing for a broader target domain; and
 - evidence that the closed path reaches commitments consequential to the
   measured capability.
 
@@ -102,8 +108,11 @@ The evidence determines how broadly closure may be stated.
 
 - A fixed finite suite supports a claim about the attempted paths on that
   suite.
-- Tasks sampled by a declared protocol support a statistical claim about that
-  challenge distribution, subject to the sampling evidence.
+- Tasks sampled by a declared external protocol support a statistical claim
+  about that challenge distribution, subject to the sampling evidence.
+- An internal task generator supports a claim only about the workload it
+  generates under the declared policy. It does not establish coverage of an
+  externally defined challenge distribution.
 - A task class stated intensionally supports a universal claim only when an
   argument covers every task admitted by the definition. A successful sample
   does not establish this.
