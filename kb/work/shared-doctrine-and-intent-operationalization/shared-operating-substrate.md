@@ -311,6 +311,7 @@ These cases test whether the decomposition is useful:
 | Generic Markdown and Git competence | Parametric background; variation is usually harmless until a project rule narrows it |
 | “Never `git add -A`” | Standing doctrine; a binding local safety commitment even though the model understands Git |
 | Imperative commit subjects | Standing convention; a selection among legitimate alternatives |
+| “One term per concept” in technical prose | Standing doctrine; a departure from the literary default current models bring (vary words to avoid repetition), recorded because that default is active and wrong here; re-check when models change |
 | A review result showing one prompt failed | Institutional memory; evidence, not yet a standing rule |
 | An accepted ADR | Institutional commitment; the evidence cannot regenerate the selection |
 | A review sentinel grammar | Exact protocol; parser compatibility makes variation unsafe |
