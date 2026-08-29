@@ -42,11 +42,10 @@ every row now in the portfolio assesses compatibility for a methodology or an
 artifact class. This assesses it **per portion of a path**. That is why it
 needs its own row rather than an edit to an existing one.
 
-## Three linked pieces, one distinction
+## Four linked pieces, one distinction
 
 Do these together. They turn on the same question — what an acceptance test
-does — and formulating them separately produces three answers that do not line
-up.
+does — and formulating them separately produces answers that do not line up.
 
 1. **Classify the new defense** in the portfolio's role table: what it
    contributes, and what it does not establish. The second column is the one
@@ -62,6 +61,28 @@ up.
    [selection removes unearned reach, not structure](../../notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md):
    structure survives when its reach is earned by a reject-capable acceptance
    test. Decide whether that is the reason, and where it stops.
+4. **Classify the production-freedom defense.** A second operator position
+   (2026-08-29) answers a different objection: *your methods are hand-authored,
+   so they are exactly what the lesson selects against.* The answer is that
+   Commonplace fixes representational form — natural language plus symbolic
+   artifacts — and deliberately leaves production method free, so present human
+   authorship is a stage rather than a commitment.
+
+   The conditional is already covered by the narrow rebuttal ("a loop could
+   search over theories, instructions, tests, schemas, and programs") and by
+   [machinery persists by warrant, not position](../../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md).
+   What is uncovered is the bridge to *this* system. State it architecturally,
+   not as a forecast: the portfolio's empirical burden already rejects
+   conceptual possibility, so "we might add automated search later" earns
+   nothing. The checkable form asks, per artifact class, **what would have to
+   be undone for a search loop to author it** — and answers honestly where the
+   answer is not "nothing".
+
+   Partial evidence exists rather than pure promise: review gates, the full
+   improvement pass, and connect reports are proposal-selection loops with
+   reject-capable evaluation. That is the same seam as piece 1 — the portion
+   already search-selected versus the portion still hand-authored by
+   contingency.
 
 ### The tension that most likely reshapes the formulation
 
@@ -107,6 +128,22 @@ formulation assume the tidy version.
   lesson's case history rather than its scope. Declare it, or the triage rule
   mis-sorts a reviewer hit on the disanalogy as a support-row narrowing to be
   accepted by default.
+- **"Without human input" must name what supplies the objective and the
+  evaluator.** The [closure–capability map](./closure-capability-map.md) lists
+  *boundary export* as a degenerate pattern: human selection, a teacher, a
+  powerful fixed model, or evaluator design supplying the hard decision outside
+  the declared path buys apparent closure by moving intelligence rather than
+  representing it. A claim that the system could learn without human input is
+  caught by that pattern unless it says where the objective and the acceptance
+  standard come from.
+- **The form constraint is scoping, not principle.**
+  [The readable-artifact loop](../../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md)
+  already frames natural-language-plus-symbolic as the tractable *first* loop,
+  chosen for shared context, current tempos, and an existing codification
+  boundary. Not training models is a resource fact for this project. Stating it
+  as a principled limit needs an argument, and whether the fixed form stays
+  competitive is P5's open empirical question — so do not claim the constraint
+  is costless.
 - **Conjectured is the ceiling** for any register status a worked row raises.
 - **Fold, do not spawn.** A bounded claim goes into the note it qualifies. A
   new note needs its own argument that no existing note can carry.
@@ -133,6 +170,9 @@ Pre-assembled so the session spends its context on formulation, not search.
 | [Warranted transfer](../../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md) | Adverse selection, the warrantability conditions, the residue table |
 | [A method ceiling bounds the method](../../notes/a-method-ceiling-bounds-the-method-not-the-transfer-already-made.md) | Why a bounded transfer stays real once the ceiling is reached (O6) |
 | [Oracle accumulation](../../notes/oracle-accumulation-improves-the-selection-environment.md) | The boundary on any fixed-oracle claim |
+| [Machinery persists by warrant, not position](../../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md) | No exempt outside: the production machinery is itself in loop scope |
+| [The readable-artifact loop](../../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) | Why the form constraint is a tractable first choice rather than a principle |
+| [Closure–capability map](./closure-capability-map.md) | Boundary export and the other degenerate patterns a no-human-input claim must clear |
 | [FunSearch](../../sources/mathematical-discoveries-program-search-large-language-models.ingest.md), [AlphaDev](../../sources/faster-sorting-algorithms-discovered-using-deep-rl.ingest.md) | The worked search cases: what is proposed, what is scored, what stays supplied |
 | [Match register](./match-register.md) | Stance vocabulary, triage rule, the Sutton row, status ceiling |
 | [Article roles](./article-roles.md) | The open interaction check, the separation rules |
@@ -152,6 +192,8 @@ specification, evaluator, skeleton, and boundary all remain supplied.
 - A reader can say what the program claims about a partly automated path,
   what it declines to claim, and why the remainder's difficulty is predicted
   rather than embarrassing.
+- The production-freedom claim is stated so that it could be checked — per
+  artifact class, what would have to be undone — rather than as an intention.
 - No proportion appears. No claim asserts that steps stack toward closure.
 - `commonplace-validate` passes on every changed artifact.
 
