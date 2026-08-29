@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The source is most useful as evidence for [curation as orientation](../notes/index-completeness-does-not-determine-editorial-orientation.md): selection, grouping, and omission communicate a worldview that an exhaustive list would not. It also compares productively with [first-principles design-space mapping](../notes/first-principles-analysis-maps-design-space-before-selection.md), because reconstructing a field from selected winners hides rival dimensions, and with the KB's narrower reading of [the Bitter Lesson](../notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md). Its fit with reflective self-improvement is limited: it describes learning and institutional action, but not improvement routed through an addressable self-representation.
+The source is most useful as evidence for [curation as orientation](../notes/index-completeness-does-not-determine-editorial-orientation.md): selection, grouping, and omission communicate a worldview that an exhaustive list would not. It also compares productively with [first-principles design-space mapping](../notes/first-principles-analysis-maps-design-space-before-selection.md), because reconstructing a field from selected winners hides rival dimensions, and with the KB's case-level conjecture that [unsupported proxy scope may explain a structured method's loss under scaling](../notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md). Its fit with reflective self-improvement is limited: it describes learning and institutional action, but not improvement routed through an addressable self-representation.
 
 ## Extractable Value
 
