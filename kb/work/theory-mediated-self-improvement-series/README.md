@@ -255,6 +255,10 @@ leave quarantine only through an explicit entry in the
 - [Closure–capability map](./closure-capability-map.md) — comparison coordinates,
   degenerate closure patterns, provisional system regions, and a candidate
   adequacy gate.
+- [Adequacy-gate run](./adequacy-gate-run.md) — the map exercised on DGM, HGM,
+  HyperAgents, Prime Agent, Recuris, and Apodex 1.1: one named path each, the
+  seven adequacy conditions measured against the retained record, the degenerate
+  patterns landed on, and the residual human cut classified by reason.
 - [Article roles](./article-roles.md) — argumentative jobs and their dependency
   order; these do not promise that every rejected title survives.
 - [Incumbent ledger](./incumbent-ledger.md) — source identities, review
