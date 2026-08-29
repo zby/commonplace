@@ -97,7 +97,10 @@ assessed structure necessarily survives scaling." The filename kept the old
 title, so inbound links still read as the strong claim. The portfolio row was
 never updated; it is now.
 
-Even in its strong form the criterion would not have carried the disanalogy.
+The report independently confirms this: "a reject-capable test can select
+the learned replacement. It improves the production method; it does not
+guarantee that the selected structure remains explicit." Even in its strong
+form the criterion would not have carried the disanalogy.
 Earned reach filters *content* — which structure passes selection when the
 function it serves is demanded. The vision features did not lose because
 their reach was unearned in that sense; edge detection is exact relative to
@@ -114,13 +117,25 @@ carrying current state, commitments, authority, and project-specific facts are
 complements, supplying what no model holds from its weights. This explains the
 vision case instead of denying it, and it is checkable per artifact class.
 
-Its status is **candidate**. No note carries it; the two existing carriers of
-the complement half are the commitment and reproduction notes, and the
-portfolio row is written so the hub cites the criterion as classified, not
-established. The historical test is the absorption-survivors search
-(report-only, in flight). If that report tells against the split, the
-candidate row and the register's third divergence are withdrawn; the
-per-portion and production-freedom rows do not depend on it.
+Its status is **candidate, narrowed**. The
+[absorption-survivors report](./absorption-survivors.md) arrived the same
+day (four episodes: 2D detection, multiview 3D, game engines, speech). It
+supports the split only after "cannot hold" is narrowed: authority and
+current state survive as *functions* — reproduction does not adopt a policy
+or observe a changed world — while rules, geometry, signal processing, and
+encoding were internalized (MuZero, DUSt3R, wav2vec 2.0), and tested,
+deployed structure (Stockfish's classical evaluator, the old vision
+pipelines) was replaced anyway. The report's own three-class test — boundary
+or authority source; locally specified operator, conditional on guarantee or
+economics; empirical proxy, exposed — replaces the two-way split. The
+portfolio row and the register's third divergence were rewritten to that
+narrowed form rather than withdrawn, because the function claim is what the
+commitment and reproduction notes already carry and the record confirms it.
+The counter-characterization stays live and must be stated beside the claim
+in any article: present survivors may be the current edge of absorption, not
+a distinct class. **Operator decision:** whether to keep the narrowed third
+divergence as a bet at all, since what remains defended is close to the
+consensus reading (every system has an environment and an objective).
 
 Where it stops, in three places. Methodology, heuristics, and conventions are
 substitutes — a capable model supplies the function they stand in for — so the
@@ -212,8 +227,9 @@ before it moves — the residue table read on the production axis.
   the accepted bitter-lesson article lists the note among its sources. Each
   needs a sentence changed or the citation dropped; a rename would repair the
   title drift.
-- **The substitute-versus-complement row is conditional** on the
-  absorption-survivors report. Its withdrawal condition is stated above.
+- **The substitute-versus-complement row was narrowed** by the
+  absorption-survivors report (above). Report consumed; the report itself
+  stays a workshop artifact and is not yet ingested or promoted.
 - Whether the per-portion rule wants its own note once the hub cites it: the
   current home is a section, on the fold-not-spawn rule; a section anchor is
   citable.

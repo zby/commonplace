@@ -64,17 +64,23 @@ purpose, held upstream (P6), and
   (the bridge premise, not the inexpressibility generator), Sutton 2019 (the
   weights-only extrapolation, not the production-method generator). Sutton
   2019 carries a third bet, against the lesson's *case history* rather than
-  its scope: that Commonplace's retained complements — current state,
-  commitments, authority, project-specific facts — are not the hand-crafted
-  features of the vision era, which were substitutes for a capability the
-  model lacked. The vision era was commercial (face detection shipped in
-  consumer cameras; OCR and industrial machine vision were products), so the
-  bet cannot run through "only researchers cared"; it runs through
-  substitute versus complement, a candidate criterion under historical test
-  (the absorption-survivors search, report-only). Pushback is predicted; a
-  reversal needs evidence that a complement class was absorbed with its
-  function, not only its content. Methodology, heuristics, and conventions
-  are substitutes and are not defended here.
+  its scope: that the functions Commonplace's authority and current-state
+  records supply — adoption, currentness, contestability, observation — are
+  not what the vision era absorbed. The vision era was commercial (face
+  detection shipped in consumer cameras; OCR and industrial machine vision
+  were products), so the bet cannot run through "only researchers cared".
+  The [absorption-survivors report](./absorption-survivors.md) (2026-08-29,
+  four episodes) narrowed the bet: it holds as a *function* claim — boundary
+  and authority inputs persist somewhere across architectures — and fails as
+  a carrier claim, since MuZero, DUSt3R, and wav2vec 2.0 internalized rules,
+  geometry, and signal front-ends, and since tested, deployed components
+  (Stockfish's classical evaluator) were still replaced. "Project-specific
+  facts" left the bet: a fact is protected only while it is a current
+  observation or an accepted record. The surviving pushback is the report's
+  counter-characterization — present survivors are the current edge of
+  absorption, not a distinct class — which the record cannot decide; an
+  article must state it beside the claim. Methodology, heuristics,
+  conventions, and reviewed semantic theory are not defended here.
 - **Support** — the source was brought in for what it supplies under its
   consensus reading. Pushback is accepted by default: if a reviewer narrows
   the row, take the narrowing, since nothing the series defends lives there.
