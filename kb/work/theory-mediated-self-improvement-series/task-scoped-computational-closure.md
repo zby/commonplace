@@ -28,13 +28,15 @@ Declare the following before observing the evaluated outcomes:
   tasks from a declared domain. State who controls the rule, what system state
   it may depend on, whether the system may refuse tasks, and how refusals are
   counted. Fix the rule before observing the evaluated outcomes.
-- **Objective and acceptance:** the externally fixed result criterion for each
-  task and any aggregate threshold used for the selected set.
+- **Objective and acceptance:** the result criterion, who controls it, whether
+  the system may revise it inside the claimed path, and how any revision is
+  evaluated. An externally anchored capability claim requires a criterion not
+  controlled solely by the candidate.
 - **System boundary:** the models, retained artifacts, code, schedulers,
   evaluators, state, tools, and evidence interfaces counted as internal.
-- **Exogenous inputs:** observations, client choices, permissions, services, or
-  feedback allowed to cross the boundary without being counted as internal
-  decisions.
+- **Exogenous inputs and interactions:** observations, client choices,
+  permissions, services, or feedback allowed to cross the boundary without
+  being counted as internal decisions or execution.
 - **Horizon:** the part of execution covered, including repair, recovery, and
   later revision episodes when recurrence is claimed.
 - **Resources:** the relevant time, compute, money, tool, and interaction
@@ -46,9 +48,10 @@ A compact notation is:
 
     Closed(M | S, A, B, E, H, R, Q)
 
-where `M` is the system, `S` task selection, `A` acceptance, `B` the system
-boundary, `E` permitted exogenous inputs, `H` the horizon, `R` resources, and
-`Q` the coverage rule. The notation is bookkeeping, not a theorem.
+where `M` is the system, `S` task selection, `A` objective and acceptance, `B`
+the system boundary, `E` permitted exogenous inputs and interactions, `H` the
+horizon, `R` resources, and `Q` the coverage rule. The notation is bookkeeping,
+not a theorem.
 
 ## Structural closure
 
@@ -63,18 +66,20 @@ presentation through any required:
 - repair, rollback, or escalation; and
 - later episode included in `H`.
 
-The path is computationally closed when every required decision and transition
-on that path is either:
+Conditional on the contributions listed in `E`, the path is computationally
+closed when:
 
-1. determined and executable by machinery inside `B`; or
-2. supplied through an input explicitly declared in `E`.
+1. every required decision not declared as an exogenous choice is determined
+   by machinery inside `B`; and
+2. every required transition not assigned to a declared environmental service
+   is executable by machinery inside `B`.
 
-No indispensable human judgment or execution step may be hidden in task
+No indispensable human judgment or manual execution may be hidden in task
 admission, decomposition, acceptance, evaluator design, repair, continuation,
 or the choice to omit a failed case. A human action that transmits an already
-determined exogenous value may be part of `E` when declared. A human action
-that selects the value or performs a required transition unavailable inside
-`B` opens the path.
+determined exogenous value may be listed in `E`. A human judgment that selects
+an undeclared value, or a human action that performs a required transition not
+assigned to a declared environmental service, opens the path.
 
 The path may terminate in success, failure, or abstention without a human cut.
 Structural closure therefore does not imply competence.
@@ -98,9 +103,10 @@ reached them without a hidden human decision.
 
 This preserves two coordinates:
 
-- **closure:** where the required decisions are made; and
-- **capability and warrant:** whether those decisions produce acceptable,
-  independently checked outcomes.
+- **closure:** where the required decisions are made and transitions executed;
+  and
+- **capability and warrant:** whether those decisions and transitions produce
+  acceptable, independently checked outcomes.
 
 ## Strength of the supported claim
 
@@ -136,16 +142,16 @@ by:
   inconvenient result.
 
 These are task-selection, boundary, or horizon exports. They do not show that a
-decision moved inside the automatic system.
+decision or transition moved inside the automatic system.
 
 ## Relation to the remote-programmer benchmark
 
 For the remote-programmer comparison, `S` selects the same briefs and
 repositories for both sides. Client demand choice and final acceptance may
 remain declared exogenous inputs. The comparison asks whether the automatic
-system carries the programming decisions between those inputs at least as well
-as a competent remote programmer under the same tools, permissions, feedback,
-resources, and acceptance criteria.
+system carries the programming decisions and execution between those inputs at
+least as well as a competent remote programmer under the same tools,
+permissions, feedback, resources, and acceptance criteria.
 
 This is a strong capability condition added to task-scoped structural closure.
 It is not the definition of all useful progress.
