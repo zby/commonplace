@@ -1,93 +1,230 @@
 ---
-description: "Separates Sutton's search-and-learning claim from a weights-only extrapolation, then identifies scalable credit assignment, reliable evaluation, and controlled decomposition revision as central challenges for learned artifacts"
+description: "Argues that explicit theory and symbolic machinery can be Bitter-Lesson-compatible only as provisional bootstrap state for a domain-extensible learning process that can produce, test, revise, and replace them"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
-  - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
+  - kb/notes/a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md
   - kb/notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md
-  - kb/notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md
-  - kb/notes/definitions/representational-form.md
-  - kb/notes/localized-retention-pays-where-change-is-sparse-in-a-matching.md
-  - kb/notes/scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md
-  - kb/notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md
-  - kb/notes/treat-continual-learning-as-representational-form-coevolution.md
+  - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
+  - kb/notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md
   - kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md
-  - kb/notes/parametric-reproduction-cannot-replace-an-authoritative-record.md
-  - kb/notes/commitment-not-derivation-creates-new-ground-truth.md
-  - kb/notes/oracle-accumulation-improves-the-selection-environment.md
-  - kb/sources/symbolic-learning-enables-self-evolving-agents.ingest.md
-  - kb/sources/memento-skills-let-agents-design-agents.ingest.md
-  - kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md
+  - kb/notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md
+  - kb/notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md
 ---
 
 # The Bitter Lesson does not require everything to live in weights
 
-> **Draft.** This article is circulating for comments; its claims, structure, and even its central thesis may still change. Comments are welcome below.
+> **Draft.** This article is circulating for comments; its claims, structure, and central thesis may still change. Counterexamples and disputed scaling assumptions are welcome through the repository's issue tracker.
 
-Richard Sutton's [2019 essay](http://www.incompleteideas.net/IncIdeas/BitterLesson.html) argues that methods built around human knowledge repeatedly lose to general methods that exploit increasing computation through search and learning. That historical pattern is a serious challenge to directly specified prompts, skill libraries, agent harnesses, and knowledge bases.
+The strongest answer to the Bitter Lesson is not that explicit theories,
+prompts, tests, schemas, and programs deserve an exemption. They do not. The
+answer is that these artifacts can be provisional state in a search-and-learning
+process that learns to produce, test, revise, and replace them.
 
-Sutton's lesson concerns how behavior-shaping content is generated and selected, but does not by itself determine how the selected content is encoded and consumed. Directly specified domain knowledge must compete with methods that exploit growing computation through search and learning. This article rejects only the inference from Sutton's pattern to a weights-only rule.
+That is the bet behind Commonplace. Its present knowledge base and agent
+machinery are partly hand-crafted. The intended endpoint is not a larger set of
+hand-written instructions for one area. It is a learning process that can form
+project-specific theories and operative methods in areas that were not specified
+when the process was designed, and that can eventually revise consequential
+parts of its own learning machinery.
 
-Consider two pairs. In the first, an engineer writes one system prompt, while an optimizer generates, evaluates, and selects another. Both are natural-language artifacts produced by different methods. In the second, an expert directly sets one dense controller vector, while gradient descent learns another inside the same parameterized architecture. Both are dense parameter vectors produced by different methods. In each pair, the kind of representation stays fixed while the production method changes. That distinction is categorical: it does not show whether learned natural-language or symbolic artifacts are competitive at scale, or whether a mixed system is best.
+This is compatible with Richard Sutton's 2019 essay only if the path works. A
+conceptual path beyond hand-crafting is not evidence that the system can follow
+it. The Bitter Lesson therefore sets the central empirical burden for the
+program rather than supplying a defense from that burden.
 
-## Two axes, not one
+## The lesson is about how useful structure is produced
 
-Sutton's pattern has two separable axes. The first is how content is produced or revised. Designers can specify it directly, or a search or learning procedure can generate and select changes using evidence and computation. Classify each component and update separately. An optimizer may select a prompt revision while designers still specify the surrounding schema, evaluator, candidate generator, and acceptance rule.
+Sutton's historical claim is that methods built around human knowledge tend to
+lose, over time, to general methods that exploit increasing computation through
+search and learning. The familiar examples include computer vision and game
+playing. Researchers designed features, heuristics, and decompositions that
+encoded what they believed mattered. More general methods later found better
+behavior through computation.
 
-The second axis is [representational form](../notes/definitions/representational-form.md). Natural-language and symbolic artifacts usually expose identifiable content-bearing units, while content in model weights is usually distributed across dense numerical state. Grouping the first two as localized yields four combinations:
+The contrast is about **production method**: whether behavior-shaping content is
+specified by designers or selected through search and learning. It is not, by
+itself, a rule that every learned result must be stored in model weights.
 
-| | Directly specified | Selected through search or learning |
-|---|---|---|
-| **Distributed-parametric** | Dense parameter values set directly by experts | Parameters fitted to data through gradient-based learning |
-| **Localized (natural-language or symbolic)** | Designer-written prompts, feature extractors, tools, skills, rules, and schemas | Prompts, programs, skills, and harnesses selected through measured computational search |
+Hold the representation fixed and change the production method. One engineer
+writes a prompt; an optimizer generates and selects another. Both results are
+natural-language artifacts, but only the second update was selected through
+search. An expert directly sets a dense controller vector; gradient descent
+learns another in the same parameterization. Both results are distributed
+numerical state, but only the second was learned. Representation affects which
+learning methods are practical, but it is a different axis.
 
-The axes are categorical, but they are not performance-independent. Representational form can affect which production method scales. It changes the search space, the difficulty of credit assignment, and the costs of dependency checking and retention. Credit assignment is the work of identifying which component should change after a failure.
+This distinction blocks a weights-only inference. It does not establish that
+learning over explicit artifacts scales. A large interdependent corpus of
+instructions, theories, tests, tool definitions, and programs has no equivalent
+of a default chain rule telling the system which artifact should change after a
+failure. Evaluation may be expensive, dependencies may be wrong, and the
+artifact decomposition itself may be the source of the mistake.
 
-## What this proves—and what it does not
+## The important contrast is endpoint versus bootstrap
 
-Existing systems already populate the lower-right cell in bounded settings. [FunSearch](https://www.nature.com/articles/s41586-023-06924-6) generates program functions with a pretrained language model, evaluates them, and retains successful programs for further search. [AlphaDev](https://www.nature.com/articles/s41586-023-06004-9) used reinforcement learning and tree search to discover assembly sorting routines later incorporated into LLVM's standard C++ library.
+A hand-crafted starting point is not automatically contrary to the Bitter
+Lesson. Every implemented learning system starts with supplied objectives,
+representations, algorithms, or machinery. The important question is what the
+starting structure permits the process to outgrow.
 
-These examples show only that search-selected behavior-shaping content need not live in weights. They do not show that artifact search is economical, that its evaluators match deployment, or that retained artifacts generalize. Localized domain structure still faces Sutton's scaling test; the proposal is to make these artifacts learning targets, not to protect them from learning.
+In the hand-designed vision and game-playing approaches Sutton criticizes,
+designer knowledge formed the object-level solution for a predefined problem
+class. The features or heuristics were intended to remain the source of
+competence. The method could calculate inside the supplied structure, but it did
+not contain a path by which evidence could replace the structure that bounded
+it.
 
-The open question is whether learned localized artifacts can compete on performance and total cost as systems, corpora, and task horizons grow. The answer depends on credit assignment, evaluation quality, retrieval and maintenance costs, and whether the update space itself can be revised safely.
+A bootstrap makes a different commitment. Its current theories, methods, tests,
+and programs are working state for a process that can:
 
-## The machinery gap inside fixed decompositions
+1. propose candidate theories and machinery;
+2. expose them to consequences that can reject them;
+3. retain, revise, or retire selected results;
+4. change the artifact types, decompositions, routing, and evaluators when those
+   choices become the bottleneck; and
+5. repeat the process in a domain whose useful concepts were not enumerated in
+   advance.
 
-Within a fixed differentiable graph and objective, backpropagation identifies how each trainable parameter should move to reduce loss, and gradient descent applies those updates. This machinery may still optimize the wrong objective or distribute a fact too widely for local editing. Successful training does not by itself show that the architecture, loss, decomposition, or data are appropriate.
+The fifth property is **domain-extensibility**. It is stronger than working in
+several domains. A system can contain ten hand-built ontologies and ten special
+update procedures while remaining a bundle of predefined solutions. A
+domain-extensible system must be able to construct the project-specific theory,
+representations, methods, and checks needed for an eleventh area without a
+person first supplying another complete domain model.
 
-A large artifact system has no comparable default. Imagine an agent deployment governed by 5,000 instructions, tests, schemas, tool definitions, and memory items. A failed release does not identify which artifact or interaction should change. Asking a model to "reflect and improve the repository" delegates the diagnosis rather than solving credit assignment.
+This does not require a system to derive its own values. Objectives,
+commitments, and grants of authority can remain supplied. The claim concerns how
+the system acquires and revises the empirical and procedural structure used to
+pursue those objectives.
 
-Artifact systems have partial substitutes: dependency links can limit rechecking, traces can preserve evidence about where a failure arose, and tests and validators can reject some bad candidates. [Localized retention helps most](../notes/localized-retention-pays-where-change-is-sparse-in-a-matching.md) when an update changes a few well-matched units and affects few others. The results examined here do not show that these mechanisms combine into a general method for updating heterogeneous artifacts.
+## Editable artifacts are not enough
 
-[Artifact learners still operate inside a decomposition chosen by designers](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md). Artifact types, routing, mutation operators, evaluators, and schedules may all remain fixed. Success shows that the whole arrangement worked in the tested setting, not that these choices were necessary or better than excluded alternatives. Fixedness is not itself a defect, but consequential fixed choices need independent justification or a safe way to revise them. Decomposition is difficult to revise because redrawing artifact boundaries also changes the units of credit assignment, validation, and rollback. Parametric learning therefore has a default update mechanism that artifact learning lacks.
+An agent that rewrites a prompt has crossed part of the production boundary. It
+has not necessarily crossed very far. The prompt schema, mutation operator,
+evaluator, routing policy, and acceptance rule may all remain fixed human
+design. Search inside that decomposition can be useful while inheriting every
+mistake the decomposition makes.
 
-## What current systems learn—and leave fixed
+The bootstrap thesis therefore applies recursively. The current learning
+machinery receives no exemption because it occupies a meta-level. A validator,
+artifact type, theory-writing method, or blame-assignment procedure should
+persist because it continues to earn its place, not because the original
+designers placed it outside the update target.
 
-Three recent systems already learn natural-language or symbolic artifacts inside bounded update spaces. The useful comparison is what can change, what accepts an update, and what designers still supply.
+This does not mean revising every layer on every run. That would make evaluation
+and recovery impossible. It means that consequential fixed choices need a
+reachable path by which evidence can challenge them. A system can begin with a
+stable decomposition while retaining a slower route that can redraw it when
+repeated failures show that the existing units no longer support useful credit
+assignment.
 
-[Agent Symbolic Learning](../sources/symbolic-learning-enables-self-evolving-agents.ingest.md) models an agent pipeline as a network whose editable state includes prompts, tools, nodes, and their connections. Execution traces produce language-based feedback that is propagated backward through the network. Separate operators revise prompts, tool code, and topology; worsening changes can be rolled back. This is an offline proof of concept for search over a mixed natural-language and symbolic harness with frozen model weights. Its "backpropagation" vocabulary is an analogy.
+At minimum, the learning path needs proposal, reject-capable evaluation, and
+operative retention. A proposal without selection generates variation but no
+learning. An evaluator that cannot reject plausible harmful candidates supplies
+no correction. A selected result that does not affect later operation is a
+report, not retained adaptation.
 
-[Memento-Skills](../sources/memento-skills-let-agents-design-agents.ingest.md) treats folders containing `SKILL.md`, prompts, and executable code as persistent, evolving memory around a frozen language model. A behavior-trained router selects a skill. After a judged failure, the write phase attributes the failure to one skill and rewrites that skill in place. If the skill's utility has stayed low over enough uses, the system creates a new skill instead. Each mutation is guarded by one synthetic test case run through the updated skill and scored by a judge, with rollback on failure. The router is parametric, so the whole system is mixed.
+The difficult addition is credit assignment. A failed deployment rarely states
+which theory, instruction, test, interface, or artifact boundary caused it.
+Explicit dependency links, execution traces, retained episodes, and accumulated
+checks can narrow the search, but no general method for a heterogeneous corpus
+has yet been established. That is the machinery the program is trying to
+bootstrap.
 
-[Co-Harness](../sources/co-harness-co-evolving-harness-and-model-weights.ingest.md) makes the mixture explicit. Its critic analyzes failed trajectories and proposes validated local updates to prompts, tools, skills, middleware, and memory. The improved harness then generates trajectories for supervised fine-tuning, and the updated model enters the next harness-repair round. The paper runs two full rounds of this alternation, which establishes an implemented coupled loop. It does not show that the allocation scales or beats matched alternatives.
+## Why explicit theory may help
 
-| System | How updates are accepted | Important structure left directly specified |
-|---|---|---|
-| Agent Symbolic Learning | Prompt-based loss scores the rerun; rollback follows a worse score | Network representation, optimizer families, loss and feedback prompts, edit operators |
-| Memento-Skills | One synthetic test case is judged; failure rolls the skill back | Skill-folder format, one-skill attribution, new-skill threshold, test gate, router, base model |
-| Co-Harness | Validated local harness updates generate the next model's fine-tuning trajectories | Five-part harness division and alternating update schedule |
+Natural-language theory is not defended because humans wrote it. Its possible
+advantage is that it can make a project-specific causal account available to the
+learning process before that account has been reduced to a formal vocabulary.
+The theory can identify what a change should preserve, interpret a failure, and
+suggest whether the candidate or the current understanding should be revised.
 
-## The scaling test remains open
+This matters most under structured change. When a new demand preserves part of
+the old causal structure, revising a named assumption or scope condition may
+need less evidence than relearning behavior without an addressable intermediate
+model. That is a sample-efficiency hypothesis, not an established general
+advantage. Explicit theory also imposes retrieval, consistency, interpretation,
+and maintenance costs.
 
-A fair test must compare end-to-end systems under comparable total budgets: model training and inference, artifact search, evaluator calls, development, maintenance, and human decisions. As corpus size, dependency density, task horizon, model capability, and available compute grow, the comparison should measure task success alongside retrieval failures, regressions, and the cost of retaining useful behavior.
+The representation is therefore not the defense. The defense is the learning
+path around it. A hand-written theory that remains protected knowledge is the
+kind of structure the Bitter Lesson warns about. A theory proposed, criticized,
+respecified, operationalized, and later retired by a general learning process is
+one possible product and working state of the process the lesson favors.
 
-The hypothesis fails in a tested growth regime if its total design, evaluation, and maintenance cost grows faster than the useful behavior it retains, relative to those baselines. Warning signs include a bespoke ontology for every new domain, evaluation that costs more than the failures it avoids, or failures that require repository-wide review to diagnose. In that case, localized artifacts may remain useful as interfaces and records while most learned competence moves into weights.
+## What Commonplace currently establishes
 
-A modest success would be an efficient division of work: dense, diffuse adaptation may favor gradients, while sparse changes may favor localized artifacts when their units match the change and their dependency closure remains small. A mixed system's units must still keep attribution and revalidation tractable, or be safely revisable. Otherwise, the mixture has only moved the scaling problem.
+Commonplace is a human-assisted attempt to build this path. A language model can
+work across natural-language and symbolic artifacts. Project theory can be
+retained and routed into later work. Stable conclusions can become instructions,
+validators, schemas, or code. Failures in using those artifacts can lead to
+changes in the knowledge base and, sometimes, in the machinery that consumes it.
 
-The Bitter Lesson sets the research program rather than deciding its outcome: do not protect human-authored knowledge from search. Build methods that can propose, test, retain, revise, and retire explicit structure, then compare them honestly with approaches that learn the same behavior elsewhere.
+This is already useful, but it is not yet the claimed general learner. People
+still identify many reusable lessons, assign blame, choose artifact forms,
+construct or approve evaluators, authorize consequential changes, and repair
+failures beyond represented coverage. The artifact ontology and many update
+procedures remain designed rather than learned.
 
-## Where to go next
+The current evidence supports a deliberately asymmetric position:
 
-The [production-method versus representational-form analysis](../notes/the-bitter-lesson-selects-production-methods-not-representational.md) develops the full argument and its empirical burden. Whether a deployed system can continue learning through governed artifact and code revision while its model weights stay fixed remains an open question; this article establishes only that the Bitter Lesson does not decide it by representational form alone.
+- The architecture is not categorically incompatible with the Bitter Lesson.
+- It is a useful human-assisted bootstrap toward a compatible learning path.
+- Whether it becomes a scalable, domain-extensible learner over heterogeneous
+  artifacts remains the central open problem.
+
+The third claim cannot be established by repeating the first two. It needs an
+experiment in which production actually moves.
+
+## A test that could change the claim
+
+A serious test should introduce a demanding domain that was not used to design
+the artifact ontology or improvement procedure. The system should have to form
+new project-specific theory, construct operative methods and checks, receive
+refuting evidence, and revise what it built. The retained result should then
+change a later episode.
+
+The evidence record should identify:
+
+- which theories, methods, and checks were produced through search rather than
+  written directly;
+- which objectives, commitments, evaluators, and artifact boundaries remained
+  supplied;
+- whether a failure changed only an object-level artifact or also the
+  decomposition and update procedure;
+- whether the same general process transferred to another unanticipated domain;
+- how much human evaluator construction, review, diagnosis, and repair was
+  required; and
+- how the total cost compared with simpler memory, stronger-model, and
+  weight-update baselines.
+
+The bootstrap account loses in a tested regime when every new domain needs a
+bespoke ontology and oracle, when evaluation and maintenance grow faster than
+the useful behavior retained, when failures require repository-wide human
+review, or when the production machinery remains outside revision in practice.
+It can also lose if stronger models absorb the useful functions more cheaply.
+No current carrier is promised survival.
+
+## The lesson becomes the research program
+
+The Bitter Lesson does not require everything to live in weights. It requires
+useful complexity to be earned by scalable search and learning rather than
+protected as designer knowledge.
+
+For explicit theory and symbolic machinery, that is a demanding standard. Their
+localized form can make assumptions, scope, dependencies, and changes easier to
+inspect and revise. It does not provide scalable proposal, evaluation, credit
+assignment, or decomposition revision for free.
+
+Commonplace should therefore be judged neither as a final hand-designed solution
+nor as a conceptual exception. It is a bootstrap attempt. It succeeds only to
+the extent that the production boundary moves: the system increasingly learns
+to construct, test, retain, revise, and replace the artifacts and machinery that
+currently depend on people, and carries that process beyond the domains the
+designers anticipated.
+
+The detailed [bootstrap thesis](../notes/a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md)
+states the failure conditions. The broader [production-method analysis](../notes/the-bitter-lesson-selects-production-methods-not-representational.md)
+examines the missing credit-assignment and scaling machinery.
