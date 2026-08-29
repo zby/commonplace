@@ -95,3 +95,32 @@ def test_unresolved_source_note_fails(tmp_path: Path) -> None:
     assert any(
         "source_notes" in f and "kb/notes/missing-note.md" in f for f in results.fails
     )
+
+
+def test_article_over_unquoted_source_bound_fails(tmp_path: Path) -> None:
+    setup_repo(tmp_path)
+    links = []
+    for index in range(6):
+        write(
+            tmp_path / "kb" / "sources" / f"src-{index}.ingest.md",
+            "# Ingest: src\n\n## Quotes\n\n- **Source extract (verbatim):** passage\n",
+        )
+        links.append(f"[src {index}](../sources/src-{index}.ingest.md)")
+    path = write(
+        tmp_path / "kb" / "articles" / "six-sources.md",
+        """---
+description: "an article citing six tracked sources without quoting any"
+type: kb/articles/types/article.md
+---
+
+# Six sources
+
+"""
+        + " ".join(f"A claim from {link}." for link in links)
+        + "\n",
+    )
+    results = validate_note(path, repo_root=tmp_path)
+    fails = [fail for fail in results.fails if "unquoted sources" in fail]
+    assert len(fails) == 1
+    assert "6 distinct tracked sources" in fails[0]
+

@@ -14,7 +14,7 @@ This collection publishes outward-facing articles distilled from the KB on the [
 
 Only after the explanation passes review may a separate editorial pass consider spreadability in the sense of Jenkins, Ford, and Green or stickiness in the sense of Heath and Heath's *Made to Stick*. Any such edit must preserve or improve clarity, precision, completeness, and honest statements of confidence and limits.
 
-**Reader-only body.** Agent-facing structure lives in frontmatter; the body is prose for the reader — no footer link tables, link labels, or graph-traversal glosses. In-prose relative links into `kb/` are deliberate invitations to go deeper; a closing "where to go next" section is welcome.
+**Reader-only body.** Agent-facing structure lives in frontmatter; the body is prose for the reader — no footer link tables, link labels, or graph-traversal glosses. In-prose relative links into `kb/` are deliberate invitations to go deeper; a closing "where to go next" section is welcome. One gloss is admitted: the word `verbatim` inside a citation parenthesis — `"…" ([source](../sources/x.ingest.md), verbatim)` — because it is what lets `commonplace-validate` verify the quotation and discharge the source against the grounding bound ([ADR 082](../reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md)), which articles share with notes at five unquoted tracked sources.
 
 **Titles and descriptions.** Titles are headlines addressed to the reader, not claim-titles. The frontmatter `description` remains what it is everywhere in this KB — a retrieval filter for agents; the reader-facing abstract is the article's opening paragraph.
 

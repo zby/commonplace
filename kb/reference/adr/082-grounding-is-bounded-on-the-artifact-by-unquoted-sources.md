@@ -1,5 +1,5 @@
 ---
-description: "Accepted decision that a note may cite at most five distinct tracked sources without a paired verified quotation, enforced as a FAIL validator rule, while the three link-following review criteria drop their reader-side caps"
+description: "Accepted decision that a note may cite at most five distinct tracked sources without a paired verified quotation, enforced as a FAIL validator rule on notes and articles, while the three link-following review criteria drop their reader-side caps"
 type: ../types/adr.md
 tags: []
 status: accepted
@@ -136,8 +136,11 @@ note-link exemption's precondition false.
 Free choices resolved: the two authoring conventions — that a source cited as
 evidence is cited in the body rather than only in the trailer, and that a
 casebook table hosts its retained evidence in an accompanying prose block —
-live in the notes collection contract. Left open: whether `kb/articles/` gets
-its own N or an exemption.
+live in the notes collection contract. `kb/articles/` shares the same N
+(resolved 2026-08-29): both live articles sat at two and three unquoted
+sources, so the rule bound on nothing, and the articles contract admits the
+`verbatim` marker inside a citation parenthesis so an article has the same
+discharge route as a note. Nothing is left open.
 
 ## Consequences
 

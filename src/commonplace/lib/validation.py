@@ -1030,7 +1030,11 @@ def validate_article(
         )
 
 
-@type_rule("kb/types/note.md", "kb/notes/types/structured-claim.md")
+@type_rule(
+    "kb/types/note.md",
+    "kb/notes/types/structured-claim.md",
+    "kb/articles/types/article.md",
+)
 def validate_unquoted_sources(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
