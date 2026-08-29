@@ -29,10 +29,11 @@ project-specific theories and operative methods in areas that were not specified
 when the process was designed, and that can eventually revise consequential
 parts of its own learning machinery.
 
-This is compatible with Richard Sutton's 2019 essay only if the path works. A
-conceptual path beyond hand-crafting is not evidence that the system can follow
-it. The Bitter Lesson therefore sets the central empirical burden for the
-program rather than supplying a defense from that burden.
+This is compatible with Richard Sutton's [2019 essay](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)
+only if the path works. A conceptual path beyond hand-crafting is not evidence
+that the system can follow it. The Bitter Lesson therefore sets the central
+empirical burden for the program rather than supplying a defense from that
+burden.
 
 ## The lesson is about how useful structure is produced
 

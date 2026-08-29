@@ -1,11 +1,11 @@
 ---
-description: "Derives distinct functional requirements from residual human decisions while treating the current natural-language, parametric, symbolic, and evidential split as one inspectable realization rather than a theorem about permanent carriers"
+description: "Distinct residue classes require distinct functional roles; the current natural-language, parametric, symbolic, and evidential split is one inspectable realization, not a theorem about permanent carriers"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
 ---
 
-# Each residue class needs a different mechanism, so a self-improving architecture must be mixed
+# Distinct residue classes require distinct functions in a self-improving architecture
 
 A system that preferentially moves warrantable decisions out of its human cut
 keeps a selected residue, [because warranted transfer leaves people the
@@ -18,8 +18,8 @@ exists, or the decision arises after the automatic horizon ends. Call these the
 Each class names a different function that must grow before its decisions can
 move: representation, settlement and semantic application, verification, or
 continuity. An architecture facing more than one class must preserve more than
-one functional role and more than one failure surface. That is the mixedness
-derived here.
+one functional role and more than one failure surface. That is the functional
+plurality derived here.
 
 The derivation does **not** prove that those functions must remain in different
 [representational forms](./definitions/representational-form.md). Retained
@@ -139,8 +139,8 @@ same function more efficiently.
   transfer policy can leave a different residue.
 - The four classes are not claimed to be exhaustive. The derivation requires
   only that each class in play has a corresponding function.
-- “Mixed” means functionally plural. It does not imply a fixed process diagram,
-  one process per role, or permanent representational heterogeneity.
+- Functional plurality does not imply a fixed process diagram, one process per
+  role, or permanent representational heterogeneity.
 - A function can become unnecessary on a narrower task distribution. That does
   not refute the claim for a path whose residue still contains its class.
 - Settlement covers objectives, commitments, methodology, and authority. A
