@@ -16,18 +16,36 @@ The control-plane file the system ships is `AGENTS.md`. KB goals live in a dedic
 - **Scope** — the domain boundary, made operational by in-scope and out-of-scope lists (the out-of-scope list is the guard against scope creep)
 - **Quality bar** — domain-specific "good enough" standards
 
-This placement is load-bearing. `AGENTS.md` is loaded on every agent invocation, including forked skill contexts (`context: fork`), so the goals are in context for every write decision without any tool call. The section sits alongside the routing table, vocabulary, version-control conventions, and other invariants the agent needs from turn one.
+This placement is load-bearing on a runtime that loads root `AGENTS.md` with
+binding force. In that consumption path, the goals are in context for every
+write decision without a tool call, including a forked skill context whose
+harness re-injects repository instructions. File placement alone does not
+guarantee delivery: a worker packet may rely on this baseline only after its
+runtime path has been verified. The section sits alongside the routing table,
+vocabulary, version-control conventions, and other invariants the agent needs
+from turn one.
 
 ## Delegation invariant
 
-The shipped control plane also states a compact delegation invariant. Delegated
-work remains inside the task's existing authority. A consequential handoff
-names its result, constraints, owned write surface, inputs, coordination,
-verification, and stop condition; the parent retains integration and recovery.
-Parallel writes require disjoint ownership or an explicit coordination rule,
-and nested delegation requires explicit authorization. The detailed authoring
-contract lives in the instruction type and collection so the always-loaded
-surface does not become a general planning checklist.
+The shipped control plane names itself as Commonplace doctrine and makes a
+handoff a task-specific delta from it. The delta carries purpose, deviations,
+and deliberately open consequential choices, plus the authority, ownership,
+constraints, commitments, acceptance, and return conditions that standing
+doctrine cannot determine. The inherited defaults keep scheduling, integration,
+and recovery with the parent and grant no nested-delegation authority. A worker
+classifies an unstated choice as inherited, deliberately delegated, irrelevant,
+or a gap. The detailed artifact-authoring contract lives in the instruction
+type and collection so the always-loaded surface does not become a general
+packet checklist.
+
+This compression creates a broad dependency: changing the root delegation
+rule changes the commission understood by every worker packet that omitted the
+rule in reliance on it. Commonplace accepts that dependency for this universal
+class instead of adding lineage fields to each packet. A root-rule edit must
+therefore open a recorded search-and-review cohort of instructions and skills
+that commission workers; those packets are not compressed against the changed
+rule until reviewed. Narrower methodology-to-instruction dependencies continue
+to use source-side lineage under the link contract.
 
 ## What varies per installation vs. what ships with the framework
 
@@ -38,7 +56,7 @@ surface does not become a general planning checklist.
 | Quality bar | Per-installation | same |
 | Routing table | Framework | `AGENTS.md` `## Using the KB`, generated/templated |
 | Version-control expectation | Framework default; project workflow | `AGENTS.md` `## Version control` |
-| Delegation safety boundary | Framework | `AGENTS.md` `## Delegation` |
+| Commonplace delegation doctrine | Framework | `AGENTS.md` `## Delegation` |
 | Type system | Framework | `kb/types/` plus collection-local `kb/*/types/` directories with schemas and templates |
 | Writing conventions | Framework | `kb/*/COLLECTION.md` (per-collection) |
 | Link semantics | Framework | `kb/notes/links-README.md` and related guidance in `kb/instructions/` |
@@ -51,7 +69,7 @@ Only the per-installation rows require human input. Framework rows are shipped f
 
 - A placeholder `## KB Goals and Scope` section with HTML comment guidance for each subsection, as concrete prose examples the practitioner replaces with their own answers
 - A stock `## Version control` section that makes versioned maintenance the default while leaving commit, branch, and review semantics to the project
-- A stock `## Delegation` section that preserves task authority, worker ownership, parent integration, and explicit nested-delegation authority
+- A stock `## Delegation` section that makes task packets deltas from a verified Commonplace doctrine, preserves task authority and parent integration, and classifies unstated choices
 - A stock `## Using the KB` routing section pointing at `kb/notes/`, `kb/reference/`, and `kb/instructions/`
 - A stock Skills and Commands section listing the Commonplace-provided skills
 - `{{project_name}}` placeholders that `init_project` substitutes with the directory name
@@ -66,7 +84,7 @@ Concretely, the install sequence is:
 
 1. `commonplace-init --root .` creates the directory structure and scaffolds `AGENTS.md.template` with placeholder goals
 2. The practitioner renames or copies the template to `AGENTS.md` and fills in the five subsections
-3. First-session agents load `AGENTS.md` and see the populated goals on every invocation
+3. Agents in a runtime configured to load root repository instructions receive `AGENTS.md` and see the populated goals on every invocation
 
 The agent has no fallback if goals are left unfilled — an empty `## KB Goals` section is a silent failure mode, which is why the installation guidance treats the fill-in step as a first-run requirement rather than optional polish.
 

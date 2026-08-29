@@ -28,19 +28,29 @@ evidence or coordination requires the choice, and otherwise let live evidence
 discriminate — rationale: [An author should fix what the executor can't
 determine, not what it will](../notes/fix-what-the-executor-cant-determine-not-what-it-will.md).
 
+A workshop framing is a task commission relative to the Commonplace doctrine
+that its executing runtime verifiably supplies. It must remain complete for its
+purpose and authority boundary without the conversation that created it. If a
+later worker does not receive a needed standing rule through that path, the
+framing or worker packet carries the rule explicitly.
+
 When a framing is an execution plan and deliberately leaves a consequential
 future item coarse, name how it returns to decision: a replanning horizon,
 discriminating observation or bounded probe, observable trigger, latest safe
 decision point, or bounded executor authority. Drafts, scratch investigations,
 and other non-plan workshops do not need this machinery.
 
-When a workshop delegates consequential work, its worker packet also fixes the
-owned output or write scope, accessible inputs, coordination boundary,
-verification or feedback, and stop or escalation condition. Delegation stays
-inside the workshop's existing authority. The parent retains scheduling,
-integration, and recovery; parallel writers need disjoint ownership or an
-explicit coordination rule, and nested delegation requires explicit
-authorization.
+When a workshop delegates consequential work, its worker packet states the
+commissioned contribution and purpose, deviations from Commonplace doctrine,
+and choices deliberately left to execution. It also fixes what the standing path
+cannot determine: owned output or write scope, accessible inputs,
+task-specific constraints and commitments, coordination boundary, verification
+or feedback, and stop or escalation condition. Delegation stays inside the
+workshop's existing authority. Parent scheduling, integration, and recovery
+and the prohibition on unauthorized nested delegation may be inherited when
+the runtime supplies the root doctrine; any transfer or exception remains
+explicit. Parallel writers still need task-specific disjoint ownership or an
+explicit coordination rule.
 
 The Active Workshops list in [`kb/work/README.md`](./README.md) is the curated operational navigation surface — add a one-line entry when starting, remove it when the workshop closes. If the README already has unrelated uncommitted edits, do not partially stage it just to keep navigation immediately complete; commit the workshop artifacts atomically and update the README in a later navigation cleanup.
 

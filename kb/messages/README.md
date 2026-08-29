@@ -22,16 +22,24 @@ Start every message with:
 - Status: open
 ```
 
-Then provide a self-contained `## Request`. Add `## Context` only for material
-the recipient cannot cheaply recover. A review request names exact commits or
-paths and states whether the recipient may edit or should only report findings.
+Then provide a self-contained `## Request`. A mailbox message crosses sessions
+and may cross harnesses, so it has no verified Commonplace doctrine baseline by
+default. It may omit a standing rule only when the message identifies a
+recipient runtime whose delivery path has been verified; otherwise include the
+needed rule. Add `## Context` only for material the verified baseline and
+accessible repository state cannot cheaply determine. A review request names
+exact commits or paths and states whether the recipient may edit or should only
+report findings.
 
-For consequential work, the request also names the intended result,
-non-negotiable constraints and authority, exact owned outputs or report-only
-boundary, accessible inputs, concurrent owners or coordination rule,
-verification and return channel, stop or escalation condition, and whether
-nested delegation is authorized. Omit fields that are genuinely harmless for
-the request; do not turn a mailbox note into a generic plan form.
+For consequential work, the request states the intended result and what it is
+for, deviations from any verified inherited baseline, choices deliberately
+left to the recipient, non-negotiable constraints and authority, exact owned
+outputs or report-only boundary, accessible inputs, concurrent owners or
+coordination rule, verification and return channel, and stop or escalation
+condition. State nested-delegation authority only when granted or when the
+boundary could plausibly be mistaken. Omit particulars that are genuinely
+irrelevant to acceptance and coupling; do not turn a mailbox note into a
+generic plan form.
 
 ## Responding
 

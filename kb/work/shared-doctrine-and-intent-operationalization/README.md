@@ -412,6 +412,37 @@ and the task delta can act without the parent conversation, preserve the purpose
 identify both its discretion and its stop condition. Test this with a probe
 worker on the runtime step 0 confirmed, not by reading the text.
 
+#### Outcome 2 result (2026-08-29)
+
+The root `AGENTS.md` and scaffold template already carried the stable standing
+defaults and needed no edit. The instruction collection and type now define
+context completeness relative to a verified consumption path and treat a
+worker packet as a task-specific delta from the Commonplace doctrine on that
+path. The writing instruction applies the inherited, delegated, irrelevant, or
+gap classification when drafting and testing a packet. Workshop commissions
+specialize the same rule. Mailbox requests remain conservative because they may
+cross sessions and harnesses: without a named verified recipient path, they
+must carry every relied-on rule.
+
+Standing doctrine keeps delegation inside existing authority, leaves
+scheduling, integration, and recovery with the parent, and grants no nested
+delegation authority by silence. Purpose, task authority and commitments,
+owned mutations, acceptance, and return conditions remain task-specific; any
+transfer of a standing responsibility is also explicit. Commonplace accepts a
+searchable broad dependency cohort for universal root, collection, and type
+rules rather than adding per-packet fields. A change to one of those rules
+reopens the commissioning cohort before packets may omit the changed rule;
+narrower methodology dependencies continue to use source-side lineage.
+
+A fresh Codex worker received `AGENTS.md` through the step 0 delivery path. It
+correctly inherited the parent recovery default while keeping sole file
+ownership task-specific, classified the open analytical method as deliberately
+delegated, and limited its evidence to the stated purpose, acceptance, inputs,
+and produced observations. It rejected a bare output-only mailbox request as
+incomplete and said an unverified recipient path must frontload the rule or
+return control. The full probe commission was sufficient without repeating
+the inherited default. Scaffold and instruction-safety tests passed (20 tests).
+
 ### 3. Use the multistage writer as the first operative pilot
 
 Simplify `cp-skill-write-multistage` by treating the shared Commonplace

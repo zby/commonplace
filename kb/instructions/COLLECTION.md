@@ -18,21 +18,30 @@ Tests for precision:
   need rather than an author-time guess about future execution state?
 - Is reasoning minimal — just enough for edge cases, with the "why" living in theory notes?
 
-**Frontloading.** Self-contained enough for an agent with no prior context. Define terms inline; don't assume the reader has loaded other KB documents.
+**Context completeness.** An instruction is self-contained relative to its
+declared consumption path. It may rely on root Commonplace doctrine, an
+applicable collection or type contract, and an invoked skill only when the
+actual worker runtime supplies those surfaces with binding force. Carry every
+task-specific purpose, exception, and constraint that those surfaces cannot
+determine. Never rely on accidental conversation history or an unverified link
+chase. If no shared baseline is verified, frontload the needed rule into the
+instruction or worker packet.
 
 **Reasoning constraint.** Keep the procedure's goal — one sentence at the top saying what it exists to make true — and cut explanations of *why* each step exists from the body. The goal is not regenerable from the steps; the per-step reasons are regenerable from the goal plus the step, and if worth preserving they go in a theory note linked via `rests-on` (for meta-readers only). Keep only enough further reasoning for edge cases and decisions.
 
-**Delegated work.** Give the worker the intended result and the decision
-boundary: what is fixed upstream, what evidence the worker may use, and which
-choices it owns. Add operative controls for the failures that would matter in
-that task. Typical surfaces include authority, input access, output ownership,
-coordination, verification, return of control, and recovery, but do not turn
-that list into a mandatory packet template. One workflow mechanism may govern
-several surfaces. Delegation never expands the caller's authority. Unless the
-workflow explicitly transfers them, the parent retains scheduling, integration,
-and recovery. Parallel writers need disjoint ownership or an explicit
-coordination rule. State nested-delegation authority only when it could
-plausibly be mistaken; absent authority, a worker cannot delegate. Use clean
+**Delegated work.** Treat a worker packet as a delta from the Commonplace
+doctrine that its runtime verifiably delivers. State the commissioned result's
+purpose, deviations from inherited rules, and consequential choices left to
+execution, then carry the task-specific authority, inputs, owned output,
+coordination, acceptance, and return conditions that the doctrine cannot
+determine. The stable default is that delegation does not expand authority, the
+parent retains scheduling, integration, and recovery, and nested delegation
+requires authority; a packet need not repeat that default when the worker
+receives it. Any transfer of those responsibilities and every task-specific
+mutation boundary remain explicit. An unstated consequential choice must be
+governed by an inherited rule, deliberately delegated to judgment from
+authorized evidence, irrelevant to acceptance and coupling, or treated as a
+gap. This is a classification test, not a mandatory packet template. Use clean
 context when isolation, later evidence, or independent judgment creates a
 specific benefit, not as an automatic reason to pay handoff cost.
 
@@ -43,6 +52,16 @@ specific benefit, not as an automatic reason to pay handoff cost.
 Skills and plain instructions can be parts of one operation rather than independent procedures. A composition sibling is a direct caller, callee, conditional instruction loaded by the artifact, or producer or consumer of its named arguments and result protocol.
 
 Before editing an instruction or skill, search `kb/instructions/` for its exact filename, skill name, and any named result literals. Read every direct composition sibling before drafting. If the change affects a trigger, argument, result, mutation authority, stop condition, or path-resolution rule, update the affected siblings in the same change or report the unresolved interface mismatch as a blocker. Do not rewrite artifacts that merely mention the procedure without consuming its interface.
+
+An inherited rule is also a composition dependency when a worker packet omits
+the rule because an upstream contract supplies it. Editing that contract
+recommissions the dependent packets. For a narrow methodological dependency,
+record source-side lineage under the existing link contract. For a universal
+rule in root `AGENTS.md`, this collection contract, or the instruction type,
+the reliance cohort is all commissioning instructions that use that verified
+baseline; review that cohort through repository search when the rule changes.
+Commonplace accepts this broad cohort instead of adding per-packet dependency
+fields or consumer-visible maintenance links.
 
 For a promoted skill, edit the canonical source under `kb/instructions/`, not its runtime projections. Inspect the promotion manifest and runtime projections only when the skill name, directory, promotion status, or packaged resources change.
 

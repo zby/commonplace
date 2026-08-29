@@ -20,27 +20,34 @@ Use `instruction` for prescriptive content: procedures, skill bodies, wrapper pr
 ## Structure
 
 - Title imperatively or as an action.
+- Make the instruction context-complete relative to its declared consumption
+  path. It may inherit Commonplace doctrine, collection and type contracts, or
+  a skill only when the actual consumer receives them with binding force. Do
+  not rely on the author's conversation or on a link the executor is not
+  required to open. With no verified baseline, carry the needed rule directly.
 - State the goal first: one sentence saying what the procedure exists to make true. It is the only rationale the body keeps; an executor holding the goal can re-route around a blocked step instead of failing on it.
 - Keep the body executable on first reading.
 - State prerequisites, scope boundaries, decision points, and verification checks where they matter.
-- When the instruction delegates consequential work, give the executor the
-  intended result and decision boundary: what is fixed, what authorized
-  evidence may inform execution, and which choices the executor owns. Then add
-  controls for the task's consequential failure surfaces. Authority, input
-  access, output ownership, coordination, verification, return of control, and
-  recovery are an audit heuristic, not fields every packet must repeat. One
-  surrounding workflow can govern several of them. Delegation does not expand
-  caller authority. Unless explicitly transferred, the parent keeps scheduling,
-  integration, and recovery; parallel writers need disjoint ownership or an
-  explicit coordination rule. A worker cannot delegate without authority, but
-  say so in the packet only where the boundary could plausibly be mistaken.
-- Fix what the executor cannot safely determine from authorized evidence: intent,
-  constraints, what *done* means, privileged or external facts, cross-task
-  coupling, and choices whose independent selection would break coordination.
-  A harmless decoupled choice need not be fixed merely because it is arbitrary.
-  Leave situation-dependent choices to live or produced evidence. A fixed live-
-  state detail is an authoring-time snapshot that may go stale; a value whose
-  inputs are static and remain valid may safely be resolved upstream.
+- When the instruction delegates consequential work, make the packet a delta
+  from the verified Commonplace doctrine. Give the task-specific purpose,
+  result and acceptance, deviations, fixed choices, and choices deliberately
+  left to authorized execution evidence. State owned outputs, input and
+  mutation authority, coordination, verification, and return conditions where
+  the inherited contracts cannot determine them. The defaults that leave
+  scheduling, integration, and recovery with the parent and prohibit
+  unauthorized nested delegation may be inherited when delivered; any transfer
+  or exception remains explicit.
+  The listed surfaces are an audit heuristic, not fields every packet repeats.
+- Fix what the executor cannot safely determine from verified doctrine, the
+  task commission, and authorized evidence: intent, constraints, what *done*
+  means, privileged or external facts, cross-task coupling, and choices whose
+  independent selection would break coordination. Leave a bounded choice to
+  execution when purpose and authorized live or produced evidence permit the
+  executor to select or construct it. A harmless decoupled choice can be
+  irrelevant. If no inherited rule, delegated judgment, or irrelevant
+  variation closes an unstated choice, treat it as a gap. A fixed live-state
+  detail is an authoring-time snapshot that may go stale; a value whose inputs
+  are static and remain valid may safely be resolved upstream.
 - When an instruction deliberately leaves a consequential future choice coarse,
   name the evidence or observation that can discriminate, how control returns,
   who owns the next decision, and what invalidates prior work or ends retries.
@@ -56,6 +63,14 @@ Use `instruction` for prescriptive content: procedures, skill bodies, wrapper pr
 ## Operativity
 
 An instruction changes system behavior only through a path: something consumes it, over some channel, with some force. Before writing or editing one, name that path — what loads this text (harness skill selection, a collection contract, a link from another instruction, a human invoking it) and when it fires. An instruction nothing loads is inert: it persists, stays true, and changes nothing — and it fails silently, because no consumer means no error either.
+
+The same path defines what the instruction may omit as inherited. When a packet
+depends on an upstream contract by omitting one of its rules, a change to that
+contract reopens the packet. Record narrow dependencies through source-side
+lineage. Treat a change to universal root, collection, or type doctrine as
+recommissioning the whole class of instructions that emits worker packets
+under that baseline. Freeze and search that cohort, then review it before a
+dependent packet relies on the changed rule as an omission source.
 
 - For link- and search-mediated consumers, the `description` is the retrieval wire: write it to match the query an agent would issue at the moment the instruction should fire, not the vocabulary of the instruction's own content.
 - If the instruction should fire on a condition (a kind of change, a kind of artifact), check that a surface loaded in that situation actually routes here. If nothing does, add the route or record the gap — do not assume discovery.

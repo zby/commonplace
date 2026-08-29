@@ -228,5 +228,6 @@ exact specification.
 
 Operationalized into:
 
+- [Writing conventions for kb/instructions/](../instructions/COLLECTION.md) — makes consequential worker packets task-specific deltas from verified Commonplace doctrine
 - [Write an instruction](../instructions/write-instruction.md) — selects delegation controls from consequential failure surfaces instead of requiring a universal packet template
 - [cp-skill-write-multistage](../instructions/cp-skill-write-multistage/SKILL.md) — fixes the commission, evidence and authority boundaries, integration, review, and recovery while leaving bounded investigative and authorial means to workers

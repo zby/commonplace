@@ -47,3 +47,8 @@ Relevant Notes:
 Derived into:
 
 - [link-vocabulary.md](../reference/link-vocabulary.md) — the lineage-footer convention and its two-regime semantics
+
+Operationalized into:
+
+- [Writing conventions for kb/instructions/](../instructions/COLLECTION.md) — treats an inherited rule as a composition dependency and distinguishes narrow lineage from the universal-doctrine cohort
+- [Write an instruction](../instructions/write-instruction.md) — records narrow source reliance and reopens broad commissioning cohorts when inherited doctrine changes
