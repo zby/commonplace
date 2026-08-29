@@ -81,7 +81,11 @@ If the system has no reachable source code, stop and write a lightweight note in
    ```
    If the marker is more than 1 hour old by the time drafting starts, carry a checkout freshness warning into the final report. If it is more than 24 hours old, refresh again before drafting.
 
-7. **Archive an existing review before writing.** If `note_path` exists, archive it before drafting or delegating:
+7. **Confirm drafting is possible before mutating anything.** Steps 1–6 are read-only; step 8 is the first irreversible change. Settle here whether a draft can be produced at all: if the harness cannot launch a sub-agent or worker, stop and report that delegated drafting is unavailable, leaving any existing review untouched at `note_path`. Do not draft locally unless the user explicitly authorizes a local fallback for this run; if authorized, report `drafting was local, not delegated` as a workflow exception. This is a parent-only decision, made before any worker exists — a worker that has actually been launched is, by construction, the delegated drafting worker and never needs to reason about fallback authorization itself.
+
+   This check does not cover a worker that launches and then fails, or a draft that taxonomy or semantic QA rejects. Those still leave the incumbent archived with no replacement; the restore obligation for them is undecided, and the option space is in [Recoverable replacement of an incumbent review](../../reference/proposals/recoverable-replacement-of-an-incumbent-review.md).
+
+8. **Archive an existing review before writing.** If `note_path` exists, archive it before drafting or delegating:
    ```bash
    git mv "{note_path}" "{note_path%.md}.replaced.{YYYY-MM-DD}.md"
    ```
@@ -93,9 +97,7 @@ If the system has no reachable source code, stop and write a lightweight note in
    - Remove `user-verified` if present; archiving is a substantive lifecycle edit and the replacement banner carries the supersession fact.
    Do not read the archived `.replaced.*.md` file while writing the replacement.
 
-8. **Draft the review by delegation.** Use `kb/agent-memory-systems/types/agent-memory-system-review.md` as the worker's artifact contract for required sections and fields. Do not ask the worker to load the full [designing-agent-memory-systems](../../notes/designing-agent-memory-systems.md) note during ordinary review writing — its comparison lens is already condensed into the contract.
-
-   Before delegating: if the harness cannot launch a sub-agent or worker, stop after setup and report that delegated drafting is unavailable. Do not draft locally unless the user explicitly authorizes a local fallback for this run; if authorized, report `drafting was local, not delegated` as a workflow exception. This is a parent-only decision, made before any worker exists — a worker that has actually been launched is, by construction, the delegated drafting worker and never needs to reason about fallback authorization itself.
+9. **Draft the review by delegation.** Use `kb/agent-memory-systems/types/agent-memory-system-review.md` as the worker's artifact contract for required sections and fields. Do not ask the worker to load the full [designing-agent-memory-systems](../../notes/designing-agent-memory-systems.md) note during ordinary review writing — its comparison lens is already condensed into the contract.
 
    Launch one fresh sub-agent or worker with a minimal task-local context. Do not fork the parent's full context when the harness offers a clean-context option. Use only the harness sub-agent mechanism for this delegation; do not launch an agent CLI from Bash. Give the worker exactly this task, with the bracketed values filled in — this task text is the worker's complete brief; do not also hand it this skill file.
 
@@ -138,22 +140,22 @@ If the system has no reachable source code, stop and write a lightweight note in
 
    The parent owns checkout, archive moves, curated index edits, taxonomy QA, semantic QA, and the final report — none of that is the worker's concern. After verifying the worker-owned draft and validation result, close, terminate, or release the drafting worker; do not retain it for semantic QA or any follow-up task.
 
-9. **Update the README only if needed.** Only edit `kb/agent-memory-systems/README.md` when:
+10. **Update the README only if needed.** Only edit `kb/agent-memory-systems/README.md` when:
    - the system was named in the `## Coverage` "Review backlog" callout — remove it there, or
    - the repo adds a genuinely new cross-system pattern worth a line in `## Patterns Across Systems`.
    Keep the edit minimal and specific.
 
-10. **Update the trace-learning survey if needed.** If the review's trace-learning placement adds meaningfully to the survey, update `kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md`.
+11. **Update the trace-learning survey if needed.** If the review's trace-learning placement adds meaningfully to the survey, update `kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md`.
 
-11. **Run taxonomy QA.** Re-read the drafted review and check whether it makes the artifact contract clear where relevant. Work from the type contract's artifact-analysis field list (plus its trace-learning split, when the system learns from traces) — the contract is authoritative for which fields exist and what each means; do not QA against a remembered list. For each contract field, ask: does the review make that mechanism clear where it affects the comparison? Do not force a rigid section into every review; add or revise text only when the existing wording leaves a mechanism ambiguous.
+12. **Run taxonomy QA.** Re-read the drafted review and check whether it makes the artifact contract clear where relevant. Work from the type contract's artifact-analysis field list (plus its trace-learning split, when the system learns from traces) — the contract is authoritative for which fields exist and what each means; do not QA against a remembered list. For each contract field, ask: does the review make that mechanism clear where it affects the comparison? Do not force a rigid section into every review; add or revise text only when the existing wording leaves a mechanism ambiguous.
 
    If a field is absent because the reviewed system has no distinctive mechanism there, leave it absent. If the absence hides an important tradeoff, fix the review before semantic QA.
 
-12. **Run semantic QA.** Run the live-agent procedure from `kb/instructions/run-review-batches.md` on the new review note using requested mode with the `semantic` bundle: select target pairs with `commonplace-review-target-selector --mode requested`, create jobs from selector JSON with `commonplace-create-review-jobs --input -`, delegate each job to a sub-agent, then finalize each sentinel-bracketed output with `commonplace-finalize-review-job` and the runner/model provenance flags. Treat it as a read-only QA loop: extract findings, fix clearly valid issues, and leave uncertain findings for the final report rather than forcing a rewrite.
+13. **Run semantic QA.** Run the live-agent procedure from `kb/instructions/run-review-batches.md` on the new review note using requested mode with the `semantic` bundle: select target pairs with `commonplace-review-target-selector --mode requested`, create jobs from selector JSON with `commonplace-create-review-jobs --input -`, delegate each job to a sub-agent, then finalize each sentinel-bracketed output with `commonplace-finalize-review-job` and the runner/model provenance flags. Treat it as a read-only QA loop: extract findings, fix clearly valid issues, and leave uncertain findings for the final report rather than forcing a rewrite.
 
    If semantic QA cannot be completed through the current harness, report it as a blocked QA step rather than substituting a shell-launched agent.
 
-13. **Validate.** Run:
+14. **Validate.** Run:
     ```bash
     commonplace-validate "{note_path}"
     ```
