@@ -352,6 +352,16 @@ Stahel extracts already supported the historical boundary, so that route
 returned `quotes sufficient`. The workshop draft remains only as working state
 until final closure.
 
+An operator-directed mailbox follow-up was applied on 2026-08-29. The
+determinability note now reads a deliberately delegated, later-informed choice
+as productive deferral by the handoff author and uses the preserved-option,
+discriminating-evidence, and convergence conditions to distinguish discretion
+from a gap. The weight-resident-methodology note now treats promotion into
+binding Commonplace doctrine as a commitment whose reversal and propagation
+cost, expiry, waiting cost, and susceptibility to later evidence must be
+priced. Both folds cite the existing productive-deferral note; neither adds a
+note, source, register row, or operative methodology label.
+
 ### 2. Change the shared delegation doctrine
 
 `AGENTS.md` and `AGENTS.md.template` already state the delegation baseline

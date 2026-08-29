@@ -42,6 +42,15 @@ The two paths should not be treated as substitutes in every case. Weight-mediate
 
 A practical consequence follows but is not yet an instruction: methodology loading can be optimized over a spectrum from a name, through a short disambiguating gloss, to an applicable retained fragment or full artifact. The theoretical criterion is whether the representation preserves the behavioral distinctions that matter for the current task, not whether it reproduces the full exposition. An ambiguous name therefore earns the shortest sufficient gloss or target-side activation test, not automatic trust merely because it is familiar. Verified doctrine also need not encode a hidden complete plan: its shared interpretation rules can combine with task-specific intent and execution evidence to guide construction of previously undecided means.
 
+Promoting a recurring method into binding Commonplace doctrine is itself a
+commitment: changing it later recommissions the worker packets that relied on
+it. The promotion decision should therefore price how costly the rule is to
+reverse and propagate, whether the option to wait may expire, what waiting
+costs now, and whether later evidence can still change the right answer. These
+are the qualitative terms in [productive deferral requires a preserved option,
+discriminating evidence, and a convergence
+rule](./productive-deferral-requires-option-evidence-and-convergence.md).
+
 ---
 
 Relevant Notes:

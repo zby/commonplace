@@ -67,10 +67,17 @@ has some possible result that would change selection, timing, modification, or
 abandonment for this choice. Evidence may arrive through later live-state
 observation or be produced by an earlier step or bounded probe. Activity
 produces decision-relevant evidence only when one of its possible outputs can
-change the follow-on choice. [Productive deferral requires option, evidence,
-and convergence](./productive-deferral-requires-option-evidence-and-convergence.md)
-owns this discriminating-evidence test. Waiting without such an observation
-does not improve the decision.
+change the follow-on choice. When an author leaves a choice for resolution
+after handoff by execution-time evidence, that allocation is [productive
+deferral](./productive-deferral-requires-option-evidence-and-convergence.md) by
+the author. It is legitimate only if the option remains materially exercisable
+when the worker reaches it, some possible evidence result can change the
+choice, and a convergence rule joins acceptance to a return or escalation
+trigger. Write scope, permissions, and lead time are part of whether the option
+remains live. A consequential choice presented as delegated that fails any
+condition is a gap unless inherited doctrine governs it or the remaining
+variation is irrelevant. Waiting without a discriminating observation does
+not improve the decision.
 
 Evidence production does not itself determine the actor or the time of
 choice. An author can run a probe and retain the later judgment. Another actor
