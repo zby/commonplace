@@ -147,6 +147,7 @@ plugins:
         'notes/related-systems/related-systems-index.md': 'agent-memory-systems/README.md'
         'notes/retrieval-failure-is-reflection-failure.md': 'notes/a-retrieval-miss-is-a-local-reflective-path-failure.md'
         'notes/reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md': 'notes/reverse-compression-is-when-llm-output-expands-without-adding.md'
+        'notes/reviewers-share-the-fields-prior-so-declare-which-claims-to-defend.md': 'notes/reviewers-share-the-fields-prior-so-interpret-findings-by-stance.md'
         'notes/rlm-achieves-the-clean-scheduler-model-but-opts-out-of-accumulation.md': 'notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md'
         'notes/self-modification-requires-search-evaluation-and-retention.md': 'notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md'
         'notes/skills-derive-from-methodology-through-distillation.md': 'notes/skills-derive-from-methodology.md'

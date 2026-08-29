@@ -56,7 +56,7 @@ it can raise a status to conjectured, never to established.
 Every row has a stance, declared here because reviewers and executing agents
 cannot reconstruct which claims the operator means to defend — that is
 purpose, held upstream (P6), and
-[decorrelated reviewers still share the field's prior](../../notes/reviewers-share-the-fields-prior-so-declare-which-claims-to-defend.md).
+[decorrelated reviewers still share the field's prior](../../notes/reviewers-share-the-fields-prior-so-interpret-findings-by-stance.md).
 
 - **Divergence** — the series contests the consensus reading of the source.
   Pushback from a decorrelated reviewer is predicted; a reversal needs a new
