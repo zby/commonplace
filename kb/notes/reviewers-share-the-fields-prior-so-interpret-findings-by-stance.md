@@ -26,6 +26,21 @@ Triage then runs stance-first: at a support claim, accept a finding unless it is
 
 Seen from the repair side, this is why [narrowing bought to survive review is paid for in content](./narrowing-bought-to-survive-review-is-paid-for-in-content.md): review pressure pushes hardest exactly where narrowing costs most. Stance makes the two cases separable. Accepting narrowing on a support claim is ordinary repair; accepting it on a divergence claim is the loss that note describes.
 
+## The misreading: telling the judges
+
+The first draft of this note was titled "…so declare which claims you will
+defend," and it was wrong in a way the note itself predicts. Read as an
+instruction to the judges, the stance would travel into the review: a judge
+told that a claim is a divergence defers to it or aims at it, and either way
+its verdict is now conditioned on the author's purpose. That re-correlates
+the judge with the author on exactly the component the technique exists to
+keep separate, and the review stops being a check on the divergence and
+becomes a negotiation about it. The temptation is real because the two uses
+share one act: the author writes the stance down. What differs is who reads
+it. The judges read the artifact and nothing else; the author reads the
+stance when the findings come back. The declaration is a filter on the
+output of review, never an input to it.
+
 ## A witness
 
 A clean-context audit of a source register in this repository, run in 2026, sorted its findings this way without being told to. It narrowed four support rows — an organizational-learning source, a philosophy-of-science source, a function-allocation taxonomy, a human-factors precedent — on grounds faithful to the ingests, and every narrowing was taken. It also proposed reversing the two rows where the series contests the consensus reading of its sources, Naur's human binding and the Bitter Lesson's weights-only extrapolation, by reading the consensus conclusion as the source's generating condition. Neither reversal added a premise; both restated the consensus. They were declined as predicted, and the register now carries the stance per row so the next audit is triaged the same way.
