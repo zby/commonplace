@@ -188,10 +188,10 @@ assigned authority.
 
 The source distinguishes a task's `what` from intent's `why`. A changed
 situation can make the former unfit while the latter continues to guide action.
-It also treats competence, trust, familiarity, shared doctrine, training,
-support, coordination, reporting, and tolerance for good-faith error as
-enabling conditions. This is bounded local judgment inside a control system,
-not a rule to maximize autonomy.
+It also treats competence, trust, familiarity, shared philosophy and
+understanding, preparation, coordination, reporting, and tolerance for
+good-faith error as enabling conditions. This is bounded local judgment inside
+a control system, not a rule to maximize autonomy.
 
 [ADRP 6-0](../../sources/us-army-adrp-6-0-mission-command-2012.ingest.md)
 gives a compatible but more explicit control account. It places some fast
@@ -237,6 +237,36 @@ tool results, local failures, or evidence produced by earlier steps. The
 planner may hold purpose and global constraints. Delegation follows the
 decision-specific information difference; it does not assume that one side
 knows more overall.
+
+#### Commonplace doctrine is not a hidden plan
+
+The modern source formulations do not make adaptation a reconstruction of an
+unstated complete order. [MCDP
+1](../../sources/marine-corps-mcdp-1-warfighting-1997.ingest.md) says a task can
+become obsolete while its intent continues to guide action, and it makes
+competent judgment, preparation, familiarity, and shared understanding part of
+its command philosophy. [ADRP
+6-0](../../sources/us-army-adrp-6-0-mission-command-2012.ingest.md) links shared
+understanding and clear intent to adaptation, while requiring education,
+rigorous training, and experience for effective application. Those are
+source-side claims about their institutional systems. They do not directly
+establish an agent packet policy.
+
+The Commonplace synthesis is that verified [Commonplace
+doctrine](../../reference/definitions/commonplace-doctrine.md) can do two kinds
+of work. It can recover a default or method the system already selected. It can
+also supply common interpretation and decision rules that combine with
+task-specific intent, binding constraints, and execution evidence to let an
+authorized executor generate a previously undecided means. The second case is
+intent-preserving adaptation, not recovery of a hidden answer.
+
+This distinction yields four omission classes for a consequential agent
+handoff: inherited choices are governed by verified doctrine; delegated choices
+are completed by authorized judgment from intent and evidence; irrelevant
+variation needs no common selection; and a choice that fits none of those
+classes is a gap that returns to an authority. A short packet can result from
+that shared interpretive machinery, but its length does not show that the
+machinery or task-specific intent is present.
 
 #### Commonplace consequence and non-transfer boundary
 
@@ -446,14 +476,16 @@ settled agent effect.
 ## Present Commonplace disposition
 
 The durable notes in the authorized evidence set have distinct current roles.
-This report uses those roles; it does not claim that the notes were changed by
-this workshop.
+This workshop revises three of those owners to carry the shared-doctrine and
+omission-class synthesis rather than adding a parallel layer ontology.
 
 | Durable note | Current role in this report | Supported gap or boundary |
 |---|---|---|
 | [Preferential codification concentrates less predictable work at the agent boundary](../../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md) | Supplies the conditional target-side selection effect and the boundary between natural-language constraint and symbolic codification. | Does not establish prevalence, aggregate difficulty, or agent effectiveness. |
 | [Borrowed patterns transfer only over a shared mechanism](../../notes/borrowed-patterns-transfer-only-over-shared-mechanism.md) | Supplies the transfer gate and separates search priority from import warrant. | Does not itself prove that a source and target share a mechanism. |
 | [Intent-framed delegation is a control regime, not a short prompt](../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) | Owns the bounded military-to-agent reconstruction, target-side truth conditions, and non-exhaustive control surfaces used here. | The conditions are not an experimentally proven minimum or a sufficient implementation packet. |
+| [An author should fix what the executor cannot determine, not what it will](../../notes/fix-what-the-executor-cant-determine-not-what-it-will.md) | Owns the decision-specific allocation rule, including inherited, delegated, irrelevant, and unresolved choices. | A rule may be inherited only through a verified binding consumption path. |
+| [Weight-resident methodologies provide context-efficient behavioral compression](../../notes/weight-resident-methodologies-compress-behavior-in-context.md) | Separates model repertoire and compact activation from explicit, authority-bearing Commonplace doctrine. | A familiar cue supplies neither project authority nor reliable activation by itself. |
 | [Productive deferral requires option, evidence, and convergence](../../notes/productive-deferral-requires-option-evidence-and-convergence.md) | Owns the cross-source necessary conditions and the bounded distinctions among rolling-wave planning, real options, DAPP, set-based practice, and mission tactics. | The three conditions do not prove that waiting is worthwhile or effective for agents. |
 | [Soft-bound traditions as sources for context-engineering strategies](../../notes/soft-bound-traditions-as-sources-for-context-engineering-strategies.md) | Supplies an advisory precedent for searching a tradition by a matching problem and then testing optimization target, feedback, and failure mode. | Adds no direct military evidence or warrant for this composite. |
 | [Human writing structures transfer to LLMs because failure modes overlap](../../notes/human-writing-structures-transfer-to-llms-because-failure-modes.md) | Supplies an advisory precedent for evaluating a borrowed convention by the failure it prevents and whether that failure exists in the target. | Adds no warrant for a different pattern without a fresh match. |
@@ -500,25 +532,28 @@ copying the report wholesale into an instruction:
 2. **Separate stable material from deferred choice.** Mission tactics exposes
    the bidirectional information boundary: upstream can hold purpose and global
    constraints while execution holds later means-relevant state.
-3. **For each consequential deferral, state why later evidence can alter the
+3. **Classify consequential omissions.** Identify whether standing doctrine
+   governs the choice, intent and evidence deliberately leave it to execution,
+   variation is irrelevant, or a real gap must return to an authority.
+4. **For each consequential deferral, state why later evidence can alter the
    choice and how the option remains feasible.** Real-options reasoning makes
    irreversibility, expiry, foregone benefit, and waiting cost visible; it does
    not make delay a virtue.
-4. **Give deliberately coarse future work an owned return.** Rolling-wave
+5. **Give deliberately coarse future work an owned return.** Rolling-wave
    planning supplies a replanning horizon at which learning is assessed and the
    next detail is added. A coarse item without a return is an unowned
    placeholder.
-5. **For mapped adaptation, name the observation, response, and lead time.**
+6. **For mapped adaptation, name the observation, response, and lead time.**
    DAPP explains why a signal alone is insufficient and why a trigger is
    different from open executor judgment.
-6. **Maintain several alternatives only behind a real evaluation surface.**
+7. **Maintain several alternatives only behind a real evaluation surface.**
    Set-based practice requires tests whose possible results can change the
    choice, a convergence boundary, and explicit attention to carrying cost.
-7. **For delegated judgment, supply the control regime.** State purpose,
+8. **For delegated judgment, supply the control regime.** State purpose,
    constraints, authority, accessible context and resources, ownership and
    integration, feedback or verification, and recovery or escalation for the
    consequential failure surfaces.
-8. **Check component interactions.** A trigger can remove judgment, a deadline
+9. **Check component interactions.** A trigger can remove judgment, a deadline
    can constrain adaptation, and authority can determine who may exercise an
    option. Do not infer composition warrant from component warrant alone.
 
@@ -529,21 +564,21 @@ change any planning machinery in this report revision.
 
 The evidence roles in this report are explicit. The MCDP, ADRP, and Stahel
 ingests supply the military source formulations and historical boundary. The
-six Commonplace notes in the present-state disposition supply the target-side
+Commonplace notes in the present-state disposition supply the target-side
 selection premise, transfer gate, bounded delegation and deferral syntheses,
-and advisory precedents. The five neighboring-method source links preserve
-source navigation; the bounded claims used here come through the authorized
-productive-deferral reconstruction.
+weight-activation boundary, and advisory precedents. The five
+neighboring-method source links preserve source navigation; the bounded claims
+used here come through the authorized productive-deferral reconstruction.
 
-This is a frontmatter-free retained report. This correction also revised the
-two durable synthesis notes named above and added minimum source extracts to the
-MCDP and Stahel ingests for the adversarial-causation and historical-leadership
-claims. It changes no tag, instruction, index, or planning machinery.
-Independent verification ran `commonplace-validate` on the two changed ingests
-and both changed notes. Across the report's eight linked ingests, 33 retained
-source quotes now resolve against their pinned snapshots. These checks
-establish deterministic validation and quote-to-pinned-snapshot resolution.
-They do not establish present doctrinal currency or broader snapshot assurance.
+This is a frontmatter-free retained report. The current synthesis revision
+updated three durable notes and added minimum source extracts to the MCDP and
+ADRP ingests for the preparation, shared-understanding, and training claims.
+It changes no tag, instruction, index, or planning machinery. Independent
+verification ran `commonplace-validate` on the changed ingests and notes.
+Across the report's eight linked ingests, 36 retained source quotes now resolve
+against their pinned snapshots. These checks establish deterministic validation
+and quote-to-pinned-snapshot resolution. They do not establish present
+doctrinal currency or broader snapshot assurance.
 
 The substantive evidence limits are also unchanged. The MCDP record supports a
 1997 institutional formulation, not present currency or effectiveness. The

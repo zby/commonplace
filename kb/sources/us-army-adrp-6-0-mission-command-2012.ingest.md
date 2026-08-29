@@ -33,6 +33,10 @@ ADRP 6-0 presents mission command as a response to uncertain, adaptive operation
 
 - **Source extract (verbatim):** Commanders delegate authority to subordinates to assist commanders in fulfilling their responsibilities. Subordinates are accountable to their commanders for the use of delegated authority, but commanders remain solely responsible and accountable for the actions of their subordinates. Delegation allows subordinates to decide and act for the commander in specified areas. Once they delegate authority, commanders supervise just enough to assure subordinates’ success. While commanders can delegate authority, they cannot delegate their responsibility for the actions or omissions of their subordinates.
   - **Source location:** Chapter 2, paragraph 2-34 (ADRP 6-0, p. 2-6)
+- **Source extract (verbatim):** Successful commanders understand that their leadership directs the development of teams and helps to establish mutual trust and shared understanding throughout the force. Commanders provide a clear intent to their forces that guides subordinates’ actions while promoting freedom of action and initiative. Subordinates, by understanding the commander’s intent and the overall common objective, are then able to adapt to rapidly changing situations and exploit fleeting opportunities. They are given the latitude to accomplish assigned tasks in a manner that best fits the situation.
+  - **Source location:** Chapter 1, paragraph 1-12 (ADRP 6-0, p. 1-3)
+- **Source extract (verbatim):** Commanders at all levels need education, rigorous training, and experience to apply these principles effectively. Mission command operates more on self-discipline than imposed discipline.
+  - **Source location:** Chapter 1, paragraph 1-13 (ADRP 6-0, p. 1-3)
 
 ## Connections Found
 

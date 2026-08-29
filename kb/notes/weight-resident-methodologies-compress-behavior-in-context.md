@@ -19,6 +19,14 @@ weight-resident methodology
 many coordinated behavioral consequences
 ```
 
+A weight-resident methodology is repertoire, not standing project authority.
+Familiarity with a method can make it available for selection, but
+[behavioral authority](./definitions/behavioral-authority.md) comes from the
+path that delivers an artifact to a consumer with binding force. A Commonplace
+task may therefore omit a standing rule only when the worker actually receives
+[**Commonplace doctrine**](../reference/definitions/commonplace-doctrine.md),
+not merely because its model is likely to know a similar method.
+
 Using *Auftragstaktik* as the selector illustrates both the compression and its limit. The label may activate intent, delegated choice of means, local initiative, and adaptation without enumerating them. But [intent-framed delegation is a control regime, not a short prompt](./intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) shows why the label does not identify one stable transferable package. When the exact mechanism matters, a bare name is only a candidate cue: pair it with a short gloss such as “preserve intent and constraints while delegating execution-time choice of means,” or establish through target-model trials that the name reliably activates that bounded mechanism without importing the surrounding military machinery.
 
 This makes weight-resident methodologies unusually economical under [context scarcity](./context-efficiency-is-the-central-design-concern-in-agent-systems.md). Instructions, task evidence, intermediate work, and retrieved project knowledge all compete for the same context window. A compact methodological cue can preserve that scarce space while still constraining many downstream choices.
@@ -28,11 +36,11 @@ The compression is not equivalent to an import from an explicit library. A metho
 This gives two different ways to make methodology operative:
 
 - **Parametric activation:** use a compact cue to activate a methodology already represented in weights. Context cost can be very low, but the reconstructed content is not directly inspectable, versioned, or selectively editable.
-- **Explicit loading:** place a retained methodology, or an applicable part of it, into context. This consumes more context but gives the system an inspectable and revisable specification.
+- **Explicit loading:** place a retained methodology, or an applicable part of it, into context. This consumes more context but gives the system an inspectable and revisable specification. When the runtime gives a selected instruction binding force, that instruction can form part of Commonplace doctrine; the retained methodology alone remains advice.
 
 The two paths should not be treated as substitutes in every case. Weight-mediated activation is attractive when the model's reconstruction is sufficiently coherent and conventional. Explicit loading matters when exact project-specific distinctions, reproducibility, revision, or auditability dominate context economy.
 
-A practical consequence follows but is not yet an instruction: methodology loading can be optimized over a spectrum from a name, through a short disambiguating gloss, to an applicable retained fragment or full artifact. The theoretical criterion is whether the representation preserves the behavioral distinctions that matter for the current task, not whether it reproduces the full exposition. An ambiguous name therefore earns the shortest sufficient gloss or target-side activation test, not automatic trust merely because it is familiar.
+A practical consequence follows but is not yet an instruction: methodology loading can be optimized over a spectrum from a name, through a short disambiguating gloss, to an applicable retained fragment or full artifact. The theoretical criterion is whether the representation preserves the behavioral distinctions that matter for the current task, not whether it reproduces the full exposition. An ambiguous name therefore earns the shortest sufficient gloss or target-side activation test, not automatic trust merely because it is familiar. Verified doctrine also need not encode a hidden complete plan: its shared interpretation rules can combine with task-specific intent and execution evidence to guide construction of previously undecided means.
 
 ---
 

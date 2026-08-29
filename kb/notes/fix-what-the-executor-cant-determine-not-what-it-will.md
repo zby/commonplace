@@ -1,5 +1,5 @@
 ---
-description: "A decision-specific rule for fixing upstream information the executor cannot recover while leaving bounded choices to live or produced evidence"
+description: "A decision-specific rule for fixing what verified doctrine, task intent, and authorized evidence cannot safely determine while leaving bounded choices to execution"
 type: kb/types/note.md
 traits:
   - title-as-claim
@@ -9,19 +9,20 @@ tags: []
 # An author should fix what the executor can't determine, not what it will
 
 For each choice in an authored execution, the author should fix what a
-competent, authorized executor cannot safely determine from authorized,
-decision-relevant evidence. The author should leave a situational choice open
-when live or actively produced evidence can distinguish among its permitted
-alternatives. A harmless choice whose alternatives are all acceptable and
-decoupled may also remain open; coordination can instead require one common
-selection. This boundary is bidirectional and specific to the choice. The
-author may uniquely know intent, binding constraints, acceptance conditions,
-privileged facts, external commitments, and cross-task coupling. Execution may
-instead reveal current state, tool results, local failures, and evidence
-produced during the work. A premature choice can therefore be wrong because
-upstream lacked relevant evidence, become wrong when state later drifts, or be
-overturned by evidence the work itself produces. Neither actor has to know more
-overall; [intent-framed delegation is a control regime, not a short
+competent, authorized executor cannot safely determine from verified inherited
+doctrine, the task commission, and authorized decision-relevant evidence. The
+author should leave a situational choice open when task intent and live or
+actively produced evidence can distinguish among its permitted alternatives.
+A harmless choice whose alternatives are all acceptable and decoupled may also
+remain open; coordination can instead require one common selection. This
+boundary is bidirectional and specific to the choice. The author may uniquely
+know intent, binding constraints, acceptance conditions, privileged facts,
+external commitments, and cross-task coupling. Execution may instead reveal
+current state, tool results, local failures, and evidence produced during the
+work. A premature choice can therefore be wrong because upstream lacked
+relevant evidence, become wrong when state later drifts, or be overturned by
+evidence the work itself produces. Neither actor has to know more overall;
+[intent-framed delegation is a control regime, not a short
 prompt](./intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md)
 owns the underlying information relation.
 
@@ -42,6 +43,13 @@ explains why added framing and constraints narrow this interpretation space.
 Here, an executor can *determine* a choice only when it can select safely from
 authorized evidence, preserve the fixed intent and bounds, and recognize when
 it cannot make a safe selection.
+
+Determination is not limited to recovering a preselected answer. Verified
+doctrine may settle an inherited default, or it may supply interpretive rules
+from which the executor derives a new means using task intent and execution
+evidence. An unstated choice is safe only when it is inherited, deliberately
+delegated, or irrelevant to acceptance and coupling. When none applies, the
+omission is a gap rather than discretion.
 
 ## Actor, time, and evidence are separate axes
 
@@ -113,7 +121,9 @@ produce a safe choice. When all choice-relevant inputs are available upstream,
 remain valid for the consuming call, and no discriminating execution
 observation is expected, resolving even method detail upstream is permissible.
 It is not required when the alternatives are all acceptable and no
-coordination benefit calls for a common selection.
+coordination benefit calls for a common selection. An author may rely on
+standing doctrine only when the executor's actual consumption path supplies it
+with binding force; otherwise the task commission must carry the needed rule.
 
 Operationalized into:
 

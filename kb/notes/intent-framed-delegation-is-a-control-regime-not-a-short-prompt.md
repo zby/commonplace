@@ -1,5 +1,5 @@
 ---
-description: For consequential agent handoffs, explains why preserving intent while delegating means depends on governed authority, information, composition, feedback, and recovery rather than prompt length.
+description: For consequential agent handoffs, explains how Commonplace doctrine, task intent, binding bounds, and local evidence govern adaptive choice while prompt length does not.
 type: kb/types/note.md
 traits:
   - title-as-claim
@@ -11,11 +11,12 @@ traits:
 
 In a consequential planner--executor handoff, intent-framed delegation is a
 governed allocation of information and decision rights. Upstream fixes purpose
-and binding boundaries. A competent, authorized executor may choose means when
-execution can expose evidence that could change which permitted means serve that
-purpose. Prompt text is only one carrier in this arrangement. Its length does
-not establish the control regime, although a short handoff can participate in
-one when the surrounding system supplies the missing controls.
+and binding boundaries that standing doctrine cannot determine for the task. A
+competent, authorized executor may select or construct means when execution can
+expose evidence that could change which permitted means serve that purpose.
+Prompt text is only one carrier in this arrangement. Its length does not
+establish the control regime, although a short handoff can participate in one
+when a verified surrounding system supplies the missing controls.
 
 ## Reciprocal opposition explains the military source problem
 
@@ -115,6 +116,49 @@ holds that judgment. Deferral changes when it is made. Delegating immediately
 to an actor that already has the evidence is delegation without a later
 information advantage.
 
+## Shared doctrine and task intent complete different omissions
+
+In the source domain, [MCDP
+1](../sources/marine-corps-mcdp-1-warfighting-1997.ingest.md) says that its
+command philosophy applies during preparation and requires competent leaders,
+familiarity, and shared understanding. [ADRP
+6-0](../sources/us-army-adrp-6-0-mission-command-2012.ingest.md) joins shared
+understanding and clear intent to local adaptation, and says that applying its
+principles requires education, rigorous training, and experience. The sources
+also say that intent can continue to guide action when a task or prior order no
+longer fits. These are claims about the source systems. The omission classes
+below are a Commonplace synthesis, not military terminology or an attribution
+of the agent method to those sources.
+
+When a verified consumption path gives an executor [**Commonplace
+doctrine**](../reference/definitions/commonplace-doctrine.md), that standing
+instruction supplies a shared way to interpret work: purposes, vocabulary,
+selected methods, defaults, precedence, and authority rules. It can recover an
+answer already selected by the system, but it can also guide generation of a
+means that no upstream actor selected. In the second case, task intent supplies
+the task-specific purpose and success criterion, binding constraints and
+commitments delimit acceptable adaptation, and execution evidence selects
+among or helps construct permitted means. Reconstructing an inherited answer
+and deriving a new means are therefore different kinds of completion.
+
+For each consequential unstated choice, the executor must be able to identify
+one of four cases:
+
+- **Inherited:** verified doctrine or a contract governs the choice.
+- **Delegated:** doctrine, task intent, bounds, and authorized evidence let the
+  executor select or construct the choice.
+- **Irrelevant:** every remaining variation is acceptable and decoupled, so no
+  common choice is needed.
+- **Gap:** none of those sources closes the choice, so the executor returns or
+  escalates instead of projecting an answer.
+
+A packet need not label every omission. It must carry enough task-specific
+intent and bounds for consequential cases to remain distinguishable. Intent
+does not entail privileged facts, permissions, ownership, external
+commitments, or acceptance evidence; those remain explicit when doctrine
+cannot determine them. A claimed inheritance is also a gap when the runtime
+does not actually deliver the doctrine with binding force.
+
 ## A control regime governs consequential surfaces
 
 A handoff is consequential here when the surrounding system cannot treat a
@@ -148,10 +192,12 @@ facts, resource access, output ownership, verification, integration, and return
 of control unsettled. A short message inside a workflow that governs those
 surfaces can participate in an adequate regime. A detailed outcome description
 that leaves them unsettled cannot establish one. Structural adequacy therefore
-turns on the control relation, not prompt length or outcome-only wording. This
-is not an empirical ranking of prompt styles. More text does not itself supply
-more control, and this record does not show that a compact methodology cue
-reliably activates the intended regime.
+turns on the control relation, not prompt length or outcome-only wording.
+Concision can result when a verified shared path already carries the standing
+interpretive machinery; it is not evidence that the task relation is adequate.
+This is not an empirical ranking of prompt styles. More text does not itself
+supply more control, and this record does not show that a compact methodology
+cue reliably activates the intended regime.
 
 ## Scope
 

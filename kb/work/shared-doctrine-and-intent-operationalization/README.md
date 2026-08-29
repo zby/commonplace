@@ -334,6 +334,24 @@ Acceptance: a reader can explain why reconstructing a hidden complete plan is
 not the same as intent-preserving adaptation, and can identify the separate
 functions of doctrine, intent, constraints, and local evidence.
 
+#### Outcome 1 result (2026-08-29)
+
+The substrate draft was consumed into the existing theory owners rather than
+promoted as a layer ontology. The omission classes and the distinction between
+recovering an inherited answer and generating a new intent-preserving means now
+live in the delegation and determinability notes; the weight-resident note
+separates parametric repertoire from authority-bearing Commonplace doctrine.
+The source-grounded synthesis report carries the same distinction while keeping
+the military source claims separate from the Commonplace construction. No new
+note was needed.
+
+Grounding through `cp-skill-ground` added one minimum MCDP extract for
+preparation, competence, and shared understanding and two ADRP extracts for
+shared understanding, clear intent, adaptation, and training. The retained
+Stahel extracts already supported the historical boundary, so that route
+returned `quotes sufficient`. The workshop draft remains only as working state
+until final closure.
+
 ### 2. Change the shared delegation doctrine
 
 `AGENTS.md` and `AGENTS.md.template` already state the delegation baseline

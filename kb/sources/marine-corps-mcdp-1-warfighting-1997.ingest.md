@@ -54,6 +54,8 @@ to unconstrained delegation.
   - **Source location:** Chapter 1, “War Defined,” p. 3
 - **Source extract (verbatim):** It is critical to keep in mind that the enemy is not an inanimate object to be acted upon but an independent and animate force with its own objectives and plans. While we try to impose our will on the enemy, he resists us and seeks to impose his own will on us. Appreciating this dynamic interplay between opposing human wills is essential to understanding the fundamental nature of war.
   - **Source location:** Chapter 1, “War Defined,” p. 4
+- **Source extract (verbatim):** First, while it is based on our warfighting style, this does not mean it applies only during war. We must put it into practice during the preparation for war as well. We cannot rightly expect our subordinates to exercise boldness and initiative in the field when they are accustomed to being oversupervised in garrison. Whether the mission is training, procuring equipment, administration, or police call, this philosophy should apply. Next, our philosophy requires competent leadership at all levels. A centralized system theoretically needs only one competent person, the senior commander, who is the sole authority. A decentralized system requires leaders at all levels to demonstrate sound and timely judgment. Initiative be- comes an essential condition of competence among commanders. Our philosophy also requires familiarity among comrades because only through a shared understanding can we develop the implicit communication necessary for unity of effort.
+  - **Source location:** Chapter 4, “Philosophy of Command,” pp. 80–81
 
 ## Connections Found
 
