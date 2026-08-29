@@ -204,6 +204,7 @@ plugins:
         'reference/text-contract-profiles.md': 'reference/adr/069-collection-contract-bundles-become-one-time-prototypes.md'
         'reference/type-loading.md': 'reference/collections-and-types.md'
         'sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md': 'sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md'
+        'sources/the-risks-of-invariant-risk-minimization.ingest.md': 'sources/rosenfeld-risks-of-invariant-risk-minimization.ingest.md'
         'work/information-measures/epiplexity-eli5.md': 'notes/epiplexity-by-example-what-entropy-and-complexity-miss.md'
 # nav is generated dynamically by src/commonplace/docs/properdocs_hooks.py:on_config
 # from kb/<collection>/README.md files. To add a collection to the nav, create
