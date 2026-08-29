@@ -47,7 +47,7 @@ it can raise a status to conjectured, never to established.
 | Prime Agent, Recuris, Apodex ([ingest](../../sources/prime-agent-a-self-improving-rlm-harness.ingest.md), [ingest](../../sources/apodex-1-1-scaling-agentic-intelligence-for-complex-work.ingest.md)) | Persistent harnesses that retain rules or weights | P3 (contrast) | No depth: evidence | Retention without a revisable theory | **Evidence** (library evidence note exists) | Nothing transfers as method |
 | Bainbridge 1983, *Ironies of Automation* ([ingest](../../sources/ironies-of-automation.ingest.md)) | An operator asked to monitor a system installed because it outperforms the operator | P2 | Downstream: the source residue is what the designer could not think how to automate — arbitrary, by the ingest's reading — not a warrant-selected residue; the shared problem is the operator left with it | Automation leaves the residue that could not be automated; the monitoring irony; skill loss without routine contact | **Conjectured** throughout. The library notes cite Bainbridge as convergent precedent (`evidenced-by`), not as a mechanism match, and the residue they establish is the elastic backlog, which the KB distinguishes from P2's selection effect. Three residues — arbitrary (Bainbridge), elastic-backlog (relocation note), warrant-selected (P2) — are not one mechanism | Industrial process-control specifics; the analogy to agent oversight, which the ingest says is asserted, not tested; any claim about how often the irony bites |
 | Parasuraman, Sheridan & Wickens 2000 ([ingest](../../sources/model-types-levels-human-interaction-automation.ingest.md)) | Which stages of a task to automate, judged by consequences | P4 | Downstream: supervisory-control allocation and pathway-function allocation share the reporting problem, not its cause | Per-function allocation profile; allocation judged by performance, reliability, and cost of consequences | **Form**: a per-function reporting form transfers, with three declared departures in the closure-tracking note — the functions are the pathway's own, the ten-level scale is not inherited, and allocation establishes nothing about warrant. No operative mechanism, so no mechanism match | The within-function level scale; task-performance stages; any inference from an allocation to its warrant or safety |
-| Mission command (ADRP 6-0, MCDP 1, Stahel) ([ingest](../../sources/us-army-adrp-6-0-mission-command-2012.ingest.md), [ingest](../../sources/marine-corps-mcdp-1-warfighting-1997.ingest.md), [ingest](../../sources/david-stahel-auftragstaktik-mission-command.ingest.md)) | Command against an intelligent opponent who observes, resists, and responds, under friction and information limits, so that plan and execution diverge; the response allocates purpose, information, and decision rights toward the actor who can observe the resulting state | P6 | Downstream: no adaptive opponent in the workshop; only the later control problem is shared | Commander's intent: purpose, key tasks, end state; bounded executor authority; governed return of control | **Conjectured**. See worked row 4. | Hierarchy, rank, doctrine, adversarial purpose; the label as stable guidance (Stahel) |
+| Mission command (ADRP 6-0, MCDP 1, Stahel) ([ingest](../../sources/us-army-adrp-6-0-mission-command-2012.ingest.md), [ingest](../../sources/marine-corps-mcdp-1-warfighting-1997.ingest.md), [ingest](../../sources/david-stahel-auftragstaktik-mission-command.ingest.md)) | Command against an intelligent opponent who observes, resists, and responds, under friction and information limits, so that plan and execution diverge; the response allocates purpose, information, and decision rights toward the actor who can observe the resulting state | P6 | Downstream: no adaptive opponent in the workshop; only the later control problem is shared | Commander's intent: purpose, key tasks, end state; bounded executor authority; governed return of control; a shared interpretive basis that, as Commonplace doctrine, makes a compact task-specific delta intelligible | **Conjectured**. See worked row 4. | Military hierarchy, rank, force structure, synchronization and risk doctrine, adversarial purpose; the label as stable guidance (Stahel) |
 | FunSearch; AlphaDev (no ingest) | Search-selected programs retained and reused in bounded settings | P5 | No depth: instance | Existence evidence that the selected-localized cell is populated | **To assess**: cited by the accepted Bitter Lesson article as its only existence evidence, with no ingest and no row until now; ingest or replace before the article publishes | Economy of search, evaluator–deployment match, generalization |
 | Internal: [codifying predictable choices leaves agents with less predictable work](../../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md) | Composition of residual agent work after preferential codification | P2 | Causal-origin: the same selection mechanism, with the selector changed | Selection effect on the residue | **Established** (note written 2026-08-28). See worked row 3. | The planning consequence (executor information advantage) does not move unchanged |
 
@@ -167,14 +167,15 @@ favours the computational side, and the horizon row captures what remains.
 **Problem match.** The source's bounded problem is allocating purpose,
 information, and decision rights when upstream retains intent and execution
 holds the state relevant to the choice of means. P6 is that problem for this
-workshop. The match returns commander's intent (purpose, key tasks, end state)
-and bounded executor authority as candidates, which the README's Intent
-section uses.
+workshop. The match returns commander's intent (purpose, key tasks, end state),
+bounded executor authority, and a shared interpretive basis that makes a
+compact task-specific delta intelligible. The target uses that third candidate
+only as Commonplace doctrine supplied through a verified consumption path.
 
 **Mechanism match, conditions.** The bounded source problem is one level
 deeper than the shared control problem: command against an opponent who
 observes and responds, under friction. The workshop has no opponent, so the
-match is downstream. It holds only if five things are independently true of
+match is downstream. It holds only if six things are independently true of
 the workshop: the operator holds a purpose the
 executing agents cannot safely reconstruct (attracting researchers is not
 derivable from the artifacts); the agents hold decision-relevant execution
@@ -183,14 +184,18 @@ and the handoff governs integration, verification, and return of control (the
 ledger, the closure conditions, and the ADR 080 hand-back when a change would
 alter a claim); the executing agents are competent for the delegated means;
 and the delegated authority is matched by resources while responsibility stays
-with the operator — the two preconditions the ADRP ingest calls material. Each
-is plausible; none has been tested by a case where an agent changed a task to
-serve the intent and the change was judged right.
+with the operator — the two preconditions the ADRP ingest calls material; and
+the executing agent inherits the Commonplace doctrine through its real
+consumption path. Each is plausible. The shared-doctrine workshop's outcome 5
+([cue and packet evaluation](../shared-doctrine-and-intent-operationalization/README.md#5-evaluate-the-cue-and-packet-policy-and-expand-only-on-evidence))
+is the pending test of whether this combination preserves intent in execution;
+until it reports, none has been established by such a case.
 
-**Non-transfer boundary.** Nothing about hierarchy, rank, doctrine, or
-adversarial purpose transfers. Stahel's warning applies: the label
-*Auftragstaktik* is not stable operating guidance, so the workshop cites the
-relation, not the doctrine.
+**Non-transfer boundary.** The shared interpretive function transfers only as
+Commonplace doctrine. The military content — hierarchy, rank, force structure,
+synchronization and risk doctrine, and adversarial purpose — does not transfer.
+Stahel's warning also keeps the label *Auftragstaktik* from serving as stable
+operating guidance.
 
 ### 5. Popper 1966 → P3, and P1's sense of "theory"
 

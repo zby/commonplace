@@ -126,7 +126,7 @@ keeps its own conditions and non-transfer boundary from the
 | Adverse selection (internal) | Say what transfer leaves behind and why the architecture is mixed | Preferential transfer condition; fixed workload and boundary |
 | Function allocation (Parasuraman et al.), narrowed to the per-function profile | Say how allocation is recorded without a scalar | No level scale; pathway functions, not task stages |
 | Sutton, narrowed to the production axis | Say what search and learning do and do not decide about representational form | Weights-only extrapolation does not enter |
-| Mission command, narrowed to intent-framed delegation | Govern the workshop's own execution across sessions | Conjectured; hierarchy and doctrine do not enter |
+| Mission command, narrowed to intent-framed delegation and the shared interpretive function | Govern the workshop's own execution across sessions | Conjectured; Commonplace doctrine enters only through a verified binding consumption path, while military hierarchy, rank, force structure, synchronization and risk doctrine, adversarial purpose, and the label as stable guidance do not enter |
 
 Interaction checks the composition must run and record:
 
@@ -167,9 +167,11 @@ Interaction checks the composition must run and record:
   need an evaluator; say whether selection by search moves a decision out of
   the human cut or only changes who proposes candidates.
 - **Delegation × hand-back.** The ADR 080 hand-back returns control when a
-  change would alter a claim. Say whether that is the governed return the
-  mission-command match requires or a case where the executor lacked the
-  operator's purpose.
+  change would alter a claim. Candidate answer from the shared-doctrine
+  workshop: it is the Commonplace doctrine's *gap* case — neither inherited,
+  delegated, nor irrelevant — and therefore a governed return of control, not
+  a case where the executor lacked the operator's purpose. This remains a
+  candidate until that workshop reports.
 
 ## Separation rules
 

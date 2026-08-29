@@ -4,12 +4,14 @@
 
 ## Intent
 
-In mission-command terms this is the commander's intent (*Absicht*): the
-purpose the workshop serves and the end state it should leave, stated so that
-a task below can be changed when it stops serving the purpose. The borrowing
-is a problem match with a conjectured mechanism match whose conditions are
-stated in the [match register](./match-register.md#4-mission-command--p6-workshop-intent);
-only the bounded delegation relation is used, not the doctrine.
+This is the workshop's intent: the purpose it serves and the end state it
+should leave, stated so that a task below can be changed when it stops serving
+the purpose. The borrowing is a problem match with a conjectured mechanism
+match whose conditions are stated in the
+[match register](./match-register.md#4-mission-command--p6-workshop-intent).
+It uses the bounded delegation relation and the shared interpretive function
+that Commonplace doctrine supplies through a verified consumption path. The
+military content does not enter.
 
 **Purpose.** Get researchers interested in Commonplace and, where it works,
 get fellow researchers working with it.
@@ -261,6 +263,9 @@ against this workshop and then closes under the workshop contract.
 - [Extraction candidates](./extraction-candidates.md) — nine library notes
   proposed so the articles cite claims instead of arguing them; coverage
   verdicts and nearest neighbours per candidate.
+- [Shared-doctrine and intent operationalization](../shared-doctrine-and-intent-operationalization/README.md)
+  — pending supplier for P3, ledger O10, and closure conditions 8–9 after its
+  outcomes 3–5 report.
 - [Accepted baselines](./accepted/README.md) — the only inherited prose that
   may seed a successor directly.
 - [Rejected draft captures](./rejected-drafts/README.md) — read-only evidence
