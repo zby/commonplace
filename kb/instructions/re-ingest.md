@@ -40,6 +40,9 @@ re_ingest_request:
   snapshot_path: <name-paired snapshot path>
 ```
 
+Add `occasion: <question or job>` only when the user re-ingests for a new
+purpose; otherwise the incumbent's `occasion` field carries through unchanged.
+
 If the named snapshot checksum differs, this call stops without changing the
 ingest. Disclose the canonical source, both paired paths, and both checksums.
 The recorded observation is immutable: capture changed bytes under a distinct

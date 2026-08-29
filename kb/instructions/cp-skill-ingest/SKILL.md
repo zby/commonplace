@@ -42,6 +42,14 @@ The drafting worker executes the standalone `draft-ingest-report.md`
 instruction. That instruction owns report analysis, writing, and worker-side
 verification; this skill owns only the surrounding orchestration.
 
+The caller may supply an **occasion**: the question or job that brought the
+source in. It is the one task-specific input the worker receives beyond the
+fixed paths. It must be stated before the source is read and must not carry
+the parent's reading of the source; the worker records it and lets it govern
+only the report's selection sections. An occasion that is already an exact
+source-side claim is `cp-skill-ground`'s job once the ingest exists; pass the
+broader question here, or none.
+
 The canonical empty Quotes block is the following complete Markdown section,
 including the blank line after its sentence:
 
@@ -59,6 +67,7 @@ URL-or-file target:
 re_ingest_request:
   ingest_path: <exact ingest path>
   snapshot_path: <name-paired snapshot path>
+  occasion: <optional; omitted keeps the incumbent's occasion field>
 ```
 
 ## Steps
@@ -89,6 +98,8 @@ re_ingest_request:
        required)` may depend on those exact bytes even when Quotes is empty. A
        changed observation requires a distinct snapshot basename and ingest;
        re-ingest never changes the incumbent observation.
+     - Set `occasion` to the request's value when supplied, else to the
+       incumbent's frontmatter `occasion` verbatim, else `none`.
      - Set `output_path` to the supplied `ingest_path`, retain whether it existed
        at the start of the run, and skip the remaining Step 1 bullets.
    - If `$ARGUMENTS` is empty, list recent
@@ -163,6 +174,8 @@ re_ingest_request:
      include its secondary-source commit URLs, claim classifications, pinned
      citations, evidence boundaries, and execution status; retain paper version,
      checkout paths, and reviewed commits only in the parent for final reporting
+   - `occasion`: the caller's pre-reading question or job, verbatim, or `none`;
+     for a re-ingest, the value resolved in Step 1
 
    Require the instruction, snapshot, and connect report to exist and be
    non-empty. Recompute the snapshot checksum immediately before dispatch and
@@ -207,6 +220,7 @@ re_ingest_request:
    - snapshot_sha256: {snapshot_sha256}
    - retained_quotes: {retained_quotes_exact_multiline_value}
    - code_grounding_context: {code_grounding_context_or_none}
+   - occasion: {occasion_or_none}
    - validation_failures: none
    ```
 
@@ -221,8 +235,9 @@ re_ingest_request:
    contains no `source_snapshot` or `code_revisions`, and does not link to
    `.snapshots/`, cite a `related-systems/` checkout, or name the generated
    connect report. For a code-grounded ingest, verify its `secondary_sources`
-   and `Code Grounding` section against the supplied context. Run full
-   validation:
+   and `Code Grounding` section against the supplied context. When an occasion
+   was supplied, require frontmatter `occasion` to equal it; when none was,
+   require the field to be absent. Run full validation:
 
    ```bash
    commonplace-validate kb/sources/some-article.ingest.md

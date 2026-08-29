@@ -65,9 +65,10 @@ Notes: connect runs the full prospecting procedure on every destination `kb/sour
 
 Notes: this is a fresh worker with no parent conversation history. Its complete
 task input is the standalone drafting instruction plus exact paths for the
-snapshot, connect report, and output, the expected snapshot checksum, and any
-prepared code-grounding context. It writes and validates only the ingest
-report.
+snapshot, connect report, and output, the expected snapshot checksum, any
+prepared code-grounding context, and the optional occasion (the caller's
+pre-reading question, which governs only the report's selection sections). It
+writes and validates only the ingest report.
 
 ## Variants
 

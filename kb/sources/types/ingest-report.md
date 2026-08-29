@@ -40,6 +40,10 @@ Assess fit relative to the installed KB's goals, local collection contracts, and
   exact precursor bytes. This gives the derivation input durable identity
   without treating a cache path as provenance or as a second primary source.
 - Use `type: kb/sources/types/ingest-report.md` for the artifact type.
+- When the caller supplied an occasion — the question or job that brought the
+  source in, stated before it was read — record it verbatim in `occasion`.
+  Omit the field otherwise. The occasion governs only the selection sections
+  named below; it is not evidence about the source.
 - Use `domains` for two to four topic tags that make the report searchable.
 - Copy capture-adapter metadata such as `status_id`, `conversation_id`,
   `post_count`, and `api_url` under its existing flat field name. Do not copy a
@@ -77,11 +81,16 @@ adopted; a collection-local snapshot type does not extend this contract.
   retains exact primary-source wording and human-resolvable locations so a
   later reviewer can judge ordinary source uses without the local snapshot.
 - `Connections Found` summarizes the connection discovery findings and explains how the source fits the current KB, as compact prose naming the source's role (for example: anchor, technical basis, counterpoint, legal disposition, public statement, limitation) rather than a transcribed candidate list. Drop weak, speculative, or duplicate edges; keep only settled, durable judgments. If no casebook notes exist yet, say so plainly instead of substituting a full map of relationships to other already-captured sources, or framing the section as prospective connections for notes that do not exist yet. The generated connect report is working context only; do not cite it, link to it, or name its path in the ingest report.
-- `Extractable Value` lists three to seven items, ordered by reach and novelty relative to the installed KB's goals and existing KB connections.
+- `Extractable Value` lists three to seven items, ordered by reach and novelty relative to the installed KB's goals and existing KB connections. When `occasion` is set, items bearing on it come first; if the source does not bear on it, one item says so.
 - `Limitations (our opinion)` states where the source should not be trusted or
   over-generalized. When `capture_scope` is not `full-source`, state what the
   retained boundary prevents the ingest from establishing.
-- `Recommended Next Action` chooses one specific advisory next action. The ingest report recommends; it does not perform promotion.
+- `Recommended Next Action` chooses one specific advisory next action. The ingest report recommends; it does not perform promotion. When `occasion` is set, the action serves it unless the source does not bear on it.
+
+`Classification`, `Summary`, `Quotes`, and `Limitations (our opinion)` are
+observation sections. They follow the general contract regardless of
+`occasion`, because later readers reuse them for jobs the occasion did not
+anticipate.
 
 ## Quotes Shape
 
@@ -150,6 +159,7 @@ capture_scope: {capture scope from snapshot frontmatter, when present}
 genre: {source genre}
 snapshot_sha256: {lowercase SHA-256 of the exact snapshot file bytes}
 ingested: "{YYYY-MM-DD}"
+occasion: "{caller's pre-reading question or job, verbatim; omit when none}"
 type: kb/sources/types/ingest-report.md
 domains: [{tag1}, {tag2}, {tag3}]
 ---

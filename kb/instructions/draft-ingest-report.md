@@ -25,6 +25,8 @@ Require the caller to supply these values in the task:
 - `snapshot_sha256`: the expected lowercase SHA-256 of the exact snapshot bytes
 - `retained_quotes`: the complete Quotes section to place in the report
 - `code_grounding_context`: `none` or the prepared paper-with-code context
+- `occasion`: `none` or the caller's question or job that brought the source
+  in, stated before the source was read
 - `validation_failures`: `none` in `create` mode; a non-empty list of exact
   failures in `repair` mode
 
@@ -86,6 +88,15 @@ local snapshot link in the durable report.
    and `partial-source` as analysis boundaries; never present one as a full
    reading of the source.
 
+   An `occasion` is the task-specific purpose for this ingest. It governs
+   `Extractable Value`, `Recommended Next Action`, and the role stated in
+   `Connections Found`: select and order for it first, then for the general KB
+   goals. It does not govern `Classification`, `Summary`, or `Limitations`;
+   write those as if no occasion had been given. It is not evidence about the
+   source. If the source does not bear on the occasion, say so in one
+   `Extractable Value` item and let the next action follow from what the source
+   does offer.
+
    From the connect report, select settled connections, relationship roles,
    synthesis opportunities, and tensions. Do not transcribe its candidate
    inventory. Treat `Maintenance Observations` as non-actionable context. Write
@@ -129,9 +140,10 @@ local snapshot link in the durable report.
 
    Put the snapshot's retained `source`, `captured`, `capture`, optional
    `capture_scope`, and flat adapter fields in frontmatter along with
-   `snapshot_sha256`. Set `genre` from the closer reading. Do not create a
-   `capture_metadata` field. Do not write the removed `source_snapshot` or
-   `code_revisions` fields. Do not link to `.snapshots/` or cite a machine-local
+   `snapshot_sha256`. Set `genre` from the closer reading. Record a supplied
+   `occasion` verbatim in frontmatter; omit the field when it is `none`. Do
+   not create a `capture_metadata` field. Do not write the removed
+   `source_snapshot` or `code_revisions` fields. Do not link to `.snapshots/` or cite a machine-local
    checkout such as `related-systems/`.
 
    Place `retained_quotes` immediately before `## Connections Found`, verbatim.
