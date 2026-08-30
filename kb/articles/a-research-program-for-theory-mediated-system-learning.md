@@ -304,6 +304,15 @@ shifts](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-sh
 and an inspectable learning record. Those are hypotheses, not exemptions from
 full cost accounting.
 
+There is a further payoff specific to reflective self-improvement. The system
+being improved is itself an agentic system, so theories of agentic systems can
+become part of the theory it uses to diagnose and redesign itself. Commonplace
+therefore develops [agentic-systems theory](../agentic-systems/README.md) not only
+as an external research topic but as candidate operative self-theory for the
+model–prompt–tool–runtime system that runs the research and for future
+programming agents. If the program works, improving that theory should improve
+the system's ability to understand and modify its own organization.
+
 The strategy competes with end-to-end learning, evolutionary search, self-play,
 weight updates, and stronger-model baselines. It should be abandoned or narrowed
 when retained theory makes no causal difference, system use becomes
