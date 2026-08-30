@@ -296,7 +296,7 @@ develops that transfer argument and separates it from [computational
 closure](../notes/methodological-and-computational-closure-track-different-changes.md),
 which states where decisions happen rather than whether they are any good.
 
-## The hand-crafted parts are a bootstrap
+## The hand-crafted parts are a bootstrap the program expects to replace
 
 The obvious objection is that retained explicit artifacts are exactly the
 hand-built structure the Bitter Lesson tells us to stop building. The program
@@ -313,17 +313,23 @@ so a theory or a validator can itself be a learned product. That makes room for
 explicit artifacts. It says nothing in favour of the present hand-written ones.
 
 The second argument is that the present artifacts are a bootstrap: a
-hand-crafted starting state that [fits the Bitter Lesson only if learning can
-outgrow
-it](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
-The label answers nothing by itself, since a promised path beyond hand-crafting
-is cheap. The answer is the condition, and the fact that it can be checked.
-Hand-crafted names who produced the current version of an artifact, not a class
-of artifact that must stay so: in a loop that has no outside, [machinery
-persists by warrant, not by its
+hand-crafted starting state that the program expects learning to replace —
+much of it, possibly all of it — while the system it started continues. What
+is meant to persist is the loop and its four functions, not any artifact now
+performing them. Every present theory, schema, validator, and decomposition is
+a plank that search and learning may swap out, and the system stays the same
+system through the replacement, as the ship of Theseus does. Hand-crafted
+names who produced the current version of an artifact, not a class of artifact
+that must stay so: in a loop that has no outside, [machinery persists by
+warrant, not by its
 position](../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md),
 and the starting artifacts are as exposed to replacement as anything else in
-the loop's scope.
+the loop's scope. Stated as a condition, the bootstrap [fits the Bitter Lesson
+only if learning can outgrow
+it](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md);
+a promised path beyond hand-crafting is cheap, so the expectation has to be
+checked rather than asserted, and the abandonment conditions below are the
+check.
 
 The bootstrap is not "hand-craft now, learn later". Computation is used inside
 the loop from the start; the human judgments that remain where global fit has no
