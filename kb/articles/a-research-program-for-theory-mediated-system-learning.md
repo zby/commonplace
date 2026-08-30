@@ -38,13 +38,13 @@ This article presents a research program around one question:
 > recovery, and delayed feedback — and revise both its theory and its behavior
 > when consequences arrive?
 
-The composite in that question is not a model but a system: model, retained
-artifacts, tools, runtime, and correction machinery, evaluated together at a
-declared boundary.
+The composite in that question is a system, not a model: retained artifacts,
+tools, runtime, and correction machinery alongside the model, evaluated together
+at a declared boundary. And the question is about learning, not only about
+editing.
 
-That makes it a question about learning, not only about editing. A change to a
-program, a rule, a schema, or a test is a durable change to the thing that
-determines the system's later behavior. When such a change is chosen by a
+A change to a program, a rule, a schema, or a test is a durable change to the
+thing that determines the system's later behavior. When such a change is chosen by a
 retained theory, and when its consequences then revise that theory, the
 modification is how the system learns — no weight update required. The unit that
 learns is [the deployed system rather than the
@@ -59,13 +59,14 @@ object the process can apply, doubt, and revise, rather than being compiled away
 into behavior. That is what a retained artifact buys and a weight update does
 not: something you can point at, withhold, or replace.
 
-Programming agents supplied with persistent project-specific theory are the
-first demanding external testbed. Commonplace, an agent-operated knowledge base,
-is the live human-agent environment in which the same mechanisms are already
-used on parts of the system's own operation.
+The program has two testbeds. Programming agents supplied with persistent
+project-specific theory are the harder one, and still prospective. Commonplace —
+an agent-operated knowledge base, and the system this article comes from — is
+the live one, where the same mechanisms already run on parts of the system's own
+operation.
 
-That loop is already partly computational, and that is the point: computation is
-not a later stage waiting to be introduced. A language model reads retained
+The Commonplace loop is already partly computational, and that is the point:
+computation is not a later stage waiting to be introduced. A language model reads retained
 Commonplace artifacts, searches and synthesizes candidate formulations and
 repository changes, criticizes alternatives, uses tools for checks and
 retention, and then works from the revised state. What stays human is
@@ -99,9 +100,9 @@ change proposal, diagnosis, evaluation, recovery, or later revision. A theory
 that merely accompanies the work is documentation, not a demonstrated part of
 the learning path.
 
-This makes the standard longitudinal. A failed first candidate can belong to
-coherent modification when the process recognizes the failure, recovers, and
-revises. A successful first candidate can fail the standard when it passes
+That makes coherent modification a longitudinal standard, judged over a sequence
+rather than at a single change. A failed first candidate can still meet it when
+the process recognizes the failure, recovers, and revises. A successful first candidate can fail the standard when it passes
 narrow tests while damaging the wider organization in a way the process cannot
 detect. The detailed claim is that [holding a program theory means sustaining
 coherent search under delayed feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md).
@@ -128,12 +129,11 @@ different ways.
 
 This is a [functionally mixed
 architecture](../notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md),
-not a theorem that the functions must remain in separate representational
-forms. A future learned substrate may host
-several of them, and stronger models may absorb parts of the present
-scaffolding. The current split is valuable because it makes the roles
-[addressable](../notes/reflection-buys-addressability.md) and supports
-interventions on each one.
+not a claim that the functions must stay in separate representational forms: a
+future learned substrate may host several at once, and stronger models may
+absorb parts of the present scaffolding. The split earns its place now because
+it makes each role [addressable](../notes/reflection-buys-addressability.md) and
+separately testable.
 
 Interpretation and correction must remain distinct. A model can understand and
 apply a false theory. Semantic competence does not establish that the theory has
@@ -152,8 +152,8 @@ The strongest recurrent loop is:
       -> retained theory-state revision
       -> changed later operation
 
-Using the complete chain as the minimum definition would hide useful partial
-results. The program distinguishes four levels:
+Requiring the whole chain before anything counts would discard useful partial
+results, so the program distinguishes four levels:
 
 1. **Mediation:** changing or withholding the theory changes a proposal,
    evaluation, diagnosis, recovery step, or intervention.
@@ -188,12 +188,10 @@ redundant, badly scoped, or placed at the wrong level of abstraction. A false
 claim can appear useful because the current implementation already assumes it.
 
 No present automatic evaluator fully decides whether a candidate belongs in the
-larger causal picture, what it should displace, or whether it will continue to
-guide coherent modification after later demands arrive. This does not make fit
-untestable. It means that the evidence is distributed and delayed rather than
-supplied by one complete local oracle.
-
-Fit is still exposed, one consequence at a time:
+larger causal picture, what it should displace, or whether it will keep guiding
+coherent modification as later demands arrive. The evidence for fit is
+distributed and delayed rather than supplied by one complete local oracle, so it
+is exposed one consequence at a time:
 
 - whether the claim changes search or recovery;
 - whether its predictions survive later evidence;
@@ -208,16 +206,16 @@ Claims earn provisional standing by making a counterfactual difference to
 building, operating, or repairing the system and by surviving the consequences
 of that use.
 
-System use is not a truth oracle. A system can reward its own misconceptions.
-Independent factual and formal checks, rival theories, preregistered
-predictions, withholding interventions, held-out demands, delayed consequences,
-and transfer tests are needed to prevent a self-sealing theory.
+System use is not a truth oracle: a system can reward its own misconceptions.
+Preventing a self-sealing theory therefore needs the checks that system use
+cannot supply by itself — independent factual and formal verification, and
+predictions registered before the evidence arrives.
 
 ## One recorded episode, and its limits
 
 The
 [2026-08-30 Commonplace revision record](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
-provides a concrete human-inclusive episode:
+provides one concrete human-agent episode:
 
 1. the model read the workshop, related notes, articles, and repository state;
 2. computational synthesis produced a review, candidate distinctions,
@@ -264,11 +262,17 @@ because global theory fit lacks a complete fixed evaluator, not because it is
 the only route. It competes with end-to-end learning, evolutionary search,
 self-play, weight updates, and stronger-model baselines. Its scaling test is
 whether more computation improves downstream search, and whether recurring
-operator judgments become reusable selection machinery. It fails if useful
-selection does not improve, if bespoke human judgment does not fall, or if the
-current decomposition cannot be challenged — the conditions under which [a
-bootstrap stops fitting the Bitter
-Lesson](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
+operator judgments become reusable selection machinery. It should be abandoned
+on any of the conditions under which [a bootstrap stops fitting the Bitter
+Lesson](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md):
+
+- system use becomes self-confirming;
+- retained theory makes no causal difference;
+- more computation does not improve useful search or selection;
+- human judgment grows with the corpus instead of falling;
+- each new domain needs its own ontology and oracle;
+- the current decomposition cannot be challenged; or
+- another method does better at comparable total cost.
 
 ## Two next experiments
 
@@ -288,8 +292,8 @@ the structure it names. Wrong theory should produce predictable negative
 transfer. Withholding theory should particularly damage recovery if the
 conjecture is right.
 
-The second experiment instruments the current human-agent loop.
-Across a sequence of real Commonplace improvements, record which retained
+The second experiment instruments the current human-agent loop. Across a
+sequence of real Commonplace improvements, record which retained
 artifacts guided model search, which proposals and checks were computational,
 which global-fit and credit judgments remained human and why, whether more
 computation changed the result, which downstream consequences bore on the
@@ -297,12 +301,9 @@ judgment, and whether a recurring correction became a test, validator, learned
 critic, method, schema, or program. A later episode should show whether the
 computational selection surface actually grew.
 
-A subsequent cross-domain comparison must test domain-extensibility and compare
-the approach with direct computational alternatives. The strategy fails when
-system use becomes self-confirming, retained theory makes no causal difference,
-additional computation does not improve useful search or selection, human
-judgment grows with the corpus, each domain needs a bespoke ontology and oracle,
-or another method performs better at comparable total cost.
+Neither experiment reaches the last two failure conditions. A subsequent
+cross-domain comparison must test domain-extensibility and measure the approach
+against direct computational alternatives.
 
 ## The invitation
 
@@ -318,7 +319,5 @@ researcher can:
   permanently dependent on bespoke human judgment.
 
 The goal is not agreement with a finished theory. It is a small set of claims
-whose status can change through criticism and evidence. The central one remains
-concrete: whether a fallible, project-specific theory can make computational
-search and recovery more coherent across novel demands and delayed
-consequences.
+whose status can change through criticism and evidence — starting with the one
+this article is built around, which is concrete enough to turn out false.
