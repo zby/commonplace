@@ -59,9 +59,6 @@ particular project.
 > for programmers — holding and revising it well enough to keep successive
 > modifications coherent when decisive feedback arrives only later?
 
-This article sets out a research program for answering that question. It does
-not report that a current system already succeeds.
-
 The [deployed system rather than the
 model](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md) is
 the unit of learning. Model weights, retained prompt state, code, tests, schemas,
@@ -72,9 +69,9 @@ selects and retains it from evidence so that later operation depends on it. No
 weight update is required.
 
 The path is *theory-mediated* when addressable retained theory guides proposal,
-diagnosis, evaluation, or recovery, and later consequences can revise that
-theory so the revision affects later work. Claim-level addressability makes the
-theory inspectable, citable, perturbable, and selectively revisable.
+diagnosis, evaluation, or recovery, and later consequences revise that theory so
+the revision affects later work. Claim-level addressability makes the theory
+inspectable, citable, perturbable, and selectively revisable.
 
 The program uses two linked testbeds. Commonplace, the agent-operated knowledge
 base from which this article comes, is the live human-agent system. Programming
@@ -130,11 +127,11 @@ can allocate work among branches or probes under weaker evidence, while
 provisional](../notes/backtracking-keeps-lightweight-search-control-provisional.md)
 when contrary evidence arrives.
 
-Naur bound program theory to programmers partly through a premise that
-[equates machine execution with formulated
+Naur's human-only boundary depends partly on a premise that [equates machine
+execution with formulated
 criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
-Trained recognizers make that premise contestable, but breaking the inference
-does not show that any current agent passes Naur's bearer tests.
+Trained recognizers make that premise contestable. Whether current agents pass
+Naur's bearer tests is the program's empirical question.
 
 ### Where the program sits
 
@@ -196,7 +193,7 @@ retained theory
   -> changed later operation
 ```
 
-Useful partial results should not be forced into the strongest claim:
+The evidence ladder distinguishes four levels:
 
 1. **Mediation:** changing or withholding theory changes a proposal, branch
    allocation, evaluation, diagnosis, recovery step, or intervention.
@@ -234,7 +231,7 @@ but not an independent warrant oracle: [system use provides evidence of theory
 fit and causal usefulness, not independent
 warrant](../notes/system-use-provides-evidence-of-theory-fit-not-independent-warrant.md).
 
-## Current status and what evidence is missing
+## Current evidence and next tests
 
 The [2026-08-30 Commonplace revision
 record](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
@@ -259,35 +256,32 @@ actually runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-r
 
 A longitudinal Commonplace study should likewise ask whether recurring operator
 judgments become reusable search, selection, or credit-assignment machinery and
-whether named functions move from human or joint to computational supply. Until
-such records and comparisons exist, these are research directions rather than
-results.
+whether named functions move from human or joint to computational supply.
 
 ## The bootstrap must outgrow its hand-crafted parts
 
-The Bitter Lesson creates an obvious objection: the program's theories, schemas,
+The Bitter Lesson puts pressure on the program because its theories, schemas,
 validators, decompositions, and evaluators are currently written by people. The
-narrow rebuttal is that [production method and representational form are
+relevant distinction is that [production method and representational form are
 different
-axes](../notes/the-bitter-lesson-selects-production-methods-not-representational.md).
-Search and learning can produce prompts, theories, tests, and programs as well as
-weights. That gives explicit artifacts conceptual room; it does not vindicate
-the present hand-written ones.
+axes](../notes/the-bitter-lesson-selects-production-methods-not-representational.md):
+search and learning can produce prompts, theories, tests, and programs as well as
+weights. The value of the present hand-written artifacts must be earned by the
+learning process.
 
 The present loop is already computational. Models retrieve, propose, criticize,
 compare, diagnose, and edit; symbolic operations carry repository changes,
 testing, validation, scheduling, and retention. Human judgment remains where no
 sufficiently discriminating reusable evaluator exists. Recurring judgments are
 therefore candidates for search controls, methods, tests, validators, learned
-critics, schemas, or programs rather than evidence for a permanently protected
-human role.
+critics, schemas, or programs.
 
 The bootstrap has two related jobs. First, move named decision-bearing functions
 from human toward joint or computational supply while holding the human-inclusive
 boundary fixed. Over a declared task scope and horizon, the technical endpoint
 is reached when the same improvement path still completes after the human
-participants are removed. That actor-allocation test does not establish quality
-or warrant. [The decisions that stay human, and what would move
+participants are removed. Quality and warrant require separate evidence. [The
+decisions that stay human, and what would move
 them](./the-decisions-that-stay-human-and-what-would-move-them.md) develops the
 full fixed-boundary and warrant argument.
 
@@ -299,18 +293,21 @@ position](../notes/machinery-persists-by-warrant-not-position-in-a-reflective-lo
 and the bootstrap [fits the Bitter Lesson only if learning can outgrow
 it](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
 
-This first strategy has three potential payoffs. Explicit theory may improve
-[sample efficiency under structured
-shifts](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md),
-and it leaves an inspectable learning record. More distinctively, the system
-being improved is itself an agentic system, so theories of agentic systems can
-become part of the theory it uses to diagnose and redesign itself. Commonplace
-therefore develops [agentic-systems theory](../agentic-systems/README.md) both as
-an external research topic and as candidate operative self-theory for the
+This strategy is available now because prompts, code, and retained artifacts
+already provide editable learning surfaces while global theory fit lacks a
+complete fixed evaluator. It has three potential payoffs. First, explicit theory
+may improve [sample efficiency under structured
+shifts](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md).
+Second, it leaves an inspectable learning record. Third, and distinctively for
+reflective self-improvement, the system being improved is itself an agentic
+system, so theories of agentic systems can become part of the theory it uses to
+diagnose and redesign itself. Commonplace therefore develops
+[agentic-systems theory](../agentic-systems/README.md) both as an external
+research topic and as candidate operative self-theory for the
 model–prompt–tool–runtime system that runs the research and for future
 programming agents. If the program works, improving that theory should improve
-the system's ability to understand and modify its own organization. These are
-hypotheses, not exemptions from full cost accounting.
+the system's ability to understand and modify its own organization. Each payoff
+must survive comparison at total system cost.
 
 The strategy competes with end-to-end learning, evolutionary search, self-play,
 weight updates, and stronger-model baselines. It should be abandoned or narrowed
@@ -338,5 +335,5 @@ The knowledge base can be [vendored read-only into another
 project](https://github.com/zby/commonplace/blob/main/INSTALL.md). A researcher
 can give an agent that access together with their own objection or rival
 mechanism and ask it to reconstruct the strongest response and design a
-discriminating test. The goal is not agreement with a finished theory, but a
-small set of claims whose status can change through criticism and evidence.
+discriminating test. The aim is to turn the program into a small set of claims
+whose status can change through criticism and evidence.
