@@ -1,73 +1,169 @@
 ---
-description: "Derives architectural mixedness from the residue classes: unrepresented premise, unsettled criterion, uncheckable result, and horizon cut each name a capacity that no other part of the architecture supplies"
+description: "Distinct residue classes require distinct functional roles; the current natural-language, parametric, symbolic, and evidential split is one inspectable realization, not a theorem about permanent carriers"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
 ---
 
-# Each residue class needs a different mechanism, so a self-improving architecture must be mixed
+# Distinct residue classes require distinct functions in a self-improving architecture
 
-A system that moves decisions out of its human cut set keeps a residue, and the residue is adversely selected, [since warranted transfer out of the human cut leaves people the hardest-to-warrant decisions](./warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md). Each residual decision stayed human for a reason. The reasons identified so far form a short list. A premise the decision needs is not represented anywhere the deciding process can read. The criterion is unsettled, so the method names a decider instead of determining a result. No oracle independent of the candidate can check the result. The decision falls after the declared automatic horizon ends. Call these the **residue classes**.
+A system that preferentially moves warrantable decisions out of its human cut
+keeps a selected residue, [because warranted transfer leaves people the
+hardest-to-warrant decisions](./warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md).
+A residual decision may remain because a required premise is not represented,
+a criterion or authority is unresolved, no sufficiently independent check
+exists, or the decision arises after the automatic horizon ends. Call these the
+**residue classes**.
 
-Each class names one capacity that has to grow before its decisions can move: representation, settlement, verification, continuity. This note takes the next step. Each capacity is supplied by a different part of the architecture, and none of those parts supplies another's capacity. A system built to shrink a residue that is nonempty in more than one class therefore has to contain more than one kind of part. Mixedness is derived from the residue classes, not stipulated as a design preference.
+Each class names a different function that must grow before its decisions can
+move: representation, settlement and semantic application, verification, or
+continuity. An architecture facing more than one class must preserve more than
+one functional role and more than one failure surface. That is the functional
+plurality derived here.
 
-"Mixed" here means mixed in [representational form](./definitions/representational-form.md): retained natural-language artifacts, a parametric interpreter over them, and symbolic code all appear, because the capacities they supply are not interchangeable.
+The derivation does **not** prove that those functions must remain in different
+[representational forms](./definitions/representational-form.md). Retained
+natural-language theory, a parametric interpreter, symbolic code, and external
+evidence are the current inspectable realization. Another substrate could host
+several roles, and learned systems may absorb current carrier boundaries. The
+requirement is functional separation where failures and evidence differ, not
+permanent representational separation.
 
-## Which part supplies which capacity
+## Which function answers which residue
 
-**Representation is supplied by retained explicit artifacts.** The premise has to be externalized somewhere the deciding process can read it and later revise it, [since only explicit retention is currently durable, writable, and addressable at once](./only-explicit-retention-is-durable-writable-and-addressable.md). One alternative exists: the deciding process reconstructs the premise from what it already sees. That works where the premise is recoverable from available material, and it leaves nothing addressable behind, so the reconstruction is repeated rather than criticized or rescoped.
+| Why the decision remains human | Function that must grow | Current realization |
+|---|---|---|
+| A required premise is not available to the deciding process | Representation and retrieval | Retained artifacts with addressable content and scope |
+| The objective, commitment, criterion, or authority does not determine what may be accepted | Settlement plus semantic application | Declared objectives and methodologies, authoritative commitments, and an interpreter that applies them to unformalized cases |
+| No check can defeat a plausible but harmful candidate | Verification | Tests, validators, decorrelated critics, held-out tasks, later demands, and operational consequences |
+| The decision arises after the automatic path stops | Continuity | Persistent state, scheduling, installation, rollback, and later reactivation |
 
-**Settlement is supplied by retained theory together with an interpreter that applies it.** The criterion's content has to exist as a retained statement, [since a methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md). A stated criterion still underdetermines many cases. Something must apply it to a case the statement does not fully fix. Pre-LLM automation could take delivery only of a [codified](./definitions/codification.md) criterion, so semantic criteria stayed human; a language model can take delivery of an explicit natural-language one, [as methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) records. This is the pairing that [theory-mediated self-improvement needs both interpretation and retention from one substrate](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) argues for on independent grounds.
+**Representation** makes a premise available and revisable. Retained explicit
+artifacts are currently the clearest way to give project-specific assumptions,
+purposes, and explanations a stable address, [since only explicit retention is
+currently durable, writable, and addressable at once](./only-explicit-retention-is-durable-writable-and-addressable.md).
+A sufficiently capable process may reconstruct some premises from its inputs,
+but reconstruction supplies no persistent target for later criticism unless the
+result is retained.
 
-**Verification is supplied by evidence and oracles independent of the candidate.** Mechanical validators sit at the cheap end, tests and decorrelated checks above them, and accumulated evidence above that. What makes them a distinct part is the independence requirement rather than their machinery, [since warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md).
+**Settlement and semantic application** are related but distinct. An objective,
+commitment, methodology, or authorized decision can settle what counts as
+acceptable. An interpreter applies that settlement where the statement does not
+fully specify the case. A fallible empirical program theory usually does not
+settle the change by itself. At an open-ended modification crux, it guides
+search, diagnosis, backtracking, and recovery while later evidence remains able
+to correct it, [because holding a program theory means sustaining coherent
+search under delayed feedback](./holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md).
 
-**Continuity is supplied by a symbolic runtime that holds state and keeps executing.** A decision after the horizon can only move if the executor is still running when the decision arises. That takes state kept outside any one bounded call and transitions applied faithfully over a long path, which is the [bounded-context orchestration model](./bounded-context-orchestration-model.md)'s scheduler role. Hosting that role in a model instead is expensive rather than impossible, [because scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md).
+**Verification** supplies grounds that can overturn the candidate's own account.
+Mechanical validators sit at the cheap end; held-out tasks and delayed
+operational consequences can reach claims that no local test settles. What
+matters is not that the checker sits outside the technical system, but that the
+candidate cannot guarantee acceptance by authoring both the proposal and the
+decisive standard, [since warranted autonomy is bounded by oracle
+domain](./warranted-autonomy-is-bounded-by-oracle-domain.md).
 
-## No part covers another's class
+**Continuity** keeps the path active when evidence or a new decision arrives.
+A symbolic runtime is currently the cheap and reliable realization because it
+carries state and exact transitions across bounded calls. A model can host some
+of this role, but doing so pays the [error-correction cost that motivates
+scheduler–LLM separation](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md).
+That is an engineering gradient, not a logical prohibition.
 
-The derivation depends on four non-substitutions, one per class.
+## No function substitutes for another
 
-**Code cannot settle a criterion.** A symbolic artifact executes the criterion it was given, and executes a wrong one as faithfully as a right one. Where the method says "use judgment", there is nothing to compile. Codification presupposes a settled criterion rather than producing one, so moving an unsettled decision into code either fixes an arbitrary reading or fails.
+The derivation depends on non-substitution at the function level.
 
-**An interpreter cannot warrant its own output.** Warrant needs a check the candidate did not author. A model judging its own proposal draws the check from the same distribution that produced the proposal, so the check's errors correlate with the errors it is meant to catch — [error correction works with above-chance oracles and decorrelated checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md), and self-checking supplies neither guarantee. What the interpreter lacks here is independence, not capability, so a more capable interpreter does not close this class.
+**Execution does not settle an unresolved criterion.** Code can faithfully
+apply a supplied rule. It cannot decide which objective or commitment should
+hold merely by executing more exactly. Codifying “use judgment” either freezes
+an arbitrary interpretation or leaves the decision unresolved.
 
-**Retained theory cannot execute.** A written criterion changes nothing until some process runs it, and a written artifact holds no position in a long path. Retention makes a claim available; it does not make anything happen at the moment the decision arises.
+**Semantic competence does not supply independent warrant by itself.** A model
+may understand a theory, generate a strong candidate, and criticize it. More
+capability can improve each operation. It does not by itself show that the
+proposal and criticism have sufficiently decorrelated failure modes. Independent
+exposure remains a separate evidential question, [because error correction
+needs above-chance oracles with decorrelated errors](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md).
 
-**Verification cannot supply an absent premise.** An oracle rejects candidates; it does not author the input nobody recorded. A check applied to a decision whose premise is unrepresented has nothing to check against. Verification can reveal that a premise is missing, which locates the gap without filling it.
+**Retention does not execute or continue a path.** A document changes nothing
+unless a process retrieves and uses it when the decision arises. Stored state
+also does not schedule its own later reactivation.
+
+**Verification does not supply an absent premise or objective.** A failed check
+can reveal that something is missing. It cannot determine the missing
+project-specific commitment merely by rejecting candidates.
+
+A single process may host several roles. A model may interpret a criterion,
+propose a change, drive tools, and perform provisional criticism. The roles
+remain analytically separate because evidence for one does not establish the
+others and an intervention can impair one while preserving the rest.
 
 ## The premise-change test
 
-The derivation predicts what happens when the residue changes shape.
+The claim predicts how the architecture should simplify when the residue
+changes.
 
-Drop a class and the corresponding part becomes optional. Where every criterion in a domain is already formal — type checking, lexical analysis — no residual decision stays human for want of settlement, and the natural-language interpreter is not needed. What remains is a wholly symbolic compiler, which is what that domain actually built. Where a whole path fits inside one bounded call, nothing stays human for want of continuity, and a one-shot transformation with a check needs no scheduler.
+Where every criterion in a domain is formal and every required premise is in
+the input, the semantic interpreter may disappear. A compiler can be wholly
+symbolic because no residual decision in its declared domain needs open-ended
+settlement or theory-guided search. Where the whole path fits in one bounded
+call, a persistent scheduler may be unnecessary. Where no independent evidence
+exists, adding more retention or execution cannot by itself warrant transfer.
 
-Add a class with no corresponding part and the architecture is incomplete for it. A candidate: a decision stays human because the system holds no represented authority to commit the change, so no one has granted it scope. None of the four capacities above closes that by itself. Whether this is a fifth class or a subcase of representation — recording who holds the grant, under what conditions — is unresolved, and the test says what turns on the answer.
+Conversely, a residual decision whose failure class has no corresponding role
+shows that the architecture is incomplete for that decision. A possible fifth
+class is authority: the system may represent what should be done and verify the
+result while lacking a grant to commit it. Authority may be a special kind of
+settlement or a separate function. The current class list does not decide.
+
+## Consequence for the current architecture
+
+The current retained-theory/LLM/runtime/evidence split is valuable because it
+makes the roles addressable and their failures inspectable. It supports targeted
+interventions: withhold the theory to test mediation, perturb the interpreter,
+replace the evaluator, or truncate the horizon. That makes it a strong research
+architecture even if later learning collapses some representational boundaries.
+
+The architecture should therefore be defended as a provisional, testable
+realization. It should not be defended by claiming that natural-language,
+parametric, and symbolic carriers are permanently necessary. [A hand-crafted
+bootstrap fits the Bitter Lesson only if learning can outgrow it](./a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md),
+including by replacing a present carrier when another realization supplies the
+same function more efficiently.
 
 ## Scope
 
-- The claim inherits the parent note's condition: transfer is *preferential*, favouring warrantable decisions. Under transfer on some other basis — cost alone, or whatever an unattended model will attempt — the residue has a different composition, and which parts a system needs follows that composition instead.
-- The four classes are the ones identified so far. Nothing here shows the list is exhaustive, and the derivation gives the architecture only as many kinds of part as there are classes in play.
-- The parent table's last row, where transfer is possible but priced out, is not a class in this sense. No capacity has to grow, so no part corresponds to it. Making an existing part cheaper changes the price without adding a capacity.
-- The mapping between classes and parts is not one-to-one. Retained artifacts carry both the represented premise and the criterion's content; settlement additionally needs the interpreter. The claim is that the capacities do not substitute for one another, not that parts and classes are in bijection.
-- The parts are functional roles, not processes. One process can host two roles — a model can interpret a criterion and drive its own loop. Hosting two roles is not one capacity covering another: the roles still fail separately, and the error-correction asymmetry prices what hosting the runtime role in a model costs.
-- The claim says what an architecture must contain. It says nothing about how the parts are wired, how many processes implement them, or which of them a given system should build first.
+- The residue prediction is conditional on preferential transfer of warrantable
+  decisions under a fixed boundary, objective, horizon, and workload. Another
+  transfer policy can leave a different residue.
+- The four classes are not claimed to be exhaustive. The derivation requires
+  only that each class in play has a corresponding function.
+- Functional plurality does not imply a fixed process diagram, one process per
+  role, or permanent representational heterogeneity.
+- A function can become unnecessary on a narrower task distribution. That does
+  not refute the claim for a path whose residue still contains its class.
+- Settlement covers objectives, commitments, methodology, and authority. A
+  fallible explanatory theory more often orients search than settles acceptance.
 
 ## Open Questions
 
-- Whether the class list can be derived systematically from the warrantability conditions rather than collected. Continuity is the suspicious member: it may be a representation problem about state across a path rather than a class of its own.
-- How independent an oracle has to be for the second non-substitution to hold. A second model call under a perturbed prompt is not the candidate's own author, yet shares training. If prompt perturbation decorrelates well enough for a class of cases, the interpreter-cannot-warrant-itself boundary is a gradient in those cases rather than a wall, and the verification part is partly reachable from the interpreter.
-- Whether an architecture can be shown incomplete in practice by exhibiting a residual decision whose class no part addresses, which is the falsifying observation this claim invites.
+- Can the class list be derived systematically from conditions for warranted
+  transfer rather than collected from current cases?
+- When does a model-based critic become independent enough that interpretation
+  and verification can be hosted by closely related processes?
+- Is authority a fifth residue class or a subcase of settlement?
+- Which intervention best tests whether the current representational split is
+  doing functional work rather than merely reflecting implementation history?
 
 ---
 
 Relevant Notes:
 
-- [Warranted transfer out of the human cut leaves people the hardest-to-warrant decisions](./warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md) — extends: supplies the residue classes and the selection effect this note converts into an architectural requirement
-- [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — grounds: the representation–settlement–warranted-execution conversion the four capacities are read off
-- [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: why verification is a separate part rather than a property of a capable decider
-- [Theory-mediated self-improvement needs both interpretation and retention from one substrate](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) — grounds: the retention-plus-interpretation pairing that supplies representation and settlement here, argued from sample efficiency instead of from residue classes
-- [Scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — grounds: why the continuity role stays symbolic, priced as a cost gradient rather than a hard line
-- [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — contrasts: motivates the scheduler-plus-model split from context scarcity and bookkeeping reliability, where this note reaches a similar split from warrant classes
-- [Error correction works with above-chance oracles and decorrelated checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — mechanism: the decorrelation condition behind the claim that an interpreter cannot warrant its own output
-- [Only explicit retention is currently durable, writable, and addressable at once](./only-explicit-retention-is-durable-writable-and-addressable.md) — grounds: why the representation capacity needs an externalized artifact rather than a better decider
-- [Representational form](./definitions/representational-form.md) — defined-in: the axis along which the resulting architecture is mixed
+- [Warranted transfer out of the human cut leaves people the hardest-to-warrant decisions](./warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md) — grounds: supplies the conditional selection effect and residue classes
+- [Theory-mediated self-improvement needs interpretation, retention, and independent read-back on one path](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) — extends: separates the functions on the theory-mediated path
+- [Holding a program theory means sustaining coherent search under delayed feedback](./holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md) — grounds: explains why fallible theory guides search rather than fully settling the hardest modification
+- [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — grounds: distinguishes represented guidance from computational execution
+- [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: keeps verification separate from proposal and interpretation
+- [Scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — grounds: explains the current cost advantage of symbolic continuity
+- [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](./a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md) — extends: treats the representational split as provisional rather than protected
