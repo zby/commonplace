@@ -1,5 +1,5 @@
 ---
-description: "Research-program statement on whether an automated system-building process can hold and revise project theory to keep successive modifications coherent under delayed feedback"
+description: "Research program on whether an automated software-development system built from weights, prompts, code, and runtime can retain and revise project theory to keep successive modifications coherent under delayed feedback"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -25,6 +25,7 @@ source_notes:
   - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
   - kb/notes/oracle-accumulation-improves-the-selection-environment.md
   - kb/notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md
+  - kb/sources/programming-as-theory-building.ingest.md
 ---
 
 # A research program for theory-mediated system learning
@@ -38,59 +39,61 @@ project-specific theory: an understanding of how the program maps to its world,
 why its parts are as they are, and how new demands can be incorporated without
 destroying its structure.
 
-Coding agents can now propose, implement, test, and retain changes. This article
-asks whether the larger automated system-building process can also carry the
-theory that human programmers use to keep a changing program coherent:
+Modern coding agents can already propose, implement, test, and retain changes.
+But the operative system is broader than the model. Model weights supply learned
+competence; prompts carry the current task, project theory, evidence, and
+constraints; code and runtime provide tools, exact transitions, persistence,
+and checks. Together they form an automated software-development system — a
+software factory in the broad sense.
 
-> Can an automated system-building process hold and revise a fallible theory of
-> the software system it is building well enough to keep successive
-> modifications coherent under delayed feedback?
+> Can an automated software-development system hold and revise a fallible theory
+> of the software it builds well enough to keep successive modifications
+> coherent when decisive feedback arrives only later?
 
-The target is a software factory in the broad sense: a model, retained
-artifacts, tools, runtime, and correction machinery repeatedly propose, realize,
-evaluate, and retain changes. They are evaluated together at a declared system
-boundary rather than reduced to the model alone. This is a statement of a
-research program, not a report of results: it claims that the question is well
-posed and testable, not that its answer is yes.
+This article sets out a research program for answering that question. It does
+not report that a current system already succeeds.
 
-A change to a program, rule, schema, or test is a durable change to something
-that determines later behavior. When a retained theory state guides such a
-change, and consequences then revise that state, the system can learn through
-the modification without requiring a weight update. The unit that learns is
-[the deployed system rather than the
-model](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md),
-and the change counts as learning when an [improvement
+The unit of analysis is [the deployed system rather than the
+model](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md).
+Any behavior-determining surface can become a learning target. Updating weights,
+revising prompt templates or the retained state from which prompts are assembled,
+rewriting code, tests, schemas, or tools, and changing runtime policy can all
+alter later executions. Such a change counts as learning when an [improvement
 process](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
-uses evidence to select and retain it so that it affects later executions.
+uses evidence to select and retain it so that later operation depends on it.
+Claims are assessed relative to a declared boundary around the components and
+people included in that process.
 
-The path is *theory-mediated* when part of the program theory persists in an
-addressable state that the process can apply, doubt, and revise. An individual
-claim can then be inspected, cited, withheld, perturbed, or rescoped. A weight
-checkpoint can also be replaced, but normally offers much weaker claim-level
-addressability. [Three 2026 self-improving harnesses examined for the
+The path is *theory-mediated* when addressable retained theory does more than
+accompany the work: it guides proposal, diagnosis, evaluation, or recovery, and
+later consequences can revise the same theory state. An individual claim can
+then be inspected, cited, withheld, perturbed, or rescoped. A weight checkpoint
+can also be replaced, but normally offers much weaker claim-level
+addressability.
+
+Current systems establish adjacent pieces. [Three 2026 self-improving harnesses
+examined for the
 program](../notes/evidence/three-2026-harnesses-retain-rules-or-weights-not-a-revisable-theory.md)
-retain rules or weights, not a revisable theory that guides patch search and
-gives later failures a shared target for diagnosis.
+retain rules or weights rather than a revisable theory that guides patch search.
+[Workspace
+optimization](../sources/workspace-optimization-how-to-train-your-agent.ingest.md)
+revises code and text around a frozen model from prediction failures and replays
+recent transitions after edits. Its theory concerns an external environment
+within one run; its role decomposition, validation, and adoption policy remain
+fixed, and persistence across sessions is not shown. These systems demonstrate
+parts of the path without yet demonstrating persistent theory-mediated
+modification of the behavior-determining system itself.
 
-The closest positive neighbour is [workspace
-optimization](../sources/workspace-optimization-how-to-train-your-agent.ingest.md),
-where a frozen-model agent revises code and text around its own calls from
-prediction failures and replays recent transitions after edits. The reported
-system revises a model of an external environment within one run; its role
-decomposition, validation, and adoption policy remain fixed, and persistence
-across sessions is not shown. This program asks about modification of the
-behavior-determining system itself across later, initially unforeseen demands.
-
-The program has two testbeds. Programming agents supplied with persistent
-program theory are the harder and still prospective one. Commonplace, the
-agent-operated knowledge base from which this article comes, is the live one.
-Its model already retrieves retained project knowledge, searches and criticizes
-candidate formulations and repository changes, uses tools for local checks, and
-works from the revised state. The operator supplies much of the sparse selection
-signal about global fit and intent. The immediate problem is therefore not to
-introduce computation, but to improve that computational search and turn
-recurring operator judgments into reusable selection and credit-assignment
-machinery.
+Two testbeds expose different parts of the problem. Programming agents supplied
+with persistent program theory are the harder and still prospective case.
+Commonplace, the agent-operated knowledge base from which this article comes, is
+the live one. Its model already retrieves retained project knowledge, searches
+and criticizes candidate formulations and repository changes, uses tools for
+local checks, and works from the revised state. The operator supplies much of
+the sparse selection signal about global fit and intent. The immediate problem
+is therefore not to introduce computation, but to improve that computational
+search and turn recurring operator judgments into reusable selection and
+credit-assignment machinery.
 
 ## Holding a theory means controlling a fallible search
 
@@ -155,13 +158,12 @@ loop](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retentio
 requires search, reject-capable evaluation, and operative retention. [Residue
 analysis](../notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md)
 asks why decisions remain outside a warranted automatic path. The table below
-instead describes the present implementation roles through which those demands
-are carried.
+maps those demands onto the present weight-prompt-code system.
 
 | Function | Current realization | Failure it exposes |
 |---|---|---|
-| Represent project-specific premises, purposes, commitments, and scope | Retained natural-language and symbolic artifacts | Omission, contradiction, drift, retrieval failure, inert documentation |
-| Interpret theory and use it to guide search and diagnosis | A language model | Underspecification, stochastic deviation, bias, post-hoc rationale, theory ignored in practice |
+| Represent project-specific premises, purposes, commitments, and scope | Retained natural-language and symbolic project state | Omission, contradiction, drift, retrieval failure, inert documentation |
+| Interpret theory and use it to guide search and diagnosis | Model weights plus prompts assembled from retained project state | Underspecification, stochastic deviation, bias, post-hoc rationale, theory omitted or ignored |
 | Execute exact transitions and keep the path alive | Code and a persistent runtime | Faithful execution of the wrong transition, frozen decomposition, truncated horizon |
 | Correct proposals and theories, and select what is retained | Tests, validators, held-out tasks, decorrelated criticism, later demands, and operational consequences; for global fit and authorization, the operator | Weak proxies, captured evaluation, viability-only gates, delayed credit assignment, unstated preferences, exogenous selection |
 
