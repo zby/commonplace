@@ -155,7 +155,7 @@ automation. A model already performs substantial computational work:
 - writing accepted revisions into state that guides later model calls.
 
 The
-[workshop conversation recorded on 2026-08-30](../work/theory-mediated-self-improvement-series/computational-theory-guided-conversation-episode-2026-08-30.md)
+[workshop conversation recorded on 2026-08-30](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
 is a direct example. The model read many Commonplace artifacts, synthesized a
 review and candidate changes, received operator corrections about the Bitter
 Lesson framing, revised the theory and repository, and used the revised state in

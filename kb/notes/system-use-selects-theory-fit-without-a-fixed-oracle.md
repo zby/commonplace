@@ -79,7 +79,7 @@ search:
   and
 - accepted revisions become inputs to later computational work.
 
-The [workshop conversation recorded on 2026-08-30](../work/theory-mediated-self-improvement-series/computational-theory-guided-conversation-episode-2026-08-30.md)
+The [workshop conversation recorded on 2026-08-30](./evidence/commonplace-revision-used-theory-guided-computational-search.md)
 is a concrete example. The model read many Commonplace artifacts, synthesized a
 review and candidate revisions, received sparse operator corrections about the
 Bitter Lesson framing, revised the theory and repository, and then used the

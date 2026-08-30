@@ -181,7 +181,7 @@ and transfer tests are needed to prevent a self-sealing theory.
 ## This conversation is already an example
 
 The
-[2026-08-30 workshop conversation](../work/theory-mediated-self-improvement-series/computational-theory-guided-conversation-episode-2026-08-30.md)
+[2026-08-30 workshop conversation](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
 provides a concrete human-inclusive episode:
 
 1. the model read the workshop, related notes, articles, and repository state;

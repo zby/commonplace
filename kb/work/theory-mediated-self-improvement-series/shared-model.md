@@ -244,7 +244,7 @@ human-inclusive computational theory-mediated learning loop. At a boundary that
 excludes the operator, global selection and final acceptance remain exogenous.
 
 The
-[2026-08-30 workshop conversation](./computational-theory-guided-conversation-episode-2026-08-30.md)
+[2026-08-30 workshop conversation](../../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
 records a concrete instance:
 
 1. retained Commonplace artifacts, code, and repository state were read;
