@@ -64,8 +64,6 @@ Zikkaron is stronger than Commonplace as an always-on runtime memory layer. It c
 
 Commonplace is stronger as a governed knowledge substrate. Its retained artifacts are inspectable Markdown files with collection contracts, type specs, citations, validation, semantic review, and git history. Zikkaron has many local control signals, but memories can become injected advisory context without the kind of explicit source review and authority promotion Commonplace requires.
 
-**Read-back:** `both` — With engineered push activation. `recall`, `get_project_context`, `restore`, and other MCP tools are explicit pull surfaces; installed Claude hooks push selected memories, checkpoints, actions, and prompt-matched recall into context before the receiving agent acts.
-
 ### Borrowable Ideas
 
 **Hook-level context budgets.** Ready for narrow experiments. Zikkaron's prompt hook caps result count and total injected characters, while session-start injects small sections for last task, anchors, project context, and recent actions. Commonplace could borrow that shape for active-workshop context without changing the library substrate.
@@ -102,6 +100,8 @@ Commonplace is stronger as a governed knowledge substrate. Its retained artifact
 **Survey placement.** Zikkaron belongs in the trace-to-summary-memory and trace-to-runtime-context families. It strengthens the survey split between raw trace capture and distilled behavior-shaping artifacts: raw tool rows do little by themselves, while grouped action memories, checkpoints, anchors, and hook-selected memories can shape future agent behavior. It also shows the governance risk of trace-learning systems whose automatic summaries can be injected without a review step.
 
 ## Read-back
+
+**Read-back:** `both` — With engineered push activation. `recall`, `get_project_context`, `restore`, and other MCP tools are explicit pull surfaces; installed Claude hooks push selected memories, checkpoints, actions, and prompt-matched recall into context before the receiving agent acts.
 
 **Direction.** Zikkaron is both pull and push. MCP tools such as `recall`, `get_project_context`, `restore`, `memory_stats`, and `get_rules` are pull. Installed Claude hooks push retained memory on `SessionStart`, `UserPromptSubmit`, and post-compaction restore; `PreCompact` and `PostToolUse` capture memory for later read-back rather than themselves returning memory to the agent.
 

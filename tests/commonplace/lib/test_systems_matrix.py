@@ -56,11 +56,14 @@ def test_zikkaron_fixture_full_new_format() -> None:
 def test_pull_only_skips_push_and_keeps_universal_axes() -> None:
     text = (
         "# Pully\n\n"
+        "## Artifact analysis\n\n"
         "**Storage substrate:** `files` — x\n"
         "**Representational form:** `natural-language` — x\n"
         "**Lineage:** `authored` — x\n"
         "**Behavioral authority:** `knowledge` — x\n"
+        "\n## Write side\n\n"
         "**Write agency:** `manual` — edits through the authoring channel\n"
+        "\n## Read-back\n\n"
         "**Read-back:** `pull` — agent must call search\n"
     )
     row, flags = parse(text)
@@ -82,11 +85,14 @@ def test_pull_only_skips_push_and_keeps_universal_axes() -> None:
 def test_trace_axes_only_apply_to_trace_learning() -> None:
     base = (
         "# Sys\n\n"
+        "## Artifact analysis\n\n"
         "**Storage substrate:** `files` — x\n"
         "**Representational form:** `natural-language` — x\n"
         "**Lineage:** `authored` — x\n"
         "**Behavioral authority:** `knowledge` — x\n"
+        "\n## Write side\n\n"
         "**Write agency:** `manual` — x\n"
+        "\n## Read-back\n\n"
         "**Read-back:** `pull` — x\n"
     )
     row, flags = parse(base)  # no trace-learning tag
@@ -97,7 +103,10 @@ def test_trace_axes_only_apply_to_trace_learning() -> None:
 def test_missing_applicable_tokens_are_flagged() -> None:
     text = (
         "# Bare\ntags: [trace-learning]\n\n"
+        "## Artifact analysis\n\n"
         "**Storage substrate:** `files` — x\n"
+        "\n## Write side\n\n"
+        "\n## Read-back\n\n"
         "**Read-back:** `push` — pushes stuff\n"
     )
     _row, flags = parse(text)
@@ -114,15 +123,18 @@ def test_missing_applicable_tokens_are_flagged() -> None:
 def test_not_determinable_marks_applicable_axis_assessed_unknown() -> None:
     text = (
         "# Pushy\ntags: [trace-learning]\n\n"
+        "## Artifact analysis\n\n"
         "**Storage substrate:** `files` — x\n"
         "**Representational form:** `natural-language` — x\n"
         "**Lineage:** `authored` — x\n"
         "**Behavioral authority:** `knowledge` — x\n"
+        "\n## Write side\n\n"
         "**Write agency:** `not-determinable` — the review cannot tell\n"
         "**Trace source:** `not-determinable` — the review says traces are used but not which kind\n"
         "**Learning scope:** `cross-task` — x\n"
         "**Learning timing:** `offline` — x\n"
         "**Distilled form:** `natural-language` — x\n"
+        "\n## Read-back\n\n"
         "**Read-back:** `push` — pushes stuff\n"
         "**Read-back signal:** `not-determinable` — push exists but the review does not identify the selector\n"
         "**Faithfulness tested:** `not-determinable` — the review does not say whether ablations exist\n"
@@ -137,10 +149,14 @@ def test_not_determinable_marks_applicable_axis_assessed_unknown() -> None:
 def test_not_determinable_cannot_be_mixed_with_controlled_values() -> None:
     text = (
         "# MixedUnknown\n\n"
+        "## Artifact analysis\n\n"
         "**Storage substrate:** `files` — x\n"
         "**Representational form:** `natural-language` `not-determinable` — x\n"
         "**Lineage:** `authored` — x\n"
         "**Behavioral authority:** `knowledge` — x\n"
+        "\n## Write side\n\n"
+        "**Write agency:** `manual` — x\n"
+        "\n## Read-back\n\n"
         "**Read-back:** `pull` — x\n"
     )
     row, flags = parse(text)
@@ -152,12 +168,15 @@ def test_curation_none_sets_assessed_absent_zeros_without_flag() -> None:
     # automatic writes but no curation: `none` records 0 across the axis, no flag
     text = (
         "# Acquisitive\n\n"
+        "## Artifact analysis\n\n"
         "**Storage substrate:** `files` — x\n"
         "**Representational form:** `natural-language` — x\n"
         "**Lineage:** `imported` — x\n"
         "**Behavioral authority:** `knowledge` — x\n"
+        "\n## Write side\n\n"
         "**Write agency:** `manual` `automatic` — auto-extracts, no curation\n"
         "**Curation operations:** `none` — only acquisition, nothing over stored memory\n"
+        "\n## Read-back\n\n"
         "**Read-back:** `pull` — x\n"
     )
     row, flags = parse(text)
@@ -169,12 +188,15 @@ def test_curation_none_sets_assessed_absent_zeros_without_flag() -> None:
 def test_curation_none_cannot_be_mixed_with_controlled_values() -> None:
     text = (
         "# MixedNone\n\n"
+        "## Artifact analysis\n\n"
         "**Storage substrate:** `files` — x\n"
         "**Representational form:** `natural-language` — x\n"
         "**Lineage:** `authored` — x\n"
         "**Behavioral authority:** `knowledge` — x\n"
+        "\n## Write side\n\n"
         "**Write agency:** `automatic` — x\n"
         "**Curation operations:** `dedup` `none` — x\n"
+        "\n## Read-back\n\n"
         "**Read-back:** `pull` — x\n"
     )
     _row, flags = parse(text)
@@ -182,7 +204,7 @@ def test_curation_none_cannot_be_mixed_with_controlled_values() -> None:
 
 
 def test_off_vocab_single_token_flagged() -> None:
-    row, flags = parse("# X\n\n**Read-back:** `sometimes` — off vocab\n")
+    row, flags = parse("# X\n\n## Read-back\n\n**Read-back:** `sometimes` — off vocab\n")
     assert "read_back_direction: off-vocab `sometimes`" in flags
     assert row["rb_pull"] == "" and row["rb_push"] == ""
 
@@ -190,11 +212,14 @@ def test_off_vocab_single_token_flagged() -> None:
 def test_corpus_shaped_natural_language_only_form_is_not_dropped() -> None:
     text = (
         "# Textual\n\n"
+        "## Artifact analysis\n\n"
         "- **Storage substrate:** `files` — Markdown files\n"
         "- **Representational form:** `natural-language` — Notes and guidance are text.\n"
         "- **Lineage:** `authored` — Written directly.\n"
         "- **Behavioral authority:** `knowledge` `instruction` — Read by agents.\n"
+        "\n## Write side\n\n"
         "**Write agency:** `manual` — Maintainers edit files.\n"
+        "\n## Read-back\n\n"
         "**Read-back:** `pull` — Agents open the files.\n"
     )
     row, flags = parse(text)
@@ -208,11 +233,14 @@ def test_corpus_shaped_natural_language_only_form_is_not_dropped() -> None:
 def test_corpus_shaped_mixed_form_retains_natural_language_component() -> None:
     text = (
         "# Mixed\n\n"
+        "## Artifact analysis\n\n"
         "- **Storage substrate:** `files` — Markdown files\n"
         "- **Representational form:** `natural-language` `symbolic` — Text plus frontmatter.\n"
         "- **Lineage:** `authored` — Written directly.\n"
         "- **Behavioral authority:** `knowledge` `routing` — Content advises; fields route.\n"
+        "\n## Write side\n\n"
         "**Write agency:** `manual` — Maintainers edit files.\n"
+        "\n## Read-back\n\n"
         "**Read-back:** `pull` — Agents open the files.\n"
     )
     row, flags = parse(text)
@@ -220,4 +248,50 @@ def test_corpus_shaped_mixed_form_retains_natural_language_component() -> None:
     assert row["form_natural_language"] == "1" and row["form_symbolic"] == "1"
     assert row["form_parametric"] == "0"
     assert row["representational_form"] == "natural-language;symbolic"
+    assert flags == []
+
+
+def test_legacy_sections_cannot_supply_authoritative_matrix_values() -> None:
+    text = (
+        "# Scoped\n\n"
+        "## Comparison with Our System\n\n"
+        "**Storage substrate:** `sqlite` — a legacy comparison value\n"
+        "**Read-back:** `push` — a legacy comparison value\n"
+        "\n## Artifact analysis\n\n"
+        "**Storage substrate:** `files` — the source-grounded value\n"
+        "**Representational form:** `natural-language` — x\n"
+        "**Lineage:** `authored` — x\n"
+        "**Behavioral authority:** `knowledge` — x\n"
+        "\n## Write side\n\n"
+        "**Write agency:** `manual` — x\n"
+        "\n## Read-back\n\n"
+        "**Read-back:** `pull` — the source-grounded value\n"
+    )
+
+    row, flags = parse(text)
+
+    assert row["storage_substrate"] == "files"
+    assert row["read_back_direction"] == "pull"
+    assert flags == []
+
+
+def test_backticked_rationale_terms_are_not_controlled_values() -> None:
+    text = (
+        "# Rationale\n\n"
+        "## Artifact analysis\n\n"
+        "**Storage substrate:** `files` — x\n"
+        "**Representational form:** `natural-language` — x\n"
+        "**Lineage:** `authored` — x\n"
+        "**Behavioral authority:** `knowledge` — x\n"
+        "\n## Write side\n\n"
+        "**Write agency:** `automatic` — x\n"
+        "**Curation operations:** `evolve` — The system implements neither `none` nor `invalidate`.\n"
+        "\n## Read-back\n\n"
+        "**Read-back:** `pull` — x\n"
+    )
+
+    row, flags = parse(text)
+
+    assert row["op_evolve"] == "1"
+    assert row["op_invalidate"] == "0"
     assert flags == []

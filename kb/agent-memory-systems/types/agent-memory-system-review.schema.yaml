@@ -78,5 +78,20 @@ allOf:
                 const: trace-learning
     then:
       properties:
-        body:
-          pattern: "### Trace-learning"
+        headings:
+          contains:
+            const: "### Trace-learning"
+  - if:
+      properties:
+        headings:
+          contains:
+            const: "### Trace-learning"
+    then:
+      properties:
+        frontmatter:
+          required:
+            - tags
+          properties:
+            tags:
+              contains:
+                const: trace-learning

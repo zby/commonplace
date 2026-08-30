@@ -10,7 +10,8 @@ logic lives in the package library `commonplace.lib.systems_matrix` (text-in,
 row-out, unit-tested); this runner owns file discovery, the existing identity join
 (public_repo / clone_path), and CSV writing. Hand-classified columns are
 preserved across runs by review_file. Off-vocabulary tokens, missing frontmatter,
-and tier mismatches are reported, not guessed.
+and tier mismatches are reported, not guessed. Any flag blocks the write so an
+invalid rebuild cannot replace the last complete matrix.
 
 Output: kb/agent-memory-systems/systems.csv. Run:  python3 scripts/build_systems_matrix.py
 """
@@ -22,7 +23,11 @@ import sys
 from pathlib import Path
 
 from commonplace.lib.systems_matrix import (
-    COLUMNS, JOINED, PARSED, norm, parse_review_text,
+    COLUMNS,
+    JOINED,
+    PARSED,
+    norm,
+    parse_review_text,
 )
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -149,19 +154,23 @@ def main() -> int:
             all_flags.append((row["review_file"], f))
 
     rows.sort(key=lambda r: (r["source_tier"], r["system_name"].lower()))
-    with SYSTEMS_CSV.open("w", encoding="utf-8", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=COLUMNS, extrasaction="ignore", lineterminator="\n")
-        w.writeheader()
-        w.writerows(rows)
-
     tiers = {}
     for r in rows:
         tiers[r["source_tier"]] = tiers.get(r["source_tier"], 0) + 1
-    print(f"rows written: {len(rows)}  ({', '.join(f'{k}={v}' for k, v in sorted(tiers.items()))})")
+    print(f"rows parsed: {len(rows)}  ({', '.join(f'{k}={v}' for k, v in sorted(tiers.items()))})")
     print(f"identity (repo/clone) joined: {joined}/{len(rows)}")
     print(f"flags: {len(all_flags)}")
     for rf, f in all_flags:
         print(f"  - {Path(rf).name}: {f}")
+    if all_flags:
+        print("matrix not written: resolve all flags first", file=sys.stderr)
+        return 1
+
+    with SYSTEMS_CSV.open("w", encoding="utf-8", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=COLUMNS, extrasaction="ignore", lineterminator="\n")
+        w.writeheader()
+        w.writerows(rows)
+    print(f"rows written: {len(rows)}")
     return 0
 
 

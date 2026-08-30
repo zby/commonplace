@@ -141,17 +141,21 @@ def norm(s: str) -> str:
     return re.sub(r"[^a-z0-9]", "", s.lower())
 
 
-def _btok(value: str) -> str:
-    """Regex matching a backticked controlled token, tolerant of internal spacing."""
-    return "`" + re.escape(value).replace(r"\ ", r"\s*") + "`"
+def _lead_tokens(line: str) -> list[str]:
+    """Return only the contiguous backticked tokens that lead a finding line.
+
+    Backticked terms in the rationale are prose, not authored matrix values. The
+    review contract therefore makes the controlled tokens a contiguous prefix.
+    """
+    tokens: list[str] = []
+    remainder = line
+    while match := re.match(r"\s*`([^`]+)`", remainder):
+        tokens.append(re.sub(r"\s+", " ", match.group(1).strip()))
+        remainder = remainder[match.end():]
+    return tokens
 
 
-def _tokens(line: str) -> list[str]:
-    return [t.strip() for t in re.findall(r"`([^`]+)`", line)]
-
-
-def _is_assessed_unknown(label: str, line: str, flags: list[str]) -> bool:
-    tokens = _tokens(line)
+def _is_assessed_unknown(label: str, tokens: list[str], flags: list[str]) -> bool:
     if NOT_DETERMINABLE not in tokens:
         return False
     if tokens == [NOT_DETERMINABLE]:
@@ -160,8 +164,7 @@ def _is_assessed_unknown(label: str, line: str, flags: list[str]) -> bool:
     return False
 
 
-def _is_assessed_none(label: str, line: str, flags: list[str]) -> bool:
-    tokens = _tokens(line)
+def _is_assessed_none(label: str, tokens: list[str], flags: list[str]) -> bool:
     if NONE_TOKEN not in tokens:
         return False
     if tokens == [NONE_TOKEN]:
@@ -172,14 +175,29 @@ def _is_assessed_none(label: str, line: str, flags: list[str]) -> bool:
 
 def extract_token(label: str, text: str) -> str:
     """Value of a ``**Label:** `token``` lead token, or '' if absent."""
-    m = re.search(rf"\*\*{re.escape(label)}:\*\*\s*`([^`]+)`", text)
-    return m.group(1).strip() if m else ""
+    line = _lead_line(label, text)
+    tokens = _lead_tokens(line) if line is not None else []
+    return tokens[0] if tokens else ""
 
 
 def _lead_line(label: str, text: str) -> str | None:
     """The remainder of the line after ``**Label:**``, or None if absent."""
-    m = re.search(rf"\*\*{re.escape(label)}:\*\*\s*(.+)", text)
+    m = re.search(
+        rf"^[ \t]*(?:[-*][ \t]+)?\*\*{re.escape(label)}:\*\*[ \t]*(.*)$",
+        text,
+        re.MULTILINE,
+    )
     return m.group(1) if m else None
+
+
+def _h2_section(text: str, heading: str) -> str:
+    """Body of one exact H2 section, excluding later H2 sections."""
+    match = re.search(
+        rf"^##[ \t]+{re.escape(heading)}[ \t]*$\n?(.*?)(?=^##[ \t]+|\Z)",
+        text,
+        re.MULTILINE | re.DOTALL,
+    )
+    return match.group(1) if match else ""
 
 
 def _onehot(label: str, cols: dict[str, str], text: str, applicable: bool,
@@ -197,15 +215,16 @@ def _onehot(label: str, cols: dict[str, str], text: str, applicable: bool,
     if line is None:
         flags.append(f"{label}: missing lead token")
         return
-    if _is_assessed_unknown(label, line, flags):
+    tokens = _lead_tokens(line)
+    if _is_assessed_unknown(label, tokens, flags):
         return
-    if _is_assessed_none(label, line, flags):
+    if _is_assessed_none(label, tokens, flags):
         for col in cols:
             row[col] = "0"
         return
     matched = False
     for col, value in cols.items():
-        hit = bool(re.search(_btok(value), line))
+        hit = value in tokens
         row[col] = "1" if hit else "0"
         matched = matched or hit
     if not matched:
@@ -242,9 +261,16 @@ def parse_review_text(text: str, review_file: str, source_tier: str) -> tuple[di
     # Targeting (coarse vs instance) lives in the Read-back signal one-hots; there is
     # no separate push_engineered flag — an `instance` signal *is* a targeted push.
 
+    # Controlled values are authoritative only inside their contract sections.
+    # Legacy comparison/transfer sections can retain similar labels as inert prose.
+    artifact_text = _h2_section(text, "Artifact analysis")
+    write_text = _h2_section(text, "Write side")
+    read_text = _h2_section(text, "Read-back")
+
     # single-valued lead tokens + vocab flagging
     for col, (label, vocab) in SINGLE_VOCAB.items():
-        v = extract_token(label, text)
+        section = artifact_text if col == "storage_substrate" else read_text
+        v = extract_token(label, section)
         row[col] = v
         if not v:
             flags.append(f"{col}: missing")
@@ -252,7 +278,7 @@ def parse_review_text(text: str, review_file: str, source_tier: str) -> tuple[di
             flags.append(f"{col}: off-vocab `{v}`")
 
     # read-back justification + direction one-hot (kills the `both` bucket)
-    mrb = re.search(r"\*\*Read-back:\*\*\s*`[^`]+`\s*[—-]+\s*(.+)", text)
+    mrb = re.search(r"\*\*Read-back:\*\*\s*`[^`]+`\s*[—-]+\s*(.+)", read_text)
     if mrb:
         row["read_back_notes"] = mrb.group(1).strip()
     direction = row["read_back_direction"]
@@ -262,22 +288,22 @@ def parse_review_text(text: str, review_file: str, source_tier: str) -> tuple[di
         row["rb_push"] = "1" if direction in ("push", "both") else "0"
 
     # representational form: one-hot components; derive a compact component list
-    line = _lead_line("Representational form", text)
+    line = _lead_line("Representational form", artifact_text)
     if line is None:
         flags.append("Representational form: missing lead token")
-    elif _is_assessed_unknown("Representational form", line, flags):
-        pass
     else:
-        present = []
-        for col, value in FORM.items():
-            hit = bool(re.search(_btok(value), line))
-            row[col] = "1" if hit else "0"
-            if hit:
-                present.append(value)
-        if present:
-            row["representational_form"] = ";".join(present)
-        else:
-            flags.append("representational_form: lead token has no controlled value")
+        tokens = _lead_tokens(line)
+        if not _is_assessed_unknown("Representational form", tokens, flags):
+            present = []
+            for col, value in FORM.items():
+                hit = value in tokens
+                row[col] = "1" if hit else "0"
+                if hit:
+                    present.append(value)
+            if present:
+                row["representational_form"] = ";".join(present)
+            else:
+                flags.append("representational_form: lead token has no controlled value")
 
     # generic one-hot axes
     for label, cols in ONEHOT_AXES.items():
@@ -288,16 +314,22 @@ def parse_review_text(text: str, review_file: str, source_tier: str) -> tuple[di
             applicable = trace_learning
         elif label in AUTOMATIC_AXES:
             applicable = row.get("wa_automatic") == "1"
-        _onehot(label, cols, text, applicable, row, flags)
+        if label in {"Lineage", "Behavioral authority"}:
+            section = artifact_text
+        elif label == "Read-back signal":
+            section = read_text
+        else:
+            section = write_text
+        _onehot(label, cols, section, applicable, row, flags)
 
     # faithfulness tested (single yes/no), applicable to push/both
     if is_push:
-        ft = extract_token("Faithfulness tested", text)
+        ft = extract_token("Faithfulness tested", read_text)
         if ft in ("yes", "no"):
             row["rb_faithfulness_tested"] = ft
         elif ft == NOT_DETERMINABLE:
-            line = _lead_line("Faithfulness tested", text) or ""
-            _is_assessed_unknown("Faithfulness tested", line, flags)
+            line = _lead_line("Faithfulness tested", read_text) or ""
+            _is_assessed_unknown("Faithfulness tested", _lead_tokens(line), flags)
         elif ft:
             flags.append(f"rb_faithfulness_tested: off-vocab `{ft}`")
         else:

@@ -1145,6 +1145,58 @@ The source does not establish behavioral activation.
     assert any("### Trace-learning" in item for item in results.fails)
 
 
+def test_agent_memory_review_trace_learning_subsection_requires_tag(
+    tmp_path: Path,
+) -> None:
+    reviews_root = configure_agent_memory_review_type(tmp_path)
+    note = write(
+        reviews_root / "system.md",
+        """---
+description: "Trace-learning review whose missing classification tag must fail the structural contract"
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
+source-tier: code-grounded
+last-checked: "2026-08-30"
+---
+
+# System
+
+## Core Ideas
+
+The system learns from tool traces.
+
+## Artifact analysis
+
+**Storage substrate:** `files` — retained files.
+**Representational form:** `natural-language` — lessons are text.
+**Lineage:** `trace-extracted` — lessons come from tool traces.
+**Behavioral authority:** `knowledge` — later agents read the lessons.
+
+## Write side
+
+**Write agency:** `automatic` — the learner writes lessons.
+
+### Trace-learning
+
+**Trace source:** `tool-traces` — completed tool calls.
+**Learning scope:** `per-project` — lessons stay in one project.
+**Learning timing:** `offline` — learning runs after the session.
+**Distilled form:** `natural-language` — lessons are text.
+
+## Read-back
+
+**Read-back:** `pull` — the agent requests lessons.
+
+## Curiosity Pass
+
+The source does not establish behavioral activation.
+""",
+    )
+
+    results = validation.validate_note(note, repo_root=tmp_path)
+
+    assert any("frontmatter: 'tags' is a required property" in item for item in results.fails)
+
+
 def test_quote_citation_shape_passes_when_well_formed() -> None:
     results = validation.CheckResults(note_type="agent-memory-system-review")
     content = (

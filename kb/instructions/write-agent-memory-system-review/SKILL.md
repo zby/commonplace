@@ -28,6 +28,7 @@ For an authorized publication, also require:
 - reviewed revision or capture, evidence limitations, and citation format;
 - an authorized `note_path`, plus authority to move an incumbent at that path to one collision-safe `.replaced.<date>[.<n>].md` sibling;
 - any separately authorized auxiliary paths: `kb/agent-memory-systems/README.md` and the trace-learning survey are excluded unless named;
+- the downstream comparison disposition: either authority for the generated `systems.csv` and `systems-table.md` pair plus any separately commissioned current landscape-synthesis output, or an explicit no-authority disposition that requires the workflow to report those consumers stale;
 - authority to create the workflow-owned review jobs, results, and freshness state required by semantic QA.
 - whether local drafting is authorized when a fresh worker is unavailable.
 
@@ -48,6 +49,7 @@ If the boundary is inspectable for the parent analysis but cannot support durabl
 3. **Archive an existing review before writing.** If `note_path` exists, move it to `{note_path%.md}.replaced.{YYYY-MM-DD}.md`. If that target exists, append a numeric suffix starting at `2` and increment until the path is free.
 
    Then mark the archived file:
+   - Change `type` to `kb/types/note.md`; the preserved predecessor is no longer a live review or matrix input.
    - Set `tags: []`, clearing any `trace-learning` tag.
    - Add after the title: `> Replaced {YYYY-MM-DD}. See [{name}](./{name}.md) for the current review.`
    - Remove `user-verified`; archiving is a substantive lifecycle edit and the replacement banner carries the supersession fact.
@@ -112,6 +114,12 @@ If the boundary is inspectable for the parent analysis but cannot support durabl
 
 8. **Validate.** Run `commonplace-validate "{note_path}"`. Fix any structural or description-quality issues and validate once more.
 
+9. **Close the downstream comparison handoff.** A code-grounded new or replacement review changes the source set for the matrix, table, and any synthesis presented as current. Do not let review publication complete with that state implicit.
+
+   - Start a generated refresh only when both paths are authorized. Rebuild `kb/agent-memory-systems/systems.csv`, require a successful build report with `flags: 0`, then regenerate `kb/agent-memory-systems/systems-table.md` from those exact CSV bytes. If either path is unauthorized or either build fails, report the pair as stale and never describe a partial refresh as current. Never hand-edit either generated artifact.
+   - A current public synthesis is invalidated whenever its matrix, row-linked reviews, or ontology inputs differ from its recorded evidence identity. Invoke [Synthesize the agent-memory landscape](../synthesize-agent-memory-landscape/SKILL.md) only when the caller separately commissioned it, authorized its output and generated inputs, and supplied a reconstructable revision or retained snapshot. Otherwise report the existing synthesis as historical after this review change. Never patch its counts or examples piecemeal.
+   - A doc-grounded review does not enter the code-grounded matrix or table. Report those as unchanged; report a public synthesis stale only when it actually includes the doc-grounded qualitative corpus that changed.
+
 ## Report
 
 Report:
@@ -121,6 +129,8 @@ Report:
 - whether an incumbent was archived;
 - whether drafting was delegated;
 - authorized auxiliary paths changed or candidate edits withheld;
+- matrix/table refresh or stale disposition, including the matrix flag count;
+- current landscape-synthesis refresh, historical, unchanged, or blocked disposition;
 - ontology and taxonomy QA outcome;
 - semantic bundle outcome;
 - final `commonplace-validate` result.
@@ -138,7 +148,7 @@ Report:
 **Never:**
 
 - acquire, refresh, mutate, or widen the prepared source boundary;
-- mutate a path outside the packet's legacy-review mutation set, except workflow-owned semantic-QA state explicitly authorized by the packet;
+- mutate a path outside the packet's authorized review, auxiliary, or generated-comparison set, except workflow-owned semantic-QA state and a separately commissioned synthesis output owned by its invoked skill;
 - overwrite a review whose source identity belongs to another subject;
 - update `last-checked` without reading the frozen sources;
 - write Commonplace differences, borrowable ideas, watch items, or transfer recommendations into the durable review;

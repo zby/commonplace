@@ -28,7 +28,7 @@ A text-only survey cannot answer "how many systems do X", and a hand-maintained 
 
 **Context.** The signal axis was first populated by mining the review text. Zikkaron exposed the failure: its text said "coarse session context" without backticking `coarse`, so mining recorded `sig_coarse=0` — wrong. At least 23 reviews under-counted `coarse` the same way.
 
-**Decision.** The matrix is populated only from authored lead tokens; mining is abandoned. An applicable axis with no token is left blank and **flagged**, making the flag list the precise retrofit worklist. `not-determinable` is an explicit token for "the review genuinely cannot tell", distinct from a missing token.
+**Decision.** The matrix is populated only from the contiguous authored lead-token prefix in each contract-owned section; later backticked rationale and legacy comparison/transfer sections are inert. An applicable axis with no token is left blank and **flagged**, making the flag list the precise retrofit worklist. `not-determinable` is an explicit token for "the review genuinely cannot tell", distinct from a missing token.
 
 **Consequences.** Faithfulness over completeness: a blank is honest, a guess pollutes. The parser lives in `commonplace.lib.systems_matrix` with unit tests and a converted-review fixture; the schema is cleaned to the live columns (no dead placeholders).
 
@@ -94,9 +94,9 @@ A second realisation sharpened the cut: when maintenance is **manual**, it *is* 
 
 **Context.** A narrative comparison can explain interactions that a table cannot, but manually maintained prose drifts from a growing matrix. Qualitative ontology observations also have a different evidence shape from population-complete controlled fields.
 
-**Decision.** Run `synthesize-agent-memory-landscape` as a separate downstream operation over one pinned `systems.csv` snapshot and its reviews. Quantitative claims come only from mechanically queried closed fields and state their denominators. Open-ended mechanisms support examples, variants, and ontology stress cases but no prevalence claim without a corpus-wide assay. Transfer scans and legacy Commonplace-comparison sections are excluded.
+**Decision.** Run `synthesize-agent-memory-landscape` as a separate downstream operation over one zero-flag `systems.csv` snapshot plus the exact row-linked reviews and ontology inputs at the same reconstructable revision or retained snapshot. Quantitative claims come only from mechanically queried closed fields and state their denominators. Open-ended mechanisms support examples, variants, and ontology stress cases but no prevalence claim without a corpus-wide assay. Transfer scans and legacy Commonplace-comparison sections are excluded.
 
-**Consequences.** A public article states its matrix hash and population and is replaced as one coherent snapshot. Its worker can exercise independent judgment without becoming a new source of matrix truth, while a checker can reproduce every number and review every qualitative example.
+**Consequences.** A public article states its matrix and complete-evidence manifest hashes, population, review/ontology revision, and cited-review hashes, and is replaced as one coherent snapshot. Its worker and checker operate on frozen bytes, so mid-run corpus changes cannot silently alter the evidence and every number and qualitative example remains reproducible.
 
 ## Open follow-ons
 
