@@ -142,9 +142,12 @@ and obtain evidence that can change the status of its central claims.
    model search, which proposals and checks were computational, which global
    judgments remained human, which system consequences bore on them, and which
    recurring judgments became reusable selection machinery.
-4. **Expose a small research surface.** Use a compact hub, the Naur argument,
-   the Bitter Lesson argument, and the experimental protocol or result. Add an
-   article only when it carries a distinct argumentative or empirical job.
+4. **Expose a small research surface.** Use a compact program article, the
+   transfer-and-closure argument, the Naur argument, the Bitter Lesson
+   argument, and the experimental protocol or result. Routing belongs to
+   `kb/articles/README.md`, not to an article. Add an article only when it
+   carries a distinct argumentative or empirical job. Expanding the program
+   article is the workshop's current article-side focus.
 5. **Show the program operating.** Record Commonplace and programming-agent
    episodes at the strongest evidence level they establish: mediation,
    empirical contact, theory learning, or recurrence.
@@ -221,7 +224,8 @@ used to revise the invitation.
 
 ## Current research surface
 
-- [The decisions that stay human, and what would move them](../../articles/the-decisions-that-stay-human-and-what-would-move-them.md) — compact program hub.
+- [A research program for theory-guided program modification](../../articles/a-research-program-for-theory-guided-program-modification.md) — the compact program statement; the workshop's current article-side focus.
+- [The decisions that stay human, and what would move them](../../articles/the-decisions-that-stay-human-and-what-would-move-them.md) — the conditional transfer argument and structural closure versus evaluator quality.
 - [What bound Naur's theory to programmers](../../articles/what-bound-naurs-theory-to-programmers.md) — bearer question and coherent modification.
 - [The Bitter Lesson does not require everything to live in weights](../../articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) — narrow rebuttal, first strategy, and scaling challenge.
 - [Shared model](./shared-model.md) — current compact synthesis and experiment outline.
@@ -239,8 +243,9 @@ used to revise the invitation.
   counterexamples, negative results, and theory revisions;
 - records that separate computational search from human selection and track
   successful conversions of recurring judgments into selection machinery;
-- a coherent researcher-facing hub and only the companion articles needed to
-  carry distinct arguments or results;
+- a coherent researcher-facing program article and only the companion articles
+  needed to carry distinct arguments or results, with routing held in the
+  articles collection landing rather than in an article;
 - an accessible research surface linking claims and open questions to their
   supporting material; and
 - evidence from a bounded researcher-engagement attempt.

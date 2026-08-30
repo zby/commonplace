@@ -13,7 +13,7 @@ Two separate pressures keep the design modular. Different collections support di
 ## Threads worth following
 
 **Theory-guided program modification.** The current
-[research program](./articles/the-decisions-that-stay-human-and-what-would-move-them.md)
+[research program](./articles/a-research-program-for-theory-guided-program-modification.md)
 asks whether a computational system can use fallible, project-specific theory
 to keep modification coherent through search, backtracking, recovery, and
 delayed feedback. Theory is proposed as control over that search, not as an
@@ -22,7 +22,9 @@ human-inclusive testbed: models perform substantial computational search while
 the operator still supplies much high-level selection about global fit. The
 [Naur](./articles/what-bound-naurs-theory-to-programmers.md) and
 [Bitter Lesson](./articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
-articles develop the bearer and scaling questions.
+articles develop the bearer and scaling questions, and
+[the decisions that stay human](./articles/the-decisions-that-stay-human-and-what-would-move-them.md)
+asks why that selection has not yet moved into the automatic system.
 
 **Deployment-time learning.** Durable changes to behavior-shaping prompts, rules, tools, schemas, tests, and code can affect later sessions without updating model weights. Storage is insufficient: later operation must load or enforce the result. [Deploy-time learning](./notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) develops this path, while [bounded context](./notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) explains why selective routing remains necessary. The [learning theory index](./notes/learning-theory-README.md) maps the wider thread.
 

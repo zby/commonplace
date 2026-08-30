@@ -9,7 +9,7 @@ only after disposition in the [incumbent ledger](./incumbent-ledger.md).
 
 | Module | Job | Essential content | Primary support | Open research contact |
 |---|---|---|---|---|
-| **Research-program hub** | Present one central question and route readers to the evidence and companion arguments | Can fallible project theory keep computational search, symbolic execution, backtracking, recovery, and revision coherent across delayed feedback? Weight–prompt operations and their code complement; lightweight search control; Commonplace and programming agents as linked testbeds; current human selection; truth versus fit; evidence ladder; decisive experiments | [Shared model](./shared-model.md), [target problems](./target-problems.md), [coherent search under delayed feedback](../../notes/program-theory-sustains-search-under-delayed-feedback.md), [operation-level complement](../../notes/code-complements-weight-prompt-with-symbolic-operations.md), [revision evidence](../../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md) | Rival accounts of coherent modification, alternative operation decompositions, counterexamples, external testbeds, and experimental designs |
+| **Research-program statement** | State one central question, the evidence standard that would answer it, and the experiments that would change its status | Can fallible project theory keep computational search, symbolic execution, backtracking, recovery, and revision coherent across delayed feedback? Weight–prompt operations and their code complement; lightweight search control; Commonplace and programming agents as linked testbeds; current human selection; truth versus fit; evidence ladder; decisive experiments | [Shared model](./shared-model.md), [target problems](./target-problems.md), [coherent search under delayed feedback](../../notes/program-theory-sustains-search-under-delayed-feedback.md), [operation-level complement](../../notes/code-complements-weight-prompt-with-symbolic-operations.md), [revision evidence](../../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md) | Rival accounts of coherent modification, alternative operation decompositions, counterexamples, external testbeds, and experimental designs |
 | **Bearer question** | Explain why program-specific theory matters and why Naur's argument does not settle that only humans can hold it | Retained theory is not the same as holding it; a holder uses partial theory to specialize search, coordinate executable changes, and recover across later demands rather than deducing a perfect change | [Accepted Naur baseline](./accepted/what-bound-naurs-theory-to-programmers.md), [Naur basis note](../../notes/naur-equates-machine-execution-with-formulated-criteria.md), [coherent-search claim](../../notes/program-theory-sustains-search-under-delayed-feedback.md), [lightweight search control](../../notes/lightweight-search-control-does-not-license-adoption.md) | Rival readings of Naur, interventions separating theory-guided from generic search, and task distributions that expose recovery |
 | **Operative theory** | State what would show that explicit theory participates in operation rather than remaining documentation | Reflective membership; prompt-side mediation with weights and symbolic state held fixed; addressable retention; independent exposure and read-back; continuation; mediation, empirical contact, theory learning, and recurrence as separate evidence levels | [Interpretation, retention, and independent read-back](../../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md), [mediation trace](../../notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md), [natural-language project-state specialization](../../notes/natural-language-project-state-specializes-search-heuristics.md), [reflection buys addressability](../../notes/reflection-buys-addressability.md) | Better causal interventions, information-matched controls, alternative substrates, stronger read-back, and failures of selective rescoping |
 | **Functional architecture** | Explain the complementary operation classes without treating today's boundary as permanent | A model-mediated operation is instantiated by weights plus prompt; code plus runtime supplies independently executed symbolic operations; code may also enter prompts as project evidence; representation, semantic application, exact execution, verification, and continuity retain distinct failure surfaces | [Operation-level complement](../../notes/code-complements-weight-prompt-with-symbolic-operations.md), [scheduler–LLM asymmetry](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md), [bounded-context orchestration](../../notes/bounded-context-orchestration-model.md), [cross-form boundary movement](../../notes/moving-the-interpretation-enforcement-boundary-requires-coverage.md) | Architectures that combine roles, evidence that independent symbolic execution is unnecessary, and interventions on operation placement |
@@ -19,31 +19,49 @@ only after disposition in the [incumbent ledger](./incumbent-ledger.md).
 
 ## Composition
 
-The modules do not imply an article per row. The current minimum public surface
-is:
+The modules do not imply an article per row. No article carries the series'
+routing: `kb/articles/README.md` is the rendered collection landing and the
+reader's entry point, and the articles collection forbids in-prose links into
+`kb/work/`, so an article cannot route to the shared model, target problems, or
+closure map in any case. Each article stands on its own and links only the
+companions a reader actually needs next.
 
-1. **A compact program hub** carrying the central question, complementary
-   operation classes, lightweight search control, current computational loop,
-   truth-versus-fit distinction, evidence ladder, testbeds, and experiments.
-2. **The Naur article** carrying the bearer argument and the shift from one-shot
+The current minimum public surface is:
+
+1. **[A research program for theory-guided program
+   modification](../../articles/a-research-program-for-theory-guided-program-modification.md)**
+   carrying the central question, complementary operation classes, lightweight
+   search control, current computational loop, truth-versus-fit distinction,
+   evidence ladder, testbeds, and experiments. This is the article the workshop
+   is now expanding.
+2. **[The decisions that stay human, and what would move
+   them](../../articles/the-decisions-that-stay-human-and-what-would-move-them.md)**
+   carrying the conditional adverse-selection argument, the residual-class table
+   of what would have to grow, structural closure versus evaluator quality, and
+   the fixed-client limit of the remote-programmer benchmark.
+3. **The Naur article** carrying the bearer argument and the shift from one-shot
    correctness to coherent search, executable modification, and recovery.
-3. **The Bitter Lesson article** carrying the narrow form-only rebuttal, the
+4. **The Bitter Lesson article** carrying the narrow form-only rebuttal, the
    already-computational human-agent loop, the prompt/code learning surface,
    high-level selection and operation-boundary bottlenecks, alternatives, and
    failure conditions.
-4. **Experimental protocols and later results**, published as articles only when
+5. **Experimental protocols and later results**, published as articles only when
    the evidence has enough substance to warrant them.
 
-Progress, closure, and functional architecture belong in the hub while they can
-be explained there without displacing the central question. Split out an
+Progress, closure, and warrant left the program statement on 2026-08-30 because
+they were displacing the central question, not because they acquired their own
+result; that split was an exposition decision and the transfer article's claims
+are still conditional. Functional architecture stays in the program statement
+while it can be explained there without the same crowding. Split out a further
 evaluation article only when it carries a distinct formalism, dataset, or
 empirical result. Do not restore former article boundaries merely because
 rejected drafts used them.
 
-The Commonplace case remains part of the hub until its evidence supports a
-standalone case study. The theory-mediated-learning material may receive its own
-article when the structured-shift experiment becomes a distinct result; until
-then it is a general layer supporting the programming and reflective cases.
+The Commonplace case remains part of the program statement until its evidence
+supports a standalone case study. The theory-mediated-learning material may
+receive its own article when the structured-shift experiment becomes a distinct
+result; until then it is a general layer supporting the programming and
+reflective cases.
 
 ## Shared constraints
 

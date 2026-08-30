@@ -14,9 +14,10 @@ Nothing published yet.
 
 ## In draft
 
-Three drafts currently remain in the article frontier:
+Four drafts currently remain in the article frontier. The first states the research program the others develop; read it first if you are new to the series.
 
-- [The decisions that stay human, and what would move them](./the-decisions-that-stay-human-and-what-would-move-them.md) — the series hub: states the research program, its progress order, the adverse selection of residual human decisions, the two milestones that meet at the evaluator, and the residue classification as instrument and build plan.
+- [A research program for theory-guided program modification](./a-research-program-for-theory-guided-program-modification.md) — the program statement: the central question of whether fallible project theory can keep computational program modification coherent across search, backtracking, recovery, and delayed feedback; the four evidence levels; the difference between a claim's truth and its fit; the current human-assisted loop; and the experiments that would change the program's status.
+- [The decisions that stay human, and what would move them](./the-decisions-that-stay-human-and-what-would-move-them.md) — the conditional selection argument that automatic transfer is easiest where premises, settled criteria, and defeating checks exist, what would have to grow for each residual class to move, and why structural computational closure is not evaluator quality.
 - [What bound Naur's theory to programmers](./what-bound-naurs-theory-to-programmers.md) — states Naur's thesis at full strength, locates the premise his argument for the human binding runs through, says what trained recognizers changed and did not, and reports one repair failure on the article's own basis note.
 - [The Bitter Lesson does not require everything to live in weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) — separates Sutton's 2019 search-and-learning claim from a weights-only extrapolation, and names credit assignment, evaluation, and decomposition revision as the open problems for learned artifacts.
 

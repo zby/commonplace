@@ -84,12 +84,13 @@ src/commonplace/          Packaged operational engine
 **Theory-guided program modification.** Can a computational system use
 fallible, project-specific theory to keep search, backtracking, and recovery
 coherent under delayed feedback? The
-[research-program hub](./kb/articles/the-decisions-that-stay-human-and-what-would-move-them.md)
+[research program](./kb/articles/a-research-program-for-theory-guided-program-modification.md)
 treats theory as search control rather than an oracle and separates the model's
 computational search from the high-level selection still supplied by the
 operator. Companion articles develop
-[Naur's theory-bearer question](./kb/articles/what-bound-naurs-theory-to-programmers.md)
-and the [Bitter Lesson's scaling test](./kb/articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md).
+[Naur's theory-bearer question](./kb/articles/what-bound-naurs-theory-to-programmers.md),
+the [Bitter Lesson's scaling test](./kb/articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md),
+and [why the hardest decisions stay human](./kb/articles/the-decisions-that-stay-human-and-what-would-move-them.md).
 
 **Deployment-time learning.** Durable changes to prompts, rules, tools, schemas, tests, and code can affect later sessions without updating model weights. Storage is insufficient: later operation must load or enforce the result. Start with [retained system-definition artifacts enable persistent deployment-time adaptation](./kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) and the [learning theory index](./kb/notes/learning-theory-README.md).
 
