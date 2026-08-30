@@ -63,13 +63,13 @@ The program statement is the entry point, not the container for every supporting
 argument. It may summarize a companion's result when that summary is required
 to state the program, but it should not reproduce the companion's derivation.
 
-The boundary between the program statement and the progress article is exact.
+The boundary between the program statement and the decisions companion is exact.
 The program statement may state two boundary facts: current Commonplace evidence
 is human-inclusive, and the research direction is to move named
 decision-bearing functions toward computational supply. The fixed-boundary
 derivation, human/computational/joint allocation profile, cut-set endpoint,
 boundary contraction, structural closure, capability, and warrant belong to
-the progress article. If the program statement names the cut-set endpoint, it
+the decisions companion. If the program statement names the cut-set endpoint, it
 does so only in its bootstrap section and links out rather than teaching the
 formalism.
 
@@ -129,7 +129,7 @@ units:
 The operator therefore appears in two places for two different reasons. The
 opening discloses the evidential boundary. The bootstrap section explains why
 the remaining human contribution is the next learning target. The full
-fixed-boundary and cut-set argument stays in the progress companion.
+fixed-boundary and cut-set argument stays in the decisions companion.
 
 Related-system comparisons should follow enough of the proposed mechanism for
 the contrast to be intelligible. The Naur exegesis, cut-set derivation, closure
@@ -147,7 +147,7 @@ boundaries; it should not default to rewriting the full article.
   closure describe the boundary and evaluation problem around it.
 - The program statement discloses the human-inclusive evidence boundary early,
   but reserves the reallocation, cut-set, contraction, closure, and warrant
-  argument for the bootstrap location and the progress companion.
+  argument for the bootstrap location and the decisions companion.
 - A prompt does not define an LLM operation alone. Relative to fixed call
   settings, the model-mediated operation is instantiated by weights plus prompt.
 - Code complements the weight–prompt operation with runtime-assigned symbolic
