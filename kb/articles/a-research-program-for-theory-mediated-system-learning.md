@@ -38,18 +38,26 @@ This article presents a research program around one question:
 > recovery, and delayed feedback — and revise both its theory and its behavior
 > when consequences arrive?
 
-That is a question about learning, not only about editing. A change to a
+The composite in that question is not a model but a system: model, retained
+artifacts, tools, runtime, and correction machinery, evaluated together at a
+declared boundary.
+
+That makes it a question about learning, not only about editing. A change to a
 program, a rule, a schema, or a test is a durable change to the thing that
 determines the system's later behavior. When such a change is chosen by a
-retained theory, and when its consequences revise that theory, the modification
-is how the system learns — no weight update required. The unit that learns is
-[the deployed system rather than the
-model](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md):
-a change counts as learning when an improvement process uses evidence from
-system behavior to select and retain it, so that it affects later executions.
+retained theory, and when its consequences then revise that theory, the
+modification is how the system learns — no weight update required. The unit that
+learns is [the deployed system rather than the
+model](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md),
+and a change counts as learning when [an improvement
+process](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
+uses evidence from system behavior to select and retain it, so that it affects
+later executions.
+
 What makes the pathway *theory-mediated* is that the theory is represented as an
 object the process can apply, doubt, and revise, rather than being compiled away
-into behavior.
+into behavior. That is what a retained artifact buys and a weight update does
+not: something you can point at, withhold, or replace.
 
 Programming agents supplied with persistent project-specific theory are the
 first demanding external testbed. Commonplace, an agent-operated knowledge base,
@@ -95,13 +103,15 @@ narrow tests while damaging the wider organization in a way the process cannot
 detect. The detailed claim is that [holding a program theory means sustaining
 coherent search under delayed feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md).
 
-The companion article [What bound Naur's theory to programmers](./what-bound-naurs-theory-to-programmers.md)
-starts from Peter Naur's claim that programming is theory building. Its repair
-is narrow: Naur's argument does not establish that only humans can hold a
-program theory. Removing the human-only premise does not show that a current
-agent passes his bearer tests. That remains empirical.
+Peter Naur argued in 1985 that programming is theory building, and that the
+theory lives in the programmers' heads rather than in the artifacts they leave
+behind. The companion article [What bound Naur's theory to
+programmers](./what-bound-naurs-theory-to-programmers.md) makes one narrow
+repair: his argument does not establish that only humans can hold a program
+theory. Removing that premise does not show any current agent passes his bearer
+tests, which stays an empirical question.
 
-## One path, several distinct functions
+## Four functions, four ways to fail
 
 The current architecture separates four functions because they fail in
 different ways.
@@ -113,11 +123,14 @@ different ways.
 | Execute exact transitions and keep the path alive | Code and a persistent runtime | Faithful execution of the wrong transition, frozen decomposition, truncated horizon |
 | Correct proposals and theories | Tests, validators, held-out tasks, decorrelated criticism, later demands, and operational consequences | Weak proxies, captured evaluation, viability-only gates, delayed credit assignment |
 
-This is a functionally mixed architecture, not a theorem that the functions must
-remain in separate representational forms. A future learned substrate may host
+This is a [functionally mixed
+architecture](../notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md),
+not a theorem that the functions must remain in separate representational
+forms. A future learned substrate may host
 several of them, and stronger models may absorb parts of the present
 scaffolding. The current split is valuable because it makes the roles
-addressable and supports interventions on each one.
+[addressable](../notes/reflection-buys-addressability.md) and supports
+interventions on each one.
 
 Interpretation and correction must remain distinct. A model can understand and
 apply a false theory. Semantic competence does not establish that the theory has
@@ -129,7 +142,7 @@ decorrelated evidence must remain able to overturn the candidate's account.
 The strongest recurrent loop is:
 
     retained theory
-      -> theory-guided search or decision
+      -> theory-mediated search or decision
       -> realized change
       -> independent or delayed consequence
       -> read-back against the same theory
@@ -148,11 +161,15 @@ results. The program distinguishes four levels:
 4. **Recurrence:** the updated theory state changes a later operation inside the
    same behavior-determining path.
 
-A citation at the decision point is a useful trace, not proof that the theory was
-load-bearing. Withholding, replacing, or perturbing the theory provides stronger
-evidence. The theory that guided the change must also be the object against
-which the outcome is read, and the resulting theory state must be the one used
-later. Disconnected witnesses do not establish learning through theory.
+[A citation at the decision point is a mediation
+trace](../notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md),
+not proof that the theory was load-bearing. Withholding, replacing, or
+perturbing the theory provides stronger evidence. The theory that guided the
+change must also be the object against which the outcome is read, and the
+resulting theory state must be the one used later. Disconnected witnesses do not
+establish learning through theory: interpretation, addressable retention, and
+independent read-back [have to share one causal path, not merely one system
+boundary](../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md).
 
 ## A true claim may still not fit the theory
 
@@ -173,11 +190,14 @@ guide coherent modification after later demands arrive. This does not make fit
 untestable. It means that the evidence is distributed and delayed rather than
 supplied by one complete local oracle.
 
-Fit can be exposed through whether a claim changes search or recovery, whether
-its predictions survive later evidence, whether modifications guided by it
-preserve organization, whether rival or ablated theories do better, whether it
-reduces repair and human intervention, and whether it transfers beyond the case
-that produced it.
+Fit is still exposed, one consequence at a time:
+
+- whether the claim changes search or recovery;
+- whether its predictions survive later evidence;
+- whether modifications guided by it preserve the system's organization;
+- whether a rival or ablated theory does better;
+- whether it reduces repair and human intervention; and
+- whether it transfers beyond the case that produced it.
 
 The live system under construction can therefore serve as an [initial selection
 environment](../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md).
@@ -190,7 +210,7 @@ Independent factual and formal checks, rival theories, preregistered
 predictions, withholding interventions, held-out demands, delayed consequences,
 and transfer tests are needed to prevent a self-sealing theory.
 
-## This conversation is already an example
+## One recorded episode, and its limits
 
 The
 [2026-08-30 Commonplace revision record](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
@@ -224,26 +244,28 @@ the system. The companion article
 develops that transfer argument and separates it from computational closure,
 which states where decisions happen rather than whether they are any good.
 
-## The Bitter Lesson tests the strategy, not the artifact forms
+## The strategy is first, not privileged
 
-The program has one narrow rebuttal to the Bitter Lesson: production method and
-representational form are different axes. A theory, program, or validator can
-be produced by learning, so Sutton's argument does not impose a weights-only
-rule. This creates conceptual room for explicit artifacts; it does not defend
-the present hand-crafted ones.
+The obvious objection is that retained explicit artifacts are exactly the
+hand-built structure the Bitter Lesson tells us to stop building. The reply is
+deliberately narrow — the [defense portfolio here has one load-bearing
+member](../notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md)
+— and the companion article [The Bitter Lesson does not require everything to
+live in weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
+develops it: production method and representational form are different axes, so
+a theory or a validator can itself be a learned product. That creates room for
+explicit artifacts. It does not defend the present hand-written ones.
 
-Theory-guided construction is the first strategy being tried because global
-theory fit lacks a complete fixed evaluator. The current loop already combines
-computational search with human-assisted high-level selection. Its scaling test
-is whether additional computation improves downstream search and whether
-recurring operator judgments become reusable computational selection machinery.
-
-The strategy competes with end-to-end learning, evolutionary search, self-play,
-weight updates, and stronger-model baselines. It fails if useful selection does
-not improve, bespoke human judgment does not fall, or the current decomposition
-cannot be challenged. The companion article
-[The Bitter Lesson does not require everything to live in weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
-develops that argument and its domain-extensibility conditions.
+Building through retained theory is the first strategy being tried, chosen
+because global theory fit lacks a complete fixed evaluator, not because it is
+the only route. It competes with end-to-end learning, evolutionary search,
+self-play, weight updates, and stronger-model baselines. Its scaling test is
+whether more computation improves downstream search, and whether recurring
+operator judgments become reusable selection machinery. It fails if useful
+selection does not improve, if bespoke human judgment does not fall, or if the
+current decomposition cannot be challenged — the conditions under which [a
+bootstrap stops fitting the Bitter
+Lesson](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
 
 ## Two next experiments
 
@@ -282,11 +304,15 @@ or another method performs better at comparable total cost.
 ## The invitation
 
 The program exposes several points where disagreement can be productive. A
-researcher can challenge the account of coherent modification, propose a rival
-mechanism that does not require retained theory, design stronger controls for
-the intervention, develop a less circular test of global theory fit, identify a
-better first computational strategy, or show that evaluator and decomposition
-construction keep the approach permanently dependent on bespoke human judgment.
+researcher can:
+
+- challenge the account of coherent modification;
+- propose a rival mechanism that does not require retained theory;
+- design stronger controls for the withholding intervention;
+- develop a less circular test of global theory fit;
+- identify a better first computational strategy; or
+- show that evaluator and decomposition construction keep the approach
+  permanently dependent on bespoke human judgment.
 
 The goal is not agreement with a finished theory. It is a small set of claims
 whose status can change through criticism and evidence. The central one remains
