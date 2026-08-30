@@ -25,6 +25,9 @@ source_notes:
   - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
   - kb/notes/oracle-accumulation-improves-the-selection-environment.md
   - kb/notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md
+  - kb/notes/methodological-and-computational-closure-track-different-changes.md
+  - kb/notes/computationally-directed-self-improvement-is-a-reallocation.md
+  - kb/notes/warranted-autonomy-is-bounded-by-oracle-domain.md
   - kb/sources/programming-as-theory-building.ingest.md
 ---
 
@@ -39,12 +42,12 @@ project-specific theory: an understanding of how the program maps to its world,
 why its parts are as they are, and how new demands can be incorporated without
 destroying its structure.
 
-Modern coding agents can already propose, implement, test, and retain changes.
-But the operative system is broader than the model. Model weights supply learned
+Modern coding agents can already propose, implement, test, and retain changes as
+components of larger software-development systems. Model weights supply learned
 competence; prompts carry the current task, project theory, evidence, and
 constraints; code and runtime provide tools, exact transitions, persistence,
-and checks. Together they form an automated software-development system — a
-software factory in the broad sense.
+and checks. Together these components form an automated software-development
+system — a software factory in the broad sense.
 
 > Can an automated software-development system hold and revise a fallible theory
 > of the software it builds well enough to keep successive modifications
@@ -53,16 +56,15 @@ software factory in the broad sense.
 This article sets out a research program for answering that question. It does
 not report that a current system already succeeds.
 
-The unit of analysis is [the deployed system rather than the
-model](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md).
-Any behavior-determining surface can become a learning target. Updating weights,
-revising prompt templates or the retained state from which prompts are assembled,
-rewriting code, tests, schemas, or tools, and changing runtime policy can all
-alter later executions. Such a change counts as learning when an [improvement
+The [deployed system rather than the
+model](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md) is
+the unit of learning. Any behavior-determining surface within it can become a
+learning target: model weights, prompt templates and the retained state from
+which prompts are assembled, code, tests, schemas, tools, or runtime policy. A
+change counts as learning when an [improvement
 process](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
-uses evidence to select and retain it so that later operation depends on it.
-Claims are assessed relative to a declared boundary around the components and
-people included in that process.
+uses evidence to select and retain it so that later operation depends on it. No
+weight update is required.
 
 The path is *theory-mediated* when addressable retained theory does more than
 accompany the work: it guides proposal, diagnosis, evaluation, or recovery, and
@@ -70,6 +72,32 @@ later consequences can revise the same theory state. An individual claim can
 then be inspected, cited, withheld, perturbed, or rescoped. A weight checkpoint
 can also be replaced, but normally offers much weaker claim-level
 addressability.
+
+The program studies the transition with two linked testbeds. Commonplace, the
+agent-operated knowledge base from which this article comes, is the live
+human-agent system. Programming agents supplied with persistent program theory
+are the harder and still prospective case. In Commonplace, the model retrieves
+retained project knowledge, searches and criticizes candidate formulations and
+repository changes, and uses tools for local checks. The operator still supplies
+much of the sparse global-fit signal and final authorization.
+
+Putting the operator inside the boundary makes the current learning path
+visible, but [human-inclusive membership is
+cheap](../notes/computationally-directed-self-improvement-is-a-reallocation.md).
+The program therefore holds that boundary fixed and reports each
+decision-bearing function as [human, computational, or
+joint](../notes/methodological-and-computational-closure-track-different-changes.md).
+Progress is reallocation toward computational supply. The automation endpoint is
+reached when the human participants are no longer a cut set: over the declared
+task scope and horizon, the boundary can contract to the technical system and
+the same improvement pathway still completes. That is an actor-allocation test,
+not a success test; coherent modification and [warrant for unattended
+decisions](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) still need
+independent evidence.
+
+The immediate Commonplace problem is therefore not to introduce computation,
+but to improve computational search and turn recurring operator judgments into
+reusable selection and credit-assignment machinery.
 
 Current systems establish adjacent pieces. [Three 2026 self-improving harnesses
 examined for the
@@ -83,17 +111,6 @@ within one run; its role decomposition, validation, and adoption policy remain
 fixed, and persistence across sessions is not shown. These systems demonstrate
 parts of the path without yet demonstrating persistent theory-mediated
 modification of the behavior-determining system itself.
-
-Two testbeds expose different parts of the problem. Programming agents supplied
-with persistent program theory are the harder and still prospective case.
-Commonplace, the agent-operated knowledge base from which this article comes, is
-the live one. Its model already retrieves retained project knowledge, searches
-and criticizes candidate formulations and repository changes, uses tools for
-local checks, and works from the revised state. The operator supplies much of
-the sparse selection signal about global fit and intent. The immediate problem
-is therefore not to introduce computation, but to improve that computational
-search and turn recurring operator judgments into reusable selection and
-credit-assignment machinery.
 
 ## Holding a theory means controlling a fallible search
 
@@ -174,9 +191,10 @@ perturb interpretation, replace evaluation, or truncate continuity.
 
 Interpretation and correction must remain distinct. A model can understand and
 apply a false theory; independent or sufficiently decorrelated evidence must be
-able to overturn it. The operator currently supplies much of the global-fit
-selection and authorization in the fourth row. Converting recurring parts of
-that work into reusable machinery is a central target of the program.
+able to overturn it. The table also exposes the current actor allocation: the
+operator supplies much of the global-fit selection and authorization in the
+fourth row. Converting recurring parts of that work into reusable machinery is a
+central target of the program.
 
 ## Evidence comes in levels
 
@@ -247,13 +265,13 @@ and repository state; proposed distinctions, experiments, and edits; and
 revised them after the operator corrected the Bitter Lesson framing. The
 revisions were retained and guided later work.
 
-At the boundary including operator, model, knowledge base, and tools, the record
-shows retained-state consumption, theory-state revision, and later reuse in a
-path consistent with mediation and recurrence. It does not estimate how
-load-bearing the artifacts were because no matched replay or ablation was run.
-At a boundary excluding the operator, global-fit selection and final acceptance
-remain exogenous. The companion article [The decisions that stay human, and
-what would move
+Under the fixed human-inclusive boundary described above, the record shows
+retained-state consumption, theory-state revision, and later reuse in a path
+consistent with mediation and recurrence. Its actor allocation remains mixed:
+the operator supplied decisive global-fit selection and final acceptance, so the
+human participants were still a cut set. Because no matched replay or ablation
+was run, the episode also does not estimate how load-bearing the artifacts were.
+The companion article [The decisions that stay human, and what would move
 them](./the-decisions-that-stay-human-and-what-would-move-them.md) develops that
 transfer problem and separates it from structural computational closure.
 
@@ -298,8 +316,8 @@ validators, learned critics, methods, schemas, or programs. A lesson helps only
 tasks that retrieve it; a [maintained check improves selection for every later
 candidate in its
 domain](../notes/oracle-accumulation-improves-the-selection-environment.md).
-Later episodes should show whether more selection decisions have become
-computational.
+Later episodes should show named functions moving from human or joint to
+computational supply, rather than merely more output being generated by agents.
 
 Neither study tests domain-extensibility or superiority to alternative methods.
 Those require later cross-domain comparisons against direct computational
