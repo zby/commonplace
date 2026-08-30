@@ -99,7 +99,8 @@ The rest of the article sets out the program's parts: what coherent
 modification is, the four functions the architecture separates, the levels at
 which evidence for the path is graded, the difference between a claim's truth
 and its fit, one recorded episode, the conditions under which the strategy
-should be abandoned, and the two studies that come next.
+should be abandoned, where the program parts company with Sutton's later
+position, and the two studies that come next.
 
 ## Holding a theory means controlling a fallible search
 
@@ -158,9 +159,11 @@ programmers](./what-bound-naurs-theory-to-programmers.md) makes one narrow
 repair: his argument binds the theory to humans only through [the premise that
 machine execution means following formulated
 criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md),
-so it does not establish that only humans can hold a program theory. Removing
-that premise does not show any current agent passes his bearer tests, which
-stays an empirical question.
+so it does not establish that only humans can hold a program theory. That
+premise is the program's one disagreement with Naur; his account of what a
+theory is, his bearer tests, and coherent modification as the decisive test
+are adopted as they stand. Removing the premise does not show any current
+agent passes his bearer tests, which stays an empirical question.
 
 ## Four functions that fail differently
 
@@ -300,14 +303,16 @@ hand-built structure the Bitter Lesson tells us to stop building. The program
 cannot deny the premise. Its theories, schemas, validators, decompositions, and
 evaluators are at present written by people.
 
-Of the rebuttals one could make, [only one holds
+The program's compatibility with the lesson rests on two arguments. The first
+is the only rebuttal to the objection that [holds
 up](../notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md):
 [production method and representational form are different
-axes](../notes/the-bitter-lesson-selects-production-methods-not-representational.md),
+axes](../notes/the-bitter-lesson-selects-production-methods-not-representational.md).
+The lesson is against hand-crafting, not against learning in prompts and code,
 so a theory or a validator can itself be a learned product. That makes room for
 explicit artifacts. It says nothing in favour of the present hand-written ones.
 
-The answer to the objection is that the present artifacts are a bootstrap: a
+The second argument is that the present artifacts are a bootstrap: a
 hand-crafted starting state that [fits the Bitter Lesson only if learning can
 outgrow
 it](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
@@ -353,6 +358,34 @@ bootstrap stops fitting the lesson, and the strategy should be abandoned, when:
   mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md);
   or
 - another method does better at comparable total cost.
+
+## Compatible with the lesson, at odds with Sutton's later bet
+
+Compatibility with the 2019 essay is not agreement with what its author now
+holds. In a 2026 interview Sutton and Khurram Javed grant that context can be
+part of an agent's state and still hold weight change necessary: "So context
+can be in the state, too. It could be both, but you still need to be able to
+update the weights."
+([source](../sources/sutton-javed-why-ai-models-stop-learning.ingest.md),
+verbatim). The structuring and generation of new concepts, on their account,
+is weight learning, and an agent that stops updating its weights has stopped
+learning in the sense that matters.
+
+The program disagrees, and the disagreement is a hypothesis rather than a
+premise on either side. Whether updates to readable artifacts — theories,
+tests, schemas, programs — can supply the capabilities open-ended learning
+needs is the empirical question this program is built to test; the lesson does
+not settle it by definition, and neither does the interview. The target is the
+same on both sides: Sutton names as his lab's largest ambition a mind that
+keeps training itself while staying self-consistent and coherent, which is
+coherent modification pursued in weights. The comparative test is to hold
+objectives and evaluation fixed and vary which surfaces may update — weights,
+natural-language artifacts, symbolic artifacts, or a mixture — and see where
+capability grows.
+
+The program's disagreements are therefore few and named: with Naur, one
+premise; with the Bitter Lesson essay, none; with Sutton and Javed's later
+position, one hypothesis.
 
 ## One experiment and one longitudinal study
 
