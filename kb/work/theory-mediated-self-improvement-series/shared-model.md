@@ -28,10 +28,10 @@ criticize the theory across cases that no fixed rule already covers. Persistent
 execution can carry the process across bounded calls, and evidence can correct
 both the candidate change and the theory that guided it.
 
-The conjecture concerns the causal use of theory, not the presence of a document.
-Retained theory contributes a handle for targeted use and revision. It does not
-supply correctness, retrieval, credit assignment, evaluation, or continuity by
-itself, [because reflection buys addressability rather than those downstream
+The conjecture concerns causal use, not the presence of a document. Retained
+theory contributes a handle for targeted search and revision. It does not supply
+correctness, retrieval, credit assignment, evaluation, or continuity by itself,
+[because reflection buys addressability rather than those downstream
 capacities](../../notes/reflection-buys-addressability.md).
 
 ## Functional architecture
@@ -85,13 +85,38 @@ independent read-back on one path](../../notes/theory-mediated-self-improvement-
 
 A contemporaneous citation at the decision point is a cheap
 [mediation trace](../../notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md).
-It identifies the theory the process claims to have used. Withholding,
-replacing, or perturbing the theory and observing a changed decision is stronger
-evidence that the use was load-bearing.
+Withholding, replacing, or perturbing the theory and observing a changed
+decision is stronger evidence that the use was load-bearing.
 
 A useful theory-guided change can reach mediation or empirical contact without
 reaching recurrence. The record should state the strongest level established
 rather than force every episode into the full loop.
+
+## Claim truth and theory fit
+
+A theory-mediated learner must evaluate two properties that should not be
+collapsed.
+
+- **Truth, validity, or warranted scope:** does the claim survive empirical,
+  formal, source, consistency, or bounded predictive checks?
+- **Fit in the working theory:** does the claim belong in the larger causal
+  account and improve proposal, diagnosis, recovery, revision, or transfer?
+
+A true claim can be irrelevant, redundant, badly scoped, or placed at the wrong
+abstraction level. A false claim can appear useful because the current system
+already embodies it. Local truth tests therefore do not fully select a working
+theory.
+
+No current fixed evaluator fully decides global theory fit. Fit is exposed by a
+distributed and delayed portfolio of consequences: changes to decisions,
+predictions, later demands, repair cost, theory interventions, rival
+formulations, and transfer. The live system under construction is therefore an
+[initial selection environment](../../notes/when-global-theory-fit-lacks-a-fixed-oracle-use-in-building-the-system-is-an-initial-selection-environment.md).
+
+System use cannot replace independent truth tests. It can become self-sealing.
+Use rival theories, withholding and replacement interventions, preregistered
+predictions, held-out demands, delayed consequences, and transfer to keep causal
+fit evidence distinct from factual or formal warrant.
 
 ## Coherent modification and warranted transfer
 
@@ -147,56 +172,74 @@ client exports the least-warrantable decisions](../../notes/holding-the-client-f
 The benchmark and warranted closure expose the same difficult client and
 acceptance boundary from different sides while measuring different coordinates.
 
-## Bitter Lesson compatibility is a bootstrap thesis
+## Bitter Lesson pressure and the first bootstrap strategy
 
-The program does not defend hand-crafted theories and machinery as exceptions
-to the Bitter Lesson. It treats them as provisional state for constructing a
-more general search-and-learning process over theories, methods, programs,
-tests, and eventually parts of the learning machinery itself.
+The only direct rebuttal to the Bitter Lesson is narrow: learned results need not
+all live in weights because production method and representational form are
+different axes. That does not defend the present hand-crafted artifacts.
 
-This differs from a hand-designed object-level solution whose features,
-heuristics, or decomposition remain the final source of competence in one
-predefined area. The intended path can propose, test, retain, revise, and retire
-its current artifacts; revise consequential artifact types, decompositions,
-routing, and evaluators; and form project-specific theory in domains not
-enumerated when the process was designed.
+Theory-guided bootstrapping is the first strategy being tried under incomplete
+global evaluation. It uses a live system as the initial environment in which
+claims can make causal differences and meet delayed consequences. At the same
+time, computation should be used wherever discrimination is already adequate:
 
-The relevant property is **domain-extensibility**, not competence across several
-predefined domains. [A hand-crafted bootstrap fits the Bitter Lesson only if
-learning can outgrow it](../../notes/a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md).
-The claim is currently architectural and programmatic. It becomes empirical only
-where production actually moves from human construction to search, evaluation,
-revision, and retention with bounded human judgment.
+- generate rival claims, theories, decompositions, and designs;
+- search for evidence and counterexamples;
+- check local consistency, entailments, references, and formal consequences;
+- propose experiments, run ablations, and analyze traces;
+- search over artifacts inside bounded evaluator domains; and
+- identify recurring human judgments that can become reusable selection
+  machinery.
+
+When a judgment stabilizes, it can become a methodology, test, validator,
+learned critic, search objective, or program. The strategy is to grow the
+computational selection surface through use, not to finish a hand-crafted theory
+before learning begins.
+
+[A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow
+it](../../notes/a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md).
+This is a conditional compatibility criterion, not a defense or uniqueness
+claim. End-to-end learning, evolutionary search, self-play, weight updates, and
+other direct computational methods remain live alternatives.
+
+The long-run challenge is domain-extensibility. The process must eventually
+construct the project-specific theory, representations, methods, and checks
+needed for domains not enumerated by the designers; reduce the human share of
+fit assessment, evaluator construction, and repair; and permit consequential
+parts of its own decomposition and update machinery to be challenged.
 
 No carrier receives permanent protection. Natural-language theory, symbolic
-machinery, and current evaluators may be absorbed or replaced. The system
-succeeds when useful functions continue to earn their place and the production
-path becomes more general, not when today's files survive.
+machinery, and current evaluators may be absorbed or replaced. The strategy
+succeeds when the production path becomes more general and competitive, not when
+today's files survive.
 
-## Current bootstrap and testbeds
+## Current testbeds
 
 Commonplace is a human-inclusive reflective testbed. It retains and routes
 project theory, supports criticism and revision, and can turn some theory into
 operative instructions, validators, schemas, and code. Humans still choose
-objectives, supply unrecorded premises, assign much of the blame, authorize
-consequential changes, interpret ambiguous evidence, and repair paths beyond
-represented coverage.
+objectives, supply unrecorded premises, judge much global fit, assign blame,
+authorize consequential changes, interpret ambiguous evidence, and repair paths
+beyond represented coverage.
 
 Programming agents with persistent project-specific theory are the first
 demanding external testbed. They isolate the bearer question without requiring
 the target program to be the agent itself. Commonplace then provides the
-reflective bootstrap in which the same mechanism can be applied to parts of the
-system's own operation.
+reflective environment in which the same mechanism can be applied to parts of
+the system's own operation.
 
 Current evidence supports useful human-agent theory work, inspectable mechanism
-traces, and a plausible bootstrap. It does not establish independent
-computational theory possession, recurrent self-improvement, task-scoped
-closure, or a scalable domain-extensible artifact learner.
+traces, and an initial environment for testing the strategy. It does not
+establish independent computational theory possession, recurrent
+self-improvement, task-scoped closure, domain-extensible artifact learning, or
+superiority to more direct computational approaches.
 
-## Next discriminating experiment
+## Next experiments
 
-The next high-value result is a prospective theory intervention on sequential
-program modifications. Use the same model, tools, repository state, budget, and
+### Theory intervention
+
+Test whether prepared project theory is load-bearing on sequential program
+modifications. Use the same model, tools, repository state, budget, and
 acceptance process under matched conditions:
 
 1. correct project theory;
@@ -217,6 +260,28 @@ predictable negative transfer; theory withholding should especially damage
 recovery and follow-on coherence; and the advantage should shrink where a
 complete specification and cheap oracle already settle the task.
 
+### Selection-environment bootstrap
+
+Instrument a sequence of real Commonplace improvements. For each consequential
+claim or method, record:
+
+1. which candidates were generated computationally;
+2. which truth, validity, or local checks were automatic;
+3. which judgment of global fit remained human and why;
+4. which downstream system consequences bore on that judgment;
+5. whether rival or ablated claims changed the result;
+6. whether a recurring judgment became a test, validator, critic, method, or
+   program; and
+7. how the human and computational shares changed on a later episode.
+
+This is a nearer test of the bootstrap strategy than demanding immediate
+cross-domain autonomy. It can show whether the selection machinery is actually
+growing or whether "bootstrap" merely renames continued human production.
+
+A later cross-domain test should compare this process with direct computational
+baselines and ask whether it constructs new theory and evaluation machinery
+without a bespoke human-built ontology for each domain.
+
 ## Minimum episode record
 
 A useful episode record should identify:
@@ -225,16 +290,20 @@ A useful episode record should identify:
    human cut;
 2. the retained theory state claimed to guide the decision and the mediation
    evidence;
-3. the search, realized change, and acceptance mechanism;
-4. the independent or delayed outcome and its read-back against that theory;
-5. any theory-state or machinery revision, including rejection, rescoping,
+3. evidence for the truth, validity, or scope of the claims used;
+4. the search, realized change, and acceptance mechanism;
+5. the independent or delayed outcome and its read-back against that theory;
+6. any theory-state or machinery revision, including rejection, rescoping,
    changed confidence, explicit retention, or deferral;
-6. whether the revision changed a later operation; and
-7. which dimension moved and which decisions remain human.
+7. whether the revision changed a later operation;
+8. which global-fit judgments remained human and whether any became reusable
+   selection machinery; and
+9. which dimension moved and which decisions remain human.
 
 The record should state the strongest evidence level reached. Without a
 same-theory trace, it may show a useful change but not theory mediation. Without
-later use, it may show theory learning but not recurrence.
+later use, it may show theory learning but not recurrence. Without growth in
+selection machinery, it does not support the bootstrap strategy.
 
 ## Open questions
 
@@ -242,9 +311,13 @@ later use, it may show theory learning but not recurrence.
   from luck, memorization, or generic search with a permissive evaluator?
 - Can project theory improve sample efficiency, recovery, or revision cost after
   accounting for retrieval, maintenance, and evaluation?
+- Which parts of global theory fit can be operationalized without encoding the
+  present theory into the evaluator?
 - How can delayed consequences receive credit when several changes and theory
   revisions intervene?
-- Can evaluator construction and decomposition revision move into the learning
-  path without relocating unlimited human judgment one level upward?
+- Which recurring human judgments should be converted first into tests,
+  validators, learned critics, or search objectives?
+- What direct computational baseline provides the strongest alternative first
+  strategy?
 - What cross-domain sequence would demonstrate domain-extensibility rather than
   a broad but fixed ontology?
