@@ -186,16 +186,25 @@ part of the learning path.
 Naur also argued that programming is theory building, and that the theory
 lives in the programmers' heads rather than in the artifacts they leave behind. The companion article [What bound Naur's theory to
 programmers](./what-bound-naurs-theory-to-programmers.md) makes one narrow
-repair: his argument binds the theory to humans only through [the premise that
-machine execution means following formulated
-criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md),
-so it does not establish that only humans can hold a program theory. That
-premise is the program's one disagreement with Naur; his account of what a
+repair: his argument relies on a crucial [premise that machine execution means
+following formulated criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md),
+so the essay does not establish in advance that only humans can hold a program
+theory. This is the program's main departure from Naur; his account of what a
 theory is, his bearer tests, and coherent modification as the decisive test
-are adopted as they stand. Removing the premise does not show any current
-agent passes his bearer tests, which stays an empirical question.
+are otherwise adopted. Removing that premise does not show any current agent
+passes his bearer tests, which stays an empirical question.
 
 ## Four functions that fail differently
+
+Several decompositions are used in this program for different questions. The
+[proposal-selection loop](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
+decomposes an improvement process into search, reject-capable evaluation, and
+operative retention. The [residue analysis](../notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md)
+classifies why decisions remain outside a warranted automatic path: missing
+representation, unsettled criteria or semantic application, insufficient
+verification, or broken continuity. The table below is different again: it
+shows the current implementation roles through which those demands are carried.
+It is not a second derivation of the loop.
 
 The current architecture separates four functions because they fail in
 different ways.
@@ -317,9 +326,12 @@ objection, to the account given below of the hand-written artifacts as a
 bootstrap, and then to that account's first-strategy form, in which current
 computation and residual human selection are explicitly separated. The revisions were retained and guided later turns.
 
-At the boundary including operator, model, knowledge base, and tools, this is
-observational support for a mediation path, theory learning, and recurrence. At a boundary excluding
-the operator, global-fit selection and final acceptance remain exogenous. That is the residue to expect: [transferring the decisions whose
+At the boundary including operator, model, knowledge base, and tools, the episode
+documents retained-state consumption, theory-state revision, and later reuse in
+a path consistent with mediation and recurrence. It does not estimate how
+load-bearing the retained artifacts were, because no matched replay or ablation
+was run. At a boundary excluding the operator, global-fit selection and final
+acceptance remain exogenous. That is the residue to expect: [transferring the decisions whose
 premises, criteria, and checks are available leaves people the
 hardest-to-warrant
 ones](../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md).
@@ -359,12 +371,10 @@ is what makes it a bootstrap rather than a scaffold: a scaffold is discarded
 once the product stands, whereas here the running system uses its current
 theory to guide the search that produces its successors. What is meant to
 persist is the loop and its four functions, not any artifact now performing
-them. Every present theory, schema, validator, and decomposition is a plank
-that search and learning may swap out, and the system stays the same system
-through the replacement, as the ship of Theseus does. Hand-crafted
-names who produced the current version of an artifact, not a class of artifact
-that must stay so: in a loop that has no outside, [machinery persists by
-warrant, not by its
+them. Hand-crafted names who produced the current version of an artifact, not a
+class of artifact that must stay so. No component inside the declared revision
+surface is exempt from challenge merely because it currently implements the
+improvement machinery: [machinery persists by warrant, not by its
 position](../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md),
 and the starting artifacts are as exposed to replacement as anything else in
 the loop's scope. Stated as a condition, the bootstrap [fits the Bitter Lesson
@@ -443,9 +453,9 @@ objectives and evaluation fixed and vary which surfaces may update — weights,
 natural-language artifacts, symbolic artifacts, or a mixture — and see where
 capability grows.
 
-The program's disagreements are therefore few and named: with Naur, one
-premise; with the Bitter Lesson essay, none; with Sutton and Javed's later
-position, one hypothesis.
+The program's disagreements are therefore few and named: with Naur, the
+machine-criteria premise just discussed; with the Bitter Lesson essay, none;
+with Sutton and Javed's later position, one hypothesis.
 
 ## One experiment and one longitudinal study
 
