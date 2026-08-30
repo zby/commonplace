@@ -39,7 +39,7 @@ Keep these evidence layers separate:
 - **Observed run:** an inspectable execution trace or artifact.
 - **Causal experiment:** an observed interventional comparison plus evidence about its design. A contrast is necessary but not sufficient for causal identification. State design and confounding limits, and attribute no more finely than the actual treatment and comparison.
 
-Assign every source a stable ID in output 1. Map the ID to its identity or revision and evidence layer. Later records may cite the ID plus a **local anchor**: a source-local section, symbol, line, event, artifact, or other available locator.
+In standalone use, assign every source a stable ID in output 1. Map the ID to its identity or revision and evidence layer. Later records may cite the ID plus a **local anchor**: a source-local section, symbol, line, event, artifact, or other available locator. In orchestrated overlay mode below, cite the supplied canonical `SRC-*` IDs instead.
 
 Do not upgrade one evidence layer into another. Inspect each representational form appropriately: read natural-language content, test symbolic artifacts within their declared semantics, and use available probes for distributed-parametric state. If the available probes cannot individuate truth-apt content, record the object or lifecycle phase as `not determinable`.
 
@@ -48,6 +48,12 @@ Apply these scope branches before continuing:
 - If the task is product ranking, adoption advice, ontology design, or a general review with no knowledge-production question, stop and use a method suited to that task.
 - If no inspectable source boundary or revision can be established, produce only output 1 with `insufficient evidence` and name each conclusion the missing evidence prevents.
 - Treat an intentionally operational or lab-tracking purpose as a scope boundary, not as product failure. Do not prescribe natural-language claims, proposal comparison, a storage model, or a universal knowledge ontology.
+
+## Orchestrated overlay mode
+
+When `analyse-agentic-system` invokes this procedure with canonical source, object, route, claim, and authority records, preserve the six analytical blocks below but return them as a sparse overlay rather than a second inventory. In output 1, identify the supplied source-register boundary and cite its canonical `SRC-*` IDs without copying the register. In later outputs, use the supplied canonical IDs. For local readability, repeat at most the canonical ID, one source-native short label, and one local evidence anchor before the epistemic fields; these repetitions do not redefine the canonical record. Where a standalone output field is canonical-owned, write `see <canonical ID>` rather than copying its value. Do not copy generic identity, representational form, storage substrate, common route endpoints or progression, or claimed-operation identity.
+
+A newly discovered object, route, claim, absence, or authority path uses an invocation-local proposal tag and supplies the full identity needed for orchestrator registration; it never mints a canonical ID. Return a targeted-read request for new source material and a correction with its evidence anchor for a defective canonical fact. When an invoking packet exists, its accepted blocks and required fields govern the return envelope; otherwise the orchestrator's linked-return contract governs. Without supplied canonical records, use the standalone stable-ID rules below.
 
 ## Required output
 
@@ -61,13 +67,13 @@ Use these fields:
 
 ### 2. Epistemic-object inventory
 
-Use one row per operative part within the material-route boundary and assign stable IDs. Split parts that differ in content, form, checks, producers or consumers, or authority paths.
+Use one row per operative part within the material-route boundary. Assign stable IDs in standalone use; in orchestrated overlay mode, use the supplied canonical ID or a local proposal tag. Split parts that differ in content, form, checks, producers or consumers, or authority paths.
 
 `object/part id | system name and description | representational form | source/input and lineage | producer/consumer | candidate truth-apt content or none | claimed role | evidence source ID and local anchor | gap/limit`
 
 ### 3. Authority-route ledger
 
-Use one row per consequential function and assign stable IDs. Split rows when the function, target, evaluator domain, timing, result, force, epistemic license, operational consequence, consumer, channel, or horizon differs. Record an evidenced absence without inventing an evaluator.
+Use one row per consequential function. Assign stable IDs in standalone use; in orchestrated overlay mode, use the supplied canonical ID or a local proposal tag. Split rows when the function, target, evaluator domain, timing, result, force, epistemic license, operational consequence, consumer, channel, or horizon differs. Record an evidenced absence without inventing an evaluator.
 
 `route id | route function | architectural status | object/candidate id | content/update relation | transition or check target | evaluator/condition and domain | activation and timing | possible or observed result | implemented force | epistemic authority and scope | operational authority: behavior permitted, blocked, or changed | behavioral-authority path: consumer, channel, force, horizon | evidence source ID and local anchor | claim IDs or none | mismatch marker or none | gap/limit`
 

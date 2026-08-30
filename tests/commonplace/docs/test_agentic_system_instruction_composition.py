@@ -68,3 +68,54 @@ def test_analysis_skill_uses_one_typed_result_shape_for_every_carrier() -> None:
     assert "A package has exactly one typed entry artifact" in orchestrator
     assert "wired; observed" in contract
     assert "implemented and observed" in contract
+
+
+def test_lens_worker_return_matches_the_frozen_packet_before_merge() -> None:
+    orchestrator = instruction("analyse-agentic-system")
+    topology = orchestrator[
+        orchestrator.index("#### Worker topology") : orchestrator.index(
+            "### 4. Run and challenge the runtime baseline"
+        )
+    ]
+
+    packet = topology.index("Freeze the packet before dispatch")
+    match = topology.index("Before merging any return")
+    artifact = topology.index("If a worker terminates after producing output")
+
+    assert packet < match < artifact
+    for field in (
+        "run ID",
+        "lens",
+        "packet identity",
+        "reviewed boundary",
+        "source-register identity",
+        "canonical-register identity",
+    ):
+        assert field in topology
+    assert "apply step 2.4's correction check" in topology
+    assert "Do not merge a mismatched return" in topology
+    assert "every proposal tag is declared once and unique inside the lens" in topology
+
+
+def test_epistemic_invocation_returns_a_sparse_canonical_overlay() -> None:
+    orchestrator = instruction("analyse-agentic-system")
+    epistemic = (
+        REPO_ROOT
+        / "kb"
+        / "instructions"
+        / "analyse-external-system-epistemic-architecture.md"
+    ).read_text(encoding="utf-8")
+    result_contract = (
+        REPO_ROOT / "kb" / "types" / "agentic-system-analysis-result.md"
+    ).read_text(encoding="utf-8")
+
+    overlay = epistemic.index("## Orchestrated overlay mode")
+    output = epistemic.index("## Required output")
+
+    assert overlay < output
+    assert "A lens return is a **sparse overlay**" in orchestrator
+    assert "it never mints a canonical ID" in epistemic[overlay:output]
+    assert "Assign stable IDs in standalone use" in epistemic[output:]
+    assert "They do not reproduce the shared inventory under lens-local IDs" in (
+        result_contract
+    )
