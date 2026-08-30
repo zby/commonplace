@@ -35,9 +35,9 @@ Suppose an endpoint is slow and a cache is put in front of the service behind
 it. The change is small, the tests pass, and the endpoint is fast. Two
 requirements later, a feature that needs every read to reflect the preceding
 write fails in production: the service had been kept transactional for exactly that
-reason, and the reason was written down nowhere the change touched. Nothing
-available when the cache went in said it would break the program. A later
-demand did.
+reason, and the reason was written down nowhere the change touched. Nothing in
+the change request, the touched files, or the local tests said the cache would
+break the program. A later demand exposed the unstated dependency.
 
 The hardest programming decisions are of this kind: not necessarily the ones
 that require the most code, but the ones for which no complete local rule or
@@ -73,11 +73,15 @@ later executions.
 
 What makes this learning path *theory-mediated* is that the theory is
 represented as an object the process can apply, doubt, and revise, rather than
-being compiled away into behavior. That is what a retained artifact buys and a
-weight update does not: something you can point at, withhold, or replace. It is
-also what [three 2026 self-improving harnesses examined for the program turn out
-not to have](../notes/evidence/three-2026-harnesses-retain-rules-or-weights-not-a-revisable-theory.md):
-they retain rule sets or weights, not a theory from which their patches derive.
+being compiled away into behavior. What retained artifacts buy is
+addressability at the level of claims: an individual claim can be inspected,
+cited, perturbed, withheld, or rescoped. A weight checkpoint can be swapped out
+too, but offers far weaker addressability at that level. Claim-level
+addressability is also what [three 2026 self-improving harnesses examined for
+the program turn out not to
+have](../notes/evidence/three-2026-harnesses-retain-rules-or-weights-not-a-revisable-theory.md):
+they retain rule sets or weights, not a revisable theory that guides patch
+search and gives later failures a shared target for diagnosis and revision.
 
 The program has two testbeds. Programming agents supplied with persistent
 program theory are the harder one, and still prospective. Commonplace —
@@ -112,7 +116,7 @@ anywhere; a partial, fallible account of it is what the theory is. So a change
 is rarely shown coherent when it is made. It is shown incoherent later, when a
 further demand, an extension, or an operational failure reveals that it broke
 something the purpose depended on. The cache change above was incoherent, and
-nothing available when it was made showed that.
+nothing local to the change showed that.
 
 The unit judged is therefore a sequence of modifications, not one change. A
 process modifies coherently when the changes it retains keep meeting later
@@ -126,8 +130,13 @@ feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md).
 
 A program theory need not be a complete formal specification or one document.
 It may be spread across retained explanations, architectural decisions,
-operational observations, learned competence, and code. Nor must it determine a
-correct first change. It is needed earlier than that: [open-ended improvement
+operational observations, learned competence, and code. Two senses need
+separating. *Program theory* names that distributed understanding, wherever it
+lives. What the program can manipulate is the *retained theory state*: the
+addressable artifacts the system can retrieve, cite, perturb, withhold, and
+revise. Code and learned competence may embody program theory; only the
+retained state can be withheld in an experiment while the model stays fixed.
+Nor must a program theory determine a correct first change. It is needed earlier than that: [open-ended improvement
 must allocate search before decisive evaluation is
 available](../notes/open-ended-improvement-allocates-search-before-evaluation.md),
 and the theory is what makes that allocation project-specific.
@@ -175,7 +184,7 @@ different ways.
 | Represent project-specific premises, purposes, commitments, and scope | Retained natural-language and symbolic artifacts | Omission, contradiction, drift, retrieval failure, inert documentation |
 | Interpret theory and use it to guide search and diagnosis | A language model | Underspecification, stochastic deviation, bias, post-hoc rationale, theory ignored in practice |
 | Execute exact transitions and keep the path alive | Code and a persistent runtime | Faithful execution of the wrong transition, frozen decomposition, truncated horizon |
-| Correct proposals and theories | Tests, validators, held-out tasks, decorrelated criticism, later demands, and operational consequences | Weak proxies, captured evaluation, viability-only gates, delayed credit assignment |
+| Correct proposals and theories, and select what is retained | Tests, validators, held-out tasks, decorrelated criticism, later demands, and operational consequences; for global fit and authorization, the operator | Weak proxies, captured evaluation, viability-only gates, delayed credit assignment, unstated preferences, exogenous selection |
 
 This is a [functionally mixed
 architecture](../notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md),
@@ -189,6 +198,13 @@ Interpretation and correction must remain distinct. A model can understand and
 apply a false theory. Semantic competence does not establish that the theory is
 right or that a proposed change is good. Independent or sufficiently
 decorrelated evidence must remain able to overturn the candidate's account.
+
+The fourth row contains the operator, and that is where the program's target
+lives. Tests can reject a candidate. They do not choose among several viable
+candidates for an underspecified purpose, and they do not grant authority to
+change the live system. At present those selection and authorization
+judgments are mostly human. They are the function the program aims to convert
+into reusable machinery, one recurring judgment at a time.
 
 ## Evidence comes in levels
 
@@ -238,6 +254,9 @@ Second, does the claim fit the larger working theory and improve the system's
 operation and revision? That is relational. A true claim can be irrelevant,
 redundant, badly scoped, or placed at the wrong level of abstraction. A false
 claim can appear useful because the current implementation already assumes it.
+Fit is not conformity to existing doctrine. A warranted claim that contradicts
+the larger theory is evidence that the theory may need revision; fit concerns
+the claim's scope, role, and integration.
 
 No present automatic evaluator fully decides whether a candidate belongs in the
 larger causal picture, what it should displace, or whether it will keep guiding
@@ -277,8 +296,8 @@ objection, to the account given below of the hand-written artifacts as a
 bootstrap, and then to that account's first-strategy form, in which current
 computation and residual human selection are explicitly separated. The revisions were retained and guided later turns.
 
-At the boundary including operator, model, knowledge base, and tools, this
-supports mediation, theory learning, and recurrence. At a boundary excluding
+At the boundary including operator, model, knowledge base, and tools, this is
+observational support for a mediation path, theory learning, and recurrence. At a boundary excluding
 the operator, global-fit selection and final acceptance remain exogenous. That is the residue to expect: [transferring the decisions whose
 premises, criteria, and checks are available leaves people the
 hardest-to-warrant
@@ -398,40 +417,52 @@ position, one hypothesis.
 
 ## One experiment and one longitudinal study
 
-The experiment tests whether prepared program theory is load-bearing. Hold
-model, tools, repository state, budget, and acceptance fixed; compare:
+The experiment tests whether a prepared retained theory state is load-bearing.
+Hold model, tools, repository state, inference budget, judging protocol,
+acceptance threshold, and authorization procedure fixed; compare:
 
-1. correct program theory;
-2. an information-matched record without theory-level organization;
+1. the reference theory — ground truth for a synthetic task whose generating
+   rationale is known, or the maintainers' current best account for a real
+   project;
+2. a fact-matched record without synthesized theory;
 3. theory withheld; and
 4. plausible but wrong or outdated theory.
 
 The comparison [identifies only the contrasts it actually
 runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md),
-and the second condition is the contested one. An information-matched record
-carries the same facts, decisions, and history as the theory — commit
-messages, issue threads, a changelog — flattened, with the purposes behind
-decisions and the dependencies between them removed. If theory-level
+and the second condition is the contested one. A fact-matched record carries
+the same facts, decisions, and history as the theory — commit messages, issue
+threads, a changelog — flattened, with the purposes behind decisions and the
+dependencies between them removed. The match is on facts, not on information,
+since the removed purposes and dependencies are information too. If theory-level
 organization is what does the work, the record should behave like withheld
 theory. If the record cannot be matched without smuggling that organization
 back in, the two conditions collapse, and that is the disagreement the program
 most wants exposed.
 
-Use sequential programming demands with delayed consequences. Measure candidate
+Each run is a sequence: an initial modification; a delayed demand that
+exposes a failure in it; diagnosis and recovery; explicit revision of the
+retained theory state; and a further, structurally related demand that can
+benefit from the revision. Without the last two stages the experiment can show
+theory-guided modification but not learning through theory. Measure candidate
 generation, preservation of architectural commitments, diagnosis, backtracking,
 recovery, collateral regressions, later-demand performance, and human
-intervention. Correct theory should help most where [the later demand preserves
+intervention. The reference theory should help most where [the later demand preserves
 the structure it
 names](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md)
 — in the cache case, a theory that records why the service is transactional.
 Wrong theory should produce predictable negative transfer. If the central
-conjecture is right, withholding theory should damage recovery most.
+conjecture is right, withholding theory should damage recovery most. The
+same-budget withheld condition is the direct-search baseline; a follow-on
+scaling study should compare retained theory against direct search at larger
+inference budgets and against stronger models.
 
 The longitudinal study instruments the current human-agent loop. Across a
 sequence of real Commonplace improvements, record which retained
 artifacts guided model search, which proposals and checks were computational,
-which global-fit and credit judgments remained human and why, whether more
-computation changed the result, which downstream consequences bore on the
+which global-fit and credit judgments remained human and why, whether
+additional computation was associated with a changed proposal or judgment,
+which downstream consequences bore on the
 judgment, and whether a recurring correction became a test, validator, learned
 critic, method, schema, or program. That last conversion is the one that
 compounds: a correction retained as a lesson helps only the tasks that retrieve
@@ -457,6 +488,14 @@ researcher can:
 - identify a better first computational strategy; or
 - show that evaluator and decomposition construction keep the approach
   permanently dependent on bespoke human judgment.
+
+A researcher need not begin by accepting the framing. The knowledge base can
+be [vendored read-only into another
+project](https://github.com/zby/commonplace/blob/main/INSTALL.md); an agent
+given that access, the researcher's own objection or rival mechanism, and the
+instruction to reconstruct the strongest available response and design a
+discriminating test is a way in that keeps the adversarial control with the
+researcher.
 
 The goal is not agreement with a finished theory. It is a small set of claims
 whose status can change through criticism and evidence — starting with the one
