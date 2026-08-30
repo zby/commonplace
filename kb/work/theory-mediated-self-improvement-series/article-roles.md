@@ -14,14 +14,14 @@ only after disposition in the [incumbent ledger](./incumbent-ledger.md).
 | **Operative theory** | State what would show that explicit theory participates in operation rather than remaining documentation | Reflective membership; prompt-side mediation with weights and symbolic state held fixed; addressable retention; independent exposure and read-back; continuation; mediation, empirical contact, theory learning, and recurrence as separate evidence levels | [Interpretation, retention, and independent read-back](../../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md), [mediation trace](../../notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md), [natural-language project-state specialization](../../notes/natural-language-project-state-specializes-search-heuristics.md), [reflection buys addressability](../../notes/reflection-buys-addressability.md) | Better causal interventions, information-matched controls, alternative substrates, stronger read-back, and failures of selective rescoping |
 | **Functional architecture** | Explain the complementary operation classes without treating today's boundary as permanent | A model-mediated operation is instantiated by weights plus prompt; code plus runtime supplies independently executed symbolic operations; code may also enter prompts as project evidence; representation, semantic application, exact execution, verification, and continuity retain distinct failure surfaces | [Operation-level complement](../../notes/code-complements-weight-prompt-with-symbolic-operations.md), [scheduler–LLM asymmetry](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md), [bounded-context orchestration](../../notes/bounded-context-orchestration-model.md), [cross-form boundary movement](../../notes/moving-the-interpretation-enforcement-boundary-requires-coverage.md) | Architectures that combine roles, evidence that independent symbolic execution is unnecessary, and interventions on operation placement |
 | **Progress, warrant, and closure** | Explain movement of the human cut under a fixed boundary while keeping actor allocation separate from capability, warrant, usefulness, and power | Human-inclusive membership is cheap; decision-bearing functions are recorded as human, computational, or joint under a fixed boundary, objective, scope, and horizon; the cut-set and boundary-contraction endpoint; conditional adverse selection of residual work; staged transfer of branch allocation, reversible symbolic execution, and adoption; task-scoped structural closure; evaluator adequacy for warranted non-degenerate results; fixed-client limits of the remote-programmer benchmark | [Fixed-boundary reallocation](../../notes/computationally-directed-self-improvement-is-a-reallocation.md), [warranted transfer](../../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md), [task-scoped closure](./task-scoped-computational-closure.md), [closure-capability map](./closure-capability-map.md), [separate progress dimensions](../../notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md), [fixed-client benchmark](../../notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md) | Before-and-after transfer studies, cut-set and contraction tests, evaluator tests, measurement of displaced work, and non-degenerate closure declarations |
-| **Bitter Lesson and first strategy** | Separate the narrow weights-only rebuttal from the full provisional bootstrap strategy and the conditions under which that strategy should be retained or abandoned | Production method differs from representational form; the current loop already uses model-mediated and symbolic computation; high-level operator selection is a missing-machinery description rather than protected intelligence; recurring judgments should become reusable search, selection, and credit-assignment machinery; present theories, code, evaluators, decompositions, and operation boundaries remain challengeable; domain-extensibility, compute scaling, direct alternatives, Sutton's later weight-update bet, and abandonment conditions | [Response portfolio](../../notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md), [production method versus form](../../notes/the-bitter-lesson-selects-production-methods-not-representational.md), [operation-level complement](../../notes/code-complements-weight-prompt-with-symbolic-operations.md), [global-fit selection environment](../../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md), [conditional bootstrap compatibility](../../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md) | Compute-scaling tests, learned code and prompt production, operation-boundary revision, alternative first strategies, cross-domain transfer, and matched baselines |
+| **Bitter Lesson and first strategy** | Separate the narrow weights-only rebuttal from the full provisional bootstrap strategy and the conditions under which that strategy should be retained or abandoned | Production method differs from representational form; the current loop already uses model-mediated and symbolic computation; high-level operator selection is a missing-machinery description rather than protected intelligence; recurring judgments should become reusable search, selection, and credit-assignment machinery; present theories, code, evaluators, decompositions, and operation boundaries remain challengeable; domain-extensibility, compute scaling, direct alternatives, Sutton's later weight-update bet, and abandonment conditions | [Response portfolio](../../notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md), [production method versus form](../../notes/the-bitter-lesson-selects-production-methods-not-representational.md), [operation-level complement](../../notes/code-complements-weight-prompt-with-symbolic-operations.md), [global-fit selection environment](../../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md), [Sutton–Javed source](../../sources/sutton-javed-why-ai-models-stop-learning.ingest.md), [conditional bootstrap compatibility](../../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md) | Compute-scaling tests, learned code and prompt production, operation-boundary revision, alternative first strategies, cross-domain transfer, and matched baselines |
 | **Prospective experiments** | Turn the central conjecture and bootstrap strategy into results that can change their status | First, matched correct-theory, information-matched, theory-withheld, and wrong-theory conditions with weights and symbolic state fixed. Second, compare model-mediated bookkeeping, generated or selected code, and a hybrid. Third, instrument whether later evidence changes branch allocation, code, or the boundary between them | [Shared-model protocols](./shared-model.md#next-experiments), future preregistrations and results | Independent replication, alternative controls, adversarial task selection, direct-learning baselines, and failure analysis |
 
 ## Composition
 
 The modules do not imply an article per row. One article may carry several
-modules, but each full supporting argument should have one public owner. Other
-articles repeat only enough to remain self-contained and link to that owner.
+modules, but each full supporting argument should have one canonical article. Other
+articles repeat only enough to remain self-contained and link to that article.
 This limits synchronization cost and makes bounded agent edits possible.
 
 No article carries the series' routing: `kb/articles/README.md` is the rendered
@@ -63,7 +63,7 @@ The program statement is the entry point, not the container for every supporting
 argument. It may summarize a companion's result when that summary is required
 to state the program, but it should not reproduce the companion's derivation.
 
-The boundary between the program statement and the decisions companion is exact.
+The division between the program statement and the decisions companion should be explicit.
 The program statement may state two boundary facts: current Commonplace evidence
 is human-inclusive, and the research direction is to move named
 decision-bearing functions toward computational supply. The fixed-boundary
@@ -73,7 +73,7 @@ the decisions companion. If the program statement names the cut-set endpoint, it
 does so only in its bootstrap section and links out rather than teaching the
 formalism.
 
-The boundary between the program statement and the Bitter Lesson article is
+The division between the program statement and the Bitter Lesson article is
 likewise asymmetric. The program statement retains the narrow
 production-method/representational-form distinction, why this human-agent loop
 is the first strategy being tried, the requirement that present machinery remain
@@ -133,7 +133,7 @@ fixed-boundary and cut-set argument stays in the decisions companion.
 
 Related-system comparisons should follow enough of the proposed mechanism for
 the contrast to be intelligible. The Naur exegesis, cut-set derivation, closure
-and warrant theory, full Bitter Lesson defense, and Sutton comparison are not
+and warrant theory, full Bitter Lesson and bootstrap argument, and Sutton comparison are not
 independent top-level movements of the program statement.
 
 An agent edit should normally target one of these six units and name the modules
@@ -244,7 +244,7 @@ reproduce their process.
 
 For broad article work, name the target unit from the research-program contract
 and its excluded modules before editing. Afterward, run a bounded integration
-check for duplicated argument ownership, inconsistent evidence claims, and
+check for duplicated full arguments, inconsistent evidence claims, and
 broken companion links rather than rewriting the article globally.
 
 Each article should make clear:
