@@ -7,6 +7,7 @@ source_notes:
   - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
   - kb/notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md
   - kb/notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md
+  - kb/notes/theory-mediated-system-learning-combines-runtime-self-modeling-with-theory-refinement.md
   - kb/notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md
   - kb/notes/system-use-selects-theory-fit-without-a-fixed-oracle.md
   - kb/notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
@@ -99,18 +100,47 @@ The immediate Commonplace problem is therefore not to introduce computation,
 but to improve computational search and turn recurring operator judgments into
 reusable selection and credit-assignment machinery.
 
-Current systems establish adjacent pieces. [Three 2026 self-improving harnesses
-examined for the
-program](../notes/evidence/three-2026-harnesses-retain-rules-or-weights-not-a-revisable-theory.md)
-retain rules or weights rather than a revisable theory that guides patch search.
+## The program joins two older lineages
+
+No single predecessor is closest on every relevant axis. The [structural
+lineage](../notes/theory-mediated-system-learning-combines-runtime-self-modeling-with-theory-refinement.md#runtime-self-modeling-and-self-adaptation-supply-the-structural-lineage)
+runs through computational reflection, runtime models, requirements reflection,
+and architecture-based self-adaptation. These approaches make a running
+system's structure, goals, or requirements available as causally connected
+representations that guide changes to that system. They are closest to what the
+retained theory is about and what it changes, but normally keep the modeling
+language, adaptation operators, and evaluation machinery supplied.
+
+The [epistemic
+lineage](../notes/theory-mediated-system-learning-combines-runtime-self-modeling-with-theory-refinement.md#theory-refinement-supplies-the-epistemic-lineage)
+runs through explanation-based learning and symbolic theory refinement. There
+an explicit, imperfect theory guides inference, and empirical failures can
+revise the theory itself. These methods are closest to the proposed
+fallible-theory and read-back mechanism, but their theory usually concerns an
+external problem domain rather than the learner's own software organization.
+
+Theory-mediated system learning proposes to join those lineages in one
+longitudinal path: an addressable theory of a software system's purposes and
+organization guides changes to the behavior-determining system; delayed
+consequences revise the same theory; and the revision changes later
+modifications, while the adaptation machinery remains challengeable. The
+[positioning
+note](../notes/theory-mediated-system-learning-combines-runtime-self-modeling-with-theory-refinement.md)
+separates these theoretical and mechanistic precedents from implementation
+analogues and experimental competitors.
+
 [Workspace
-optimization](../sources/workspace-optimization-how-to-train-your-agent.ingest.md)
-revises code and text around a frozen model from prediction failures and replays
-recent transitions after edits. Its theory concerns an external environment
-within one run; its role decomposition, validation, and adoption policy remain
-fixed, and persistence across sessions is not shown. These systems demonstrate
-parts of the path without yet demonstrating persistent theory-mediated
-modification of the behavior-determining system itself.
+Optimization](../sources/workspace-optimization-how-to-train-your-agent.ingest.md)
+is a close contemporary LLM-agent implementation analogue, not the overall
+closest antecedent. It combines a frozen model with editable code and text,
+routes prediction failures toward responsible artifacts, and replays earlier
+transitions. Its explicit theory primarily models an external environment within
+one run; its role decomposition, validation, and adoption policy remain fixed;
+and cross-session recurrence of a program self-theory is not shown. [Three 2026
+self-improving harnesses examined for the
+program](../notes/evidence/three-2026-harnesses-retain-rules-or-weights-not-a-revisable-theory.md)
+expose other nearby fragments: they retain rules or weights rather than a
+revisable theory that guides patch search.
 
 ## Holding a theory means controlling a fallible search
 
