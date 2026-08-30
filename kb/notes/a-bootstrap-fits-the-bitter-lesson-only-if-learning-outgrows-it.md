@@ -1,5 +1,5 @@
 ---
-description: "A hand-crafted starting state is only conditionally compatible with the Bitter Lesson; the condition is satisfiable because a bootstrap, unlike a scaffold, is replaced by the loop it seeds while the system persists; theory-guided construction is a first strategy where global theory fit lacks a fixed oracle, not a defense of manual production"
+description: "A hand-crafted starting state fits the Bitter Lesson only if learning can outgrow it; satisfiable because a bootstrap, unlike a scaffold, is replaced by the loop it seeds while the system persists; a first strategy, not a defense of hand-crafting"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning, foundations]
