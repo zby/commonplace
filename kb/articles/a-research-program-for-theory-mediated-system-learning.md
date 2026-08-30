@@ -42,7 +42,8 @@ organized as it is, and how that organization can survive new demands.
 Crucially, Naur treated this theory as something held by programmers rather than
 by the program or its documentation. The machine could execute what had been
 formulated, but the theory needed for coherent modification remained with
-people, because [Naur equates machine execution with formulated
+people—a boundary grounded partly in [Naur's equation of machine execution with
+formulated
 criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
 
 Modern coding agents make that boundary worth testing. Their learned competence
@@ -55,8 +56,9 @@ machinery shape what happens in a particular project.
 
 The [deployed system rather than the
 model](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md) is
-the learning unit. Learning may be retained in weights, project state, or
-executable machinery. A change counts as learning when an [improvement
+the learning unit. Learning need not be a weight update; it may also be retained
+in project state or executable machinery. A change counts as learning when an
+[improvement
 process](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
 selects and retains it from evidence so that later operation depends on it.
 
@@ -69,12 +71,12 @@ The program couples a live testbed with a prospective controlled one.
 **Commonplace** is the live human-agent testbed: agents use the knowledge base to
 revise both the repository and the theory that guides its operation, while the
 operator still supplies much global-fit judgment and final authorization. It
-tests whether an evolving human-agent loop can turn recurring judgments into
-reusable machinery. The **programming-agent testbed** will give agents persistent
-fallible theory about a software project and a sequence of modifications whose
-later demands can expose earlier mistakes. Matched runs will vary that theory
-while holding the rest of the system fixed, testing whether it changes search,
-recovery, and coherent modification.
+exposes the human-inclusive learning loop and whether recurring judgments can
+become reusable machinery. The **programming-agent testbed** will give agents
+persistent fallible theory about a software project and a sequence of
+modifications whose later demands can expose earlier mistakes. Matched runs will
+vary that theory while holding the rest of the system fixed, testing whether it
+changes search, recovery, and coherent modification.
 
 ## Holding a theory means controlling a fallible search
 
@@ -90,19 +92,18 @@ checks but damages the wider organization in a way the process cannot detect.
 [Holding a program theory means sustaining coherent search under delayed
 feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md).
 
-Program-relevant understanding may be distributed across explicit artifacts,
-executable state, model competence, and people. The proposed experiment varies
-one retained theory surface while holding specified background components fixed.
-It therefore tests the causal contribution of that surface, not whether it
-exhausts the system's whole program theory, [as the retained-theory intervention
-note makes
+Program-relevant understanding may extend beyond the retained theory surface.
+The proposed experiment varies one such surface while holding specified
+background components fixed. It therefore tests the causal contribution of that
+surface, not whether it exhausts the system's whole program theory, [as the
+retained-theory intervention note makes
 explicit](../notes/a-retained-theory-intervention-isolates-one-explicit-theory-surface.md).
 
 Theory matters before a correct answer is available. [Open-ended improvement
 must allocate search before decisive evaluation
 exists](../notes/open-ended-improvement-allocates-search-before-evaluation.md).
-Retained theory can focus search, expose commitments a local fix must preserve,
-and guide recovery when later evidence contradicts an earlier change.
+Retained theory can focus search and guide recovery by exposing commitments a
+local fix must preserve.
 
 Generic search can also generate and test patches. The distinction is causal:
 withholding or replacing retained theory should change the search or subsequent
@@ -120,15 +121,14 @@ when contrary evidence arrives.
 ## Four roles in the current research design
 
 To make the mechanism testable, the current design separates four functional
-roles by how they can fail and be perturbed. Other decompositions answer other
-questions; these roles are the ones needed for the interventions proposed here.
+roles by how they can fail and be perturbed.
 
-| Functional role | Current realization | Characteristic failure |
+| Functional role | Current realization | Typical failure |
 |---|---|---|
 | Retained project state | Addressable theory and other persistent project artifacts | Omission, contradiction, drift, or retrieval failure |
 | Model-mediated semantic operation | Model weights applied to call-specific context | Theory ignored, misapplied, or rationalized after the fact |
 | Independently executed symbolic operation | Code and runtime carrying exact transitions and continuity | Exact execution of the wrong transition or a path that ends too early |
-| Independent exposure and read-back | Tests, later demands, criticism, and operational consequences; the operator supplies much global-fit judgment and authorization | Weak or captured evaluation, delayed credit assignment, or exogenous selection |
+| Independent exposure and read-back | Independent checks and later consequences; the operator supplies much global-fit judgment and authorization | Weak or captured evaluation, delayed credit assignment, or exogenous selection |
 
 These are roles, not permanent carriers. A future substrate may combine them;
 the current separation permits targeted interventions on theory, interpretation,
@@ -159,8 +159,8 @@ retained theory
 
 The evidence ladder distinguishes four levels:
 
-1. **Mediation:** changing or withholding theory changes search, judgment, or a
-   realized intervention.
+1. **Mediation:** changing or withholding theory changes a consequential
+   decision or intervention.
 2. **Empirical contact:** the intervention produces an outcome that bears on the
    theory.
 3. **Theory learning:** the outcome changes the retained theory's content, scope,
@@ -221,7 +221,7 @@ supply.
 
 The Bitter Lesson puts pressure on the program because its present theory and
 improvement machinery emerge from a human-guided loop. Agents write much of the
-material, but operators still supply decisive framing, corrections, and
+material, but operators still supply decisive high-level direction and
 selection. The issue is not who types the artifacts; it is whether general
 computation can increasingly generate and select their successors.
 
@@ -257,12 +257,12 @@ improve [sample efficiency under structured
 shifts](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md).
 Second, it leaves an inspectable learning record. Third, because the system being
 improved is itself agentic, theories of agentic systems can become operative
-self-theory. Commonplace therefore develops
+self-theory. Commonplace therefore builds
 [agentic-systems theory](../agentic-systems/README.md) both as an external
 research topic and as candidate self-theory for the system that runs the research
-and for future programming agents. Improving that theory should improve the
-system's ability to understand and modify its own organization. Each payoff must
-survive comparison at total system cost.
+and for future programming agents. The program tests whether improving that
+theory improves the system's ability to understand and modify its own
+organization. Each payoff must survive comparison at total system cost.
 
 The strategy must compete with more direct learning and search methods. It
 should be narrowed or abandoned if retained theory is causally inert, the
