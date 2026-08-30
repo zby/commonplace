@@ -978,7 +978,7 @@ def test_type_spec_validation_accepts_explicitly_schema_less_type(
     )
 
 
-def test_agent_memory_review_fails_when_last_checked_missing(tmp_path: Path) -> None:
+def configure_agent_memory_review_type(tmp_path: Path) -> Path:
     configure_temp_repo(tmp_path)
     reviews_root = tmp_path / "kb" / "agent-memory-systems"
     write(reviews_root / "COLLECTION.md", "# Agent memory systems\n")
@@ -1002,6 +1002,11 @@ def test_agent_memory_review_fails_when_last_checked_missing(tmp_path: Path) -> 
         name="agent-memory-system-review",
         schema="kb/agent-memory-systems/types/agent-memory-system-review.schema.yaml",
     )
+    return reviews_root
+
+
+def test_agent_memory_review_fails_when_last_checked_missing(tmp_path: Path) -> None:
+    reviews_root = configure_agent_memory_review_type(tmp_path)
     note = write(
         reviews_root / "system.md",
         """---
@@ -1039,6 +1044,105 @@ Watch.
         "frontmatter: 'last-checked' is a required property" in item
         for item in results.fails
     )
+
+
+def test_agent_memory_review_accepts_stable_review_without_transfer_sections(
+    tmp_path: Path,
+) -> None:
+    reviews_root = configure_agent_memory_review_type(tmp_path)
+    note = write(
+        reviews_root / "system.md",
+        """---
+description: "Ontology-normalized external memory system with explicit write and read-back mechanisms"
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
+source-tier: code-grounded
+last-checked: "2026-08-30"
+---
+
+# System
+
+## Core Ideas
+
+The system frontloads a bounded project map before each run.
+
+## Artifact analysis
+
+**Storage substrate:** `files` — retained Markdown files.
+
+**Representational form:** `natural-language` — prose consumed as context.
+
+**Lineage:** `authored` — a maintainer writes the files.
+
+**Behavioral authority:** `knowledge` — the agent receives advisory context.
+
+## Write side
+
+**Write agency:** `manual` — maintainers edit the files.
+
+## Read-back
+
+**Read-back:** `pull` — the agent requests a relevant file.
+
+## Curiosity Pass
+
+The frontloading mapping applies only to the generated project map.
+""",
+    )
+
+    results = validation.validate_note(note, repo_root=tmp_path)
+
+    assert results.fails == []
+
+
+def test_agent_memory_review_trace_learning_tag_requires_subsection(
+    tmp_path: Path,
+) -> None:
+    reviews_root = configure_agent_memory_review_type(tmp_path)
+    note = write(
+        reviews_root / "system.md",
+        """---
+description: "Trace-learning review whose missing evidence subsection must fail the structural contract"
+type: kb/agent-memory-systems/types/agent-memory-system-review.md
+source-tier: code-grounded
+tags: [trace-learning]
+last-checked: "2026-08-30"
+---
+
+# System
+
+## Core Ideas
+
+The system learns from tool traces.
+
+## Artifact analysis
+
+**Storage substrate:** `files` — retained files.
+
+**Representational form:** `natural-language` — prose lessons.
+
+**Lineage:** `trace-extracted` — lessons come from tool traces.
+
+**Behavioral authority:** `knowledge` — lessons return as advice.
+
+## Write side
+
+**Write agency:** `automatic` — a scheduled job writes lessons.
+
+**Curation operations:** `none` — it only acquires new lessons.
+
+## Read-back
+
+**Read-back:** `pull` — the agent requests lessons.
+
+## Curiosity Pass
+
+The source does not establish behavioral activation.
+""",
+    )
+
+    results = validation.validate_note(note, repo_root=tmp_path)
+
+    assert any("### Trace-learning" in item for item in results.fails)
 
 
 def test_quote_citation_shape_passes_when_well_formed() -> None:

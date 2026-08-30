@@ -15,7 +15,7 @@ Memory is an internal lens of agentic-system analysis. Its current separate coll
 
 ## Current state
 
-The public skill was promoted on 2026-08-21 after six cold trials, reconciliation, and acceptance review. It is live at `kb/instructions/analyse-agentic-system/SKILL.md` and projected into both runtime skill surfaces. On 2026-08-29 it became the public entry point for external memory-system review: target classification now conditionally invokes the retained `write-agent-memory-system-review` instructions in prepared-source mode, so the old publication workflow reuses the unified run's frozen evidence boundary. The remaining workshop work is downstream: design the agentic-systems result contract and plan source-regeneration migration of the separate memory-review corpus. The completed construction, trial, and acceptance record remains below and in the linked workshop artifacts.
+The public skill was promoted on 2026-08-21 after six cold trials, reconciliation, and acceptance review. It is live at `kb/instructions/analyse-agentic-system/SKILL.md` and projected into both runtime skill surfaces. On 2026-08-29 it became the public entry point for external memory-system review: target classification now conditionally invokes the retained `write-agent-memory-system-review` instructions in prepared-source mode, so the old publication workflow reuses the unified run's frozen evidence boundary. On 2026-08-30 the review boundary was split again by artifact stability: stable analyses now describe external mechanisms in source-native terms and normalize them through Commonplace ontology, while current Commonplace implications are separately commissioned, interest-conditioned transfer scans. Public memory-landscape synthesis is a second downstream operation over a pinned matrix snapshot. The remaining workshop work is downstream: design the agentic-systems result contract and plan source-regeneration migration of the separate memory-review corpus. The completed construction, trial, and acceptance record remains below and in the linked workshop artifacts.
 
 ## Known instruction inputs
 
@@ -44,12 +44,15 @@ Fixed for this workshop:
 - epistemic analysis on every run, scoped by whether a route produces, transforms, checks, accepts, or authorizes truth-apt content, or the system makes a knowledge-production or warrant claim;
 - evaluation-driven behavior or policy adaptation with no evidenced truth-apt object and no knowledge/warrant claim remains a runtime finding; under the 2026-08-21 decision this exception no longer gates the epistemic lens but scopes its objects — the route stays in the runtime account and is named for the orchestrator rather than analysed as an epistemic route;
 - synthesis preserves lens-specific findings and evidence limits.
+- Commonplace ontology names and relates external mechanisms inside the stable analysis; a mapping keeps the source-native operation and rationale visible, and an open-ended omission never means absence;
+- current Commonplace differences and transfer candidates live only in a separately commissioned operational-state scan keyed by the stable analysis, current Commonplace inputs, and current interest brief;
+- public cross-system memory synthesis consumes the ontology-normalized reviews and one pinned matrix snapshot, never the transfer scans.
 
 Not fixed yet:
 
 - whether a published system analysis is one file or a per-system package;
 - whether lens instructions remain internal sections of one skill or become separately invocable instructions;
-- the final output schema and which controlled values deserve parser support;
+- the final whole-system output schema and which ontology mappings deserve controlled parser support;
 - the migration sequence for the existing memory corpus and comparison matrix.
 
 These are design questions, not permission to mechanically relocate or patch the current corpus.

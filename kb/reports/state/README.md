@@ -12,6 +12,7 @@ Current state includes:
 - [`full-pass/`](./full-pass/README.md) — guarded captures and actionable pass
   dispositions;
 - `fixes/` — warning dispositions;
+- `agentic-system-transfer/` — interest-conditioned transfer scans until every candidate is promoted, recorded as `no action`, or explicitly discarded;
 - legacy review stores, backups, and revise-autoreason runs.
 
 Do not delete this subtree as a cache. Follow the owning workflow's completion

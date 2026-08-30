@@ -20,7 +20,7 @@ allOf:
             enum: [code-grounded, doc-grounded]
         additionalProperties: true
       headings:
-        description: "Required review headings. Borrowable Ideas nests as a ### subsection under ## Comparison with Our System. ## Write side is required in every review (it carries the **Write agency:** verdict; a ### Trace-derived learning sub-section is added only when trace-learning applies). ## Read-back is required in every review (it carries the **Read-back:** verdict; push-specific detail inside the section is used only for push/both read-backs, with targeting recorded by the Read-back signal: a coarse vs instance signal, not a separate flag)."
+        description: "Required stable-review headings. ## Write side carries the **Write agency:** verdict; a ### Trace-learning sub-section is added only when trace-learning applies. ## Read-back carries the **Read-back:** verdict; push-specific detail is used only for push/both read-backs, with targeting recorded by the Read-back signal. Commonplace comparison, borrowable ideas, and watch items are separate transfer-scan outputs, not required review sections."
         type: array
         allOf:
           - contains:
@@ -28,15 +28,11 @@ allOf:
           - contains:
               const: "## Artifact analysis"
           - contains:
-              const: "## Comparison with Our System"
-          - contains:
               const: "## Write side"
           - contains:
               const: "## Read-back"
           - contains:
               const: "## Curiosity Pass"
-          - contains:
-              const: "## What to Watch"
   - properties:
       body:
         not:
@@ -79,8 +75,8 @@ allOf:
           properties:
             tags:
               contains:
-                const: trace-derived
+                const: trace-learning
     then:
       properties:
         body:
-          pattern: "### Trace-derived learning"
+          pattern: "### Trace-learning"

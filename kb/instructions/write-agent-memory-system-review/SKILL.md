@@ -11,7 +11,7 @@ argument-hint: "prepared-source packet from analyse-agentic-system"
 
 # Write Agent Memory System Review
 
-Publish or replace one legacy `type: kb/agent-memory-systems/types/agent-memory-system-review.md` artifact from the frozen evidence boundary established by `analyse-agentic-system`, then run its established editorial QA and validation workflow.
+Publish or replace one legacy-collection `type: kb/agent-memory-systems/types/agent-memory-system-review.md` artifact from the frozen evidence boundary established by `analyse-agentic-system`, then run its established editorial QA and validation workflow. The artifact is a source-faithful, ontology-normalized account of the external system; current Commonplace implications are a separately commissioned transfer scan.
 
 This is a local Commonplace-repo publication subworkflow, not a public external-system analysis entry and not a promoted `cp-skill-*` framework skill. The invoking orchestrator owns the source boundary, mutation authority, artifact lifecycle, taxonomy and semantic QA, closing validation, and final report. A delegated worker owns only the new review draft and its first structural validation.
 
@@ -64,7 +64,7 @@ If the boundary is inspectable for the parent analysis but cannot support durabl
    Read, in this order:
    - kb/agent-memory-systems/COLLECTION.md
    - kb/agent-memory-systems/types/agent-memory-system-review.md — the authoritative artifact contract. Use its current retained-artifact vocabulary, including `knowledge-artifact` and `system-definition-artifact` as behavioral-authority families.
-   - 1-2 current reviews from the same evidence tier's directory and kb/agent-memory-systems/README.md, for style
+   - 1-2 current reviews from the same evidence tier's directory and kb/agent-memory-systems/README.md, for style only; ignore any legacy Commonplace-comparison, borrowable-idea, or watch sections they retain
 
    Inputs:
    - parent run: {parent_run_id}
@@ -79,6 +79,10 @@ If the boundary is inspectable for the parent analysis but cannot support durabl
    If any required input is missing, stop and report which. Verify every supplied source location or bundled item is readable. Never update last-checked without actually reading the frozen sources. Do not mutate or widen them.
 
    Ground the review in the primary sources in the frozen register. For a code-grounded review, inspect README, architecture/design docs, CLAUDE.md/AGENTS.md, package manifests, and the core source files implementing the central claims; where implementation clarifies or contradicts doctrine, report what the code does and note the divergence. For a doc-grounded review, keep behavior claim-level and carry evidence limitations into the relevant claims. Decide trace-learning status only at the confidence the tier supports, and keep the placement section and trace-learning tag in parity.
+
+   Write each material mechanism in the external system's native operational terms before applying Commonplace ontology. For every mapping, make the defining fit visible and qualify partial or uncertain analogies. Fill the closed controlled fields even when the value resembles Commonplace. Treat open mechanisms such as frontloading as evidenced instances, not as population-complete absence fields. Put an ontology mismatch in Curiosity Pass instead of forcing the nearest term.
+
+   Do not add Comparison with Our System, Borrowable Ideas, What to Watch, a Commonplace delta, or a transfer recommendation. Those are excluded from the durable review even when the style examples contain them.
 
    Do not add user-verified; drafting and semantic review cannot grant human attestation. Write note_path from the strongest supplied evidence outward. Do not cite the parent run as evidence; cite the frozen primary sources.
 
@@ -102,7 +106,7 @@ If the boundary is inspectable for the parent analysis but cannot support durabl
 
 5. **Update auxiliary artifacts only when separately authorized.** Edit `kb/agent-memory-systems/README.md` only when its path is in the packet's mutation set and either the subject was named in the `## Coverage` review backlog or the review establishes a genuinely new cross-system pattern. Edit `kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md` only when its path is authorized and the review's trace-learning placement adds meaningfully to the survey. Otherwise report the candidate edit without making it.
 
-6. **Run taxonomy QA.** Re-read the draft against the type contract's artifact-analysis fields and trace-learning split. For each field, ask whether the review makes the mechanism clear where it affects comparison. Do not force a rigid section when the system has no distinctive mechanism there; revise only when absence hides an important tradeoff or the wording is ambiguous.
+6. **Run ontology and taxonomy QA.** Re-read the draft against the type contract's ontology-normalization rule, artifact-analysis fields, and trace-learning split. For each controlled field, ask whether the external mechanism, value, and mapping rationale remain together. For each open Commonplace concept, verify that the review states the native mechanism and does not turn omission into absence. Move a partial or failed fit to Curiosity Pass. Confirm the draft contains no Commonplace comparison, borrowable ideas, watch items, or transfer recommendations. Do not force a rigid section when the system has no distinctive mechanism there; revise only when absence hides an important tradeoff or the wording is ambiguous.
 
 7. **Run semantic QA.** Follow `kb/instructions/run-review-batches.md` on the new review in requested mode with the `semantic` bundle. Select pairs, create jobs from selector JSON, delegate each job through the harness, and finalize each sentinel-bracketed output with runner and any harness-supplied model provenance. Treat findings as a read-only QA loop: fix clearly valid issues and leave uncertain findings for the final report. If the current harness cannot complete semantic QA, report it as a blocked QA step rather than substituting a shell-launched agent.
 
@@ -117,7 +121,7 @@ Report:
 - whether an incumbent was archived;
 - whether drafting was delegated;
 - authorized auxiliary paths changed or candidate edits withheld;
-- taxonomy QA outcome;
+- ontology and taxonomy QA outcome;
 - semantic bundle outcome;
 - final `commonplace-validate` result.
 
@@ -128,6 +132,7 @@ Report:
 - reuse the invoking run's source register and revision;
 - write code-grounded reviews under `reviews/` and doc-grounded reviews under `lightweight/`;
 - cite the frozen source identity at the review type's required strength;
+- preserve the external system's native mechanism beneath each Commonplace ontology mapping;
 - run semantic QA before final validation.
 
 **Never:**
@@ -136,5 +141,6 @@ Report:
 - mutate a path outside the packet's legacy-review mutation set, except workflow-owned semantic-QA state explicitly authorized by the packet;
 - overwrite a review whose source identity belongs to another subject;
 - update `last-checked` without reading the frozen sources;
+- write Commonplace differences, borrowable ideas, watch items, or transfer recommendations into the durable review;
 - run an agent CLI from the shell to bypass delegation or worker limits;
 - leave a published review unvalidated.

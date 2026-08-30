@@ -2,9 +2,9 @@
 
 ## Text contract
 
-This collection covers external **agentic systems and harnesses as whole systems** — execution loops, orchestration APIs, sub-agent surfaces, scheduling, permissioning, and control — what each is built from and does.
+This collection covers external **agentic systems and harnesses as whole systems** — execution loops, orchestration APIs, sub-agent surfaces, scheduling, permissioning, and control — what each is built from and does. Analyses use Commonplace ontology to name comparable mechanisms while preserving the external system's native operation and evidence.
 
-The quality goal is **fidelity + economy**: faithful to what the system actually does, in minimum tokens. An analysis that misrepresents the analysed system is worse than none.
+The quality goal is **fidelity + economy**: faithful to what the system actually does, in the minimum shared vocabulary needed to explain it. An analysis that misrepresents the analysed system or forces a mechanism into an ill-fitting Commonplace term is worse than none.
 
 Memory and knowledge subsystems are carved out: they have their own collection, `kb/agent-memory-systems/`, with a full review methodology that runs largely automatically. This collection covers everything else about how agentic systems are built. If a memory-subsystem category here ever matures into its own methodology, it should follow the same path and split out.
 
@@ -15,6 +15,12 @@ The collection root holds per-system and per-feature analyses plus navigation. N
 ## Evidence basis
 
 Open each analysis with a one-line **evidence basis**: what it is grounded in — docs, source code, papers, or first-hand operation of the system — and when that evidence was captured. There is no formal `source-tier` field yet; adopt one if the collection grows a comparison methodology.
+
+## Ontology and local transfer
+
+State the external mechanism in its own operational terms before applying a Commonplace concept. Explain why the concept fits and qualify partial or unresolved mappings. Commonplace chooses the analytical distinctions; it is not the comparison target, and a reader must be able to reject a mapping without losing the external-system account.
+
+Current differences from Commonplace, borrowable ideas, and watch items are not part of the durable analysis. They depend on a current Commonplace baseline and interest brief. Produce them, when separately requested, as living transfer state under `kb/reports/state/agentic-system-transfer/`; never feed that scan back into the stable analysis or a public corpus comparison. Keep unresolved candidate judgments until disposition, then replace or delete the state report under its owning workflow.
 
 ## Title conventions
 
@@ -42,5 +48,6 @@ A typed artifact in this collection may use a global type spec under `kb/types/`
 - Transferable claims about KB methodology or orchestration theory → `kb/notes/`
 - Raw snapshots of external sources → `kb/sources/`
 - Descriptions of the Commonplace system itself → `kb/reference/`
+- Current Commonplace differences, borrowable ideas, and watch items → a selective transfer scan under `kb/reports/state/agentic-system-transfer/`
 - Procedures and how-to guidance → `kb/instructions/`
 - Work in progress → `kb/work/`

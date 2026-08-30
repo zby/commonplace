@@ -6,7 +6,7 @@ tags: [agent-memory]
 
 # Review framework and comparison matrix: design and decisions
 
-This collection reviews external agent-memory systems against a shared vocabulary so independent systems can be set side by side. Two artifacts carry that comparison: the per-system reviews under `reviews/`, written to the [review type spec](./types/agent-memory-system-review.md), and [`systems.csv`](./systems.csv), a matrix whose comparison axes are parsed from the reviews by `commonplace.lib.systems_matrix` (run via `scripts/build_systems_matrix.py`). The build script also joins identity metadata. This note records the motivations and the design decisions behind that machinery, so later changes start from the reasoning rather than re-deriving it.
+This collection reviews external agent-memory systems through a shared Commonplace ontology so independent systems can be set side by side without making Commonplace the comparison target. Two artifacts carry the stable comparison: the per-system reviews under `reviews/`, written to the [review type spec](./types/agent-memory-system-review.md), and [`systems.csv`](./systems.csv), a matrix whose comparison axes are parsed from the reviews by `commonplace.lib.systems_matrix` (run via `scripts/build_systems_matrix.py`). The build script also joins identity metadata. Selective implications for Commonplace are separate living state until their candidates are disposed. This note records the motivations and the design decisions behind that machinery, so later changes start from the reasoning rather than re-deriving it.
 
 It is a collection-scoped decision log, deliberately *not* a `kb/reference/adr/` record: those govern the shipped Commonplace system, whereas this governs how *this collection* reviews and compares external systems. The format is ADR-style (context / decision / consequences) for rigour.
 
@@ -73,6 +73,30 @@ A second realisation sharpened the cut: when maintenance is **manual**, it *is* 
 **Decision.** Remove the `push_engineered` column and the `push-activation` tag. Targeting is read solely from the Read-back signal (`coarse` vs `instance`); the optional push-specific part inside the required `## Read-back` section triggers on direction (`push`/`both`), not a tag. No derived `targeted_push` column is stored either — the render table collapses the `sig_*` one-hots for display, but the normalized store keeps only the signal.
 
 **Consequences.** One representation of targeting, nothing to author or over-tag separately. The build stops emitting `push_engineered`; review frontmatter keeps only `trace-learning` when that learning path applies. (The same normalization argument applies to the derived `rb_pull`/`rb_push` one-hots, kept for now as filter conveniences per D1 — revisit if normalization is tightened further.)
+
+### D8 — Commonplace supplies the ontology, not the comparison baseline
+
+**Context.** A Commonplace-relative review records only selected differences. That loses ordinary mechanisms when they resemble Commonplace, makes silence ambiguous, and becomes stale whenever Commonplace changes. Yet a perspective-free review is neither possible nor useful: terms such as representational form, behavioral authority, and frontloading are what let independent implementations become comparable cases.
+
+**Decision.** Make each review a source-faithful, ontology-normalized account. State the external mechanism in native operational terms, then apply the Commonplace concept with a mapping rationale and qualification. Closed comparison dimensions are population-complete under their field contracts. Open-ended mechanisms are evidenced instances; omission never means assessed absence. Record a poor fit as ontology stress rather than forcing the nearest term.
+
+**Consequences.** The matrix can keep treating every row as an absolute system record. Public readers can audit or reject our mapping without losing the underlying mechanism. The corpus also tests the ontology: repeated variants sharpen a concept, while repeated poor fits identify a missing or over-broad distinction.
+
+### D9 — Current Commonplace implications are living transfer scans
+
+**Context.** The old type required `Comparison with Our System`, `Borrowable Ideas`, and `What to Watch`. Those sections mix three changing inputs: the external review, the current Commonplace baseline, and the current design interest. Because they select only interesting differences, they are not complete deltas and their omissions carry no stable meaning.
+
+**Decision.** Remove those sections from new and replacement review production. When requested, run `scan-agentic-system-transfer` over the completed analysis and a named interest brief. The response or state report records the external-analysis identity, consulted Commonplace artifacts, and interest brief; it is selective, excluded from matrix/public evidence, and cannot promote its own candidates. Written scans are operational state rather than cache because their LLM judgments and unresolved dispositions are not exactly reproducible. The owning workflow may replace or delete one after every candidate is promoted, recorded as `no action`, or explicitly discarded.
+
+**Consequences.** Durable reviews no longer go stale merely because Commonplace or its priorities change. A local scan can be refreshed cheaply for a new decision without rereading external sources. Legacy local sections remain inert until source-regenerated rather than receiving a mechanical semantic migration.
+
+### D10 — Public synthesis is a snapshot projection of the stable corpus
+
+**Context.** A narrative comparison can explain interactions that a table cannot, but manually maintained prose drifts from a growing matrix. Qualitative ontology observations also have a different evidence shape from population-complete controlled fields.
+
+**Decision.** Run `synthesize-agent-memory-landscape` as a separate downstream operation over one pinned `systems.csv` snapshot and its reviews. Quantitative claims come only from mechanically queried closed fields and state their denominators. Open-ended mechanisms support examples, variants, and ontology stress cases but no prevalence claim without a corpus-wide assay. Transfer scans and legacy Commonplace-comparison sections are excluded.
+
+**Consequences.** A public article states its matrix hash and population and is replaced as one coherent snapshot. Its worker can exercise independent judgment without becoming a new source of matrix truth, while a checker can reproduce every number and review every qualitative example.
 
 ## Open follow-ons
 

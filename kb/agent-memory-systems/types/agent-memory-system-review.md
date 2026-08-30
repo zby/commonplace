@@ -7,9 +7,9 @@ schema: ./agent-memory-system-review.schema.yaml
 
 # Agent memory system review
 
-A review of an external agent memory, knowledge, or context-engineering system. It captures what the system actually does, not what it claims — stated at the confidence the evidence supports: mark what you can't verify, and never present reported behavior as observed.
+A review of an external agent memory, knowledge, or context-engineering system. It captures what the system actually does, not what it claims, and maps those mechanisms into Commonplace's shared analytical ontology at the confidence the evidence supports. Mark what you cannot verify, never present reported behavior as observed, and never force a partial analogy into an exact classification.
 
-These reviews serve two readers. For someone **surveying or choosing** a system, the review is a faithful account of what it is and does. For **Commonplace itself**, it surfaces ideas worth borrowing for our own design. The characterization sections (Core Ideas, Artifact analysis, Write side, Read-back) serve the first reader; `Comparison with Our System` and its nested `### Borrowable Ideas` serve the second.
+The durable review serves readers surveying systems and the downstream matrix and public landscape analysis. It is a source-faithful, ontology-normalized case study: Commonplace supplies the distinctions and names, while the external system remains the subject. Current differences from Commonplace and ideas worth transferring are separate living state because their selection depends on a changing Commonplace baseline and current interest brief.
 
 **Two evidence tiers, one type.** The `source-tier` frontmatter field records which: `code-grounded` (the default this spec assumes — material findings rest on inspected implementation; abandoned-but-readable code counts) or `doc-grounded` (no inspectable implementation supports the material findings; they rest on paper/README/blog, stay claim-level, and are filed under `lightweight/`). The section specs, evidence-stance, source-metadata, and citation rules below are tier-neutral; only production, owned by the skill, differs by tier.
 
@@ -54,9 +54,22 @@ This is **optional and additive** — use it on the claims that carry the review
 
 The opening paragraph states what the system is, what it is for, who built it, and any caller-supplied source identity. Put source identity and reviewed revision before the review section headings, using the caller's labels: a repo + commit for `code-grounded`, or a document + version/date for `doc-grounded`.
 
+## Ontology-normalization
+
+Describe the external mechanism in its own operational terms before naming it with Commonplace ontology. A mapping states:
+
+1. what the external system concretely does;
+2. which Commonplace concept or controlled value applies;
+3. why the concept's defining conditions fit; and
+4. whether the fit is exact, partial, or unresolved.
+
+The mapping is an analytical claim, not source terminology unless the source actually uses it. Preserve the source-native name when one exists. A reader must be able to reject the Commonplace mapping without losing the underlying account of the mechanism.
+
+Use closed dimensions and open-ended mechanisms differently. Closed dimensions such as representational form and read-back direction require a value, assessed absence, or `not-determinable` under their field rules because the matrix compares every system on them. Open-ended mechanisms such as frontloading may be named where evidenced, but their omission means only that the review did not record an instance; it cannot support a population absence or prevalence count. When a recurring mechanism does not fit the ontology, state the mismatch in `Curiosity Pass` as an ontology stress case rather than forcing the nearest term.
+
 ## Core Ideas
 
-Write 3–6 mechanisms and design choices, not a feature list; use bold lead phrases for scanning. **Every review states how the system manages context efficiency** — the volume *and* complexity of what it puts in the agent's context (selection budgets, progressive disclosure, navigation, compaction, sub-agent isolation), named even when the answer is "unbounded / loads everything." A memory system is a context-engineering tool; this is its central design question, not an optional angle.
+Write 3–6 mechanisms and design choices, not a feature list; use bold lead phrases for scanning. Use a Commonplace concept such as frontloading when it makes the mechanism more precise, and include the native operation and mapping rationale rather than substituting the term for explanation. **Every review states how the system manages context efficiency** — the volume *and* complexity of what it puts in the agent's context (selection budgets, progressive disclosure, navigation, compaction, sub-agent isolation), named even when the answer is "unbounded / loads everything." A memory system is a context-engineering tool; this is its central design question, not an optional angle.
 
 Also frame the ideas by what future action the remembered material can change, and surface where distinctive: how far the memory can be **trusted** (preserved source, metadata, review state, validation) and its **adoption affordances** (fits the native editor/terminal/git environment, avoids metered-API lock-in, degrades to inspectable files and scripts).
 
@@ -86,9 +99,11 @@ Mark effective authority and quality (does the natural-language content carry fo
 
 For systems that learn from agent traces, the Write side section deepens this with the raw → distilled two-stage treatment; this section still records the system's standing retained surfaces.
 
-## Comparison with Our System
+## Local transfer is a separate output
 
-Write concrete alignments, divergences, and tradeoffs vs Commonplace. Close with a `### Borrowable Ideas` subsection: for each idea, state what it would look like in Commonplace and whether it is ready now or needs a concrete use case first.
+Do not add `Comparison with Our System`, `Borrowable Ideas`, or `What to Watch` to a new or replacement review. Those sections select current implications rather than characterize the external system. Run `scan-agentic-system-transfer` against the completed review and a named current interest brief when the caller separately requests that judgment. The scan is non-exhaustive, lives as operational state until its candidates are disposed, is excluded from matrix and public landscape inputs, and distinguishes shipped Commonplace behavior from proposals or theory.
+
+Legacy reviews may retain those sections until source-regenerated. Do not mechanically delete or treat their omission as a semantic migration; they are excluded from downstream corpus evidence now.
 
 ## Write side
 
@@ -161,11 +176,7 @@ When the push-specific part is warranted, address:
 
 ## Curiosity Pass
 
-Use the second pass for surprising claims, simpler alternatives, mechanisms that sound more powerful than they are, and boundary cases where the reviewed system's own framing may overstate what the implementation proves.
-
-## What to Watch
-
-Track *specific* pending changes, each tied to a consequence for our design or a tracked decision. Cut generic maturity claims ("they add features / get more robust"); an honestly short section beats filler.
+Use the second pass for surprising claims, simpler alternatives, mechanisms that sound more powerful than they are, boundary cases where the reviewed system's own framing may overstate what the implementation proves, and ontology stress cases where a Commonplace concept fits only partially or not at all. Keep it source-relative. Current Commonplace consequences and watch items belong in the separate transfer scan.
 
 ## Relevant Notes
 
@@ -176,12 +187,14 @@ Every review ends with explicit `Relevant Notes:` links into the KB. Link notes 
 - Don't present `doc-grounded` reported behavior as observed; don't invent four-field or read-back detail the sources don't support.
 - Don't write markdown links from a review into local source paths (`../../../related-systems/...`).
 - Don't treat proposed docs as implemented behavior without checking the code.
+- Don't replace the external mechanism with a Commonplace label; state the native operation and why the mapping fits.
+- Don't write current Commonplace differences, transfer recommendations, or watch items into a new or replacement review.
 
 ## Template
 
 ```markdown
 ---
-description: Template for related-system reviews — external system comparisons with fixed sections, borrowable ideas, and review freshness metadata
+description: Template for ontology-normalized external memory-system reviews with source evidence, comparison fields, and review freshness metadata
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "YYYY-MM-DD"
@@ -208,14 +221,6 @@ last-checked: "YYYY-MM-DD"
 - **Lineage:** `{authored|imported|trace-extracted|other-compiled}` `{...}` — {source and transformation status}
 - **Behavioral authority:** `{knowledge|instruction|enforcement|routing|validation|ranking|learning}` `{...}` — {consumer, channel, force}
 
-## Comparison with Our System
-
-{Alignments, divergences, tradeoffs vs Commonplace.}
-
-### Borrowable Ideas
-
-{For each idea: what it would look like in Commonplace; ready now or needs a use case first.}
-
 ## Write side
 
 **Write agency:** `{manual|automatic}` `{...}` — {how the store changes; manual = curation via the authoring channel, see Lineage + affordances}
@@ -234,14 +239,9 @@ last-checked: "YYYY-MM-DD"
 
 ## Curiosity Pass
 
-- {Surprises or curiosities}
-- {Simpler alternatives worth checking}
-- {What the mechanism could actually achieve, even if it works perfectly}
-
-## What to Watch
-
-- {A *specific* pending change + its consequence for our design or a tracked decision.}
-- {Cut generic "they get more robust" filler — an honestly-short section beats it.}
+- {Surprises, simpler alternatives, or what the mechanism could actually achieve}
+- {Source framing that outruns implementation evidence}
+- {Commonplace ontology mapping that is partial, unresolved, or exposes a missing distinction}
 
 Relevant Notes:
 

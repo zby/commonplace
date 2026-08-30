@@ -2,17 +2,21 @@
 
 ## Text contract
 
-This collection documents external agent memory, knowledge, and context-engineering systems — what each is built from and does, grounded in the code. Broad cross-system comparison lives in the root-level analyses.
+This collection documents external agent memory, knowledge, and context-engineering systems — what each is built from and does, grounded in the code and normalized through a shared Commonplace ontology. Broad cross-system comparison lives in the root-level analyses.
 
-The quality goal is **fidelity + economy**: faithful to what the code actually does, in minimum tokens. A review that misrepresents the reviewed system is worse than none — it pollutes the landscape.
+The quality goal is **fidelity + economy**: faithful to what the code actually does, expressed in the minimum shared vocabulary needed to compare systems. A review that misrepresents the reviewed system or forces its mechanism into an ill-fitting Commonplace term is worse than none — it pollutes the landscape.
 
 ## Structure
 
 **`reviews/`** — individual system reviews, one file per system, typed as `../types/agent-memory-system-review.md`. The workflow and section rules live in `types/agent-memory-system-review.md`.
 
-**`lightweight/`** — doc-grounded coverage for systems known from papers, READMEs, or articles when no inspectable implementation supports a code-grounded review. These are ordinary `agent-memory-system-review` notes carrying `source-tier: doc-grounded`; they hold the **same comparison elements** as code-grounded reviews (four-field record, read-back direction, borrowable ideas) at a lower evidence tier — claim-level. The tier is about authority, not scope. Flip `source-tier` to `code-grounded` when inspectable implementation source supports the material findings. The review spec's instructions are tier-neutral (evidence-stance, source-metadata, and citation rules cover both); see the `source-tier` field in `types/agent-memory-system-review.md`.
+**`lightweight/`** — doc-grounded coverage for systems known from papers, READMEs, or articles when no inspectable implementation supports a code-grounded review. These are ordinary `agent-memory-system-review` notes carrying `source-tier: doc-grounded`; they hold the **same ontology-normalized comparison elements** as code-grounded reviews (four-field record, write side, and read-back direction) at a lower evidence tier — claim-level. The tier is about authority, not scope. Flip `source-tier` to `code-grounded` when inspectable implementation source supports the material findings. The review spec's instructions are tier-neutral (evidence-stance, source-metadata, and citation rules cover both); see the `source-tier` field in `types/agent-memory-system-review.md`.
 
 **Collection root** — navigation (`README.md` plus build-time directory listings), cross-system analyses (comparative reviews, focused comparisons), and any analysis grounded in multiple reviews. When an analysis makes a claim general enough to transfer beyond this landscape, consider promoting it to `kb/notes/`.
+
+Reviews record each external mechanism absolutely, even when it resembles Commonplace. The shared ontology chooses the distinctions and names comparable solutions; it does not turn the review into a Commonplace delta. Closed controlled fields feed the matrix. Open-ended mechanisms and ontology boundary cases support qualitative synthesis but no prevalence claim until the full corpus has been assayed for that concept.
+
+Selective Commonplace implications are living transfer scans under `kb/reports/state/agentic-system-transfer/`. They are conditioned on a current interest brief and current Commonplace artifacts, never feed the matrix or public corpus analysis, and do not belong in a durable review. Their owning workflow keeps unresolved candidate judgments until disposition, then may replace or delete them. Legacy `Comparison with Our System`, `Borrowable Ideas`, and `What to Watch` sections may remain until their reviews are regenerated from source; new and replacement reviews omit them.
 
 ## Title conventions
 
@@ -46,6 +50,7 @@ A typed artifact in this collection may use a global type spec under `kb/types/`
 - Transferable claims about KB methodology → `kb/notes/`
 - Procedures and how-to guidance → `kb/instructions/`
 - Descriptions of the Commonplace system itself → `kb/reference/`
+- Selective Commonplace differences, borrowable ideas, or current watch items → a transfer scan under `kb/reports/state/agentic-system-transfer/`
 - Whole external agentic-system or harness analyses not centered on memory/knowledge/context engineering → `kb/agentic-systems/`
 - Raw snapshots of external sources → `kb/sources/`
 - Work in progress → `kb/work/`
