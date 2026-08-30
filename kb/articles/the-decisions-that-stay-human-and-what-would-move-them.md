@@ -255,56 +255,26 @@ repository, tools, permissions, and feedback. It deliberately holds the client
 fixed, so task choice, missing premises, feedback, and final acceptance remain
 outside the worker. Passing it does not close those decisions.
 
-## The Bitter Lesson supplies pressure, not a defense
+## The Bitter Lesson tests the strategy, not the artifact forms
 
-The program has only one narrow rebuttal to the Bitter Lesson: production method
-and representational form are different axes. A theory, program, or validator
-can be a product of learning, so Sutton's argument does not impose a weights-only
-rule.
-
-That does not defend the present hand-crafted artifacts. Calling them a
-bootstrap would be empty unless useful production and selection actually move
-toward methods that exploit increasing computation.
+The program has one narrow rebuttal to the Bitter Lesson: production method and
+representational form are different axes. A theory, program, or validator can
+be produced by learning, so Sutton's argument does not impose a weights-only
+rule. This creates conceptual room for explicit artifacts; it does not defend
+the present hand-crafted ones.
 
 Theory-guided construction is the first strategy being tried because global
-theory fit lacks a complete fixed evaluator. But it is already computational.
-The model performs much of the retrieval, interpretation, proposal, synthesis,
-criticism, and editing. The operator currently supplies much of the high-level
-selection and credit assignment.
+theory fit lacks a complete fixed evaluator. The current loop already combines
+computational search with human-assisted high-level selection. Its scaling test
+is whether additional computation improves downstream search and whether
+recurring operator judgments become reusable computational selection machinery.
 
-The strategy is therefore to improve two connected surfaces:
-
-- **computational search:** retrieval, rival generation, evidence and
-  counterexample search, decomposition search, experiment design, ablation,
-  trace analysis, and bounded artifact optimization;
-- **computational selection:** convert recurring operator judgments into
-  methodologies, tests, validators, learned critics, search objectives, episode
-  schemas, or programs.
-
-The intended strategy is not "handcraft now, learn later." It is computational
-search with human-assisted global selection while constructing machinery that
-can make more of that selection reusable and computational.
-
-This is a first approach, not a uniqueness claim. End-to-end reinforcement
-learning, evolutionary search, self-play, learned world models, weight updates,
-and stronger-model baselines remain live alternatives. The strategy should be
-retained only while more computation improves useful search and selection at
-competitive total cost.
-
-Long-run compatibility still requires the process to outgrow its starting
-structure. Competence in several predefined domains is not enough. The process
-must eventually construct project-specific theories, representations, methods,
-and checks in areas not enumerated by its designers; reduce the marginal human
-share of fit assessment and evaluator construction; and permit consequential
-parts of its own decomposition and update machinery to be challenged.
-
-No present carrier is promised survival. The path succeeds when production and
-selection become more general, not when today's files remain.
-
-The companion article [The Bitter Lesson does not require everything to live in
-weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
-develops the narrow rebuttal, the evaluator gap, the current computational loop,
-and the first-strategy claim.
+The strategy competes with end-to-end learning, evolutionary search, self-play,
+weight updates, and stronger-model baselines. It fails if useful selection does
+not improve, bespoke human judgment does not fall, or the current decomposition
+cannot be challenged. The companion article
+[The Bitter Lesson does not require everything to live in weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
+develops that argument and its domain-extensibility conditions.
 
 ## Two next experiments
 

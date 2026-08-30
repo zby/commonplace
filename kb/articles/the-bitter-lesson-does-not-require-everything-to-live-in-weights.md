@@ -96,64 +96,33 @@ methods might someday be learned. It becomes substantive when it identifies:
   producing more candidates; and
 - which alternative learning methods provide a fair comparison.
 
-The workshop should therefore not present bootstrapping as its successful
+The project should therefore not present bootstrapping as its successful
 answer to the Bitter Lesson. The Bitter Lesson is a standing pressure on the
 strategy and a source of failure conditions.
 
 ## True claims do not automatically form a useful theory
 
-A theory-mediated learner must evaluate at least two properties of a claim.
+A theory-mediated learner must ask whether a claim is warranted over its stated
+scope and whether it fits the larger working theory well enough to improve
+operation and revision. These are different questions. A true claim can be
+irrelevant or badly placed; a false claim can appear useful because the current
+implementation already assumes it.
 
-First, is the claim true, valid, or otherwise warranted over its stated scope?
-Some claims admit direct factual checks, formal derivations, consistency tests,
-controlled experiments, or bounded benchmarks.
-
-Second, does the claim fit the larger working theory and help the system act and
-revise coherently? That question is relational. A true claim can be irrelevant,
-redundant, badly scoped, or placed at the wrong level of abstraction. A false
-claim can appear useful because the current implementation already assumes it.
-
-No current automatic evaluator fully decides whether a candidate claim belongs
-in the larger causal picture, what it should replace, or whether it will
-continue to guide coherent modification after later demands arrive. This does
-not make global fit untestable. It means that the evidence is distributed and
-delayed rather than supplied by one complete local oracle.
-
-A claim's fit becomes visible through consequences such as:
-
-- whether it changes proposal, diagnosis, backtracking, or recovery;
-- whether its predictions survive independent evidence;
-- whether modifications guided by it preserve organization across later
-  demands;
-- whether replacing or withholding it changes the result;
-- whether it reduces search, repair, or human intervention relative to rival
-  formulations; and
-- whether its useful structure transfers beyond the episode that produced it.
-
-The live system can therefore act as an
-[initial selection environment](../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md).
-Claims earn provisional standing by making a counterfactual difference to
-building, operating, or repairing the system and by surviving the consequences
-of that use.
-
-System use is not a truth oracle. A self-consistent system can reinforce its own
-mistakes. Independent factual and formal checks, rival theories, preregistered
-predictions, ablations, held-out demands, and transfer tests are needed to keep
-the selection environment from becoming self-sealing.
+Global fit has no complete fixed evaluator here. It is exposed through changed
+search and recovery, comparisons with rival or ablated theories, later demands,
+repair cost, and transfer. The live system can therefore provide an
+[initial selection environment](../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md),
+but not a truth oracle. Independent factual and formal checks, preregistered
+predictions, held-out demands, and transfer tests remain necessary to prevent
+the working theory from becoming self-sealing.
 
 ## Computation is already inside the loop
 
 The present Commonplace process is not a manual design phase waiting for future
-automation. A model already performs substantial computational work:
-
-- retrieving and interpreting retained project artifacts;
-- generating competing claims, theories, decompositions, and designs;
-- searching sources and constructing counterexamples;
-- comparing formulations and identifying contradictions or missing distinctions;
-- checking references, local consistency, entailments, and formal consequences;
-- proposing experiments and repository changes;
-- running bounded evaluations, ablations, and trace analysis through tools; and
-- writing accepted revisions into state that guides later model calls.
+automation. A model already retrieves and interprets retained artifacts,
+generates and criticizes competing formulations, proposes experiments and
+repository changes, runs bounded checks through tools, and writes accepted
+revisions into state that guides later calls.
 
 The
 [2026-08-30 Commonplace revision record](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
@@ -167,13 +136,10 @@ is already a human-inclusive computational theory-mediated learning loop. At a
 boundary excluding the operator, global-fit selection and final acceptance
 remain outside the computational subsystem.
 
-The distinction is therefore not **computation versus no computation**. It is
-between:
-
-- computational theory-guided search with sparse human high-level selection;
-  and
-- a process whose search, selection, and credit assignment are increasingly
-  reusable, computational, and responsive to additional compute.
+The distinction is therefore not computation versus no computation. It is
+between computational theory-guided search with sparse human high-level
+selection and a process whose search, selection, and credit assignment become
+increasingly reusable and responsive to additional compute.
 
 Reading and citing retained artifacts supports a mediation claim, but it does
 not quantify how load-bearing they were. A matched run with the artifacts
@@ -260,19 +226,10 @@ selection path, not by preserving today's files.
 
 ## What Commonplace currently establishes
 
-Commonplace is a live human-agent environment for trying the strategy. A model
-can work across natural-language and symbolic artifacts. Project theory can be
-retained and routed into later work. Stable conclusions can become
-instructions, validators, schemas, or code. Failures can lead to revisions in
-both the knowledge base and some of its machinery.
-
-This already establishes more than a future intention to use computation. The
-model carries substantial retrieval, interpretation, synthesis, criticism, and
-editing work, and the retained knowledge base guides that work across turns.
-
-It is not yet a general autonomous learner. People still choose objectives,
-identify many reusable claims, judge much of their global fit, assign blame,
-choose representations, construct or approve evaluators, authorize
+Commonplace establishes that retained theory can participate in computational
+search inside a human-agent system and can condition later work. It does not
+yet establish a general autonomous learner. People still choose objectives,
+judge much global fit, assign blame, construct or approve evaluators, authorize
 consequential changes, and repair failures beyond represented coverage.
 
 The current position therefore has four levels:
@@ -290,25 +247,13 @@ and research commitments.
 
 ## Tests that can change the strategy
 
-The immediate experiment should test whether prepared project theory is actually
-load-bearing. Hold model, tools, repository state, budget, and acceptance fixed;
-compare correct theory, an information-matched record without theory-level
-organization, theory withheld, and plausible but wrong theory over sequential
-programming demands with delayed consequences.
-
-Measure candidate generation, preservation of architectural commitments,
-diagnosis, backtracking, recovery, collateral regressions, later-demand
-performance, and human intervention. Correct theory should help most where the
-later demand preserves the structure it names. Wrong theory should produce
-predictable negative transfer. Withholding theory should particularly damage
-recovery if the conjecture is right.
-
-A second experiment should instrument the current human-agent loop. Across real
-Commonplace improvements, record which retained artifacts guided the model,
-which proposals and checks were computational, which high-level judgments
-remained human, whether additional computation changed the result, and whether
-a recurring correction became a reusable test, critic, method, schema, or
-program.
+The [program hub](./the-decisions-that-stay-human-and-what-would-move-them.md#two-next-experiments)
+specifies the immediate theory intervention and the prospective instrumentation
+of the current human-agent loop. For the Bitter Lesson strategy, those results
+must additionally show that more computation improves downstream search rather
+than candidate volume, that recurring human judgments become reusable selection
+machinery, and that the marginal human contribution falls without hidden losses
+in quality or warrant.
 
 A later experiment must test domain-extensibility. Introduce a domain that was
 not used to design the artifact ontology or improvement procedure. Track which

@@ -12,6 +12,18 @@ Two separate pressures keep the design modular. Different collections support di
 
 ## Threads worth following
 
+**Theory-guided program modification.** The current
+[research program](./articles/the-decisions-that-stay-human-and-what-would-move-them.md)
+asks whether a computational system can use fallible, project-specific theory
+to keep modification coherent through search, backtracking, recovery, and
+delayed feedback. Theory is proposed as control over that search, not as an
+oracle that supplies the correct first change. Commonplace is the current
+human-inclusive testbed: models perform substantial computational search while
+the operator still supplies much high-level selection about global fit. The
+[Naur](./articles/what-bound-naurs-theory-to-programmers.md) and
+[Bitter Lesson](./articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
+articles develop the bearer and scaling questions.
+
 **Deployment-time learning.** Durable changes to behavior-shaping prompts, rules, tools, schemas, tests, and code can affect later sessions without updating model weights. Storage is insufficient: later operation must load or enforce the result. [Deploy-time learning](./notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) develops this path, while [bounded context](./notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) explains why selective routing remains necessary. The [learning theory index](./notes/learning-theory-README.md) maps the wider thread.
 
 **Self-improving systems.** A system improves itself only when evidence-responsive change reaches its own behavior-determining organization. One architecture directly updates behavior; another searches candidates, evaluates them, and [retains an accepted proposal](./notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md). [Reflection](./notes/definitions/reflective-system.md) is a separate property that provides [addressability](./notes/reflection-buys-addressability.md), not improvement by itself. The [self-improving systems index](./notes/self-improving-systems-README.md) and [Commonplace case](./notes/evidence/commonplace-as-a-reflective-system.md) develop the distinction.
