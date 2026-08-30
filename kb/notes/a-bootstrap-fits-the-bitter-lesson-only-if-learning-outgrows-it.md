@@ -1,5 +1,5 @@
 ---
-description: "A hand-crafted starting state is only conditionally compatible with the Bitter Lesson; theory-guided construction is a first strategy for growing search and evaluation where global theory fit lacks a fixed oracle, not a defense of manual production"
+description: "A hand-crafted starting state is only conditionally compatible with the Bitter Lesson; the condition is satisfiable because a bootstrap, unlike a scaffold, is replaced by the loop it seeds while the system persists; theory-guided construction is a first strategy where global theory fit lacks a fixed oracle, not a defense of manual production"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning, foundations]
@@ -22,6 +22,25 @@ Calling present artifacts a bootstrap cannot answer the Bitter Lesson by itself.
 A promised path beyond hand-crafting is cheap. The program must either show that
 search and evidence progressively take over useful production or concede that a
 more direct computational method is better.
+
+## A bootstrap is replaced by the loop it seeds
+
+What makes the condition satisfiable is the difference between a bootstrap and
+a scaffold. A scaffold is discarded once the product stands; a prototype is
+thrown away and rebuilt. A bootstrap is the running system itself, using its
+current theory and machinery to guide the search that produces its successors.
+Replacement can therefore be complete while the system persists: what persists
+is the loop and the functions it must perform, not any artifact currently
+performing them, since in a loop with no outside [machinery persists by
+warrant, not by
+position](./machinery-persists-by-warrant-not-position-in-a-reflective-loop.md).
+
+The hand-designed features in Sutton's examples were scaffold content that
+became permanent: the method never learned to replace them. Bootstrap content
+is content the loop is expected to replace, using it. For a declared system the
+compatibility condition therefore becomes a prediction — hand-crafted content
+will be displaced by learned content while the system continues — and the
+failure conditions below are what would refute it.
 
 ## The Bitter Lesson creates immediate pressure to use computation
 

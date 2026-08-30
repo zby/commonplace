@@ -314,11 +314,14 @@ explicit artifacts. It says nothing in favour of the present hand-written ones.
 
 The second argument is that the present artifacts are a bootstrap: a
 hand-crafted starting state that the program expects learning to replace —
-much of it, possibly all of it — while the system it started continues. What
-is meant to persist is the loop and its four functions, not any artifact now
-performing them. Every present theory, schema, validator, and decomposition is
-a plank that search and learning may swap out, and the system stays the same
-system through the replacement, as the ship of Theseus does. Hand-crafted
+much of it, possibly all of it — while the system it started continues. That
+is what makes it a bootstrap rather than a scaffold: a scaffold is discarded
+once the product stands, whereas here the running system uses its current
+theory to guide the search that produces its successors. What is meant to
+persist is the loop and its four functions, not any artifact now performing
+them. Every present theory, schema, validator, and decomposition is a plank
+that search and learning may swap out, and the system stays the same system
+through the replacement, as the ship of Theseus does. Hand-crafted
 names who produced the current version of an artifact, not a class of artifact
 that must stay so: in a loop that has no outside, [machinery persists by
 warrant, not by its
