@@ -77,6 +77,12 @@ Every negative, thin, conflicting, or uncertain finding names its inspected boun
 
 A source with several evidence layers uses separate rows or clearly separated scopes. The register does not flatten implementation, doctrine/design, reported operation, observed run, and causal experiment into one layer.
 
+For a focused test or probe, the row's citation anchor resolves to one **probe evidence capsule** in this result. The capsule contains:
+
+`source ID | check ID | UTC execution time | evidence layer | intervention and comparison, or none for an observational run | fixture or input identity | exact command, test node, or reusable-script identity | relevant environment | execution outcome and exit status | raw output inline, or resolvable exact-output location plus byte length and SHA-256 | design and confounding limits | exact conclusion supported and affected canonical IDs`
+
+The check ID joins this capsule to its execution-preflight record. Fixture or input identity uses an immutable revision or byte length and SHA-256 when content is not already canonical. Record a command verbatim; identify a reusable script by path plus immutable revision or SHA-256. The relevant environment names the runtime, tool, package, and service versions and non-secret configuration needed to interpret the result. It records only credential availability, never credential values. A `causal experiment` capsule includes an actual intervention and comparison; otherwise the capsule is `observed run` evidence. A digest without resolvable retained bytes may identify missing output, but by itself it cannot support an `observed` or `causally supported` conclusion. The capsule may be inline or reached through a canonical package pointer. This type requires the evidence to resolve inside the selected carrier; it does not authorize or choose that carrier's lifecycle.
+
 ### Shared records
 
 `## Shared records` contains the six required subheadings `### Components`, `### Operative objects`, `### Routes`, `### Claims`, `### Evidenced absences`, and `### Behavioral-authority paths`. Each subsection contains its canonical records or one resolvable package pointer. State `none found within <boundary>` when an inventory is empty; never make heading omission carry that meaning.
@@ -86,6 +92,12 @@ Component and operative-object records preserve source-native identity, represen
 ### Runtime account
 
 `## Runtime account` traces the ordinary shipped invocation and every material alternate or forcing route selected by the producing skill. For each material loop it identifies the trigger and principal, identities, next-step owner, decision policy and representational form, context, state, executor and effect boundary, runtime-client controls, persistence, coordination and return, recovery, and terminal output. A load-bearing guarantee also names its owner, enforcement point, guarantee strength, covered and alternate paths, required external contract, and separate conclusion-status fields.
+
+For every focused test or probe selected by the producing skill, the runtime account contains one execution-preflight record:
+
+`check ID | intended conclusion | command, test, or script identity | required dependencies and authority | availability evidence | execution disposition: ran or not run | execution outcome or non-execution reason | conclusion prevented`
+
+Each check ID is unique inside the run. An executed check reuses it in the probe evidence capsule. Execution disposition is separate from conclusion status. `not run` does not mean a failed check or absent system behavior. A command attempt that stops before the target check executes leaves the target check `not run`. When no dynamic check was selected, state `no dynamic check planned`.
 
 ### Lens scoping
 

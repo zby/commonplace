@@ -119,3 +119,51 @@ def test_epistemic_invocation_returns_a_sparse_canonical_overlay() -> None:
     assert "They do not reproduce the shared inventory under lens-local IDs" in (
         result_contract
     )
+
+
+def test_dynamic_checks_preflight_before_execution() -> None:
+    orchestrator = instruction("analyse-agentic-system")
+    runtime = orchestrator[
+        orchestrator.index("### 4. Run and challenge the runtime baseline")
+        : orchestrator.index("### 5. Scope the two lenses")
+    ]
+
+    selected = runtime.index("select a focused test or probe")
+    preflight = runtime.index("Before executing each selected test or probe")
+    capsule = runtime.index("For every executed test or probe")
+
+    assert selected < preflight < capsule
+    assert "execution disposition to `not run`" in runtime
+    assert "run-dependent conclusion as `uninspected`" in runtime
+    assert "Only a target check that executed" in runtime
+    assert "an observed interventional comparison plus design evidence" in orchestrator
+    assert "every selected dynamic check has one preflight record" in orchestrator
+
+
+def test_result_type_owns_probe_capsule_shape_not_its_lifecycle() -> None:
+    orchestrator = instruction("analyse-agentic-system")
+    contract = (
+        REPO_ROOT / "kb" / "types" / "agentic-system-analysis-result.md"
+    ).read_text(encoding="utf-8")
+
+    capsule = contract.index("**probe evidence capsule**")
+    runtime = contract.index("### Runtime account")
+
+    assert capsule < runtime
+    for field in (
+        "intervention and comparison",
+        "fixture or input identity",
+        "command, test node, or reusable-script identity",
+        "relevant environment",
+        "raw output inline",
+        "design and confounding limits",
+        "exact conclusion supported",
+    ):
+        assert field in contract[capsule:runtime]
+    assert "path plus immutable revision or SHA-256" in contract[capsule:runtime]
+    assert "Execution disposition is separate from conclusion status" in contract
+    assert "it does not authorize or choose that carrier's lifecycle" in contract
+    assert "cannot support an `observed` or `causally supported` conclusion" in contract
+    assert "Do not create a workshop, `cache/`, `state/`, or `retained/` artifact" in (
+        orchestrator
+    )
