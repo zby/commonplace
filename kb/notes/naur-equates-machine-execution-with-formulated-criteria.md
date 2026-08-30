@@ -9,6 +9,8 @@ tags: [foundations, context-engineering]
 
 Peter Naur's essay *Programming as Theory Building* makes two claims that are usually read as one. The first is that a program's theory — the capacity to map it onto the world, justify its parts, and extend it coherently — cannot be expressed as criteria or rules. The second is that the theory is "inextricably bound to human beings." The essay's bridge between them is an equation: what a program running on a computer does is execute formulated criteria, so a judgment whose criteria cannot be formulated is a judgment no program can make. For the programs Naur's essay is about, the equation was accurate — making a machine judge meant writing the criteria. Trained recognizers have since separated formal execution from formulated criteria, and the examples Naur chose for the inexpressible — faces, tunes, tastes of wine — are the ones they separated them on. What survives is not the human binding but a set of tests that any interpreter-plus-artifact composite has to pass.
 
+Retained theory and holding a theory are different. Retained theory is the stored, addressable object. Holding it is a capacity of the interpreter-plus-artifact composite that uses it. Text alone does not hold a theory, and breaking Naur's human-binding inference does not show that any current composite does.
+
 ## The inexpressibility argument targets formulable criteria
 
 Naur takes his notion of theory from the philosopher Gilbert Ryle. Having a theory is being able to do certain things and also to explain, justify, and answer questions about them. Intelligence of this kind cannot consist in following rules: adhering to a rule is itself done well or badly, so intelligence-as-rule-following would need rules for following rules, in a regress Naur calls absurd. What ends the regress is a grasp of similarity between situations, and similarity of the relevant kind "cannot be expressed in terms of criteria, no more than the similarities of … human faces, tunes, or tastes of wine."
@@ -43,10 +45,13 @@ Read with Naur's account of theory possession, the case gives three necessary te
 
 Whether a current LLM-plus-artifact system passes these tests is an empirical question. What the essay cannot do is settle it in advance, because the premise that would settle it — that a program executes only formulated criteria — was true of the programs it describes and is not true of trained recognizers.
 
+The third test is longitudinal rather than a demand for a correct first change. [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) develops it as a capacity to guide search, backtracking, recovery, and revision across later demands.
+
 ---
 
 Relevant Notes:
 
 - [Programming as Theory Building](../sources/programming-as-theory-building.ingest.md) — abstracted-from: supplies the Ryle regress, the inexpressibility and human-binding claims, the program-as-formal-symbol-manipulation and rule-following passages, the program-life passage, and the compiler case; the identification of the bridge as an equation is this note's reading
 - [Attempted recovery identifies informational gaps, not provenance or authority](./documentation-generates-the-system-rather-than-describing-it.md) — grounds: why Naur's failed transfers show that content was missing from the supplied artifacts, not that program theory is inexpressible in principle
+- [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: develops Naur's third bearer test as a longitudinal search-and-recovery capacity rather than one-shot correctness
 - [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) — extends: the interpreter/retention division of labour that the three tests condition

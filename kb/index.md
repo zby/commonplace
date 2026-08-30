@@ -19,11 +19,13 @@ to keep modification coherent through search, backtracking, recovery, and
 delayed feedback. Theory is proposed as control over that search, not as an
 oracle that supplies the correct first change. Commonplace is the current
 human-inclusive testbed: models perform substantial computational search while
-the operator still supplies much high-level selection about global fit. The
-[Naur](./articles/what-bound-naurs-theory-to-programmers.md) and
-[Bitter Lesson](./articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
-articles develop the bearer and scaling questions, and
-[the decisions that stay human](./articles/the-decisions-that-stay-human-and-what-would-move-them.md)
+the operator still supplies much high-level selection about global fit. The [Naur note](./notes/naur-equates-machine-execution-with-formulated-criteria.md)
+explains why his human-only conclusion no longer settles the bearer question,
+while the [coherent-search note](./notes/program-theory-sustains-search-under-delayed-feedback.md)
+states the remaining test. The [Bitter Lesson
+article](./articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
+develops the scaling question, and [the decisions that stay
+human](./articles/the-decisions-that-stay-human-and-what-would-move-them.md)
 asks why that selection has not yet moved into the automatic system.
 
 **Deployment-time learning.** Durable changes to behavior-shaping prompts, rules, tools, schemas, tests, and code can affect later sessions without updating model weights. Storage is insufficient: later operation must load or enforce the result. [Deploy-time learning](./notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) develops this path, while [bounded context](./notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) explains why selective routing remains necessary. The [learning theory index](./notes/learning-theory-README.md) maps the wider thread.

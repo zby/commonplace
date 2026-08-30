@@ -36,6 +36,7 @@ plugins:
         'articles/reflective-self-improvement.md': 'articles/when-systems-learn-theories-about-themselves.md'
         'articles/what-makes-a-system-self-improving.md': 'articles/when-systems-learn-theories-about-themselves.md'
         'articles/what-makes-human-inclusive-self-revision-non-trivial.md': 'articles/moving-revision-decisions-into-the-automatic-system.md'
+        'articles/what-bound-naurs-theory-to-programmers.md': 'notes/naur-equates-machine-execution-with-formulated-criteria.md'
         'instructions/ground-source-dependent-claims.md': 'instructions/cp-skill-ground/SKILL.md'
         'instructions/report-high-impact-simplification-opportunities.md': 'instructions/run-compression-bundle-on-note.md'
         'instructions/run-review-batches-on-note.md': 'instructions/run-review-batches.md'

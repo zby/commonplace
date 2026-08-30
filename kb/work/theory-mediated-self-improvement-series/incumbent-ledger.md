@@ -28,12 +28,19 @@ without that record is not a move.
 
 | Source | Review identity | Document status |
 |---|---|---|
-| accepted/what-bound-naurs-theory-to-programmers.md | closing-ready pass 20260827T152910Z-b7e42d; accepted capture SHA-256 3161c1db34e27a5f5bd7afc23778df073d5a58e0f45734e95667c2adffd9679d | Accepted baseline |
 | accepted/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md | closing-ready pass 20260827T153208Z-9f4bd8; accepted capture SHA-256 73ce96a40f41a87dafb2367e2d05d602df7309f6f264aa79a2b5e41f833f4807 | Accepted baseline |
 | rejected-drafts/theory-building-inside-the-system.txt | pass 20260827T163241Z-16d5d1; source SHA-256 50fee4cceeb34cef266d97a2f6f2a160e66916089442a75144b3bdc28bfafa80 | Quarantined after closing hand-back |
 | rejected-drafts/when-systems-learn-theories-about-themselves.txt | pass 20260827T163237Z-7ed60b; source SHA-256 7a9f74838feb920aa6dd8be4229f526c8479582c6465cf8fab21f61064fd8180 | Quarantined after revise |
 | rejected-drafts/moving-revision-decisions-into-the-automatic-system.txt | pass 20260827T163335Z-8e9d5e; source SHA-256 eeb3c69d8f54d969d1cb92ace504a49873fd56bbee9c260d26d3bce0dc95a64a | Quarantined after revise |
 | rejected-drafts/continual-learning-outside-the-weights.txt | pass 20260827T163425Z-2082a8; source SHA-256 36f8896c25bb1122997e56a24e05195e722d4fc4e3b2e42721e4337c4c0b8255 | Quarantined after revise |
+
+The former Naur article baseline was retired because its historical argument
+is now carried by
+`kb/notes/naur-equates-machine-execution-with-formulated-criteria.md` and its
+process-level consequence by
+`kb/notes/program-theory-sustains-search-under-delayed-feedback.md`. The local
+repair episode is illustration only; do not promote it as evidence of theory
+possession or bearer failure.
 
 ## Operator-supplied claims added after review
 
@@ -57,7 +64,7 @@ without that record is not a move.
 | ID | Incumbent claim | Review-constrained disposition | Permitted next move |
 |---|---|---|---|
 | T1 | Theory building can be decomposed into functions and allocated across human and computational actors inside a declared boundary. | Candidate | Fix the path and decision grain, then state the functions without implying that any activity by a model is theory-guided. |
-| T2 | The traced repair episode warrants criticism and proposal as computational contributions while other decision content is untraced or human. | Narrow | Preserve only the evidence-bounded allocation. Distinguish criticism of a theory claim from criticism guided by the retained program-specific theory. |
+| T2 | The traced repair episode warrants criticism and proposal as computational contributions while other decision content is untraced or human. | Omit as evidence | The episode may remain as illustration only; do not derive theory-possession, bearer-failure, or computational-capacity claims from it. |
 | T3 | Re-recording the allocation gives a unique or scalar measure of progress toward autonomy. | Defeated as stated | Replace with a vector or partial order that records path coverage, horizon, human cut, warrant, usefulness, and yield. |
 | T4 | Retained natural-language theory becomes operative or learned state when a capable interpreter consumes it. | Candidate | Specify the causal consumption path and separate operative retention from theory possession and system-level learning. |
 | T5 | Formalization moves rather than removes the theory problem. | Candidate | Name the remaining theory–model correspondence and explain how code can faithfully execute a wrong realization. |

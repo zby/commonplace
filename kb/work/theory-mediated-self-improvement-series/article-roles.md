@@ -9,8 +9,8 @@ only after disposition in the [incumbent ledger](./incumbent-ledger.md).
 
 | Module | Job | Essential content | Primary support | Open research contact |
 |---|---|---|---|---|
-| **Research-program statement** | State one central question, the proposed mechanism, the evidence standard, the current evidential position, and the studies that would change its status. Disclose present human dependence without turning the article into a general account of autonomy, closure, or warrant. | Can fallible project theory keep computational search, symbolic execution, backtracking, recovery, and revision coherent across delayed feedback? Weight–prompt operations and their code complement; lightweight search control; Commonplace and programming agents as linked testbeds; an early disclosure that current Commonplace evidence is human-inclusive; truth versus fit inside the evaluation problem; the evidence ladder; one bounded episode; the decisive experiment and longitudinal study; and a compact bridge to the bootstrap strategy and its failure conditions. | [Shared model](./shared-model.md), [target problems](./target-problems.md), [coherent search under delayed feedback](../../notes/program-theory-sustains-search-under-delayed-feedback.md), [operation-level complement](../../notes/code-complements-weight-prompt-with-symbolic-operations.md), [revision evidence](../../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md) | Rival accounts of coherent modification, alternative operation decompositions, counterexamples, external testbeds, and experimental designs |
-| **Bearer question** | Explain why program-specific theory matters and why Naur's argument does not settle that only humans can hold it | Retained theory is not the same as holding it; a holder uses partial theory to specialize search, coordinate executable changes, and recover across later demands rather than deducing a perfect change | [Accepted Naur baseline](./accepted/what-bound-naurs-theory-to-programmers.md), [Naur basis note](../../notes/naur-equates-machine-execution-with-formulated-criteria.md), [coherent-search claim](../../notes/program-theory-sustains-search-under-delayed-feedback.md), [lightweight search control](../../notes/lightweight-search-control-does-not-license-adoption.md) | Rival readings of Naur, interventions separating theory-guided from generic search, and task distributions that expose recovery |
+| **Research-program statement** | State one central question, the proposed mechanism, the evidence standard, the current evidential position, and the studies that would change its status. Disclose present human dependence without turning the article into a general account of autonomy, closure, or warrant. | Can fallible project theory keep computational search, symbolic execution, backtracking, recovery, and revision coherent across delayed feedback? Weight–prompt operations and their code complement; lightweight search control; Commonplace and programming agents as linked testbeds; an early disclosure that current Commonplace evidence is human-inclusive; truth versus fit inside the evaluation problem; the evidence ladder; one bounded illustration and its limits; a compact statement of the evidence still missing and the contrasts that could change the claim; and a bridge to the bootstrap strategy and its failure conditions. | [Shared model](./shared-model.md), [target problems](./target-problems.md), [coherent search under delayed feedback](../../notes/program-theory-sustains-search-under-delayed-feedback.md), [operation-level complement](../../notes/code-complements-weight-prompt-with-symbolic-operations.md), [revision evidence](../../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md) | Rival accounts of coherent modification, alternative operation decompositions, counterexamples, external testbeds, and experimental designs |
+| **Bearer question** | Explain why program-specific theory matters and why Naur's argument does not settle that only humans can hold it | Retained theory is not the same as holding it; a holder uses partial theory to specialize search, coordinate executable changes, and recover across later demands rather than deducing a perfect change | [Naur basis note](../../notes/naur-equates-machine-execution-with-formulated-criteria.md), [coherent-search claim](../../notes/program-theory-sustains-search-under-delayed-feedback.md), [design-rationale claim](../../notes/design-rationale-must-preserve-unregenerable-decision-premises.md), [lightweight search control](../../notes/lightweight-search-control-does-not-license-adoption.md) | Rival readings of Naur, interventions separating theory-guided from generic search, and task distributions that expose recovery |
 | **Operative theory** | State what would show that explicit theory participates in operation rather than remaining documentation | Reflective membership; prompt-side mediation with weights and symbolic state held fixed; addressable retention; independent exposure and read-back; continuation; mediation, empirical contact, theory learning, and recurrence as separate evidence levels | [Interpretation, retention, and independent read-back](../../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md), [mediation trace](../../notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md), [natural-language project-state specialization](../../notes/natural-language-project-state-specializes-search-heuristics.md), [reflection buys addressability](../../notes/reflection-buys-addressability.md) | Better causal interventions, information-matched controls, alternative substrates, stronger read-back, and failures of selective rescoping |
 | **Functional architecture** | Explain the complementary operation classes without treating today's boundary as permanent | A model-mediated operation is instantiated by weights plus prompt; code plus runtime supplies independently executed symbolic operations; code may also enter prompts as project evidence; representation, semantic application, exact execution, verification, and continuity retain distinct failure surfaces | [Operation-level complement](../../notes/code-complements-weight-prompt-with-symbolic-operations.md), [scheduler–LLM asymmetry](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md), [bounded-context orchestration](../../notes/bounded-context-orchestration-model.md), [cross-form boundary movement](../../notes/moving-the-interpretation-enforcement-boundary-requires-coverage.md) | Architectures that combine roles, evidence that independent symbolic execution is unnecessary, and interventions on operation placement |
 | **Progress, warrant, and closure** | Explain movement of the human cut under a fixed boundary while keeping actor allocation separate from capability, warrant, usefulness, and power | Human-inclusive membership is cheap; decision-bearing functions are recorded as human, computational, or joint under a fixed boundary, objective, scope, and horizon; the cut-set and boundary-contraction endpoint; conditional adverse selection of residual work; staged transfer of branch allocation, reversible symbolic execution, and adoption; task-scoped structural closure; evaluator adequacy for warranted non-degenerate results; fixed-client limits of the remote-programmer benchmark | [Fixed-boundary reallocation](../../notes/computationally-directed-self-improvement-is-a-reallocation.md), [warranted transfer](../../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md), [task-scoped closure](./task-scoped-computational-closure.md), [closure-capability map](./closure-capability-map.md), [separate progress dimensions](../../notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md), [fixed-client benchmark](../../notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md) | Before-and-after transfer studies, cut-set and contraction tests, evaluator tests, measurement of displaced work, and non-degenerate closure declarations |
@@ -20,9 +20,10 @@ only after disposition in the [incumbent ledger](./incumbent-ledger.md).
 ## Composition
 
 The modules do not imply an article per row. One article may carry several
-modules, but each full supporting argument should have one canonical article.
-Other articles repeat only enough to remain self-contained and link to that
-article. This limits synchronization cost and makes bounded agent edits possible.
+modules, but each full supporting argument should have one canonical public
+home, which may be a note or an article. Other articles repeat only enough to
+remain self-contained and link to that home. This limits synchronization cost
+and makes bounded agent edits possible.
 
 No article carries the series' routing: `kb/articles/README.md` is the rendered
 collection landing and the reader's entry point, and the articles collection
@@ -36,8 +37,9 @@ The current minimum public surface is:
    learning](../../articles/a-research-program-for-theory-mediated-system-learning.md)**
    carrying the central question, fallible longitudinal search, complementary
    operation classes, lightweight search control, the evidence ladder,
-   truth-versus-fit inside the evaluation problem, the two testbeds, the bounded
-   Commonplace episode, and the studies that would change the program's status.
+   truth-versus-fit inside the evaluation problem, the two testbeds, an
+   illustrative Commonplace episode, the evidence it failed to retain, and the
+   minimum contrasts that could change the program's status.
    It discloses early that the current path is human-inclusive and later gives
    only the compact bootstrap bridge needed to explain why the operator's
    remaining judgments are research targets.
@@ -48,16 +50,21 @@ The current minimum public surface is:
    the residual-class table of what would have to grow, structural closure
    versus evaluator quality, and the fixed-client limit of the remote-programmer
    benchmark.
-3. **The Naur article** carrying the bearer argument and the shift from one-shot
-   correctness to coherent search, executable modification, and recovery.
-4. **The Bitter Lesson article** carrying the narrow form-only rebuttal, the
+3. **The Bitter Lesson article** carrying the narrow form-only rebuttal, the
    already-computational human-agent loop, the prompt/code learning surface,
    conversion of recurring operator judgments into selection machinery,
    challengeability of the present decomposition and operation boundary,
    domain-extensibility, Sutton's later weight-update position, direct
    alternatives, and failure conditions.
-5. **Experimental protocols and later results**, published as articles only when
+4. **Experimental protocols and later results**, published as articles only when
    the evidence has enough substance to warrant them.
+
+The bearer module is carried by the
+[Naur note](../../notes/naur-equates-machine-execution-with-formulated-criteria.md)
+and the
+[coherent-search note](../../notes/program-theory-sustains-search-under-delayed-feedback.md).
+There is no separate Naur article: a new one would need a distinct
+external-reader exposition rather than another assembly of the same argument.
 
 The program statement is the entry point, not the container for every supporting
 argument. It may summarize a companion's result when that summary is required
@@ -116,9 +123,10 @@ units:
 4. **Evidence and evaluation.** Present mediation, empirical contact, theory
    learning, and recurrence; treat claim truth and theory fit as two evaluation
    questions inside this section rather than as a second article spine.
-5. **Current status and studies.** State what the recorded Commonplace episode
-   establishes and does not establish, then present the theory intervention and
-   longitudinal study that could change the program's status.
+5. **Current status and missing evidence.** Treat current episodes only at
+   their recorded strength, state what evidence is missing, and name the minimum
+   contrasts that could change the program's status. Detailed protocols and
+   unrun measurement catalogues stay in the workshop until execution.
 6. **Bootstrap pressure and invitation.** State the narrow Bitter Lesson
    compatibility, explain why the human-inclusive computational loop is the
    first strategy, identify recurring operator judgments as targets for
