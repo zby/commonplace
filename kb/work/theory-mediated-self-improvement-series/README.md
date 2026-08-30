@@ -42,13 +42,24 @@ for programming agents is the first demanding external application. Neither
 case yet establishes independent computational theory possession, recurrent
 theory-mediated self-improvement, or task-scoped computational closure.
 
-The program's strongest answer to the Bitter Lesson is not an exemption for
-explicit theories or symbolic machinery. Present hand-crafted artifacts are
-provisional bootstrap state for building a more general search-and-learning
-process over theories, methods, programs, tests, and eventually parts of the
-learning machinery itself. The relevant generality is domain-extensibility, not
-competence in several predefined areas. This is an empirical burden, not a
-result already established.
+The Bitter Lesson does not give the present hand-crafted artifacts a defense. A
+narrow argument only blocks the inference that learned results must live in
+weights: production method and representational form are different axes.
+Theory-guided bootstrapping is instead the first construction strategy being
+tried.
+
+The rationale is an evaluator gap. Individual claims may admit factual, formal,
+or local tests, but their fit in a larger working theory is relational and does
+not yet have a complete fixed oracle. Commonplace's live operation provides an
+initial selection environment: claims are used to build and revise the system,
+and their fit is tested through causal, predictive, operational, and transfer
+consequences. Computational proposal, local testing, comparison, and ablation
+should begin immediately. Recurrent global judgments should become tests,
+validators, learned critics, methods, or code, expanding the searchable surface.
+
+This strategy is provisional. It competes with more direct computational
+approaches and must eventually reduce human judgment, challenge its own
+machinery, and transfer beyond predefined domains.
 
 Researcher incentives are not yet known. Plausible sources of value are
 important questions, leverage from prepared material, freedom to challenge the
@@ -67,16 +78,25 @@ with disagreement. Treat these as hypotheses, not promises.
 - A retained theory counts only through causal use. Distinguish mediation,
   empirical contact, theory-state revision, and recurrent later use instead of
   forcing every useful episode into the strongest loop.
-- Semantic interpretation and epistemic assessment are different functions.
-  An interpreter can understand and apply a false theory; independent evidence
-  is what can correct it.
+- Semantic interpretation and epistemic assessment are different functions. An
+  interpreter can understand and apply a false theory; independent evidence is
+  what can correct it.
+- Claim truth and claim fit are different evaluation problems. System use may
+  test causal usefulness and integration, but it cannot replace factual,
+  formal, or scope evidence.
 - Representation, interpretation, verification, and continuity have different
   functions and failure surfaces. The current natural-language, parametric,
   symbolic, and evidential split is a provisional research architecture, not a
   claim that these carriers must remain separate.
-- The Bitter Lesson applies recursively. No current theory, artifact type,
-  decomposition, evaluator, or update procedure is protected by its position in
-  the loop.
+- The Bitter Lesson supplies a scaling pressure, not a defense. Use computation
+  wherever a discriminating selection criterion already exists, record the
+  human judgments left by evaluator gaps, and try to turn recurring judgments
+  into reusable selection machinery.
+- No current theory, artifact type, decomposition, evaluator, or update
+  procedure is protected by its position in the loop.
+- Theory-guided bootstrapping is the first approach, not a uniqueness claim.
+  Direct search, end-to-end learning, evolutionary methods, and stronger-model
+  baselines remain live alternatives.
 - Practical usefulness, computational autonomy, warrant, and system power are
   separate dimensions.
 - Computational closure is task-scoped and structural. It says where required
@@ -95,24 +115,30 @@ and obtain evidence that can change the status of its central claims.
 1. **Keep the model coherent.** Maintain the distinctions between coherent
    modification and warranted transfer, structural closure and warrant,
    semantic interpretation and reach-assessment, functional roles and their
-   current carriers, and theory mediation and recurrence.
+   current carriers, theory mediation and recurrence, and claim truth and
+   system-level fit.
 2. **Run a prospective theory intervention.** Compare correct project theory,
    an information-matched record without theory-level organization, theory
    withheld, and plausible but wrong theory on sequential programming demands
    with delayed consequences. The protocol in the
    [shared model](./shared-model.md) is the current starting point.
-3. **Expose a small research surface.** Use a compact hub, the Naur argument,
+3. **Instrument the first bootstrap strategy.** Record which proposals and
+   checks are computational, which global judgments remain human, which system
+   consequences bear on theory fit, and which recurring judgments can be
+   operationalized into selection machinery.
+4. **Expose a small research surface.** Use a compact hub, the Naur argument,
    the Bitter Lesson argument, and the experimental protocol or result. Add an
    article only when it carries a distinct argumentative or empirical job.
-4. **Show the program operating.** Record Commonplace and programming-agent
+5. **Show the program operating.** Record Commonplace and programming-agent
    episodes at the strongest evidence level they establish: mediation,
    empirical contact, theory learning, or recurrence.
-5. **Test the invitation.** Put a bounded, falsifiable part of the program before
+6. **Test the invitation.** Put a bounded, falsifiable part of the program before
    relevant researchers. Record substantive responses, objections, independent
    uses, and reasons for disengagement; revise the invitation accordingly.
 
 These are priorities, not a fixed sequence. Agents may adapt exposition,
-examples, outreach, and experimental details as evidence changes.
+examples, outreach, experimental details, and computational methods as evidence
+changes.
 
 Hand back decisions that would change the researcher-facing intent, promise an
 external reward, set terms for joint work without agreement, distort a claim
@@ -137,7 +163,17 @@ For a theory-mediated episode, report the strongest link actually established:
 4. the updated theory state changed a later operation.
 
 A citation at the decision point is a useful trace but not proof that the theory
-was load-bearing. Withholding or replacing the theory is stronger evidence.
+was load-bearing. Withholding, replacing, or perturbing the theory is stronger
+evidence.
+
+For a claim used in the working theory, report separately:
+
+- evidence for truth, validity, or warranted scope;
+- the decision or search process the claim changed;
+- downstream evidence about its fit in the larger system;
+- rival, withholding, or ablation evidence;
+- delayed and transfer consequences; and
+- whether the judgment produced reusable selection machinery.
 
 For computational closure, declare task selection, objective and acceptance,
 system boundary, permitted exogenous inputs, horizon, resources, and coverage.
@@ -145,11 +181,12 @@ A bad evaluator can exist inside a computationally closed path. Treat evaluator
 adequacy as warrant for a non-degenerate result, not as the definition of
 structural closure.
 
-For the Bitter Lesson bootstrap thesis, record which artifacts and production
-decisions were proposed and selected by search, which remained hand-supplied,
-whether evidence revised the decomposition or update machinery, and whether the
-same learning path transferred to an unanticipated domain with bounded human
-judgment and maintenance.
+For the first bootstrap strategy, record which artifacts and production
+decisions were generated or selected computationally, which remained
+hand-supplied, why the remaining judgments lacked adequate evaluators, whether
+repeated judgments became tests or learned critics, whether evidence revised
+the decomposition or update machinery, and whether the same process transferred
+to an unanticipated domain at competitive total cost.
 
 For researcher engagement, page views and generic praise are weak signals.
 Stronger signals are substantive criticism, independent testing or use,
@@ -161,10 +198,11 @@ used to revise the invitation.
 
 - [The decisions that stay human, and what would move them](../../articles/the-decisions-that-stay-human-and-what-would-move-them.md) — compact program hub.
 - [What bound Naur's theory to programmers](../../articles/what-bound-naurs-theory-to-programmers.md) — bearer question and coherent modification.
-- [The Bitter Lesson does not require everything to live in weights](../../articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) — bootstrap and scaling challenge.
+- [The Bitter Lesson does not require everything to live in weights](../../articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) — narrow rebuttal, first strategy, and scaling challenge.
 - [Shared model](./shared-model.md) — current compact synthesis and experiment outline.
 - [Target problems](./target-problems.md) — the central question and supporting research problems.
-- [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](../../notes/a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md) — the positive compatibility thesis and its empirical burden.
+- [When global theory fit lacks a fixed oracle, use in building the system is an initial selection environment](../../notes/when-global-theory-fit-lacks-a-fixed-oracle-use-in-building-the-system-is-an-initial-selection-environment.md) — rationale for research-through-building.
+- [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](../../notes/a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md) — conditional compatibility and failure criteria.
 
 ## Outputs
 
@@ -173,6 +211,8 @@ used to revise the invitation.
   sufficiently grounded theory;
 - experimental protocols and evidence records, including interventions,
   counterexamples, negative results, and theory revisions;
+- records of missing evaluators and successful conversions of recurring
+  judgments into selection machinery;
 - a coherent researcher-facing hub and only the companion articles needed to
   carry distinct arguments or results;
 - an accessible research surface linking claims and open questions to their
@@ -223,11 +263,15 @@ The workshop closes when:
 3. at least one prospective Commonplace or programming-agent intervention tests
    whether project theory changes search, recovery, or later modification;
 4. the result is reported at the strongest evidence level it actually reaches;
-5. the Bitter Lesson bootstrap thesis has a concrete cross-domain test or a
-   negative result that narrows it;
-6. one bounded researcher-engagement attempt produces substantive exchange or a
+5. the first bootstrap strategy has an instrumented account of computational
+   search, missing global evaluators, system-level fit evidence, and at least one
+   attempted conversion of a recurring judgment into reusable selection
+   machinery;
+6. a cross-domain test or negative result narrows the domain-extensibility
+   conjecture;
+7. one bounded researcher-engagement attempt produces substantive exchange or a
    recorded negative result that revises the invitation; and
-7. source uses stay within match-register boundaries, outstanding reviews are
+8. source uses stay within match-register boundaries, outstanding reviews are
    resolved, durable outputs validate, and the earlier workshop is closed.
 
 Article completion alone cannot close the workshop. At closure, durable theory,
