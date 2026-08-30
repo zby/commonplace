@@ -275,16 +275,3 @@ method wins at comparable total cost.
 The companion article [The Bitter Lesson does not require everything to live in
 weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
 develops the scaling argument and competing alternatives.
-
-### The invitation
-
-Researchers can challenge the mechanism, supply rival accounts, or design
-contrasts that separate theory mediation from generic search and human
-selection.
-
-The knowledge base can be [vendored read-only into another
-project](https://github.com/zby/commonplace/blob/main/INSTALL.md). A researcher
-can give an agent that access together with their own objection or rival
-mechanism and ask it to reconstruct the strongest response and design a
-discriminating test. The aim is to turn the program into a small set of claims
-whose status can change through criticism and evidence.
