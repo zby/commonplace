@@ -32,6 +32,8 @@ source_notes:
 
 > **Draft.** Comments and counterexamples are welcome through the repository's issue tracker.
 
+> **TL;DR.** My bet is that software factories that build software factories can reach operational closure: the machinery that improves the factory can itself be produced, evaluated, and revised inside the system. That would be recursive self-improvement without training new models. Today this still needs bootstrapping because key evaluation and self-modification machinery is missing, but software factories are already moving in that direction.
+
 ## The question and the two testbeds
 
 Peter Naur's [1985 essay *Programming as Theory
