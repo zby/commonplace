@@ -60,6 +60,12 @@ The system in that question is not a model. It is retained artifacts, tools,
 runtime, and correction machinery alongside the model, evaluated together at a
 declared boundary. And the question is about learning, not only about editing.
 
+This is a statement of a research program, not a report of results. It sets
+out the question, a standard for answering it, the levels at which evidence
+would count, one observational episode, and two studies that have not been
+run. What it claims is that the question is well posed and testable, not that
+its answer is yes.
+
 A change to a program, a rule, a schema, or a test is a durable change to the
 thing that determines the system's later behavior. When a retained theory
 state guides such a change, and the consequences then revise that state, the
