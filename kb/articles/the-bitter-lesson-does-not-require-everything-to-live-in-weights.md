@@ -247,7 +247,7 @@ and research commitments.
 
 ## Tests that can change the strategy
 
-The [research program](./a-research-program-for-theory-guided-program-modification.md#two-next-experiments)
+The [research program](./a-research-program-for-theory-mediated-system-learning.md#two-next-experiments)
 specifies the immediate theory intervention and the prospective instrumentation
 of the current human-agent loop. For the Bitter Lesson strategy, those results
 must additionally show that more computation improves downstream search rather

@@ -224,7 +224,7 @@ used to revise the invitation.
 
 ## Current research surface
 
-- [A research program for theory-guided program modification](../../articles/a-research-program-for-theory-guided-program-modification.md) — the compact program statement; the workshop's current article-side focus.
+- [A research program for theory-mediated system learning](../../articles/a-research-program-for-theory-mediated-system-learning.md) — the compact program statement; the workshop's current article-side focus.
 - [The decisions that stay human, and what would move them](../../articles/the-decisions-that-stay-human-and-what-would-move-them.md) — the conditional transfer argument and structural closure versus evaluator quality.
 - [What bound Naur's theory to programmers](../../articles/what-bound-naurs-theory-to-programmers.md) — bearer question and coherent modification.
 - [The Bitter Lesson does not require everything to live in weights](../../articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) — narrow rebuttal, first strategy, and scaling challenge.

@@ -28,8 +28,8 @@ companions a reader actually needs next.
 
 The current minimum public surface is:
 
-1. **[A research program for theory-guided program
-   modification](../../articles/a-research-program-for-theory-guided-program-modification.md)**
+1. **[A research program for theory-mediated system
+   learning](../../articles/a-research-program-for-theory-mediated-system-learning.md)**
    carrying the central question, complementary operation classes, lightweight
    search control, current computational loop, truth-versus-fit distinction,
    evidence ladder, testbeds, and experiments. This is the article the workshop
@@ -58,10 +58,12 @@ empirical result. Do not restore former article boundaries merely because
 rejected drafts used them.
 
 The Commonplace case remains part of the program statement until its evidence
-supports a standalone case study. The theory-mediated-learning material may
-receive its own article when the structured-shift experiment becomes a distinct
-result; until then it is a general layer supporting the programming and
-reflective cases.
+supports a standalone case study. The sample-efficiency conjecture — that
+theory mediation needs fewer target observations when a shift preserves the
+structure a theory names — may receive its own article when the structured-shift
+experiment becomes a distinct result. Title that article on the result, not on
+the phrase *theory-mediated system learning*, which the program statement now
+uses in its general sense.
 
 ## Shared constraints
 

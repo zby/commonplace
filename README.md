@@ -84,7 +84,7 @@ src/commonplace/          Packaged operational engine
 **Theory-guided program modification.** Can a computational system use
 fallible, project-specific theory to keep search, backtracking, and recovery
 coherent under delayed feedback? The
-[research program](./kb/articles/a-research-program-for-theory-guided-program-modification.md)
+[research program](./kb/articles/a-research-program-for-theory-mediated-system-learning.md)
 treats theory as search control rather than an oracle and separates the model's
 computational search from the high-level selection still supplied by the
 operator. Companion articles develop

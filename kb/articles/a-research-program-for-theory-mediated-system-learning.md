@@ -1,10 +1,11 @@
 ---
-description: "Research-program statement on whether fallible project theory can keep computational program modification coherent under delayed feedback: the central conjecture, the four evidence levels, truth versus fit, and the experiments that would test it"
+description: "Research-program statement on theory-mediated system learning: whether a system that revises retained project theory keeps its own modification coherent under delayed feedback, with the four evidence levels, truth versus fit, and the experiments"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
+  - kb/notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md
   - kb/notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md
   - kb/notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md
   - kb/notes/system-use-selects-theory-fit-without-a-fixed-oracle.md
@@ -16,7 +17,7 @@ source_notes:
   - kb/notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md
 ---
 
-# A research program for theory-guided program modification
+# A research program for theory-mediated system learning
 
 > **Draft.** This article is circulating for comments; its claims, structure, and central thesis may still change. Counterexamples, rival mechanisms, and disputed experimental controls are welcome through the repository's issue tracker.
 
@@ -36,6 +37,19 @@ This article presents a research program around one question:
 > program modification coherent across proposal, search, backtracking,
 > recovery, and delayed feedback — and revise both its theory and its behavior
 > when consequences arrive?
+
+That is a question about learning, not only about editing. A change to a
+program, a rule, a schema, or a test is a durable change to the thing that
+determines the system's later behavior. When such a change is chosen by a
+retained theory, and when its consequences revise that theory, the modification
+is how the system learns — no weight update required. The unit that learns is
+[the deployed system rather than the
+model](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md):
+a change counts as learning when an improvement process uses evidence from
+system behavior to select and retain it, so that it affects later executions.
+What makes the pathway *theory-mediated* is that the theory is represented as an
+object the process can apply, doubt, and revise, rather than being compiled away
+into behavior.
 
 Programming agents supplied with persistent project-specific theory are the
 first demanding external testbed. Commonplace, an agent-operated knowledge base,

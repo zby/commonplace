@@ -29,6 +29,8 @@ plugins:
       redirect_maps:
         'agent-memory-systems/landscape.md': 'agent-memory-systems/README.md'
         'agent-memory-systems/related-systems-index.md': 'agent-memory-systems/README.md'
+        'articles/a-research-program-for-theory-guided-program-modification.md': 'articles/a-research-program-for-theory-mediated-system-learning.md'
+        'articles/a-research-program-for-theory-mediated-learning.md': 'articles/a-research-program-for-theory-mediated-system-learning.md'
         'articles/atomic-steps-size-the-note-to-its-check.md': 'notes/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md'
         'articles/recursive-targetability.md': 'articles/moving-revision-decisions-into-the-automatic-system.md'
         'articles/reflective-self-improvement.md': 'articles/when-systems-learn-theories-about-themselves.md'
