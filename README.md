@@ -4,6 +4,8 @@
 
 Commonplace studies how agentic systems can change after deployment through inspectable knowledge artifacts. It also puts that idea into practice: human-directed agents use and revise the Markdown, instructions, schemas, validators, tests, and code in this repository. When later work loads or enforces those artifacts, accepted changes can shape behavior without updating model weights. The repository makes both the mechanism and its governance visible.
 
+Commonplace is also a **living doctrine**: an adopted, revisable framework for selecting and coordinating how model-mediated and symbolic operations are used. It is not limited to knowledge absent from model weights: relevant knowledge may fail to [activate](./kb/notes/knowledge-storage-does-not-imply-contextual-activation.md), while operations that require [faithful execution](./kb/notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) may still belong in code. Like the Ship of Theseus, Commonplace persists through a governed lineage of revisions even as its doctrine, prompts, code, and the models it uses change.
+
 The theory's most immediate target is an **LLM wiki**, in the sense [AI researcher Andrej Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): a persistent, linked Markdown layer that agents build and maintain around a person's or project's work. This repository ships the framework for operating one — the type system, writing conventions, agent skills, and `commonplace-*` Python commands.
 
 This page covers the tool: what's in the repo, how to use it, and how to install it. The research is best read on the rendered site at <https://zby.github.io/commonplace/>.
