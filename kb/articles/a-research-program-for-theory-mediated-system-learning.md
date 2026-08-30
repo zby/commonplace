@@ -15,8 +15,11 @@ source_notes:
   - kb/notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md
   - kb/notes/reflection-buys-addressability.md
   - kb/notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md
+  - kb/notes/a-retained-theory-intervention-isolates-one-explicit-theory-surface.md
+  - kb/notes/disconnected-witnesses-do-not-establish-a-full-causal-path-through-theory.md
+  - kb/notes/a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md
+  - kb/notes/system-use-provides-evidence-of-theory-fit-not-independent-warrant.md
   - kb/notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md
-  - kb/notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md
   - kb/notes/natural-language-project-state-specializes-search-heuristics.md
   - kb/notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md
   - kb/notes/open-ended-improvement-allocates-search-before-evaluation.md
@@ -26,9 +29,7 @@ source_notes:
   - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
   - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
   - kb/notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md
-  - kb/notes/methodological-and-computational-closure-track-different-changes.md
   - kb/notes/computationally-directed-self-improvement-is-a-reallocation.md
-  - kb/notes/warranted-autonomy-is-bounded-by-oracle-domain.md
   - kb/sources/programming-as-theory-building.ingest.md
 ---
 
@@ -61,18 +62,17 @@ not report that a current system already succeeds.
 
 The [deployed system rather than the
 model](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md) is
-the unit of learning. Model weights, prompt templates and retained prompt state,
-code, tests, schemas, tools, and runtime policy can all be learning targets. A
-change counts as learning when an [improvement
+the unit of learning. Model weights, retained prompt state, code, tests, schemas,
+tools, and runtime policy can all be learning targets. A change counts as
+learning when an [improvement
 process](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
 selects and retains it from evidence so that later operation depends on it. No
 weight update is required.
 
 The path is *theory-mediated* when addressable retained theory guides proposal,
-diagnosis, evaluation, or recovery, and later consequences can revise the same
-theory state. A claim can then be inspected, cited, withheld, perturbed, or
-rescoped. A weight checkpoint can also be replaced, but normally offers much
-weaker claim-level addressability.
+diagnosis, evaluation, or recovery, and later consequences can revise that
+theory so the revision affects later work. Claim-level addressability makes the
+theory inspectable, citable, perturbable, and selectively revisable.
 
 The program uses two linked testbeds. Commonplace, the agent-operated knowledge
 base from which this article comes, is the live human-agent system. Programming
@@ -98,12 +98,13 @@ cannot detect. [Holding a program theory means sustaining coherent search under
 delayed
 feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md).
 
-A program theory need not be a complete formal specification or one document. It
-may be distributed across retained explanations, architectural decisions,
-operational observations, learned competence, and code. *Program theory* names
-that wider understanding. The *retained theory state* is the addressable part
-the system can retrieve, cite, withhold, and revise. The proposed intervention
-isolates this state while holding model weights and symbolic state fixed.
+Program-relevant understanding may be distributed across explanations,
+architectural decisions, code, tests, operational state, model competence, and
+human participants. The proposed experiment varies one explicit retained theory
+surface while holding specified background components fixed. It therefore tests
+the causal contribution of that surface, not whether it exhausts the system's
+whole program theory, [as the retained-theory intervention note makes
+explicit](../notes/a-retained-theory-intervention-isolates-one-explicit-theory-surface.md).
 
 Theory matters before a correct answer is available. [Open-ended improvement
 must allocate search before decisive evaluation
@@ -112,18 +113,18 @@ Retained theory can narrow candidates, identify commitments a local fix must
 preserve, interpret unexpected results, guide rollback and recovery, and change
 what later demands cause the process to try.
 
-Some of those judgments can remain provisional. As [lightweight search
-controls](../notes/lightweight-search-control-does-not-license-adoption.md), they
-allocate work among branches or probes without licensing adoption.
-[Backtracking keeps them
+Some of those judgments can remain provisional. [Lightweight search
+controls](../notes/lightweight-search-control-does-not-license-adoption.md) can
+allocate work among branches or probes without licensing adoption, while
+[backtracking keeps them
 provisional](../notes/backtracking-keeps-lightweight-search-control-provisional.md)
 when contrary evidence arrives.
 
 Generic search can also generate, test, and discard patches. The distinction is
 causal: withholding or replacing retained theory should change proposal, branch
-allocation, diagnosis, evaluation, recovery, or later revision. One working
-mechanism is that [natural-language project state may specialize search
-heuristics already present in model
+allocation, diagnosis, evaluation, recovery, or later revision. One possible
+mechanism is that [natural-language project state specializes search heuristics
+already present in model
 weights](../notes/natural-language-project-state-specializes-search-heuristics.md).
 A theory that merely accompanies the work remains documentation.
 
@@ -135,44 +136,27 @@ does not show that any current agent passes Naur's bearer tests.
 
 ### Where the program sits
 
-Two older lineages supply different halves of the proposal. Computational
-reflection, runtime models, requirements reflection, and architecture-based
-self-adaptation make a system's own structure or goals causally available to
-guide change, but normally keep the modeling language, adaptation operators, and
-evaluation machinery supplied. Explanation-based learning and symbolic theory
-refinement let an explicit fallible theory guide inference and change after
-empirical failure, but usually model an external domain rather than the
-learner's own software organization.
-
-The program proposes to test their conjunction: an addressable theory of a
-software system's purposes and organization guides changes to the
-behavior-determining system; delayed consequences revise the same theory; and
-the revision changes later modifications while the adaptation machinery remains
-challengeable. The [positioning
+Runtime reflection and self-adaptation supply the structural lineage: a system's
+own organization or requirements become causally available to guide change.
+Theory-refinement work supplies the epistemic lineage: an explicit fallible
+theory guides inference and is revised after empirical failure. This program
+tests their conjunction while leaving the adaptation machinery itself open to
+revision. The [positioning
 note](../notes/theory-mediated-system-learning-combines-runtime-self-modeling-with-theory-refinement.md)
-develops the two lineages and the relevant experimental competitors.
+develops the comparison and relevant baselines.
 
 [Workspace
 Optimization](../sources/workspace-optimization-how-to-train-your-agent.ingest.md)
-is a close contemporary LLM-agent implementation analogue, not the overall
-closest antecedent. It combines a frozen model with editable code and text,
-routes prediction failures toward responsible artifacts, and replays earlier
-transitions. Its explicit theory primarily models an external environment within
-one run; its decomposition and adoption machinery remain fixed; and
-cross-session recurrence of a program self-theory is not shown. [Three 2026
-self-improving harnesses examined for the
-program](../notes/evidence/three-2026-harnesses-retain-rules-or-weights-not-a-revisable-theory.md)
-expose other nearby fragments.
+is a close contemporary LLM-agent implementation analogue rather than the
+overall closest antecedent. It combines a frozen model with editable code and
+text, but its explicit theory primarily models an external environment within
+one run, while its decomposition and adoption machinery remain supplied.
 
 ## Four functions that fail differently
 
-Different decompositions answer different questions. A
-[proposal-selection
-loop](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
-describes update-loop anatomy; [residue
-analysis](../notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md)
-asks why warranted automatic transfer stops. The table maps those demands onto
-the current weight-prompt-code system.
+A proposal-selection loop asks what an improvement update must contain; residue
+analysis asks why warranted automatic transfer stops. The table below instead
+asks which functional roles carry the current path and how each can fail.
 
 | Functional role | Current realization | Characteristic failure |
 |---|---|---|
@@ -181,21 +165,18 @@ the current weight-prompt-code system.
 | Independently executed symbolic operation | Code plus a runtime carrying exact transitions, scheduling, validation, installation, rollback, and later reactivation | Faithful execution of the wrong transition, frozen decomposition, incomplete coverage, or truncated horizon |
 | Independent exposure and read-back | Tests, validators, held-out tasks, decorrelated criticism, later demands, reviews, and operational consequences; for much global fit and authorization, the operator | Weak proxies, captured evaluation, viability-only gates, delayed credit assignment, unstated preferences, or exogenous selection |
 
-The functions need distinct failure surfaces, not permanently separate
-representational forms. This split makes interventions possible: withhold
+The roles need distinct failure surfaces, not permanently separate
+representational forms. That separation permits targeted interventions: withhold
 theory, perturb interpretation, replace evaluation, or truncate continuity. A
-future substrate may host several functions at once.
+future substrate may host several roles at once.
 
-The same code can be read into a prompt as evidence and later executed by a
-symbolic runtime. The distinction concerns its consumption path, not its
-authorship. Symbolic execution can be exact while implementing the wrong
-requirement. Likewise, a model can understand and apply a false theory;
-independent evidence must be able to overturn it.
+The same code may also be read into a prompt as evidence and later executed by a
+symbolic runtime. Its role follows the consumption path, not its authorship; exact
+execution does not establish that the encoded requirement or theory is correct.
 
-The table also exposes the present actor allocation without making it the
-article's second subject: the operator still supplies much of the fourth
-function. Converting recurring parts of that work into reusable machinery is a
-bootstrap target.
+The table also exposes the present actor allocation. The operator still supplies
+much of the fourth role. Moving recurring parts of that work into reusable
+machinery is therefore a bootstrap target.
 
 ## Evidence and evaluation
 
@@ -224,29 +205,30 @@ Useful partial results should not be forced into the strongest claim:
 
 A [citation at the decision point is a mediation
 trace](../notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md),
-not proof that the theory was load-bearing. Withholding, replacement, or
-perturbation is stronger evidence. The higher levels must also be co-indexed:
-the theory that guided the change must receive the outcome read-back, and its
-revision must be what later operation consumes. [Disconnected witnesses do not
-establish learning through
-theory](../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md).
+not proof that the theory was load-bearing; withholding, replacement, or
+perturbation is stronger evidence. The higher levels also have to belong to the
+same full causal path. Separate witnesses for theory use, outcome, revision, and
+later work do not compose automatically into evidence of theory-mediated
+learning, [because disconnected witnesses do not establish a full causal path
+through
+theory](../notes/disconnected-witnesses-do-not-establish-a-full-causal-path-through-theory.md).
 
-### Truth and theory fit are different evaluations
+### Warrant and theory fit are different evaluations
 
-A candidate claim must be evaluated both for truth, validity, or warranted scope
-and for its fit in the larger working theory. A true claim may be irrelevant,
-redundant, badly scoped, or placed at the wrong abstraction level. A false claim
-may appear useful because the current implementation already assumes it. A
-warranted contradiction may instead show that the larger theory needs revision.
+A claim can be well warranted yet irrelevant, redundant, badly scoped, or at the
+wrong abstraction level for a working theory. Conversely, a weak or false claim
+can appear to fit because the current implementation already assumes it.
+[A claim's warrant therefore does not determine its fit in a working
+theory](../notes/a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md).
 
-No present automatic evaluator fully decides global fit. Evidence comes from
-changed search and recovery, surviving predictions, later demands, rival or
-ablated theories, repair cost, human intervention, and transfer. The live system
-can therefore serve as an [initial selection
+No present automatic evaluator fully decides global fit. The live system can
+supply evidence through changed search and recovery, surviving predictions,
+later demands, rival or ablated theories, repair cost, intervention, and
+transfer. That makes system use an [initial selection
 environment](../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md),
-but not as a truth oracle. Independent factual and formal checks, preregistered
-predictions, held-out demands, and transfer tests are needed to prevent the
-working theory from becoming self-sealing.
+but not an independent warrant oracle: [system use provides evidence of theory
+fit and causal usefulness, not independent
+warrant](../notes/system-use-provides-evidence-of-theory-fit-not-independent-warrant.md).
 
 ## Current status and what evidence is missing
 
@@ -258,26 +240,24 @@ recorded prospectively enough to establish how load-bearing the theory was,
 separate computational from operator contributions cleanly, or support a
 comparative result.
 
-The next step is therefore better evidence retention, not a stronger
-retrospective claim. Consequential episodes should preserve the theory and
-symbolic state supplied to each decision, the alternatives considered, operator
-interventions, later consequences, revisions, and the later operations claimed
-to depend on them.
+Future consequential episodes should therefore preserve enough information to
+connect the relevant theory state, decision, realized change, consequence,
+revision, and later use. For nondeterministic production, omitted causal joins
+cannot reliably be reconstructed after the fact.
 
-A controlled test would vary retained theory while holding the model, code,
-tools, task, and budget fixed. At minimum, it should compare usable theory with
-theory withheld or deliberately wrong on a sequence where later demands can
-expose earlier mistakes. The relevant questions are whether theory changes
-search and recovery, whether consequences revise the same theory state, and
-whether that revision changes later work. Any result identifies only [the
-contrast it actually runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md).
-Detailed controls and measures should be fixed when the study is run, not
-presented here as completed methodology.
+The minimum controlled test varies retained theory while holding the model,
+code, tools, task, and budget fixed. It should compare usable theory with theory
+withheld or deliberately wrong on a sequence where later demands can expose
+earlier mistakes. The relevant questions are whether theory changes search and
+recovery, whether consequences revise the same theory state, and whether that
+revision changes later work. Any result identifies only [the contrast it
+actually runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md).
 
 A longitudinal Commonplace study should likewise ask whether recurring operator
 judgments become reusable search, selection, or credit-assignment machinery and
 whether named functions move from human or joint to computational supply. Until
-such records exist, these are research directions rather than results.
+such records and comparisons exist, these are research directions rather than
+results.
 
 ## The bootstrap must outgrow its hand-crafted parts
 
@@ -290,54 +270,53 @@ Search and learning can produce prompts, theories, tests, and programs as well a
 weights. That gives explicit artifacts conceptual room; it does not vindicate
 the present hand-written ones.
 
-Commonplace is already computational. Model-mediated operations perform
-retrieval, proposal, criticism, comparison, diagnosis, and editing; symbolic
-operations carry repository changes, testing, validation, scheduling, and
-retention. Human judgment remains where global fit lacks a discriminating
-evaluator. When a judgment recurs with stable scope, it should become a search
-control, test, validator, learned critic, method, schema, or program.
+The present loop is already computational. Models retrieve, propose, criticize,
+compare, diagnose, and edit; symbolic operations carry repository changes,
+testing, validation, scheduling, and retention. Human judgment remains where no
+sufficiently discriminating reusable evaluator exists. Recurring judgments are
+therefore candidates for search controls, methods, tests, validators, learned
+critics, schemas, or programs rather than evidence for a permanently protected
+human role.
 
-That transition is measured by holding the human-inclusive boundary fixed and
-recording each decision-bearing function as human, computational, or joint.
-Progress means named functions move toward computational supply. Over a declared
-task scope and horizon, the technical endpoint is reached when the same
-improvement pathway still completes after the human participants are removed.
-That actor-allocation test does not establish quality or warrant. [The decisions
-that stay human, and what would move
+Progress is measured under a fixed human-inclusive boundary: named
+decision-bearing functions move from human toward joint or computational supply.
+Over a declared task scope and horizon, the technical endpoint is reached when
+the same improvement path still completes after the human participants are
+removed. That actor-allocation test does not establish quality or warrant. [The
+decisions that stay human, and what would move
 them](./the-decisions-that-stay-human-and-what-would-move-them.md) develops the
-full fixed-boundary, contraction, closure, and warrant argument.
+full fixed-boundary and warrant argument.
 
-The system must also use its current theory and machinery to search for
-successors that replace much, possibly all, of the hand-crafted content. What
-should persist is the learning loop and its functions, not any present carrier.
-No component inside the declared revision surface is exempt because it
-implements the improvement machinery: [machinery persists by warrant, not by
-position](../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md).
-The bootstrap [fits the Bitter Lesson only if learning can outgrow
+The system must also use its present theory and machinery to search for
+successors that can replace them. What should persist is the learning loop and
+its functions, not any current carrier. No component inside the declared
+revision surface is exempt because it implements improvement machinery:
+[machinery persists by warrant, not by
+position](../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md),
+and the bootstrap [fits the Bitter Lesson only if learning can outgrow
 it](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
 
 This is the first strategy being tried because global theory fit lacks a
-complete fixed evaluator, while prompts, code, and retained artifacts are
-available without a training budget. Possible payoffs include [sample efficiency
+complete fixed evaluator while prompts, code, and retained artifacts are already
+available as learning surfaces. Possible payoffs include [sample efficiency
 under structured
 shifts](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md)
-and an inspectable learning record. These are hypotheses, not exemptions from
+and an inspectable learning record. Those are hypotheses, not exemptions from
 full cost accounting.
 
 The strategy competes with end-to-end learning, evolutionary search, self-play,
 weight updates, and stronger-model baselines. It should be abandoned or narrowed
-when retained theory makes no causal difference; system use becomes
-self-confirming; more computation increases candidate volume without improving
-search or outcomes; recurring operator judgments do not become reusable
-machinery; new domains continue to require bespoke human ontologies and oracles;
-the decomposition remains protected from revision; or another method wins at
-comparable total cost.
+when retained theory makes no causal difference, system use becomes
+self-confirming, additional computation fails to improve search or outcomes,
+recurring human judgments do not become reusable machinery, new domains still
+require bespoke human ontologies and oracles, the decomposition remains
+protected from revision, or another method wins at comparable total cost.
 
 The companion article [The Bitter Lesson does not require everything to live in
 weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
-develops the full scaling argument, direct alternatives, domain-extensibility,
-and the separate disagreement with Sutton and Javed's later requirement of
-weight updates.
+develops the scaling argument, direct alternatives, domain-extensibility, and
+the separate disagreement with Sutton and Javed's later requirement of weight
+updates.
 
 ### The invitation
 
