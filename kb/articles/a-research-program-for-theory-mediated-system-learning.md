@@ -61,8 +61,8 @@ runtime, and correction machinery alongside the model, evaluated together at a
 declared boundary. And the question is about learning, not only about editing.
 
 A change to a program, a rule, a schema, or a test is a durable change to the
-thing that determines the system's later behavior. When such a change is chosen by a
-retained theory, and when its consequences then revise that theory, the
+thing that determines the system's later behavior. When a retained theory
+state guides such a change, and the consequences then revise that state, the
 modification is how the system learns — no weight update required. The unit that
 learns is [the deployed system rather than the
 model](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md),
@@ -71,9 +71,9 @@ process](../notes/a-proposal-selection-loop-requires-search-evaluation-and-reten
 uses evidence from system behavior to select and retain it, so that it affects
 later executions.
 
-What makes this learning path *theory-mediated* is that the theory is
-represented as an object the process can apply, doubt, and revise, rather than
-being compiled away into behavior. What retained artifacts buy is
+What makes this learning path *theory-mediated* is that part of the program
+theory is retained in an addressable state the process can apply, doubt, and
+revise, rather than being compiled away into behavior. What retained artifacts buy is
 addressability at the level of claims: an individual claim can be inspected,
 cited, perturbed, withheld, or rescoped. A weight checkpoint can be swapped out
 too, but offers far weaker addressability at that level. Claim-level
@@ -82,6 +82,21 @@ the program turn out not to
 have](../notes/evidence/three-2026-harnesses-retain-rules-or-weights-not-a-revisable-theory.md):
 they retain rule sets or weights, not a revisable theory that guides patch
 search and gives later failures a shared target for diagnosis and revision.
+
+The closest positive neighbour is [workspace
+optimization](../sources/workspace-optimization-how-to-train-your-agent.ingest.md):
+a frozen-model agent revises the code and text around its own model calls — an
+executable model of the game it is playing, hypotheses, strategies — from
+prediction failures routed to the artifact that owns them, with recent
+transitions replayed after each edit. That is a mediation, consequence, and
+revision chain, demonstrated on 25 ARC-AGI-3 games. The differences mark this
+program's question. What that system revises is a model of an external
+environment, within one run; its own decomposition into roles, its validation,
+and its adoption policy stay fixed, and nothing is shown to survive into a
+later session. This program asks whether a retained program theory can guide
+modification of the behavior-determining system itself across later,
+initially unforeseen demands, and whether a delayed failure revises the same
+theory so that later modifications improve.
 
 The program has two testbeds. Programming agents supplied with persistent
 program theory are the harder one, and still prospective. Commonplace —
@@ -376,9 +391,9 @@ author's situation. The strategy also has payoffs beyond the reasons for
 choosing it. If the [sample-efficiency
 conjecture](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md)
 holds, retained theory needs fewer observations where later demands preserve
-the structure it names. The theory under test is readable, so the strategy can
-be tested by many people, and what the system has learned can be audited, which
-serves alignment research. The cost advantage is a starting one: if most of the
+the structure it names. The retained theory state is readable: many people can test the strategy, and
+what the system has learned is open to inspection, which gives alignment
+research an audit surface. The cost advantage is a starting one: if most of the
 loop becomes computational, further gains will again cost compute.
 
 The strategy competes with end-to-end learning, evolutionary search, self-play,
