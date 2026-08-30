@@ -24,6 +24,7 @@ source_notes:
   - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
   - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
   - kb/notes/oracle-accumulation-improves-the-selection-environment.md
+  - kb/notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md
 ---
 
 # A research program for theory-mediated system learning
@@ -269,9 +270,9 @@ related notes, and repository state, and produced a review, candidate
 distinctions, experiments, and repository edits. The operator accepted much of
 the result but corrected the Bitter Lesson framing several times, and under
 those corrections the theory moved from a set of several defenses against the
-objection, to a conditional bootstrap thesis, to the first-strategy account
-given below, in which current computation and residual human selection are
-explicitly separated. The revisions were retained and guided later turns.
+objection, to the account given below of the hand-written artifacts as a
+bootstrap, and then to that account's first-strategy form, in which current
+computation and residual human selection are explicitly separated. The revisions were retained and guided later turns.
 
 At the boundary including operator, model, knowledge base, and tools, this
 supports mediation, theory learning, and recurrence. At a boundary excluding
@@ -292,28 +293,55 @@ develops that transfer argument and separates it from [computational
 closure](../notes/methodological-and-computational-closure-track-different-changes.md),
 which states where decisions happen rather than whether they are any good.
 
-## The strategy is the first tried, not the favoured one
+## The hand-crafted parts are a bootstrap
 
 The obvious objection is that retained explicit artifacts are exactly the
-hand-built structure the Bitter Lesson tells us to stop building. Of the replies
-one could make, [only one holds
-up](../notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md),
-and the companion article [The Bitter Lesson does not require everything to
-live in weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
-develops it: [production method and representational form are different
-axes](../notes/the-bitter-lesson-selects-production-methods-not-representational.md),
-so a theory or a validator can itself be a learned product. That creates room for
-explicit artifacts. It does not defend the present hand-written ones.
+hand-built structure the Bitter Lesson tells us to stop building. The program
+cannot deny the premise. Its theories, schemas, validators, decompositions, and
+evaluators are at present written by people.
 
-Building through retained theory is the first strategy being tried, chosen
-because global theory fit lacks a complete fixed evaluator, not because it is
-the only route. It competes with end-to-end learning, evolutionary search,
-self-play, weight updates, and stronger-model baselines. Its scaling test is
-the research problem stated at the start: more computation must improve search,
-and recurring operator judgments must become reusable selection machinery. It
-should be abandoned
-on any of the conditions under which [a bootstrap stops fitting the Bitter
-Lesson](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md):
+Of the rebuttals one could make, [only one holds
+up](../notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md):
+[production method and representational form are different
+axes](../notes/the-bitter-lesson-selects-production-methods-not-representational.md),
+so a theory or a validator can itself be a learned product. That makes room for
+explicit artifacts. It says nothing in favour of the present hand-written ones.
+
+The answer to the objection is that the present artifacts are a bootstrap: a
+hand-crafted starting state that [fits the Bitter Lesson only if learning can
+outgrow
+it](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
+The label answers nothing by itself, since a promised path beyond hand-crafting
+is cheap. The answer is the condition, and the fact that it can be checked.
+Hand-crafted names who produced the current version of an artifact, not a class
+of artifact that must stay so: in a loop that has no outside, [machinery
+persists by warrant, not by its
+position](../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md),
+and the starting artifacts are as exposed to replacement as anything else in
+the loop's scope.
+
+The bootstrap is not "hand-craft now, learn later". Computation is used inside
+the loop from the start; the human judgments that remain where global fit has no
+evaluator are recorded as missing selection machinery rather than accepted as
+the permanent arrangement; and a judgment that recurs with a stable scope
+becomes a test, validator, learned critic, method, or program. The
+hand-designed vision and game-playing methods in Richard Sutton's essay put
+designer knowledge into the object-level solution and never learned to replace
+it. The present strategy differs from them only if its theories, schemas,
+validators, decompositions, and evaluators remain challengeable in practice.
+Editable files are not enough: a model may rewrite a prompt while every choice
+about what may change and how it is judged stays fixed human design. The
+companion article [The Bitter Lesson does not require everything to live in
+weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
+develops both the rebuttal and the bootstrap account.
+
+Building through a bootstrap is the first strategy being tried, chosen because
+global theory fit lacks a complete fixed evaluator, not because it is the only
+route. It competes with end-to-end learning, evolutionary search, self-play,
+weight updates, and stronger-model baselines. Its scaling test is the research
+problem stated at the start: more computation must improve search, and
+recurring operator judgments must become reusable selection machinery. The
+bootstrap stops fitting the lesson, and the strategy should be abandoned, when:
 
 - system use becomes self-confirming;
 - retained theory makes no causal difference;
