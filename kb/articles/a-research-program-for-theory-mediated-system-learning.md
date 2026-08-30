@@ -44,16 +44,20 @@ Building*](https://ingenieria-de-software-i.github.io/assets/bibliografia/progra
 argues that programmers do more than produce code. They build and hold a
 project-specific theory: an understanding of how the program maps to its world,
 why its parts are as they are, and how new demands can be incorporated without
-destroying its structure.
+destroying its structure. Crucially, Naur treated this theory as something held
+by the programmers rather than by the program or its documentation. The machine
+could execute what had been formulated, but the theory needed for coherent
+modification remained with people.
 
-Modern coding agents already propose, implement, test, and retain changes inside
-larger software-development systems. Their learned competence comes from model
-weights, while prompts, retained project state, code, tools, tests, and runtime
-policy shape what happens in a particular project.
+Modern coding agents make that boundary worth testing. They already propose,
+implement, test, and retain changes inside larger software-development systems.
+Their learned competence comes from model weights, while prompts, retained
+project state, code, tools, tests, and runtime policy shape what happens in a
+particular project.
 
-> Can such a system hold and revise a fallible theory of the software it builds
-> well enough to keep successive modifications coherent when decisive feedback
-> arrives only later?
+> Can such a system become a bearer of the fallible project theory Naur reserved
+> for programmers — holding and revising it well enough to keep successive
+> modifications coherent when decisive feedback arrives only later?
 
 This article sets out a research program for answering that question. It does
 not report that a current system already succeeds.
