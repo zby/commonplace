@@ -47,11 +47,9 @@ why its parts are as they are, and how new demands can be incorporated without
 destroying its structure.
 
 Modern coding agents already propose, implement, test, and retain changes inside
-larger software-development systems. Model weights supply learned competence;
-prompts carry the current task, project theory, evidence, and constraints; code
-and runtime provide exact transitions, persistence, tools, and checks. Together
-these components form an automated software-development system — a software
-factory in the broad sense.
+larger software-development systems. Their learned competence comes from model
+weights, while prompts, retained project state, code, tools, tests, and runtime
+policy shape what happens in a particular project.
 
 > Can such a system hold and revise a fallible theory of the software it builds
 > well enough to keep successive modifications coherent when decisive feedback
@@ -113,13 +111,6 @@ Retained theory can narrow candidates, identify commitments a local fix must
 preserve, interpret unexpected results, guide rollback and recovery, and change
 what later demands cause the process to try.
 
-Some of those judgments can remain provisional. [Lightweight search
-controls](../notes/lightweight-search-control-does-not-license-adoption.md) can
-allocate work among branches or probes without licensing adoption, while
-[backtracking keeps them
-provisional](../notes/backtracking-keeps-lightweight-search-control-provisional.md)
-when contrary evidence arrives.
-
 Generic search can also generate, test, and discard patches. The distinction is
 causal: withholding or replacing retained theory should change proposal, branch
 allocation, diagnosis, evaluation, recovery, or later revision. One possible
@@ -127,6 +118,13 @@ mechanism is that [natural-language project state specializes search heuristics
 already present in model
 weights](../notes/natural-language-project-state-specializes-search-heuristics.md).
 A theory that merely accompanies the work remains documentation.
+
+Theory-guided choices need not all meet the standard for final adoption.
+[Lightweight search controls](../notes/lightweight-search-control-does-not-license-adoption.md)
+can allocate work among branches or probes under weaker evidence, while
+[backtracking keeps them
+provisional](../notes/backtracking-keeps-lightweight-search-control-provisional.md)
+when contrary evidence arrives.
 
 Naur bound program theory to programmers partly through a premise that
 [equates machine execution with formulated
@@ -154,9 +152,10 @@ one run, while its decomposition and adoption machinery remain supplied.
 
 ## Four functions that fail differently
 
-A proposal-selection loop asks what an improvement update must contain; residue
-analysis asks why warranted automatic transfer stops. The table below instead
-asks which functional roles carry the current path and how each can fail.
+The system can be decomposed in several ways. A proposal-selection loop asks
+what an improvement update must contain; residue analysis asks why warranted
+automatic transfer stops. The table below instead asks which functional roles
+carry the current path and how each can fail.
 
 | Functional role | Current realization | Characteristic failure |
 |---|---|---|
@@ -171,8 +170,9 @@ theory, perturb interpretation, replace evaluation, or truncate continuity. A
 future substrate may host several roles at once.
 
 The same code may also be read into a prompt as evidence and later executed by a
-symbolic runtime. Its role follows the consumption path, not its authorship; exact
-execution does not establish that the encoded requirement or theory is correct.
+symbolic runtime. Its role follows the consumption path, not its authorship;
+exact execution does not establish that the encoded requirement or theory is
+correct.
 
 The table also exposes the present actor allocation. The operator still supplies
 much of the fourth role. Moving recurring parts of that work into reusable
@@ -278,40 +278,35 @@ therefore candidates for search controls, methods, tests, validators, learned
 critics, schemas, or programs rather than evidence for a permanently protected
 human role.
 
-Progress is measured under a fixed human-inclusive boundary: named
-decision-bearing functions move from human toward joint or computational supply.
-Over a declared task scope and horizon, the technical endpoint is reached when
-the same improvement path still completes after the human participants are
-removed. That actor-allocation test does not establish quality or warrant. [The
-decisions that stay human, and what would move
+The bootstrap has two related jobs. First, move named decision-bearing functions
+from human toward joint or computational supply while holding the human-inclusive
+boundary fixed. Over a declared task scope and horizon, the technical endpoint
+is reached when the same improvement path still completes after the human
+participants are removed. That actor-allocation test does not establish quality
+or warrant. [The decisions that stay human, and what would move
 them](./the-decisions-that-stay-human-and-what-would-move-them.md) develops the
 full fixed-boundary and warrant argument.
 
-The system must also use its present theory and machinery to search for
+Second, keep the current improvement machinery itself inside the revision
+surface. The system must use its present theory and machinery to search for
 successors that can replace them. What should persist is the learning loop and
-its functions, not any current carrier. No component inside the declared
-revision surface is exempt because it implements improvement machinery:
-[machinery persists by warrant, not by
+its functions, not any current carrier. [Machinery persists by warrant, not by
 position](../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md),
 and the bootstrap [fits the Bitter Lesson only if learning can outgrow
 it](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
 
-This is the first strategy being tried because global theory fit lacks a
-complete fixed evaluator while prompts, code, and retained artifacts are already
-available as learning surfaces. Possible payoffs include [sample efficiency
-under structured
-shifts](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md)
-and an inspectable learning record. Those are hypotheses, not exemptions from
-full cost accounting.
-
-There is a further payoff specific to reflective self-improvement. The system
+This first strategy has three potential payoffs. Explicit theory may improve
+[sample efficiency under structured
+shifts](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md),
+and it leaves an inspectable learning record. More distinctively, the system
 being improved is itself an agentic system, so theories of agentic systems can
 become part of the theory it uses to diagnose and redesign itself. Commonplace
-therefore develops [agentic-systems theory](../agentic-systems/README.md) not only
-as an external research topic but as candidate operative self-theory for the
+therefore develops [agentic-systems theory](../agentic-systems/README.md) both as
+an external research topic and as candidate operative self-theory for the
 model–prompt–tool–runtime system that runs the research and for future
 programming agents. If the program works, improving that theory should improve
-the system's ability to understand and modify its own organization.
+the system's ability to understand and modify its own organization. These are
+hypotheses, not exemptions from full cost accounting.
 
 The strategy competes with end-to-end learning, evolutionary search, self-play,
 weight updates, and stronger-model baselines. It should be abandoned or narrowed
