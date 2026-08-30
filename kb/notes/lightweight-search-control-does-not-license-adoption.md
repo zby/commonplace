@@ -35,5 +35,8 @@ a change operative.
 
 Relevant Notes:
 
-- [Open-ended improvement must allocate search before decisive evaluation is available](./open-ended-improvement-allocates-search-before-evaluation.md) — grounds: establishes the prior allocation problem this control addresses
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: separates bringing a candidate into consideration from accepting it
+- [Operative change](./definitions/operative-change.md) — defined-in: supplies the horizon-relative behavioral threshold that lightweight search control cannot cross by itself
+- [Backtracking keeps lightweight search control provisional](./backtracking-keeps-lightweight-search-control-provisional.md) — mechanism: explains how restoring an earlier usable state prevents a branch trial from becoming a de facto adoption
+- [A search controller is tested by what it brings to stronger evaluation](./a-search-controller-is-tested-by-what-it-brings-to-stronger-evaluation.md) — extends: gives the distributional evaluation appropriate to a controller whose judgments do not claim acceptance authority
+- [False-positive generation is filtered; false-positive acceptance becomes operative](./false-positive-generation-is-filtered-before-retention.md) — mechanism: explains why search can use weaker authority than adoption when bad candidates still face a downstream filter

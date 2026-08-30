@@ -47,7 +47,10 @@ conjecture.
 
 Relevant Notes:
 
-- [Code complements the weight–prompt pair with independently executed symbolic operations](./code-complements-weight-prompt-with-symbolic-operations.md) — extends: places the prompt-side specialization beside the independently executed symbolic operation class
 - [Lightweight search control allocates further search without licensing adoption](./lightweight-search-control-does-not-license-adoption.md) — grounds: identifies the limited authority of the specialized heuristics
 - [Weight-resident methodologies provide context-efficient behavioral compression](./weight-resident-methodologies-compress-behavior-in-context.md) — grounds: shows how compact language can select a larger behavioral pattern already represented in weights
 - [A capable agent needs methodology selection, not just relevant knowledge](./capable-agents-need-methodology-selection.md) — extends: distinguishes selecting a governing method from merely supplying relevant facts
+- [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: develops working theory into program-specific control over proposal, failure interpretation, backtracking, and revision
+- [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — grounds: separates supplying retained state to the prompt from showing that it changes search behavior
+- [An experiment identifies only the contrast it actually runs](./an-experiment-identifies-only-the-contrast-it-actually-runs.md) — grounds: bounds the proposed withholding and replacement test to the state components varied while other search conditions remain fixed
+- [The 2026-08-30 Commonplace revision used retained theory to guide computational search](./evidence/commonplace-revision-used-theory-guided-computational-search.md) — evidenced-by: records a bounded human-inclusive case while preserving the absence of a matched intervention on retained project state

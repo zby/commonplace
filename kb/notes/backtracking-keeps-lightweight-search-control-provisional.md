@@ -35,4 +35,8 @@ because the branch was tried.
 Relevant Notes:
 
 - [Lightweight search control allocates further search without licensing adoption](./lightweight-search-control-does-not-license-adoption.md) — grounds: supplies the provisional branch choice
+- [Productive deferral requires a preserved option, discriminating evidence, and a convergence rule](./productive-deferral-requires-option-evidence-and-convergence.md) — exemplifies: realizes the general test through a restorable state, contrary evidence, and a redirect response
+- [A failure explanation becomes search control only when it changes a later branch decision](./failure-explanation-changes-later-branch-decisions.md) — extends: shows when contrary evidence becomes operative by changing a later scope, priority, probe, continuation, or abandonment decision
+- [A search controller is tested by what it brings to stronger evaluation](./a-search-controller-is-tested-by-what-it-brings-to-stronger-evaluation.md) — extends: supplies the downstream test for whether restored paths yield useful candidates, evidence, informative failures, or improved recovery
+- [Current-task fit alone does not warrant costly structural entrenchment](./current-task-fit-alone-does-not-warrant-costly-entrenchment.md) — extends: develops the warning that reversible trial use becomes costly when dependencies and migration costs accumulate
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: places backtracking inside longitudinal program modification and recovery

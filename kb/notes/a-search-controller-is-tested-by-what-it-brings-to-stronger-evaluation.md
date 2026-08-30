@@ -35,3 +35,7 @@ Relevant Notes:
 
 - [Lightweight search control allocates further search without licensing adoption](./lightweight-search-control-does-not-license-adoption.md) — grounds: supplies the limited-authority controller whose output is being evaluated
 - [Open-ended improvement must allocate search before decisive evaluation is available](./open-ended-improvement-allocates-search-before-evaluation.md) — grounds: explains why comparison cannot assume exhaustive evaluation of every branch
+- [Backtracking keeps lightweight search control provisional](./backtracking-keeps-lightweight-search-control-provisional.md) — mechanism: explains how a mistaken branch can still improve recovery while remaining provisional
+- [A failure explanation becomes search control only when it changes a later branch decision](./failure-explanation-changes-later-branch-decisions.md) — mechanism: identifies when an informative failure actually changes subsequent routing
+- [Diagnostic richness constrains outer-loop learning quality](./diagnostic-richness-constrains-outer-loop-learning-quality.md) — grounds: explains why inspectable evidence and failures are valuable downstream consequences apart from acceptance
+- [An experiment identifies only the contrast it actually runs](./an-experiment-identifies-only-the-contrast-it-actually-runs.md) — grounds: limits controller attribution to comparisons that vary the controller rather than a larger treatment bundle

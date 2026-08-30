@@ -34,3 +34,7 @@ Relevant Notes:
 
 - [Lightweight search control allocates further search without licensing adoption](./lightweight-search-control-does-not-license-adoption.md) — grounds: identifies the branch decisions an explanation can change
 - [Theory-mediated self-improvement needs interpretation and retention](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) — extends: supplies the stronger requirement that a retained theory-state change affect later operation
+- [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — exemplifies: treats a retained failure explanation as a concrete case of stored knowledge becoming active only when it changes later behavior
+- [Backtracking keeps lightweight search control provisional](./backtracking-keeps-lightweight-search-control-provisional.md) — mechanism: restores an earlier usable state so a retained explanation can redirect search instead of remaining commentary
+- [Citing retained theory at the decision point is a mediation trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — enables: supplies a checkable record that the retained explanation entered the causal path to the later branch decision
+- [A search controller is tested by what it brings to stronger evaluation](./a-search-controller-is-tested-by-what-it-brings-to-stronger-evaluation.md) — extends: distinguishes evidence that an explanation changed routing from evidence that the resulting control improves search

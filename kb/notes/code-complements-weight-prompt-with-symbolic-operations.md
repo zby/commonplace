@@ -76,6 +76,10 @@ storage substrate.
 
 Relevant Notes:
 
+- [Agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — grounds: supplies the semantic underspecification and execution-indeterminism distinction behind prompt interpretation and runtime-assigned consequences
+- [Semantic work can be relocated but not eliminated](./semantic-work-can-be-relocated-but-not-eliminated.md) — grounds: explains why generating or selecting code moves semantic judgment upstream rather than removing it from the system
+- [Specification-level separation recovers scoping before it recovers error correction](./specification-level-separation-recovers-scoping-before-it-recovers.md) — contrasts: shows that symbolic-looking structure remains model-mediated when the model still interprets its control semantics
+- [Progressive constraining commits only after patterns stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — mechanism: describes how recurrent model-interpreted behavior can become an installed symbolic operation
 - [Natural-language project state may specialize weight-resident search heuristics](./natural-language-project-state-specializes-search-heuristics.md) — grounds: isolates how retained project information changes the prompt side of the model-mediated operation
 - [Scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — mechanism: explains why exact state transitions and bookkeeping benefit from independent symbolic execution
 - [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — exemplifies: composes explicit symbolic state and transitions with bounded model calls
