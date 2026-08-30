@@ -96,9 +96,11 @@ methods might someday be learned. It becomes substantive when it identifies:
   producing more candidates; and
 - which alternative learning methods provide a fair comparison.
 
-The project should therefore not present bootstrapping as its successful
-answer to the Bitter Lesson. The Bitter Lesson is a standing pressure on the
-strategy and a source of failure conditions.
+The project's answer to the Bitter Lesson is therefore not the label but the
+prediction the label commits it to, and which it can be held to: learning will
+replace much, possibly all, of the hand-crafted content while the loop that
+does the replacing persists. The Bitter Lesson is a standing pressure on that
+prediction and the source of its failure conditions.
 
 ## True claims do not automatically form a useful theory
 
@@ -195,7 +197,7 @@ systems may discover useful organization without evaluating explicit claims one
 by one. The program should compare against them rather than claim that no other
 route exists.
 
-## The bootstrap must be able to outgrow itself
+## The bootstrap is expected to replace itself
 
 The hand-designed vision and game-playing approaches in Sutton's comparison
 encoded object-level competence for predefined problem classes. Their
@@ -222,7 +224,15 @@ concerns production of empirical and procedural competence.
 No current carrier is promised survival. A future model may absorb a theory,
 collapse a representational boundary, or replace a validator with a cheaper
 learned mechanism. The bootstrap succeeds by improving the production and
-selection path, not by preserving today's files.
+selection path, not by preserving today's files. That is the difference
+between a bootstrap and a scaffold: a scaffold is discarded once the product
+stands, whereas a bootstrap is the running system using its current theory to
+guide the search that produces its successors. Replacement can therefore be
+complete while the loop and its functions persist, since in a loop with no
+outside [machinery persists by warrant, not by
+position](../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md);
+the system stays the same system through the replacement, as the ship of
+Theseus does.
 
 ## What Commonplace currently establishes
 
@@ -268,7 +278,7 @@ improve useful search or selection, human judgment grows with the corpus, each
 domain needs a new ontology and oracle, the decomposition remains outside
 revision, or a more direct method performs better at comparable total cost.
 
-## The research program, not the defense
+## A prediction to be judged, not a vindication
 
 The Bitter Lesson does not require everything to live in weights. It does
 require useful complexity to be earned through methods that exploit search,
@@ -280,12 +290,15 @@ The project is testing whether an already-computational, theory-guided
 human-agent system can improve its search and grow its selection machinery:
 using retained project theory as operative context, exposing global fit through
 system-building consequences, and progressively converting recurring human
-judgments into evaluators, methods, schemas, and code.
+judgments into evaluators, methods, schemas, and code. Its prediction is that
+the hand-crafted content it starts from will be replaced along the way, much or
+all of it, while the loop persists.
 
 This is a first construction strategy. It should be retained only while it helps
 build a more general learning process than the one that produced it.
 
 The [bootstrap note](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md)
-states the conditional compatibility and failure criteria. The
+states the conditional compatibility, why the condition is satisfiable, and
+the failure criteria. The
 [response-portfolio note](../notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md)
 separates the narrow rebuttal from the broader research commitments.
