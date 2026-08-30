@@ -9,6 +9,7 @@ Global structural contracts used across Commonplace collections. A type-spec doc
 - [Definition](./definition.md) — operational vocabulary definitions
 - [Review gate](./review-gate.md) — one judgment-based quality criterion
 - [Tag README](./tag-readme.md) — a tag's curated landing page, with optional validated marks
+- [Agentic system analysis result](./agentic-system-analysis-result.md) — one complete, evidence-bounded analysis run across response, file, or package carriers
 
 ## Type-system contracts
 

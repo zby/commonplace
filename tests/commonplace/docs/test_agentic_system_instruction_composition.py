@@ -32,3 +32,39 @@ def test_transfer_scan_follows_stable_result_verification() -> None:
 
     assert verification < transfer
     assert "only after step 10 has frozen and fingerprinted" in orchestrator[transfer:]
+
+
+def test_response_fingerprint_contract_excludes_its_own_report() -> None:
+    orchestrator = instruction("analyse-agentic-system")
+    transfer = instruction("scan-agentic-system-transfer")
+    contract = (
+        REPO_ROOT
+        / "kb"
+        / "instructions"
+        / "analyse-agentic-system"
+        / "references"
+        / "response-fingerprint.md"
+    ).read_text(encoding="utf-8")
+
+    assert "hash only its delimited stable block" in orchestrator
+    assert "digest outside that block" in orchestrator
+    assert "exact delimited stable response block" in transfer
+    assert "Never hash the completed assistant message" in contract
+    assert "AAS-STABLE-RESULT START" in contract
+    assert "AAS-STABLE-RESULT END" in contract
+
+
+def test_analysis_skill_uses_one_typed_result_shape_for_every_carrier() -> None:
+    orchestrator = instruction("analyse-agentic-system")
+    contract = (
+        REPO_ROOT / "kb" / "types" / "agentic-system-analysis-result.md"
+    ).read_text(encoding="utf-8")
+
+    assert "single authority for the result's frontmatter" in orchestrator
+    assert "A response's delimited stable block is the complete typed entry artifact" in orchestrator
+    assert "copy those unchanged bytes to a temporary `.md` validation target" in orchestrator
+    assert "The type fixes content shape, not lifecycle" in contract
+    assert "A response-only result" in contract
+    assert "A package has exactly one typed entry artifact" in orchestrator
+    assert "wired; observed" in contract
+    assert "implemented and observed" in contract

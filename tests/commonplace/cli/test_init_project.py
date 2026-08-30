@@ -110,6 +110,8 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
         Path("kb/reports/state/.commonplace-validation-ignore"),
         Path("kb/reports/retained/README.md"),
         Path("kb/types/note.schema.yaml"),
+        Path("kb/types/agentic-system-analysis-result.md"),
+        Path("kb/types/agentic-system-analysis-result.schema.yaml"),
         Path("kb/types/instruction.md"),
         Path("kb/types/instruction.schema.yaml"),
         Path("kb/types/type-spec.md"),
