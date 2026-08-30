@@ -1,5 +1,5 @@
 ---
-description: "Research-program statement on theory-mediated system learning: whether a system that revises retained program theory keeps its own modification coherent under delayed feedback, with the four evidence levels, truth versus fit, and the experiments"
+description: "Research-program statement on whether an automated system-building process can hold and revise project theory to keep successive modifications coherent under delayed feedback"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -31,31 +31,27 @@ source_notes:
 
 > **Draft.** This article is circulating for comments. Counterexamples, rival mechanisms, and disputed experimental controls are welcome through the repository's issue tracker.
 
-Suppose an endpoint is slow, so a cache is added in front of the service behind
-it. The change is small, its tests pass, and the endpoint becomes fast. Two
-requirements later, a feature that needs every read to reflect the preceding
-write fails in production. The service had been kept transactional for exactly
-that reason, but the reason appeared nowhere the change touched. A later demand
-exposed the unstated dependency.
+Peter Naur's [1985 essay *Programming as Theory
+Building*](https://ingenieria-de-software-i.github.io/assets/bibliografia/programming-as-theory-building.pdf)
+argues that programmers do more than produce code. They build and hold a
+project-specific theory: an understanding of how the program maps to its world,
+why its parts are as they are, and how new demands can be incorporated without
+destroying its structure.
 
-The hardest programming decisions are often of this kind: no complete local
-rule or cheap test says which change will preserve the program's purpose and
-organization. Human programmers handle them imperfectly. They use a partial
-theory of the program to choose promising changes, notice conflicts, interpret
-failure, backtrack, and revise their understanding. The theory does not replace
-search. It keeps search coherent until later requirements and operational
-consequences reveal what the first tests could not.
+Coding agents can now propose, implement, test, and retain changes. This article
+asks whether the larger automated system-building process can also carry the
+theory that human programmers use to keep a changing program coherent:
 
-This article presents a research program around one question:
+> Can an automated system-building process hold and revise a fallible theory of
+> the software system it is building well enough to keep successive
+> modifications coherent under delayed feedback?
 
-> Can a system use a fallible program theory to keep its own modifications
-> coherent under delayed feedback, and revise that theory when the consequences
-> arrive?
-
-The system is not just a model. It includes retained artifacts, tools, runtime,
-and correction machinery alongside the model, evaluated together at a declared
-boundary. This is a statement of a research program, not a report of results: it
-claims that the question is well posed and testable, not that its answer is yes.
+The target is a software factory in the broad sense: a model, retained
+artifacts, tools, runtime, and correction machinery repeatedly propose, realize,
+evaluate, and retain changes. They are evaluated together at a declared system
+boundary rather than reduced to the model alone. This is a statement of a
+research program, not a report of results: it claims that the question is well
+posed and testable, not that its answer is yes.
 
 A change to a program, rule, schema, or test is a durable change to something
 that determines later behavior. When a retained theory state guides such a
@@ -98,11 +94,10 @@ machinery.
 
 ## Holding a theory means controlling a fallible search
 
-A modification is coherent when it meets a new demand without breaking the
-purpose and organization that make the program work. This is Peter Naur's test
-for whoever holds a program's theory. Because that organization is only partly
-stated, coherence is often revealed longitudinally: a later extension or
-operational failure shows that an earlier locally successful change broke
+Naur's test is longitudinal. A modification is coherent when it meets a new
+demand without breaking the purpose and organization that make the program work.
+Because that organization is only partly stated, a later extension or
+operational failure may show that an earlier locally successful change broke
 something important.
 
 The unit judged is therefore a sequence of modifications, not one patch. A
