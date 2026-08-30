@@ -368,9 +368,20 @@ companion article [The Bitter Lesson does not require everything to live in
 weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
 develops both the rebuttal and the bootstrap account.
 
-Building through a bootstrap is the first strategy being tried, chosen because
-global theory fit lacks a complete fixed evaluator, not because it is the only
-route. It competes with end-to-end learning, evolutionary search, self-play,
+Building through a bootstrap is the first strategy being tried, for two
+reasons. The first is that global theory fit lacks a complete fixed evaluator.
+The second is access: prompts, code, and retained artifacts are the part of the
+system a researcher without a training budget can change, and this is the
+author's situation. The strategy also has payoffs beyond the reasons for
+choosing it. If the [sample-efficiency
+conjecture](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md)
+holds, retained theory needs fewer observations where later demands preserve
+the structure it names. The theory under test is readable, so the strategy can
+be tested by many people, and what the system has learned can be audited, which
+serves alignment research. The cost advantage is a starting one: if most of the
+loop becomes computational, further gains will again cost compute.
+
+The strategy competes with end-to-end learning, evolutionary search, self-play,
 weight updates, and stronger-model baselines. Its scaling test is the research
 problem stated at the start: more computation must improve search, and
 recurring operator judgments must become reusable selection machinery. The
