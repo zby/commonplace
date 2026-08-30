@@ -3,182 +3,368 @@
 This is the workshop's compact working synthesis. It connects the
 [target problems](./target-problems.md), durable theory notes, and evaluation
 artifacts. It does not promote claims by itself; the linked notes carry their
-arguments, evidence, and scope conditions.
+arguments, evidence, and scope.
 
-## Core conjecture
+## Central research question
 
-A mixed system can improve through explicit theories without requiring every
-learned result to enter model weights. Retained natural-language theory makes
-premises, criteria, and scope addressable. A language model interprets and
-criticizes them. Symbolic machinery carries state and exact transitions.
-Evidence and oracles correct the result.
+Can a computational composite use a fallible, project-specific theory to keep
+program modification coherent across proposal, search, backtracking, recovery,
+and delayed feedback — and revise both its theory and its behavior when
+consequences arrive?
 
-The attribution *improvement through theory* requires one causally co-indexed
-path:
+The theory need not deduce the correct first change. Human programmers also
+search, fail, reverse changes, and revise their understanding. The relevant
+capacity is longitudinal: the program theory must shape which changes are tried,
+what the process tries to preserve, how failures are interpreted, and how
+recovery and later modification proceed. This is the crux developed in
+[holding a program theory means sustaining coherent search under delayed
+feedback](../../notes/holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md).
 
-    retained theory
-      -> interpreted decision
-      -> realized change
-      -> outcome
-      -> read-back against the same theory
-      -> revised theory
-      -> later operation
+## Working conjecture
 
-Co-occurrence inside one system boundary is insufficient. The same theory must
-guide the change, be tested by its result, and affect later operation after
-revision. This is the central constraint from
-[theory-mediated self-improvement needs interpretation and retention](../../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md).
+Explicit project theory can improve this process by making premises, purposes,
+assumptions, and scope addressable. A semantic interpreter can apply and
+criticize the theory across cases that no fixed rule already covers. Persistent
+execution can carry the process across bounded calls, and evidence can correct
+both the candidate change and the theory that guided it.
 
-Explicit retention contributes addressability, not automatic correctness.
-Credit assignment, coherence, retrieval, interpretation, and admission remain
-separate problems, as
-[reflection buys addressability](../../notes/reflection-buys-addressability.md)
-sets out.
+The conjecture concerns causal use, not the presence of a document. Retained
+theory contributes a handle for targeted search and revision. It does not supply
+correctness, retrieval, credit assignment, evaluation, or continuity by itself,
+[because reflection buys addressability rather than those downstream
+capacities](../../notes/reflection-buys-addressability.md).
 
 ## Functional architecture
 
-| Role | What it supplies | Characteristic failure |
+The current research architecture uses several representational forms because
+they make different roles inspectable:
+
+| Functional role | Current realization | Characteristic failure |
 |---|---|---|
-| Retained explicit theory | Represented premises, objectives, explanations, assumptions, and applicability conditions | Omission, contradiction, drift, inert documentation, retrieval failure |
-| Language-model interpreter | Semantic application, criticism, derivation, and proposal where cases are not fully formalized | Underspecification, stochastic deviation, bias, confabulated rationale |
-| Symbolic runtime and code | State, scheduling, repeatable transitions, validation, installation, rollback, and continuity across calls | Faithful execution of the wrong transition; frozen decomposition |
-| Evidence and oracles | Rejection, comparison, correction, and outcome read-back independent of the candidate | Weak proxies, captured evaluation, self-sealing judgment, incomplete coverage |
+| Project-specific representation | Retained natural-language and symbolic artifacts carrying premises, objectives, explanations, commitments, and scope | Omission, contradiction, drift, retrieval failure, inert documentation |
+| Semantic interpretation and theory-guided search | A language model that applies theory, proposes changes, criticizes candidates, diagnoses failure, and helps recover | Underspecification, stochastic deviation, bias, post-hoc rationale, theory ignored in practice |
+| Exact execution and continuity | Code and a symbolic runtime carrying state, scheduling, validation, installation, rollback, and later reactivation | Faithful execution of the wrong transition; frozen decomposition; truncated horizon |
+| Independent exposure and read-back | Tests, validators, held-out tasks, decorrelated criticism, later demands, and operational consequences | Weak proxies, captured evaluation, viability-only gates, incomplete coverage, delayed credit assignment |
 
-The architecture is mixed because the residual decisions left with people fail
-for different reasons:
+These roles are distinct because evidence for one does not establish the others.
+The architecture need not preserve their current carrier boundaries forever.
+[Each residue class needs a different function](../../notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md),
+but one learned substrate may eventually host several functions. The current
+mixed-form arrangement is a provisional, intervention-friendly realization.
 
-| Why a decision remains human | Capacity that must grow |
-|---|---|
-| A required premise is not represented | Representation |
-| The criterion is unsettled or cannot yet be applied | Settlement and interpretation |
-| No sufficiently independent check exists | Verification |
-| The decision arises beyond the automatic horizon | Continuity |
+## Evidence ladder for theory-mediated improvement
 
-No one role supplies all four capacities. The parts are functional roles, not a
-required process diagram; one process may host several roles. The derivation
-and its limits live in
-[each residue class needs a different mechanism](../../notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md).
+The workshop distinguishes four increasingly strong claims:
 
-## Operating cycle
+1. **Mediation.** The retained theory changes a proposal, evaluation, diagnosis,
+   recovery step, or realized intervention.
+2. **Empirical contact.** The intervention produces an outcome that bears on the
+   theory rather than merely accompanying it.
+3. **Theory learning.** The outcome changes the theory's content, scope,
+   confidence, status, or operational role. Rejection or deliberate retention
+   after a refuting opportunity is a theory-state judgment too.
+4. **Recurrent theory-mediated self-improvement.** The updated theory state
+   changes a later operation inside the same behavior-determining path.
 
-The working cycle is:
+The strongest recurrent path is:
 
-    observation or failure
-      -> criticism of retained theory
-      -> revised theory or derived candidate
-      -> realization in prose, code, configuration, or model state
-      -> evaluation and admission
-      -> installation and execution
-      -> outcome read back against the retained theory
+    retained theory
+      -> theory-guided decision or search
+      -> realized change
+      -> independent or delayed consequence
+      -> read-back against the same theory state
+      -> retained theory-state revision
+      -> changed later operation
 
-A contemporaneous citation of retained theory at the decision point is a cheap
+The path must be causally co-indexed: provenance must identify which theory state
+guided the change and which later state received the outcome. Co-occurrence of a
+theory, a successful change, and an unrelated revision inside one boundary is
+insufficient. The full distinction is stated in
+[theory-mediated self-improvement needs interpretation, retention, and
+independent read-back on one path](../../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md).
+
+A contemporaneous citation at the decision point is a cheap
 [mediation trace](../../notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md).
-It is necessary for a record-based mediation claim but does not prove correct or
-load-bearing use. Withholding or replacing the theory and observing a changed
-decision is stronger evidence.
+Withholding, replacing, or perturbing the theory and observing a changed
+decision is stronger evidence that the use was load-bearing.
 
-When a derivation recurs and its scope stabilizes, it may be codified into a
-methodology, validator, or scheduler. The narrower artifact becomes a cheaper,
-more faithful fast path; the theory remains available as a fallback while
-coverage is incomplete. This is the
-[two-layer execution model](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md).
+A useful theory-guided change can reach mediation or empirical contact without
+reaching recurrence. The record should state the strongest level established
+rather than force every episode into the full loop.
 
-## Progress and the human boundary
+## Claim truth and theory fit
 
-Do not put systems on one ladder. Tool usefulness, computational autonomy,
-warrant, and system power ask different questions and require different
-evidence. A change must name which dimension moved; none follows from another.
-See
-[usefulness, autonomy, warrant, and power are separate dimensions](../../notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md).
+A theory-mediated learner must evaluate two properties that should not be
+collapsed.
 
-A mechanism has an **automation envelope**: the responsibilities it can carry
-under stated conditions. Progress can expand that envelope by moving a
-responsibility out of the residual human work, or improve quality, reliability,
-coverage, latency, or cost inside a fixed envelope. Reaching a ceiling does not
-retract the transfer already made and does not show a path beyond the ceiling.
-See
-[a method's ceiling bounds the method](../../notes/a-method-ceiling-bounds-the-method-not-the-transfer-already-made.md).
+- **Truth, validity, or warranted scope:** does the claim survive empirical,
+  formal, source, consistency, or bounded predictive checks?
+- **Fit in the working theory:** does the claim belong in the larger causal
+  account and improve proposal, diagnosis, recovery, revision, or transfer?
 
-Warranted transfer is adversely selective. It preferentially moves decisions
-with represented premises, settled criteria, and checkable outcomes, leaving a
-residue that is harder to warrant per decision. The remaining human work is
-therefore evidence about what the current system cannot warrant, not about an
-essentially human capacity. Each residual decision should be recorded with the
-reason it stayed human.
+A true claim can be irrelevant, redundant, badly scoped, or placed at the wrong
+abstraction level. A false claim can appear useful because the current system
+already embodies it. Local truth tests therefore do not fully select a working
+theory.
 
-At the least-warrantable point of open-ended program modification, this is the
-same problem as Naur's coherent-modification test. Human theory-holders do not
-need to deduce a correct change from a complete theory. They use a partial
-program theory to guide search, interpret failures, backtrack, and revise under
-delayed feedback. Warrant belongs to the process across later demands, not to
-the first proposal. See
-[holding a program theory means sustaining coherent search under delayed feedback](../../notes/holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md).
+No current fixed evaluator fully decides global theory fit. Fit is exposed by a
+distributed and delayed portfolio of consequences: changes to decisions,
+predictions, later demands, repair cost, theory interventions, rival
+formulations, and transfer. The live system under construction is therefore an
+[initial selection environment](../../notes/when-global-theory-fit-lacks-a-fixed-oracle-use-in-building-the-system-is-an-initial-selection-environment.md).
 
-## Closure and strong capability
+System use cannot replace independent truth tests. It can become self-sealing.
+Use rival theories, withholding and replacement interventions, preregistered
+predictions, held-out demands, delayed consequences, and transfer to keep causal
+fit evidence distinct from factual or formal warrant.
 
-Computational closure is task-scoped. A claim must declare task selection,
-objective and acceptance, system boundary, permitted exogenous inputs and
-interactions, horizon, resources, and coverage. Conditional on those
-declarations, every remaining required decision and transition must be carried
-inside the automatic system. The detailed formulation is
+## The present loop is already computational
+
+Commonplace should not be described as handcrafting a theory before computation
+begins. In a typical episode, a language model retrieves multiple retained
+artifacts, interprets their claims and constraints, searches and synthesizes
+candidate formulations or changes, criticizes alternatives, uses tools to check
+local consequences, and writes accepted revisions back into the knowledge base.
+Those revisions then condition later model calls.
+
+The operator currently supplies much of the sparse high-level selection signal
+about global fit, blame, scope, and acceptance. At the boundary that includes the
+operator, model, knowledge base, and tools, the process is already a
+human-inclusive computational theory-mediated learning loop. At a boundary that
+excludes the operator, global selection and final acceptance remain exogenous.
+
+The
+[2026-08-30 workshop conversation](./computational-theory-guided-conversation-episode-2026-08-30.md)
+records a concrete instance:
+
+1. retained Commonplace artifacts and repository state were read;
+2. computational synthesis produced a review, candidate distinctions,
+   experiments, and repository changes;
+3. the operator supplied corrections about the Bitter Lesson framing;
+4. the theory and artifacts were revised and retained; and
+5. the revised state guided later work.
+
+This supports mediation, theory-state revision, and recurrence at the
+human-inclusive boundary. It does not establish how load-bearing each artifact
+was without an ablation, whether the revised claims are independently true, or
+whether more computation scales better than the alternatives.
+
+The open engineering problem is therefore not how to introduce computation. It
+is how to improve the computational search already present and how to convert
+recurring operator judgments into reusable selection and credit-assignment
+machinery.
+
+## Coherent modification and warranted transfer
+
+The bearer problem and the residual-human-work problem meet at open-ended
+modification decisions. No complete local criterion or cheap independent oracle
+determines which change preserves the program's organization. A theory-holder
+must carry search and recovery until later evidence arrives.
+
+The two problems still ask different questions:
+
+- **Coherent modification:** can the composite use project theory to sustain
+  program-specific search, diagnosis, backtracking, and revision?
+- **Warranted transfer:** are the premises, authority, correction, and continuity
+  needed for that process inside the declared boundary strongly enough that the
+  decision can leave the human cut with warrant?
+
+[Warranted transfer may leave people the hardest-to-warrant decisions](../../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md)
+when transfer preferentially selects decisions with represented premises,
+settled criteria, and checkable outcomes. This is a conditional selection
+mechanism, not an established prevalence claim. A cross-sectional shortage of
+independent evaluation is consistent with the predicted bottleneck; a direct
+test needs before-and-after transfer histories.
+
+An evaluator is necessary for correction but does not replace theory-guided
+search or credit assignment. A strong oracle can reject a bad candidate without
+identifying which premise, theory, artifact boundary, or production method
+should change. The program therefore studies both sides: theory organizes and
+interprets search; consequences correct the theory and the changes made through
+it.
+
+## Closure, capability, warrant, and power
+
+Computational closure is task-scoped and structural. A claim must declare task
+selection, objective and acceptance, system boundary, permitted exogenous
+inputs and interactions, horizon, resources, and coverage. Conditional on those
+declarations, every required decision and transition must occur inside the
+automatic system. See
 [task-scoped computational closure](./task-scoped-computational-closure.md).
 
-Closure is structural: it says where decisions and transitions occur, not
-whether they are good. A non-degenerate milestone also needs externally
-anchored capability, consequential revision reach, an adequate evaluator,
-continuity, no hidden human cut, and outcome evidence. The
+Closure does not say that the decisions are good. A captured evaluator, a bad
+objective, or a no-op loop can be computationally closed. Capability, warrant,
+usefulness, and system power require separate evidence. A non-degenerate
+milestone pairs structural closure with consequential reach, a declared
+capability floor, reject-capable evaluation, continuity, explicit boundary
+accounting, and measured outcomes. The
 [closure-capability map](./closure-capability-map.md) records these coordinates
-and degenerate patterns.
+and failure patterns.
 
 Performance at least as good as a competent remote programmer is a strong
-worker-capability benchmark, not the definition of useful progress. Holding the
-client fixed exports task choice, feedback, and acceptance; passing the
-benchmark therefore does not establish closure over those decisions. See
-[a benchmark that holds the client fixed](../../notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md).
+worker-capability benchmark, not closure. Holding the client fixed exports task
+choice, feedback, missing premises, and final acceptance, [because a fixed
+client exports the least-warrantable decisions](../../notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md).
+The benchmark and warranted closure expose the same difficult client and
+acceptance boundary from different sides while measuring different coordinates.
 
-## Current bootstrap
+## Bitter Lesson pressure and the first bootstrap strategy
 
-Commonplace is a human-inclusive testbed. It already retains and routes theory,
-supports criticism and revision, and can turn some theory into operative
-instructions, validators, schemas, and code. Humans still choose objectives,
-supply unrecorded premises, authorize consequential changes, interpret
-ambiguous evidence, and repair paths beyond represented coverage. This supports
-claims about present tool usefulness and mechanism traces, not independent
-computational theory possession or closure.
+The only direct rebuttal to the Bitter Lesson is narrow: learned results need not
+all live in weights because production method and representational form are
+different axes. That does not defend the present hand-crafted artifacts.
 
-The program uses two linked testbeds: Commonplace's own operation and
-programming agents supplied with persistent project-specific theory. Classifying
-the residual decisions on either path can suggest what to build next. Whether
-following that classification produces a more powerful system is an empirical
-question, not a consequence of the model.
+Theory-guided bootstrapping is the first strategy being tried under incomplete
+global evaluation. It uses the already-computational Commonplace loop as a live
+environment in which retained theory guides search, claims make causal
+differences, and delayed consequences can expose poor fit.
 
-## Minimum evidence for one episode
+The strategy should improve the use of computation along two fronts:
+
+- **Search:** better retrieval, rival generation, criticism, decomposition
+  search, evidence and counterexample search, experiment design, ablation, trace
+  analysis, and bounded artifact optimization.
+- **Selection:** progressively turn recurring operator judgments into
+  methodologies, tests, validators, learned critics, search objectives, episode
+  schemas, or programs.
+
+The distinction is not computation versus no computation. It is computational
+search with human-assisted high-level selection versus a process whose search,
+selection, and credit assignment are increasingly reusable and computational.
+
+[A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow
+it](../../notes/a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md).
+This is a conditional compatibility criterion, not a defense or uniqueness
+claim. End-to-end learning, evolutionary search, self-play, weight updates, and
+other direct computational methods remain live alternatives.
+
+The long-run challenge is domain-extensibility. The process must eventually
+construct the project-specific theory, representations, methods, and checks
+needed for domains not enumerated by the designers; reduce the marginal human
+share of fit assessment, evaluator construction, and repair; and permit
+consequential parts of its own decomposition and update machinery to be
+challenged.
+
+No carrier receives permanent protection. Natural-language theory, symbolic
+machinery, and current evaluators may be absorbed or replaced. The strategy
+succeeds when increasing computation improves the production and selection path
+at competitive total cost, not when today's files survive.
+
+## Current testbeds
+
+Commonplace is a human-inclusive reflective testbed. It retains and routes
+project theory, supports criticism and revision, and can turn some theory into
+operative instructions, validators, schemas, and code. The model already carries
+substantial retrieval, interpretation, synthesis, criticism, and editing work.
+Humans still choose objectives, supply unrecorded premises, judge much global
+fit, assign blame, authorize consequential changes, interpret ambiguous
+evidence, and repair paths beyond represented coverage.
+
+Programming agents with persistent project-specific theory are the first
+demanding external testbed. They isolate the bearer question without requiring
+the target program to be the agent itself. Commonplace then provides the
+reflective environment in which the same mechanism can be applied to parts of
+the system's own operation.
+
+Current evidence supports useful human-agent theory work, computationally guided
+search, inspectable mechanism traces, and an initial environment for testing the
+strategy. It does not establish independent computational theory possession,
+computational closure over selection, domain-extensible artifact learning, or
+superiority to more direct computational approaches.
+
+## Next experiments
+
+### Theory intervention
+
+Test whether prepared project theory is load-bearing on sequential program
+modifications. Use the same model, tools, repository state, budget, and
+acceptance process under matched conditions:
+
+1. correct project theory;
+2. an information-matched record without synthesized theory-level organization;
+3. theory withheld; and
+4. plausible but wrong or outdated theory.
+
+Each sequence should contain an initial modification and a later demand or
+delayed test that exposes whether the first change preserved the program's
+organization. Measure candidate generation, architectural preservation,
+backtracking, diagnosis, recovery, collateral regressions, later-demand
+performance, human intervention, and whether outcome read-back changes a later
+episode.
+
+The diagnostic prediction is an interaction: correct theory should help when
+the later shift preserves the structure it names; wrong theory should cause
+predictable negative transfer; theory withholding should especially damage
+recovery and follow-on coherence; and the advantage should shrink where a
+complete specification and cheap oracle already settle the task.
+
+### Selection-environment bootstrap
+
+Instrument a sequence of real Commonplace improvements. For each consequential
+claim or method, record:
+
+1. which retained artifacts guided the model's search;
+2. which candidates, comparisons, and local checks were computational;
+3. which judgment of global fit or credit remained human and why;
+4. which downstream system consequences bore on that judgment;
+5. whether rival or ablated claims changed the result;
+6. whether a recurring judgment became a test, validator, critic, method,
+   schema, or program;
+7. whether additional computation improved the result; and
+8. how the marginal human and computational shares changed on a later episode.
+
+This is a nearer test of the bootstrap strategy than demanding immediate
+cross-domain autonomy. It can show whether computational search and selection
+are improving or whether "bootstrap" merely renames continued bespoke human
+correction.
+
+A later cross-domain test should compare this process with direct computational
+baselines and ask whether it constructs new theory and evaluation machinery
+without a bespoke human-built ontology for each domain.
+
+## Minimum episode record
 
 A useful episode record should identify:
 
-1. the selected task, objective, boundary, horizon, and starting human cut;
-2. the retained theory claimed to guide the decision, with a contemporaneous
-   mediation trace or an intervention on that theory;
-3. the realized change and the acceptance mechanism;
-4. the outcome and its read-back against the same theory;
-5. the retained theory or machinery revision, including rejection or deferral;
-   and
-6. the dimension that moved and the residual decisions that remain human.
+1. the selected task, objective, boundary, horizon, resources, and starting
+   human cut;
+2. the retained artifacts read and the theory state claimed to guide the work;
+3. which retrieval, search, synthesis, criticism, testing, and editing operations
+   were computational;
+4. evidence for the truth, validity, or scope of the claims used;
+5. which high-level selection and credit judgments came from the operator;
+6. the realized change and acceptance mechanism;
+7. the independent or delayed outcome and its read-back against the theory;
+8. any theory-state or machinery revision, including rejection, rescoping,
+   changed confidence, explicit retention, or deferral;
+9. whether the revision changed a later operation;
+10. whether a recurring human judgment became reusable selection machinery; and
+11. which dimension moved and which decisions remain human.
 
-Without the same-theory trace and read-back, the record may show a useful
-change, but it does not show theory-mediated improvement.
+The record should state the strongest evidence level reached. Without a
+same-theory trace, it may show a useful change but not theory mediation. Without
+later use, it may show theory learning but not recurrence. Without an
+intervention, it cannot quantify how load-bearing the retained theory was.
+Without growth in selection machinery or better results from additional
+computation, it does not support the scaling strategy.
 
 ## Open questions
 
-- What task distribution and horizon distinguish a composite that sustains
-  coherent program-specific search and recovery from one that succeeds by
-  luck, memorization, or a permissive evaluator?
-- How can load-bearing use of retained theory be distinguished from a merely
-  decorative citation without rerunning every decision?
-- Can task choice, acceptance, and evaluator revision move inside the system
-  without producing captured evaluation or boundary export?
-- On which task distributions does explicit theory improve sample efficiency,
-  reliability, or revision cost relative to weight updates or fixed-decomposition
-  artifact learning?
-- At what grain can residual decisions and displaced review or repair be
-  compared without inventing a misleading scalar?
+- What task distribution and horizon distinguish coherent theory-guided search
+  from luck, memorization, or generic search with a permissive evaluator?
+- Can project theory improve sample efficiency, recovery, or revision cost after
+  accounting for retrieval, maintenance, and evaluation?
+- How much does retained Commonplace knowledge change LLM search relative to an
+  information-matched record?
+- Which parts of global theory fit can be operationalized without encoding the
+  present theory into the evaluator?
+- How can delayed consequences receive credit when several changes and theory
+  revisions intervene?
+- Which recurring human judgments should be converted first into tests,
+  validators, learned critics, search objectives, or episode schemas?
+- How should inference-time compute, tool use, human correction, and retained
+  artifacts be accounted for in an end-to-end comparison?
+- What direct computational baseline provides the strongest alternative first
+  strategy?
+- What cross-domain sequence would demonstrate domain-extensibility rather than
+  a broad but fixed ontology?

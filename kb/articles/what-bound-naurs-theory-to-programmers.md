@@ -6,6 +6,7 @@ byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
   - kb/notes/design-rationale-must-preserve-unregenerable-decision-premises.md
+  - kb/notes/holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md
   - kb/notes/definitions/discovery-lifecycle.md
   - kb/reference/adr/080-full-passes-hand-claim-changes-back-as-a-pending-revise.md
   - kb/sources/programming-as-theory-building.ingest.md
@@ -70,6 +71,35 @@ The pass then assessed each repair against a brief reconstructed after it had de
 The project's response was to [stop a full pass when repair would change a claim](../reference/adr/080-full-passes-hand-claim-changes-back-as-a-pending-revise.md) and hand the objection back to whoever holds the theory. The machinery arrived at Naur's own operational conclusion: transfer still needed contact with the theory-holder.
 
 The failure became visible only afterward. Stating the tests in advance would have turned it into a measurement rather than a discovery. This one case supports one operational rule: before claiming that a composite holds a theory, define program-specific acquisition, required decision premises, and a reliability threshold.
+
+## Coherent modification is a search-and-recovery test
+
+Naur's third bearer test should not be read as a demand that the holder deduce a
+correct change on its first attempt. Human theory-holders use partial and
+fallible theories. They inspect the program, construct alternatives, encounter
+conflicts, reverse course, and revise their understanding.
+
+The theory matters because it keeps that search program-specific. It shapes
+which candidates are considered, what must be preserved, how failures are
+interpreted, when to backtrack, and what recovery should restore or revise. A
+failed first candidate can belong to coherent modification when the process
+recognizes the failure and recovers. A locally successful candidate can fail the
+test when it damages the program's wider organization and the process cannot
+detect the damage.
+
+The computational test must therefore cover a sequence of demands and at least
+one refuting exposure. It should ask whether withholding or replacing the
+project theory changes proposal or recovery, whether consequences not authored
+only by the candidate can trigger backtracking, and whether the resulting
+revision affects a later modification. The full process-level formulation is
+that [holding a program theory means sustaining coherent search under delayed
+feedback](../notes/holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md).
+
+This reframing makes the local failure above more precise. The improvement pass
+did not merely choose a bad sentence. It lacked a reliable process for using the
+note's project-specific purpose to steer repair, recognize that a defensible
+narrowing had destroyed the intended contribution, and recover before claiming
+success.
 
 ## Where to go next
 
