@@ -25,7 +25,6 @@ source_notes:
   - kb/notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md
   - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
   - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
-  - kb/notes/oracle-accumulation-improves-the-selection-environment.md
   - kb/notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md
   - kb/notes/methodological-and-computational-closure-track-different-changes.md
   - kb/notes/computationally-directed-self-improvement-is-a-reallocation.md
@@ -128,13 +127,11 @@ heuristics already present in model
 weights](../notes/natural-language-project-state-specializes-search-heuristics.md).
 A theory that merely accompanies the work remains documentation.
 
-Naur bound program theory to programmers partly through a [premise that machine
-execution means following formulated
+Naur bound program theory to programmers partly through a premise that
+[equates machine execution with formulated
 criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
-Trained recognizers make that premise contestable. The companion article [What
-bound Naur's theory to programmers](./what-bound-naurs-theory-to-programmers.md)
-develops this narrow departure; removing the premise does not show that any
-current agent passes Naur's bearer tests.
+Trained recognizers make that premise contestable, but breaking the inference
+does not show that any current agent passes Naur's bearer tests.
 
 ### Where the program sits
 
@@ -251,70 +248,36 @@ but not as a truth oracle. Independent factual and formal checks, preregistered
 predictions, held-out demands, and transfer tests are needed to prevent the
 working theory from becoming self-sealing.
 
-## Current status and the studies that could change it
+## Current status and what evidence is missing
 
 The [2026-08-30 Commonplace revision
 record](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
-documents one human-agent episode. The model read the workshop, related notes,
-and repository state; proposed distinctions, experiments, and edits; and
-revised them after the operator corrected the Bitter Lesson framing. The
-revisions were retained and guided later work.
+is an illustration of the proposed path: retained artifacts were read, the
+operator corrected the framing, and the revision affected later work. It was not
+recorded prospectively enough to establish how load-bearing the theory was,
+separate computational from operator contributions cleanly, or support a
+comparative result.
 
-At the human-inclusive boundary, the record shows retained-state consumption,
-theory-state revision, and later reuse in a path consistent with mediation and
-recurrence. It does not establish how load-bearing the artifacts were, whether
-the revised claims are independently true, or whether the technical subsystem
-can complete the path alone. No matched replay or ablation was run, and the
-operator supplied decisive global-fit selection and final acceptance.
+The next step is therefore better evidence retention, not a stronger
+retrospective claim. Consequential episodes should preserve the theory and
+symbolic state supplied to each decision, the alternatives considered, operator
+interventions, later consequences, revisions, and the later operations claimed
+to depend on them.
 
-### Theory intervention
+A controlled test would vary retained theory while holding the model, code,
+tools, task, and budget fixed. At minimum, it should compare usable theory with
+theory withheld or deliberately wrong on a sequence where later demands can
+expose earlier mistakes. The relevant questions are whether theory changes
+search and recovery, whether consequences revise the same theory state, and
+whether that revision changes later work. Any result identifies only [the
+contrast it actually runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md).
+Detailed controls and measures should be fixed when the study is run, not
+presented here as completed methodology.
 
-Hold model weights, target and control code, tests, runtime, tools, repository
-state, inference budget, judging protocol, acceptance threshold, and
-authorization procedure fixed; compare:
-
-1. a reference theory — ground truth for a synthetic task whose generating
-   rationale is known, or the maintainers' current best account for a real
-   project;
-2. a fact-matched record without synthesized theory;
-3. theory withheld; and
-4. plausible but wrong or outdated theory.
-
-The fact-matched condition is deliberately contested. It carries the same
-facts, decisions, and history but removes purposes and dependency structure. It
-is matched on facts, not information. If that organization cannot be removed
-without smuggling it back in, the conditions collapse; the experiment identifies
-only [the contrasts it actually
-runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md).
-
-Each run includes an initial modification, a delayed demand exposing a failure,
-diagnosis and recovery, explicit theory-state revision, and a further related
-demand. Measure search allocation, candidate generation, preservation of
-commitments, diagnosis, backtracking, recovery, collateral regressions,
-later-demand performance, and human intervention. Correct theory should help
-most when the later demand preserves the structure it names; wrong theory should
-produce predictable negative transfer. Theory withheld is the same-budget
-direct-search baseline, followed by larger-budget and stronger-model
-comparisons.
-
-### Longitudinal study
-
-Instrument real Commonplace improvements. Record which natural-language and
-symbolic artifacts entered consequential calls, which proposals and checks were
-computational, which global-fit and credit judgments remained human and why,
-which later consequences bore on them, and whether withholding or perturbing
-theory changed the result.
-
-Then ask whether recurring corrections became search controls, tests,
-validators, learned critics, methods, schemas, or programs that changed later
-operation. A lesson helps only tasks that retrieve it; a [maintained check
-improves selection for every later candidate in its
-domain](../notes/oracle-accumulation-improves-the-selection-environment.md).
-Progress should appear as named functions moving from human or joint to
-computational supply, not merely more agent output.
-
-Neither study tests domain-extensibility or superiority to alternative methods.
-Those require later cross-domain comparisons at comparable total cost.
+A longitudinal Commonplace study should likewise ask whether recurring operator
+judgments become reusable search, selection, or credit-assignment machinery and
+whether named functions move from human or joint to computational supply. Until
+such records exist, these are research directions rather than results.
 
 ## The bootstrap must outgrow its hand-crafted parts
 

@@ -32,10 +32,11 @@ same longitudinal process inside a computational system. See the
 ## Situation
 
 Commonplace already contains substantial theory, source work, article material,
-evaluations, and operative machinery. Two article baselines remain usable; four
-reviewed drafts remain evidence for claim recovery rather than prose
-foundations. Repeated editing has also produced several nearby formulations
-that must now be kept consistent rather than expanded.
+evaluations, and operative machinery. One article baseline remains usable. The
+former Naur article was retired because its argument is now carried by durable
+notes; four reviewed drafts remain evidence for claim recovery rather than prose
+foundations. Repeated editing has also produced several nearby formulations that
+must now be kept consistent rather than expanded.
 
 Commonplace is a live human-agent testbed. Persistent project-specific theory
 for programming agents is the first demanding external application. Neither
@@ -49,7 +50,8 @@ in later work. The operator currently supplies much of the sparse high-level
 selection signal about whether a claim fits the larger theory and intended
 system. The
 [2026-08-30 Commonplace revision record](../../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
-records one such episode.
+illustrates one such episode, but the retained record is not strong enough to
+isolate the causal contribution of its inputs.
 
 The unresolved bottleneck is therefore not introducing computation. It is
 building more reusable and increasingly computational selection and credit
@@ -143,11 +145,10 @@ and obtain evidence that can change the status of its central claims.
    judgments remained human, which system consequences bore on them, and which
    recurring judgments became reusable selection machinery.
 4. **Expose a small research surface.** Use a compact program article, the
-   transfer-and-closure argument, the Naur argument, the Bitter Lesson
-   argument, and the experimental protocol or result. Routing belongs to
+   transfer-and-closure article, the Naur and coherent-search notes, the Bitter
+   Lesson article, and experimental results when they exist. Routing belongs to
    `kb/articles/README.md`, not to an article. Add an article only when it
-   carries a distinct argumentative or empirical job. Expanding the program
-   article is the workshop's current article-side focus.
+   carries a distinct argumentative or empirical job.
 5. **Show the program operating.** Record Commonplace and programming-agent
    episodes at the strongest evidence level they establish: mediation,
    empirical contact, theory learning, or recurrence.
@@ -226,11 +227,12 @@ used to revise the invitation.
 
 - [A research program for theory-mediated system learning](../../articles/a-research-program-for-theory-mediated-system-learning.md) — the compact program statement; the workshop's current article-side focus.
 - [The decisions that stay human, and what would move them](../../articles/the-decisions-that-stay-human-and-what-would-move-them.md) — the conditional transfer argument and structural closure versus evaluator quality.
-- [What bound Naur's theory to programmers](../../articles/what-bound-naurs-theory-to-programmers.md) — bearer question and coherent modification.
+- [Naur binds program theory to humans by equating machine execution with formulated criteria](../../notes/naur-equates-machine-execution-with-formulated-criteria.md) — why Naur's human-only conclusion does not settle the bearer question.
+- [Holding a program theory means sustaining coherent search under delayed feedback](../../notes/program-theory-sustains-search-under-delayed-feedback.md) — the longitudinal coherent-modification test.
 - [The Bitter Lesson does not require everything to live in weights](../../articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) — narrow rebuttal, first strategy, and scaling challenge.
 - [Shared model](./shared-model.md) — current compact synthesis and experiment outline.
 - [Target problems](./target-problems.md) — the central question and supporting research problems.
-- [The 2026-08-30 Commonplace revision used retained theory to guide computational search](../../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md) — bounded evidence that retained Commonplace knowledge guided computational search inside a human-inclusive loop.
+- [The 2026-08-30 Commonplace revision used retained theory to guide computational search](../../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md) — an illustrative record of one human-inclusive revision and of the production evidence that was not retained.
 - [System use is an initial selection environment when theory fit lacks a fixed oracle](../../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md) — rationale for research-through-building.
 - [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](../../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md) — conditional compatibility and failure criteria.
 
@@ -252,7 +254,7 @@ used to revise the invitation.
 
 ## Source handling
 
-Only the two closing-ready articles under
+Only the remaining closing-ready Bitter Lesson article under
 [accepted](./accepted/README.md) may seed successor prose directly. The four
 bodies under [rejected-drafts](./rejected-drafts/README.md) remain read-only
 source captures; claims leave quarantine only through the
