@@ -32,4 +32,4 @@ them by itself.
 Relevant Notes:
 
 - [Intent-framed delegation is a control regime; prompt length does not establish it](./intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) — grounds: locates intent inside a broader allocation of information, authority, and evidence
-- [Lightweight search control allocates further search without licensing adoption](./lightweight-search-control-allocates-further-search-without-licensing-adoption.md) — extends: local intent can rank branches without authorizing their final adoption
+- [Lightweight search control allocates further search without licensing adoption](./lightweight-search-control-does-not-license-adoption.md) — extends: local intent can rank branches without authorizing their final adoption

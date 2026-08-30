@@ -130,7 +130,7 @@ A claim's fit becomes visible through consequences such as:
 - whether its useful structure transfers beyond the episode that produced it.
 
 The live system can therefore act as an
-[initial selection environment](../notes/when-global-theory-fit-lacks-a-fixed-oracle-use-in-building-the-system-is-an-initial-selection-environment.md).
+[initial selection environment](../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md).
 Claims earn provisional standing by making a counterfactual difference to
 building, operating, or repairing the system and by surviving the consequences
 of that use.
@@ -339,7 +339,7 @@ judgments into evaluators, methods, schemas, and code.
 This is a first construction strategy. It should be retained only while it helps
 build a more general learning process than the one that produced it.
 
-The [bootstrap note](../notes/a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md)
+The [bootstrap note](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md)
 states the conditional compatibility and failure criteria. The
 [response-portfolio note](../notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md)
 separates the narrow rebuttal from the broader research commitments.

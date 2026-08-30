@@ -8,7 +8,7 @@ tags: [foundations, computational-model, self-improving-systems]
 # Lightweight search control allocates further search without licensing adoption
 
 [Open-ended improvement must allocate search before decisive evaluation is
-available](./open-ended-improvement-must-allocate-search-before-decisive-evaluation-is-available.md).
+available](./open-ended-improvement-allocates-search-before-evaluation.md).
 Call a judgment **lightweight search control** when its authorized consequence
 is limited to changing which branch receives further search. It may make a
 question worth investigating, select a probe, continue or suspend a branch, or
@@ -35,5 +35,5 @@ a change operative.
 
 Relevant Notes:
 
-- [Open-ended improvement must allocate search before decisive evaluation is available](./open-ended-improvement-must-allocate-search-before-decisive-evaluation-is-available.md) — grounds: establishes the prior allocation problem this control addresses
+- [Open-ended improvement must allocate search before decisive evaluation is available](./open-ended-improvement-allocates-search-before-evaluation.md) — grounds: establishes the prior allocation problem this control addresses
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: separates bringing a candidate into consideration from accepting it

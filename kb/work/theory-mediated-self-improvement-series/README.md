@@ -27,7 +27,7 @@ complete theories. They search, encounter conflicts, reverse course, and revise
 their understanding. The program asks whether retained theory can organize the
 same longitudinal process inside a computational system. See the
 [shared model](./shared-model.md) and
-[coherent-search claim](../../notes/holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md).
+[coherent-search claim](../../notes/program-theory-sustains-search-under-delayed-feedback.md).
 
 ## Situation
 
@@ -227,8 +227,8 @@ used to revise the invitation.
 - [Shared model](./shared-model.md) — current compact synthesis and experiment outline.
 - [Target problems](./target-problems.md) — the central question and supporting research problems.
 - [Computational theory-guided conversation episode, 2026-08-30](./computational-theory-guided-conversation-episode-2026-08-30.md) — current evidence that retained Commonplace knowledge guides computational search inside a human-inclusive loop.
-- [When global theory fit lacks a fixed oracle, use in building the system is an initial selection environment](../../notes/when-global-theory-fit-lacks-a-fixed-oracle-use-in-building-the-system-is-an-initial-selection-environment.md) — rationale for research-through-building.
-- [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](../../notes/a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md) — conditional compatibility and failure criteria.
+- [When global theory fit lacks a fixed oracle, use in building the system is an initial selection environment](../../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md) — rationale for research-through-building.
+- [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](../../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md) — conditional compatibility and failure criteria.
 
 ## Outputs
 

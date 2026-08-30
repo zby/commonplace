@@ -32,5 +32,5 @@ separate learning from rationalization.
 
 Relevant Notes:
 
-- [Lightweight search control allocates further search without licensing adoption](./lightweight-search-control-allocates-further-search-without-licensing-adoption.md) — grounds: identifies the branch decisions an explanation can change
+- [Lightweight search control allocates further search without licensing adoption](./lightweight-search-control-does-not-license-adoption.md) — grounds: identifies the branch decisions an explanation can change
 - [Theory-mediated self-improvement needs interpretation and retention](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) — extends: supplies the stronger requirement that a retained theory-state change affect later operation

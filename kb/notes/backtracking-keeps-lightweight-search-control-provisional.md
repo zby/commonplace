@@ -8,7 +8,7 @@ tags: [foundations, computational-model, self-improving-systems]
 # Backtracking keeps lightweight search control provisional
 
 A branch chosen by
-[lightweight search control](./lightweight-search-control-allocates-further-search-without-licensing-adoption.md)
+[lightweight search control](./lightweight-search-control-does-not-license-adoption.md)
 may be wrong. Backtracking keeps that choice provisional when the process can
 preserve an earlier usable state, recognize evidence against the current
 branch, return to that state, and redirect search.
@@ -34,5 +34,5 @@ because the branch was tried.
 
 Relevant Notes:
 
-- [Lightweight search control allocates further search without licensing adoption](./lightweight-search-control-allocates-further-search-without-licensing-adoption.md) — grounds: supplies the provisional branch choice
-- [Holding a program theory means sustaining coherent search under delayed feedback](./holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md) — extends: places backtracking inside longitudinal program modification and recovery
+- [Lightweight search control allocates further search without licensing adoption](./lightweight-search-control-does-not-license-adoption.md) — grounds: supplies the provisional branch choice
+- [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: places backtracking inside longitudinal program modification and recovery

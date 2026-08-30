@@ -93,7 +93,7 @@ project theory changes proposal or recovery, whether consequences not authored
 only by the candidate can trigger backtracking, and whether the resulting
 revision affects a later modification. The full process-level formulation is
 that [holding a program theory means sustaining coherent search under delayed
-feedback](../notes/holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md).
+feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md).
 
 This reframing makes the local failure above more precise. The improvement pass
 did not merely choose a bad sentence. It lacked a reliable process for using the

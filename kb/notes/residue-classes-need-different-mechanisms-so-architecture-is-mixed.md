@@ -53,7 +53,7 @@ fully specify the case. A fallible empirical program theory usually does not
 settle the change by itself. At an open-ended modification crux, it guides
 search, diagnosis, backtracking, and recovery while later evidence remains able
 to correct it, [because holding a program theory means sustaining coherent
-search under delayed feedback](./holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md).
+search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md).
 
 **Verification** supplies grounds that can overturn the candidate's own account.
 Mechanical validators sit at the cheap end; held-out tasks and delayed
@@ -128,7 +128,7 @@ architecture even if later learning collapses some representational boundaries.
 The architecture should therefore be defended as a provisional, testable
 realization. It should not be defended by claiming that natural-language,
 parametric, and symbolic carriers are permanently necessary. [A hand-crafted
-bootstrap fits the Bitter Lesson only if learning can outgrow it](./a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md),
+bootstrap fits the Bitter Lesson only if learning can outgrow it](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md),
 including by replacing a present carrier when another realization supplies the
 same function more efficiently.
 
@@ -162,8 +162,8 @@ Relevant Notes:
 
 - [Warranted transfer out of the human cut leaves people the hardest-to-warrant decisions](./warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md) — grounds: supplies the conditional selection effect and residue classes
 - [Theory-mediated self-improvement needs interpretation, retention, and independent read-back on one path](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) — extends: separates the functions on the theory-mediated path
-- [Holding a program theory means sustaining coherent search under delayed feedback](./holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md) — grounds: explains why fallible theory guides search rather than fully settling the hardest modification
+- [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — grounds: explains why fallible theory guides search rather than fully settling the hardest modification
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — grounds: distinguishes represented guidance from computational execution
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: keeps verification separate from proposal and interpretation
 - [Scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — grounds: explains the current cost advantage of symbolic continuity
-- [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](./a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md) — extends: treats the representational split as provisional rather than protected
+- [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md) — extends: treats the representational split as provisional rather than protected

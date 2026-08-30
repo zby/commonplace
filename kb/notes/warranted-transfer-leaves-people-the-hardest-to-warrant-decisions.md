@@ -69,7 +69,7 @@ A computational composite can carry the same decision only by sustaining that
 longitudinal process. The theory may make a provisional proposal better
 warranted without settling it immediately. Warrant accumulates through exposure,
 recovery, and read-back across later demands, [because holding a program theory
-means sustaining coherent search under delayed feedback](./holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md).
+means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md).
 
 This is where the bearer question and the residue question meet. They still ask
 different things. The bearer question asks whether the composite can preserve
@@ -159,7 +159,7 @@ Relevant Notes:
 
 - [Codifying predictable choices leaves agents with less predictable work](./codifying-predictable-choices-leaves-agents-with-less-predictable-work.md) — mechanism: supplies the analogous selection effect at the agent–code boundary
 - [Computationally directed self-improvement is a fixed-boundary reallocation ending in contraction](./computationally-directed-self-improvement-is-a-reallocation.md) — grounds: defines the human cut and the transfer path
-- [Holding a program theory means sustaining coherent search under delayed feedback](./holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md) — extends: identifies the hardest delayed-evidence modification case
+- [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: identifies the hardest delayed-evidence modification case
 - [Each residue class needs a different mechanism, so a self-improving architecture must be mixed](./residue-classes-need-different-mechanisms-so-architecture-is-mixed.md) — extends: converts the residue reasons into distinct functional requirements
 - [A benchmark that holds the client fixed exports the least-warrantable decisions by design](./holding-the-client-fixed-exports-the-least-warrantable-decisions.md) — extends: applies the residue analysis to a capability benchmark
 - [Tool usefulness, computational autonomy, warrant, and system power are separate dimensions](./usefulness-autonomy-warrant-and-power-are-separate-dimensions.md) — grounds: prevents the evaluator bottleneck from redefining structural closure

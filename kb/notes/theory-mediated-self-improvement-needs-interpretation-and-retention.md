@@ -133,7 +133,7 @@ The present LLM-plus-artifact arrangement receives no permanent exemption.
 Retained theory earns its place only where persistence, selective rescoping,
 inspection, and cross-episode use improve the learning path enough to pay for
 retrieval, maintenance, and consistency costs. [A hand-crafted bootstrap fits
-the Bitter Lesson only when learning can outgrow it](./a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md).
+the Bitter Lesson only when learning can outgrow it](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
 
 A future model may perform some present theory search internally or move the
 same functions into learned modules. That would replace the carrier without
@@ -177,5 +177,5 @@ Relevant Notes:
 - [Reach-assessment](./definitions/reach-assessment.md) — contrasts: names the epistemic judgment kept separate from semantic interpretation
 - [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: explains the retention affordance without supplying correctness
 - [Citing retained theory at the decision point is a mediation trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — enables: records the claimed first link while leaving causal importance open
-- [Holding a program theory means sustaining coherent search under delayed feedback](./holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md) — extends: applies the functions to longitudinal program modification and recovery
-- [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](./a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md) — extends: bounds the current representational realization as provisional bootstrap state
+- [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: applies the functions to longitudinal program modification and recovery
+- [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md) — extends: bounds the current representational realization as provisional bootstrap state

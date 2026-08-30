@@ -41,7 +41,7 @@ large-scale causal picture used to build and modify the system. The first
 strategy is therefore to use claims in a live system and expose them to the
 consequences of building, operating, and repairing it. [When global theory fit
 lacks a fixed oracle, use in building the system is an initial selection
-environment](./when-global-theory-fit-lacks-a-fixed-oracle-use-in-building-the-system-is-an-initial-selection-environment.md).
+environment](./system-use-selects-theory-fit-without-a-fixed-oracle.md).
 
 This is not an argument for postponing computation. Candidate claims, rival
 syntheses, counterexamples, local deductions, experiments, ablations, traces,
@@ -53,7 +53,7 @@ methods, or code. The strategy is to grow the selection machinery through use.
 ## What conditional compatibility requires
 
 [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow
-it](./a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md).
+it](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
 That is a necessary condition, not a strategic defense. The system must
 increasingly learn to produce, test, revise, and replace its theories and
 machinery rather than merely apply a protected hand-designed store.
@@ -152,7 +152,7 @@ The first strategy should be rejected or narrowed when:
 Relevant Notes:
 
 - [The bitter lesson selects production methods, not representational forms](./the-bitter-lesson-selects-production-methods-not-representational.md) — grounds: supplies the sole premise required for the narrow form-only rebuttal
-- [When global theory fit lacks a fixed oracle, use in building the system is an initial selection environment](./when-global-theory-fit-lacks-a-fixed-oracle-use-in-building-the-system-is-an-initial-selection-environment.md) — motivates: supplies the rationale for the first strategy without presenting it as a defense
-- [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](./a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md) — limits: states the conditional compatibility and failure burden
+- [When global theory fit lacks a fixed oracle, use in building the system is an initial selection environment](./system-use-selects-theory-fit-without-a-fixed-oracle.md) — motivates: supplies the rationale for the first strategy without presenting it as a defense
+- [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md) — limits: states the conditional compatibility and failure burden
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — mechanism: states what the strategy must progressively construct
 - [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — limits: keeps the initial artifact ontology inside the eventual challenge surface

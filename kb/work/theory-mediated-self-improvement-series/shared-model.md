@@ -18,7 +18,7 @@ capacity is longitudinal: the program theory must shape which changes are tried,
 what the process tries to preserve, how failures are interpreted, and how
 recovery and later modification proceed. This is the crux developed in
 [holding a program theory means sustaining coherent search under delayed
-feedback](../../notes/holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md).
+feedback](../../notes/program-theory-sustains-search-under-delayed-feedback.md).
 
 ## Working conjecture
 
@@ -60,7 +60,7 @@ specializing learned competence. Code complements the resulting weight–prompt
 operation with exact state transitions, persistent bookkeeping, repeatable
 procedures, and enforceable checks. The atomic claim is
 [code complements the weight–prompt pair with independently executed symbolic
-operations](../../notes/code-complements-the-weight-prompt-pair-with-independently-executed-symbolic-operations.md).
+operations](../../notes/code-complements-weight-prompt-with-symbolic-operations.md).
 
 The project state available to the composite is mixed-form. A useful abstraction
 is:
@@ -78,7 +78,7 @@ results, later demands, reviews, and operational outcomes.
 Context assembly selects a call-specific view of this state into a prompt. The
 model then applies weight-resident competence to that view. The
 [natural-language part of project state may specialize weight-resident search
-heuristics](../../notes/natural-language-project-state-may-specialize-weight-resident-search-heuristics.md),
+heuristics](../../notes/natural-language-project-state-specializes-search-heuristics.md),
 while code and other symbolic artifacts also constrain the search and can later
 execute its selected results independently.
 
@@ -96,14 +96,14 @@ candidate, proof, or experiment that search never develops. Even proof-gated
 self-modification retains a prior allocation problem, because the initial search
 must reach a proof path before the gate can act. See
 [open-ended improvement must allocate search before decisive evaluation is
-available](../../notes/open-ended-improvement-must-allocate-search-before-decisive-evaluation-is-available.md).
+available](../../notes/open-ended-improvement-allocates-search-before-evaluation.md).
 
 The programme calls a judgment **lightweight search control** when its authority
 stops at allocating further work. It may select a branch, probe, continuation,
 suspension, or abandonment without licensing an operative change. This permits
 weaker and provisional evidence to guide search while stronger evaluation
 remains downstream. [Lightweight search control allocates further search without
-licensing adoption](../../notes/lightweight-search-control-allocates-further-search-without-licensing-adoption.md).
+licensing adoption](../../notes/lightweight-search-control-does-not-license-adoption.md).
 
 The weight–prompt pair is one candidate implementation of this controller. The
 weights may contain general heuristics for anomaly detection, alternative
@@ -129,7 +129,7 @@ retained explanation must change a later branch decision about scope, priority,
 probing, continuation, or abandonment. Otherwise it remains commentary rather
 than operative search control. See
 [a failure explanation becomes search control only when it changes a later
-branch decision](../../notes/a-failure-explanation-becomes-search-control-only-when-it-changes-a-later-branch-decision.md).
+branch decision](../../notes/failure-explanation-changes-later-branch-decisions.md).
 
 ## Functional architecture
 
@@ -220,7 +220,7 @@ distributed and delayed portfolio of consequences: changed branch choices,
 predictions, later demands, repair cost, code behavior, theory interventions,
 rival formulations, and transfer. The live system under construction is
 therefore an
-[initial selection environment](../../notes/when-global-theory-fit-lacks-a-fixed-oracle-use-in-building-the-system-is-an-initial-selection-environment.md).
+[initial selection environment](../../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md).
 
 System use cannot replace independent truth tests. It can become self-sealing.
 Use rival theories, withholding and replacement interventions, preregistered
@@ -351,7 +351,7 @@ allocation, selection, and credit assignment become increasingly reusable and
 computational.
 
 [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow
-it](../../notes/a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md).
+it](../../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
 This is a conditional compatibility criterion, not a defense or uniqueness
 claim. End-to-end learning, evolutionary search, self-play, weight updates, and
 other direct computational methods remain live alternatives.

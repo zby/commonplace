@@ -76,7 +76,7 @@ storage substrate.
 
 Relevant Notes:
 
-- [Natural-language project state may specialize weight-resident search heuristics](./natural-language-project-state-may-specialize-weight-resident-search-heuristics.md) — grounds: isolates how retained project information changes the prompt side of the model-mediated operation
+- [Natural-language project state may specialize weight-resident search heuristics](./natural-language-project-state-specializes-search-heuristics.md) — grounds: isolates how retained project information changes the prompt side of the model-mediated operation
 - [Scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — mechanism: explains why exact state transitions and bookkeeping benefit from independent symbolic execution
 - [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — exemplifies: composes explicit symbolic state and transitions with bounded model calls
 - [Unified calling conventions enable bidirectional refactoring between neural and symbolic](./unified-calling-conventions-enable-bidirectional-refactoring.md) — extends: makes movement between the two operation classes local while preserving an interface

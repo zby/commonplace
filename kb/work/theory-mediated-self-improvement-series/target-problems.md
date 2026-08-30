@@ -26,7 +26,7 @@ operations alone. A call's behavior is instantiated by the model's weights plus
 its prompt, while code complements that pair with operations whose consequences
 are assigned and executed by a symbolic runtime. See
 [code complements the weight–prompt pair with independently executed symbolic
-operations](../../notes/code-complements-the-weight-prompt-pair-with-independently-executed-symbolic-operations.md).
+operations](../../notes/code-complements-weight-prompt-with-symbolic-operations.md).
 
 P2 meets P1 at the same hard modification decisions but asks a different
 question. P1 concerns the capability to sustain coherent modification. P2

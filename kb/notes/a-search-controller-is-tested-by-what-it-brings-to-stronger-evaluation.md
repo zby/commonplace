@@ -33,5 +33,5 @@ in the open-ended setting.
 
 Relevant Notes:
 
-- [Lightweight search control allocates further search without licensing adoption](./lightweight-search-control-allocates-further-search-without-licensing-adoption.md) — grounds: supplies the limited-authority controller whose output is being evaluated
-- [Open-ended improvement must allocate search before decisive evaluation is available](./open-ended-improvement-must-allocate-search-before-decisive-evaluation-is-available.md) — grounds: explains why comparison cannot assume exhaustive evaluation of every branch
+- [Lightweight search control allocates further search without licensing adoption](./lightweight-search-control-does-not-license-adoption.md) — grounds: supplies the limited-authority controller whose output is being evaluated
+- [Open-ended improvement must allocate search before decisive evaluation is available](./open-ended-improvement-allocates-search-before-evaluation.md) — grounds: explains why comparison cannot assume exhaustive evaluation of every branch

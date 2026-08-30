@@ -81,7 +81,7 @@ coherent modification when the process recognizes the failure, recovers, and
 revises. A successful first candidate can fail the standard when it passes
 narrow tests while damaging the wider organization in a way the process cannot
 detect. The detailed claim is that [holding a program theory means sustaining
-coherent search under delayed feedback](../notes/holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md).
+coherent search under delayed feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md).
 
 The companion article [What bound Naur's theory to programmers](./what-bound-naurs-theory-to-programmers.md)
 starts from Peter Naur's claim that programming is theory building. Its repair
@@ -168,7 +168,7 @@ reduces repair and human intervention, and whether it transfers beyond the case
 that produced it.
 
 The live system under construction can therefore serve as an [initial selection
-environment](../notes/when-global-theory-fit-lacks-a-fixed-oracle-use-in-building-the-system-is-an-initial-selection-environment.md).
+environment](../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md).
 Claims earn provisional standing by making a counterfactual difference to
 building, operating, or repairing the system and by surviving the consequences
 of that use.

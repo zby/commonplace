@@ -42,7 +42,7 @@ It can be irrelevant, redundant, badly scoped, or placed at the wrong level of
 abstraction. Conversely, a false claim can appear useful because the current
 implementation already assumes it. [When global theory fit lacks a fixed oracle,
 use in building the system is an initial selection
-environment](./when-global-theory-fit-lacks-a-fixed-oracle-use-in-building-the-system-is-an-initial-selection-environment.md).
+environment](./system-use-selects-theory-fit-without-a-fixed-oracle.md).
 
 This evaluator gap is a reason for the first strategy, not an exemption from the
 lesson.
@@ -176,7 +176,7 @@ learning method or show that the strategy is better than its alternatives.
 
 Relevant Notes:
 
-- [When global theory fit lacks a fixed oracle, use in building the system is an initial selection environment](./when-global-theory-fit-lacks-a-fixed-oracle-use-in-building-the-system-is-an-initial-selection-environment.md) — grounds: explains why live system construction is the first selection environment rather than a defense of manual production
+- [When global theory fit lacks a fixed oracle, use in building the system is an initial selection environment](./system-use-selects-theory-fit-without-a-fixed-oracle.md) — grounds: explains why live system construction is the first selection environment rather than a defense of manual production
 - [The bitter lesson selects production methods, not representational forms](./the-bitter-lesson-selects-production-methods-not-representational.md) — grounds: supplies the narrow compatibility argument while preserving the scaling burden
 - [Machinery persists by warrant, not position in a reflective loop](./machinery-persists-by-warrant-not-position-in-a-reflective-loop.md) — extends: applies the production requirement recursively to the selection machinery
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — mechanism: states the minimum loop that turns proposals into retained learning
