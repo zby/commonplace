@@ -1,5 +1,5 @@
 ---
-description: "Separates the narrow claim that the Bitter Lesson does not impose a weights-only rule from the provisional strategy of using live system construction to grow computational search and evaluation over explicit theories and machinery"
+description: "Separates the narrow claim that the Bitter Lesson does not impose a weights-only rule from the provisional strategy of improving an already-computational human-agent loop whose high-level selection remains partly human"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -24,18 +24,27 @@ bootstrap does not solve it. A future path toward learning is easy to promise;
 the historical challenge is whether useful structure is actually found through
 methods that exploit increasing computation.
 
-This article makes one narrow rebuttal and then states a research strategy.
+But describing Commonplace as handcrafting a theory before computation begins
+would also be wrong. The present process already uses a language model and tools
+to retrieve project knowledge, search over candidate formulations and system
+changes, criticize alternatives, run checks, and retain revisions. The operator
+currently supplies much of the sparse high-level selection signal about whether
+a claim fits the larger theory and intended system.
+
+This article therefore makes one narrow rebuttal and then states a research
+strategy.
 
 The rebuttal is that the Bitter Lesson does not imply that every learned result
 must live in model weights. It constrains how useful structure is produced and
 selected, not only how the result is represented.
 
-The strategy is more tentative. Commonplace is trying theory-guided
-bootstrapping because the global fit of a claim inside an evolving system does
-not yet have a complete fixed evaluator. The live system under construction is
-used as an initial selection environment, while computational proposal, local
-testing, comparison, and revision begin immediately. This is the first approach
-being tried, not a defense that it must be right.
+The strategy is more tentative. Commonplace uses an already-computational,
+theory-guided human-agent loop as a live selection environment because the
+global fit of a claim inside an evolving system does not yet have a complete
+fixed evaluator. The immediate task is not to introduce computation, but to make
+its search more effective and to turn recurring operator judgments into reusable
+selection and credit-assignment machinery. This is the first approach being
+tried, not a defense that it must be right.
 
 ## The narrow rebuttal: production method is not representation
 
@@ -77,11 +86,13 @@ hand-crafted as the system develops.
 A bootstrap account becomes empty when it says only that present theories and
 methods might someday be learned. It becomes substantive when it identifies:
 
-- what computational search can already propose;
+- what computational search already proposes;
 - what evidence can reject candidates;
-- which decisions remain human and why;
+- which selection and credit judgments remain human and why;
 - how recurring judgments can become evaluators or update machinery;
-- how the current decomposition itself can be challenged; and
+- how the current decomposition itself can be challenged;
+- whether additional computation improves useful search rather than merely
+  producing more candidates; and
 - which alternative learning methods provide a fair comparison.
 
 The workshop should therefore not present bootstrapping as its successful
@@ -129,31 +140,67 @@ mistakes. Independent factual and formal checks, rival theories, preregistered
 predictions, ablations, held-out demands, and transfer tests are needed to keep
 the selection environment from becoming self-sealing.
 
-## Computation should enter at the beginning
+## Computation is already inside the loop
 
-The absence of a complete global evaluator does not justify handcrafting a full
-theory before applying computation. It determines which parts of search can be
-trusted first.
+The present Commonplace process is not a manual design phase waiting for future
+automation. A model already performs substantial computational work:
 
-Models and programs can already be used to:
+- retrieving and interpreting retained project artifacts;
+- generating competing claims, theories, decompositions, and designs;
+- searching sources and constructing counterexamples;
+- comparing formulations and identifying contradictions or missing distinctions;
+- checking references, local consistency, entailments, and formal consequences;
+- proposing experiments and repository changes;
+- running bounded evaluations, ablations, and trace analysis through tools; and
+- writing accepted revisions into state that guides later model calls.
 
-- generate competing claims, theories, decompositions, and designs;
-- search sources and construct counterexamples;
-- check references, local consistency, entailments, and formal consequences;
-- propose experiments and run bounded evaluations;
-- perform theory-withholding and theory-replacement ablations;
-- analyze traces and delayed outcomes for possible credit; and
-- search over artifacts inside regions with sufficiently discriminating tests.
+The
+[workshop conversation recorded on 2026-08-30](../work/theory-mediated-self-improvement-series/computational-theory-guided-conversation-episode-2026-08-30.md)
+is a direct example. The model read many Commonplace artifacts, synthesized a
+review and candidate changes, received operator corrections about the Bitter
+Lesson framing, revised the theory and repository, and used the revised state in
+later turns.
+
+At a boundary that includes the operator, model, knowledge base, and tools, this
+is already a human-inclusive computational theory-mediated learning loop. At a
+boundary excluding the operator, global-fit selection and final acceptance
+remain outside the computational subsystem.
+
+The distinction is therefore not **computation versus no computation**. It is
+between:
+
+- computational theory-guided search with sparse human high-level selection;
+  and
+- a process whose search, selection, and credit assignment are increasingly
+  reusable, computational, and responsive to additional compute.
+
+Reading and citing retained artifacts supports a mediation claim, but it does
+not quantify how load-bearing they were. A matched run with the artifacts
+withheld, replaced, or reduced to an information-matched record would provide a
+stronger causal estimate.
+
+## The bootstrap grows selection machinery
 
 Human judgment remains in the loop where global fit is not yet represented or
 reliably evaluated. That remaining work should be treated as a description of
 missing selection machinery, not as a protected source of intelligence.
 
 When a judgment recurs and its scope stabilizes, it can be operationalized as a
-methodology, test, validator, learned critic, search objective, or program. The
-computationally searchable surface then grows. The intended bootstrap is not
-"handcraft now, learn later." It is **learning while constructing the machinery
-that makes more learning selectable**.
+methodology, test, validator, learned critic, search objective, episode schema,
+or program. The computationally selectable surface then grows. The intended
+bootstrap is not "handcraft now, learn later." It is **computational search and
+learning while constructing better machinery for selection and credit
+assignment**.
+
+The relevant progress measures are whether:
+
+- additional computation improves proposal, criticism, comparison, diagnosis,
+  and recovery;
+- retained theory improves those operations relative to appropriate controls;
+- recurring operator corrections are captured and reused;
+- the marginal human judgment required per useful revision falls;
+- the selection machinery can challenge the current decomposition; and
+- the same process transfers beyond the cases and domains that produced it.
 
 ## Why try explicit theory first?
 
@@ -207,8 +254,8 @@ concerns production of empirical and procedural competence.
 
 No current carrier is promised survival. A future model may absorb a theory,
 collapse a representational boundary, or replace a validator with a cheaper
-learned mechanism. The bootstrap succeeds by improving the production path, not
-by preserving today's files.
+learned mechanism. The bootstrap succeeds by improving the production and
+selection path, not by preserving today's files.
 
 ## What Commonplace currently establishes
 
@@ -218,22 +265,27 @@ retained and routed into later work. Stable conclusions can become
 instructions, validators, schemas, or code. Failures can lead to revisions in
 both the knowledge base and some of its machinery.
 
-This is useful, but it is not yet a general learner. People still choose
-objectives, identify many reusable claims, judge much of their global fit,
-assign blame, choose representations, construct or approve evaluators,
-authorize consequential changes, and repair failures beyond represented
-coverage.
+This already establishes more than a future intention to use computation. The
+model carries substantial retrieval, interpretation, synthesis, criticism, and
+editing work, and the retained knowledge base guides that work across turns.
+
+It is not yet a general autonomous learner. People still choose objectives,
+identify many reusable claims, judge much of their global fit, assign blame,
+choose representations, construct or approve evaluators, authorize
+consequential changes, and repair failures beyond represented coverage.
 
 The current position therefore has four levels:
 
 1. The Bitter Lesson does not impose a weights-only representational rule.
 2. Theory-mediated learning is a serious conjecture worth testing.
-3. Theory-guided construction of a live system is the first strategy for
-   bootstrapping the missing selection machinery.
-4. Whether that strategy becomes scalable, reduces human judgment, transfers
-   beyond anticipated domains, and beats more direct alternatives remains open.
+3. Commonplace already implements computational theory-guided search with
+   human-assisted high-level selection.
+4. Whether that process can use increasing computation to improve selection,
+   reduce marginal human judgment, transfer beyond anticipated domains, and
+   beat more direct alternatives remains open.
 
-Only the first level is a rebuttal. The others are research commitments.
+Only the first level is a rebuttal. The other three are empirical descriptions
+and research commitments.
 
 ## Tests that can change the strategy
 
@@ -250,16 +302,24 @@ later demand preserves the structure it names. Wrong theory should produce
 predictable negative transfer. Withholding theory should particularly damage
 recovery if the conjecture is right.
 
-A later experiment must test the bootstrap strategy itself. Introduce a domain
-that was not used to design the artifact ontology or improvement procedure.
-Track which claims, methods, checks, and evaluator components are produced by
-computational search; which judgments remain human; whether repeated judgments
-become reusable machinery; and whether the process transfers again without a
-new bespoke architecture.
+A second experiment should instrument the current human-agent loop. Across real
+Commonplace improvements, record which retained artifacts guided the model,
+which proposals and checks were computational, which high-level judgments
+remained human, whether additional computation changed the result, and whether
+a recurring correction became a reusable test, critic, method, schema, or
+program.
+
+A later experiment must test domain-extensibility. Introduce a domain that was
+not used to design the artifact ontology or improvement procedure. Track which
+claims, methods, checks, and evaluator components are produced by computational
+search; which judgments remain human; whether repeated judgments become
+reusable machinery; and whether the process transfers again without a new
+bespoke architecture.
 
 The strategy loses in a tested regime when system use becomes self-confirming,
-computational search remains peripheral, human judgment grows with the corpus,
-each domain needs a new ontology and oracle, the decomposition remains outside
+retained theory makes no causal difference, additional computation does not
+improve useful search or selection, human judgment grows with the corpus, each
+domain needs a new ontology and oracle, the decomposition remains outside
 revision, or a more direct method performs better at comparable total cost.
 
 ## The research program, not the defense
@@ -270,11 +330,11 @@ learning, evidence, and computation rather than protected as designer
 knowledge.
 
 That requirement does not vindicate Commonplace. It tells us how to judge it.
-The project is testing whether a live, theory-guided human-agent system can grow
-its own selection machinery: beginning with computational proposal and local
-checks, using system-building consequences where global fit lacks a fixed
-oracle, and progressively converting recurring judgments into evaluators,
-methods, and code.
+The project is testing whether an already-computational, theory-guided
+human-agent system can improve its search and grow its selection machinery:
+using retained project theory as operative context, exposing global fit through
+system-building consequences, and progressively converting recurring human
+judgments into evaluators, methods, schemas, and code.
 
 This is a first construction strategy. It should be retained only while it helps
 build a more general learning process than the one that produced it.
