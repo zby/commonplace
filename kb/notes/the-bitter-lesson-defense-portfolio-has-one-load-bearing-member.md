@@ -1,149 +1,158 @@
 ---
-description: "The only load-bearing defense of the program against the Bitter Lesson is that its hand-crafted layer is provisional bootstrap state for a domain-extensible learning path; the other arguments supply concessions, tests, functions, or conditional forecasts"
+description: "The production-method versus representational-form distinction answers only a narrow weights-only inference; theory-guided bootstrapping is a provisional first strategy under incomplete global evaluation, not a defense of continuing hand production"
 type: kb/types/note.md
 traits: [title-as-claim, synthesis]
 tags: [learning-theory, deploy-time-learning]
 ---
 
-# The Bitter Lesson defense portfolio has one load-bearing member: the bootstrap thesis
+# The Bitter Lesson defense portfolio has one load-bearing member for the form-only rebuttal
 
 [Sutton's Bitter Lesson](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)
 is the recurring observation that methods built around human knowledge tend to
 lose to general search and learning methods that exploit increasing
-computation. The only response that defends this program itself is not an
-exception to that lesson. It is the claim that the present hand-crafted layer is
-**bootstrap state for building the kind of search-and-learning process the
-lesson favors**.
+computation. The workshop has accumulated several replies, but they answer
+different questions.
 
-[Production method and representational form are different
+Only one is needed for the **narrow form-only rebuttal**:
+[production method and representational form are different
 axes](./the-bitter-lesson-selects-production-methods-not-representational.md).
-That distinction makes the bootstrap claim coherent: a theory, instruction,
-test, schema, or program can be produced and selected by learning even though
-its retained form is localized. But the distinction alone establishes only
-conceptual compatibility. The substantive defense requires a path by which
-search and learning increasingly produce, test, revise, and replace the
-localized artifacts and consequential parts of their production machinery.
+A theory, instruction, test, schema, or program can be produced and selected by
+learning. Sutton's argument therefore does not imply that every learned result
+must live in model weights.
 
-## The hand-crafted layer must be a stage, not the solution
+That rebuttal establishes conceptual room for learned explicit artifacts. It
+does not defend the present hand-crafted bootstrap, show that artifact learning
+scales, or establish that Commonplace has found the right path.
 
-The hand-designed vision and game-playing approaches in Sutton's comparison
-encoded object-level knowledge for a predefined problem class. Their designed
-features, heuristics, or decompositions were part of the intended solution.
-Computation could operate inside that structure, but the method did not provide
-a path for learning to replace the structure that bounded it.
+## The bootstrap should be stated as a first strategy
 
-The program here makes a different bet about its current theories,
-methodologies, schemas, validators, and code. They are not protected final
-knowledge. They are provisional working state in a process intended to learn
-how to produce and supersede them. The distinction is real only if the system
-can eventually move beyond the artifact classes, decompositions, and evaluators
-that people supplied at the start.
+The program currently has a reason to try theory-guided bootstrapping, but not a
+proof that it is necessary or optimal.
 
-The relevant generality is **domain-extensibility**, not merely several domains.
-A system with many hand-built domain models remains a bundle of predefined
-solutions. A domain-extensible learning path can construct new project-specific
-theories, representations, methods, and checks in an area that was not
-anticipated when the path was designed. [A hand-crafted bootstrap fits the
-lesson only when learning can outgrow it](./a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md).
+A theory-mediated system must select among claims. Individual claims can often
+be checked for factual truth, formal validity, local consistency, or bounded
+predictive success. Those checks do not fully determine whether a claim fits a
+larger working theory. Fit is relational: a true claim may be irrelevant,
+redundant, badly scoped, or located at the wrong level of abstraction. A false
+claim may appear useful because the current system already embodies it.
 
-## What the bootstrap thesis commits the program to
+No present fixed evaluator fully decides whether a candidate claim improves the
+large-scale causal picture used to build and modify the system. The first
+strategy is therefore to use claims in a live system and expose them to the
+consequences of building, operating, and repairing it. [When global theory fit
+lacks a fixed oracle, use in building the system is an initial selection
+environment](./when-global-theory-fit-lacks-a-fixed-oracle-use-in-building-the-system-is-an-initial-selection-environment.md).
 
-For each important artifact class and production decision, the program must be
-able to answer what would have to change for search and evidence to take over
-its production. The answer cannot remain indefinitely “a person writes it” or
-“a person builds a new domain-specific evaluator.”
+This is not an argument for postponing computation. Candidate claims, rival
+syntheses, counterexamples, local deductions, experiments, ablations, traces,
+and revisions can be searched computationally from the beginning. Human
+judgment remains where global fit is not yet adequately captured, but recurring
+judgments should become tests, validators, learned critics, search objectives,
+methods, or code. The strategy is to grow the selection machinery through use.
 
-A credible path needs:
+## What conditional compatibility requires
 
-1. proposal or search over candidate theories and machinery;
-2. reject-capable evaluation whose decisive grounds are not authored only by
-   the candidate;
-3. credit assignment rich enough to identify what should change;
-4. operative retention, so selected changes affect later work;
-5. revision of the ontology, decomposition, routing, and update operators when
-   evidence shows that the current update space is wrong; and
-6. bounded human judgment and maintenance as the artifact corpus, task horizon,
-   and number of domains grow.
+[A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow
+it](./a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md).
+That is a necessary condition, not a strategic defense. The system must
+increasingly learn to produce, test, revise, and replace its theories and
+machinery rather than merely apply a protected hand-designed store.
 
-The machinery receives no exemption from the rule. [Reflective machinery
-persists by warrant, not by its position in the loop](./machinery-persists-by-warrant-not-position-in-a-reflective-loop.md).
-A fixed evaluator, artifact type, or decomposition may be a justified current
-choice, but its meta-level position does not make it the permanent source of
-generality.
+For each consequential artifact class and production decision, the program
+should be able to say:
+
+1. what computational proposal or search is already possible;
+2. what evidence can currently reject candidates;
+3. which judgment still requires a person and why;
+4. how repeated judgments could become selection machinery;
+5. what would allow the current ontology, decomposition, or evaluator to be
+   challenged; and
+6. what alternative learning method should be used as a baseline.
+
+The long-run criterion is **domain-extensibility**, not competence in several
+predefined domains. A system with many hand-built ontologies remains a bundle of
+predefined solutions. A domain-extensible process must eventually construct the
+project-specific theory, representations, methods, and checks needed for a new
+area without a person first supplying another complete domain model.
 
 ## What the other arguments contribute
 
-The other claims in the portfolio remain useful, but they do not independently
-defend a hand-crafted system against the lesson.
+The remaining claims are useful as constraints, methods, or hypotheses. None
+independently justifies the current strategy.
 
 | Claim | Role | What it does not establish |
 |---|---|---|
-| [Selection removes unearned reach rather than structure](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md) | Suggests a selection criterion: structure can survive when its reach is earned by refuting tests | That any carrier or current artifact layer will survive scaling |
-| [Surviving absorption is a function-level question](./the-bitter-lesson-selects-production-methods-not-representational.md#why-the-form-axis-does-not-collapse-into-weights) | Explains why authoritative records, commitments, interfaces, or checks may still be supplied somewhere | That natural-language or symbolic carriers are permanent |
-| [Scaffolding can recur at a moving frontier](./scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md) | Gives a conditional forecast when assigned difficulty rises with capability | That the current scaffolding is efficient or will be learned |
-| [Theory-mediated learning may improve sample efficiency](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) | Gives one empirical reason explicit theories might earn a place | That the artifact-production loop scales |
-| [Codification and relaxing navigate the boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) | Supplies a methodology for hardening and retiring structure | That the methodology itself will be produced by learning |
-| [Commitments create ground truth](./commitment-not-derivation-creates-new-ground-truth.md) and [reproduction does not transfer authority](./parametric-reproduction-cannot-replace-an-authoritative-record.md) | Answer a separate absorption question about governed current state | A defense of semantic knowledge that remains manually authored |
-| Use of Commonplace as an instrument | Surfaces retrieval, coherence, and maintenance failures in the current decomposition | Proof that the decomposition is right or scalable |
+| [Selection removes unearned reach rather than structure](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md) | Suggests that structure can survive when its scope is earned by refuting tests | That any current carrier or artifact layer will survive scaling |
+| [Surviving absorption is a function-level question](./the-bitter-lesson-selects-production-methods-not-representational.md#why-the-form-axis-does-not-collapse-into-weights) | Explains why authority, interfaces, or checks may still be supplied somewhere | That natural-language or symbolic carriers are permanent |
+| [Scaffolding can recur at a moving frontier](./scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md) | Gives a conditional forecast when assigned difficulty rises with capability | That the current scaffolding is efficient or should be built manually |
+| [Theory-mediated learning may improve sample efficiency](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) | Gives a reason explicit theories might help under structured shifts | That the advantage exists at system scale or beats direct search |
+| [Codification and relaxing navigate the boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) | Supplies a method for hardening and retiring structure | That the method itself will become computationally produced |
+| [Commitments create ground truth](./commitment-not-derivation-creates-new-ground-truth.md) and [reproduction does not transfer authority](./parametric-reproduction-cannot-replace-an-authoritative-record.md) | Explain why some governed current state remains supplied | A defense of hand-authored empirical competence |
+| Use of Commonplace as an instrument | Exposes retrieval, coherence, and maintenance failures in the present decomposition | Proof that the decomposition or bootstrap strategy is right |
 
-The absorption evidence should therefore be read as a concession: functions may
-persist while every current carrier disappears. The moving-frontier and
-sample-efficiency claims are research hypotheses. Commitments and authority
-explain why some supplied inputs remain, but they do not rescue hand-authored
-empirical competence. None replaces the bootstrap thesis.
+The absorption evidence remains a concession: functions may persist while every
+current carrier disappears. The moving-frontier and sample-efficiency claims are
+hypotheses. Commitments and authority explain externally supplied inputs, not a
+protected semantic layer.
 
-## Current status of the defense
+## Current position
 
-Commonplace already gives the bootstrap claim a concrete architecture. A
-language model can propose changes across heterogeneous artifacts; explicit
-state can be retained and revised; some theory can be codified into instructions,
-validators, schemas, or code; and parts of the system's own operation are in the
-revision surface.
+The defensible position has four levels:
 
-The decisive evidence is still missing. People perform much of the proposal
-selection, blame assignment, evaluator construction, and acceptance. The
-artifact ontology and many update procedures remain designed. Current evidence
-therefore supports three claims of different strength:
+1. **Narrow compatibility:** the Bitter Lesson does not impose a weights-only
+   representational rule.
+2. **Working conjecture:** explicit theories may improve coherent search and
+   revision under sparse or delayed feedback.
+3. **First strategy:** use a live human-agent system as an initial selection
+   environment while computational search and evaluation expand from the parts
+   that already have discriminating tests.
+4. **Open comparison:** test whether this route reduces human judgment,
+   transfers beyond anticipated domains, and outperforms more direct learning
+   approaches at comparable total cost.
 
-- the architecture is not categorically contrary to the Bitter Lesson;
-- Commonplace is a useful human-assisted bootstrap toward a compatible path;
-- whether the path becomes a scalable, domain-extensible learning method is the
-  central empirical burden.
+Only the first level is a rebuttal. The other three are research commitments.
+Calling all of them a defense would hide the main uncertainty.
 
-The third claim should not be promoted by repeating the first two. It requires
-experiments in which the system enters an unanticipated domain, constructs the
-needed theory and machinery, receives refuting evidence, revises its production
-process, and carries the result into later work with bounded human effort.
+## Failure conditions
+
+The first strategy should be rejected or narrowed when:
+
+- the system's own use rewards a self-confirming theory;
+- truth checks and system-fit judgments cannot be kept distinct;
+- computational search remains peripheral while human production grows;
+- repeated human judgments do not become reusable selection machinery;
+- every new domain requires a bespoke ontology and evaluator;
+- interventions on explicit theory do not improve search, recovery, or later
+  modification; or
+- direct end-to-end, evolutionary, parametric, or other computational methods
+  perform better at comparable total cost.
 
 ## Scope
 
-- “Load-bearing” means that rejecting this member would leave the program as a
-  defense of continuing hand production. It does not mean that the supporting
-  claims are unimportant.
-- Objectives, commitments, and grants of authority may remain supplied. The
-  lesson constrains the production of empirical competence and behavior-shaping
-  structure; it does not make value choices derive themselves.
-- The bootstrap thesis is path-relative. An artifact class can be learned on
-  one path and hand-supplied on another.
-- A declared path beyond hand-crafting is not evidence that the path works. The
-  defense becomes empirical only where production actually moves.
+- “Load-bearing” refers only to the narrow rejection of a form-only inference.
+  It does not rank the practical importance of the other claims.
+- The bootstrap is a path-relative strategy. An artifact may be learned on one
+  path and hand-supplied on another.
+- Objectives, commitments, and grants of authority may remain supplied; the
+  scaling question concerns empirical and procedural competence.
+- The absence of a complete global-fit oracle is current and defeasible, not a
+  proof that such an evaluator cannot be learned.
 
 ## Open Questions
 
-- Which first cross-domain experiment would distinguish domain-extensible
-  learning from a broad but fixed artifact ontology?
-- What evidence would show that evaluator construction and credit assignment
-  are also moving into the learning path rather than remaining hidden human
-  work?
-- How much of the bootstrap machinery must be revisable before the program is
-  materially different from bounded search inside a fixed decomposition?
+- What computations can already search over theory without requiring a complete
+  global evaluator?
+- Which system-building consequences provide the least self-confirming evidence
+  of theory fit?
+- Which recurring global judgments should be operationalized first?
+- What alternative first strategy gives the strongest comparison?
 
 ---
 
 Relevant Notes:
 
-- [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](./a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md) — extends: states the positive defense and its domain-extensibility test
-- [The bitter lesson selects production methods, not representational forms](./the-bitter-lesson-selects-production-methods-not-representational.md) — grounds: supplies the distinction that makes learned localized artifacts conceptually coherent
-- [Machinery persists by warrant, not position in a reflective loop](./machinery-persists-by-warrant-not-position-in-a-reflective-loop.md) — grounds: applies the production requirement recursively to the learning machinery
-- [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — grounds: explains why bounded editing inside supplied artifact classes is not yet the claimed general path
-- [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — mechanism: supplies the minimum production loop the bootstrap must increasingly internalize
+- [The bitter lesson selects production methods, not representational forms](./the-bitter-lesson-selects-production-methods-not-representational.md) — grounds: supplies the sole premise required for the narrow form-only rebuttal
+- [When global theory fit lacks a fixed oracle, use in building the system is an initial selection environment](./when-global-theory-fit-lacks-a-fixed-oracle-use-in-building-the-system-is-an-initial-selection-environment.md) — motivates: supplies the rationale for the first strategy without presenting it as a defense
+- [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](./a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md) — limits: states the conditional compatibility and failure burden
+- [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — mechanism: states what the strategy must progressively construct
+- [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — limits: keeps the initial artifact ontology inside the eventual challenge surface
