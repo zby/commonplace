@@ -1,5 +1,5 @@
 ---
-description: "Research-program statement on theory-mediated system learning: whether a system that revises retained project theory keeps its own modification coherent under delayed feedback, with the four evidence levels, truth versus fit, and the experiments"
+description: "Research-program statement on theory-mediated system learning: whether a system that revises retained program theory keeps its own modification coherent under delayed feedback, with the four evidence levels, truth versus fit, and the experiments"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -30,9 +30,18 @@ source_notes:
 
 > **Draft.** This article is circulating for comments; its claims, structure, and central thesis may still change. Counterexamples, rival mechanisms, and disputed experimental controls are welcome through the repository's issue tracker.
 
-The hardest programming decisions are not necessarily the ones that require the
-most code. They are the ones for which no complete local rule or cheap test says
-what change will preserve the program's purpose and organization.
+Suppose an endpoint is slow and a cache is put in front of the service behind
+it. The change is small, the tests pass, and the endpoint is fast. Two
+requirements later, a feature that needs every read to reflect the preceding
+write fails in production: the service had been kept transactional for exactly that
+reason, and the reason was written down nowhere the change touched. At the time
+of the cache change no local rule or cheap test said it would damage the
+program's organization. A later demand did.
+
+The hardest programming decisions are of this kind. They are not necessarily
+the ones that require the most code; they are the ones for which no complete
+local rule or cheap test says what change will preserve the program's purpose
+and organization.
 
 Human programmers handle these decisions imperfectly. They use a partial theory
 of the program to choose promising changes, notice conflicts, interpret failed
@@ -42,15 +51,13 @@ consequences reveal what the first tests could not.
 
 This article presents a research program around one question:
 
-> Can a computational composite use a fallible, project-specific theory to keep
-> program modification coherent across proposal, search, backtracking,
-> recovery, and delayed feedback — and revise both its theory and its behavior
-> when consequences arrive?
+> Can a system use a fallible program theory to keep its own modifications
+> coherent under delayed feedback, and revise that theory when the consequences
+> arrive?
 
-The composite in that question is a system, not a model: retained artifacts,
-tools, runtime, and correction machinery alongside the model, evaluated together
-at a declared boundary. And the question is about learning, not only about
-editing.
+The system in that question is not a model. It is retained artifacts, tools,
+runtime, and correction machinery alongside the model, evaluated together at a
+declared boundary. And the question is about learning, not only about editing.
 
 A change to a program, a rule, a schema, or a test is a durable change to the
 thing that determines the system's later behavior. When such a change is chosen by a
@@ -72,13 +79,12 @@ weights, not a theory from which their patches
 derive](../notes/evidence/three-2026-harnesses-retain-rules-or-weights-not-a-revisable-theory.md).
 
 The program has two testbeds. Programming agents supplied with persistent
-project-specific theory are the harder one, and still prospective. Commonplace —
+program theory are the harder one, and still prospective. Commonplace —
 an agent-operated knowledge base, and the system this article comes from — is
 the live one, where the same mechanisms already run on parts of the system's own
 operation.
 
-The Commonplace loop is already partly computational, and that is the point:
-computation is not a later stage waiting to be introduced. A language model reads retained
+The Commonplace loop is already partly computational. A language model reads retained
 Commonplace artifacts, searches and synthesizes candidate formulations and
 repository changes, criticizes alternatives, uses tools for checks and
 retention, and then works from the revised state. What stays human is
@@ -89,6 +95,12 @@ computation, but how to make that computational search more effective and how to
 turn recurring operator judgments into reusable selection and credit-assignment
 machinery.
 
+The rest of the article sets out the program's parts: what coherent
+modification is, the four functions the architecture separates, the levels at
+which evidence for the pathway is graded, the difference between a claim's truth
+and its fit, one recorded episode, the conditions under which the strategy
+should be abandoned, and the two studies that come next.
+
 ## Holding a theory means controlling a fallible search
 
 A modification is coherent when it meets the new demand without breaking the
@@ -98,7 +110,8 @@ behind it. What the program's organization requires is not fully stated
 anywhere; a partial, fallible account of it is what the theory is. So a change
 is rarely shown coherent when it is made. It is shown incoherent later, when a
 further demand, an extension, or an operational failure reveals that it broke
-something the purpose depended on. In practice coherence is refuted after the
+something the purpose depended on. The cache change above was incoherent, and
+nothing available when it was made showed that. In practice coherence is refuted after the
 fact more often than it is verified in advance.
 
 The unit judged is therefore a sequence of modifications, not one change. A
@@ -150,7 +163,7 @@ so it does not establish that only humans can hold a program theory. Removing
 that premise does not show any current agent passes his bearer tests, which
 stays an empirical question.
 
-## Four functions, four ways to fail
+## Four functions that fail differently
 
 The current architecture separates four functions because they fail in
 different ways.
@@ -211,7 +224,7 @@ boundary](../notes/theory-mediated-self-improvement-needs-interpretation-and-ret
 
 ## A true claim may still not fit the theory
 
-A theory-mediated learner must answer two different questions about a claim.
+A theory-mediated system must answer two different questions about a claim.
 
 First, is the claim true, valid, or otherwise warranted over its stated scope?
 Some claims admit factual checks, formal derivations, consistency tests,
@@ -242,9 +255,9 @@ building, operating, or repairing the system and by surviving the consequences
 of that use.
 
 System use is not a truth oracle: a system can reward its own misconceptions.
-Preventing a self-sealing theory therefore needs the checks that system use
-cannot supply by itself — independent factual and formal verification, and
-predictions registered before the evidence arrives.
+Preventing a self-sealing theory is what the separate correction function is
+for: independent factual and formal verification, and predictions registered
+before the evidence arrives, are the checks system use cannot supply by itself.
 
 ## One recorded episode, and its limits
 
@@ -286,13 +299,13 @@ develops that transfer argument and separates it from [computational
 closure](../notes/methodological-and-computational-closure-track-different-changes.md),
 which states where decisions happen rather than whether they are any good.
 
-## The strategy is first, not privileged
+## The strategy is the first tried, not the favoured one
 
 The obvious objection is that retained explicit artifacts are exactly the
-hand-built structure the Bitter Lesson tells us to stop building. The reply is
-deliberately narrow — the [defense portfolio here has one load-bearing
-member](../notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md)
-— and the companion article [The Bitter Lesson does not require everything to
+hand-built structure the Bitter Lesson tells us to stop building. Of the replies
+one could make, [only one holds
+up](../notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md),
+and the companion article [The Bitter Lesson does not require everything to
 live in weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
 develops it: [production method and representational form are different
 axes](../notes/the-bitter-lesson-selects-production-methods-not-representational.md),
@@ -319,26 +332,36 @@ Lesson](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it
   or
 - another method does better at comparable total cost.
 
-## Two next experiments
+## One experiment and one longitudinal study
 
-The first experiment tests whether prepared project theory is load-bearing.
-Hold model, tools, repository state, budget, and acceptance fixed; compare:
+The experiment tests whether prepared program theory is load-bearing. Hold
+model, tools, repository state, budget, and acceptance fixed; compare:
 
-1. correct project theory;
+1. correct program theory;
 2. an information-matched record without theory-level organization;
 3. theory withheld; and
 4. plausible but wrong or outdated theory.
+
+The second condition is the contested control. An information-matched record
+carries the same facts, decisions, and history as the theory — commit
+messages, issue threads, a changelog — flattened, with the purposes behind
+decisions and the dependencies between them removed. If theory-level
+organization is what does the work, the record should behave like withheld
+theory. If the record cannot be matched without smuggling that organization
+back in, the two conditions collapse, and that is the disagreement the program
+most wants exposed.
 
 Use sequential programming demands with delayed consequences. Measure candidate
 generation, preservation of architectural commitments, diagnosis, backtracking,
 recovery, collateral regressions, later-demand performance, and human
 intervention. Correct theory should help most where [the later demand preserves
 the structure it
-names](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md). Wrong theory should produce predictable negative
-transfer. Withholding theory should particularly damage recovery if the
+names](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md)
+— in the cache case, a theory that records why the service is transactional.
+Wrong theory should produce predictable negative transfer. Withholding theory should particularly damage recovery if the
 conjecture is right.
 
-The second experiment instruments the current human-agent loop. Across a
+The longitudinal study instruments the current human-agent loop. Across a
 sequence of real Commonplace improvements, record which retained
 artifacts guided model search, which proposals and checks were computational,
 which global-fit and credit judgments remained human and why, whether more
@@ -349,11 +372,11 @@ compounds: a correction retained as a lesson helps only the tasks that retrieve
 it, whereas one retained as a [maintained check improves selection for every
 later candidate in its
 domain](../notes/oracle-accumulation-improves-the-selection-environment.md). A
-later episode should show whether the computational selection surface actually
-grew.
+later episode should show whether more of the selection decisions had become
+computational.
 
-Neither experiment reaches the last two failure conditions. A subsequent
-cross-domain comparison must test domain-extensibility and measure the approach
+Neither study reaches the conditions on domain-extensibility and rival methods.
+A subsequent cross-domain comparison must test domain-extensibility and measure the approach
 against direct computational alternatives.
 
 ## The invitation
