@@ -118,6 +118,42 @@ Use rival theories, withholding and replacement interventions, preregistered
 predictions, held-out demands, delayed consequences, and transfer to keep causal
 fit evidence distinct from factual or formal warrant.
 
+## The present loop is already computational
+
+Commonplace should not be described as handcrafting a theory before computation
+begins. In a typical episode, a language model retrieves multiple retained
+artifacts, interprets their claims and constraints, searches and synthesizes
+candidate formulations or changes, criticizes alternatives, uses tools to check
+local consequences, and writes accepted revisions back into the knowledge base.
+Those revisions then condition later model calls.
+
+The operator currently supplies much of the sparse high-level selection signal
+about global fit, blame, scope, and acceptance. At the boundary that includes the
+operator, model, knowledge base, and tools, the process is already a
+human-inclusive computational theory-mediated learning loop. At a boundary that
+excludes the operator, global selection and final acceptance remain exogenous.
+
+The
+[2026-08-30 workshop conversation](./computational-theory-guided-conversation-episode-2026-08-30.md)
+records a concrete instance:
+
+1. retained Commonplace artifacts and repository state were read;
+2. computational synthesis produced a review, candidate distinctions,
+   experiments, and repository changes;
+3. the operator supplied corrections about the Bitter Lesson framing;
+4. the theory and artifacts were revised and retained; and
+5. the revised state guided later work.
+
+This supports mediation, theory-state revision, and recurrence at the
+human-inclusive boundary. It does not establish how load-bearing each artifact
+was without an ablation, whether the revised claims are independently true, or
+whether more computation scales better than the alternatives.
+
+The open engineering problem is therefore not how to introduce computation. It
+is how to improve the computational search already present and how to convert
+recurring operator judgments into reusable selection and credit-assignment
+machinery.
+
 ## Coherent modification and warranted transfer
 
 The bearer problem and the residual-human-work problem meet at open-ended
@@ -179,22 +215,22 @@ all live in weights because production method and representational form are
 different axes. That does not defend the present hand-crafted artifacts.
 
 Theory-guided bootstrapping is the first strategy being tried under incomplete
-global evaluation. It uses a live system as the initial environment in which
-claims can make causal differences and meet delayed consequences. At the same
-time, computation should be used wherever discrimination is already adequate:
+global evaluation. It uses the already-computational Commonplace loop as a live
+environment in which retained theory guides search, claims make causal
+differences, and delayed consequences can expose poor fit.
 
-- generate rival claims, theories, decompositions, and designs;
-- search for evidence and counterexamples;
-- check local consistency, entailments, references, and formal consequences;
-- propose experiments, run ablations, and analyze traces;
-- search over artifacts inside bounded evaluator domains; and
-- identify recurring human judgments that can become reusable selection
-  machinery.
+The strategy should improve the use of computation along two fronts:
 
-When a judgment stabilizes, it can become a methodology, test, validator,
-learned critic, search objective, or program. The strategy is to grow the
-computational selection surface through use, not to finish a hand-crafted theory
-before learning begins.
+- **Search:** better retrieval, rival generation, criticism, decomposition
+  search, evidence and counterexample search, experiment design, ablation, trace
+  analysis, and bounded artifact optimization.
+- **Selection:** progressively turn recurring operator judgments into
+  methodologies, tests, validators, learned critics, search objectives, episode
+  schemas, or programs.
+
+The distinction is not computation versus no computation. It is computational
+search with human-assisted high-level selection versus a process whose search,
+selection, and credit assignment are increasingly reusable and computational.
 
 [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow
 it](../../notes/a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md).
@@ -204,23 +240,25 @@ other direct computational methods remain live alternatives.
 
 The long-run challenge is domain-extensibility. The process must eventually
 construct the project-specific theory, representations, methods, and checks
-needed for domains not enumerated by the designers; reduce the human share of
-fit assessment, evaluator construction, and repair; and permit consequential
-parts of its own decomposition and update machinery to be challenged.
+needed for domains not enumerated by the designers; reduce the marginal human
+share of fit assessment, evaluator construction, and repair; and permit
+consequential parts of its own decomposition and update machinery to be
+challenged.
 
 No carrier receives permanent protection. Natural-language theory, symbolic
 machinery, and current evaluators may be absorbed or replaced. The strategy
-succeeds when the production path becomes more general and competitive, not when
-today's files survive.
+succeeds when increasing computation improves the production and selection path
+at competitive total cost, not when today's files survive.
 
 ## Current testbeds
 
 Commonplace is a human-inclusive reflective testbed. It retains and routes
 project theory, supports criticism and revision, and can turn some theory into
-operative instructions, validators, schemas, and code. Humans still choose
-objectives, supply unrecorded premises, judge much global fit, assign blame,
-authorize consequential changes, interpret ambiguous evidence, and repair paths
-beyond represented coverage.
+operative instructions, validators, schemas, and code. The model already carries
+substantial retrieval, interpretation, synthesis, criticism, and editing work.
+Humans still choose objectives, supply unrecorded premises, judge much global
+fit, assign blame, authorize consequential changes, interpret ambiguous
+evidence, and repair paths beyond represented coverage.
 
 Programming agents with persistent project-specific theory are the first
 demanding external testbed. They isolate the bearer question without requiring
@@ -228,10 +266,10 @@ the target program to be the agent itself. Commonplace then provides the
 reflective environment in which the same mechanism can be applied to parts of
 the system's own operation.
 
-Current evidence supports useful human-agent theory work, inspectable mechanism
-traces, and an initial environment for testing the strategy. It does not
-establish independent computational theory possession, recurrent
-self-improvement, task-scoped closure, domain-extensible artifact learning, or
+Current evidence supports useful human-agent theory work, computationally guided
+search, inspectable mechanism traces, and an initial environment for testing the
+strategy. It does not establish independent computational theory possession,
+computational closure over selection, domain-extensible artifact learning, or
 superiority to more direct computational approaches.
 
 ## Next experiments
@@ -265,18 +303,20 @@ complete specification and cheap oracle already settle the task.
 Instrument a sequence of real Commonplace improvements. For each consequential
 claim or method, record:
 
-1. which candidates were generated computationally;
-2. which truth, validity, or local checks were automatic;
-3. which judgment of global fit remained human and why;
+1. which retained artifacts guided the model's search;
+2. which candidates, comparisons, and local checks were computational;
+3. which judgment of global fit or credit remained human and why;
 4. which downstream system consequences bore on that judgment;
 5. whether rival or ablated claims changed the result;
-6. whether a recurring judgment became a test, validator, critic, method, or
-   program; and
-7. how the human and computational shares changed on a later episode.
+6. whether a recurring judgment became a test, validator, critic, method,
+   schema, or program;
+7. whether additional computation improved the result; and
+8. how the marginal human and computational shares changed on a later episode.
 
 This is a nearer test of the bootstrap strategy than demanding immediate
-cross-domain autonomy. It can show whether the selection machinery is actually
-growing or whether "bootstrap" merely renames continued human production.
+cross-domain autonomy. It can show whether computational search and selection
+are improving or whether "bootstrap" merely renames continued bespoke human
+correction.
 
 A later cross-domain test should compare this process with direct computational
 baselines and ask whether it constructs new theory and evaluation machinery
@@ -288,22 +328,25 @@ A useful episode record should identify:
 
 1. the selected task, objective, boundary, horizon, resources, and starting
    human cut;
-2. the retained theory state claimed to guide the decision and the mediation
-   evidence;
-3. evidence for the truth, validity, or scope of the claims used;
-4. the search, realized change, and acceptance mechanism;
-5. the independent or delayed outcome and its read-back against that theory;
-6. any theory-state or machinery revision, including rejection, rescoping,
+2. the retained artifacts read and the theory state claimed to guide the work;
+3. which retrieval, search, synthesis, criticism, testing, and editing operations
+   were computational;
+4. evidence for the truth, validity, or scope of the claims used;
+5. which high-level selection and credit judgments came from the operator;
+6. the realized change and acceptance mechanism;
+7. the independent or delayed outcome and its read-back against the theory;
+8. any theory-state or machinery revision, including rejection, rescoping,
    changed confidence, explicit retention, or deferral;
-7. whether the revision changed a later operation;
-8. which global-fit judgments remained human and whether any became reusable
-   selection machinery; and
-9. which dimension moved and which decisions remain human.
+9. whether the revision changed a later operation;
+10. whether a recurring human judgment became reusable selection machinery; and
+11. which dimension moved and which decisions remain human.
 
 The record should state the strongest evidence level reached. Without a
 same-theory trace, it may show a useful change but not theory mediation. Without
-later use, it may show theory learning but not recurrence. Without growth in
-selection machinery, it does not support the bootstrap strategy.
+later use, it may show theory learning but not recurrence. Without an
+intervention, it cannot quantify how load-bearing the retained theory was.
+Without growth in selection machinery or better results from additional
+computation, it does not support the scaling strategy.
 
 ## Open questions
 
@@ -311,12 +354,16 @@ selection machinery, it does not support the bootstrap strategy.
   from luck, memorization, or generic search with a permissive evaluator?
 - Can project theory improve sample efficiency, recovery, or revision cost after
   accounting for retrieval, maintenance, and evaluation?
+- How much does retained Commonplace knowledge change LLM search relative to an
+  information-matched record?
 - Which parts of global theory fit can be operationalized without encoding the
   present theory into the evaluator?
 - How can delayed consequences receive credit when several changes and theory
   revisions intervene?
 - Which recurring human judgments should be converted first into tests,
-  validators, learned critics, or search objectives?
+  validators, learned critics, search objectives, or episode schemas?
+- How should inference-time compute, tool use, human correction, and retained
+  artifacts be accounted for in an end-to-end comparison?
 - What direct computational baseline provides the strongest alternative first
   strategy?
 - What cross-domain sequence would demonstrate domain-extensibility rather than
