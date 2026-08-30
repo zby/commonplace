@@ -64,14 +64,17 @@ first demanding external testbed. Commonplace, an agent-operated knowledge base,
 is the live human-agent environment in which the same mechanisms are already
 used on parts of the system's own operation.
 
-That current loop is computational. A language model reads retained Commonplace
-artifacts, searches and synthesizes candidate formulations and repository
-changes, criticizes alternatives, uses tools for checks and retention, and then
-works from the revised state. The operator currently supplies much of the sparse
+That loop is already partly computational, and that is the point: computation is
+not a later stage waiting to be introduced. A language model reads retained
+Commonplace artifacts, searches and synthesizes candidate formulations and
+repository changes, criticizes alternatives, uses tools for checks and
+retention, and then works from the revised state. What stays human is
+concentrated rather than spread: the operator supplies much of the sparse
 high-level selection signal about whether a candidate fits the larger theory and
-intended system. The research problem is not how to introduce computation, but
-how to make that computational search more effective and how to turn recurring
-operator judgments into reusable selection and credit-assignment machinery.
+intended system. The research problem is therefore not how to introduce
+computation, but how to make that computational search more effective and how to
+turn recurring operator judgments into reusable selection and credit-assignment
+machinery.
 
 ## Holding a theory means controlling a fallible search
 
@@ -285,7 +288,7 @@ the structure it names. Wrong theory should produce predictable negative
 transfer. Withholding theory should particularly damage recovery if the
 conjecture is right.
 
-The second experiment instruments the current computational human-agent loop.
+The second experiment instruments the current human-agent loop.
 Across a sequence of real Commonplace improvements, record which retained
 artifacts guided model search, which proposals and checks were computational,
 which global-fit and credit judgments remained human and why, whether more
