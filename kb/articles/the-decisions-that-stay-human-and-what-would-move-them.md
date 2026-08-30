@@ -1,5 +1,5 @@
 ---
-description: "Research-program hub centered on whether fallible project theory can keep program modification coherent through search, recovery, and delayed feedback, with warranted transfer, evaluator bootstrapping, and computational alternatives as supporting questions"
+description: "Research-program hub centered on whether fallible project theory can keep computational program modification coherent through search, recovery, and delayed feedback, with human-assisted selection, warranted transfer, and scaling as supporting questions"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -41,8 +41,17 @@ This article presents a research program around one question:
 
 Programming agents supplied with persistent project-specific theory are the
 first demanding external testbed. Commonplace, an agent-operated knowledge base,
-is the live human-agent environment in which the same mechanisms can be used on
-parts of the system's own operation.
+is the live human-agent environment in which the same mechanisms are already
+used on parts of the system's own operation.
+
+That current loop is computational. A language model reads retained Commonplace
+artifacts, searches and synthesizes candidate formulations and repository
+changes, criticizes alternatives, uses tools for checks and retention, and then
+works from the revised state. The operator currently supplies much of the sparse
+high-level selection signal about whether a candidate fits the larger theory and
+intended system. The research problem is not how to introduce computation, but
+how to make that computational search more effective and how to turn recurring
+operator judgments into reusable selection and credit-assignment machinery.
 
 ## Holding a theory means controlling a fallible search
 
@@ -169,6 +178,33 @@ Independent factual and formal checks, rival theories, preregistered
 predictions, withholding interventions, held-out demands, delayed consequences,
 and transfer tests are needed to prevent a self-sealing theory.
 
+## This conversation is already an example
+
+The
+[2026-08-30 workshop conversation](../work/theory-mediated-self-improvement-series/computational-theory-guided-conversation-episode-2026-08-30.md)
+provides a concrete human-inclusive episode:
+
+1. the model read the workshop, related notes, articles, and repository state;
+2. computational synthesis produced a review, candidate distinctions,
+   experiments, and repository edits;
+3. the operator accepted much of the result but corrected the Bitter Lesson
+   framing several times;
+4. the theory changed from a defense portfolio, to a conditional bootstrap
+   thesis, to a first-strategy account in which current computation and residual
+   human selection are explicitly separated;
+5. the revisions were retained; and
+6. the revised repository state guided later turns.
+
+At the boundary including operator, model, knowledge base, and tools, this
+supports mediation, theory-state revision, and recurrence. At a boundary
+excluding the operator, global-fit selection and final acceptance remain
+exogenous.
+
+The episode does not prove how much each artifact mattered. Reading and citing
+many Commonplace artifacts is strong mediation evidence, but an intervention
+that withholds, replaces, or reduces them to an information-matched record is
+needed to measure their causal contribution.
+
 ## Why difficult decisions remain human
 
 The same hard modification can be viewed from a boundary question: why has the
@@ -226,66 +262,48 @@ can be a product of learning, so Sutton's argument does not impose a weights-onl
 rule.
 
 That does not defend the present hand-crafted artifacts. Calling them a
-bootstrap would be empty unless useful production actually moves toward methods
-that exploit computation.
+bootstrap would be empty unless useful production and selection actually move
+toward methods that exploit increasing computation.
 
 Theory-guided construction is the first strategy being tried because global
-theory fit lacks a complete fixed evaluator. The strategy uses a live system as
-an initial consequence-bearing selection environment while computation enters
-where discrimination is already adequate. Models and programs can immediately:
+theory fit lacks a complete fixed evaluator. But it is already computational.
+The model performs much of the retrieval, interpretation, proposal, synthesis,
+criticism, and editing. The operator currently supplies much of the high-level
+selection and credit assignment.
 
-- generate rival claims, theories, decompositions, and designs;
-- search for evidence and counterexamples;
-- check local consistency, entailments, references, and formal consequences;
-- propose experiments, run ablations, and analyze traces; and
-- search over artifacts inside bounded evaluator domains.
+The strategy is therefore to improve two connected surfaces:
 
-Human judgment remains where global fit is not yet represented or reliably
-evaluated. That remainder should be treated as missing selection machinery, not
-as a protected source of intelligence. When a judgment recurs and its scope
-stabilizes, it can become a methodology, test, validator, learned critic, search
-objective, or program. The intended strategy is not "handcraft now, learn
-later." It is learning while constructing the machinery that makes more
-learning selectable.
+- **computational search:** retrieval, rival generation, evidence and
+  counterexample search, decomposition search, experiment design, ablation,
+  trace analysis, and bounded artifact optimization;
+- **computational selection:** convert recurring operator judgments into
+  methodologies, tests, validators, learned critics, search objectives, episode
+  schemas, or programs.
+
+The intended strategy is not "handcraft now, learn later." It is computational
+search with human-assisted global selection while constructing machinery that
+can make more of that selection reusable and computational.
 
 This is a first approach, not a uniqueness claim. End-to-end reinforcement
 learning, evolutionary search, self-play, learned world models, weight updates,
 and stronger-model baselines remain live alternatives. The strategy should be
-retained only while it improves the use of computation at competitive total
-cost.
+retained only while more computation improves useful search and selection at
+competitive total cost.
 
 Long-run compatibility still requires the process to outgrow its starting
 structure. Competence in several predefined domains is not enough. The process
 must eventually construct project-specific theories, representations, methods,
-and checks in areas not enumerated by its designers; reduce the human share of
-fit assessment and evaluator construction; and permit consequential parts of
-its own decomposition and update machinery to be challenged.
+and checks in areas not enumerated by its designers; reduce the marginal human
+share of fit assessment and evaluator construction; and permit consequential
+parts of its own decomposition and update machinery to be challenged.
 
-No present carrier is promised survival. The path succeeds when production
-becomes more general, not when today's files remain.
+No present carrier is promised survival. The path succeeds when production and
+selection become more general, not when today's files remain.
 
 The companion article [The Bitter Lesson does not require everything to live in
 weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
-develops the narrow rebuttal, the evaluator gap, and the first-strategy claim.
-
-## Two linked testbeds
-
-Programming agents with persistent project-specific theory provide the cleanest
-first test of the bearer question. The target repository is external to the
-agent. The experiment can ask whether correct theory changes search and recovery
-without first proving that the agent modifies its own behavior-determining
-organization.
-
-Commonplace provides the reflective environment. It retains theory about its own
-operation, routes that theory into later work, and turns some conclusions into
-instructions, validators, schemas, and code. Humans still choose objectives,
-supply unrecorded premises, judge much global fit, assign blame, approve
-consequential changes, and repair paths beyond represented coverage.
-
-This supports claims about useful human-agent theory work and inspectable causal
-traces. It does not establish independent computational theory possession,
-recurrence, task-scoped closure, scalable artifact learning, or superiority to
-more direct computational methods.
+develops the narrow rebuttal, the evaluator gap, the current computational loop,
+and the first-strategy claim.
 
 ## Two next experiments
 
@@ -305,18 +323,21 @@ the structure it names. Wrong theory should produce predictable negative
 transfer. Withholding theory should particularly damage recovery if the
 conjecture is right.
 
-The second experiment instruments the bootstrap strategy itself. Across a
-sequence of real Commonplace improvements, record which proposals and checks are
-computational, which global-fit judgments remain human and why, which downstream
-consequences bear on them, and whether a recurring judgment becomes a test,
-validator, learned critic, method, or program. A later episode should show
-whether the computational selection surface actually grew.
+The second experiment instruments the current computational human-agent loop.
+Across a sequence of real Commonplace improvements, record which retained
+artifacts guided model search, which proposals and checks were computational,
+which global-fit and credit judgments remained human and why, whether more
+computation changed the result, which downstream consequences bore on the
+judgment, and whether a recurring correction became a test, validator, learned
+critic, method, schema, or program. A later episode should show whether the
+computational selection surface actually grew.
 
 A subsequent cross-domain comparison must test domain-extensibility and compare
 the approach with direct computational alternatives. The strategy fails when
-system use becomes self-confirming, computational search remains peripheral,
-human judgment grows with the corpus, each domain needs a bespoke ontology and
-oracle, or another method performs better at comparable total cost.
+system use becomes self-confirming, retained theory makes no causal difference,
+additional computation does not improve useful search or selection, human
+judgment grows with the corpus, each domain needs a bespoke ontology and oracle,
+or another method performs better at comparable total cost.
 
 ## The invitation
 
@@ -325,7 +346,7 @@ researcher can challenge the account of coherent modification, propose a rival
 mechanism that does not require retained theory, design stronger controls for
 the intervention, develop a less circular test of global theory fit, identify a
 better first computational strategy, or show that evaluator and decomposition
-construction keep the approach permanently dependent on human design.
+construction keep the approach permanently dependent on bespoke human judgment.
 
 The goal is not agreement with a finished theory. It is a small set of claims
 whose status can change through criticism and evidence. The central one remains
