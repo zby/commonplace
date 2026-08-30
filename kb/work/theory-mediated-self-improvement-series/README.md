@@ -42,6 +42,19 @@ for programming agents is the first demanding external application. Neither
 case yet establishes independent computational theory possession, recurrent
 theory-mediated self-improvement, or task-scoped computational closure.
 
+The present Commonplace process already uses computation. A language model reads
+retained project artifacts, retrieves related material, searches and synthesizes
+candidate formulations, proposes repository changes, and uses accepted changes
+in later work. The operator currently supplies much of the sparse high-level
+selection signal about whether a claim fits the larger theory and intended
+system. The
+[2026-08-30 workshop conversation](./computational-theory-guided-conversation-episode-2026-08-30.md)
+records one such episode.
+
+The unresolved bottleneck is therefore not introducing computation. It is
+building more reusable and increasingly computational selection and credit
+assignment for judgments whose evidence is distributed or delayed.
+
 The Bitter Lesson does not give the present hand-crafted artifacts a defense. A
 narrow argument only blocks the inference that learned results must live in
 weights: production method and representational form are different axes.
@@ -53,12 +66,12 @@ or local tests, but their fit in a larger working theory is relational and does
 not yet have a complete fixed oracle. Commonplace's live operation provides an
 initial selection environment: claims are used to build and revise the system,
 and their fit is tested through causal, predictive, operational, and transfer
-consequences. Computational proposal, local testing, comparison, and ablation
-should begin immediately. Recurrent global judgments should become tests,
-validators, learned critics, methods, or code, expanding the searchable surface.
+consequences. The current computational search should be measured and expanded;
+recurrent operator judgments should become tests, validators, learned critics,
+methods, or code, enlarging the computational selection surface.
 
 This strategy is provisional. It competes with more direct computational
-approaches and must eventually reduce human judgment, challenge its own
+approaches and must eventually reduce bespoke human judgment, challenge its own
 machinery, and transfer beyond predefined domains.
 
 Researcher incentives are not yet known. Plausible sources of value are
@@ -88,10 +101,13 @@ with disagreement. Treat these as hypotheses, not promises.
   functions and failure surfaces. The current natural-language, parametric,
   symbolic, and evidential split is a provisional research architecture, not a
   claim that these carriers must remain separate.
-- The Bitter Lesson supplies a scaling pressure, not a defense. Use computation
-  wherever a discriminating selection criterion already exists, record the
-  human judgments left by evaluator gaps, and try to turn recurring judgments
-  into reusable selection machinery.
+- The current loop already uses computation throughout retrieval, interpretation,
+  proposal, criticism, comparison, editing, testing, and retention. Distinguish
+  computational search from human-assisted global selection instead of treating
+  computation as a later stage.
+- The Bitter Lesson supplies scaling pressure, not a defense. Measure whether
+  additional computation improves useful search and whether recurring operator
+  judgments become reusable computational selection machinery.
 - No current theory, artifact type, decomposition, evaluator, or update
   procedure is protected by its position in the loop.
 - Theory-guided bootstrapping is the first approach, not a uniqueness claim.
@@ -115,17 +131,17 @@ and obtain evidence that can change the status of its central claims.
 1. **Keep the model coherent.** Maintain the distinctions between coherent
    modification and warranted transfer, structural closure and warrant,
    semantic interpretation and reach-assessment, functional roles and their
-   current carriers, theory mediation and recurrence, and claim truth and
-   system-level fit.
+   current carriers, theory mediation and recurrence, claim truth and
+   system-level fit, and computational search versus global selection.
 2. **Run a prospective theory intervention.** Compare correct project theory,
    an information-matched record without theory-level organization, theory
    withheld, and plausible but wrong theory on sequential programming demands
    with delayed consequences. The protocol in the
    [shared model](./shared-model.md) is the current starting point.
-3. **Instrument the first bootstrap strategy.** Record which proposals and
-   checks are computational, which global judgments remain human, which system
-   consequences bear on theory fit, and which recurring judgments can be
-   operationalized into selection machinery.
+3. **Instrument the current computational loop.** Record which artifacts guided
+   model search, which proposals and checks were computational, which global
+   judgments remained human, which system consequences bore on them, and which
+   recurring judgments became reusable selection machinery.
 4. **Expose a small research surface.** Use a compact hub, the Naur argument,
    the Bitter Lesson argument, and the experimental protocol or result. Add an
    article only when it carries a distinct argumentative or empirical job.
@@ -166,6 +182,15 @@ A citation at the decision point is a useful trace but not proof that the theory
 was load-bearing. Withholding, replacing, or perturbing the theory is stronger
 evidence.
 
+For a human-inclusive computational episode, also record:
+
+- which retained artifacts the model read and how they constrained the work;
+- which search, synthesis, criticism, testing, and editing operations were
+  computational;
+- which high-level selection and credit judgments came from the operator;
+- whether accepted revisions conditioned later model work; and
+- whether recurring operator corrections became reusable machinery.
+
 For a claim used in the working theory, report separately:
 
 - evidence for truth, validity, or warranted scope;
@@ -201,6 +226,7 @@ used to revise the invitation.
 - [The Bitter Lesson does not require everything to live in weights](../../articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) — narrow rebuttal, first strategy, and scaling challenge.
 - [Shared model](./shared-model.md) — current compact synthesis and experiment outline.
 - [Target problems](./target-problems.md) — the central question and supporting research problems.
+- [Computational theory-guided conversation episode, 2026-08-30](./computational-theory-guided-conversation-episode-2026-08-30.md) — current evidence that retained Commonplace knowledge guides computational search inside a human-inclusive loop.
 - [When global theory fit lacks a fixed oracle, use in building the system is an initial selection environment](../../notes/when-global-theory-fit-lacks-a-fixed-oracle-use-in-building-the-system-is-an-initial-selection-environment.md) — rationale for research-through-building.
 - [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](../../notes/a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md) — conditional compatibility and failure criteria.
 
@@ -211,8 +237,8 @@ used to revise the invitation.
   sufficiently grounded theory;
 - experimental protocols and evidence records, including interventions,
   counterexamples, negative results, and theory revisions;
-- records of missing evaluators and successful conversions of recurring
-  judgments into selection machinery;
+- records that separate computational search from human selection and track
+  successful conversions of recurring judgments into selection machinery;
 - a coherent researcher-facing hub and only the companion articles needed to
   carry distinct arguments or results;
 - an accessible research surface linking claims and open questions to their
@@ -244,7 +270,9 @@ historical planning state should not govern current work.
   [article roles](./article-roles.md),
   [task-scoped closure](./task-scoped-computational-closure.md),
   [closure-capability map](./closure-capability-map.md).
-- **Evidence and claim control:** [adequacy-gate run](./adequacy-gate-run.md),
+- **Evidence and claim control:**
+  [computational conversation episode](./computational-theory-guided-conversation-episode-2026-08-30.md),
+  [adequacy-gate run](./adequacy-gate-run.md),
   [absorption survivors](./absorption-survivors.md),
   [match register](./match-register.md),
   [incumbent ledger](./incumbent-ledger.md),
@@ -263,10 +291,10 @@ The workshop closes when:
 3. at least one prospective Commonplace or programming-agent intervention tests
    whether project theory changes search, recovery, or later modification;
 4. the result is reported at the strongest evidence level it actually reaches;
-5. the first bootstrap strategy has an instrumented account of computational
-   search, missing global evaluators, system-level fit evidence, and at least one
-   attempted conversion of a recurring judgment into reusable selection
-   machinery;
+5. the current computational loop has an instrumented account of retained
+   knowledge, model search, human global selection, system-level fit evidence,
+   and at least one attempted conversion of a recurring judgment into reusable
+   selection machinery;
 6. a cross-domain test or negative result narrows the domain-extensibility
    conjecture;
 7. one bounded researcher-engagement attempt produces substantive exchange or a
