@@ -2,11 +2,9 @@
 
 **Research on knowledge systems, running as one.**
 
-Commonplace studies how agentic systems can change after deployment through inspectable knowledge artifacts. It also puts that idea into practice: human-directed agents use and revise the Markdown, instructions, schemas, validators, tests, and code in this repository. When later work loads or enforces those artifacts, accepted changes can shape behavior without updating model weights. The repository makes both the mechanism and its governance visible.
+Commonplace is a **living doctrine for agent-operated knowledge systems, developed and tested by running one**. Human-directed agents use and revise the Markdown, instructions, schemas, validators, tests, and code in this repository. The doctrine selects and coordinates how model-mediated and symbolic operations are used: explicit artifacts can [activate](./kb/notes/knowledge-storage-does-not-imply-contextual-activation.md) and give project authority to methods already available in model weights, while code can [faithfully execute](./kb/notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) operations that should not be reconstructed on every call. Like the Ship of Theseus, Commonplace persists through governed revision even as its doctrine, prompts, code, and models change.
 
-Commonplace is also a **living doctrine**: an adopted, revisable framework for selecting and coordinating how model-mediated and symbolic operations are used. It is not limited to knowledge absent from model weights: relevant knowledge may fail to [activate](./kb/notes/knowledge-storage-does-not-imply-contextual-activation.md), while operations that require [faithful execution](./kb/notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) may still belong in code. Like the Ship of Theseus, Commonplace persists through a governed lineage of revisions even as its doctrine, prompts, code, and the models it uses change.
-
-The theory's most immediate target is an **LLM wiki**, in the sense [AI researcher Andrej Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): a persistent, linked Markdown layer that agents build and maintain around a person's or project's work. This repository ships the framework for operating one — the type system, writing conventions, agent skills, and `commonplace-*` Python commands.
+The theory's most immediate target is an **LLM wiki**, in the sense [AI researcher Andrej Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): a persistent, linked Markdown layer that agents build and maintain around a person's or project's work. This repository is its current reference embodiment and ships the framework for operating one — the type system, writing conventions, agent skills, and `commonplace-*` Python commands.
 
 This page covers the tool: what's in the repo, how to use it, and how to install it. The research is best read on the rendered site at <https://zby.github.io/commonplace/>.
 
@@ -46,7 +44,7 @@ Five design principles the system is built on. The research claims behind them l
 
 **The network IS the knowledge.** Individual notes matter less than their relationships. Every link must articulate its relationship (extends, grounds, contradicts, exemplifies) — "related" is not a relationship. An unconnected note is invisible ([linking methodology](https://github.com/zby/commonplace/blob/main/kb/notes/links-README.md)).
 
-**Externalized methodology.** The procedures for working the wiki — how to write a note, connect it, validate it — are written down as skills and conventions, not baked into a particular model or assistant. Every agent reads them fresh, so a different model, or a new session, produces consistent work: the manual is on disk, not in the weights.
+**Living doctrine.** The adopted methods for working the wiki are explicit in skills and conventions rather than assumed from a particular model. Explicit loading helps activate and authorize relevant model capabilities; code and validators carry operations whose faithful execution should not depend on repeated interpretation. The doctrine and its current embodiment can both change as evidence and model capabilities change.
 
 ## Research threads
 
