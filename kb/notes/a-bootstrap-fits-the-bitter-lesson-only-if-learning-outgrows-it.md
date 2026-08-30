@@ -176,9 +176,9 @@ learning method or show that the strategy is better than its alternatives.
 
 Relevant Notes:
 
-- [When global theory fit lacks a fixed oracle, use in building the system is an initial selection environment](./system-use-selects-theory-fit-without-a-fixed-oracle.md) — grounds: explains why live system construction is the first selection environment rather than a defense of manual production
+- [System use is an initial selection environment when theory fit lacks a fixed oracle](./system-use-selects-theory-fit-without-a-fixed-oracle.md) — grounds: explains why live system construction is the first selection environment rather than a defense of manual production
 - [The bitter lesson selects production methods, not representational forms](./the-bitter-lesson-selects-production-methods-not-representational.md) — grounds: supplies the narrow compatibility argument while preserving the scaling burden
 - [Machinery persists by warrant, not position in a reflective loop](./machinery-persists-by-warrant-not-position-in-a-reflective-loop.md) — extends: applies the production requirement recursively to the selection machinery
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — mechanism: states the minimum loop that turns proposals into retained learning
-- [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — limits: explains why editable object-level artifacts do not establish general learning
-- [Theory-mediated learning may improve sample efficiency under structured shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — motivates: supplies the conditional reason to try explicit theory as working state
+- [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — grounds: explains why editable object-level artifacts do not establish general learning
+- [Theory-mediated learning may improve sample efficiency under structured shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — grounds: supplies the conditional reason to try explicit theory as working state

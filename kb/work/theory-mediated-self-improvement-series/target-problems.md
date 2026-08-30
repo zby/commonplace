@@ -37,7 +37,7 @@ final adoption can move at different times. A system can be computationally
 closed and still fail P2 because its evaluator or requirement is weak.
 
 P3 supplies the attribution test for P1. A stored theory does not count merely
-because it accompanies a successful code change. The programme distinguishes
+because it accompanies a successful code change. The program distinguishes
 mediation, empirical contact, theory-state revision, and recurrent later use.
 The clean theory intervention holds weights, code, runtime, tools, and task
 fixed while changing the natural-language theory supplied through the prompt.
@@ -84,7 +84,7 @@ comparison strategies.
 - Whether computation has begun. The current human-agent loop already composes
   computational model-mediated and symbolic operations; the problem is improving
   search, execution, selection, credit assignment, and their allocation.
-- Whether a prompt alone defines an LLM operation. The programme treats the
+- Whether a prompt alone defines an LLM operation. The program treats the
   operation as instantiated by the weight–prompt pair under fixed call settings.
 - Whether code or the model is globally superior. They provide complementary
   operation classes whose appropriate scope must be learned and tested.

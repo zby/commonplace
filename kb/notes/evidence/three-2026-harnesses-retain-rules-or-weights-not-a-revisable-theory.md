@@ -47,4 +47,4 @@ Relevant Notes:
 - [Recuris](../../sources/recursive-experiential-working-memory-evolution.ingest.md) — evidenced-by: the repair-decision framing and the growth-only package
 - [Apodex 1.1](../../sources/apodex-1-1-scaling-agentic-intelligence-for-complex-work.ingest.md) — evidenced-by: offline weight training and the run-scoped coordination plane
 - [Sutton and Javed on why AI models stop learning](../../sources/sutton-javed-why-ai-models-stop-learning.ingest.md) — evidenced-by: the weights-side position
-- [Theory-mediated self-improvement needs both interpretation and retention from one substrate](../theory-mediated-self-improvement-needs-interpretation-and-retention.md#the-attribution-needs-one-co-indexed-path) — exemplifies: states the co-indexing test this comparison applies case-wise
+- [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](../theory-mediated-self-improvement-needs-interpretation-and-retention.md#the-functions-share-one-path-not-one-substrate) — exemplifies: states the co-indexing test this comparison applies case-wise

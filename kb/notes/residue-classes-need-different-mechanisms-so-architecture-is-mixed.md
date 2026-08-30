@@ -161,7 +161,7 @@ same function more efficiently.
 Relevant Notes:
 
 - [Warranted transfer out of the human cut leaves people the hardest-to-warrant decisions](./warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md) — grounds: supplies the conditional selection effect and residue classes
-- [Theory-mediated self-improvement needs interpretation, retention, and independent read-back on one path](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) — extends: separates the functions on the theory-mediated path
+- [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) — extends: separates the functions on the theory-mediated path
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — grounds: explains why fallible theory guides search rather than fully settling the hardest modification
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — grounds: distinguishes represented guidance from computational execution
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: keeps verification separate from proposal and interpretation

@@ -36,7 +36,7 @@ capacities](../../notes/reflection-buys-addressability.md).
 
 ## Complementary operation classes
 
-The programme distinguishes two operation classes inside the deployed system.
+The program distinguishes two operation classes inside the deployed system.
 
 A **model-mediated operation** is instantiated jointly by a model's weights and
 the prompt supplied for one call. The weights provide broad learned competence
@@ -98,7 +98,7 @@ must reach a proof path before the gate can act. See
 [open-ended improvement must allocate search before decisive evaluation is
 available](../../notes/open-ended-improvement-allocates-search-before-evaluation.md).
 
-The programme calls a judgment **lightweight search control** when its authority
+The program calls a judgment **lightweight search control** when its authority
 stops at allocating further work. It may select a branch, probe, continuation,
 suspension, or abandonment without licensing an operative change. This permits
 weaker and provisional evidence to guide search while stronger evaluation
@@ -244,14 +244,14 @@ human-inclusive computational theory-mediated learning loop. At a boundary that
 excludes the operator, global selection and final acceptance remain exogenous.
 
 The
-[2026-08-30 workshop conversation](../../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
+[2026-08-30 Commonplace revision record](../../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
 records a concrete instance:
 
 1. retained Commonplace artifacts, code, and repository state were read;
 2. computational synthesis produced a review, candidate distinctions,
    experiments, and repository changes;
 3. the operator supplied corrections about the Bitter Lesson framing;
-4. natural-language theory and programme artifacts were revised and retained;
+4. natural-language theory and program artifacts were revised and retained;
    and
 5. the revised state guided later work.
 
@@ -290,7 +290,7 @@ test needs before-and-after transfer histories.
 An evaluator is necessary for correction but does not replace theory-guided
 search or credit assignment. A strong oracle can reject a bad candidate without
 identifying which premise, theory, code unit, artifact boundary, or production
-method should change. The programme therefore studies both sides: theory
+method should change. The program therefore studies both sides: theory
 organizes and interprets search; symbolic operations carry exact transitions;
 and consequences correct both the theory and the changes made through it.
 

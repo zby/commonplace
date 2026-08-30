@@ -5,7 +5,7 @@ traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning, evaluation]
 ---
 
-# When global theory fit lacks a fixed oracle, use in building the system is an initial selection environment
+# System use is an initial selection environment when theory fit lacks a fixed oracle
 
 The current Commonplace loop is already computational. A language model reads
 retained project artifacts, searches and synthesizes candidate claims and
@@ -79,7 +79,7 @@ search:
   and
 - accepted revisions become inputs to later computational work.
 
-The [workshop conversation recorded on 2026-08-30](./evidence/commonplace-revision-used-theory-guided-computational-search.md)
+The [2026-08-30 Commonplace revision record](./evidence/commonplace-revision-used-theory-guided-computational-search.md)
 is a concrete example. The model read many Commonplace artifacts, synthesized a
 review and candidate revisions, received sparse operator corrections about the
 Bitter Lesson framing, revised the theory and repository, and then used the
@@ -199,8 +199,8 @@ total cost.
 
 Relevant Notes:
 
-- [The bitter lesson selects production methods, not representational forms](./the-bitter-lesson-selects-production-methods-not-representational.md) — motivates: requires computational search where selection criteria permit it without imposing a weights-only representation
+- [The bitter lesson selects production methods, not representational forms](./the-bitter-lesson-selects-production-methods-not-representational.md) — grounds: requires computational search where selection criteria permit it without imposing a weights-only representation
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: states the minimum machinery required for the initial environment to produce learning
-- [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — applies: identifies the system-level consequences through which project-theory fit can become visible
-- [Theory-mediated learning may improve sample efficiency under structured shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — motivates: supplies the conditional reason to try explicit theory as the first working state
-- [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — limits: explains why the initial selection environment must eventually challenge its own representational choices
+- [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — grounds: identifies the system-level consequences through which project-theory fit can become visible
+- [Theory-mediated learning may improve sample efficiency under structured shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — grounds: supplies the conditional reason to try explicit theory as the first working state
+- [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — grounds: explains why the initial selection environment must eventually challenge its own representational choices

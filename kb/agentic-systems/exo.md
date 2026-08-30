@@ -95,7 +95,7 @@ By the criteria in [self-improving systems](../notes/self-improving-systems-READ
 Relevant Notes:
 
 - [Exo agent memory system review](../agent-memory-systems/reviews/exo.md) — contains: the memory, skills, and context-assembly subsystem of this same system, still pinned to the earlier `baa07f67`
-- [Theory-mediated self-improvement needs both interpretation and retention from one substrate](../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md) — rests-on: the substrate conditions this system supplies, and the evaluation condition its acceptance gate leaves to the model
+- [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md) — rests-on: the operative-path functions Exo partly supplies and the independent evaluation its acceptance gate leaves to the model
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — rests-on: the three stages this loop is read against
 - [Warranted autonomy is bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) — rests-on: why build-and-test oracles bound which self-modifications this system can adopt unattended
 - [Reflective system](../notes/definitions/reflective-system.md) — rests-on: the change-pathway criterion their production-relation vocabulary does not track, and the declared-boundary requirement their harness/executor split satisfies

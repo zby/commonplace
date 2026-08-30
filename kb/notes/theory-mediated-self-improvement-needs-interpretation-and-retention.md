@@ -5,7 +5,7 @@ traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
 ---
 
-# Theory-mediated self-improvement needs interpretation, retention, and independent read-back on one path
+# Theory-mediated self-improvement needs interpretation, retention, and independent read-back
 
 [Theory-mediated learning may improve sample efficiency under structured
 shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md)
@@ -30,6 +30,8 @@ They should be kept separate because they fail separately:
    back against the same retained object.
 5. **Continuation.** The resulting theory state affects a later operation on
    the same path.
+
+## The functions share one path, not one substrate
 
 These functions need one causally integrated and co-indexed path. They do not
 need one substrate. A retained artifact may supply addressability, a language

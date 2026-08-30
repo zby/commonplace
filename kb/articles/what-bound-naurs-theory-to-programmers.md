@@ -6,7 +6,7 @@ byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
   - kb/notes/design-rationale-must-preserve-unregenerable-decision-premises.md
-  - kb/notes/holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md
+  - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
   - kb/notes/definitions/discovery-lifecycle.md
   - kb/reference/adr/080-full-passes-hand-claim-changes-back-as-a-pending-revise.md
   - kb/sources/programming-as-theory-building.ingest.md

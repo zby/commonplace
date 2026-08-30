@@ -152,7 +152,7 @@ The first strategy should be rejected or narrowed when:
 Relevant Notes:
 
 - [The bitter lesson selects production methods, not representational forms](./the-bitter-lesson-selects-production-methods-not-representational.md) — grounds: supplies the sole premise required for the narrow form-only rebuttal
-- [When global theory fit lacks a fixed oracle, use in building the system is an initial selection environment](./system-use-selects-theory-fit-without-a-fixed-oracle.md) — motivates: supplies the rationale for the first strategy without presenting it as a defense
-- [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md) — limits: states the conditional compatibility and failure burden
+- [System use is an initial selection environment when theory fit lacks a fixed oracle](./system-use-selects-theory-fit-without-a-fixed-oracle.md) — grounds: supplies the rationale for the first strategy without presenting it as a defense
+- [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md) — grounds: states the conditional compatibility and failure burden
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — mechanism: states what the strategy must progressively construct
-- [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — limits: keeps the initial artifact ontology inside the eventual challenge surface
+- [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — grounds: keeps the initial artifact ontology inside the eventual challenge surface

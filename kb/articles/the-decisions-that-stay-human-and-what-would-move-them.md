@@ -1,15 +1,16 @@
 ---
-description: "Research-program hub centered on whether fallible project theory can keep computational program modification coherent through search, recovery, and delayed feedback, with human-assisted selection, warranted transfer, and scaling as supporting questions"
+description: "Research-program hub on whether fallible project theory can keep computational program modification coherent through delayed feedback, with human-assisted selection, warranted transfer, and scaling as supporting questions"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
-  - kb/notes/holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md
+  - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
   - kb/notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md
   - kb/notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md
   - kb/notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md
-  - kb/notes/when-global-theory-fit-lacks-a-fixed-oracle-use-in-building-the-system-is-an-initial-selection-environment.md
-  - kb/notes/a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md
+  - kb/notes/system-use-selects-theory-fit-without-a-fixed-oracle.md
+  - kb/notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
+  - kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md
   - kb/notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md
   - kb/notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md
   - kb/notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md
@@ -181,7 +182,7 @@ and transfer tests are needed to prevent a self-sealing theory.
 ## This conversation is already an example
 
 The
-[2026-08-30 workshop conversation](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
+[2026-08-30 Commonplace revision record](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
 provides a concrete human-inclusive episode:
 
 1. the model read the workshop, related notes, articles, and repository state;

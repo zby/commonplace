@@ -6,8 +6,9 @@ byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md
   - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
-  - kb/notes/when-global-theory-fit-lacks-a-fixed-oracle-use-in-building-the-system-is-an-initial-selection-environment.md
-  - kb/notes/a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md
+  - kb/notes/system-use-selects-theory-fit-without-a-fixed-oracle.md
+  - kb/notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
+  - kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md
   - kb/notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md
   - kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md
   - kb/notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md
@@ -155,7 +156,7 @@ automation. A model already performs substantial computational work:
 - writing accepted revisions into state that guides later model calls.
 
 The
-[workshop conversation recorded on 2026-08-30](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
+[2026-08-30 Commonplace revision record](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
 is a direct example. The model read many Commonplace artifacts, synthesized a
 review and candidate changes, received operator corrections about the Bitter
 Lesson framing, revised the theory and repository, and used the revised state in

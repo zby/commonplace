@@ -48,7 +48,7 @@ candidate formulations, proposes repository changes, and uses accepted changes
 in later work. The operator currently supplies much of the sparse high-level
 selection signal about whether a claim fits the larger theory and intended
 system. The
-[2026-08-30 workshop conversation](../../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
+[2026-08-30 Commonplace revision record](../../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
 records one such episode.
 
 The unresolved bottleneck is therefore not introducing computation. It is
@@ -226,8 +226,8 @@ used to revise the invitation.
 - [The Bitter Lesson does not require everything to live in weights](../../articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) — narrow rebuttal, first strategy, and scaling challenge.
 - [Shared model](./shared-model.md) — current compact synthesis and experiment outline.
 - [Target problems](./target-problems.md) — the central question and supporting research problems.
-- [Computational theory-guided conversation episode, 2026-08-30](../../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md) — current evidence that retained Commonplace knowledge guides computational search inside a human-inclusive loop.
-- [When global theory fit lacks a fixed oracle, use in building the system is an initial selection environment](../../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md) — rationale for research-through-building.
+- [The 2026-08-30 Commonplace revision used retained theory to guide computational search](../../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md) — bounded evidence that retained Commonplace knowledge guided computational search inside a human-inclusive loop.
+- [System use is an initial selection environment when theory fit lacks a fixed oracle](../../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md) — rationale for research-through-building.
 - [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](../../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md) — conditional compatibility and failure criteria.
 
 ## Outputs
@@ -271,7 +271,7 @@ historical planning state should not govern current work.
   [task-scoped closure](./task-scoped-computational-closure.md),
   [closure-capability map](./closure-capability-map.md).
 - **Evidence and claim control:**
-  [computational conversation episode](../../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md),
+  [Commonplace revision record](../../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md),
   [adequacy-gate run](./adequacy-gate-run.md),
   [absorption survivors](./absorption-survivors.md),
   [match register](./match-register.md),
