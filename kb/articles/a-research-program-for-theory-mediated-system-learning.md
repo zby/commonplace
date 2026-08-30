@@ -1,5 +1,5 @@
 ---
-description: "Research program on whether an automated software-development system built from weights, prompts, code, and runtime can retain and revise project theory to keep successive modifications coherent under delayed feedback"
+description: "Research program on whether an agentic software-development system can retain and revise project theory to keep successive modifications coherent under delayed feedback"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -7,13 +7,9 @@ source_notes:
   - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
   - kb/notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md
   - kb/notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md
-  - kb/notes/theory-mediated-system-learning-combines-runtime-self-modeling-with-theory-refinement.md
-  - kb/notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md
   - kb/notes/system-use-selects-theory-fit-without-a-fixed-oracle.md
   - kb/notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
   - kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md
-  - kb/notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md
-  - kb/notes/reflection-buys-addressability.md
   - kb/notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md
   - kb/notes/a-retained-theory-intervention-isolates-one-explicit-theory-surface.md
   - kb/notes/disconnected-witnesses-do-not-establish-a-full-causal-path-through-theory.md
@@ -29,31 +25,29 @@ source_notes:
   - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
   - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
   - kb/notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md
-  - kb/notes/computationally-directed-self-improvement-is-a-reallocation.md
   - kb/sources/programming-as-theory-building.ingest.md
 ---
 
 # A research program for theory-mediated system learning
 
-> **Draft.** This article is circulating for comments. Counterexamples, rival mechanisms, and disputed experimental controls are welcome through the repository's issue tracker.
+> **Draft.** Comments and counterexamples are welcome through the repository's issue tracker.
 
 ## The question and the two testbeds
 
 Peter Naur's [1985 essay *Programming as Theory
 Building*](https://ingenieria-de-software-i.github.io/assets/bibliografia/programming-as-theory-building.pdf)
 argues that programmers do more than produce code. They build and hold a
-project-specific theory: an understanding of how the program maps to its world,
-why its parts are as they are, and how new demands can be incorporated without
-destroying its structure. Crucially, Naur treated this theory as something held
-by the programmers rather than by the program or its documentation. The machine
-could execute what had been formulated, but the theory needed for coherent
-modification remained with people.
+project-specific theory: an understanding of what the program must do, why it is
+organized as it is, and how that organization can survive new demands.
+Crucially, Naur treated this theory as something held by programmers rather than
+by the program or its documentation. The machine could execute what had been
+formulated, but the theory needed for coherent modification remained with
+people, because [Naur equates machine execution with formulated
+criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
 
-Modern coding agents make that boundary worth testing. They already propose,
-implement, test, and retain changes inside larger software-development systems.
-Their learned competence comes from model weights, while prompts, retained
-project state, code, tools, tests, and runtime policy shape what happens in a
-particular project.
+Modern coding agents make that boundary worth testing. Their learned competence
+comes from model weights, while retained project state, tools, and runtime
+machinery shape what happens in a particular project.
 
 > Can such a system become a bearer of the fallible project theory Naur reserved
 > for programmers — holding and revising it well enough to keep successive
@@ -61,26 +55,26 @@ particular project.
 
 The [deployed system rather than the
 model](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md) is
-the unit of learning. Model weights, retained prompt state, code, tests, schemas,
-tools, and runtime policy can all be learning targets. A change counts as
-learning when an [improvement
+the learning unit. Learning may be retained in weights, project state, or
+executable machinery. A change counts as learning when an [improvement
 process](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
-selects and retains it from evidence so that later operation depends on it. No
-weight update is required.
+selects and retains it from evidence so that later operation depends on it.
 
-The path is *theory-mediated* when addressable retained theory guides proposal,
-diagnosis, evaluation, or recovery, and later consequences revise that theory so
-the revision affects later work. Claim-level addressability makes the theory
-inspectable, citable, perturbable, and selectively revisable.
+The full path is *theory-mediated* when addressable retained theory guides search
+or modification, later consequences revise that theory, and the revision affects
+later work. Claim-level addressability makes the theory inspectable, citable,
+perturbable, and selectively revisable.
 
-The program uses two linked testbeds. Commonplace, the agent-operated knowledge
-base from which this article comes, is the live human-agent system. Programming
-agents supplied with persistent program theory are the harder prospective case.
-In Commonplace, the model retrieves project knowledge, searches and criticizes
-candidate formulations and repository changes, and uses tools for local checks.
-The operator still supplies much global-fit selection and final authorization.
-The present evidence therefore concerns a human-inclusive learning path, not a
-technical subsystem that can complete the same path alone.
+The program couples a live testbed with a prospective controlled one.
+**Commonplace** is the live human-agent testbed: agents use the knowledge base to
+revise both the repository and the theory that guides its operation, while the
+operator still supplies much global-fit judgment and final authorization. It
+tests whether an evolving human-agent loop can turn recurring judgments into
+reusable machinery. The **programming-agent testbed** will give agents persistent
+fallible theory about a software project and a sequence of modifications whose
+later demands can expose earlier mistakes. Matched runs will vary that theory
+while holding the rest of the system fixed, testing whether it changes search,
+recovery, and coherent modification.
 
 ## Holding a theory means controlling a fallible search
 
@@ -90,87 +84,57 @@ those are only partly stated, a later demand may expose damage caused by an
 earlier locally successful change.
 
 The unit judged is therefore a sequence, not one patch. A failed first candidate
-can belong to coherent modification when the process recognizes the failure,
-recovers, and revises. A successful first candidate can fail the test when it
-passes narrow checks but damages the wider organization in a way the process
-cannot detect. [Holding a program theory means sustaining coherent search under
-delayed
+can belong to coherent modification when the process recognizes the failure and
+recovers. A successful first candidate can fail the test when it passes narrow
+checks but damages the wider organization in a way the process cannot detect.
+[Holding a program theory means sustaining coherent search under delayed
 feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md).
 
-Program-relevant understanding may be distributed across explanations,
-architectural decisions, code, tests, operational state, model competence, and
-human participants. The proposed experiment varies one explicit retained theory
-surface while holding specified background components fixed. It therefore tests
-the causal contribution of that surface, not whether it exhausts the system's
-whole program theory, [as the retained-theory intervention note makes
+Program-relevant understanding may be distributed across explicit artifacts,
+executable state, model competence, and people. The proposed experiment varies
+one retained theory surface while holding specified background components fixed.
+It therefore tests the causal contribution of that surface, not whether it
+exhausts the system's whole program theory, [as the retained-theory intervention
+note makes
 explicit](../notes/a-retained-theory-intervention-isolates-one-explicit-theory-surface.md).
 
 Theory matters before a correct answer is available. [Open-ended improvement
 must allocate search before decisive evaluation
 exists](../notes/open-ended-improvement-allocates-search-before-evaluation.md).
-Retained theory can narrow candidates, identify commitments a local fix must
-preserve, interpret unexpected results, guide rollback and recovery, and change
-what later demands cause the process to try.
+Retained theory can focus search, expose commitments a local fix must preserve,
+and guide recovery when later evidence contradicts an earlier change.
 
-Generic search can also generate, test, and discard patches. The distinction is
-causal: withholding or replacing retained theory should change proposal, branch
-allocation, diagnosis, evaluation, recovery, or later revision. One possible
-mechanism is that [natural-language project state specializes search heuristics
-already present in model
+Generic search can also generate and test patches. The distinction is causal:
+withholding or replacing retained theory should change the search or subsequent
+revision. One possible mechanism is that [natural-language project state
+specializes search heuristics already present in model
 weights](../notes/natural-language-project-state-specializes-search-heuristics.md).
 A theory that merely accompanies the work remains documentation.
 
 Theory-guided choices need not all meet the standard for final adoption.
 [Lightweight search controls](../notes/lightweight-search-control-does-not-license-adoption.md)
-can allocate work among branches or probes under weaker evidence, while
-[backtracking keeps them
+can allocate work under weaker evidence, while [backtracking keeps them
 provisional](../notes/backtracking-keeps-lightweight-search-control-provisional.md)
 when contrary evidence arrives.
 
-Naur's human-only boundary depends partly on a premise that [equates machine
-execution with formulated
-criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
-Trained recognizers make that premise contestable. Whether current agents pass
-Naur's bearer tests is the program's empirical question.
+## Four roles in the current research design
 
-### Where the program sits
-
-Runtime reflection and self-adaptation supply the structural lineage: a system's
-own organization or requirements become causally available to guide change.
-Theory-refinement work supplies the epistemic lineage: an explicit fallible
-theory guides inference and is revised after empirical failure. This program
-tests their conjunction while leaving the adaptation machinery itself open to
-revision. The [positioning
-note](../notes/theory-mediated-system-learning-combines-runtime-self-modeling-with-theory-refinement.md)
-develops the comparison and relevant baselines.
-
-[Workspace
-Optimization](../sources/workspace-optimization-how-to-train-your-agent.ingest.md)
-is a close contemporary LLM-agent implementation analogue rather than the
-overall closest antecedent. It combines a frozen model with editable code and
-text, but its explicit theory primarily models an external environment within
-one run, while its decomposition and adoption machinery remain supplied.
-
-## Four functions that fail differently
-
-The system can be decomposed in several ways. A proposal-selection loop asks
-what an improvement update must contain; residue analysis asks why warranted
-automatic transfer stops. The table below instead asks which functional roles
-carry the current path and how each can fail.
+To make the mechanism testable, the current design separates four functional
+roles by how they can fail and be perturbed. Other decompositions answer other
+questions; these roles are the ones needed for the interventions proposed here.
 
 | Functional role | Current realization | Characteristic failure |
 |---|---|---|
-| Retained project state | Natural-language theory, intent, rationale, and history together with code, tests, schemas, configuration, checkpoints, and evidence records | Omission, contradiction, drift, stale mappings, retrieval failure, or an incomplete symbolic snapshot |
-| Model-mediated semantic operation | Model weights plus a call-specific prompt assembled from relevant project state | Underspecification, stochastic deviation, bias, post-hoc rationale, or project theory ignored in practice |
-| Independently executed symbolic operation | Code plus a runtime carrying exact transitions, scheduling, validation, installation, rollback, and later reactivation | Faithful execution of the wrong transition, frozen decomposition, incomplete coverage, or truncated horizon |
-| Independent exposure and read-back | Tests, validators, held-out tasks, decorrelated criticism, later demands, reviews, and operational consequences; for much global fit and authorization, the operator | Weak proxies, captured evaluation, viability-only gates, delayed credit assignment, unstated preferences, or exogenous selection |
+| Retained project state | Addressable theory and other persistent project artifacts | Omission, contradiction, drift, or retrieval failure |
+| Model-mediated semantic operation | Model weights applied to call-specific context | Theory ignored, misapplied, or rationalized after the fact |
+| Independently executed symbolic operation | Code and runtime carrying exact transitions and continuity | Exact execution of the wrong transition or a path that ends too early |
+| Independent exposure and read-back | Tests, later demands, criticism, and operational consequences; the operator supplies much global-fit judgment and authorization | Weak or captured evaluation, delayed credit assignment, or exogenous selection |
 
-The roles need distinct failure surfaces, not permanently separate
-representational forms. That separation permits targeted interventions: withhold
-theory, perturb interpretation, replace evaluation, or truncate continuity. A
-future substrate may host several roles at once.
+These are roles, not permanent carriers. A future substrate may combine them;
+the current separation permits targeted interventions on theory, interpretation,
+evaluation, and continuity.
 
-The same code may also be read into a prompt as evidence and later executed by a
+The same code may be read into a prompt as evidence and later executed by a
 symbolic runtime. Its role follows the consumption path, not its authorship;
 exact execution does not establish that the encoded requirement or theory is
 correct.
@@ -195,19 +159,19 @@ retained theory
 
 The evidence ladder distinguishes four levels:
 
-1. **Mediation:** changing or withholding theory changes a proposal, branch
-   allocation, evaluation, diagnosis, recovery step, or intervention.
+1. **Mediation:** changing or withholding theory changes search, judgment, or a
+   realized intervention.
 2. **Empirical contact:** the intervention produces an outcome that bears on the
    theory.
-3. **Theory learning:** the outcome changes the theory's content, scope,
-   confidence, status, or operational role.
-4. **Recurrence:** the updated theory state changes a later operation on the same
+3. **Theory learning:** the outcome changes the retained theory's content, scope,
+   or operational force.
+4. **Recurrence:** the updated theory changes a later operation on the same
    behavior-determining path.
 
 A [citation at the decision point is a mediation
 trace](../notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md),
 not proof that the theory was load-bearing; withholding, replacement, or
-perturbation is stronger evidence. The higher levels also have to belong to the
+perturbation is stronger evidence. The higher levels must also belong to the
 same full causal path. Separate witnesses for theory use, outcome, revision, and
 later work do not compose automatically into evidence of theory-mediated
 learning, [because disconnected witnesses do not establish a full causal path
@@ -216,16 +180,13 @@ theory](../notes/disconnected-witnesses-do-not-establish-a-full-causal-path-thro
 
 ### Warrant and theory fit are different evaluations
 
-A claim can be well warranted yet irrelevant, redundant, badly scoped, or at the
-wrong abstraction level for a working theory. Conversely, a weak or false claim
-can appear to fit because the current implementation already assumes it.
+A well-warranted claim can still fit a working theory poorly. Conversely, a weak
+claim can appear to fit because the current implementation already assumes it.
 [A claim's warrant therefore does not determine its fit in a working
 theory](../notes/a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md).
 
-No present automatic evaluator fully decides global fit. The live system can
-supply evidence through changed search and recovery, surviving predictions,
-later demands, rival or ablated theories, repair cost, intervention, and
-transfer. That makes system use an [initial selection
+No present automatic evaluator fully decides global fit. Consequences of live
+use and comparisons with rival theories provide an [initial selection
 environment](../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md),
 but not an independent warrant oracle: [system use provides evidence of theory
 fit and causal usefulness, not independent
@@ -235,53 +196,51 @@ warrant](../notes/system-use-provides-evidence-of-theory-fit-not-independent-war
 
 The [2026-08-30 Commonplace revision
 record](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
-is an illustration of the proposed path: retained artifacts were read, the
-operator corrected the framing, and the revision affected later work. It was not
-recorded prospectively enough to establish how load-bearing the theory was,
-separate computational from operator contributions cleanly, or support a
-comparative result.
+illustrates part of the proposed path: retained theory guided the work, operator
+feedback revised it, and the result affected later work. The episode was not
+recorded prospectively enough for causal or comparative attribution.
 
-Future consequential episodes should therefore preserve enough information to
-connect the relevant theory state, decision, realized change, consequence,
-revision, and later use. For nondeterministic production, omitted causal joins
-cannot reliably be reconstructed after the fact.
+Future consequential episodes should preserve the joins of the causal path
+above, including which theory state guided a decision and which revision later
+work consumed. For nondeterministic production, missing joins cannot reliably be
+reconstructed after the fact.
 
-The minimum controlled test varies retained theory while holding the model,
-code, tools, task, and budget fixed. It should compare usable theory with theory
-withheld or deliberately wrong on a sequence where later demands can expose
-earlier mistakes. The relevant questions are whether theory changes search and
-recovery, whether consequences revise the same theory state, and whether that
-revision changes later work. Any result identifies only [the contrast it
-actually runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md).
+The minimum controlled test compares usable theory with theory withheld or
+deliberately wrong while holding the model, executable machinery, task sequence,
+and budget fixed. Later demands must be able to expose earlier mistakes. The
+questions are whether theory changes search and recovery, whether consequences
+revise the same theory state, and whether that revision changes later work. Any
+result identifies only [the contrast it actually
+runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md).
 
-A longitudinal Commonplace study should likewise ask whether recurring operator
-judgments become reusable search, selection, or credit-assignment machinery and
-whether named functions move from human or joint to computational supply.
+A longitudinal Commonplace study should ask whether recurring operator judgments
+become reusable machinery and whether named functions move toward computational
+supply.
 
 ## The bootstrap must outgrow its hand-crafted parts
 
-The Bitter Lesson puts pressure on the program because its theories, schemas,
-validators, decompositions, and evaluators are currently written by people. The
-relevant distinction is that [production method and representational form are
-different
-axes](../notes/the-bitter-lesson-selects-production-methods-not-representational.md):
-search and learning can produce prompts, theories, tests, and programs as well as
-weights. The value of the present hand-written artifacts must be earned by the
-learning process.
+The Bitter Lesson puts pressure on the program because its present theory and
+improvement machinery emerge from a human-guided loop. Agents write much of the
+material, but operators still supply decisive framing, corrections, and
+selection. The issue is not who types the artifacts; it is whether general
+computation can increasingly generate and select their successors.
 
-The present loop is already computational. Models retrieve, propose, criticize,
-compare, diagnose, and edit; symbolic operations carry repository changes,
-testing, validation, scheduling, and retention. Human judgment remains where no
-sufficiently discriminating reusable evaluator exists. Recurring judgments are
-therefore candidates for search controls, methods, tests, validators, learned
-critics, schemas, or programs.
+[Production method and representational form are different
+axes](../notes/the-bitter-lesson-selects-production-methods-not-representational.md):
+learning can produce explicit artifacts as well as weights. The present artifacts
+earn their place only if the learning process can revise or replace them.
+
+The loop is already computational: models search and revise project state, while
+symbolic machinery executes and retains changes. Operators remain decisive where
+reusable evaluators are weak. Recurring judgments are candidates for reusable
+machinery.
 
 The bootstrap has two related jobs. First, move named decision-bearing functions
-from human toward joint or computational supply while holding the human-inclusive
-boundary fixed. Over a declared task scope and horizon, the technical endpoint
-is reached when the same improvement path still completes after the human
-participants are removed. Quality and warrant require separate evidence. [The
-decisions that stay human, and what would move
+from human toward joint or computational supply while holding the
+human-inclusive boundary fixed. Over a declared task scope and horizon, the
+technical endpoint is reached when the same improvement path still completes
+after the human participants are removed. Quality and warrant require separate
+evidence. [The decisions that stay human, and what would move
 them](./the-decisions-that-stay-human-and-what-would-move-them.md) develops the
 full fixed-boundary and warrant argument.
 
@@ -293,43 +252,33 @@ position](../notes/machinery-persists-by-warrant-not-position-in-a-reflective-lo
 and the bootstrap [fits the Bitter Lesson only if learning can outgrow
 it](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
 
-This strategy is available now because prompts, code, and retained artifacts
-already provide editable learning surfaces while global theory fit lacks a
-complete fixed evaluator. It has three potential payoffs. First, explicit theory
-may improve [sample efficiency under structured
+Three immediate payoffs motivate this strategy. First, explicit theory may
+improve [sample efficiency under structured
 shifts](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md).
-Second, it leaves an inspectable learning record. Third, and distinctively for
-reflective self-improvement, the system being improved is itself an agentic
-system, so theories of agentic systems can become part of the theory it uses to
-diagnose and redesign itself. Commonplace therefore develops
+Second, it leaves an inspectable learning record. Third, because the system being
+improved is itself agentic, theories of agentic systems can become operative
+self-theory. Commonplace therefore develops
 [agentic-systems theory](../agentic-systems/README.md) both as an external
-research topic and as candidate operative self-theory for the
-model–prompt–tool–runtime system that runs the research and for future
-programming agents. If the program works, improving that theory should improve
-the system's ability to understand and modify its own organization. Each payoff
-must survive comparison at total system cost.
+research topic and as candidate self-theory for the system that runs the research
+and for future programming agents. Improving that theory should improve the
+system's ability to understand and modify its own organization. Each payoff must
+survive comparison at total system cost.
 
-The strategy competes with end-to-end learning, evolutionary search, self-play,
-weight updates, and stronger-model baselines. It should be abandoned or narrowed
-when retained theory makes no causal difference, system use becomes
-self-confirming, additional computation fails to improve search or outcomes,
-recurring human judgments do not become reusable machinery, new domains still
-require bespoke human ontologies and oracles, the decomposition remains
-protected from revision, or another method wins at comparable total cost.
+The strategy must compete with more direct learning and search methods. It
+should be narrowed or abandoned if retained theory is causally inert, the
+evaluation loop becomes self-confirming, human judgments and current
+decompositions fail to become revisable and transferable machinery, or another
+method wins at comparable total cost.
 
 The companion article [The Bitter Lesson does not require everything to live in
 weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
-develops the scaling argument, direct alternatives, domain-extensibility, and
-the separate disagreement with Sutton and Javed's later requirement of weight
-updates.
+develops the scaling argument and competing alternatives.
 
 ### The invitation
 
-Researchers can challenge the account of coherent modification, propose a rival
-mechanism, improve the intervention controls, develop a less circular test of
-global theory fit, identify a better first computational strategy, or show that
-selection and evaluator construction remain dependent on bespoke human
-judgment.
+Researchers can challenge the mechanism, supply rival accounts, or design
+contrasts that separate theory mediation from generic search and human
+selection.
 
 The knowledge base can be [vendored read-only into another
 project](https://github.com/zby/commonplace/blob/main/INSTALL.md). A researcher
