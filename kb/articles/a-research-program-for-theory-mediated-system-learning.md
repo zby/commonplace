@@ -15,6 +15,15 @@ source_notes:
   - kb/notes/reflection-buys-addressability.md
   - kb/notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md
   - kb/notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md
+  - kb/notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md
+  - kb/notes/natural-language-project-state-specializes-search-heuristics.md
+  - kb/notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md
+  - kb/notes/open-ended-improvement-allocates-search-before-evaluation.md
+  - kb/notes/failure-explanation-changes-later-branch-decisions.md
+  - kb/notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md
+  - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
+  - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
+  - kb/notes/oracle-accumulation-improves-the-selection-environment.md
 ---
 
 # A research program for theory-mediated system learning
@@ -57,7 +66,10 @@ later executions.
 What makes the pathway *theory-mediated* is that the theory is represented as an
 object the process can apply, doubt, and revise, rather than being compiled away
 into behavior. That is what a retained artifact buys and a weight update does
-not: something you can point at, withhold, or replace.
+not: something you can point at, withhold, or replace. Most current
+self-improving harnesses lack it: [three 2026 harnesses retain rule sets or
+weights, not a theory from which their patches
+derive](../notes/evidence/three-2026-harnesses-retain-rules-or-weights-not-a-revisable-theory.md).
 
 The program has two testbeds. Programming agents supplied with persistent
 project-specific theory are the harder one, and still prospective. Commonplace —
@@ -79,41 +91,64 @@ machinery.
 
 ## Holding a theory means controlling a fallible search
 
+A modification is coherent when it meets the new demand without breaking the
+purpose and organization that make the program work. This is the test Peter
+Naur set in 1985 for whoever holds a program's theory, and no checklist stands
+behind it. What the program's organization requires is not fully stated
+anywhere; a partial, fallible account of it is what the theory is. So a change
+is rarely shown coherent when it is made. It is shown incoherent later, when a
+further demand, an extension, or an operational failure reveals that it broke
+something the purpose depended on. In practice coherence is refuted after the
+fact more often than it is verified in advance.
+
+The unit judged is therefore a sequence of modifications, not one change. A
+process modifies coherently when the changes it retains keep meeting later
+demands, and when it detects and repairs the ones that turn out not to. A
+failed first candidate can meet this standard if the process recognizes the
+failure, recovers, and revises. A successful first candidate can fail it if it
+passes narrow tests while damaging the wider organization in a way the process
+cannot detect. The detailed claim is that [holding a program theory means
+sustaining coherent search under delayed
+feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md).
+
 A program theory need not be a complete formal specification or one document.
 It may be spread across retained explanations, architectural decisions,
 operational observations, learned competence, and code. Nor must it determine a
-correct first change.
+correct first change. It is needed earlier than that: [open-ended improvement
+must allocate search before decisive evaluation is
+available](../notes/open-ended-improvement-allocates-search-before-evaluation.md),
+and the theory is what makes that allocation project-specific.
 
 A theory is doing work when it changes the modification process. It can:
 
 - narrow which candidates are considered;
 - identify commitments a local fix must not silently break;
-- give an unexpected result an interpretation;
+- give an unexpected result an interpretation, one that [counts as search
+  control only when it changes a later branch
+  decision](../notes/failure-explanation-changes-later-branch-decisions.md);
 - distinguish evidence against a candidate from evidence against the current
   theory;
 - guide rollback and recovery; and
 - change what the process tries on the next demand.
 
 Generic search can also generate, test, and discard patches. The difference is
-causal and project-specific. Withholding or replacing the retained theory should
-change proposal, diagnosis, evaluation, recovery, or later revision. A theory
+causal and project-specific. The working conjecture is that [natural-language
+project state specializes search heuristics already present in the model's
+weights](../notes/natural-language-project-state-specializes-search-heuristics.md),
+so withholding or replacing the retained theory should change proposal,
+diagnosis, evaluation, recovery, or later revision. A theory
 that merely accompanies the work is documentation, not a demonstrated part of
 the learning path.
 
-That makes coherent modification a longitudinal standard, judged over a sequence
-rather than at a single change. A failed first candidate can still meet it when
-the process recognizes the failure, recovers, and revises. A successful first candidate can fail the standard when it passes
-narrow tests while damaging the wider organization in a way the process cannot
-detect. The detailed claim is that [holding a program theory means sustaining
-coherent search under delayed feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md).
-
-Peter Naur argued in 1985 that programming is theory building, and that the
-theory lives in the programmers' heads rather than in the artifacts they leave
-behind. The companion article [What bound Naur's theory to
+Naur also argued that programming is theory building, and that the theory
+lives in the programmers' heads rather than in the artifacts they leave behind. The companion article [What bound Naur's theory to
 programmers](./what-bound-naurs-theory-to-programmers.md) makes one narrow
-repair: his argument does not establish that only humans can hold a program
-theory. Removing that premise does not show any current agent passes his bearer
-tests, which stays an empirical question.
+repair: his argument binds the theory to humans only through [the premise that
+machine execution means following formulated
+criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md),
+so it does not establish that only humans can hold a program theory. Removing
+that premise does not show any current agent passes his bearer tests, which
+stays an empirical question.
 
 ## Four functions, four ways to fail
 
@@ -231,18 +266,24 @@ provides one concrete human-agent episode:
 At the boundary including operator, model, knowledge base, and tools, this
 supports mediation, theory-state revision, and recurrence. At a boundary
 excluding the operator, global-fit selection and final acceptance remain
-exogenous.
+exogenous. That is the residue to expect: [transferring the decisions whose
+premises, criteria, and checks are available leaves people the
+hardest-to-warrant
+ones](../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md).
 
 The episode does not prove how much each artifact mattered. Reading and citing
 many Commonplace artifacts is strong mediation evidence, but an intervention
 that withholds, replaces, or reduces them to an information-matched record is
-needed to measure their causal contribution.
+needed to measure their causal contribution, because [an experiment identifies
+only the contrast it actually
+runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md).
 
 The episode also raises a boundary question the program treats separately: why
 the operator's global-fit judgments have not moved into the automatic part of
 the system. The companion article
 [The decisions that stay human, and what would move them](./the-decisions-that-stay-human-and-what-would-move-them.md)
-develops that transfer argument and separates it from computational closure,
+develops that transfer argument and separates it from [computational
+closure](../notes/methodological-and-computational-closure-track-different-changes.md),
 which states where decisions happen rather than whether they are any good.
 
 ## The strategy is first, not privileged
@@ -253,8 +294,9 @@ deliberately narrow — the [defense portfolio here has one load-bearing
 member](../notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md)
 — and the companion article [The Bitter Lesson does not require everything to
 live in weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
-develops it: production method and representational form are different axes, so
-a theory or a validator can itself be a learned product. That creates room for
+develops it: [production method and representational form are different
+axes](../notes/the-bitter-lesson-selects-production-methods-not-representational.md),
+so a theory or a validator can itself be a learned product. That creates room for
 explicit artifacts. It does not defend the present hand-written ones.
 
 Building through retained theory is the first strategy being tried, chosen
@@ -271,7 +313,10 @@ Lesson](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it
 - more computation does not improve useful search or selection;
 - human judgment grows with the corpus instead of falling;
 - each new domain needs its own ontology and oracle;
-- the current decomposition cannot be challenged; or
+- the current decomposition cannot be challenged, so [learning inside it
+  inherits its
+  mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md);
+  or
 - another method does better at comparable total cost.
 
 ## Two next experiments
@@ -287,8 +332,9 @@ Hold model, tools, repository state, budget, and acceptance fixed; compare:
 Use sequential programming demands with delayed consequences. Measure candidate
 generation, preservation of architectural commitments, diagnosis, backtracking,
 recovery, collateral regressions, later-demand performance, and human
-intervention. Correct theory should help most where the later demand preserves
-the structure it names. Wrong theory should produce predictable negative
+intervention. Correct theory should help most where [the later demand preserves
+the structure it
+names](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md). Wrong theory should produce predictable negative
 transfer. Withholding theory should particularly damage recovery if the
 conjecture is right.
 
@@ -298,8 +344,13 @@ artifacts guided model search, which proposals and checks were computational,
 which global-fit and credit judgments remained human and why, whether more
 computation changed the result, which downstream consequences bore on the
 judgment, and whether a recurring correction became a test, validator, learned
-critic, method, schema, or program. A later episode should show whether the
-computational selection surface actually grew.
+critic, method, schema, or program. That last conversion is the one that
+compounds: a correction retained as a lesson helps only the tasks that retrieve
+it, whereas one retained as a [maintained check improves selection for every
+later candidate in its
+domain](../notes/oracle-accumulation-improves-the-selection-environment.md). A
+later episode should show whether the computational selection surface actually
+grew.
 
 Neither experiment reaches the last two failure conditions. A subsequent
 cross-domain comparison must test domain-extensibility and measure the approach
