@@ -20,9 +20,9 @@ only after disposition in the [incumbent ledger](./incumbent-ledger.md).
 ## Composition
 
 The modules do not imply an article per row. One article may carry several
-modules, but each full supporting argument should have one canonical article. Other
-articles repeat only enough to remain self-contained and link to that article.
-This limits synchronization cost and makes bounded agent edits possible.
+modules, but each full supporting argument should have one canonical article.
+Other articles repeat only enough to remain self-contained and link to that
+article. This limits synchronization cost and makes bounded agent edits possible.
 
 No article carries the series' routing: `kb/articles/README.md` is the rendered
 collection landing and the reader's entry point, and the articles collection
@@ -63,10 +63,10 @@ The program statement is the entry point, not the container for every supporting
 argument. It may summarize a companion's result when that summary is required
 to state the program, but it should not reproduce the companion's derivation.
 
-The division between the program statement and the decisions companion should be explicit.
-The program statement may state two boundary facts: current Commonplace evidence
-is human-inclusive, and the research direction is to move named
-decision-bearing functions toward computational supply. The fixed-boundary
+The division between the program statement and the decisions companion should
+be explicit. The program statement may state two boundary facts: current
+Commonplace evidence is human-inclusive, and the research direction is to move
+named decision-bearing functions toward computational supply. The fixed-boundary
 derivation, human/computational/joint allocation profile, cut-set endpoint,
 boundary contraction, structural closure, capability, and warrant belong to
 the decisions companion. If the program statement names the cut-set endpoint, it
@@ -133,8 +133,9 @@ fixed-boundary and cut-set argument stays in the decisions companion.
 
 Related-system comparisons should follow enough of the proposed mechanism for
 the contrast to be intelligible. The Naur exegesis, cut-set derivation, closure
-and warrant theory, full Bitter Lesson and bootstrap argument, and Sutton comparison are not
-independent top-level movements of the program statement.
+and warrant theory, the full Bitter Lesson and bootstrap argument, and the
+Sutton comparison are not independent top-level movements of the program
+statement.
 
 An agent edit should normally target one of these six units and name the modules
 it is not changing. A later integration pass checks the central question,
@@ -244,8 +245,8 @@ reproduce their process.
 
 For broad article work, name the target unit from the research-program contract
 and its excluded modules before editing. Afterward, run a bounded integration
-check for duplicated full arguments, inconsistent evidence claims, and
-broken companion links rather than rewriting the article globally.
+check for duplicated full arguments, inconsistent evidence claims, and broken
+companion links rather than rewriting the article globally.
 
 Each article should make clear:
 
