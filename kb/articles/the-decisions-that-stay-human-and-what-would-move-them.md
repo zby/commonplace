@@ -1,5 +1,5 @@
 ---
-description: "Research-program hub centered on whether fallible project theory can keep program modification coherent through search, recovery, and delayed feedback, with warranted transfer, closure, and a Bitter-Lesson-compatible bootstrap as supporting questions"
+description: "Research-program hub centered on whether fallible project theory can keep program modification coherent through search, recovery, and delayed feedback, with warranted transfer, evaluator bootstrapping, and computational alternatives as supporting questions"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -8,7 +8,9 @@ source_notes:
   - kb/notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md
   - kb/notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md
   - kb/notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md
+  - kb/notes/when-global-theory-fit-lacks-a-fixed-oracle-use-in-building-the-system-is-an-initial-selection-environment.md
   - kb/notes/a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md
+  - kb/notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md
   - kb/notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md
   - kb/notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md
   - kb/notes/reflection-buys-addressability.md
@@ -37,40 +39,10 @@ This article presents a research program around one question:
 > recovery, and delayed feedback — and revise both its theory and its behavior
 > when consequences arrive?
 
-Commonplace, an agent-operated knowledge base, is the human-inclusive bootstrap.
 Programming agents supplied with persistent project-specific theory are the
-first demanding external testbed. The goal is not to protect hand-written
-knowledge from learning. It is to build a learning process that can eventually
-produce, test, revise, and replace the theories and machinery it currently
-receives from people.
-
-## Easy automation leaves a different kind of work
-
-A formatter can remove formatting decisions almost completely. Its inputs are
-represented in source text, its criterion is supplied by a style specification,
-and its output is cheap to check. Once formatting moves, better formatting tools
-can become faster and cover more syntax, but they do not thereby take over
-architecture or maintenance. Those decisions were outside the formatter's
-method.
-
-A request such as “support another output format without duplicating the
-pipeline's validation logic” has a different shape. The repository may contain
-tests for the immediate behavior, but no test fully states which abstraction is
-central, which duplication is tolerable, or which present boundary exists for a
-reason that the new request must preserve. The programmer uses code, tests,
-design rationale, remembered failures, and an evolving account of the system as
-a whole.
-
-An agent can generate patches and run tests. The research question begins where
-that is insufficient. Can it hold enough project-specific theory to understand
-why the system has its present organization, use that theory during search, and
-recover when a locally successful change proves globally wrong?
-
-The companion article [What bound Naur's theory to programmers](./what-bound-naurs-theory-to-programmers.md)
-starts from Peter Naur's claim that programming is theory building. Its main
-repair is narrow: Naur's argument does not establish that only humans can hold a
-program theory. But removing the human-only premise does not show that a current
-agent passes his bearer tests. That remains an empirical question.
+first demanding external testbed. Commonplace, an agent-operated knowledge base,
+is the live human-agent environment in which the same mechanisms can be used on
+parts of the system's own operation.
 
 ## Holding a theory means controlling a fallible search
 
@@ -95,16 +67,22 @@ change proposal, diagnosis, evaluation, recovery, or later revision. A theory
 that merely accompanies the work is documentation, not a demonstrated part of
 the learning path.
 
-This makes the relevant standard longitudinal. A failed first candidate can
-belong to coherent modification when the process recognizes the failure,
-recovers, and revises. A successful first candidate can fail the standard when
-it passes narrow tests while damaging the wider organization in a way the
-process cannot detect. The detailed claim is that [holding a program theory
-means sustaining coherent search under delayed feedback](../notes/holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md).
+This makes the standard longitudinal. A failed first candidate can belong to
+coherent modification when the process recognizes the failure, recovers, and
+revises. A successful first candidate can fail the standard when it passes
+narrow tests while damaging the wider organization in a way the process cannot
+detect. The detailed claim is that [holding a program theory means sustaining
+coherent search under delayed feedback](../notes/holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md).
+
+The companion article [What bound Naur's theory to programmers](./what-bound-naurs-theory-to-programmers.md)
+starts from Peter Naur's claim that programming is theory building. Its repair
+is narrow: Naur's argument does not establish that only humans can hold a
+program theory. Removing the human-only premise does not show that a current
+agent passes his bearer tests. That remains empirical.
 
 ## One path, several distinct functions
 
-The current research architecture separates four functions because they fail in
+The current architecture separates four functions because they fail in
 different ways.
 
 | Function | Current realization | Failure it exposes |
@@ -114,36 +92,30 @@ different ways.
 | Execute exact transitions and keep the path alive | Code and a persistent runtime | Faithful execution of the wrong transition, frozen decomposition, truncated horizon |
 | Correct proposals and theories | Tests, validators, held-out tasks, decorrelated criticism, later demands, and operational consequences | Weak proxies, captured evaluation, viability-only gates, delayed credit assignment |
 
-This is a **functionally mixed** architecture. It is not a theorem that these
-functions must remain in separate representational forms. A future learned
-substrate may host several of them, and stronger models may absorb parts of the
-current scaffolding. The present split is valuable because it makes the roles
+This is a functionally mixed architecture, not a theorem that the functions must
+remain in separate representational forms. A future learned substrate may host
+several of them, and stronger models may absorb parts of the present
+scaffolding. The current split is valuable because it makes the roles
 addressable and supports interventions on each one.
 
-The distinction between interpretation and correction is especially important.
-A model can understand and apply a false theory. Semantic competence does not by
-itself establish that the theory has genuine reach or that the proposed change
-is good. Independent or sufficiently decorrelated evidence must remain able to
-overturn the candidate's account.
-
-Likewise, retained theory does not execute, and code does not decide which
-unsettled objective should hold. The architecture is not a stack in which a
-higher layer validates everything below it. It is a set of roles whose outputs
-constrain and correct one another.
+Interpretation and correction must remain distinct. A model can understand and
+apply a false theory. Semantic competence does not establish that the theory has
+genuine reach or that a proposed change is good. Independent or sufficiently
+decorrelated evidence must remain able to overturn the candidate's account.
 
 ## Evidence comes in levels
 
-The strongest theory-mediated loop is easy to state:
+The strongest recurrent loop is:
 
     retained theory
       -> theory-guided search or decision
       -> realized change
       -> independent or delayed consequence
       -> read-back against the same theory
-      -> retained theory revision
+      -> retained theory-state revision
       -> changed later operation
 
-Using that complete chain as the minimum definition would hide useful partial
+Using the complete chain as the minimum definition would hide useful partial
 results. The program distinguishes four levels:
 
 1. **Mediation:** changing or withholding the theory changes a proposal,
@@ -155,18 +127,47 @@ results. The program distinguishes four levels:
 4. **Recurrence:** the updated theory state changes a later operation inside the
    same behavior-determining path.
 
-A useful change can reach the first or second level without reaching the fourth.
-The record should say so. A citation of retained theory at the decision point is
-a cheap mediation trace, because it identifies the theory the process claims to
-have used. It does not prove that the theory was load-bearing. An intervention
-that withholds, replaces, or perturbs the theory provides stronger evidence.
+A citation at the decision point is a useful trace, not proof that the theory was
+load-bearing. Withholding, replacing, or perturbing the theory provides stronger
+evidence. The theory that guided the change must also be the object against
+which the outcome is read, and the resulting theory state must be the one used
+later. Disconnected witnesses do not establish learning through theory.
 
-The path must also be co-indexed. The theory that guided the change must be the
-object against which the outcome is read, and the resulting theory state must be
-the one used later. Three disconnected witnesses — a theory in one place, a
-successful change in another, and a later revision elsewhere — do not establish
-learning through theory. The full requirement is developed in [the note on
-interpretation, retention, and independent read-back](../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md).
+## A true claim may still not fit the theory
+
+A theory-mediated learner must answer two different questions about a claim.
+
+First, is the claim true, valid, or otherwise warranted over its stated scope?
+Some claims admit factual checks, formal derivations, consistency tests,
+controlled experiments, or bounded benchmarks.
+
+Second, does the claim fit the larger working theory and improve the system's
+operation and revision? That is relational. A true claim can be irrelevant,
+redundant, badly scoped, or placed at the wrong level of abstraction. A false
+claim can appear useful because the current implementation already assumes it.
+
+No present automatic evaluator fully decides whether a candidate belongs in the
+larger causal picture, what it should displace, or whether it will continue to
+guide coherent modification after later demands arrive. This does not make fit
+untestable. It means that the evidence is distributed and delayed rather than
+supplied by one complete local oracle.
+
+Fit can be exposed through whether a claim changes search or recovery, whether
+its predictions survive later evidence, whether modifications guided by it
+preserve organization, whether rival or ablated theories do better, whether it
+reduces repair and human intervention, and whether it transfers beyond the case
+that produced it.
+
+The live system under construction can therefore serve as an [initial selection
+environment](../notes/when-global-theory-fit-lacks-a-fixed-oracle-use-in-building-the-system-is-an-initial-selection-environment.md).
+Claims earn provisional standing by making a counterfactual difference to
+building, operating, or repairing the system and by surviving the consequences
+of that use.
+
+System use is not a truth oracle. A system can reward its own misconceptions.
+Independent factual and formal checks, rival theories, preregistered
+predictions, withholding interventions, held-out demands, delayed consequences,
+and transfer tests are needed to prevent a self-sealing theory.
 
 ## Why difficult decisions remain human
 
@@ -174,29 +175,23 @@ The same hard modification can be viewed from a boundary question: why has the
 decision not yet moved out of the human part of the system?
 
 A decision is easier to transfer with warrant when the process has the premises
-it needs, an objective or criterion settled enough to apply, and evidence that
-can reject a plausible but harmful candidate. When systems preferentially move
-such decisions, the remaining human work becomes enriched for the opposite
+it needs, a criterion settled enough to apply, and evidence that can reject a
+plausible but harmful candidate. When systems preferentially transfer such
+decisions, the remaining human work becomes enriched for the opposite
 properties.
 
 | Why the decision remains human | What would have to grow |
 |---|---|
-| A required premise is unavailable to the deciding process | Representation, retrieval, or acquisition |
+| A required premise is unavailable | Representation, retrieval, or acquisition |
 | The objective, commitment, criterion, or authority does not settle acceptance | Methodological settlement or a represented grant of authority |
 | No sufficiently independent check can defeat the candidate | Verification, decorrelated criticism, delayed exposure, or accepted error tolerance |
 | The decision arises after the automatic path stops | Persistent state, scheduling, and later reactivation |
 | Transfer is possible but too expensive | No new capacity; the transfer is currently uneconomic |
 
 This is a conditional selection argument, not yet a prevalence result. Real
-systems may automate whatever is cheap or whatever an unattended model will
-attempt rather than preferentially moving warrantable decisions. A direct test
-must compare decisions before and after successive transfers under a stable
-boundary, objective, horizon, and workload.
-
-The current comparative evidence finds that independent correction is often
-weak or unstated in reported self-improvement paths. That is consistent with an
-evaluator bottleneck. It does not by itself show that the residual decisions
-became harder because easier ones moved first.
+systems may automate whatever is cheap rather than what is warrantable. A direct
+test needs before-and-after histories under a stable boundary, objective,
+horizon, and workload.
 
 The bearer and transfer questions meet at open-ended modification but do not
 collapse into one. The bearer question asks whether the composite can sustain
@@ -211,122 +206,129 @@ objective, boundary, permitted exogenous inputs, horizon, resources, and
 coverage rule. Conditional on those declarations, a path is structurally closed
 when every required decision and transition occurs inside the automatic system.
 
-That says where the decisions happen, not whether they are good. A no-op loop, a
-bad objective, or a captured evaluator can be computationally closed. Evaluator
-quality matters because a useful strong result needs correction, not because the
-evaluator defines structural closure.
-
-A **warranted, non-degenerate closure** claim therefore adds a capability floor,
-consequential revision reach, reject-capable evaluation, continuity, explicit
-boundary accounting, and measured outcomes. These are separate coordinates.
-Tool usefulness, computational autonomy, warrant, and system power can move in
-different directions, [so a progress claim must name which dimension
-changed](../notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md).
+That says where decisions happen, not whether they are good. A no-op loop, a bad
+objective, or a captured evaluator can be computationally closed. A warranted,
+non-degenerate result additionally needs a capability floor, consequential
+revision reach, reject-capable evaluation, continuity, explicit boundary
+accounting, and measured outcomes.
 
 The remote-programmer benchmark is another coordinate. It asks whether a system
 performs at least as well as a competent remote programmer given the same brief,
-repository, tools, permissions, and feedback. That is a strong test of the
-worker role. It deliberately holds the client fixed, so task choice, missing
-premises, feedback, and final acceptance remain outside the worker. Passing the
-benchmark would not close those decisions; [holding the client fixed exports
-them by design](../notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md).
+repository, tools, permissions, and feedback. It deliberately holds the client
+fixed, so task choice, missing premises, feedback, and final acceptance remain
+outside the worker. Passing it does not close those decisions.
 
-The benchmark and warranted closure expose the same difficult client and
-acceptance boundary from opposite sides. They do not measure the same thing.
+## The Bitter Lesson supplies pressure, not a defense
 
-## The Bitter Lesson is a bootstrap requirement
+The program has only one narrow rebuttal to the Bitter Lesson: production method
+and representational form are different axes. A theory, program, or validator
+can be a product of learning, so Sutton's argument does not impose a weights-only
+rule.
 
-This program does not argue that natural-language theory and symbolic machinery
-are exceptions to the Bitter Lesson. Present artifacts are partly hand-crafted,
-and no carrier receives permanent protection.
+That does not defend the present hand-crafted artifacts. Calling them a
+bootstrap would be empty unless useful production actually moves toward methods
+that exploit computation.
 
-The positive thesis is that they are bootstrap state for constructing a more
-general search-and-learning process. The process should increasingly learn to
-propose, test, retain, revise, operationalize, and retire theories, methods,
-programs, tests, and parts of the machinery that performs those operations.
+Theory-guided construction is the first strategy being tried because global
+theory fit lacks a complete fixed evaluator. The strategy uses a live system as
+an initial consequence-bearing selection environment while computation enters
+where discrimination is already adequate. Models and programs can immediately:
 
-That differs from a hand-designed solution for one predefined area only if the
-path can outgrow its starting structure. Competence in several domains is not
-enough. A system with many hand-built ontologies and special update procedures
-is still a bundle of predefined solutions. The relevant property is
-**domain-extensibility**: can the same learning process construct the
-project-specific theory, representations, methods, and checks needed in an area
-that the designers did not enumerate?
+- generate rival claims, theories, decompositions, and designs;
+- search for evidence and counterexamples;
+- check local consistency, entailments, references, and formal consequences;
+- propose experiments, run ablations, and analyze traces; and
+- search over artifacts inside bounded evaluator domains.
 
-Editable artifacts do not establish this. An agent may rewrite prompts while
-the artifact types, mutation operators, routing, evaluators, and acceptance
-rules remain fixed. The bootstrap thesis requires a reachable path by which
-evidence can challenge consequential parts of that production machinery. It
-also requires credit assignment and bounded human evaluation as the corpus,
-horizon, and number of domains grow.
+Human judgment remains where global fit is not yet represented or reliably
+evaluated. That remainder should be treated as missing selection machinery, not
+as a protected source of intelligence. When a judgment recurs and its scope
+stabilizes, it can become a methodology, test, validator, learned critic, search
+objective, or program. The intended strategy is not "handcraft now, learn
+later." It is learning while constructing the machinery that makes more
+learning selectable.
+
+This is a first approach, not a uniqueness claim. End-to-end reinforcement
+learning, evolutionary search, self-play, learned world models, weight updates,
+and stronger-model baselines remain live alternatives. The strategy should be
+retained only while it improves the use of computation at competitive total
+cost.
+
+Long-run compatibility still requires the process to outgrow its starting
+structure. Competence in several predefined domains is not enough. The process
+must eventually construct project-specific theories, representations, methods,
+and checks in areas not enumerated by its designers; reduce the human share of
+fit assessment and evaluator construction; and permit consequential parts of
+its own decomposition and update machinery to be challenged.
+
+No present carrier is promised survival. The path succeeds when production
+becomes more general, not when today's files remain.
 
 The companion article [The Bitter Lesson does not require everything to live in
 weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
-develops this argument. Its claim is deliberately asymmetric: the architecture
-is conceptually compatible with the lesson, Commonplace is a useful
-human-assisted bootstrap, and whether the path becomes a scalable,
-domain-extensible learner remains open.
+develops the narrow rebuttal, the evaluator gap, and the first-strategy claim.
 
 ## Two linked testbeds
 
 Programming agents with persistent project-specific theory provide the cleanest
 first test of the bearer question. The target repository is external to the
 agent. The experiment can ask whether correct theory changes search and recovery
-without first proving that the agent is modifying its own behavior-determining
+without first proving that the agent modifies its own behavior-determining
 organization.
 
-Commonplace provides the reflective bootstrap. It retains theory about its own
+Commonplace provides the reflective environment. It retains theory about its own
 operation, routes that theory into later work, and turns some conclusions into
 instructions, validators, schemas, and code. Humans still choose objectives,
-supply unrecorded premises, assign much of the blame, approve consequential
-changes, and repair paths beyond represented coverage.
+supply unrecorded premises, judge much global fit, assign blame, approve
+consequential changes, and repair paths beyond represented coverage.
 
 This supports claims about useful human-agent theory work and inspectable causal
-traces. It does not yet establish independent computational theory possession,
-recurrence, task-scoped closure, or a scalable artifact-learning method.
+traces. It does not establish independent computational theory possession,
+recurrence, task-scoped closure, scalable artifact learning, or superiority to
+more direct computational methods.
 
-## The next experiment
+## Two next experiments
 
-The most useful next result is a prospective theory intervention on sequential
-program modifications. Hold the model, tools, repository state, budget, and
-acceptance process fixed. Compare four conditions:
+The first experiment tests whether prepared project theory is load-bearing.
+Hold model, tools, repository state, budget, and acceptance fixed; compare:
 
 1. correct project theory;
-2. an information-matched record without synthesized theory-level organization;
+2. an information-matched record without theory-level organization;
 3. theory withheld; and
 4. plausible but wrong or outdated theory.
 
-Each sequence should contain an initial modification and a later demand or
-delayed test that reveals whether the first change preserved the program's
-organization. Measure which candidates are generated, what the process tries to
-preserve, how it diagnoses failures, when it backtracks, how well it recovers,
-what collateral regressions occur, how much human intervention is required, and
-whether the outcome changes a later episode.
+Use sequential programming demands with delayed consequences. Measure candidate
+generation, preservation of architectural commitments, diagnosis, backtracking,
+recovery, collateral regressions, later-demand performance, and human
+intervention. Correct theory should help most where the later demand preserves
+the structure it names. Wrong theory should produce predictable negative
+transfer. Withholding theory should particularly damage recovery if the
+conjecture is right.
 
-The diagnostic prediction is not simply that more context helps. Correct theory
-should help most when the later demand preserves the structure the theory names.
-Wrong theory should produce predictable negative transfer. Withholding theory
-should especially damage diagnosis, recovery, and follow-on coherence. The
-advantage should shrink where a complete specification and cheap oracle already
-settle the task.
+The second experiment instruments the bootstrap strategy itself. Across a
+sequence of real Commonplace improvements, record which proposals and checks are
+computational, which global-fit judgments remain human and why, which downstream
+consequences bear on them, and whether a recurring judgment becomes a test,
+validator, learned critic, method, or program. A later episode should show
+whether the computational selection surface actually grew.
 
-This result would not prove a scalable bootstrap. It would establish the more
-basic causal claim that project theory can be a load-bearing part of coherent
-modification. A later cross-domain experiment must test whether the process can
-construct and revise the required theory and machinery rather than receiving
-them already prepared.
+A subsequent cross-domain comparison must test domain-extensibility and compare
+the approach with direct computational alternatives. The strategy fails when
+system use becomes self-confirming, computational search remains peripheral,
+human judgment grows with the corpus, each domain needs a bespoke ontology and
+oracle, or another method performs better at comparable total cost.
 
 ## The invitation
 
-The program now has several points where disagreement can be productive. A
-researcher can challenge the account of human coherent modification, propose a
-rival mechanism that does not require retained theory, design stronger controls
-for the intervention, test whether residual work is actually adversely
-selected, or show that evaluator and decomposition construction keep the
-bootstrap permanently dependent on human design.
+The program exposes several points where disagreement can be productive. A
+researcher can challenge the account of coherent modification, propose a rival
+mechanism that does not require retained theory, design stronger controls for
+the intervention, develop a less circular test of global theory fit, identify a
+better first computational strategy, or show that evaluator and decomposition
+construction keep the approach permanently dependent on human design.
 
-The goal is not to recruit agreement with a finished theory. It is to expose a
-small set of claims whose status can change through criticism and evidence. The
-central one is concrete: whether a fallible, project-specific theory can make
-computational search and recovery more coherent across novel demands and
-delayed consequences.
+The goal is not agreement with a finished theory. It is a small set of claims
+whose status can change through criticism and evidence. The central one remains
+concrete: whether a fallible, project-specific theory can make computational
+search and recovery more coherent across novel demands and delayed
+consequences.
