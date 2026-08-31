@@ -6,7 +6,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [multistage-write-costly-entrenchment-options-20260828](./multistage/multistage-write-costly-entrenchment-options-20260828/README.md) — refining the costly-entrenchment claim with the real-options conditions, delay costs, and bounded-probe alternative while preserving its three existing warrants
 - [theory-mediated-self-improvement-series](./theory-mediated-self-improvement-series/README.md) — reconstructs the article series from two accepted baselines and four quarantined drafts around a mixed theory–LLM–code target, a non-degenerate closure–capability map, a human-inclusive theory-building and LLM-wiki tool, and controlled claim transfer
 - [multistage-write-prototype-standing-revision-cost-20260827](./multistage/multistage-write-prototype-standing-revision-cost-20260827/README.md) — promoted `prototype-standing-is-revision-cost-binding-plus-lost-investment.md` (standing = external binding plus lost investment; form and acceptance separate); retained for three handoffs: fold the correspondence branch into `formal-systems-assess-…`, the defense-portfolio link question, and the pre-formal note's binding-only definition wording
 - [full-pass-instruction-coherence-audit](./full-pass-instruction-coherence-audit/README.md) — repaired claim-change authority, phase/guard recovery, and closing completion after one instrumented keep exposed a schema-valid final capture with an edit-introduced parsing failure; scenario coverage remains incomplete
