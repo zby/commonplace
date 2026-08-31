@@ -21,7 +21,7 @@ The public skill was promoted on 2026-08-21 after six cold trials, reconciliatio
 
 The `known-instructions/` directory preserves or extracts procedures whose behavior is already understood well enough to use as workshop baselines:
 
-- `current-memory-review-skill.md` — byte-for-byte snapshot of the functioning local review skill.
+- `current-memory-review-skill.md` — content snapshot of the functioning local review skill, with relative links rebased to remain valid from the workshop location.
 - `current-memory-analysis-contract.md` — content snapshot of the functioning memory review type contract, with relative links rebased to remain valid from the workshop location; it currently carries much of the analysis procedure.
 - `current-epistemic-analysis.md` — byte-for-byte snapshot of the accepted and cold-trialled epistemic instruction.
 - `current-agentic-comparison-instruction.md` — byte-for-byte snapshot of a bounded whole-system comparison instruction that produced a substantive review, retained as precedent rather than a general contract.

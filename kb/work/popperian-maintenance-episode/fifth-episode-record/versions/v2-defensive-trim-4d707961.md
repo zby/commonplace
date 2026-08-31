@@ -35,7 +35,7 @@ A composite of retained text and an interpreter is therefore only a possibility 
 
 Even then, the records would not perform Naur's three capabilities. A justification can be written down, but a fresh interpreter must still select and apply the relevant reason. Fixed mapping points can be recorded, but extending the mapping to a new case remains a judgment. The artifact supplies inputs to the capacities; it does not relocate the capacities into text.
 
-This division of labour is the one proposed in [theory-mediated self-improvement needs both interpretation and retention from one substrate](./theory-mediated-self-improvement-needs-interpretation-and-retention.md). Its retention boundary follows the recovery question in [design rationale must preserve decision premises its interpreter cannot regenerate](./design-rationale-must-preserve-unregenerable-decision-premises.md): which decision-relevant claims can this interpreter recover, at the required fidelity, from its other available sources?
+This division of labour is the one proposed in [theory-mediated self-improvement needs both interpretation and retention from one substrate](../../../../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md). Its retention boundary follows the recovery question in [design rationale must preserve decision premises its interpreter cannot regenerate](../../../../notes/design-rationale-must-preserve-unregenerable-decision-premises.md): which decision-relevant claims can this interpreter recover, at the required fidelity, from its other available sources?
 
 Any candidate composite must meet at least three conditions:
 
@@ -47,7 +47,7 @@ An LLM-plus-artifact system is one conjectured candidate under these conditions.
 
 ## Scope
 
-- **Retained-source boundary.** The reading rests on passages retained in the [ingest](../sources/programming-as-theory-building.ingest.md), especially the adjacent requirement and contributor statements. It makes no source-wide claim that Naur lacks other human-specific premises.
+- **Retained-source boundary.** The reading rests on passages retained in the [ingest](../../../../sources/programming-as-theory-building.ingest.md), especially the adjacent requirement and contributor statements. It makes no source-wide claim that Naur lacks other human-specific premises.
 - **Meaning of rules.** The note addresses the limited, enumerated criteria named in the retained passage. It does not claim that a text-plus-computable-interpreter system escapes an impossibility result quantified over the full effective procedure.
 - **Possibility versus transfer.** Leaving a competent bearer logically open does not explain how a fresh interpreter acquires program theory or establish that text is sufficient to transfer it.
 
@@ -55,4 +55,4 @@ An LLM-plus-artifact system is one conjectured candidate under these conditions.
 
 Relevant Notes:
 
-- [Programming as Theory Building](../sources/programming-as-theory-building.ingest.md) — abstracted-from: supplies the three theory-holder capabilities, the limited-criteria statement, and the relevance-decision passage; the requirement/bearer distinction is this note's bounded reading
+- [Programming as Theory Building](../../../../sources/programming-as-theory-building.ingest.md) — abstracted-from: supplies the three theory-holder capabilities, the limited-criteria statement, and the relevance-decision passage; the requirement/bearer distinction is this note's bounded reading

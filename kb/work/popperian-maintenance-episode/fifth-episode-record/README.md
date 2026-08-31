@@ -55,7 +55,7 @@ Candidate claim: **a repair loop that can narrow a claim but cannot extend its e
 - `evidence/full-pass-report.md` — the reconciled packet (warranted contribution, disposition, body edits, routed attention, gate table, closing cycle). Copied from the gitignored `kb/reports/state/full-pass/…/20260826T115728Z-a18058/`.
 - `evidence/initial/` — critique, friction, premises, compression bundle, and the `semantic/grounding-alignment` FAIL that drove the reframe.
 - `evidence/closing/` — closing critique (attack "partially lands": exegetical force of "someone"/"programmer", unsupported narrow reading of "rules"), friction, premises.
-- `versions/` — the six texts, v0 through v5.
+- `versions/` — the six texts, v0 through v5; library links are rebased for this nested record location while the prose remains as recorded.
 - Git: `def1280a` (v1), `4d707961` (v2), `eac2b0b8` (v3); v4 was never committed; v5 in the commit that adds cycle 2.
 - Session: <https://claude.ai/code/session_017dDJmV15wVzPkVffW1eLEh> — the motivation discussion (Naur, Ryle's regress, the "only humans" objection), the v2 trim, the full-essay read, and the four grounding runs. The pass itself ran in a separate operator session.
 - `kb/log.md` FIX entry dated 2026-08-26 keyed on the pass id.

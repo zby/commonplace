@@ -107,7 +107,7 @@ Analyse accumulated-from-use mechanisms; this is not a memory-review publication
 
 ### 7. Invoke the epistemic procedure conditionally (when applicable)
 
-1. Invoke [Analyse an external system's epistemic architecture](kb/instructions/analyse-external-system-epistemic-architecture.md) — invokes: run the accepted route-analysis method inside this run's boundary. Do not copy or restate its object-inventory, route-ledger, transformation, lifecycle, claim-comparison, or authority method.
+1. Invoke [Analyse an external system's epistemic architecture](../../instructions/analyse-external-system-epistemic-architecture.md) — invokes: run the accepted route-analysis method inside this run's boundary. Do not copy or restate its object-inventory, route-ledger, transformation, lifecycle, claim-comparison, or authority method.
 2. Pass to the invocation: a bounded epistemic subquestion, the run and system boundary, the frozen revision, the `SRC-*` register and evidence packet, the existing canonical records, and the trigger evidence from step 5.
 3. Enforce the wrapper rules: no source reacquisition, no boundary widening, no revision change, no silent evidence upgrade, no parallel ID namespace, no independent publication decision, no system-wide epistemic grade.
 4. Require linked returns: material objects, routes, and claims by canonical ID; transformation class and route function; architectural status and episode status; checking, acceptance, and retention/integration findings; the three authority records kept separate; and missing evidence paired with the conclusions it prevents. Any new record or targeted-evidence request returns to the orchestrator for registration, and affected work is rerun.
@@ -160,9 +160,9 @@ Rules:
 
 ---
 
-- [Agent-runtime analysis should separate scheduling, context, and state](kb/notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) — rests-on: the three causal runtime responsibilities behind step 4
-- [Agent orchestration occupies a multi-dimensional design space](kb/notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) — rests-on: why the runtime inventory stays open rather than becoming a taxonomy
-- [Runtime structure determines governance control surfaces](kb/notes/runtime-structure-determines-governance-control-surfaces.md) — rests-on: why governance surfaces are conditional, crosscutting inspections
-- [Agent memory is a crosscutting concern, not a separable niche](kb/notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) — rests-on: why memory is a lens inside system analysis, not a peer category
-- [Knowledge storage does not imply contextual activation](kb/notes/knowledge-storage-does-not-imply-contextual-activation.md) — rests-on: the retention/read-back/presence/activation distinctions in steps 3, 5, and 6
-- [Behavioral authority](kb/notes/definitions/behavioral-authority.md) — rests-on: the consumer/channel/force path definition behind `BAP-*` records
+- [Agent-runtime analysis should separate scheduling, context, and state](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) — rests-on: the three causal runtime responsibilities behind step 4
+- [Agent orchestration occupies a multi-dimensional design space](../../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) — rests-on: why the runtime inventory stays open rather than becoming a taxonomy
+- [Runtime structure determines governance control surfaces](../../notes/runtime-structure-determines-governance-control-surfaces.md) — rests-on: why governance surfaces are conditional, crosscutting inspections
+- [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) — rests-on: why memory is a lens inside system analysis, not a peer category
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) — rests-on: the retention/read-back/presence/activation distinctions in steps 3, 5, and 6
+- [Behavioral authority](../../notes/definitions/behavioral-authority.md) — rests-on: the consumer/channel/force path definition behind `BAP-*` records
