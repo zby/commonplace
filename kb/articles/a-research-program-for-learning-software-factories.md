@@ -184,11 +184,12 @@ project-specific theory: an understanding of how the program maps onto the
 activity it supports, why it is organized as it is, and how new demands relate
 to that organization.
 
-Naur's compiler case has the transition above. The original group retained the
-theory built while producing compiler A and could use it in later modification,
-while another group did not acquire the same capacity from source,
-documentation, discussion, and advice. The computational analogue is a new
-factory that retains and can apply the theory built during earlier production.
+Naur's compiler case has the transition above. Group A retained the theory built
+while producing the compiler and could use it to evaluate and propose later
+modifications. Group B received the source, documentation, design discussion,
+and advice but did not acquire the same capacity. The computational analogue is
+a new factory that retains and can apply the theory built during earlier
+production.
 
 For this target, the program adopts Naur's functional constraint: some
 project-specific state or capacity must perform those mapping, justification,
