@@ -88,5 +88,6 @@ def test_landings_cli_target_reports_repository_validation(
 
     output = capsys.readouterr().out
     assert exit_code == 0
-    assert "Type: collection-landings" in output
-    assert "Overall: PASS (clean)" in output
+    assert "VALIDATION SUCCESS" in output
+    assert "Target: landings" in output
+    assert "Diagnostics: 0 failures across 0 subjects; 0 warnings across 0 subjects" in output

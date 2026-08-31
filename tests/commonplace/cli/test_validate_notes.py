@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import os
 import shutil
 import sys
@@ -1606,7 +1607,7 @@ Orientation paragraph.
     )
     monkeypatch.chdir(tmp_path)
 
-    exit_code = validate_notes.main(["kb/notes/tagged-note.md"])
+    exit_code = validate_notes.main(["--full", "kb/notes/tagged-note.md"])
     output = capsys.readouterr().out
 
     assert exit_code == 1
@@ -1624,6 +1625,27 @@ def test_bulk_scopes_are_rejected(tmp_path: Path) -> None:
     for target in ("all", "kb", "kb/"):
         with pytest.raises(ValueError):
             validate_notes.resolve_validation_target(target, repo_root=tmp_path)
+
+
+def test_lifecycle_target_emits_stable_json_diagnostics(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    write(tmp_path / "kb/work/README.md", "# Work\n")
+    write(tmp_path / "kb/work/unframed/scratch.md", "Scratch\n")
+    monkeypatch.chdir(tmp_path)
+
+    exit_code = validate_notes.main(["--json", "lifecycle"])
+    payload = json.loads(capsys.readouterr().out)
+
+    assert exit_code == 1
+    assert payload["schema"] == "commonplace.validation.v1"
+    assert payload["status"] == "failed"
+    assert [item["id"] for item in payload["diagnostics"]] == [
+        "lifecycle.workshop.unregistered",
+        "lifecycle.workshop.missing-framing",
+    ]
 
 
 def test_collection_directory_targets_scan_that_collection(tmp_path: Path) -> None:
@@ -1795,11 +1817,56 @@ def test_source_collection_validation_prints_local_snapshot_warning(
     output = capsys.readouterr().out
 
     assert exit_code == 0
-    assert "Collection warnings: 1" in output
+    assert "VALIDATION WARNING" in output
+    assert "1 warnings across 1 subjects" in output
+    assert "validation.collection-warning.unpaired-local-snapshot" in output
     assert (
         "kb/sources/.snapshots/orphan.md: unpaired local snapshot: no same-stem "
         "ingest and no ingest matches its source URL or checksum"
+    ) not in output
+    assert (
+        "kb/sources/.snapshots/orphan.md | unpaired local snapshot: no same-stem "
+        "ingest and no ingest matches its source URL or checksum"
     ) in output
+
+
+def test_validation_json_is_compact_and_structured(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    sources = tmp_path / "kb" / "sources"
+    write(sources / "COLLECTION.md", "# Sources\n")
+    write(sources / "scratch.md", "Visible source work.\n")
+    write(sources / ".snapshots" / "orphan.md", "uncatalogued bytes\n")
+    monkeypatch.chdir(tmp_path)
+
+    exit_code = validate_notes.main(["--json", "sources"])
+    payload = json.loads(capsys.readouterr().out)
+
+    assert exit_code == 0
+    assert payload["schema"] == "commonplace.validation.v1"
+    assert payload["status"] == "warning"
+    assert payload["summary"] == {
+        "failing_subjects": 0,
+        "failures": 0,
+        "files_analysed": 1,
+        "text_files": 1,
+        "warning_subjects": 1,
+        "warnings": 1,
+    }
+    assert payload["diagnostics"] == [
+        {
+            "id": "validation.collection-warning.unpaired-local-snapshot",
+            "reason": (
+                "unpaired local snapshot: no same-stem ingest and no ingest "
+                "matches its source URL or checksum"
+            ),
+            "severity": "warning",
+            "subject": "kb/sources/.snapshots/orphan.md",
+        }
+    ]
+    assert payload["details_command"] == "commonplace-validate --full sources"
 
 
 def test_source_snapshot_cache_reports_same_url_as_related_observation(

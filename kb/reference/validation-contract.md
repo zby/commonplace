@@ -18,7 +18,27 @@ FAIL:
 
 In one sentence: **a type declares what the document must contain; the framework checks that what it points at is really there.**
 
-The explicit `landings` and `redirects` targets are outside this note pipeline. Both emit `[repository]` findings. `landings` checks that every top-level collection has a `README.md` and that no sibling `index.md` shadows it. `redirects` compares `properdocs.yml` with the live `docs_dir`: targets resolve, keys do not shadow pages, and the map is flat. Keeping these checks explicit prevents validation of one note or collection from failing on unrelated site configuration while still making the published-tree invariants deterministic.
+The explicit `landings`, `redirects`, and `lifecycle` targets are outside this
+note pipeline. `landings` and `redirects` emit `[repository]` findings.
+`landings` checks that every top-level collection has a `README.md` and that no
+sibling `index.md` shadows it. `redirects` compares `properdocs.yml` with the
+live `docs_dir`: targets resolve, keys do not shadow pages, and the map is flat.
+`lifecycle` inspects the support surfaces under `kb/work/` and `kb/tasks/`. It
+fails a non-empty top-level workshop with no framing file and warns about an
+unregistered non-empty workshop, a backlog checklist whose tasks are all
+complete, or a recurring task whose declared non-glob output does not exist.
+The warnings raise reconciliation decisions; they do not authorize registration,
+movement, creation, or deletion. Keeping these checks explicit prevents
+validation of one note or collection from failing on unrelated repository state
+while still making each broader invariant deterministic.
+
+The command presents these findings through two views. The default compact view
+prints counts plus every warning, failure, and material notice. `--full` retains
+the per-artifact PASS/WARN/FAIL/INFO transcript for deliberate inspection.
+`--json` emits the versioned `commonplace.validation.v1` envelope with stable
+diagnostic rule IDs, subjects, reasons, and the detailed drill-down command.
+Presentation does not change severities or exit behavior: warnings exit zero;
+failures exit nonzero.
 
 ## Scope: this is the deterministic half only
 

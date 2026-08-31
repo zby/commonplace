@@ -6,7 +6,18 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [agent-operability-audit-follow-through](./agent-operability-audit-follow-through/README.md) — tracking the bounded audit follow-through: baseline, compact validation, lifecycle diagnostics and reconciliation, then a measured read-only status pilot
 - [agentic-system-learning-refoundation](./agentic-system-learning-refoundation/README.md) — deferred revision material for the learning-software-factories program article: deeper research questions, a note-faithfulness audit, and a defense of weak theory-guided search against the random-mutation baseline
+- [cognitive-architecture-transfer-scan](./cognitive-architecture-transfer-scan/README.md) — breadth-first conjecture scan whose promising cross-architecture candidates still require deduplication, selective grounding, and extraction
+- [collection-aware-full-improvement-pass](./collection-aware-full-improvement-pass/README.md) — determining whether prose-improvement workflows should route by collection and artifact function rather than imposing the theory-note contract
+- [curiosity-prompts](./curiosity-prompts/README.md) — completed Decapod prompt experiment whose exact report still needs relocation to a durable evidence surface before the workshop can close
+- [dialectical-sample](./dialectical-sample/README.md) — illustrative dialectical/evidential collection awaiting an explicit keep, archive, or delete disposition after serving its prototype-checking purpose
+- [error-catching](./error-catching/README.md) — systematizing error-detection techniques, their catch rates, activation gaps, and promotion paths into a durable scheme
+- [hanoi-experiment](./hanoi-experiment/README.md) — OpenProse bookkeeping stress test with recorded results and remaining variations
+- [review-evidence-and-disposition-hardening](./review-evidence-and-disposition-hardening/README.md) — resolving or rejecting the code-grounded review findings about result delivery, evidence identity, acknowledgement, recovery, and review-system contracts
+- [skill-creator-distillation](./skill-creator-distillation/README.md) — comparing Codex and Claude skill creators as mixed-evidence distillation workflows and deciding what should be extracted
+- [skills-vs-instructions](./skills-vs-instructions/README.md) — determining when reusable procedures need skill routing and execution policy rather than an ordinary instruction path
+- [token-wiki-review](./token-wiki-review/README.md) — deciding and executing the durable promotion path for the completed Token Wiki analysis
 - [full-pass-instruction-coherence-audit](./full-pass-instruction-coherence-audit/README.md) — repaired claim-change authority, phase/guard recovery, and closing completion after one instrumented keep exposed a schema-valid final capture with an edit-introduced parsing failure; scenario coverage remains incomplete
 - [change-operations-catalogue](./change-operations-catalogue/README.md) — a working list of the operations by which Commonplace gets changed, each admitted by an observed instance, with the premises it must read and where they live; used to audit `kb/reference/` in both directions under ADR 074. Carries no completeness claim
 - [full-pass-recompute-cluster](./full-pass-recompute-cluster/README.md) — queued full improvement passes over the six recoverability/economics notes written 2026-08-22/23, in two dependency-ordered batches so a reframe in the first lands before the second reads its premises
@@ -54,10 +65,13 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [obsidian-affordances](./obsidian-affordances/README.md) — deciding which Obsidian-facing affordances are useful compatibility layers versus representation drift for a repo-native KB
 - [philosophy-borrowing](./philosophy-borrowing/README.md) — evaluating Peirce's abduction, Quine's web of belief, speech-act theory, and Carnap's explication as operational borrowings for KB methodology
 - [agent-complexity-theory](./agent-complexity-theory/README.md) — formal consequences of the bounded-context orchestration model; candidate theorem sketches for academic collaboration
-- [semantic-search-replacement](./semantic-search-replacement/README.md) — evaluating whether to replace qmd as the semantic-search layer, and with what
 - [latent-space-generation-without-training](./latent-space-generation-without-training/README.md) — exploring whether embedding-guided novelty-generation papers can become a practical no-large-training workflow
 - [review-revise-gated](./review-revise-gated/README.md) — finding review/revise arrangements that reliably produce the manual-edit quality bar, then codifying as reusable instructions
 - [auditable-llm-editing](./auditable-llm-editing/README.md) — testing whether sparse, anchored writing state prevents accidental claim drift across repeated LLM editing passes
 - [distributing-built-kbs](./distributing-built-kbs/README.md) — downstream counterpart to ADR 021's Commonplace-library shipping model: most hassle-free way to distribute a domain KB someone built, by separating the lightweight consumer path from the authoring machinery
 - [lifecycle-management](./lifecycle-management/README.md) — mapping the full artifact life-cycle (intake, promotion, maturation, retirement); the `agent-memory-design` test case landed as a `note + synthesis` trait in `kb/notes/designing-agent-memory-systems.md`; the proposal disposal half shipped 2026-07-25 as ADR 056 (extract, then archive out of the frontier as a link sink), leaving note and source-snapshot retirement as the blocking gaps
 - [condensation-faithfulness-experiment](./condensation-faithfulness-experiment/README.md) — designing an experiment to test whether our condensation methodology (write conventions + gate suite) produces more behaviorally faithful memory than naive auto-summary, using the Faithful Self-Evolvers perturbation protocol
+
+## Workflow Namespaces
+
+- [multistage](./multistage/README.md) — grouping namespace for skill-managed multistage writing runs; active runs are listed individually above

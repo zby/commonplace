@@ -34,10 +34,25 @@ running commands.
 
 ## Validation and indexing
 
+### commonplace-status
+
+Show one compact, read-only situation report assembled from project and command
+versions, Git state, notes validation, and workshop-and-task lifecycle
+validation. The default view gives stable next-action IDs and drill-down
+commands without embedding underlying rows. Review warnings, jobs, and
+freshness state are deliberately absent from the normal path while the review
+system remains irregular operational state; request them with `--review`.
+`--json` emits `commonplace.status.v1`. The command does not mutate, rank with a
+model, schedule work, or become an authority for any displayed state.
+
 ### commonplace-validate
 
 Run deterministic validation on one artifact, collection, type surface,
-collection-landing set, or redirect map. The
+collection-landing set, redirect map, or the bounded workshop-and-task
+lifecycle surface. The default result contains counts and every warning or
+failure without printing passing artifact blocks. Use `--full` for the complete
+per-artifact transcript and `--json` for the stable compact
+`commonplace.validation.v1` result. The
 [validation contract](./validation-contract.md) owns the exact check domains.
 
 ### commonplace-verify-quotes
