@@ -6,6 +6,8 @@ byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/bounded-context-orchestration-model.md
   - kb/notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md
+  - kb/notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md
+  - kb/notes/a-software-factory-can-produce-another-factory-without-acquiring-its-family-specific-production-knowledge.md
   - kb/notes/an-agentic-substrate-becomes-a-software-factory-through-family-specific-production-machinery.md
   - kb/notes/task-families-and-product-families-classify-different-things.md
   - kb/notes/broad-software-demands-create-pressure-for-agentic-factory-development.md
@@ -67,10 +69,11 @@ workflow and program.
 
 For software production, Greenfield's ontology supplies a more precise boundary
 than the loose modern factory metaphor. A [software
-factory](../notes/definitions/software-factory.md) is a development and runtime
-environment configured for a declared family of software products or solutions.
-Its reusable production knowledge is distributed across a schema, packaged
-assets, processes or guidance, tools, frameworks, tests, and lifecycle support.
+factory](../notes/definitions/software-factory.md) is a configured,
+family-specific production environment for a declared family of software
+products or solutions. Its reusable production knowledge is distributed across
+a schema, packaged assets, processes or guidance, tools, frameworks, tests, and
+lifecycle support.
 
 The mapping is:
 
@@ -107,7 +110,7 @@ every useful decomposition, representation, workflow, tool, evaluator, context
 policy, test, and recovery procedure will be supplied in advance. Novel
 requirements and environments expose missing or mistaken production knowledge.
 A general agentic system should therefore be able to participate in factory
-development when its installed specialization is inadequate.
+development when its installed family machinery is inadequate.
 
 This is a practical conjecture, not a necessity theorem. A fixed universal
 substrate remains a live counterhypothesis. The burden is empirical: does
@@ -120,8 +123,9 @@ Recursive factory construction is not the novelty. Greenfield, Tool Factory,
 and MDSoFa already describe factories or tool factories producing further
 production machinery. In those cases, people still supply the family
 definition, metamodels, mappings, frameworks, or expertise that determine the
-target. [Constructing a factory from supplied specialization is not learning
-that specialization](../notes/a-software-factory-can-produce-another-factory-without-learning-its-specialization.md).
+target. [Constructing a factory from supplied family-specific production
+knowledge is not acquiring that
+knowledge](../notes/a-software-factory-can-produce-another-factory-without-acquiring-its-family-specific-production-knowledge.md).
 
 ### Continual learning changes later production
 
@@ -185,7 +189,7 @@ The relevant self-knowledge is not a complete account of model internals. A
 decomposition is relative to both a task and a solver: it must preserve the
 task's dependencies while producing units that this system can execute, retain,
 combine, and verify. Theory-mediated decomposition therefore needs a
- task-relevant model of the task–solver relation and of interventions that can
+task-relevant model of the task–solver relation and of interventions that can
 make the task tractable.
 
 Theory does not replace search. It can shape a generate-and-verify process by
@@ -433,9 +437,9 @@ them](./the-decisions-that-stay-human-and-what-would-move-them.md) develops the
 warrant and transfer problem.
 
 Second, widen the demands over which computation can acquire the required
-specialization. Task-specific theories, schemas, decompositions, tools, methods,
-and evaluators must not remain a new human construction project for every new
-region of claimed scope.
+task- or family-specific production knowledge. Theories, schemas,
+decompositions, tools, methods, and evaluators must not remain a new human
+construction project for every new region of claimed scope.
 
 The Bitter Lesson constrains the production method, not only the carrier of what
 is learned. [Learning can produce explicit artifacts as well as
@@ -464,7 +468,7 @@ The factory-learning foundation does not make every stronger property follow.
 | Computational closure | Every decision assigned to a declared learning path is supplied computationally, conditional on permitted external evidence and interaction |
 | Self-improvement | Evidence supports that the system's own retained change improved a declared objective |
 | Compounding | An earlier change improves the capacity to produce or select later improvements |
-| Broad production reach | The process acquires adequate specialization across a declared class of demands |
+| Broad production reach | The process acquires adequate family-specific production knowledge across a declared class of demands |
 
 A factory can learn without reflection. A reflective system can fail to learn. A
 closed path can perform badly. A factory-valued product can be produced from a
