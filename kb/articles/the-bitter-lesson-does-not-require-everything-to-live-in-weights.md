@@ -13,7 +13,6 @@ source_notes:
   - kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md
   - kb/notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md
   - kb/notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md
-  - kb/notes/definitions/domain-extensible-software-factory.md
 ---
 
 # The Bitter Lesson does not require everything to live in weights
@@ -102,8 +101,8 @@ methods might someday be learned. It becomes substantive when it identifies:
 
 The project's answer to the Bitter Lesson is therefore not the label but the
 prediction the label commits it to, and which it can be held to: computation
-will acquire the task- or family-specific specialization required as claimed
-reach widens instead of requiring people to construct it anew. Fixed general
+will acquire the task-specific specialization required as claimed reach widens
+instead of requiring people to construct it anew. Fixed general
 learning machinery may persist. The Bitter Lesson is a standing pressure on
 that prediction and the source of its failure conditions.
 
@@ -217,16 +216,14 @@ computationally producible or challengeable over the reach being claimed.
 Editable files are not enough. An agent may rewrite a prompt while every
 important target-specific decision remains fixed human design.
 
-The long-run criterion is [**domain
-extensibility**](../notes/definitions/domain-extensible-software-factory.md), not
-competence in several predefined domains. A system with ten hand-built
-ontologies and ten special update procedures is still a bundle of predefined
-solutions. Relative to a predeclared non-vacuous demand, evidence, acceptance,
-and coverage frame, a domain-extensible process must computationally determine
-and install the required family specialization without a person supplying it
-wholesale or piecemeal. The specialization must govern production beyond the
-product that first exposed the need, across at least one distinct admitted
-variation.
+The long-run criterion is not competence in several predefined
+domains. A system with ten hand-built ontologies and ten special update
+procedures is still a bundle of predefined solutions. As claimed scope widens,
+computation must increasingly determine and retain the task-specific theory,
+representations, methods, and checks that new demands require instead of
+receiving another bespoke human design. The retained specialization must affect
+later work beyond the episode that first exposed the need; otherwise a one-off
+repair can masquerade as a general learning method.
 
 This does not require the system to derive its own values or revise every fixed
 component. Objectives, commitments, grants of authority, general learning
@@ -274,15 +271,14 @@ than candidate volume, that recurring human judgments become reusable selection
 machinery, and that the marginal human contribution falls without hidden losses
 in quality or warrant.
 
-A later experiment can provide an initial probe toward domain extensibility.
-Before outcomes are known, declare the demand and family frame, evidence
-protocol, acceptance relation, coverage, novelty rule, and human-intervention
-boundary. Introduce a family that was not used to design the artifact ontology
-or improvement procedure. Track which schema, methods, checks, and evaluator
-components computation produces, whether the resulting specialization becomes
-operative, and whether it causally supports a distinct admitted family member.
-Broader domain-extensibility requires repeated transfer without a new bespoke
-human architecture.
+A later experiment can probe transfer beyond supplied specialization. Before
+outcomes are known, declare the demand class, evidence protocol, acceptance
+relation, coverage, novelty rule, and human-intervention boundary. Introduce
+tasks or an area not used to design the artifact ontology or improvement
+procedure. Track which theories, representations, methods, checks, and evaluator
+components computation produces, whether they become operative, and whether
+they help on independently selected later demands. Broader support requires
+repeated transfer without a new bespoke human architecture.
 
 The strategy loses in a tested regime when system use becomes self-confirming,
 retained theory makes no causal difference, additional computation does not
