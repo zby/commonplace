@@ -5,7 +5,7 @@ traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [foundations, self-improving-systems]
 ---
 
-# A software factory can produce another factory without acquiring its family-specific production knowledge
+# A software factory can produce another without acquiring family-specific production knowledge
 
 Producing a software factory is not by itself evidence that a system acquired the family-specific production knowledge embodied in that factory. The software-factory literature already contains recursive factory construction and tooling bootstraps. In the retained examples, computation realizes production machinery from supplied family definitions, metamodels, mappings, frameworks, or expertise. The semantically decisive family knowledge still originates with people.
 

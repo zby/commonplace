@@ -5,7 +5,7 @@ traits: [title-as-claim]
 tags: [foundations, self-improving-systems, evaluation]
 ---
 
-# A retained-theory intervention isolates one explicit theory surface, not the system's whole program theory
+# A retained-theory intervention isolates one surface, not the whole program theory
 
 A system may carry program-relevant understanding across several places at once: explicit explanations, architectural decisions, code, tests, operational state, model competence, and human participants inside the declared boundary. A **retained-theory intervention** varies a declared explicit theory state while holding specified background components fixed. Its result therefore identifies the causal contribution of that theory surface under the intervention; it does not remove every theory-bearing influence from the composite or test whether the composite possesses a complete program theory.
 

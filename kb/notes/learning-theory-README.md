@@ -1,9 +1,8 @@
 ---
-description: "Curated head for the learning-theory tag — how systems learn, verify, and improve; routes to the covered child tags listed in covered_by."
+description: "Curated head for the learning-theory tag — how systems learn, verify, and improve, with routes through its major child areas"
 type: kb/types/tag-readme.md
 index_source: tag
 index_key: learning-theory
-covered_by: [deploy-time-learning, constraining, discovery, artifact-analysis, agent-memory, llm-reliability]
 ---
 
 # Learning theory
@@ -12,9 +11,9 @@ How systems learn, verify, and improve. These notes define learning mechanisms, 
 
 The area is organized around [deploy-time learning](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) as the unifying framework. **Accumulation** — adding knowledge to the store — is the most basic learning operation, with [explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) as its key property: facts sit at the low end, theories at the high end. Accumulated knowledge is transformed by [constraining](./definitions/constraining.md) and by working use-shaped artifacts out from it ([theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md)); the conjecture phase of the [discovery lifecycle](./definitions/discovery-lifecycle.md) posits the high-explanatory-reach theories that are accumulation's most valuable items, and [recognition](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) is the expensive step in getting there.
 
-## The kinds of notes under this tag
+## Major child areas
 
-Every note carrying `learning-theory` also carries at least one of these child tags (enforced by validation — the typed routing below is trustworthy):
+These child tags route major parts of the area:
 
 - [deploy-time-learning](./deploy-time-learning-README.md) — the framework itself: adaptation through durable inspectable artifacts, learning fundamentals, and feedback quality
 - [constraining](./constraining-README.md) — narrowing the interpretation space, from conventions to deterministic code; codification, relaxing, and the decision heuristics
