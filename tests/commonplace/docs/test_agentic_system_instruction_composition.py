@@ -167,3 +167,40 @@ def test_result_type_owns_probe_capsule_shape_not_its_lifecycle() -> None:
     assert "Do not create a workshop, `cache/`, `state/`, or `retained/` artifact" in (
         orchestrator
     )
+
+
+def test_candidate_artifact_does_not_establish_phase_observation() -> None:
+    epistemic = (
+        REPO_ROOT
+        / "kb"
+        / "instructions"
+        / "analyse-external-system-epistemic-architecture.md"
+    ).read_text(encoding="utf-8")
+    example = epistemic[
+        epistemic.index("Example: observed-run evidence")
+        : epistemic.index("Use this schema:")
+    ]
+
+    assert "persisted claim artifact" in example
+    assert "does not establish that any particular production phase ran" in example
+    assert "architectural status as `implemented`" in example
+    assert "observed candidate state" in example
+    assert "as `not determinable`, not `phase evidenced` or `accepted`" in example
+    assert "candidate-linked evidence of that phase" in example
+    assert "neither a candidate artifact nor a candidate-linked trace" in example
+    assert "use `no instance observed`" in example
+
+
+def test_response_only_report_makes_commit_visibility_explicit() -> None:
+    orchestrator = instruction("analyse-agentic-system")
+    report = orchestrator[
+        orchestrator.index("### 12. Emit and report")
+        : orchestrator.index("## Verify")
+    ]
+
+    assert "canonical-result commit visibility: none" in report
+    assert "no standalone repository artifact was written" in report
+    assert "separately authorized downstream operation captures it" in report
+    assert "does not convert the response-only result into a published analysis" in report
+    assert "does not grant write, capture, retention, or publication authority" in report
+    assert "no standalone canonical result is commit-visible" in orchestrator

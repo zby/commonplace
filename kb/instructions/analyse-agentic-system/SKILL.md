@@ -216,7 +216,11 @@ Rules:
 
 ### 12. Emit and report
 
-Emit the frozen response result now when the run was response-only; do not alter its stable block after fingerprinting. Then report outside that block: result identity and response or authorized locations; target classification; boundary, revision, and tier; both lens scoping records and the depth each lens ran at; legacy memory-review detection, invocation, path, and validation or blocker disposition; stable-result verification and digest or not-required disposition; transfer-scan not-requested, response, state path, or transfer-specific blocker disposition; retention disposition for any files; limitations; and blockers.
+Emit the frozen response result now when the run was response-only; do not alter its stable block after fingerprinting.
+
+In the operator report outside that block, include this explicit notice for a response-only run: `canonical-result commit visibility: none — no standalone repository artifact was written; the canonical result exists only in this response unless a separately authorized downstream operation captures it.` Report any such capture by its separate path and state that it does not convert the response-only result into a published analysis. The notice does not grant write, capture, retention, or publication authority.
+
+Also report: result identity and response or authorized locations; target classification; boundary, revision, and tier; both lens scoping records and the depth each lens ran at; legacy memory-review detection, invocation, path, and validation or blocker disposition; stable-result verification and digest or not-required disposition; transfer-scan not-requested, response, state path, or transfer-specific blocker disposition; retention disposition for any files; limitations; and blockers.
 
 ## Verify
 
@@ -226,6 +230,7 @@ Emit the frozen response result now when the run was response-only; do not alter
 - No conclusion status was upgraded; every negative or uncertain finding names its inspected boundary and prevented conclusion.
 - Commonplace terms normalize evidenced external mechanisms; no label replaces the source-native account, and open-ended omissions carry no absence claim.
 - The runtime account classifies the target, traces the ordinary and material alternate paths, and attributes every load-bearing guarantee to its owner and enforcement point.
+- A response-only operator report states that no standalone canonical result is commit-visible, reports any separately authorized downstream capture by its own path, and grants no write or lifecycle authority through that notice.
 - The synthesis is organized around the system, contains no system-wide epistemic grade, and the emitted entry artifact conforms to `kb/types/agentic-system-analysis-result.md` for every result disposition. Any file output follows an authorized collection and retention contract.
 - The stable result passed semantic and applicable deterministic verification, was frozen, and, when byte identity was required, was fingerprinted before any transfer scan began.
 - Any Commonplace transfer scan is separately commissioned, interest-conditioned, keyed to the complete analysis digest, held as operational state until disposition, excluded from the canonical result and matrix, and reported only by disposition.

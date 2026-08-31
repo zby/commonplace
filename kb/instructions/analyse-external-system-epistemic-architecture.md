@@ -109,6 +109,8 @@ Use these **observed candidate states**:
 
 Implementation or doctrine alone cannot establish an observed candidate state. Use `suspended` only for an observed candidate deliberately held pending, not for a disabled implementation route.
 
+Example: observed-run evidence contains a persisted claim artifact `OBJ-7`, while implementation evidence contains conjecture, test, and acceptance routes `RTE-3` through `RTE-5`, but no provenance or trace links that artifact to any route. The artifact establishes that a candidate instance is available; it does not establish that any particular production phase ran. Record each route's architectural status as `implemented`. Record the observed candidate state for conjecture, test/evidence, and acceptance as `not determinable`, not `phase evidenced` or `accepted`. Upgrade one phase only from candidate-linked evidence of that phase. If neither a candidate artifact nor a candidate-linked trace exists, use `no instance observed`.
+
 Use this schema:
 
 `candidate object ID | relevant route IDs | transformation: ampliative conjecture | observation/anomaly: route IDs + architectural status + observed candidate state + evidence | conjecture: route IDs + architectural status + observed candidate state + evidence | derived consequence: route IDs + architectural status + observed candidate state + evidence | test/evidence: route IDs + architectural status + observed candidate state + evidence | acceptance: route IDs + evaluator + criterion + intended use + architectural status + observed candidate state + accepted scope + evidence | lifecycle integration: route IDs + post-acceptance change/consumer + architectural status + observed candidate state + evidence | missing phase/evidence`
