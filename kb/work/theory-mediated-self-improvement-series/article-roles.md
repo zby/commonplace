@@ -1,3 +1,3 @@
 # Article roles
 
-Canonical argument map. This PR does not intentionally change article roles.
+This file remains governed by the version on main; the compression change is scoped to the program article.
