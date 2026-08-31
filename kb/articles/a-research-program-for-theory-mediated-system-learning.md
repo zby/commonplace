@@ -185,7 +185,7 @@ theory](../notes/disconnected-witnesses-do-not-establish-a-full-causal-path-thro
 ### Warrant and theory fit are different evaluations
 
 A well-warranted claim can still fit a working theory poorly. Conversely, a weak
-claim can appear useful because the current implementation already assumes it.
+claim can appear to fit because the current implementation already assumes it.
 [A claim's warrant therefore does not determine its fit in a working
 theory](../notes/a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md).
 
