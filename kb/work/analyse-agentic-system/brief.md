@@ -93,9 +93,9 @@ Exclude for this target:
 - `kb/agent-memory-systems/types/agent-memory-system-review.md`
 - `kb/agent-memory-systems/types/agent-memory-system-review.schema.yaml`
 - `kb/instructions/analyse-external-system-epistemic-architecture.md`
-- `kb/work/multistage/multistage-write-analyse-epistemic-architecture-20260820/acceptance.md`
-- `kb/work/multistage/multistage-write-analyse-epistemic-architecture-20260820/arc-trial.md`
-- `kb/work/multistage/multistage-write-analyse-epistemic-architecture-20260820/gbrain-trial.md`
+- `kb/reports/retained/epistemic-architecture-analysis-trials-20260820/acceptance.md`
+- `kb/reports/retained/epistemic-architecture-analysis-trials-20260820/arc-trial.md`
+- `kb/reports/retained/epistemic-architecture-analysis-trials-20260820/gbrain-trial.md`
 - `kb/work/pi-agent-zerostack-comparison/review-instruction.md`
 
 ### Collection and framework state

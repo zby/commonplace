@@ -4,7 +4,7 @@ This is a source-first reconstruction for the new instruction. It is not polishe
 
 ## Source key and evidential roles
 
-- **[Brief]** `kb/work/multistage/multistage-write-analyse-epistemic-architecture-20260820/brief.md` — authoritative for purpose, scope, required behavior, held-out boundary, and operativity.
+- **[Brief]** `kb/reports/retained/epistemic-architecture-analysis-trials-20260820/brief.md` — authoritative for purpose, scope, required behavior, held-out boundary, and operativity.
 - **[Workshop framing]** `kb/work/epistemic-architectures/README.md` — names the six cases, their unequal evidence grades, and the route-level result.
 - **[Four-case baseline]** `kb/work/epistemic-architectures/four-system-baseline.md` — working comparison of ScienceFlow, the ontology draft, Eigenius, and Commonplace.
 - **[AI Research OS case]** `kb/work/epistemic-architectures/ai-research-os-reading.md` — fifth case: retained synthesis without reject-capable acceptance.

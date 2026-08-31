@@ -1,4 +1,10 @@
-# Multistage write: analyse external epistemic architecture
+# Epistemic-architecture analysis trials (2026-08-20)
+
+Retained exact record of the multistage write, independent ARC application,
+held-out GBrain application, assessment, audit, and acceptance review that
+produced `kb/instructions/analyse-external-system-epistemic-architecture.md`.
+The completed run left active work on 2026-08-31 because the current unified
+agentic-system workflow still consumes these trials as design evidence.
 
 - **Immutable run key:** `kb/instructions/analyse-external-system-epistemic-architecture.md`
 - **Current intended target:** `kb/instructions/analyse-external-system-epistemic-architecture.md`
@@ -6,7 +12,7 @@
 - **Collection:** `kb/instructions/`
 - **Type:** `kb/types/instruction.md`
 - **Acceptance review:** required — this is a behavior-changing review instruction with substantive epistemic distinctions
-- **Experiment retention:** required — the user asked to inspect two sub-agent applications of the candidate instruction
+- **Retention:** durable evaluation record cited by `kb/work/analyse-agentic-system/`
 
 ## Inputs
 
@@ -38,9 +44,15 @@
 - None. The user authorized writing the instruction and testing it through sub-agents on ARC skill and one already reviewed memory architecture with non-trivial transformations.
 - GBrain is the held-out memory-system case: it is code-grounded, already reviewed, implements automatic `synthesize` and trace-learning routes, and was not one of the six epistemic-architecture workshop cases.
 
-## Pending handoffs
+## Closure
 
-- Conditional wiring into `write-agent-memory-system-review` and its type contract is not part of this target. The trials show that the instruction adds knowledge-generation analysis beyond the current memory-review schema, but automatic invocation remains a separately authorized design change.
+- The former conditional-wiring handoff is resolved by the unified
+  `kb/instructions/analyse-agentic-system/SKILL.md` workflow. It invokes the
+  accepted epistemic procedure on every run and routes detected memory,
+  knowledge, and context-engineering systems through the legacy memory-review
+  publication workflow at the same frozen evidence boundary.
+- No active-workshop decision remains. This retained set preserves the exact
+  trial and review record rather than unfinished work.
 
 ## Outcome
 

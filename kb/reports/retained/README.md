@@ -7,6 +7,7 @@ a library claim or system definition.
 
 Current retained sets:
 
+- [Epistemic-architecture analysis trials](./epistemic-architecture-analysis-trials-20260820/README.md)
 - [Planning and delegation theory](./planning-delegation-theory/README.md)
 - [Simplification-instruction comparison](./simplification-instruction-comparison-20260807/README.md)
 - [ASD-STE100-inspired rewrite experiment](./asd-ste100-inspired-rewrite.md)

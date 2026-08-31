@@ -68,7 +68,7 @@ These are design questions, not permission to mechanically relocate or patch the
 - `kb/instructions/write-agent-memory-system-review/SKILL.md`
 - `kb/agent-memory-systems/review-framework-design.md`
 - `kb/instructions/analyse-external-system-epistemic-architecture.md`
-- `kb/work/multistage/multistage-write-analyse-epistemic-architecture-20260820/`
+- `kb/reports/retained/epistemic-architecture-analysis-trials-20260820/`
 - `kb/work/pi-agent-zerostack-comparison/review-instruction.md`
 - `kb/notes/agent-runtime-analysis-should-separate-scheduling-context-state.md`
 - `kb/notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md`
