@@ -42,7 +42,7 @@ source_notes:
 
 > **Draft.** Comments and counterexamples are welcome through the repository's issue tracker.
 
-> **TL;DR.** If software factories can build software factories, the machinery that improves a factory could itself be produced, evaluated, and revised inside the system — improvement without training new models. Factories that build factories are prior art; factories that improve from having done so are not. This program bets the missing piece is theory-mediated learning: a fallible natural-language theory of the system's tasks, failures, and machinery, revised as consequences come in. Whether it survives its own cost is what the program tests.
+> **TL;DR.** If software factories can build software factories, the machinery that improves a factory could itself be produced, evaluated, and revised inside the system — improvement without training new models. Factories that build factories are prior art; factories that improve from having done so are not. When what a system learns lives in addressable storage rather than weights, retention is just a write: continual learning stops being the hard part, and coherence becomes it. This program bets the missing piece is theory-mediated learning: a fallible natural-language theory of the system's tasks, failures, and machinery, revised as consequences come in. Whether it survives its own cost is what the program tests.
 
 ## From agentic systems to learning software factories
 
