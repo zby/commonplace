@@ -35,7 +35,7 @@ This list extends the historical ontology into current agentic machinery while p
 
 One substrate can host, select, compose, or help construct several factories. A generic LLM runtime may remain the same while different family schemas, tools, workflows, tests, and guidance configure it for web applications, data pipelines, embedded controllers, or another declared family.
 
-Calling the general substrate one universal software factory would hide this distinction. Its generic capabilities may make many factories realizable, but a configured factory additionally embodies the specialization needed for a particular family. The ability to execute or generate any supplied program does not establish that the appropriate family specialization is already present or can be acquired from task evidence.
+Calling the general substrate one universal software factory would hide this distinction. Its generic capabilities may make many factories realizable, but a configured factory additionally embodies the production knowledge needed for a particular family. The ability to execute or generate any supplied program does not establish that the required family-specific production knowledge is already present or can be acquired from task evidence.
 
 ## Task-local software is not sufficient
 
@@ -64,7 +64,7 @@ Likewise, the mapping does not imply learning. A complete family template can be
 - The mapping is functional, not a claim that a modern agent harness is identical to Greenfield's Microsoft IDE architecture.
 - The general substrate may contain fixed components that apply across families.
 - The configured factory can include human activities; actor allocation and autonomy must be declared separately.
-- A family-valued product can itself be another factory, but recursive output does not establish acquisition, learning, reflection, or self-improvement.
+- A factory-valued product can itself be another factory, but recursive output does not establish acquisition, learning, reflection, or self-improvement.
 - The product-family boundary must be declared independently; it cannot be inferred post hoc from whatever artifacts the system happened to produce.
 
 ---
@@ -72,5 +72,5 @@ Likewise, the mapping does not imply learning. A complete family template can be
 Relevant Notes:
 
 - [A software factory is family-scoped lifecycle production machinery](./a-software-factory-is-family-scoped-lifecycle-production-machinery.md) — grounds: supplies the imported family, schema, template, configured-environment, and member boundaries
-- [A software factory can produce another factory without learning its specialization](./a-software-factory-can-produce-another-factory-without-learning-its-specialization.md) — contrasts: shows that general construction machinery can realize supplied specialization without acquiring it
+- [A software factory can produce another factory without acquiring its family-specific production knowledge](./a-software-factory-can-produce-another-factory-without-acquiring-its-family-specific-production-knowledge.md) — contrasts: shows that general construction machinery can realize supplied family knowledge without acquiring it
 - [The deployed system, not the model alone, is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md) — extends: places the configured model, artifacts, tools, and runtime inside the behavior-producing system boundary
