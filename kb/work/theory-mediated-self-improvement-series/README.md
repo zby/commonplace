@@ -15,6 +15,13 @@ articles is not success by itself.
 This series is for researchers. Practitioner adoption and operational guidance
 belong in a separate series.
 
+The [research-program
+article](../../articles/a-research-program-for-learning-software-factories.md)
+now derives an outer factory-learning question before introducing theory
+mediation. This workshop owns the downstream theory-mediated mechanism,
+coherent-modification test, and bootstrap. Its shared model and article-role
+files do not govern the article's outer dependency order.
+
 ## Central research question
 
 Can a computational composite use a fallible, project-specific theory to keep
@@ -225,7 +232,7 @@ used to revise the invitation.
 
 ## Current research surface
 
-- [A research program for learning software factories](../../articles/a-research-program-for-learning-software-factories.md) — the compact program statement; the workshop's current article-side focus.
+- [A research program for learning software factories](../../articles/a-research-program-for-learning-software-factories.md) — the public program statement; this workshop supplies its theory-mediated test.
 - [The decisions that stay human, and what would move them](../../articles/the-decisions-that-stay-human-and-what-would-move-them.md) — the conditional transfer argument and structural closure versus evaluator quality.
 - [Naur binds program theory to humans by equating machine execution with formulated criteria](../../notes/naur-equates-machine-execution-with-formulated-criteria.md) — why Naur's human-only conclusion does not settle the bearer question.
 - [Holding a program theory means sustaining coherent search under delayed feedback](../../notes/program-theory-sustains-search-under-delayed-feedback.md) — the longitudinal coherent-modification test.
@@ -272,7 +279,7 @@ historical planning state should not govern current work.
 
 ## Working map
 
-- **Research program:** [shared model](./shared-model.md),
+- **Theory-mediated program:** [shared model](./shared-model.md),
   [target problems](./target-problems.md),
   [article roles](./article-roles.md),
   [task-scoped closure](./task-scoped-computational-closure.md),
