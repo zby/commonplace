@@ -19,189 +19,76 @@ only after disposition in the [incumbent ledger](./incumbent-ledger.md).
 
 ## Composition
 
-The modules do not imply an article per row. One article may carry several
-modules, but each full supporting argument should have one canonical public
-home, which may be a note or an article. Other articles repeat only enough to
-remain self-contained and link to that home. This limits synchronization cost
-and makes bounded agent edits possible.
+The modules do not imply an article per row. One article may carry several modules, but each full supporting argument should have one canonical public home, which may be a note or an article. Other articles repeat only enough to remain self-contained and link to that home. This limits synchronization cost and makes bounded agent edits possible.
 
-No article carries the series' routing: `kb/articles/README.md` is the rendered
-collection landing and the reader's entry point, and the articles collection
-forbids in-prose links into `kb/work/`, so an article cannot route to the shared
-model, target problems, or closure map in any case. Each article stands on its
-own and links only the companions a reader actually needs next.
+No article carries the series' routing: `kb/articles/README.md` is the rendered collection landing and the reader's entry point, and the articles collection forbids in-prose links into `kb/work/`, so an article cannot route to the shared model, target problems, or closure map in any case. Each article stands on its own and links only the companions a reader actually needs next.
 
 The current minimum public surface is:
 
-1. **[A research program for learning software
-   factories](../../articles/a-research-program-for-learning-software-factories.md)**
-   carrying the central question, fallible longitudinal search, complementary
-   operation classes, lightweight search control, the evidence ladder,
-   truth-versus-fit inside the evaluation problem, the two testbeds, an
-   illustrative Commonplace episode, the evidence it failed to retain, and the
-   minimum contrasts that could change the program's status.
-   It discloses early that the current path is human-inclusive and later gives
-   only the compact bootstrap bridge needed to explain why the operator's
-   remaining judgments are research targets.
-2. **[The decisions that stay human, and what would move
-   them](../../articles/the-decisions-that-stay-human-and-what-would-move-them.md)**
-   carrying fixed-boundary function allocation, the human cut-set and
-   boundary-contraction endpoint, the conditional adverse-selection argument,
-   the residual-class table of what would have to grow, structural closure
-   versus evaluator quality, and the fixed-client limit of the remote-programmer
-   benchmark.
-3. **The Bitter Lesson article** carrying the narrow form-only rebuttal, the
-   already-computational human-agent loop, the prompt/code learning surface,
-   conversion of recurring operator judgments into selection machinery,
-   challengeability of the present decomposition and operation boundary,
-   domain-extensibility, Sutton's later weight-update position, direct
-   alternatives, and failure conditions.
-4. **Experimental protocols and later results**, published as articles only when
-   the evidence has enough substance to warrant them.
+1. **[A research program for learning software factories](../../articles/a-research-program-for-learning-software-factories.md)** carrying the central question, fallible longitudinal search, complementary operation classes, lightweight search control, the evidence ladder, truth-versus-fit inside the evaluation problem, the two testbeds, an illustrative Commonplace episode, the evidence it failed to retain, and the minimum contrasts that could change the program's status. It discloses early that the current path is human-inclusive and later gives only the compact bootstrap bridge needed to explain why the operator's remaining judgments are research targets.
+2. **[The decisions that stay human, and what would move them](../../articles/the-decisions-that-stay-human-and-what-would-move-them.md)** carrying fixed-boundary function allocation, the human cut-set and boundary-contraction endpoint, the conditional adverse-selection argument, the residual-class table of what would have to grow, structural closure versus evaluator quality, and the fixed-client limit of the remote-programmer benchmark.
+3. **The Bitter Lesson article** carrying the narrow form-only rebuttal, the already-computational human-agent loop, the prompt/code learning surface, conversion of recurring operator judgments into selection machinery, challengeability of the present decomposition and operation boundary, domain-extensibility, Sutton's later weight-update position, direct alternatives, and failure conditions.
+4. **Experimental protocols and later results**, published as articles only when the evidence has enough substance to warrant them.
 
-The bearer module is carried by the
-[Naur note](../../notes/naur-equates-machine-execution-with-formulated-criteria.md)
-and the
-[coherent-search note](../../notes/program-theory-sustains-search-under-delayed-feedback.md).
-There is no separate Naur article: a new one would need a distinct
-external-reader exposition rather than another assembly of the same argument.
+The bearer module is carried by the [Naur note](../../notes/naur-equates-machine-execution-with-formulated-criteria.md) and the [coherent-search note](../../notes/program-theory-sustains-search-under-delayed-feedback.md). There is no separate Naur article: a new one would need a distinct external-reader exposition rather than another assembly of the same argument.
 
-The program statement is the entry point, not the container for every supporting
-argument. It may summarize a companion's result when that summary is required
-to state the program, but it should not reproduce the companion's derivation.
+The program statement is the entry point, not the container for every supporting argument. It may summarize a companion's result when that summary is required to state the program, but it should not reproduce the companion's derivation.
 
-The division between the program statement and the decisions companion should
-be explicit. The program statement may state two boundary facts: current
-Commonplace evidence is human-inclusive, and the research direction is to move
-named decision-bearing functions toward computational supply. The fixed-boundary
-derivation, human/computational/joint allocation profile, cut-set endpoint,
-boundary contraction, structural closure, capability, and warrant belong to
-the decisions companion. If the program statement names the cut-set endpoint, it
-does so only in its bootstrap section and links out rather than teaching the
-formalism.
+The division between the program statement and the decisions companion should be explicit. The program statement may state two boundary facts: current Commonplace evidence is human-inclusive, and the research direction is to move named decision-bearing functions toward computational supply. The fixed-boundary derivation, human/computational/joint allocation profile, cut-set endpoint, boundary contraction, structural closure, capability, and warrant belong to the decisions companion. If the program statement names the cut-set endpoint, it does so only in its bootstrap section and links out rather than teaching the formalism.
 
-The division between the program statement and the Bitter Lesson article is
-likewise asymmetric. The program statement retains the narrow
-production-method/representational-form distinction, why this human-agent loop
-is the first strategy being tried, the requirement that present machinery remain
-challengeable, and concise abandonment conditions. The companion owns the full
-scaling argument, the account of computation already in the loop, conversion of
-operator judgments into machinery, domain-extensibility, the Sutton comparison,
-and the detailed alternatives.
+The division between the program statement and the Bitter Lesson article is likewise asymmetric. The program statement retains the narrow production-method/representational-form distinction, why this human-agent loop is the first strategy being tried, the requirement that present machinery remain challengeable, and concise abandonment conditions. The companion owns the full scaling argument, the account of computation already in the loop, conversion of operator judgments into machinery, domain-extensibility, the Sutton comparison, and the detailed alternatives.
 
-Functional architecture stays in the program statement while it can be
-explained there without displacing the central question. Split out a further
-evaluation article only when it carries a distinct formalism, dataset, or
-empirical result. Do not restore former article boundaries merely because
-rejected drafts used them.
+Functional architecture stays in the program statement while it can be explained there without displacing the central question. Split out a further evaluation article only when it carries a distinct formalism, dataset, or empirical result. Do not restore former article boundaries merely because rejected drafts used them.
 
-The Commonplace case remains part of the program statement until its evidence
-supports a standalone case study. The sample-efficiency conjecture — that
-theory mediation needs fewer target observations when a shift preserves the
-structure a theory names — may receive its own article when the structured-shift
-experiment becomes a distinct result. Title that article on the result, not on
-the phrase *theory-mediated system learning*, which the program statement now
-uses in its general sense.
+The Commonplace case remains part of the program statement until its evidence supports a standalone case study. The sample-efficiency conjecture — that theory mediation needs fewer target observations when a shift preserves the structure a theory names — may receive its own article when the structured-shift experiment becomes a distinct result. Title that article on the result, not on the phrase *theory-mediated system learning*, which the program statement now uses in its general sense.
 
 ## Research-program statement contract
 
-The program statement should remain editable as six bounded argumentative
-units:
+The program statement should remain editable as six bounded argumentative units:
 
-1. **Question, learning unit, and testbeds.** Open from Naur's problem, define the
-   deployed-system learning unit and theory mediation, introduce Commonplace and
-   programming agents, and disclose that the current Commonplace path includes
-   an operator who supplies much global-fit selection and final authorization.
-   Do not introduce cut-set or closure machinery here.
-2. **Fallible longitudinal search.** Explain coherent modification across
-   proposal, backtracking, recovery, and delayed feedback; distinguish
-   theory-guided search from a correct first-shot deduction; state the causal
-   theory intervention.
-3. **Functional architecture.** Give the distinct failure surfaces for retained
-   project state, model-mediated semantic operation, independently executed
-   symbolic operation, and independent exposure and read-back.
-4. **Evidence and evaluation.** Present mediation, empirical contact, theory
-   learning, and recurrence; treat claim truth and theory fit as two evaluation
-   questions inside this section rather than as a second article spine.
-5. **Current status and missing evidence.** Treat current episodes only at
-   their recorded strength, state what evidence is missing, and name the minimum
-   contrasts that could change the program's status. Detailed protocols and
-   unrun measurement catalogues stay in the workshop until execution.
-6. **Bootstrap pressure and invitation.** State the narrow Bitter Lesson
-   compatibility, explain why the human-inclusive computational loop is the
-   first strategy, identify recurring operator judgments as targets for
-   reusable machinery, give only the compact progress criterion and failure
-   conditions needed here, link to the two companions, and invite rival
-   mechanisms and discriminating tests.
+1. **Question, learning unit, and testbeds.** Open from Naur's problem, define the deployed-system learning unit and theory mediation, introduce Commonplace and programming agents, and disclose that the current Commonplace path includes an operator who supplies much global-fit selection and final authorization. Do not introduce cut-set or closure machinery here.
+2. **Fallible longitudinal search.** Explain coherent modification across proposal, backtracking, recovery, and delayed feedback; distinguish theory-guided search from a correct first-shot deduction; state the causal theory intervention.
+3. **Functional architecture.** Give the distinct failure surfaces for retained project state, model-mediated semantic operation, independently executed symbolic operation, and independent exposure and read-back.
+4. **Evidence and evaluation.** Present mediation, empirical contact, theory learning, and recurrence; treat claim truth and theory fit as two evaluation questions inside this section rather than as a second article spine.
+5. **Current status and missing evidence.** Treat current episodes only at their recorded strength, state what evidence is missing, and name the minimum contrasts that could change the program's status. Detailed protocols and unrun measurement catalogues stay in the workshop until execution.
+6. **Bootstrap pressure and invitation.** State the narrow Bitter Lesson compatibility, explain why the human-inclusive computational loop is the first strategy, identify recurring operator judgments as targets for reusable machinery, give only the compact progress criterion and failure conditions needed here, link to the two companions, and invite rival mechanisms and discriminating tests.
 
-The operator therefore appears in two places for two different reasons. The
-opening discloses the evidential boundary. The bootstrap section explains why
-the remaining human contribution is the next learning target. The full
-fixed-boundary and cut-set argument stays in the decisions companion.
+The operator therefore appears in two places for two different reasons. The opening discloses the evidential boundary. The bootstrap section explains why the remaining human contribution is the next learning target. The full fixed-boundary and cut-set argument stays in the decisions companion.
 
-Related-system comparisons should follow enough of the proposed mechanism for
-the contrast to be intelligible. The Naur exegesis, cut-set derivation, closure
-and warrant theory, the full Bitter Lesson and bootstrap argument, and the
-Sutton comparison are not independent top-level movements of the program
-statement.
+Related-system comparisons should follow enough of the proposed mechanism for the contrast to be intelligible. The Naur exegesis, cut-set derivation, closure and warrant theory, the full Bitter Lesson and bootstrap argument, and the Sutton comparison are not independent top-level movements of the program statement.
 
-An agent edit should normally target one of these six units and name the modules
-it is not changing. A later integration pass checks the central question,
-evidence levels, current actor allocation, experimental controls, and companion
-boundaries; it should not default to rewriting the full article.
+An agent edit should normally target one of these six units and name the modules it is not changing. A later integration pass checks the central question, evidence levels, current actor allocation, experimental controls, and companion boundaries; it should not default to rewriting the full article.
 
 ## Shared constraints
 
-- Coherent modification is the center. Warranted transfer and computational
-  closure describe the boundary and evaluation problem around it.
-- The program statement discloses the human-inclusive evidence boundary early,
-  but reserves the reallocation, cut-set, contraction, closure, and warrant
-  argument for the bootstrap location and the decisions companion.
-- A prompt does not define an LLM operation alone. Relative to fixed call
-  settings, the model-mediated operation is instantiated by weights plus prompt.
-- Code complements the weight–prompt operation with runtime-assigned symbolic
-  operations that can execute without model reinterpretation, even when the
-  model generated or selected the code.
-- Code can also be read into a prompt as project evidence. Distinguish that
-  model-mediated consumption path from import, execution, testing, or validation
-  by a symbolic runtime.
-- Human theory-holders use partial, fallible theories to guide search,
-  diagnosis, backtracking, executable change, and recovery. The computational
-  comparison is not a demand for a correct first proposal.
-- Lightweight search control may allocate branches and probes under weaker
-  evidence than final adoption requires. Backtracking must keep those choices
-  provisional.
-- Distinguish mediation, empirical contact, theory-state revision, and recurrent
-  later use. Report the strongest link established; do not redefine every
-  useful theory-guided change as the full recurrent loop.
-- Semantic interpretation is not reach-assessment. A process may understand and
-  apply a false theory; independent exposure supplies correction.
-- Claim truth is not claim fit. System-building consequences can test causal
-  usefulness and integration, but they cannot replace factual, formal, or scope
-  evidence.
-- Symbolic exactness is relative to the implemented transition. It does not
-  validate the requirement, decomposition, or objective that selected the code.
-- The current natural-language, parametric, symbolic, and evidential carriers
-  are provisional. The allocation between model-mediated and symbolic
-  operations may be combined, moved, absorbed, or replaced.
-- The adverse-selection claim is conditional. Cross-sectional evaluator gaps
-  are consistent with it, not a direct test of before-and-after residual
-  enrichment.
-- Computational closure is task-scoped and structural. A captured evaluator can
-  occur inside a closed path; it defeats warrant for a strong result rather
-  than structural closure itself.
-- Remote-programmer parity measures the worker role under a fixed client. It
-  does not establish closure over task choice, feedback, missing premises, or
-  acceptance.
-- Only the form-only inference is rebutted under the Bitter Lesson. The
-  theory-guided bootstrap is a first strategy under incomplete global
-  evaluation, not a defense or a uniqueness claim.
-- The program statement summarizes that bootstrap only far enough to constrain
-  the research program; the full scaling argument and Sutton comparison belong
-  to the Bitter Lesson companion.
-- The current Commonplace loop already uses weight–prompt operations for
-  retrieval, interpretation, search, synthesis, and criticism, and symbolic
-  operations for repository changes, testing, validation, scheduling, and
-  retention. The bottleneck is not the absence of computation.
-- The first strategy must measure whether more computation improves downstream
-  search quality, whether code earns its placement after
+- Coherent modification is the center. Warranted transfer and computational closure describe the boundary and evaluation problem around it.
+- The program statement discloses the human-inclusive evidence boundary early, but reserves the reallocation, cut-set, contraction, closure, and warrant argument for the bootstrap location and the decisions companion.
+- A prompt does not define an LLM operation alone. Relative to fixed call settings, the model-mediated operation is instantiated by weights plus prompt.
+- Code complements the weight–prompt operation with runtime-assigned symbolic operations that can execute without model reinterpretation, even when the model generated or selected the code.
+- Code can also be read into a prompt as project evidence. Distinguish that model-mediated consumption path from import, execution, testing, or validation by a symbolic runtime.
+- Human theory-holders use partial, fallible theories to guide search, diagnosis, backtracking, executable change, and recovery. The computational comparison is not a demand for a correct first proposal.
+- Lightweight search control may allocate branches and probes under weaker evidence than final adoption requires. Backtracking must keep those choices provisional.
+- Distinguish mediation, empirical contact, theory-state revision, and recurrent later use. Report the strongest link established; do not redefine every useful theory-guided change as the full recurrent loop.
+- Semantic interpretation is not reach-assessment. A process may understand and apply a false theory; independent exposure supplies correction.
+- Claim truth is not claim fit. System-building consequences can test causal usefulness and integration, but they cannot replace factual, formal, or scope evidence.
+- Symbolic exactness is relative to the implemented transition. It does not validate the requirement, decomposition, or objective that selected the code.
+- The current natural-language, parametric, symbolic, and evidential carriers are provisional. The allocation between model-mediated and symbolic operations may be combined, moved, absorbed, or replaced.
+- The adverse-selection claim is conditional. Cross-sectional evaluator gaps are consistent with it, not a direct test of before-and-after residual enrichment.
+- Computational closure is task-scoped and structural. A captured evaluator can occur inside a closed path; it defeats warrant for a strong result rather than structural closure itself.
+- Remote-programmer parity measures the worker role under a fixed client. It does not establish closure over task choice, feedback, missing premises, or acceptance.
+- Only the form-only inference is rebutted under the Bitter Lesson. The theory-guided bootstrap is a first strategy under incomplete global evaluation, not a defense or a uniqueness claim.
+- The program statement summarizes that bootstrap only far enough to constrain the research program; the full scaling argument and Sutton comparison belong to the Bitter Lesson companion.
+- The current Commonplace loop already uses weight–prompt operations for retrieval, interpretation, search, synthesis, and criticism, and symbolic operations for repository changes, testing, validation, scheduling, and retention. The bottleneck is not the absence of computation.
+- The first strategy must measure whether more computation improves downstream search quality, whether code earns its placement after specification and maintenance costs, and whether recurring human judgments become reusable search, selection, or boundary-setting machinery.
+- The recorded conversation supports mediation, theory revision, and recurrence at the human-inclusive boundary. It does not establish independent computational recurrence, closure over acceptance, scalable domain-extensible cross-form learning, or superiority to direct computational alternatives.
+
+## Cross-module questions
+
+The articles should expose rather than bury these questions:
+
+1. What intervention distinguishes load-bearing project theory from an information-rich record or a plausible post-hoc citation?
+2. Which task distribution and horizon expose coherent recovery rather than generic search, memorization, or luck?
+3. Does project theory change branch allocation when weights, code, tools, and task are held fixed?
+4. When does independently executed code improve reliability, cost, and recovery after specification, integration, validation, and maintenance are counted?
+5. Which operations should remain model-mediated, which should be codified, and what evidence should trigger relaxing?
+6. How can delayed consequences assign credit among theory
