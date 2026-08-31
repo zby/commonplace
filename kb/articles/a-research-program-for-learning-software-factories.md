@@ -36,6 +36,10 @@ source_notes:
   - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
   - kb/notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md
   - kb/sources/programming-as-theory-building.ingest.md
+  - kb/sources/sutton-javed-why-ai-models-stop-learning.ingest.md
+  - kb/notes/treat-continual-learning-as-representational-form-coevolution.md
+  - kb/notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md
+  - kb/notes/continual-learning-requires-governing-behaviour-changing-writes.md
 ---
 
 # A research program for learning software factories
@@ -545,6 +549,38 @@ capacity. The contingent implementation bet is that retained natural-language
 theory gives a learning software factory a useful, revisable way to coordinate
 what it believes about tasks, itself, its failures, and the machinery it should
 build next.
+
+## Compatible with the lesson, at odds with Sutton's later bet
+
+Compatibility with Sutton's 2019 essay is not agreement with his later position.
+In a 2026 interview Sutton and Khurram Javed allow context to be part of an
+agent's state but still require weight change: "So context can be in the state,
+too. It could be both, but you still need to be able to update the weights."
+([source](../sources/sutton-javed-why-ai-models-stop-learning.ingest.md),
+verbatim.) Their claim is that weight updating is necessary for the concept and
+abstraction formation a continual agent needs, not that context-state adaptation
+does nothing.
+
+This program treats that necessity as an open empirical question rather than a
+settled boundary. The competing hypothesis is that updates to theories, tests,
+schemas, programs, or mixtures of [representational
+forms](../notes/definitions/representational-form.md) can supply some of the
+capabilities open-ended learning requires. The comparative test holds objectives
+and evaluation fixed, varies which surfaces may update, and asks where capability
+grows. The interview does not run that comparison, and its examples motivate
+functions a continual agent needs without establishing weight change as the
+necessary component boundary for them.
+
+The two programs agree about the hard part. Asked for his lab's most ambitious
+goal, Sutton describes wanting a system where "something keeps it organized and
+coherent and settling back into a good place rather than drifting off into crazy
+land." That is the coherence problem this program also places at the centre. The
+disagreement is about where coherence is easier to obtain. A weight-based system
+must achieve it inside a representation nobody can read; a factory that keeps its
+project theory in addressable artifacts can inspect what it retained, test a
+change against it, and withdraw the change when later evidence goes against it.
+The bet is that readability is what makes the difference, and the conditions
+listed above are the ones under which it should be given up.
 
 The companion article [The Bitter Lesson does not require everything to live in
 weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
