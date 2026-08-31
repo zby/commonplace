@@ -1,9 +1,17 @@
 ---
-description: "Research program on whether an agentic software-development system can retain and revise project theory to keep successive modifications coherent under delayed feedback"
+description: "Research program on whether an agentic software-production system can learn reusable production machinery and whether natural-language theory improves that learning"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
+  - kb/notes/bounded-context-orchestration-model.md
+  - kb/notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md
+  - kb/notes/an-agentic-substrate-becomes-a-software-factory-through-family-specific-production-machinery.md
+  - kb/notes/task-families-and-product-families-classify-different-things.md
+  - kb/notes/broad-software-demands-create-pressure-for-agentic-factory-development.md
+  - kb/notes/a-software-factory-learns-when-production-experience-changes-reusable-machinery-used-later.md
+  - kb/notes/factory-learning-mechanisms-should-be-compared-on-the-same-causal-job.md
+  - kb/notes/theory-mediation-can-coordinate-heterogeneous-factory-development.md
   - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
   - kb/notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md
   - kb/notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md
@@ -32,55 +40,206 @@ source_notes:
 
 > **Draft.** Comments and counterexamples are welcome through the repository's issue tracker.
 
-> **TL;DR.** This program asks whether an agentic software-development system can retain a fallible project theory, use it to guide modifications, revise it when later consequences expose mistakes, and let the revision change subsequent work. Commonplace is the live human-agent testbed; a controlled programming-agent test will compare usable theory with theory withheld or deliberately wrong.
+> **TL;DR.** An agentic system is more than an LLM call: bounded model calls operate inside persistent software machinery. For software production, configuring that machinery with reusable knowledge for a declared product family yields a software factory. When production experience changes reusable factory machinery and later work depends on the change, the factory learns. Several mechanisms could drive that learning. This program tests whether natural-language theory is unusually versatile because it can connect task structure, solver limits, failures, evidence, and coordinated changes across prompts, schemas, workflows, tools, evaluators, and code.
 
-## The question and the two testbeds
+## From agentic systems to learning software factories
+
+An LLM call is bounded. It receives a finite context, produces a finite result,
+and does not by itself provide durable state, exact iteration, tool execution,
+permissions, aggregation, or long-horizon continuity. Agentic systems obtain
+those capabilities from software surrounding the calls.
+
+The [bounded-context orchestration
+model](../notes/bounded-context-orchestration-model.md) makes one such
+architecture explicit: symbolic state and transitions organize repeated bounded
+calls. The [scheduler–LLM
+separation](../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md)
+explains why exact progression and bookkeeping often belong in software rather
+than accumulated natural-language context. Semantic interpretation can remain
+model-mediated while code performs transitions that are cheaper to check than
+to regenerate correctly on every call.
+
+This starting point does not require the software to learn or modify itself. A
+fixed, sufficiently general substrate could in principle express every useful
+workflow and program.
+
+### Family-specific production knowledge configures a factory
+
+For software production, Greenfield's ontology supplies a more precise boundary
+than the loose modern factory metaphor. A [software
+factory](../notes/definitions/software-factory.md) is a development and runtime
+environment configured for a declared family of software products or solutions.
+Its reusable production knowledge is distributed across a schema, packaged
+assets, processes or guidance, tools, frameworks, tests, and lifecycle support.
+
+The mapping is:
+
+```text
+general agentic substrate
+  + declared software product or solution family
+  + reusable family-specific production knowledge
+  -> configured agentic software factory
+```
+
+A generic coding agent, IDE, or harness is not yet a Greenfield-style factory.
+Nor is every script or orchestrator generated during one task. Task-local
+software becomes factory machinery only when it carries reusable production
+knowledge for a declared family or admitted variation space. The [agentic
+substrate mapping](../notes/an-agentic-substrate-becomes-a-software-factory-through-family-specific-production-machinery.md)
+develops this boundary.
+
+A [task family and a product
+family](../notes/task-families-and-product-families-classify-different-things.md)
+also classify different things. A benchmark may group tasks because they stress
+the same solver capability. A product family groups software systems through
+declared commonality, variability, and reusable production machinery. One
+product may generate many tasks, and one task family may span many unrelated
+product families.
+
+### Broad demands create pressure for factory development
+
+[Factory development](../notes/definitions/factory-development.md) constructs or
+revises reusable family-level production machinery. Solution development uses
+that machinery to create and sustain one family member.
+
+As the covered software demands widen, it becomes increasingly implausible that
+every useful decomposition, representation, workflow, tool, evaluator, context
+policy, test, and recovery procedure will be supplied in advance. Novel
+requirements and environments expose missing or mistaken production knowledge.
+A general agentic system should therefore be able to participate in factory
+development when its installed specialization is inadequate.
+
+This is a practical conjecture, not a necessity theorem. A fixed universal
+substrate remains a live counterhypothesis. The burden is empirical: does
+agentic construction of production machinery reduce recurring target-specific
+human work and improve transfer at acceptable total cost? [Broad software
+demands create this pressure](../notes/broad-software-demands-create-pressure-for-agentic-factory-development.md)
+without requiring every fixed component to become self-modifying.
+
+Recursive factory construction is not the novelty. Greenfield, Tool Factory,
+and MDSoFa already describe factories or tool factories producing further
+production machinery. In those cases, people still supply the family
+definition, metamodels, mappings, frameworks, or expertise that determine the
+target. [Constructing a factory from supplied specialization is not learning
+that specialization](../notes/a-software-factory-can-produce-another-factory-without-learning-its-specialization.md).
+
+### Continual learning changes later production
+
+Software production and factory development do not by themselves imply
+learning. The minimal factory-level learning path is:
+
+```text
+production under current factory machinery
+  -> experience bearing on that machinery
+  -> system-determined change to reusable family machinery
+  -> retention
+  -> changed later production
+```
+
+Experience without a reusable change is feedback. Repairing only the current
+product is solution development. A generated candidate that is discarded does
+not persist. Stored machinery that later production never consumes has no
+demonstrated learning effect.
+
+When the whole path is present, [the software factory
+learns](../notes/a-software-factory-learns-when-production-experience-changes-reusable-machinery-used-later.md)
+in a minimal cross-episode sense. The change need not be beneficial. Improvement,
+warrant, computational closure, reflection, autonomy, and compounding add
+separate claims.
+
+The [deployed system rather than the
+model](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md) is
+the relevant learning boundary. Retained changes may live in weights,
+natural-language artifacts, symbolic software, retrieved memories, or mixtures.
+The factory-level subset changes reusable production machinery.
+
+## Theory mediation is one candidate mechanism
+
+Factory-level learning does not require theory. Trial-and-error retention,
+trajectory reuse, program search, learned construction policies, direct
+optimization, and mixtures can all turn experience into later production
+changes. They should be [compared on the same causal
+job](../notes/factory-learning-mechanisms-should-be-compared-on-the-same-causal-job.md),
+not ranked by whether their state is readable or whether it lives in weights.
+
+The proposal tested here is narrower:
+
+> Natural-language theory may be an unusually versatile coordination mechanism
+> for learning heterogeneous production machinery.
+
+A factory-relevant theory can jointly represent:
+
+- task and domain structure;
+- relevant capacities and limitations of the current solver;
+- explanations of successes and failures;
+- proposed interventions and their intended mechanisms;
+- scope conditions and predictions; and
+- evidence that should revise or defeat the account.
+
+An LLM can interpret that state into changes across decomposition, context
+selection, schemas, workflows, prompts, tests, evaluators, tools, and code. The
+same explanation can coordinate several artifacts rather than leaving each to a
+separate local update process.
+
+The relevant self-knowledge is not a complete account of model internals. A
+decomposition is relative to both a task and a solver: it must preserve the
+task's dependencies while producing units that this system can execute, retain,
+combine, and verify. Theory-mediated decomposition therefore needs a
+ task-relevant model of the task–solver relation and of interventions that can
+make the task tractable.
+
+Theory does not replace search. It can shape a generate-and-verify process by
+controlling which failure explanations are plausible, which machinery is worth
+changing, which candidates to try, which experiments are informative, and how
+outcomes should revise the retained account. Blind exploration, learned
+policies, program search, exact code execution, and independent tests can remain
+inside the same system.
+
+The claim is causal. A theory that merely accompanies the work is documentation.
+Theory mediation requires the retained theory to change search, diagnosis,
+evaluation, recovery, or revision. The supporting note states why [theory may
+coordinate heterogeneous factory
+development](../notes/theory-mediation-can-coordinate-heterogeneous-factory-development.md)
+and what comparative results would support or defeat that claim.
+
+## Naur's bearer question and the two testbeds
 
 Peter Naur's [1985 essay *Programming as Theory
 Building*](https://ingenieria-de-software-i.github.io/assets/bibliografia/programming-as-theory-building.pdf)
 argues that programmers do more than produce code. They build and hold a
 project-specific theory: an understanding of what the program must do, why it is
 organized as it is, and how that organization can survive new demands.
-Crucially, Naur treated this theory as something held by programmers rather than
-by the program or its documentation. The machine could execute what had been
+
+Naur treated this theory as something held by programmers rather than by the
+program or its documentation. The machine could execute what had been
 formulated, but the theory needed for coherent modification remained with
 people—a boundary grounded partly in [Naur's equation of machine execution with
 formulated
 criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
 
-Modern coding agents make that boundary worth testing. Their learned competence
-comes from model weights, while retained project state, tools, and runtime
-machinery shape what happens in a particular project.
+Modern agentic systems make that boundary worth testing. Their learned
+competence comes partly from model weights, while retained project state, tools,
+schemas, tests, and runtime machinery determine what happens in a particular
+project.
 
-> Can such a system become a bearer of the fallible project theory Naur reserved
-> for programmers — holding and revising it well enough to keep successive
-> modifications coherent when decisive feedback arrives only later?
-
-The [deployed system rather than the
-model](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md) is
-the learning unit. Learning need not be a weight update; it may also be retained
-in project state or executable machinery. A change counts as learning when
-evidence from system behavior determines it and operative retention makes later
-work depend on it. A [proposal-selection
-loop](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
-is one implementation; a direct evidence-responsive update need not expose
-competing candidates.
-
-The full path is *theory-mediated* when addressable retained theory guides search
-or modification, later consequences revise that theory, and the revision affects
-later work. Claim-level addressability makes the theory inspectable, citable,
-perturbable, and selectively revisable.
+> Can such a system become a bearer of a fallible project theory—holding and
+> revising it well enough to keep successive modifications coherent when
+> decisive feedback arrives only later?
 
 The program couples a live testbed with a prospective controlled one.
-**Commonplace** is the live human-agent testbed: agents use the knowledge base to
-revise both the repository and the theory that guides its operation, while the
-operator still supplies much global-fit judgment and final authorization. It
-exposes the human-inclusive learning loop and whether recurring judgments can
-become reusable machinery. The **programming-agent testbed** will give agents
-persistent fallible theory about a software project and a sequence of
-modifications whose later demands can expose earlier mistakes. Matched runs will
-vary that theory while holding the rest of the system fixed, testing whether it
-changes search, recovery, and coherent modification.
+
+**Commonplace** is the live human-agent testbed. Agents use retained theory to
+revise the knowledge base, software, and methodology that guide later work. The
+operator still supplies much global-fit judgment and final authorization. This
+makes the human-inclusive learning path visible and exposes which recurring
+judgments might become reusable machinery.
+
+The **programming-agent testbed** will place a persistent, fallible theory inside
+an agentic software-production system and give it a sequence of modifications
+whose later demands can expose earlier mistakes. It is the direct test of
+whether theory changes factory-development choices and coherent modification.
+Matched runs will vary the theory while holding specified background components
+fixed.
 
 ## Holding a theory means controlling a fallible search
 
@@ -91,30 +250,30 @@ earlier locally successful change.
 
 The unit judged is therefore a sequence, not one patch. A failed first candidate
 can belong to coherent modification when the process recognizes the failure and
-recovers. A successful first candidate can fail the test when it passes narrow
-checks but damages the wider organization in a way the process cannot detect.
-[Holding a program theory means sustaining coherent search under delayed
+recovers. A successful first candidate can fail when it passes narrow checks but
+damages the wider organization in a way the process cannot detect. [Holding a
+program theory means sustaining coherent search under delayed
 feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md).
 
 Program-relevant understanding may extend beyond the retained theory surface.
-The proposed experiment varies one such surface while holding specified
-background components fixed. It therefore tests the causal contribution of that
-surface, not whether it exhausts the system's whole program theory, [as the
+The controlled experiment varies one addressable surface while holding specified
+background components fixed. It tests the causal contribution of that surface,
+not whether the surface exhausts the system's whole program theory, [as the
 retained-theory intervention note makes
 explicit](../notes/a-retained-theory-intervention-isolates-one-explicit-theory-surface.md).
 
 Theory matters before a correct answer is available. [Open-ended improvement
 must allocate search before decisive evaluation
 exists](../notes/open-ended-improvement-allocates-search-before-evaluation.md).
-Retained theory can focus search and guide recovery by exposing commitments a
+Retained theory can focus work and guide recovery by exposing commitments a
 local fix must preserve.
 
-Generic search can also generate and test patches. The distinction is causal:
-withholding or replacing retained theory should change the search or subsequent
-revision. One possible mechanism is that [natural-language project state
-specializes search heuristics already present in model
+Generic search can also generate and test patches. One possible theory mechanism
+is that [natural-language project state specializes search heuristics already
+present in model
 weights](../notes/natural-language-project-state-specializes-search-heuristics.md).
-A theory that merely accompanies the work remains documentation.
+The empirical question is whether that specialization improves the sequence at
+comparable information and total cost.
 
 Theory-guided choices need not all meet the standard for final adoption.
 [Lightweight search controls](../notes/lightweight-search-control-does-not-license-adoption.md)
@@ -122,38 +281,13 @@ can allocate work under weaker evidence, while [backtracking keeps them
 provisional](../notes/backtracking-keeps-lightweight-search-control-provisional.md)
 when contrary evidence arrives.
 
-## Four roles in the current research design
-
-To make the mechanism testable, the current design separates four functional
-roles by how they can fail and be perturbed.
-
-| Functional role | Current realization | Typical failure |
-|---|---|---|
-| Retained project state | Addressable theory and other persistent project artifacts | Omission, contradiction, drift, or retrieval failure |
-| Model-mediated semantic operation | Model weights applied to call-specific context | Theory ignored, misapplied, or rationalized after the fact |
-| Independently executed symbolic operation | Code and runtime carrying exact transitions and continuity | Exact execution of the wrong transition or a path that ends too early |
-| Independent exposure and read-back | Independent checks and later consequences; the operator supplies much global-fit judgment and authorization | Weak or captured evaluation, delayed credit assignment, or exogenous selection |
-
-These are roles, not permanent carriers. A future substrate may combine them;
-the current separation permits targeted interventions on theory, interpretation,
-evaluation, and continuity.
-
-The same code may be read into a prompt as evidence and later executed by a
-symbolic runtime. Its role follows the consumption path, not its authorship;
-exact execution does not establish that the encoded requirement or theory is
-correct.
-
-The table also exposes the present actor allocation. The operator still supplies
-much of the fourth role. Moving recurring parts of that work into reusable
-machinery is therefore a bootstrap target.
-
-## Evidence and evaluation
+## What counts as theory-mediated learning
 
 The strongest path the program wants to observe is:
 
 ```text
 retained theory
-  -> theory-mediated search or decision
+  -> theory-mediated search or factory-development decision
   -> realized change
   -> independent or delayed consequence
   -> read-back against the same theory
@@ -174,27 +308,51 @@ The evidence ladder distinguishes four levels:
 
 A [citation at the decision point is a mediation
 trace](../notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md),
-not proof that the theory was load-bearing; withholding, replacement, or
-perturbation is stronger evidence. The higher levels must also belong to the
-same full causal path. Separate witnesses for theory use, outcome, revision, and
-later work do not compose automatically into evidence of theory-mediated
-learning, [because disconnected witnesses do not establish a full causal path
-through
+not proof that the theory was load-bearing. Withholding, replacement, or
+perturbation is stronger evidence. The higher levels must also belong to one
+causal path. Separate witnesses for theory use, outcome, revision, and later work
+do not compose automatically, [because disconnected witnesses do not establish
+a full path through
 theory](../notes/disconnected-witnesses-do-not-establish-a-full-causal-path-through-theory.md).
 
-### Warrant and theory fit are different evaluations
+### Four functional roles
 
-A well-warranted claim can still fit a working theory poorly. Conversely, a weak
-claim can appear to fit because the current implementation already assumes it.
-[A claim's warrant therefore does not determine its fit in a working
+The current design separates four roles because they have different failure
+modes and support different interventions.
+
+| Functional role | Current realization | Typical failure |
+|---|---|---|
+| Retained project state | Addressable theory and other persistent artifacts | Omission, contradiction, drift, or retrieval failure |
+| Model-mediated semantic operation | Model weights applied to call-specific context | Theory ignored, misapplied, or rationalized after the fact |
+| Independently executed symbolic operation | Code and runtime carrying exact transitions and continuity | Exact execution of the wrong transition or a path that ends too early |
+| Independent exposure and read-back | Tests, later consequences, and operator judgment | Weak or captured evaluation, delayed credit assignment, or exogenous selection |
+
+These are roles, not permanent carriers. The same artifact can be read as
+evidence in one path and executed as an instruction in another. Its role follows
+how it is consumed, not who authored it. Exact execution does not establish that
+the encoded requirement or theory is correct.
+
+The table also exposes the present actor allocation. The operator still supplies
+much independent global-fit judgment and authorization. Moving recurring parts
+of that work into reusable machinery is a bootstrap target, not a completed
+autonomy claim.
+
+## Warrant and fit are different evaluations
+
+A well-warranted claim can fit a working theory poorly. It may be irrelevant,
+badly scoped, or incompatible with other commitments. Conversely, a weak claim
+can appear useful because the current implementation already assumes it. [A
+claim's warrant therefore does not determine its fit in a working
 theory](../notes/a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md).
 
 No present automatic evaluator fully decides global fit. Consequences of live
 use and comparisons with rival theories provide an [initial selection
 environment](../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md),
-but not an independent warrant oracle: [system use provides evidence of theory
+but not an independent truth oracle. [System use provides evidence of theory
 fit and causal usefulness, not independent
 warrant](../notes/system-use-provides-evidence-of-theory-fit-not-independent-warrant.md).
+Independent factual and formal checks, held-out demands, rival theories, and
+later consequences remain necessary to prevent a self-confirming loop.
 
 ## Current evidence and next tests
 
@@ -204,83 +362,147 @@ illustrates part of the proposed path: retained theory guided the work, operator
 feedback revised it, and the result affected later work. The episode was not
 recorded prospectively enough for causal or comparative attribution.
 
-Future consequential episodes should preserve the joins of the causal path
-above, including which theory state guided a decision and which revision later
-work consumed. For nondeterministic production, missing joins cannot reliably be
-reconstructed after the fact.
+Future consequential episodes should preserve the joins of the causal path,
+including which theory state guided a decision, which consequence bore on it,
+which revision was retained, and which later operation consumed that revision.
+For nondeterministic production, missing joins cannot reliably be reconstructed
+after the fact.
 
-The minimum controlled test compares usable theory with theory withheld or
-deliberately wrong while holding the model, executable machinery, task sequence,
-and budget fixed. Later demands must be able to expose earlier mistakes. The
-questions are whether theory changes search and recovery, whether consequences
-revise the same theory state, and whether that revision changes later work. Any
-result identifies only [the contrast it actually
+### Controlled programming-agent test
+
+The minimum controlled test compares:
+
+- usable retained theory;
+- theory withheld;
+- deliberately wrong theory; and
+- where feasible, an information-matched record that preserves facts while
+  removing the theory's explanatory organization.
+
+The model, executable machinery, task sequence, interaction protocol, and budget
+should otherwise be held fixed. Later demands must be able to expose mistakes
+introduced by earlier locally successful modifications.
+
+The primary questions are:
+
+- Does theory change search allocation, decomposition, tool construction, or
+  recovery?
+- Do later consequences revise the same retained theory surface?
+- Does that revision change later work?
+- Does theory improve coherent modification, transfer, or total recovery cost?
+- Does it outperform credible trajectory, search, policy, optimization, or mixed
+  alternatives at comparable total cost?
+
+Any result identifies only [the contrast it actually
 runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md).
+A theory-versus-no-theory result does not rank every alternative learning
+mechanism.
 
-A longitudinal Commonplace study should ask whether recurring operator judgments
-become reusable machinery and whether named functions move toward computational
-supply.
+### Longitudinal Commonplace study
 
-## The bootstrap must outgrow supplied specialization
+Commonplace should record consequential revisions prospectively and ask whether:
 
-The Bitter Lesson puts pressure on the program because its present theory and
-improvement machinery emerge from a human-guided loop. Agents write much of the
-material, but operators still supply decisive high-level direction and
-selection. The issue is not who types the artifacts. It is whether computation
-can increasingly determine and operatively retain the task-specific machinery
-needed as the demand class widens.
+- recurring operator judgments become reusable evaluators, methods, schemas, or
+  code;
+- the marginal human judgment required per useful revision falls;
+- retained theory remains causally active rather than ceremonial;
+- wrong theories produce detectable negative transfer and are revised; and
+- improvements transfer beyond the episodes that produced them.
 
-[Production method and representational form are different
-axes](../notes/the-bitter-lesson-selects-production-methods-not-representational.md):
-learning can produce explicit artifacts as well as weights. Fixed general
-models, learning methods, runtimes, interfaces, resource controls, and trusted
-kernels may remain. The scaling burden falls on human-supplied specialization
-that must be recreated for each new task or area of work, not on every
-handcrafted component merely because it is fixed.
+## The bootstrap and the system boundary
 
-The present loop is human-inclusive and computationally open over decisive
-high-level selection. Models search and revise project state, while symbolic
-machinery executes and retains changes, but operators remain decisive where
-reusable evaluators are weak. Recurring judgments are candidates for reusable
-machinery.
+The current Commonplace loop is human-inclusive. Agents retrieve, synthesize,
+criticize, and write much of the material, while the operator still supplies
+decisive high-level direction, global-fit judgment, and final authorization.
+Calling the inclusive system autonomous would be cheap: it would hide the very
+human contribution the bootstrap is intended to reduce.
 
-The bootstrap has two related jobs. First, move named decision-bearing functions
-from human toward joint or computational supply while holding the
-human-inclusive boundary fixed. Over a declared task scope and horizon, the
-technical endpoint is reached when the same improvement path still completes
-after the human participants are removed. Quality and warrant require separate
-evidence. [The decisions that stay human, and what would move
+Progress should therefore be reported against a fixed boundary and a declared
+set of decision-bearing functions. The relevant measure is how much of the
+learning path the computational subsystem can complete without a person
+supplying the decomposition, evaluator, selection, promotion, or recovery
+choice that the path is meant to make.
+
+The bootstrap has two related jobs.
+
+First, move named functions from human toward joint or computational supply while
+holding the human-inclusive system boundary visible. A technical closure claim
+is reached only for a declared path, task scope, horizon, evidence protocol, and
+coverage rule. Closure says where decisions occur, not whether they are good.
+[The decisions that stay human, and what would move
 them](./the-decisions-that-stay-human-and-what-would-move-them.md) develops the
-full fixed-boundary and warrant argument.
+warrant and transfer problem.
 
-Second, widen the range of demands over which computation can acquire the
-specialization they require. Task-specific theories, schemas, decompositions,
-methods, and evaluators must not remain a new human construction project for
-every new region of claimed scope. This does not put every current component
-inside one universal revision surface. [Machinery persists by
-warrant, not by
-position](../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md),
-while the bootstrap [fits the Bitter Lesson only if learning outgrows its
-supplied specialization](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
+Second, widen the demands over which computation can acquire the required
+specialization. Task-specific theories, schemas, decompositions, tools, methods,
+and evaluators must not remain a new human construction project for every new
+region of claimed scope.
 
-Three immediate payoffs motivate this strategy. First, explicit theory may
-improve [sample efficiency under structured
+The Bitter Lesson constrains the production method, not only the carrier of what
+is learned. [Learning can produce explicit artifacts as well as
+weights](../notes/the-bitter-lesson-selects-production-methods-not-representational.md).
+Fixed general models, learning methods, runtimes, interfaces, resource controls,
+and trusted kernels may remain. The scaling burden falls on recurring
+human-supplied task- or family-specific competence that the claimed process is
+supposed to find.
+
+This is why calling current structure a bootstrap is not enough. The bootstrap
+[fits the Bitter Lesson only if learning outgrows its supplied
+specialization](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
+At the same time, [machinery persists by warrant, not by
+position](../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md):
+a fixed component need not be replaced merely because it is outside one update
+surface.
+
+## Stronger claims remain separate
+
+The factory-learning foundation does not make every stronger property follow.
+
+| Property | Additional requirement |
+|---|---|
+| Recursive or higher-order factory development | Production machinery constructs or revises machinery used for later factory development |
+| Reflection | A causally connected representation of selected aspects of the same system participates in operation or revision |
+| Computational closure | Every decision assigned to a declared learning path is supplied computationally, conditional on permitted external evidence and interaction |
+| Self-improvement | Evidence supports that the system's own retained change improved a declared objective |
+| Compounding | An earlier change improves the capacity to produce or select later improvements |
+| Broad production reach | The process acquires adequate specialization across a declared class of demands |
+
+A factory can learn without reflection. A reflective system can fail to learn. A
+closed path can perform badly. A factory-valued product can be produced from a
+complete human specification. One successful change can remove the path that
+produced it. These distinctions prevent recursion or factory language from doing
+causal work it has not earned.
+
+## What would change the strategy
+
+Three possible benefits motivate theory mediation. Explicit theory may improve
+[sample efficiency under structured
 shifts](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md).
-Second, it leaves an inspectable learning record. Third, because the system being
-improved is itself agentic, theories of agentic systems can become operative
-self-theory. Commonplace therefore builds
-[agentic-systems theory](../agentic-systems/README.md) both as an external
-research topic and as candidate self-theory for the system that runs the research
-and for future programming agents. The program tests whether improving that
-theory improves the system's ability to understand and modify its own
-organization. Each payoff must survive comparison at total system cost.
+It can leave an inspectable learning record. And theories of agentic systems can
+become candidate self-theory for the systems that build and revise agentic
+software. Commonplace therefore develops [agentic-systems
+theory](../agentic-systems/README.md) both as an external research topic and as
+potential operative state.
 
-The strategy must compete with more direct learning and search methods. It
-should be narrowed or abandoned if retained theory is causally inert, the
-evaluation loop becomes self-confirming, each new covered area still needs
-human-built task-specific decomposition or evaluation machinery, required
-in-scope decisions remain human, or another method wins at comparable total
-cost.
+Each benefit must survive comparison at total system cost. The strategy should
+be narrowed or abandoned in a tested regime when:
+
+- retained theory is causally inert or reconstructed after decisions;
+- the evaluation loop becomes self-confirming;
+- natural-language coordination increases correlated error;
+- theory maintenance and retrieval cost exceed its search or transfer benefit;
+- each new covered area still requires human-built decomposition or evaluation
+  machinery;
+- the marginal human contribution does not fall;
+- additional computation produces activity or candidates without better
+  downstream selection; or
+- a more direct or mixed learning mechanism performs better at comparable total
+  cost.
+
+The program is therefore not a claim that general agentic learning must be
+theory-mediated. It is a test of whether retained natural-language theory gives
+a learning software factory a useful, revisable way to coordinate what it
+believes about tasks, itself, its failures, and the machinery it should build
+next.
 
 The companion article [The Bitter Lesson does not require everything to live in
 weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
