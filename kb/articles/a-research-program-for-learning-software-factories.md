@@ -240,12 +240,10 @@ judgments might become reusable machinery.
 
 The **programming-agent testbed** will place a persistent, fallible theory inside
 an agentic software-production system and give it a sequence of modifications
-whose later demands can expose earlier mistakes. It directly tests whether
-theory changes coherent modification and factory-development choices. A run
-supports a factory-learning claim only if experience changes reusable family
-machinery that later production consumes; otherwise it tests theory-mediated
-solution modification. Matched runs will vary the theory while holding
-specified starting components fixed.
+whose later demands can expose earlier mistakes. It is the direct test of
+whether theory changes factory-development choices and coherent modification.
+Matched runs will vary the theory while holding specified background components
+fixed.
 
 ## Holding a theory means controlling a fallible search
 
@@ -381,13 +379,13 @@ The minimum controlled test compares:
 - usable retained theory;
 - theory withheld;
 - plausible but wrong theory; and
-- for claims about explanatory organization, an information-matched record that
-  preserves the facts while removing that organization.
+- an information-matched factual record when testing explanatory organization.
 
-The base model, initial executable machinery, task sequence, interaction
-protocol, and budget should be matched across conditions. Treatment-induced
-machinery changes are outcomes. Later demands must be able to expose mistakes
-introduced by earlier locally successful modifications.
+The base model, starting machinery, task sequence, protocol, and budget should
+be matched across conditions; machinery changes are outcomes. A factory-learning
+result additionally requires changed reusable machinery to affect later
+production. Later demands must be able to expose mistakes introduced by earlier
+locally successful modifications.
 
 The primary questions are:
 
