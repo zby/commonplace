@@ -35,10 +35,11 @@ purpose, deviations from inherited rules, and consequential choices left to
 execution, then carry the task-specific authority, inputs, owned output,
 coordination, acceptance, and return conditions that the doctrine cannot
 determine. The stable default is that delegation does not expand authority, the
-parent retains scheduling, integration, and recovery, and nested delegation
-requires authority; a packet need not repeat that default when the worker
-receives it. Any transfer of those responsibilities and every task-specific
-mutation boundary remain explicit. An unstated consequential choice must be
+parent retains scheduling, integration, and recovery, and nested delegation may
+proceed within the worker's existing task authority and coordination boundary;
+a packet need not repeat that default when the worker receives it. Any transfer
+of those responsibilities and every task-specific mutation boundary remain
+explicit. An unstated consequential choice must be
 governed by an inherited rule, deliberately delegated to judgment from
 authorized evidence, irrelevant to acceptance and coupling, or treated as a
 gap. This is a classification test, not a mandatory packet template. Use clean

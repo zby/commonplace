@@ -164,8 +164,8 @@ acceptance, non-negotiable constraints, owned outputs or write scope,
 accessible inputs, coordination boundary, verification or feedback, and stop
 or escalation condition. The parent retains scheduling, integration, and
 recovery; parallel writers need disjoint ownership or an explicit
-coordination rule. Nested delegation requires explicit authorization; silence
-means no.
+coordination rule. Nested delegation is permitted within the worker's existing
+task authority and coordination boundary.
 
 For a choice the handoff leaves unstated, a worker asks which case applies:
 governed by an inherited default — follow it; deliberately delegated — choose

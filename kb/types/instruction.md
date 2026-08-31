@@ -34,9 +34,10 @@ Use `instruction` for prescriptive content: procedures, skill bodies, wrapper pr
   left to authorized execution evidence. State owned outputs, input and
   mutation authority, coordination, verification, and return conditions where
   the inherited contracts cannot determine them. The defaults that leave
-  scheduling, integration, and recovery with the parent and prohibit
-  unauthorized nested delegation may be inherited when delivered; any transfer
-  or exception remains explicit.
+  scheduling, integration, and recovery with the parent and keep nested
+  delegation within the worker's existing task authority and coordination
+  boundary may be inherited when delivered; any transfer or exception remains
+  explicit.
   The listed surfaces are an audit heuristic, not fields every packet repeats.
 - Fix what the executor cannot safely determine from verified doctrine, the
   task commission, and authorized evidence: intent, constraints, what *done*
