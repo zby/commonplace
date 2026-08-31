@@ -52,7 +52,7 @@ Three increasingly strong cases are easy to conflate:
 2. **Construction:** realize a factory or asset from a supplied schema, metamodel, mapping, or complete description.
 3. **Acquisition:** use task or production evidence to determine what reusable family-specific production knowledge is required and construct or revise it.
 
-The first two can cover substantial work. Greenfield, Tool Factory, and MDSoFa already establish recursive construction from supplied family knowledge. The [construction-versus-acquisition note](./a-software-factory-can-produce-another-factory-without-acquiring-its-family-specific-production-knowledge.md) marks the remaining boundary.
+The first two can cover substantial work. Greenfield, Tool Factory, and MDSoFa already establish recursive construction from supplied family knowledge. The [construction-versus-acquisition note](./factory-construction-does-not-establish-knowledge-acquisition.md) marks the remaining boundary.
 
 The practical generality claim concerns the third case. A system does not meet it by hiding a target-indexed catalog of handcrafted factories inside its supposedly general substrate.
 
@@ -102,7 +102,7 @@ A universal fixed substrate is therefore a live counterhypothesis, not a contrad
 
 Relevant Notes:
 
-- [An agentic substrate becomes a software factory through family-specific production machinery](./an-agentic-substrate-becomes-a-software-factory-through-family-specific-production-machinery.md) — grounds: separates fixed general machinery from installed family knowledge
+- [An agentic substrate becomes a software factory through family-specific production machinery](./agentic-substrate-needs-family-specific-machinery-to-be-a-factory.md) — grounds: separates fixed general machinery from installed family knowledge
 - [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — grounds: shows why learning confined to supplied production structure may preserve its errors
 - [Orchestration strategies and run-state have opposite persistence economics](./orchestration-strategies-and-run-state-have-opposite-persistence.md) — exemplifies: reusable control strategy may merit promotion while task-specific state remains ephemeral
 - [Machinery persists by warrant, not position, in a reflective loop](./machinery-persists-by-warrant-not-position-in-a-reflective-loop.md) — extends: explains why the pressure does not require universal self-modification

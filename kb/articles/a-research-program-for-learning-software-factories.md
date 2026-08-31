@@ -5,8 +5,8 @@ status: draft
 byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md
-  - kb/notes/a-software-factory-can-produce-another-factory-without-acquiring-its-family-specific-production-knowledge.md
-  - kb/notes/a-software-factory-learns-when-production-experience-changes-reusable-machinery-used-later.md
+  - kb/notes/factory-construction-does-not-establish-knowledge-acquisition.md
+  - kb/notes/factory-learning-retains-experience-in-reusable-machinery.md
   - kb/notes/factory-learning-mechanisms-should-be-compared-on-the-same-causal-job.md
   - kb/notes/theory-mediation-can-coordinate-heterogeneous-factory-development.md
   - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
@@ -31,7 +31,7 @@ source_notes:
 
 A [software factory](../notes/definitions/software-factory.md) is a configured production environment containing reusable production knowledge for a declared family of software. For the present program, its machinery may include models, prompts, natural-language artifacts, code, tools, workflows, tests, and evaluators.
 
-A factory can produce another factory. That is prior art, and it places factory machinery inside the space of things software production can build. But construction alone is neither learning nor improvement. A factory may merely realize production knowledge supplied by people without [acquiring or improving that knowledge](../notes/a-software-factory-can-produce-another-factory-without-acquiring-its-family-specific-production-knowledge.md).
+A factory can produce another factory. That is prior art, and it places factory machinery inside the space of things software production can build. But construction alone is neither learning nor improvement. A factory may merely realize production knowledge supplied by people without [acquiring or improving that knowledge](../notes/factory-construction-does-not-establish-knowledge-acquisition.md).
 
 The research target is stronger:
 
@@ -43,7 +43,7 @@ factory F
   -> better later production
 ```
 
-Experience that causally determines a retained machinery change used in later production is [factory learning](../notes/a-software-factory-learns-when-production-experience-changes-reusable-machinery-used-later.md). The change can still be harmful. Calling the successor *better* additionally requires evidence of improvement under a declared objective and scope.
+Experience that causally determines a retained machinery change used in later production is [factory learning](../notes/factory-learning-retains-experience-in-reusable-machinery.md). The change can still be harmful. Calling the successor *better* additionally requires evidence of improvement under a declared objective and scope.
 
 For the recursive-improvement claim, that comparison includes the capabilities needed to continue factory development. The successor must be able to do at least the improvement-relevant work of its predecessor, including producing further factories, while improving some relevant part of software production. A factory that produces one better artifact by consuming the capability that made further improvement possible is not better in this sense.
 

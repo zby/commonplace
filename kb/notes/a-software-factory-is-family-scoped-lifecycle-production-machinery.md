@@ -98,7 +98,7 @@ The Greenfield ontology does not by itself imply:
 - that producing another factory is self-improvement; or
 - that one factory can handle previously unanticipated product families.
 
-Greenfield, Cook and Kent, and MDSoFa do provide real prior art for factories or tool factories producing other production machinery. The separate note [A software factory can produce another factory without acquiring its family-specific production knowledge](./a-software-factory-can-produce-another-factory-without-acquiring-its-family-specific-production-knowledge.md) identifies the remaining distinction: constructing a producer from supplied family knowledge is not the same as acquiring or revising that knowledge from experience.
+Greenfield, Cook and Kent, and MDSoFa do provide real prior art for factories or tool factories producing other production machinery. The separate note [A software factory can produce another factory without acquiring its family-specific production knowledge](./factory-construction-does-not-establish-knowledge-acquisition.md) identifies the remaining distinction: constructing a producer from supplied family knowledge is not the same as acquiring or revising that knowledge from experience.
 
 ## Evidence limits
 
@@ -110,5 +110,5 @@ Relevant Notes:
 
 - [Software factory](./definitions/software-factory.md) — defined-in: supplies the compact term boundary derived from this reconstruction
 - [Factory development](./definitions/factory-development.md) — defined-in: isolates the process that constructs or revises reusable family machinery
-- [A software factory can produce another factory without acquiring its family-specific production knowledge](./a-software-factory-can-produce-another-factory-without-acquiring-its-family-specific-production-knowledge.md) — extends: uses recursive-construction prior art to identify the acquisition boundary
+- [A software factory can produce another factory without acquiring its family-specific production knowledge](./factory-construction-does-not-establish-knowledge-acquisition.md) — extends: uses recursive-construction prior art to identify the acquisition boundary
 - [The deployed system, not the model alone, is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md) — compares: likewise treats behavior as determined by a configured arrangement of models, artifacts, tools, and runtime machinery

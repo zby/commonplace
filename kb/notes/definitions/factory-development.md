@@ -42,4 +42,4 @@ Relevant Notes:
 
 - [Software factory](./software-factory.md) — defined-in: names the family-specific production environment whose reusable machinery is constructed or revised
 - [A software factory is family-scoped lifecycle production machinery](../a-software-factory-is-family-scoped-lifecycle-production-machinery.md) — grounds: supplies the historical two-process distinction and the specialization and composition operations
-- [A software factory can produce another factory without acquiring its family-specific production knowledge](../a-software-factory-can-produce-another-factory-without-acquiring-its-family-specific-production-knowledge.md) — contrasts: shows that automated factory construction can still consume human-supplied family-specific production knowledge
+- [A software factory can produce another factory without acquiring its family-specific production knowledge](../factory-construction-does-not-establish-knowledge-acquisition.md) — contrasts: shows that automated factory construction can still consume human-supplied family-specific production knowledge

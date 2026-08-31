@@ -34,7 +34,7 @@ Cook and Kent reject a universal modeling language in favor of a tool factory th
 
 ## Connections Found
 
-The source's strongest role is technical evidence for [the distinction between factory construction and acquisition of family-specific production knowledge](../notes/a-software-factory-can-produce-another-factory-without-acquiring-its-family-specific-production-knowledge.md). It makes recursive construction concrete as a dependency chain from a supplied language-family definition to a generated designer and then to a designer capable of regenerating its own kind. Producing another producer does not establish computational acquisition or revision of the family knowledge embodied in that producer.
+The source's strongest role is technical evidence for [the distinction between factory construction and acquisition of family-specific production knowledge](../notes/factory-construction-does-not-establish-knowledge-acquisition.md). It makes recursive construction concrete as a dependency chain from a supplied language-family definition to a generated designer and then to a designer capable of regenerating its own kind. Producing another producer does not establish computational acquisition or revision of the family knowledge embodied in that producer.
 
 It complements [Greenfield and Short's broader software-factory account](./greenfield-short-software-factories-oopsla-2003.ingest.md) with the internal language-tool architecture, and it precedes [MDSoFa's implemented metamodel-and-expertise pipeline](./langlois-exertier-mdsofa-software-factory-factory-2004.ingest.md). [DreamCoder](./dreamcoder-wake-sleep-bayesian-program-learning.ingest.md) is a useful counterpoint on the acquisition boundary: Cook and Kent generate tools from a human-authored language definition, whereas DreamCoder revises a domain-specific language from task solutions under an explicit selection objective.
 
@@ -60,5 +60,5 @@ Use this source as the mechanism-level case for construction from supplied famil
 
 Abstracted into:
 
-- [A software factory can produce another factory without acquiring its family-specific production knowledge](../notes/a-software-factory-can-produce-another-factory-without-acquiring-its-family-specific-production-knowledge.md) — uses the generated-designer and conditional self-bootstrap mechanism to separate construction from acquisition of the language-family knowledge supplied to it
+- [A software factory can produce another factory without acquiring its family-specific production knowledge](../notes/factory-construction-does-not-establish-knowledge-acquisition.md) — uses the generated-designer and conditional self-bootstrap mechanism to separate construction from acquisition of the language-family knowledge supplied to it
 - [A software factory is family-scoped lifecycle production machinery](../notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md) — places the tool bootstrap inside the broader family/template/configured-environment ontology

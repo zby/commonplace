@@ -71,7 +71,7 @@ Likewise, symbolic software can be handcrafted, generated from a supplied schema
 
 When a system exposes rejectable candidates, a complete proposal-selection path needs search, evaluation, and operative retention. The [proposal-selection loop](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) states that requirement.
 
-But some mechanisms update state directly or retrieve previously retained machinery without presenting explicit alternatives. They should be judged by causal controls appropriate to their architecture rather than forced into candidate terminology. The common requirement is that production experience determine a retained factory change used later, as defined by [factory-level continual learning](./a-software-factory-learns-when-production-experience-changes-reusable-machinery-used-later.md).
+But some mechanisms update state directly or retrieve previously retained machinery without presenting explicit alternatives. They should be judged by causal controls appropriate to their architecture rather than forced into candidate terminology. The common requirement is that production experience determine a retained factory change used later, as defined by [factory-level continual learning](./factory-learning-retains-experience-in-reusable-machinery.md).
 
 ## Fair experimental contrasts
 
@@ -112,7 +112,7 @@ A theory-surface intervention tests whether making project theory explicit and a
 
 Relevant Notes:
 
-- [A software factory learns when production experience changes reusable machinery used later](./a-software-factory-learns-when-production-experience-changes-reusable-machinery-used-later.md) — grounds: supplies the shared causal job
+- [A software factory learns when production experience changes reusable machinery used later](./factory-learning-retains-experience-in-reusable-machinery.md) — grounds: supplies the shared causal job
 - [Naur binds program theory to humans by equating machine execution with formulated criteria](./naur-equates-machine-execution-with-formulated-criteria.md) — grounds: supplies the mapping, justification, and coherent-extension functions whose human-only allocation is reopened
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: states the stronger adequacy test beyond a retained factory update
 - [The bitter lesson selects production methods, not representational forms](./the-bitter-lesson-selects-production-methods-not-representational.md) — grounds: separates how useful state is produced from where it is stored

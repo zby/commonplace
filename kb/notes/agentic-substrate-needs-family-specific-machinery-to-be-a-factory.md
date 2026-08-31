@@ -72,5 +72,5 @@ Likewise, the mapping does not imply learning. A complete family template can be
 Relevant Notes:
 
 - [A software factory is family-scoped lifecycle production machinery](./a-software-factory-is-family-scoped-lifecycle-production-machinery.md) — grounds: supplies the imported family, schema, template, configured-environment, and member boundaries
-- [A software factory can produce another factory without acquiring its family-specific production knowledge](./a-software-factory-can-produce-another-factory-without-acquiring-its-family-specific-production-knowledge.md) — contrasts: shows that general construction machinery can realize supplied family knowledge without acquiring it
+- [A software factory can produce another factory without acquiring its family-specific production knowledge](./factory-construction-does-not-establish-knowledge-acquisition.md) — contrasts: shows that general construction machinery can realize supplied family knowledge without acquiring it
 - [The deployed system, not the model alone, is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md) — extends: places the configured model, artifacts, tools, and runtime inside the behavior-producing system boundary

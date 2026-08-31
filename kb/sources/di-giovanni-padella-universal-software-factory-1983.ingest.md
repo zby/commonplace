@@ -53,4 +53,4 @@ Keep unqualified *universal software factory* unregistered. Use [Universal softw
 Abstracted into:
 
 - [Universal software factory needs a declared universality axis](../notes/universal-software-factory-needs-a-declared-universality-axis.md) — uses the report's processor-portability sense to expose the historical collision in unqualified universal-software-factory terminology
-- [A software factory can produce another factory without acquiring its family-specific production knowledge](../notes/a-software-factory-can-produce-another-factory-without-acquiring-its-family-specific-production-knowledge.md) — contrasts recursive construction with the production knowledge supplied to the constructor
+- [A software factory can produce another factory without acquiring its family-specific production knowledge](../notes/factory-construction-does-not-establish-knowledge-acquisition.md) — contrasts recursive construction with the production knowledge supplied to the constructor

@@ -82,6 +82,6 @@ Relevant Notes:
 
 - [Software factory](./definitions/software-factory.md) — grounds: makes a declared product or solution family part of factory identity
 - [Factory development](./definitions/factory-development.md) — extends: changes reusable machinery for a product family rather than merely solving another task
-- [An agentic substrate becomes a software factory through family-specific production machinery](./an-agentic-substrate-becomes-a-software-factory-through-family-specific-production-machinery.md) — extends: uses the product-family boundary when mapping generic agentic machinery to a configured factory
+- [An agentic substrate becomes a software factory through family-specific production machinery](./agentic-substrate-needs-family-specific-machinery-to-be-a-factory.md) — extends: uses the product-family boundary when mapping generic agentic machinery to a configured factory
 - [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — compares: shows why a task grouping should not protect the decomposition used to define it
 - [Program synthesis](../sources/program-synthesis-gulwani-polozov-singh-2017.ingest.md) — evidenced-by: shows why initial examples or natural-language instructions may require later interaction to discriminate intended behavior
