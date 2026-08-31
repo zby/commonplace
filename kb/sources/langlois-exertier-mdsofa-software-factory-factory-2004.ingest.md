@@ -37,7 +37,7 @@ Langlois and Exertier define a model-driven software factory as a producer whose
 
 This paper is a technical prior-art anchor for computational factory construction. It strengthens [Greenfield and Short's recursive factory account](./greenfield-short-software-factories-oopsla-2003.ingest.md) with a concrete metamodel-to-environment generator, while the later [Greenfield account of factory specialization](./greenfield-mass-customizing-software-factories-2007.ingest.md) establishes **factory specialization** as changing the factory's own viewpoints, artifacts, activities, and assets.
 
-The main boundary is captured by [A software factory can produce another factory without acquiring its family-specific production knowledge](../notes/factory-construction-does-not-establish-knowledge-acquisition.md). MDSoFa computes substantial factory assets from supplied metamodels, mappings, expertise, and platform choices. It does not demonstrate a system-determined process that infers those family-defining inputs from task or production evidence.
+The main boundary is captured by [Factory construction is not evidence of production-knowledge acquisition](../notes/factory-construction-does-not-establish-knowledge-acquisition.md). MDSoFa computes substantial factory assets from supplied metamodels, mappings, expertise, and platform choices. It does not demonstrate a system-determined process that infers those family-defining inputs from task or production evidence.
 
 Like the construction methods surveyed in [Program Synthesis](./program-synthesis-gulwani-polozov-singh-2017.ingest.md), MDSoFa starts after relevant domain and platform knowledge has been supplied. Its human metamodel, expertise, architecture, and strategy roles therefore make it a boundary case for both [hand-crafted bootstraps](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md) and [learning inside a fixed decomposition](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md): recursive generation inside a supplied design does not acquire or evidence-responsively revise that design.
 
@@ -61,5 +61,5 @@ Use MDSoFa as the strongest retained implementation precedent for constructing f
 
 Abstracted into:
 
-- [A software factory can produce another factory without acquiring its family-specific production knowledge](../notes/factory-construction-does-not-establish-knowledge-acquisition.md) — uses MDSoFa to bound novelty at construction and locate the stronger production-knowledge acquisition question
+- [Factory construction is not evidence of production-knowledge acquisition](../notes/factory-construction-does-not-establish-knowledge-acquisition.md) — uses MDSoFa to bound novelty at construction and locate the stronger production-knowledge acquisition question
 - [A software factory is family-scoped lifecycle production machinery](../notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md) — places MDSoFa's recursive asset production beside the inherited Greenfield factory ontology without treating the two definitions as identical

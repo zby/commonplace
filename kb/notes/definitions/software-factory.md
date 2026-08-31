@@ -36,4 +36,4 @@ Relevant Notes:
 
 - [A software factory is family-scoped lifecycle production machinery](../a-software-factory-is-family-scoped-lifecycle-production-machinery.md) — grounds: reconstructs the versioned historical ontology and the family-machinery/member boundary
 - [Factory development](./factory-development.md) — defined-in: names the separate process that constructs or revises reusable factory machinery
-- [A software factory can produce another factory without acquiring its family-specific production knowledge](../factory-construction-does-not-establish-knowledge-acquisition.md) — contrasts: separates recursive construction from acquiring the production knowledge supplied to the constructor
+- [Factory construction is not evidence of production-knowledge acquisition](../factory-construction-does-not-establish-knowledge-acquisition.md) — contrasts: separates recursive construction from acquiring the production knowledge supplied to the constructor

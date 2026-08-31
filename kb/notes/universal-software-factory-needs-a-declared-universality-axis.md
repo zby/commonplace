@@ -53,7 +53,7 @@ A fixed general substrate remains compatible with that claim. What matters is wh
 
 Relevant Notes:
 
-- [A software factory can produce another factory without acquiring its family-specific production knowledge](./factory-construction-does-not-establish-knowledge-acquisition.md) — grounds: separates recursive construction from acquisition of the knowledge supplied to the constructor
+- [Factory construction is not evidence of production-knowledge acquisition](./factory-construction-does-not-establish-knowledge-acquisition.md) — grounds: separates recursive construction from acquisition of the knowledge supplied to the constructor
 - [Broad software demands create pressure for agentic factory development](./broad-software-demands-create-pressure-for-agentic-factory-development.md) — extends: states the practical acquisition problem without an unqualified universality label
 - [An agentic substrate becomes a software factory through family-specific production machinery](./agentic-substrate-needs-family-specific-machinery-to-be-a-factory.md) — grounds: separates a general substrate from the configured family-specific factory
 - [A Top Down Approach to Structured Software Design for MARA](../sources/di-giovanni-padella-universal-software-factory-1983.ingest.md) — evidenced-by: supplies the target-platform portability use of universal factory
