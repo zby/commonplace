@@ -14,11 +14,13 @@ source_notes:
   - kb/notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md
   - kb/notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md
   - kb/notes/knowledge-storage-does-not-imply-contextual-activation.md
+  - kb/notes/retained-theory-intervention-isolates-one-explicit-surface.md
   - kb/notes/natural-language-project-state-specializes-search-heuristics.md
   - kb/notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md
   - kb/notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
   - kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md
   - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
+  - kb/notes/project-theory-relates-new-demands-to-existing-organization.md
   - kb/sources/programming-as-theory-building.ingest.md
 ---
 
@@ -70,7 +72,7 @@ The hard part of experience-responsive development is changing software and reus
 
 Peter Naur's [1985 essay *Programming as Theory Building*](../sources/programming-as-theory-building.ingest.md) argues that programmers do this by building and holding a project-specific theory: an understanding of how the program maps onto the activity it supports, why it is organized as it is, and how new demands relate to that organization.
 
-Naur's compiler example makes the last capacity especially important. The original group recognized that existing compiler facilities applied to novel modification requests. A later group, despite receiving the program and extensive documentation, proposed locally plausible additions that bypassed those facilities. Access to information was not enough; the relevant connection had to be recognized when the new demand appeared.
+Naur's compiler example makes the last capacity especially important. The original group recognized that existing compiler facilities applied to novel modification requests. A later group, despite receiving the program and extensive documentation, proposed locally plausible additions that bypassed those facilities. Access to information was not enough; [the new demand had to be compared with the program's existing organization](../notes/project-theory-relates-new-demands-to-existing-organization.md).
 
 The program treats this project-theory requirement as a functional hypothesis to be challenged experimentally, not as a necessity result established by Naur's cases.
 
@@ -84,11 +86,11 @@ Fallibility has a structural source. Acquiring a theory from experience is not o
 
 ## Natural-language theory is the implementation bet
 
-Project theory may be carried in many forms. Natural language is the tested realization because LLMs can interpret it into changes across heterogeneous factory machinery while it remains addressable, inspectable, and revisable.
+Project theory may be carried in many forms. Natural language is the tested realization because an LLM can [use one account to coordinate changes across heterogeneous factory machinery](../notes/theory-mediation-can-coordinate-heterogeneous-factory-development.md) while the account remains addressable, inspectable, and revisable.
 
-Natural language also makes the theory directly manipulable in experiments. The same project theory can be retained, withheld, surfaced, corrupted, or replaced while model weights remain fixed. These interventions expose a central failure mode: knowledge may exist in weights or artifacts, and may even appear in the live context, without becoming action-relevant. [Storage and exposure do not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md).
+Natural language also makes the theory [directly manipulable in experiments](../notes/retained-theory-intervention-isolates-one-explicit-surface.md). The same project theory can be retained, withheld, surfaced, corrupted, or replaced while model weights remain fixed. These interventions expose a central failure mode: knowledge may exist in weights or artifacts, and may even appear in the live context, without becoming action-relevant. [Storage and exposure do not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md).
 
-Such a theory can guide generate-and-verify, program search, and learned policies by allocating search and interpreting failures before decisive evidence is available. Other representations and direct or mixed learning methods are competing approaches and should be compared empirically.
+Such a theory may [specialize search heuristics already represented in the model](../notes/natural-language-project-state-specializes-search-heuristics.md), allocating search and interpreting failures in generate-and-verify, program search, and learned policies before decisive evidence is available. Other representations and direct or mixed learning methods are competing approaches and should be compared empirically.
 
 ## How to test the program
 
