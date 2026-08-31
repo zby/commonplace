@@ -42,7 +42,7 @@ source_notes:
 
 > **Draft.** Comments and counterexamples are welcome through the repository's issue tracker.
 
-> **TL;DR.** An agentic system is more than an LLM call: bounded model calls operate inside persistent software machinery. For software production, configuring that machinery with reusable knowledge for a declared product family yields a software factory. When production experience changes reusable factory machinery and later work depends on the change, the factory learns. Several mechanisms could drive that learning. Open-ended coherent modification is harder: following Naur, it requires some form of project theory. This program tests whether fallible natural-language theory gives an LLM-based system a useful, revisable way to coordinate changes across prompts, schemas, workflows, tools, evaluators, and code.
+> **TL;DR.** If software factories can build software factories, the machinery that improves a factory could itself be produced, evaluated, and revised inside the system — improvement without training new models. Factories that build factories are prior art; factories that improve from having done so are not. This program bets the missing piece is theory-mediated learning: a fallible natural-language theory of the system's tasks, failures, and machinery, revised as consequences come in. Whether it survives its own cost is what the program tests.
 
 ## From agentic systems to learning software factories
 
