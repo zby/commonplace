@@ -7,7 +7,7 @@ This ledger states what each stage assumes, what it concludes, and what remains 
 | Stage | Additional premise | Derived claim | Not yet established |
 |---|---|---|---|
 | 1. Agentic computational substrate | Work is performed through bounded LLM calls embedded in persistent software machinery that stores state and mediates effects across calls. | The model call is not the whole behavior-producing system; consequential functions can live in software. | The software need not be generated, mutable, learning, family-specific, or universal. |
-| 2. Configured software factory | The substrate is configured with reusable production knowledge for a declared software product or solution family. | The resulting development and runtime environment is a Greenfield-style software factory for that family. | A generic harness, task family, or task-local program does not yet satisfy this boundary. |
+| 2. Configured software factory | The substrate is configured with reusable production knowledge for a declared software product or solution family. | The resulting configured production environment is a Greenfield-style software factory for that family. | A generic harness, task family, or task-local program does not yet satisfy this boundary. |
 | 3. Agentic factory development | Current family machinery is inadequate for a covered demand, and the agent constructs or revises reusable family-level production machinery. | The agent participates in factory development rather than only solution development. | This is a practical capability claim, not a theorem that all useful machinery must be learned. |
 | 4. Factory-level continual learning | Production experience causally determines a retained factory-development change and later production depends on it. | The factory learns in the minimal cross-episode sense. | The change need not improve outcomes, be warranted, reflective, autonomous, broad, or computationally closed. |
 | 5. Learning-mechanism comparison | More than one mechanism can perform the experience-to-retained-factory-change transition. | Trial and error, trajectory reuse, program search, learned policies, direct optimization, theory mediation, and mixtures are live alternatives. | The list is not exhaustive and supplies no ranking. |
@@ -27,7 +27,7 @@ Counterexamples and limits:
 
 ## Stage 2: family-specific production knowledge configures a factory
 
-The historical term now has an imported boundary. A [software factory](../../notes/definitions/software-factory.md) is a development and runtime environment configured for a declared family of software products or solutions. The reusable production knowledge may be distributed across a schema, packaged assets, processes or guidance, tools, frameworks, generators, tests, and lifecycle support.
+The historical term now has an imported boundary. A [software factory](../../notes/definitions/software-factory.md) is a configured, family-specific production environment for a declared family of software products or solutions. The reusable production knowledge may be distributed across a schema, packaged assets, processes or guidance, tools, frameworks, generators, tests, and lifecycle support.
 
 The mapping is:
 
@@ -53,16 +53,16 @@ Counterexamples and limits:
 
 [Factory development](../../notes/definitions/factory-development.md) changes reusable family-level production machinery. Solution development changes one family member under supplied machinery. An agent participates in factory development when it constructs or revises family scope, schemas, variation knowledge, processes, tools, evaluators, representations, workflows, or other reusable machinery for later family production.
 
-The premise is practical rather than logical. A fixed universal interpreter might express every required program. A complete catalog might contain every useful schema and workflow. The claim is that for sufficiently broad software demands, exhaustively pre-supplying task-appropriate specialization is unlikely to be economical or adequate. Novel requirements, repositories, environments, and failure modes will often expose missing or mistaken production knowledge.
+The premise is practical rather than logical. A fixed universal interpreter might express every required program. A complete catalog might contain every useful schema and workflow. The claim is that for sufficiently broad software demands, exhaustively pre-supplying task-appropriate family knowledge is unlikely to be economical or adequate. Novel requirements, repositories, environments, and failure modes will often expose missing or mistaken production knowledge.
 
-This stage still does not require learning. An agent can construct a new factory from a complete human-supplied description. The [factory-construction prior-art boundary](../../notes/a-software-factory-can-produce-another-factory-without-learning-its-specialization.md) shows why construction and specialization acquisition must stay separate.
+This stage still does not require learning. An agent can construct a new factory from a complete human-supplied description. The [factory-construction prior-art boundary](../../notes/a-software-factory-can-produce-another-factory-without-acquiring-its-family-specific-production-knowledge.md) shows why construction and acquisition of family-specific production knowledge must stay separate.
 
 Counterexamples and limits:
 
 - Selecting an anticipated variant from a complete catalog is configuration, not acquisition of new production knowledge.
 - Repairing one product does not become factory development unless the result changes reusable machinery.
 - Constructing machinery from a supplied metamodel or schema demonstrates realization capability, not inference of that structure from production evidence.
-- Fixed general machinery can remain. The burden falls on specialization claimed to be newly handled.
+- Fixed general machinery can remain. The burden falls on family-specific production knowledge claimed to be newly handled.
 
 ## Stage 4: production experience can make the factory learn
 
@@ -137,7 +137,7 @@ These properties classify stronger systems or experiments. They do not sit on th
 | Computational closure | Every decision assigned to a declared learning path is computationally supplied, conditional on permitted external evidence and interaction. | Actor allocation for that path, not quality or breadth. |
 | Self-improvement | Evidence supports that the system's own retained change improved a declared objective. | Improvement attribution, not compounding. |
 | Compounding | A prior change improves the capacity to produce or select later improvements. | Improvement of the improvement process. |
-| Domain breadth | The process acquires adequate specialization across a declared class of demands. | Reach, independent of closure. |
+| Domain breadth | The process acquires adequate family-specific production knowledge across a declared class of demands. | Reach, independent of closure. |
 
 A factory can learn without reflection. A reflective factory can fail to learn. A closed path can perform badly. A broad process can remain human-open. A successor implementation can remove the path that produced it.
 
@@ -147,6 +147,6 @@ A factory can learn without reflection. A reflective factory can fail to learn. 
 2. Replace every factory term with its causal description. The argument should lose brevity, not validity.
 3. Hold the substrate fixed. The architecture remains coherent; only the practical construction premise becomes false for the tested regime.
 4. Generate one-off code and discard it. Production software exists, but factory machinery and continual learning are withheld.
-5. Generate a factory from a complete supplied schema. Factory construction is established; specialization acquisition and learning are withheld.
+5. Generate a factory from a complete supplied schema. Factory construction is established; acquisition of family-specific production knowledge and learning are withheld.
 6. Retain a harmful factory change. Learning may have occurred, while improvement is withheld.
 7. Let a direct optimizer beat theory mediation. The theory proposal narrows or loses without collapsing the earlier stages.
