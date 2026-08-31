@@ -2,7 +2,18 @@
 
 ## Goal
 
-Explain where architectural redesign occurs in the systems compared by the [reflective self-improvement article](../theory-mediated-self-improvement-series/rejected-drafts/theory-building-inside-the-system.txt). The experimental pathways expose different slices of organizational redesign while leaving different evaluators, update protocols, ontologies, or controllers supplied. Commonplace has made parts of a human–agent builder loop explicit, retained, and operative, with an affordance for turning some current organizing machinery into a later revision target. The theoretical Gödel machine supplies the other comparison point: extraordinarily broad self-referential redesign, but only when its benefit is provable from the incumbent formalization. The [plain account](./plain-account.md) is the integrated synthesis; the [hostile reading](./hostile-reading.md) records the counterexamples that corrected it.
+Explain where architectural redesign occurs across Commonplace, five
+experimental pathways, and the theoretical Gödel machine. The experimental
+pathways expose different slices of organizational redesign while leaving
+different evaluators, update protocols, ontologies, or controllers supplied.
+Commonplace has made parts of a human–agent builder loop explicit, retained, and
+operative, with an affordance for turning some current organizing machinery
+into a later revision target. The Gödel machine supplies the other comparison
+point: extraordinarily broad self-referential redesign, but only when its
+benefit is provable from the incumbent formalization. The
+[plain account](./plain-account.md) is the integrated synthesis; the
+[hostile reading](./hostile-reading.md) records the counterexamples that
+corrected it.
 
 Along the way, develop only as much supporting theory as the explanation needs: what makes a change to the parts list harder to control than a change within a part, how procedure, warrant, and permission to experiment differ, and how coverage claims survive a reorganization.
 
@@ -26,7 +37,7 @@ Both narrowings, and the three distinctions the tests forced (procedure vs warra
 
 ## Why a separate workshop
 
-The KB fixes the local distinctions — [self-improving system](../../notes/definitions/self-improving-system.md), [reflective system](../../notes/definitions/reflective-system.md), [reflective coverage across forms](../../notes/reflective-coverage-is-graded-across-representational-forms.md), [effective update space](../../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md), [behavioral authority](../../notes/definitions/behavioral-authority.md), [the Gödel-machine corner](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md), [omitted vs frozen](../../notes/an-omitted-loop-function-and-a-frozen-one-need-different-repairs.md) — but not their composition into one comparison the article can use. The proof → benchmark → semantic-judgment material, formerly in a separate adjoiner, is now consumed into the [article](../theory-mediated-self-improvement-series/rejected-drafts/theory-building-inside-the-system.txt) (section "Why the binding held, and what changed").
+The KB fixes the local distinctions — [self-improving system](../../notes/definitions/self-improving-system.md), [reflective system](../../notes/definitions/reflective-system.md), [reflective coverage across forms](../../notes/reflective-coverage-is-graded-across-representational-forms.md), [effective update space](../../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md), [behavioral authority](../../notes/definitions/behavioral-authority.md), [the Gödel-machine corner](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md), [omitted vs frozen](../../notes/an-omitted-loop-function-and-a-frozen-one-need-different-repairs.md) — but not their composition into one comparison. The [plain account](./plain-account.md) owns that composition. The earlier article body was rejected and is recoverable from Git history; it is not a working baseline for this workshop.
 
 ## Evaluation boundary
 
@@ -58,7 +69,7 @@ The KB fixes the local distinctions — [self-improving system](../../notes/defi
 
 Practical closure, not completeness:
 
-1. the plain outer-builder-loop explanation is promoted into the article (and its load-bearing distinctions into `kb/notes/`), or rejected with the failure recorded;
+1. the plain outer-builder-loop explanation is promoted into a durable article or note synthesis, or rejected with the failure recorded;
 2. the "something outside each change" successor of the kernel thesis is promoted, narrowed further, or dropped;
 3. every promoted claim passes the plain-language constraint — stated without the workshop's notation;
 4. the formal apparatus is either consumed by a real need or explicitly retired with the parked records left in place;

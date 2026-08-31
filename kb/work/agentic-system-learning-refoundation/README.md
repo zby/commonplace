@@ -14,21 +14,21 @@ material here after deciding not to change the program article yet.
   searches and backtracks" confound, developed from the operator's reframe
   (admit mutation-plus-backtracking; claim only that the space is enormous and
   weak natural-language conjectures help).
+- [program-article-review-residuum-2026-08-30.md](./program-article-review-residuum-2026-08-30.md)
+  — deeper research questions that the earlier focused article review left
+  unresolved because they can change the program's ontology, experiments, or
+  success criteria.
 
 **Scope.** The workshop name signals a broader ambition — refounding the
-argumentation of the agentic-system-learning program — but only the two
+argumentation of the agentic-system-learning program — but only the three
 documents above are commissioned so far. The operator extends the scope.
 
-**Closure.** Closes when the deferred material is folded into the article and
-its source notes or deliberately discarded, and the candidate artifacts named
-inside (a wrong-theory failure-signature note, an update-bandwidth mechanism
-claim) are written or rejected.
+**Closure.** Closes when each deferred finding is folded into the article and
+its source notes, deliberately discarded, or routed to a durable experimental
+owner. The candidate wrong-theory failure-signature and update-bandwidth claims
+must be written or rejected; the residuum's larger research questions need an
+explicit owner, not premature answers.
 
-**Related.**
-[theory-mediated-self-improvement-series](../theory-mediated-self-improvement-series/README.md)
-owns the article-series reconstruction and holds the earlier deep-questions
-residuum,
-[program-article-review-residuum-2026-08-30.md](../theory-mediated-self-improvement-series/program-article-review-residuum-2026-08-30.md).
-Division of labor: that residuum records research questions the article should
-not resolve in prose; this workshop's audit records article–note fidelity
-findings and deferred edits.
+The review residuum records research questions the article should not resolve
+in prose; the faithfulness audit records article–note fidelity findings and
+deferred edits.

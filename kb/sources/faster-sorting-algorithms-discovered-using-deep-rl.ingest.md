@@ -8,7 +8,7 @@ capture_origin: user-provided-publisher-pdf
 genre: scientific-paper
 snapshot_sha256: 9d50bfec381872be2e4d61747cc7cab43ff62fb5eba43a834dbefbbe3d31e27e
 ingested: "2026-08-29"
-occasion: "Determine what status the AlphaDev source supports for the FunSearch/AlphaDev row in kb/work/theory-mediated-self-improvement-series/match-register.md."
+occasion: "Assess AlphaDev as evidence for learned-localized program improvement and for the production-method/form distinction."
 type: kb/sources/types/ingest-report.md
 domains: [program-synthesis, reinforcement-learning, self-improving-systems, algorithm-optimization]
 ---
@@ -47,4 +47,4 @@ Following [the fixed-decomposition boundary](../notes/learning-inside-a-fixed-de
 
 ## Recommended Next Action
 
-Update `kb/work/theory-mediated-self-improvement-series/match-register.md` so the FunSearch/AlphaDev row records AlphaDev as direct support for bounded learned-localized proposal, evaluation, and operative retention, but as insufficient evidence for theory mediation or for FunSearch, and use this ingest as the row's AlphaDev evidence record.
+Completed. The durable [production-method/form note](../notes/the-bitter-lesson-selects-production-methods-not-representational.md) now uses AlphaDev as direct support for bounded learned-localized program search and operative symbolic output. Keep the limit explicit: this paper does not establish theory mediation or supply evidence about FunSearch.

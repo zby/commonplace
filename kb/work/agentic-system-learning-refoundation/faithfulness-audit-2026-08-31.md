@@ -8,7 +8,7 @@ evidence and warrant), each checking every note's claim against the article's
 use of it; synthesis by the session agent. The operator deferred all edits.
 
 Complementary to
-[program-article-review-residuum-2026-08-30](../theory-mediated-self-improvement-series/program-article-review-residuum-2026-08-30.md):
+[program-article-review-residuum-2026-08-30](./program-article-review-residuum-2026-08-30.md):
 that file records research questions the article should not resolve in prose;
 this file records article–note fidelity findings.
 

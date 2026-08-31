@@ -6,8 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [agentic-system-learning-refoundation](./agentic-system-learning-refoundation/README.md) — deferred revision material for the learning-software-factories program article: a note-faithfulness audit and a defense of weak theory-guided search against the random-mutation baseline
-- [theory-mediated-self-improvement-series](./theory-mediated-self-improvement-series/README.md) — reconstructs the article series from two accepted baselines and four quarantined drafts around a mixed theory–LLM–code target, a non-degenerate closure–capability map, a human-inclusive theory-building and LLM-wiki tool, and controlled claim transfer
+- [agentic-system-learning-refoundation](./agentic-system-learning-refoundation/README.md) — deferred revision material for the learning-software-factories program article: deeper research questions, a note-faithfulness audit, and a defense of weak theory-guided search against the random-mutation baseline
 - [full-pass-instruction-coherence-audit](./full-pass-instruction-coherence-audit/README.md) — repaired claim-change authority, phase/guard recovery, and closing completion after one instrumented keep exposed a schema-valid final capture with an edit-introduced parsing failure; scenario coverage remains incomplete
 - [change-operations-catalogue](./change-operations-catalogue/README.md) — a working list of the operations by which Commonplace gets changed, each admitted by an observed instance, with the premises it must read and where they live; used to audit `kb/reference/` in both directions under ADR 074. Carries no completeness claim
 - [full-pass-recompute-cluster](./full-pass-recompute-cluster/README.md) — queued full improvement passes over the six recoverability/economics notes written 2026-08-22/23, in two dependency-ordered batches so a reframe in the first lands before the second reads its premises

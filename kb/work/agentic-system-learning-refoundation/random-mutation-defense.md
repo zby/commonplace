@@ -95,7 +95,7 @@ hurts systematically in the predicted direction, the theory was load-bearing.
 A mechanism whose failures are directional is a mechanism that is steering.
 This connects to the single-premise-corruption arm and its preregistered
 negative-transfer prediction in
-[program-article review residuum §3](../theory-mediated-self-improvement-series/program-article-review-residuum-2026-08-30.md).
+[program-article review residuum §3](./program-article-review-residuum-2026-08-30.md).
 
 ## The honest residue
 
@@ -128,4 +128,4 @@ defense must not quietly claim that territory.
 - [program-theory-sustains-search-under-delayed-feedback](../../notes/program-theory-sustains-search-under-delayed-feedback.md) — rests-on: source of the confound this paper answers
 - [an-experiment-identifies-only-the-contrast-it-actually-runs](../../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md) — rests-on: the comparative restatement must run the contrast it claims
 - [open-ended-improvement-allocates-search-before-evaluation](../../notes/open-ended-improvement-allocates-search-before-evaluation.md) — see-also: why allocation matters before decisive evaluation exists
-- [program-article-review-residuum-2026-08-30 §3](../theory-mediated-self-improvement-series/program-article-review-residuum-2026-08-30.md) — see-also: experiment arms this argument's predictions attach to
+- [program-article-review-residuum-2026-08-30 §3](./program-article-review-residuum-2026-08-30.md) — see-also: experiment arms this argument's predictions attach to
