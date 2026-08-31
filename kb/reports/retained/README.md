@@ -14,6 +14,7 @@ Current retained sets:
 - [Provider treatment of operator-communication failures](./provider-treatment-of-operator-communication-failures-2026-08-29.md)
 - [Link-vocabulary audit](./link-vocabulary.md)
 - [Review-link availability baseline](./review-link-availability.md)
+- [Agent operability audit](./agent-operability-audit-2026-08-31.md)
 
 Promote transferable conclusions to the appropriate library collection, but
 keep the report here when a later reader still needs the exact record behind
