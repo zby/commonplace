@@ -33,7 +33,7 @@ Three substitutions, each already carried by a standing claim:
 
 - **Provenance, update placement, and actor allocation remain separate.** "Hand-crafted" says who produced the current version. It does not say whether the artifact is currently revisable or whether a human performs its operation. A bootstrap may move production of selected content and machinery into computation without requiring every inherited component to move.
 - **Exemption by position becomes persistence by warrant where the claimed path reaches.** A gate may survive because its criterion keeps discriminating, a type because its carve keeps earning use, or a kernel because exactness, safety, or bounded cost warrants protection. Applying an assessed standard to consequential free choices, machinery included, is this note's conjecture. The [case-level diagnosis of a structured method's loss under scaling](./bitter-lesson-selects-against-unearned-reach-not-against-structure.md) states when unsupported proxy scope may explain a loss and disclaims the converse guarantee that assessed structure persists.
-- **The declared frame replaces the fiction that reflection has no outside.** Objectives, commitments, authority grants, and fixed general learning machinery may remain supplied. A [computationally closed pathway](./definitions/computationally-closed-software-factory-learning-loop.md) names those crossings rather than pretending they disappeared. Fixedness becomes a reach limit when the protected component embeds task- or family-specific specialization that a broader claim requires computation to acquire, as separated by [domain extensibility](./definitions/domain-extensible-software-factory.md).
+- **The declared frame replaces the fiction that reflection has no outside.** Objectives, commitments, authority grants, and fixed general learning machinery may remain supplied. [The computational-closure account](./methodological-and-computational-closure-track-different-changes.md) names those crossings rather than pretending they disappeared. Fixedness becomes a reach limit when the protected component embeds task- or family-specific production knowledge that a broader claim requires computation to acquire, as stated by [the pressure for agentic factory development](./broad-software-demands-create-pressure-for-agentic-factory-development.md).
 
 ## The cost is the fixed point
 
@@ -45,7 +45,7 @@ That is a cost of recursive revision, not a requirement that every reflective sy
 
 - The claim is about what licenses a consequential fixed choice, not a demand for universal revisability. One traced instance of loop-produced machinery plus one standing channel does not make the loop the main producer of its own machinery today.
 - Fixed provenance, location outside one update space, and current human decision supply are different properties. A fixed computational rule can be computationally closed for the scope it settles.
-- Bitter-Lesson pressure is strongest where human-authored task- or family-specific specialization claims broad reach. Fixed general machinery may remain when its generality and constraints are part of the stated claim and survive relevant tests.
+- Bitter-Lesson pressure is strongest where human-authored task- or family-specific production knowledge claims broad reach. Fixed general machinery may remain when its generality and constraints are part of the stated claim and survive relevant tests.
 
 ## Open Questions
 
