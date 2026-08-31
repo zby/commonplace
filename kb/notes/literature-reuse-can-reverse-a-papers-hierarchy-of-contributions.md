@@ -11,6 +11,8 @@ Researchers often have to construct a careful ontology—a set of entities, dist
 
 A later project may value these outputs in the opposite order. The reported result may be specific to a substrate, implementation, or empirical setting that the later project does not share, while the supporting ontology still distinguishes cases that matter in its problem. The later project then reuses the machinery that made the original result expressible without treating that result as evidence for the new domain.
 
+The same reversal can occur with taxonomies, decompositions, and other conceptual frameworks. Ontologies are especially prone to it because they organize a range of possible cases, while a reported result is often confined to a narrower class of systems or observations. Their distinctions can survive changes of substrate or implementation when they capture structural relations. This transferability is strongest when the ontology makes enough commitments to discriminate relevant cases while avoiding commitments needed only by the source setting.
+
 The ontology is not independent of the original empirical or engineering work. Its value may come precisely from the range of cases and failed distinctions through which it was developed. What changes is which product of that work transfers: not necessarily the reported result, but the ontology shaped while producing it.
 
 ## Implication for literature ingestion
