@@ -36,11 +36,11 @@ Objectives, commitments, authority boundaries, fixed general learning methods,
 exact interfaces, and trusted kernels may all remain outside a particular
 update space. A frozen acceptance rule may therefore be the warranted kernel
 rather than the defect. Frozen names where a component sits; it does not by
-itself convict. If the component instead embeds family-specific specialization
-that people must redesign as claimed reach widens, it limits [domain
-extensibility](./definitions/domain-extensible-software-factory.md), not because
-all fixed machinery is forbidden but because the required specialization stays
-human supplied.
+itself convict. If the component instead embeds family-specific production
+knowledge that people must redesign as claimed reach widens, it limits [the
+system's acquired production reach](./broad-software-demands-create-pressure-for-agentic-factory-development.md),
+not because all fixed machinery is forbidden but because the required knowledge
+stays human supplied.
 
 When a freeze is defended rather than merely inherited, the defences split: a
 **protective** freeze keeps the component outside the loop to resist a named

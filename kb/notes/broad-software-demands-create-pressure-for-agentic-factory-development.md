@@ -56,6 +56,23 @@ The first two can cover substantial work. Greenfield, Tool Factory, and MDSoFa a
 
 The practical generality claim concerns the third case. A system does not meet it by hiding a target-indexed catalog of handcrafted factories inside its supposedly general substrate.
 
+## Reach claims need a declared evaluation frame
+
+A claim that the process acquires adequate family knowledge across new demands must declare:
+
+- the demand class and prospective selection or sampling rule;
+- the permitted task and production evidence, including user or environment interaction;
+- the acceptance relation for resulting products and reusable machinery;
+- the learner boundary and which human interventions are disallowed;
+- the horizon and resource limits; and
+- how failures, timeouts, abstentions, retries, and rescues are counted.
+
+These conditions should be fixed before outcomes are known. Otherwise a system can appear broad by excluding failed demands, supplying the decisive schema or evaluator through “feedback,” or defining the family only after seeing the product it produced.
+
+Production reach and computational closure are independent. A computationally closed update path can remain narrow because it only revises one supplied family. A broad process can remain human-open because people still determine the family-specific machinery for each newly covered area. Evidence for one axis does not establish the other.
+
+The allowed evidence also bounds the claim. When two intended demands remain indistinguishable under every permitted interaction but require incompatible outcomes, no solver can be guaranteed to recover the missing distinction. The remedy is to restrict the demand class, permit a discriminating interaction, allow abstention or later correction, or weaken the success claim—not to hide the missing information inside the word *universal*.
+
 ## What would support the claim
 
 The pressure claim earns evidence when a fixed supplied repertoire repeatedly encounters demands for which:
@@ -79,7 +96,7 @@ A universal fixed substrate is therefore a live counterhypothesis, not a contrad
 - Broad demand coverage is not itself learning. The system may construct machinery from a complete human-supplied description.
 - Fixed objectives, interfaces, runtimes, model providers, resource controls, and trusted kernels may remain.
 - The relevant burden is recurring human construction of family-specific production knowledge required by the claimed reach, not the mere existence of handcrafted general components.
-- One novel tool does not establish broad extensibility; later reuse and repeated transfer are separate evidence requirements.
+- One novel tool does not establish broad reach; later reuse and repeated transfer are separate evidence requirements.
 
 ---
 
@@ -89,3 +106,5 @@ Relevant Notes:
 - [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — grounds: shows why learning confined to supplied production structure may preserve its errors
 - [Orchestration strategies and run-state have opposite persistence economics](./orchestration-strategies-and-run-state-have-opposite-persistence.md) — exemplifies: reusable control strategy may merit promotion while task-specific state remains ephemeral
 - [Machinery persists by warrant, not position, in a reflective loop](./machinery-persists-by-warrant-not-position-in-a-reflective-loop.md) — extends: explains why the pressure does not require universal self-modification
+- [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — contrasts: supplies the actor-allocation axis that must not be confused with production reach
+- [Universal software factory needs a declared universality axis](./universal-software-factory-needs-a-declared-universality-axis.md) — extends: explains why a bare universality label cannot replace the declared reach frame

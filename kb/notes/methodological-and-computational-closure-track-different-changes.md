@@ -35,6 +35,8 @@ The line between an exogenous input and a human intervention is causal, not synt
 
 Declare these crossings before reading the evaluated outcomes, and keep failures, timeouts, and abstentions in the coverage account. A path may reach any of them without human help and remain computationally closed. Closure therefore establishes actor allocation over the selected paths, not competence, warrant, or breadth of task coverage.
 
+Production reach is a separate axis. A computationally closed path may remain narrow because it only updates one supplied family, while a broad process may remain human-open because people still supply the production knowledge required for each newly covered area.
+
 ## Four concrete combinations
 
 | Improvement decision | Methodologically closed? | Computationally closed? | Why |
@@ -105,4 +107,3 @@ Relevant Notes:
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — contrasts: states why computational allocation stalls where warranted checking is expensive
 - [A Model for Types and Levels of Human Interaction with Automation](https://www.cs.uml.edu/~holly/91.550/papers/sheridan-autonomy.pdf) — evidenced-by: the external per-function allocation precedent, whose within-function level scale is deliberately not inherited
 - [Distinct residue classes require distinct functions in a self-improving architecture](./residue-classes-need-different-mechanisms-so-architecture-is-mixed.md) — extends: maps the representation–settlement–warranted-execution conversion onto the architectural parts that supply each stage
-- [Computationally closed software-factory learning loop](./definitions/computationally-closed-software-factory-learning-loop.md) — extends: specializes the declared-crossing and actor-allocation rules to evidence-responsive factory development
