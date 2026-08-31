@@ -81,17 +81,18 @@ src/commonplace/          Packaged operational engine
 
 ## Research routes
 
-**Theory-guided program modification.** Can a computational system use
-fallible, project-specific theory to keep search, backtracking, and recovery
-coherent under delayed feedback? The
+**Learning software factories.** Can an agentic software-production system learn
+reusable family-specific production machinery from experience, and does retained
+natural-language theory improve that learning? The
 [research program](./kb/articles/a-research-program-for-learning-software-factories.md)
-treats theory as search control rather than an oracle and separates the model's
-computational search from the high-level selection still supplied by the
-operator. The [Naur note](./kb/notes/naur-equates-machine-execution-with-formulated-criteria.md)
-explains why Naur's human-only conclusion no longer settles the bearer question,
-while the [coherent-search note](./kb/notes/program-theory-sustains-search-under-delayed-feedback.md)
-states the remaining test. Companion articles develop the [Bitter Lesson's
-scaling test](./kb/articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
+separates this outer question from its first theory-specific test: coherent
+modification under delayed feedback. Commonplace is the live human-inclusive
+testbed; a programming-agent comparison is planned. The [Naur
+note](./kb/notes/naur-equates-machine-execution-with-formulated-criteria.md)
+frames the bearer question, while the [coherent-search
+note](./kb/notes/program-theory-sustains-search-under-delayed-feedback.md)
+states the first test. Companion articles develop the [Bitter Lesson's scaling
+test](./kb/articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
 and [why the hardest decisions stay human](./kb/articles/the-decisions-that-stay-human-and-what-would-move-them.md).
 
 **Deployment-time learning.** Durable changes to prompts, rules, tools, schemas, tests, and code can affect later sessions without updating model weights. Storage is insufficient: later operation must load or enforce the result. Start with [retained system-definition artifacts enable persistent deployment-time adaptation](./kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) and the [learning theory index](./kb/notes/learning-theory-README.md).
