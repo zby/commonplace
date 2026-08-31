@@ -13,7 +13,7 @@ Two separate pressures keep the design modular. Different collections support di
 ## Threads worth following
 
 **Theory-guided program modification.** The current
-[research program](./articles/a-research-program-for-theory-mediated-system-learning.md)
+[research program](./articles/a-research-program-for-learning-software-factories.md)
 asks whether a computational system can use fallible, project-specific theory
 to keep modification coherent through search, backtracking, recovery, and
 delayed feedback. Theory is proposed as control over that search, not as an

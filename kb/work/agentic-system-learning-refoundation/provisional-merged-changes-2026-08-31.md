@@ -57,7 +57,7 @@ Before treating this batch as settled:
   — the proposed boundary between factory construction and learning.
 - [Closure and reach](../../notes/domain-extensibility-not-closure-determines-factory-reach.md)
   — the separation of actor allocation from breadth.
-- [Research-program article](../../articles/a-research-program-for-theory-mediated-system-learning.md)
+- [Research-program article](../../articles/a-research-program-for-learning-software-factories.md)
   and [Bitter Lesson article](../../articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
   — the premature article-level integrations to revisit.
 

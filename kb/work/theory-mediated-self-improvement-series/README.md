@@ -225,7 +225,7 @@ used to revise the invitation.
 
 ## Current research surface
 
-- [A research program for theory-mediated system learning](../../articles/a-research-program-for-theory-mediated-system-learning.md) — the compact program statement; the workshop's current article-side focus.
+- [A research program for learning software factories](../../articles/a-research-program-for-learning-software-factories.md) — the compact program statement; the workshop's current article-side focus.
 - [The decisions that stay human, and what would move them](../../articles/the-decisions-that-stay-human-and-what-would-move-them.md) — the conditional transfer argument and structural closure versus evaluator quality.
 - [Naur binds program theory to humans by equating machine execution with formulated criteria](../../notes/naur-equates-machine-execution-with-formulated-criteria.md) — why Naur's human-only conclusion does not settle the bearer question.
 - [Holding a program theory means sustaining coherent search under delayed feedback](../../notes/program-theory-sustains-search-under-delayed-feedback.md) — the longitudinal coherent-modification test.

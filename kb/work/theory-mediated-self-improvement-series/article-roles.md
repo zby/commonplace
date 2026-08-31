@@ -33,8 +33,8 @@ own and links only the companions a reader actually needs next.
 
 The current minimum public surface is:
 
-1. **[A research program for theory-mediated system
-   learning](../../articles/a-research-program-for-theory-mediated-system-learning.md)**
+1. **[A research program for learning software
+   factories](../../articles/a-research-program-for-learning-software-factories.md)**
    carrying the central question, fallible longitudinal search, complementary
    operation classes, lightweight search control, the evidence ladder,
    truth-versus-fit inside the evaluation problem, the two testbeds, an

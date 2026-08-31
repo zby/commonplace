@@ -38,7 +38,7 @@ source_notes:
   - kb/sources/programming-as-theory-building.ingest.md
 ---
 
-# A research program for theory-mediated system learning
+# A research program for learning software factories
 
 > **Draft.** Comments and counterexamples are welcome through the repository's issue tracker.
 
