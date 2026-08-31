@@ -7,14 +7,14 @@ tags: [foundations, learning-theory, self-improving-systems]
 
 # A software factory learns when production experience changes reusable machinery used later
 
-A [software factory](./definitions/software-factory.md) undergoes **factory-level continual learning** when experience from producing one product causally determines retained state in a new factory and later production under that factory depends on the retained state.
+A [software factory](./definitions/software-factory.md) undergoes **factory-level continual learning** when experience from producing one product causally determines a retained change to the reusable family-level production machinery of a new factory and later production under that factory depends on the change.
 
 The minimal path is:
 
 ```text
 production of product A under factory F
   -> experience bearing on reusable machinery
-  -> retained change in new factory F'
+  -> retained change to reusable machinery in new factory F'
   -> later production under F' depends on the change
 ```
 
