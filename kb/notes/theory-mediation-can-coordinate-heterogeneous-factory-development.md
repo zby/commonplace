@@ -90,7 +90,7 @@ Against information- and budget-matched alternatives, theory mediation should ea
 2. predicts where a decomposition, representation, evaluator, or tool will fail before exhaustive trial;
 3. improves recovery after delayed feedback by identifying the earlier commitment that should change;
 4. supports targeted rescoping instead of copying or discarding an entire trajectory;
-5. reduces new human specialization when a related but unanticipated family variation appears; or
+5. reduces new human construction of family-specific production knowledge when a related but unanticipated product variation appears; or
 6. leaves an intervention-sensitive trace: withholding, replacing, or corrupting the theory changes consequential factory-development choices.
 
 It should narrow or lose when:
@@ -101,7 +101,7 @@ It should narrow or lose when:
 - theories become self-confirming because their evaluators share the same assumptions;
 - cross-artifact coordination increases correlated error;
 - human judgment required to maintain theory grows with the system; or
-- each new domain still requires people to supply the decisive decomposition and evaluator.
+- each new domain still requires people to supply the decisive decomposition, family knowledge, and evaluator.
 
 ## Theory content and factory machinery are different roles
 
@@ -116,6 +116,7 @@ Conversely, theory need not remain in natural language forever. Stable claims ca
 - A theory of the task alone may be insufficient when decomposition depends on solver limits. A theory of the solver alone may be insufficient when task dependencies determine what must be preserved.
 - Theory mediation can coexist with fixed general machinery and with non-theoretical search at lower levels.
 - Reflection is not required for every theory-mediated factory change. It is claimed only when a causally connected representation of selected aspects of the same system participates in operation or revision.
+- Greenfield's **factory specialization** remains a particular operation on reusable factory structure; it is not a synonym for acquiring family-specific production knowledge from evidence.
 
 ---
 
