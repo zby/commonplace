@@ -20,7 +20,7 @@ This starting point does not imply that the software substrate learns, writes it
 
 Greenfield's software-factory ontology supplies a useful established distinction, but it is narrower than a generic agentic system.
 
-A Greenfield-style [software factory](../../notes/definitions/software-factory.md) is a development and runtime environment configured for a declared family of software products or solutions. Its family-specific production knowledge is distributed across a schema, packaged assets, processes or guidance, tools, frameworks, and lifecycle support. [Factory development](../../notes/definitions/factory-development.md) constructs or revises that reusable machinery; solution development uses it to create and sustain a family member.
+A Greenfield-style [software factory](../../notes/definitions/software-factory.md) is a configured, family-specific production environment for a declared family of software products or solutions. Its family-specific production knowledge is distributed across a schema, packaged assets, processes or guidance, tools, frameworks, and lifecycle support. [Factory development](../../notes/definitions/factory-development.md) constructs or revises that reusable machinery; solution development uses it to create and sustain a family member.
 
 The mapping used by this workshop is therefore:
 
@@ -74,9 +74,9 @@ Several important ideas remain in the program, but they are not required to deri
 - **Computational closure** asks whether all decisions assigned to a declared learning path are computationally supplied, conditional on permitted external evidence and interaction.
 - **Self-improvement** adds an objective and evidence that the system's own change improves it relative to that objective.
 - **Compounding** requires later evidence that an earlier change improved the capacity to produce further improvements.
-- **Breadth or domain extensibility** asks which demands the process can turn into adequate family specialization; it is independent of closure.
+- **Breadth or domain extensibility** asks which demands the process can turn into adequate family-specific production knowledge; it is independent of closure.
 
-Factory-valued output, recursion, reflection, learning, improvement, closure, and compounding must remain separately classifiable.
+Factory-valued output, factory specialization, acquisition of family-specific production knowledge, learning, recursion, reflection, improvement, closure, and compounding must remain separately classifiable.
 
 ## Direction fixed by the operator
 
@@ -110,20 +110,25 @@ The positive conjecture is that natural-language theory may be unusually versati
 - Do not call every coding agent, workflow, generated program, or task-local orchestrator a software factory.
 - Do not infer a product family from an evaluator's task grouping.
 - Do not infer factory learning from product repair, retained bytes, or improved output on the same task.
-- Do not infer learning from recursive construction when the target specialization was supplied.
+- Do not infer learning from recursive construction when the target family-specific production knowledge was supplied.
+- Do not use *factory specialization* as a synonym for acquiring production knowledge; it is Greenfield's name for a specific factory-development operation.
 - Do not require universal self-modification; fixed general machinery, objectives, interfaces, resource controls, and trusted kernels may remain.
 - Do not make computational closure, reflection, self-improvement, or compounding part of the minimal continual-learning premise.
 - Do not discard theory-mediated material merely because its argumentative position changes.
 
-## Implementation sequence
+## Implementation state
 
-1. **Contain premature article integration.** Remove article-level claims that depend on successor-factory, closure, or domain-extensibility terminology before the ontology is settled.
-2. **Import the Greenfield ontology.** Keep compact definitions for software factory and factory development, a versioned reconstruction, and a separate construction-versus-acquisition prior-art note.
-3. **Rebase this workshop.** Replace the loose task-local factory usage with the substrate/configured-factory/factory-development distinction and move recursion and closure downstream.
-4. **Write the learning bridge.** Add durable notes for the agentic-substrate mapping, task-family/product-family distinction, practical pressure for agentic factory development, minimal factory-level continual learning, and neutral mechanism comparison.
-5. **Restructure the research-program article.** Make the architectural dependency order visible, then preserve the strongest existing theory-mediated argument, experiment, and evidence as the downstream proposal.
+The refoundation has now produced:
 
-The [transition map](./transition-map.md) records the current disposition of existing material.
+1. a contained public baseline that removed the premature successor-factory and closure framing;
+2. a versioned Greenfield ontology import with compact `software factory` and `factory development` definitions;
+3. a workshop rebase using the substrate/configured-factory/factory-development distinction;
+4. durable bridge notes for task/product families, practical factory-development pressure, minimal factory-level continual learning, mechanism comparison, and theory mediation; and
+5. a restructured research-program article that makes the architectural dependency order visible before presenting theory mediation.
+
+The earlier stacked pull requests were accidentally merged into feature branches rather than the default branch. The current integration pass assembles their content on `main` and applies the terminology and provenance corrections recorded during review.
+
+The [transition map](./transition-map.md) records the remaining disposition work.
 
 ## Relationship to the existing workshop
 
@@ -145,11 +150,9 @@ Theory mediation then earns its place through comparative evidence. Useful tests
 
 ## What closes this workshop
 
-The workshop closes when:
+The supporting derivation and article restructuring are now assembled. The workshop can close only after:
 
-- durable notes carry every step of the revised spine without circular dependence on theory mediation;
-- task families and product families are kept distinct;
-- factory-valued construction, specialization acquisition, learning, reflection, closure, self-improvement, and compounding can be classified independently;
-- alternative mechanisms are represented fairly;
-- the research-program article has been restructured around the derived architecture; and
-- every old-workshop artifact has a recorded disposition before the old workshop is closed separately.
+- the premature extension files have explicit keep, withdraw, replace, or delete dispositions;
+- every old-workshop artifact has a recorded destination or retained-evidence role;
+- the source-to-note provenance graph points to the durable replacement notes; and
+- the old workshop is closed separately without losing its evidence and source controls.
