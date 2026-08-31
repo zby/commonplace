@@ -263,11 +263,11 @@ and research commitments.
 
 ## Tests that can change the strategy
 
-The [research program](./a-research-program-for-learning-software-factories.md#current-evidence-and-next-tests)
-specifies the immediate theory intervention and the prospective instrumentation
-of the current human-agent loop. For the Bitter Lesson strategy, those results
-must additionally show that more computation improves downstream search rather
-than candidate volume, that recurring human judgments become reusable selection
+The [research program](./a-research-program-for-learning-software-factories.md#how-to-test-the-program)
+specifies the immediate theory-holding intervention and the later acquisition
+and successor-factory tests. For the Bitter Lesson strategy, those results must
+additionally show that more computation improves downstream search rather than
+candidate volume, that recurring human judgments become reusable selection
 machinery, and that the marginal human contribution falls without hidden losses
 in quality or warrant.
 
