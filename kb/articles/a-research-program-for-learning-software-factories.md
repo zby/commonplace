@@ -420,39 +420,20 @@ after the fact.
 
 ### Controlled programming-agent test
 
-The minimum controlled test compares:
+Controlled runs will vary the retained theory while matching the base model,
+starting machinery, task sequence, protocol, and budget; treatment-induced
+machinery changes remain outcomes. Conditions should include usable theory,
+theory withheld, plausible but wrong theory, and—when testing explanatory
+organization—an information-matched factual record. Later demands must be able
+to expose mistakes introduced by earlier modifications.
 
-- usable retained theory;
-- theory withheld;
-- plausible but wrong theory; and
-- for claims about explanatory organization, an information-matched record that
-  preserves the facts while removing that organization.
-
-The base model, initial executable machinery, task sequence, interaction
-protocol, and budget should be matched across conditions. Treatment-induced
-machinery changes are outcomes. Later demands must be able to expose mistakes
-introduced by earlier locally successful modifications.
-
-The primary questions are:
-
-- Does theory change search allocation, decomposition, tool construction, or
-  recovery?
-- Do later consequences revise the same retained theory surface?
-- Does that revision change later work?
-- Does theory improve coherent modification, transfer, or total recovery cost?
-- Does it outperform credible trajectory, search, policy, optimization, or mixed
-  alternatives at comparable total cost?
-
-A run supports a factory-learning claim only when production experience changes
-reusable family machinery and later production consumes that change. Otherwise
-the experiment may still establish theory-mediated solution modification or
-recovery.
-
-Any result identifies only [the contrast it actually
-runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md).
-A natural-language-theory result tests that explicit surface; it does not show
-that every successful alternative lacks an implicit project theory or rank every
-learning mechanism.
+The test asks whether theory changes search and recovery, whether consequences
+revise the retained theory and later work, and whether this improves coherent
+modification at comparable total cost. A factory-learning claim additionally
+requires changed reusable machinery to affect later production; otherwise the
+result concerns theory-mediated solution modification. [Any conclusion is
+limited to the contrasts actually
+run](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md).
 
 ### Longitudinal Commonplace study
 
