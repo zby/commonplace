@@ -23,7 +23,8 @@ The paper argues that stronger search, reasoning, and tool use do not by themsel
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** The ladder is organized in three dimensions: 1) Search pattern: is the system searching within a fixed representational space, or can it modify the space being searched? 2) Vocabulary autonomy: can it create and reuse new conceptual primitives? 3) Verifier autonomy: does it own the verifier and evolve it as needed, or is the success criteria supplied and fixed from outside?
+  - **Source location:** Section 4, “Levels of Innovation Autonomy,” opening taxonomy paragraph
 
 ## Connections Found
 

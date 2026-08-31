@@ -22,6 +22,12 @@ Artifact analysis records four fields:
 
 These fields replace the older shorthand of **class/backend/role**. Backend becomes storage substrate. Class becomes representational form. Source relation becomes lineage. Role and control path become behavioral authority. The replacement is not cosmetic: the new names force the record to say what the artifact's operative part is, which consumption path gives it force, and what evidence would actually review it.
 
+## The artifact record describes retained state, not the process that changes it
+
+The four fields describe what retained behavior-shaping state exists and how it can act through a consumption path. [Beyond Fixed Representations: The Vocabulary and Verifier Gaps in Open-Ended AI](../sources/beyond-fixed-representations-vocabulary-verifier-gaps.ingest.md) supplies a complementary vocabulary for change: search pattern, vocabulary autonomy, and verifier autonomy. These dimensions ask what a process can change; they are not additional fields of the artifact record.
+
+Applying the artifact record before and after a change can describe both configurations. It does not establish the transition between them: what found the candidate, what evidence selected it, whether it became operative, or whether the same redesign class remains open to another change. [A repeatable operative revision path](./a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md) supplies that test.
+
 ## Representational form
 
 Representational form is the main replacement for the old opaque/natural-language/symbolic class axis.
