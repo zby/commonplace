@@ -2,7 +2,7 @@
 description: "Theory-mediated system learning joins runtime self-modeling and self-adaptation with empirical refinement of fallible explicit theories; Workspace Optimization is a contemporary implementation analogy rather than the overall closest antecedent"
 type: kb/types/note.md
 traits: [title-as-claim, synthesis, has-external-sources]
-tags: [learning-theory, self-improving-systems, foundations]
+tags: [learning-theory, deploy-time-learning, self-improving-systems, foundations]
 ---
 
 # Theory-mediated system learning combines runtime self-modeling with empirical theory refinement
@@ -48,8 +48,12 @@ self-adaptive systems usually begin with a supplied model language, goal or
 requirements vocabulary, monitoring boundary, adaptation operators, and
 evaluation policy. They need not treat the runtime model as a fallible
 explanatory theory whose content and scope are revised by delayed consequences,
-and they generally leave the adaptation machinery itself outside the revision
-surface.
+and they generally leave these adaptation-machinery choices outside the
+revision surface. Such choices count as factory-development choices in this
+research program only when they belong to a declared family-scoped
+software-production factory. Their fixed placement limits domain extensibility when they carry
+required task- or family-specific specialization. It is not an inherent defect
+when a component is warranted general machinery over the declared reach.
 
 ## Theory refinement supplies the epistemic lineage
 
@@ -117,11 +121,14 @@ have not been fully formalized. Persistent natural-language and symbolic
 artifacts provide addressable working state, while code and runtime carry exact
 transitions, checks, and continuity.
 
-The further ambition is that the decomposition, evaluators, and improvement
-machinery remain challengeable rather than permanently supplied. No source
-above establishes this complete combination, and the current program has not
-yet demonstrated it either. The combination is the research target, not a
-settled novelty result.
+The further ambition is that required task- or family-specific decompositions,
+evaluators, and improvement methods can be computationally acquired or
+challenged rather than supplied anew by people as the demand class widens. The
+ambition does not require every general algorithm, runtime, interface, or
+trusted kernel to modify itself. No source above establishes the complete
+evidence-to-specialization transition, and the current program has not yet
+demonstrated it either. The combination is the research target, not a settled
+novelty result.
 
 ## Consequences for comparison and experiment
 
@@ -157,6 +164,9 @@ modification on one traceable path.
   causal role, not an identity of concepts.
 - A theory-refinement system is not automatically reflective. Explicit theory
   revision can concern a world outside the learner.
+- Supplied adaptation machinery bounds the demonstrated reach when it embeds
+  target-specific specialization. Human provenance or fixedness alone does not
+  show that scoped learning or computational closure is incomplete.
 - The proposed synthesis may turn out not to outperform simpler combinations of
   runtime models, direct search, artifact repair, and parametric adaptation.
 
@@ -170,8 +180,9 @@ modification on one traceable path.
   when both expose the same purposes and dependencies?
 - Which part of Workspace Optimization's advantage comes from editable state,
   local ownership, replay, or theory-level organization?
-- Does putting adaptation machinery inside the revision surface improve learning
-  or mainly destabilize the evaluator and control structure?
+- Which supplied adaptation choices carry task-specific competence that domain
+  extensibility must acquire, and which are warranted general machinery over
+  the declared reach?
 
 ---
 
@@ -181,7 +192,8 @@ Relevant Notes:
 - [Reflective system](./definitions/reflective-system.md) — grounds: supplies the causally connected self-representation relation inherited from computational reflection
 - [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) — grounds: states the causally co-indexed path the synthesis must realize
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: applies the theory-guided mechanism to longitudinal software modification and recovery
-- [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — grounds: explains the further requirement that adaptation machinery remain challengeable
+- [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — grounds: explains why target-specific decomposition choices bound reach without making every fixed component defective
 - [The deployed system, not the model alone, is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md) — grounds: places runtime models, artifacts, tools, code, and weights inside one learning boundary
+- [Domain-extensible software factory](./definitions/domain-extensible-software-factory.md) — defined-in: states the bounded acquisition claim that the further ambition requires
 - [Workspace Optimization](../sources/workspace-optimization-how-to-train-your-agent.ingest.md) — exemplifies: supplies the contemporary editable-workspace implementation analogy and its bounded evidence
 - [Maes, Computational Reflection](../sources/maes-computational-reflection-1988.ingest.md) — abstracted-from: supplies the causal self-representation lineage

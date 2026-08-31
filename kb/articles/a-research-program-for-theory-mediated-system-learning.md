@@ -25,6 +25,10 @@ source_notes:
   - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
   - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
   - kb/notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md
+  - kb/notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md
+  - kb/notes/a-closed-factory-learning-transition-produces-a-successor-factory.md
+  - kb/notes/operative-succession-turns-meta-factory-construction-into-learning.md
+  - kb/notes/domain-extensibility-not-closure-determines-factory-reach.md
   - kb/sources/programming-as-theory-building.ingest.md
 ---
 
@@ -32,7 +36,7 @@ source_notes:
 
 > **Draft.** Comments and counterexamples are welcome through the repository's issue tracker.
 
-> **TL;DR.** Software factories that build software factories may be able to reach operational closure: the machinery that improves the factory can itself be produced, evaluated, and revised inside the system. That would be recursive self-improvement without training new models. Today this still requires bootstrapping because key evaluation and self-modification machinery is missing, but software factories are already moving in that direction.
+> **TL;DR.** A conventional software factory is lifecycle production machinery specialized for a product family. When production evidence computationally changes that machinery and the retained result governs later work, a computationally closed factory-learning occurrence produces a successor factory. Recursive factory construction is prior art; the open question is whether the same process can acquire the specialization needed for previously unanticipated demands. That is a domain-extensibility claim, not a promise of unrestricted universality or universal self-modification.
 
 ## The question and the two testbeds
 
@@ -59,10 +63,12 @@ machinery shape what happens in a particular project.
 The [deployed system rather than the
 model](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md) is
 the learning unit. Learning need not be a weight update; it may also be retained
-in project state or executable machinery. A change counts as learning when an
-[improvement
-process](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
-selects and retains it from evidence so that later operation depends on it.
+in project state or executable machinery. A change counts as learning when
+evidence from system behavior determines it and operative retention makes later
+work depend on it. A [proposal-selection
+loop](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
+is one implementation; a direct evidence-responsive update need not expose
+competing candidates.
 
 The full path is *theory-mediated* when addressable retained theory guides search
 or modification, later consequences revise that theory, and the revision affects
@@ -79,6 +85,51 @@ persistent fallible theory about a software project and a sequence of
 modifications whose later demands can expose earlier mistakes. Matched runs will
 vary that theory while holding the rest of the system fixed, testing whether it
 changes search, recovery, and coherent modification.
+
+## Computationally closed factory learning produces successor factories
+
+A Greenfield-style [software
+factory](../notes/definitions/software-factory.md) is configured,
+family-specific machinery for producing and sustaining software through its
+lifecycle work products. Its schema, assets, tools, methods, and runtime support
+encode production knowledge for a declared product family. The term is narrower
+than a generic coding agent or harness, and the detailed [historical ontology
+belongs in the supporting
+note](../notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md).
+
+For a fixed factory, product development changes one family member; [factory
+development](../notes/definitions/factory-development.md) changes reusable
+machinery that will govern later members. These roles are producer-relative. A
+meta-factory may produce another factory as one of its members, making the same
+work product development relative to the first factory and factory development
+relative to the second.
+
+Such factory-valued production is prior art. The further step is
+evidence-responsive operative succession: experience from production must
+computationally determine a reusable change, and the retained result must enter
+the authority path for later work. When that learning path is [computationally
+closed](../notes/definitions/computationally-closed-software-factory-learning-loop.md),
+an actual change produces an operative [successor
+factory](../notes/definitions/successor-factory.md). This is a consequence of
+closed factory learning, not an independent requirement that a factory reproduce
+itself.
+
+Requirements, existing artifacts, user answers, corrections, bug reports,
+tests, telemetry, permissions, and acceptance responses may remain external
+evidence through declared interfaces. The path remains computationally open
+when a person supplies a factory-development decision assigned to it, such as
+the required family schema, a task-specific evaluator, a promotion choice, or
+ad hoc recovery.
+
+Closure is separate from breadth. A closed updater may remain confined to one
+family. [Domain extensibility](../notes/definitions/domain-extensible-software-factory.md)
+asks whether computation can acquire and install the family-specific machinery
+needed by sufficiently novel covered demands while fixed general learning
+machinery remains. The [unqualified universal-software-factory
+label](../notes/domain-extensibility-not-closure-determines-factory-reach.md) is
+too ambiguous: constructional universality can collapse into ordinary compiler
+expressivity, while unrestricted task universality would demand distinctions
+that the permitted evidence may not reveal.
 
 ## Holding a theory means controlling a fallible search
 
@@ -219,21 +270,26 @@ A longitudinal Commonplace study should ask whether recurring operator judgments
 become reusable machinery and whether named functions move toward computational
 supply.
 
-## The bootstrap must outgrow its hand-crafted parts
+## The bootstrap must outgrow supplied specialization
 
 The Bitter Lesson puts pressure on the program because its present theory and
 improvement machinery emerge from a human-guided loop. Agents write much of the
 material, but operators still supply decisive high-level direction and
-selection. The issue is not who types the artifacts; it is whether general
-computation can increasingly generate and select their successors.
+selection. The issue is not who types the artifacts. It is whether computation
+can increasingly determine and operatively retain the task- or family-specific
+machinery needed as the demand class widens.
 
 [Production method and representational form are different
 axes](../notes/the-bitter-lesson-selects-production-methods-not-representational.md):
-learning can produce explicit artifacts as well as weights. The present artifacts
-earn their place only if the learning process can revise or replace them.
+learning can produce explicit artifacts as well as weights. Fixed general
+models, learning methods, runtimes, interfaces, resource controls, and trusted
+kernels may remain. The scaling burden falls on human-supplied specialization
+that must be recreated for each new task or family, not on every handcrafted
+component merely because it is fixed.
 
-The loop is already computational: models search and revise project state, while
-symbolic machinery executes and retains changes. Operators remain decisive where
+The present loop is human-inclusive and computationally open over decisive
+high-level selection. Models search and revise project state, while symbolic
+machinery executes and retains changes, but operators remain decisive where
 reusable evaluators are weak. Recurring judgments are candidates for reusable
 machinery.
 
@@ -246,13 +302,15 @@ evidence. [The decisions that stay human, and what would move
 them](./the-decisions-that-stay-human-and-what-would-move-them.md) develops the
 full fixed-boundary and warrant argument.
 
-Second, keep the current improvement machinery itself inside the revision
-surface. The system must use its present theory and machinery to search for
-successors that can replace them. What should persist is the learning loop and
-its functions, not any current carrier. [Machinery persists by warrant, not by
+Second, widen production reach by computationally acquiring the specialization
+that novel covered demands require. Task-specific theories, schemas,
+decompositions, methods, and evaluators must not remain a new human construction
+project for every family the system claims to cover. This does not put every
+current component inside one universal revision surface. [Machinery persists by
+warrant, not by
 position](../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md),
-and the bootstrap [fits the Bitter Lesson only if learning can outgrow
-it](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
+while the bootstrap [fits the Bitter Lesson only if learning outgrows its
+supplied specialization](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
 
 Three immediate payoffs motivate this strategy. First, explicit theory may
 improve [sample efficiency under structured
@@ -268,9 +326,10 @@ organization. Each payoff must survive comparison at total system cost.
 
 The strategy must compete with more direct learning and search methods. It
 should be narrowed or abandoned if retained theory is causally inert, the
-evaluation loop becomes self-confirming, human judgments and current
-decompositions fail to become revisable and transferable machinery, or another
-method wins at comparable total cost.
+evaluation loop becomes self-confirming, each novel covered family still needs
+human-built task-specific decomposition or evaluation machinery, required
+in-scope decisions remain human, or another method wins at comparable total
+cost.
 
 The companion article [The Bitter Lesson does not require everything to live in
 weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)

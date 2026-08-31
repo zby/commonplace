@@ -55,25 +55,29 @@ methods, or code. The strategy is to grow the selection machinery through use.
 [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow
 it](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
 That is a necessary condition, not a strategic defense. The system must
-increasingly learn to produce, test, revise, and replace its theories and
-machinery rather than merely apply a protected hand-designed store.
+increasingly acquire and revise the task- or family-specific knowledge required
+for its claimed reach rather than merely apply a growing protected store of
+hand-designed specializations. This condition does not require every fixed
+general method or trusted component to become self-modifiable.
 
-For each consequential artifact class and production decision, the program
-should be able to say:
+For each human-supplied artifact or production decision that carries
+task-specific competence or an unsupported claim of reach, the program should
+be able to say:
 
 1. what computational proposal or search is already possible;
 2. what evidence can currently reject candidates;
 3. which judgment still requires a person and why;
 4. how repeated judgments could become selection machinery;
-5. what would allow the current ontology, decomposition, or evaluator to be
-   challenged; and
+5. what would allow any target-specific ontology, decomposition, or evaluator
+   to be challenged; and
 6. what alternative learning method should be used as a baseline.
 
 The long-run criterion is **domain-extensibility**, not competence in several
 predefined domains. A system with many hand-built ontologies remains a bundle of
 predefined solutions. A domain-extensible process must eventually construct the
-project-specific theory, representations, methods, and checks needed for a new
-area without a person first supplying another complete domain model.
+required family-specific schema or model, representations, methods, evaluators,
+and checks for a new area without a person supplying that specialization either
+wholesale or piecemeal.
 
 ## What the other arguments contribute
 
@@ -135,6 +139,10 @@ The first strategy should be rejected or narrowed when:
   path and hand-supplied on another.
 - Objectives, commitments, and grants of authority may remain supplied; the
   scaling question concerns empirical and procedural competence.
+- Fixed general learning methods, metalanguages, runtimes, exact interfaces,
+  resource controls, and warranted kernels may remain. The burden falls on
+  human-supplied task or family specialization and supposedly general machinery
+  whose reach depends on hidden target-specific choices.
 - The absence of a complete global-fit oracle is current and defeasible, not a
   proof that such an evaluator cannot be learned.
 
@@ -156,3 +164,4 @@ Relevant Notes:
 - [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md) — grounds: states the conditional compatibility and failure burden
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — mechanism: states what the strategy must progressively construct
 - [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — grounds: keeps the initial artifact ontology inside the eventual challenge surface
+- [Domain-extensible software factory](./definitions/domain-extensible-software-factory.md) — defined-in: makes the long-run reach test explicit without requiring universal self-replacement
