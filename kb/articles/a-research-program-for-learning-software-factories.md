@@ -42,7 +42,7 @@ source_notes:
 
 > **Draft.** Comments and counterexamples are welcome through the repository's issue tracker.
 
-> **TL;DR.** An agentic system is more than an LLM call: bounded model calls operate inside persistent software machinery. For software production, configuring that machinery with reusable knowledge for a declared product family yields a software factory. When production experience changes reusable factory machinery and later work depends on the change, the factory learns. Several mechanisms could drive that learning. Open-ended coherent modification is harder: following Naur, it requires some form of project theory. This program tests whether fallible natural-language theory gives an LLM-based system a useful, revisable way to coordinate changes across prompts, schemas, workflows, tools, evaluators, and code.
+> **TL;DR.** An agentic system is more than an LLM call: bounded model calls operate inside persistent software machinery. For software production, configuring that machinery with reusable knowledge for a declared product family yields a software factory. When producing one product leaves a new factory with retained state that changes later production, the factory learns. Several mechanisms could drive that learning. Open-ended coherent modification is harder: following Naur, it requires some form of project theory. This program tests whether fallible natural-language theory gives an LLM-based system a useful, revisable way to coordinate changes across prompts, schemas, workflows, tools, evaluators, and code.
 
 ## From agentic systems to learning software factories
 
@@ -127,23 +127,30 @@ target. [Constructing a factory from supplied family-specific production
 knowledge is not acquiring that
 knowledge](../notes/a-software-factory-can-produce-another-factory-without-acquiring-its-family-specific-production-knowledge.md).
 
-### Continual learning changes later production
+### Factory learning produces a new factory
 
 Software production and factory development do not by themselves imply
-learning. The minimal factory-level learning path is:
+learning. In a complete factory-learning episode, producing one product changes
+the factory available for later production:
 
 ```text
-production under current factory machinery
-  -> experience bearing on that machinery
-  -> system-determined change to reusable family machinery
-  -> retention
-  -> changed later production
+production of product A under factory F
+  -> experience bearing on reusable machinery
+  -> system-determined retention in new factory F'
+  -> production of later product B under F'
+  -> retained state changes how B is produced
 ```
 
-Experience without a reusable change is feedback. Repairing only the current
+`F'` is the new factory produced by the episode; it may remain scoped to the
+same declared product family. Its retained state may include project theory
+together with revised prompts, schemas, workflows, tools, evaluators, tests, or
+code.
+
+Experience without a retained change is feedback. Repairing only the current
 product is solution development. A generated candidate that is discarded does
-not persist. Stored machinery that later production never consumes has no
-demonstrated learning effect.
+not persist. Producing a factory from production knowledge supplied
+independently of the experience is construction, not learning. Retained state
+that later production never consumes has no demonstrated learning effect.
 
 When the whole path is present, [the software factory
 learns](../notes/a-software-factory-learns-when-production-experience-changes-reusable-machinery-used-later.md)
@@ -177,11 +184,27 @@ project-specific theory: an understanding of how the program maps onto the
 activity it supports, why it is organized as it is, and how new demands relate
 to that organization.
 
+Naur's compiler case has the transition above. The original group retained the
+theory built while producing compiler A and could use it in later modification,
+while another group did not acquire the same capacity from source,
+documentation, discussion, and advice. The computational analogue is a new
+factory that retains and can apply the theory built during earlier production.
+
 For this target, the program adopts Naur's functional constraint: some
 project-specific state or capacity must perform those mapping, justification,
 and integration roles. A process that merely retains successful changes may
 learn in the minimal sense while still failing coherent modification when a
 later demand exposes a conflict that its local tests did not represent.
+
+Retaining a theory artifact is not yet holding the theory. In the current
+agentic realization, it must be activated by retrieval into a call-specific
+context, interpreted with the model's learned competence, and causally change
+search or modification; surrounding software must retain the consequences and
+reactivate the revised state later. This [interpretation, retention, and
+continuation
+path](../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md)
+is the theory-bearing machinery; a theory merely stored or read without
+changing operation is inert.
 
 The necessity claim is about a function, not a carrier. Program theory may be
 distributed across model weights, retained artifacts, tools, and participants.
@@ -326,10 +349,10 @@ The **programming-agent testbed** will place a persistent, fallible theory insid
 an agentic software-production system and give it a sequence of modifications
 whose later demands can expose earlier mistakes. It directly tests whether
 theory changes coherent modification and factory-development choices. A run
-supports a factory-learning claim only if experience changes reusable family
-machinery that later production consumes; otherwise it tests theory-mediated
-solution modification. Matched runs will vary the theory while holding
-specified starting components fixed.
+supports a factory-learning claim only if producing one product leaves a new
+factory with retained state that changes later production; otherwise it tests
+theory-mediated solution modification. Matched runs will vary the theory while
+holding specified starting components fixed.
 
 ## What counts as theory-mediated learning
 
@@ -430,9 +453,9 @@ to expose mistakes introduced by earlier modifications.
 The test asks whether theory changes search and recovery, whether consequences
 revise the retained theory and later work, and whether this improves coherent
 modification at comparable total cost. A factory-learning claim additionally
-requires changed reusable machinery to affect later production; otherwise the
-result concerns theory-mediated solution modification. [Any conclusion is
-limited to the contrasts actually
+requires the first production episode to leave a new factory whose retained
+state affects later production; otherwise the result concerns theory-mediated
+solution modification. [Any conclusion is limited to the contrasts actually
 run](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md).
 
 ### Longitudinal Commonplace study
