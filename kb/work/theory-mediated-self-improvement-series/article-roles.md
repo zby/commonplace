@@ -1,3 +1,3 @@
 # Article roles
 
-This file should not differ from main.
+This file is intentionally unchanged from main.
