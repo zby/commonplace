@@ -5,6 +5,13 @@ its current SHA-256. The parent executes every mutation and recovery step.
 
 ## Preflight and drift
 
+Resolve the active run path before any live mutation. Require its direct parent
+to be exactly `kb/work/multistage/`, its basename to conform to
+`multistage-write-<short-topic>-<YYYYMMDD>`, and its canonical path to remain
+inside that parent. A path directly under `kb/work/`, the grouping directory
+itself, or an unresolved or escaping path is a setup blocker: do not promote,
+edit `kb/work/README.md`, or remove anything.
+
 Require no blocker, completed grounding, candidate bytes matching the accepted
 digest, and destination-relative frontmatter, required sections, and links
 passing preflight. For an edit, require the live target to remain byte-identical
@@ -88,7 +95,10 @@ Extra artifacts or sibling changes converge only through explicit decline,
 user acceptance, or separate completion. A composition mismatch blocks
 promotion.
 
-Remove only this exact workshop and its exact `kb/work/README.md` line after the
-target and lineage validate, the closing account is complete, no authorized
-decision remains unexecuted, and no retention reason remains. Retain blocked,
-failed, inspection, and experiment runs and report the pending state.
+Immediately before cleanup, resolve the run path again and require the same
+`kb/work/multistage/` parent and basename constraints. On any mismatch, retain
+the run and README entry and report the blocker. Otherwise, remove only this
+exact run directory and its exact `kb/work/README.md` line after the target and
+lineage validate, the closing account is complete, no authorized decision
+remains unexecuted, and no retention reason remains. Retain blocked, failed,
+inspection, and experiment runs and report the pending state.

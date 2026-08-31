@@ -20,7 +20,8 @@ untouched until an independent reviewer accepts its exact candidate bytes.
 
 Use this workflow when the intended contribution is known but its claims,
 evidence, or synthesis remain unsettled. Route a settled edit to
-`cp-skill-write`. Keep work with no authorized library target in a workshop.
+`cp-skill-write`. Keep work with no authorized library target in a separate
+ordinary workshop and stop; do not initialize this workflow for it.
 
 The invoking agent is the **parent**. It fixes the commission and authority
 boundary, supplies privileged context, and owns all live mutations. Workers
@@ -53,11 +54,18 @@ A change of identity, mode, collection, or type restarts setup. A retitle,
 replacement, fold, merge, retirement, or artifact-set change requires explicit
 user authority; never infer it from a worker recommendation.
 
-Create or resume one
-`kb/work/multistage/multistage-write-<short-topic>-<YYYYMMDD>/` run. An
-ambiguous or malformed matching run is a recovery stop, not a reason to create
-another. Maintain its exact `kb/work/README.md` entry without overwriting
-unrelated edits.
+The run parent is exactly `kb/work/multistage/`; the general
+`kb/work/<workshop-name>/` convention does not apply to this workflow. Before
+creating or writing any run artifact, resolve the proposed repo-relative run
+path and require its direct parent to be `kb/work/multistage/`, its basename to
+match `multistage-write-<short-topic>-<YYYYMMDD>`, and its canonical path to
+remain inside that parent. A run directly under `kb/work/`, the grouping
+directory itself, or any unresolved or escaping path is a setup blocker.
+
+Create or resume one valid run at that path. An ambiguous or malformed
+matching run is a recovery stop, not a reason to create another. Maintain its
+exact nested path in the `kb/work/README.md` entry without overwriting unrelated
+edits.
 
 Keep only durable run state:
 
@@ -212,7 +220,7 @@ After final acceptance, read and execute
 conditional retitle, atomic promotion, rollback, validation, lineage, the
 closing account, and cleanup. Do not improvise a shorter mutation path.
 
-Report the target or blocker, final candidate and review digests, validation,
-any source mutation, whether repair or recovery ran, and whether the workshop
-was removed or retained. Suggest `cp-skill-connect` only as optional follow-up;
-do not launch sibling work automatically.
+Report the exact run path, target or blocker, final candidate and review
+digests, validation, any source mutation, whether repair or recovery ran, and
+whether the workshop was removed or retained. Suggest `cp-skill-connect` only
+as optional follow-up; do not launch sibling work automatically.
