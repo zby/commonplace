@@ -1,1 +1,3 @@
-RESTORE_FINAL
+# Article roles
+
+See `main` for the canonical argument map.
