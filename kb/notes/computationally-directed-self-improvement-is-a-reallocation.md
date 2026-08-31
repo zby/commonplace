@@ -41,7 +41,16 @@ The graded reading also reconciles this note with the observation that [increasi
 
 **Not warrant.** A contracted pathway completes; whether its acceptances are any good is a separate question, [bounded by the domain over which its oracles are reliable](./warranted-autonomy-is-bounded-by-oracle-domain.md). Contraction can succeed on a pathway that reliably adopts bad changes.
 
-**Not causal independence from humans.** The criteria, types, and gates the contracted system runs on are human decisions that were externalized into artifacts now sitting inside the contracted boundary. Contraction shows that no human decision is *required within the horizon*, not that none is *embodied*. Where the pathway cannot revise those artifacts, the human decision is deferred rather than removed — and that residue is a methodological-closure reading of what the retained method settles, not an allocation reading. This is the test's principal blind spot, and it is the reason the two closure readings are kept apart in the first place.
+**Not human-free provenance or universal revisability.** The criteria, types,
+and gates the contracted system runs on may be human-authored artifacts inside
+the contracted boundary. Contraction shows that no human decision is *required
+within the declared horizon*, not that no human design is embodied. A fixed
+computational gate is not a deferred current human decision: it executes the
+settled rule computationally and can be computationally and methodologically
+closed for that scope. Its revision becomes an open higher-order pathway only
+when the declaration puts revision of the gate in scope and a person must
+supply that transition. Provenance, placement in the update surface, and
+current actor allocation are separate properties.
 
 **Not substrate independence.** The model provider and the infrastructure sit outside the contracted boundary and stay there. Counting that dependency as human participation would put contraction out of reach of every model-mediated pathway and destroy the discrimination the test exists to provide.
 
@@ -60,7 +69,8 @@ Nothing in the argument uses reflectivity — the test applies to a gradient-dri
 ## Open Questions
 
 - Whether a partial contraction — excising some human participants but not all — is informative, or whether only the full excision has a clean interpretation.
-- Whether the deferred-decision blind spot can be closed by requiring that the pathway's own governing artifacts be within its revision scope, or whether that requirement makes the endpoint unreachable in practice.
+- How to test whether fixed governing artifacts hide target-specific scope
+  without treating universal revisability as part of computational direction.
 - Whether repository history can supply retrospective contraction results, by finding intervals in which no human decision entered a pathway and checking whether it completed.
 
 ---

@@ -11,9 +11,42 @@ When a [proposal-selection improvement loop](./a-proposal-selection-loop-require
 
 The architecture-neutral causal obligations belong to the [self-improving-system definition](./definitions/self-improving-system.md). Failure there is a missing or unestablished causal link. **Omitted** is narrower: a function is omitted only relative to an architecture that requires it. In a proposal-selection pathway, an accepted patch that is never installed omits operative retention. A direct update exposes no separate candidate–adoption decision, so adding a reject-capable gate would introduce proposal selection rather than fill an omitted universal function.
 
-A function is **frozen** when something performs it, but that something sits outside the loop's [effective update space](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — a fixed acceptance rule, a human generalization judgment, a declared edit surface. The loop closes; it cannot revise how it closes. (The word is overloaded in this KB — frozen weights, a frozen tool loop, a frozen taxonomy. Here it means only this: outside the update space of the loop under discussion.) A frozen function is the loop-anatomy view of a human decision [deferred rather than removed](./computationally-directed-self-improvement-is-a-reallocation.md): externalized into an artifact the pathway consumes but cannot revise.
+A function is **frozen** when its implementation or governing rule sits outside
+the loop's [effective update
+space](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — for
+example, a fixed computational acceptance rule, a fixed human procedure, or a
+declared edit surface. The loop can perform the function but cannot revise how
+that function is performed. (The word is overloaded in this KB — frozen
+weights, a frozen tool loop, a frozen taxonomy. Here it means only this:
+outside the update space of the loop under discussion.) Frozen therefore names
+update placement, not provenance or actor allocation. A human-authored rule
+executed by computation is still computationally allocated; a person is a
+current cut set only when an in-scope transition requires that person.
 
-The two diagnoses are worth separating because their repairs are not the same kind of work. Adding an omitted required function is bounded engineering: connect an accepted proposal to a live authority path, for example, and the loop gains the operative retention it lacked. Unfreezing a function is not, because whatever criterion governs the lift is itself fixed one level up — the open question left standing at the end of [learning inside a fixed decomposition](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md). Some functions should stay frozen: [machinery persists by warrant, not position](./machinery-persists-by-warrant-not-position-in-a-reflective-loop.md), which also argues that what stays permanently external is a function class rather than a component class — the objective, the standing commitments, the adoption *no*. A frozen acceptance rule may therefore be the warranted kernel rather than the defect. Frozen names where a component sits; it does not by itself convict. And when a freeze is defended rather than merely inherited, the defences split: a **protective** freeze keeps the component outside the loop to resist a named failure, such as objective hacking; an **affordable** freeze is a resource compromise, liftable in principle. Lifting them costs different things — a protective freeze needs a replacement defence, an affordable one only budget.
+The two diagnoses are worth separating because their repairs are not the same
+kind of work. Adding an omitted required function is bounded engineering:
+connect an accepted proposal to a live authority path, for example, and the
+loop gains the operative retention it lacked. Unfreezing a function changes the
+update architecture, because whatever criterion governs the lift is itself
+fixed one level up — the open question left standing at the end of [learning
+inside a fixed decomposition](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md).
+Some functions should stay frozen because [machinery persists by warrant, not
+position](./machinery-persists-by-warrant-not-position-in-a-reflective-loop.md).
+Objectives, commitments, authority boundaries, fixed general learning methods,
+exact interfaces, and trusted kernels may all remain outside a particular
+update space. A frozen acceptance rule may therefore be the warranted kernel
+rather than the defect. Frozen names where a component sits; it does not by
+itself convict. If the component instead embeds family-specific specialization
+that people must redesign as claimed reach widens, it limits [domain
+extensibility](./definitions/domain-extensible-software-factory.md), not because
+all fixed machinery is forbidden but because the required specialization stays
+human supplied.
+
+When a freeze is defended rather than merely inherited, the defences split: a
+**protective** freeze keeps the component outside the loop to resist a named
+failure, such as objective hacking; an **affordable** freeze is a resource
+compromise, liftable in principle. Lifting them costs different things — a
+protective freeze needs a replacement defence, an affordable one only budget.
 
 What makes the distinction load-bearing rather than pedantic is that **a reported improvement cannot separate them**. Headline gains cannot establish whether a required function is absent, present but frozen, or not required by the chosen architecture. Classifying the update architecture and then reading its effective update space is the only way to tell, which is why the readings below are drawn from what each paper declares editable rather than from its headline numbers.
 
@@ -64,7 +97,7 @@ Relevant Notes:
 - [Real self-improving systems occupy combinations no single rung captures](./evidence/real-self-improving-systems-occupy-combinations-no-rung-captures.md) — contrasts: profiles cases on reflection, cumulativity, and allocation; this note distinguishes the direct-update boundary from frozen functions within proposal selection
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — contrasts: the one placement whose acceptance machinery sits inside its own update space, at the declared cost of unreachable unprovable changes — but a theoretical construction, never run; the [Darwin Gödel Machine](../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md) is a declared departure from it, not an implementation — it relaxes the proof requirement to a viability filter at acceptance and demotes benchmark score to a search signal
 - [Retire, redact, supersede, relax](./agent-memory-requirements/retire-redact-supersede-relax.md) — extends: the lifecycle operations for which none of the six establishes a system-wide, criterion-driven path across all retained artifact types
-- [Computationally directed self-improvement is a fixed-boundary reallocation](./computationally-directed-self-improvement-is-a-reallocation.md) — grounds: supplies "deferred rather than removed" — the externalized human decision a pathway cannot revise, which "frozen" names from inside the loop anatomy
+- [Computationally directed self-improvement is a fixed-boundary reallocation](./computationally-directed-self-improvement-is-a-reallocation.md) — grounds: separates current human necessity from human provenance and placement outside the update surface
 - [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — extends: parks the prior question of whether a coarse function list can be a cross-system ontology, which these readings assume and do not settle
 - [Readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — see-also: the shared substrate that makes all six paths inspectable enough to diagnose this way
 - [Ingest: Huxley-Gödel Machine (snapshot required)](../sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md) — evidenced-by: the name-borrowing lineage substitutes a benchmark estimate for the utility proof, and shows the immediate benchmark score is a weak selection signal even where the gate is frozen on it

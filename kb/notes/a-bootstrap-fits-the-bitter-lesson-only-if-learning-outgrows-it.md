@@ -1,5 +1,5 @@
 ---
-description: "A hand-crafted starting state fits the Bitter Lesson only if learning can outgrow it; satisfiable because a bootstrap, unlike a scaffold, is replaced by the loop it seeds while the system persists; a first strategy, not a defense of hand-crafting"
+description: "A hand-crafted starting state fits the Bitter Lesson only if scalable learning displaces the task- and family-specific specialization it supplies as claimed reach widens"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning, foundations]
@@ -23,24 +23,28 @@ A promised path beyond hand-crafting is cheap. The program must either show that
 search and evidence progressively take over useful production or concede that a
 more direct computational method is better.
 
-## A bootstrap is replaced by the loop it seeds
+## A bootstrap can seed the process that outgrows its specialization
 
 What makes the condition satisfiable is the difference between a bootstrap and
 a scaffold. A scaffold is discarded once the product stands; a prototype is
 thrown away and rebuilt. A bootstrap is the running system itself, using its
 current theory and machinery to guide the search that produces its successors.
-Replacement can therefore be complete while the system persists: what persists
-is the loop and the functions it must perform, not any artifact currently
-performing them, since in a loop with no outside [machinery persists by
-warrant, not by
-position](./machinery-persists-by-warrant-not-position-in-a-reflective-loop.md).
+The task- or family-specific specialization it starts with can therefore be
+displaced while the system persists. Complete self-replacement is neither the
+mechanism nor the criterion. Fixed general learning machinery, exact
+interfaces, resource controls, and trusted kernels may continue when their
+scope and warrant support the reach being claimed, since [machinery persists
+by warrant rather than by position in a reflective
+loop](./machinery-persists-by-warrant-not-position-in-a-reflective-loop.md).
 
 The hand-designed features in Sutton's examples were scaffold content that
 became permanent: the method never learned to replace them. Bootstrap content
-is content the loop is expected to replace, using it. For a declared system the
-compatibility condition therefore becomes a prediction — hand-crafted content
-will be displaced by learned content while the system continues — and the
-failure conditions below are what would refute it.
+is compatible only when it does not remain an expanding source of target
+competence. For a declared reach, the compatibility condition therefore becomes
+a prediction: computation will acquire the required task- or family-specific
+knowledge from permitted evidence rather than requiring people to construct it
+for every new demand. The failure conditions below are what would refute that
+prediction.
 
 ## The Bitter Lesson creates immediate pressure to use computation
 
@@ -106,23 +110,27 @@ designer knowledge into the intended object-level solution for a predefined
 problem class. Their computation operated inside features, heuristics, and
 decompositions that the method did not learn to replace.
 
-The present strategy differs only if its theories, methodologies, schemas,
-validators, programs, artifact types, decompositions, routing, and evaluators
-remain challengeable. Editable files are not enough. A model may rewrite a
-prompt while every important choice about what may change and how it is judged
+The present strategy differs only if the theories, schemas, representations,
+methods, evaluators, and decomposition choices that carry required task- or
+family-specific competence can be computationally acquired or challenged.
+Editable files are not enough. A model may rewrite a prompt while every
+important target-specific choice about what may change and how it is judged
 remains fixed human design.
 
 The long-run criterion is **domain-extensibility**, not competence in several
 predefined domains. A system with ten hand-built ontologies and ten specialized
 update procedures is still a bundle of predefined solutions. A
-domain-extensible process can construct the project-specific theory,
-representations, methods, and checks needed for a new area without a person first
-supplying another complete domain model.
+domain-extensible process can construct the required family-specific schema or
+model, representations, methods, evaluators, and checks for a new area without
+a person supplying that specialization either wholesale or piecemeal.
 
 This criterion does not require the system to invent its own objective.
 Objectives, commitments, and grants of authority may remain supplied. The claim
-concerns how empirical and procedural structure is produced and revised in
-pursuit of them.
+concerns how required empirical and procedural specialization is produced and
+revised in pursuit of them. Nor does it require every general algorithm,
+metalanguage, runtime, or trusted kernel to modify itself. Whether supposedly
+general machinery hides target-specific assumptions is an empirical scope
+question.
 
 ## This is not a uniqueness claim
 
@@ -141,8 +149,8 @@ The appropriate comparison is therefore strategic rather than defensive:
 
 - Does theory-guided construction make better use of available computation than
   direct search under the same total budget?
-- Does the human share of proposal, fit assessment, evaluator construction, and
-  repair fall over time?
+- Does human construction of required task-specific specialization fall as the
+  claimed demand class widens?
 - Do recurrent judgments become operational selection machinery?
 - Does the process transfer beyond domains and decompositions anticipated by its
   designers?
@@ -156,8 +164,8 @@ The strategy loses in a tested regime when:
 - claims remain artisanal and computational search stays peripheral;
 - each new domain requires a bespoke ontology and evaluator;
 - human global judgment and maintenance grow with the corpus;
-- the decomposition and evaluation machinery remain outside revision in
-  practice;
+- task-specific decomposition or evaluation choices remain human supplied while
+  the system claims reach beyond them;
 - interventions on retained theory make no causal difference; or
 - a more direct learning method achieves better results at comparable total
   cost.
@@ -176,9 +184,11 @@ learning method or show that the strategy is better than its alternatives.
   replace independent truth, validity, or scope checks.
 - No current carrier is promised survival. Learned functions may migrate into
   weights, code, other artifacts, or future substrates.
-- A fixed component may remain justified where changing it is outside the
-  objective, unsafe, or uneconomic. Its fixedness must not be misreported as a
-  general learning result.
+- A fixed component may remain justified because it implements a general method
+  over the declared reach, because changing it is outside the objective, or
+  because revision is unsafe or uneconomic. Its fixedness must not be
+  misreported as learned, and hidden task specialization must not be
+  misreported as general machinery.
 
 ## Open Questions
 
@@ -204,3 +214,4 @@ Relevant Notes:
 - [The 2026-08-30 Commonplace revision used retained theory to guide computational search](./evidence/commonplace-revision-used-theory-guided-computational-search.md) — evidenced-by: bounds the current human-assisted case, where retained theory guided computational search but operator selection and missing ablation prevent a scalable-outgrowth conclusion
 - [Open-ended improvement must allocate search before decisive evaluation is available](./open-ended-improvement-allocates-search-before-evaluation.md) — grounds: explains why computational search allocation must begin before global-fit evidence can license adoption
 - [A repeatable operative path keeps a redesign class open to revision](./a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md) — extends: turns the requirement that starting machinery remain challengeable into a causal test for whether a redesign class stays revisable after one transition
+- [Domain-extensible software factory](./definitions/domain-extensible-software-factory.md) — defined-in: states the bounded reach criterion that replaces complete self-replacement

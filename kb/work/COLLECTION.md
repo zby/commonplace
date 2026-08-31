@@ -47,10 +47,10 @@ cannot determine: owned output or write scope, accessible inputs,
 task-specific constraints and commitments, coordination boundary, verification
 or feedback, and stop or escalation condition. Delegation stays inside the
 workshop's existing authority. Parent scheduling, integration, and recovery
-and the prohibition on unauthorized nested delegation may be inherited when
-the runtime supplies the root doctrine; any transfer or exception remains
-explicit. Parallel writers still need task-specific disjoint ownership or an
-explicit coordination rule.
+and the rule that nested delegation stays within the worker's existing task
+authority and coordination boundary may be inherited when the runtime supplies
+the root doctrine; any transfer or exception remains explicit. Parallel writers
+still need task-specific disjoint ownership or an explicit coordination rule.
 
 The Active Workshops list in [`kb/work/README.md`](./README.md) is the curated operational navigation surface — add a one-line entry when starting, remove it when the workshop closes. If the README already has unrelated uncommitted edits, do not partially stage it just to keep navigation immediately complete; commit the workshop artifacts atomically and update the README in a later navigation cleanup.
 

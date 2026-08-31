@@ -25,6 +25,16 @@ Actor allocation restores the missing discrimination. Under a fixed human-inclus
 
 The form is inherited rather than invented. [Parasuraman, Sheridan, and Wickens](https://www.cs.uml.edu/~holly/91.550/papers/sheridan-autonomy.pdf) report automation per function — information acquisition, analysis, decision and action selection, action implementation — and hold that an allocation is judged by its performance consequences, its reliability, and the cost of the consequences it admits, not by how much of the work the machine has taken over. That shape is what carries across, with three departures. The functions allocated here are the improvement pathway's own — search, evaluation, and retention where the pathway is proposal-selection — rather than task-performance stages. Their within-function ten-level scale is not inherited: the paper's validation is strongest for decision selection, and a graded level per function would reintroduce the percentage this profile refuses. And allocation still establishes nothing about warrant.
 
+## Closure is relative to selected tasks and declared crossings
+
+A pathway is not fully declared until the tasks that instantiate it are declared. A system can otherwise appear closed by selecting only easy cases, dropping failures, or ending the horizon before the next required human decision. A computational-closure claim must therefore name the task-selection rule, objective and acceptance conditions, system boundary, permitted exogenous inputs and interactions, horizon, resource limits, and coverage rule. Changing any of these creates a different claim.
+
+Task selection may remain external. A client or environment may supply a brief, requirements, an existing repository, corrections, bug reports, tests, telemetry, permissions, changing constraints, and later acceptance evidence. Computational closure does not require the system to create its own task, objective, or environment. Conditional on those declared crossings, it requires machinery inside the boundary to determine every required decision and execute every required transition assigned to the pathway.
+
+The line between an exogenous input and a human intervention is causal, not syntactic. A person may transmit a task or observation whose value is explicitly outside the pathway. The path remains open when a person supplies a decision the pathway is meant to make: interpreting evidence into an undeclared requirement, constructing a needed evaluator, choosing a candidate or recovery, performing an unassigned transition, or deciding that a failed case no longer counts. Calling that contribution “feedback” or listing it among inputs does not change its role.
+
+Declare these crossings before reading the evaluated outcomes, and keep failures, timeouts, and abstentions in the coverage account. A path may reach any of them without human help and remain computationally closed. Closure therefore establishes actor allocation over the selected paths, not competence, warrant, or breadth of task coverage.
+
 ## Four concrete combinations
 
 | Improvement decision | Methodologically closed? | Computationally closed? | Why |
@@ -63,7 +73,11 @@ The properties reinforce each other when the represented object is the improveme
 ## Scope
 
 - Both closure readings are per decision and per pathway, so mixed profiles are normal: exact validators can coexist with joint review, and settled acceptance rules with improvised objective-setting.
-- A loop instance **completes** when search, evaluation, and operative retention occur. Calling that event closure would conflate completion with architecture.
+- A task-scoped claim exports only the inputs and interactions it declares. It may not export a required decision under the names “task selection,” “feedback,” or “environment.”
+- A proposal-selection loop instance **completes** when search, evaluation, and
+  operative retention occur. A direct pathway completes through an
+  evidence-responsive operative update without a separate rejection stage.
+  Calling either event closure would conflate completion with actor allocation.
 - Both readings require a declared frame. A whole-system closure claim without named decisions and pathways hides the mixed architecture.
 - Comparing allocation profiles across releases or systems inherits the open commensurability problem: [measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md).
 
@@ -91,3 +105,4 @@ Relevant Notes:
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — contrasts: states why computational allocation stalls where warranted checking is expensive
 - [A Model for Types and Levels of Human Interaction with Automation](https://www.cs.uml.edu/~holly/91.550/papers/sheridan-autonomy.pdf) — evidenced-by: the external per-function allocation precedent, whose within-function level scale is deliberately not inherited
 - [Distinct residue classes require distinct functions in a self-improving architecture](./residue-classes-need-different-mechanisms-so-architecture-is-mixed.md) — extends: maps the representation–settlement–warranted-execution conversion onto the architectural parts that supply each stage
+- [Computationally closed software-factory learning loop](./definitions/computationally-closed-software-factory-learning-loop.md) — extends: specializes the declared-crossing and actor-allocation rules to evidence-responsive factory development
