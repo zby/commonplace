@@ -126,8 +126,6 @@ The refoundation has now produced:
 4. durable bridge notes for task/product families, practical factory-development pressure, minimal factory-level continual learning, mechanism comparison, and theory mediation; and
 5. a restructured research-program article that makes the architectural dependency order visible before presenting theory mediation.
 
-The earlier stacked pull requests were accidentally merged into feature branches rather than the default branch. The current integration pass assembles their content on `main` and applies the terminology and provenance corrections recorded during review.
-
 The [transition map](./transition-map.md) records the remaining disposition work.
 
 ## Relationship to the existing workshop
@@ -150,9 +148,8 @@ Theory mediation then earns its place through comparative evidence. Useful tests
 
 ## What closes this workshop
 
-The supporting derivation and article restructuring are now assembled. The workshop can close only after:
+The supporting derivation, article restructuring, and source-provenance repair are now assembled. The workshop can close only after:
 
 - the premature extension files have explicit keep, withdraw, replace, or delete dispositions;
-- every old-workshop artifact has a recorded destination or retained-evidence role;
-- the source-to-note provenance graph points to the durable replacement notes; and
+- every old-workshop artifact has a recorded destination or retained-evidence role; and
 - the old workshop is closed separately without losing its evidence and source controls.
