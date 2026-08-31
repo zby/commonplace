@@ -7,23 +7,25 @@ tags: [foundations, learning-theory, self-improving-systems]
 
 # A software factory learns when production experience changes reusable machinery used later
 
-A [software factory](./definitions/software-factory.md) undergoes **factory-level continual learning** when experience from production causally determines a retained change to its reusable family-level production machinery and later production depends on that change.
+A [software factory](./definitions/software-factory.md) undergoes **factory-level continual learning** when experience from producing one product causally determines retained state in a new factory and later production under that factory depends on the retained state.
 
 The minimal path is:
 
 ```text
-production under current factory machinery
-  -> experience bearing on that machinery
-  -> change to reusable family-level production machinery
-  -> retention
-  -> changed later production
+production of product A under factory F
+  -> experience bearing on reusable machinery
+  -> retained change in new factory F'
+  -> later production under F' depends on the change
 ```
+
+`F'` is the new factory produced by the learning episode. It may be a revised version of the same family-scoped factory; it need not define a new product family.
 
 Each link excludes a nearby but weaker event.
 
 - Experience without a factory change is observation or feedback.
 - Product repair without a reusable change is solution development.
 - A generated but rejected or discarded asset is a candidate, not retained learning.
+- A factory produced from knowledge supplied independently of the experience is construction, not learning.
 - Stored machinery that later production does not consume has no demonstrated behavioral effect.
 - A later process that differs only because the task differs does not show dependence on earlier experience.
 
@@ -52,6 +54,8 @@ The permitted evidence and interaction protocol should therefore be declared sep
 ## Retention means later behavioral dependence
 
 Retention is stronger than storage. The changed machinery must enter a path through which it can affect later production. Depending on the factory, this may mean that a revised schema is loaded, a workflow is selected by default, a validator gates later changes, a tool becomes available, or a natural-language rule is retrieved into later model calls.
+
+For retained theory, this requires activation rather than storage alone: the theory must be selected into a call-specific context, interpreted, and change a later operation. [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) separates these functions.
 
 Permanent installation is not required. A change can be operative for a declared horizon and later be rolled back. What matters is that later production actually depended on it during the interval for which learning is claimed.
 
@@ -90,8 +94,9 @@ A persuasive record should identify:
 2. the production experience that bore on it;
 3. the update decision and the declared learner boundary;
 4. the retained change;
-5. the later production path that consumed it; and
-6. the behavioral difference attributable to the retained change.
+5. the new factory containing that change;
+6. the later production path that consumed it; and
+7. the behavioral difference attributable to the retained change.
 
 Withholding, reverting, or replacing the change strengthens causal attribution. A mere chronology—experience occurred, a file changed, later work improved—does not establish that the same learning path connects the events.
 
