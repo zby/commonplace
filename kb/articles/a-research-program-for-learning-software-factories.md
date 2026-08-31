@@ -1,5 +1,5 @@
 ---
-description: "Research program on whether an agentic software-production system can learn reusable production machinery and whether natural-language theory improves that learning"
+description: "Research program on whether agentic software factories can learn reusable production machinery and whether fallible natural-language project theory can make open-ended modification coherent"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -42,7 +42,7 @@ source_notes:
 
 > **Draft.** Comments and counterexamples are welcome through the repository's issue tracker.
 
-> **TL;DR.** An agentic system is more than an LLM call: bounded model calls operate inside persistent software machinery. For software production, configuring that machinery with reusable knowledge for a declared product family yields a software factory. When production experience changes reusable factory machinery and later work depends on the change, the factory learns. Several mechanisms could drive that learning. This program tests whether natural-language theory is unusually versatile because it can connect task structure, solver limits, failures, evidence, and coordinated changes across prompts, schemas, workflows, tools, evaluators, and code.
+> **TL;DR.** An agentic system is more than an LLM call: bounded model calls operate inside persistent software machinery. For software production, configuring that machinery with reusable knowledge for a declared product family yields a software factory. When production experience changes reusable factory machinery and later work depends on the change, the factory learns. Minimal factory learning can use many update mechanisms. The harder target is open-ended coherent modification, where new demands must be reconciled with purposes and organization that local tests do not exhaust. Following Naur, this program treats project theory as an indispensable functional part of that capacity, though the theory need not be complete, explicit, or natural-language. Its specific bet is that a fallible natural-language theory, interpreted by an LLM and revised through testing, backtracking, and delayed feedback, provides a versatile addressable surface for coordinating changes across prompts, schemas, workflows, tools, evaluators, and code.
 
 ## From agentic systems to learning software factories
 
@@ -157,95 +157,66 @@ the relevant learning boundary. Retained changes may live in weights,
 natural-language artifacts, symbolic software, retrieved memories, or mixtures.
 The factory-level subset changes reusable production machinery.
 
-## Theory mediation is one candidate mechanism
+## Naur's constraint: coherent modification requires project theory
 
-Factory-level learning does not require theory. Trial-and-error retention,
+Minimal factory learning does not require theory. Trial-and-error retention,
 trajectory reuse, program search, learned construction policies, direct
-optimization, and mixtures can all turn experience into later production
-changes. They should be [compared on the same causal
-job](../notes/factory-learning-mechanisms-should-be-compared-on-the-same-causal-job.md),
-not ranked by whether their state is readable or whether it lives in weights.
+optimization, and mixtures can all change reusable machinery used later. They
+should be [compared on the same causal
+job](../notes/factory-learning-mechanisms-should-be-compared-on-the-same-causal-job.md).
 
-The proposal tested here is narrower:
-
-> Natural-language theory may be an unusually versatile coordination mechanism
-> for learning heterogeneous production machinery.
-
-A factory-relevant theory can jointly represent:
-
-- task and domain structure;
-- relevant capacities and limitations of the current solver;
-- explanations of successes and failures;
-- proposed interventions and their intended mechanisms;
-- scope conditions and predictions; and
-- evidence that should revise or defeat the account.
-
-An LLM can interpret that state into changes across decomposition, context
-selection, schemas, workflows, prompts, tests, evaluators, tools, and code. The
-same explanation can coordinate several artifacts rather than leaving each to a
-separate local update process.
-
-The relevant self-knowledge is not a complete account of model internals. A
-decomposition is relative to both a task and a solver: it must preserve the
-task's dependencies while producing units that this system can execute, retain,
-combine, and verify. Theory-mediated decomposition therefore needs a
-task-relevant model of the task–solver relation and of interventions that can
-make the task tractable.
-
-Theory does not replace search. It can shape a generate-and-verify process by
-controlling which failure explanations are plausible, which machinery is worth
-changing, which candidates to try, which experiments are informative, and how
-outcomes should revise the retained account. Blind exploration, learned
-policies, program search, exact code execution, and independent tests can remain
-inside the same system.
-
-The claim is causal. A theory that merely accompanies the work is documentation.
-Theory mediation requires the retained theory to change search, diagnosis,
-evaluation, recovery, or revision. The supporting note states why [theory may
-coordinate heterogeneous factory
-development](../notes/theory-mediation-can-coordinate-heterogeneous-factory-development.md)
-and what comparative results would support or defeat that claim.
-
-## Naur's bearer question and the two testbeds
+The program's hardest target is stronger than that minimal relation. It is
+open-ended coherent modification of long-lived software: new demands must be
+integrated without destroying purposes and organization that are only partly
+captured by local acceptance criteria.
 
 Peter Naur's [1985 essay *Programming as Theory
 Building*](https://ingenieria-de-software-i.github.io/assets/bibliografia/programming-as-theory-building.pdf)
 argues that programmers do more than produce code. They build and hold a
-project-specific theory: an understanding of what the program must do, why it is
-organized as it is, and how that organization can survive new demands.
+project-specific theory: an understanding of how the program maps onto the
+activity it supports, why it is organized as it is, and how new demands relate
+to that organization.
 
-Naur treated this theory as something held by programmers rather than by the
+For this target, the program adopts Naur's functional constraint: some
+project-specific state or capacity must perform those mapping, justification,
+and integration roles. A process that merely retains successful changes may
+learn in the minimal sense while still failing coherent modification when a
+later demand exposes a conflict that its local tests did not represent.
+
+The necessity claim is about a function, not a carrier. Program theory may be
+distributed across model weights, retained artifacts, tools, and participants.
+It need not be one explicit document or remain in natural language. Search,
+trajectories, learned policies, and optimization may construct, revise, apply,
+compile, or implicitly embody it. The serious rival is a system that sustains
+coherent modification without any project-specific state performing Naur's
+functions—not merely a system without a file called *theory*.
+
+Naur treated the theory as something held by programmers rather than by the
 program or its documentation. The machine could execute what had been
 formulated, but the theory needed for coherent modification remained with
 people—a boundary grounded partly in [Naur's equation of machine execution with
 formulated
 criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
+Modern learned interpreters make that human-only conclusion testable rather
+than settled.
 
-Modern agentic systems make that boundary worth testing. Their learned
-competence comes partly from model weights, while retained project state, tools,
-schemas, tests, and runtime machinery determine what happens in a particular
-project.
-
-> Can such a system become a bearer of a fallible project theory—holding and
+> Can an agentic system become a bearer of a fallible project theory—holding and
 > revising it well enough to keep successive modifications coherent when
 > decisive feedback arrives only later?
 
-The program couples a live testbed with a prospective controlled one.
+## A weak theory can control fallible search
 
-**Commonplace** is the live human-agent testbed. Agents use retained theory to
-revise the knowledge base, software, and methodology that guide later work. The
-operator still supplies much global-fit judgment and final authorization. This
-makes the human-inclusive learning path visible and exposes which recurring
-judgments might become reusable machinery.
+Real software development does not normally proceed by deducing a correct
+change from a complete theory. Developers work from partial and sometimes
+mistaken understanding. They inspect the system, make tentative changes, test
+assumptions, encounter conflicts, backtrack, and revise both the program and
+their understanding of it.
 
-The **programming-agent testbed** will place a persistent, fallible theory inside
-an agentic software-production system and give it a sequence of modifications
-whose later demands can expose earlier mistakes. It is the direct test of
-whether theory changes factory-development choices and coherent modification.
-Matched runs will vary the theory while holding specified background components
-fixed.
-
-## Holding a theory means controlling a fallible search
+A computational theory-holder should be judged by the same longitudinal
+standard. A useful program theory may be partial, imprecise, and fallible. It
+counts because it shapes which changes are considered, what must be preserved,
+how failures are interpreted, when to reverse course, and what should be
+revised.
 
 Naur's test is longitudinal. A coherent modification meets a new demand without
 destroying the purpose and organization that make the program work. Because
@@ -258,6 +229,15 @@ recovers. A successful first candidate can fail when it passes narrow checks but
 damages the wider organization in a way the process cannot detect. [Holding a
 program theory means sustaining coherent search under delayed
 feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md).
+
+```text
+partial theory
+  -> candidate change
+  -> provisional check
+  -> later or external consequence
+  -> retain, repair, backtrack, or revise
+  -> changed theory and later search
+```
 
 Program-relevant understanding may extend beyond the retained theory surface.
 The controlled experiment varies one addressable surface while holding specified
@@ -284,6 +264,72 @@ Theory-guided choices need not all meet the standard for final adoption.
 can allocate work under weaker evidence, while [backtracking keeps them
 provisional](../notes/backtracking-keeps-lightweight-search-control-provisional.md)
 when contrary evidence arrives.
+
+## Natural-language theory is a candidate operative surface
+
+The specific implementation hypothesis is narrower than the functional claim:
+
+> Fallible natural-language theory may provide an unusually versatile,
+> addressable surface for coordinating heterogeneous production machinery.
+
+A factory-relevant theory can jointly represent:
+
+- task and domain structure;
+- relevant capacities and limitations of the current solver;
+- explanations of successes and failures;
+- proposed interventions and their intended mechanisms;
+- scope conditions and predictions; and
+- evidence that should revise or defeat the account.
+
+An LLM can interpret that state into changes across decomposition, context
+selection, schemas, workflows, prompts, tests, evaluators, tools, and code. The
+same explanation can coordinate several artifacts rather than leaving each to a
+separate local update process.
+
+The relevant self-knowledge is not a complete account of model internals. A
+decomposition is relative to both a task and a solver: it must preserve the
+task's dependencies while producing units that this system can execute, retain,
+combine, and verify. Theory-mediated decomposition therefore needs a
+task-relevant model of the task–solver relation and of interventions that can
+make the task tractable.
+
+Theory does not replace search. It can shape a generate-and-verify process by
+controlling which failure explanations are plausible, which machinery is worth
+changing, which candidates to try, which experiments are informative, and how
+outcomes should revise the retained account. Blind exploration, learned
+policies, program search, trajectory reuse, exact code execution, and
+independent tests can remain inside the same system.
+
+The claim is causal. A theory that merely accompanies the work is documentation.
+Theory mediation requires the retained theory to change search, diagnosis,
+evaluation, recovery, or revision. The supporting note states why [theory may
+coordinate heterogeneous factory
+development](../notes/theory-mediation-can-coordinate-heterogeneous-factory-development.md)
+and what comparative results would support or defeat the natural-language
+realization.
+
+A failure of the explicit natural-language surface would not by itself show
+that the successful alternative had no project theory. The same functional
+organization may be carried implicitly or in another representational form.
+
+## Two testbeds
+
+The program couples a live testbed with a prospective controlled one.
+
+**Commonplace** is the live human-agent testbed. Agents use retained theory to
+revise the knowledge base, software, and methodology that guide later work. The
+operator still supplies much global-fit judgment and final authorization. This
+makes the human-inclusive learning path visible and exposes which recurring
+judgments might become reusable machinery.
+
+The **programming-agent testbed** will place a persistent, fallible theory inside
+an agentic software-production system and give it a sequence of modifications
+whose later demands can expose earlier mistakes. It directly tests whether
+theory changes coherent modification and factory-development choices. A run
+supports a factory-learning claim only if experience changes reusable family
+machinery that later production consumes; otherwise it tests theory-mediated
+solution modification. Matched runs will vary the theory while holding
+specified starting components fixed.
 
 ## What counts as theory-mediated learning
 
@@ -378,12 +424,13 @@ The minimum controlled test compares:
 
 - usable retained theory;
 - theory withheld;
-- deliberately wrong theory; and
-- where feasible, an information-matched record that preserves facts while
-  removing the theory's explanatory organization.
+- plausible but wrong theory; and
+- for claims about explanatory organization, an information-matched record that
+  preserves the facts while removing that organization.
 
-The model, executable machinery, task sequence, interaction protocol, and budget
-should otherwise be held fixed. Later demands must be able to expose mistakes
+The base model, initial executable machinery, task sequence, interaction
+protocol, and budget should be matched across conditions. Treatment-induced
+machinery changes are outcomes. Later demands must be able to expose mistakes
 introduced by earlier locally successful modifications.
 
 The primary questions are:
@@ -396,10 +443,16 @@ The primary questions are:
 - Does it outperform credible trajectory, search, policy, optimization, or mixed
   alternatives at comparable total cost?
 
+A run supports a factory-learning claim only when production experience changes
+reusable family machinery and later production consumes that change. Otherwise
+the experiment may still establish theory-mediated solution modification or
+recovery.
+
 Any result identifies only [the contrast it actually
 runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md).
-A theory-versus-no-theory result does not rank every alternative learning
-mechanism.
+A natural-language-theory result tests that explicit surface; it does not show
+that every successful alternative lacks an implicit project theory or rank every
+learning mechanism.
 
 ### Longitudinal Commonplace study
 
@@ -478,8 +531,8 @@ causal work it has not earned.
 
 ## What would change the strategy
 
-Three possible benefits motivate theory mediation. Explicit theory may improve
-[sample efficiency under structured
+Three possible benefits motivate an explicit natural-language theory surface. It
+may improve [sample efficiency under structured
 shifts](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md).
 It can leave an inspectable learning record. And theories of agentic systems can
 become candidate self-theory for the systems that build and revise agentic
@@ -487,26 +540,30 @@ software. Commonplace therefore develops [agentic-systems
 theory](../agentic-systems/README.md) both as an external research topic and as
 potential operative state.
 
-Each benefit must survive comparison at total system cost. The strategy should
-be narrowed or abandoned in a tested regime when:
+Each benefit must survive comparison at total system cost. The natural-language
+strategy should be narrowed or abandoned in a tested regime when:
 
 - retained theory is causally inert or reconstructed after decisions;
 - the evaluation loop becomes self-confirming;
 - natural-language coordination increases correlated error;
 - theory maintenance and retrieval cost exceed its search or transfer benefit;
+- another representation carries the required project theory more effectively;
 - each new covered area still requires human-built decomposition or evaluation
   machinery;
 - the marginal human contribution does not fall;
 - additional computation produces activity or candidates without better
   downstream selection; or
-- a more direct or mixed learning mechanism performs better at comparable total
+- a more direct or mixed learning process performs better at comparable total
   cost.
 
-The program is therefore not a claim that general agentic learning must be
-theory-mediated. It is a test of whether retained natural-language theory gives
-a learning software factory a useful, revisable way to coordinate what it
-believes about tasks, itself, its failures, and the machinery it should build
-next.
+The program therefore distinguishes two claims. It does not claim that every
+factory update or agentic learning episode must be theory-mediated, or that
+project theory must remain explicit or natural-language. It does claim that
+open-ended coherent modification requires a project-specific theory-bearing
+capacity. The contingent implementation bet is that retained natural-language
+theory gives a learning software factory a useful, revisable way to coordinate
+what it believes about tasks, itself, its failures, and the machinery it should
+build next.
 
 The companion article [The Bitter Lesson does not require everything to live in
 weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)

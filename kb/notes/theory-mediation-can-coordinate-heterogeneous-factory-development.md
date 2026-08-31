@@ -1,5 +1,5 @@
 ---
-description: "Natural-language theory may be a versatile factory-learning mechanism because one LLM-interpretable account can connect tasks, solver limits, failures, evidence, and changes across heterogeneous production machinery"
+description: "Fallible natural-language project theory may provide an addressable way to coordinate heterogeneous factory development while search, testing, and backtracking construct and revise it"
 type: kb/types/note.md
 traits: [title-as-claim, has-comparison]
 tags: [foundations, learning-theory, self-improving-systems]
@@ -9,7 +9,9 @@ tags: [foundations, learning-theory, self-improving-systems]
 
 Natural-language theory may be a particularly versatile mechanism for [factory development](./definitions/factory-development.md) because one LLM-interpretable account can connect task structure, relevant solver limitations, observed failures, proposed interventions, scope conditions, and evidence, then guide changes across heterogeneous production machinery.
 
-This is a comparative hypothesis, not a definition of learning and not a claim that theory is necessary. A software factory can learn through trial and error, trajectory reuse, program search, learned policies, direct optimization, or mixtures. The question is whether theory mediation provides useful leverage when a change must coordinate several artifact kinds or when decisive feedback is sparse, delayed, or arrives under a structured shift.
+Two claims must remain separate. Minimal factory learning does not require theory: trial-and-error retention, trajectory reuse, program search, learned policies, direct optimization, or mixtures can all produce retained changes used later. For the harder target of open-ended coherent modification, however, this program follows Naur in treating a project-theory function as indispensable. Some project-specific state or capacity must connect the program to its purposes, account for its organization, and relate new demands to what should be preserved.
+
+The necessity attaches to that function, not to one carrier. A project theory may be distributed across weights, artifacts, tools, and participants, and it need not be fully explicit. The contingent hypothesis here is that an addressable natural-language theory gives an LLM-based system useful leverage when a change must coordinate several artifact kinds or when decisive feedback is sparse, delayed, or arrives under a structured shift.
 
 ## The coordination problem
 
@@ -45,9 +47,26 @@ A factory-relevant theory may include:
 
 The relevant self-knowledge is therefore not a complete theory of the model's internals. It is a task-relevant theory of the relation among the task, the current solver, and interventions that can make the task tractable.
 
+## A useful theory can be weak and fallible
+
+Theory mediation does not require a complete account that deductively yields the right factory change. Real software development commonly proceeds from partial and sometimes mistaken understanding. A developer uses that understanding to choose a promising change, inspects the result, encounters conflicts, backtracks, and revises both the program and the understanding of it.
+
+A computational theory-holder should be judged by the same longitudinal standard. A weak theory can still be operative when it narrows search, identifies commitments worth preserving, interprets failure, or tells recovery what to restore or revise. Backtracking is not evidence that theory was absent; it is one way a fallible theory remains corrigible under incomplete information.
+
+```text
+partial theory
+  -> candidate change
+  -> provisional check
+  -> later or external consequence
+  -> retain, repair, backtrack, or revise
+  -> changed theory and later search
+```
+
+A theory that never risks revision is not made stronger by surviving only the evidence it selected for itself. Independent tests, later demands, rival explanations, and negative transfer are needed to turn plausible guidance into learning.
+
 ## Theory guides search; it does not replace it
 
-Theory mediation does not require deductively deriving every factory change. The theory can shape a generate-and-verify process by controlling:
+The theory can shape a generate-and-verify process by controlling:
 
 - which failure explanations are plausible;
 - which machinery is worth inspecting;
@@ -56,7 +75,9 @@ Theory mediation does not require deductively deriving every factory change. The
 - which checks should reject a proposal; and
 - how an observed result should revise the retained account.
 
-Blind or stochastic exploration can remain inside the process. A learned policy can propose candidates. Code can execute exact transformations and tests. The theory-mediated claim is that addressable theory causally changes search, diagnosis, evaluation, recovery, or revision.
+Blind or stochastic exploration can remain inside the process. A learned policy can propose candidates. Program search can construct executable machinery. Code can perform exact transformations and tests. Trajectories can preserve evidence about earlier decisions. These mechanisms may construct, revise, apply, compile, or implicitly embody project theory rather than simply compete with it.
+
+The theory-mediated claim is causal: addressable theory changes search, diagnosis, evaluation, recovery, or revision. The serious functional rival is a system that sustains coherent modification without any project-specific state performing the mapping, justification, and integration functions assigned to program theory.
 
 The [scheduler–LLM separation](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) gives the complementary implementation principle: semantic interpretation can remain model-mediated while exact progression, bookkeeping, and stabilized invariants move into software. Theory can guide which invariants should be codified without requiring the LLM to execute them unreliably on every run.
 
@@ -84,7 +105,7 @@ These are hypotheses. Natural language also introduces ambiguity, retrieval cost
 
 ## Comparative predictions
 
-Against information- and budget-matched alternatives, theory mediation should earn support when it:
+Against information- and budget-matched alternatives, an explicit natural-language theory surface should earn support when it:
 
 1. transfers one retained explanation into several causally coherent machinery changes;
 2. predicts where a decomposition, representation, evaluator, or tool will fail before exhaustive trial;
@@ -93,15 +114,18 @@ Against information- and budget-matched alternatives, theory mediation should ea
 5. reduces new human construction of family-specific production knowledge when a related but unanticipated product variation appears; or
 6. leaves an intervention-sensitive trace: withholding, replacing, or corrupting the theory changes consequential factory-development choices.
 
-It should narrow or lose when:
+It should narrow or lose as a representational and coordination strategy when:
 
 - the retained theory is ignored or reconstructed post hoc;
 - direct search or optimization reaches better machinery at comparable total cost;
-- trajectory reuse transfers as well with less maintenance;
+- an implicit or differently represented project theory guides modification as well with less maintenance;
+- trajectory reuse transfers as well without theory-level organization;
 - theories become self-confirming because their evaluators share the same assumptions;
 - cross-artifact coordination increases correlated error;
 - human judgment required to maintain theory grows with the system; or
 - each new domain still requires people to supply the decisive decomposition, family knowledge, and evaluator.
+
+A loss by the natural-language surface would not by itself show that the successful system had no project theory. It may show that the same functional organization was better carried elsewhere.
 
 ## Theory content and factory machinery are different roles
 
@@ -111,7 +135,9 @@ Conversely, theory need not remain in natural language forever. Stable claims ca
 
 ## Scope
 
-- The claim concerns versatility across factory-development decisions, not universal superiority on every task.
+- Minimal factory learning does not require theory. The indispensability claim is scoped to open-ended coherent modification where local criteria do not exhaust program purpose and organization.
+- The indispensable object is a project-theory function, not necessarily an explicit natural-language artifact.
+- The claim about natural-language theory concerns versatility across factory-development decisions, not universal superiority on every task.
 - Natural-language theory is one representational surface inside the deployed system; model weights and symbolic machinery remain essential.
 - A theory of the task alone may be insufficient when decomposition depends on solver limits. A theory of the solver alone may be insufficient when task dependencies determine what must be preserved.
 - Theory mediation can coexist with fixed general machinery and with non-theoretical search at lower levels.
@@ -122,8 +148,9 @@ Conversely, theory need not remain in natural language forever. Stable claims ca
 
 Relevant Notes:
 
-- [Factory-learning mechanisms should be compared on the same causal job](./factory-learning-mechanisms-should-be-compared-on-the-same-causal-job.md) — grounds: supplies the neutral comparison frame and failure conditions
-- [Program theory sustains search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — grounds: explains how retained rationale connects later consequences to earlier choices
+- [Naur binds program theory to humans by equating machine execution with formulated criteria](./naur-equates-machine-execution-with-formulated-criteria.md) — grounds: supplies the project-theory functions and reopens their allocation to a computational composite
+- [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — grounds: explains why a partial and fallible theory can guide search, backtracking, and revision
+- [Factory-learning mechanisms should be compared on the same causal job](./factory-learning-mechanisms-should-be-compared-on-the-same-causal-job.md) — grounds: separates the minimal update relation from the stronger coherent-modification target
 - [Theory-mediated self-improvement needs interpretation and retention](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) — grounds: supplies the causal mediation and retained-revision requirements
 - [Theory-mediated learning may improve sample efficiency under shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — extends: states the structured-transfer conjecture
 - [Natural-language project state specializes search heuristics](./natural-language-project-state-specializes-search-heuristics.md) — mechanism: explains one way explicit theory can alter an LLM's proposal distribution
