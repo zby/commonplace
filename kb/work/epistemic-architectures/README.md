@@ -23,7 +23,7 @@ The selection angle that seeded this workshop is [weakly discriminated qualities
 - [Analyse an External System's Epistemic Architecture](../../instructions/analyse-external-system-epistemic-architecture.md) — promoted workshop result: a collection-neutral review procedure that inventories epistemic objects, separates truth-apt transformations from non-truth-apt adaptations, and traces checking, acceptance, integration, and behavioral force per material route
 - **Response taxonomy (failed unchanged)** — the fifth case's participation × containment 2×2 cannot assign ARC one system-level cell. Participation and containment remain useful only as route-qualified questions; no unchanged taxonomy note should be promoted.
 - **Route-level oracle asymmetry (open, candidate addition)** — asymmetry between commit routes into the accepted population, not just between qualities; Eigenius is the original witness. ARC strengthens the need to type each route's target and force, but is not positive evidence for explanatory-quality underselection.
-- **Behavioral-authority fold (open handoff)** — a later run may add ARC as a bounded worked case to the [behavioral-authority decomposition proposal](../../reference/proposals/revise-behavioral-authority-decomposition.md). ARC warrants no new standalone theory note.
+- **Behavioral-authority fold (completed 2026-08-31)** — the [behavioral-authority decomposition proposal](../../reference/proposals/revise-behavioral-authority-decomposition.md) now uses ARC as a bounded worked case grounded in the [pinned live-action implementation ingest](../../sources/arc-skill-live-action-execution-dba53c3.ingest.md). The case exercises applicability, path position, and consequence without selecting an ontology or warranting a standalone theory note.
 - [operator-response.md](./operator-response.md) — the draft's author responded (2026-08-19, corrected 2026-08-20): the draft is intended for publication, and the stated intent is lab tooling à la Neptune.ai, not theory production — reframing exile as deliberate scoping (the operator concurs that lab tooling is right to be evidence-heavy) while leaving the drift prediction and the tracking-vs-knowledge-production tension open
 - **Attribution of the ontology draft (open, external)** — the author intends to publish the draft; once it is public, snapshot and ingest it and restore the anonymized references here and in the weakly-discriminated note to full citations. Until then everything stays anonymous.
 
@@ -32,7 +32,7 @@ The selection angle that seeded this workshop is [weakly discriminated qualities
 1. The durable claims extracted: the failed system-level response taxonomy either replaced by a route-qualified comparison or explicitly dropped; the route-level variant either added to the weakly-discriminated note with its warranted evidence edges or rejected with a reason.
 2. The comparison itself consumed: anything worth keeping lands in library notes or an article; the workshop's tables are not promoted as-is, workshops being sinks.
 3. The attribution question answered or parked with the contact.
-4. The ARC worked-case fold into the behavioral-authority proposal either completed in a separate run or explicitly parked.
+4. The ARC worked-case fold into the behavioral-authority proposal either completed in a separate run or explicitly parked — completed 2026-08-31.
 
 ## Evaluation boundary
 

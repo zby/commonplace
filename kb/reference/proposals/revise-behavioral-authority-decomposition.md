@@ -51,6 +51,20 @@ No option adds authorization, epistemic warrant, provenance, realization, or dep
 
 Free choices, marked as such: whether applicability belongs inside the record or in a predicate over it; the stage vocabulary and whether a chain replaces or composes local links; the force taxonomy and any separate delivery or consumption-mechanism taxonomy; and which external ontology, if any, supplies each carve. The names *warrant*, *earning*, *authorization*, and *backing* are not interchangeable placeholders: any later vocabulary must preserve the distinctions above.
 
+## Bounded worked case: ARC live execution
+
+ARC's pinned live-action implementation provides a bounded use test for the proposal's distinctions, not an ontology source or a completeness result. One symbolic execution surface applies different checks to different operations, at different positions, with different consequences ([pinned ARC implementation ingest](../../sources/arc-skill-live-action-execution-dba53c3.ingest.md)):
+
+| Route | Target and activation condition | Position | Implemented consequence | What the check does not establish |
+|---|---|---|---|---|
+| Batch-step admission | Every submitted batch step must contain an action and a nonempty prediction | Before the batch spends an action | A malformed step refuses the batch | Prediction quality, causal discrimination, or later success |
+| Solve-plan applicability | A referenced plan must carry source provenance matching the current event, observation, and rules identities | Before the first planned action | Missing or stale provenance refuses the plan | That the plan or rules are correct |
+| Prediction-miss containment | The current paid action's result fails its prediction while an unexecuted batch suffix remains | After the current action, before the next | The result is classified as `SURPRISE` and the remaining suffix is discarded | Rollback of the spent action, rejection of a wider theory, or warrant beyond that transition |
+
+The case exercises **applicability** because a submitted batch step, a referenced solve plan, and an active unexecuted suffix are different targets with different activation conditions. It exercises **path topology** because prediction syntax and plan freshness gate entrance, while consequence grading acts after the current action and can contain only later actions. It exercises **force** because refusal, result classification, and suffix truncation are different operational consequences even though code delivers all three. The provenance row also preserves the proposal's boundary: current inputs make a plan applicable, not epistemically warranted.
+
+This is a point-in-time static code reading. It establishes the selected control flow, not branch prevalence, deployed behavior, or the best names and structure for a general authority record. The survey and migration criteria therefore remain open.
+
 ## Survey targets
 
 The gate before choosing is a question-indexed survey, not a search for one ontology that absorbs every neighboring record. For each thread, record what it decomposes, whether the bridge to retained-artifact consumption holds, what it supplies, and which tempting inference it does not license.
