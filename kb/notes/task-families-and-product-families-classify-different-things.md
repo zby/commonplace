@@ -34,9 +34,9 @@ A collection can satisfy both classifications. Repeated requests to configure an
 
 First, it prevents a post-hoc singleton factory. Solving one task and then declaring its output to be a one-member family does not demonstrate reusable family production knowledge. The family and the variation or reuse relation should be declared before the result is used as evidence for factory capability.
 
-Second, it separates evaluation reach from factory scope. A system may perform well across a broad task family by using different manually supplied factories for each domain. That shows broad task performance, not acquisition of product-family specialization. Conversely, a factory may support a rich product family while being evaluated on only a narrow set of tasks.
+Second, it separates evaluation reach from factory scope. A system may perform well across a broad task family by using different manually supplied factories for each domain. That shows broad task performance, not acquisition of the family-specific production knowledge used by those factories. Conversely, a factory may support a rich product family while being evaluated on only a narrow set of tasks.
 
-Third, it clarifies what is retained. A general task-solving heuristic may transfer across product families without becoming part of any one family's specialization. A family-specific schema or test suite may transfer across members of one product family while being useless elsewhere. Both are reusable, but their reuse scopes differ.
+Third, it clarifies what is retained. A general task-solving heuristic may transfer across product families without becoming part of any one family's production knowledge. A family-specific schema or test suite may transfer across members of one product family while being useless elsewhere. Both are reusable, but their reuse scopes differ.
 
 Fourth, it prevents decomposition from being smuggled into the benchmark. If tasks are grouped only after observing which decomposition worked, the grouping can hide failures outside the selected method's reach. Task-family selection and product-family definition should be independently inspectable.
 
