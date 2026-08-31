@@ -204,6 +204,13 @@ criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
 Modern learned interpreters make that human-only conclusion testable rather
 than settled.
 
+A retained theory is therefore not yet a held theory in Naur's stronger sense.
+Holding requires the theory-bearing system to recognize when that theory is
+relevant to a novel modification demand and bring it to bear. For LLM-based
+systems this gap is experimentally accessible: theory may be recoverable when
+explicitly requested yet fail to guide the modification when its relevance is
+not named in advance.
+
 > Can an agentic system become a bearer of a fallible project theory—holding and
 > revising it well enough to keep successive modifications coherent when
 > decisive feedback arrives only later?
@@ -341,6 +348,7 @@ The strongest path the program wants to observe is:
 
 ```text
 retained theory
+  -> held theory
   -> theory-mediated search or factory-development decision
   -> realized change
   -> independent or delayed consequence
@@ -348,6 +356,10 @@ retained theory
   -> retained theory-state revision
   -> changed later operation
 ```
+
+Here *held theory* means that the system recognizes the retained theory's
+relevance to the current demand and brings it to bear; retention alone does not
+establish that capability.
 
 The evidence ladder distinguishes four levels:
 
@@ -423,6 +435,11 @@ For nondeterministic production, missing joins cannot reliably be reconstructed
 after the fact.
 
 ### Controlled programming-agent test
+
+A first contrast can isolate the retained-to-held transition: is relevant theory
+merely recoverable when explicitly requested, or does the system recognize its
+relevance to a novel modification demand without a project-specific cue and
+bring it to bear?
 
 Controlled runs will vary the retained theory while matching the base model,
 starting machinery, task sequence, protocol, and budget; treatment-induced
