@@ -1,3 +1,3 @@
 # Article roles
 
-This file is intentionally unchanged.
+This file remains unchanged from main.
