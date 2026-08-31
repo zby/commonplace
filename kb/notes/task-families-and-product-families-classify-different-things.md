@@ -40,6 +40,23 @@ Third, it clarifies what is retained. A general task-solving heuristic may trans
 
 Fourth, it prevents decomposition from being smuggled into the benchmark. If tasks are grouped only after observing which decomposition worked, the grouping can hide failures outside the selected method's reach. Task-family selection and product-family definition should be independently inspectable.
 
+## A task-family evaluation needs a declared frame
+
+A longitudinal software-task assessment should declare more than an initial prompt. At minimum it should fix:
+
+- the task-family membership or prospective sampling rule;
+- the initial product state, including any repository and lifecycle artifacts;
+- the objective and acceptance conditions;
+- the evidence sources and user or environment interactions the solver may use;
+- the horizon and resource limits; and
+- how failures, timeouts, abstentions, retries, and requests for human rescue are counted.
+
+The initial request need not be an exhaustive specification. Requirements, constraints, corrections, tests, telemetry, dependency changes, and user answers may arrive later when the declared interaction protocol permits them. What must remain fixed for the assessment is the rule governing those arrivals and their interpretation.
+
+Changing the objective, acceptance relation, coverage rule, or allowed human help after seeing outcomes creates a different assessment frame. Otherwise a system can appear broad by silently dropping hard cases or by reclassifying an exported design decision as ordinary feedback.
+
+This frame defines the evaluated task process; it does not turn the task family into a software product family. Product-family reuse still requires independently declared commonality, variability, and reusable production machinery.
+
 ## Mapping between the axes
 
 A study that uses both concepts should declare:
@@ -67,3 +84,4 @@ Relevant Notes:
 - [Factory development](./definitions/factory-development.md) — extends: changes reusable machinery for a product family rather than merely solving another task
 - [An agentic substrate becomes a software factory through family-specific production machinery](./an-agentic-substrate-becomes-a-software-factory-through-family-specific-production-machinery.md) — extends: uses the product-family boundary when mapping generic agentic machinery to a configured factory
 - [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — compares: shows why a task grouping should not protect the decomposition used to define it
+- [Program synthesis](../sources/program-synthesis-gulwani-polozov-singh-2017.ingest.md) — evidenced-by: shows why initial examples or natural-language instructions may require later interaction to discriminate intended behavior
