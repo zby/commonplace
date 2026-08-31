@@ -1,32 +1,22 @@
 ---
-description: "Research program on whether agentic software factories can learn reusable production machinery and whether fallible natural-language project theory can make open-ended modification coherent"
+description: "Research program on whether a software factory can learn to build a better software factory by acquiring, holding, and revising fallible project theory"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md
   - kb/notes/a-software-factory-can-produce-another-factory-without-acquiring-its-family-specific-production-knowledge.md
-  - kb/notes/an-agentic-substrate-becomes-a-software-factory-through-family-specific-production-machinery.md
-  - kb/notes/broad-software-demands-create-pressure-for-agentic-factory-development.md
   - kb/notes/a-software-factory-learns-when-production-experience-changes-reusable-machinery-used-later.md
   - kb/notes/factory-learning-mechanisms-should-be-compared-on-the-same-causal-job.md
   - kb/notes/theory-mediation-can-coordinate-heterogeneous-factory-development.md
   - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
   - kb/notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md
   - kb/notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md
-  - kb/notes/system-use-selects-theory-fit-without-a-fixed-oracle.md
-  - kb/notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
-  - kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md
-  - kb/notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md
-  - kb/notes/a-retained-theory-intervention-isolates-one-explicit-theory-surface.md
-  - kb/notes/disconnected-witnesses-do-not-establish-a-full-causal-path-through-theory.md
+  - kb/notes/knowledge-storage-does-not-imply-contextual-activation.md
   - kb/notes/natural-language-project-state-specializes-search-heuristics.md
   - kb/notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md
-  - kb/notes/open-ended-improvement-allocates-search-before-evaluation.md
-  - kb/notes/lightweight-search-control-does-not-license-adoption.md
-  - kb/notes/backtracking-keeps-lightweight-search-control-provisional.md
-  - kb/notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md
-  - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
+  - kb/notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
+  - kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md
   - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
   - kb/sources/programming-as-theory-building.ingest.md
 ---
@@ -35,91 +25,73 @@ source_notes:
 
 > **Draft.** Comments and counterexamples are welcome through the repository's issue tracker.
 
-> **TL;DR.** If software factories can build software factories, production experience could improve the machinery used to build later software without training new models. The hard part is not retaining more information but keeping open-ended modification coherent. This program tests whether an LLM-based system can acquire, hold, use, and revise a fallible project theory that guides search and factory development as consequences arrive.
+> **TL;DR.** If a software factory can build a better software factory, improvement can happen through changes to software-production machinery without training new models. This program tests whether LLM-based factories can do this by acquiring, holding, using, and revising fallible project theories.
 
-## Learning software factories
+## Better software factories
 
-An agentic coding system becomes a [software factory](../notes/definitions/software-factory.md) when a general substrate is configured with reusable production knowledge for a declared family of software products or solutions. [Factory development](../notes/definitions/factory-development.md) constructs or revises that reusable machinery; solution development uses it to build or maintain one family member.
+A [software factory](../notes/definitions/software-factory.md) is a configured production environment containing reusable production knowledge for a declared family of software. For the present program, its machinery may include models, prompts, natural-language artifacts, code, tools, workflows, tests, and evaluators.
 
-As software demands widen, it becomes less plausible that every useful decomposition, representation, workflow, tool, evaluator, context policy, and recovery procedure can be supplied in advance. A general agentic system should therefore be able to participate in factory development when its installed machinery is inadequate. This is an empirical conjecture: a fixed sufficiently general substrate remains a live alternative.
+A factory can produce another factory. That is prior art, and it places factory machinery inside the space of things software production can build. But construction alone is neither learning nor improvement. A factory may merely realize production knowledge supplied by people without [acquiring or improving that knowledge](../notes/a-software-factory-can-produce-another-factory-without-acquiring-its-family-specific-production-knowledge.md).
 
-Factories that build factories are prior art. Learning requires a stronger relation:
+The research target is stronger:
 
 ```text
-production under current factory machinery
-  -> experience bearing on that machinery
-  -> system-determined change to reusable machinery
-  -> retention
-  -> changed later production
+factory F
+  -> production experience
+  -> retained change to reusable production machinery
+  -> successor factory F'
+  -> better later production
 ```
 
-Experience without a reusable change is feedback; repairing only the current product is solution development. The relevant learning unit is the [deployed system rather than only the model](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md), so retained changes may live in weights, natural-language artifacts, symbolic software, retrieved memories, or mixtures.
+Experience that causally determines a retained machinery change used in later production is [factory learning](../notes/a-software-factory-learns-when-production-experience-changes-reusable-machinery-used-later.md). The change can still be harmful. Calling the successor *better* additionally requires evidence of improvement under a declared objective and scope.
+
+For the recursive-improvement claim, that comparison includes the capabilities needed to continue factory development. The successor must be able to do at least the improvement-relevant work of its predecessor, including producing further factories, while improving some relevant part of software production. A factory that produces one better artifact by consuming the capability that made further improvement possible is not better in this sense.
+
+The retained change need not be a weight update. The learning unit is the [deployed system rather than only the model](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md), so improvement may occur through any operative part of the factory's production machinery.
 
 ## Coherent modification requires held project theory
 
-Minimal factory learning does not require theory. Trial-and-error retention, trajectory reuse, program search, learned policies, direct optimization, and mixtures can all change reusable machinery. The harder target is open-ended coherent modification: integrating new demands without destroying purposes and organization that local acceptance criteria capture only partly.
+The hard part is not merely generating another configuration. A better factory must modify software and reusable production machinery without silently destroying purposes and organization that immediate acceptance tests capture only partly.
 
-Peter Naur's [1985 essay *Programming as Theory Building*](https://ingenieria-de-software-i.github.io/assets/bibliografia/programming-as-theory-building.pdf) argues that programmers build and hold a project-specific theory: an understanding of how the program maps onto the activity it supports, why it is organized as it is, and how new demands relate to that organization. For this target, the program adopts Naur's functional constraint: some project-specific state or capacity must perform those mapping, justification, and integration roles. The claim is about a function, not a carrier; the theory may be distributed across weights, artifacts, tools, and participants.
+Peter Naur's [1985 essay *Programming as Theory Building*](../sources/programming-as-theory-building.ingest.md) argues that programmers do this by building and holding a project-specific theory: an understanding of how the program maps onto the activity it supports, why it is organized as it is, and how new demands relate to that organization.
 
-Naur treated the theory as held by programmers rather than by the program or its documentation. Modern learned interpreters make that boundary testable. A retained theory is not yet a held theory: the theory-bearing system must recognize when it is relevant to a novel demand and bring it to bear. For LLM-based systems, theory may be recoverable when explicitly requested yet fail to guide a modification when its relevance is not named in advance.
+Naur's compiler example makes the last capacity especially important. The original group recognized that existing compiler facilities applied to novel modification requests. A successor group, despite receiving the program and extensive documentation, proposed locally plausible additions that bypassed those facilities. Access to information was not enough; the relevant connection had to be recognized when the new demand appeared.
 
-> Can an agentic system become a bearer of a fallible project theory—holding and revising it well enough to keep successive modifications coherent when decisive feedback arrives only later?
+This gives a useful distinction. A **retained theory** persists in a recoverable form. A **held theory** is a capability of the theory-bearing system: it recognizes when retained project theory is relevant to a novel demand and brings it to bear without the task author naming the project-specific connection. Modern learned interpreters make Naur's formerly human-only bearer question [empirically open](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
 
-Holding a theory does not mean deducing the correct change in one step. Human developers work from partial and sometimes mistaken understanding: they inspect, search, make tentative changes, test assumptions, backtrack, and revise both the program and their understanding. A computational theory-holder should be judged by the same longitudinal standard. The theory counts because it shapes which changes are considered, what must be preserved, how failures are interpreted, when to reverse course, and what should be revised. [Holding a program theory means sustaining coherent search under delayed feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md).
+> Can an LLM-based software factory acquire and hold a fallible project theory, revise it from consequences, and use it to build a better factory?
 
-```text
-partial theory
-  -> theory-guided search and tentative change
-  -> provisional check
-  -> later or external consequence
-  -> retain, repair, backtrack, or revise
-  -> changed theory and later search
-```
-
-Generic search remains part of the system. Theory can guide generate-and-verify by allocating search and interpreting failures before decisive evaluation is available; backtracking keeps those choices provisional. The empirical question is whether project-specific theory improves coherent modification at comparable information and total cost.
+Holding a theory does not mean deducing the correct change in one step. A working theory may be partial or wrong. It matters because it shapes search: what changes are considered, what must be preserved, how failures are interpreted, when to backtrack, and what should be revised. The bearer test is longitudinal—whether the system can [sustain coherent search under delayed feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md).
 
 ## Natural-language theory is the implementation bet
 
-The functional claim does not require project theory to be explicit or natural-language. The implementation hypothesis is narrower:
+The functional claim does not require theory to be explicit or natural-language. Natural language is the tested realization because LLMs can interpret it into changes across heterogeneous factory machinery while it remains addressable, inspectable, and revisable.
 
-> Fallible natural-language theory may provide an unusually versatile, addressable surface for coordinating heterogeneous production machinery.
+This creates a new experimental control surface. The same project theory can be retained, withheld, surfaced, corrupted, or replaced while model weights remain fixed. It also exposes a central failure mode: knowledge may exist in weights or artifacts, and may even appear in the live context, without becoming action-relevant. [Storage and exposure do not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md).
 
-An LLM can interpret retained project state into changes across decomposition, context selection, schemas, workflows, prompts, tests, evaluators, tools, and code. One possible mechanism is that [natural-language project state specializes search heuristics already present in model weights](../notes/natural-language-project-state-specializes-search-heuristics.md).
+Theory does not replace generate-and-verify, program search, or learned policies. A fallible theory may guide those mechanisms by allocating search and interpreting failures before decisive evidence is available. Another representation or a direct or mixed learner may perform the same causal job better; that is an empirical competitor, not a terminological exception.
 
-The claim is causal. A theory that merely accompanies the work is documentation. Theory mediation requires the retained theory to change search, diagnosis, evaluation, recovery, or revision. A failure of the explicit natural-language surface would not show that a successful alternative had no project theory; another representation may carry the same functional organization more effectively.
+## How to test the program
 
-## How the program is tested
+The first experiment need not solve recursive self-improvement. It can test Naurian theory-holding in ordinary software projects. Each project should contain a non-obvious reusable design idea, a novel requirement that can be met either by extending that idea or by adding a local special case, and a later demand that exposes whether the earlier modification preserved the program's organization.
 
-The program couples two testbeds. **Commonplace** is the live human-agent system in which agents use retained theory to revise the knowledge base, software, and methodology that guide later work. The operator still supplies much global-fit judgment and final authorization. The **programming-agent testbed** will place persistent fallible theory inside an agentic software-production system and give it sequences of modifications whose later demands can expose earlier mistakes.
-
-The strongest path the program wants to observe is:
+The diagnostic path is:
 
 ```text
 retained theory
-  -> held theory
-  -> theory-mediated search or factory-development decision
-  -> realized change
-  -> independent or delayed consequence
-  -> retained theory-state revision
-  -> changed later operation
+  -> held theory under a novel demand
+  -> theory-guided modification
+  -> later consequence
+  -> theory revision
+  -> changed later modification
 ```
 
-Evidence comes in levels: **mediation**, where changing or withholding theory changes a consequential decision; **empirical contact**, where the intervention produces an outcome bearing on the theory; **theory learning**, where that outcome changes the retained theory; and **recurrence**, where the revised theory changes later operation. A contemporaneous citation is only a trace; withholding, replacement, or perturbation gives stronger evidence that theory was load-bearing.
+Controlled runs can separate the links. A direct probe tests whether the relevant theory is recoverable. An ordinary modification demand tests whether the system recognizes its relevance without a project-specific cue. A mechanism-specific hint tests whether failure was one of activation rather than application. Withheld and plausible wrong theories test whether theory content causally changes the modification rather than merely appearing in an explanation.
 
-The [2026-08-30 Commonplace revision record](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md) illustrates part of this path: retained theory guided work, operator feedback revised it, and the result affected later work. It was not recorded prospectively enough for causal or comparative attribution.
+A later stage moves from project modification to factory learning. Production experience must change reusable production machinery, the change must affect later production, and the successor must be better under the declared comparison—including preservation of factory-development capability. Holding model weights fixed isolates the proposed non-weight route.
 
-The first controlled contrast can isolate the retained-to-held transition: is relevant theory merely recoverable when explicitly requested, or does the system recognize its relevance to a novel modification demand without a project-specific cue and bring it to bear? Matched runs can then compare usable theory with theory withheld, plausible but wrong theory, and information-matched factual records. Later demands must be able to expose mistakes introduced by earlier modifications. A factory-learning claim additionally requires changed reusable machinery to affect later production; otherwise the result concerns theory-mediated solution modification.
+The program uses two complementary testbeds. **Commonplace** supplies a live, long-horizon human–LLM development process; the [recorded revision episode](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md) is illustrative but not a controlled causal result. A controlled software-project testbed can run the interventions that Commonplace cannot. Current Commonplace evidence is human-inclusive, so progress also means reducing how often the operator must name the relevant theory, choose the decisive branch, or supply another task-specific learning decision.
 
-System use can test a theory's causal usefulness and fit, but it is not an independent truth oracle. Factual and formal checks, held-out demands, rival theories, and later consequences remain necessary to prevent a self-confirming loop.
+The strategy should be narrowed where theory interventions are causally inert, another learning mechanism performs better at comparable total cost, or wider scope continues to require substantial new human-built specialization. It is compatible with the Bitter Lesson only if the bootstrap can [outgrow recurring human-supplied specialization](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
 
-## Bootstrap and failure conditions
-
-The current Commonplace loop is human-inclusive. Agents already retrieve, synthesize, criticize, write, execute repository changes, test, validate, and retain results, while the operator still supplies decisive high-level direction, global-fit judgment, and authorization. The bootstrap target is therefore not to introduce computation but to reduce recurring task-specific human decisions by turning them into reusable computational machinery.
-
-Progress should be reported against a fixed boundary: how much of the learning path can the computational subsystem carry without a person supplying the task-specific decomposition, evaluator, selection, promotion, or recovery choice? [The decisions that stay human, and what would move them](./the-decisions-that-stay-human-and-what-would-move-them.md) develops the fuller boundary, warrant, and transfer argument.
-
-The Bitter Lesson is a constraint on this strategy, not a reason that learned state must live in weights. [Learning can produce explicit artifacts as well as weights](../notes/the-bitter-lesson-selects-production-methods-not-representational.md), but a bootstrap is credible only if learning can outgrow recurring human-supplied specialization as scope widens. The companion article [The Bitter Lesson does not require everything to live in weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) develops that scaling argument and the competing weight-update view.
-
-The strategy should be narrowed or abandoned where retained theory is causally inert, another representation or direct or mixed learning process performs better at comparable total cost, or each new covered area continues to require substantial human-built specialization. Factory learning also does not by itself establish reflection, computational closure, self-improvement, compounding, or broad production reach; those require separate evidence.
-
-The program therefore makes two claims at different strengths. It does **not** claim that every factory update must be theory-mediated or that project theory must remain explicit or natural-language. It **does** claim that open-ended coherent modification requires a project-specific theory-bearing capacity. The contingent bet is that LLM-interpreted natural-language theory is a useful way to build and study that capacity while software factories learn better machinery for their own future production.
+One successful transition would establish neither indefinite compounding nor computational closure. It would establish a more basic and testable result: a software factory can learn from production, hold project theory strongly enough to guide coherent modification, and use that learning to build a better software factory without training a new model.
