@@ -27,7 +27,7 @@ Not every mechanism exposes all of these steps as separate components. A direct 
 |---|---|---|---|
 | Trial-and-error retention | A tool, workflow, policy, prompt, or configuration associated with observed success | Makes few assumptions about why a change works | Weak transfer and expensive search when feedback is sparse or delayed |
 | Trajectory or episode reuse | Stored traces, summaries, plans, demonstrations, or retrieved procedures | Reuses concrete experience with low abstraction cost | Copies incidental details, can fail under shift, and may not expose which part should be revised |
-| Program search | Symbolic programs, schemas, workflows, evaluators, or tool compositions | Produces executable and testable machinery | Search spaces and evaluators can encode decisive human specialization |
+| Program search | Symbolic programs, schemas, workflows, evaluators, or tool compositions | Produces executable and testable machinery | Search spaces and evaluators can encode decisive human-supplied family knowledge |
 | Learned construction or selection policy | Parametric or artifact-based policy for choosing or building machinery | Amortizes repeated decisions and can improve with scale | Hidden credit assignment, distribution shift, and limited inspectability |
 | Direct optimization | Weights, adapters, continuous policies, scores, or other directly updated state | Can integrate large amounts of feedback without explicit hand decomposition | Update cost, catastrophic interference, weak localization, and difficulty coordinating heterogeneous artifacts |
 | Theory mediation | Addressable natural-language claims about tasks, solvers, failures, interventions, evidence, and scope | Can coordinate search and revision across several artifact kinds through one interpretable medium | Plausible rationalization, interpretation error, maintenance cost, and dependence on model reading and application |
@@ -44,7 +44,7 @@ Mechanisms should be evaluated on at least these dimensions:
 - **Reach:** Which schemas, tools, workflows, evaluators, representations, prompts, code, or parametric state can it alter?
 - **Credit assignment:** How does later success or failure bear on earlier factory decisions?
 - **Operative retention:** How does the selected or updated state enter later production, and can it be rolled back?
-- **Transfer:** Does the retained change help a distinct task, product variation, or family without new target-specific human design?
+- **Transfer:** Does the retained change help a distinct task, product variation, or family without new target-specific human construction of production knowledge?
 - **Negative transfer:** How are overgeneralized or harmful lessons detected and revised?
 - **Total cost:** Count model calls, environment interaction, compute, human judgment, artifact maintenance, validation, and recovery.
 - **Warrant:** What independent checks or accepted error bounds support consequential use?
@@ -55,7 +55,7 @@ No single dimension settles the comparison. A mechanism can be cheap but narrow,
 
 The same representational form can be produced by different learning mechanisms. A person can write a prompt; an optimizer can search for one; a theory-mediated agent can derive one from an explanation. All three results are natural-language artifacts, but the production methods and evidence paths differ.
 
-Likewise, symbolic software can be handcrafted, generated from a supplied schema, selected through search, learned from trajectories, or revised through theory. Parametric state can encode either general machinery or target-specific specialization. The [Bitter Lesson production-method distinction](./the-bitter-lesson-selects-production-methods-not-representational.md) therefore applies directly: the carrier does not determine whether useful structure was found by a scalable computational method.
+Likewise, symbolic software can be handcrafted, generated from a supplied schema, selected through search, learned from trajectories, or revised through theory. Parametric state can encode either general machinery or target-specific family knowledge. The [Bitter Lesson production-method distinction](./the-bitter-lesson-selects-production-methods-not-representational.md) therefore applies directly: the carrier does not determine whether useful structure was found by a scalable computational method.
 
 ## Proposal selection is one architecture, not the universal definition
 
@@ -71,7 +71,7 @@ A useful comparison holds constant, as far as possible:
 - task and product-family selection;
 - permitted evidence and interaction;
 - total compute and wall-clock budget;
-- human interventions and supplied specialization;
+- human interventions and supplied family-specific production knowledge;
 - acceptance conditions and later-use horizon; and
 - accounting for failures, abstentions, retries, and recovery.
 
@@ -84,7 +84,7 @@ The strongest comparisons intervene on the mechanism while preserving the inform
 - Better immediate product output shows task performance, not factory learning.
 - A retained change used later supports the learning path, but not necessarily improvement.
 - Transfer to a distinct admitted product variation supports family-level reuse.
-- Repeated transfer across families with falling target-specific human work supports broader acquisition reach.
+- Repeated transfer across families with falling target-specific human construction of production knowledge supports broader acquisition reach.
 - A mechanism winning in one feedback regime does not establish universal superiority; sparse delayed feedback, dense automated feedback, and safety-critical deployment may favor different mechanisms.
 
 ## Scope
