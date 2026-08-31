@@ -74,7 +74,7 @@ Keep the source captures and their evidence limits:
 - [Tool Factory](../../sources/cook-kent-tool-factory-2003.ingest.md); and
 - [MDSoFa](../../sources/langlois-exertier-mdsofa-software-factory-factory-2004.ingest.md).
 
-Their classifications, source summaries, extracts, and limitations remain useful. Their abstraction links should point to the versioned ontology reconstruction and the plain construction-versus-acquisition note rather than making the older operative-succession note own the source result. The partial book preview remains a bibliographic and framing source rather than authority for detailed ontology claims.
+Their classifications, source summaries, extracts, and limitations remain useful. This integration updates their interpretive links so the versioned ontology reconstruction and the plain construction-versus-acquisition note own the relevant source results. The partial book preview remains a bibliographic and framing source rather than authority for detailed ontology claims.
 
 ## Companion articles
 
@@ -90,9 +90,8 @@ Carry theory-specific experiment design and evidence downstream. Do not rewrite 
 
 ## Remaining migration gate
 
-The conceptual spine and public article are now assembled. The remaining work before closing this workshop is narrower:
+The conceptual spine, bridge notes, public article, and source provenance are now assembled. The remaining work before closing this workshop is:
 
-1. update source-to-note provenance for the Greenfield, Tool Factory, and MDSoFa ingests;
-2. implement explicit keep, withdraw, replace, or delete dispositions for the premature extension files;
-3. disposition every retained artifact in the older theory-mediated workshop; and
-4. close the older workshop separately without losing its evidence and source controls.
+1. implement explicit keep, withdraw, replace, or delete dispositions for the premature extension files;
+2. disposition every retained artifact in the older theory-mediated workshop; and
+3. close the older workshop separately without losing its evidence and source controls.
