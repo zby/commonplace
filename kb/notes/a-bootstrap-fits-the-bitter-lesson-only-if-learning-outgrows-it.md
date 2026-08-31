@@ -1,5 +1,5 @@
 ---
-description: "A hand-crafted starting state fits the Bitter Lesson only if scalable learning displaces the task- and family-specific specialization it supplies as claimed reach widens"
+description: "A hand-crafted starting state fits the Bitter Lesson only if scalable learning displaces the task- and family-specific production knowledge it supplies as claimed reach widens"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning, foundations]
@@ -23,15 +23,15 @@ A promised path beyond hand-crafting is cheap. The program must either show that
 search and evidence progressively take over useful production or concede that a
 more direct computational method is better.
 
-## A bootstrap can seed the process that outgrows its specialization
+## A bootstrap can seed the process that outgrows its starting knowledge
 
 What makes the condition satisfiable is the difference between a bootstrap and
 a scaffold. A scaffold is discarded once the product stands; a prototype is
 thrown away and rebuilt. A bootstrap is the running system itself, using its
-current theory and machinery to guide the search that produces its successors.
-The task- or family-specific specialization it starts with can therefore be
-displaced while the system persists. Complete self-replacement is neither the
-mechanism nor the criterion. Fixed general learning machinery, exact
+current theory and machinery to guide the search that produces later versions.
+The task- or family-specific production knowledge it starts with can therefore
+be displaced while the system persists. Complete self-replacement is neither
+the mechanism nor the criterion. Fixed general learning machinery, exact
 interfaces, resource controls, and trusted kernels may continue when their
 scope and warrant support the reach being claimed, since [machinery persists
 by warrant rather than by position in a reflective
@@ -117,20 +117,20 @@ Editable files are not enough. A model may rewrite a prompt while every
 important target-specific choice about what may change and how it is judged
 remains fixed human design.
 
-The long-run criterion is **domain-extensibility**, not competence in several
+The long-run criterion is whether learning can acquire the family-specific
+production knowledge required as claimed reach widens, not competence in several
 predefined domains. A system with ten hand-built ontologies and ten specialized
-update procedures is still a bundle of predefined solutions. A
-domain-extensible process can construct the required family-specific schema or
-model, representations, methods, evaluators, and checks for a new area without
-a person supplying that specialization either wholesale or piecemeal.
+update procedures is still a bundle of predefined solutions. The stronger
+process constructs the required family schema or model, representations,
+methods, evaluators, and checks for a new area without a person supplying that
+knowledge either wholesale or piecemeal.
 
 This criterion does not require the system to invent its own objective.
 Objectives, commitments, and grants of authority may remain supplied. The claim
-concerns how required empirical and procedural specialization is produced and
-revised in pursuit of them. Nor does it require every general algorithm,
-metalanguage, runtime, or trusted kernel to modify itself. Whether supposedly
-general machinery hides target-specific assumptions is an empirical scope
-question.
+concerns how required empirical and procedural knowledge is produced and revised
+in pursuit of them. Nor does it require every general algorithm, metalanguage,
+runtime, or trusted kernel to modify itself. Whether supposedly general
+machinery hides target-specific assumptions is an empirical scope question.
 
 ## This is not a uniqueness claim
 
@@ -149,7 +149,7 @@ The appropriate comparison is therefore strategic rather than defensive:
 
 - Does theory-guided construction make better use of available computation than
   direct search under the same total budget?
-- Does human construction of required task-specific specialization fall as the
+- Does human construction of required task-specific knowledge fall as the
   claimed demand class widens?
 - Do recurrent judgments become operational selection machinery?
 - Does the process transfer beyond domains and decompositions anticipated by its
@@ -171,8 +171,9 @@ The strategy loses in a tested regime when:
   cost.
 
 Current Commonplace evidence supports a useful human-assisted environment for
-trying this strategy. It does not establish a scalable, domain-extensible
-learning method or show that the strategy is better than its alternatives.
+trying this strategy. It does not establish a scalable learning method with
+broad production reach or show that the strategy is better than its
+alternatives.
 
 ## Scope
 
@@ -187,8 +188,8 @@ learning method or show that the strategy is better than its alternatives.
 - A fixed component may remain justified because it implements a general method
   over the declared reach, because changing it is outside the objective, or
   because revision is unsafe or uneconomic. Its fixedness must not be
-  misreported as learned, and hidden task specialization must not be
-  misreported as general machinery.
+  misreported as learned, and hidden task knowledge must not be misreported as
+  general machinery.
 
 ## Open Questions
 
@@ -198,8 +199,8 @@ learning method or show that the strategy is better than its alternatives.
   selection machinery?
 - What baseline best compares theory-guided construction with direct
   computational search?
-- What sequence of tasks or domains would distinguish domain-extensibility from
-  a broad but still predefined ontology?
+- What sequence of tasks or domains would distinguish acquired production reach
+  from a broad but predefined ontology?
 
 ---
 
@@ -214,4 +215,4 @@ Relevant Notes:
 - [The 2026-08-30 Commonplace revision used retained theory to guide computational search](./evidence/commonplace-revision-used-theory-guided-computational-search.md) — evidenced-by: bounds the current human-assisted case, where retained theory guided computational search but operator selection and missing ablation prevent a scalable-outgrowth conclusion
 - [Open-ended improvement must allocate search before decisive evaluation is available](./open-ended-improvement-allocates-search-before-evaluation.md) — grounds: explains why computational search allocation must begin before global-fit evidence can license adoption
 - [A repeatable operative path keeps a redesign class open to revision](./a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md) — extends: turns the requirement that starting machinery remain challengeable into a causal test for whether a redesign class stays revisable after one transition
-- [Domain-extensible software factory](./definitions/domain-extensible-software-factory.md) — defined-in: states the bounded reach criterion that replaces complete self-replacement
+- [Broad software demands create pressure for agentic factory development](./broad-software-demands-create-pressure-for-agentic-factory-development.md) — extends: states the acquisition and reach burden without a premature domain-extensibility definition
