@@ -15,6 +15,7 @@ Current retained sets:
 - [Link-vocabulary audit](./link-vocabulary.md)
 - [Review-link availability baseline](./review-link-availability.md)
 - [Agent operability audit](./agent-operability-audit-2026-08-31.md)
+- [Codex ingest-session tool-result volume audit](./codex-ingest-session-tool-result-volume-20260831/README.md)
 
 Promote transferable conclusions to the appropriate library collection, but
 keep the report here when a later reader still needs the exact record behind
