@@ -1,269 +1,152 @@
 # Conceptual spine
 
-This is the dependency ledger for the re-foundation. It separates what each
-stage assumes, what it concludes, and what would defeat the inference. The
-labels are provisional; the causal descriptions are load-bearing.
+This ledger states what each stage assumes, what it concludes, and what remains unestablished. The causal relations are load-bearing; the labels merely compress them.
 
 ## Dependency map
 
 | Stage | Additional premise | Derived claim | Not yet established |
 |---|---|---|---|
-| 1. Agentic system | Work is performed through bounded LLM calls plus persistent software machinery that stores state and mediates effects across calls. | The model call is not the whole behavior-producing system; consequential functions can live in software. | The software need not be generated, mutable, learning, or universal. |
-| 2. Extensible production machinery | The task family is broad enough that predefining every useful schema, workflow, decomposition, validator, algorithm, representation, tool, and coordination structure is practically unrealistic; the agent can construct some of this machinery. | The system can function as an extensible software factory for its own work. | This is not true of every agentic system and does not rule out a fixed universal substrate in principle. |
-| 3. Continual learning | Experience on earlier tasks persistently changes how later tasks are solved. | The learning surface may include software machinery as well as weights and memories. | The change need not be an improvement, reflective, autonomous, or computationally closed. |
-| 4. Learning software factory | Earlier experience changes retained production machinery and later work depends on that change. | The factory itself learns in the cross-task sense; decompositions, evaluators, context strategies, representations, tools, search procedures, and coordination structures become learnable machinery. | One retained change does not establish compounding, broad reach, or repeated self-improvement. |
-| 5. Recursive or reflective factory | Constructing the machinery needed for a task is itself a difficult task; retained machinery can affect how later machinery is constructed. A causally connected self-representation is additionally present when reflection is claimed. | A factory-building-factory relation emerges, and some paths may be reflective with respect to represented machinery. | Factory-valued output alone is not recursion in operation; recursion alone is not reflection; reflection alone is not improvement. |
-| 6. Learning-mechanism comparison | More than one mechanism can turn experience into operative changes. | Trial and error, trajectory reuse, program search, learned policies, optimization, theory mediation, and mixtures are live candidates. | No ordering, exhaustiveness, or winner follows from the list. |
-| 7. Theory-mediation proposal | Natural-language theory can jointly represent task structure, solver limits, failure explanations, interventions, and evidence, and an LLM can interpret it into heterogeneous software changes. | Theory mediation may be a particularly versatile learning mechanism for the factory. | Necessity, sufficiency, universal superiority, and general learning remain unestablished. |
+| 1. Agentic computational substrate | Work is performed through bounded LLM calls embedded in persistent software machinery that stores state and mediates effects across calls. | The model call is not the whole behavior-producing system; consequential functions can live in software. | The software need not be generated, mutable, learning, family-specific, or universal. |
+| 2. Configured software factory | The substrate is configured with reusable production knowledge for a declared software product or solution family. | The resulting development and runtime environment is a Greenfield-style software factory for that family. | A generic harness, task family, or task-local program does not yet satisfy this boundary. |
+| 3. Agentic factory development | Current family machinery is inadequate for a covered demand, and the agent constructs or revises reusable family-level production machinery. | The agent participates in factory development rather than only solution development. | This is a practical capability claim, not a theorem that all useful machinery must be learned. |
+| 4. Factory-level continual learning | Production experience causally determines a retained factory-development change and later production depends on it. | The factory learns in the minimal cross-episode sense. | The change need not improve outcomes, be warranted, reflective, autonomous, broad, or computationally closed. |
+| 5. Learning-mechanism comparison | More than one mechanism can perform the experience-to-retained-factory-change transition. | Trial and error, trajectory reuse, program search, learned policies, direct optimization, theory mediation, and mixtures are live alternatives. | The list is not exhaustive and supplies no ranking. |
+| 6. Theory-mediation proposal | Natural-language theory can jointly represent task structure, solver limits, failures, interventions, evidence, and scope, and an LLM can interpret it into heterogeneous factory changes. | Theory mediation may be an unusually versatile mechanism for factory-level continual learning. | Necessity, sufficiency, universal superiority, and general learning remain unestablished. |
 
-## Stage 1: bounded calls plus persistent software
+## Stage 1: bounded calls participate in a larger software system
 
-The minimum claim is architectural, not ontological. A deployed agentic system
-uses one or more bounded model calls while software outside those calls carries
-some consequential state or effect path. The machinery can include prompt and
-context assembly, scheduling, memory access, tool dispatch, permissions,
-execution, validation, recovery, and retention.
+The computational foundation already exists in the [computational-model cluster](../../notes/computational-model-README.md). The [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) gives one explicit architecture in which symbolic state and transitions surround bounded model calls. The [scheduler–LLM separation](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) explains why exact progression, bookkeeping, and cheaply checkable invariants often belong in software rather than accumulated natural-language context.
 
-The [bounded-context orchestration
-model](../../notes/bounded-context-orchestration-model.md) is one useful form
-when transition state is explicit and inter-call execution is symbolic. The
-more general starting claim should not inherit all of that form's closed-world,
-barrier, or scheduler conditions. The
-[scheduler–LLM separation](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md)
-supports why exact state transitions often belong in software rather than
-accumulated model context. It still leaves the placement boundary empirical and
-revisable.
-
-Required supporting-note job: state the minimal system boundary and explain why
-software machinery is behavior-producing rather than inert infrastructure.
+The minimum premise is broader than either note's full formal conditions. A deployed agentic system uses one or more bounded calls while software outside those calls carries some consequential state or effect path: context assembly, memory access, scheduling, tool dispatch, permissions, execution, validation, recovery, aggregation, or retention.
 
 Counterexamples and limits:
 
-- A single stateless model call still has serving software, but it may not have
-  the persistent cross-call machinery relevant to this program.
-- An LLM-mediated scheduler keeps some progression in conversation; this weakens
-  the clean separation without erasing the surrounding software substrate.
-- A perfect fixed substrate would satisfy the starting architecture. The later
-  extensibility claim needs an independent practical premise.
+- A single stateless model call may lack the persistent cross-call machinery relevant to this program.
+- An LLM-mediated scheduler weakens a clean model/software split but does not erase the surrounding serving and effect machinery.
+- A fixed, perfectly general substrate satisfies this stage. Later construction and learning claims need additional premises.
 
-## Stage 2: practical generality creates a factory role
+## Stage 2: family-specific production knowledge configures a factory
 
-The new premise concerns breadth. Across a sufficiently broad family of tasks,
-the useful production machinery is not known exhaustively in advance. Different
-tasks may reward different decompositions, data representations, checks,
-searches, algorithms, tools, context policies, or coordination structures. If
-the agent constructs some of these and uses them to perform its work, the
-system has taken on a software-factory role.
+The historical term now has an imported boundary. A [software factory](../../notes/definitions/software-factory.md) is a development and runtime environment configured for a declared family of software products or solutions. The reusable production knowledge may be distributed across a schema, packaged assets, processes or guidance, tools, frameworks, generators, tests, and lifecycle support.
 
-The claim is deliberately weaker than an impossibility theorem. A fixed
-universal substrate could in principle interpret or generate every needed
-program. The practical conjecture is that supplying all task-appropriate
-machinery extensionally in advance is unrealistic, while constructing it from
-task evidence is useful for broad enough demand families.
-
-Required supporting-note job: state the breadth condition and distinguish a
-target work product from software that organizes or performs the production
-process. Such machinery may be task-local at this stage. Later cross-task use
-belongs to the learning-factory inference rather than to the factory premise.
-
-Terminology question: the in-flight Greenfield-style definition of [software
-factory](../../notes/definitions/software-factory.md) requires a declared
-product family and lifecycle machinery. That may supply useful distinctions,
-but the general derivation must be established first. It should not turn a
-broad agentic architecture claim into a software-product-line claim merely to
-inherit the word *factory*.
-
-Counterexamples and limits:
-
-- A fixed tool loop over a narrow task family is an agentic system without the
-  extensible factory role.
-- Generating a one-off answer or target program is product work, not evidence
-  that production machinery was constructed. A task-local generated
-  orchestrator may be production machinery without yet being retained learning.
-- Selecting one item from a fully predefined catalog shows configuration reach,
-  not construction of unanticipated machinery.
-- Model-written code that is discarded after one task may demonstrate factory
-  activity within the task, but not a learning factory across tasks.
-
-## Stage 3: continual learning widens the persistent change surface
-
-Use the minimal temporal relation:
+The mapping is:
 
 ```text
-experience on task t
-  -> persistent change in the system
-  -> a different solution process on a later task
+general agentic substrate
+  + declared product or solution family
+  + reusable family-specific production knowledge
+  -> configured agentic software factory
 ```
 
-The persistent change may be parametric, natural-language, symbolic, or mixed.
-This is why the [deployed system rather than the model
-alone](../../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md)
-is the relevant boundary: prompts, retrieval, context policies, schedulers,
-tools, validators, and runtime rules can all change later behavior.
+The substrate can host or instantiate multiple factories. It should not automatically be called one universal factory. The Greenfield ontology classifies the configured family-specific producer, not every general mechanism on which it depends.
 
-The existing [continual-learning governance
-note](../../notes/continual-learning-requires-governing-behaviour-changing-writes.md)
-adds selection, validation, authorization, and coordination. Those are
-important for warranted deployment, but the foundation first needs the weaker
-cross-task dependence. The supporting work should say exactly when it moves
-from minimal continual learning to improvement-directed or self-improving
-change.
+A **task family** groups tasks under some evaluation or solver-relevant relation. A **product family** groups software products or solutions through declared commonality and variability. The same collection may satisfy both descriptions, but neither follows from the other.
 
 Counterexamples and limits:
 
-- Saving a trace that later work never consumes is persistence without
-  learning effect.
-- Loading a memory that is ignored does not establish causal dependence.
-- A human maintenance edit can change later work without showing that the agent
-  learned the change.
-- A later process that changes only because the task differs does not establish
-  retained learning from earlier experience.
+- A generic coding agent or IDE is not a Greenfield-style factory merely because it produces software.
+- A one-off generated script or orchestrator may help perform a task without carrying reusable family production knowledge.
+- A schema, template, workflow, generator, or tool can be factory machinery without being the whole configured factory.
+- A family member is product state relative to its producer, even when it happens to be another tool or factory.
 
-## Stage 4: retained construction makes the factory learn
+## Stage 3: broad demands create pressure for agentic factory development
 
-Combine stages 2 and 3 only after both stand independently. The relevant event
-is not merely that the agent writes code, nor merely that state persists. The
-agent constructs or changes production machinery from experience; the result is
-retained; and later work uses the changed machinery.
+[Factory development](../../notes/definitions/factory-development.md) changes reusable family-level production machinery. Solution development changes one family member under supplied machinery. An agent participates in factory development when it constructs or revises family scope, schemas, variation knowledge, processes, tools, evaluators, representations, workflows, or other reusable machinery for later family production.
 
-The concrete candidates include:
+The premise is practical rather than logical. A fixed universal interpreter might express every required program. A complete catalog might contain every useful schema and workflow. The claim is that for sufficiently broad software demands, exhaustively pre-supplying task-appropriate specialization is unlikely to be economical or adequate. Novel requirements, repositories, environments, and failure modes will often expose missing or mistaken production knowledge.
 
-- task decomposition and aggregation strategies;
-- context selection, compression, and retrieval policies;
-- representations and schemas;
-- evaluators, tests, and validation procedures;
-- search, planning, and recovery procedures;
-- tool implementations and interfaces; and
-- delegation and coordination structures.
-
-The [orchestration persistence
-note](../../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md)
-provides one narrow example: task-specific run state can remain ephemeral while
-reusable selection strategies are promoted into tested library code. The
-example should support the general possibility without becoming the definition.
-
-Required supporting-note job: derive the learning-factory intersection and
-separate four thresholds: constructed machinery, retained machinery, causal
-later use, and evidence of improvement.
+This stage still does not require learning. An agent can construct a new factory from a complete human-supplied description. The [factory-construction prior-art boundary](../../notes/a-software-factory-can-produce-another-factory-without-learning-its-specialization.md) shows why construction and specialization acquisition must stay separate.
 
 Counterexamples and limits:
 
-- A retained but unused tool is not operative learning.
-- A reused tool written independently of experience is reusable machinery, not
-  continual learning from the earlier task.
-- Better output on the task that caused the change does not show cross-task
-  learning.
-- One successful transfer does not establish an indefinitely self-improving or
-  compounding system.
+- Selecting an anticipated variant from a complete catalog is configuration, not acquisition of new production knowledge.
+- Repairing one product does not become factory development unless the result changes reusable machinery.
+- Constructing machinery from a supplied metamodel or schema demonstrates realization capability, not inference of that structure from production evidence.
+- Fixed general machinery can remain. The burden falls on specialization claimed to be newly handled.
 
-## Stage 5: higher-order construction yields recursion; reflection needs more
+## Stage 4: production experience can make the factory learn
 
-Some object-level tasks are difficult because they need decomposition,
-representation, evaluation, or tool construction. Choosing or constructing the
-right decomposition, representation, evaluator, or tool can itself be a
-difficult task. The factory may therefore use production machinery to build
-machinery that changes how later production machinery will be built.
+Combine agentic factory development with a causal cross-episode learning relation:
 
-That is the factory-building-factory structure. It becomes operationally
-recursive when the produced machinery participates in another machinery-
-construction transition. It becomes reflective only on a path satisfying the
-[reflective-system definition](../../notes/definitions/reflective-system.md): a
-causally connected representation of selected aspects of the same system is
-used in operation and can affect later behavior.
+```text
+production under current factory machinery
+  -> experience or evidence about its behavior
+  -> system-determined retained change to reusable factory machinery
+  -> later production depends on the change
+```
 
-The [fixed-decomposition
-argument](../../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md)
-explains why some higher-order choices must remain challengeable when they carry
-task-specific mistakes. It does not imply that every fixed component is a
-defect. General learning machinery, objectives, interfaces, resource controls,
-or trusted kernels may remain fixed over the claimed reach.
+All four links matter. Experience that triggers only product repair does not change the factory. A generated candidate that is discarded does not persist. A stored artifact that no later production consumes has no demonstrated learning effect. A later change caused only by a different task rather than retained experience is not continual learning from the earlier episode.
 
-Required supporting-note job: derive the higher-order structure from nested
-task difficulty and state when recurrence, reflection, self-improvement, and
-compounding do or do not follow.
+This is deliberately weaker than the existing [continual-learning governance](../../notes/continual-learning-requires-governing-behaviour-changing-writes.md) account. Governed deployment may require candidate selection, validation, authorization, rollback, and coordination across representational forms. Those are important stronger conditions, but not every direct evidence-responsive update exposes a proposal-selection architecture.
+
+The [deployed system, not the model alone](../../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md), is the relevant learning boundary. The retained change may live in weights, natural-language artifacts, symbolic software, retrieved memories, or mixtures. Factory-level learning is the subset that changes reusable production machinery.
 
 Counterexamples and limits:
 
-- A conventional generator can emit another generator from a supplied complete
-  specification without learning or reflecting.
-- A reflective system can inspect its scheduler without changing it.
-- An adaptive system can change its controller without a self-representation
-  and therefore learn without reflection.
-- A successor can remove the path that produced it; one transition does not
-  establish repeatability.
+- A human maintenance edit can improve later production without showing that the agentic system learned the change.
+- Better performance on the same product that caused the revision does not by itself show cross-episode reuse.
+- A retained change can be harmful; learning is not yet improvement.
+- One occurrence does not establish repeatability, compounding, broad reach, or autonomy.
 
-## Stage 6: compare mechanisms on the same causal job
+## Stage 5: compare mechanisms on the same causal job
 
-The comparison object is a transition from experience to a persistent change
-that affects later production. Candidate mechanisms include:
+The shared comparison object is the transition from production experience to a retained factory change that affects later production. Candidate mechanisms include:
 
 - trial-and-error retention of successful machinery;
-- reuse or transformation of trajectories and episodes;
+- retrieval, reuse, transformation, or compression of trajectories and episodes;
 - enumerative, stochastic, evolutionary, or LLM-guided program search;
-- learned policies for selecting or constructing machinery;
+- learned policies for selecting, composing, or constructing machinery;
 - gradient-based or other direct optimization;
 - natural-language theory construction and revision; and
-- mixtures operating at different times or on different machinery.
+- mixtures operating on different artifacts, timescales, or parts of the factory.
 
-Compare them by what evidence they consume, what change space they can reach,
-how they assign credit, how a result becomes operative, how they handle
-negative transfer and revision, and their total computational and human cost.
-Do not equate a readable mechanism with a better one or a parametric mechanism
-with a more general one.
+Compare mechanisms by the evidence they consume, the change spaces they reach, how they allocate search and credit, how changes become operative, how they detect negative transfer, their revision costs, and their total computational and human cost.
 
-Required supporting-note job: produce a neutral comparison frame or show that
-existing notes already supply one. A catalog that merely names techniques does
-not carry the argument.
+Readable state is not automatically better state. Parametric learning is not automatically more general. Exact symbolic machinery is not automatically correct. A fair comparison must hold task information, model access, interaction, and budget as comparable as the mechanism permits.
 
-## Stage 7: theory mediation is the proposal
+## Stage 6: theory mediation is the research proposal
 
-Natural-language theory is a candidate coordination medium for the learning
-factory because it can place several kinds of state in one interpretable
-representation:
+Natural-language theory is a candidate coordination medium because it can express several kinds of state in one LLM-interpretable representation:
 
-- a model of task or domain structure;
-- a model of the solver's relevant capacities and limitations;
-- explanations of observed successes and failures;
-- proposed changes and their intended mechanisms;
-- scope conditions and predictions; and
+- models of task or domain structure;
+- models of relevant solver capacities and limitations;
+- explanations of successes and failures;
+- proposed interventions and their intended mechanisms;
+- scope conditions, predictions, and expected failure modes; and
 - evidence that should revise or reject the account.
 
-An LLM can interpret this state into different software changes rather than
-requiring one fixed update operator per artifact kind. Existing work on
-[program theory and delayed
-feedback](../../notes/program-theory-sustains-search-under-delayed-feedback.md),
-[theory-mediated causal
-paths](../../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md),
-and [sample efficiency under structured
-shifts](../../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md)
-supplies the downstream hypothesis and evidence requirements.
+An LLM can interpret such theory into heterogeneous changes rather than requiring one fixed update operator per artifact kind. Existing notes on [program theory under delayed feedback](../../notes/program-theory-sustains-search-under-delayed-feedback.md), [theory-mediated causal paths](../../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md), and [sample efficiency under structured shifts](../../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) supply the downstream hypothesis and evidence requirements.
 
-The comparative prediction must be sharper than “theory is flexible.” Plausible
-tests ask whether theory mediation, at comparable information and total cost:
+The comparative prediction must be stronger than “theory is flexible.” At comparable information and total cost, theory mediation should sometimes:
 
-- transfers one explanation into several different machinery changes;
-- predicts where a mechanism will fail or stop applying;
-- improves diagnosis and recovery after delayed feedback;
-- supports selective revision without replaying all prior experience; or
-- performs no better, or worse, than trajectories, rules, program search,
-  learned policies, direct optimization, or mixtures.
+- transfer one explanation into several different factory changes;
+- expose where a decomposition, representation, or evaluator will stop applying;
+- improve diagnosis and recovery when decisive feedback arrives later;
+- support selective revision without replaying all prior experience; or
+- lose clearly when trajectories, direct search, learned policies, optimization, or mixtures solve the same transition more effectively.
 
-Required supporting-note job: state versatility as a defeasible comparative
-claim. The article may then make theory mediation its research bet without
-making it the foundation of the architecture.
+## Optional extensions
 
-## Integration tests for the final article
+These properties classify stronger systems or experiments. They do not sit on the mandatory path to theory mediation.
 
-1. Delete the theory-mediation section. The reader should still understand why
-   an agentic system can become a learning software factory.
-2. Replace every factory term with its plain causal description. The argument
-   should lose brevity, not validity.
-3. Hold the software substrate fixed. The starting architecture must remain
-   coherent, while the practical-generalization claim becomes an empirical
-   question rather than a contradiction.
-4. Let the factory learn without a self-representation. Continual learning must
-   remain possible, while reflection is correctly withheld.
-5. Let the system construct one-off code and discard it. Factory activity may
-   occur, but cross-task factory learning must be withheld.
-6. Let theory mediation lose to a direct optimizer. The comparative proposal
-   must lose or narrow without collapsing the architectural spine.
+| Extension | Additional condition | What it establishes |
+|---|---|---|
+| Higher-order factory development | Factory machinery constructs or revises machinery used for later factory development. | A factory-building-factory relation in operation. |
+| Operational recursion | The result of one machinery-construction transition participates in another transition of the same relevant class. | Recurrence of the construction path, not necessarily learning or improvement. |
+| Reflection | A causally connected representation of selected aspects of the same system participates in operation or revision. | Aspect-relative reflective organization. |
+| Computational closure | Every decision assigned to a declared learning path is computationally supplied, conditional on permitted external evidence and interaction. | Actor allocation for that path, not quality or breadth. |
+| Self-improvement | Evidence supports that the system's own retained change improved a declared objective. | Improvement attribution, not compounding. |
+| Compounding | A prior change improves the capacity to produce or select later improvements. | Improvement of the improvement process. |
+| Domain breadth | The process acquires adequate specialization across a declared class of demands. | Reach, independent of closure. |
+
+A factory can learn without reflection. A reflective factory can fail to learn. A closed path can perform badly. A broad process can remain human-open. A successor implementation can remove the path that produced it.
+
+## Integration tests
+
+1. Delete the theory-mediation stage. The reader should still understand configured software factories, agentic factory development, and factory-level continual learning.
+2. Replace every factory term with its causal description. The argument should lose brevity, not validity.
+3. Hold the substrate fixed. The architecture remains coherent; only the practical construction premise becomes false for the tested regime.
+4. Generate one-off code and discard it. Production software exists, but factory machinery and continual learning are withheld.
+5. Generate a factory from a complete supplied schema. Factory construction is established; specialization acquisition and learning are withheld.
+6. Retain a harmful factory change. Learning may have occurred, while improvement is withheld.
+7. Let a direct optimizer beat theory mediation. The theory proposal narrows or loses without collapsing the earlier stages.

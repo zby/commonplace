@@ -1,142 +1,104 @@
 # Transition map
 
-This map records how current material may serve the new conceptual spine. It is
-not a move manifest and does not authorize edits to the listed artifacts. The
-[old workshop](../theory-mediated-self-improvement-series/README.md) remains
-active until a later explicit closure pass.
+This map records how current material serves the revised conceptual spine. It is a disposition ledger, not a claim that every action has already been completed. The [theory-mediated self-improvement workshop](../theory-mediated-self-improvement-series/README.md) remains active until a separate migration and closure pass.
 
-The map reflects the worktree observed on 2026-08-31. Several software-factory
-notes and article changes were in flight and uncommitted. Re-read their current
-content and establish edit ownership before acting on a disposition below.
+## Disposition vocabulary
 
-## Disposition rules
+- **Carry** — retain the claim and use it at the same level.
+- **Reposition** — retain the claim but move it later in the dependency order.
+- **Revise** — preserve the job while correcting scope or terminology.
+- **Split** — extract independently useful claims into separate homes.
+- **Park** — keep as specialized methodology or working material, outside the foundation.
+- **Retire after replacement** — remove the current formulation only after its durable content has a validated successor.
 
-- **Foundation candidate** — may carry an early arrow after its scope and
-  independence are checked.
-- **Downstream theory material** — preserve, but place after the learning-
-  factory architecture and alternative-mechanism comparison.
-- **Specialized extension** — useful for a narrower claim, not required by the
-  general spine.
-- **Evidence or process record** — retain until its live conclusion has a
-  durable home; do not seed article prose directly unless its source rules allow
-  that use.
-- **Reframe later** — likely article or synthesis work, deliberately blocked on
-  the supporting notes.
+## Foundation and bridge material
 
-## New-spine support
-
-| Spine job | Current material | Provisional disposition | Gap before use |
+| Job in the revised spine | Current material | Disposition | Required action |
 |---|---|---|---|
-| Minimal agentic architecture | [Bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md); [scheduler–LLM separation](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md); [agent-runtime decomposition](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) | Foundation candidates | Extract a minimal bounded-calls-plus-persistent-software claim without inheriting the orchestration model's closed-world and barrier conditions. |
-| Software as part of the behavior-producing and learning boundary | [The deployed system, not the model alone, is the unit of learning](../../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md); [retained system-definition artifacts](../../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) | Foundation candidates | Separate the minimal cross-task learning premise from stronger evidence-responsive improvement and deployment-governance requirements. |
-| Practical need to construct task machinery | [Learning inside a fixed decomposition inherits its mistakes](../../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md); [orchestration persistence economics](../../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md) | Foundation candidates | Add the positive broad-task-family argument. Fixed decompositions can be mistaken, but that alone does not show agents must construct machinery. |
-| General software-factory role | In-flight [software-factory reconstruction](../../notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md) and [software-factory definition](../../notes/definitions/software-factory.md) | Specialized extension pending terminology decision | Determine whether Greenfield's product-family and lifecycle boundary fits the general agentic role. Do not make the architectural premise true by adopting the narrower definition. |
-| Breadth and extensibility | In-flight [domain-extensible software factory](../../notes/definitions/domain-extensible-software-factory.md) and [factory reach](../../notes/domain-extensibility-not-closure-determines-factory-reach.md) | Specialized extension | Their declared tuples and family-specialization tests may support later evaluation. The foundation first needs the modest practical claim that not all useful machinery will realistically be predefined. |
-| Minimal continual learning | [Learning is not only about generality](../../notes/learning-is-not-only-about-generality.md); [continual-learning governance](../../notes/continual-learning-requires-governing-behaviour-changing-writes.md); [self-improving-system definition](../../notes/definitions/self-improving-system.md) | Split | Retain their stronger distinctions, but add or revise support for the weaker “earlier experience changes later solving” premise. Do not import self-improvement membership into continual learning by definition. |
-| Learning factory | In-flight [closed factory-learning transition](../../notes/a-closed-factory-learning-transition-produces-a-successor-factory.md), [operative succession](../../notes/operative-succession-turns-meta-factory-construction-into-learning.md), and [computationally closed factory-learning loop](../../notes/definitions/computationally-closed-software-factory-learning-loop.md) | Specialized extension | First derive the simpler intersection of retained constructed machinery and cross-task dependence. Closure, evidence-responsive improvement, and successor terminology should remain optional stronger claims. |
-| Recursion and reflection | [Reflective system](../../notes/definitions/reflective-system.md); [fixed decomposition](../../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md); [repeatable redesign path](../../notes/a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md); [machinery persists by warrant](../../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md) | Foundation candidates for the higher-order stage | Add the nested-difficulty derivation. Keep factory-valued production, operational recursion, reflection, repeatability, and compounding separate. |
-| Alternative learning mechanisms | [Proposal-selection loop](../../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md); [Bitter Lesson production-method distinction](../../notes/the-bitter-lesson-selects-production-methods-not-representational.md); existing related-system evidence | Split or new synthesis | Build a neutral comparison on the shared experience-to-operative-change job. Current material is distributed and often organized around theory mediation or proposal selection. |
-| Theory mediation as candidate | [Program theory under delayed feedback](../../notes/program-theory-sustains-search-under-delayed-feedback.md); [theory-mediated causal path](../../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md); [theory-mediated system-learning synthesis](../../notes/theory-mediated-system-learning-combines-runtime-self-modeling-with-theory-refinement.md); [sample-efficiency conjecture](../../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) | Downstream theory material | State the versatility hypothesis against alternatives and connect it to heterogeneous factory changes. Remove any dependence in the opposite direction. |
+| Agentic computational substrate | [Computational-model cluster](../../notes/computational-model-README.md), [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md), [scheduler–LLM separation](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md), [select/call normal form](../../notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md) | Carry | Import the cluster rather than write another note asserting bounded calls plus software. Use only the minimal premises needed by the article. |
+| Software as part of the learning boundary | [The deployed system, not the model alone, is the unit of learning](../../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md), [retained system-definition artifacts](../../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) | Carry and reposition | Use after the computational substrate and before the continual-learning bridge. Keep stronger deployment claims separate from the minimal relation. |
+| Imported software-factory ontology | [Software factory](../../notes/definitions/software-factory.md), [factory development](../../notes/definitions/factory-development.md), [versioned Greenfield reconstruction](../../notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md) | Revise | Keep two compact definitions plus one versioned synthesis. Remove closure, successor, and domain-reach extensions from the imported meanings. |
+| Recursive-construction prior art | Greenfield 2003, Tool Factory, MDSoFa, and the current long synthesis | Split | Extract the claim that a factory can produce another factory without learning the supplied specialization. Keep construction and acquisition separate. |
+| Agentic substrate to configured factory mapping | No durable atomic note | New bridge | State that a general agentic substrate becomes a Greenfield-style factory only when configured with declared family-specific reusable production knowledge. |
+| Task family versus product family | No durable atomic note | New bridge | Define the different classification jobs and block benchmark task groupings from silently becoming software-product families. |
+| Practical pressure for agentic factory development | [Learning inside a fixed decomposition inherits its mistakes](../../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md), [orchestration persistence economics](../../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md) | Carry as support; add new claim | State the positive practical premise: broad demands often require construction or revision of reusable production machinery. Preserve the fixed-universal-substrate possibility. |
+| Minimal factory-level continual learning | [Learning is not only about generality](../../notes/learning-is-not-only-about-generality.md), [continual-learning governance](../../notes/continual-learning-requires-governing-behaviour-changing-writes.md) | Split | Add a weaker causal note: production experience determines a retained reusable-factory change used later. Keep governance, validation, and authorization as stronger deployment requirements. |
+| Neutral mechanism comparison | [Proposal-selection loop](../../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md), [Bitter Lesson production-method distinction](../../notes/the-bitter-lesson-selects-production-methods-not-representational.md), related-system ingests | New synthesis | Compare mechanisms on the same experience-to-retained-factory-change job. Do not make proposal selection universal or arrange a ladder with theory at the top. |
+| Theory mediation as a candidate | [Program theory under delayed feedback](../../notes/program-theory-sustains-search-under-delayed-feedback.md), [theory-mediated causal path](../../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md), [sample-efficiency conjecture](../../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) | Reposition | Preserve as the downstream research proposal and sharpen the comparative versatility hypothesis. |
 
-## Existing research-program article
+## Premature software-factory extensions
 
-The current [research-program
-article](../../articles/a-research-program-for-theory-mediated-system-learning.md)
-contains valuable downstream material:
+The 2026-08-31 batch contains useful distinctions but registered them too early as foundational definitions or article premises.
 
-- Naur's bearer question and longitudinal coherent modification;
-- the theory-mediation causal path and evidence ladder;
-- theory intervention and delayed-feedback experiment design;
-- the separation of claim warrant from fit in a working theory;
-- Commonplace and programming agents as testbeds; and
-- the admission that current evidence is human-inclusive and not comparative.
-
-Carry these downstream rather than discard them.
-
-The article currently opens from theory mediation, and its in-flight edit adds a
-Greenfield-style “closed learning produces successor factories” section before
-the coherent-search argument. Both arrangements remain blocked for this
-workshop. The eventual restructure should instead:
-
-1. establish the minimal agentic architecture;
-2. derive the practical factory role;
-3. add continual learning and retained machinery;
-4. derive the higher-order factory structure only where needed;
-5. compare alternative learning mechanisms; and
-6. introduce the existing theory-mediated program as the positive proposal.
-
-The article need not carry the full derivation of every arrow once durable notes
-do. It should make the dependency order visible and link the supporting claims.
-
-## Old-workshop core artifacts
-
-| Artifact | Contribution worth preserving | Later action |
+| Artifact | Durable content | Disposition |
 |---|---|---|
-| [README](../theory-mediated-self-improvement-series/README.md) | Researcher-facing intent, evidence standards, actor-allocation disclosure, source controls, and hand-back conditions | Preserve as the old commission until migration. Reframe its theory-first central question in the successor article rather than editing the historical commission now. |
-| [Shared model](../theory-mediated-self-improvement-series/shared-model.md) | Mixed-form system account, theory-mediation levels, truth-versus-fit distinction, current human/computational allocation, experiments, and episode-record schema | Carry the theory-specific material downstream. Split general architecture from theory-specific mechanism where the shared model currently combines them. |
-| [Target problems](../theory-mediated-self-improvement-series/target-problems.md) | Coherent modification, warranted transfer, operative-theory attribution, evaluation, and bootstrap failure modes | Reorder. The current P1/P3 center becomes the downstream proposal; architectural generality and learning-factory questions become prior jobs. Keep closure and warrant as separate evaluation coordinates. |
-| [Article roles](../theory-mediated-self-improvement-series/article-roles.md) | Useful modular editing boundary and companion-article discipline | Rebuild after the supporting notes settle the new article dependency order. Do not preserve the old module order merely for synchronization. |
-| [Program-article review residuum](../theory-mediated-self-improvement-series/program-article-review-residuum-2026-08-30.md) | Minimum-theory threshold, nested hypotheses, stronger controls, decomposition mapping, fit taxonomy, scaling denominators, and instrumentation gaps | Carry downstream as an unresolved research queue. The new foundation reduces pressure to settle the minimum-theory threshold before the architecture can be stated. |
-| [Task-scoped computational closure](../theory-mediated-self-improvement-series/task-scoped-computational-closure.md) and [closure–capability map](../theory-mediated-self-improvement-series/closure-capability-map.md) | Careful separation of structural closure, capability, warrant, usefulness, and power | Specialized extension and evaluation material. Do not use closure to define the learning factory. |
-| [Gradual compatibility](../theory-mediated-self-improvement-series/gradual-compatibility.md) | Narrow Bitter Lesson response and bootstrap conditions | Reconcile with the fixed-general-substrate possibility and keep as a scaling companion rather than the architectural foundation. |
+| [Software-production task and process](../../notes/definitions/software-production-task-and-process.md) | Longitudinal task identity, evidence protocol, acceptance, horizon, resources, and coverage | Park as evaluation methodology. It is not part of the imported Greenfield ontology. |
+| [Computationally closed software-factory learning loop](../../notes/definitions/computationally-closed-software-factory-learning-loop.md) | Path-relative actor allocation and the evidence/intervention boundary | Park as a specialized closure definition. Closure is not required for factory-level continual learning. |
+| [Domain-extensible software factory](../../notes/definitions/domain-extensible-software-factory.md) | The research question of acquiring family specialization for demands outside installed families; useful experimental indices | Demote from foundational definition to hypothesis or experiment scaffold after the minimal learning bridge exists. |
+| [Successor factory](../../notes/definitions/successor-factory.md) | The distinction between generated candidates and changes that actually govern later production | Retire after replacement. Existing operative-change and causal-use vocabulary can carry the useful boundary without a new factory noun. |
+| [A closed factory-learning transition produces a successor factory](../../notes/a-closed-factory-learning-transition-produces-a-successor-factory.md) | Operative retention is required before a changed factory affects later work | Retire after replacement. Most of the claim is generated by the successor definition itself. |
+| [Evidence-responsive operative succession turns meta-factory construction into learning](../../notes/operative-succession-turns-meta-factory-construction-into-learning.md) | Greenfield/Tool Factory/MDSoFa prior art and the construction-versus-learning distinction | Split. Move the prior-art result into the compact construction-versus-acquisition note; leave closure and succession downstream. |
+| [Domain extensibility, not closure, determines factory reach](../../notes/domain-extensibility-not-closure-determines-factory-reach.md) | Closure and breadth are independent; construction from a supplied description is not acquisition of that description | Split, then retire the current omnibus note. Preserve the two distinctions separately; park the universal-factory formalization until the literature scan is settled. |
 
-## Old-workshop evidence and source controls
+Until replacements merge, these files remain available as working material. New article prose should not depend on their registered terminology.
 
-The following are process or evidence records, not obsolete drafts:
+## Source ingests
 
-- [incumbent ledger](../theory-mediated-self-improvement-series/incumbent-ledger.md);
-- [match register](../theory-mediated-self-improvement-series/match-register.md);
-- [adequacy-gate run](../theory-mediated-self-improvement-series/adequacy-gate-run.md);
-- [absorption survivors](../theory-mediated-self-improvement-series/absorption-survivors.md);
-- [grounding-sweep narrowing check](../theory-mediated-self-improvement-series/grounding-sweep-narrowing-check.md);
-- [accepted baseline](../theory-mediated-self-improvement-series/accepted/README.md); and
-- [rejected-draft quarantine](../theory-mediated-self-improvement-series/rejected-drafts/README.md).
+Keep the source captures and evidence limits:
 
-Keep their source restrictions in force. A re-foundation changes dependency and
-exposition; it does not convert rejected prose into an accepted baseline or
-erase the provenance of recovered claims.
+- [Greenfield and Short 2003](../../sources/greenfield-short-software-factories-oopsla-2003.ingest.md);
+- [Greenfield 2007](../../sources/greenfield-mass-customizing-software-factories-2007.ingest.md);
+- [Software Factories book preview](../../sources/greenfield-short-software-factories-book-preview.ingest.md);
+- [Tool Factory](../../sources/cook-kent-tool-factory-2003.ingest.md); and
+- [MDSoFa](../../sources/langlois-exertier-mdsofa-software-factory-factory-2004.ingest.md).
 
-Before closing the old workshop, each record must be classified as consumed by
-durable outputs, still needed as retained evidence, recoverable from git history
-without loss, or transferred to a new live owner.
+Their classifications, source summaries, extracts, and limitations remain useful. After the durable notes settle, revise only interpretive fields that point to retired successor, closure, or domain-extensibility formulations. The partial book preview must remain a bibliographic and framing source rather than authority for detailed ontology claims.
 
-## Companion material
+## Research-program article
 
-- [The decisions that stay human, and what would move
-  them](../../articles/the-decisions-that-stay-human-and-what-would-move-them.md)
-  remains a companion on transfer, closure, and warrant. Those are not the
-  minimal learning-factory premise.
-- [The Bitter Lesson does not require everything to live in
-  weights](../../articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
-  remains a scaling and production-method companion. It should not establish
-  theory mediation by exclusion of alternatives.
-- The [explanatory-theories deployment-time-learning
-  workshop](../explanatory-theories-deployment-time-learning/README.md) owns
-  comparative experimental work on whether explicit theory improves search and
-  evidence acquisition. Coordinate its experiments rather than duplicating
-  them here.
+Preserve these downstream contributions:
+
+- Naur's bearer question;
+- coherent modification across delayed consequences;
+- the theory-mediated causal path and evidence ladder;
+- theory withholding, replacement, and wrong-theory controls;
+- the distinction between claim warrant and fit in a working theory;
+- Commonplace and programming agents as complementary testbeds; and
+- the current human/computational actor allocation.
+
+The article should eventually follow this dependency order:
+
+1. import the agentic computational substrate;
+2. map it to a configured family-specific software factory;
+3. motivate agentic factory development under broad demands;
+4. define factory-level continual learning;
+5. compare alternative learning mechanisms;
+6. introduce theory mediation as the positive research bet;
+7. develop Naur, coherent modification, experiments, evidence, and bootstrapping.
+
+The article need not reproduce every supporting derivation. It must make the order visible and avoid reopening closure, recursion, or universal-factory claims before they are needed.
+
+## Companion articles
+
+- [The Bitter Lesson does not require everything to live in weights](../../articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md): carry the production-method-versus-representational-form argument. Replace domain-extensible-factory terminology with the more general requirement that task-specific production knowledge increasingly be computationally found rather than rebuilt by people for each new case.
+- [The decisions that stay human, and what would move them](../../articles/the-decisions-that-stay-human-and-what-would-move-them.md): carry as a companion on warrant, transfer, closure, and residual human decisions. Do not make it part of the minimal learning definition.
+- [Continual learning outside the weights](../../articles/continual-learning-outside-the-weights.md): keep withdrawn. Recover claims only through durable notes, not by reviving the rejected article body.
+
+## Old workshop records
+
+The old workshop's README, shared model, target problems, article roles, ledgers, accepted baseline, rejected-draft quarantine, review residua, and closure/capability maps remain governed by their existing source and disposition rules.
+
+Carry theory-specific experiment design and evidence downstream. Do not rewrite historical commissions as though the refoundation had governed them. Before closing the old workshop, classify each artifact as consumed by durable outputs, retained as evidence, transferred to a new owner, or safely recoverable from history.
 
 ## Migration gate
 
-No article restructuring or old-workshop closure begins until supporting notes
-can answer all of these questions:
+The main article restructure begins only when durable notes answer:
 
-1. What is the minimum agentic architecture being assumed, and which scheduler
-   details are optional?
-2. What empirical or practical breadth premise creates the need for constructed
-   machinery?
-3. What distinguishes a target work product from task-local production
-   machinery, and what additional retention makes that machinery part of
-   cross-task learning?
-4. What is the minimal cross-task learning relation, and when do stronger
-   improvement or self-improvement claims begin?
-5. What makes retained machinery part of a learning factory?
-6. When does higher-order construction become operationally recursive, and
-   when does it meet the stricter reflection criterion?
-7. Which alternative learning mechanisms perform the same causal job?
-8. What comparative result would support, narrow, or defeat the theory-
-   versatility hypothesis?
+1. What turns a general agentic substrate into a Greenfield-style software factory?
+2. How do task families differ from software product or solution families?
+3. What practical breadth premise motivates agentic factory development without denying a fixed universal substrate in principle?
+4. What is the minimal causal relation for factory-level continual learning?
+5. Which mechanisms perform the same experience-to-retained-change job?
+6. What comparative result would support, narrow, or defeat the theory-versatility hypothesis?
 
-Once these are carried by durable notes, update this map with concrete
-`carry`, `revise`, `split`, or `retire-after-replacement` dispositions and only
-then edit the article.
+After those notes merge, update this map from planned dispositions to completed ones, restructure the article, and only then decide whether to delete, withdraw, or retain the premature extension files.
