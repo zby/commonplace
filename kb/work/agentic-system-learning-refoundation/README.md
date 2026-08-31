@@ -215,6 +215,9 @@ ready.
   counterexamples for the new argument.
 - [Transition map](./transition-map.md) — provisional disposition of current
   notes, articles, and old-workshop records; no files have moved.
+- [Provisional merged changes — 2026-08-31](./provisional-merged-changes-2026-08-31.md)
+  — changes allowed to remain in `main` but held for later review against this
+  workshop's dependency and migration gates.
 - [The deployed system, not the model alone, is the unit of
   learning](../../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md)
   — current support for putting software machinery inside the learning
