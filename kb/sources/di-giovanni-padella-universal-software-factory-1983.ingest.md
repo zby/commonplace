@@ -1,5 +1,5 @@
 ---
-description: "A 1983 MARA project report uses universal software factory for a lifecycle tool environment portable across microprocessor families, not for constructing its specialization."
+description: "A 1983 MARA project report uses universal software factory for a lifecycle tool environment portable across microprocessor families, not for acquiring family-specific production knowledge."
 source: https://dspace-erf.nlr.nl/bitstreams/20caf012-9a56-4603-b0bc-d383579b5811/download
 captured: "2026-08-31"
 capture: pdftotext
@@ -7,7 +7,7 @@ capture_scope: full-source
 genre: practitioner-report
 snapshot_sha256: 796e51fca6123553583c1e21de5ad603ca1955b2355b80babfd4f864b027da34
 ingested: "2026-08-31"
-occasion: "determine whether established universal-factory and factory-generator terminology conflicts with or subsumes a proposed limiting concept about computational construction of family-specific specialization."
+occasion: "determine whether established universal-factory terminology conflicts with an unqualified claim about computational acquisition of family-specific production knowledge."
 type: kb/sources/types/ingest-report.md
 domains: [software-factories, software-configuration, cross-development, product-families]
 ---
@@ -36,11 +36,11 @@ This report is a historical terminology counterpoint. Its *universal factory* is
 
 ## Extractable Value
 
-1. **Reserve “universal” for a named axis.** In this source, universality means one development environment can target different microprocessor families. Bare *universal factory* therefore collides with an established portability usage if it is repurposed to mean computational construction of family-specific specialization. [quick-win]
-2. **Separate configuration from construction of specialization.** SCL combines a human-supplied descriptor, configurator, and compiled files to produce a loadable target image. It varies deployment within a predefined architecture; it does not acquire or construct the language, component family, or production method that makes the configuration possible. [quick-win]
-3. **Do not let “factory generator” subsume the proposed boundary.** Greenfield and Short's later factory-building example concerns production of successor factory assets, but still assigns their design to human product-line developers. Computational construction of the family-specific specialization layer is therefore a stricter property than recursive factory production alone. [deep-dive]
-4. **Distinguish three independent questions hidden by factory terminology.** A useful taxonomy asks whether a factory spans target hardware, can produce successor factory machinery, and can computationally construct the domain or product-family specialization that its search or generation consumes. The three properties can vary independently. [deep-dive]
-5. **Use the paper as lexical and architectural evidence, not an impossibility result.** It demonstrates a concrete historical meaning and exposes which production choices remain external to configuration, but it does not show that broader computational specialization is impossible. [just-a-reference]
+1. **Reserve “universal” for a named axis.** In this source, universality means one development environment can target different microprocessor families. Bare *universal factory* therefore collides with an established portability usage if it is repurposed to mean acquisition of family-specific production knowledge. [quick-win]
+2. **Separate configuration from acquisition of production knowledge.** SCL combines a human-supplied descriptor, configurator, and compiled files to produce a loadable target image. It varies deployment within a predefined architecture; it does not acquire or construct the language, component family, or production method that makes the configuration possible. [quick-win]
+3. **Do not let recursive factory production subsume the acquisition boundary.** Greenfield and Short's later factory-building example concerns production of further factory assets, but still assigns their design to human product-line developers. Factory-valued output therefore remains distinct from computational acquisition of the target family's production knowledge. [deep-dive]
+4. **Distinguish independent questions hidden by factory terminology.** A useful taxonomy asks whether a factory spans target hardware, can produce further factory machinery, can realize a factory from a supplied description, and can acquire the production knowledge required by new demands. These properties can vary independently. [deep-dive]
+5. **Use the paper as lexical and architectural evidence, not an impossibility result.** It demonstrates a concrete historical meaning and exposes which production choices remain external to configuration, but it does not show that broader computational acquisition is impossible. [just-a-reference]
 
 ## Limitations (our opinion)
 
@@ -48,8 +48,9 @@ The authors report on their own industrial system and assert that its practical 
 
 ## Recommended Next Action
 
-Keep unqualified *universal software factory* unregistered, and route any article-level limiting claim through [Domain extensibility, not closure, determines factory reach](../notes/domain-extensibility-not-closure-determines-factory-reach.md), which distinguishes target-platform portability, recursive construction, constructional expressivity, and domain reach.
+Keep unqualified *universal software factory* unregistered. Use [Universal software factory needs a declared universality axis](../notes/universal-software-factory-needs-a-declared-universality-axis.md) to distinguish target-platform portability, factory-valued output, constructional expressivity, and production-knowledge acquisition reach.
 
 Abstracted into:
 
-- [Domain extensibility, not closure, determines factory reach](../notes/domain-extensibility-not-closure-determines-factory-reach.md) — uses the report's processor-portability sense to expose the historical collision in unqualified universal-software-factory terminology
+- [Universal software factory needs a declared universality axis](../notes/universal-software-factory-needs-a-declared-universality-axis.md) — uses the report's processor-portability sense to expose the historical collision in unqualified universal-software-factory terminology
+- [A software factory can produce another factory without acquiring its family-specific production knowledge](../notes/a-software-factory-can-produce-another-factory-without-acquiring-its-family-specific-production-knowledge.md) — contrasts recursive construction with the production knowledge supplied to the constructor
