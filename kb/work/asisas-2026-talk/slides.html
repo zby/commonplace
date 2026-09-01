@@ -1,0 +1,421 @@
+<title>Where It Lives Is Not What It Is</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --paper:#F6F5F1;
+    --ink:#1D2320;
+    --ink-soft:#4A5350;
+    --accent:#C8451A;      /* what it is */
+    --slate:#48607A;       /* where it lives */
+    --line:#D8D5CC;
+    --card:#FFFFFF;
+    --sans:'IBM Plex Sans',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  html,body{height:100%}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    overflow:hidden;
+  }
+  .deck{height:100vh;position:relative}
+  .slide{
+    position:absolute;inset:0;
+    display:none;
+    flex-direction:column;
+    padding:5vh 7vw 9vh;
+    background:var(--paper);
+  }
+  .slide.active{display:flex}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:clamp(.7rem,1.3vh,.85rem);
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:2.2vh;
+  }
+  .eyebrow b{color:var(--accent);font-weight:600}
+  h1,h2{font-weight:700;line-height:1.08;text-wrap:balance}
+  h2{font-size:clamp(1.8rem,5.2vh,3rem);margin-bottom:3.5vh}
+  .body{flex:1;display:flex;flex-direction:column;justify-content:flex-start;min-height:0}
+  p.lede{font-size:clamp(1.05rem,2.6vh,1.5rem);line-height:1.5;max-width:34em;color:var(--ink)}
+  .counter{
+    position:absolute;bottom:3.2vh;right:7vw;
+    font-family:var(--mono);font-size:.8rem;color:var(--ink-soft);
+  }
+  .footmark{
+    position:absolute;bottom:3.2vh;left:7vw;
+    font-family:var(--mono);font-size:.75rem;color:var(--ink-soft);letter-spacing:.06em;
+  }
+  .key{
+    font-family:var(--mono);font-weight:500;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:.08em .45em;
+    font-size:.88em;
+    white-space:nowrap;
+  }
+  .accent{color:var(--accent)}
+  .slatec{color:var(--slate)}
+
+  /* ---------- title slide ---------- */
+  .title-slide{justify-content:center;padding-bottom:14vh}
+  .title-slide .where{
+    font-family:var(--mono);font-size:clamp(.85rem,1.9vh,1.1rem);
+    color:var(--slate);letter-spacing:.18em;text-transform:uppercase;margin-bottom:2.5vh;
+  }
+  .title-slide h1{font-size:clamp(2.6rem,9vh,5.2rem);max-width:12em}
+  .title-slide h1 .not{color:var(--accent)}
+  .title-slide .sub{
+    margin-top:3vh;font-size:clamp(1rem,2.5vh,1.4rem);color:var(--ink-soft);max-width:36em;line-height:1.45;
+  }
+  .title-slide .meta{
+    margin-top:5vh;font-family:var(--mono);font-size:clamp(.8rem,1.8vh,1rem);color:var(--ink-soft);
+    display:flex;gap:2.5em;flex-wrap:wrap;
+  }
+
+  /* ---------- generic list ---------- */
+  ul.big{list-style:none;display:flex;flex-direction:column;gap:2.2vh;max-width:38em}
+  ul.big li{
+    font-size:clamp(1rem,2.5vh,1.4rem);line-height:1.45;
+    padding-left:1.3em;position:relative;
+  }
+  ul.big li::before{
+    content:"";position:absolute;left:0;top:.55em;
+    width:.55em;height:.55em;background:var(--accent);
+  }
+  ul.big li.slate::before{background:var(--slate)}
+  ul.big li small{display:block;color:var(--ink-soft);font-size:.8em;margin-top:.25em}
+
+  /* ---------- forms strip (example slide) ---------- */
+  .forms-strip{display:flex;gap:1.2vw;margin-top:3.5vh;flex-wrap:wrap}
+  .form-chip{
+    background:var(--card);border:1px solid var(--line);border-top:3px solid var(--slate);
+    padding:1.4vh 1.1vw;flex:1 1 10em;min-width:9.5em;
+  }
+  .form-chip.nl{border-top-color:var(--accent)}
+  .form-chip.dp{border-top-color:#8A6D2F}
+  .form-chip h3{font-size:clamp(.85rem,2vh,1.05rem);font-weight:600;margin-bottom:.35em}
+  .form-chip p{font-size:clamp(.75rem,1.7vh,.9rem);color:var(--ink-soft);line-height:1.35}
+
+  /* ---------- record table ---------- */
+  .tablewrap{overflow-x:auto;max-width:100%}
+  table.rec{
+    border-collapse:collapse;width:100%;background:var(--card);
+    font-size:clamp(.8rem,2vh,1.05rem);
+  }
+  table.rec th,table.rec td{
+    border:1px solid var(--line);padding:1.2vh 1vw;text-align:left;vertical-align:top;line-height:1.35;
+  }
+  table.rec th{
+    font-family:var(--mono);font-weight:600;font-size:.85em;letter-spacing:.04em;
+    background:var(--paper);
+  }
+  table.rec td.fname{font-family:var(--mono);font-weight:600;white-space:nowrap}
+  table.rec td.fname.where{color:var(--slate)}
+  table.rec td.fname.what{color:var(--accent)}
+
+  /* ---------- derivation 2x2 ---------- */
+  .deriv{display:grid;grid-template-columns:auto 1fr 1fr;gap:0;max-width:62em;margin-top:1vh}
+  .deriv .corner{border:none}
+  .deriv .axis-top{
+    font-family:var(--mono);font-size:clamp(.75rem,1.8vh,.95rem);color:var(--ink-soft);
+    text-align:center;padding:1vh .5vw;letter-spacing:.05em;
+  }
+  .deriv .axis-side{
+    font-family:var(--mono);font-size:clamp(.75rem,1.8vh,.95rem);color:var(--ink-soft);
+    display:flex;align-items:center;justify-content:flex-end;padding:1vh 1vw;letter-spacing:.05em;
+    text-align:right;max-width:11em;line-height:1.3;
+  }
+  .deriv .cell{
+    border:1px solid var(--line);background:var(--card);
+    padding:2.2vh 1.4vw;min-height:16vh;
+    display:flex;flex-direction:column;gap:.6vh;justify-content:center;
+  }
+  .deriv .cell h3{font-size:clamp(1.1rem,3vh,1.7rem);font-weight:700}
+  .deriv .cell p{font-size:clamp(.78rem,1.9vh,1rem);color:var(--ink-soft);line-height:1.4}
+  .deriv .cell .method{
+    font-family:var(--mono);font-size:clamp(.72rem,1.7vh,.9rem);font-weight:600;margin-top:.4vh;
+  }
+  .deriv .cell.sym h3{color:var(--slate)}
+  .deriv .cell.nl h3{color:var(--accent)}
+  .deriv .cell.dp h3{color:#8A6D2F}
+  .deriv .cell.empty{
+    border-style:dashed;background:transparent;justify-content:center;align-items:center;
+  }
+  .deriv .cell.empty p{text-align:center;font-style:italic}
+
+  /* ---------- corpus slide ---------- */
+  .corpus{display:flex;gap:3vw;align-items:stretch;flex-wrap:wrap;margin-top:1vh}
+  .bignum{
+    display:flex;flex-direction:column;justify-content:center;gap:.5vh;min-width:12em;
+  }
+  .bignum .n{
+    font-family:var(--mono);font-weight:600;font-size:clamp(3rem,11vh,6rem);line-height:1;color:var(--slate);
+    font-variant-numeric:tabular-nums;
+  }
+  .bignum .cap{font-size:clamp(.85rem,2vh,1.05rem);color:var(--ink-soft);max-width:14em;line-height:1.35}
+  .bars{flex:1;display:flex;flex-direction:column;gap:1.8vh;justify-content:center;min-width:20em}
+  .bar-row{display:grid;grid-template-columns:minmax(11em,16em) 1fr 3ch;gap:1vw;align-items:center}
+  .bar-row .lbl{font-size:clamp(.82rem,2vh,1.02rem);line-height:1.25}
+  .bar-row .track{background:var(--card);border:1px solid var(--line);height:2.6vh;position:relative}
+  .bar-row .fill{position:absolute;inset:0;right:auto;background:var(--accent)}
+  .bar-row .val{font-family:var(--mono);font-weight:600;font-size:clamp(.85rem,2.1vh,1.1rem);text-align:right;font-variant-numeric:tabular-nums}
+  .corpus-note{margin-top:2.5vh;font-size:clamp(.85rem,2vh,1.1rem);color:var(--ink-soft);max-width:44em;line-height:1.45}
+  .corpus-note b{color:var(--ink)}
+
+  /* ---------- takeaway ---------- */
+  .close-quote{
+    font-size:clamp(1.4rem,4.2vh,2.4rem);font-weight:600;line-height:1.3;max-width:22em;text-wrap:balance;
+  }
+  .close-quote .accent{color:var(--accent)}
+  .close-sub{margin-top:3.5vh;font-size:clamp(.95rem,2.3vh,1.25rem);color:var(--ink-soft);max-width:38em;line-height:1.5}
+
+  .navhint{
+    position:absolute;bottom:3.2vh;left:50%;transform:translateX(-50%);
+    font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);opacity:.7;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .slide.active .body,.slide.active h2,.slide.active .eyebrow{animation:rise .35s ease both}
+    @keyframes rise{from{opacity:0;transform:translateY(1.2vh)}to{opacity:1;transform:none}}
+  }
+</style>
+
+<div class="deck" id="deck">
+
+<!-- 1 · Title -->
+<section class="slide title-slide active">
+  <div class="where">ASISAS 2026 · European Conference on Software Architecture</div>
+  <h1>Where it lives is <span class="not">not</span> what it is</h1>
+  <p class="sub">An architectural vocabulary for retained adaptation in agentic systems</p>
+  <div class="meta">
+    <span>Zbigniew Łukasiak</span>
+    <span>position paper + 141-system corpus</span>
+  </div>
+  <div class="navhint">→ / space to advance</div>
+</section>
+
+<!-- 2 · Problem -->
+<section class="slide">
+  <div class="eyebrow"><b>01</b> · The problem</div>
+  <h2>Agents adapt by retaining artifacts — and we classify them by where they're stored</h2>
+  <div class="body">
+    <ul class="big">
+      <li class="slate">Prompts, workflows, validators, routing rules, memories, adapters, checkpoints — all shape future behavior.</li>
+      <li class="slate">Today they're managed under storage labels: <span class="key">memory system</span> <span class="key">vector store</span> <span class="key">flat files</span> <span class="key">prompt registry</span> <span class="key">model store</span></li>
+      <li><strong>Position:</strong> storage-first classification is architecturally insufficient. It hides how a retained artifact acts, what review it needs, and how to undo it.</li>
+    </ul>
+  </div>
+  <div class="footmark">§1</div>
+</section>
+
+<!-- 3 · Example -->
+<section class="slide">
+  <div class="eyebrow"><b>02</b> · One lesson, many forms</div>
+  <h2>A coding agent keeps mishandling dependency resolution</h2>
+  <div class="body">
+    <p class="lede">The system can retain that lesson in very different shapes — and each creates different obligations for review, invalidation, and rollback:</p>
+    <div class="forms-strip">
+      <div class="form-chip nl"><h3>Natural-language reflection</h3><p>Affects behavior only if retrieval carries it forward.</p></div>
+      <div class="form-chip nl"><h3>Derived prompt summary</h3><p>Can go stale and govern behavior after its source is fixed.</p></div>
+      <div class="form-chip"><h3>Lockfile validator</h3><p>Blocks execution cheaply — but must be tested like control logic.</p></div>
+      <div class="form-chip"><h3>Conflict-check script</h3><p>Fast and repeatable; fails systematically when the spec is wrong.</p></div>
+      <div class="form-chip dp"><h3>Learned scoring weights</h3><p>Need behavioral probes — there's no record to read.</p></div>
+    </div>
+  </div>
+  <div class="footmark">§1</div>
+</section>
+
+<!-- 4 · Four fields -->
+<section class="slide">
+  <div class="eyebrow"><b>03</b> · The vocabulary</div>
+  <h2>A four-field record for every retained artifact</h2>
+  <div class="body">
+    <div class="tablewrap">
+      <table class="rec">
+        <tr><th>field</th><th>records</th><th>why the architect cares</th></tr>
+        <tr>
+          <td class="fname where">storage_substrate</td>
+          <td>Where retained state persists: files, repos, vector stores, registries, model stores.</td>
+          <td>Access, deletion, versioning, rollback paths.</td>
+        </tr>
+        <tr>
+          <td class="fname what">representational_form</td>
+          <td>How the operative part is encoded and consumed: natural-language, symbolic, distributed-parametric.</td>
+          <td>Default inspection method, review evidence, recurring execution cost.</td>
+        </tr>
+        <tr>
+          <td class="fname what">lineage</td>
+          <td>Source material, or a derived view, index, or learned update — and of what.</td>
+          <td>What must be invalidated when a source changes.</td>
+        </tr>
+        <tr>
+          <td class="fname what">behavioral_authority</td>
+          <td>Consumer + channel + force: from advice through instruction to enforcement and learning input.</td>
+          <td>Who acts on it, through which channel, with what force.</td>
+        </tr>
+      </table>
+    </div>
+    <p class="corpus-note">Unit of classification: the <b>operative part</b> and its consumption path — not the stored object. Bundled objects get split.</p>
+  </div>
+  <div class="footmark">§2–§6</div>
+</section>
+
+<!-- 5 · Derivation -->
+<section class="slide">
+  <div class="eyebrow"><b>04</b> · Representational form, derived</div>
+  <h2>Two axes generate the three forms</h2>
+  <div class="body">
+    <div class="deriv">
+      <div class="corner"></div>
+      <div class="axis-top">localized unit</div>
+      <div class="axis-top">non-localized</div>
+      <div class="axis-side">consequences assigned by a defined consumer</div>
+      <div class="cell sym">
+        <h3>symbolic</h3>
+        <p>Code, schemas, validators, route tables. An implementation adjudicates: two consumers disagreeing means one is wrong.</p>
+      </div>
+      <div class="cell empty">
+        <p>unoccupied — vector-symbolic architectures aim here</p>
+      </div>
+      <div class="axis-side">reinterpreted on each consumption</div>
+      <div class="cell nl">
+        <h3>natural-language</h3>
+        <p>Reflections, facts, notes, policies, prompt content. No adjudicator: two readings can both be reasonable — underspecification, not a defect.</p>
+      </div>
+      <div class="cell dp">
+        <h3>distributed-parametric</h3>
+        <p>Weights, adapters, embedding spaces, reward models. No addressable unit carries the content.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footmark">§5</div>
+</section>
+
+<!-- 6 · Inspection -->
+<section class="slide">
+  <div class="eyebrow"><b>05</b> · Inspection follows from the axes</div>
+  <h2>Read, test, or probe — derived, not stipulated</h2>
+  <div class="body">
+    <ul class="big">
+      <li class="slate">A localized unit <em>with</em> defined semantics can be checked against them → <span class="key">test</span> symbolic artifacts.</li>
+      <li>A localized unit <em>without</em> them yields content only to interpretation → <span class="key">read</span> natural-language artifacts.</li>
+      <li>A non-localized artifact offers nothing to point at; only behavior is observable → <span class="key">probe</span> distributed-parametric artifacts.</li>
+      <li><strong>Revisability rides the localization axis alone:</strong> a prompt and a validator are both revisable one item at a time; weights are not.</li>
+    </ul>
+  </div>
+  <div class="footmark">§5</div>
+</section>
+
+<!-- 7 · Lineage & authority -->
+<section class="slide">
+  <div class="eyebrow"><b>06</b> · Lineage &amp; behavioral authority</div>
+  <h2>Where it came from, and what force it carries</h2>
+  <div class="body">
+    <ul class="big">
+      <li><span class="key">lineage</span> — source material vs. derived view, index, or learned update. Not full provenance: just what to invalidate, regenerate, or retire when a source changes.</li>
+      <li><span class="key">authority</span> = consumer × channel × force — from advice that may be ignored, through instruction, to enforcement, ranking influence, and learning input.</li>
+      <li class="slate">The record exposes failure modes: a <strong>stale derived view</strong> governing behavior after its source is fixed; <strong>untrusted natural language</strong> entering high-authority prompt channels; <strong>poisoned records</strong> hidden behind opaque retrieval.</li>
+    </ul>
+  </div>
+  <div class="footmark">§6</div>
+</section>
+
+<!-- 8 · Record in use -->
+<section class="slide">
+  <div class="eyebrow"><b>07</b> · The record in use</div>
+  <h2>Same dependency lesson, four architectural profiles</h2>
+  <div class="body">
+    <div class="tablewrap">
+      <table class="rec">
+        <tr><th>artifact</th><th>form</th><th>force</th><th>review evidence</th><th>rollback</th></tr>
+        <tr><td>Failure reflection</td><td>natural-language (+ dense-vector path)</td><td>advice</td><td>read; probe retrieval</td><td>delete record, refresh index</td></tr>
+        <tr><td>Conflict-check script</td><td>symbolic executable</td><td>enforcement</td><td>unit &amp; integration tests</td><td>commit revert / feature flag</td></tr>
+        <tr><td>Markdown prompt (derived from workflow)</td><td>natural-language instruction</td><td>instruction</td><td>prompt review</td><td>remove or regenerate entry</td></tr>
+        <tr><td>Semantic-retrieval package</td><td>natural-language records + embeddings</td><td>ranking influence</td><td>read records; probe ranking</td><td>rebuild or roll back index</td></tr>
+      </table>
+    </div>
+    <p class="corpus-note">Calling all four <b>“memory”</b> hides exactly these differences. The design question is not whether a lesson is “in memory,” but whether its current <b>form and authority are justified</b>.</p>
+  </div>
+  <div class="footmark">§7</div>
+</section>
+
+<!-- 9 · Corpus -->
+<section class="slide">
+  <div class="eyebrow"><b>08</b> · Evidence from a system corpus</div>
+  <h2>Hold storage fixed — the other fields still pull systems apart</h2>
+  <div class="body">
+    <div class="corpus">
+      <div class="bignum">
+        <div class="n">98<span style="font-size:.4em;color:var(--ink-soft)">/141</span></div>
+        <div class="cap">agent-memory systems, reviewed from source code, keep retained state in plain files or repositories</div>
+      </div>
+      <div class="bars">
+        <div class="bar-row"><span class="lbl">acts as an enforced gate</span><span class="track"><span class="fill" style="width:54%"></span></span><span class="val">53</span></div>
+        <div class="bar-row"><span class="lbl">includes a distributed-parametric part</span><span class="track"><span class="fill" style="width:38%"></span></span><span class="val">37</span></div>
+        <div class="bar-row"><span class="lbl">pull-only activation</span><span class="track"><span class="fill" style="width:40%"></span></span><span class="val">39</span></div>
+        <div class="bar-row"><span class="lbl">trace-extracted lineage</span><span class="track"><span class="fill" style="width:71%"></span></span><span class="val">70</span></div>
+      </div>
+    </div>
+    <p class="corpus-note">Substrate predicts none of this. And natural-language and symbolic parts each appear in <b>all 141 systems</b> — the form axis discriminates only below the system, at the operative part.</p>
+  </div>
+  <div class="footmark">§8 · counts are system-level presence, corpus is descriptive, not a field sample</div>
+</section>
+
+<!-- 10 · Limits -->
+<section class="slide">
+  <div class="eyebrow"><b>09</b> · Honest limits</div>
+  <h2>A classification discipline, not a validated method — yet</h2>
+  <div class="body">
+    <ul class="big">
+      <li class="slate">Corpus assembled opportunistically; seeded by a file/wiki-heavy discussion thread, so distributions describe this collection, not the field.</li>
+      <li class="slate">Counts are system-level presence; the vocabulary's real unit is the artifact. Per-artifact statistics are future work.</li>
+      <li class="slate">Classifications produced under one saved review contract — reviewer consistency untested.</li>
+      <li>Next: pre-registered sampling frame, design-review and incident-analysis trials — does the record expose risks storage labels miss?</li>
+    </ul>
+  </div>
+  <div class="footmark">§9</div>
+</section>
+
+<!-- 11 · Takeaway -->
+<section class="slide">
+  <div class="eyebrow"><b>10</b> · Takeaway</div>
+  <h2 style="visibility:hidden;position:absolute">Takeaway</h2>
+  <div class="body" style="justify-content:center">
+    <p class="close-quote">Storage locates retained state. <span class="accent">Form, lineage, and authority determine how it acts</span> — and what review it admits.</p>
+    <p class="close-sub">For each retained lesson, ask: should it stay quick-to-capture natural language, become symbolic control, be surfaced through retrieval, or be learned into numerical state? Those choices differ sharply in cost, coverage, behavioral variance — and in the review and rollback they admit.</p>
+  </div>
+  <div class="footmark">§10 · thank you — questions</div>
+</section>
+
+</div>
+<div class="counter" id="counter" style="position:fixed"></div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const counter=document.getElementById('counter');
+  let i=0;
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    counter.textContent=(i+1)+' / '+slides.length;
+    try{localStorage.setItem('asisas-slide',i)}catch(e){}
+  }
+  try{const saved=parseInt(localStorage.getItem('asisas-slide'));if(!isNaN(saved))i=saved}catch(e){}
+  show(i);
+  addEventListener('keydown',e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();show(i+1)}
+    else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();show(i-1)}
+    else if(e.key==='Home')show(0);
+    else if(e.key==='End')show(slides.length-1);
+  });
+  addEventListener('click',e=>{
+    if(e.target.closest('a'))return;
+    (e.clientX>innerWidth/3)?show(i+1):show(i-1);
+  });
+</script>
