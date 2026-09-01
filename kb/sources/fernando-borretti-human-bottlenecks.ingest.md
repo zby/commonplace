@@ -7,7 +7,7 @@ genre: conceptual-essay
 snapshot_sha256: f401bcc09e56ea69abe1b48fd7ee5e612ad0b2d6114939fe01408f97acfce37f
 ingested: "2026-06-15"
 type: kb/sources/types/ingest-report.md
-domains: [human-llm-differences, augmentation-automation, distillation]
+domains: [human-llm-differences, augmentation-automation, context-engineering]
 ---
 
 # Ingest: Human Bottlenecks
@@ -31,7 +31,7 @@ The companion connect report found no outbound edges (the source is an immutable
 
 - [the-augmentation-automation-boundary-is-discrimination-not-accuracy](../notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — strongest. That note's terminal case is "the human IS the oracle"; Borretti supplies the human-side floor it leaves implicit — the human-as-oracle is itself bottlenecked by foundational knowledge.
 - [human-llm-differences-are-load-bearing-for-knowledge-system-design](../notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — that note assumes the human reader "fills gaps from background knowledge"; Borretti hardens this into a constraint that silently fails when the knowledge is absent.
-- [definitions/distillation](../notes/definitions/distillation.md) — distillation requires a real downstream consumer; Borretti's "no serious context of use" polemic is the field-evidence inverse (distillation aimed at a non-existent consumer produces graph-screenshot theater).
+- [Information value is observer-relative](../notes/information-value-is-observer-relative.md) — a consumer-shaped artifact requires a real downstream consumer; Borretti's "no serious context of use" polemic is the field-evidence inverse, where reshaping for a nonexistent consumer produces graph-screenshot theater.
 
 The connect report also flagged a **synthesis opportunity**: the KB does not yet hold the claim that *AI augmentation has a human-side competence floor*. It noted this is the second Borretti snapshot accreting toward a "where the human stays load-bearing in an AI loop" cluster, and suggested ingesting both together for joint triage.
 
@@ -39,7 +39,7 @@ The connect report also flagged a **synthesis opportunity**: the KB does not yet
 
 1. **The human oracle has a competence floor** — Borretti's "if you don't have the knowledge, you don't understand the question" gives the augmentation/automation note a concrete bound: when the human is the oracle, their discrimination is itself capped by foundational knowledge. This is the highest-reach extraction — it operationalizes the "human IS the oracle" terminal case into a stated constraint rather than an assumed free resource. [quick-win]
 2. **A candidate synthesis note: AI cannot lift a user past their own knowledge bottleneck** — the unifying claim across the three reverse-edge candidates. Worth promoting because it would give all three notes one shared anchor instead of three parallel `evidenced-by` links. High reach: it constrains any KB design that assumes the human supplies discrimination. [deep-dive]
-3. **"Serious context of use" as a sharper name for distillation's consumer requirement** — Borretti's phrase is a retrieval-friendly, polemical framing of distillation's "real downstream consumer" requirement. Useful as a humanities-side illustration that the consumer must be real, not as a load-bearing claim. [just-a-reference]
+3. **"Serious context of use" names the consumer requirement sharply** — Borretti's phrase is a retrieval-friendly, polemical framing of why consumer-shaped artifacts require a real downstream consumer. It is useful as a humanities-side illustration, not as a load-bearing claim. [just-a-reference]
 4. **The dual-audience design assumption can silently fail** — the operational warning that designs relying on the human to "fill gaps from background knowledge" break when that knowledge is absent, with no error signal. A failure mode worth recording against `human-llm-differences-...`. [quick-win]
 5. **Borretti-cluster joint triage** — two Borretti snapshots now sit uningested with overlapping "human-in-the-AI-loop" arguments. Deciding whether they share one synthesis note or two is itself extractable value (avoids fragmented promotion). [experiment]
 
