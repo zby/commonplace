@@ -14,10 +14,9 @@ Two separate pressures keep the design modular. Different collections support di
 
 **Learning software factories.** The current
 [research program](./articles/a-research-program-for-learning-software-factories.md)
-asks whether production experience can cause retained changes to a factory's
-reusable machinery that later work depends on, and whether a later factory
-state can then be shown better than its predecessor without training a new
-model. It tests whether an
+asks whether a software factory can learn from its production experience —
+retained machinery changes that make a later factory state better than its
+predecessor — without training a new model. It tests whether an
 LLM-based factory can acquire and hold project theory strongly enough to keep
 modification coherent across novel demands; retained natural-language theory is
 the addressable realization under test. Commonplace is the live human-inclusive

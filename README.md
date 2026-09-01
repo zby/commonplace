@@ -81,10 +81,9 @@ src/commonplace/          Packaged operational engine
 
 ## Research routes
 
-**Learning software factories.** Can production experience cause retained
-changes to a software factory's reusable machinery that later work depends
-on — and can a later factory state then be shown better than its predecessor
-without training a new model?
+**Learning software factories.** Can a software factory learn from its
+production experience — retained machinery changes that make a later factory
+state better than its predecessor — without training a new model?
 The [research program](./kb/articles/a-research-program-for-learning-software-factories.md)
 tests whether an LLM-based factory can acquire and hold project theory strongly
 enough to keep modification coherent across novel demands; retained

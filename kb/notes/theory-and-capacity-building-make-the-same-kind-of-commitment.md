@@ -15,7 +15,7 @@ An **explanatory commitment** selects an account of how or why something works: 
 
 A **constructive commitment** selects how future work will be done: an architecture, representation, tool, workflow, invariant, convention. What it changes is the learner's production machinery — learning surface, because [the deployed system, not the model alone, is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md).
 
-Both count as learning when the change responds to evidence and is retained operatively.
+Both count as experience-responsive retention when the change responds to evidence and is retained operatively; whether they amount to learning turns on whether they improved the learner.
 
 ## The parallel breaks at what the commitment does to its object
 
@@ -51,7 +51,7 @@ The reverse path runs regardless. A constructive commitment creates machinery, t
 ## Scope
 
 - The split classifies resolutions, not artifacts. One retained change often bundles both: adopting a convention commits an account of why the pattern works and machinery that enforces it. Classify per resolution, as the commitment boundary itself does.
-- Derived organization — an episode index, a computed statistic — is a third kind of retained learning state, not a milder commitment. It is regenerable from retained ground truth and governed by recompute, on the other side of the derivation/commitment boundary. The explanatory/constructive split partitions the commitment side only; the three kinds do not form a spectrum.
+- Derived organization — an episode index, a computed statistic — is a third kind of retained state, not a milder commitment. It is regenerable from retained ground truth and governed by recompute, on the other side of the derivation/commitment boundary. The explanatory/constructive split partitions the commitment side only; the three kinds do not form a spectrum.
 - "Capacity" here means retained production machinery in the deployed-system sense. Whether a parametric weight update, which also resolves underdetermination but retains no inspectable resolution, supports the retraction machinery described here is left open.
 
 ## Open Questions

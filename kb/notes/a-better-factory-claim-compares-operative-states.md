@@ -7,7 +7,7 @@ tags: [foundations, learning-theory, self-improving-systems]
 
 # A better-factory claim compares operative states under an antecedent assessment relation
 
-A [software factory](./definitions/software-factory.md) [learns when production experience causes a retained change to its reusable machinery that later work depends on](./factory-learning-is-experience-responsive-retention-that-improves.md). That is an occurrence condition with no quality requirement: a factory whose retained judgements are poor still learns in the defined sense, and can degenerate. Whether it got *better* is a different claim with different relata and its own declarations. The claim holds between two operative states of the factory, under an assessment relation fixed before the development it judges, and its evaluator sits at a declared location that is not settled by the learner boundary.
+A [software factory](./definitions/software-factory.md) undergoes experience-responsive retention when production experience causes a retained change to its reusable machinery that later work depends on, and [learns when such retention improves it](./factory-learning-is-experience-responsive-retention-that-improves.md). Retention has no quality requirement: a factory whose retained judgements are poor retains, depends, and degenerates rather than learns. Whether it got *better* is therefore its own claim with different relata and its own declarations. The claim holds between two operative states of the factory, under an assessment relation fixed before the development it judges, and its evaluator sits at a declared location that is not settled by the learner boundary.
 
 Four declarations make a better-factory claim determinate: which states are compared, what relation they are compared under, how a state becomes the successor, and where the evaluator sits. Getting any of them from the record after the fact is where the claim goes soft.
 
@@ -57,7 +57,7 @@ This is also why the oracle problem for better-factory claims is sharp rather th
 
 Passing the comparison does not establish learning. A capable builder can produce a better factory from supplied specifications, with people holding the production knowledge that matters — improvement with no experience link. The learning claim needs retained experience from the predecessor's own production to causally enter the changes the improvement depends on, and because [an experiment identifies only the contrast it actually runs](./an-experiment-identifies-only-the-contrast-it-actually-runs.md), that link is established by manipulating it — supplying versus withholding the predecessor's retained state — not by observing that the successor scored higher.
 
-Learning does not establish passing either, for the reason the occurrence condition is silent about quality. Internal controls a factory places on what it retains — heuristic self-evaluation, preregistered internal comparisons, up to a proof gate — are design choices of the factory that it can choose badly, and they do not supply the improvement claim. They govern the pathway; the comparison judges the states.
+Retention does not establish passing either: the occurrence condition is silent about quality, and even a change that improved the factory against some objective need not pass the declared comparison. Internal controls a factory places on what it retains — heuristic self-evaluation, preregistered internal comparisons, up to a proof gate — are design choices of the factory that it can choose badly, and they do not supply the improvement claim. They govern the pathway; the comparison judges the states.
 
 ## Scope
 
@@ -75,7 +75,7 @@ Learning does not establish passing either, for the reason the occurrence condit
 
 Relevant Notes:
 
-- [A software factory learns when production experience changes reusable machinery used later](./factory-learning-is-experience-responsive-retention-that-improves.md) — grounds: the occurrence condition whose silence about quality makes a separate comparison necessary
+- [Factory learning is experience-responsive retention that improves the factory](./factory-learning-is-experience-responsive-retention-that-improves.md) — grounds: the retention layer whose silence about quality makes the improvement comparison a separate claim
 - [Self-improvement is relative to a declared objective](./self-improvement-is-relative-to-a-declared-objective.md) — grounds: the indexed and antecedent conditions this applies to a pairwise state comparison
 - [A repeatable operative path keeps a redesign class open to revision](./a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md) — grounds: what preserving a factory-development path requires beyond editability
 - [Compounding is tested in later improvement, not by the accepting metric](./compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md) — contrasts: preservation is checked at the comparison, compounding only in later episodes

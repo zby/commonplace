@@ -73,4 +73,4 @@ Use the source as the mature ontology anchor and as the human-directed precursor
 Abstracted into:
 
 - [A software factory is family-scoped lifecycle production machinery](../notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md) — reconstructs the mature lifecycle ontology, two development processes, factory specialization, factory composition, and feedback-supported revision
-- [A software factory learns when production experience changes reusable machinery used later](../notes/factory-learning-is-experience-responsive-retention-that-improves.md) — extends the human-directed feedback path with the system-determined retained-change condition required for factory-level continual learning
+- [Factory learning is experience-responsive retention that improves the factory](../notes/factory-learning-is-experience-responsive-retention-that-improves.md) — extends the human-directed feedback path with the system-determined retained-change condition required for experience-responsive retention

@@ -19,7 +19,7 @@ production experience
   -> retention and later behavioral effect
 ```
 
-This is the minimal factory-learning relation. It does not by itself establish the harder capacity to modify a long-lived program coherently when local acceptance criteria do not exhaust its purpose and organization. A mechanism can change later production and still fail that test.
+This is experience-responsive retention, the causal job every factory-learning mechanism must perform. It does not by itself establish the harder capacity to modify a long-lived program coherently when local acceptance criteria do not exhaust its purpose and organization. A mechanism can change later production and still fail that test.
 
 Not every mechanism exposes all of these steps as separate components. A direct optimizer may combine proposal and selection in one update. A trajectory-reuse system may retrieve an earlier procedure without constructing a new artifact. A theory-mediated process may guide search before a candidate exists. The comparison should preserve these architectural differences while asking whether the same downstream transition was achieved.
 
@@ -71,7 +71,7 @@ Likewise, symbolic software can be handcrafted, generated from a supplied schema
 
 When a system exposes rejectable candidates, a complete proposal-selection path needs search, evaluation, and operative retention. The [proposal-selection loop](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) states that requirement.
 
-But some mechanisms update state directly or retrieve previously retained machinery without presenting explicit alternatives. They should be judged by causal controls appropriate to their architecture rather than forced into candidate terminology. The common requirement is that production experience determine a retained factory change used later, as defined by [factory-level continual learning](./factory-learning-is-experience-responsive-retention-that-improves.md).
+But some mechanisms update state directly or retrieve previously retained machinery without presenting explicit alternatives. They should be judged by causal controls appropriate to their architecture rather than forced into candidate terminology. The common requirement is that production experience determine a retained factory change used later, as defined by [experience-responsive retention](./factory-learning-is-experience-responsive-retention-that-improves.md).
 
 ## Fair experimental contrasts
 
@@ -94,7 +94,7 @@ A theory-surface intervention tests whether making project theory explicit and a
 ## What a result can establish
 
 - Better immediate product output shows task performance, not factory learning.
-- A retained change used later supports the learning path, but not necessarily improvement.
+- A retained change used later supports the retention path, but not necessarily improvement — so not yet learning.
 - Transfer to a distinct admitted product variation supports family-level reuse.
 - Repeated transfer across families with falling target-specific human construction of production knowledge supports broader acquisition reach.
 - Better coherent modification under delayed feedback supports the tested theory-bearing realization, not the unique necessity of its carrier.
@@ -103,7 +103,7 @@ A theory-surface intervention tests whether making project theory explicit and a
 ## Scope
 
 - The note compares update mechanisms at the minimal factory-learning relation; system architecture and evaluator quality can dominate results.
-- The program's scoped claim that open-ended coherent modification requires a project-theory function is a stronger adequacy condition, not part of the minimal learning definition.
+- The program's scoped claim that open-ended coherent modification requires a project-theory function is a stronger adequacy condition, not part of the minimal retention condition.
 - Readability, addressability, exact execution, and parametric compression are properties with costs and benefits, not rankings.
 - Mixed mechanisms are the default serious alternative to any single update method.
 - Natural-language theory mediation earns support only through comparative causal and outcome evidence; indispensability attaches to the theory-bearing function, not automatically to this carrier.
@@ -112,7 +112,7 @@ A theory-surface intervention tests whether making project theory explicit and a
 
 Relevant Notes:
 
-- [A software factory learns when production experience changes reusable machinery used later](./factory-learning-is-experience-responsive-retention-that-improves.md) — grounds: supplies the shared causal job
+- [Factory learning is experience-responsive retention that improves the factory](./factory-learning-is-experience-responsive-retention-that-improves.md) — grounds: supplies the shared causal job
 - [Naur binds program theory to humans by equating machine execution with formulated criteria](./naur-equates-machine-execution-with-formulated-criteria.md) — grounds: supplies the mapping, justification, and coherent-extension functions whose human-only allocation is reopened
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: states the stronger adequacy test beyond a retained factory update
 - [The bitter lesson selects production methods, not representational forms](./the-bitter-lesson-selects-production-methods-not-representational.md) — grounds: separates how useful state is produced from where it is stored
