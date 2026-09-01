@@ -7,6 +7,7 @@ source_notes:
   - kb/notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md
   - kb/notes/factory-construction-does-not-establish-knowledge-acquisition.md
   - kb/notes/factory-learning-retains-experience-in-reusable-machinery.md
+  - kb/notes/a-better-factory-claim-compares-operative-states.md
   - kb/notes/commitment-not-derivation-creates-new-ground-truth.md
   - kb/notes/theory-and-capacity-building-make-the-same-kind-of-commitment.md
   - kb/notes/open-ended-theory-learning-and-factory-learning-close-the-same.md
@@ -66,7 +67,7 @@ declare the comparison while factory state F is current
 
 The successor F' is a measurement boundary on a continuous process, not necessarily the product of one discrete construction step. It can be the factory state after a period of experience-responsive development, or after a single retained change; either way it is already the later operative state, and the measurement judges a realized trajectory rather than performing adoption. A factory constructed and evaluated before installation is a different case: a candidate, which becomes the successor only when installed and depended on — the shape the successor-factory experiment below uses. The two cases also separate two human roles: a person who only measures whether a realized change helped stays outside the learner boundary, while one whose judgment controls installation enters the causal update path.
 
-The comparison is declared before the development it judges: its non-regression thresholds and target dimensions are fixed while only F exists, so improvement cannot be claimed on a dimension chosen after seeing F'. Under it, F' must meet non-regression thresholds on the predecessor's prior scope and exceed a specified target on at least one production dimension it names. The factories this program compares keep factory development in their declared scope, so the preserved prior scope includes an operative path for producing and improving further factories. This prevents a one-off gain that consumes the capacity for further improvement.
+The comparison is [declared before the development it judges](../notes/a-better-factory-claim-compares-operative-states.md): its non-regression thresholds and target dimensions are fixed while only F exists, so improvement cannot be claimed on a dimension chosen after seeing F'. Under it, F' must meet non-regression thresholds on the predecessor's prior scope and exceed a specified target on at least one production dimension it names. The factories this program compares keep factory development in their declared scope, so the preserved prior scope includes an operative path for producing and improving further factories. This prevents a one-off gain that consumes the capacity for further improvement.
 
 The comparison is between [deployed systems rather than only model weights](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md). The successor may improve through changes to any operative part of its production machinery.
 
