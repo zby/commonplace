@@ -56,7 +56,7 @@ The factory judges what a failure means and what is worth keeping, organizes the
 
 This is the complete occurrence condition for experience-responsive retention. A particular factory may add internal controls on what it retains or adopts — heuristic self-evaluation, preregistered internal comparisons, up to a proof gate in the style of Schmidhuber's Gödel machine — but these are design choices of the factory, not parts of the definition. Even a proof gate certifies only against the axioms it is given.
 
-Learning is retention that leaves the factory better, and the occurrence condition does not by itself establish improvement. The program's instrument is a measurement laid over snapshots of the process:
+Retention does not by itself establish improvement. The program measures it with an instrument laid over snapshots of the process:
 
 ```text
 declare the comparison while factory state F is current
