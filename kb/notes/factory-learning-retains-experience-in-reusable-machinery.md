@@ -1,15 +1,15 @@
 ---
-description: "Minimal factory-level continual learning requires production experience to causally determine a retained change to reusable family machinery that affects later production"
+description: "Experience-responsive retention: production experience determines a retained change to reusable family machinery that later production depends on; factory-level learning is retention that improves the factory relative to a declared objective"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, learning-theory, self-improving-systems]
 ---
 
-# A software factory learns when production experience changes reusable machinery used later
+# Factory learning is experience-responsive retention that improves the factory
 
-A [software factory](./definitions/software-factory.md) undergoes **factory-level continual learning** when experience from production causally determines a retained change to its reusable family-level production machinery and later production depends on that change.
+A [software factory](./definitions/software-factory.md) undergoes **experience-responsive retention** when experience from production causally determines a retained change to its reusable family-level production machinery and later production depends on that change. It undergoes **factory-level learning** when such a retained change also improves the factory. Improvement is relative to a declared objective, so the learning claim carries that index in addition to the boundary index below.
 
-The minimal path is:
+The minimal retention path is:
 
 ```text
 production under current factory machinery
@@ -23,7 +23,7 @@ Each link excludes a nearby but weaker event.
 
 - Experience without a factory change is observation or feedback.
 - Product repair without a reusable change is solution development.
-- A generated but rejected or discarded asset is a candidate, not retained learning.
+- A generated but rejected or discarded asset is a candidate, not retention.
 - Stored machinery that later production does not consume has no demonstrated behavioral effect.
 - A later process that differs only because the task differs does not show dependence on earlier experience.
 
@@ -39,11 +39,11 @@ Each link excludes a nearby but weaker event.
 - tests, evaluators, validation rules, monitors, and recovery procedures; or
 - reusable lifecycle content for requirements, architecture, deployment, operation, maintenance, or migration.
 
-The same production event can have both product-level and factory-level effects. A failed test may trigger a patch to the current product and also reveal that a reusable test generator or release gate should change. Only the latter change is factory-level learning relative to the producing factory.
+The same production event can have both product-level and factory-level effects. A failed test may trigger a patch to the current product and also reveal that a reusable test generator or release gate should change. Only the latter change is factory-level retention relative to the producing factory — and learning, if it improves the factory.
 
-## Learning is boundary-relative
+## Retention is boundary-relative, and learning inherits it
 
-The causal determination must occur inside the learner boundary being claimed. At a human-inclusive boundary, a person and computational tools may jointly interpret experience and revise the factory. At a boundary that excludes the operator, a human-selected schema, evaluator, decomposition, promotion decision, or recovery step remains an external intervention rather than learning by the technical subsystem.
+The causal determination must occur inside the learner boundary being claimed. At a human-inclusive boundary, a person and computational tools may jointly interpret experience and revise the factory. At a boundary that excludes the operator, a human-selected schema, evaluator, decomposition, promotion decision, or recovery step remains an external intervention rather than retention by the technical subsystem.
 
 This distinction is about causal responsibility, not who typed the final bytes. An LLM can author a file while a person supplies the decisive change. Conversely, a person can provide an observation or acceptance response while the system determines how reusable machinery should change.
 
@@ -53,15 +53,15 @@ The permitted evidence and interaction protocol should therefore be declared sep
 
 Retention is stronger than storage. The changed machinery must enter a path through which it can affect later production. Depending on the factory, this may mean that a revised schema is loaded, a workflow is selected by default, a validator gates later changes, a tool becomes available, or a natural-language rule is retrieved into later model calls.
 
-Permanent installation is not required. A change can be operative for a declared horizon and later be rolled back. What matters is that later production actually depended on it during the interval for which learning is claimed.
+Permanent installation is not required. A change can be operative for a declared horizon and later be rolled back. What matters is that later production actually depended on it during the interval for which retention is claimed.
 
 Later use can occur on another family member or on a later lifecycle episode for the same member, provided the changed item is genuinely reusable family machinery rather than a disguised product-local patch. Evidence from a distinct admitted variation is stronger because it tests the reuse claim directly.
 
-## Minimal learning does not imply improvement
+## Learning is retention that improves
 
-A retained factory change can degrade later production. The causal sequence still establishes learning in the minimal sense that experience changed future capacity or behavior. Calling it **improvement** additionally requires a declared objective, an assessment relation, and evidence that the change helped relative to an appropriate comparison.
+A retained factory change can degrade later production. The causal sequence then establishes retention — experience changed future capacity or behavior — but not learning: the factory degenerates rather than learns. Learning additionally requires that the change improved the factory relative to a declared objective. Whether it did can be a fact of the trajectory before anyone verifies it; the definition needs the objective it is indexed to, not an oracle. Establishing the claim is a separate measurement problem, disciplined by [an antecedent better-factory comparison](./a-better-factory-claim-compares-operative-states.md).
 
-The minimal definition also does not require:
+Neither retention nor learning requires:
 
 - explicit competing candidates or a proposal-selection loop;
 - a complete independent evaluator;
@@ -93,7 +93,7 @@ A persuasive record should identify:
 5. the later production path that consumed it; and
 6. the behavioral difference attributable to the retained change.
 
-Withholding, reverting, or replacing the change strengthens causal attribution. A mere chronology—experience occurred, a file changed, later work improved—does not establish that the same learning path connects the events.
+Withholding, reverting, or replacing the change strengthens causal attribution. A mere chronology—experience occurred, a file changed, later work improved—does not establish that the same retention path connects the events. Establishing learning rather than retention alone further requires the improvement evidence a declared comparison supplies.
 
 ## Scope
 
@@ -108,6 +108,7 @@ Withholding, reverting, or replacing the change strengthens causal attribution. 
 Relevant Notes:
 
 - [The deployed system, not the model alone, is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md) — grounds: places all behavior-determining factory machinery inside the candidate learning surface
+- [A better-factory claim compares operative states under an antecedent assessment relation](./a-better-factory-claim-compares-operative-states.md) — extends: disciplines the improvement half of the learning claim with its relata and antecedent relation
 - [Continual learning requires governing behaviour-changing writes, not just storing content](./continual-learning-requires-governing-behaviour-changing-writes.md) — extends: adds governance requirements for safe and coordinated deployment
 - [Operative change](./definitions/operative-change.md) — extends: supplies the stronger persistence and behavioral-authority account for retained system changes
 - [Task families and product families classify different things](./task-families-and-product-families-classify-different-things.md) — grounds: clarifies what later transfer establishes at task and family levels
