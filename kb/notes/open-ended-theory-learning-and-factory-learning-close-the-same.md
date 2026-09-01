@@ -43,8 +43,8 @@ retention; it depends on it.
 prior evidence under the accepted claim and updates the artifacts that use it.
 For a self-directed theory those artifacts are the system's own instructions,
 validators, evaluators, and tools. Integration is therefore a retained change to
-reusable machinery on which later work depends — the definition of factory
-learning.
+reusable machinery on which later work depends — the definition of
+experience-responsive retention.
 
 The self-directed discovery lifecycle already contains a production-and-revision
 cycle over machinery. It is not adjacent to factory learning; it is factory
@@ -68,10 +68,10 @@ available](./open-ended-improvement-allocates-search-before-evaluation.md).
 What plays that role is a held theory of the factory's own purposes and
 organization. Such a theory cannot be a summary of the production record,
 because [commitment, not derivation, creates new ground
-truth](./commitment-not-derivation-creates-new-ground-truth.md): acquiring it
+truth](./commitment-not-derivation-creates-new-ground-truth.md): building it
 fixes content the experience does not determine — a conjectured mechanism, a
 resolution adopted because production needed some choice. Once committed, that
-content is unrecoverable from the record and can only be revised.
+content cannot be re-derived from the record; it can only be revised.
 
 A commitment that exceeds its evidence, whose consequences arrive later, and
 that must be revised when those consequences contradict it, is an ampliative
@@ -129,7 +129,7 @@ loop](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
 completely — search, reject-capable evaluation, and operative retention are all
 present and mechanized — while leaving the theory-learning loop empty. Its
 self-representation is a premise, not a candidate: the machine can improve
-indefinitely while learning nothing about its own organization.
+indefinitely while never revising its account of its own organization.
 
 That separability makes the convergence claim contentful rather than
 definitional: pin provenance to supplied-and-fixed and the two loops come apart
