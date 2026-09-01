@@ -12,7 +12,7 @@ source_notes:
 
 # The decisions that stay human, and what would move them
 
-> **Draft.** This article is circulating for comments; its claims, structure, and central thesis may still change. Counterexamples, rival mechanisms, and disputed experimental controls are welcome through the repository's issue tracker.
+> **Draft.** This article is circulating for comments; its claims, structure, and central thesis may still change. Counterexamples, rival mechanisms, and disputed experimental controls are welcome through [the repository's issue tracker](https://github.com/zby/commonplace/issues).
 
 Automating parts of software work does not leave a random residue behind. A
 decision moves out of human hands most easily when the automatic process has the

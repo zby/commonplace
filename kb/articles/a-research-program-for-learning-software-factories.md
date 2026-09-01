@@ -25,7 +25,7 @@ source_notes:
 
 # A research program for learning software factories
 
-> **Draft.** Comments and counterexamples are welcome through the repository's issue tracker.
+> **Draft.** Comments and counterexamples are welcome through [the repository's issue tracker](https://github.com/zby/commonplace/issues).
 
 > **TL;DR.** A software factory learns when its production experience causes retained changes to its machinery that later work depends on; it improves when a later factory state beats an earlier one under a declared comparison. This program tests whether LLM-based factories can learn this way without training new models, by acquiring, holding, using, and revising project theories.
 
@@ -33,7 +33,7 @@ source_notes:
 
 A [software factory](../notes/definitions/software-factory.md) is a configured production environment containing reusable production knowledge for a declared family of software. Its machinery can include models, prompts, natural-language artifacts, code, tools, workflows, tests, and evaluators.
 
-Prior work describes software factories configured to produce software factories as members of their declared family. In the [examples reviewed here](../notes/factory-construction-does-not-establish-knowledge-acquisition.md), people supply the production knowledge that determines the produced factory.
+The software-factory literature already describes factories configured to produce factories as members of their declared family: Greenfield and Short's factory-building factory, Cook and Kent's Tool Factory, and Langlois and Exertier's MDSoFa, a self-described "software factory factory." In [these examples](../notes/factory-construction-does-not-establish-knowledge-acquisition.md), people supply the family definitions, metamodels, mappings, and expertise that determine the produced factory.
 
 The research target is a factory that learns from what it produces. A factory undergoes [factory-level learning](../notes/factory-learning-retains-experience-in-reusable-machinery.md) when production experience—failures, surprises, evaluations, corrections, delayed consequences—causes a retained change to its reusable production machinery, and later production or factory development depends on that change.
 
@@ -41,9 +41,10 @@ In current agentic coding systems this learning is interleaved with operation ra
 
 ```text
 production and factory development under the current factory state
-  <-> experience from that work
-  <-> retained, organized state: project theory, indexes, tests, tools
+  -> experience from that work
+  -> retained, organized state: project theory, indexes, tests, tools
   -> later production and factory-development decisions
+  -> further experience, now under the changed factory state
 ```
 
 Improvement is judged in a second view that takes snapshots of this process. Fix two factory states and compare them:
@@ -59,7 +60,7 @@ factory state F
 
 The successor F' is a measurement boundary on a continuous process, not necessarily the product of one discrete construction step. It can be the factory state after a period of experience-responsive development, or after a single retained change. Adoption and later use make F' the operative successor.
 
-Under the declared comparison, F' must meet non-regression thresholds on the predecessor's prior scope—including an operative path for producing and improving further factories—and exceed a specified target on at least one production dimension the declared comparison names. This prevents a one-off gain that consumes the capacity for further improvement.
+The comparison is declared before the development it judges: its non-regression thresholds and target dimensions are fixed while only F exists, so improvement cannot be claimed on a dimension chosen after seeing F'. Under it, F' must meet non-regression thresholds on the predecessor's prior scope and exceed a specified target on at least one production dimension it names. The factories this program compares keep factory development in their declared scope, so the preserved prior scope includes an operative path for producing and improving further factories. This prevents a one-off gain that consumes the capacity for further improvement.
 
 The comparison is between [deployed systems rather than only model weights](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md). The successor may improve through changes to any operative part of its production machinery.
 
@@ -81,7 +82,7 @@ This gives a useful distinction. A **retained theory** persists in a recoverable
 
 Holding a theory guides search rather than guaranteeing a correct change in one step. The theory can be fallible—partial, provisional, or wrong—while still shaping what changes are considered, what must be preserved, how failures are interpreted, when to backtrack, and what should be revised. The bearer test is longitudinal: whether the system can [sustain coherent search under delayed feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md).
 
-Fallibility has a structural source. Acquiring a theory from experience is not only reorganizing information the experience already contains: the theory commits to content the experience does not determine—a mechanism conjectured beyond the observed cases, and resolutions adopted because production needed some choice, not because that choice was judged better. [Commitment, not derivation, creates new ground truth](../notes/commitment-not-derivation-creates-new-ground-truth.md): once committed, such content cannot be recovered from the production record; it can only be revised. Retained machinery changes—the factory-level learning defined above—[make the same kind of fallible commitment](../notes/theory-and-capacity-building-make-the-same-kind-of-commitment.md), though retracting one means restructuring what was built on it rather than revising an account. That is what makes theory revision a real event in the diagnostic path below rather than a recomputation, and it is why theory mediation is a substantive bet rather than a restatement of retrieval.
+Fallibility has a structural source. Acquiring a theory from experience is not only reorganizing information the experience already contains: the theory commits to content the experience does not determine—a mechanism conjectured beyond the observed cases, and resolutions adopted because production needed some choice, not because that choice was judged better. [Commitment, not derivation, creates new ground truth](../notes/commitment-not-derivation-creates-new-ground-truth.md): once committed, such content cannot be recovered from the production record; it can only be revised. Retained machinery changes—the factory-level learning defined above—[make the same kind of fallible commitment](../notes/theory-and-capacity-building-make-the-same-kind-of-commitment.md), though retracting one means restructuring what was built on it rather than revising an account. That is what makes theory revision a real event in the diagnostic path below rather than a recomputation, and it is why theory mediation—routing production and factory development through a held project theory—is a substantive bet rather than a restatement of retrieval.
 
 ## Natural-language theory is the implementation bet
 
@@ -95,7 +96,7 @@ Such a theory may [specialize search heuristics already represented in the model
 
 The first experiment isolates theory-holding—recognizing and applying retained project theory without a project-specific cue—in ordinary software projects. Each project should contain a non-obvious reusable design idea, a novel requirement that can be met either by extending that idea or by adding a local special case, and a later demand that exposes whether the earlier modification preserved the program's [existing organization](../notes/project-theory-relates-new-demands-to-existing-organization.md).
 
-The initial benchmark supplies the project theory to isolate holding and activation. A later acquisition condition starts without it and requires the system to construct and revise project theory from permitted project and production evidence.
+The initial benchmark supplies the project theory to isolate holding and activation. A later acquisition condition starts without it and requires the system to construct and revise project theory from permitted project and production evidence. Acquisition is tested by the same probes as holding: the constructed theory must be recoverable, must change the system's modifications when withheld or replaced, and must be revised when its consequences arrive.
 
 The diagnostic path is:
 
@@ -118,6 +119,6 @@ The program uses two complementary testbeds. **Commonplace**—the agent-operate
 
 The program is staged accordingly. In the current phase, the theory's main use is to guide the design of Commonplace itself, and the first experiment is runnable in this phase; the controlled interventions and the successor-factory experiment wait until the system is sound enough to support them. Using the theory to design the system is not yet evidence for the theory, but it produces the testbed in which that evidence can be gathered.
 
-The theory-mediated approach loses support if changing or withholding project theory does not change construction decisions, if another learning mechanism—including plain retention and retrieval of the raw production record—performs better at comparable total cost, or if each new area still requires substantial human-built specialization. Richard Sutton's essay [*The Bitter Lesson*](http://www.incompleteideas.net/IncIdeas/BitterLesson.html) argues that approaches built on human-supplied domain knowledge are eventually overtaken by general methods that use computation and learning; the bootstrap fits that lesson only if it can [outgrow recurring human-supplied specialization](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md). A [companion article](the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) argues the lesson does not require all learning to live in model weights.
+The theory-mediated approach loses support if changing or withholding project theory does not change construction decisions, if another learning mechanism—including plain retention and retrieval of the raw production record—performs better at comparable total cost, or if each new area still requires substantial human-built specialization. The program's hand-built starting state—its theories, benchmarks, and declared comparisons—is a bootstrap: the running system uses its current machinery to guide the search that produces later versions, rather than being scaffolding someone rebuilds for each new area. Richard Sutton's essay [*The Bitter Lesson*](http://www.incompleteideas.net/IncIdeas/BitterLesson.html) argues that approaches built on human-supplied domain knowledge are eventually overtaken by general methods that use computation and learning, and calling the starting state a bootstrap does not by itself answer it: the bootstrap fits the lesson only if it can [outgrow recurring human-supplied specialization](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md). A [companion article](the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) argues the lesson does not require all learning to live in model weights.
 
-A successful transition would establish a bounded result: a software factory can turn its own production experience into held project theory strongly enough that a later factory state passes the declared better-than comparison and becomes operative, without training a new model. Indefinite compounding and computational closure would remain open.
+A successful transition would establish a bounded result: a software factory can turn its own production experience into held project theory strongly enough that a later factory state passes the declared better-than comparison and becomes operative, without training a new model. Indefinite compounding would remain open, and so would computational closure—whether the consequential decisions in this loop can stop requiring a human actor. The comparison with formal self-modifying systems is developed elsewhere in this knowledge base: [open-ended theory learning and factory learning close the same reflective loop](../notes/open-ended-theory-learning-and-factory-learning-close-the-same.md), and Schmidhuber's proof-gated Gödel machine marks the corner of that design space where the theory is supplied rather than learned.
