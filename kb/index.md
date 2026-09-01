@@ -14,14 +14,14 @@ Two separate pressures keep the design modular. Different collections support di
 
 **Learning software factories.** The current
 [research program](./articles/a-research-program-for-learning-software-factories.md)
-asks whether an agentic software-production system can learn reusable
-family-specific production machinery from experience. Minimal factory learning
-can use many update mechanisms. For open-ended coherent modification, the
-program treats a project-theory-bearing capacity as necessary and tests retained
-natural-language theory as an explicit, addressable realization. Commonplace is
-the live human-inclusive testbed; a programming-agent comparison is planned. The
-[Naur note](./notes/naur-equates-machine-execution-with-formulated-criteria.md)
-grounds the functional constraint, while the [coherent-search
+asks whether a software factory configured to produce factories can construct
+and adopt a better successor without training a new model. It tests whether an
+LLM-based factory can acquire and hold project theory strongly enough to keep
+modification coherent across novel demands; retained natural-language theory is
+the addressable realization under test. Commonplace is the live human-inclusive
+testbed; a controlled programming-agent comparison is planned. The [Naur
+note](./notes/naur-equates-machine-execution-with-formulated-criteria.md)
+reopens the bearer question, while the [coherent-search
 note](./notes/program-theory-sustains-search-under-delayed-feedback.md)
 states the longitudinal test. The [Bitter Lesson
 article](./articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)

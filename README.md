@@ -81,15 +81,16 @@ src/commonplace/          Packaged operational engine
 
 ## Research routes
 
-**Learning software factories.** Can an agentic software-production system learn
-reusable family-specific production machinery from experience? Minimal factory
-learning can use many update mechanisms. For open-ended coherent modification,
-the [research program](./kb/articles/a-research-program-for-learning-software-factories.md)
-treats a project-theory-bearing capacity as necessary and tests retained
-natural-language theory as an explicit, addressable realization. Commonplace is
-the live human-inclusive testbed; a programming-agent comparison is planned. The
-[Naur note](./kb/notes/naur-equates-machine-execution-with-formulated-criteria.md)
-grounds the functional constraint, while the [coherent-search
+**Learning software factories.** Can a software factory configured to produce
+factories construct and adopt a better successor without training a new model?
+The [research program](./kb/articles/a-research-program-for-learning-software-factories.md)
+tests whether an LLM-based factory can acquire and hold project theory strongly
+enough to keep modification coherent across novel demands; retained
+natural-language theory is the addressable realization under test. Commonplace
+is the live human-inclusive testbed; a controlled programming-agent comparison
+is planned. The [Naur
+note](./kb/notes/naur-equates-machine-execution-with-formulated-criteria.md)
+reopens the bearer question, while the [coherent-search
 note](./kb/notes/program-theory-sustains-search-under-delayed-feedback.md)
 states the longitudinal test. Companion articles develop the [Bitter Lesson's
 scaling test](./kb/articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
