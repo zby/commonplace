@@ -21,7 +21,7 @@ Three terms keep the comparison's endpoints straight.
 
 A candidate that is generated and discarded never enters the comparison, so a better-factory claim cannot be read off a construction event. Two routes produce a successor, and they differ in where the evaluation sits relative to the causal path.
 
-**Measurement over snapshots.** In an interleaved process — a failed task causes a note, a test, a revised rule, and a retried task, all under the running factory — there is no phase in which an unchanged factory merely accumulates experience. The successor is then a measurement boundary drawn on a continuous process, not the product of a discrete construction step. It may be the state after a period of experience-responsive development or after a single retained change; either way it is already operative when measured, and the measurement judges a realized trajectory rather than performing adoption.
+**Measurement over snapshots.** In an interleaved process — a failed task causes a note, a test, a revised rule, and a retried task, all under the running factory — there is no phase in which an unchanged factory merely accumulates experience. The successor is then a measurement boundary drawn on a continuous process, not the product of a discrete construction step. It may be the state after a period of development or after a single retained change; either way it is already operative when measured, and the measurement judges a realized trajectory rather than performing adoption.
 
 **Candidate admission.** A factory constructed and evaluated before installation is a candidate, and the evaluation decides whether it becomes the successor. Here the assessment is an admission decision inside the causal path that determines what the factory retains.
 

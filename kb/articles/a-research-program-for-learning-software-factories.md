@@ -60,7 +60,7 @@ The learning surface spans the whole factory: [the deployed system, not the mode
 
 ## Held project theory is the program's hypothesis for coherent modification
 
-The hard part of experience-responsive development is changing software and reusable production machinery without silently destroying purposes and organization that immediate acceptance tests capture only partly.
+A change can pass every immediate test and still damage the system, because acceptance tests capture a program's purposes and organization only partly. The damage surfaces later, as changes that no longer fit. The hard part of the loop is making retained changes — to the software and to the factory's own machinery — without this kind of silent loss.
 
 Peter Naur's [1985 essay *Programming as Theory Building*](../sources/programming-as-theory-building.ingest.md) argues that programmers do this by building and holding a project-specific theory: an understanding of how the program maps onto the activity it supports, why it is organized as it is, and how new demands relate to that organization.
 
