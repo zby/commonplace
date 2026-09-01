@@ -68,6 +68,7 @@ plugins:
         'notes/a-theory-may-name-a-choice-only-as-a-bound-variable.md': 'notes/artifacts-must-preserve-named-choice-scope.md'
         'notes/access-burden-and-transformation-burden-are-independent-query.md': 'notes/access-burden-and-transformation-burden-are-distinct-query-dimensions.md'
         'notes/actionable-theories-and-reflexive-system-construction.md': 'notes/self-improving-systems-README.md'
+        'notes/ad-hoc-explanation-is-rational-under-fast-feedback-and-no-reuse.md': 'notes/ad-hoc-explanation-can-be-rational-when-error-is-cheap-and-local.md'
         'notes/addressability-grain-not-compression-ratio-decides-whether-a.md': 'notes/addressability-grain-sets-a-matched-selective-read-floor.md'
         'notes/addressable-hypotheses-may-reduce-target-data-under-structured-shifts.md': 'notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md'
         'notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md': 'notes/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md'

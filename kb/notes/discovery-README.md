@@ -30,7 +30,7 @@ A learning operation distinct from constraining and from source-derived reshapin
 
 ## Conditions for discovery
 
-- [ad hoc explanation is rational under fast feedback and no reuse](./ad-hoc-explanation-is-rational-under-fast-feedback-and-no-reuse.md) — prices the lifecycle's heavy phases: derive/test/integrate is priced for delayed feedback and retention, so disposable local guesses are the rational regime elsewhere and the reach toll belongs at promotion
+- [ad hoc explanation can be rational when error is cheap and local](./ad-hoc-explanation-can-be-rational-when-error-is-cheap-and-local.md) — prices the lifecycle's heavy phases: derive/test/integrate controls errors that can propagate, while disposable guesses can select cheap local probes before the reach toll is paid at promotion
 - [short composable notes maximize combinatorial discovery](./short-composable-notes-maximize-combinatorial-discovery.md) — the artifact-shape argument: small claims compose into more candidate generalizations
 - [information value is observer-relative](./information-value-is-observer-relative.md) — the gap discovery (and consumer-directed reshaping) bridges: structure exists but is inaccessible to the bounded observer until transformed
 - [Epiplexity by example](./epiplexity-by-example-what-entropy-and-complexity-miss.md) — worked examples: encrypted messages, shuffled textbooks, CSPRNGs, and chess notation make observer-relative extractable structure concrete

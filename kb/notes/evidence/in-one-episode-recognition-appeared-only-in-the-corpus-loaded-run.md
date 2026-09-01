@@ -38,22 +38,26 @@ The corpus-loaded session identified those retained notes, declined the
 duplicate proposal, raised the tension, and integrated only the convergence
 claim it judged genuinely new, as [open-ended theory learning and factory
 learning close the same reflective loop](../open-ended-theory-learning-and-factory-learning-close-the-same.md)
-(commits `0a2c21f`, `ae3f1f9`, `c436c2d`, and merge `bb9aa1f` on the PR 172
-branch).
+(mainline squash commit `d07f067a` for PR 172). That commit preserves the
+accepted output, not the intermediate decision trace.
 
 ## What the episode supports
 
-One bounded observation: the composite of interpreter plus retained corpus
-performed recognition that the interpreter alone did not, on this topic, on this
-day. Retained theory and holding it are different — the corpus is the stored
-object, and holding it is a capacity of the composite that reads it, as
+One bounded observation: recognition appeared in the corpus-loaded judging run
+and did not appear in the repository-free generation run, on this topic, on this
+day. This is a descriptive contrast between two bundled conditions, not an
+estimate of the corpus's effect. Retained theory and holding it are different —
+the corpus is the stored object, and holding it is a capacity of the composite
+that reads it, as
 [Naur's human-binding argument](../naur-equates-machine-execution-with-formulated-criteria.md)
-is corrected to say. Here the composite held enough of it to place a new
-proposal against what was already there.
+is corrected to say. The episode is a minimal witness that one deployed
+composite used retained material to place a cued proposal against what the KB
+already held.
 
-In this instance storage plus loading was necessary for that: the same topic,
-met without the corpus, produced re-derivation and re-proposal instead. That is
-all the episode establishes.
+Because access, interpreter, task, doctrine, tools, and prior context moved
+together, the episode cannot show which difference produced recognition. It
+motivates matched contrasts; it establishes neither that corpus loading was
+necessary nor that access would be sufficient in another run.
 
 ## Scope
 
@@ -69,9 +73,10 @@ all the episode establishes.
   demands: the second was handed the first's output and asked to judge it, which
   is an easier task than producing the synthesis unaided.
 - **The observer is a participant.** The corpus-loaded session is both the party
-  credited with recognition and the party reporting it. The commits and retained
-  notes are independently checkable; the judgment that a proposed framing was
-  *already rejected* is that session's own.
+  credited with recognition and the party reporting it. The mainline squash
+  commit and retained notes make the accepted output checkable, but not the
+  intermediate reasoning; the judgment that a proposed framing was *already
+  rejected* is that session's own.
 - **The other side of the contrast is gone.** The ChatGPT-side transcript was
   never captured; only the pasted conclusion survives in the session record, and
   [history has one chance to become checkable](../history-has-one-chance-to-become-checkable.md).
