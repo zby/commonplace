@@ -20,7 +20,6 @@ source_notes:
   - kb/notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
   - kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md
   - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
-  - kb/notes/project-theory-relates-new-demands-to-existing-organization.md
   - kb/sources/programming-as-theory-building.ingest.md
 ---
 
