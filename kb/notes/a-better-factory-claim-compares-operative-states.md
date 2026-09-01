@@ -39,7 +39,7 @@ The compared states span the whole production environment. Because [the deployed
 
 ## Preserving a repeatable factory-development path falls out of scope indexing
 
-When the factory's declared scope includes [factory development](./definitions/factory-development.md), the predecessor's prior scope already contains an operative path for producing and improving further factories. Non-regression over that scope therefore requires the successor to keep such a path. This is not an extra virtue bolted onto the comparison; it is what scope-indexed non-regression already says once factory development is in scope.
+When the predecessor's prior capability set includes an operative path for [factory development](./definitions/factory-development.md), non-regression over that set requires the successor to keep such a path. This is not an extra virtue bolted onto the comparison; it is what scope-indexed non-regression already says once the factory-development path is part of what the predecessor could do.
 
 What it rules out is a one-off gain that consumes the capacity for further improvement: a successor that scores better on the target dimension while closing the route by which any later successor could be produced. Checking it means checking that [the revision path remains applicable after the transition](./a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md) for the factory-development redesign class, not merely that the successor is editable.
 
@@ -49,7 +49,7 @@ This preservation requirement is weaker than compounding and is checked at a dif
 
 The learner boundary declares whose causal contributions count as the factory's own learning. The evaluator location declares who or what performs the comparison. The two come apart, and the route that produced the successor is what separates them.
 
-A person who only measures whether a realized change helped stays outside the learner boundary: the measurement follows the update and does not determine it. A person whose judgment controls installation is inside it, because an admission decision determines what the factory retains. The same human activity — reading results and forming a verdict — falls on opposite sides depending on whether it gated the successor. So evaluator location is not recoverable from who was in the room; it has to be declared alongside the boundary.
+Measuring whether a realized change helped does not by itself place a person on the causal update path: the measurement follows the update and does not determine it. Judgment that controls installation does, because an admission decision determines what the factory retains. The same human activity — reading results and forming a verdict — falls on opposite sides depending on whether it gated the successor. So evaluator location is not recoverable from who was in the room; it has to be declared alongside the boundary.
 
 This is also why the oracle problem for better-factory claims is sharp rather than incidental. Judging a factory's capability over its declared family is expensive; an acceptance test the constructing factory can inspect can be gamed; and if people supply the decisive acceptance judgments, the human-inclusive boundary re-enters at the headline result rather than at a labelled input.
 
