@@ -32,13 +32,13 @@ source_notes:
 
 > **TL;DR.** A software factory learns when its production experience causes retained changes to its machinery that make later factory states better. This program tests whether LLM-based factories can learn this way without training new models, by acquiring, holding, using, and revising project theories.
 
-## Better software factories
+## Factories that learn
 
 A [software factory](../notes/definitions/software-factory.md) is a configured production environment containing reusable production knowledge for a declared family of software. Its machinery can include models, prompts, natural-language artifacts, code, tools, workflows, tests, and evaluators.
 
 The software-factory literature already describes factories configured to produce factories as members of their declared family: Greenfield and Short's factory-building factory, Cook and Kent's Tool Factory, and Langlois and Exertier's MDSoFa, a self-described "software factory factory." In [these examples](../notes/factory-construction-does-not-establish-knowledge-acquisition.md), people supply the family definitions, metamodels, mappings, and expertise that determine the produced factory.
 
-The research target is a factory that learns from its own production. The definition has two layers. The causal layer is **experience-responsive retention**: production experience causes a retained change to the factory's reusable production machinery, and later production or factory development depends on that change. The experience can be of any kind—a failure, a surprise, a consequence arriving long after its cause. Retention is relative to a declared learner boundary. Draw the boundary around the operator and the system together, and an episode where the operator decides what to retain counts; draw it around the system alone, and the same change was made from outside. [Factory-level learning](../notes/factory-learning-is-experience-responsive-retention-that-improves.md) is retention that improves the factory. Improvement is objective-relative, so learning carries a second index besides the boundary: the objective the retained change made the factory better against.
+The research target is a factory that learns from its own production. The definition has two layers. The causal layer is **experience-responsive retention**: production experience causes a retained change to the factory's reusable production machinery, and later production or factory development depends on that change. The experience can be of any kind—a failure, a surprise, a consequence arriving long after its cause. Retention is relative to a declared learner boundary. Draw the boundary around the operator and the system together, and an episode where the operator decides what to retain counts; draw it around the system alone, and the same change was made from outside. [Factory-level learning](../notes/factory-learning-is-experience-responsive-retention-that-improves.md) is retention that improves the factory. Improvement is objective-relative, so learning carries a second index besides the boundary: the objective against which the retained change improved the factory.
 
 In current agentic coding systems this retention is interleaved with operation rather than confined to a separate phase. A failed task can immediately cause a note to be written, a test added, a rule revised, a tool changed, and the task retried; [Compound Engineering's retention pathway](../agentic-systems/compound-engineering-plugin.md) works this way. Some of those changes already change the factory. There need be no phase in which an unchanged factory merely accumulates experience before retention begins. The process is a loop, not a pipeline:
 
@@ -54,24 +54,9 @@ production and factory development under the current factory state
 
 The factory judges what a failure means and what is worth keeping, organizes the result so later work can find it, and, where the experience leaves resolutions open, settles them with [explanatory and constructive commitments of the same fallible kind](../notes/theory-and-capacity-building-make-the-same-kind-of-commitment.md) — content the evidence does not entail.
 
-This is the complete occurrence condition for experience-responsive retention. A particular factory may add internal controls on what it retains or adopts — heuristic self-evaluation, preregistered internal comparisons, up to a proof gate in the style of Schmidhuber's Gödel machine — but these are design choices of the factory, not parts of the definition. Even a proof gate certifies only against the axioms it is given.
+A particular factory may add internal controls on what it retains or adopts — heuristic self-evaluation, preregistered internal comparisons, up to a proof gate in the style of Schmidhuber's Gödel machine — but these are design choices of the factory, not parts of the definition. Even a proof gate certifies only against the axioms it is given.
 
-Retention does not by itself establish improvement. The program measures it with an instrument laid over snapshots of the process:
-
-```text
-declare the comparison while factory state F is current
-  -> intervening production and factory development
-  -> factory state F'
-  -> compare F' with F under the declared comparison
-```
-
-The successor F' is a measurement boundary on a continuous process, not necessarily the product of one discrete construction step. It can be the factory state after a period of experience-responsive development, or after a single retained change; either way it is already the later operative state, and the measurement judges a realized trajectory rather than performing adoption. A factory constructed and evaluated before installation is a different case: a candidate, which becomes the successor only when installed and depended on — the shape the successor-factory experiment below uses. The two cases also separate two human roles: measuring a realized transition does not by itself put a person on the causal update path, while judgment that controls installation does.
-
-The comparison is [declared before the development it judges](../notes/a-better-factory-claim-compares-operative-states.md): its non-regression thresholds and target dimensions are fixed while only F exists, so improvement cannot be claimed on a dimension chosen after seeing F'. Under it, F' must meet non-regression thresholds on the predecessor's prior scope and exceed a specified target on at least one production dimension it names. The comparison protects the predecessor's operative factory-development path as part of its prior capability set, so a successor must keep a path for producing and improving further factories. This prevents a one-off gain that consumes the capacity for further improvement.
-
-The comparison is between [deployed systems rather than only model weights](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md). The successor may improve through changes to any operative part of its production machinery.
-
-Passing the comparison does not by itself establish learning. The constructors reviewed above show that a capable builder can produce a better factory from supplied specifications, with people holding the production knowledge that matters. The learning claim requires the experience link: retained experience from the predecessor's own production must causally enter the changes the improvement depends on. [An experiment identifies only the contrast it actually runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md), so the experiments below manipulate that link directly.
+The learning surface spans the whole factory: [the deployed system, not the model alone, is the unit of learning](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md), so a factory can learn through changes to any operative part of its production machinery, with model weights fixed. How the program establishes that a later factory state is better is part of its test design, below.
 
 ## Held project theory is the program's hypothesis for coherent modification
 
@@ -103,7 +88,24 @@ Such a theory may [specialize search heuristics already represented in the model
 
 ## How to test the program
 
-Two staged experiments carry the program's causal claims, and two testbeds host them.
+The test design has three parts: an instrument that measures improvement, two staged experiments that carry the causal claims, and two testbeds that host them.
+
+### Measuring improvement
+
+Retention does not by itself establish improvement. The program measures improvement with a comparison laid over snapshots of the process:
+
+```text
+declare the comparison while factory state F is current
+  -> intervening production and factory development
+  -> factory state F'
+  -> compare F' with F under the declared comparison
+```
+
+F' is a measurement boundary on a continuous process — the factory state after a period of development, or after a single retained change — and it is already operative when measured: the comparison judges a realized trajectory rather than performing adoption. A factory evaluated before installation is instead a candidate, which becomes the successor only when installed and depended on; the successor-factory experiment below uses that shape. Measuring a realized transition does not put a person on the causal update path; judgment that controls installation does.
+
+The comparison is [declared before the development it judges](../notes/a-better-factory-claim-compares-operative-states.md), so improvement cannot be claimed on a dimension chosen after seeing F'. F' must meet non-regression thresholds on the predecessor's prior capability set and exceed a declared target on at least one dimension. That capability set includes the predecessor's factory-development path, so a one-off gain that consumes the capacity for further improvement fails the comparison.
+
+Passing the comparison does not by itself establish learning. The constructors reviewed above show that a capable builder can produce a better factory from supplied specifications, with people holding the production knowledge that matters. The learning claim requires the experience link: retained experience from the predecessor's own production must causally enter the changes the improvement depends on. [An experiment identifies only the contrast it actually runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md), so the experiments manipulate that link directly.
 
 ### Experiment one: theory-holding and acquisition
 
@@ -128,7 +130,7 @@ Experiment one is a component test of the theory-holding function on ordinary pr
 
 ### Experiment two: the successor factory
 
-A later experiment packages the interleaved process into one attributable episode: after a period of operation, a factory is given the explicit task of constructing a successor. Candidate successors are evaluated under the fixed comparison against the predecessor's prior scope, the target improvement, and their ability to repeat the factory-development process. Evaluation must guide revision of the candidate; an accepted candidate must then be adopted and used in later production and factory development. Three contrasts carry the causal claims, all with model weights fixed to isolate the proposed non-weight route and the task specification held constant. Supplying versus withholding the predecessor's whole retained state — production record and theory together — estimates the contribution of that experience package beyond the incumbent factory, which already embodies earlier experience, and the task specification. Supplying the production record with versus without the distilled theory estimates the additional contribution of the explicit theory surface; the record-only condition may still reconstruct or implicitly carry similar organization. Replacing the correct theory with a controlled wrong one, record unchanged, tests content-sensitive steering rather than the mere presence of a theory-shaped artifact.
+A later experiment packages the interleaved process into one attributable episode: after a period of operation, a factory is given the explicit task of constructing a successor. Candidate successors are evaluated under the fixed comparison against the predecessor's prior capability set, the target improvement, and their ability to repeat the factory-development process. Evaluation must guide revision of the candidate; an accepted candidate must then be adopted and used in later production and factory development. Three contrasts carry the causal claims, all with model weights fixed to isolate the proposed non-weight route and the task specification held constant. Supplying versus withholding the predecessor's whole retained state — production record and theory together — estimates the contribution of that experience package beyond the incumbent factory, which already embodies earlier experience, and the task specification. Supplying the production record with versus without the distilled theory estimates the additional contribution of the explicit theory surface; the record-only condition may still reconstruct or implicitly carry similar organization. Replacing the correct theory with a controlled wrong one, record unchanged, tests content-sensitive steering rather than the mere presence of a theory-shaped artifact.
 
 The declared comparison has an unresolved oracle problem: the program has no trustworthy mechanism for deciding whether a successor is genuinely better. Each candidate mechanism fails in its own way. Judging a factory's capability over a family of software is expensive. An acceptance test the constructing factory can inspect can be gamed. And if people supply the decisive acceptance judgments, the human-inclusive boundary re-enters at the headline result. The program does not yet have an evaluation design that removes this; it is recorded as an open problem of the second experiment, not a solved part of it.
 
