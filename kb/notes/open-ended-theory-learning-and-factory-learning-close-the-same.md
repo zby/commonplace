@@ -11,7 +11,7 @@ Two research directions in this knowledge base look like separate programs. One
 asks how a system acquires, tests, and revises explanatory theories about its
 own organization. The other asks how [a software factory learns when production
 experience changes reusable machinery used
-later](./factory-learning-retains-experience-in-reusable-machinery.md). They are
+later](./factory-learning-is-experience-responsive-retention-that-improves.md). They are
 the same loop reached from opposite ends: each, pushed to where it stops being
 satisfiable on its own terms, requires what the other supplies.
 
@@ -180,7 +180,7 @@ outside.
 Relevant Notes:
 
 - [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) — grounds: supplies the causally co-indexed path the two directions are shown to converge on
-- [A software factory learns when production experience changes reusable machinery used later](./factory-learning-retains-experience-in-reusable-machinery.md) — grounds: supplies the factory-side starting requirement the second derivation begins from
+- [A software factory learns when production experience changes reusable machinery used later](./factory-learning-is-experience-responsive-retention-that-improves.md) — grounds: supplies the factory-side starting requirement the second derivation begins from
 - [Discovery lifecycle](./definitions/discovery-lifecycle.md) — defined-in: supplies the six-phase model the first derivation begins from
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — grounds: supplies the coherence requirement that forces a held theory into the factory loop
 - [Commitment, not derivation, creates new ground truth](./commitment-not-derivation-creates-new-ground-truth.md) — grounds: why an acquired factory theory is ampliative and revisable rather than recomputable
