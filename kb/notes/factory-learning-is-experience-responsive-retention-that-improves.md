@@ -39,11 +39,11 @@ Each link excludes a nearby but weaker event.
 - tests, evaluators, validation rules, monitors, and recovery procedures; or
 - reusable lifecycle content for requirements, architecture, deployment, operation, maintenance, or migration.
 
-The same production event can have both product-level and factory-level effects. A failed test may trigger a patch to the current product and also reveal that a reusable test generator or release gate should change. Only the latter change is factory-level retention relative to the producing factory — and learning, if it improves the factory.
+The same production event can have both product-level and factory-level effects. A failed test may trigger a patch to the current product and also reveal that a reusable test generator or release gate should change. Only the latter change is factory-level retention relative to the producing factory.
 
 ## Retention is boundary-relative, and learning inherits it
 
-The causal determination must occur inside the learner boundary being claimed. At a human-inclusive boundary, a person and computational tools may jointly interpret experience and revise the factory. At a boundary that excludes the operator, a human-selected schema, evaluator, decomposition, promotion decision, or recovery step remains an external intervention rather than retention by the technical subsystem.
+The causal determination must occur inside the learner boundary being claimed. At a human-inclusive boundary, a person and computational tools may jointly interpret experience and revise the factory. At a boundary that excludes the operator, a human-selected schema, promotion decision, or recovery step remains an external intervention rather than retention by the technical subsystem.
 
 This distinction is about causal responsibility, not who typed the final bytes. An LLM can author a file while a person supplies the decisive change. Conversely, a person can provide an observation or acceptance response while the system determines how reusable machinery should change.
 
@@ -76,11 +76,11 @@ Those are separately testable extensions.
 
 ## Direct updates and search both qualify
 
-Some learning paths expose proposals, reject candidates, select one, and install it. Others directly update a retained rule, policy, model, or schema in response to evidence. Both can satisfy the minimal path when the causal and later-use relations are established.
+Some retention paths expose proposals, reject candidates, select one, and install it. Others directly update a retained rule, policy, model, or schema in response to evidence. Both can satisfy the minimal path when the causal and later-use relations are established.
 
-The [proposal-selection loop](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) remains important for architectures that expose rejectable candidates. It should not be imported as the definition of all factory learning.
+The [proposal-selection loop](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) remains important for architectures that expose rejectable candidates. It should not be imported as the definition of the retention path itself.
 
-Likewise, [continual-learning governance](./continual-learning-requires-governing-behaviour-changing-writes.md) adds selection, validation, authorization, coordination, and regression control for safe deployment. Those requirements govern learning well; they are stronger than the minimal occurrence condition.
+Likewise, [continual-learning governance](./continual-learning-requires-governing-behaviour-changing-writes.md) adds selection, validation, authorization, coordination, and regression control for safe deployment. Those requirements govern retention well; they are stronger than the minimal occurrence condition.
 
 ## Evidence
 
@@ -98,7 +98,7 @@ Withholding, reverting, or replacing the change strengthens causal attribution. 
 ## Scope
 
 - The definition is relative to a declared factory and product-family boundary.
-- Accumulating product facts or traces can be continual learning at the deployed-system level without being factory-level learning.
+- Accumulating product facts or traces can be retention at the deployed-system level without touching reusable factory machinery.
 - Human maintenance can improve a factory without demonstrating learning by a narrower technical subsystem.
 - Factory-level learning can occur in natural-language, symbolic, parametric, or mixed representational forms.
 - One occurrence does not establish indefinite learning capacity or recursive self-improvement.
