@@ -64,7 +64,7 @@ A change can pass every immediate test and still damage the system, because acce
 
 Peter Naur's [1985 essay *Programming as Theory Building*](../sources/programming-as-theory-building.ingest.md) argues that programmers do this by building and holding a project-specific theory: an understanding of how the program maps onto the activity it supports, why it is organized as it is, and how new demands relate to that organization.
 
-Naur's compiler example makes the last capacity especially important. The original group recognized that existing compiler facilities applied to novel modification requests. A later group, despite receiving the program and extensive documentation, proposed locally plausible additions that bypassed those facilities. Access to information was not enough; [the new demand had to be compared with the program's existing organization](../notes/project-theory-relates-new-demands-to-existing-organization.md).
+Naur's compiler example makes the last capacity especially evident. The original group recognized that existing compiler facilities applied to novel modification requests. A later group, despite receiving the program and extensive documentation, proposed locally plausible additions that bypassed those facilities. Access to information was not enough; [the new demand had to be compared with the program's existing organization](../notes/project-theory-relates-new-demands-to-existing-organization.md).
 
 The research program treats the project-theory requirement as a functional hypothesis to be challenged experimentally, not as a necessity result established by Naur's cases.
 
