@@ -12,9 +12,8 @@ asks how a system acquires, tests, and revises explanatory theories about its
 own organization. The other asks how [a software factory learns when production
 experience changes reusable machinery used
 later](./factory-learning-retains-experience-in-reusable-machinery.md). They are
-the same loop reached from opposite ends, because each direction, followed to
-where it stops being satisfiable on its own terms, requires exactly what the
-other supplies.
+the same loop reached from opposite ends: each, pushed to where it stops being
+satisfiable on its own terms, requires what the other supplies.
 
 The shared loop is the causally co-indexed path that [theory-mediated
 self-improvement needs interpretation, retention, and independent
@@ -38,9 +37,9 @@ the discriminating consequences can be gathered by observing that domain without
 touching the observer. For a theory about the system's own organization, the
 consequences that bear on it are largely the consequences of acting on it: what
 a change guided by the theory costs when a later demand arrives. So the theory
-must acquire a consumer, a channel, and a force before the evidence that could
-defeat it exists. The test phase is not merely followed by operative retention;
-it depends on it.
+must already be operative—retained, and acted on by later work—before the
+evidence that could defeat it exists. The test phase does not precede operative
+retention; it depends on it.
 
 **Integration is a machinery change.** The lifecycle's final phase reconnects
 prior evidence under the accepted claim and updates the artifacts that use it.
@@ -64,11 +63,9 @@ feedback](./program-theory-sustains-search-under-delayed-feedback.md) — a
 modification must preserve purposes and organization that the immediate
 acceptance tests capture only partly, and the evidence that would expose the
 damage arrives after the change is already in the machinery. Something has to
-allocate search and interpret failures before that evidence exists, which is the
-general condition that [open-ended improvement must allocate search before
-decisive evaluation is
-available](./open-ended-improvement-allocates-search-before-evaluation.md)
-states.
+allocate search and interpret failures before that evidence exists, since
+[open-ended improvement must allocate search before decisive evaluation is
+available](./open-ended-improvement-allocates-search-before-evaluation.md).
 
 What plays that role is a held theory of the factory's own purposes and
 organization. Such a theory cannot be a summary of the production record,
@@ -97,11 +94,10 @@ that patches without holding a theory accumulates local special cases, because
 nothing in it recognizes which existing organization a new demand should have
 gone through.
 
-Those two failure modes are what the claim forbids being avoidable by the
-half-loop alone. A system that sustains long-run coherent factory improvement
-while holding no revisable theory of its own organization refutes the second
-derivation directly, and plain retention and retrieval of the raw production
-record is the specific rival that would do it.
+The claim is refutable at these failure modes. A system that sustains long-run
+coherent factory improvement while holding no revisable theory of its own
+organization refutes the second derivation directly, and plain retention and
+retrieval of the raw production record is the specific rival that would do it.
 
 ## Two axes place the Gödel machine
 
@@ -129,36 +125,34 @@ construction differently: its axioms describing the machine, its hardware, its
 environment, and its utility function are premises of every rewrite and are
 revised by none of them. Its provenance is pinned to supplied-and-fixed.
 
-This is why the Gödel machine matters here rather than as a maturity endpoint.
+The Gödel machine therefore enters as a contrast case, not a maturity endpoint.
 It closes the [proposal-selection improvement
 loop](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
 completely — search, reject-capable evaluation, and operative retention are all
 present and mechanized — while leaving the theory-learning loop empty. Its
-self-representation is a premise, not a candidate. Everything the machine can
-ever conclude about itself was available in the axioms it started with, so a
-Gödel machine can improve indefinitely and learn nothing about its own
-organization that it did not begin with.
+self-representation is a premise, not a candidate: the machine can improve
+indefinitely while learning nothing about its own organization.
 
-That separability is what makes the convergence claim contentful rather than
-definitional. Pin provenance to supplied-and-fixed and the two loops come apart
-cleanly. The convergence is asserted only for the open-ended corner, where the
-theory is acquired and revisable — and the corner has a diagnostic: theory
-provenance decides where the pre-formal work sits, since [improvements outside
-the admitted formal language need a pre-formal stage
-somewhere](./unformalized-improvements-need-a-pre-formal-stage-in-the-loop.md).
-Acquired provenance puts that stage inside the loop. Supplied provenance fixes
-it at design time, in whoever chose the axioms, which is also why the machine's
-utility function is unrevisable from within: [revising an improvement objective
-is licensed from outside it or is not
+That separability makes the convergence claim contentful rather than
+definitional: pin provenance to supplied-and-fixed and the two loops come apart
+cleanly, so the convergence is asserted only for the corner where the theory is
+acquired and revisable. Provenance also decides where the pre-formal work sits,
+since [improvements outside the admitted formal language need a pre-formal
+stage
+somewhere](./unformalized-improvements-need-a-pre-formal-stage-in-the-loop.md):
+acquired provenance puts that stage inside the loop, while supplied provenance
+fixes it at design time, in whoever chose the axioms. The same placement
+explains why the machine's utility function is unrevisable from within —
+[revising an improvement objective is licensed from outside it or is not
 improvement](./revising-an-improvement-objective-is-licensed-from-outside-it.md),
-and a construction whose highest level is its own supplied objective has no such
+and a construction whose highest level is its own supplied objective has no
 outside.
 
 ## Scope
 
-- The convergence is over the loop's functional requirements. It says nothing
-  about shared substrate, tempo, artifact granularity, or whether one process
-  performs several functions.
+- The convergence is over the loop's functional requirements, not shared
+  substrate, tempo, artifact granularity, or identity of research agendas. The
+  two directions still differ in what they measure and what counts as a result.
 - Reflective membership is boundary-relative. Open-ended theory learning whose
   object lies outside the learner's own behavior-determining organization is
   ordinary empirical inquiry and does not converge with factory learning.
@@ -169,9 +163,6 @@ outside.
   production setting whose tests fully capture the purposes a change could
   damage would not force a held theory, because the immediate gate would carry
   the coherence burden.
-- "Same loop" is a claim about requirements, not about identity of research
-  agendas. The two directions still differ in what they measure and what
-  counts as a result.
 
 ## Open Questions
 
