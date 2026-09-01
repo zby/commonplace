@@ -7,6 +7,9 @@ import re
 import sys
 from pathlib import Path
 
+import yaml
+from yaml.nodes import MappingNode, ScalarNode, SequenceNode
+
 from commonplace.lib.naming import ensure_note_slug_length, slugify_note_filename
 from commonplace.lib.project_paths import (
     find_repo_markdown_files,
@@ -25,6 +28,7 @@ TOKEN_PATTERN = re.compile(
 EXTERNAL_TARGET = re.compile(r"^[a-z][a-z0-9+.-]*:")
 REDIRECT_MAP_HEADER = re.compile(r"^(\s*)redirect_maps:\s*$")
 REDIRECT_ENTRY = re.compile(r"^\s*['\"]([^'\"]+)['\"]:\s+['\"]([^'\"]+)['\"]\s*$")
+FRONTMATTER_PATTERN = re.compile(r"^---\r?\n(.*?)\r?\n---\r?(?:\n|$)", re.DOTALL)
 
 
 def resolve_note(arg: str, *, root: Path) -> Path:
@@ -240,6 +244,77 @@ def rewrite_links_to_moved_files(
     return TOKEN_PATTERN.sub(replace_match, content), changes
 
 
+def _render_yaml_scalar(value: str, style: str | None) -> str:
+    """Render a replacement scalar while retaining its existing quote style."""
+    if style == "'":
+        return f"'{value.replace(chr(39), chr(39) * 2)}'"
+    if style == '"':
+        return yaml.safe_dump(value, default_style='"').strip()
+    return value
+
+
+def rewrite_source_notes(
+    content: str,
+    *,
+    repo_root: Path,
+    moves: dict[Path, Path],
+) -> tuple[str, list[str]]:
+    """Rewrite repo-relative paths in a frontmatter ``source_notes`` list."""
+    frontmatter_match = FRONTMATTER_PATTERN.match(content)
+    if frontmatter_match is None:
+        return content, []
+
+    raw = frontmatter_match.group(1)
+    try:
+        document = yaml.compose(raw)
+    except yaml.YAMLError:
+        return content, []
+    if not isinstance(document, MappingNode):
+        return content, []
+
+    replacements: list[tuple[int, int, str]] = []
+    changes: list[str] = []
+    for key, value in document.value:
+        if not (
+            isinstance(key, ScalarNode)
+            and key.value == "source_notes"
+            and isinstance(value, SequenceNode)
+        ):
+            continue
+        for item in value.value:
+            if not isinstance(item, ScalarNode) or item.style in {"|", ">"}:
+                continue
+            old_path = (repo_root / item.value).resolve()
+            destination = moves.get(old_path)
+            if destination is None:
+                continue
+            try:
+                new_path = destination.relative_to(repo_root).as_posix()
+            except ValueError:
+                continue
+            replacements.append(
+                (
+                    item.start_mark.index,
+                    item.end_mark.index,
+                    _render_yaml_scalar(new_path, item.style),
+                )
+            )
+            changes.append(f"source_notes: {item.value} -> {new_path}")
+
+    for start, end, replacement in reversed(replacements):
+        raw = f"{raw[:start]}{replacement}{raw[end:]}"
+    if not replacements:
+        return content, []
+
+    return (
+        (
+            f"{content[:frontmatter_match.start(1)]}{raw}"
+            f"{content[frontmatter_match.end(1):]}"
+        ),
+        changes,
+    )
+
+
 def rebase_and_rewrite_in_moved_file(
     content: str,
     old_source_file: Path,
@@ -356,6 +431,12 @@ def relocate_directory(
         else:
             updated, changes = rewrite_links_to_moved_files(original, md_file, md_moves)
             target = md_file
+        updated, source_note_changes = rewrite_source_notes(
+            updated,
+            repo_root=repo_root,
+            moves=md_moves,
+        )
+        changes.extend(source_note_changes)
         if changes:
             markdown_updates[md_file] = (target, updated, changes)
 
@@ -449,6 +530,12 @@ def relocate_note(
             )
         else:
             updated, changes = rewrite_links_to_moved_files(original, md_file, md_moves)
+        updated, source_note_changes = rewrite_source_notes(
+            updated,
+            repo_root=repo_root,
+            moves=md_moves,
+        )
+        changes.extend(source_note_changes)
         if changes:
             markdown_updates[md_file] = (updated, changes)
 

@@ -120,6 +120,19 @@ def test_relocate_directory_apply_moves_and_rewrites(tmp_path: Path) -> None:
     write(source_dir / "bar.md", "# Bar\n")
     write(tmp_path / "kb" / "notes" / "definitions" / "d.md", "# D\n")
     write(tmp_path / "kb" / "notes" / "outer.md", "# Outer\n\n[foo](./related-systems/foo.md)\n")
+    article = write(
+        tmp_path / "kb" / "articles" / "article.md",
+        """---
+type: kb/articles/types/article.md
+description: Article
+source_notes:
+  - kb/notes/related-systems/foo.md
+  - kb/notes/related-systems/bar.md
+---
+
+# Article
+""",
+    )
     write(tmp_path / "properdocs.yml", """site_name: X
 plugins:
   - redirects:
@@ -154,6 +167,10 @@ plugins:
     # Unmoved file: link to moved file rewritten
     outer_content = (tmp_path / "kb" / "notes" / "outer.md").read_text()
     assert "[foo](../agent-memory-systems/foo.md)" in outer_content
+
+    article_content = article.read_text(encoding="utf-8")
+    assert "  - kb/agent-memory-systems/foo.md" in article_content
+    assert "  - kb/agent-memory-systems/bar.md" in article_content
 
     # ProperDocs has exactly ONE new redirect (plus the pre-existing stale one)
     properdocs_content = (tmp_path / "properdocs.yml").read_text()

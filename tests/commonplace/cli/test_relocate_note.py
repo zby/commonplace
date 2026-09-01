@@ -54,6 +54,33 @@ Inline: `[skip](../notes/old-note.md)`
     ]
 
 
+def test_rewrite_source_notes_updates_frontmatter_paths_only(tmp_path: Path) -> None:
+    old_note = tmp_path / "kb" / "notes" / "old-note.md"
+    new_note = tmp_path / "kb" / "notes" / "archive" / "new-note.md"
+    content = """---
+type: kb/articles/types/article.md
+source_notes: [kb/notes/old-note.md, 'kb/notes/unchanged.md']
+---
+
+Body mentions kb/notes/old-note.md without declaring lineage.
+"""
+
+    updated, changes = relocation.rewrite_source_notes(
+        content,
+        repo_root=tmp_path,
+        moves={old_note.resolve(): new_note.resolve()},
+    )
+
+    assert (
+        "source_notes: [kb/notes/archive/new-note.md, 'kb/notes/unchanged.md']"
+        in updated
+    )
+    assert "Body mentions kb/notes/old-note.md" in updated
+    assert changes == [
+        "source_notes: kb/notes/old-note.md -> kb/notes/archive/new-note.md"
+    ]
+
+
 def test_rebase_and_rewrite_updates_outbound_links_for_moved_note(tmp_path: Path) -> None:
     old_note = tmp_path / "kb" / "notes" / "old-note.md"
     new_note = tmp_path / "kb" / "notes" / "archive" / "relocated-note.md"
@@ -276,6 +303,18 @@ See [note](../types/note.md)
 See [doc](./document-classification.md).
 """,
     )
+    article = write(
+        kb_root / "articles" / "article.md",
+        """---
+type: kb/articles/types/article.md
+description: Article
+source_notes:
+  - kb/notes/document-classification.md
+---
+
+# Article
+""",
+    )
     write(
         repo_root / "properdocs.yml",
         """site_name: Commonplace
@@ -302,6 +341,7 @@ nav:
     relocated_text = destination.read_text(encoding="utf-8")
     assert "[note](../types/note.md)" in relocated_text
     assert "[doc](../reference/type-system.md)" in (notes_root / "reader.md").read_text(encoding="utf-8")
+    assert "  - kb/reference/type-system.md" in article.read_text(encoding="utf-8")
     properdocs_content = (repo_root / "properdocs.yml").read_text(encoding="utf-8")
     assert "'notes/document-classification.md': 'reference/type-system.md'" in properdocs_content
     assert "'notes/already-old.md': 'reference/type-system.md'" in properdocs_content
