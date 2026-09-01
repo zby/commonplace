@@ -52,7 +52,7 @@ production and factory development under the current factory state
   -> further experience, now under the changed factory state
 ```
 
-The factory judges what a failure means and what is worth keeping, organizes the result so later work can find it, and, where the experience leaves resolutions open, settles them with [explanatory and constructive commitments of the same fallible kind](../notes/theory-and-capacity-building-make-the-same-kind-of-commitment.md) — content the evidence does not entail. Judging here names an act, not a standard. Retention places no quality requirement on it: a factory whose retained judgements are poor still retains, and later work still depends on what it retained — it degenerates rather than learns.
+The factory judges what a failure means and what is worth keeping, organizes the result so later work can find it, and, where the experience leaves resolutions open, settles them with [explanatory and constructive commitments of the same fallible kind](../notes/theory-and-capacity-building-make-the-same-kind-of-commitment.md) — content the evidence does not entail.
 
 This is the complete occurrence condition for experience-responsive retention. A particular factory may add internal controls on what it retains or adopts — heuristic self-evaluation, preregistered internal comparisons, up to a proof gate in the style of Schmidhuber's Gödel machine — but these are design choices of the factory, not parts of the definition, and a factory can choose them badly. Even a proof gate certifies only against the axioms it is given.
 
